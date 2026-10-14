@@ -137,7 +137,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-mowzies-cataclysm` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-mowzies-mobs` | 17 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-northstar-redux` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-not-enough-glyphs` | 49 | 🟡 8/40 fichas com engenharia source 4.6.2 (7 source-enabled/condicionais + Momentum disabled); ⚠️ SERVER config e runtime; ⛔ perk adapter |
+| `✅-not-enough-glyphs` | 49 | 🟡 30/40 fichas com engenharia source 4.6.2 (29 source-enabled condicionais + Momentum disabled); ⚠️ SERVER config e runtime; ⛔ perk adapter |
 | `✅-ozymandias-sundries` | 6 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-paladin-spells` | 9 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-photon` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -219,3 +219,10 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 - **8/40** fichas aprofundadas, com links Java e causalidade no novo `PERK-ENGINEERING-MATRIX-4.6.2.md`. IDs completos `glyph_` confirmados por `CompatRL`.
 - Defaults retificados: Plow **0** (antes 5), Flatten **30** (antes 100), Echoing Trail **200, Tier III** (antes 50, Tier II). Os 40 registros incluem Momentum **source-disabled**, não 40 spells ativas.
 - Perks e Mastery **⛔** fail-closed até hooks, custo/debit real e deduplicação. O source 4.6.2 e a estrutura da modlist são provas documentais, **não** execução de bytecode/GameTest/Survival. Delta semântico **+0**.
+
+## Continuação Not Enough Glyphs — contingências/filtros, 2026-10-13
+
+- **+22 fichas** individuais de engenharia (7 contingências e 15 filtros), cobertura de **8/40 a 30/40**; permanecem 10 perfis. Nova `PERK-ENGINEERING-MATRIX-FILTERS-CONTINGENCIES-4.6.2.md` e READMEs vinculados.
+- Source pin `45604dd18d9d2e3e7ca80a2c616b3309f42aca77`, `Events.java` para handlers de `LivingHealEvent`, `LivingDeathEvent`, `LivingUseTotemEvent`, `EntityTeleportEvent`; `ContingencyTriggers` para fall/fire/health; expiry pertence a Sauce. Semântica do cast armazenado e custos ainda exigem auditoria da dependência real.
+- Retificações: `FilterLight` usa SKY e `FilterDark` usa BLOCK, limiar `8+ampMultiplier` (`>=` versus `<`); `EntityDummy` é incluído como player; `FilterSelf.onResolve` possui predicado local incompleto para exclusão de outros alvos (hipótese source-level, não falha física confirmada). Todas as identidades ganharam ID completo `glyph_` e links Java.
+- Mantêm-se ⚠️ config ativa, bytecode instalado, GameTest/Survival e ⛔ hooks/adapters RPG. **+0 identidades semânticas**.

@@ -51,9 +51,11 @@ The container visibly exposes slots 0–24. `Events.attachCaps` also reacts to c
 
 See [`SPELL-BINDER-AND-PERKS.md`](SPELL-BINDER-AND-PERKS.md).
 
-## Dossiês causais 4.6.2 — primeiro lote 8/40
+## Dossiês causais 4.6.2 — 30/40
 
 As oito fichas source-pinned de [PERK-ENGINEERING-MATRIX-4.6.2.md](PERK-ENGINEERING-MATRIX-4.6.2.md) investigam FakePlayer/claims, propagadores, seleção de veículo, raio, multiplicidade de projéteis e procs. Corrigem **Plow 0**, **Flatten 30**, **Echoing Trail 200/Tier III** e IDs completos com `glyph_`. São defaults da fonte, não valores efetivos da SERVER config. Nenhuma identidade semântica nova; sem GameTest, runtime físico ou adapter de perks.
+
+**Continuação:** [matriz de 22 contingências e filtros](PERK-ENGINEERING-MATRIX-FILTERS-CONTINGENCIES-4.6.2.md), cobrindo agora **30/40**. Correções adicionais: Light/Dark usam SKY/BLOCK com threshold 8+amp; variantes Player/Not Player incluem `EntityDummy`, e o controle Self exige QA específico. Ainda faltam 10 perfis.
 
 ## Provider-owned systems
 
