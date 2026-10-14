@@ -1,5 +1,7 @@
 # 39 providers — fila de evidências para validação binária
 
+**Checkpoint atual (2026-10-14) — Apprentice's Codex 0.9.7.1:** [83/83 callsites compilados exatos](apprentice-codex-registry-binary-2026-10-14.md), [run #38578571735](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38578571735) **SUCCESS**. **✅ 26/39** provas independentes e **⚠️ 13/39** pendentes; +0 raízes, mínimos **1857/1855** mantidos. Fingerprint collector continua `registry_proofs_completed=0`, pois não executa nenhuma das 26 auditorias independentes. `AC-P01–AC-P05` PENDING e Stage 06.05 sem promoção. Snapshots abaixo históricos.
+
 **Checkpoint Paladin 2026-10-12:** [cinco IDs binários exatos](../../wiki/modpack-catalog/providers/✅-paladin-spells/EXACT-BINARY-SPELLS-1.1.1.md) auditados em [run #38308575364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38308575364). **5/39** exatos e **34/39** pendentes; +0 novos, 1851/1849 inalterados. Fingerprint collector segue em `registry_proofs_completed=0`; checkpoints abaixo permanecem históricos.
 
 **Checkpoint 2026-10-12:** a [prova de Dreamless Spells 1.1.9](../../wiki/modpack-catalog/providers/✅-dreamless-spells/EXACT-BINARY-SPELLS-1.1.9.md) ([run #38302406303](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38302406303)) eleva as provas **independentes** a **4/39**; **35/39** ainda exigem JAR/registro. +0 magias, mínimos 1851/1849. O fingerprint collector não promove nenhuma delas e continua com `registry_proofs_completed=0`; números dos checkpoints antigos abaixo são históricos.
