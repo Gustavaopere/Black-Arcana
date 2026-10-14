@@ -2,7 +2,7 @@
 
 ## Status
 
-`SOURCE-PINNED 2.0.3.3 / FACTION+FORMS+LEVELING+SKILLS+ACTIONS+EFFECTS+LORD+MINIONS INVENTORIED / STATIC MISMATCHES RECORDED / RUNTIME QA PENDING`
+`COUNTED_EXACT 2.0.3.3 AT STATIC ACTION REGISTRY / 9 ACTION CALLS PHYSICALLY VERIFIED / 8 SEMANTIC ACTIONS SOURCE-CATALOGED / FACTION+FORMS+LEVELING+SKILLS+ACTIONS+EFFECTS+LORD+MINIONS INVENTORIED / STATIC MISMATCHES RECORDED / RUNTIME QA PENDING`
 
 ## Installed authority
 
@@ -75,3 +75,7 @@ The source key is `werewolves:werewolf_heaven`, but the English display name is 
 ## Runtime QA still required
 
 Source catalog completion is not runtime confirmation. Dedicated-server/in-pack QA remains required for transformation state, Epic Fight rendering/animation, skill-tree unlocks, Stone Altar settlement, bite/infection, silver/wolfsbane, action timing, minions, worldgen and the static mismatches recorded in `TECHNICAL-AUDIT.md`.
+
+## Publisher action registry proof — 2026-10-14
+
+**✅ `COUNTED_EXACT` at the compiled action-registry boundary only.** [Java21 workflow #38600511526](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38600511526) passed on the publisher's official [Modrinth 2.0.3.3](https://modrinth.com/mod/werewolves/version/zkd687ts) JAR; the equivalent CurseForge 7814024 CDN initially returned HTTP 403, so no CurseForge-download result is claimed. Publisher JAR `Werewolves-1.21-2.0.3.3.jar`: **2,297,879 bytes**, SHA-1 `12a400d50c6e2afdcd96caf73cb80d37877147c8` identical to sibling installed #570 and SHA-256 `ecbca2cd344e24ad48157834a8f321d1a7d2221c727fe8e61e4436d1219c6cfb`. Exact `de.teamlapen.werewolves.core.ModActions` bytecode: **9/9** static `VampirismRegistries.Keys.ACTION` `DeferredRegister` registrations, 9 distinct IDs, 0 missing/extra/duplicated/field mismatches; standalone synthetic Java21 tests passed separately. The **8** strict supernatural action identities remain the existing source-pinned semantic set: 3 player forms, Howling, Rage, Sense, Fear and **Leap**, with `hide_name` counted only as presentation and excluded from strict magic. This is **not** a loaded Vampirism registry, real ability execution, PvP/claims, form transition, bite cooldown, config or Survival test. Full assembled runtime ⚠️, RPG skill bridge ⛔, Stage 06.05 🟡 unchanged.
