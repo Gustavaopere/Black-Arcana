@@ -87,8 +87,13 @@ def spell_id(disassembly: str) -> str:
             continue
         if n < 2 or n + 1 >= len(code):
             continue
+        nsop, nscomment = code[n-2]
         stringop, stringcomment = code[n-1]
         storeop, storecomment = code[n+1]
+        if not ((nsop == 'getstatic' and
+                 'Field net/ender/ess_requiem/EndersSpellsAndStuffRequiem.MOD_ID:' in nscomment)
+                or (nsop in ('ldc', 'ldc_w') and nscomment == 'String ess_requiem')):
+            raise AuditError('compiled spell namespace is not the provider mod ID')
         if (stringop not in ('ldc', 'ldc_w') or not stringcomment.startswith('String ')
                 or storeop != 'putfield' or not re.search(r'\bField spellId:', storecomment)):
             continue
