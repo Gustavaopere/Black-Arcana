@@ -42,6 +42,15 @@ jobs:
             'https://mediafilez.forgecdn.net/files/8762/149/ess_requiem-0.1.7.jar' \
             --output "$JAR"
           echo "c4648cced4f9e96527cfa4e3f5edcdcead43abb1  $JAR" | sha1sum --check
+      - name: Inspect compiled registry field signatures (read-only diagnostics)
+        shell: bash
+        run: |
+          set -euo pipefail
+          JAR='build/ess-requiem-017/ess_requiem-0.1.7.jar'
+          for C in 'net.ender.ess_requiem.registries.GGSpellRegistry' 'net.ender.ess_requiem.compat.dte.dte_registry.DTESpellRegistry'; do
+            echo "REGISTRY=$C"
+            javap -p -classpath "$JAR" "$C" | grep -E '^  public static' | head -n 70
+          done
       - name: Audit 55 base and three conditional DTE registry identities
         run: |
           python3 docs/qa/ess_requiem_017_binary_audit.py \
