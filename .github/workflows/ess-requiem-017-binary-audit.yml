@@ -51,7 +51,7 @@ jobs:
             echo "REGISTRY=$C"
             javap -p -classpath "$JAR" "$C" | grep -E '^  public static' | head -n 70
           done
-      - name: Audit 55 base and three conditional DTE registry identities
+      - name: Verify 54 base + three DTE compiled identities, with source-only gong excluded
         run: |
           python3 docs/qa/ess_requiem_017_binary_audit.py \
             --jar build/ess-requiem-017/ess_requiem-0.1.7.jar \
