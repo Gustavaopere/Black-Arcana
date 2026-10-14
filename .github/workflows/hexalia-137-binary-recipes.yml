@@ -1,0 +1,84 @@
+name: Hexalia 1.3.7 exact physical recipe boundary
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/hexalia-137-binary-recipes.yml'
+      - 'docs/qa/hexalia_binary_recipes_audit.py'
+      - 'docs/qa/hexalia_binary_recipes_audit_test.py'
+      - 'docs/qa/hexalia-137-exact-rituals-note.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/hexalia-137-binary-recipes.yml'
+      - 'docs/qa/hexalia_binary_recipes_audit.py'
+      - 'docs/qa/hexalia_binary_recipes_audit_test.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact_installed_hexalia_recipes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Synthetic recipes and strict identity tests (not live-game QA)
+        run: python3 docs/qa/hexalia_binary_recipes_audit_test.py -v
+
+      - name: Find exact matching official 1.3.7 NeoForge JAR across same-filename publisher revisions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/hexalia-137-recipes
+          EXPECTED='ca90edf1664cf6d44fe7e5318c71069050499c7e'
+          TARGET='build/hexalia-137-recipes/hexalia-neoforge-1.3.7.jar'
+          MATCH=''
+          for FILE_ID in 8875587 8943719; do
+            PREFIX="${FILE_ID:0:4}"
+            SUFFIX="${FILE_ID:4:3}"
+            URL="https://mediafilez.forgecdn.net/files/${PREFIX}/${SUFFIX}/hexalia-neoforge-1.3.7.jar"
+            CANDIDATE="build/hexalia-137-recipes/candidate-${FILE_ID}.jar"
+            if curl --fail --show-error --silent --location --retry 2 \
+               --connect-timeout 20 --max-time 150 "$URL" --output "$CANDIDATE"; then
+              OBSERVED="$(sha1sum "$CANDIDATE" | awk '{print $1}')"
+              echo "Official file $FILE_ID: SHA-1 $OBSERVED"
+              if [[ "$OBSERVED" == "$EXPECTED" ]]; then
+                mv "$CANDIDATE" "$TARGET"
+                MATCH="$FILE_ID"
+                break
+              fi
+            else
+              echo "Official file $FILE_ID not retrievable; cannot establish identity from it"
+            fi
+            rm -f "$CANDIDATE"
+          done
+          if [[ -z "$MATCH" ]]; then
+            echo 'FAIL CLOSED: no official candidate matches current physical modlist SHA-1' >&2
+            exit 1
+          fi
+          printf '%s\n' "$MATCH" > build/hexalia-137-recipes/official-file-id.txt
+          echo "Verified actual installed identity using official CurseForge file $MATCH"
+          printf '%s  %s\n' "$EXPECTED" "$TARGET" | sha1sum --check
+
+      - name: Inspect exact matched archive for 23 Nature rituals and 6 Celestial infusions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/hexalia_binary_recipes_audit.py \
+            --jar build/hexalia-137-recipes/hexalia-neoforge-1.3.7.jar \
+            --output build/hexalia-137-recipes/evidence.json
+
+      - name: Publish narrow evidence JSON and official file ID; never upload publisher JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: hexalia-137-recipe-boundary-${{ github.sha }}
+          path: |
+            build/hexalia-137-recipes/evidence.json
+            build/hexalia-137-recipes/official-file-id.txt
+          if-no-files-found: ignore
+          retention-days: 14

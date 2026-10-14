@@ -105,10 +105,10 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_real_frozen_campaign_has_twenty_seven_existing_exact_registries(self):
+    def test_real_frozen_campaign_has_twenty_eight_existing_exact_registries(self):
         matrix = mod.load_matrix()
         self.assertEqual(39, len(matrix))
-        self.assertEqual(27, sum(
+        self.assertEqual(28, sum(
             x['catalog_evidence'] == 'COUNTED_EXACT' for x in matrix.values()
         ))
         self.assertEqual(
@@ -120,6 +120,11 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             {'version': '0.2.7', 'semantic_objects': 25,
              'catalog_evidence': 'COUNTED_EXACT'},
             matrix["Reliquified Iron's Spells 'n Spellbooks"],
+        )
+        self.assertEqual(
+            {'version': '1.3.7', 'semantic_objects': 29,
+             'catalog_evidence': 'COUNTED_EXACT'},
+            matrix['Hexalia'],
         )
         self.assertEqual(
             {'version': '21.3.0', 'semantic_objects': 5,
@@ -274,7 +279,7 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_twenty_seven_independent_prior_exact_providers_not_report_promoted(self):
+    def test_twenty_eight_independent_prior_exact_providers_not_report_promoted(self):
         matrix, crosswalk, report = fixture()
         for name, orig, version, count in (
             ('Ars Additions', 'Provider 1', '21.3.0', 5),
@@ -304,6 +309,7 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             ("Reliquified Ars Nouveau", 'Provider 25', '0.8.1', 19),
             ("Apprentice's Codex", 'Provider 26', '0.9.7.1', 83),
             ("Reliquified Iron's Spells 'n Spellbooks", 'Provider 27', '0.2.7', 25),
+            ('Hexalia', 'Provider 28', '1.3.7', 29),
         ):
             filename = crosswalk.pop(orig)
             matrix.pop(orig)
@@ -313,15 +319,15 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             next(r for r in report['entries'] if r['provider'] == orig
                  )['provider'] = name
         result = mod.build_queue(matrix, crosswalk, report)
-        self.assertEqual(27, result['catalog_exact_preexisting'])
-        self.assertEqual(12, result['registry_proofs_remaining'])
+        self.assertEqual(28, result['catalog_exact_preexisting'])
+        self.assertEqual(11, result['registry_proofs_remaining'])
         self.assertEqual(0, result['registry_proofs_completed'])
         exact_rows = [x for x in result['providers']
                       if x['status'] == 'CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT']
         self.assertEqual({'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
                           'Dreamless Spells', 'Paladin Spells', "Wind's Spellbooks", 'Backported Spellbooks',
                           'Deeper & Darker Spellbooks', "GTBC's Geomancy Plus",
-                          "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", 'Ars Controle', 'Ars Technica', 'Ars Zero', 'Ars Elemental', 'IronSable', "Fire's Ender Expansion", "Ypsilon's Fundamentalism", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice's Codex", "Reliquified Iron's Spells 'n Spellbooks"},
+                          "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", 'Ars Controle', 'Ars Technica', 'Ars Zero', 'Ars Elemental', 'IronSable', "Fire's Ender Expansion", "Ypsilon's Fundamentalism", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice's Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia"},
                          {x['provider'] for x in exact_rows})
         self.assertTrue(all(not x['registry_verified'] and
                             not x['promotion_allowed'] and

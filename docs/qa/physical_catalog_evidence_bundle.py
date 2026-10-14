@@ -181,7 +181,8 @@ def _valid_collector_report(name: str, doc: dict | None, exit_code: int) -> bool
                          "Waystones": ('21.1.45', 3),
                          "Reliquified Ars Nouveau": ('0.8.1', 19),
                          "Apprentice's Codex": ('0.9.7.1', 83),
-                         "Reliquified Iron's Spells 'n Spellbooks": ('0.2.7', 25)}
+                         "Reliquified Iron's Spells 'n Spellbooks": ('0.2.7', 25),
+                         'Hexalia': ('1.3.7', 29)}
                 if (row['provider'] not in known
                         or evidence != 'COUNTED_EXACT'
                         or (row.get('declared_version'),
@@ -207,11 +208,11 @@ def _valid_collector_report(name: str, doc: dict | None, exit_code: int) -> bool
                     return False
             else:
                 return False
-        return (len(seen) == 39 and prior_exact == 27
+        return (len(seen) == 39 and prior_exact == 28
                 and type(doc.get('catalog_exact_preexisting')) is int
-                and doc['catalog_exact_preexisting'] == 27
+                and doc['catalog_exact_preexisting'] == 28
                 and type(doc.get('registry_proofs_remaining')) is int
-                and doc['registry_proofs_remaining'] == 12
+                and doc['registry_proofs_remaining'] == 11
                 and type(doc.get('fingerprinted_pending_registry')) is int
                 and doc['fingerprinted_pending_registry'] == fingerprinted
                 and type(doc.get('blocked_physical_artifact')) is int
