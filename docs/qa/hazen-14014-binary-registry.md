@@ -1,6 +1,6 @@
 # Hazen N Stuff 1.4.0.14 — auditoria binária do registry de 38 magias
 
-**Checkpoint inicial:** 2026-10-14 · Minecraft 1.21.1 / NeoForge / Java 21. **🟡 Auditoria automatizada proposta; ⚠️ nenhum PASS binário afirmado antes de observar a CI do JAR real.**
+**Checkpoint inicial:** 2026-10-14 · Minecraft 1.21.1 / NeoForge / Java 21. **✅ Prova binária pontual obtida no JAR de SHA verificado; ⚠️ integração, configuração e gameplay permanecem não comprovados.**
 
 ## Identidade instalada e fonte
 
@@ -23,3 +23,11 @@ O resultado `PASS` (se observado) comprova **apenas esses 38 registros compilado
 - **Campanha global na abertura:** ✅ 27/39 `COUNTED_EXACT` e ⚠️ 12/39 condicionados; nenhum dos 38 objetos é identidade semântica nova nesta PR. Não promover a 28/39 sem CI binária exata e reconciliação dos testes/ledgers globais.
 
 **Registro de conclusão:** anotar HEAD, run, hash SHA-256 e contagens **somente após verificá-los**. Qualquer diferença entre o bytecode e a expectativa source-pinned é dado para triagem, não autorização para modificar o provider.
+
+## Resultado observado — workflow inicial PR #812, 2026-10-14
+
+- [Execução exata #38605812160](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38605812160): **SUCCESS** na branch `catalog/hazen-14014-exact-binary-spells-20261014@99c7d9aa9b0be1b68ba622c9795fdce9803b754f`. Nove testes Java 21 de fixture sintético passaram; a inspeção de bytecode do JAR real passou separadamente.
+- JAR CurseForge `8277644`: **7.921.289 bytes**; SHA-1 **`3be20bacb44c1923348ab6f61b685eec6aacfdcd`** (mesmo do sibling físico #312); SHA-256 **`eeacf5b5536bbe2691e1687902a8c37cff775829457db6e116261bbff7a00462`**. Metadados NeoForge para `hazennstuff` checados.
+- Resultado JSON `PASS`: `compiled_registration_pairs=38`, `compiled_unique_classes=38`, `exact_spell_id_class_match_count=38`, `expected=38`, `deviations={}`. A linha comentada de Reign of Tyros não aparece nas 38 identidades binárias auditadas.
+- Escopo **apenas** de `HnSSpellRegistries` e dos construtores/`getSpellResource` das 38 classes; não estabelece source/JAR equivalência integral, host Iron's carregado, mana, loot, crafting, compatibilidade, PvP/claims ou acesso Survival.
+- **Campanha global:** a prova está pronta para reconciliação, mas a matriz de 39 providers permanece **27/39** nesta PR, até um commit global coordenado; a PR concorrente #811 audita Werewolves e não deve ser sobrescrita. `+0` magias semânticas. Stage 06.05 permanece 🟡; adapter RPG Mastery/perks ⛔.

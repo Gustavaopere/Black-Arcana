@@ -150,3 +150,7 @@ Those runtime gates do not erase the source-pinned semantic catalog; they preven
 **✅ Cataloged at source-pinned semantic level: 38/38 active 1.4.0.14 spell registrations.**
 
 Runtime/provider integration remains fail-closed until direct assembled-pack evidence exists.
+
+## Bytecode do registry no JAR físico — Hazen N Stuff 1.4.0.14 (2026-10-14)
+
+✅ A [auditoria SHA-exata das 38 magias](../../../../docs/qa/hazen-14014-binary-registry.md), [GitHub Actions #38605812160](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38605812160), confirmou `HnSSpellRegistries` com **38/38** registros `registerSpell(new XSpell())`, **38** classes únicas e **38** correspondências exatas de IDs retornados por `getSpellResource`, sem desvios. O JAR oficial CurseForge `8277644` possui **7.921.289 bytes**, SHA-1 `3be20bacb44c1923348ab6f61b685eec6aacfdcd` idêntico à modlist física e SHA-256 `eeacf5b5536bbe2691e1687902a8c37cff775829457db6e116261bbff7a00462`. `reign_of_tyros` permanece excluído por ausência de registro compilado ativo. Essa é uma **prova exata das chamadas de registro**, não da execução/descoberta de spells em Iron's, nem de configuração, cliente, gameplay, crafting, World Safety ou Survival. ⚠️ QA real pendente; ⛔ RPG Skill Tree sem adapter homologado; Stage 06.05 inalterado. A contagem global só será promovida após reconciliação da matriz dos 39 providers.
