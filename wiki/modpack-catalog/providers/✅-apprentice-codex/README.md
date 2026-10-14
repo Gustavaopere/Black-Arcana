@@ -295,3 +295,9 @@ Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` e JAR 
 ## Engenharia causal de armas conjuradas e efeitos derivados — 2026-10-14
 
 **🟡 54/83** dossiês aprofundados (44 anteriores + 10 source-auditados neste lote); **✅ 83/83** identidades catalogadas, **29/83** pendentes, **+0 roots**. A [matriz de armas conjuradas](PERK-ENGINEERING-MATRIX-SUMMONED-WEAPONS-0.9.7.1.md) rastreia Commence Fire, Breaching Enemy, Dual Acrobat, Fujin, Silent Assassin, Lethal Assault, Moon Light, Shiden, Fly Swatter e Precision Jack com classes/métodos da versão declarada 0.9.7.1. **⚠️** Sem equivalência binária JAR/QA físico de config, Survival, dedicated, claims, PvP ou performance; **⛔** adapter Mastery/perks sem contrato. Java/runtime, Stage 06.05 e autoridade de mana/casts inalterados.
+
+## Engenharia causal de utilidades, persistência e recursos — 2026-10-14
+
+**🟡 64/83** magias com dossiê source-level causal aprofundado (54 integradas +10 deste lote); **✅ 83/83** identidades já catalogadas, restam **19/83** nesta profundidade e +0 roots. [Matriz de utilidades/lifecycle](PERK-ENGINEERING-MATRIX-UTILITY-LIFECYCLE-0.9.7.1.md) contém Combustion Jet, Catch Flame, Wizardlamp, Grind Runner, Spectral Wing, Mana Transcription, Servant Gaze, Compound Phial, Extract e Terra Resonance, com classe/método do source fixado `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`.
+
+⚠️ Leitura de source não é prova física do JAR/corpos de métodos, config, Survival, dedicated/multiplayer, claims/PvP, persistência nem economia de itens; ⛔ perks/Mastery continuam sem adapter real homologado. Nenhum runtime Java nem Stage modificado.
