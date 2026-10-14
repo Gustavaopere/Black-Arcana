@@ -88,6 +88,14 @@ class RegistryIdentityTests(unittest.TestCase):
         with self.assertRaises(audit.AuditError):
             audit.registry_classes(registry_class_text().replace("class net/ender/ess_requiem/spells/SecondSpell","class net/ender/ess_requiem/spells/FirstSpell"),2)
 
+    def test_diagnostic_mode_preserves_registered_fields_despite_expected_count_drift(self):
+        sample=registry_class_text()
+        with self.assertRaises(audit.AuditError):
+            audit.registry_classes(sample,3)
+        observed=audit.registry_classes(sample,3,strict=False)
+        self.assertEqual(len(observed),2)
+        self.assertEqual(set(observed),{"FIRST","SECOND"})
+
     def test_compiled_spell_id_is_extracted_from_constructor_and_getter(self):
         self.assertEqual(audit.spell_id(spell_class_text()),"spark")
         self.assertEqual(audit.spell_id(spell_class_text("eldritch_bolt")),"eldritch_bolt")
