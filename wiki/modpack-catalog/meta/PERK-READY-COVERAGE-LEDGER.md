@@ -31,7 +31,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-apothic-compats` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-enchanting` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-spawners` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-apprentice-codex` | 101 | ✅ 83/83 identidades registradas e fichas source-located; 🟡 14/83 engenharia causal aprofundada (8 novas nesta etapa); ⚠️ JAR/config/Survival/QA; ⛔ RPG adapter |
+| `✅-apprentice-codex` | 101 | ✅ 83/83 identidades registry/source-located; 🟡 24/83 engenharia causal aprofundada (+10 entidades/automação); ⚠️ bytecode/config/Survival/QA; ⛔ RPG perk adapter |
 | `✅-ars-additions` | 48 | ✅ 5/5 magias/rituais (3 glyphs, 2 rituals) com cadeia e source exato; ⚠️ compatibilidade host/config/QA; ⛔ adapter RPG |
 | `✅-ars-controle` | 25 | ✅ 9/9 glyphs com source 1.6.16 causal exato; ⚠️ runtime/concurrency/scheduler; ⛔ perk adapter RPG |
 | `✅-ars-creo` | 14 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -254,3 +254,11 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 - **+8** dossiês causais profundos: [matriz técnica](../providers/✅-apprentice-codex/PERK-ENGINEERING-MATRIX-HIGH-RISK-0.9.7.1.md), elevando **6/83→14/83**. **83/83** identidades permanecem catalogadas; **69/83** pendentes da mesma profundidade; **+0** ao denominador global.
 - Auditoria source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` em eventos, auxiliares, managers e entidades; corpos do JAR/config/QA não provados. O provider/Iron's preserva ownership do cast/mana e world mutations; BA só do próprio runtime.
 - **Perks/Mastery ⛔** sem contrato real; **Stage 06.05** não promovido. Alterações exclusivas em Markdown; sem GameTest físico de conteúdo Apprentice's Codex.
+
+## Apprentice's Codex — entidades/jobs: +10 dossiês, 2026-10-13
+
+- `main` de partida: `61696cd5ec7589c5f42a461d6c5ef4c2599e88c0`. Modlist sibling `main@f5d31633186a004ada41557220dcafa94a75546e` confirma `apprentice_codex-0.9.7.1+mc1.21.1.jar`, `apprenticecodex`, SHA-1 `b514315add32b93b0049c8673075627d7ef812e0`.
+- Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`; **+10** dossiês em Auto Turret, Companion Trunk, Call Broom, Bound Sword, Bound Bow, Archer Multiple, Search Beacon, Tamer's Pocket, Personal Shelf e Tiny Lumberjack. [Matriz técnica lifecycle](../providers/✅-apprentice-codex/PERK-ENGINEERING-MATRIX-LIFECYCLE-0.9.7.1.md).
+- Cobertura de **engenharia causal** progride **14/83 → 24/83**, restam **59/83** sem a mesma profundidade. **Identidades catalogadas 83/83, +0 ao denominador semântico global**. Arquivos Markdown podem crescer, mas não são novas magias.
+- Riscos ⚠️: cobrança de restock, cleanup varrendo níveis, item inventory/cursor, UUID e NBT de pets, item reservation/refund, transferência via item handler e jobs sem cap agregado neste manager. Bytecode exato do JAR, pack config e QA físico não provados.
+- **Black Arcana e RPG Skill Tree:** nenhum adapter, cast replay, segunda liquidação, reward, claim policy ou world effect externo implementado; RPG perks/Mastery ⛔. Stage 06.05 permanece sem promoção.
