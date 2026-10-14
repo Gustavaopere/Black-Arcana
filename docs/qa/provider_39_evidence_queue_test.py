@@ -105,12 +105,17 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_real_frozen_campaign_has_twenty_five_existing_exact_registries(self):
+    def test_real_frozen_campaign_has_twenty_six_existing_exact_registries(self):
         matrix = mod.load_matrix()
         self.assertEqual(39, len(matrix))
-        self.assertEqual(25, sum(
+        self.assertEqual(26, sum(
             x['catalog_evidence'] == 'COUNTED_EXACT' for x in matrix.values()
         ))
+        self.assertEqual(
+            {'version': '0.9.7.1', 'semantic_objects': 83,
+             'catalog_evidence': 'COUNTED_EXACT'},
+            matrix["Apprentice's Codex"],
+        )
         self.assertEqual(
             {'version': '21.3.0', 'semantic_objects': 5,
              'catalog_evidence': 'COUNTED_EXACT'},
