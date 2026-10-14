@@ -35,3 +35,12 @@ Independent Black Arcana terrain/biome mutation remains subject to `WorldEffectP
 ## QA
 
 Source behavior is pinned to 5.13.1. Protection/claim interaction is not explicitly visible in `ConjureBiomeRitual`'s placement path and therefore requires full-pack runtime QA rather than inference.
+
+## Engenharia para perks — contrato de ritual
+
+- **Fonte exata:** [`ConjurePlainsRitual.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/ConjurePlainsRitual.java) no Ars 5.13.1. Executor herdado [`ConjureBiomeRitual.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/api/ritual/ConjureBiomeRitual.java).
+- **Volume e orçamento:** herda `ConjureBiomeRitual`: `radius=7+SourceGemCount`; `ManhattenTracker` centrado 3 blocos abaixo; por tick examina no máximo `radius` posições da sequência e realiza **no máximo 1 placement bem-sucedido** com `setState` + `RitualUtil.changeBiome`. A cada 5 placements marca `setNeedsSource(true)` e reinicia contador; Source cost declarado 50.
+- **Composição:** padrão PLAINS com GRASS_BLOCK em Y−1 e DIRT em outras camadas; se `FROSTAYA_POD` foi consumido, marca `isSnowy` e usa biome `SNOWY_PLAINS` mantendo as mesmas layers. `canConsumeItem` aceita uma escolha Frostaya além de Source Gems.
+- **Persistência e risco:** `ConjurePlainsRitual` serializa `isSnowy`; pai serializa `tracker`/`radius`. Os caminhos `ConjureBiomeRitual.setState` e `changeBiome` não exibem claim gate local; não presumir proteção universal nem implementá-lo duplicadamente em RPG.
+- **Perks:** raio e chamadas de worldgen implicam volume, biome e Source distintos; não transformar este ritual em cast de bioma de Black Arcana ou gratificar cada bloco como ritual individual.
+- **Estado:** ✅ identidade/métodos/source pin; ⚠️ valores no modpack, proteções, Save/Restart e multiplayer não testados nesta branch. ⛔ adapter RPG para mutation, bônus de recursos ou acompanhamento de um cast por ritual não implementado; Ars conserva Source e world authority.

@@ -43,3 +43,11 @@ Any mastery/danger bridge must preserve root-cast causality and bounded attribut
 ## QA / runtime
 
 Source behavior is pinned to 5.13.1. Full 612-mod runtime/config QA remains separate.
+
+## Dossiê de engenharia para perks — classe de efeito
+
+- **Source pin:** [`EffectOrbit.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectOrbit.java), Ars Nouveau 5.13.1.
+- **Quantidade:** tanto para bloco quanto entidade, `total=3+spellStats.getBuffCount(AugmentSplit.INSTANCE)`; sem partes restantes, sai sem spawn. A cadeia residual é encapsulada em novo `SpellContext` com `MethodProjectile.INSTANCE` inserido no início, e o parent é cancelado.
+- **Spawn:** `EntityOrbitProjectile` recebe `setOffset(i)`, `setAccelerates((int)getAccMultiplier())`, `setAoe((float)getAoeMultiplier())`, `extendTimes=(int)getDurationMultiplier()` e `setTotal(total)`; no bloco orbita posição, na entidade orbita target entity.
+- **Perks:** Split aumenta *entidades*, mas não cast count; raio e velocidade efetivos dependem do executor downstream; limite de número e lifetime requer auditoria da classe e config, sem duplicar custo/Mastery.
+- **Status:** ✅ source exato lido; ⚠️ entidade auxiliar, caps runtime e Survival requerem testes; API por efeito não foi validada contra RPG/Black Arcana. Sem autorização para segunda liquidação de dano/recurso/target.

@@ -29,3 +29,11 @@ Estado: **✅ `COUNTED_SOURCE_PINNED` — ritual individualizado** · **⚠️ c
 Os campos acima reproduzem os contratos factuais da auditoria do source e do Ars 5.13.1 quando herdados. Não constituem medição no pack físico. Recursos Source, alteração de blocos/biomas, entidades, scheduler, persistência e cleanup permanecem provider-owned. Black Arcana não cobra Source duas vezes nem reexecuta rituais; efeitos destrutivos próprios passam por `WorldEffectPolicy`. Sem hook real, integração **⛔ fail-closed**.
 
 **Fontes:** [rituais](../../RITUALS.md) · [registries](../../REGISTRIES.md) · [acquisition](../../ACQUISITION.md). Clean-room factual, sem código/JSON/assets upstream.
+
+## Engenharia de perks — contrato causal do ritual 0.7.10.1
+
+- **Source checkpoint exato:** [`RepulsionRitual.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/rituals/RepulsionRitual.java). Pin de versionamento, **não** prova binária de equivalência da implementação ao JAR.
+- **Backoff:** `getBackoff()=20+backoff` e `backoff` vira 60 quando nenhuma entidade encontrada e nenhum sucesso (ciclo passa 20→80 ticks); caso contrário volta a 0. NBT salva `backoff`.
+- **Admissão:** busca `LivingEntity` em AABB `inflate(15)`. Sem `Items.BONE`, filtra não-Player e não `Tags.EntityTypes.BOSSES`. Com Bone, usa **apenas** `EntityTypeTags.UNDEAD`; esse branch não reaplica explicitamente o filtro de bosses, logo boss-undead condicional não pode ser descartado por suposição.
+- **Aplicação:** `entity.addEffect(new PosCarryMEI(ModPotions.REPEL,200,0,true,true,getPos()))`; se `addEffect` retorna true chama `setNeedsSource(true)` e marca flag. Source cost declarado 10; `getPos` é centro usado pela potion. Não duplicar aplicação do movimento por RPG.
+- **Estado:** ✅ ID física do JAR e assinatura do source pinned; ⚠️ equivalência implementation-JAR, config deploy, helpers/host, protection e Survival pendentes; ⛔ adapter de perks RPG e mutabilidade externa não comprovados. Sem dupla Source/cast/concessão de Mastery.

@@ -27,3 +27,14 @@ Compatible augments: Amplify, Dampen, Fortune, Randomize.
 Ars Nouveau owns healing, food exhaustion, undead/inverted-heal damage and configured values. Black Arcana must not create duplicate healing settlement, damage procs or progression awards from the same provider event.
 
 Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.
+
+## Localizadores e parâmetros para Codex — fonte exata
+
+- **Java:** [`EffectHeal.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectHeal.java) no commit `112920ff774831f204031da75b4c4e73d3765157` correspondente ao catálogo Ars 5.13.1.
+- **Alvo:** `onResolveEntity` requer `LivingEntity` válida e `ServerLevel`; ignora removidos ou saúde <=0.
+- **Cálculo:** `healVal = GENERIC_DOUBLE.get() + AMP_VALUE.get()*spellStats.getAmpMultiplier()`, defaults configuráveis 3.0 base e 3.0 per amplifier. `Randomize` aplica rolagem somente na branch de cura, após seleção do destino.
+- **Alvo de cura invertida:** `isInvertedHealAndHarm` muda para dano de `DamageTypes.MAGIC` via `attemptDamage`; não tratar a magia como heal-only para todas as entidades.
+- **Alvo player:** `causeFoodExhaustion(2.5f)` antes de `heal`; custos de fome não podem ser ignorados por perks.
+- **Augments:** Amplify, Dampen, Fortune, Randomize. Hook específico para trocar amount/target ainda **não comprovado**; sem duplicar cura/dano.
+
+**Estado:** prova estática de parâmetros por leitura de código; habilidade de mutação por hook externo não verificada. Ars controla composição, execução, mana/Source e configurações; RPG Skill Tree controla perks/Mastery/gates; Black Arcana é autoridade somente de seu runtime próprio. [Padrão universal](../../../../meta/PERK-READY-TECHNICAL-STANDARD.md).

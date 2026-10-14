@@ -29,3 +29,11 @@ Without Sensitive, the spell places a temporary Ars block that mimics a Redstone
 Ars Nouveau owns this temporary redstone-power capability and persistence. Black Arcana must not create a second redstone state ledger or replay provider block updates. Independent Black Arcana world mutations still pass through `WorldEffectPolicy`.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectRedstone`).
+
+## Engenharia para perks — caminho causal individual
+
+- **Código exato:** [`EffectRedstone.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectRedstone.java), Ars 5.13.1.
+- **Potência/duração:** `signalModifier=clamp((int)getAmpMultiplier()+10,1,15)` e `delay=max(GENERIC_INT.get()+(int)durationMultiplier*BONUS_TIME.get(),2)`; defaults base duration 5 **ticks**, Extend Time bonus 10 ticks. Mana default 0.
+- **Sensitive path:** para cada posição AOE/Pierce válida, armazena `RedstoneSavedData.SIGNAL_MAP.put(pos,new Entry(pos,power,delay))`, chama `neighborChanged` e `updateNeighborsAt`; o path não cria um bloco adicional. **Ramo normal:** desloca candidato para a face hit, checa replaceable/bounds, publica `BlockEvent.EntityPlaceEvent` cancelável e coloca `TEMPORARY_BLOCK` com `POWER`, gravando `TemporaryTile.gameTime`, `tickDuration` e `mimicState=REDSTONE_BLOCK`.
+- **Risco de proteção:** Sensitive path não publica `EntityPlaceEvent` nesta classe e não exibe claim check local. Isto exige testar `RedstoneSavedData`, carregamento de chunks e providers de proteção; não declarar bypass sem pipeline completo. Também não repetir sinais como procs de magia.
+- **Estado:** ✅ assinatura/source; ⚠️ integração de plugins proteção, configs e gameplay pending; ⛔ nenhum adapter RPG testado nem permissão para duplicar a cadeia causal/perk/mastery.

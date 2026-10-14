@@ -29,3 +29,11 @@ Crop maturation checks, drop calculation, replanting, adjacent inventory inserti
 ## QA
 
 Source behavior is pinned to 5.13.1. Effective Source debit batching and compatibility with modded crop/drop/storage hooks remain runtime QA.
+
+## Engenharia para perks — execução do ritual
+
+- **Source pin:** [`RitualHarvest.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/RitualHarvest.java), versão Ars Nouveau 5.13.1.
+- **Volume/cadência:** `RitualHarvest.tick` roda a cada `200` ticks, percorrendo blocos de `pos.offset(4,-1,4)` a `pos.offset(-4,1,-4)` (9×3×9 posições candidatas antes de redirecionar para blocos acima). Não é varredura ilimitada, mas cada tentativa de drops e inventário tem custo.
+- **Culturas:** Nether Wart AGE=3, Cocoa AGE=2, `HARVEST_STEMS` e `CropBlock.isMaxAge`. `processAndSpawnDrops` usa `Block.getDrops`, reduz uma seed/bloco quando replantando, tenta `tile.getInventoryManager().insertStack` e emite `ItemEntity` para sobras; exclui `MAGE_BLOOM_CROP` desse caminho.
+- **Custo:** `setNeedsSource(true)` após work e `getSourceCost=100`; não inferir pagamento 100 a cada cultura a partir deste boolean. **Perks:** quantity, seed/loot/replant e Source pertencem à transação Ars; observer não pode duplicar drops.
+- **Status:** ✅ código fonte exato; ⚠️ configurações e comportamento físico dos providers adicionais pendentes; ⛔ mutabilidade em ritual ou integração com Mastery não é provada pelos eventos de glyph. Ritual runtime permanece Ars Nouveau.

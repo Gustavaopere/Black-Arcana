@@ -27,3 +27,11 @@ Independent Black Arcana teleportation continues to use its canonical server-sid
 ## QA
 
 Source behavior is pinned to 5.13.1. Cross-dimension/sublevel behavior and interactions with Sable/portal providers remain runtime/integration QA.
+
+## Dossiê de implementação para perks — ritual exato
+
+- **Classe fonte:** [`RitualWarp.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/RitualWarp.java), fonte `112920ff774831f204031da75b4c4e73d3765157` para Ars 5.13.1.
+- **Admissão:** `canConsumeItem` admite **um** `WarpScroll`, com `WARP_SCROLL` component, `data.isValid()` e `data.canTeleportWithDim(tile.getLevel())`; `canStart` depende de consumido.
+- **Conclusão:** a cada 20 ticks incrementa progress; em `>=3` busca `Entity` em AABB `inflate(5)`, extrai `data.pos().orElse(null)`, chama `entity.teleportTo(x,y,z)` para cada alvo se posição existe, toca som e `setFinished`. **Cuidado:** esse método de `teleportTo(double,double,double)` não mostra transição explícita de dimensão, ainda que a admissão teste `canTeleportWithDim`; efeito cross-dimension exige teste, não promessa.
+- **Perks:** alcance, quantidade de alvos, filtros de teleport e consumo de scroll devem preservar ownership Ars; não é uma rota para ignorar gates de deslocamento Black Arcana.
+- **Mutabilidade externa:** ⛔ nenhum adapter RPG provado que altere lifecycle, Source ou raio sem duplicar settlement; 🟡 fórmula/lógica source-pinned; ⚠️ runtime, receitas/config física, addons e Survival pendentes.

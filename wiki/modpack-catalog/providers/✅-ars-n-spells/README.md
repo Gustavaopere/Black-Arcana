@@ -134,3 +134,9 @@ These bridge/payment/presentation changes do not transfer gameplay authority to 
 See [`EVIDENCE-AND-PROVENANCE.md`](EVIDENCE-AND-PROVENANCE.md).
 
 Phase 3 remains blocked. This provider closure is deduplication evidence; it is not permission to add a competing universal mana/spellbook bridge to Black Arcana.
+
+## Dossiês de engenharia de perks — cinco rituais
+
+- ✅ As cinco fichas `rituals/*.md` foram aprofundadas com **código de rituais 3.3.3** e semântica de transações, autenticação e ciclo de Mana. [Matriz de engenharia 3.3.4](PERK-ENGINEERING-MATRIX-3.3.4.md).
+- ⚠️ Os IDs/conditional gates são comprovados na versão binária **3.3.4**, mas a implementação pública disponível é **3.3.3**: nenhum método 3.3.4 foi promovido por dedução. O runtime/cast/payment revision é uma pendência separada. ⛔ RPG/perks/cost bridge sem adapter testado.
+- Nenhuma nova identidade e nenhuma mutação Java/Stage efetuada nesta documentação.

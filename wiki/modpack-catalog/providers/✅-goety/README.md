@@ -237,3 +237,7 @@ Goety Iron `3.1` and Goety Cataclysm `1.21.1-1.8.2` are separate installed provi
 ## Semantic denominator and Phase 3 gate
 
 Phase 2BH canonically counts Goety as `COUNTED_EXACT` with **361** semantic objects, yielding strict minimum **1249 / 57 of 100** after durable PR #198 and exact post-merge CI #2524. Runtime integration remains fail-closed until provider boundaries are separately proven.
+
+## Dossiês técnicos de Focus para perks
+
+O inventário exato dos 123 Focuses permanece inalterado. A campanha transversal separa identity do JAR 3.1.4 de detalhes ainda não observados no executável; `blizzard_focus` e `blasting_focus` receberam fichas com bloqueios explícitos para classes/alcance/custo/hooks não verificados. Não atribuir dados da branch upstream 1.20 à versão instalada. [Padrão de catalogação](../../meta/PERK-READY-TECHNICAL-STANDARD.md).

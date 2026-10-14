@@ -29,3 +29,11 @@ Estado: **✅ `COUNTED_SOURCE_PINNED` — ritual individualizado** · **⚠️ c
 Os campos acima reproduzem os contratos factuais da auditoria do source e do Ars 5.13.1 quando herdados. Não constituem medição no pack físico. Recursos Source, alteração de blocos/biomas, entidades, scheduler, persistência e cleanup permanecem provider-owned. Black Arcana não cobra Source duas vezes nem reexecuta rituais; efeitos destrutivos próprios passam por `WorldEffectPolicy`. Sem hook real, integração **⛔ fail-closed**.
 
 **Fontes:** [rituais](../../RITUALS.md) · [registries](../../REGISTRIES.md) · [acquisition](../../ACQUISITION.md). Clean-room factual, sem código/JSON/assets upstream.
+
+## Engenharia de perks — contrato causal do ritual 0.7.10.1
+
+- **Source checkpoint exato:** [`SquirrelRitual.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/rituals/SquirrelRitual.java). Pin de versionamento, **não** prova binária de equivalência da implementação ao JAR.
+- **Filtro/alcance:** somente `Starbuncle` em AABB expandida por `15*modifier`, `modifier=2` se Gold Block foi consumido, senão 1. `canConsumeItem` aceita um `Items.GOLD_BLOCK` apenas enquanto lista de consumidos vazia.
+- **Cadência:** opera quando `server.gameTime%Common.SQUIRREL_REFRESH_RATE.get()==0`, default 600 ticks no catálogo. Aplica `MOVEMENT_SPEED` por 2400 ticks amplifier1 e `JUMP` por 2400 ticks amplifier0; chama `setNeedsSource(true)` dentro do loop quando Starbuncle existe. Cost declarado 150.
+- **Perks:** manter efeitos de entidade, raio e Source como provider-owned; `getSourceCost` não prova debit por Starbuncle ou por refresh.
+- **Estado:** ✅ ID física do JAR e assinatura do source pinned; ⚠️ equivalência implementation-JAR, config deploy, helpers/host, protection e Survival pendentes; ⛔ adapter de perks RPG e mutabilidade externa não comprovados. Sem dupla Source/cast/concessão de Mastery.

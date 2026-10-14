@@ -35,3 +35,12 @@ Any Familiars & Divination integration should observe a supported provider state
 ## QA
 
 Source lifecycle is pinned to 5.13.1. Exact recipe-driven target coverage and client presentation in the full pack remain runtime/data QA.
+
+## Dossiê de implementação para perks — ritual exato
+
+- **Classe fonte:** [`RitualScrying.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/RitualScrying.java), fonte `112920ff774831f204031da75b4c4e73d3765157` para Ars 5.13.1.
+- **Admissão:** `canStart` exige `getConsumedItems()` não vazio. `canConsumeItem` permite no máximo uma `MANIPULATION_ESSENCE` como modificador e um `BlockItem` ou item que case com `ScryRitualRegistry`.
+- **Progresso:** `incrementProgress` a cada `20` ticks no servidor, completa em `>=15`; aplica a `ServerPlayer` em AABB `inflate(5.0)`. A duração de `SCRYING_EFFECT` é `60*20*5` ticks, multiplicada por 3 se Essence consumida (=6000 ou 18000 ticks defaults).
+- **Persistência:** resolve `TagScryer` de receita ou `SingleBlockScryer` por BlockItem; `grantScrying` serializa o contrato para a chave `an_scryer` sob `Player.PERSISTED_NBT_TAG` e manda `PacketGetPersistentData`. Não assumir que partículas vistas no cliente são evento de descoberta confiável.
+- **Perks:** revela estado persistente, mas um mod externo não deve gravar/modificar `an_scryer` sem contrato público de leitura/escrita.
+- **Mutabilidade externa:** ⛔ nenhum adapter RPG provado que altere lifecycle, Source ou raio sem duplicar settlement; 🟡 fórmula/lógica source-pinned; ⚠️ runtime, receitas/config física, addons e Survival pendentes.

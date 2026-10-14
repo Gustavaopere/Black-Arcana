@@ -28,3 +28,11 @@ Summons an `EntityDummy` decoy and redirects nearby `Mob` targets within an infl
 Ars Nouveau owns this aggro-decoy primitive. Black Arcana illusion/control content should not clone the same temporary taunt dummy without a materially different contract.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectSummonDecoy`).
+
+## Engenharia para perks — caminho causal individual
+
+- **Source pin:** [`EffectSummonDecoy.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectSummonDecoy.java) do Ars 5.13.1.
+- **Spawn e duração:** somente com `canSummon(shooter)`, cria `EntityDummy` em posição do hit +1Y; `ticksLeft=(int)(20*(GENERIC_INT.get()+durationMultiplier*EXTEND_TIME.get()))`, defaults 30s e 15s. `summonLivingEntity` efetiva o lifecycle.
+- **Atração:** após invocar, percorre `world.getEntitiesOfClass(Mob.class,dummy.boundingBox.inflate(20,10,20))` e faz `mob.setTarget(dummy)` — é uma caixa de busca 40×20×40 de expansão ao redor do próprio dummy, **não** comprovadamente um raio de 20 nem seleção exclusiva de hostis.
+- **Summoning Sickness:** chama `applySummoningSickness(shooter,1)` (parâmetro 1 passado ao helper, não 1 segundo garantido). **Perks:** controle de aggro, lifecycle, HP do dummy e target retargeting exigem classe `EntityDummy`/helpers e auditoria PvP/addons; não repetir taunt por RPG.
+- **Estado:** ✅ classe/método do source pin; ⚠️ scripts de addons, config física e QA Survival pendentes; ⛔ bridge de perks RPG e mutação de `SpellStats` sem validação de causalidade e limites.

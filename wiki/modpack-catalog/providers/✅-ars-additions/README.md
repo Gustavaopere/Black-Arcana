@@ -82,3 +82,9 @@ Memory Crystal runtime/state semantics are confirmed, but a normal default acqui
 Phase 2Q is documentation/provenance/deduplication work. `CATALOG COMPLETE` means the material source surface for this provider has been cataloged at the pinned revision; it does **not** mean the installed 21.3.0 JAR has passed runtime/config/client/full-modpack acceptance against Ars Nouveau 5.13.1.
 
 No Ars Additions adapter is implemented by this phase and no Black Arcana runtime Stage is promoted.
+
+## Engenharia de perks — checkpoint de fichas individuais do PR #796
+
+- ✅ 5/5 raízes mágicas, sendo 3 Glyphs e 2 Rituals receberam dossiê individual source-located no draft PR #796. Matriz: [PERK-ENGINEERING-MATRIX-21.3.0.md](PERK-ENGINEERING-MATRIX-21.3.0.md).
+- ⚠️ Host/API, config instalada, equivalência da implementação Java com os bytes físicos do JAR e Survival/client/server QA condicionados. ⛔ Nenhuma perk/bridge do RPG Skill Tree implementada ou validada.
+- Black Arcana não se apropria de mana, Source, casting, efeitos derivados, estado de entidade ou world settlement dos addons. +0 identidades semânticas, nenhum Stage promovido.

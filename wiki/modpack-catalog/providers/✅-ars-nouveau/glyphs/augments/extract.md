@@ -23,3 +23,11 @@ Provides Silk-Touch-like behavior to compatible Break usage. The exact source al
 Ars Nouveau owns loot/extraction semantics and its compatibility matrix. Black Arcana destructive block effects remain governed by `WorldEffectPolicy`; this glyph cannot be used as a generic bypass for protection, drops or world-mutation policy.
 
 Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.
+
+## Engenharia para perks — operador e consumidores
+
+- **Classe Java exata:** [`AugmentExtract.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/augment/AugmentExtract.java), source pin `112920ff774831f204031da75b4c4e73d3765157` (Ars Nouveau 5.13.1).
+- **Operador source:** a classe `AugmentExtract` não sobrescreve `applyModifiers` nesta versão; consumers verificam `spellStats.getBuffCount(AugmentExtract.INSTANCE)`/`hasBuff`. Mana default 30, tier II.
+- **Break:** usa count Extract como nível simulado de `SILK_TOUCH` no `ItemStack` da ferramenta. **Explosion:** seleciona `Explosion.BlockInteraction.DESTROY` em vez de `DESTROY_WITH_DECAY` quando tem Extract; as consequências de drops são liquidadas pela engine.
+- **Perks:** Extract e Fortune são descritos como incompatíveis pelo provider. Não transformar o augment em uma duplicação direta dos blocos/itens; claims e eventos do provider continuam mandatórios.
+- **Mutação externa:** ⛔ nenhum hook de escrita de `SpellStats` por RPG Skill Tree comprovado; a presença do método Java **não** valida bridge. Source auditado; config real, testes físicos/Survival e integração continuam ⚠️ condicionados.

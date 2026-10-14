@@ -183,3 +183,7 @@ Ars core already exposes Heal, Hex, Wither, Ignite, Flare, Gravity, summons, det
 - Glyph architecture, registry IDs, tiers, base costs and descriptions above: current public Ars 1.21.1 guide — HIGH.
 - The guide is addon-aware; ownership is determined by registry namespace, not page location.
 - No Java bytecode was decompiled for this catalog.
+
+## Fichas técnicas para Codex e perks
+
+A campanha transversal ampliou a leitura de código para **85/85 Glyph Parts** (5 Forms, 67 Effects, 13 Augments) e **24/24 rituais**, incluindo executores `ANExplosion`, `LightningEntity`, `RuneTile`, `SpellUtil`, `IPotionEffect` e `SpellStats`. [Matriz de implementação para Codex](PERK-ENGINEERING-MATRIX-5.13.1.md) e [padrão universal](../../meta/PERK-READY-TECHNICAL-STANDARD.md). O núcleo Ars está **completo em dossiês source-located de objetos individuais** (109/109), mas os eventos, efeitos derivados, JAR físico, addons e o adapter RPG ainda requerem testes e QA; não se afirma implementado. Foram localizados eventos públicos concretos de spell/effect/cost/dispel: [contratos source-pinned](VERIFIED-EVENT-SURFACES-5.13.1.md). Hooks existem para certos passos, mas nenhum adapter RPG passou testes reais. Essa documentação não cria outro SpellResolver, não autoriza mutação externa e não representa QA do modpack.

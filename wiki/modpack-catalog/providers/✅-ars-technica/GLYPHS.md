@@ -49,3 +49,7 @@ Consequences for Black Arcana:
 ## Runtime/version-drift gate
 
 The 2.7.6 source was compiled against Ars Nouveau 5.11.0.1267 and Create 6.0.8, while the physical pack uses Ars Nouveau 5.13.1 and Create 6.0.10. This source catalog does not claim that every mixin, recipe hook, wrapped-caster path or Create integration has been runtime-validated against those newer hosts.
+
+## Fichas individuais para engenharia de perks (PR #796)
+
+Os 11 registros acima já estavam no catálogo. Agora cada objeto tem dossiê físico de fonte em [`carve`](glyphs/carve.md), [`pack`](glyphs/pack.md), [`polish`](glyphs/polish.md), [`obliterate`](glyphs/obliterate.md), [`press`](glyphs/press.md), [`superheat`](glyphs/superheat.md), [`fuse`](glyphs/fuse.md), [`whirl`](glyphs/whirl.md), [`insert`](glyphs/insert.md), [`telefeast`](glyphs/telefeast.md), [`apply`](glyphs/apply.md). A nova [matriz de engenharia](PERK-ENGINEERING-MATRIX-2.7.6.md) associa as fichas aos mecanismos de aplicação Create, manuseio de inventários, fluidos, contextos de spell e pontos não mutáveis sem hook. **+0 novas magias**; 11 arquivos `.md` novos; não é evidência de adapter ou QA.

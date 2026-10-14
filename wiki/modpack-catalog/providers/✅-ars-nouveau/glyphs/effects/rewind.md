@@ -42,3 +42,9 @@ Any independent Black Arcana temporal mechanic must remain bounded and must not 
 ## Performance / QA
 
 The global entity-history warning is part of the source-pinned provider contract and remains a representative-performance QA item for the 612-mod pack. Runtime acceptance is not inferred from source inspection.
+
+## Dossiê de engenharia para perks — cadeia e interfaces
+
+- **Source pin:** [`EffectRewind.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectRewind.java), Ars Nouveau 5.13.1.
+- **Registry:** `ars_nouveau:rewind` na ficha, não assumir `glyph_rewind`. **Entidade:** `onResolveEntity` exige `IRewindable`, tipo fora de `EntityTags.REWIND_BLACKLIST` e `!isRewinding()`; agenda `RewindEvent` e `DelayedSpellEvent` por `EventQueue`; bloco agenda Rewind sem entidade. **Ticks:** `getRewindTicks` inicia em `BASE_REWIND_TIME=40` (config default), soma `EXTEND_TIME*durationMultiplier` quando positivo (20 default) ou subtrai `DURATION_DOWN_TIME*abs(durationMultiplier)` quando negativo (10 default), truncando para int. Tracking default 60 ticks, limits Extend Time 1/Duration Down 5. **Perks:** rewind de histórico e continuação do spell são eventos provider-owned; nenhuma dupla cobrança/XP.
+- **Estado:** ✅ classe exata lida; ⚠️ helpers/config real e Survival pendentes; mutabilidade via RPG Skill Tree ⛔ sem interface comprovada que altere esses parâmetros. Ars conserva authority de recursos/efeitos.

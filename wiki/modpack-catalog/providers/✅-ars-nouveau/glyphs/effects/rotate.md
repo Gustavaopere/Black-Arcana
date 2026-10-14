@@ -28,3 +28,11 @@ Rotate changes entity/block orientation. Amplification adds clockwise rotations;
 Ars Nouveau owns this orientation/projectile-direction utility. Black Arcana should not duplicate generic rotation control or replay provider projectile movement.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectRotate`).
+
+## Engenharia para perks — caminho causal individual
+
+- **Código exato:** [`EffectRotate.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectRotate.java), Ars 5.13.1.
+- **Entidades:** `counterClockwise` quando `(int)ampMultiplier<0`; laço `i<1+abs(ampMod)` gira 90° na direction escolhida ou angle aleatória `world.random.nextFloat()*360`. Sensitive afeta look; sem Sensitive define YRot; se `Projectile`, também altera delta vector por `rotateVec`.
+- **Blocos:** `SpellUtil.calcAOEBlocks` gera candidatos; Randomize altera `AXIS` ou `FACING` quando propriedades existem e faz `state.rotate(...Rotation.getRandom)`; no determinístico aplica `1+abs(ampMod)` passos clockwise, mas quando counterClockwise o limite do loop é apenas `abs(ampMod)` (sem +1). Sensitive muda AXIS/FACING com switches especiais.
+- **QA de matemática e claims:** `rotateVec` passa o parâmetro chamado `angle` diretamente a `Math.cos/Math.sin`, enquanto callsites geram ângulos 90/−90 ou valores 0..360. Como `Math.cos/sin` esperam radianos, isso é possível divergência de direção estática; exige teste físico para verificar comportamento real. `world.setBlockAndUpdate` por candidato não exibe claim gate local. Nenhuma correction ou exploit declarada.
+- **Estado:** ✅ assinatura/source; ⚠️ integração de plugins proteção, configs e gameplay pending; ⛔ nenhum adapter RPG testado nem permissão para duplicar a cadeia causal/perk/mastery.

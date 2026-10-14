@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe fonte:** [`EffectWaterJet.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectWaterJet.java) pin fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d, não igualdade criptográfica source/JAR.
+- **Escolha de alvo:** `numJets=1+getBuffCount(Split)`, impacto no olho do EntityHit ou hitPosition; varre `LivingEntity` viva diferente de shooter em AABB `inflate(10)` e ordena por `distanceToSqr(impactPos)`. Se vazio, apenas partículas splash e retorna, sem marker.
+- **Randomize e lançamento:** para cada jet calcula posição inicial circular raio 1.5, angle `2π*i/numJets`; sem Randomize escolhe sempre alvo mais próximo, com Randomize cicla por `potentialTargets[i % size]`. Cria **um** `EntityWaterJet` marker com todas origens, targetIds e dano `DAMAGE+AMP_VALUE*ampMultiplier` (defaults 4+1*amp). Dano posterior e atraso são do EntityWaterJet.
+- **Custo:** `getDefaultManaCost=80`; custo override da Augment Split **40**. **Perks:** marker, quantidade de jets e impactos posteriores não são múltiplos casts nem garantem que cada target permaneça válido.
+- **Estado:** ✅ símbolo/assinatura reais e ID registral física; ⚠️ config, helper, entidade e Survival runtime pendentes; ⛔ perks RPG/adapters não implementados nem comprovados, settlement/cast pertence ao Ars.

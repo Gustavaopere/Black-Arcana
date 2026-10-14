@@ -24,3 +24,11 @@ Este filtro opera dentro do casting Ars. Não cria por si só root cast, lei/sea
 **Authority:** Ars Nouveau/Elemental controlam targeting, mana, aplicação de efeitos e execução. **⛔** Hook Black Arcana sem contrato provider-native segue fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md). Clean-room factual, sem código ou assets upstream.
+
+## Engenharia de perks — filtro real e negação
+
+- **Classe exata:** [AquaticFilter.java](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/filters/AquaticFilter.java), e base [ElementalAbstractFilter.java](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/ElementalAbstractFilter.java). Source versionado 0.7.10.1.
+- **Identidade e modo:** aquatic; instância normal; predicado shouldResolveOnEntity: LivingEntity cuja EntityType pertence a EntityTypeTags.AQUATIC.
+- **Cadeia de filtro:** ElementalAbstractFilter.shouldAffect devolve inverted != super.shouldAffect(hit,level,stats,context,resolver). O NOT troca o resultado, sem alterar tag/atributo da entidade.
+- **Cancelamento:** ElementalAbstractFilter.onResolve chama spellContext.setCanceled(true) quando !shouldAffect. shouldResolveOnBlock da base retorna false; comportamento herdado de AbstractFilter em bloco ainda depende da implementação host e precisa de teste.
+- **Semântica de perk:** typeIndex=15, sem dano/custo/XP próprios no filtro. Avaliação do predicado não é novo cast; listener de Mastery não pode premiar por target ou por cada filtro. Tags instaladas podem divergir do source; adapter RPG de mutação/targeting permanece ⛔ sem contrato e QA.

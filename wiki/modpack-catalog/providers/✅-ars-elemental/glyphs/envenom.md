@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Source commit:** [`EffectEnvenom.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectEnvenom.java) na versão de código fixada, não prova binária dos métodos no JAR.
+- **Transformação:** em `onResolveEntity`, alvo vivo admissível com POISON existente converte a Venom: antes chama `spellStats.setAmpMultiplier(poison.getAmplifier()/2F + spellStats.getAmpMultiplier())`, aplica `ModPotions.VENOM` e remove `MobEffects.POISON`. Isto **muta a instância SpellStats**, relevante para listeners `EffectResolveEvent.Pre/Post`.
+- **Sem poison prévio:** aplica POISON comum, exceto quando tipo ignora poison/regeneration ou é Spider e `CompatUtils.earthCheck(resolver)` é true, então aplica VENOM. Config default `addPotionConfig(5)` e `addExtendTimeConfig(5)`, mas getters em estado não configurado retornam 30/8; o valor deploy deve ser lido da config efetiva.
+- **Perks:** amplificação pelo poison anterior não é buff genericamente somável para outros efeitos. Hooks devem controlar mutação persistente do SpellStats ao longo da cadeia e evitar segunda conversão/consumo do status.
+- **Status:** ✅ objeto com ID de JAR física comprovada e source observado; ⚠️ runtime, API host, config deploy e controle de claims ainda condicionados; ⛔ nenhum adapter RPG implementado, sem duplicação de settle/hit/Source/mana.

@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Source commit:** [`EffectOxidize.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectOxidize.java) na versão de código fixada, não prova binária dos métodos no JAR.
+- **Entidade:** aplica `ModPotions.RUST` via IPotionEffect somente em LivingEntity; o modificador de armadura efetivo pertence ao status downstream.
+- **Blocos:** calcula AOE/Pierce com `SpellUtil.calcAOEBlocks`, ignora posições fora de altura e faz chance adicional `world.random.nextFloat()<count(Randomize)*0.25` antes de checar claim em cada `pos1`. Depois, para `ChangeOverTimeBlock` com próximo estado e random<0.1, faz `world.setBlockAndUpdate(pos, nextState)` usando **variável original `pos`**, não `pos1` iterada. É discrepância source-level potencial na geometria AOE a registrar, sem confirmar impacto em JAR.
+- **Perks:** alterar AOE poderia expandir verificações mas a gravação no `pos` original requer teste; não implementar tratamento de oxidação por interceptação de blocos como se cada pos1 fosse mutado.
+- **Status:** ✅ objeto com ID de JAR física comprovada e source observado; ⚠️ runtime, API host, config deploy e controle de claims ainda condicionados; ⛔ nenhum adapter RPG implementado, sem duplicação de settle/hit/Source/mana.

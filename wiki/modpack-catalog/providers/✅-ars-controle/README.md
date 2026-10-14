@@ -91,3 +91,9 @@ This closes the version drift at catalog level without adding or removing semant
 The source catalog is complete. PR delivery is tracked through the Phase 2R checkpoint and GitHub history; installed-JAR runtime/config/client/full-modpack QA remains a later explicit validation layer and is not inferred from source inspection.
 
 Shared provenance tables remain high-churn; `PROVENANCE-DELTA-PHASE2R-ARS-CONTROLE.md` is the authoritative narrow provenance overlay until those indexes are safely regenerated.
+
+## Engenharia por objeto para perks — PR #796
+
+- ✅ **9/9 glifos existentes** (Precise Delay e 8 filtros) receberam dossiês individuais com pin Java 1.6.16, fórmula/context index/validação e limites de hook. [Matriz técnica 1.6.16](PERK-ENGINEERING-MATRIX-1.6.16.md) e fichas em [`glyphs/`](glyphs/README.md).
+- ⚠️ Potential risk source-level: Delay exponencial com ExtendTime, estado singleton `res/y/chance` nos filtros e segundo filho Random com leitura de augments do índice inicial. Não são bugs comprovados no JAR ou instância física.
+- **Estado:** ✅ fonte/identidade e documentação no PR draft; ⚠️ config física/compatibilidade/Survival; ⛔ adapter RPG não implementado ou testado. Nenhuma alteração de runtime Black Arcana ou promoção de Stage.

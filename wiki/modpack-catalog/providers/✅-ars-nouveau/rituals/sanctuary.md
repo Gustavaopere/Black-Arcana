@@ -41,3 +41,12 @@ Status dessa divergência: `RUNTIME QA REQUIRED`.
 2. Confirmar custo temporal efetivo quando múltiplos spawns são negados dentro do mesmo minuto.
 3. Validar coexistência com outros mods do pack que interceptem natural spawn ou village sieges.
 4. Confirmar comportamento após chunk unload/reload e reload de configuração/provider state.
+
+## Dossiê de implementação para perks — ritual exato
+
+- **Classe fonte:** [`DenySpawnRitual.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/DenySpawnRitual.java), fonte `112920ff774831f204031da75b4c4e73d3765157` para Ars 5.13.1.
+- **Tipo de execução:** `DenySpawnRitual extends RangeRitual`, expõe `denySpawn(FinalizeSpawnEvent)` e `denySiege(VillageSiegeEvent)` em vez de matar mobs por tick. Requer `!tile.isOff`; spawns naturais classificados como `Enemy` ou na whitelist e fora da blacklist são cancelados dentro de `radius*radius`; siege recebe veto separado.
+- **Raio/config:** `radius=32` inicial; `onStart` soma ao raio a contagem de `ROTTEN_FLESH` consumida. `canConsumeItem` permite mais Rotten Flesh quando `itemConsumedCount()<128`; limite de **quantidade** não é prova de raio final máximo 128. Persistência de `radius` e `deniedSpawn` em NBT.
+- **Resource:** `getSourceCost=500`; quando `deniedSpawn` está true e `gameTime%1200==0`, limpa flag e chama `takeSourceNow()`. Não confundir taxa por minuto com débito por cada spawn.
+- **Perks:** alcance de admissão, whitelist/blacklist e consumo Source são semânticas separadas. Black Arcana não injeta segundo veto em spawn Ars nem altera saldo por heurística.
+- **Mutabilidade externa:** ⛔ nenhum adapter RPG provado que altere lifecycle, Source ou raio sem duplicar settlement; 🟡 fórmula/lógica source-pinned; ⚠️ runtime, receitas/config física, addons e Survival pendentes.

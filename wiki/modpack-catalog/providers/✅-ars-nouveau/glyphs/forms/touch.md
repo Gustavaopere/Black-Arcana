@@ -40,3 +40,9 @@ Ars Nouveau owns direct Touch resolution, Rune interaction semantics, particles/
 ## Validation state
 
 `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / PACK RUNTIME QA PENDING`
+
+## Mapeamento para perks — targeting real
+
+- **Source pin:** [`MethodTouch.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/method/MethodTouch.java), Ars Nouveau 5.13.1.
+- **Resolver:** `onCast` sem destino de bloco/entidade retorna `CastResolveType.FAILURE`. Overloads `onCastOnBlock` e `onCastOnEntity` passam diretamente `BlockHitResult`/`EntityHitResult` a `resolver.onResolveEffect`. **Rune:** para `SpellContext.CasterType.RUNE` em target de entidade, retorna `SUCCESS_NO_EXPEND`; isso é regra de settlement Ars, não desconto concedido por perk. **Augments:** somente Sensitive, capaz de permitir mira em ar/fluidos segundo o provider; mana default 5. **Perks:** preservar o resultado SUCCESS/FAILURE e lógica de runa; não gerar efeitos por partículas ou sound de resolução.
+- **Status:** ✅ método/fonte identificado; ⛔ mutação de targeting por perk RPG não verificada. Ars controla SpellResolver, custos e cadeia de efeitos; Black Arcana só controla suas casts. Runtime/Survival: PENDING.

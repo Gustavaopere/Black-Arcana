@@ -59,3 +59,19 @@ Uses the Iron's spell registry/scroll model. Exact 0.9.7.1 loot and recipe acqui
 ## Confidence
 
 `SOURCE-PINNED SPELL CONFIG + SERVER APPLICATION PATH + PROVIDER GUIDE / EFFECT INTERNAL DETAILS AND PACK RUNTIME QA PENDING`
+
+## Localizadores para Codex — source exato
+
+- **Código da implementação:** [`MistForm.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/mistform/MistForm.java); classe `jp.aquafactory.apprenticecodex.spell.mistform.MistForm`.
+- **Registro comprovado:** `SpellRegistry.reg("mist_form", MistForm::new)`; entrada distinta de escola, registry e documento.
+- **Localização de parâmetros:** conservar as fórmulas, constantes, tempo, mana, configurações e advertências da seção `Exact source coefficients` desta própria ficha; conferir na classe qualquer setter de entidade/efeito, sem presumir que o campo possa ser alterado externamente.
+- **Atributos/modificadores:** como addon do Iron's, `AbstractSpell` resolve spell power/custo e escola conforme seu contrato exato; parâmetros como raio, alvos e projéteis podem depender da classe acima ou de helpers/entidades *provider-owned*. Sua mutabilidade por perk está **CONDICIONADA** a evento/API/adapter validado na versão exata.
+- **Causalidade e proteção:** associar progressão ao cast original; não premiar projétil, dano indireto, summon ou recast como outro cast automaticamente. Nenhum teste de alteração de runtime, Survival ou hook foi conduzido por esta ficha.
+- **Proveniência:** fonte no commit 0.9.7.1 `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. Metadados e localizadores factuais; nenhuma cópia de implementação ou asset upstream.
+
+## Engenharia de perks — cadeia causal exata
+
+- **`MistForm.onCast`** aplica `EffectRegistry.MIST_FORM` apenas no servidor, amplificador zero, duração `Math.round(200*getSpellPower(level,caster)/100)` ticks. `SummonedFirearmTools.suppressNearbyAwareness` é chamado com raio fixo `32.0D` após ativar o efeito.
+- **Perks:** duração (associada ao spell power) e awareness radius (constante da classe) têm contratos distintos. Invulnerabilidade, phasing, interrupção ao atacar e vulnerabilidade a Fire/Holy dependem do MobEffect/handlers do provider; não modificar por equivalência temática nem repetir suppression a cada tick de Mastery.
+
+**Confiança:** source auditado do commit fixado 0.9.7.1; hooks externos de mutação e teste em Survival permanecem pendentes.

@@ -309,3 +309,7 @@ The final Phase 2 product is:
 `capability → provider(s) → current coverage → semantic overlap → real gap`
 
 That matrix is the gate for Phase 3. No new Black Arcana spell is approved merely because its presentation differs from an existing provider capability.
+
+## Padrão transversal para Codex, perks e criação de magias
+
+Para todo `.md` que descreve um spell, glyph, Focus, ritual, habilidade ou ação sobrenatural, usar [o padrão universal de dossiê técnico](meta/PERK-READY-TECHNICAL-STANDARD.md). O [ledger de cobertura por provider](meta/PERK-READY-COVERAGE-LEDGER.md) separa quantidade de documentos de quantidade de objetos mágicos e informa as pendências de código/hooks. Este trabalho é catalogação de engenharia, sem promoção de Stage e sem presumir mutabilidade do provider.

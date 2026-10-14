@@ -36,3 +36,9 @@ Ars Nouveau owns this under-caster target-selection behavior. Black Arcana must 
 ## Validation state
 
 `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / PACK RUNTIME QA PENDING`
+
+## Mapeamento para perks — targeting real
+
+- **Source pin:** [`MethodUnderfoot.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/method/MethodUnderfoot.java), Ars Nouveau 5.13.1.
+- **Alvo em cast genérico e onCastOnEntity:** primeiro `caster.getVehicle()`; senão `world.getEntities(caster, caster.getBoundingBox().inflate(0.1,1.5,0.1))` e o primeiro da lista; se nenhum, usa `BlockHitResult` no bloco abaixo. **Divergência por overload:** `onCastOnBlock` sempre aponta ao bloco sob o caster, sem busca de entidades. **Mana:** default 5; `getCompatibleAugments()=augmentSetOf()`. **Perks:** a primeira entidade encontrada não é automaticamente alvo de combate nem critério de propriedade RPG; não reimplementar target finder sem auditoria e sem hook.
+- **Status:** ✅ método/fonte identificado; ⛔ mutação de targeting por perk RPG não verificada. Ars controla SpellResolver, custos e cadeia de efeitos; Black Arcana só controla suas casts. Runtime/Survival: PENDING.

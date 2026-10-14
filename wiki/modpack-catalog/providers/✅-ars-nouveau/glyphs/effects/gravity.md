@@ -28,3 +28,9 @@ On blocks, Gravity converts eligible targets into Ars `EnchantedFallingBlock` en
 Ars Nouveau owns this gravity/falling control primitive and its falling-block interaction. Black Arcana Space/Displacement or forbidden-control spells must be mechanically distinct and must not replay provider motion/block conversion.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectGravity`).
+
+## Dossiê de engenharia para perks — cadeia e interfaces
+
+- **Source pin:** [`EffectGravity.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectGravity.java), Ars Nouveau 5.13.1.
+- **Blocos:** `SpellUtil.calcAOEBlocks` com AOE/Pierce; cada candidato tenta `EnchantedFallingBlock.fall(...)`, seguido de `ShapersFocus.tryPropagateEntitySpell` quando não nulo. **Entidades:** com Extend Time aplica `ModPotions.GRAVITY_EFFECT` por `IPotionEffect`; sem ele muda movimento por `deltaMovement.add(0,-1.0-getAmpMultiplier(),0)`. **Defaults status:** potion 30 segundos, extend 8, com ticks resolvidos pelo helper. **Perks:** transformação de bloco, impulso vertical e buff/debuff são casos diferentes, com decisões do executor e world/claim owner em Ars. Não repetir efeitos via Black Arcana.
+- **Estado:** ✅ classe exata lida; ⚠️ helpers/config real e Survival pendentes; mutabilidade via RPG Skill Tree ⛔ sem interface comprovada que altere esses parâmetros. Ars conserva authority de recursos/efeitos.

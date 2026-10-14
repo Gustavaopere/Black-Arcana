@@ -29,3 +29,11 @@ Summons temporary allied `SummonSkeleton` entities. Pierce switches them to bows
 Ars Nouveau owns these temporary undead summons, their loadout scaling, ownership/lifetime and Summoning Sickness. Black Arcana Souls & Death content must not reinterpret them as Black Arcana souls/minions or double-settle their attacks.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectSummonUndead`).
+
+## Engenharia de perks — evidência de execução individual
+
+- **Classe versionada:** [`EffectSummonUndead.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectSummonUndead.java) no Ars Nouveau 5.13.1.
+- **Admission/duração:** `canSummon(shooter)`; `ticks=(int)(20*(GENERIC_INT.get()+EXTEND_TIME.get()*durationMultiplier))`, defaults 15s e 10s, retorna se ticks <=0. **Contagem:** `count=3+getBuffCount(Split)`; cria `SummonSkeleton` com spawn position aleatória próxima, `setOwner(shooter)`, `setLimitedLife(ticks)`, `summonLivingEntity` e `SUMMONING_SICKNESS_EFFECT` do caster por igual duração.
+- **Equipamento:** Pierce flag fornece bow; com Amplify aplica POWER `max(4,(int)amp)-1` em bow, se amp>0; sem Pierce, amp >1 dá diamond sword, >2 netherite sword, >=3 netherite axe. A quantidade do summon não equivale a duração/qualidade da arma.
+- **Perks:** Split aumenta pressão de summons; ownership/caps/sickness pertencem a Ars. Não creditar kills de cada minion como novo cast sem contrato causal.
+- **Status:** ✅ code pin/identidade; ⚠️ downstream, config e Survival pendentes; mutação por RPG perk só pode ocorrer via [eventos reais](../../VERIFIED-EVENT-SURFACES-5.13.1.md) e adapter validado, não por inferência temática.

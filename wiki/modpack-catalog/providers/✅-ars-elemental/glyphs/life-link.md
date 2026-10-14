@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe:** [`EffectLifeLink.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectLifeLink.java), commit exato `fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d`, identidade estática do JAR físico já provada separadamente.
+- **Alvo e inversão:** `onResolveEntity` só age com `LivingEntity` que não é o caster. Sem Sensitive, `entity=target`/`owner=shooter`; com Sensitive inverte ambos. A mesma `EntityCarryMEI(LIFE_LINK,...,owner,entity)` é aplicada nas duas entidades para partilha futura, portanto não são dois casts.
+- **Duração:** `ticks=getBaseDuration()*20+getExtendTimeDuration()*stats.getDurationInTicks()`, defaults configurados 30s+8s de extensão por helper. Com Necromancy Focus detectado por `resolver.hasFocus(ModItems.NECRO_FOCUS.get())` usa `forceAddEffect` em ambos, senão `addEffect`. O comportamento efetivo de compartilhamento de dano/cura fica no `LIFE_LINK` effect/handlers e precisa de auditoria separada.
+- **Perks:** gates devem preservar as duas UUIDs, consentimento/validade do alvo, source attribution e prevenção de ciclos. Não reinterpretar este glyph como implementação da Vincular do Black Arcana nem duplicar dano.
+- **Estado:** ✅ fonte/métodos source-located, ID confirmada no JAR; ⚠️ código-fonte→bytes JAR não equivalentes comprovados, config/QA de host não validados; ⛔ hook e adapter de perks RPG/Black Arcana não aprovados, sem duplicar mana ou efeitos.

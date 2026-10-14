@@ -104,3 +104,9 @@ The exact README and `neoforge.mods.toml` say LGPL v3, while the root `LICENSE` 
 The source catalog is complete for the pinned surface and dependencies used by this phase. Still pending are comparison against the real installed/generated Ars Elemental config/datapack and runtime/client/dedicated/full-modpack interoperability checks. Those pending observations do not convert source defaults into installed-runtime claims.
 
 This provider catalog does not promote any Black Arcana runtime Stage.
+
+## Engenharia de perks — checkpoint de fichas individuais do PR #796
+
+- ✅ 47/47 objetos de núcleo, sendo 23 Effects, 2 Cast Methods, 2 Propagators, 12 Filters e 8 Rituals receberam dossiê individual source-located no draft PR #796. Matriz: [PERK-ENGINEERING-MATRIX-0.7.10.1.md](PERK-ENGINEERING-MATRIX-0.7.10.1.md).
+- ⚠️ Host/API, config instalada, equivalência da implementação Java com os bytes físicos do JAR e Survival/client/server QA condicionados. ⛔ Nenhuma perk/bridge do RPG Skill Tree implementada ou validada.
+- Black Arcana não se apropria de mana, Source, casting, efeitos derivados, estado de entidade ou world settlement dos addons. +0 identidades semânticas, nenhum Stage promovido.

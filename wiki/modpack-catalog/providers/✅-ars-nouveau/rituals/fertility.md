@@ -27,3 +27,11 @@ The 20-animal ceiling is part of the provider's bounded operational identity and
 ## QA
 
 Source behavior is pinned to 5.13.1. Compatibility with modded animal breeding implementations remains full-pack runtime QA.
+
+## Engenharia para perks — contrato de ritual
+
+- **Fonte:** [`RitualBreed.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/RitualBreed.java), `com.hollingsworth.arsnouveau.common.ritual.RitualBreed`, Ars 5.13.1.
+- **Frequência e cap:** a cada `200` ticks, procura `Animal` em `AABB(brazier).inflate(5)`. Se `animals.size()>=20` retorna **sem efeito** (todos os animais contam antes do filtro de blacklist); tooltips atualizam aviso a cada 20 ticks quando consultados.
+- **Processamento:** ignora `EntityTags.BREED_BLACKLIST`; exige idade `getAge()==0` e `canFallInLove()`, chama `setInLove(null)` e marca `didWorkOnce`. Após ao menos uma operação marca `setNeedsSource(true)`; `getSourceCost=500` é declarado por ritual, não prova de custo por animal.
+- **Perks:** remover cap populacional, tornar animals adultos ou induzir love fora de `canFallInLove` mudaria contrato da autoridade Ars; status de breeding não garante nascimento nem novo cast. Observação de Mastery deve ser deduplicada.
+- **Estado:** ✅ source-pinned; ⚠️ tempo, recursos e proteção exigem observar config/JAR runtime. ⛔ não existe adapter RPG/Black Arcana demonstrado para reescrever Source, progresso, alvos ou world effects deste ritual.
