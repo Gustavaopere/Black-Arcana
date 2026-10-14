@@ -278,3 +278,10 @@ A análise acrescentou sequenciamento de projétil e blink, expiração e restau
 **🟡 24/83** magias têm agora dossiês source-level de lifecycle aprofundado: seis da campanha original, oito da [matriz de alto risco](PERK-ENGINEERING-MATRIX-HIGH-RISK-0.9.7.1.md) e dez da [matriz de entidades/jobs](PERK-ENGINEERING-MATRIX-LIFECYCLE-0.9.7.1.md). Todas as **✅ 83/83** permanecem catalogadas; **59/83** aguardam o mesmo detalhamento. **+0** raízes novas.
 
 Este incremento documenta callbacks, estado owner/UUID, recuperação de itens, reservas do Search Beacon, entidades temporárias, agendamento de jobs, fluxo de mana e separação de efeitos derivados em dez fichas existentes. **⚠️** Método Java source não comprova JAR byte-idêntico, configuração ativa, QA no modpack ou segurança de mods externos. **⛔** Não há adapter homologado de perks/Mastery; nenhuma alteração do runtime mágico BA foi feita.
+
+
+## Engenharia causal de 10 magias persistentes — 2026-10-14
+
+**🟡 34/83** fichas com dossiê source-located aprofundado (6 originais + 8 alto risco + 10 lifecycle + 10 [persistentes](PERK-ENGINEERING-MATRIX-PERSISTENT-0.9.7.1.md)); **✅ 83/83** identidades permanecem inventariadas e **49/83** ainda esperam engenharia desse nível. **+0** raízes globais. Três famílias críticas tratadas: entidades/itens gerados, efeitos periódicos de dano/cura e intervenções sobre blocos/sessões.
+
+Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` e JAR instalado 0.9.7.1 da modlist sibling. **⚠️** Leitura de callbacks no source não comprova equivalência binária dos métodos ou QA Survival no modpack. **⛔** perks/Mastery sem contrato interoperável; o runtime Black Arcana não foi alterado.
