@@ -73,7 +73,7 @@ Rank/stat modifiers, experience sources, item containers, spawned entities/proje
 
 ## Engenharia de três habilidades de alto risco — source 0.8.1
 
-**🟡 3/19 habilidades com dossiê causal aprofundado:** [Archmage Glove / Echo Spell](abilities/archmage-glove.md), [Mana Ring / Arcane Reserve](abilities/mana-ring.md) e [Ring of Last Will](abilities/ring-of-last-will.md). [Matriz de engenharia 0.8.1](PERK-ENGINEERING-MATRIX-0.8.1.md). As 19/19 **identidades estáticas** permanecem confirmadas pelo JAR; para três delas há agora leitura de callbacks de execução, recursos e lifecycle no código-fonte declarado 0.8.1. Isso não comprova equivalência do corpo ao JAR físico, hooks interoperáveis nem QA de Survival. **+0 identidades**.
+**✅ 19/19 habilidades com dossiê causal source-located:** [Archmage Glove / Echo Spell](abilities/archmage-glove.md), [Mana Ring / Arcane Reserve](abilities/mana-ring.md) e [Ring of Last Will](abilities/ring-of-last-will.md). [Matriz de engenharia 0.8.1](PERK-ENGINEERING-MATRIX-0.8.1.md). As 19/19 **identidades estáticas** permanecem confirmadas pelo JAR; as 19/19 fichas apresentam agora mecanismos e localizadores source 0.8.1, com níveis diferentes de dependências e de provas downstream. Isso não comprova equivalência do corpo ao JAR físico, hooks interoperáveis nem QA de Survival. A [matriz de 19/19](PERK-ENGINEERING-MATRIX-0.8.1.md) substitui a cobertura inicial 3/19. **+0 identidades**.
 
 ## Provider-native reachability
 
