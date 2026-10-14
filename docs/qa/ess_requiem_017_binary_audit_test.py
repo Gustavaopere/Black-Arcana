@@ -92,6 +92,15 @@ class RegistryIdentityTests(unittest.TestCase):
         self.assertEqual(audit.spell_id(spell_class_text()),"spark")
         self.assertEqual(audit.spell_id(spell_class_text("eldritch_bolt")),"eldritch_bolt")
 
+    def test_namespace_must_be_exact_provider_owner(self):
+        source=spell_class_text()
+        foreign=source.replace(
+            "EndersSpellsAndStuffRequiem.MOD_ID:",
+            "ForeignMod.MOD_ID:"
+        )
+        with self.assertRaises(audit.AuditError):
+            audit.spell_id(foreign)
+
     def test_getter_must_return_stored_id(self):
         with self.assertRaises(audit.AuditError):
             audit.spell_id(spell_class_text().replace("1: getfield","1: getstatic"))
