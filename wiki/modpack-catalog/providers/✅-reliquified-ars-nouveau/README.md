@@ -71,6 +71,10 @@ Physical-JAR ↔ source-build byte equality has not been established, so this ev
 
 Rank/stat modifiers, experience sources, item containers, spawned entities/projectiles, status effects and downstream consequences are not counted as additional semantic identities.
 
+## Engenharia de três habilidades de alto risco — source 0.8.1
+
+**🟡 3/19 habilidades com dossiê causal aprofundado:** [Archmage Glove / Echo Spell](abilities/archmage-glove.md), [Mana Ring / Arcane Reserve](abilities/mana-ring.md) e [Ring of Last Will](abilities/ring-of-last-will.md). [Matriz de engenharia 0.8.1](PERK-ENGINEERING-MATRIX-0.8.1.md). As 19/19 **identidades estáticas** permanecem confirmadas pelo JAR; para três delas há agora leitura de callbacks de execução, recursos e lifecycle no código-fonte declarado 0.8.1. Isso não comprova equivalência do corpo ao JAR físico, hooks interoperáveis nem QA de Survival. **+0 identidades**.
+
 ## Provider-native reachability
 
 The exact source set closes the same **19 classes** under both:
