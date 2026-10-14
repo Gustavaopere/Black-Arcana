@@ -45,12 +45,13 @@ class HazenBinaryParserTest(unittest.TestCase):
             "package net.hazen.hazennstuff.Spells;",
             "import java.util.function.Supplier;",
             "import io.redspace.ironsspellbooks.api.spells.AbstractSpell;",
+            "import net.hazen.hazennstuff.Spells.Schools.Test.*;",
             "public class HnSSpellRegistries {",
             " public static Supplier<AbstractSpell> registerSpell(AbstractSpell spell) {return () -> spell;}",
         ]
         for id, klass in FIXTURE:
             reg.append(f" public static final Supplier<AbstractSpell> {id.upper()} = "
-                       f"registerSpell(new Schools.Test.{klass}());")
+                       f"registerSpell(new {klass}());")
             sources[f"net/hazen/hazennstuff/Spells/Schools/Test/{klass}.java"] = (
                 "package net.hazen.hazennstuff.Spells.Schools.Test;"
                 "import io.redspace.ironsspellbooks.api.spells.AbstractSpell;"
