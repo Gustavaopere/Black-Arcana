@@ -7,6 +7,7 @@ on:
       - '.github/workflows/ess-requiem-017-binary-audit.yml'
       - 'docs/qa/ess_requiem_017_binary_audit.py'
       - 'docs/qa/ess_requiem_017_binary_audit_test.py'
+      - 'docs/qa/ess_requiem_017_catalog_reconciliation_test.py'
       - 'wiki/modpack-catalog/providers/✅-enders-spells-and-stuff-requiem/SOURCE-0.1.7-SPELL-INVENTORY.md'
   push:
     branches: [main]
@@ -30,7 +31,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Verify synthetic fail-closed validator contracts
-        run: python3 docs/qa/ess_requiem_017_binary_audit_test.py -v
+        run: |
+          python3 docs/qa/ess_requiem_017_binary_audit_test.py -v
+          python3 docs/qa/ess_requiem_017_catalog_reconciliation_test.py -v
       - name: Download official CurseForge 8762149 and require installed SHA-1
         shell: bash
         run: |

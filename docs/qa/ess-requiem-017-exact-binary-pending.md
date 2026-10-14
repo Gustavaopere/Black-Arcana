@@ -1,4 +1,4 @@
-# Requiem 0.1.7 — compiled registry gate (independent CI pending)
+# Requiem 0.1.7 — compiled registry gate (historical setup; binary result now closed)
 
 State: **⚠️ COUNTED_SOURCE_PINNED — NOT COUNTED_EXACT until publisher bytes pass the installed SHA and Java 21 inspection proves entire inventory.**
 
@@ -33,3 +33,8 @@ Missing, unexpected, duplicate or unparsable identities, changed class construct
 - Stage 06.05 remains 🟡; Stage 09 retains the physical acceptance rows.
 
 Promotion requires exact-release Java workflow success on synchronized PR head, reconciled 39-provider matrix and consumer tests, canonical CI, merge and postmerge verification. Until then **28/39 exact / 11/39 conditional; 1,857 global / 1,855 in scope**.
+
+
+## Final physical proof
+
+Java21 workflow #38655251099 ended **SUCCESS** for the corrected 54+3/57 manifest and 52 physical semantic roots. Source-only `gong` is explicitly absent. See provider EXACT-BINARY-SPELLS-0.1.7.md; all earlier 58/53 expectations in this note document the pre-correction source hypothesis. Independent runtime config and gameplay validation remain PENDING.
