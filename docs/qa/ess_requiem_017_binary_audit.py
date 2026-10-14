@@ -22,9 +22,9 @@ BASE = 'net.ender.ess_requiem.registries.GGSpellRegistry'
 DTE = 'net.ender.ess_requiem.compat.dte.dte_registry.DTESpellRegistry'
 CLASSES = {BASE: 55, DTE: 3}
 MAX_BYTES = 32 * 1024 * 1024
-ID_LINE = re.compile(r'^\\| \\x60ess_requiem:([a-z0-9_]+)\\x60 \\| (COUNTED_SOURCE_PINNED|EXCLUDED) \\|', re.M)
-INSTRUCTION = re.compile(r'^[ \\t]*\\d+:[ \\t]+([\\w]+)(?:[ \\t]+[^/\\n]*)?(?:[ \\t]*//[ \\t]*(.*))?$', re.M)
-FIELD = re.compile(r'^\\s*public static final java\\.util\\.function\\.Supplier<[^\\n]+\\s+([A-Z0-9_]+);$', re.M)
+ID_LINE = re.compile(r'^\| \x60ess_requiem:([a-z0-9_]+)\x60 \| (COUNTED_SOURCE_PINNED|EXCLUDED) \|', re.M)
+INSTRUCTION = re.compile(r'^[ \t]*\d+:[ \t]+([\w]+)(?:[ \t]+[^/\n]*)?(?:[ \t]*//[ \t]*(.*))?$', re.M)
+FIELD = re.compile(r'^\s*public static final java\.util\.function\.Supplier<[^\n]+\s+([A-Z0-9_]+);$', re.M)
 
 class AuditError(ValueError):
     pass
@@ -63,8 +63,8 @@ def registry_classes(disassembly: str, expected_count: int) -> dict[str, str]:
         (storeop, storecomment) = code[n+1]
         if newop != 'new' or dupop != 'dup' or ctorop != 'invokespecial' or storeop != 'putstatic':
             raise AuditError('registration construction shape changed')
-        classname = re.search(r'\\bclass (net/ender/ess_requiem/[\\w/$]+)$', newcomment)
-        field = re.search(r'\\bField ([A-Z][A-Z0-9_]*):', storecomment)
+        classname = re.search(r'\bclass (net/ender/ess_requiem/[\w/$]+)$', newcomment)
+        field = re.search(r'\bField ([A-Z][A-Z0-9_]*):', storecomment)
         if not classname or not field or '"<init>"' not in ctorcomment:
             raise AuditError('compiled registry class/field/constructor unknown')
         cl, f = classname.group(1).replace('/', '.'), field.group(1)
@@ -90,7 +90,7 @@ def spell_id(disassembly: str) -> str:
         stringop, stringcomment = code[n-1]
         storeop, storecomment = code[n+1]
         if (stringop not in ('ldc', 'ldc_w') or not stringcomment.startswith('String ')
-                or storeop != 'putfield' or not re.search(r'\\bField spellId:', storecomment)):
+                or storeop != 'putfield' or not re.search(r'\bField spellId:', storecomment)):
             continue
         root = stringcomment[7:]
         if not re.fullmatch(r'[a-z][a-z0-9_]*', root):
@@ -98,8 +98,8 @@ def spell_id(disassembly: str) -> str:
         hits.append(root)
     if len(hits) != 1:
         raise AuditError(f'expected one compiled spellId assignment, found {len(hits)}')
-    getter = disassembly.split('getSpellResource();', 1)[1].split('\\n  public ', 1)[0]
-    if not re.search(r'getfield\\s+[^\\n]*// Field spellId:', getter) or not re.search(r'\\bareturn\\b', getter):
+    getter = disassembly.split('getSpellResource();', 1)[1].split('\n  public ', 1)[0]
+    if not re.search(r'getfield\s+[^\n]*// Field spellId:', getter) or not re.search(r'\bareturn\b', getter):
         raise AuditError('getSpellResource is not the stored spellId getter')
     return hits[0]
 
@@ -137,7 +137,7 @@ def audit(jar: Path, inventory: str) -> dict:
             metadata = archive.read('META-INF/neoforge.mods.toml')
         except KeyError as exc:
             raise AuditError('NeoForge metadata absent') from exc
-        if len(metadata)>256_000 or not re.search(rb'\\bmodId\\s*=\\s*["\\x27]ess_requiem["\\x27]',metadata):
+        if len(metadata)>256_000 or not re.search(rb'\bmodId\s*=\s*["\x27]ess_requiem["\x27]',metadata):
             raise AuditError('mod ID absent/mismatched')
     records=[]
     for reg, count in CLASSES.items():
@@ -187,7 +187,7 @@ def main()->int:
     except (AuditError,OSError,ValueError,UnicodeError,zipfile.BadZipFile) as exc:
         report={'result':'FAIL_CLOSED','reason':str(exc)}
         status=1
-    output=json.dumps(report,ensure_ascii=False,sort_keys=True,indent=2)+'\\n'
+    output=json.dumps(report,ensure_ascii=False,sort_keys=True,indent=2)+'\n'
     if args.output:
         args.output.parent.mkdir(parents=True,exist_ok=True)
         args.output.write_text(output,encoding='utf-8')
