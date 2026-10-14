@@ -1,6 +1,6 @@
 # Apprentice's Codex 0.9.7.1 — classfile registry reconciliation
 
-**Checkpoint:** 2026-10-14 · Minecraft 1.21.1 NeoForge · Java 21. **State: 🟡 audit gate prepared; exact physical result pending CI.**
+**Checkpoint:** 2026-10-14 · Minecraft 1.21.1 NeoForge · Java 21. **State: ✅ 83/83 compiled registry callsite pairs validated in the exact SHA-matched JAR by CI; ⚠️ actual modpack registry/gameplay still pending.**
 
 ## Authorities
 
@@ -26,4 +26,14 @@ It reconciles all 83 canonical IDs against 83 distinct compiled registration pai
 - ⛔ RPG Skill Tree perks/Mastery adapter without real homologated contract remains blocked. Black Arcana does not take control of external Iron's mana, cast pipeline, or Apprentice's spell effects.
 - 🟡 Stage 06.05 remains without promotion; Stage 09 D035 acceptance cannot be inferred from `javap` or a green CI workflow.
 
-**Recording rule:** Add the actual CI run, HEAD SHA, verified counts and evidence artifact only after observing them; do not prematurely mark binary registry PASS.
+**Recording rule:** The observed result below is bound to the first exact PR head. On any updated head, rerun the exact audit and CI before merge; do not extrapolate gameplay status.
+
+
+## Executed exact-JAR registry result — 2026-10-14
+
+- **CI:** [workflow #38576975705](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38576975705) — **SUCCESS**, PR #808 initial head `9236248dc833fd62d185008444ec6a0d471c10ac`, job `exact_jar_bytecode`.
+- **Binary:** `apprentice_codex-0.9.7.1+mc1.21.1.jar`, **9,945,619 bytes**, SHA-1 `b514315add32b93b0049c8673075627d7ef812e0`, SHA-256 `f0dfab67154f344c02c6fbe561f73456fa46ed9d018fae661dcdf4da95c67fe2`.
+- **Reported static initializer:** `expected_count=83`, `registration_pairs_count=83`, `unique_registration_ids=83`, `status=PASS`, result `PASS`; missing, extra, duplicated IDs/fields, unknown fields and wrong ID-field mapping **all empty**.
+- **Tests:** nine Java 21 synthetic fixture regressions passed in the same workflow. They validate the collector; the 83/83 confirmation comes separately from actual `javap` inspection of the exact binary.
+- **Artifact:** `apprentice-codex-binary-report-22397b3e02f224a88711c52eae18d03e7e43e75d`, artifact ID `11900901277` (two small JSON reports, no provider JAR).
+- ⚠️ The static initializer **does not** prove a loaded Iron's registry, survival acquisition, casting, server/claims safety or RPG progression. Provider-real ledger `AC-P01–AC-P05` remains **0/5 PENDING**; Stage 06.05 unpromoted.

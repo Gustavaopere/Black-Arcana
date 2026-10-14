@@ -31,7 +31,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-apothic-compats` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-enchanting` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-spawners` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-apprentice-codex` | 101 | ✅ 83/83 identidades registry/source-located; 🟡 83/83 engenharia causal aprofundada documentada (9 finais); 0 lacuna documental; ⚠️ bytecode/config/Survival/QA; ⛔ RPG perk adapter |
+| `✅-apprentice-codex` | 101 | ✅ 83/83 source-catalogadas + 83/83 callsites de registry confirmados no JAR exato; 🟡 83/83 dossiês causais documentados; ⚠️ método/config/Survival/5 casos provider-real PENDING; ⛔ RPG perk adapter |
 | `✅-ars-additions` | 48 | ✅ 5/5 magias/rituais (3 glyphs, 2 rituals) com cadeia e source exato; ⚠️ compatibilidade host/config/QA; ⛔ adapter RPG |
 | `✅-ars-controle` | 25 | ✅ 9/9 glyphs com source 1.6.16 causal exato; ⚠️ runtime/concurrency/scheduler; ⛔ perk adapter RPG |
 | `✅-ars-creo` | 14 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -286,3 +286,9 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 - ✅ 83/83 identidades + 🟡 **83/83 dossiês causais** com class/method tracing source-level, +9 sobre os 74 de #804, zero magias novas. [Matriz final](../providers/✅-apprentice-codex/PERK-ENGINEERING-MATRIX-FINAL-NINE-0.9.7.1.md).
 - Riscos estáticos: `UniteLunaMoonEntity.explodeByAntiMagic` com multiplicador 3×; `PaletteShiftReceptionEvent.onSpellPreCast` cancela magia receptora; `ManaMendingCastData.matchesTarget` exige mesma instância de ItemStack; listener `DeepSensor` limita display a 8.
 - ⚠️ Leitura source concluída **não** equivale a QA binário/Survival/dedicated/claims/PvP/config; ⛔ perks/Mastery ainda não implementáveis sem contrato homologado com RPG Skill Tree. Nenhuma promoção Stage 06.05.
+
+
+## Apprentice's Codex — prova dos 83 registros no JAR exato, 2026-10-14
+
+- [CI binária #38576975705](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38576975705): SHA-1 e SHA-256 do JAR oficial 0.9.7.1 coincidem com a modlist sibling; `SpellRegistry` contém **83/83** pares `ID → Supplier → reg() → DeferredHolder`, sem faltas, extras ou duplicações. [Relatório técnico](../providers/✅-apprentice-codex/README.md) e [evidência QA](../../../docs/qa/apprentice-codex-registry-binary-2026-10-14.md).
+- **✅** igualdade documental/callsite de registro; **⚠️** não confirma registry carregado, classes de todos os spells em runtime, disponibilidade em Survival, configs nem comportamento real. `AC-P01–AC-P05` ainda **PENDING**. **⛔** nenhuma integração Mastery/perks sem contrato real RPG Skill Tree. Stage 06.05 inalterado.
