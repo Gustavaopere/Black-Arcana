@@ -26,4 +26,4 @@ The current 40 registrations therefore resolve to **4 forms + 36 effects + 0 aug
 
 O conjunto original de cartões usava o pin 4.6.1 `2f0c7b9...`; a matriz de registro foi revalidada para 4.6.2. **Oito fichas deste lote** usam diretamente o source 4.6.2 e corrigem divergências históricas de IDs/defaults. As demais permanecem em análise campo a campo; atributos herdados de Ars/Sauce não foram inferidos.
 
-[Matriz inicial 8/40](../PERK-ENGINEERING-MATRIX-4.6.2.md) · [Matriz de 22 contingências/filtros — cobertura 30/40](../PERK-ENGINEERING-MATRIX-FILTERS-CONTINGENCIES-4.6.2.md).
+[Matriz inicial 8/40](../PERK-ENGINEERING-MATRIX-4.6.2.md) · [Matriz de 22 contingências/filtros](../PERK-ENGINEERING-MATRIX-FILTERS-CONTINGENCIES-4.6.2.md) · [Fechamento 40/40](../PERK-ENGINEERING-MATRIX-COMPLETION-4.6.2.md).

@@ -137,7 +137,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-mowzies-cataclysm` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-mowzies-mobs` | 17 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-northstar-redux` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-not-enough-glyphs` | 49 | 🟡 30/40 fichas com engenharia source 4.6.2 (29 source-enabled condicionais + Momentum disabled); ⚠️ SERVER config e runtime; ⛔ perk adapter |
+| `✅-not-enough-glyphs` | 49 | ✅ 40/40 fichas source-located (39 source-enabled condicionais + Momentum disabled); ⚠️ config SERVER/bytecode/QA; ⛔ RPG perk adapter |
 | `✅-ozymandias-sundries` | 6 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-paladin-spells` | 9 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-photon` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -226,3 +226,9 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 - Source pin `45604dd18d9d2e3e7ca80a2c616b3309f42aca77`, `Events.java` para handlers de `LivingHealEvent`, `LivingDeathEvent`, `LivingUseTotemEvent`, `EntityTeleportEvent`; `ContingencyTriggers` para fall/fire/health; expiry pertence a Sauce. Semântica do cast armazenado e custos ainda exigem auditoria da dependência real.
 - Retificações: `FilterLight` usa SKY e `FilterDark` usa BLOCK, limiar `8+ampMultiplier` (`>=` versus `<`); `EntityDummy` é incluído como player; `FilterSelf.onResolve` possui predicado local incompleto para exclusão de outros alvos (hipótese source-level, não falha física confirmada). Todas as identidades ganharam ID completo `glyph_` e links Java.
 - Mantêm-se ⚠️ config ativa, bytecode instalado, GameTest/Survival e ⛔ hooks/adapters RPG. **+0 identidades semânticas**.
+
+## Fechamento documental Not Enough Glyphs 4.6.2 — 2026-10-13
+
+- **+10 fichas finais** atualizadas a partir do source público 4.6.2: Ride, Feed, Chaining, Reverse Direction, Resize, Propagate Missile/Overhead/Projectile/Self e Overhead form. A cobertura de engenharia chega a **40/40 (39 source-enabled condicionais; 1 source-disabled Momentum)** com três matrizes de controle.
+- Observações: `EffectFeed` demanda custo item-side/explosão Crush e cuidado com eventos `Pre`; `EffectChaining` cria child resolvers e defaults 16 blocos/8 entidades; `EffectResize` exige auditoria de unidades `IPotionEffect`; `PropagateMissile` menciona Extract mas a lista de augments parece não incluí-lo na fonte.
+- **+0** no denominador mágico global. Todos os 40 registros já existiam. Nenhum adapter, dano, mundo, receita, core Java, GameTest ou validação física foi implementado. Config ativa e equivalência source/binário ficam ⚠️; hooks de perks e Mastery permanecem ⛔.
