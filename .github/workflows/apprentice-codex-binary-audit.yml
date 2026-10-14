@@ -1,0 +1,65 @@
+name: Apprentice Codex exact-JAR bytecode evidence
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/apprentice-codex-binary-audit.yml'
+      - 'docs/qa/apprentice_codex_binary_audit.py'
+      - 'docs/qa/apprentice_codex_binary_audit_test.py'
+      - 'docs/qa/apprentice-codex-binary-audit-2026-10-14.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apprentice-codex-binary-audit.yml'
+      - 'docs/qa/apprentice_codex_binary_audit.py'
+      - 'docs/qa/apprentice_codex_binary_audit_test.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact_jar_bytecode:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 21 (javap)
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Deterministic synthetic-fixture tests (not physical QA)
+        run: python3 docs/qa/apprentice_codex_binary_audit_test.py -v
+
+      - name: Fetch CurseForge file 8768955 with exact installed SHA-1 gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/apprentice-codex-binary-audit
+          JAR='build/apprentice-codex-binary-audit/apprentice_codex-0.9.7.1+mc1.21.1.jar'
+          curl --fail --show-error --silent --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://mediafilez.forgecdn.net/files/8768/955/apprentice_codex-0.9.7.1%2Bmc1.21.1.jar' \
+            --output "$JAR"
+          echo "b514315add32b93b0049c8673075627d7ef812e0  $JAR" | sha1sum --check --status
+          test "$(stat -c %s "$JAR")" -gt 1000000
+
+      - name: Inspect exact-hash compiled class methods (no provider execution)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/apprentice_codex_binary_audit.py \
+            --jar 'build/apprentice-codex-binary-audit/apprentice_codex-0.9.7.1+mc1.21.1.jar' \
+            --output build/apprentice-codex-binary-audit/evidence.json
+
+      - name: Upload narrow evidence report (never publish the provider JAR)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: apprentice-codex-binary-report-${{ github.sha }}
+          path: build/apprentice-codex-binary-audit/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
