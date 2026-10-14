@@ -12,7 +12,7 @@ class RequiemPhysicalLedgerTests(unittest.TestCase):
     def test_57_compiled_52_semantic_and_source_only_gong(self):
         note=(PROVIDER/'EXACT-BINARY-SPELLS-0.1.7.md').read_text(encoding='utf8')
         source=(PROVIDER/'SOURCE-0.1.7-SPELL-INVENTORY.md').read_text(encoding='utf8')
-        rows=re.findall(r'^\\| \\x60ess_requiem:([a-z0-9_]+)\\x60 \\| (COUNTED_SOURCE_PINNED|EXCLUDED) \\|', source, flags=re.M)
+        rows=re.findall(r'^\| \x60ess_requiem:([a-z0-9_]+)\x60 \| (COUNTED_SOURCE_PINNED|EXCLUDED) \|', source, flags=re.M)
         self.assertEqual(58,len(rows))
         self.assertEqual(58,len(set(x for x,_ in rows)))
         self.assertEqual(53,sum(s=='COUNTED_SOURCE_PINNED' for _,s in rows))
@@ -23,7 +23,7 @@ class RequiemPhysicalLedgerTests(unittest.TestCase):
             self.assertIn(token,note)
     def test_matrix_29_exact_and_scope_corrected_by_one(self):
         matrix=(META/'REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md').read_text(encoding='utf8')
-        entries=[x for x in matrix.splitlines() if x.startswith('| [') and re.search(r' \\| (COUNTED_SOURCE_PINNED|COUNTED_EXACT|COUNTED_RELEASE_BOUNDED) \\|', x)]
+        entries=[x for x in matrix.splitlines() if x.startswith('| [') and re.search(r' \| (COUNTED_SOURCE_PINNED|COUNTED_EXACT|COUNTED_RELEASE_BOUNDED) \|', x)]
         self.assertEqual(39,len(entries))
         self.assertEqual(29,sum('| COUNTED_EXACT |' in x for x in entries))
         row=next(x for x in entries if x.startswith("| [Ender's Spells and Stuff: Requiem]"))
