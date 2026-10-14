@@ -148,7 +148,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-pufferfishs-skills` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-pufferfishs-unofficial-additions` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-relics` | 45 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-reliquified-ars-nouveau` | 21 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-reliquified-ars-nouveau` | 21 | ✅ 19/19 habilidades com dossiês source-located 0.8.1 e identidades estáticas físico-exatas; ⚠️ config/bytecode de métodos/QA; ⛔ RPG perk adapter |
 | `✅-reliquified-artifacts` | 55 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-reliquified-irons-spells-n-spellbooks` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-reliquified-l-enders-cataclysm` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -232,3 +232,18 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 - **+10 fichas finais** atualizadas a partir do source público 4.6.2: Ride, Feed, Chaining, Reverse Direction, Resize, Propagate Missile/Overhead/Projectile/Self e Overhead form. A cobertura de engenharia chega a **40/40 (39 source-enabled condicionais; 1 source-disabled Momentum)** com três matrizes de controle.
 - Observações: `EffectFeed` demanda custo item-side/explosão Crush e cuidado com eventos `Pre`; `EffectChaining` cria child resolvers e defaults 16 blocos/8 entidades; `EffectResize` exige auditoria de unidades `IPotionEffect`; `PropagateMissile` menciona Extract mas a lista de augments parece não incluí-lo na fonte.
 - **+0** no denominador mágico global. Todos os 40 registros já existiam. Nenhum adapter, dano, mundo, receita, core Java, GameTest ou validação física foi implementado. Config ativa e equivalência source/binário ficam ⚠️; hooks de perks e Mastery permanecem ⛔.
+
+## Dossiês Reliquified Ars Nouveau 0.8.1 — source 2026-10-13
+
+- 3/19 `AbilityTemplate` roots aprofundadas em `PERK-ENGINEERING-MATRIX-0.8.1.md`; source declarado 0.8.1 `Octo-Studios/reliquified_ars_nouveau@125e1e3a723d8bc7050026e0670f8ac49535c8bc`. **19/19 identidades estáticas já eram COUNTED_EXACT** no JAR hash-matched. +0 raízes semânticas.
+- Archmage Glove: `SpellCastEvent` primário + `AugmentMulticast` posicional, filhos a cada 5 ticks, tag de custo 0 de filhos, chance de refund condicionada a resolução.
+- Mana Ring: max mana/regeneration Ars, heal-to-mana, custo `SpellCostCalcEvent.Pre` com dívida `MANA_RING_DEBT`, repagamento pelo tick.
+- Last Will: intercepta `LivingIncomingDamageEvent`, enfileira `RewindEvent` 60 ticks, cancela dano, registra cooldown, vingança por UUID e synergy dummy/vanishing.
+- Implementação física exata de métodos / config atual / GameTests/Survival ⚠️; Black Arcana/RPG perk adapter ⛔.
+
+## Fechamento documental Reliquified Ars Nouveau 0.8.1 — 2026-10-13
+
+- Na continuação do PR #797, **+16 fichas** aprofundadas sobre as **3 prévias**, atingindo **19/19** em `PERK-ENGINEERING-MATRIX-0.8.1.md`. **+0 identidades**; as 19 roots já integravam a métrica global (mínimos mantidos).
+- Bytecode/JAR físico verificado para registro `AbilityTemplate.builder` (Java 21 #38461801129), enquanto a engenharia de handlers/callbacks usa apenas source `Octo-Studios/reliquified_ars_nouveau@125e1e3a723d8bc7050026e0670f8ac49535c8bc`. NÃO promover corpos compilados, config efetiva ou QA/Survival a PASS.
+- Riscos mais importantes: `RingOfThrift` Pre/Post com free-cast token e refunds, `QuantumBubble` owner e lifecycle de projéteis, `ArchitectsStaff` MageBlock placement, `SpectralWalker` IntangibleAir e claims, `HornOfWildHunter` UUIDs de wolves, `IllusionistsMantle` death swap e `LastWill` rewind simultâneos.
+- Interoperabilidade RPG **⛔** sem hook seguro; world/resource authority externa preservada. Stage 06.05 não avançou.
