@@ -65,3 +65,13 @@ Occupies the **uninterruptible targeted leap into a provider-owned summoned-blad
 - **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
 - **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
 - **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia causal aprofundada — ofensiva/movimento (2026-10-14)
+
+**Source:** [`mantisleap/MantisLeap.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/mantisleap/MantisLeap.java) · [`mantisleap/MantisLeapMovementEvent.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/mantisleap/MantisLeapMovementEvent.java).
+
+- **Estado e autoridade:** `startLeap` grava duração, origem, destino, `bladeEntityId` em `MANTIS_LEAP_STATE`; `onPlayerTick` calcula a trajetória no cliente e servidor; `finalizeLeap(...,!isClientSide)` só permite a lâmina atacar do lado autoritativo.
+- **Watchdog/landing:** após **4 ticks** sem avanço mínimo, o movimento finaliza. `findSafeLandingPosition` testa offsets por `level.noCollision`, porém retorna o **destino original** se nenhum servir. `deactivate` restaura gravidade e zera estado; janela pós-salto de **20 ticks** cancela somente ataques de fonte `Mob` no `LivingIncomingDamageEvent`.
+- **QA:** colisão, fall damage, client correction, PvP, restart e invulnerabilidade. `MantisLeapBladeEntity.slash` usa flag `slashed` para bloquear segundo corte. Movimento e dano têm uma causa.
+
+🟡 Source-level causal; ⚠️ bytecode do JAR, config e QA modpack/Survival não certificados; ⛔ RPG perks/Mastery sem adapter homologado. Iron's e Apprentice's mantêm mana/casting/efeitos; Black Arcana não duplica runtime.
