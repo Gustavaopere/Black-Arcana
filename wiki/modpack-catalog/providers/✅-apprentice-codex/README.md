@@ -266,3 +266,9 @@ The exact source pin supports factual source-derived cataloging. It does not by 
 ## Mapas de implementação para Codex / RPG Skill Tree
 
 Esta campanha acrescenta às **83 fichas já source-catalogadas** localizadores exatos de classes Java verificados pelo `SpellRegistry` do commit `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`; seis fichas de risco recebem cadeia causal detalhada. Não há novo spell registry, API de setter de geometria ou QA físico certificado. Regras de campos e estados: [padrão global](../../meta/PERK-READY-TECHNICAL-STANDARD.md).
+
+## Engenharia causal de oito magias sensíveis — 2026-10-13
+
+**🟡 Cobertura técnica aprofundada 14/83** (seis dossiês anteriores, oito adicionais); **✅ identidade/source-class 83/83** preservada. [Matriz de alto risco 0.9.7.1](PERK-ENGINEERING-MATRIX-HIGH-RISK-0.9.7.1.md) documenta Anchor Blink, Rift Hole, Remote Eye, Auto Magnet, Linear Build, Earth Forge, Force Field e Demi-creator Wings com métodos concretos de runtime no source declarado `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. **69/83** esperam a mesma profundidade de engenharia, mas continuam **catalogadas**.
+
+A análise acrescentou sequenciamento de projétil e blink, expiração e restauração de túnel, ancoragem de Remote Eye, lote de coleta e débito do Auto Magnet, cobranças/rollback de Linear Build, agendamento de Earth Forge, defesa contra dano no Force Field e remoção de voo no Demicreator Wings. **⚠️** Configuração física, bytecode dos métodos, reprodução em Minecraft cliente/servidor, claims, jogo real e integração com mods opcionais ainda exigem QA; **⛔** perks/Mastery dependem de contrato efetivo com RPG Skill Tree. A instrumentação do Black Arcana não foi alterada e `Stage 06.05` permanece no status operacional existente.

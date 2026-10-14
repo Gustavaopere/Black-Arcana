@@ -31,7 +31,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-apothic-compats` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-enchanting` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-apothic-spawners` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-apprentice-codex` | 101 | 🟡 83/83 fichas de spell com source class; 6 com causalidade aprofundada; hooks/QA pendentes |
+| `✅-apprentice-codex` | 101 | ✅ 83/83 identidades registradas e fichas source-located; 🟡 14/83 engenharia causal aprofundada (8 novas nesta etapa); ⚠️ JAR/config/Survival/QA; ⛔ RPG adapter |
 | `✅-ars-additions` | 48 | ✅ 5/5 magias/rituais (3 glyphs, 2 rituals) com cadeia e source exato; ⚠️ compatibilidade host/config/QA; ⛔ adapter RPG |
 | `✅-ars-controle` | 25 | ✅ 9/9 glyphs com source 1.6.16 causal exato; ⚠️ runtime/concurrency/scheduler; ⛔ perk adapter RPG |
 | `✅-ars-creo` | 14 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -247,3 +247,10 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 - Bytecode/JAR físico verificado para registro `AbilityTemplate.builder` (Java 21 #38461801129), enquanto a engenharia de handlers/callbacks usa apenas source `Octo-Studios/reliquified_ars_nouveau@125e1e3a723d8bc7050026e0670f8ac49535c8bc`. NÃO promover corpos compilados, config efetiva ou QA/Survival a PASS.
 - Riscos mais importantes: `RingOfThrift` Pre/Post com free-cast token e refunds, `QuantumBubble` owner e lifecycle de projéteis, `ArchitectsStaff` MageBlock placement, `SpectralWalker` IntangibleAir e claims, `HornOfWildHunter` UUIDs de wolves, `IllusionistsMantle` death swap e `LastWill` rewind simultâneos.
 - Interoperabilidade RPG **⛔** sem hook seguro; world/resource authority externa preservada. Stage 06.05 não avançou.
+
+## Apprentice's Codex 0.9.7.1 — incremento de engenharia 2026-10-13
+
+- `main` de partida `a6ccf7fd1d4ea6a18e5ff697f4e5abc82a197248`; versão física do sibling modlist `0.9.7.1`, JAR `apprentice_codex-0.9.7.1+mc1.21.1.jar`, SHA-1 `b514315add32b93b0049c8673075627d7ef812e0`, mod ID `apprenticecodex`.
+- **+8** dossiês causais profundos: [matriz técnica](../providers/✅-apprentice-codex/PERK-ENGINEERING-MATRIX-HIGH-RISK-0.9.7.1.md), elevando **6/83→14/83**. **83/83** identidades permanecem catalogadas; **69/83** pendentes da mesma profundidade; **+0** ao denominador global.
+- Auditoria source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` em eventos, auxiliares, managers e entidades; corpos do JAR/config/QA não provados. O provider/Iron's preserva ownership do cast/mana e world mutations; BA só do próprio runtime.
+- **Perks/Mastery ⛔** sem contrato real; **Stage 06.05** não promovido. Alterações exclusivas em Markdown; sem GameTest físico de conteúdo Apprentice's Codex.

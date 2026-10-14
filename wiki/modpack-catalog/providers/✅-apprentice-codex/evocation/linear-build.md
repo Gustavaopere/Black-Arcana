@@ -49,3 +49,27 @@ Occupies the **inventory/container-backed linear construction spell with per-ext
 - **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
 - **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
 - **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+---
+
+## Engenharia causal aprofundada — 0.9.7.1 (audit de source, 2026-10-13)
+
+**Prova rastreável:** [`linearbuild/LinearBuild.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/linearbuild/LinearBuild.java) · [`linearbuild/LinearBuildItemSources.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/linearbuild/LinearBuildItemSources.java) · [`linearbuild/LinearBuildItemSource.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/linearbuild/LinearBuildItemSource.java). Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (declara 0.9.7.1); o JAR físico da modlist tem identidade/versionamento corroborados, **sem equivalência dos corpos compilados demonstrada**.
+
+### Planejamento, cobrança e reversão local
+
+- **Fonte e alvo:** `LinearBuild.checkPreCastConditions` fixa um template de `BlockItem` válido e uma `PlacementTarget(hitPos,hitFace)`. `onCast` restaura `LinearBuildCastData` ou resolve o alvo, mantendo `ServerPlayer` como autor das interações e suas proteções. O plano não é uma permissão ampla para modificar qualquer `BlockState`.
+- **Fontes de estoque:** `collectItemSources` monta adaptadores para inventário, off-hand/main-hand, Personal Shelf, ender chest, Companion Trunk, chested horses, Curios, shulkers, bundles, handlers e pontes opcionais de Create toolbox/Malum pouch. **Disponibilidade da integração e precedência concreta** devem ser conferidas por versão e configuração; uma fonte enumerada não é garantia de item disponível no runtime.
+- **Tentativa por posição:** `placeLine` percorre `collectLinePositions`, verifica `canBeReplaced()`, encontra a próxima fonte disponível e pode abortar ou pular quando `abortOnFailedPlacement` assim determinar. `tryPlaceAt` chama `BlockTools.useItemOnBlockByPlayerMainHand`, exige mudança efetiva do estado do bloco e depois tenta `source.consumeOne(template)`.
+- **Rollback local:** se o bloco foi colocado, mas `source.consumeOne` falhou, `tryPlaceAt` executa `level.setBlock(pos,before,Block.UPDATE_ALL)` e retorna `false`. **Não é rollback integral de toda a linha**: posições já concluídas antes permanecem aplicadas pelo código examinado. Conferir tile/side effects de proteção de claims em QA.
+- **Liquidação de recurso:** `manaCostPerBlock` vem de `linearBuildConfig().manaCostPerBlock()` após `CraftsmansDelight.applyManaCostDiscount`. A cobrança **adicional** é condicionada a `castSource.consumesMana() && !player.getAbilities().instabuild`. Só depois de `placedAtPosition==true` usa `playerMagicData.setMana(max(0, mana-cost))`; sincroniza via `SyncManaPacket` se houve cobrança. Base mana do Iron's permanece distinta dessa cobrança por bloco.
+- **Perks:** cada colocação é efeito de uma root `linear_build`, e não uma sequência de casts independentes. O BA não reexecuta, não cobra blocos uma segunda vez e não concede Mastery por block update sem contrato explícito de atribuição e aceite.
+
+### Perfil para integração de perks e QA
+
+- **A / atributo e rank:** stats e estado de Iron's/Codex são lidos do provider, sem sobrescrita automática. Valores efetivos dependem de configuração e outros mods.
+- **B / causalidade:** raiz `apprenticecodex:linear_build`, mantendo eventos, tarefas e recursos da cadeia sob authority externa; não atribuir Mastery por cada callback de efeito secundário.
+- **C/D / política:** nenhuma API/hook de RPG Skill Tree homologada pela simples presença desses métodos. **⛔** fail-closed para adapter e **⚠️** QA da versão instalada (JAR, host, Survival, servidor, multiplayer, dependências opcionais e claims).
+- **Clean-room:** somente especificação factual própria; não transplantar implementação upstream.
+
+[Matriz causal desta etapa](../PERK-ENGINEERING-MATRIX-HIGH-RISK-0.9.7.1.md).
