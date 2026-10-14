@@ -115,6 +115,16 @@ class RegistryIdentityTests(unittest.TestCase):
         with self.assertRaises(audit.AuditError):
             audit.spell_id(spell_class_text("Not-Valid"))
 
+    def test_publisher_57_manifest_keeps_unregistered_source_gong_explicit(self):
+        self.assertEqual(audit.CLASSES[audit.BASE],54)
+        self.assertEqual(audit.CLASSES[audit.DTE],3)
+        self.assertEqual(audit.COMPILED_EXPECTED,57)
+        self.assertEqual(audit.SOURCE_ONLY_NOT_COMPILED,frozenset({"gong"}))
+        source=inventory().replace("synthetic_57","gong")
+        parsed=audit.expected_inventory(source)
+        self.assertEqual(parsed["gong"],"COUNTED_SOURCE_PINNED")
+        self.assertEqual(len(set(parsed)-audit.SOURCE_ONLY_NOT_COMPILED),57)
+
     def test_publisher_sha_is_mandatory_before_javap(self):
         import tempfile
         from unittest.mock import patch
