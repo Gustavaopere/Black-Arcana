@@ -24,4 +24,6 @@ Provenance is preserved below the functional class rather than replacing it:
 
 The current 40 registrations therefore resolve to **4 forms + 36 effects + 0 augments**. Historical namespaces remain identity/provenance markers; they do not create duplicate Black Arcana capabilities.
 
-Every page is source-pinned to `Alexthw46/NotEnoughGlyphs@2f0c7b9fcf802c7e85b4ed4d7ed94123bcee398b`. Fields inherited only from Ars/Sauce remain provider-owned rather than guessed.
+O conjunto original de cartões usava o pin 4.6.1 `2f0c7b9...`; a matriz de registro foi revalidada para 4.6.2. **Oito fichas deste lote** usam diretamente o source 4.6.2 e corrigem divergências históricas de IDs/defaults. As demais permanecem em análise campo a campo; atributos herdados de Ars/Sauce não foram inferidos.
+
+[Matriz de dossiês 8/40](../PERK-ENGINEERING-MATRIX-4.6.2.md).

@@ -51,6 +51,10 @@ The container visibly exposes slots 0–24. `Events.attachCaps` also reacts to c
 
 See [`SPELL-BINDER-AND-PERKS.md`](SPELL-BINDER-AND-PERKS.md).
 
+## Dossiês causais 4.6.2 — primeiro lote 8/40
+
+As oito fichas source-pinned de [PERK-ENGINEERING-MATRIX-4.6.2.md](PERK-ENGINEERING-MATRIX-4.6.2.md) investigam FakePlayer/claims, propagadores, seleção de veículo, raio, multiplicidade de projéteis e procs. Corrigem **Plow 0**, **Flatten 30**, **Echoing Trail 200/Tier III** e IDs completos com `glyph_`. São defaults da fonte, não valores efetivos da SERVER config. Nenhuma identidade semântica nova; sem GameTest, runtime físico ou adapter de perks.
+
 ## Provider-owned systems
 
 NEG additionally registers the following provider systems; 4.6.2 adds behavior/dependency hotfixes but does not change the source-level glyph registration matrix:
