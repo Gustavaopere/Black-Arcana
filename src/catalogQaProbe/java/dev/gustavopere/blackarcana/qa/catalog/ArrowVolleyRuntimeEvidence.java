@@ -172,8 +172,8 @@ final class ArrowVolleyRuntimeEvidence {
             if (now - trace.joinGameTick >= MAX_OBSERVATION_TICKS
                 || trace.leaveSeen
                 || (controller == null && trace.observedTicks > 0)) {
-                LOG.info("{} type=end controller={} status={} observed_ticks={} first_age={} last_age={} age_monotonic={} candidate_joins={} confirmed_present_at_post={} ambiguous_joins={} candidate_budget_exceeded={} leave_seen={} removal={} join_counts_per_tick={} unmatched_global={} ambiguous_global={}",
-                    PREFIX, trace.controller,
+                LOG.info("{} type=end controller={} join_game_tick={} status={} observed_ticks={} first_age={} last_age={} age_monotonic={} candidate_joins={} confirmed_present_at_post={} ambiguous_joins={} candidate_budget_exceeded={} leave_seen={} removal={} join_counts_per_tick={} unmatched_global={} ambiguous_global={}",
+                    PREFIX, trace.controller, trace.joinGameTick,
                     trace.leaveSeen ? "LEFT_LEVEL" :
                         controller == null ? "ENTITY_NOT_FOUND" : "WINDOW_EXPIRED",
                     trace.observedTicks, trace.firstAge, trace.lastAge, trace.monotonic,
