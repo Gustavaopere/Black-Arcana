@@ -12,7 +12,7 @@ from pathlib import Path
 
 TAG = "[BLACK_ARCANA_ARROW_VOLLEY_QA]"
 LOG_FIELDS = (
-    "controller", "status", "observed_ticks", "first_age", "last_age",
+    "controller", "join_game_tick", "status", "observed_ticks", "first_age", "last_age",
     "age_monotonic", "candidate_joins", "confirmed_present_at_post",
     "ambiguous_joins", "candidate_budget_exceeded", "leave_seen", "removal"
 )
@@ -76,6 +76,27 @@ def evaluate(text, level, controller=None):
         reasons.append("ROW_PATTERN_MISMATCH")
     if any(rows[i][0] - rows[i-1][0] != 5 for i in range(1, len(rows))):
         reasons.append("ROW_INTERVAL_MISMATCH")
+    # A stream with correct five-tick gaps can still be shifted arbitrarily.
+    # Tie every reported row to the controller's observed world insertion tick.
+    join_tick = int(obj["join_game_tick"])
+    expected_last_row_age = expected_rows * 5
+    actual_row_ticks = [tick for tick, _ in rows]
+    expected_row_ticks = [join_tick + step * 5
+                          for step in range(1, expected_rows + 1)]
+    if actual_row_ticks != expected_row_ticks:
+        reasons.append("ROW_START_OFFSET_MISMATCH")
+
+    # At the server Post tick, initial age is expected to be 0 or 1
+    # for a fresh controller. Later initial ages suggest a reload/skipped
+    # sampling and may not be used to validate a complete new cast.
+    age_start = int(obj["first_age"])
+    samples = int(obj["observed_ticks"])
+    if age_start not in (0, 1) or samples < expected_last_row_age - 1:
+        reasons.append("CONTROLLER_OBSERVATION_INCOMPLETE")
+    age_end = int(obj["last_age"])
+    if not expected_last_row_age <= age_end <= expected_last_row_age + 1:
+        reasons.append("CONTROLLER_DISCARD_AGE_MISMATCH")
+
     if sum(n for _, n in rows) != actual:
         reasons.append("JOIN_SUMMARY_INCONSISTENT")
     return {
