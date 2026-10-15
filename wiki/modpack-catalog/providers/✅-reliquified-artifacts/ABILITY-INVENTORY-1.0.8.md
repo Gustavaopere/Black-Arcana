@@ -1,6 +1,8 @@
 # Reliquified Artifacts 1.0.8 — owner-scoped ability inventory
 
-Status: `52/52 OWNER-SCOPED ABILITY ROOTS / SOURCE-PINNED 1.0.8 / SURVIVAL ROUTES BOUNDED`
+Status: `52/52 OWNER-SCOPED ABILITY ROOTS / COUNTED_EXACT COMPILED OWNER-LINK 1.0.8 / SURVIVAL PENDING`
+
+**Latest installed-JAR exact proof:** [Java21 #38662072936](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38662072936) verified 48/48 owner → compiled lambda constructor → 47 classes → 51 unique class-level builders and 52 owner-scoped abilities. [Full exact binary evidence](EXACT-BINARY-OWNER-ABILITIES-1.0.8.md). The source descriptions below remain provenance; assembled Survival and Relics runtime remain untested.
 
 Official source checkpoint: `Octo-Studios/reliquified-artifacts@529fa0cd865a95dbe1bf02081de0275e90c69aee`.
 
@@ -65,7 +67,7 @@ Counting uses **owner + ability ID**, not ability string alone. Reused IDs such 
 
 ## Materialização em fichas individuais
 
-**✅ 52/52 fichas** estão ligadas ao [índice de owner + ability](ABILITY-CARDS-1.0.8.md), preservando as classes da matriz e a exceção de Eternal Steak. Esta transformação editorial acrescenta **+0 identidades novas** e mantém a evidência `COUNTED_SOURCE_PINNED`, sem simular paridade binária ou runtime Survival.
+**✅ 52/52 fichas** estão ligadas ao [índice de owner + ability](ABILITY-CARDS-1.0.8.md), preservando as classes da matriz e a exceção de Eternal Steak. Esta transformação editorial acrescenta **+0 identidades novas** e foi originalmente source-pinned; a prova binária posterior promoveu a identidade estática a `COUNTED_EXACT`, sem simular runtime Survival.
 
 ## Cardinality checks
 
