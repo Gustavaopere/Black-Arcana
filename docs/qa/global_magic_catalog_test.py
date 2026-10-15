@@ -1545,9 +1545,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(34, len(exact))
+        self.assertEqual(35, len(exact))
         self.assertEqual(
-            {"Ars Nouveau", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice\'s Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum"},
+            {"Hazen N Stuff", "Ars Nouveau", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice\'s Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1604,9 +1604,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(34, len(exact))
+        self.assertEqual(35, len(exact))
         self.assertEqual(
-            {"Ars Nouveau", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice\'s Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum"},
+            {"Hazen N Stuff", "Ars Nouveau", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice\'s Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -2401,6 +2401,32 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("| 5.13.1 | 109 | `COUNTED_EXACT` |",semantic)
         self.assertIn("1856",ledger)
         self.assertIn("1854",ledger)
+
+
+    def test_hazen_14014_exact_static_38_spell_ids(self):
+        provider = PROVIDERS / "✅-hazen-n-stuff"
+        readme = (provider / "README.md").read_text(encoding="utf-8")
+        self.assertIn("COUNTED_EXACT", readme)
+        self.assertIn("38606162180", readme)
+        inventory = (provider / "SOURCE-1.4.0.14-SPELL-INVENTORY.md").read_text(encoding="utf-8")
+        self.assertIn("38", inventory)
+        proof = (ROOT / "docs/qa/hazen-14014-binary-registry.md").read_text(encoding="utf-8")
+        for token in ("38606162180", "compiled_registration_pairs=38",
+                      "exact_spell_id_class_match_count=38",
+                      "3be20bacb44c1923348ab6f61b685eec6aacfdcd",
+                      "eeacf5b5536bbe2691e1687902a8c37cff775829457db6e116261bbff7a00462",
+                      "COUNTED_EXACT", "Survival"):
+            self.assertIn(token, proof)
+        matrix = (ROOT / "wiki/modpack-catalog/meta/REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(x for x in matrix.splitlines() if x.startswith("| [Hazen N Stuff]"))
+        self.assertIn("| 1.4.0.14 | 38 | COUNTED_EXACT |", row)
+        semantic = (ROOT / "wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        row = next(x for x in semantic.splitlines() if x.startswith("| [Hazen N Stuff]"))
+        self.assertIn("| 1.4.0.14 | 38 | `COUNTED_EXACT` |", row)
+        self.assertIn("35/39", matrix)
+        self.assertIn("4/39", matrix)
+        self.assertIn("1.856", matrix)
+        self.assertIn("1.854", matrix)
 
 
 if __name__ == "__main__":
