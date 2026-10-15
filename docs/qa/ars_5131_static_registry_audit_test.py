@@ -52,6 +52,19 @@ class ClassRegistrationTests(unittest.TestCase):
         changed=self.dis.replace(needle, '       6: ifeq          20\n'+needle,1)
         with self.assertRaisesRegex(aud.AuditError,'conditional jump'):
             self.parse(s=changed)
+    def test_exact_duplicate_publisher_legal_metadata_allowed(self):
+        names=['META-INF/LICENSE.txt']*6+['META-INF/NOTICE.txt']*6+[
+            'com/hollingsworth/arsnouveau/setup/registry/APIRegistry.class']
+        result=aud.check_duplicate_members(names)
+        self.assertEqual(result,{'META-INF/LICENSE.txt':6,'META-INF/NOTICE.txt':6})
+    def test_duplicate_compiled_class_rejected(self):
+        names=['META-INF/LICENSE.txt']*6+['META-INF/NOTICE.txt']*6+[
+            'com/hollingsworth/arsnouveau/setup/registry/APIRegistry.class']*2
+        with self.assertRaisesRegex(aud.AuditError,'outside exact legal metadata allowlist'):
+            aud.check_duplicate_members(names)
+    def test_unexpected_legal_metadata_count_rejected(self):
+        with self.assertRaises(aud.AuditError):
+            aud.check_duplicate_members(['META-INF/LICENSE.txt']*5+['META-INF/NOTICE.txt']*6)
     def test_wrong_hash_fails(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/aud.FILENAME
