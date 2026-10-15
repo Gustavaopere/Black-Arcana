@@ -1,0 +1,61 @@
+name: Iron's 3.16.3 projectile bytecode evidence (Java 21)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/irons-3163-projectile-bytecode.yml'
+      - 'docs/qa/irons_3163_projectile_bytecode.py'
+      - 'docs/qa/irons-3163-projectile-bytecode-pending.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect_published_provider_jar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up exact Java major version
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Fail-closed parser self-test (does not inspect publisher JAR)
+        run: python3 docs/qa/irons_3163_projectile_bytecode.py --self-test
+
+      - name: Download publisher CurseForge file ID 8680204
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/irons-3163
+          JAR='build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar'
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 240 \
+            'https://mediafilez.forgecdn.net/files/8680/204/irons_spellbooks-1.21.1-3.16.3.jar' \
+            --output "$JAR"
+          test "$(stat -c '%s' "$JAR")" -gt 10000000
+          sha256sum "$JAR" | tee build/irons-3163/download-sha256.txt
+          jar tf "$JAR" | grep -F 'io/redspace/ironsspellbooks/entity/spells/ArrowVolleyEntity.class'
+          # This validates an externally fetched publisher file, not the user's installed JAR.
+
+      - name: Inspect compiled class method boundaries with javap
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/irons_3163_projectile_bytecode.py \
+            --jar build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar \
+            --output build/irons-3163/evidence.json
+
+      - name: Upload evidence only (never copyrighted provider JAR)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: irons-3163-projectile-bytecode-${{ github.sha }}
+          path: build/irons-3163/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
