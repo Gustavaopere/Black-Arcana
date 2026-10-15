@@ -1,0 +1,51 @@
+# Iron's 3.16.3 — ordem causal dos eventos para perks
+
+**Estado:** ✅ leitura source-pinned de assinaturas + callsites; ⚠️ ausência de teste real com o JAR físico, listener third-party, cliente e RPG adapter. **Este é um guia de interoperability, não um segundo pipeline de spellcasting.**
+
+Versão-alvo: Minecraft 1.21.1, `irons_spellbooks` 3.16.3, código `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`. JAR exato, deployed config e regressões multi-provider continuam pendentes. O Java-fonte contém comentários de Javadoc antigos referindo-se a `MinecraftForge`; o código inspecionado posta de fato em `NeoForge.EVENT_BUS`. Priorizar **callsites executáveis** e não descrição histórica de Javadoc.
+
+## Ordem confirmada para cast do player
+
+1. **Consulta prévia de nível (condicional ao caller):** [`AbstractSpell.getLevelFor`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L157) soma bônus próprios, publica `ModifySpellLevelEvent` e devolve nível calculado. Em uma rota confirmada, [`Utils.serverSideInitiateCast`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L430-L437) chama `getLevelFor` antes de `attemptInitiateCast`. Nem toda origem possível de cast foi auditada; não assumir cobertura universal.
+2. **Admissão/cast inicial:** [`AbstractSpell.canBeCastedBy`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L373-L395) checa aprendizagem, cooldown e **mana calculada com nível recebido antes de `SpellOnCastEvent`**. [`attemptInitiateCast`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L288) aplica `checkPreCastConditions` e `SpellPreCastEvent` cancelável antes de prosseguir. O gating de server continua owner do Iron's.
+3. **Resolução do cast:** [`AbstractSpell.castSpell`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L305-L333) posta `SpellOnCastEvent` e então usa `event.getManaCost` no desconto (se aplicável) e `event.getSpellLevel` em `onCast`; em seguida gerencia recasts/cooldown e sync. O evento é **posterior ao gate de mana**. Alterar mana ou level neste ponto não recalcula automaticamente a admissão. O custo final é clampado em zero no setter de mana do player, não validado novamente como saldo suficiente.
+4. **Dano por aplicação em LivingEntity:** [`DamageSources.applyDamage`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L65) só emite `SpellDamageEvent` quando alvo é `LivingEntity` e o source é `SpellDamageSource`; evento é cancelável e `setAmount` altera o **valor bruto** antes da resistência da escola e de `hurt`. Se não satisfaz as duas condições, aplica `target.hurt` sem este evento.
+5. **Ação contramágica:** `CounterspellSpell.onCast` posta `CounterSpellEvent` apenas após escolher um alvo por raycast, **antes** de executar os ramos `onAntiMagic`/cancelCast/dispel. [`CounterspellSpell`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/CounterspellSpell.java#L67-L107).
+6. **Explosão de terreno Fireball:** somente se `ServerConfigs.SPELL_GREIFING` ativo, `MagicFireball` constrói uma explosão do mundo e posta `ExplosionEvent.Start` cancelável. A explosão de terreno é um pipeline distinto dos hits em área anteriores; observar risco de efeitos adicionais sem afirmar resultado antes de teste. [`MagicFireball`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/fireball/MagicFireball.java#L76-L112).
+
+## Matriz de eventos efetivamente localizados
+
+| API/evento | Alteração ou veto exposto na fonte | Onde entra | O que **não** prova |
+|---|---|---|---|
+| [`ModifySpellLevelEvent`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/ModifySpellLevelEvent.java) | `setLevel(int)` e `addLevels(int)`; caster pode ser null | consultas via `getLevelFor` | nenhum enforcement de maxLevel/cap pelo próprio setter, nem que todos os callers usem essa rota |
+| [`SpellPreCastEvent`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellPreCastEvent.java) | `ICancellableEvent`, getters `spellId`/`school`/`level`/`castSource` | após gate de mana e spell-specific preflight em `attemptInitiateCast` | descontos de mana, seleção de múltiplos alvos e mudança direta de cooldown |
+| [`SpellOnCastEvent`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellOnCastEvent.java) | `setSpellLevel(int)` e `setManaCost(int)`, **não cancelável** | após preflight, antes de chamar `onCast` | que mana menor permita cast anteriormente recusado, que custo maior seja revalidado, que projeto/área/target sejam reescritos |
+| [`SpellDamageEvent`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellDamageEvent.java) | cancelamento + `setAmount(float)` | antes de `getResist` e `LivingEntity.hurt` | substituição de `DamageType`, dano final após resistências, afetar blocos, Fireball `Explosion`, todos os danos não-spell |
+| [`CounterSpellEvent`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/CounterSpellEvent.java) | cancelamento; caster e target são campos públicos `final` | após seleção do alvo e antes de dispel | setter de range, novo target, execução sobre providers sem interface compatível |
+| `ExplosionEvent.Start` (NeoForge) | cancelamento, na chamada específica Fireball | após loop de dano MagicFireball, antes da explosão de blocos | que a configuração `spellGriefing` seja alterável por perks sem influenciar outros spells |
+
+### Decisões de integração recomendadas (não implementadas)
+
+- **Bônus de dano:** `SpellDamageEvent` é candidato observável/mutável no caminho necessário; filtrar spell ID, caster e unidade do evento, aplicar cap, evitar multiplicações repetidas em hits derivados e manter testes de PvP. **Seam source-verified ≠ adapter final homologado.**
+- **Bônus de nível:** preferir examinar `ModifySpellLevelEvent` e `getLevelFor` **antes** de investir em `SpellOnCastEvent.setSpellLevel`; verificar todos os caminhos de origem (staff, scroll, mobs, recasts e outros), limites e compatibilidade de custo.
+- **Desconto de mana:** `SpellOnCastEvent.setManaCost` reduz quanto é debitado **em cast já aceito**. Caso o player possua menos mana que o custo original, `canBeCastedBy` pode negar antes que o desconto seja executado. **⛔ bloquear alegações de perk que permita esse cast** sem novo seam validado antes do gate.
+- **Aumento de custo:** o mesmo evento pode definir custo maior após a verificação original de saldo; necessidade de revalidação/contrato transacional upstream. **⛔ sem garantia de débito completo.**
+- **Conversão do tipo de dano:** o [`SpellDamageSource`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/SpellDamageSource.java#L16-L26) constrói `DamageSource` com DamageType associado à escola; evento `SpellDamageEvent` não possui setter para o tipo. **⛔ sem hook de conversão confirmado.**
+- **Transformação do alvo/área/escala/velocidade:** nenhum desses eventos possui setters da geometria ou do tipo de Entity; setters privados à fase de spawn não constituem callback público de perks. **⛔ fail-closed.**
+- **Efeitos Black Arcana / Enshrouded:** alterações em casting/hazard/shroud próprios pertencem a seus runtimes. Não repassar `SpellDamageEvent` do Iron's como autorização para recalcular recursos de terceiros.
+
+## Critérios de teste para um futuro adapter
+
+| Caso | Esperado a validar |
+|---|---|
+| Insuficiência de mana original + perk de desconto `SpellOnCastEvent` | Pré-admissão ainda pode rejeitar; sem declarar sucesso |
+| Custo aumentado pós-gate | Garantir gasto transacional ou fail-closed |
+| Aumento de nível via `ModifySpellLevelEvent` e mesma origem via scroll/recast | Consistência de nível, mana e limites, sem duplicar perks |
+| Chain Lightning com 4+ hits | Dano por vítima sem gerar novos casts/procs ofensivos indevidos |
+| Fireball com `spellGriefing=true` | Separação dano AOE, ExplosionEvent e possível second damage |
+| Counterspell event cancelado | Nenhum ramo provider-owned de anti-magia executado; cooldown/mana conforme regra original |
+| Alvo não-`LivingEntity` e source não-`SpellDamageSource` | Não depender de `SpellDamageEvent` inexistente no caminho |
+
+**Pendências:** nenhum listener de perk do RPG Skill Tree foi implementado ou testado nesta documentação; não foi executado CI, GameTest, cliente ou perfil físico. Não promova Stage 06.05 ou Stage 09 por este mapeamento.
+
+Dossiês individuais: [Fireball](CAUSAL-PERKS-FIREBALL-3.16.3.md), [Chain Lightning](CAUSAL-PERKS-CHAIN-LIGHTNING-3.16.3.md), [Counterspell](CAUSAL-PERKS-COUNTERSPELL-3.16.3.md). Contrato de campos: [PERK-TECHNICAL-CATALOG-CONTRACT](../../../meta/PERK-TECHNICAL-CATALOG-CONTRACT.md).
