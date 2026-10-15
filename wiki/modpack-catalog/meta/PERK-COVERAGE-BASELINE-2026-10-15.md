@@ -2,6 +2,18 @@
 
 **Natureza:** snapshot de coordenação de catálogo e dos eixos de engenharia de perks, sem alterar os contadores canônicos. A fonte operacional dinâmica continua em `SEMANTIC-MAGIC-COVERAGE.md`, `CATALOG-COVERAGE-CURRENT.md` e `plans/STATUS.md`; atualizar esta ficha após reconciliação, sem assumir que é o último checkpoint.
 
+## Current tranche override — twelve causal dossiers (2026-10-15, PR #825 draft)
+
+**Iron's Spells 'n Spellbooks 3.16.3: 12/110 spells com dossiê causal suplementar nesta PR** — **10,91% da fila de 110**; isso representa escopo de *auditoria documental source-pinned*, **não** completion de hooks per-perk, adapter implementado, verificação binária, GameTest ou execução real. A PR #795 continua distinta com as 110 fichas de origem em draft. O checkpoint de 9/110 abaixo permanece histórico. Nenhum novo ID mágico foi acrescentado: **1.856 objetos semânticos mínimos globais / 1.854 no escopo restrito**; denominador final do universo global continua **aberto (—%)**.
+
+Novas fichas desta tranche, como complementos individuais sem sobrescrever arquivos da PR #795:
+
+- [Frostbite — eventos de morte e fan-out](../providers/✅-irons-spells/audits/CAUSAL-PERKS-FROSTBITE-3.16.3.md): buff no atacante, exigência `isFullyFrozen` na vítima, criação de `FrozenHumanoid`, atraso de 100 ticks, impacto AOE e oito shards com `ICICLE_SPELL` como damage source; owner/shatter/persistência separados.
+- [Echoing Strikes — event Post e anti-recursão](../providers/✅-irons-spells/audits/CAUSAL-PERKS-ECHOING-STRIKES-3.16.3.md): `LivingDamageEvent.Post`, seletor dano melee/arrow, exclusão de `SpellDamageSource`, `hitCount=level+2`, attachment codificado, espada AOE de raio 2 e flecha após delay 15 ticks.
+- [Sacrifice — cast direto vs morte marcada](../providers/✅-irons-spells/audits/CAUSAL-PERKS-SACRIFICE-3.16.3.md): dois ingressos e fórmulas diferentes, `IMagicSummon` própria/mark de DeadKing, `AABB.ofSize(radius,radius,radius)` com **raio nominal e cubo de candidatos distintos**, queda de dano e potencial propagação de mortes marcadas.
+
+**Avaliação de interoperabilidade:** ✅ observação de fonte fixa e mapeamento causal por spell; ⚠️ JAR/mundo efetivo, morte cancelada, callbacks de terceiros, i-frames, identidade de dano derivado, persistência e limites de proc não foram testados; ⛔ sem hook público seguro, manter bloqueadas alterações per-perk de spawn/shape/quantidade de projéteis/cadeias de morte. O RPG Skill Tree permanece provider de progressão/perks, sem assumir o runtime do Iron's ou do Black Arcana.
+
 ## Current tranche override — nine causal dossiers (2026-10-15, PR #825 draft)
 
 A PR #825 passou de seis para **9/110 magias do Iron's com dossiê suplementar de auditoria causal source-pinned** (**8,18% desta categoria documental**). O novo grupo cobre **Root, Slow e Abyssal Shroud**. O checkpoint de seis arquivos abaixo é histórico, não substitui este estado mais recente. O universo semântico **não** aumentou: **1.856 objetos mágicos mínimos globais / 1.854 no escopo estrito** permanecem os mesmos do ledger canônico. Denominador global final **desconhecido (—%)**. Não confundir 9/110 fichas suplementares com implementação de perks, prova binária ou homologação da API. A PR #795 continua aberta com as 110 fichas individuais em outra branch.
