@@ -149,7 +149,9 @@ def audit(jar):
     with zipfile.ZipFile(io.BytesIO(blob)) as zipped:
         members=zipped.namelist()
         if len(members)!=len(set(members)):
-            raise AuditError('duplicate archive members')
+            from collections import Counter
+            duplicates={name:count for name,count in Counter(members).items() if count>1}
+            raise AuditError('duplicate archive members: '+json.dumps(duplicates,sort_keys=True))
         if OWNER.replace('.','/')+'.class' not in members:
             raise AuditError('APIRegistry owner class missing')
         meta=zipped.read('META-INF/neoforge.mods.toml')
