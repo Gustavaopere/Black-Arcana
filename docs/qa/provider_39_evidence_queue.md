@@ -1,5 +1,8 @@
 # 39 providers — fila de evidências para validação binária
 
+**Checkpoint 2026-10-14 — Vampirism 1.10.13:** [Java21 #38664546643](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38664546643) comprovou SHA físico igual ao publisher, **14+3+2 = 19 IDs/constructors/holders**, sem duplicidade ou desvio. Campanha **31/39 exatos / 8/39 condicionados**, mínimos semânticos **1856/1854** (+0). O coletor genérico de fingerprint permanece `registry_proofs_completed=0` porque não realiza inspeção de registry binário. Config, Loaded ActionHandler e Survival ⚠️.
+
+
 **Checkpoint 2026-10-14 — Reliquified Artifacts 1.0.8:** [Java21 #38662072936](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38662072936) comprova 48/48 owner→constructor SHA-exatos, 47 classes, 51 templates e 52 owner-scoped roots existentes. **30/39 exatos / 9/39 condicionados** e mínimos **1856 global / 1854 escopo** sem delta. O fingerprint collector genérico continua `registry_proofs_completed=0` porque não executa prova binária independente. Mixin injetado no pack, Relics runtime e Survival PENDING.
 
 

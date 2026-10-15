@@ -1,4 +1,6 @@
-# Vampirism 1.10.13 — exact publisher player-action registry audit
+# Vampirism 1.10.13 — histórico da preparação da prova exata
+
+**Gate de identidade estática posteriormente aprovado:** [Java 21 #38664546643](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38664546643) SHA-equal 19/19. [Dossiê exato](../../wiki/modpack-catalog/providers/✅-vampirism/EXACT-BINARY-PLAYER-ACTIONS-1.10.13.md). As instruções de auditoria pendente abaixo registram o plano antes da prova. Stage06.05 continua 🟡; Stage09 físico PENDING; sem gameplay PASS.
 
 **🟡 Audit in progress; no `COUNTED_EXACT` claim and no catalog promotion.**
 
