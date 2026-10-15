@@ -7,11 +7,18 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.slf4j.Logger;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,6 +43,9 @@ final class ArrowVolleyRuntimeEvidence {
     private static final ResourceLocation ARROW =
         ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "small_magic_arrow");
 
+    private static final String EXPECTED_IRONS_SHA256 =
+        "13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73";
+    private static final long MAX_FINGERPRINT_BYTES = 64L * 1024L * 1024L;
     private static final int MAX_TOTAL_SESSIONS = 16;
     private static final int MAX_ACTIVE_SESSIONS = 4;
     private static final int MAX_OBSERVATION_TICKS = 100;
@@ -48,6 +58,49 @@ final class ArrowVolleyRuntimeEvidence {
     private static int ambiguousArrowJoins;
 
     private ArrowVolleyRuntimeEvidence() {
+    }
+
+    /**
+     * Called once on ServerStartedEvent, not from a per-tick callback.
+     * Evidence is the actual loaded mod file, not a CDN filename guess.
+     * Logs metadata only; never prints absolute paths or stores JAR bytes.
+     */
+    static void emitProviderFingerprint() {
+        try {
+            var modFile = ModList.get().getModFileById("irons_spellbooks");
+            if (modFile == null) {
+                LOG.warn("{} type=provider_fingerprint mod_id=irons_spellbooks status=HASH_UNAVAILABLE error=MOD_FILE_MISSING",
+                    PREFIX);
+                return;
+            }
+            Path file = modFile.getFile().getFilePath();
+            if (!Files.isRegularFile(file)) {
+                LOG.warn("{} type=provider_fingerprint mod_id=irons_spellbooks status=HASH_UNAVAILABLE error=NOT_A_REGULAR_FILE",
+                    PREFIX);
+                return;
+            }
+            long size = Files.size(file);
+            if (size <= 0 || size > MAX_FINGERPRINT_BYTES) {
+                LOG.warn("{} type=provider_fingerprint mod_id=irons_spellbooks status=HASH_UNAVAILABLE error=SIZE_OUT_OF_BOUNDS bytes={}",
+                    PREFIX, size);
+                return;
+            }
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            try (var input = Files.newInputStream(file)) {
+                byte[] bytes = new byte[8192];
+                int n;
+                while ((n = input.read(bytes)) != -1) {
+                    digest.update(bytes, 0, n);
+                }
+            }
+            String sha256 = HexFormat.of().formatHex(digest.digest());
+            LOG.info("{} type=provider_fingerprint mod_id=irons_spellbooks status=OBSERVED file={} bytes={} sha256={} expected_match={}",
+                PREFIX, file.getFileName(), size, sha256,
+                EXPECTED_IRONS_SHA256.equals(sha256));
+        } catch (IOException | NoSuchAlgorithmException | RuntimeException failed) {
+            LOG.warn("{} type=provider_fingerprint mod_id=irons_spellbooks status=HASH_UNAVAILABLE error={}",
+                PREFIX, failed.getClass().getSimpleName());
+        }
     }
 
     static void install() {
