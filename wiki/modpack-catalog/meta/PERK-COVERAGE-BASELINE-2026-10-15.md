@@ -10,7 +10,7 @@ Novos dossiês, sem sobrescrever fichas individuais em `main` nem na PR #795:
 
 - [Firebolt 3.16.3](../providers/✅-irons-spells/audits/CAUSAL-PERKS-FIREBOLT-3.16.3.md) — `0,5×0,5` hitbox, `1,75` bloco/tick, dano `0,5×power` e fire ticks 60.
 - [Wall of Fire 3.16.3](../providers/✅-irons-spells/audits/CAUSAL-PERKS-WALL-OF-FIRE-3.16.3.md) — anchors/segmentos, `20` blocos por raycast, duração 240 ticks, risco de múltiplos hits/ticks, persistência e posição final a verificar.
-- [Teleport 3.16.3](../providers/✅-irons-spells/audits/CAUSAL-PERKS-TELEPORT-3.16.3.md) — alcance com soft-cap e multiplicadores, dois ramos de destino, `SpellTeleportEvent` com veto, implicações de VFX mesmo quando cancelado.
+- [Teleport 3.16.3](../providers/✅-irons-spells/audits/CAUSAL-PERKS-TELEPORT-3.16.3.md) — alcance com soft-cap e multiplicadores, dois ramos de destino, `SpellTeleportEvent` com veto e **setters de coordenadas herdados** comprovados no código-fonte NeoForge 1.21.1; equivalência física/API, revalidação de destino e VFX no veto continuam ⚠️.
 
 **Status:** ✅ conteúdo documental source-pinned enviado à PR; ⚠️ paridade de comportamento com JAR físico, config efetiva, efeitos/client/server/Survival e hooks de adaptação não testados; ⛔ alterações de raio/target/hitbox/tempo de terceiros sem seam seguro. A autoridade runtime continua Black Arcana para seus spells e cada provider para sua própria execução; RPG Skill Tree é sibling de perks/progressão.
 
