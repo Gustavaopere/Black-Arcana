@@ -45,6 +45,21 @@ class ExactIdTests(unittest.TestCase):
     def test_glyph_class_and_compiled_field(self):
         self.assertEqual("ars_nouveau:glyph_blink",
             audit.glyph_id(GLYPH_CTOR,"EffectBlink",{"EffectBlinkID":"glyph_blink"}))
+    def test_sense_magic_static_same_class_constructor(self):
+        dis="""public class EffectSenseMagic {
+  static {};
+    Code:
+       0: new #1 // class com/hollingsworth/arsnouveau/common/spell/effect/EffectSenseMagic
+       3: dup
+       4: getstatic #2 // Field com/hollingsworth/arsnouveau/common/lib/GlyphLib.EffectSenseMagicID:Ljava/lang/String;
+       7: ldc #3 // String Sense Magic
+       9: invokespecial #4 // Method "<init>":(Ljava/lang/String;Ljava/lang/String;)V
+      12: putstatic #5 // Field INSTANCE:Lcom/hollingsworth/arsnouveau/common/spell/effect/EffectSenseMagic;
+      15: return
+}"""
+        self.assertEqual("ars_nouveau:glyph_sense_magic",audit.glyph_id(dis,"EffectSenseMagic",{"EffectSenseMagicID":"glyph_sense_magic"}))
+        with self.assertRaises(audit.AuditError):
+            audit.glyph_id(dis.replace('Method "<init>"','Method "fake"'),"EffectSenseMagic",{"EffectSenseMagicID":"glyph_sense_magic"})
     def test_glyph_id_swap_fails(self):
         with self.assertRaisesRegex(audit.AuditError,"mismatch"):
             audit.reconcile({"EffectBlink":"ars_nouveau:glyph_blink"},
