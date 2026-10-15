@@ -130,7 +130,7 @@ final class ArrowVolleyRuntimeEvidence {
             }
             UUID controllerId = entity.getUUID();
             Trace trace = new Trace(level, controllerId, projectile.getOwner().getUUID(),
-                level.getGameTime());
+                level.getGameTime(), entity.tickCount);
             ACTIVE.put(controllerId, trace);
             begun++;
             LOG.info("{} type=begin controller={} dimension={} join_game_tick={} status=JOIN_CANDIDATE",
@@ -170,6 +170,11 @@ final class ArrowVolleyRuntimeEvidence {
 
         Trace trace = matches.get(0);
         trace.candidateJoins++;
+        // A positive projectile age at Join may signal a restored rather than a
+        // newly emitted arrow. This alone is insufficient to certify reload.
+        if (entity.tickCount != 0) {
+            trace.nonfreshArrowJoins++;
+        }
         if (trace.candidates.size() >= MAX_CANDIDATES_PER_SESSION) {
             trace.budgetExceeded = true;
             return;
@@ -199,10 +204,15 @@ final class ArrowVolleyRuntimeEvidence {
             Entity controller = trace.level.getEntity(trace.controller);
             if (controller != null) {
                 int age = controller.tickCount;
-                if (trace.previousAge != Integer.MIN_VALUE
-                    && now > trace.previousGameTick
-                    && age <= trace.previousAge) {
-                    trace.monotonic = false;
+                if (trace.previousAge != Integer.MIN_VALUE) {
+                    if (now != trace.previousGameTick + 1L) {
+                        trace.sampleGaps++;
+                    } else if (age != trace.previousAge + 1) {
+                        trace.ageStepMismatches++;
+                    }
+                    if (now > trace.previousGameTick && age <= trace.previousAge) {
+                        trace.monotonic = false;
+                    }
                 }
                 if (trace.firstAge == Integer.MIN_VALUE) {
                     trace.firstAge = age;
@@ -225,11 +235,12 @@ final class ArrowVolleyRuntimeEvidence {
             if (now - trace.joinGameTick >= MAX_OBSERVATION_TICKS
                 || trace.leaveSeen
                 || (controller == null && trace.observedTicks > 0)) {
-                LOG.info("{} type=end controller={} join_game_tick={} status={} observed_ticks={} first_age={} last_age={} age_monotonic={} candidate_joins={} confirmed_present_at_post={} ambiguous_joins={} candidate_budget_exceeded={} leave_seen={} removal={} join_counts_per_tick={} unmatched_global={} ambiguous_global={}",
-                    PREFIX, trace.controller, trace.joinGameTick,
+                LOG.info("{} type=end controller={} join_game_tick={} controller_join_age={} status={} observed_ticks={} first_age={} last_age={} age_monotonic={} sample_gaps={} age_step_mismatches={} nonfresh_arrow_joins={} candidate_joins={} confirmed_present_at_post={} ambiguous_joins={} candidate_budget_exceeded={} leave_seen={} removal={} join_counts_per_tick={} unmatched_global={} ambiguous_global={}",
+                    PREFIX, trace.controller, trace.joinGameTick, trace.controllerJoinAge,
                     trace.leaveSeen ? "LEFT_LEVEL" :
                         controller == null ? "ENTITY_NOT_FOUND" : "WINDOW_EXPIRED",
                     trace.observedTicks, trace.firstAge, trace.lastAge, trace.monotonic,
+                    trace.sampleGaps, trace.ageStepMismatches, trace.nonfreshArrowJoins,
                     trace.candidateJoins, trace.confirmedPresent, trace.ambiguousJoins,
                     trace.budgetExceeded, trace.leaveSeen, trace.removal, trace.byTick,
                     unmatchedArrowJoins, ambiguousArrowJoins);
@@ -246,6 +257,7 @@ final class ArrowVolleyRuntimeEvidence {
         final UUID controller;
         final UUID owner;
         final long joinGameTick;
+        final int controllerJoinAge;
         final Map<UUID, Boolean> candidates = new LinkedHashMap<>();
         final Map<Long, Integer> byTick = new LinkedHashMap<>();
         int firstAge = Integer.MIN_VALUE;
@@ -253,6 +265,9 @@ final class ArrowVolleyRuntimeEvidence {
         int previousAge = Integer.MIN_VALUE;
         long previousGameTick = Long.MIN_VALUE;
         int observedTicks;
+        int sampleGaps;
+        int ageStepMismatches;
+        int nonfreshArrowJoins;
         int candidateJoins;
         int confirmedPresent;
         int ambiguousJoins;
@@ -261,11 +276,13 @@ final class ArrowVolleyRuntimeEvidence {
         boolean leaveSeen;
         String removal = "NOT_OBSERVED";
 
-        Trace(ServerLevel level, UUID controller, UUID owner, long joinGameTick) {
+        Trace(ServerLevel level, UUID controller, UUID owner, long joinGameTick,
+              int controllerJoinAge) {
             this.level = level;
             this.controller = controller;
             this.owner = owner;
             this.joinGameTick = joinGameTick;
+            this.controllerJoinAge = controllerJoinAge;
         }
     }
 }
