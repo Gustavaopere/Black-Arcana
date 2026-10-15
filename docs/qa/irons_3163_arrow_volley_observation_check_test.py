@@ -89,6 +89,13 @@ class ArrowVolleyObservationParserTests(unittest.TestCase):
             join_counts_per_tick="{5=10, 10=5, 15=5, 20=5, 25=0}"), 1)
         self.assertIn("ROW_PATTERN_MISMATCH", result["fail_reasons"])
 
+    def test_accepts_nonzero_world_game_tick(self):
+        # Real servers do not normally start the spell at game tick zero.
+        rows = "{205=5, 210=5, 215=5, 220=5, 225=5}"
+        result = evaluate(simulated_log(1, join_game_tick=200,
+                                        join_counts_per_tick=rows), 1)
+        self.assertEqual("TRACE_CONSISTENT_NOT_GAMETEST", result["result"])
+
     def test_rejects_shifted_start_ticks(self):
         # Row gaps remain valid but the first emission is one tick too late.
         result = evaluate(simulated_log(1,
