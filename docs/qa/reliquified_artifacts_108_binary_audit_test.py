@@ -49,7 +49,7 @@ class ReliquifiedArtifacts108BinaryTest(unittest.TestCase):
         text="  17: ldc #1 // String umbrella\n  22: ldc #2 // String cloud_in_a_bottle\n"
         self.assertEqual({"umbrella","cloud_in_a_bottle"},audit.mixin_literals(text))
     def test_missing_one_inventory_ability_fails_closed(self):
-        body=audit.INVENTORY.read_text(encoding="utf8").replace("| 52 |", "| 200 |",1)
+        body="\n".join(line for line in audit.INVENTORY.read_text(encoding="utf8").splitlines() if not line.startswith("| 52 |"))
         with self.assertRaises(audit.AuditError):
             audit.expected_inventory(body)
 
