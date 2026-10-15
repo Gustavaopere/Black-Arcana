@@ -198,7 +198,7 @@ def inspect_registry(disassembly):
                          json.dumps({k:[MANIFEST[k],hits[k]] for k in hits if hits[k]!=MANIFEST[k]},sort_keys=True))
     return hits
 
-def verify_main_bus(disassembly):
+def verify_main_bus(disassembly, *, synthetic_local_bus=False):
     # Constrain to this mod's public @Mod constructor; a different method
     # merely mentioning register is not evidence.
     matches=list(re.finditer(r"^  public [^\n]*Bloodlines\([^\n]*IEventBus[^\n]*\);$",disassembly,re.M))
@@ -212,8 +212,9 @@ def verify_main_bus(disassembly):
     instr=code_instructions(rest[:end.start()])
     has_source=any(op=="getstatic" and "BloodlineActions.ACTIONS:" in comment for _,op,_,comment in instr)
     has_bus=any(op in ("aload_1","aload") and (op=="aload_1" or operand=="1") for _,op,operand,_ in instr)
-    has_hook=any(op in ("invokevirtual","invokeinterface") and
-                 "DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)V" in comment
+    exact_descriptor=("DeferredRegister.register:(LIEventBus;)V" if synthetic_local_bus
+                      else "DeferredRegister.register:(Lnet/neoforged/bus/api/IEventBus;)V")
+    has_hook=any(op in ("invokevirtual","invokeinterface") and exact_descriptor in comment
                  for _,op,_,comment in instr)
     if not (has_source and has_bus and has_hook):
         raise AuditError("mod constructor does not forward BloodlineActions.ACTIONS to IEventBus")
