@@ -8,6 +8,10 @@ on:
       - 'docs/qa/irons_3163_projectile_bytecode.py'
       - 'docs/qa/minecraft_1211_entity_tick_proof.py'
       - 'docs/qa/irons_3163_arrow_volley_tick_model_test.py'
+      - 'docs/qa/irons_3163_arrow_volley_observation_check.py'
+      - 'docs/qa/irons_3163_arrow_volley_observation_check_test.py'
+      - 'src/catalogQaProbe/java/dev/gustavopere/blackarcana/qa/catalog/ArrowVolleyRuntimeEvidence.java'
+      - 'src/catalogQaProbe/java/dev/gustavopere/blackarcana/qa/catalog/CatalogQaProbeMod.java'
       - 'docs/qa/irons-3163-projectile-bytecode-pending.md'
   workflow_dispatch:
 
@@ -32,6 +36,25 @@ jobs:
 
       - name: Test source-constrained Arrow Volley tick model (not GameTest)
         run: python3 docs/qa/irons_3163_arrow_volley_tick_model_test.py
+
+      - name: Fail-closed parser synthetic tests (not GameTests)
+        run: python3 docs/qa/irons_3163_arrow_volley_observation_check_test.py
+
+      - name: Compile removable runtime observer and verify production isolation
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./gradlew --no-daemon catalogQaProbeJar jar
+          CATALOG_JAR="$(find build/libs -maxdepth 1 -name 'black_arcana_catalog_qa-*.jar' -print -quit)"
+          PROD_JAR="$(find build/libs -maxdepth 1 -name 'black_arcana-*.jar' -print -quit)"
+          test -n "$CATALOG_JAR"
+          test -n "$PROD_JAR"
+          jar tf "$CATALOG_JAR" | grep -Fx 'dev/gustavopere/blackarcana/qa/catalog/ArrowVolleyRuntimeEvidence.class'
+          if jar tf "$PROD_JAR" | grep -Fq 'ArrowVolleyRuntimeEvidence'; then
+            echo 'QA-only passive observer leaked into production'
+            exit 1
+          fi
+          echo 'Removable QA probe build/isolation: PASS'
 
       - name: Download publisher CurseForge file ID 8680204
         shell: bash
