@@ -88,7 +88,7 @@ def validate(obj,stem,group):
             raise AuditError("generic ritual provider ID mismatch "+stem)
         if stem in SUMMONS:
             output=(MOD_ID+":" if stem in {"summon_wraith","summon_slimy_slug","summon_raven"} else "minecraft:")+stem.removeprefix("summon_")
-            if obj.get("output")!=output or type(obj.get("count")) is not int or obj["count"]<1:
+            if obj.get("output")!=output or type(obj.get("count",1)) is not int or obj.get("count",1)!=(3 if stem in {"summon_husk","summon_drowned","summon_slimy_slug","summon_raven"} else 1):
                 raise AuditError("summon output/count mismatch "+stem)
         if stem in CRAFTING and (not isinstance(obj.get("result"),dict) or not isinstance(obj["result"].get("id"),str) or obj.get("health_requirement") not in (20,40)):
             raise AuditError("crafting ritual result/health mismatch "+stem)
