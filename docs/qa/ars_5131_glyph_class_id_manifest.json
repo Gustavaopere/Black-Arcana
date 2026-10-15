@@ -40,5 +40,19 @@
   "EffectSmelt": "ars_nouveau:glyph_smelt",
   "EffectLeap": "ars_nouveau:glyph_leap",
   "EffectDelay": "ars_nouveau:glyph_delay",
-  "EffectRedstone": "ars_nouveau:glyph_redstone_signal"
+  "EffectRedstone": "ars_nouveau:glyph_redstone_signal",
+  "EffectIntangible": "ars_nouveau:glyph_intangible",
+  "EffectInvisibility": "ars_nouveau:glyph_invisibility",
+  "AugmentDurationDown": "ars_nouveau:glyph_duration_down",
+  "EffectWither": "ars_nouveau:glyph_wither",
+  "EffectExchange": "ars_nouveau:glyph_exchange",
+  "EffectCraft": "ars_nouveau:glyph_craft",
+  "EffectFlare": "ars_nouveau:glyph_flare",
+  "EffectColdSnap": "ars_nouveau:glyph_cold_snap",
+  "EffectConjureWater": "ars_nouveau:glyph_conjure_water",
+  "EffectGravity": "ars_nouveau:glyph_gravity",
+  "EffectCut": "ars_nouveau:glyph_cut",
+  "EffectCrush": "ars_nouveau:glyph_crush",
+  "EffectSummonWolves": "ars_nouveau:glyph_summon_wolves",
+  "EffectSummonSteed": "ars_nouveau:glyph_summon_steed"
 }
