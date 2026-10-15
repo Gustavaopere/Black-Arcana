@@ -6,6 +6,7 @@ It does NOT certify each ResourceLocation ID, registry execution or gameplay.
 """
 from __future__ import annotations
 import argparse
+from collections import Counter
 import hashlib
 import io
 import json
@@ -133,6 +134,16 @@ def parse(disassembly, spells=SPELL_CLASSES, rituals=RITUAL_CLASSES, enforce_cou
     return {'spell_class_owners':got_spells, 'ritual_class_owners':got_rituals,
             'count_spell_parts':len(got_spells),'count_rituals':len(got_rituals)}
 
+def check_duplicate_members(members):
+    # SHA-pinned 5.13.1 publisher bundles six copies of each legal-notice
+    # document. These are not registration-bearing paths or executable classes.
+    duplicates={name:count for name,count in Counter(members).items() if count>1}
+    permitted={'META-INF/LICENSE.txt':6, 'META-INF/NOTICE.txt':6}
+    if duplicates and duplicates != permitted:
+        raise AuditError('duplicate archive members outside exact legal metadata allowlist: '
+                         +json.dumps(duplicates,sort_keys=True))
+    return duplicates
+
 def audit(jar):
     if jar.name!=FILENAME or jar.is_symlink() or not jar.is_file():
         raise AuditError('unexpected/unsafe publisher JAR')
@@ -148,10 +159,7 @@ def audit(jar):
         raise AuditError('publisher SHA1 differs from installed modlist')
     with zipfile.ZipFile(io.BytesIO(blob)) as zipped:
         members=zipped.namelist()
-        if len(members)!=len(set(members)):
-            from collections import Counter
-            duplicates={name:count for name,count in Counter(members).items() if count>1}
-            raise AuditError('duplicate archive members: '+json.dumps(duplicates,sort_keys=True))
+        duplicate_metadata=check_duplicate_members(members)
         if OWNER.replace('.','/')+'.class' not in members:
             raise AuditError('APIRegistry owner class missing')
         meta=zipped.read('META-INF/neoforge.mods.toml')
@@ -171,7 +179,7 @@ def audit(jar):
         'status':'PASS','evidence_class':'SHA_MATCHED_COMPILED_REGISTRATION_CLASS_CALLS_ONLY',
         'filename':FILENAME,'mod_id':'ars_nouveau','version':'5.13.1',
         'physical_sha1':sha1,'publisher_sha256':hashlib.sha256(blob).hexdigest(),
-        'bytes':len(blob),**classes,
+        'bytes':len(blob),'duplicate_legal_metadata':duplicate_metadata,**classes,
         'not_verified':['per-class ResourceLocation IDs','loaded GlyphRegistry/RitualRegistry',
                         'configuration and player learning','mana and Source settlement',
                         'spell composition/casting and rituals in Survival',
