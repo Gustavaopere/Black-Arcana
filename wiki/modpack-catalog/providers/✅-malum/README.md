@@ -1,8 +1,15 @@
 # Malum 1.8.2 — provider catalog
 
+## Physical 1.8.2 publisher evidence — 2026-10-15
+
+**33ª prova física — Malum 1.8.2 (2026-10-15):** [Java21 #38679501150](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38679501150) SUCCESS com publisher Modrinth BIbVs1fo SHA-1 = físico sibling #389 (7bea3f874f186a17ad3e271df145c179e81c2a1d), 33.585.331 bytes, SHA-256 38f4fa53e8da9e3d67aa5f54f98fd7c83cb342f0463ce5c63a6864229c88efa8. Bytecode: **26/26 SpiritRiteType IDs**, campos RiteHolder e lambdas de fábrica, sem desvios; [dossiê estático exato](EXACT-BINARY-SPIRIT-RITES-1.8.2.md). **+0 novos objetos**; 39-provider **33/39 COUNTED_EXACT / 6/39 condicionado**; mínimo estrito **1856 global / 1854 escopo** preservado. Conflito LGPLv3 vs All Rights Reserved mantém source/API implementation reuse bloqueado; Malum continua authority exclusiva de spirits/rites/Geas/Locus. Stage 06.05 🟡, Stage09 runtime/Survival ⚠️.
+
+**Current catalog state: ✅ COUNTED_EXACT static base rites, 26/26; ⚠️ live runtime/Survival pending.** The historical release-bounded history below remains the factual source-provenance layer, not the current highest binary identity confidence. No safe source-derived integration API has been promoted.
+
+
 ## Status
 
-`RELEASE 1.8.2 / RELEASE-BOUNDED CORE REGISTRY INVENTORY CLOSED / SPECIAL RITES PLAYER-FACING PROVEN / WHOLE-INTERVAL PATH HISTORY VERIFIED / PUBLISHER 1.8+1.8.2 CHANGELOG SURFACE VERIFIED / SOURCE-LICENSE CONFLICT BLOCKS IMPLEMENTATION-INTERNAL PROMOTION / RUNTIME/API QA PENDING`
+`RELEASE 1.8.2 / COUNTED_EXACT STATIC COMPILED 26/26 RITES / SPECIAL RITES PLAYER-FACING PROVEN / WHOLE-INTERVAL PATH HISTORY VERIFIED / PUBLISHER 1.8+1.8.2 CHANGELOG SURFACE VERIFIED / SOURCE-LICENSE CONFLICT BLOCKS IMPLEMENTATION-INTERNAL PROMOTION / RUNTIME/API QA PENDING`
 
 ## Installed authority
 

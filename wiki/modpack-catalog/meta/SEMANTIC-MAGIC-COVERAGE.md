@@ -1,5 +1,12 @@
 # Semantic Magic Coverage Ledger
 
+## Malum 1.8.2 compiled 26 RiteHolder static identities (2026-10-15)
+
+**33ª prova física — Malum 1.8.2 (2026-10-15):** [Java21 #38679501150](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38679501150) SUCCESS com publisher Modrinth BIbVs1fo SHA-1 = físico sibling #389 (7bea3f874f186a17ad3e271df145c179e81c2a1d), 33.585.331 bytes, SHA-256 38f4fa53e8da9e3d67aa5f54f98fd7c83cb342f0463ce5c63a6864229c88efa8. Bytecode: **26/26 SpiritRiteType IDs**, campos RiteHolder e lambdas de fábrica, sem desvios; [dossiê estático exato](../providers/✅-malum/EXACT-BINARY-SPIRIT-RITES-1.8.2.md). **+0 novos objetos**; 39-provider **33/39 COUNTED_EXACT / 6/39 condicionado**; mínimo estrito **1856 global / 1854 escopo** preservado. Conflito LGPLv3 vs All Rights Reserved mantém source/API implementation reuse bloqueado; Malum continua authority exclusiva de spirits/rites/Geas/Locus. Stage 06.05 🟡, Stage09 runtime/Survival ⚠️.
+
+Historical release-bounded 26 entries below refer to the same roots and add no new semantic objects.
+
+
 ## Eidolon 0.5.0.2 exact packaged chant/ritual recipes (2026-10-14)
 
 **32ª prova binária — Eidolon: Repraised 0.5.0.2 (2026-10-14):** [Java21 #38669010587](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38669010587) **SUCCESS** sobre JAR publisher SHA1-igual à modlist sibling #246 (`1f05ffd2f9fa672dc2ecff3c32de092cdbcde989`), **4.050.310 bytes**, SHA-256 `8acd575046f7446dcdd4640c83b3022150ab92e5f25878b3b330e98358563bac`: **18/18 chants + 24/24 ritual JSONs** (10 generic, 11 summon, 2 crafting, 1 locator), **4 conversões dependentes não aditivas**, 8 fixtures PASS e nenhum desvio. [Dossiê de identidade estática](../providers/✅-eidolon-repraised/EXACT-PACKAGED-CHANT-RITUAL-RECIPES-0.5.0.2.md). As **42 raízes já contadas** mudam `COUNTED_SOURCE_PINNED → COUNTED_EXACT` para **recipe resource identity** apenas, **+0** novas magias; campanha **✅ 32/39 exatos / ⚠️ 7/39 condicionados**, mínimos **1856 global / 1854 escopo**. Registro técnico `Spells.init` 20 itens **não comprovado no bytecode**; RecipeManager e Survival/settlement/config/Stage09 ainda ⚠️, Stage06.05 🟡.
@@ -573,7 +580,7 @@ Arithmetic cross-check by provider family:
 | [Bloodlines](../providers/✅-bloodlines/README.md) | 3.0.9 | 28 | `COUNTED_SOURCE_PINNED` | 29 action registrations minus Sorcerous Strike; exact source registers its action/skill/node/config but omits the node from the configured Gravebound tree and from all rank-default grants, so it is not normally survival-reachable in this build |
 | [Werewolves](../providers/✅-werewolves/README.md) | 2.0.3.3 | 8 | `COUNTED_SOURCE_PINNED` | 3 player form actions + Howling + Rage + Sense + Fear + Leap; exact source proves Leap's survival-tree node and dedicated server input path; Hide Name remains presentation-only |
 | [Hexalia](../providers/✅-hexalia/README.md) | 1.3.7 | 29 | `COUNTED_EXACT` | release-correlated 1.3.7 source closes 23 player-facing Nature's Ritual identities + 6 Celestial Infusions; brews, equipment, passive/proc effects and downstream entity/item behavior remain excluded by metric scope |
-| [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | `COUNTED_RELEASE_BOUNDED` | release-bounded registry evidence closes 26 base `SpiritRiteType` identities; exact release-bounded `TotemMagicEntries` separately places both special Arcane rites in `ArcanaProgressionScreen` with `SpiritRiteRecipePage`, proving they are player-facing rites rather than proxy slots; 37 Geas effect types and 9 spirit resource/type identities remain excluded |
+| [Malum](../providers/✅-malum/README.md) | 1.8.2 | 26 | `COUNTED_EXACT` | [26 physical compiled Spirit Rites, RiteHolder/lambda matched](../providers/✅-malum/EXACT-BINARY-SPIRIT-RITES-1.8.2.md); source-implementation license unresolved, live Malum runtime/Survival ⚠️ |
 | **Strict total** |  | **1849** |  |  |
 
 ### Bloodlines 3.0.9 Sorcerous Strike reachability closure
