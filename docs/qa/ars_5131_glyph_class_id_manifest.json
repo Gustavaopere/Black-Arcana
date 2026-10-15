@@ -1,0 +1,16 @@
+{
+  "MethodProjectile": "ars_nouveau:glyph_projectile",
+  "MethodTouch": "ars_nouveau:glyph_touch",
+  "MethodSelf": "ars_nouveau:glyph_self",
+  "MethodPantomime": "ars_nouveau:glyph_pantomime",
+  "EffectBreak": "ars_nouveau:glyph_break",
+  "EffectHarm": "ars_nouveau:glyph_harm",
+  "EffectIgnite": "ars_nouveau:glyph_ignite",
+  "EffectPhantomBlock": "ars_nouveau:glyph_phantom_block",
+  "EffectHeal": "ars_nouveau:glyph_heal",
+  "EffectGrow": "ars_nouveau:glyph_grow",
+  "EffectKnockback": "ars_nouveau:glyph_gust",
+  "EffectLight": "ars_nouveau:glyph_light",
+  "EffectDispel": "ars_nouveau:glyph_dispel",
+  "EffectLaunch": "ars_nouveau:glyph_launch"
+}
