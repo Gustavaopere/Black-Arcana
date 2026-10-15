@@ -33,6 +33,14 @@ Em mundo dedicado e controlado, efetuar manualmente **um cast Arrow Volley váli
 
 A medição é passiva: **não** chama `onCast`, `addFreshEntity`, `discard`, `setOwner`, muda dano ou reescreve `SummonManager`. O resultado negativo pode significar ausência de fixture, cast negado, evento não disparado ou entidade carregada de disco; não inverter ausência em sucesso. O observador não certifica reload de entidades, API de buffs per-player, custos, cooldown ou propriedades internas do projectile.
 
+## 3A. Regressão de offset temporal e cobertura do observador (2026-10-15)
+
+**Falha reproduzida em testes sintéticos:** [Actions #38821246417](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38821246417) terminou com **FAIL (5 regressões)** porque o analisador original podia aceitar séries artificialmente deslocadas no tempo, contadores iniciais tardios, amostras insuficientes ou descarte muito posterior ao período nominal. Isso **não é bug de Arrow Volley no Minecraft**: é defeito comprovado no **validador do observador de QA**.
+
+**Correção aplicável somente à fixture de testes:** a mensagem `type=end` passou a conter `join_game_tick` originalmente registrado em `type=begin`. O validador exige fileiras exatamente nos ticks `join_game_tick + 5, +10, ..., +5×rows` (não apenas separações de 5 ticks), amostragem desde `first_age=0` ou `1`, pelo menos `5×rows−1` amostras e `last_age` em `[5×rows, 5×rows+1]`. Qualquer dado ausente, cancelamento, chunk unload ou sequência incompatível permanece **FAIL_CLOSED**. O tempo observado é `ServerLevel.getGameTime` e não medição direta do início de cast; a hipótese do offset exato depende de execução real e poderá requerer ajuste **somente com prova física**, nunca relaxando automaticamente o gate.
+
+O teste de regressão agora possui 15 casos, incluindo cinco casos **RED** comprovados no workflow citado. **Resultado GREEN deve ser buscado no último run após o commit de correção**, não inferido desta documentação. A comparação dos ticks elimina falso PASS para fileiras deslocadas, **não prova** que eventos Join foram causados pelo controlador: correlação owner/proximidade continua ⚠️ heurística.
+
 ## 4. Processamento e critérios de aceite do trace
 
 Preservar log original integral do **servidor de QA**, com identidade e dados privados redigidos antes de compartilhamento. Executar, na raiz do repositório:
