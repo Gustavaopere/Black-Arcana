@@ -128,7 +128,7 @@ class ArrowVolleyObservationParserTests(unittest.TestCase):
 
     def test_controller_filter(self):
         log = simulated_log(1) + "\n" + simulated_log(1,
-            controller="00000000-0000-4000-8000-000000000002")
+            controller="00000000-0000-4000-8000-000000000002").splitlines()[-1]
         self.assertEqual("TRACE_CONSISTENT_NOT_GAMETEST",
                          evaluate(log, 1, controller=UUID)["result"])
 
