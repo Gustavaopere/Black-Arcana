@@ -2,6 +2,18 @@
 
 **Natureza:** snapshot de coordenação de catálogo e dos eixos de engenharia de perks, sem alterar os contadores canônicos. A fonte operacional dinâmica continua em `SEMANTIC-MAGIC-COVERAGE.md`, `CATALOG-COVERAGE-CURRENT.md` e `plans/STATUS.md`; atualizar esta ficha após reconciliação, sem assumir que é o último checkpoint.
 
+## Current tranche override — six causal dossiers (2026-10-15, PR #825 draft)
+
+A branch mantém **6/110 spells do Iron's com fichas suplementares de auditoria causal source-pinned**: Fireball, Chain Lightning, Counterspell, **Firebolt, Wall of Fire e Teleport**. Isso é **5,45% das 110 identidades** com *este tipo específico* de aprofundamento nesta PR, **não** percentual de APIs mutáveis, implementação de perks ou QA. A tranche anterior 3/110 é preservada como checkpoint histórico abaixo. Nenhum novo objeto semântico mágico foi introduzido: o mínimo do ledger permanece **1.856 global / 1.854 no escopo restrito**, sem denominador global final (—%). As **110 fichas da PR #795** continuam em draft, num trabalho paralelo distinto.
+
+Novos dossiês, sem sobrescrever fichas individuais em `main` nem na PR #795:
+
+- [Firebolt 3.16.3](../providers/✅-irons-spells/audits/CAUSAL-PERKS-FIREBOLT-3.16.3.md) — `0,5×0,5` hitbox, `1,75` bloco/tick, dano `0,5×power` e fire ticks 60.
+- [Wall of Fire 3.16.3](../providers/✅-irons-spells/audits/CAUSAL-PERKS-WALL-OF-FIRE-3.16.3.md) — anchors/segmentos, `20` blocos por raycast, duração 240 ticks, risco de múltiplos hits/ticks, persistência e posição final a verificar.
+- [Teleport 3.16.3](../providers/✅-irons-spells/audits/CAUSAL-PERKS-TELEPORT-3.16.3.md) — alcance com soft-cap e multiplicadores, dois ramos de destino, `SpellTeleportEvent` com veto, implicações de VFX mesmo quando cancelado.
+
+**Status:** ✅ conteúdo documental source-pinned enviado à PR; ⚠️ paridade de comportamento com JAR físico, config efetiva, efeitos/client/server/Survival e hooks de adaptação não testados; ⛔ alterações de raio/target/hitbox/tempo de terceiros sem seam seguro. A autoridade runtime continua Black Arcana para seus spells e cada provider para sua própria execução; RPG Skill Tree é sibling de perks/progressão.
+
 ## Authority consultada para esta tranche
 
 - `Black-Arcana/main@511ec03f0da62ebfc1722825def50354594976c3`.
