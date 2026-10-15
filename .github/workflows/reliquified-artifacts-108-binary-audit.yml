@@ -7,6 +7,9 @@ on:
       - '.github/workflows/reliquified-artifacts-108-binary-audit.yml'
       - 'docs/qa/reliquified_artifacts_108_binary_audit.py'
       - 'docs/qa/reliquified_artifacts_108_binary_audit_test.py'
+      - 'docs/qa/reliquified_artifacts_108_owner_link_audit.py'
+      - 'docs/qa/reliquified_artifacts_108_owner_link_audit_test.py'
+      - 'docs/qa/fixtures/ReArtOwnerFixture.java'
       - 'wiki/modpack-catalog/providers/✅-reliquified-artifacts/ABILITY-INVENTORY-1.0.8.md'
   push:
     branches: [main]
@@ -14,6 +17,9 @@ on:
       - '.github/workflows/reliquified-artifacts-108-binary-audit.yml'
       - 'docs/qa/reliquified_artifacts_108_binary_audit.py'
       - 'docs/qa/reliquified_artifacts_108_binary_audit_test.py'
+      - 'docs/qa/reliquified_artifacts_108_owner_link_audit.py'
+      - 'docs/qa/reliquified_artifacts_108_owner_link_audit_test.py'
+      - 'docs/qa/fixtures/ReArtOwnerFixture.java'
   workflow_dispatch:
 
 permissions:
@@ -31,6 +37,8 @@ jobs:
           java-version: '21'
       - name: Run safety and identity fixtures
         run: python3 docs/qa/reliquified_artifacts_108_binary_audit_test.py -v
+      - name: Prove compiled owner-to-lambda-constructor mapping (synthetic regression)
+        run: python3 docs/qa/reliquified_artifacts_108_owner_link_audit_test.py -v
       - name: Download exact Modrinth 1.0.8 publisher JAR and require physical SHA-1
         shell: bash
         run: |
@@ -66,11 +74,18 @@ jobs:
           python3 docs/qa/reliquified_artifacts_108_binary_audit.py \
             --jar build/reliquified-artifacts-108/reliquified_artifacts-1.21.1-1.0.8.jar \
             --output build/reliquified-artifacts-108/evidence.json
+      - name: Audit 48 owner-to-constructor links from compiled Mixin bootstrap
+        run: |
+          python3 docs/qa/reliquified_artifacts_108_owner_link_audit.py \
+            --jar build/reliquified-artifacts-108/reliquified_artifacts-1.21.1-1.0.8.jar \
+            --output build/reliquified-artifacts-108/owner-link-evidence.json
       - name: Upload JSON only, never redistribute JAR
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: reliquified-artifacts-108-binary-${{ github.sha }}
-          path: build/reliquified-artifacts-108/evidence.json
+          path: |
+            build/reliquified-artifacts-108/evidence.json
+            build/reliquified-artifacts-108/owner-link-evidence.json
           if-no-files-found: ignore
           retention-days: 14
