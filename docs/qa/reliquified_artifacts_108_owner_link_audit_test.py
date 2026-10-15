@@ -35,6 +35,14 @@ class ExactOwnerLinkTests(unittest.TestCase):
         self.assertEqual({"eternal_steak":"FoodItem"},
                          proof.switch_mapping(self.bytecode,"redirectRegister",bootstrap))
 
+    def test_hashcode_tableswitch_is_distinct_from_case_tableswitch(self):
+        method=proof.code_of_method(self.bytecode,"compactHash")
+        self.assertEqual(2,method.count("tableswitch"))
+        actual=proof.switch_mapping(self.bytecode,"compactHash",
+                                    proof.bootstrap_ctors(self.bytecode))
+        self.assertEqual({"owner_45":"HatItem","owner_46":"ToolItem",
+                          "owner_47":"FoodItem"},actual)
+
     def test_wrong_constructor_is_not_explained_away_by_matching_owner_literals(self):
         boot=proof.bootstrap_ctors(self.bytecode)
         mapping=proof.switch_mapping(self.bytecode,"redirectWearableItem",boot)
