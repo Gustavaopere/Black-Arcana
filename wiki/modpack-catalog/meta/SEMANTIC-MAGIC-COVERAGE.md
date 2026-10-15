@@ -1,5 +1,10 @@
 # Semantic Magic Coverage Ledger
 
+## Ars Nouveau 5.13.1 exact 109 static identities (2026-10-15)
+
+**34ª prova física — Ars Nouveau 5.13.1 (2026-10-15):** [Java21 #38691889186](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38691889186) SUCCESS em JAR publisher SHA-1 idêntico ao físico sibling #047 (`02782d071ee5fab3b5c4b8ced67b7e1748277dfd`), 20.107.711 bytes, SHA-256 `99dff85e8778f7ae21dfd51cdedadf20f555a834fc757c0afe5f03c10eea96f2`: **85/85 Glyph Parts + 24/24 rituais, 109 IDs únicos classe→ResourceLocation compilados**, 15 regressões sintéticas novas, 12 anteriores, zero divergências. [Dossiê físico estático](../providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md). Mesmos 109 objetos já contados, `COUNTED_SOURCE_PINNED → COUNTED_EXACT` **apenas para identidade binária estática** (+0). Campanha **34/39 exatos / 5/39 condicionados**, mínimos **1.856 global / 1.854 escopo** inalterados; loaded registry/config/mana/Source/Survival Stage09 ⚠️, Stage06.05 🟡.
+
+
 ## Malum 1.8.2 compiled 26 RiteHolder static identities (2026-10-15)
 
 **33ª prova física — Malum 1.8.2 (2026-10-15):** [Java21 #38679501150](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38679501150) SUCCESS com publisher Modrinth BIbVs1fo SHA-1 = físico sibling #389 (7bea3f874f186a17ad3e271df145c179e81c2a1d), 33.585.331 bytes, SHA-256 38f4fa53e8da9e3d67aa5f54f98fd7c83cb342f0463ce5c63a6864229c88efa8. Bytecode: **26/26 SpiritRiteType IDs**, campos RiteHolder e lambdas de fábrica, sem desvios; [dossiê estático exato](../providers/✅-malum/EXACT-BINARY-SPIRIT-RITES-1.8.2.md). **+0 novos objetos**; 39-provider **33/39 COUNTED_EXACT / 6/39 condicionado**; mínimo estrito **1856 global / 1854 escopo** preservado. Conflito LGPLv3 vs All Rights Reserved mantém source/API implementation reuse bloqueado; Malum continua authority exclusiva de spirits/rites/Geas/Locus. Stage 06.05 🟡, Stage09 runtime/Survival ⚠️.
@@ -510,7 +515,7 @@ Arithmetic cross-check by provider family:
 
 | Provider | Installed/current line | Count | State | Semantic basis |
 |---|---|---:|---|---|
-| [Ars Nouveau](../providers/✅-ars-nouveau/README.md) | 5.13.1 | 109 | `COUNTED_SOURCE_PINNED` | 5 Forms + 13 Augments + 67 Effects + 24 rituals; arbitrary composed chains excluded |
+| [Ars Nouveau](../providers/✅-ars-nouveau/README.md) | 5.13.1 | 109 | `COUNTED_EXACT` | 5 Forms + 13 Augments + 67 Effects + 24 rituals; 109 SHA-exact static class→ID roots; arbitrary composed chains excluded, runtime/Survival pending |
 | [StarbuncleMania](../providers/✅-starbunclemania/README.md) | 1.5.8 | 2 | `COUNTED_EXACT` | physical SHA-1 equals exact publisher File `8778598`; exact artifact closes two unconditional Ars `AbstractEffect` glyphs plus their two packaged `ars_nouveau:glyph` acquisition recipes |
 | [Ars Additions](../providers/✅-ars-additions/README.md) | 21.3.0 | 5 | `COUNTED_EXACT` | 3 glyphs + 2 rituals; host 5.13.1 glyph prefix directly verified; +0 previously counted |
 | [Ars Controle](../providers/✅-ars-controle/README.md) | 1.6.16 | 9 | `COUNTED_EXACT` | [9/9 glyphs físicos](../providers/✅-ars-controle/EXACT-BINARY-GLYPHS-1.6.16.md), 1 effect + 8 filters, static registry only; runtime ⚠️ |

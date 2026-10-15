@@ -1,5 +1,7 @@
 # 39 providers — fila de evidências para validação binária
 
+**Ars Nouveau compiled ID checkpoint 2026-10-15:** [Java21 #38691889186](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38691889186) SUCCESS em 109/109 pares owner→ResourceLocation binários (85 glyphs + 24 rituals). Campaign **34/39 exact / 5/39 conditional**; +0 objetos novos, mínimo 1856/1854. Fingerprint collector continua reportando `registry_proofs_completed=0` porque não executa a auditoria independente. Config/Survival ⚠️.
+
 **Malum static binary checkpoint 2026-10-15:** [Java21 #38679501150](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38679501150) confirms 26/26 physical registry IDs/holder/lambda links. Campaign **33/39 exact, 6/39 conditional**; no newly added semantic roots, minima 1856/1854. General fingerprint collector still returns registry_proofs_completed=0; this independent binary audit is separate. License and loaded-provider/Survival acceptance ⚠️.
 
 

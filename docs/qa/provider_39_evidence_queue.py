@@ -25,7 +25,8 @@ CROSSWALK_LINE = re.compile(r'^\| (?P<provider>[^|]+) \| #\d{3} \| \x60(?P<filen
 MATRIX_LINE = re.compile(r'^\| \[(?P<provider>[^|\]]+)\]\([^|)]+\) \| (?P<version>[^|]+) \| (?P<count>\d+) \| (?P<evidence>COUNTED_SOURCE_PINNED|COUNTED_RELEASE_BOUNDED|COUNTED_EXACT) \|')
 # Only these independently audited identities can appear as COUNTED_EXACT in the
 # frozen campaign. No arbitrarily supplied exact row or fingerprint is trusted.
-KNOWN_EXACT = {"Ypsilon's Fundamentalism": ('1.1.7.1', 15),
+KNOWN_EXACT = {'Ars Nouveau': ('5.13.1', 109),
+               "Ypsilon's Fundamentalism": ('1.1.7.1', 15),
                "Fire's Ender Expansion": ('2.4.1', 11),
                'IronSable': ('1.2.0', 7),
                'Ars Elemental': ('0.7.10.1', 47),
