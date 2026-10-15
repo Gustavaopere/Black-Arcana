@@ -1,0 +1,79 @@
+name: Eidolon Repraised 0.5.0.2 physical 42 chant and ritual recipes
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/eidolon-0502-physical-recipes.yml'
+      - 'docs/qa/eidolon_0502_publisher_recipes_audit.py'
+      - 'docs/qa/eidolon_0502_publisher_recipes_audit_test.py'
+      - 'wiki/modpack-catalog/providers/✅-eidolon-repraised/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/eidolon-0502-physical-recipes.yml'
+      - 'docs/qa/eidolon_0502_publisher_recipes_audit.py'
+      - 'docs/qa/eidolon_0502_publisher_recipes_audit_test.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compiled_package_ritual_recipe_proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fail-closed synthetic recipe manifest tests
+        run: python3 docs/qa/eidolon_0502_publisher_recipes_audit_test.py -v
+      - name: Retrieve official Modrinth 0.5.0.2 publisher file with exact installed SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/eidolon-0502
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 80 \
+            'https://api.modrinth.com/v2/version/e82la8yu' \
+            --output build/eidolon-0502/version.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlparse
+          directory=Path("build/eidolon-0502")
+          doc=json.loads((directory/"version.json").read_text(encoding="utf8"))
+          assert doc["id"]=="e82la8yu" and doc["project_id"]=="eWX2m1eM"
+          assert doc["version_number"]=="0.5.0.2"
+          assert "neoforge" in doc["loaders"]
+          assert "1.21.1" in doc["game_versions"]
+          matches=[v for v in doc["files"] if v["filename"]=="eidolon_repraised-1.21.1-0.5.0.2.jar"]
+          assert len(matches)==1
+          item=matches[0]
+          assert item["hashes"]["sha1"]=="1f05ffd2f9fa672dc2ecff3c32de092cdbcde989"
+          address=item["url"]
+          u=urlparse(address)
+          assert u.scheme=="https" and u.hostname in ("cdn.modrinth.com","cdn-raw.modrinth.com")
+          (directory/"url.txt").write_text(address,encoding="utf8")
+          PY
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            "$(cat build/eidolon-0502/url.txt)" \
+            --output build/eidolon-0502/eidolon_repraised-1.21.1-0.5.0.2.jar
+          echo '1f05ffd2f9fa672dc2ecff3c32de092cdbcde989  build/eidolon-0502/eidolon_repraised-1.21.1-0.5.0.2.jar' | sha1sum --check
+      - name: Read-only audit publisher-packaged 18 chants plus 24 ritual JSONs
+        run: |
+          python3 docs/qa/eidolon_0502_publisher_recipes_audit.py \
+            --jar build/eidolon-0502/eidolon_repraised-1.21.1-0.5.0.2.jar \
+            --output build/eidolon-0502/evidence.json
+      - name: Upload JSON evidence only (not any proprietary JAR)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: eidolon-0502-recipe-evidence
+          path: build/eidolon-0502/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
