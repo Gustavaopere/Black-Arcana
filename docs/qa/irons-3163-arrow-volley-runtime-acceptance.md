@@ -1,6 +1,6 @@
 # Iron's 3.16.3 — protocolo de observação Arrow Volley no modpack real
 
-**Alvo:** Minecraft 1.21.1 · NeoForge **21.1.248** · Java 21 · `irons_spellbooks` **3.16.3** (artefato publicado de referência CurseForge file **8680204**). **Estado:** ✅ fixture compilada, 20/20 testes sintéticos; ⚠️ observação física pendente; ⚠️ GameTest / execução em servidor exato / fingerprint do JAR *instalado* pendentes; ⛔ alteração da contagem de flechas por perks sem contrato do provider. Stage 06.05 **não promovido**.
+**Alvo:** Minecraft 1.21.1 · NeoForge **21.1.248** · Java 21 · `irons_spellbooks` **3.16.3** (artefato publicado de referência CurseForge file **8680204**). **Estado:** ✅ fixture compilada, 25/25 testes sintéticos; ⚠️ observação física pendente; ⚠️ GameTest / execução em servidor exato / fingerprint do JAR *instalado* pendentes; ⛔ alteração da contagem de flechas por perks sem contrato do provider. Stage 06.05 **não promovido**.
 
 ## 1. Evidência disponível, sem inferir gameplay
 
@@ -50,6 +50,16 @@ O registro necessário é `type=provider_fingerprint mod_id=irons_spellbooks sta
 O [validador](./irons_3163_arrow_volley_observation_check.py) agora exige **exatamente um** registro de fingerprint no log, com status, tamanho, hash e flag conferidos independentemente. Um registro ausente, duplicado, divergente ou alterado gera `PROVIDER_FINGERPRINT_UNVERIFIED` e saída de falha. Essa é **validação de conteúdo de log**; não autentica a origem do arquivo de log e não comprova sozinha a presença/versão do **NeoForge instalado**. Reter log de servidor do cenário efetivamente executado, launcher, metadata, hash do NeoForge e inventário de mods.
 
 **Prova de regressão:** [Actions #38821612239](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38821612239) reproduziu a falha do validador antigo nos casos negativos de fingerprint (**RED**); o **GREEN foi confirmado em [Actions #38821874458](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38821874458)**: 20/20 testes sintéticos PASS e compilação Java 21 do JAR auxiliar com isolamento da produção PASS. Qualquer resultado de parser permanece classificado como `TRACE_CONSISTENT_NOT_GAMETEST`, não como conclusão de GameTest.
+
+## 3C. Integridade da sequência de idade e entidades não frescas (2026-10-15)
+
+**Evidência de regressão:** [RED #38825091652](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38825091652) executou **25 testes**, dos quais **5 falharam** para condições anteriormente aceitas indevidamente: amostras temporais descontínuas, saltos/duplicação de idade, controlador já com idade positiva ao ingressar no mundo, flecha candidata já envelhecida ao entrar e campo de amostragem ausente. A regressão é do **parser de QA**, não do jogo ou do provider.
+
+**Correção na fixture:** a mensagem `type=end` apresenta `controller_join_age`, `sample_gaps`, `age_step_mismatches` e `nonfresh_arrow_joins`. A amostragem em `ServerTickEvent.Post` agora registra quebra quando `getGameTime` não avança exatamente um tick entre leituras consecutivas, e quando `entity.tickCount` não cresce **exatamente uma unidade** entre leituras contíguas. O evento de Join registra `entity.tickCount` do controlador e de cada flecha associada como candidata. O parser exige **zero nas quatro métricas**; valores ausentes também falham. Isso impede tratar uma sessão temporalmente descontínua como equivalente ao modelo de disparos ininterruptos.
+
+**Evidência GREEN:** [Actions #38825193239](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38825193239) **SUCCESS**, com **25/25 testes sintéticos PASS**, compilação Java 21 de `catalogQaProbeJar` e isolamento do observador no JAR auxiliar **PASS**. O mesmo run continuou verificando o classfile do Iron's publicado e a ordem de ticks Mojang 1.21.1.
+
+**Caveat:** `tickCount>0` na entrada é **indício incompleto de entidade restaurada**, não garantia de detecção de todo reload; entidades recarregadas com idade zerada poderiam escapar deste sinal. Tampouco um trace temporal perfeito assegura origem de projéteis: correlação por owner + proximidade continua heurística. Para certificação, usar execução real no modpack e conferir chunk unload/reload por eventos, NBT e inspeção in-game, sem inferir PASS do parser.
 
 ## 4. Processamento e critérios de aceite do trace
 
