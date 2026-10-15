@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/irons-3163-projectile-bytecode.yml'
       - 'docs/qa/irons_3163_projectile_bytecode.py'
+      - 'docs/qa/minecraft_1211_entity_tick_proof.py'
       - 'docs/qa/irons-3163-projectile-bytecode-pending.md'
   workflow_dispatch:
 
@@ -39,6 +40,7 @@ jobs:
             'https://mediafilez.forgecdn.net/files/8680/204/irons_spellbooks-1.21.1-3.16.3.jar' \
             --output "$JAR"
           test "$(stat -c '%s' "$JAR")" -gt 10000000
+          echo '13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73  build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar' | sha256sum --check
           sha256sum "$JAR" | tee build/irons-3163/download-sha256.txt
           jar tf "$JAR" | grep -F 'io/redspace/ironsspellbooks/entity/spells/ArrowVolleyEntity.class'
           # This validates an externally fetched publisher file, not the user's installed JAR.
@@ -51,11 +53,24 @@ jobs:
             --jar build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar \
             --output build/irons-3163/evidence.json
 
+      - name: Self-test official 1.21.1 entity tick provenance collector
+        run: python3 docs/qa/minecraft_1211_entity_tick_proof.py --self-test
+
+      - name: Inspect official Mojang 1.21.1 server tickNonPassenger method
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/minecraft_1211_entity_tick_proof.py \
+            --output build/irons-3163/mojang-1211-entity-tick.json
+          # Only a provenance report; no Minecraft server runtime or NeoForge transforms.
+
       - name: Upload evidence only (never copyrighted provider JAR)
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: irons-3163-projectile-bytecode-${{ github.sha }}
-          path: build/irons-3163/evidence.json
+          path: |
+            build/irons-3163/evidence.json
+            build/irons-3163/mojang-1211-entity-tick.json
           if-no-files-found: ignore
           retention-days: 14
