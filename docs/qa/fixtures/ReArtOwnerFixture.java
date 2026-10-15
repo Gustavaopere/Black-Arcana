@@ -17,6 +17,16 @@ public class ReArtOwnerFixture {
         };
     }
 
+    // These sequential hashes produce two javac tableswitches.
+    private static Object compactHash(String name, Supplier<?> original) {
+        return switch (name) {
+            case "owner_45" -> register(name, HatItem::new);
+            case "owner_46" -> register(name, ToolItem::new);
+            case "owner_47" -> register(name, FoodItem::new);
+            default -> register(name, original);
+        };
+    }
+
     private static Object redirectRegister(String name, Supplier<?> original) {
         return switch (name) {
             case "eternal_steak" -> register(name, FoodItem::new);
