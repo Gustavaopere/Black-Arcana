@@ -1,0 +1,76 @@
+name: Reliquified Artifacts 1.0.8 publisher classfile evidence
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/reliquified-artifacts-108-binary-audit.yml'
+      - 'docs/qa/reliquified_artifacts_108_binary_audit.py'
+      - 'docs/qa/reliquified_artifacts_108_binary_audit_test.py'
+      - 'wiki/modpack-catalog/providers/✅-reliquified-artifacts/ABILITY-INVENTORY-1.0.8.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/reliquified-artifacts-108-binary-audit.yml'
+      - 'docs/qa/reliquified_artifacts_108_binary_audit.py'
+      - 'docs/qa/reliquified_artifacts_108_binary_audit_test.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compiled_ability_proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Run safety and identity fixtures
+        run: python3 docs/qa/reliquified_artifacts_108_binary_audit_test.py -v
+      - name: Download exact Modrinth 1.0.8 publisher JAR and require physical SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/reliquified-artifacts-108
+          curl --fail --show-error --silent --location --retry 3 \
+            --connect-timeout 20 --max-time 90 \
+            'https://api.modrinth.com/v2/version/x2qoJkgq' \
+            --output build/reliquified-artifacts-108/version.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlparse
+          folder=Path("build/reliquified-artifacts-108")
+          version=json.loads((folder/"version.json").read_text())
+          assert version["id"]=="x2qoJkgq" and version["version_number"]=="1.0.8"
+          files=[v for v in version["files"] if v["filename"]=="reliquified_artifacts-1.21.1-1.0.8.jar"]
+          assert len(files)==1
+          item=files[0]
+          assert item["hashes"]["sha1"]=="00ad43d5a1aa287fd0084bc3b48546821494ff80"
+          url=item["url"]
+          parsed=urlparse(url)
+          assert parsed.scheme=="https" and parsed.hostname in ("cdn.modrinth.com","cdn-raw.modrinth.com")
+          (folder/"url.txt").write_text(url)
+          PY
+          curl --fail --show-error --silent --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            "$(cat build/reliquified-artifacts-108/url.txt)" \
+            --output build/reliquified-artifacts-108/reliquified_artifacts-1.21.1-1.0.8.jar
+          echo '00ad43d5a1aa287fd0084bc3b48546821494ff80  build/reliquified-artifacts-108/reliquified_artifacts-1.21.1-1.0.8.jar' | sha1sum --check
+      - name: Verify compiled class-level Relics ability templates and Mixin item case IDs
+        run: |
+          python3 docs/qa/reliquified_artifacts_108_binary_audit.py \
+            --jar build/reliquified-artifacts-108/reliquified_artifacts-1.21.1-1.0.8.jar \
+            --output build/reliquified-artifacts-108/evidence.json
+      - name: Upload JSON only, never redistribute JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reliquified-artifacts-108-binary-${{ github.sha }}
+          path: build/reliquified-artifacts-108/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
