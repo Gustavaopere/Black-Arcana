@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+"""Classify one passive Arrow Volley QA trace without fabricating gameplay evidence.
+
+This consumes only the bounded companion's log summary. A matching trace is
+evidence that must still be tied to a real modpack fingerprint, test conditions,
+and NeoForge version; it is never an automatic Stage acceptance.
+"""
+import argparse
+import json
+import re
+from pathlib import Path
+
+TAG = "[BLACK_ARCANA_ARROW_VOLLEY_QA]"
+LOG_FIELDS = (
+    "controller", "status", "observed_ticks", "first_age", "last_age",
+    "age_monotonic", "candidate_joins", "confirmed_present_at_post",
+    "ambiguous_joins", "candidate_budget_exceeded", "leave_seen", "removal"
+)
+
+
+def field(line, name):
+    match = re.search(r"\b" + re.escape(name) + r"=([^\s]+)", line)
+    if not match:
+        raise ValueError(f"Missing {name}")
+    return match.group(1)
+
+
+def parse_rows(line):
+    match = re.search(r"\bjoin_counts_per_tick=\{([^}]*)\}", line)
+    if not match:
+        raise ValueError("Missing join_counts_per_tick map")
+    pairs = []
+    if match.group(1).strip():
+        for token in match.group(1).split(","):
+            match_pair = re.fullmatch(r"\s*(\d+)=(\d+)\s*", token)
+            if not match_pair:
+                raise ValueError("Invalid tick count map entry")
+            pairs.append((int(match_pair.group(1)), int(match_pair.group(2))))
+    return pairs
+
+
+def evaluate(text, level, controller=None):
+    if level not in range(1, 7):
+        raise ValueError("Level must be 1..6")
+    traces = [line for line in text.splitlines()
+              if TAG in line and "type=end " in line]
+    if controller:
+        traces = [line for line in traces
+                  if field(line, "controller") == controller]
+    if len(traces) != 1:
+        raise ValueError(f"Expected exactly one complete session, found {len(traces)}")
+    line = traces[0]
+    obj = {key: field(line, key) for key in LOG_FIELDS}
+    rows = parse_rows(line)
+    expected_rows = level + 4
+    per_row = 5 + level // 2
+    expected = expected_rows * per_row
+    actual = int(obj["candidate_joins"])
+    confirmed = int(obj["confirmed_present_at_post"])
+    reasons = []
+    if obj["status"] != "LEFT_LEVEL" or not obj["leave_seen"] == "true":
+        reasons.append("NO_CONFIRMED_LEAVE_EVENT")
+    if obj["removal"] != "DISCARDED":
+        reasons.append("UNEXPECTED_REMOVAL_REASON")
+    if obj["age_monotonic"] != "true":
+        reasons.append("AGE_NONMONOTONIC")
+    if int(obj["last_age"]) < expected_rows * 5:
+        reasons.append("INSUFFICIENT_CONTROLLER_TICKS")
+    if obj["candidate_budget_exceeded"] != "false":
+        reasons.append("CANDIDATE_BUDGET_EXCEEDED")
+    if int(obj["ambiguous_joins"]) != 0:
+        reasons.append("AMBIGUOUS_OWNER_PROXIMITY")
+    if actual != expected or confirmed != expected:
+        reasons.append("COUNT_NOT_CONFIRMED")
+    if len(rows) != expected_rows or any(amount != per_row for _, amount in rows):
+        reasons.append("ROW_PATTERN_MISMATCH")
+    if any(rows[i][0] - rows[i-1][0] != 5 for i in range(1, len(rows))):
+        reasons.append("ROW_INTERVAL_MISMATCH")
+    if sum(n for _, n in rows) != actual:
+        reasons.append("JOIN_SUMMARY_INCONSISTENT")
+    return {
+        "level": level,
+        "controller": obj["controller"],
+        "expected_rows": expected_rows,
+        "expected_arrows": expected,
+        "candidate_join_count": actual,
+        "confirmed_present_at_server_post": confirmed,
+        "result": "TRACE_CONSISTENT_NOT_GAMETEST" if not reasons else "FAIL_CLOSED",
+        "fail_reasons": reasons,
+        "limits": [
+            "Owner/proximity association is heuristic, not canonical cast ancestry",
+            "Join event is an insertion attempt; post-tick presence is a limited check",
+            "The installed Iron's and NeoForge JAR fingerprints remain external evidence",
+            "This parser does not execute Minecraft or certify reload/chunk behavior",
+        ],
+    }
+
+
+def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("--log", type=Path, required=True)
+    p.add_argument("--spell-level", type=int, required=True)
+    p.add_argument("--controller")
+    p.add_argument("--report", type=Path)
+    args = p.parse_args()
+    try:
+        result = evaluate(args.log.read_text(), args.spell_level, args.controller)
+    except (OSError, ValueError) as e:
+        p.exit(2, f"FAIL_CLOSED: {e}\n")
+    report = json.dumps(result, indent=2, sort_keys=True) + "\n"
+    if args.report:
+        args.report.parent.mkdir(parents=True, exist_ok=True)
+        args.report.write_text(report)
+    print(report, end="")
+    if result["fail_reasons"]:
+        p.exit(1, "FAIL_CLOSED: trace does not meet model acceptance\n")
+
+
+if __name__ == "__main__":
+    main()
