@@ -105,10 +105,10 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_real_frozen_campaign_has_thirty_two_existing_exact_registries(self):
+    def test_real_frozen_campaign_has_thirty_three_existing_exact_registries(self):
         matrix = mod.load_matrix()
         self.assertEqual(39, len(matrix))
-        self.assertEqual(32, sum(
+        self.assertEqual(33, sum(
             x['catalog_evidence'] == 'COUNTED_EXACT' for x in matrix.values()
         ))
         self.assertEqual({'version': '1.0.8', 'semantic_objects': 52,
@@ -118,6 +118,8 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
                           'catalog_evidence': 'COUNTED_EXACT'}, matrix['Vampirism'])
         self.assertEqual({'version': '0.5.0.2', 'semantic_objects': 42,
                           'catalog_evidence': 'COUNTED_EXACT'}, matrix['Eidolon: Repraised'])
+        self.assertEqual({'version': '3.0.9', 'semantic_objects': 28,
+                          'catalog_evidence': 'COUNTED_EXACT'}, matrix['Bloodlines'])
         self.assertEqual({'version': '0.1.7', 'semantic_objects': 52,
                           'catalog_evidence': 'COUNTED_EXACT'},
                          matrix["Ender's Spells and Stuff: Requiem"])
@@ -324,6 +326,7 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             ('Reliquified Artifacts', 'Provider 30', '1.0.8', 52),
             ('Vampirism', 'Provider 31', '1.10.13', 19),
             ('Eidolon: Repraised', 'Provider 32', '0.5.0.2', 42),
+            ('Bloodlines', 'Provider 33', '3.0.9', 28),
         ):
             filename = crosswalk.pop(orig)
             matrix.pop(orig)
@@ -333,15 +336,15 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             next(r for r in report['entries'] if r['provider'] == orig
                  )['provider'] = name
         result = mod.build_queue(matrix, crosswalk, report)
-        self.assertEqual(32, result['catalog_exact_preexisting'])
-        self.assertEqual(7, result['registry_proofs_remaining'])
+        self.assertEqual(33, result['catalog_exact_preexisting'])
+        self.assertEqual(6, result['registry_proofs_remaining'])
         self.assertEqual(0, result['registry_proofs_completed'])
         exact_rows = [x for x in result['providers']
                       if x['status'] == 'CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT']
         self.assertEqual({'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
                           'Dreamless Spells', 'Paladin Spells', "Wind's Spellbooks", 'Backported Spellbooks',
                           'Deeper & Darker Spellbooks', "GTBC's Geomancy Plus",
-                          "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", 'Ars Controle', 'Ars Technica', 'Ars Zero', 'Ars Elemental', 'IronSable', "Fire's Ender Expansion", "Ypsilon's Fundamentalism", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice's Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised"},
+                          "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", 'Ars Controle', 'Ars Technica', 'Ars Zero', 'Ars Elemental', 'IronSable', "Fire's Ender Expansion", "Ypsilon's Fundamentalism", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice's Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Bloodlines"},
                          {x['provider'] for x in exact_rows})
         self.assertTrue(all(not x['registry_verified'] and
                             not x['promotion_allowed'] and
