@@ -23,7 +23,7 @@ REGISTER = "net.redreaper.monsterspellbooks.init.ModSpellRegistry"
 REGISTRY_BINARY = "net/redreaper/monsterspellbooks/init/ModSpellRegistry"
 MAX_BYTES = 20_000_000
 INVENTORY = Path("wiki/modpack-catalog/providers/✅-monsters-spellbooks/SPELL-CATALOG.md")
-ROW = re.compile(r'^\| (\d+) \| \x60([a-z]+)\x60 \| \x60([A-Z][A-Z0-9_]+)\x60 \| \x60([A-Za-z0-9]+Spell)\x60 \| \x60registered in ModSpellRegistry\x60 \|$', re.M)
+ROW = re.compile(r'^\| (\d+) \| \x60([a-z]+)\x60 \| \x60([A-Z][A-Z0-9_]+)\x60 \| \x60([A-Za-z][A-Za-z0-9]*)\x60 \| \x60registered in ModSpellRegistry\x60 \|$', re.M)
 FAMILY_COUNTS = {"blood":5,"ender":12,"evocation":3,"fire":10,"holy":4,"hydro":8,"ice":8,
                  "lightning":14,"nature":7,"necro":25,"technomancy":2}
 FIELD = re.compile(r'^\s*public static final java\.util\.function\.Supplier<[^\n]*\s+([A-Z][A-Z0-9_]+);$',re.M)
