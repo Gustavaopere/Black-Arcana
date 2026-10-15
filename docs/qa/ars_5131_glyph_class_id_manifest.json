@@ -26,5 +26,19 @@
   "AugmentAmplify": "ars_nouveau:glyph_amplify",
   "AugmentAOE": "ars_nouveau:glyph_aoe",
   "AugmentExtendTime": "ars_nouveau:glyph_extend_time",
-  "AugmentPierce": "ars_nouveau:glyph_pierce"
+  "AugmentPierce": "ars_nouveau:glyph_pierce",
+  "AugmentDampen": "ars_nouveau:glyph_dampen",
+  "AugmentExtract": "ars_nouveau:glyph_extract",
+  "AugmentFortune": "ars_nouveau:glyph_fortune",
+  "EffectEnderChest": "ars_nouveau:glyph_ender_inventory",
+  "EffectHarvest": "ars_nouveau:glyph_harvest",
+  "EffectFell": "ars_nouveau:glyph_fell",
+  "EffectPickup": "ars_nouveau:glyph_pickup",
+  "EffectInteract": "ars_nouveau:glyph_interact",
+  "EffectPlaceBlock": "ars_nouveau:glyph_place_block",
+  "EffectSnare": "ars_nouveau:glyph_snare",
+  "EffectSmelt": "ars_nouveau:glyph_smelt",
+  "EffectLeap": "ars_nouveau:glyph_leap",
+  "EffectDelay": "ars_nouveau:glyph_delay",
+  "EffectRedstone": "ars_nouveau:glyph_redstone_signal"
 }
