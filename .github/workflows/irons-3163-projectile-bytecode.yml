@@ -7,6 +7,7 @@ on:
       - '.github/workflows/irons-3163-projectile-bytecode.yml'
       - 'docs/qa/irons_3163_projectile_bytecode.py'
       - 'docs/qa/minecraft_1211_entity_tick_proof.py'
+      - 'docs/qa/irons_3163_arrow_volley_tick_model_test.py'
       - 'docs/qa/irons-3163-projectile-bytecode-pending.md'
   workflow_dispatch:
 
@@ -28,6 +29,9 @@ jobs:
 
       - name: Fail-closed parser self-test (does not inspect publisher JAR)
         run: python3 docs/qa/irons_3163_projectile_bytecode.py --self-test
+
+      - name: Test source-constrained Arrow Volley tick model (not GameTest)
+        run: python3 docs/qa/irons_3163_arrow_volley_tick_model_test.py
 
       - name: Download publisher CurseForge file ID 8680204
         shell: bash
