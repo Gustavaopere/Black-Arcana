@@ -14,8 +14,10 @@ TAG = "[BLACK_ARCANA_ARROW_VOLLEY_QA]"
 EXPECTED_IRONS_SHA256 = "13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73"
 EXPECTED_IRONS_BYTES = 13890046
 LOG_FIELDS = (
-    "controller", "join_game_tick", "status", "observed_ticks", "first_age", "last_age",
-    "age_monotonic", "candidate_joins", "confirmed_present_at_post",
+    "controller", "join_game_tick", "controller_join_age", "status",
+    "observed_ticks", "first_age", "last_age",
+    "age_monotonic", "sample_gaps", "age_step_mismatches",
+    "nonfresh_arrow_joins", "candidate_joins", "confirmed_present_at_post",
     "ambiguous_joins", "candidate_budget_exceeded", "leave_seen", "removal"
 )
 
@@ -110,6 +112,14 @@ def evaluate(text, level, controller=None):
     # At the server Post tick, initial age is expected to be 0 or 1
     # for a fresh controller. Later initial ages suggest a reload/skipped
     # sampling and may not be used to validate a complete new cast.
+    if int(obj["controller_join_age"]) != 0:
+        reasons.append("CONTROLLER_NONFRESH_JOIN")
+    if int(obj["sample_gaps"]) != 0:
+        reasons.append("CONTROLLER_SAMPLE_GAPS")
+    if int(obj["age_step_mismatches"]) != 0:
+        reasons.append("CONTROLLER_AGE_STEP_MISMATCH")
+    if int(obj["nonfresh_arrow_joins"]) != 0:
+        reasons.append("NONFRESH_ARROW_CANDIDATE")
     age_start = int(obj["first_age"])
     samples = int(obj["observed_ticks"])
     if age_start not in (0, 1) or samples < expected_last_row_age - 1:
