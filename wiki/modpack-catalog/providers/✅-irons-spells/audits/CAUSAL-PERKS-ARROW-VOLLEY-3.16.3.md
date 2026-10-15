@@ -2,6 +2,12 @@
 
 **Status:** ✅ `SOURCE-PINNED / CAUSAL-PARTIAL` no `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`; ⚠️ paridade do JAR compilado, scheduler real, tick/lifetime e modpack não testados. **+0 identidades**: `irons_spellbooks:arrow_volley` já está entre os 110 spell IDs do provider. [Ficha de catálogo](../evocation/arrow-volley.md). Minecraft 1.21.1/NeoForge; Iron's 3.16.3 documental.
 
+## Atualização de evidência física — Java 21 (2026-10-15)
+
+A [auditoria binária #38811661659](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38811661659) **SUCCESS** inspecionou `ArrowVolleyEntity.tick()` e `SmallMagicArrow.shoot/onHitEntity` no artefato publicado `irons_spellbooks-1.21.1-3.16.3.jar` (CurseForge file 8680204, **13.890.046 bytes**, SHA-256 `13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73`). A classe compilada de `ArrowVolleyEntity` lê `tickCount`, **não invoca `super.tick()` e não escreve diretamente esse campo**. A classe compilada `SmallMagicArrow` define movimento diretamente em `shoot` e identifica `ARROW_VOLLEY_SPELL` em seu hit. Ver [relatório e limites](../../../../docs/qa/irons-3163-projectile-bytecode-pending.md).
+
+**Mudança de status de prova:** ✅ `BINARY-STATIC-PROOF` para os métodos acima, ⚠️ **ausência de GameTest/servidor e sem fingerprint do JAR instalado**, ⛔ aumento do número de flechas ainda bloqueado. A contagem 25–80 é **somente matemática nominal** até comprovação de `tickCount`, despawn e budget no jogo. Não afirmar exploit ou spawn infinito a partir do bytecode isolado.
+
 ## Pipeline de resolução
 
 1. **Defaults:** [`ArrowVolleySpell.java` L32–L68](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/evocation/ArrowVolleySpell.java#L32-L68) registra Evocation, UNCOMMON, níveis 1–6, `LONG` com cast nominal 30 ticks, cooldown default **15 s**, custo `40+10×(level−1)`, `baseSpellPower=8`, `spellPowerPerLevel=0`. Power continua sujeito a atributos/config, mas **não aparece nas fórmulas de contagem**.
