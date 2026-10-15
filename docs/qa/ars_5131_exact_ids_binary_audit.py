@@ -126,9 +126,19 @@ def glyph_id(dis,name,fields):
         if key not in fields: raise AuditError(name+" unknown compiled glyph constant "+key)
         path=fields[key]
     window=ins[pos+1:pos+5]
-    if not any(op=="invokespecial" and '"<init>":' in c and
-               ("Abstract" in c or (name=="EffectSenseMagic" and "EffectSenseMagic" in c))
-               for op,c in window):
+    if name=="EffectSenseMagic":
+        # Same-class constructor bytecode abbreviates owner to Method "<init>".
+        # Require the exact static new/dup/field/name/ctor/INSTANCE chain.
+        if (pos<2 or len(ins)<pos+4 or
+            [x[0] for x in ins[pos-2:pos+4]]!=
+            ["new","dup","getstatic","ldc","invokespecial","putstatic"] or
+            "EffectSenseMagic" not in ins[pos-2][1] or
+            ins[pos+1][1]!="String Sense Magic" or
+            '"<init>":(Ljava/lang/String;Ljava/lang/String;)V' not in ins[pos+2][1] or
+            "Field INSTANCE:" not in ins[pos+3][1]):
+            raise AuditError(name+" no exact static initializer constructor chain")
+    elif not any(op=="invokespecial" and '"<init>":' in c and "Abstract" in c
+                 for op,c in window):
         raise AuditError(name+" literal not causally tied to constructor")
     if any(op.startswith(("if","goto","jsr")) for op,_ in ins):
         raise AuditError(name+" identity path has branch")
