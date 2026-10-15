@@ -1439,7 +1439,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                 self.assertIn("Sem \x60LootTemplate\x60 local", text)
         self.assertIn("✅ 52/52 habilidades individualizadas", index)
         self.assertIn("**+0 novas identidades semânticas**", index)
-        self.assertIn("não \x60COUNTED_EXACT\x60", index)
+        self.assertIn("COUNTED_EXACT", index)
+        self.assertIn("38662072936", index)
+        self.assertIn("EXACT-BINARY-OWNER-ABILITIES-1.0.8.md", index)
         self.assertIn("ABILITY-CARDS-1.0.8.md", self.index)
         for doc in ("README.md", "ABILITY-INVENTORY-1.0.8.md"):
             self.assertIn(
