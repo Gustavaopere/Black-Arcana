@@ -79,7 +79,7 @@ class Bloodlines309PhysicalActionAuditTest(unittest.TestCase):
             audit.inspect_registry(changed)
     def test_mod_bus_connection_fails_when_method_changed(self):
         modified=self.mod_entry.replace("DeferredRegister.register:(LIEventBus;)V",
-                                        "ForeignRegistry.register:(LIEventBus;)V",1)
+                                        "ForeignRegistry.register:(LIEventBus;)V")
         self.assertNotEqual(modified,self.mod_entry)
         with self.assertRaises(audit.AuditError):
             audit.verify_main_bus(modified,synthetic_local_bus=True)
