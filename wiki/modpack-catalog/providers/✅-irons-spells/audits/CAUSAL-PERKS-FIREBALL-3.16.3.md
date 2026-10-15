@@ -32,6 +32,8 @@
 
 **Ponto de integração verificável:** [`SpellDamageEvent`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellDamageEvent.java#L24-L51) permite trocar o montante do *hit* de uma vítima viva antes do `hurt`; a API não certifica recálculo de explosão, dano de bloco, AABB ou DamageType. Usar filtro pelo `SpellDamageSource.spell()` / owner quando necessário e um teste de coexistência. [`SpellOnCastEvent`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellOnCastEvent.java#L20-L74) altera nível/custo, não geometria.
 
+**Interdependência causal:** [`ModifySpellLevelEvent`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/ModifySpellLevelEvent.java) oferece mutação do nível em consultas via `getLevelFor`, e os atributos/power multiplicadores também são consumidos por `getDamage` e `getRadius`. Portanto, **nível/power podem alterar dano e raio em conjunto**, mas não constituem uma API isolada de raio. Verificar a origem do cast, os limites e os demais consumidores antes de anunciar perk exclusiva de área.
+
 ## QA pendente
 
 - [ ] JAR bytecode idêntico para `FireballSpell`, `MagicFireball`, `AbstractMagicProjectile` e config.
