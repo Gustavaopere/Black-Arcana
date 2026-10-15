@@ -1,0 +1,46 @@
+# Iron's 3.16.3 — Teleport: alcance, destino seguro e event seam
+
+**Estado:** `SOURCE-PINNED / CAUSAL-PARTIAL`. `irons_spellbooks:teleport` já está no catálogo de 110 spells; **+0 objeto mágico**. MC 1.21.1, mod ID `irons_spellbooks`, source upstream `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`. Esta revisão usa **somente fonte versionada**, sem afirmar equivalência com bytecode do pack, configuração ativa ou sucesso de GameTest/Survival.
+
+[Descrição já existente](../ender/teleport.md) · [Wiki de spells oficial](https://iron.wiki/spells/).
+
+## Causalidade verificável
+
+1. **Defaults:** [TeleportSpell L31–L61](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/TeleportSpell.java#L31-L61) define escola Ender, min rarity UNCOMMON, máximo 5, cooldown **6 s default**, `INSTANT`, tempo de cast 0, mana base 20 + 5 por nível e spell power base **8 + 2 por nível adicional**. `getSpellCooldown()`/mana final passam por configuração e classe-base; valor efetivo implantado ainda não identificado.
+2. **Cálculo do alcance:** `getDistance(level,entity)` usa produto de `Utils.softCapFormula(getEntityPowerMultiplier(entity))` por `getSpellPower(level,null)`. `getEntityPowerMultiplier` incorpora a configuração de power, atributos do caster e modificador de escola; `getSpellPower(...,null)` usa o *base power* escalado por configuração. **Importante:** a configuração de power aparece nos dois fatores, mas dentro de `softCapFormula` em um deles — portanto não supor escalonamento linear de alcance por atributos ou multiplicador da config. [TeleportSpell L149–L151](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/TeleportSpell.java#L149-L151), [AbstractSpell L211–L242](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L211-L242), [Utils L177–L185](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L177-L185).
+3. **Números em defaults unitários (derivação, não teste):** níveis 1–5 resultam em alcance nominal **8, 10, 12, 14 e 16 blocos**. O `softCapFormula(x)` é igual a `x` para `x<=1,5` e tende a 2 para entradas positivas maiores; não equivale a cap rígido universal para qualquer input injetado.
+4. **Destino por mira:** se `TeleportData` em `playerMagicData.getAdditionalCastData()` fornece uma posição, `onCast` **usa-a diretamente**; caso contrário chama `findTeleportLocation(level,caster,distance)`. Esta última usa `Utils.getTargetBlock(...,Fluid.NONE,maxDistance)`, depois `solveTeleportDestination` que avalia ledge/air/LOS e tenta fallback baseado em colisão/altura do caster. **A presença de TeleportData não prova que o próprio spell refaça a mesma verificação de ledge/LOS nesse ramo.** A origem e os escritores de `TeleportData` exigem auditoria adicional. [TeleportSpell L74–L130](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/TeleportSpell.java#L74-L130), [raycast do bloco](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L261-L266).
+5. **Dispatch final:** `onCast` dispara pacote de partículas de origem/destino, desmonta passageiro, chama `Utils.handleSpellTeleport(this,caster,dest)`, zera fall distance, reseta cast-data e toca som. `handleSpellTeleport` publica `SpellTeleportEvent`, lê `event.isCanceled()` e só faz `entity.teleportTo(event.targetX,targetY,targetZ)` se **não** cancelado. O caller **não consulta o boolean de cancelamento** ao decidir sobre VFX, desmontar ou zerar fall distance. Assim, evento vetado pode continuar produzindo parte dos side effects periféricos; confirmação visual/física ainda depende de teste. [TeleportSpell L89–L106](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/TeleportSpell.java#L89-L106), [Utils L167–L175](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L167-L175).
+6. **Contrato do evento:** [`SpellTeleportEvent`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellTeleportEvent.java) estende `EntityTeleportEvent`, retém `AbstractSpell` via `getSpell()`; a rotina no provider verifica explicitamente cancelamento e lê destino **pós-evento**. Isso comprova **seam de veto** e que a resolução usa coordenadas do evento. **Não se certifica aqui** assinatura de setters herdados, alcance permitido, security policy, loaded chunks, claim permissions, range after modification nem adapter RPG.
+7. **Sem mudança de dimensão comprovada:** a invocação observada é `entity.teleportTo(x,y,z)`, no mundo atual da entidade. Esta ficha **não** certifica teleport entre dimensões, portal, passengers ou recall. `TeleportData` contém apenas um `Vec3` na classe examinada. [TeleportSpell L153–L172](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/TeleportSpell.java#L153-L172).
+
+## Matriz de perks
+
+| Eixo | Fonte técnica | Viabilidade |
+|---|---|---|
+| Alcance | `softCap(entityPowerMultiplier) × getSpellPower(level,null)` | ⚠️ possível influência **indireta** por nível e atributos/provider config, com outros efeitos colaterais; ⛔ sem setter de range exclusivo comprovado |
+| Destino | raycast bloco + ledge/LOS/fallback, ou `TeleportData` | ⛔ não permitir coordenadas arbitrárias/retarget sem verificação server authoritative de safety + loaded-chunks + claims |
+| Cancelamento | `SpellTeleportEvent` + `isCanceled()` | ✅ `HOOK_VERIFICADO` **para veto** no trecho de fonte; ⚠️ callback e alcance do adapter não testados no JAR do pack |
+| Alteração de destino | evento contém targetX/Y/Z e rotina os lê após os listeners | ⚠️ assinatura dos setters herdados e admissibilidade post-listener **não verificadas**; não publicar suporte definitivo |
+| Tipo de alvo | caster `LivingEntity` do spell, não o hit entity | ⛔ nenhuma mudança self→target entity certificada |
+| Tempo | instantâneo / cast 0 default; cooldown 6 s | ⚠️ redução de cooldown via provider attributes/config deve respeitar cap e owner; sem autorização para rearmar casts |
+| Custo | 20+5×(level−1), multiplicadores provider | ⚠️ desconto em `SpellOnCastEvent` ocorre após gate de mana; não libera casts negados |
+| VFX/estado | pacote enviado antes da chamada do evento e reset periférico após ela | ⚠️ qualquer veto deve ser testado visualmente e contra estado de jogador, montagem e fall distance |
+
+## Pontos críticos de integração
+
+- **Validação de destino:** uma perk que aumenta distância precisa garantir segurança efetiva para todos os ramos de destino, tanto raycast normal quanto `TeleportData`; não chamar `entity.teleportTo` em um segundo pipeline para compensar veto do provider.
+- **Camada de autoridade:** Iron's mantém teleporte/custo/veto nativos. Black Arcana mantém suas próprias políticas de destino em spells próprios; RPG Skill Tree apenas informa progressão e perks via adapter validado, sem tomar posse do teleporte do Iron's.
+- **Cancelamento e UX:** efeitos visuais podem ter sido iniciados antes de `SpellTeleportEvent`; observar o resultado real em cliente, inclusive resets e desserialização.
+- **Soft cap:** o cálculo mostrado **não demonstra** cap final contra valores negativos/extremos/config alterada nem garante que aumentos de nível respeitem limites configurados em todos os callers.
+
+## Aceite necessário, não executado
+
+- [ ] Verificar JAR físico, source equivalence e config efetiva.
+- [ ] Auditar todos os writers e consumidores de `TeleportData`; testes com input inválido, NaN/infinito, chunk descarregado e dimensões.
+- [ ] Inspecionar método/event API exata de NeoForge para setters herdados e ordem de listeners; testar cancelamento.
+- [ ] Testar free space, headroom, parede, laje, líquido, unloaded, claims, teleporte vetado e player montado.
+- [ ] Validar bônus de nível/power e contagem de mana/cooldowns com todos os cast sources.
+- [ ] Dedicated-server, Survival, relog e coexistência de RPG Skill Tree/Black Arcana/portals.
+
+Documento de interoperabilidade clean-room; nenhum código, asset ou VFX do Iron's redistribuído.
