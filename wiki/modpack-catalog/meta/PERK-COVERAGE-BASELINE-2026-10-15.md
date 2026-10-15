@@ -2,6 +2,20 @@
 
 **Natureza:** snapshot de coordenação de catálogo e dos eixos de engenharia de perks, sem alterar os contadores canônicos. A fonte operacional dinâmica continua em `SEMANTIC-MAGIC-COVERAGE.md`, `CATALOG-COVERAGE-CURRENT.md` e `plans/STATUS.md`; atualizar esta ficha após reconciliação, sem assumir que é o último checkpoint.
 
+## Current tranche override — eighteen causal dossiers (2026-10-15, PR #825 draft)
+
+**Iron's 3.16.3 — 18/110 magias com ficha causal source-pinned complementar nesta PR (16,36% da fila de 110).** Essa é métrica **documental específica**, não contagem de magias novas nem proporção de hooks, perks, adapter, JAR físico ou GameTests aceitos. A PR #795 mantém trabalho paralelo das 110 fichas individuais; não há alteração nelas neste lote. O piso canônico permanece **1.856 objetos semânticos mágicos globais / 1.854 no escopo restrito**, com **denominador global desconhecido (—%)**. O checkpoint anterior 15/110 aparece abaixo apenas como histórico.
+
+Novas fichas desta tranche, todas clean-room e com provenance fixa `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`:
+
+- [Acupuncture](../providers/✅-irons-spells/audits/CAUSAL-PERKS-ACUPUNCTURE-3.16.3.md): alvo a 32 blocos; `(int)((4+level)*power)` agulhas (5–14 em power neutro), dano `1+power` por agulha, `shoot` nominal 0,875 bloco/tick. **`BloodNeedle.onHitEntity` atribui hits a `BLOOD_NEEDLES_SPELL`**, não ao cast Acupuncture. Constructor split/gravity e escala física condicionados.
+- [Blood Needles](../providers/✅-irons-spells/audits/CAUSAL-PERKS-BLOOD-NEEDLES-3.16.3.md): cinco projéteis **fixos**, damage `power×0,25` por agulha, vetor shoot nominal 2,5 blocos/tick, `SpellDamageSource` com 25% lifesteal e zero i-frames; classe de projétil compartilhada com Acupuncture.
+- [Flaming Barrage](../providers/✅-irons-spells/audits/CAUSAL-PERKS-FLAMING-BARRAGE-3.16.3.md): `RecastInstance(total=5, remaining=4, ttl=120)`, uma pequena fireball por `onCast`, cursor-homing com limite de consulta 48 blocos e disparo inicial nominal 0,925 bloco/tick. **`SmallMagicFireball.onHitEntity` usa `BLAZE_STORM_SPELL` como damage-source** inclusive em disparos de Flaming Barrage. Possível ignição de blocos sob `ServerConfigs.SPELL_GREIFING` depende de config/claims físicos.
+
+**Atenção:** duas discrepâncias de `cast spell ID` vs `damage source spell ID` significam que filtragem de perks por `SpellDamageSource.spell()` **não reconstrói sozinha** a identidade da ação original para essas magias. Sem hook de provenance/correlação confiável, o adapter deve **falhar fechado**, não reatribuir dano silenciosamente. `SpellOnCastEvent` pode ocorrer em recasts sucessivos, ao passo que cobrança de mana e cooldown seguem política provider-native. Números de entidade/velocidade são defaults source-pinned, não resultados de gameplay.
+
+**Estado:** ✅ 18 fichas causais suplementares registradas na branch; ⚠️ binário/modlist física, impact damage actual, config, addons, multiplayer e JAR/CI QA não testados; ⛔ sem autorização para modificar entidades de terceiro, hitbox, quantidade, homing ou tipo de dano sem contrato seguro. Stage 06.05 segue 🟡 e Stage 09 pendente.
+
 ## Current tranche override — fifteen causal dossiers (2026-10-15, PR #825 draft)
 
 **Iron's Spells 'n Spellbooks 3.16.3 — 15/110 spells têm fichas suplementares de leitura causal source-pinned nesta PR (13,64% das identidades).** É métrica **estritamente documental de auditoria**, não porcentagem de APIs seguras, adapters implementados, física do JAR ou QA. As 110 fichas individuais da PR #795 continuam em draft e em trabalho separado. O mínimo do ledger global **permanece 1.856 objetos semânticos / 1.854 no escopo restrito**, pois nenhuma destas magias é identidade nova; **denominador global final desconhecido (—%)**. O checkpoint 12/110 abaixo fica como histórico.
