@@ -1,3 +1,7 @@
+# Bloodlines 3.0.9 — historical exact-JAR proof plan
+
+**Static registry proof now PASS:** [Java21 #38673548806](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38673548806) verifies all 29 compiled IAction fields/constructors on SHA-matched publisher, 28 semantic identities and 1 excluded action. [Exact dossier](../../wiki/modpack-catalog/providers/✅-bloodlines/EXACT-BINARY-PLAYER-ACTIONS-3.0.9.md). The prior 32/39 queue and source-pinned statements below are historical. Gameplay, live grants, Souls/Blood, config, Survival still ⚠️ Stage09, Stage06.05 🟡.
+
 # Bloodlines 3.0.9 — physical compiled IAction registry verification in progress
 
 **🟡 PENDING. No `COUNTED_EXACT` promotion before exact publisher hash and exhaustive compiled proof pass.**

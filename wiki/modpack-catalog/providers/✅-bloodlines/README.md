@@ -1,6 +1,10 @@
 # Bloodlines 3.0.9 — provider audit
 
-Status: `SOURCE-PINNED 3.0.9 / GRANULAR SOURCE CATALOG COMPLETE / RUNTIME QA + INSTALLED-ADDON INTEROP PENDING`
+Status: `✅ COUNTED_EXACT STATIC BINARY 29 REGISTERED / 28 SEMANTIC COUNTED / 1 SORCEROUS STRIKE EXCLUDED / ⚠️ RUNTIME QA + ADDON INTEROP PENDING`
+
+## Exact binary evidence — 2026-10-14
+
+[Java21 #38673548806](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38673548806) proves exact installed SHA1 and **29 compiled Bloodlines IAction registrations** (including `gravebound_crit_action`), with corresponding DeferredHolder IDs, LambdaMetafactory constructors and ACTIONS IEventBus forwarding. **Only 28** currently source-tree-reachable actions count semantically; Sorcerous Strike remains EXCLUDED. [Full binary dossier](EXACT-BINARY-PLAYER-ACTIONS-3.0.9.md). Binary registration is not a live registry, unlock, Bloodline wallet, Souls, Blood, cooldown, multiplayer or Survival PASS.
 
 ## Version authority
 
