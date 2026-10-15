@@ -34,6 +34,8 @@ Versão-alvo: Minecraft 1.21.1, `irons_spellbooks` 3.16.3, código `iron431/iron
 - **Transformação do alvo/área/escala/velocidade:** nenhum desses eventos possui setters da geometria ou do tipo de Entity; setters privados à fase de spawn não constituem callback público de perks. **⛔ fail-closed.**
 - **Efeitos Black Arcana / Enshrouded:** alterações em casting/hazard/shroud próprios pertencem a seus runtimes. Não repassar `SpellDamageEvent` do Iron's como autorização para recalcular recursos de terceiros.
 
+**Estabilidade de dependência:** o guia oficial [Iron's — Developers](https://iron.wiki/developers/) distingue o pacote `io.redspace.ironsspellbooks.api` disponibilizado como API da dependência integral que permite acessar implementações fora desse pacote, sujeitas a maior instabilidade. Os eventos `SpellOnCastEvent`, `SpellDamageEvent`, `ModifySpellLevelEvent` e `CounterSpellEvent` residem no pacote `api`; observações de `DamageSources`, `MagicFireball` e `ChainLightning` usam **implementação não-API** para provar causalidade e **não** autorizam importar esses internals no adapter sem avaliação de compatibilidade/versionamento. A disponibilidade real de cada evento na dependência de API exata e o comportamento em JAR compilado continuam pendentes de validação.
+
 ## Critérios de teste para um futuro adapter
 
 | Caso | Esperado a validar |
