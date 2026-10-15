@@ -1,0 +1,67 @@
+name: Monsters Spellbooks 0.0.16.3 SHA-exact spell registry evidence
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/monsters-spellbooks-00163-binary-audit.yml'
+      - 'docs/qa/monsters_spellbooks_00163_binary_audit.py'
+      - 'docs/qa/monsters_spellbooks_00163_binary_audit_test.py'
+      - 'wiki/modpack-catalog/providers/✅-monsters-spellbooks/SPELL-CATALOG.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/monsters-spellbooks-00163-binary-audit.yml'
+      - 'docs/qa/monsters_spellbooks_00163_binary_audit.py'
+      - 'docs/qa/monsters_spellbooks_00163_binary_audit_test.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compiled_spell_registry_proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify synthetic fail-closed registry and spell resource contracts
+        run: python3 docs/qa/monsters_spellbooks_00163_binary_audit_test.py -v
+      - name: Download exact CurseForge 8788560 and require installed SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/monsters-spellbooks-00163
+          JAR='build/monsters-spellbooks-00163/monstersspellbooks-0.0.16.3.jar'
+          curl --fail --show-error --silent --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://mediafilez.forgecdn.net/files/8788/560/monstersspellbooks-0.0.16.3.jar' \
+            --output "$JAR"
+          echo "b3aa89fd081bf4bfaf8d0f4380bcdc393c66ab0e  $JAR" | sha1sum --check
+      - name: Diagnose publisher static Supplier registry and native schools
+        shell: bash
+        run: |
+          set -euo pipefail
+          JAR='build/monsters-spellbooks-00163/monstersspellbooks-0.0.16.3.jar'
+          javap -p -classpath "$JAR" net.redreaper.monsterspellbooks.init.ModSpellRegistry \
+            | grep 'java.util.function.Supplier<' | head -n 110
+          echo 'SCHOOLS_DIAGNOSTIC_ONLY_NOT_RUNTIME'
+          javap -c -p -classpath "$JAR" net.redreaper.monsterspellbooks.init.ModSpellSchools \
+            | grep -E 'SchoolType|ResourceLocation|aero|necro|registerSchool' | head -n 45 || :
+      - name: Verify 98 compiled spell class registrations and resource IDs
+        run: |
+          python3 docs/qa/monsters_spellbooks_00163_binary_audit.py \
+            --jar build/monsters-spellbooks-00163/monstersspellbooks-0.0.16.3.jar \
+            --output build/monsters-spellbooks-00163/evidence.json
+      - name: Publish narrow JSON identity evidence, not the publisher JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: monsters-spellbooks-00163-binary-${{ github.sha }}
+          path: build/monsters-spellbooks-00163/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
