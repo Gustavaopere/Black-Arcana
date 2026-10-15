@@ -1,6 +1,6 @@
 # Iron's 3.16.3 — protocolo de observação Arrow Volley no modpack real
 
-**Alvo:** Minecraft 1.21.1 · NeoForge **21.1.248** · Java 21 · `irons_spellbooks` **3.16.3** (artefato publicado de referência CurseForge file **8680204**). **Estado:** ✅ fixture compilada, 10/10 testes sintéticos; ⚠️ observação física pendente; ⚠️ GameTest / execução em servidor exato / fingerprint do JAR *instalado* pendentes; ⛔ alteração da contagem de flechas por perks sem contrato do provider. Stage 06.05 **não promovido**.
+**Alvo:** Minecraft 1.21.1 · NeoForge **21.1.248** · Java 21 · `irons_spellbooks` **3.16.3** (artefato publicado de referência CurseForge file **8680204**). **Estado:** ✅ fixture compilada, 20/20 testes sintéticos; ⚠️ observação física pendente; ⚠️ GameTest / execução em servidor exato / fingerprint do JAR *instalado* pendentes; ⛔ alteração da contagem de flechas por perks sem contrato do provider. Stage 06.05 **não promovido**.
 
 ## 1. Evidência disponível, sem inferir gameplay
 
@@ -39,7 +39,7 @@ A medição é passiva: **não** chama `onCast`, `addFreshEntity`, `discard`, `s
 
 **Correção aplicável somente à fixture de testes:** a mensagem `type=end` passou a conter `join_game_tick` originalmente registrado em `type=begin`. O validador exige fileiras exatamente nos ticks `join_game_tick + 5, +10, ..., +5×rows` (não apenas separações de 5 ticks), amostragem desde `first_age=0` ou `1`, pelo menos `5×rows−1` amostras e `last_age` em `[5×rows, 5×rows+1]`. Qualquer dado ausente, cancelamento, chunk unload ou sequência incompatível permanece **FAIL_CLOSED**. O tempo observado é `ServerLevel.getGameTime` e não medição direta do início de cast; a hipótese do offset exato depende de execução real e poderá requerer ajuste **somente com prova física**, nunca relaxando automaticamente o gate.
 
-O teste de regressão agora possui 15 casos, incluindo cinco casos **RED** comprovados no workflow citado. **Resultado GREEN deve ser buscado no último run após o commit de correção**, não inferido desta documentação. A comparação dos ticks elimina falso PASS para fileiras deslocadas, **não prova** que eventos Join foram causados pelo controlador: correlação owner/proximidade continua ⚠️ heurística.
+O teste de regressão agora possui 15 casos, incluindo cinco casos **RED** comprovados no workflow citado. **GREEN corroborado por [Actions #38821874458](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38821874458)**, que executou 20 testes sintéticos e compilou a fixture no Java 21. Não corresponde à execução de servidor NeoForge com os JARs físicos. A comparação dos ticks elimina falso PASS para fileiras deslocadas, **não prova** que eventos Join foram causados pelo controlador: correlação owner/proximidade continua ⚠️ heurística.
 
 ## 3B. Fingerprint do JAR realmente carregado (2026-10-15)
 
@@ -49,7 +49,7 @@ O registro necessário é `type=provider_fingerprint mod_id=irons_spellbooks sta
 
 O [validador](./irons_3163_arrow_volley_observation_check.py) agora exige **exatamente um** registro de fingerprint no log, com status, tamanho, hash e flag conferidos independentemente. Um registro ausente, duplicado, divergente ou alterado gera `PROVIDER_FINGERPRINT_UNVERIFIED` e saída de falha. Essa é **validação de conteúdo de log**; não autentica a origem do arquivo de log e não comprova sozinha a presença/versão do **NeoForge instalado**. Reter log de servidor do cenário efetivamente executado, launcher, metadata, hash do NeoForge e inventário de mods.
 
-**Prova de regressão:** [Actions #38821612239](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38821612239) reproduziu a falha do validador antigo nos casos negativos de fingerprint (**RED**); o GREEN só deve ser atribuído após conferência da última execução que contém a correção. Qualquer resultado de parser permanece classificado como `TRACE_CONSISTENT_NOT_GAMETEST`, não como conclusão de GameTest.
+**Prova de regressão:** [Actions #38821612239](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38821612239) reproduziu a falha do validador antigo nos casos negativos de fingerprint (**RED**); o **GREEN foi confirmado em [Actions #38821874458](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38821874458)**: 20/20 testes sintéticos PASS e compilação Java 21 do JAR auxiliar com isolamento da produção PASS. Qualquer resultado de parser permanece classificado como `TRACE_CONSISTENT_NOT_GAMETEST`, não como conclusão de GameTest.
 
 ## 4. Processamento e critérios de aceite do trace
 
@@ -70,7 +70,7 @@ Mesmo quando esse validador retorna `TRACE_CONSISTENT_NOT_GAMETEST`, **a aceita�
 | JAR publicado Iron's e classfile `ArrowVolleyEntity.tick` | ✅ prova binária estática |
 | Mojang 1.21.1 `ServerLevel.tickNonPassenger` | ✅ prova binária estática |
 | Modelo de seis níveis | ✅ teste determinístico (não GameTest) |
-| Código da fixture removível / testes do parser | ✅ compilado e isolado (Actions #38820230432; 10/10 testes sintéticos); ⚠️ ainda sem execução no pack |
+| Código da fixture removível / testes do parser | ✅ compilado e isolado (Actions #38820230432; 20/20 testes sintéticos); ⚠️ ainda sem execução no pack |
 | Logs reais NeoForge 21.1.248 com Iron's + modpack | ⚠️ **pendente** |
 | Fingerprint do JAR instalado e compatibilidade com o publicado | ⚠️ **pendente** |
 | Unload/reload e limites sob mundo protegido | ⚠️ **pendente** |
