@@ -23,5 +23,8 @@ public final class CatalogQaProbeMod {
 
     private static void onServerStarted(ServerStartedEvent event) {
         CatalogRuntimeEvidence.emit();
+        if (Boolean.getBoolean("black_arcana.catalog_qa.arrow_volley")) {
+            ArrowVolleyRuntimeEvidence.emitProviderFingerprint();
+        }
     }
 }
