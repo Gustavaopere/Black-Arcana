@@ -1,6 +1,6 @@
 # Iron's 3.16.3 — protocolo de observação Arrow Volley no modpack real
 
-**Alvo:** Minecraft 1.21.1 · NeoForge **21.1.248** · Java 21 · `irons_spellbooks` **3.16.3** (artefato publicado de referência CurseForge file **8680204**). **Estado:** 🟡 fixture de medição em código; ⚠️ GameTest / execução em servidor exato / fingerprint do JAR *instalado* pendentes; ⛔ alteração da contagem de flechas por perks sem contrato do provider. Stage 06.05 **não promovido**.
+**Alvo:** Minecraft 1.21.1 · NeoForge **21.1.248** · Java 21 · `irons_spellbooks` **3.16.3** (artefato publicado de referência CurseForge file **8680204**). **Estado:** ✅ fixture compilada, 10/10 testes sintéticos; ⚠️ observação física pendente; ⚠️ GameTest / execução em servidor exato / fingerprint do JAR *instalado* pendentes; ⛔ alteração da contagem de flechas por perks sem contrato do provider. Stage 06.05 **não promovido**.
 
 ## 1. Evidência disponível, sem inferir gameplay
 
@@ -52,7 +52,7 @@ Mesmo quando esse validador retorna `TRACE_CONSISTENT_NOT_GAMETEST`, **a aceita�
 | JAR publicado Iron's e classfile `ArrowVolleyEntity.tick` | ✅ prova binária estática |
 | Mojang 1.21.1 `ServerLevel.tickNonPassenger` | ✅ prova binária estática |
 | Modelo de seis níveis | ✅ teste determinístico (não GameTest) |
-| Código da fixture removível / testes do parser | 🟡 em compilação/CI, sem execução do pack |
+| Código da fixture removível / testes do parser | ✅ compilado e isolado (Actions #38820230432; 10/10 testes sintéticos); ⚠️ ainda sem execução no pack |
 | Logs reais NeoForge 21.1.248 com Iron's + modpack | ⚠️ **pendente** |
 | Fingerprint do JAR instalado e compatibilidade com o publicado | ⚠️ **pendente** |
 | Unload/reload e limites sob mundo protegido | ⚠️ **pendente** |
