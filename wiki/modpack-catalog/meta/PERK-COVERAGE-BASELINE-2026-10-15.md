@@ -2,6 +2,16 @@
 
 **Natureza:** snapshot de coordenação de catálogo e dos eixos de engenharia de perks, sem alterar os contadores canônicos. A fonte operacional dinâmica continua em `SEMANTIC-MAGIC-COVERAGE.md`, `CATALOG-COVERAGE-CURRENT.md` e `plans/STATUS.md`; atualizar esta ficha após reconciliação, sem assumir que é o último checkpoint.
 
+## Hardening do trace temporal e fingerprint instalado (2026-10-15)
+
+**Estado da auditoria:** foram reproduzidos dois defeitos de aceite do **analisador de QA**, não do runtime Iron's. [RED #38821246417](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38821246417): cinco testes negativos falharam porque o parser aceitava a primeira fileira deslocada, amostra tardia/insuficiente de `tickCount`, descarte tardio e ausência de `join_game_tick`. [RED #38821612239](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38821612239): quatro negativos falharam porque o parser não conferia integridade do JAR instalado. Esses resultados são **evidência de regressões do validador**, não GameTests do Minecraft. As correções foram aplicadas na branch e exigem nova verificação de CI.
+
+- O [observador opt-in](../../../src/catalogQaProbe/java/dev/gustavopere/blackarcana/qa/catalog/ArrowVolleyRuntimeEvidence.java) agora emite `join_game_tick` em `type=end` e calcula uma vez no `ServerStartedEvent` a impressão SHA-256 do **JAR realmente carregado** via `ModList.get().getModFileById("irons_spellbooks")`. O código usa leitura limitada a **64 MiB**, somente metadados, sem abrir/regenerar entidades, e compara ao hash publicado `13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73`.
+- O [parser](../../../docs/qa/irons_3163_arrow_volley_observation_check.py) exige `join_game_tick + 5×índice_da_fileira`, amostragem inicial de idade 0 ou 1, observação de pelo menos `rows×5−1` amostras, descarte em idade `rows×5` ou `rows×5+1` e **um único fingerprint** com SHA-256, tamanho e status correspondentes. Falhas são rotuladas `FAIL_CLOSED`; testes sintéticos não representam spawn aceito em NeoForge.
+- O [protocolo](../../../docs/qa/irons-3163-arrow-volley-runtime-acceptance.md) distingue hash constatado em **log** de procedência autenticada do servidor, e mantém versão efetiva NeoForge, pack instalado, reload/chunks, TPS e causalidade sem prova física.
+
+**Impacto nos contadores: zero.** Iron's permanece ✅ **110 identidades inventariadas**, 🟡 **26/110 dossiês causais complementares**, ⚠️ GameTest de Arrow Volley e fingerprint real do perfil ainda não coletados, ⛔ perks que multipliquem flechas continuam bloqueados. Catálogo mínimo **1.856 global / 1.854 restrito**, denominador final desconhecido. Stage 06.05 permanece 🟡; PR #825 draft.
+
 ## Fila de QA física — observador passivo de Arrow Volley (2026-10-15)
 
 **Sem aumentar a cobertura semântica:** a fila de 110 identidades Iron's permanece **26/110 dossiês individuais de causalidade aprofundada (23,64%)**. Mínimo canônico **1.856 mágicos globais / 1.854 em escopo**, denominador definitivo **desconhecido (—%)**. Esta tranche adiciona infraestrutura de **observação**, não a 27ª magia nem um adapter runtime.
