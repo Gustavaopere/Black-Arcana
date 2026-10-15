@@ -41,6 +41,16 @@ A medição é passiva: **não** chama `onCast`, `addFreshEntity`, `discard`, `s
 
 O teste de regressão agora possui 15 casos, incluindo cinco casos **RED** comprovados no workflow citado. **Resultado GREEN deve ser buscado no último run após o commit de correção**, não inferido desta documentação. A comparação dos ticks elimina falso PASS para fileiras deslocadas, **não prova** que eventos Join foram causados pelo controlador: correlação owner/proximidade continua ⚠️ heurística.
 
+## 3B. Fingerprint do JAR realmente carregado (2026-10-15)
+
+A fixture de QA executa **uma vez em `ServerStartedEvent`** o método `ArrowVolleyRuntimeEvidence.emitProviderFingerprint()`, condicionado ao mesmo opt-in do observador. Ele obtém o caminho da instalação ativa por **`ModList.get().getModFileById("irons_spellbooks")`**, verifica que é arquivo regular, limita a leitura a **64 MiB**, calcula SHA-256 em streaming (buffer 8192 bytes) e publica **somente** nome do arquivo, tamanho, hash e correspondência. Não distribui o JAR nem altera dados ou entidades.
+
+O registro necessário é `type=provider_fingerprint mod_id=irons_spellbooks status=OBSERVED ... bytes=13890046 sha256=13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73 expected_match=true`. Em arquivo ausente/inacessível/sob limite inválido, a fixture emite `HASH_UNAVAILABLE`; se a versão do pack difere da publicação já auditada, `expected_match=false`. **Não alterar a expectativa de SHA para forçar aceite**: reauditar a versão do artefato sob cadeia física correta.
+
+O [validador](./irons_3163_arrow_volley_observation_check.py) agora exige **exatamente um** registro de fingerprint no log, com status, tamanho, hash e flag conferidos independentemente. Um registro ausente, duplicado, divergente ou alterado gera `PROVIDER_FINGERPRINT_UNVERIFIED` e saída de falha. Essa é **validação de conteúdo de log**; não autentica a origem do arquivo de log e não comprova sozinha a presença/versão do **NeoForge instalado**. Reter log de servidor do cenário efetivamente executado, launcher, metadata, hash do NeoForge e inventário de mods.
+
+**Prova de regressão:** [Actions #38821612239](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38821612239) reproduziu a falha do validador antigo nos casos negativos de fingerprint (**RED**); o GREEN só deve ser atribuído após conferência da última execução que contém a correção. Qualquer resultado de parser permanece classificado como `TRACE_CONSISTENT_NOT_GAMETEST`, não como conclusão de GameTest.
+
 ## 4. Processamento e critérios de aceite do trace
 
 Preservar log original integral do **servidor de QA**, com identidade e dados privados redigidos antes de compartilhamento. Executar, na raiz do repositório:
