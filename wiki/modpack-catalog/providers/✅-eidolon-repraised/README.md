@@ -1,5 +1,9 @@
 # Eidolon: Repraised
 
+## Prova física de receitas — 2026-10-14
+
+[Java 21 #38669010587](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38669010587) provou publisher SHA-1 idêntico à instalação: **18 chants + 24 rituais em JSON empacotados** (10 genéricos, 11 invocações, 2 crafting, 1 localizador) e **4 conversões dependentes**. As 42 identidades já catalogadas passam a `COUNTED_EXACT` **somente para registros estáticos de receitas**, sem alterar o mínimo global. [Dossiê de prova](EXACT-PACKAGED-CHANT-RITUAL-RECIPES-0.5.0.2.md). Os 20 registros de spells e as 16 researches continuam aferidos apenas pela fonte; a execução de RecipeManager, mana/health, server, datapacks e Survival segue ⚠️.
+
 ## Estado canônico
 
 - mod id: `eidolon_repraised`
@@ -9,7 +13,7 @@
 - loader: NeoForge
 - source oficial: `Alexthw46/Eidolon-Repraised`
 - source pin exato da versão: `696a47333e43970be7f697790eac0af76b6a04b8`
-- estado: **SOURCE-PINNED 0.5.0.2 / SPELL REGISTRY 20/20 / OFFICIAL CHANTS 18/18 / CONVERSIONS 4/4 / GENERIC RITUAL PROTOTYPES 10/10 / OFFICIAL RITUAL RECIPES 24/24 / RESEARCH REGISTRY 16/16 INVENTORIADOS / RUNTIME QA + FULL SURVIVAL REACHABILITY PENDENTES**
+- estado: **✅ CATALOGADO / COUNTED_EXACT para 18/18 CHANTS + 24/24 RITUAL RECIPES EMPACOTADOS; 4/4 CONVERSÕES DEPENDENTES / SPELL REGISTRY 20/20 e RESEARCH 16/16 apenas SOURCE-PINNED / ⚠️ RUNTIME QA E SURVIVAL PENDENTES**
 
 O source pin acima é o commit que altera `mod_version` para `0.5.0.2`. O head atual da branch 1.21.1 já avançou para 0.5.0.3 e não é usado como autoridade para a build instalada.
 
