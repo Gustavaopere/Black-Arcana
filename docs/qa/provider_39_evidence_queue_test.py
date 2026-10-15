@@ -292,7 +292,7 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_thirty_independent_prior_exact_providers_not_report_promoted(self):
+    def test_thirty_four_independent_prior_exact_providers_not_report_promoted(self):
         matrix, crosswalk, report = fixture()
         for name, orig, version, count in (
             ('Ars Nouveau', 'Provider 0', '5.13.1', 109),
@@ -343,7 +343,7 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         self.assertEqual(0, result['registry_proofs_completed'])
         exact_rows = [x for x in result['providers']
                       if x['status'] == 'CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT']
-        self.assertEqual({'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
+        self.assertEqual({'Ars Nouveau', 'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
                           'Dreamless Spells', 'Paladin Spells', "Wind's Spellbooks", 'Backported Spellbooks',
                           'Deeper & Darker Spellbooks', "GTBC's Geomancy Plus",
                           "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", 'Ars Controle', 'Ars Technica', 'Ars Zero', 'Ars Elemental', 'IronSable', "Fire's Ender Expansion", "Ypsilon's Fundamentalism", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice's Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum"},
