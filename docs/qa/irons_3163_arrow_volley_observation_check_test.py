@@ -16,6 +16,10 @@ def simulated_log(level=1, **overrides):
         "status": "LEFT_LEVEL",
         "observed_ticks": rows * 5,
         "join_game_tick": 0,
+        "controller_join_age": 0,
+        "sample_gaps": 0,
+        "age_step_mismatches": 0,
+        "nonfresh_arrow_joins": 0,
         "first_age": 1,
         "last_age": rows * 5,
         "age_monotonic": "true",
@@ -70,6 +74,27 @@ class ArrowVolleyObservationParserTests(unittest.TestCase):
         fingerprint = log.splitlines()[0]
         result = evaluate(fingerprint + "\n" + log, 1)
         self.assertIn("PROVIDER_FINGERPRINT_UNVERIFIED", result["fail_reasons"])
+
+    def test_rejects_noncontiguous_samples(self):
+        trace = evaluate(simulated_log(1, sample_gaps=1), 1)
+        self.assertIn("CONTROLLER_SAMPLE_GAPS", trace["fail_reasons"])
+
+    def test_rejects_skipped_or_double_age_steps(self):
+        trace = evaluate(simulated_log(1, age_step_mismatches=1), 1)
+        self.assertIn("CONTROLLER_AGE_STEP_MISMATCH", trace["fail_reasons"])
+
+    def test_rejects_reloaded_controller_join(self):
+        trace = evaluate(simulated_log(1, controller_join_age=14), 1)
+        self.assertIn("CONTROLLER_NONFRESH_JOIN", trace["fail_reasons"])
+
+    def test_rejects_nonfresh_arrow_candidate(self):
+        trace = evaluate(simulated_log(1, nonfresh_arrow_joins=1), 1)
+        self.assertIn("NONFRESH_ARROW_CANDIDATE", trace["fail_reasons"])
+
+    def test_rejects_missing_sample_gap_field(self):
+        trace = simulated_log(1).replace("sample_gaps=0 ", "")
+        with self.assertRaises(ValueError):
+            evaluate(trace, 1)
 
     def test_rejects_ambiguous_attribution(self):
         result = evaluate(simulated_log(1, ambiguous_joins=1), 1)
