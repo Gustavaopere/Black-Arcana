@@ -2,6 +2,17 @@
 
 **Natureza:** snapshot de coordenação de catálogo e dos eixos de engenharia de perks, sem alterar os contadores canônicos. A fonte operacional dinâmica continua em `SEMANTIC-MAGIC-COVERAGE.md`, `CATALOG-COVERAGE-CURRENT.md` e `plans/STATUS.md`; atualizar esta ficha após reconciliação, sem assumir que é o último checkpoint.
 
+## Verified published Java 21 bytecode — four compiled class paths (2026-10-15, PR #825 draft)
+
+**Prova binária localizada (não aumenta o numerador de magias):** [GitHub Actions #38811661659](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38811661659) **SUCCESS** para workflow [`irons-3163-projectile-bytecode.yml`](../../../.github/workflows/irons-3163-projectile-bytecode.yml), coletor [`irons_3163_projectile_bytecode.py`](../../../docs/qa/irons_3163_projectile_bytecode.py) e [relatório de QA e limites](../../../docs/qa/irons-3163-projectile-bytecode-pending.md). Download do JAR publicado do Iron's 3.16.3, CurseForge **file 8680204**, **13.890.046 bytes**, SHA-256 **`13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73`**, Java 21.0.12.1. A evidência exportada é JSON, não o JAR proprietário.
+
+- ✅ `ArrowVolleyEntity.tick`: lê `tickCount`, **não chama `super.tick` nem escreve o campo diretamente**. A contagem de flechas do spell continua **nominal** até GameTest/servidor provar evolução de tick/TTL; ⛔ perk de aumento de multiplicidade permanece bloqueado.
+- ✅ `SmallMagicArrow.shoot`: escreve `deltaMovement` diretamente, sem consulta a `getSpeed`; `onHitEntity` referencia `ARROW_VOLLEY_SPELL` no bytecode.
+- ✅ `SummonedSkeleton`: herda `Skeleton` e não declara `performRangedAttack`; ⚠️ fonte real da flecha herdada permanece **indeterminada** sem bytecode Minecraft/NeoForge e eventos em execução.
+- ✅ `PoisonCloud.applyEffect`: chama `hurt` sem `DamageSources.applyDamage`; `SpellDamageEvent` do helper do Iron's não é disparado por **esse método**, mas eventos gerais do jogo permanecem possíveis.
+
+**Caveats:** o checksum é do arquivo do publisher baixado na Actions, **não foi confrontado com JAR instalado**. Nenhum GameTest, Minecraft runtime, servidor dedicado, cliente, PvP, reload, profilers ou teste de gameplay foi executado. O job verde é **prova de auditoria binária estática somente**; as outras 22+ fichas permanecem conforme a provenance já documentada. **Cobertura do Iron's segue 26/110 (23,64% desta fila documental), piso global 1.856 / 1.854, denominador desconhecido (—%).** Stage 06.05 🟡 e sem promoção. PR continua draft.
+
 ## Current tranche override — twenty-six causal dossiers (2026-10-15, PR #825 draft)
 
 **Iron's 3.16.3 — 26/110 magias têm dossiês individuais causais suplementares source-pinned nesta PR (23,64% da fila documental específica).** As **110 identidades** já estão identificadas; dossiê causal **não significa** adapter, cobertura de API, equivalência JAR, GameTest ou QA de pack. A PR #795 das 110 fichas individuais está separada e seus arquivos não devem ser sobrescritos. **Nenhuma nova identidade semântica:** piso do ledger canônico preservado em **1.856 objetos mágicos mínimos globais / 1.854 no escopo estrito**, denominador global **desconhecido (—%)**. O checkpoint histórico 23/110 permanece abaixo.
