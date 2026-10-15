@@ -38,7 +38,7 @@ def fake_jar(missing=None,override=None,extra=None):
             if stem in aud.GENERIC: doc["ritual"]="eidolon_repraised:"+stem
             if stem in aud.SUMMONS:
                 doc["output"]=("eidolon_repraised:" if stem in {"summon_wraith","summon_slimy_slug","summon_raven"} else "minecraft:")+stem.removeprefix("summon_")
-                doc["count"]=1
+                doc["count"]=3 if stem in {"summon_husk","summon_drowned","summon_slimy_slug","summon_raven"} else 1
             if stem in aud.CRAFTING:
                 doc["result"]={"id":"eidolon_repraised:synthetic"}
                 doc["health_requirement"]=20
@@ -62,6 +62,21 @@ class PhysicalEidolonRecipeAuditTest(unittest.TestCase):
         self.assertEqual(1,out["ritual_type_counts"]["eidolon_repraised:ritual_brazier_location"])
         self.assertNotIn("undead_lure",out["normal_chants"])
         self.assertNotIn("basic_incense",out["normal_chants"])
+    def test_default_one_count_may_be_omitted_but_triple_count_may_not(self):
+        one=aud.RECIPE_ROOT+"rituals/summon_skeleton.json"
+        with zipfile.ZipFile(io.BytesIO(fake_jar(override={one:{
+             "type":"eidolon_repraised:ritual_brazier_summoning",
+             "reagent":{"item":"minecraft:coal"},"pedestal_items":[],
+             "output":"minecraft:skeleton"}}))) as z:
+            self.assertEqual(42,aud.scan(z)["semantic_magic_roots"])
+        triple=aud.RECIPE_ROOT+"rituals/summon_raven.json"
+        with zipfile.ZipFile(io.BytesIO(fake_jar(override={triple:{
+             "type":"eidolon_repraised:ritual_brazier_summoning",
+             "reagent":{"item":"minecraft:coal"},"pedestal_items":[],
+             "output":"eidolon_repraised:raven"}}))) as z:
+            with self.assertRaisesRegex(aud.AuditError,"summon output/count mismatch"):
+                aud.scan(z)
+
     def test_missing_summon_cannot_be_inferred_from_10_prototypes(self):
         with zipfile.ZipFile(io.BytesIO(fake_jar(missing=aud.RECIPE_ROOT+"rituals/summon_raven.json"))) as z:
             with self.assertRaisesRegex(aud.AuditError,"rituals identities mismatch"): aud.scan(z)
