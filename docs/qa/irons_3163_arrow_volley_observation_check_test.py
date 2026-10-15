@@ -15,6 +15,7 @@ def simulated_log(level=1, **overrides):
         "controller": UUID,
         "status": "LEFT_LEVEL",
         "observed_ticks": rows * 5,
+        "join_game_tick": 0,
         "first_age": 1,
         "last_age": rows * 5,
         "age_monotonic": "true",
@@ -58,6 +59,30 @@ class ArrowVolleyObservationParserTests(unittest.TestCase):
         result = evaluate(simulated_log(1,
             join_counts_per_tick="{5=10, 10=5, 15=5, 20=5, 25=0}"), 1)
         self.assertIn("ROW_PATTERN_MISMATCH", result["fail_reasons"])
+
+    def test_rejects_shifted_start_ticks(self):
+        # Row gaps remain valid but the first emission is one tick too late.
+        result = evaluate(simulated_log(1,
+            join_counts_per_tick="{6=5, 11=5, 16=5, 21=5, 26=5}"), 1)
+        self.assertIn("ROW_START_OFFSET_MISMATCH", result["fail_reasons"])
+
+    def test_rejects_controller_first_seen_late(self):
+        result = evaluate(simulated_log(1, first_age=9), 1)
+        self.assertIn("CONTROLLER_OBSERVATION_INCOMPLETE", result["fail_reasons"])
+
+    def test_rejects_missing_initial_age_samples(self):
+        result = evaluate(simulated_log(1, observed_ticks=3), 1)
+        self.assertIn("CONTROLLER_OBSERVATION_INCOMPLETE", result["fail_reasons"])
+
+    def test_rejects_late_controller_discard(self):
+        result = evaluate(simulated_log(1, last_age=70), 1)
+        self.assertIn("CONTROLLER_DISCARD_AGE_MISMATCH", result["fail_reasons"])
+
+    def test_rejects_missing_join_game_tick(self):
+        line = simulated_log(1)
+        line = line.replace("join_game_tick=0 ", "")
+        with self.assertRaises(ValueError):
+            evaluate(line, 1)
 
     def test_rejects_budget_overflow(self):
         result = evaluate(simulated_log(6,
