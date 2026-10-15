@@ -1,6 +1,10 @@
 # Vampirism 1.10.13 — provider audit
 
-Status: `SOURCE-PINNED 1.10.13 / CATÁLOGO GRANULAR BASE COMPLETO / VAMPIRE SPELLS 0.0.9 SOURCE-CATALOGADO / RUNTIME QA + BLOODLINES/DEMAIS ADDON INTEROP PENDENTES`
+Status: `✅ CATALOGED / COUNTED_EXACT STATIC PLAYER ACTION IDS 19/19 / VAMPIRE SPELLS 0.0.9 SOURCE-CATALOGADO / RUNTIME QA + BLOODLINES/DEMAIS ADDON INTEROP PENDENTES`
+
+## Prova binária física — 2026-10-14
+
+[Java21 #38664546643](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38664546643) confirmou o publisher CurseForge 8814121 SHA-1 igual ao físico #558, **14 Vampire + 3 Hunter + 2 Lord = 19/19 ações** com registrador, ID, holder e construtor compilado exatos. São as mesmas 19 ações já catalogadas, agora COUNTED_EXACT para a **identidade estática**, sem criar novas ações. [Dossiê de prova](EXACT-BINARY-PLAYER-ACTIONS-1.10.13.md). Execução real do barramento NeoForge, config, ActionHandler, sangue, facções, addons, Survival e multiplayer continuam sem PASS; Stage09 permanece PENDING.
 
 ## Autoridade da versão
 

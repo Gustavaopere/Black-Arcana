@@ -1,8 +1,12 @@
 # Vampirism 1.10.13 — Action Catalog
 
-Status: `VAMPIRE 14/14 + HUNTER 3/3 + LORD 2/2 INVENTORIADAS EM SOURCE / RUNTIME QA PENDENTE`
+Status: `COUNTED_EXACT STATIC JAR 1.10.13 / VAMPIRE 14/14 + HUNTER 3/3 + LORD 2/2 / RUNTIME QA PENDENTE`
 
 Canonical source: `TeamLapen/Vampirism@e1ed095713cef5e9eb151d0ee58908fa830d6bb7`
+
+## Current binary provenance
+
+The exact publisher [Java21 run #38664546643](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38664546643) matched the installed SHA-1 and verified all **19 distinct compiled action registrations**, their literal IDs, DeferredHolder fields, supplier constructors and IEventBus forwarding. [Evidence dossier](EXACT-BINARY-PLAYER-ACTIONS-1.10.13.md). Every timer and effect below remains a source-level behavioral description, not a completed physical Survival or provider runtime test.
 
 ## Action authority
 
