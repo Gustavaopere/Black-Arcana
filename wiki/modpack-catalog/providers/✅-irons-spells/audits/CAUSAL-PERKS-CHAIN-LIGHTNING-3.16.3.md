@@ -27,6 +27,8 @@
 | Recursão/duplicação | `allVictims`, `lastVictims` e cap total | ⛔ não gerar outra ChainLightning para cada evento de dano; risco de proc chain e bypass do orçamento |
 | Mana/cooldown | base provider + config | ⚠️ alterar custo com `SpellOnCastEvent` ocorre após a admissão original |
 
+**Dependências entre parâmetros:** uma modificação de nível por [`ModifySpellLevelEvent`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/ModifySpellLevelEvent.java) pode alterar **simultaneamente** dano, número total de vítimas e distância por `getMaxConnections`/`getRange`; não é uma API para modificar somente um desses eixos. Como `getLevelFor` não foi auditado em todas as origens do casting, esta possibilidade é **condicionada** até comprovação do caller e dos caps.
+
 ### QA
 
 - [ ] Confirmar classfile do artefato do pack e config carregada.
