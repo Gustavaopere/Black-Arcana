@@ -41,3 +41,15 @@ Iron's permanece authority dos summons e de seu dano. Integrações Black Arcana
 ## Fonte / evidência
 
 Catálogo oficial atual: `https://iron.wiki/spells/` — consulta em 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe:** [`SummonSwordsSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/SummonSwordsSpell.java) (`iron431@e4056af90302d37eb1739f5ff05020b020e6e252`, versão 1.21.1-3.16.3).
+- **ID no source:** `summon_swords` (namespace esperado Iron's; confirmar no registry se não extraído).
+- **DefaultConfig:** minRarity `RARE`; maxLevel `5`; cooldown `150` s; cast `LONG`.
+- **Campos Java:** `baseManaCost`=`80`; `manaCostPerLevel`=`15`; `baseSpellPower`=`1`; `spellPowerPerLevel`=`2`; `castTime`=`20`.
+- **Métodos de efeito/seleção:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `getHealthBonus()`, `getDamageBonus()`, `getRecastCount()`, `onRecastFinished()`, `getEmptyCastData()`, `onCast()`.
+- **Fórmulas diretas localizadas:** `getRecastCount = 2`.
+- **Pistas de código:** `SummonManager`, `SpellSummonEvent`, `RecastInstance`, `addFreshEntity`.
+
+**Regra de integração:** dados estáticos e nomes reais são pontos de entrada para o Codex; quantidades e alcance devem ser verificados no helper ou entidade que aplica o efeito. Perks/gates/Mastery são do RPG Skill Tree; cast e custos do Iron's; runtime mágico próprio do Black Arcana. Eventos disponíveis não garantem mutabilidade do efeito: sem contrato, fail-closed; caps e prevenção de duplicação são mandatórios. QA real pendente. [Mapa geral](../TECHNICAL-PERK-MAP.md).

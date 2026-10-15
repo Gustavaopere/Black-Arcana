@@ -36,3 +36,18 @@ A catalogar visualmente no runtime do pack.
 ## Fonte
 
 `https://iron.wiki/spells/` · `https://iron.wiki/schools/` · `https://iron.wiki/progression/`.
+
+## Parâmetros de implementação para perks — código auditado
+
+- **Source exato:** [`BloodStepSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/blood/BloodStepSpell.java) (`e4056af90302d37eb1739f5ff05020b020e6e252`, versão declarada 1.21.1-3.16.3); classe `io.redspace.ironsspellbooks.spells.blood.BloodStepSpell`.
+- **ID:** `irons_spellbooks:blood_step`. **DefaultConfig:** `RARE/UNCOMMON/COMMON=UNCOMMON` (raridade mínima), maxLevel `5`, cooldown `12` segundos, cast `INSTANT`.
+- **Campos Java verificados:** `baseManaCost=30`, `manaCostPerLevel=10`, `baseSpellPower=8`, `spellPowerPerLevel=1`, `castTime=0` ticks. Custo base a nível n: `(int)((baseManaCost + manaCostPerLevel*(n-1))*MANA_MULTIPLIER)`.
+- **Métodos-base relevantes:** `getDefaultConfig()`, `getCastType()`, `getSpellResource()`, `onCast(...)`; consulte a classe vinculada para helpers e entidades específicas.
+
+### Causalidade e eixos técnicos
+
+Distância: Utils.softCapFormula(getEntityPowerMultiplier(caster))*getSpellPower(level,null). Raycast e seleção de destino; para alvo vivo testa até 8 posições angulares atrás dele; teleporte executado por Utils.handleSpellTeleport. Aplica TRUE_INVISIBILITY por 100 ticks, zera fall distance. Range pode mudar pela potência, mas respeita soft cap. Perks de invisibilidade/segurança exigem inspecionar helper, proteção contra teleporte inválido e regressão Survival/PvP.
+
+### Limites de integração
+
+Atributos nativos `SPELL_POWER` e poder da escola Blood podem alterar `getSpellPower`; isso **não prova** um hook genérico para modificar geometria, quantidade, efeito ou alvo. O RPG Skill Tree fornece perks/gates/Mastery; Iron's preserva a autoridade de casting/custos/cooldowns e entidades; Black Arcana só intervém através de contratos verificados. Nenhum adapter de efeitos foi implementado nesta ficha. Registro **estático/source-pinned**, não teste Survival. [Contrato transversal](../TECHNICAL-PERK-MAP.md).

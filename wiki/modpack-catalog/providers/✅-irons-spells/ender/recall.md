@@ -47,3 +47,15 @@ Iron's é authority do estado de combate e da admissão deste spell. Se uma brid
 - Catálogo oficial atual: `https://iron.wiki/spells/`
 - Changelog oficial atual: `https://iron.wiki/changelog/`
 - Consulta: 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`RecallSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/RecallSpell.java), fixado em `e4056af90302d37eb1739f5ff05020b020e6e252` (versão 1.21.1-3.16.3).
+- **ID declarado:** `irons_spellbooks:recall` (se NÃO EXTRAÍDO, consultar registry).
+- **Config na classe:** minRarity `UNCOMMON`, maxLevel `1`, cooldown segundos `300`, cast `LONG`.
+- **Campos Java:** `baseManaCost`=`100`; `manaCostPerLevel`=`1`; `baseSpellPower`=`1`; `spellPowerPerLevel`=`1`; `castTime`=`80`.
+- **Métodos-chave:** `getCastType()`, `getEffectiveCastTime()`, `checkPreCastConditions()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `onCast()`, `getCastStartAnimation()`, `getCastFinishAnimation()`.
+- **Fórmulas numéricas de retorno direto:** não extraídas; rastrear corpo de métodos e entidades auxiliares. Não são fórmulas completas de efeitos condicionais.
+- **Pistas de efeito e targeting no source:** nenhuma das pistas-padrão extraída.
+
+**Para o Codex:** seguir `onCast` e métodos auxiliares até as classes que realmente aplicam dano/efeito. Campos extraídos documentam defaults, não a configuração efetiva no servidor. `getSpellPower` consulta atributos e escola nativos; eventos genéricos não demonstram modificabilidade de raio, quantidade ou alvo. Requer adapter/contrato real, cap, causalidade e fail-closed. Iron's mantém cast/custo/cooldown; RPG Skill Tree, perks/Mastery/gates; Black Arcana, o runtime mágico próprio. ⚠️ Auditoria estática sem testes físicos. [Especificação](../TECHNICAL-PERK-MAP.md).

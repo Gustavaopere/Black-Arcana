@@ -35,3 +35,15 @@ Já cobre projétil de magma + explosão + campo persistente de fogo. A existên
 - Catálogo oficial atual: `https://iron.wiki/spells/`
 - Changelog oficial: `https://iron.wiki/changelog/`
 - Consulta: 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`MagmaBombSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/fire/MagmaBombSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:magma_bomb` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `UNCOMMON`; maxLevel `8`; cooldown `12` segundos; cast `LONG`.
+- **Campos Java:** `baseManaCost`=`30`; `manaCostPerLevel`=`5`; `baseSpellPower`=`8`; `spellPowerPerLevel`=`3`; `castTime`=`20`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `onCast()`, `getRadius()`, `getDamage()`, `getAoeDamage()`, `getCastStartAnimation()`.
+- **Fórmulas numéricas com retorno direto:** `getRadius = 3 + getEntityPowerMultiplier(caster)`; `getDamage = baseSpellPower * getEntityPowerMultiplier(caster)`; `getAoeDamage = 1 + getSpellPower(spellLevel, caster) * .1f`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `addFreshEntity`, `Explosion`.
+
+**Contrato de perks:** escola `fire` não certifica que todo dano/incêndio seja fire damage; verificar fonte de dano, duração de burning e entidades de projétil. Separar atributo de spell power nativo de mutações de área/contagem/efeito, que exigem hook específico, caps e world safety. Sem contrato comprovado: ⚠️ condicionado/fail-closed. RPG Skill Tree gerencia perks, Mastery e gates; Iron's mantém cast, mana e efeitos nativos; Black Arcana mantém seu runtime e WorldEffectPolicy para efeitos próprios. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).

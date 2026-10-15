@@ -83,3 +83,23 @@ Já cobre vortex Ice móvel com pull/freezing semantics. Uma nova tempestade gla
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
 - Source 3.16.3: `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`, `BlizzardSpell.java`.
 - Pinagem de versão: `gradle.properties` no mesmo commit (`minecraft_version=1.21.1`, `mod_version=1.21.1-3.16.3`).
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`BlizzardSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ice/BlizzardSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:blizzard` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `RARE`; maxLevel `8`; cooldown `22` segundos; cast `LONG`.
+- **Campos Java:** `baseManaCost`=`40`; `manaCostPerLevel`=`10`; `baseSpellPower`=`12`; `spellPowerPerLevel`=`3`; `castTime`=`25`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `checkPreCastConditions()`, `onCast()`, `getDurationTicks()`, `getRadius()`, `getCastStartAnimation()`.
+- **Fórmulas numéricas com retorno direto:** `getDurationTicks = (int) (20 * (10 + 1.5f * spellLevel))`; `getRadius = 2f + 6f * getEntityPowerMultiplier(caster)`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `RaycastBuilder`, `TargetEntityCastData`, `addFreshEntity`.
+
+**Contrato de perks:** a escola `ice` não garante, sozinha, um damage type de gelo/frost nem status de freeze. Identificar classe que aplica efeitos, limites de duração/slow e colisão antes de propor modificadores. Atributo nativo de Iron's não é hook universal de raio/ângulo/quantidade. Exigir adapter comprovado, proteção contra duplicação e caps; caso contrário ⚠️ condicionado/fail-closed. Iron's mantém cast/efeitos/mana; RPG Skill Tree possui perks/Mastery/gates; Black Arcana mantém runtime próprio. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
+
+## Mecânica confirmada — leitura causal do código-fonte
+
+- **Área/efeito:** `checkPreCastConditions` tenta selecionar alvo até 32 blocos, mas admite cair para raycast de 32 blocos e escolha de solo; `onCast` instancia `BlizzardAoe` com owner, radius, duration e movimento horizontal de `0.05` por vetor de direção.
+- **Fórmulas:** `durationTicks=(int)(20*(10+1.5f*level))`; `radius=2+6*getEntityPowerMultiplier(caster)`. O raio não usa diretamente `level` nesta fórmula, enquanto duração sim. `getSpellPower` não é chamado no cálculo de raio, exceto que ambos podem envolver multiplicadores semelhantes.
+- **Perks:** duração/radius exigem interceptar ou parametrizar `BlizzardAoe`; a avaliação de acertos/congelamento real está nessa entidade, ainda sem QA e sem contrato de mutação provado.
+
+**Nível de prova:** inspeção do método do spell fixado no source 3.16.3; efeitos internos da entidade/projétil, possibilidade de patch por hooks externos e runtime Survival não validados.

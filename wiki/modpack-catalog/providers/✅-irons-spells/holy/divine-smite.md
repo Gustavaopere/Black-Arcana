@@ -60,3 +60,15 @@ Já cobre smite Holy melee dependente da arma. Uma bridge deve preservar um úni
 - Catálogo oficial atual: `https://iron.wiki/spells/`
 - Source audit canônico: `wiki/modpack-catalog/providers/irons-spells/audits/source-3.16.3/spells/holy/divine-smite.md`
 - Consulta: 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`DivineSmiteSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/holy/DivineSmiteSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:divine_smite` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `COMMON`; maxLevel `5`; cooldown `15` segundos; cast `LONG`.
+- **Campos Java:** `baseManaCost`=`30`; `manaCostPerLevel`=`15`; `baseSpellPower`=`8`; `spellPowerPerLevel`=`3`; `castTime`=`16`.
+- **Métodos no código:** `getUniqueInfo()`, `getEffectiveCastTime()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `onCast()`, `getDamage()`, `getAdditionalDamage()`, `getDamageText()`, `getCastStartAnimation()`, `getCastFinishAnimation()`.
+- **Fórmulas numéricas com retorno direto:** `getDamage = getSpellPower(spellLevel, entity) + getAdditionalDamage(entity)`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `DamageSources`.
+
+**Contrato de perks:** escola `holy` não prova dano, cura ou imunidade universais. Inspecionar fonte de dano/cura e estado persistente do efeito nativo antes de modificar duração, alcance e alvo. Atributo provider-native e patch em entidade/efeito são integrações diferentes; requerem evento/hook real, caps e prevenção de duplicidade. Sem hook: ⚠️ condicionado/fail-closed. Iron's é autoridade do cast e mana; RPG Skill Tree, perks/Mastery/gates; Black Arcana, seu runtime mágico. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).

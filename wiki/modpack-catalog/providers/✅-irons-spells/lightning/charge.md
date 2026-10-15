@@ -52,3 +52,15 @@ O catálogo oficial atual publica 5% por nível para os três atributos; `Charge
 
 - `https://iron.wiki/spells/` — consulta 2026-09-06.
 - Source 3.16.3: `ChargeSpell.java` em `e4056af90302d37eb1739f5ff05020b020e6e252`.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`ChargeSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/lightning/ChargeSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:charge` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `RARE`; maxLevel `3`; cooldown `40` segundos; cast `INSTANT`.
+- **Campos Java:** `baseManaCost`=`50`; `manaCostPerLevel`=`25`; `baseSpellPower`=`30`; `spellPowerPerLevel`=`8`; `castTime`=`0`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `onCast()`, `getPercentAttackDamage()`, `getPercentSpeed()`, `getPercentSpellPower()`, `getDurationTicks()`, `getCastStartAnimation()`.
+- **Fórmulas numéricas com retorno direto:** `getPercentAttackDamage = spellLevel * ChargeEffect.ATTACK_DAMAGE_PER_LEVEL * 100`; `getPercentSpeed = spellLevel * ChargeEffect.SPEED_PER_LEVEL * 100`; `getPercentSpellPower = spellLevel * ChargeEffect.SPELL_POWER_PER_LEVEL * 100`; `getDurationTicks = (int) (30 * 20 * getEntityPowerMultiplier(entity))`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `MobEffectInstance`, `addEffect`.
+
+**Contrato de perks:** escola `lightning` não prova, sozinha, dano elétrico, arcos em cadeia ou stun. Conferir classe de descarga/targeting, i-frames, limites de saltos, duração e efeitos de bloco. Atributo nativo ≠ hook para raio, count ou chain. Exigir contrato de provider, cap e anti-proc-recursivo; caso contrário ⚠️ condicionado/fail-closed. Iron's controla cast/mana/efeitos, RPG Skill Tree perks/Mastery/gates, Black Arcana runtime mágico próprio. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).

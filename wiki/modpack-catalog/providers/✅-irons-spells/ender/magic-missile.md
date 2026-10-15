@@ -37,3 +37,15 @@ O changelog atual da linha 3.16.x registra lens flare na renderização de Magic
 - Catálogo oficial atual: `https://iron.wiki/spells/`
 - Changelog oficial atual: `https://iron.wiki/changelog/`
 - Consulta: 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`MagicMissileSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/MagicMissileSpell.java), fixado em `e4056af90302d37eb1739f5ff05020b020e6e252` (versão 1.21.1-3.16.3).
+- **ID declarado:** `irons_spellbooks:magic_missile` (se NÃO EXTRAÍDO, consultar registry).
+- **Config na classe:** minRarity `COMMON`, maxLevel `10`, cooldown segundos `1`, cast `INSTANT`.
+- **Campos Java:** `baseManaCost`=`10`; `manaCostPerLevel`=`2`; `baseSpellPower`=`12`; `spellPowerPerLevel`=`1`; `castTime`=`0`.
+- **Métodos-chave:** `getUniqueInfo()`, `getDefaultConfig()`, `getCastType()`, `getSpellResource()`, `onCast()`, `getDamage()`.
+- **Fórmulas numéricas de retorno direto:** `getDamage = getSpellPower(spellLevel, entity) * .5f`. Não são fórmulas completas de efeitos condicionais.
+- **Pistas de efeito e targeting no source:** `addFreshEntity`.
+
+**Para o Codex:** seguir `onCast` e métodos auxiliares até as classes que realmente aplicam dano/efeito. Campos extraídos documentam defaults, não a configuração efetiva no servidor. `getSpellPower` consulta atributos e escola nativos; eventos genéricos não demonstram modificabilidade de raio, quantidade ou alvo. Requer adapter/contrato real, cap, causalidade e fail-closed. Iron's mantém cast/custo/cooldown; RPG Skill Tree, perks/Mastery/gates; Black Arcana, o runtime mágico próprio. ⚠️ Auditoria estática sem testes físicos. [Especificação](../TECHNICAL-PERK-MAP.md).

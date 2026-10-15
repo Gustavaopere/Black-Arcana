@@ -39,3 +39,15 @@ Pre-cast tenta target helper até 32 blocos sem exigir sucesso. Se não houver t
 
 - `https://iron.wiki/spells/` — consulta 2026-09-06.
 - `EarthquakeSpell.java` — source 3.16.3.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`EarthquakeSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/EarthquakeSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:earthquake`; o ID pode divergir do título de exibição.
+- **Config:** minRarity `UNCOMMON`; maxLevel `10`; cooldown `16` segundos; cast `LONG`.
+- **Campos Java:** `baseManaCost`=`50`; `manaCostPerLevel`=`10`; `baseSpellPower`=`8`; `spellPowerPerLevel`=`1`; `castTime`=`40`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `checkPreCastConditions()`, `onCast()`, `getDamage()`, `getRadius()`, `getSlownessAmplifier()`.
+- **Fórmulas numéricas com retorno direto:** `getDamage = getSpellPower(spellLevel, caster) * .25f`; `getRadius = 4 + 4 * getEntityPowerMultiplier(caster)`; `getSlownessAmplifier = Math.clamp((int) getDamage(spellLevel, caster) - 2, 0, 2)`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `RaycastBuilder`, `TargetEntityCastData`, `addFreshEntity`.
+
+**Contrato de perks:** escola `nature` não implica toxicidade, dano ácido, status ou transformação automática. Verificar aplicação real por helper, entidade, efeito ou damage source. Separar atributo nativo de mudar geometria/status/quantidade; exigir contrato real, caps, segurança e dedup; sem hook ⚠️ condicionado/fail-closed. Iron's controla cast/efeitos/mana; RPG Skill Tree perks/Mastery/gates; Black Arcana seu runtime mágico. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
