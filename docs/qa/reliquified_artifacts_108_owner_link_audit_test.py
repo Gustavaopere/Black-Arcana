@@ -51,7 +51,8 @@ class ExactOwnerLinkTests(unittest.TestCase):
                                  expected_owners={"plastic_drinking_hat","novelty_drinking_hat","snorkel"})
 
     def test_bootstrap_constructor_mutation_fails(self):
-        corrupt=self.bytecode.replace("REF_newInvokeSpecial ReArtOwnerFixture$HatItem.","REF_invokeVirtual ReArtOwnerFixture$HatItem.",1)
+        prefix,bootstrap=self.bytecode.split("BootstrapMethods:",1)
+        corrupt=prefix+"BootstrapMethods:"+bootstrap.replace("REF_newInvokeSpecial ReArtOwnerFixture$HatItem.","REF_invokeVirtual ReArtOwnerFixture$HatItem.",1)
         with self.assertRaises(proof.AuditError):
             proof.switch_mapping(corrupt,"redirectWearableItem",proof.bootstrap_ctors(corrupt))
 
