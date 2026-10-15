@@ -2,6 +2,18 @@
 
 **Natureza:** snapshot de coordenação de catálogo e dos eixos de engenharia de perks, sem alterar os contadores canônicos. A fonte operacional dinâmica continua em `SEMANTIC-MAGIC-COVERAGE.md`, `CATALOG-COVERAGE-CURRENT.md` e `plans/STATUS.md`; atualizar esta ficha após reconciliação, sem assumir que é o último checkpoint.
 
+## Current tranche override — nine causal dossiers (2026-10-15, PR #825 draft)
+
+A PR #825 passou de seis para **9/110 magias do Iron's com dossiê suplementar de auditoria causal source-pinned** (**8,18% desta categoria documental**). O novo grupo cobre **Root, Slow e Abyssal Shroud**. O checkpoint de seis arquivos abaixo é histórico, não substitui este estado mais recente. O universo semântico **não** aumentou: **1.856 objetos mágicos mínimos globais / 1.854 no escopo estrito** permanecem os mesmos do ledger canônico. Denominador global final **desconhecido (—%)**. Não confundir 9/110 fichas suplementares com implementação de perks, prova binária ou homologação da API. A PR #795 continua aberta com as 110 fichas individuais em outra branch.
+
+- [Root 3.16.3](../providers/✅-irons-spells/audits/CAUSAL-PERKS-ROOT-3.16.3.md): alvo único 32 blocos, `CANT_ROOT` verificado na execução final, root invocada e montada como veículo, HP independente do nível, duração por power, dismount guard, antimagia e NBT.
+- [Slow 3.16.3](../providers/✅-irons-spells/audits/CAUSAL-PERKS-SLOW-3.16.3.md): aquisição 32 blocos, duração por power, amplificador por entity power multiplier, quatro modificadores de atributo com impacto diferenciado para mineração e casting, sem dano direto.
+- [Abyssal Shroud 3.16.3](../providers/✅-irons-spells/audits/CAUSAL-PERKS-ABYSSAL-SHROUD-3.16.3.md): defesa própria por `LivingIncomingDamageEvent` e `ProjectileImpactEvent`, bypass tags, precedência `EVASION`, tentativa de deslocamento que nem sempre se concretiza e ausência de `SpellTeleportEvent` nesse caminho direto.
+
+**Riscos confirmados na leitura source-pinned, sem declarar bug de JAR/gameplay:** `RootSpell` pode cobrar o cast antes da verificação final `CANT_ROOT`, `RootEntity` não serializa `target` explicitamente na própria classe; `AbyssalShroudEffect.doEffect` retorna true após tentativas condicionais de movimento, permitindo veto de dano mesmo sem `teleportTo`, e contém chamada `Vec3.yRot` cujo resultado não é guardado. `SlowSpell` não usa spell level diretamente na fórmula de intensidade do amplificador, embora o nível influencie sua duração. Todos exigem QA.
+
+**Estado:** ✅ nove dossiês suplementares source-pinned na PR #825; ⚠️ prova binária e testes provider-native não executados para os três novos; ⛔ sem adapter per-player seguro de alvo/área/posição não comprovado. Stage 06.05/09 sem promoção.
+
 ## Current tranche override — six causal dossiers (2026-10-15, PR #825 draft)
 
 A branch mantém **6/110 spells do Iron's com fichas suplementares de auditoria causal source-pinned**: Fireball, Chain Lightning, Counterspell, **Firebolt, Wall of Fire e Teleport**. Isso é **5,45% das 110 identidades** com *este tipo específico* de aprofundamento nesta PR, **não** percentual de APIs mutáveis, implementação de perks ou QA. A tranche anterior 3/110 é preservada como checkpoint histórico abaixo. Nenhum novo objeto semântico mágico foi introduzido: o mínimo do ledger permanece **1.856 global / 1.854 no escopo restrito**, sem denominador global final (—%). As **110 fichas da PR #795** continuam em draft, num trabalho paralelo distinto.
