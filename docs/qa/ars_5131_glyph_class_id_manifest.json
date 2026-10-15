@@ -68,5 +68,20 @@
   "EffectBounce": "ars_nouveau:glyph_bounce",
   "AugmentSensitive": "ars_nouveau:glyph_sensitive",
   "EffectWindshear": "ars_nouveau:glyph_wind_shear",
-  "EffectEvaporate": "ars_nouveau:glyph_evaporate"
+  "EffectEvaporate": "ars_nouveau:glyph_evaporate",
+  "EffectLinger": "ars_nouveau:glyph_linger",
+  "EffectSenseMagic": "ars_nouveau:glyph_sense_magic",
+  "EffectInfuse": "ars_nouveau:glyph_infuse",
+  "EffectRotate": "ars_nouveau:glyph_rotate",
+  "EffectWall": "ars_nouveau:glyph_wall",
+  "EffectAnimate": "ars_nouveau:glyph_animate_block",
+  "EffectBurst": "ars_nouveau:glyph_burst",
+  "AugmentRandomize": "ars_nouveau:glyph_randomize",
+  "EffectOrbit": "ars_nouveau:glyph_orbit",
+  "EffectReset": "ars_nouveau:reset",
+  "EffectWololo": "ars_nouveau:wololo",
+  "EffectRewind": "ars_nouveau:rewind",
+  "EffectBubble": "ars_nouveau:glyph_bubble",
+  "EffectWindburst": "ars_nouveau:glyph_wind_burst",
+  "EffectPrestidigitation": "ars_nouveau:glyph_prestidigitation"
 }
