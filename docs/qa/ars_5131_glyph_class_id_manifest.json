@@ -12,5 +12,19 @@
   "EffectKnockback": "ars_nouveau:glyph_gust",
   "EffectLight": "ars_nouveau:glyph_light",
   "EffectDispel": "ars_nouveau:glyph_dispel",
-  "EffectLaunch": "ars_nouveau:glyph_launch"
+  "EffectLaunch": "ars_nouveau:glyph_launch",
+  "EffectPull": "ars_nouveau:glyph_pull",
+  "EffectBlink": "ars_nouveau:glyph_blink",
+  "EffectExplosion": "ars_nouveau:glyph_explosion",
+  "EffectLightning": "ars_nouveau:glyph_lightning",
+  "EffectSlowfall": "ars_nouveau:glyph_slowfall",
+  "EffectFangs": "ars_nouveau:glyph_fangs",
+  "EffectSummonVex": "ars_nouveau:glyph_summon_vex",
+  "AugmentAccelerate": "ars_nouveau:glyph_accelerate",
+  "AugmentDecelerate": "ars_nouveau:glyph_decelerate",
+  "AugmentSplit": "ars_nouveau:glyph_split",
+  "AugmentAmplify": "ars_nouveau:glyph_amplify",
+  "AugmentAOE": "ars_nouveau:glyph_aoe",
+  "AugmentExtendTime": "ars_nouveau:glyph_extend_time",
+  "AugmentPierce": "ars_nouveau:glyph_pierce"
 }
