@@ -31,7 +31,12 @@ def simulated_log(level=1, **overrides):
         "ambiguous_global": 0,
     }
     props.update(overrides)
-    return TAG + " type=end " + " ".join(f"{k}={v}" for k, v in props.items())
+    fingerprint = (TAG + " type=provider_fingerprint mod_id=irons_spellbooks" +
+                   " status=OBSERVED file=irons_spellbooks-1.21.1-3.16.3.jar" +
+                   " bytes=13890046 sha256=13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73" +
+                   " expected_match=true")
+    return fingerprint + "\n" + TAG + " type=end " + " ".join(
+        f"{k}={v}" for k, v in props.items())
 
 
 class ArrowVolleyObservationParserTests(unittest.TestCase):
@@ -41,6 +46,30 @@ class ArrowVolleyObservationParserTests(unittest.TestCase):
                 result = evaluate(simulated_log(level), level)
                 self.assertEqual("TRACE_CONSISTENT_NOT_GAMETEST", result["result"])
                 self.assertEqual([], result["fail_reasons"])
+
+    def test_rejects_missing_provider_fingerprint(self):
+        log = simulated_log(1)
+        log = log.splitlines()[-1]
+        result = evaluate(log, 1)
+        self.assertIn("PROVIDER_FINGERPRINT_UNVERIFIED", result["fail_reasons"])
+
+    def test_rejects_modified_installed_provider(self):
+        log = simulated_log(1).replace("expected_match=true", "expected_match=false")
+        result = evaluate(log, 1)
+        self.assertIn("PROVIDER_FINGERPRINT_UNVERIFIED", result["fail_reasons"])
+
+    def test_rejects_forged_matching_flag(self):
+        log = simulated_log(1).replace(
+            "sha256=13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73",
+            "sha256=" + "f" * 64)
+        result = evaluate(log, 1)
+        self.assertIn("PROVIDER_FINGERPRINT_UNVERIFIED", result["fail_reasons"])
+
+    def test_rejects_duplicate_provider_fingerprint(self):
+        log = simulated_log(1)
+        fingerprint = log.splitlines()[0]
+        result = evaluate(fingerprint + "\n" + log, 1)
+        self.assertIn("PROVIDER_FINGERPRINT_UNVERIFIED", result["fail_reasons"])
 
     def test_rejects_ambiguous_attribution(self):
         result = evaluate(simulated_log(1, ambiguous_joins=1), 1)
