@@ -96,7 +96,7 @@ def switch_mapping(text: str, name: str, constructors: dict[int,str],
         raise AuditError("compiled case owner names differ from pinned inventory")
     # Javac sometimes emits a hashcode tableswitch before its case-index dispatch.
     # Select the switch whose labels exactly match String.equals discriminants.
-    matches=list(re.finditer(r'^\s*\d+:\s+tableswitch\s+\{[^\n]*\n(.*?)^\s*\}',code,re.M|re.S))
+    matches=list(re.finditer(r'^\s*\d+:\s+(?:table|lookup)switch\s+\{[^\n]*\n(.*?)^\s*\}',code,re.M|re.S))
     if not matches: raise AuditError('no compiled tableswitch: '+name)
     candidates=[]
     for match in matches:
