@@ -1,5 +1,8 @@
 # 39 providers — fila de evidências para validação binária
 
+**Checkpoint 2026-10-14 — Bloodlines 3.0.9:** [Java21 #38673548806](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38673548806) comprovou publisher SHA-igual ao físico #81, **29/29 registries IAction**, com **28/28** raízes semânticas previamente contadas e Sorcerous Strike explicitamente excluído por topologia de progressão fonte. Campanha **33/39 exatos /6/39 condicionados**, mínimos **1856 global /1854 escopo** (+0). O coletor genérico `registry_proofs_completed=0` não realiza essa inspeção binária. Runtime/Survival/Stage09 ⚠️.
+
+
 **Checkpoint 2026-10-14 — Eidolon 0.5.0.2:** [Java21 #38669010587](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38669010587) prova SHA publisher=físico, 18 chants normais +24 rituais empacotados e 4 conversões dependentes. **32/39 exatos /7/39 condicionados**, mínimos **1856 global /1854 escopo** (+0). O collector read-only mantém `registry_proofs_completed=0` pois não realiza essas auditorias independentes. RecipeManager, runtime provider, config, Survival e Stage09 ⚠️.
 
 

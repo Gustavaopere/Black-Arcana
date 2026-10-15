@@ -1,0 +1,15 @@
+# Bloodlines 3.0.9 — historical exact-JAR proof plan
+
+**Static registry proof now PASS:** [Java21 #38673548806](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38673548806) verifies all 29 compiled IAction fields/constructors on SHA-matched publisher, 28 semantic identities and 1 excluded action. [Exact dossier](../../wiki/modpack-catalog/providers/✅-bloodlines/EXACT-BINARY-PLAYER-ACTIONS-3.0.9.md). The prior 32/39 queue and source-pinned statements below are historical. Gameplay, live grants, Souls/Blood, config, Survival still ⚠️ Stage09, Stage06.05 🟡.
+
+# Bloodlines 3.0.9 — physical compiled IAction registry verification in progress
+
+**🟡 PENDING. No `COUNTED_EXACT` promotion before exact publisher hash and exhaustive compiled proof pass.**
+
+Physical sibling `neoforge-rpg-skilltree@9e6436edb0049a8dcc4e47165db0f6850e5efa68` modlist **#81**, `bloodlines-1.21-3.0.9.jar`, mod ID `bloodlines`, SHA-1 `b14ff359c7530c0e40ca289cc023bd1c19a070af`; CurseForge project **1073052**, file **8639194**, uploader thedoctorofdoctoring, Aug 13, 2026, NeoForge 1.21.1. Exactly pinned source `TheDrOfDoctoring/bloodlines@c8fd517d204d09dfcb9a544c17d7df87755eaa5c`.
+
+Source provides **29** registered `IAction` objects in Vampirism's own `VampirismRegistries.Keys.ACTION`: Gravebound 12, Noble 5, Zealot 4, Ectotherm 3, Bloodknight 5. Of these, **28** are normally reachable through current source-pinned skills and grants, while `gravebound_crit_action` (Sorcerous Strike) is present in the registry but **EXCLUDED** from the strict semantic total because the exact Gravebound configured skill-tree graph and rank defaults omit its acquisition route. Never promote this 29th identity into the denominator from mere publisher registry presence.
+
+The SHA-gated Java21 workflow is designed to verify publisher metadata, `BloodlineActions` class, each literal ID → ACTIONS.register → LambdaMetafactory constructor → DeferredHolder field graph, and entrypoint `Bloodlines` constructor forwarding the DeferredRegister to mod IEventBus. Independent synthetic fixtures check full cardinality, namespace, constructor swaps and missing bus. No third-party code, binary or assets committed; only JSON audit output.
+
+**Limits:** even compiled registry identity does not prove live registry loaded, datapack-altered tree topology, operator grants, skill unlocks, souls/blood transactions, movement, action activation success, effects or client/server Survival. Bloodlines remains authoritative for BloodlineManager, ranks, perk wallets, Gravebound Souls/Phylactery; Vampirism retains base blood and action timers/activation. RPG Skill Tree is sibling progression only via validated contracts; Black Arcana owns its own runtime. Stage 06.05 🟡 / Stage09 PENDING. Until independent proof + ledger + final CI, campaign **32/39 exact /7/39 conditional**, minima **1856 global /1854 in scope**.

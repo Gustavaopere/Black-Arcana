@@ -4,6 +4,10 @@ Source authority: `TheDrOfDoctoring/bloodlines@c8fd517d204d09dfcb9a544c17d7df877
 
 All 29 provider actions are registered in `VampirismRegistries.Keys.ACTION`. Bloodlines therefore extends the Vampirism action pipeline instead of creating a parallel action engine. Activation, duration, cooldown, action selection and synchronization remain provider-native; Black Arcana must observe/bridge those settlements rather than emulate them.
 
+## Publisher SHA-matched compiled registry — 2026-10-14
+
+[Run #38673548806](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38673548806) verified **all 29 IAction registrations and constructors** in the exact official 3.0.9 JAR. [Binary dossier](EXACT-BINARY-PLAYER-ACTIONS-3.0.9.md). Sorcerous Strike is physically present but stays EXCLUDED from 28 normally reachable semantic roots; this action's reachability is source-tree evidence, not a loaded datapack proof. All costs, timers and behavior below remain source/default descriptions requiring physical gameplay tests.
+
 ## Registry inventory — 29/29
 
 | Bloodline | Count | Registered actions |
