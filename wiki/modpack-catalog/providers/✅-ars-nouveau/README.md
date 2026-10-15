@@ -182,7 +182,7 @@ Ars core already exposes Heal, Hex, Wither, Ignite, Flare, Gravity, summons, det
 - Presence/version: current 2026-09-06 modlist — HIGH.
 - Glyph architecture, registry IDs, tiers, base costs and descriptions above: current public Ars 1.21.1 guide — HIGH.
 - The guide is addon-aware; ownership is determined by registry namespace, not page location.
-- No Java bytecode was decompiled for this catalog.
+- Original semantic dossiers were compiled from pinned upstream source; [SHA-exact Java21 class-callsite proof #38687392724](STATIC-REGISTRATION-PHYSICAL-AUDIT-PENDING-5.13.1.md) subsequently verified 85 spell-part class registration calls + 24 ritual class registration calls in the installed publisher JAR, with 12 synthetic checks. The **109 namespaced ResourceLocation IDs are still not independently binary-certified**, so Ars Nouveau remains `COUNTED_SOURCE_PINNED` rather than `COUNTED_EXACT`. Runtime and Survival pending.
 
 ## Fichas técnicas para Codex e perks
 
