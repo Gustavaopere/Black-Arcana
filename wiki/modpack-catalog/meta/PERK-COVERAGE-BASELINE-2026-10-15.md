@@ -2,6 +2,18 @@
 
 **Natureza:** snapshot de coordenação de catálogo e dos eixos de engenharia de perks, sem alterar os contadores canônicos. A fonte operacional dinâmica continua em `SEMANTIC-MAGIC-COVERAGE.md`, `CATALOG-COVERAGE-CURRENT.md` e `plans/STATUS.md`; atualizar esta ficha após reconciliação, sem assumir que é o último checkpoint.
 
+## Current tranche override — fifteen causal dossiers (2026-10-15, PR #825 draft)
+
+**Iron's Spells 'n Spellbooks 3.16.3 — 15/110 spells têm fichas suplementares de leitura causal source-pinned nesta PR (13,64% das identidades).** É métrica **estritamente documental de auditoria**, não porcentagem de APIs seguras, adapters implementados, física do JAR ou QA. As 110 fichas individuais da PR #795 continuam em draft e em trabalho separado. O mínimo do ledger global **permanece 1.856 objetos semânticos / 1.854 no escopo restrito**, pois nenhuma destas magias é identidade nova; **denominador global final desconhecido (—%)**. O checkpoint 12/110 abaixo fica como histórico.
+
+Novos dossiês, sem sobrescrever as fichas existentes:
+
+- [Gluttony — mana em `LivingEntityUseItemEvent.Finish`](../providers/✅-irons-spells/audits/CAUSAL-PERKS-GLUTTONY-3.16.3.md): alimento `FoodProperties` com status GLUTTONY, `nutrition × ratioForAmplifier`, server `MagicData.addMana`, cap superior `MAX_MANA`, `ChangeManaEvent` e sync; sem segundo crédito/cast.
+- [Devour — mandíbula e Vigor por kill](../providers/✅-irons-spells/audits/CAUSAL-PERKS-DEVOUR-3.16.3.md): target single raycast 9 blocos, `DevourJaw` em 13 ticks, lifesteal de 15% do dano `LivingDamageEvent.Post`, heal no kill e vida máxima temporária via `VIGOR` com amplifier cap 9; não confundir retorno do hit com kill.
+- [Ray of Siphoning — canalização e roubo de vida](../providers/✅-irons-spells/audits/CAUSAL-PERKS-RAY-OF-SIPHONING-3.16.3.md): scheduler de player `CONTINUOUS_CAST_TICK_INTERVAL=10`, custo por chamada nativa e reserva de 2× mana cost para continuação, raycast 12 blocos independente do nível, `SpellDamageSource.setLifestealPercent(1f).indirect()`; hits/heals recorrentes pertencem a um canal e não são casts independentes.
+
+**Barreiras:** ✅ documentação com provenance fixa; ⚠️ sem verificação do artefato físico, `CastSource` efetivo, eventos de terceiros, stacking, save/reload ou QA multiplayer; ⛔ mudanças per-perk de `DevourJaw`, geometria, cadência de canalização, tipo de dano e recursos de outro provider permanecem bloqueadas sem hook público estável e testes. Black Arcana governa apenas seu runtime, RPG Skill Tree progressão/gates/perks, Iron's rege as próprias magias.
+
 ## Current tranche override — twelve causal dossiers (2026-10-15, PR #825 draft)
 
 **Iron's Spells 'n Spellbooks 3.16.3: 12/110 spells com dossiê causal suplementar nesta PR** — **10,91% da fila de 110**; isso representa escopo de *auditoria documental source-pinned*, **não** completion de hooks per-perk, adapter implementado, verificação binária, GameTest ou execução real. A PR #795 continua distinta com as 110 fichas de origem em draft. O checkpoint de 9/110 abaixo permanece histórico. Nenhum novo ID mágico foi acrescentado: **1.856 objetos semânticos mínimos globais / 1.854 no escopo restrito**; denominador final do universo global continua **aberto (—%)**.
