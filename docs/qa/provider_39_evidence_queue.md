@@ -1,5 +1,8 @@
 # 39 providers — fila de evidências para validação binária
 
+**Checkpoint 2026-10-14 — Reliquified Artifacts 1.0.8:** [Java21 #38662072936](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38662072936) comprova 48/48 owner→constructor SHA-exatos, 47 classes, 51 templates e 52 owner-scoped roots existentes. **30/39 exatos / 9/39 condicionados** e mínimos **1856 global / 1854 escopo** sem delta. O fingerprint collector genérico continua `registry_proofs_completed=0` porque não executa prova binária independente. Mixin injetado no pack, Relics runtime e Survival PENDING.
+
+
 **Checkpoint 2026-10-14 — Requiem 0.1.7:** [Java21 #38655251099](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38655251099) comprovou publisher SHA igual ao físico, 54 registros GG + 3 DTE, **57/57 IDs exatos**, **52 ações semânticas**. `WEAKENING_GONG`/`ess_requiem:gong` existe apenas na fonte, **não** no registry compilado. Campanha **✅ 29/39 exatos / ⚠️ 10/39 condicionados**; mínimo global **1856**, escopo **1854**, correção −1. O fingerprint collector genérico continua `registry_proofs_completed=0` por não executar provas binárias; gameplay e Survival pendentes.
 
 **Checkpoint atual 2026-10-14 — Hexalia 1.3.7:** [prova independente #38612851733](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38612851733) comprova o publisher CurseForge 8875587 com SHA-1 físico `ca90edf1664cf6d44fe7e5318c71069050499c7e`, **23 Nature's Ritual + 6 Celestial Infusion / 29 IDs exatos**, sem divergências. Campanha **✅ 28/39 exatos / ⚠️ 11/39 condicionados**. O fingerprint collector genérico continua `registry_proofs_completed=0` porque não executa a auditoria independente. +0 raízes semânticas; configuração, gameplay e Stage09 permanecem PENDING.

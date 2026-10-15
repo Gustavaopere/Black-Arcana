@@ -1,8 +1,8 @@
 # Reliquified Artifacts 1.0.8 — 52 fichas owner-scoped
 
-**✅ 52/52 habilidades individualizadas**, correspondendo exatamente à [matriz source-pinned 1.0.8](ABILITY-INVENTORY-1.0.8.md). O source pin resolve **48 owners** `artifacts:<id>` em **47 classes**; a classe `DrinkingHatItem` serve dois owners. Há **51 roots em nível de classe e 52 roots por owner**. A mesma root sob dois owners distintos não é colapsada.
+**✅ 52/52 habilidades individualizadas; identidade estática `COUNTED_EXACT` por [prova Java21 #38662072936](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38662072936)**, correspondendo exatamente à [matriz source-pinned 1.0.8](ABILITY-INVENTORY-1.0.8.md). O source pin resolve **48 owners** `artifacts:<id>` em **47 classes**; a classe `DrinkingHatItem` serve dois owners. Há **51 roots em nível de classe e 52 roots por owner**. A mesma root sob dois owners distintos não é colapsada.
 
-**Evidência:** `Octo-Studios/reliquified-artifacts@529fa0cd865a95dbe1bf02081de0275e90c69aee`; JAR físico declarado `reliquified_artifacts-1.21.1-1.0.8.jar`, SHA-1 `00ad43d5a1aa287fd0084bc3b48546821494ff80`. A igualdade do build source com o JAR físico não foi demonstrada; **`COUNTED_SOURCE_PINNED`**, não `COUNTED_EXACT`.
+**Evidência:** `Octo-Studios/reliquified-artifacts@529fa0cd865a95dbe1bf02081de0275e90c69aee`; JAR físico declarado `reliquified_artifacts-1.21.1-1.0.8.jar`, SHA-1 `00ad43d5a1aa287fd0084bc3b48546821494ff80`. O registro source-pinned é histórico: agora o JAR publisher SHA-igual possui prova independente de **48/48 vínculos compilados owner→construtor e 51 builders**. `COUNTED_EXACT` abrange identidade estática, não runtime, configuração ou Survival. Ver [dossiê completo](EXACT-BINARY-OWNER-ABILITIES-1.0.8.md).
 
 | # | Owner original | Ability root | Classe source-pinned | Ficha |
 |---:|---|---|---|---|

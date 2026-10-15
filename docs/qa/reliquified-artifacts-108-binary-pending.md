@@ -1,3 +1,7 @@
+# Reliquified Artifacts 1.0.8 — historical pending plan; static proof now closed
+
+**Static owner→constructor gate closed:** independent [Java21 #38662072936](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38662072936) now proves all 48/48 compiled owner factory links, 47 classes and 51 builders, giving 52 previously counted static identities `COUNTED_EXACT`. See [exact dossier](../../wiki/modpack-catalog/providers/✅-reliquified-artifacts/EXACT-BINARY-OWNER-ABILITIES-1.0.8.md). This file retains pre-proof checkpoints below. No loaded Mixin, Relics runtime or Survival PASS; Stage 06.05 🟡 and Stage09 PENDING.
+
 # Reliquified Artifacts 1.0.8 — pending physical JAR audit
 
 State: 🟡 In progress. Do not promote COUNTED_SOURCE_PINNED to COUNTED_EXACT yet.

@@ -1,4 +1,6 @@
-# Reliquified Artifacts 1.0.8 — partial binary ability evidence
+# Reliquified Artifacts 1.0.8 — partial binary ability evidence (historical checkpoint)
+
+**Superseded for static owner→class identity:** [Java21 #38662072936](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38662072936) subsequently verified the 48 exact compiled case→lambda constructor links. [Current COUNTED_EXACT static dossier](EXACT-BINARY-OWNER-ABILITIES-1.0.8.md). The partial status described below is a preserved historical state; assembled runtime remains unverified.
 
 **⚠️ Static physical classfile audit: PASS. Semantic owner→class injection: UNPROVEN. No COUNTED_EXACT promotion.**
 
