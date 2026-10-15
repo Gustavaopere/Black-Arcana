@@ -15,6 +15,12 @@ Current physical Project Library authority records:
 
 Official CurseForge identifies the 1.21.1 `1.0.8` build as the current Beta release published 2026-08-22. The project is All Rights Reserved; this catalog is clean-room factual inspection only.
 
+## Independent physical classfile corroboration — 2026-10-14
+
+Java 21 [run #38659260300](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38659260300) finished **SUCCESS** using the official Modrinth 1.0.8 publisher JAR with a SHA-1 exactly matching sibling physical #477. Size: **699,260 bytes**; SHA-256: `360fd701d575b5421675bfdc50c6ed8a22614410eb92dd782424f9b5fb5c0006`. All **47 class files**, **51 unique class-level AbilityTemplate.builder roots**, **48 compiled ModItemsMixin owner literals** and **52 owner-scoped source inventory identities** matched with zero observed discrepancies. See [physical static evidence](PARTIAL-BINARY-ABILITY-EVIDENCE-1.0.8.md).
+
+**Evidence ceiling:** verified class templates and separate owner-case literals do not establish that each owner is actually bound to the catalogued class in the compiled redirect, nor loaded Mixin behavior against current Artifacts 13.2.5 / Relics 0.12.8. Therefore these 52 roots **remain COUNTED_SOURCE_PINNED**; no COUNTED_EXACT promotion or addition to the semantic minimum. The installed 1.0.8 remains authoritative even though publisher 1.0.9 was released on 2026-10-12.
+
 ## Exact source-version checkpoint
 
 Official repository: `Octo-Studios/reliquified-artifacts`.

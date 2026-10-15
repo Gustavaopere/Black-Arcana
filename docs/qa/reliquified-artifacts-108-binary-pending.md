@@ -11,3 +11,7 @@ Publisher delivery: Modrinth GnU07giL, version x2qoJkgq (1.0.8). The CI requires
 The independent Java 21 read-only probe verifies constructor-declared ability template roots within each compiled class and ModItemsMixin switch owner literals. It does not prove the live Artifacts registration, class assignment per owner, loaded Relics templates, Survival/gameplay, Curios equip, config, pickup idempotence, rank XP, persistence or multiplayer. No copyrighted binary is committed.
 
 Until exact proof and consumer-ledger reconciliation pass, campaign remains 29/39 exact, 10/39 conditional. Strict minima stay 1856 global / 1854 in scope. Stage 06.05 remains 🟡, physical acceptance Stage 09 PENDING and RPG Skill Tree bridge ⛔ without contract.
+
+## Actual independent publisher result — 2026-10-14
+
+[Java 21 #38659260300](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38659260300) **SUCCESS** after physical hash matched Modrinth 1.0.8. Exact bytes: 699260; SHA-256 360fd701d575b5421675bfdc50c6ed8a22614410eb92dd782424f9b5fb5c0006. Proven 47 concrete class files, 51 class-level ability builder IDs (no mismatches), 48 Mixin owner literals (no missing/extra) and 52 owner-scoped SOURCE references. Full proof artifact is private to the CI run and no proprietary JAR is stored. **Remaining blocker:** class→owner causal association is source-referenced but not derived from the compiled Mixin switch/bootstrap flow; assembled runtime and Relics native behavior untested. Exact-count promotion is intentionally refused.

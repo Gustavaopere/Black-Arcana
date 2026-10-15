@@ -53,5 +53,16 @@ class ReliquifiedArtifacts108BinaryTest(unittest.TestCase):
         with self.assertRaises(audit.AuditError):
             audit.expected_inventory(body)
 
+    def test_partial_binary_evidence_is_not_counted_exact(self):
+        root=Path(__file__).resolve().parents[2]
+        provider=root/"wiki/modpack-catalog/providers/✅-reliquified-artifacts"
+        doc=(provider/"PARTIAL-BINARY-ABILITY-EVIDENCE-1.0.8.md").read_text(encoding="utf8")
+        readme=(provider/"README.md").read_text(encoding="utf8")
+        for token in ("38659260300","699,260","51/51","48/48","52","360fd701d575b5421675bfdc50c6ed8a22614410eb92dd782424f9b5fb5c0006"):
+            self.assertIn(token,doc)
+        self.assertIn("COUNTED_SOURCE_PINNED",doc)
+        self.assertNotIn("PROMOTED_TO_COUNTED_EXACT",doc)
+        self.assertIn("remain COUNTED_SOURCE_PINNED",readme)
+
 if __name__=="__main__":
     unittest.main()
