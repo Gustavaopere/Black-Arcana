@@ -63,7 +63,7 @@ class Bloodlines309PhysicalActionAuditTest(unittest.TestCase):
     def test_real_java21_compiled_full_register_lambdas(self):
         self.assertEqual(audit.MANIFEST,audit.inspect_registry(self.registry))
     def test_real_java21_mod_constructor_register_bridge(self):
-        audit.verify_main_bus(self.mod_entry)
+        audit.verify_main_bus(self.mod_entry,synthetic_local_bus=True)
     def test_modified_compiled_supplier_ctor_fails(self):
         first="GraveboundCritStrikeAction"
         second="GraveboundMistFormAction"
@@ -82,7 +82,7 @@ class Bloodlines309PhysicalActionAuditTest(unittest.TestCase):
                                         "ForeignRegistry.register:(LIEventBus;)V",1)
         self.assertNotEqual(modified,self.mod_entry)
         with self.assertRaises(audit.AuditError):
-            audit.verify_main_bus(modified)
+            audit.verify_main_bus(modified,synthetic_local_bus=True)
     def test_invalid_sha_never_reaches_classfile(self):
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/audit.JAR_NAME
