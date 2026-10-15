@@ -11,6 +11,8 @@ import re
 from pathlib import Path
 
 TAG = "[BLACK_ARCANA_ARROW_VOLLEY_QA]"
+EXPECTED_IRONS_SHA256 = "13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73"
+EXPECTED_IRONS_BYTES = 13890046
 LOG_FIELDS = (
     "controller", "join_game_tick", "status", "observed_ticks", "first_age", "last_age",
     "age_monotonic", "candidate_joins", "confirmed_present_at_post",
@@ -39,6 +41,22 @@ def parse_rows(line):
     return pairs
 
 
+def provider_fingerprint_valid(text):
+    lines = [line for line in text.splitlines()
+             if TAG in line and "type=provider_fingerprint " in line
+             and "mod_id=irons_spellbooks " in line]
+    if len(lines) != 1:
+        return False
+    line = lines[0]
+    try:
+        return (field(line, "status") == "OBSERVED"
+                and field(line, "expected_match") == "true"
+                and field(line, "sha256") == EXPECTED_IRONS_SHA256
+                and int(field(line, "bytes")) == EXPECTED_IRONS_BYTES)
+    except ValueError:
+        return False
+
+
 def evaluate(text, level, controller=None):
     if level not in range(1, 7):
         raise ValueError("Level must be 1..6")
@@ -58,6 +76,9 @@ def evaluate(text, level, controller=None):
     actual = int(obj["candidate_joins"])
     confirmed = int(obj["confirmed_present_at_post"])
     reasons = []
+    fp_verified = provider_fingerprint_valid(text)
+    if not fp_verified:
+        reasons.append("PROVIDER_FINGERPRINT_UNVERIFIED")
     if obj["status"] != "LEFT_LEVEL" or not obj["leave_seen"] == "true":
         reasons.append("NO_CONFIRMED_LEAVE_EVENT")
     if obj["removal"] != "DISCARDED":
@@ -102,6 +123,7 @@ def evaluate(text, level, controller=None):
     return {
         "level": level,
         "controller": obj["controller"],
+        "provider_fingerprint_matches_publisher_in_log": fp_verified,
         "expected_rows": expected_rows,
         "expected_arrows": expected,
         "candidate_join_count": actual,
@@ -111,7 +133,8 @@ def evaluate(text, level, controller=None):
         "limits": [
             "Owner/proximity association is heuristic, not canonical cast ancestry",
             "Join event is an insertion attempt; post-tick presence is a limited check",
-            "The installed Iron's and NeoForge JAR fingerprints remain external evidence",
+            "Matching Iron's checksum is a log claim; retain authentic log provenance",
+            "NeoForge/pack fingerprint and physical acceptance still need independent QA",
             "This parser does not execute Minecraft or certify reload/chunk behavior",
         ],
     }
