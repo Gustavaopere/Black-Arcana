@@ -1,8 +1,10 @@
 # Eidolon: Repraised 0.5.0.2 — Data-Driven Catalog
 
-Status: `OFFICIAL DATAGEN INVENTORIED — 18 CHANTS + 4 CHANT CONVERSIONS + 24 RITUAL RECIPES / COMMAND-CHANT SURFACE PRESENT BUT NO OFFICIAL ENTRY GENERATED / RUNTIME QA PENDING`
+Status: `PUBLISHER SHA-MATCHED: 18 CHANTS + 24 RITUAL RECIPES COUNTED_EXACT STATIC + 4 DEPENDENT CONVERSIONS / COMMAND-CHANT SURFACE WITHOUT OFFICIAL ENTRY / RUNTIME QA PENDING`
 
 Canonical source: `Alexthw46/Eidolon-Repraised@696a47333e43970be7f697790eac0af76b6a04b8`
+
+The [exact physical 0.5.0.2 JAR audit](EXACT-PACKAGED-CHANT-RITUAL-RECIPES-0.5.0.2.md) verifies that the official 18+24 recipes and four dependent conversions are bundled, including the default-one summon count representation. Static packaging does not establish RecipeManager reload/Survival or configured datapack reachability.
 
 ## 1. Official chant recipes — 18
 

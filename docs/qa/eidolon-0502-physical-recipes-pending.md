@@ -1,4 +1,7 @@
-# Eidolon: Repraised 0.5.0.2 — physical packaged recipe proof gate
+# Eidolon: Repraised 0.5.0.2 — historical pre-proof checklist
+
+**Static data package identity gate now closed:** [Java21 #38669010587](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38669010587) verified 18/18 normal chants, 24/24 ritual recipes and 4/4 dependent conversions on installed SHA-matched 0.5.0.2. [Exact dossier](../../wiki/modpack-catalog/providers/✅-eidolon-repraised/EXACT-PACKAGED-CHANT-RITUAL-RECIPES-0.5.0.2.md). Pre-proof SOURCE-PINNED statements below are historical only. Compiled Spells.init and loaded RecipeManager/Survival remain unproven; Stage06.05 🟡, Stage09 PENDING.
+
 
 **🟡 Auditoria física iniciada; 42 IDs ainda SOURCE-PINNED. Não promover até CI real PASS.**
 

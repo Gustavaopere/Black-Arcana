@@ -1,5 +1,8 @@
 # 39 providers — fila de evidências para validação binária
 
+**Checkpoint 2026-10-14 — Eidolon 0.5.0.2:** [Java21 #38669010587](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38669010587) prova SHA publisher=físico, 18 chants normais +24 rituais empacotados e 4 conversões dependentes. **32/39 exatos /7/39 condicionados**, mínimos **1856 global /1854 escopo** (+0). O collector read-only mantém `registry_proofs_completed=0` pois não realiza essas auditorias independentes. RecipeManager, runtime provider, config, Survival e Stage09 ⚠️.
+
+
 **Checkpoint 2026-10-14 — Vampirism 1.10.13:** [Java21 #38664546643](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38664546643) comprovou SHA físico igual ao publisher, **14+3+2 = 19 IDs/constructors/holders**, sem duplicidade ou desvio. Campanha **31/39 exatos / 8/39 condicionados**, mínimos semânticos **1856/1854** (+0). O coletor genérico de fingerprint permanece `registry_proofs_completed=0` porque não realiza inspeção de registry binário. Config, Loaded ActionHandler e Survival ⚠️.
 
 
