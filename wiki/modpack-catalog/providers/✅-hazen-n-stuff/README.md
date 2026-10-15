@@ -1,6 +1,6 @@
 # Hazen N Stuff — 1.4.0.14
 
-Status: `COUNTED_SOURCE_PINNED / +38 SEMANTIC SPELLS / CATALOG ✅ / RUNTIME QA FAIL-CLOSED`
+Status: `COUNTED_EXACT (STATIC BINARY IDs ONLY) / 38 SEMANTIC SPELLS / CATALOG ✅ / RUNTIME QA FAIL-CLOSED`
 
 ## Current physical identity
 
@@ -19,7 +19,7 @@ The exact public source checkpoint used for this catalog is:
 
 That commit is titled `1.4.0.14 beta.`, and its `gradle.properties` declares `mod_id=hazennstuff`, `mod_version=1.4.0.14`, Minecraft 1.21.1 and PolyForm Shield licensing.
 
-This establishes a version-correlated **source pin**, not byte-for-byte equivalence between source output and the separately hashed physical JAR. The semantic inventory is therefore `COUNTED_SOURCE_PINNED`, not `COUNTED_EXACT`.
+This is the original source-reconciliation baseline, not proof that the complete upstream source is equivalent to the physical JAR. Subsequently, the [SHA-matched Java21 audit #38606162180](../../../docs/qa/hazen-14014-binary-registry.md) verified 38/38 static compiled class→spell IDs, promoting the **same 38 already counted spell identities** to `COUNTED_EXACT` for binary identity only. It does not establish loaded registries, costs, crafting or Survival. +0 roots.
 
 ## Exact source-pinned spell registry
 
@@ -150,3 +150,8 @@ Those runtime gates do not erase the source-pinned semantic catalog; they preven
 **✅ Cataloged at source-pinned semantic level: 38/38 active 1.4.0.14 spell registrations.**
 
 Runtime/provider integration remains fail-closed until direct assembled-pack evidence exists.
+
+
+## Exact static JAR identity checkpoint — 2026-10-15
+
+[Hazen 1.4.0.14 binary dossier](../../../docs/qa/hazen-14014-binary-registry.md) records 38 compiled static registrations with IDs and physical SHA-1 parity (GitHub Actions #38606162180). Status `COUNTED_EXACT` is limited to compiled registry identities. Host Iron's behavior, HazentouveLib, server modpack, progression, items, mana, effects and Survival remain pending Stage 09; RPG Skill Tree contracts are not asserted. Cohort 35/39 exact, 4/39 conditional, +0 semantic additions.
