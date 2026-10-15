@@ -33,6 +33,18 @@ Os valores 1.856/1.854 e 35/39 são reproduzidos do topo corrente do ledger e do
 
 **Nota de escopo:** `COUNTED_EXACT` atesta as propriedades demonstradas na prova binária (por exemplo, identidade estática/recipe empacotada), não garante range, dano, custo, consumo, loaded registry ou mutabilidade por API. A tabela explicita deliberadamente quando a fração de engenharia ainda não pode ser calculada.
 
+## Tranche causal adicional — 15/10/2026 (PR #825, draft)
+
+O trio de magias do Iron's Spellbooks 3.16.3 **Fireball, Chain Lightning e Counterspell** recebeu fichas **suplementares** por spell com execução/raycast/efeitos downstream, fórmulas, tipos de parâmetros e source links permanentes. A ordem geral de quatro eventos de perks também foi documentada. Essas alterações estão na **PR #825**, **não na main** nem na PR #795. Não surgiram novas identidades mágicas.
+
+- **3/110** magias do Iron's têm **esta tranche específica** de leitura causal aprofundada, com fichas extra na branch; é uma métrica de execução deste lote, não uma estimativa da completude de todas as 110 fichas nem do trabalho concurrente. O total de engenharia plenamente verificada para perks **continua não aferido**. As 110 fichas da PR #795 permanecem um mapeamento source-pinned, em PR paralela.
+- Fireball: [cálculo de dano/raio, projétil, colisão, world explosion](../providers/✅-irons-spells/audits/CAUSAL-PERKS-FIREBALL-3.16.3.md).
+- Chain Lightning: [precast 32 blocos vs jump range, ondas de 6 ticks e caps](../providers/✅-irons-spells/audits/CAUSAL-PERKS-CHAIN-LIGHTNING-3.16.3.md).
+- Counterspell: [raycast de 80 blocos, evento cancelável, anti-magic alvo](../providers/✅-irons-spells/audits/CAUSAL-PERKS-COUNTERSPELL-3.16.3.md).
+- Cross-cutting: [ModifySpellLevel / PreCast / OnCast / SpellDamage / CounterSpell — ordem e riscos](../providers/✅-irons-spells/audits/CAUSAL-PERKS-EVENT-ORDER-3.16.3.md).
+
+**Nova evidência crítica:** `SpellDamageEvent.setAmount` tem efeito antes do `hurt` em `LivingEntity` com `SpellDamageSource`. `SpellOnCastEvent.setManaCost` ocorre **depois** do gate de mana; desconto pós-gate não libera automaticamente casts originalmente inviáveis. `ModifySpellLevelEvent` é observado em `getLevelFor`, porém cobertura de todas as origens de casting ainda não está comprovada. **Nenhuma dessas descobertas autoriza anunciar adapter RPG implementado/testado, mudança de hitbox, alteração arbitrária de `DamageType` ou single-target→AOE.**
+
 ## Regra das duas barras nas respostas de catalogação
 
 1. **Barra global:** `% da catalogação técnica completa`, somente com denominador completo e regra homogênea. Enquanto aberto, renderizar barra neutra, `—%` e mínimo estrito 1.856 como valor **não percentual**; não converter o mínimo em 100%.
