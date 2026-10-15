@@ -2,6 +2,10 @@
 
 **Estado:** ✅ `SOURCE-PINNED / CAUSAL-PARTIAL` para `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`; ⚠️ JAR físico, configurações, extra damage events, event timing, server/client e adapter não testados. `irons_spellbooks:poison_arrow` está entre as 110 identidades previamente catalogadas: **+0 magias**. Minecraft 1.21.1/Iron's 3.16.3 documental. [Ficha existente](../nature/poison-arrow.md).
 
+## Prova compilada da nuvem (2026-10-15)
+
+A [auditoria Java 21 #38811661659](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38811661659) inspecionou `PoisonCloud.applyEffect` no JAR publicado Iron's 3.16.3 (SHA-256 `13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73`). O bytecode desse método referencia `POISON_CLOUD` e invoca diretamente `hurt`, **sem invocar `DamageSources.applyDamage`**, confirmando o limite de `SpellDamageEvent` nesta via específica. Esta constatação **não** descarta os eventos NeoForge gerais de `hurt` nem certifica o comportamento físico da nuvem. Ver [relatório e limites](../../../../../docs/qa/irons-3163-projectile-bytecode-pending.md). ✅ método estaticamente provado; ⚠️ pack/runtime pendentes.
+
 ## Cadeia causal
 
 1. **Defaults:** [`PoisonArrowSpell.java` L22–L58](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/PoisonArrowSpell.java#L22-L58) define escola Nature, COMMON, máximo nível 10, `LONG` com cast nominal **20 ticks**, cooldown default **15 s**, mana `40+5×(level−1)`, power `5+(level−1)`. [`PoisonArrowSpell.java` L71–L88](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/PoisonArrowSpell.java#L71-L88) cria **uma** `PoisonArrow`, atira na direção dos olhos e define `getArrowDamage=power`, `getAOEDamage=power×0.185`. Sob multiplicadores unitários: dano do impacto **5–14** e dano-base da nuvem **0,925–2,59** antes de redução de defesa.
