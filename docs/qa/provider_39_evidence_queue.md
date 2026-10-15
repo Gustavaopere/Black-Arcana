@@ -1,5 +1,8 @@
 # 39 providers — fila de evidências para validação binária
 
+**Malum static binary checkpoint 2026-10-15:** [Java21 #38679501150](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38679501150) confirms 26/26 physical registry IDs/holder/lambda links. Campaign **33/39 exact, 6/39 conditional**; no newly added semantic roots, minima 1856/1854. General fingerprint collector still returns registry_proofs_completed=0; this independent binary audit is separate. License and loaded-provider/Survival acceptance ⚠️.
+
+
 **Checkpoint 2026-10-14 — Eidolon 0.5.0.2:** [Java21 #38669010587](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38669010587) prova SHA publisher=físico, 18 chants normais +24 rituais empacotados e 4 conversões dependentes. **32/39 exatos /7/39 condicionados**, mínimos **1856 global /1854 escopo** (+0). O collector read-only mantém `registry_proofs_completed=0` pois não realiza essas auditorias independentes. RecipeManager, runtime provider, config, Survival e Stage09 ⚠️.
 
 

@@ -1,5 +1,9 @@
 # Black Arcana — cinco pendências mágicas (acompanhamento)
 
+**Malum 1.8.2 checkpoint — 2026-10-15:** [Java21 #38679501150](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38679501150) SHA-equal 26/26 RiteHolder ID→factory compiled, **33/39 exatos /6/39 condicionados**, +0 roots, minima 1856 global/1854 scope. ⚠️ source license, runtime/provider/Survival remain blocked/pending Stage09; Stage06.05 🟡.
+
+
+
 **Checkpoint Eidolon 0.5.0.2 — 2026-10-14:** [Java21 #38669010587](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38669010587) confirmou **18 chants +24 rituais JSON +4 conversões dependentes** no JAR físico SHA-igual; campanha **✅ 32/39 exatos / ⚠️ 7/39 condicionados**, **+0** novos, mínimos **1856/1854**. SpellRegistry compilado, carregamento dos dados, mana/ritual, jogo real e Stage09 ⚠️; Stage06.05 🟡.
 
 
@@ -85,7 +89,7 @@
 | Pendência | Estado |
 |---|---|
 | Identificar eventuais magias ainda não descobertas em mods de outras categorias | 🟡 **Em auditoria** — 489 JARs inventariados; 142 candidatos priorizados (46 por nome + 96 por categoria), 453 dossiês individuais revisados (346/347 OTHER); 1 OTHER ⛔ sem dossiê (#272; filename, versão e mod ID declarados no índice, sem prova do JAR); auditoria binária não executada |
-| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **32/39 `COUNTED_EXACT` de registro mágico** (Hexalia 29/29 recipes, Reliquified Iron's Spells 'n Spellbooks 25/25, Apprentice's Codex 83/83, Reliquified Ars Nouveau 19/19, Waystones 3/3 action paths, Companions! 9/9 native Magic Books, Discerning The Eldritch 22/22, Legendary Spellbooks 30/30, ISS: Magic From The East 22/22, Tunes n' Tomes 16/16, Ypsilon's Fundamentalism 15/15, Fire's Ender Expansion 11/11, IronSable 7/7, Ars Elemental 47/47, Ars Zero 18/18, Ars Technica 11/11, Ars Controle 9/9, Ars Additions 5/5, Ars Hex 1/1 sob `malum`, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6, Deeper & Darker Spellbooks 4/4, GTBC's Geomancy Plus 12/12, Farmer's Spell 'n Spellbooks 6/6 e Ars 'n' Spells 5/5 sob gate Iron's); ⚠️ **7/39** pendentes; nenhum PASS de execução/Survival |
+| Comprovar registries binários de 39 providers atualmente documentados por fonte ou release | ⚠️ **Parcial** — ✅ **33/39 `COUNTED_EXACT` de registro mágico** (Hexalia 29/29 recipes, Reliquified Iron's Spells 'n Spellbooks 25/25, Apprentice's Codex 83/83, Reliquified Ars Nouveau 19/19, Waystones 3/3 action paths, Companions! 9/9 native Magic Books, Discerning The Eldritch 22/22, Legendary Spellbooks 30/30, ISS: Magic From The East 22/22, Tunes n' Tomes 16/16, Ypsilon's Fundamentalism 15/15, Fire's Ender Expansion 11/11, IronSable 7/7, Ars Elemental 47/47, Ars Zero 18/18, Ars Technica 11/11, Ars Controle 9/9, Ars Additions 5/5, Ars Hex 1/1 sob `malum`, Crystal Chronicles 1/1, Dreamless Spells 4/4, Paladin Spells 5/5, Wind's Spellbooks 7/7, Backported Spellbooks 6/6, Deeper & Darker Spellbooks 4/4, GTBC's Geomancy Plus 12/12, Farmer's Spell 'n Spellbooks 6/6 e Ars 'n' Spells 5/5 sob gate Iron's); ⚠️ **6/39** pendentes; nenhum PASS de execução/Survival |
 | Verificar configurações, desbloqueios e aquisição de magias em Survival | ⚠️ **Condicionado** — 14 rotas de evidência, nenhuma aprovação física inferida |
 | Atualizar algumas referências antigas que ainda indicam pastas ⚠️ já promovidas a ✅ | ✅ **Referências operacionais atuais corrigidas** |
 | Concluir a ativação canônica do grande ritual `black_arcana:veil_anchor_consecration` | 🟡 **Em implementação** — PR #733 incorporado à main, CI `38077919349` aprovada; aceitação física pendente, Stage 06.05 não promovida |

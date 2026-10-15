@@ -1,8 +1,13 @@
 # Malum 1.8.2 — Spirit Rites
 
+## Exact compiled identity addendum — 2026-10-15
+
+[Publisher SHA-equal Java 21 run #38679501150](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38679501150) proved 26/26 compiled rite IDs linked to holder fields and separate supplier lambda factories, including rite_of_rending → RITE_OF_RAISING. [Physical exact dossier](../EXACT-BINARY-SPIRIT-RITES-1.8.2.md). **COUNTED_EXACT for static identity only**; the historical source interval evidence below remains useful for player-facing eligibility but not runtime effects or a safe implementation contract. Rite loci, spirits, recipes, Gaze, Survival and Stage09 remain ⚠️.
+
+
 ## Estado
 
-`SPIRIT RITE SYSTEM PROVEN / 26 BASE RITE IDENTITIES RELEASE-BOUNDED / SPECIAL RITES PLAYER-FACING PROVEN / DEFERRED-REGISTRY MIGRATION PROVEN / RITE LOCUS+ANCHOR+UNWAVER ARCHITECTURE PROVEN / RECIPES+RUNTIME/API QA PENDING`
+`SPIRIT RITE SYSTEM PROVEN / 26 BASE RITE IDENTITIES COUNTED_EXACT STATIC / SPECIAL RITES PLAYER-FACING PROVEN / DEFERRED-REGISTRY MIGRATION PROVEN / RITE LOCUS+ANCHOR+UNWAVER ARCHITECTURE PROVEN / RECIPES+RUNTIME/API QA PENDING`
 
 A lista base de `SpiritRiteType` da linha instalada 1.8.2 está fechada por evidência release-bounded. Isso não equivale a prova byte-a-byte de que um commit específico gerou o JAR físico e não promove mecânicas internas, recipes ou APIs não documentadas para contrato do Black Arcana.
 
