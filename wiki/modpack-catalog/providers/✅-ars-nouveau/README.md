@@ -182,7 +182,7 @@ Ars core already exposes Heal, Hex, Wither, Ignite, Flare, Gravity, summons, det
 - Presence/version: current 2026-09-06 modlist — HIGH.
 - Glyph architecture, registry IDs, tiers, base costs and descriptions above: current public Ars 1.21.1 guide — HIGH.
 - The guide is addon-aware; ownership is determined by registry namespace, not page location.
-- Original semantic dossiers were compiled from pinned upstream source; [SHA-exact Java21 class-callsite proof #38687392724](STATIC-REGISTRATION-PHYSICAL-AUDIT-PENDING-5.13.1.md) subsequently verified 85 spell-part class registration calls + 24 ritual class registration calls in the installed publisher JAR, with 12 synthetic checks. The **109 namespaced ResourceLocation IDs are still not independently binary-certified**, so Ars Nouveau remains `COUNTED_SOURCE_PINNED` rather than `COUNTED_EXACT`. Runtime and Survival pending.
+- [Exact Java21 physical ID proof #38691889186](EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md) certified **109/109 unique compiled class→ResourceLocation identities** (85 Forms/Effects/Augments, 24 rituals) in the SHA-identical official 5.13.1 JAR, including the three unprefixed literals and the special Sense Magic INSTANCE factory. The 109 pre-existing roots now have **`COUNTED_EXACT` for static binary identity only**, +0 new. Loaded registries, mana/Source costs, configurations, spell resolution, Survival, Stage09 and RPG adapter remain ⚠️/⛔.
 
 ## Fichas técnicas para Codex e perks
 
