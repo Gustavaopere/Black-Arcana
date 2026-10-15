@@ -54,5 +54,19 @@
   "EffectCut": "ars_nouveau:glyph_cut",
   "EffectCrush": "ars_nouveau:glyph_crush",
   "EffectSummonWolves": "ars_nouveau:glyph_summon_wolves",
-  "EffectSummonSteed": "ars_nouveau:glyph_summon_steed"
+  "EffectSummonSteed": "ars_nouveau:glyph_summon_steed",
+  "EffectSummonDecoy": "ars_nouveau:glyph_summon_decoy",
+  "EffectHex": "ars_nouveau:glyph_hex",
+  "MethodUnderfoot": "ars_nouveau:glyph_underfoot",
+  "EffectGlide": "ars_nouveau:glyph_glide",
+  "EffectRune": "ars_nouveau:glyph_rune",
+  "EffectFreeze": "ars_nouveau:glyph_freeze",
+  "EffectName": "ars_nouveau:glyph_name",
+  "EffectSummonUndead": "ars_nouveau:glyph_summon_undead",
+  "EffectFirework": "ars_nouveau:glyph_firework",
+  "EffectToss": "ars_nouveau:glyph_toss",
+  "EffectBounce": "ars_nouveau:glyph_bounce",
+  "AugmentSensitive": "ars_nouveau:glyph_sensitive",
+  "EffectWindshear": "ars_nouveau:glyph_wind_shear",
+  "EffectEvaporate": "ars_nouveau:glyph_evaporate"
 }
