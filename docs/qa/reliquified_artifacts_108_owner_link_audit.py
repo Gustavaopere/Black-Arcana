@@ -94,23 +94,29 @@ def switch_mapping(text: str, name: str, constructors: dict[int,str],
         assignments[owner]=int_opcode(push[1],push[2],push[3])
     if expected_owners is not None and set(assignments)!=set(expected_owners):
         raise AuditError("compiled case owner names differ from pinned inventory")
-    match=re.search(r'^\s*\d+:\s+tableswitch\s+\{[^\n]*\n(.*?)^\s*\}',code,re.M|re.S)
-    if not match: raise AuditError("expected dense compiler switch dispatch absent in "+name)
-    table={}
-    default=None
-    for line in match.group(1).splitlines():
-        label=re.match(r'^\s*(default|-?\d+):\s*(\d+)\s*$',line)
-        if not label: raise AuditError("unrecognized compiled tableswitch entry")
-        target=int(label.group(2))
-        if label.group(1)=='default':
-            if default is not None: raise AuditError("multiple switch defaults")
-            default=target
-        else:
-            n=int(label.group(1))
-            if n in table: raise AuditError("duplicate switch label")
-            table[n]=target
-    if default is None or set(table)!=set(assignments.values()):
-        raise AuditError("compiled case-index table does not match all owners")
+    # Javac sometimes emits a hashcode tableswitch before its case-index dispatch.
+    # Select the switch whose labels exactly match String.equals discriminants.
+    matches=list(re.finditer(r'^\s*\d+:\s+tableswitch\s+\{[^\n]*\n(.*?)^\s*\}',code,re.M|re.S))
+    if not matches: raise AuditError('no compiled tableswitch: '+name)
+    candidates=[]
+    for match in matches:
+        table={}
+        default=None
+        for line in match.group(1).splitlines():
+            label=re.match(r'^\s*(default|-?\d+):\s*(\d+)\s*$',line)
+            if not label: raise AuditError('unrecognized compiled switch entry')
+            target=int(label.group(2))
+            if label.group(1)=='default':
+                if default is not None: raise AuditError('duplicate compiled default')
+                default=target
+            else:
+                n=int(label.group(1))
+                if n in table: raise AuditError('duplicate compiled switch label')
+                table[n]=target
+        if default is not None and set(table)==set(assignments.values()):
+            candidates.append((table,default))
+    if len(candidates)!=1: raise AuditError('ambiguous compiled case-index dispatch')
+    table,default=candidates[0]
     if default not in by_offset:
         raise AuditError("default case not aligned with bytecode")
     # The Java language fallback must retain the original Supplier/Consumer.
