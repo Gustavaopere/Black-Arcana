@@ -16,6 +16,9 @@ public final class CatalogQaProbeMod {
 
     public CatalogQaProbeMod() {
         NeoForge.EVENT_BUS.addListener(CatalogQaProbeMod::onServerStarted);
+        if (Boolean.getBoolean("black_arcana.catalog_qa.arrow_volley")) {
+            ArrowVolleyRuntimeEvidence.install();
+        }
     }
 
     private static void onServerStarted(ServerStartedEvent event) {
