@@ -1,5 +1,13 @@
 # Epic Fight — 21.17.3.1
 
+## Perks — parâmetros de combate (checkpoint 16/10/2026)
+
+A cobertura do **registro exato 21.17.3.1 permanece 43/43**, incluindo três habilidades sobrenaturais já contadas no universo de magia e 40 skills combat/mobility/passive excluídas apenas dessa métrica. Para implementação de perks, foi iniciada uma dimensão de documentação distinta: **9/43 IDs (20,93%)** receberam aprofundamento de código **source-adjacent** em seis documentos, sem declarar equivalência ao JAR `21.17.3.1` nem hooks aprovados. O upstream `Antikythera-Studios/epicfight@a78aa24b72e90a9d09f5fd61925e4369d117abaf` declara **21.17.3**.
+
+[Checkpoint com as duas dimensões e próximos gates](skills/PERK-TECHNICAL-CHECKPOINT-2026-10-16.md) · [Parrying](skills/technical/PARRYING-21.17.3-SOURCE-ADJACENT.md) · [Impact Guard](skills/technical/IMPACT-GUARD-21.17.3-SOURCE-ADJACENT.md) · [Swordmaster](skills/technical/SWORDMASTER-21.17.3-SOURCE-ADJACENT.md) · [Forbidden Strength](skills/technical/FORBIDDEN-STRENGTH-21.17.3-SOURCE-ADJACENT.md) · [Roll/Step](skills/technical/DODGE-ROLL-STEP-21.17.3-SOURCE-ADJACENT.md) · [Trident Innates](skills/technical/TRIDENT-INNATES-21.17.3-SOURCE-ADJACENT.md).
+
+Nenhum novo objeto semântico mágico, perk implementada, adapter ou aceite físico foi declarado nesta tranche; Epic Fight retém autoridade sobre stamina, combat state, weapon capabilities, animações e settlement.
+
 Status: `✅ CATALOGED / EXACT PHYSICAL=PUBLISHER ARTIFACT / 43-SKILL REGISTRY FULLY DISPOSITIONED / 3 COUNTED_EXACT SUPERNATURAL TRIDENT INNATES / RUNTIME QA SEPARATE`
 
 ## Current physical identity
