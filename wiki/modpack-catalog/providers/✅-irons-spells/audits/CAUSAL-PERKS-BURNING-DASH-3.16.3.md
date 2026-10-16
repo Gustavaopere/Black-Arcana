@@ -4,6 +4,10 @@
 
 **Estado:** ✅ `SOURCE-PINNED / CAUSAL-PARTIAL`, fonte imutável `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`; ⚠️ classfile da magia/efeito, config de pack, eventos executados, tick timing/servidor dedicado e interoperabilidade com addons ainda não atestados. Autoridades: Iron's governa dash, mana, cooldown e i-frames; Black Arcana governa somente seu próprio runtime; RPG Skill Tree apenas atributos/progressão/perks/gates mediante contratos reais.
 
+## Prova compilada limitada — Java 21 (2026-10-15)
+
+A [Actions #38828793186](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38828793186) terminou **SUCCESS** com inspeção por `javap -p -c` do **publisher JAR Iron's 3.16.3** (SHA-256 `13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73`). O bytecode de `BurningDashSpell.onCast` confirma `ImpulseCastData`, `setDeltaMovement`, efeito `BURNING_DASH` e `invulnerableTime`; `BurningDashEffect.applyEffectTick` confirma `DamageSources.applyDamage` e escrita de `invulnerableTime` após a tentativa, com `shouldApplyEffectTickThisTick` retornando `true`. O `getDamageSource` contém `setFireTicks`. **✅ método/binário**, **⚠️ dano realmente aceito, ramificações, flags, cliente e JAR instalado não testados**. Ver [relatório de prova binária](../../../../../docs/qa/irons-3163-recast-dash-bytecode-evidence.md).
+
 ## Pipeline causal
 
 1. **Defaults:** [`BurningDashSpell.java` L29–L55](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/fire/BurningDashSpell.java#L29-L55) configura Fire / COMMON / níveis 1–10, `CastType.INSTANT`, `castTime=0`, cooldown-base **10 s**, mana `20+2×(level−1)` (**20–38**), poder-base `1+(level−1)=level` antes de multiplicadores. `getSpellPower` também usa atributos de spell power, school power e configuração: [`AbstractSpell.java` L211–L225](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L211-L225). Não afirmar que o dano-base do pack seja fixo.
