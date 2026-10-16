@@ -1,8 +1,12 @@
 # Iron's 3.16.3 — Greater Heal: canal longo, valor de evento versus cura efetiva
 
-**Identidade:** `irons_spellbooks:greater_heal` · escola Holy · Iron's 3.16.3 / Minecraft 1.21.1 / NeoForge. ✅ identidade entre as 110 já inventariadas; 🟡 novo aprofundamento causal; ⚠️ binário/execução e lifecycle de canal não comprovados; ⛔ novos recursos/casts derivados sem contrato. **+0 objeto semântico global.**
+**Identidade:** `irons_spellbooks:greater_heal` · escola Holy · Iron's 3.16.3 / Minecraft 1.21.1 / NeoForge. ✅ identidade entre as 110 já inventariadas; 🟡 novo aprofundamento causal; ✅ classfile publicado inspecionado; ⚠️ execução e lifecycle de canal não comprovados; ⛔ novos recursos/casts derivados sem contrato. **+0 objeto semântico global.**
 
 **Provenance:** `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`; leitura para interoperabilidade, clean-room. Esta ficha complementa [Heal](./CAUSAL-PERKS-HEAL-3.16.3.md), não duplica esse spell.
+
+## Prova binária publicada — Java 21
+
+[Actions Java 21 #38834814254](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38834814254) **SUCCESS** confirmou no JAR publicado `getMaxHealth`, publicação de `SpellHealEvent` anterior à chamada `heal` e envio do pacote visual. **Não** comprova interrupção/finalização do canal `LONG`, HP líquido restaurado ou recebimento do pacote. [Relatório de nove classfiles](../../../../../docs/qa/irons-3163-healing-heartstop-blight-bytecode-evidence.md).
 
 ## Caminho causal
 
