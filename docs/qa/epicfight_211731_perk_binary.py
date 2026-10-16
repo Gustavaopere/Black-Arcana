@@ -223,7 +223,7 @@ CLASS_SYMBOLS = {
     "yesman.epicfight.registry.entries.EpicFightMovesets":
         ("TSUNAMI", "WRATHFUL_LIGHTING", "EVERLASTING_ALLEGIANCE"),
     "yesman.epicfight.registry.entries.EpicFightSkills":
-        ("wrathful_lighting", "tsunami", "everlasting_allegiance"),
+        tuple(sorted(EXPECTED_FIELDS)) + ("empty",),
     "yesman.epicfight.api.event.EpicFightEventHooks$Entity":
         ("MODIFY_ATTACK_SPEED", "TAKE_DAMAGE_INCOME"),
     "yesman.epicfight.api.event.EpicFightEventHooks$Player":
@@ -355,7 +355,7 @@ def audit(jar: pathlib.Path) -> dict:
         "sha1": sha1, "sha256": sha256, "bytes": len(raw),
         "source_adjacent_pin": "Antikythera-Studios/epicfight@a78aa24b72e90a9d09f5fd61925e4369d117abaf",
         "exact_json_parameter_files_inspected": len(params),
-        "registered_core_skill_ids_classified": 43,
+        "expected_registry_ids_checked_by_compiled_symbol": len(CLASS_SYMBOLS["yesman.epicfight.registry.entries.EpicFightSkills"]),
         "unconfigured_empty_sentinel": "epicfight:empty",
         "exact_classfiles_symbol_checked": len(classes),
         "legacy_modifier_skill_ids_raw_only": sorted(EXPECTED_LEGACY_MODIFIERS),
@@ -403,6 +403,12 @@ class ContractSelfTest(unittest.TestCase):
         self.assertIn("reserveAnimation", CLASS_SYMBOLS["yesman.epicfight.skill.weaponinnate.EviscerateSkill"])
         self.assertNotIn("setExecute(", CLASS_SYMBOLS["yesman.epicfight.skill.weaponinnate.GuillotineAxeSkill"])
         self.assertNotIn("reserveAnimation(", CLASS_SYMBOLS["yesman.epicfight.skill.weaponinnate.EviscerateSkill"])
+
+    def test_all_43_expected_registry_ids_are_checked_in_classfile(self):
+        ids = CLASS_SYMBOLS["yesman.epicfight.registry.entries.EpicFightSkills"]
+        self.assertEqual(len(ids), 43)
+        self.assertEqual(len(set(ids)), 43)
+        self.assertEqual(set(ids), set(EXPECTED_FIELDS) | {"empty"})
 
     def test_empty_sentinel_is_not_a_missing_json_skill(self):
         self.assertNotIn("empty", EXPECTED_FIELDS)
