@@ -16,6 +16,12 @@ EXPECTED_SHA256 = "8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39
 PARAMETER_PREFIX = "data/epicfight/skill_parameters/"
 EXPECTED_FIELDS = {
     "guard": {"penalizer": 0.6},
+    "adaptive_skin": {"damage_resistance": 0.15, "max_resistance_stack": 3},
+    "meteor_slam": {},
+    "revelation": {"max_duration": 20, "block_stacks": 3, "parry_stacks": 6, "dodge_stacks": 8, "default_revelation_stacks": 20},
+    "demolition_leap": {"consumption": 0.6},
+    "phantom_ascent": {"extra_jumps": 1, "jump_power": 0.6},
+    "grasping_spire": {"consumption": 40.0},
     "parrying": {"penalizer": 0.6, "parry_window": 8},
     "impact_guard": {"penalizer": 0.6, "superior_penalizer": 0.2, "damage_reducer": 0.2},
     "swordmaster": {"speed_bonus": 30},
@@ -76,6 +82,9 @@ EXPECTED_ATTRIBUTE_MODIFIERS = {
 # parses/applies the records (they lack a modern "id" key).
 # tuple: (attribute, operation, amount, name, uuid) exact JSON fields.
 EXPECTED_LEGACY_MODIFIERS = {
+    "adaptive_skin": [
+        ("minecraft:generic.max_health", "addition", 6.0, "adaptive_skin_skill_stat", "e9cd15f0-72cc-474b-bfee-66276d06157d"),
+    ],
     "adrenaline_fiend": [
         ("minecraft:generic.attack_speed", "multiply_total", 0.1, "adrenaline_skill_stat", "678cff5d-dc70-492d-b960-f01241d1a0f9"),
         ("minecraft:generic.attack_damage", "multiply_total", 0.075, "adrenaline_skill_stat", "678cff5d-dc70-492d-b960-f01241d1a0f9"),
@@ -92,8 +101,44 @@ EXPECTED_LEGACY_MODIFIERS = {
         ("minecraft:generic.attack_damage", "multiply_total", 0.075, "vengeance_skill_stat", "bcb1f110-c987-412e-9e40-5831c62eba2e"),
     ],
 }
+# Entity-type limits are declarative packaged datapack values, not an active
+# loaded registry or a promise every referenced addon entity is present.
+EXPECTED_MAPS = {
+    "revelation": {
+        "minecraft:cave_spider": 10,
+        "minecraft:drowned": 10,
+        "minecraft:enderman": 30,
+        "minecraft:husk": 10,
+        "minecraft:iron_golem": 30,
+        "minecraft:piglin": 10,
+        "minecraft:piglin_brute": 20,
+        "minecraft:zombified_piglin": 10,
+        "minecraft:pillager": 10,
+        "minecraft:player": 30,
+        "minecraft:skeleton": 10,
+        "minecraft:spider": 10,
+        "minecraft:stray": 10,
+        "minecraft:vindicator": 10,
+        "minecraft:wither_skeleton": 20,
+        "minecraft:zombie": 10,
+        "minecraft:zombie_villager": 10,
+        "epicfight:wither_skeleton_minion": 10,
+    },
+}
 # These are *symbol-presence* checks in compiled classfiles, not behavioral/ABI proof.
 CLASS_SYMBOLS = {
+    "yesman.epicfight.skill.passive.AdaptiveSkinSkill":
+        ("damageResistance", "maxResistanceStack", "RESISTING_DAMAGE_TYPE", "TAKE_DAMAGE_PRE"),
+    "yesman.epicfight.skill.identity.MeteorSlamSkill":
+        ("minDistance", "CAST_SKILL", "FALL_DISTANCE", "PROTECT_NEXT_FALL"),
+    "yesman.epicfight.skill.identity.RevelationSkill":
+        ("maxRevelationStacks", "checkStackAndActivate(", "ON_DODGE", "TAKE_DAMAGE_INCOME"),
+    "yesman.epicfight.skill.mover.DemolitionLeapSkill":
+        ("holdTick(", "getAllowedMaxChargingTicks(", "PROTECT_NEXT_FALL"),
+    "yesman.epicfight.skill.mover.PhantomAscentSkill":
+        ("extraJumps", "jumpPower", "JUMP_COUNT", "TAKE_DAMAGE_INCOME"),
+    "yesman.epicfight.skill.weaponinnate.GraspingSpireSkill":
+        ("LAST_HIT_COUNT", "DELIVER_DAMAGE_POST", "registerPropertiesToAnimation("),
     "yesman.epicfight.skill.guard.GuardSkill":
         ("penalizer", "TAKE_DAMAGE_INCOME", "guard("),
     "yesman.epicfight.skill.guard.ParryingSkill":
@@ -194,6 +239,13 @@ def compare_parameters(documents: dict[str, object]) -> tuple[list[dict], list[s
                     failures.append(f"{skill}: legacy raw modifier fields drift")
             checked["legacy_modifier_schema"] = "RAW_ONLY_NOT_PROVEN_LOADED"
             checked["legacy_modifiers_raw_count"] = len(modifiers) if isinstance(modifiers, list) else None
+        if skill in EXPECTED_MAPS:
+            actual_map = data.get("max_revelations")
+            expected_map = EXPECTED_MAPS[skill]
+            if not isinstance(actual_map, dict) or actual_map != expected_map:
+                failures.append(f"{skill}: max_revelations entity-type limits drift")
+            checked["entity_type_limit_entries"] = len(actual_map) if isinstance(actual_map, dict) else None
+            checked["entity_type_limit_schema"] = "PACKAGED_RAW_NOT_LOADED_REGISTRY"
         evidence.append({"id": "epicfight:" + skill, "source_adjacent_expected": expected,
                          "publisher_values": checked, "resource_path": PARAMETER_PREFIX + skill + ".json"})
     return evidence, failures
@@ -264,6 +316,7 @@ def audit(jar: pathlib.Path) -> dict:
         "exact_json_parameter_files_inspected": len(params),
         "exact_classfiles_symbol_checked": len(classes),
         "legacy_modifier_skill_ids_raw_only": sorted(EXPECTED_LEGACY_MODIFIERS),
+        "entity_limit_map_ids_raw_only": sorted(EXPECTED_MAPS),
         "parameter_evidence": params,
         "symbol_evidence": classes,
         "deviations": failures,
@@ -272,6 +325,7 @@ def audit(jar: pathlib.Path) -> dict:
             "Matching symbol strings does not prove instruction equivalence or hook ordering.",
             "Matching packaged JSON does not prove actual world datapack/config values.",
             "Legacy-shaped name/uuid attribute_modifiers are raw data only; loader compatibility unproven.",
+            "Entity-type map keys are packaged raw only; registry and addon presence not verified.",
             "No runtime loading, skill activation, damage, stamina consumption, Mastery, or optional adapter tested.",
             "No external JAR or proprietary class contents are redistributed.",
         ],
@@ -291,11 +345,13 @@ class ContractSelfTest(unittest.TestCase):
                 dict(zip(("attribute", "operation", "amount", "name", "uuid"), modifier))
                 for modifier in modifiers
             ]
+        for skill, entity_map in EXPECTED_MAPS.items():
+            docs[skill]["max_revelations"] = dict(entity_map)
         return docs
 
     def test_synthetic_expected_values(self):
         actual, errors = compare_parameters(self.sample())
-        self.assertEqual(len(actual), 21)
+        self.assertEqual(len(actual), 27)
         self.assertEqual(errors, [])
 
     def test_missing_skill_fails_closed(self):
@@ -322,6 +378,23 @@ class ContractSelfTest(unittest.TestCase):
         docs = self.sample()
         docs["parrying"]["parry_window"] = True
         self.assertTrue(any("parry_window" in e for e in compare_parameters(docs)[1]))
+
+    def test_revelation_type_limits_drift_fails_closed(self):
+        docs = self.sample()
+        docs["revelation"]["max_revelations"]["minecraft:player"] = 999
+        self.assertTrue(any("max_revelations" in x for x in compare_parameters(docs)[1]))
+
+    def test_revelation_missing_limit_fails_closed(self):
+        docs = self.sample()
+        del docs["revelation"]["max_revelations"]["minecraft:player"]
+        self.assertTrue(any("max_revelations" in x for x in compare_parameters(docs)[1]))
+
+    def test_adaptive_legacy_attribute_not_promoted(self):
+        docs = self.sample()
+        entries, failures = compare_parameters(docs)
+        self.assertEqual(failures, [])
+        item = next(x for x in entries if x["id"] == "epicfight:adaptive_skin")
+        self.assertEqual(item["publisher_values"]["legacy_modifier_schema"], "RAW_ONLY_NOT_PROVEN_LOADED")
 
     def test_legacy_raw_schema_preserved_not_promoted(self):
         evidence, failures = compare_parameters(self.sample())
