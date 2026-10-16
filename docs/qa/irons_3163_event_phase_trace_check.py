@@ -117,19 +117,33 @@ def assess(log):
     for slot, value in sessions.items():
         if value["root"] != 1:
             fail.append("SESSION_REQUIRES_EXACTLY_ONE_ROOT")
+    cast_keys = [(v["actor_slot"], v["session_slot"], v["tick"])
+                 for v in casts]
     followup_keys = [(v["actor_slot"], v["session_slot"], v["tick"])
                      for v in followups]
     if len(followup_keys) != len(set(followup_keys)):
         fail.append("DUPLICATE_CAST_FOLLOWUP")
     if casts and not followups:
         fail.append("NO_CAST_FOLLOWUP")
+    for key in cast_keys:
+        if key not in followup_keys:
+            fail.append("MISSING_CAST_FOLLOWUP")
     for value in followups:
+        full_key = (value["actor_slot"], value["session_slot"], value["tick"])
         if value["session_slot"] not in sessions:
             fail.append("FOLLOWUP_WITHOUT_ROOT")
+        elif sessions[value["session_slot"]]["actor"] != value["actor_slot"]:
+            fail.append("FOLLOWUP_ACTOR_MISMATCH")
+        if full_key not in cast_keys:
+            fail.append("FOLLOWUP_WITHOUT_CAST")
         if value["recast_after"] not in ("true", "false"):
             fail.append("INVALID_RECAST_AFTER")
+    attempt_keys = [v["attempt_slot"] for v in damage]
+    if len(attempt_keys) != len(set(attempt_keys)):
+        fail.append("DUPLICATE_DAMAGE_ATTEMPT")
     for value in damage:
-        if value["cancelled_event_snapshot"] not in ("true", "false")                 or value["ambiguous"] not in ("true", "false"):
+        if (value["cancelled_event_snapshot"] not in ("true", "false")
+                or value["ambiguous"] not in ("true", "false")):
             fail.append("INVALID_DAMAGE_FLAGS")
         try:
             hits = int(value["post_hits"])
@@ -137,12 +151,16 @@ def assess(log):
             after = int(value["iframe_at_post_tick"])
             if hits < 0 or before < 0 or after < 0:
                 fail.append("NEGATIVE_DAMAGE_METRIC")
+            if hits > 1:
+                fail.append("MULTIPLE_POST_HITS_IN_ONE_ATTEMPT")
+            if hits > 0 and value["cancelled_event_snapshot"] == "true":
+                # A later listener may un-cancel; this snapshot conflict
+                # requires physical event-order evidence, never reward credit.
+                fail.append("CANCEL_SNAPSHOT_POST_HIT_CONFLICT")
         except ValueError:
             fail.append("INVALID_DAMAGE_METRIC")
         if value["ambiguous"] == "true":
             fail.append("AMBIGUOUS_HIT_CORRELATION")
-        if int(value["post_hits"]) > 1:
-            fail.append("MULTIPLE_POST_HITS_IN_ONE_ATTEMPT")
     return {
         "result": "TRACE_CLASSIFIED_NOT_GAMETEST" if not fail else "FAIL_CLOSED",
         "fingerprint_claim_in_log_matches_publisher": fingerprint,
