@@ -1,8 +1,12 @@
 # Iron's 3.16.3 — Blight: redução de cura recebida e dano causado por listeners gerais
 
-**Identidade:** `irons_spellbooks:blight` · escola Nature · Minecraft 1.21.1 / NeoForge / Iron's documental 3.16.3. ✅ ID já presente entre 110; 🟡 aprofundamento causal de perks; ⚠️ JAR classfile/servidor físico pendentes; ⛔ alterações em multiplicadores, listeners e alcance sem boundary real. **+0 identidade mágica nova.**
+**Identidade:** `irons_spellbooks:blight` · escola Nature · Minecraft 1.21.1 / NeoForge / Iron's documental 3.16.3. ✅ ID já presente entre 110; 🟡 aprofundamento causal de perks; ✅ classfiles do JAR publicado auditados; ⚠️ servidor físico pendente; ⛔ alterações em multiplicadores, listeners e alcance sem boundary real. **+0 identidade mágica nova.**
 
 **Source pin:** `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`. Conteúdo clean-room de interoperabilidade, não port do provider.
+
+## Prova binária publicada — Java 21
+
+[Actions Java 21 #38834814254](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38834814254) **SUCCESS** confirmou no publisher JAR `BlightSpell.onCast` com alvo `TargetEntityCastData`/efeito `BLIGHT` e os listeners `BlightEffect.reduceHealing` (`LivingHealEvent.setAmount`) e `reduceDamageOutput` (`LivingIncomingDamageEvent.setAmount`). Os fatores de 10% e 5% por nível vêm da fonte fixada e **não** são medições de resultados no servidor. [Relatório binário](../../../../../docs/qa/irons-3163-healing-heartstop-blight-bytecode-evidence.md).
 
 ## Cadeia causal com duas entradas de evento
 
