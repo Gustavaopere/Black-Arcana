@@ -15,6 +15,23 @@ EXPECTED_SHA1 = "fb199b7bbea2fc402da28ab586e73f47e32f8fc0"
 EXPECTED_SHA256 = "8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526"
 PARAMETER_PREFIX = "data/epicfight/skill_parameters/"
 EXPECTED_FIELDS = {
+    # Registry sentinel epicfight:empty is excluded deliberately: it is an internal
+    # Skill.EMPTY identity, not an independently configured JSON skill resource.
+    "combo_attacks": {},
+    "knockdown_wakeup": {"consumption": 6.0},
+    "sweeping_edge": {"consumption": 24.0},
+    "dancing_edge": {"consumption": 30.0},
+    "the_guillotine": {"consumption": 24.0},
+    "heartpiercer": {"consumption": 40.0},
+    "steel_whirlwind": {"consumption": 60.0},
+    "battojutsu": {"consumption": 30.0},
+    "rushing_tempo": {"consumption": 25.0, "max_stacks": 3},
+    "relentless_combo": {"consumption": 20.0},
+    "sharp_stab": {"consumption": 30.0},
+    "liechtenauer": {"consumption": 40.0, "max_duration": 240, "return_duration": 60},
+    "eviscerate": {"consumption": 25.0, "damage_cap": 20.0},
+    "blade_rush": {"consumption": 25.0, "max_stacks": 4},
+    "battojutsu_passive": {"consumption": 5.0},
     "guard": {"penalizer": 0.6},
     "adaptive_skin": {"damage_resistance": 0.15, "max_resistance_stack": 3},
     "meteor_slam": {},
@@ -127,6 +144,30 @@ EXPECTED_MAPS = {
 }
 # These are *symbol-presence* checks in compiled classfiles, not behavioral/ABI proof.
 CLASS_SYMBOLS = {
+    "yesman.epicfight.skill.Skill":
+        ("EMPTY", "loadDatapackParameters("),
+    "yesman.epicfight.skill.common.ComboAttacks":
+        ("MIN_SPRINT_TICKS_FOR_DASH", "executeOnServer(", "checkConsumption("),
+    "yesman.epicfight.skill.dodge.KnockdownWakeupSkill":
+        ("gatherArguments(", "isExecutableState("),
+    "yesman.epicfight.skill.weaponinnate.SimpleWeaponInnateSkill":
+        ("registerPropertiesToAnimation(", "executeOnServer("),
+    "yesman.epicfight.skill.weaponinnate.GuillotineAxeSkill":
+        ("DELIVER_DAMAGE_PRE", "setExecute("),
+    "yesman.epicfight.skill.weaponinnate.SteelWhirlwindSkill":
+        ("getAllowedMaxChargingTicks(", "onStopHolding("),
+    "yesman.epicfight.skill.weaponinnate.BattojutsuSkill":
+        ("playSkillAnimation(", "SHEATH"),
+    "yesman.epicfight.skill.weaponinnate.RushingTempoSkill":
+        ("comboAnimation", "checkExecuteCondition("),
+    "yesman.epicfight.skill.weaponinnate.LiechtenauerSkill":
+        ("returnDuration", "KILL_ENTITY", "TAKE_DAMAGE_INCOME"),
+    "yesman.epicfight.skill.weaponinnate.EviscerateSkill":
+        ("damageCap", "reserveAnimation(", "getDamageCap("),
+    "yesman.epicfight.skill.weaponinnate.BladeRushSkill":
+        ("INSTABILITY", "DELIVER_DAMAGE_POST", "checkExecuteCondition("),
+    "yesman.epicfight.skill.weapon_passive.BattojutsuPassive":
+        ("SHEATH", "USE_ITEM", "getCooldownRegenPerSecond("),
     "yesman.epicfight.skill.passive.AdaptiveSkinSkill":
         ("damageResistance", "maxResistanceStack", "RESISTING_DAMAGE_TYPE", "TAKE_DAMAGE_PRE"),
     "yesman.epicfight.skill.identity.MeteorSlamSkill":
@@ -314,6 +355,8 @@ def audit(jar: pathlib.Path) -> dict:
         "sha1": sha1, "sha256": sha256, "bytes": len(raw),
         "source_adjacent_pin": "Antikythera-Studios/epicfight@a78aa24b72e90a9d09f5fd61925e4369d117abaf",
         "exact_json_parameter_files_inspected": len(params),
+        "registered_core_skill_ids_classified": 43,
+        "unconfigured_empty_sentinel": "epicfight:empty",
         "exact_classfiles_symbol_checked": len(classes),
         "legacy_modifier_skill_ids_raw_only": sorted(EXPECTED_LEGACY_MODIFIERS),
         "entity_limit_map_ids_raw_only": sorted(EXPECTED_MAPS),
@@ -328,6 +371,7 @@ def audit(jar: pathlib.Path) -> dict:
             "Entity-type map keys are packaged raw only; registry and addon presence not verified.",
             "No runtime loading, skill activation, damage, stamina consumption, Mastery, or optional adapter tested.",
             "No external JAR or proprietary class contents are redistributed.",
+            "EpicFightSkills EMPTY is an internal sentinel and not a 43rd skill_parameters JSON resource.",
         ],
     }
 
@@ -351,8 +395,28 @@ class ContractSelfTest(unittest.TestCase):
 
     def test_synthetic_expected_values(self):
         actual, errors = compare_parameters(self.sample())
-        self.assertEqual(len(actual), 27)
+        self.assertEqual(len(actual), 42)
         self.assertEqual(errors, [])
+
+    def test_empty_sentinel_is_not_a_missing_json_skill(self):
+        self.assertNotIn("empty", EXPECTED_FIELDS)
+        self.assertIn("yesman.epicfight.skill.Skill", CLASS_SYMBOLS)
+        self.assertIn("EMPTY", CLASS_SYMBOLS["yesman.epicfight.skill.Skill"])
+
+    def test_missing_combo_resource_fails_closed(self):
+        docs = self.sample()
+        del docs["combo_attacks"]
+        self.assertTrue(any("combo_attacks" in e for e in compare_parameters(docs)[1]))
+
+    def test_liechtenauer_return_duration_drift(self):
+        docs = self.sample()
+        docs["liechtenauer"]["return_duration"] = 59
+        self.assertTrue(any("return_duration" in e for e in compare_parameters(docs)[1]))
+
+    def test_blade_rush_stack_drift(self):
+        docs = self.sample()
+        docs["blade_rush"]["max_stacks"] = 3
+        self.assertTrue(any("max_stacks" in e for e in compare_parameters(docs)[1]))
 
     def test_missing_skill_fails_closed(self):
         docs = self.sample()
