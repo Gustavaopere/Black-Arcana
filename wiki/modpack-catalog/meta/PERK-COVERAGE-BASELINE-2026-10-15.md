@@ -1,5 +1,12 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight — novo eixo de engenharia para perks (16/10/2026)
+
+- **Inventário físico 21.17.3.1 (registrar core):** ✅ **43/43 identidades de skill dispositionadas**; **3/43 `COUNTED_EXACT` mágicas** (Wrathful Lightning, Tsunami, Everlasting Allegiance) e 40 skills marciais, técnicas ou passivas `EXCLUDED` **apenas da métrica de magias**. O status deste registro já estava consolidado; **+0 novos objetos mágicos**. Artefato físico `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar`, SHA-1 `fb199b7bbea2fc402da28ab586e73f47e32f8fc0`; [auditoria física](../providers/✅-epic-fight/EXACT-21.17.3.1-ARTIFACT-SKILL-AUDIT.md).
+- **Tranche técnica de perks:** 🟡 **9/43 identidades (20,93%)** com **novo aprofundamento source-adjacent** em seis dossiês (Parrying, Impact Guard, Swordmaster, Forbidden Strength, Roll, Step e as três trident innates). **34/43** fora do escopo do aprofundamento nesta tranche; não confundir com ausência de toda documentação anterior. [Checkpoint específico do Epic Fight](../providers/✅-epic-fight/skills/PERK-TECHNICAL-CHECKPOINT-2026-10-16.md).
+- **Proveniência condicionada:** upstream `Antikythera-Studios/epicfight@a78aa24b72e90a9d09f5fd61925e4369d117abaf` declara versão **21.17.3**, mas o JAR exato é **21.17.3.1**. Os valores `parry_window=8`, `damage_reducer=.2`, `speed_bonus=30`, Roll/Step `consumption=4/3` e trident `consumption=50/50/40` são fatos **da fonte adjacente**, não um contrato confirmado para o JAR físico ou recursos efetivamente consumidos. Neste bloco, **43 âncoras SHA/linhas verificadas em 14 arquivos Java upstream** e 9 JSONs de parâmetros consultados; **0 testes físicos/adapter/QA** desta tranche. Nenhum percentual de hook executável/Mastery/Stage 09 pode ser derivado disso.
+- **Catálogo global:** piso 1.856 objetos semânticos mínimos / 1.854 estritos; universo final **—%**. Epic Fight adiciona **0** novas raízes nesta rodada. Integração Epic Fight ↔ RPG Skill Tree condicionada a ABI/hook validado sem stamina duplicada; Black Arcana preserva autoridade de casting próprio e WorldEffectPolicy. Stage 06.05 🟡 / Stage 09 físico pendente.
+
 ## Fechamento da cobertura causal de Iron's ativo — 16/10/2026
 
 **Estado documental desta branch, após 11 auditorias novas e correção de registro:**
