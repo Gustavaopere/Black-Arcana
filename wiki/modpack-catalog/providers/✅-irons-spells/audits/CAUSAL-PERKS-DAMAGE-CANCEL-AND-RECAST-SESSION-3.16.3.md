@@ -1,6 +1,6 @@
 # Iron's 3.16.3 — fronteiras de eventos: Burning Dash cancelado e sessão de recasts Eldritch
 
-**Natureza:** auditoria causal **transversal não contável como magia**. Relaciona [Burning Dash](./CAUSAL-PERKS-BURNING-DASH-3.16.3.md) e [Eldritch Blast](./CAUSAL-PERKS-ELDRITCH-BLAST-3.16.3.md), ambos entre os 110 spell IDs já inventariados. **+0 identidade, +0 dossiê individual.**
+**Natureza:** auditoria causal **transversal não contável como magia**. Indicador vigente: **28/110 dossiês causais individuais** (25,45%), mínimo **1.856 objetos mágicos globais / 1.854 em escopo**, denominador final não estabelecido. Relaciona [Burning Dash](./CAUSAL-PERKS-BURNING-DASH-3.16.3.md) e [Eldritch Blast](./CAUSAL-PERKS-ELDRITCH-BLAST-3.16.3.md), ambos entre os 110 spell IDs já inventariados. **+0 identidade, +0 dossiê individual.**
 
 **Versão/provenance:** Minecraft 1.21.1, NeoForge; Iron's Spells 3.16.3, publisher JAR CurseForge file 8680204, SHA-256 `13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73`; fonte upstream fixa `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`. ✅ fonte verificável; ⚠️ branch transformada do NeoForge, JAR instalado, eventos/efeitos em live gameplay e boundary RPG não QA; ⛔ nunca mutar diretamente o runtime do provider.
 
