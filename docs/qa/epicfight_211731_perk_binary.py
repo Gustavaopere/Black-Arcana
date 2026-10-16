@@ -153,7 +153,7 @@ CLASS_SYMBOLS = {
     "yesman.epicfight.skill.weaponinnate.SimpleWeaponInnateSkill":
         ("registerPropertiesToAnimation(", "executeOnServer("),
     "yesman.epicfight.skill.weaponinnate.GuillotineAxeSkill":
-        ("DELIVER_DAMAGE_PRE", "setExecute("),
+        ("DELIVER_DAMAGE_PRE", "setExecute"),
     "yesman.epicfight.skill.weaponinnate.SteelWhirlwindSkill":
         ("getAllowedMaxChargingTicks(", "onStopHolding("),
     "yesman.epicfight.skill.weaponinnate.BattojutsuSkill":
@@ -163,7 +163,7 @@ CLASS_SYMBOLS = {
     "yesman.epicfight.skill.weaponinnate.LiechtenauerSkill":
         ("returnDuration", "KILL_ENTITY", "TAKE_DAMAGE_INCOME"),
     "yesman.epicfight.skill.weaponinnate.EviscerateSkill":
-        ("damageCap", "reserveAnimation(", "getDamageCap("),
+        ("damageCap", "reserveAnimation", "getDamageCap("),
     "yesman.epicfight.skill.weaponinnate.BladeRushSkill":
         ("INSTABILITY", "DELIVER_DAMAGE_POST", "checkExecuteCondition("),
     "yesman.epicfight.skill.weapon_passive.BattojutsuPassive":
@@ -397,6 +397,12 @@ class ContractSelfTest(unittest.TestCase):
         actual, errors = compare_parameters(self.sample())
         self.assertEqual(len(actual), 42)
         self.assertEqual(errors, [])
+
+    def test_compiled_invocation_symbol_fragments(self):
+        self.assertIn("setExecute", CLASS_SYMBOLS["yesman.epicfight.skill.weaponinnate.GuillotineAxeSkill"])
+        self.assertIn("reserveAnimation", CLASS_SYMBOLS["yesman.epicfight.skill.weaponinnate.EviscerateSkill"])
+        self.assertNotIn("setExecute(", CLASS_SYMBOLS["yesman.epicfight.skill.weaponinnate.GuillotineAxeSkill"])
+        self.assertNotIn("reserveAnimation(", CLASS_SYMBOLS["yesman.epicfight.skill.weaponinnate.EviscerateSkill"])
 
     def test_empty_sentinel_is_not_a_missing_json_skill(self):
         self.assertNotIn("empty", EXPECTED_FIELDS)
