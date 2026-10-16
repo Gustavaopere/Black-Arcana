@@ -72,9 +72,9 @@ def audit(dis: dict[str, str]) -> dict:
     expect_all(gh_cast, ("getMaxHealth", "SpellHealEvent", "heal",
                          "HealParticlesPacket"),
                "GreaterHealSpell.onCast")
-    ordered(h_cast, ("SpellHealEvent", "NeoForge", "heal:"),
+    ordered(h_cast, ("SpellHealEvent", "post:", "heal:"),
             "HealSpell.onCast")
-    ordered(gh_cast, ("getMaxHealth", "SpellHealEvent", "heal:"),
+    ordered(gh_cast, ("getMaxHealth", "SpellHealEvent", "post:", "heal:"),
             "GreaterHealSpell.onCast")
     expect_all(dis["heal_event"], ("getTargetEntity", "getHealAmount",
                                    "getSchoolType"),
@@ -152,14 +152,14 @@ def analyze(jar: Path) -> dict:
 def self_test() -> None:
     good = ("  public void onCast();\n    Code:\n"
             "    0: new #7 // class SpellHealEvent\n"
-            "    3: invokevirtual #8 // Field NeoForge.EVENT_BUS\n"
+            "    3: invokeinterface #8 // Method IEventBus.post:()V\n"
             "    7: invokevirtual #9 // Method LivingEntity.heal:(F)V\n")
-    ordered(good, ("SpellHealEvent", "NeoForge", "heal:"), "synthetic")
+    ordered(good, ("SpellHealEvent", "post:", "heal:"), "synthetic")
     reversed_order = good.replace("SpellHealEvent", "TEMP").replace(
         "LivingEntity.heal:", "SpellHealEvent").replace(
         "TEMP", "LivingEntity.heal:")
     try:
-        ordered(reversed_order, ("SpellHealEvent", "NeoForge", "heal:"),
+        ordered(reversed_order, ("SpellHealEvent", "post:", "heal:"),
                 "synthetic")
     except ValueError:
         pass
