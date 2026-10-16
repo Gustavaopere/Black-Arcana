@@ -4,6 +4,10 @@
 
 **Provenance:** ✅ `SOURCE-PINNED` a `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`; ⚠️ `CAUSAL-PARTIAL`: **não** é equivalência de classfiles desta magia no JAR 3.16.3 instalado/publicado, nem GameTest, ambiente real ou adapter certificado. Código third-party analisado somente para contratos de interoperabilidade, sem redistribuição/cópia.
 
+## Prova compilada limitada — Java 21 (2026-10-15)
+
+A [Actions #38828793186](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38828793186) terminou **SUCCESS** com inspeção por `javap -p -c` do **publisher JAR Iron's 3.16.3** (SHA-256 `13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73`). Foram confirmadas no bytecode as referências `RecastInstance`, `RaycastBuilder`, `DamageSources.applyDamage`, `EldritchBlastVisualEntity`, fonte `setIFrames`/`indirect` e visual com `shouldBeSaved=false` e descarte por `tick`. A contagem **3–7** permanece fórmula source-pinned, **não** total de tiros observado em execução. **✅ operação compilada**, **⚠️ recasts/cooldowns e eventos reais, JAR instalado/pack não testados**. Ver [relatório de prova binária](../../../../../docs/qa/irons-3163-recast-dash-bytecode-evidence.md).
+
 ## Cadeia causal do disparo e seus recasts
 
 1. **Parâmetros de spell:** [`EldritchBlastSpell.java` L34–L58](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/eldritch/EldritchBlastSpell.java#L34-L58) define raridade LEGENDARY, escola Eldritch, 5 níveis, `INSTANT` com cast-time base 0, cooldown default **15 segundos** e mana `90 + 15×(spellLevel−1)` → **90–150**. `baseSpellPower=15`, `spellPowerPerLevel=0`: dano-base **15 por blast** quando multiplicadores/atributos/config são unitários; aumentar o nível **não** aumenta isoladamente este poder-base.
