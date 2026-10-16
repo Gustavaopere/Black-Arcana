@@ -20,13 +20,13 @@
 | Dodge | [`roll` + `step`](technical/DODGE-ROLL-STEP-21.17.3-SOURCE-ADJACENT.md) | custo4/3 defaults, input cliente, execução server, animações/movesets e estado |
 | Trident innate | [`wrathful_lighting`, `tsunami`, `everlasting_allegiance`](technical/TRIDENT-INNATES-21.17.3-SOURCE-ADJACENT.md) | `consumption` 50/50/40 (sem Resource confirmado), properties de attack phase e selector Riptide/Channeling/Loyalty |
 
-**Verificações do lote:** seis arquivos documentais publicados e relidos no GitHub; **43 âncoras source-pinned em 16 arquivos Java** foram verificadas quanto a SHA, existência e limites de linhas (**37** nos primeiros 5 documentos + **6** no trident, sem intervalo inválido). Nove nomes de parâmetros `*.json` distintos foram consultados no upstream. Nenhum compilador, GameTest, reprodução de bug, correspondência de bytecode 21.17.3.1 ou QA visual foi executado como parte da documentação.
+**Verificações do lote:** seis arquivos documentais publicados e relidos no GitHub; **43 âncoras source-pinned em 14 arquivos Java** foram verificadas quanto a SHA, existência e limites de linhas (**37** nos primeiros 5 documentos + **6** no trident, sem intervalo inválido). Nove nomes de parâmetros `*.json` distintos foram consultados no upstream. Nenhum compilador, GameTest, reprodução de bug, correspondência de bytecode 21.17.3.1 ou QA visual foi executado como parte da documentação.
 
 ## Riscos prioritários e estratégia segura
 
 1. **Discrepância de release:** o source pinado `Antikythera-Studios/epicfight@a78aa24b72e90a9d09f5fd61925e4369d117abaf` declara `mod=21.17.3` em `gradle/libs.versions.toml`. O pack utiliza publisher JAR `21.17.3.1`. Mesmo patch/minor não é equivalência provada. Executar auditoria bytecode de métodos e extrair `skill_parameters` **do JAR físico exato** antes de aprovar qualquer hook per-player.
 2. **Evento observável ≠ setter seguro:** `Entity.MODIFY_ATTACK_SPEED` e `Player.CONSUME_SKILL` existem na fonte adjacente. Contrato de listener, fase preflight, sidedness, composição de modifiers e alteração dos recursos no JAR físico ainda condicionados.
-3. **Dano guard residual:** `ImpactGuardSkill` pode cancelar incoming e invocar um novo `hurt` reduzido, com novos `DamageSource` tags. Numa bridge com Iron's, não duplicar daño/crit/Mastery nem classificar automaticamente `DamageTypes.MAGIC` como todo dano magical provider.
+3. **Dano guard residual:** `ImpactGuardSkill` pode cancelar incoming e invocar um novo `hurt` reduzido, com novos `DamageSource` tags. Numa bridge com Iron's, não duplicar dano/crit/Mastery nem classificar automaticamente `DamageTypes.MAGIC` como todo dano magical provider.
 4. **World safety:** as três trident-innates pertencem a Epic Fight. Não emitir thunder, recall ou teleport AOE de novo por Black Arcana; categorizar cast e efeitos secundários pelo mesmo root com dedup.
 5. **Mastery:** progressão do RPG sibling só por fato comprovado de acerto/defesa/cast, não packet client, FX ou tentativa cancelada. Não assumir que o progress provider terá setter nativo para stamina, hitbox, i-frames, raio de ataque ou `DamageType`.
 
