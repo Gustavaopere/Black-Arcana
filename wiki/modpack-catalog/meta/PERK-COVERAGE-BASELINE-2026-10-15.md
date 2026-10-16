@@ -2,6 +2,19 @@
 
 **Natureza:** snapshot de coordenação de catálogo e dos eixos de engenharia de perks, sem alterar os contadores canônicos. A fonte operacional dinâmica continua em `SEMANTIC-MAGIC-COVERAGE.md`, `CATALOG-COVERAGE-CURRENT.md` e `plans/STATUS.md`; atualizar esta ficha após reconciliação, sem assumir que é o último checkpoint.
 
+## Fases de dano cancelado e Mastery em recasts (2026-10-15)
+
+**Escopo desta tranche:** revisão transversal **não contável** de duas magias já aprofundadas, **Burning Dash** e **Eldritch Blast**. Mantêm-se **28/110 dossiês causais individuais (25,45%)**, **110/110 spell IDs inventariados** e pisos globais **1.856 objetos mágicos / 1.854 em escopo**, denominador global desconhecido (—%). **+0 novas magias e +0 dossiês individuais.**
+
+[Aceite transversal de dano cancelado e sessão de recasts](../providers/✅-irons-spells/audits/CAUSAL-PERKS-DAMAGE-CANCEL-AND-RECAST-SESSION-3.16.3.md) usa `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`; **21 referências source-pinned em 10 arquivos upstream verificadas**, fonte e linhas válidas.
+
+- **Burning Dash:** `DamageSources.applyDamage` posta `SpellDamageEvent` e retorna `false` se cancelado antes de chamar `hurt`. O `BurningDashEffect.applyEffectTick` chama o helper e **ignora o booleano**, escrevendo `target.invulnerableTime=20` na sequência do mesmo ramo. Consequência: **tentativa vetada não equivale a hit aceito nem garante ausência de efeito colateral**. O efeito real dos i-frames após cancelamento no NeoForge transformado é ⚠️ pendente.
+- **Eldritch Blast:** `AbstractSpell.castSpell` posta `SpellOnCastEvent` antes de cobrar mana, chamar `onCast` e consumir recast. `playerAlreadyHasRecast` é lido antes do evento; uma sessão pode produzir vários `SpellOnCastEvent` sem várias cobranças iniciais. `PlayerRecasts` mantém mapa por spell ID e `RecastInstance` persiste cargas/timer em NBT, **sem session UUID explícito** na classe examinada. Não contar cada `SpellOnCastEvent` como nova sessão de Mastery, nem forjar token de sessão.
+- **Prova compilada adicional em processamento:** [`irons_3163_event_phase_bytecode.py`](../../../docs/qa/irons_3163_event_phase_bytecode.py) e extensão do [workflow Java21](../../../.github/workflows/irons-3163-projectile-bytecode.yml) examinam bytecode publicado de `BurningDashEffect`, `DamageSources`, `AbstractSpell`, `PlayerRecasts`, `RecastInstance` e `EldritchBlastSpell`. Primeiro run [#38829616023](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38829616023) **FAIL_CLOSED** por overload/bridge `serializeNBT` do Java; a seleção tipada foi corrigida para retorno `CompoundTag` com autoteste de regressão. **Não declarar prova binária final antes de GREEN**.
+- **Gates:** ⚠️ fonte/bytecode não substituem medição em GameTest, eventos de cancelamento, cliente/servidor dedicado, reparo de NBT/relog nem correspondência do JAR do modpack; ⛔ setters de i-frame, duplicação de dano, XP por recast, segundo pool de mana e integração Mastery sem boundary permanecem bloqueados.
+
+**Estado Stage:** 06.05 🟡, Stage 09 pendente, PR #825 aberta como draft, PR #795 separada sem alteração intencional.
+
 ## Burning Dash e prova binária recast-dash (2026-10-15)
 
 **Cobertura documental Iron's 3.16.3:** ✅ **110/110 identidades catalogadas**, 🟡 **28/110 magias com dossiês causais individuais suplementares (25,45% da fila de engenharia)**, ⚠️ sem equivalência automática com adapters implementados, testes executados em ambiente físico ou builds do modpack. **+0 identidade nova:** o ledger mínimo permanece **1.856 objetos mágicos globais / 1.854 em escopo**, denominador definitivo **desconhecido (—%)**. Checkpoint histórico anterior 27/110 abaixo.
