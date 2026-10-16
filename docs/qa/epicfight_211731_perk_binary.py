@@ -15,6 +15,7 @@ EXPECTED_SHA1 = "fb199b7bbea2fc402da28ab586e73f47e32f8fc0"
 EXPECTED_SHA256 = "8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526"
 PARAMETER_PREFIX = "data/epicfight/skill_parameters/"
 EXPECTED_FIELDS = {
+    "guard": {"penalizer": 0.6},
     "parrying": {"penalizer": 0.6, "parry_window": 8},
     "impact_guard": {"penalizer": 0.6, "superior_penalizer": 0.2, "damage_reducer": 0.2},
     "swordmaster": {"speed_bonus": 30},
@@ -23,6 +24,13 @@ EXPECTED_FIELDS = {
     "berserker": {"speed_bonus": 0.5, "damage_bonus": 0.3},
     "stamina_pillager": {"regen_rate": 30},
     "death_harvest": {},
+    "endurance": {"consumption": 12.0, "max_duration": 160, "stamina_ratio": 0.3},
+    "hypervitality": {"consumption": 6.0, "max_stacks": 1},
+    "adrenaline_fiend": {},
+    "catharsis": {"regen_bonus": 0.5},
+    "emergency_escape": {"consumption": 5.0},
+    "bonebreaker": {"damage_bonus": 0.1, "max_damage_bonus_stacks": 8},
+    "vengeance": {"damage_bonus": 0.3, "max_duration": 200},
     "roll": {"consumption": 4.0},
     "step": {"consumption": 3.0},
     "wrathful_lighting": {"consumption": 50.0},
@@ -51,9 +59,43 @@ EXPECTED_ATTRIBUTE_MODIFIERS = {
     "death_harvest": {
         "minecraft:generic.attack_damage": ("add_multiplied_total", 0.15),
     },
+    "endurance": {
+        "minecraft:generic.max_health": ("add_value", 2.0),
+        "epicfight:stamina": ("add_value", 4.0),
+    },
+    "hypervitality": {
+        "epicfight:stamina": ("add_value", 2.0),
+        "minecraft:generic.max_health": ("add_value", 4.0),
+    },
+    "emergency_escape": {
+        "epicfight:stamina_regen": ("add_value", 0.3),
+    },
+}
+# These are legacy-shaped records in some packaged JSONs. Their presence/values are
+# evidence ONLY of serialized data, not proof that AttributeModifier.MAP_CODEC
+# parses/applies the records (they lack a modern "id" key).
+# tuple: (attribute, operation, amount, name, uuid) exact JSON fields.
+EXPECTED_LEGACY_MODIFIERS = {
+    "adrenaline_fiend": [
+        ("minecraft:generic.attack_speed", "multiply_total", 0.1, "adrenaline_skill_stat", "678cff5d-dc70-492d-b960-f01241d1a0f9"),
+        ("minecraft:generic.attack_damage", "multiply_total", 0.075, "adrenaline_skill_stat", "678cff5d-dc70-492d-b960-f01241d1a0f9"),
+    ],
+    "catharsis": [
+        ("epicfight:stamina_regen", "addition", 0.15, "bloodlust_skill_stat", "0c6efd18-199e-48a6-aa1b-51a1c1f9f613"),
+        ("minecraft:generic.attack_damage", "multiply_total", 0.1, "bloodlust_skill_stat", "0c6efd18-199e-48a6-aa1b-51a1c1f9f613"),
+    ],
+    "bonebreaker": [
+        ("minecraft:generic.attack_speed", "multiply_total", 0.15, "bonebreaker_skill_stat", "06212e76-6dbe-4d4b-a875-562829bb6db4"),
+    ],
+    "vengeance": [
+        ("minecraft:generic.max_health", "addition", 3.0, "vengeance_skill_stat", "bcb1f110-c987-412e-9e40-5831c62eba2e"),
+        ("minecraft:generic.attack_damage", "multiply_total", 0.075, "vengeance_skill_stat", "bcb1f110-c987-412e-9e40-5831c62eba2e"),
+    ],
 }
 # These are *symbol-presence* checks in compiled classfiles, not behavioral/ABI proof.
 CLASS_SYMBOLS = {
+    "yesman.epicfight.skill.guard.GuardSkill":
+        ("penalizer", "TAKE_DAMAGE_INCOME", "guard("),
     "yesman.epicfight.skill.guard.ParryingSkill":
         ("parryWindow", "loadDatapackParameters(", "guard("),
     "yesman.epicfight.skill.guard.ImpactGuardSkill":
@@ -72,6 +114,20 @@ CLASS_SYMBOLS = {
         ("regenRate", "KILL_ENTITY"),
     "yesman.epicfight.skill.passive.DeathHarvestSkill":
         ("onInitiate(", "WEAPON_INNATE", "DeathHarvestOrb"),
+    "yesman.epicfight.skill.passive.EnduranceSkill":
+        ("staminaRatio", "TAKE_DAMAGE_PRE", "setMaxStunShield"),
+    "yesman.epicfight.skill.passive.HyperVitalitySkill":
+        ("CONSUME_SKILL", "CANCEL_SKILL"),
+    "yesman.epicfight.skill.passive.AdrenalineFiendSkill":
+        ("KILL_ENTITY", "START_ACTION"),
+    "yesman.epicfight.skill.passive.CatharsisSkill":
+        ("regenBonus", "ON_DODGE"),
+    "yesman.epicfight.skill.passive.EmergencyEscapeSkill":
+        ("CAST_SKILL", "CONSUME_SKILL", "setStateExecutable"),
+    "yesman.epicfight.skill.passive.BonebreakerSkill":
+        ("DELIVER_DAMAGE_PRE", "MODIFY_ATTACK_DAMAGE", "maxDamageBonusStacks"),
+    "yesman.epicfight.skill.passive.VengeanceSkill":
+        ("TAKE_DAMAGE_PRE", "DELIVER_DAMAGE_PRE", "KILL_ENTITY"),
     "yesman.epicfight.world.entity.DeathHarvestOrb":
         ("tick(", "setConsumptionSynchronize"),
     "yesman.epicfight.skill.weaponinnate.WrathfulLightingSkill":
@@ -119,6 +175,23 @@ def compare_parameters(documents: dict[str, object]) -> tuple[list[dict], list[s
             checked["modifier:" + attr] = {"operation": m.get("operation"), "amount": m.get("amount")}
             if m.get("operation") != want_operation or isinstance(m.get("amount"), bool) or m.get("amount") != want_amount:
                 failures.append(f"{skill}: modifier {attr} differs: {m!r}")
+        legacy_expected = EXPECTED_LEGACY_MODIFIERS.get(skill, [])
+        if legacy_expected:
+            modifiers = data.get("attribute_modifiers")
+            if not isinstance(modifiers, list) or len(modifiers) != len(legacy_expected):
+                failures.append(f"{skill}: expected {len(legacy_expected)} legacy-shaped modifiers")
+            else:
+                exact = []
+                for modifier in modifiers:
+                    if not isinstance(modifier, dict):
+                        failures.append(f"{skill}: non-object legacy modifier")
+                        continue
+                    exact.append(tuple(modifier.get(k) for k in
+                                       ("attribute", "operation", "amount", "name", "uuid")))
+                if sorted(map(repr, exact)) != sorted(map(repr, legacy_expected)):
+                    failures.append(f"{skill}: legacy raw modifier fields drift")
+            checked["legacy_modifier_schema"] = "RAW_ONLY_NOT_PROVEN_LOADED"
+            checked["legacy_modifiers_raw_count"] = len(modifiers) if isinstance(modifiers, list) else None
         evidence.append({"id": "epicfight:" + skill, "source_adjacent_expected": expected,
                          "publisher_values": checked, "resource_path": PARAMETER_PREFIX + skill + ".json"})
     return evidence, failures
@@ -188,6 +261,7 @@ def audit(jar: pathlib.Path) -> dict:
         "source_adjacent_pin": "Antikythera-Studios/epicfight@a78aa24b72e90a9d09f5fd61925e4369d117abaf",
         "exact_json_parameter_files_inspected": len(params),
         "exact_classfiles_symbol_checked": len(classes),
+        "legacy_modifier_skill_ids_raw_only": sorted(EXPECTED_LEGACY_MODIFIERS),
         "parameter_evidence": params,
         "symbol_evidence": classes,
         "deviations": failures,
@@ -195,6 +269,7 @@ def audit(jar: pathlib.Path) -> dict:
         "limits": [
             "Matching symbol strings does not prove instruction equivalence or hook ordering.",
             "Matching packaged JSON does not prove actual world datapack/config values.",
+            "Legacy-shaped name/uuid attribute_modifiers are raw data only; loader compatibility unproven.",
             "No runtime loading, skill activation, damage, stamina consumption, Mastery, or optional adapter tested.",
             "No external JAR or proprietary class contents are redistributed.",
         ],
@@ -209,11 +284,16 @@ class ContractSelfTest(unittest.TestCase):
                 {"attribute": attr, "operation": op, "amount": amount}
                 for attr, (op, amount) in mods.items()
             ]
+        for skill, modifiers in EXPECTED_LEGACY_MODIFIERS.items():
+            docs[skill]["attribute_modifiers"] = [
+                dict(zip(("attribute", "operation", "amount", "name", "uuid"), modifier))
+                for modifier in modifiers
+            ]
         return docs
 
     def test_synthetic_expected_values(self):
         actual, errors = compare_parameters(self.sample())
-        self.assertEqual(len(actual), 13)
+        self.assertEqual(len(actual), 21)
         self.assertEqual(errors, [])
 
     def test_missing_skill_fails_closed(self):
@@ -240,6 +320,22 @@ class ContractSelfTest(unittest.TestCase):
         docs = self.sample()
         docs["parrying"]["parry_window"] = True
         self.assertTrue(any("parry_window" in e for e in compare_parameters(docs)[1]))
+
+    def test_legacy_raw_schema_preserved_not_promoted(self):
+        evidence, failures = compare_parameters(self.sample())
+        self.assertEqual(failures, [])
+        item = next(x for x in evidence if x["id"] == "epicfight:adrenaline_fiend")
+        self.assertEqual(item["publisher_values"]["legacy_modifier_schema"], "RAW_ONLY_NOT_PROVEN_LOADED")
+
+    def test_legacy_modifier_drift_fails_closed(self):
+        docs = self.sample()
+        docs["vengeance"]["attribute_modifiers"][0]["operation"] = "add_value"
+        self.assertTrue(any("vengeance" in e for e in compare_parameters(docs)[1]))
+
+    def test_legacy_modifier_missing_fails_closed(self):
+        docs = self.sample()
+        docs["catharsis"]["attribute_modifiers"] = []
+        self.assertTrue(any("catharsis" in e for e in compare_parameters(docs)[1]))
 
     def test_hooks_are_in_nested_compiled_classes(self):
         entity = "yesman.epicfight.api.event.EpicFightEventHooks$Entity"
