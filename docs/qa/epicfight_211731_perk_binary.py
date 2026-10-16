@@ -8,7 +8,6 @@ import json
 import pathlib
 import subprocess
 import sys
-import tempfile
 import unittest
 import zipfile
 
@@ -56,8 +55,10 @@ CLASS_SYMBOLS = {
         ("TSUNAMI", "WRATHFUL_LIGHTING", "EVERLASTING_ALLEGIANCE"),
     "yesman.epicfight.registry.entries.EpicFightSkills":
         ("wrathful_lighting", "tsunami", "everlasting_allegiance"),
-    "yesman.epicfight.api.event.EpicFightEventHooks":
-        ("MODIFY_ATTACK_SPEED", "CONSUME_SKILL", "TAKE_DAMAGE_INCOME"),
+    "yesman.epicfight.api.event.EpicFightEventHooks$Entity":
+        ("MODIFY_ATTACK_SPEED", "TAKE_DAMAGE_INCOME"),
+    "yesman.epicfight.api.event.EpicFightEventHooks$Player":
+        ("CONSUME_SKILL",),
     "yesman.epicfight.skill.SkillContainer":
         ("requestCasting(", "CONSUME_SKILL"),
 }
