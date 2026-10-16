@@ -4,7 +4,7 @@ import com.mojang.logging.LogUtils;
 import io.redspace.ironsspellbooks.api.events.SpellDamageEvent;
 import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
-import io.redspace.ironsspellbooks.damage.SpellDamageSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -55,8 +55,73 @@ final class IronsEventPhaseRuntimeEvidence {
     private static int damageEvents;
     private static int sessionCounter;
     private static boolean budgetWarned;
+    private static boolean providerInterfaceWarned;
 
     private IronsEventPhaseRuntimeEvidence() {}
+
+    // Only for removable QA and only against the exact, source-verified
+    // 3.16.3 provider JAR. This is NOT a public API contract for gameplay.
+    // The compileOnly :api classifier intentionally omits PlayerRecasts and
+    // SpellDamageSource, so neither type is statically linked.
+    private static void providerUnavailable(String reason) {
+        if (!providerInterfaceWarned) {
+            providerInterfaceWarned = true;
+            LOG.warn("{} type=probe_unavailable reason={} state=FAIL_CLOSED",
+                    PREFIX, reason);
+        }
+    }
+
+    private static Boolean recastActiveSnapshot(MagicData data) {
+        try {
+            Object recasts = data.getClass().getMethod("getPlayerRecasts")
+                    .invoke(data);
+            Object result = recasts.getClass()
+                    .getMethod("hasRecastForSpell", String.class)
+                    .invoke(recasts, ELDRITCH);
+            if (result instanceof Boolean flag) {
+                return flag;
+            }
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError failure) {
+            providerUnavailable("PROVIDER_RECAST_METHOD_UNAVAILABLE");
+            return null;
+        }
+        providerUnavailable("PROVIDER_RECAST_RESULT_INVALID");
+        return null;
+    }
+
+    private static String readSourceSpellId(Object source) {
+        if (source == null || !source.getClass().getName().equals(
+                "io.redspace.ironsspellbooks.damage.SpellDamageSource")) {
+            return null;
+        }
+        try {
+            Object spell = source.getClass().getMethod("spell").invoke(source);
+            Object result = spell.getClass().getMethod("getSpellId").invoke(spell);
+            if (result instanceof String id) {
+                return id;
+            }
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError failure) {
+            providerUnavailable("PROVIDER_DAMAGE_SPELL_METHOD_UNAVAILABLE");
+            return null;
+        }
+        providerUnavailable("PROVIDER_DAMAGE_SPELL_RESULT_INVALID");
+        return null;
+    }
+
+    private static DamageSource damageSourceSnapshot(SpellDamageEvent event) {
+        try {
+            Object source = event.getClass().getMethod("getSpellDamageSource")
+                    .invoke(event);
+            if (source instanceof DamageSource damage) {
+                return damage;
+            }
+        } catch (ReflectiveOperationException | RuntimeException | LinkageError failure) {
+            providerUnavailable("PROVIDER_DAMAGE_SOURCE_METHOD_UNAVAILABLE");
+            return null;
+        }
+        providerUnavailable("PROVIDER_DAMAGE_SOURCE_RESULT_INVALID");
+        return null;
+    }
 
     static void install() {
         NeoForge.EVENT_BUS.addListener(IronsEventPhaseRuntimeEvidence::onCast);
@@ -108,7 +173,11 @@ final class IronsEventPhaseRuntimeEvidence {
         MagicData data = MagicData.getPlayerMagicData(actor);
         // This is read at the SpellOnCastEvent listener; the provider checked
         // recast earlier. Another listener may still mutate event level/cost.
-        boolean prior = data.getPlayerRecasts().hasRecastForSpell(ELDRITCH);
+        Boolean priorSnapshot = recastActiveSnapshot(data);
+        if (priorSnapshot == null) {
+            return;
+        }
+        boolean prior = priorSnapshot;
         long tick = level.getGameTime();
         CandidateSession previous = SESSIONS.get(actor.getUUID());
         String kind;
@@ -140,10 +209,11 @@ final class IronsEventPhaseRuntimeEvidence {
     }
 
     private static void onSpellDamage(SpellDamageEvent event) {
-        if (!DASH.equals(event.getSpellDamageSource().spell().getSpellId())) {
+        DamageSource damage = damageSourceSnapshot(event);
+        if (damage == null || !DASH.equals(readSourceSpellId(damage))) {
             return;
         }
-        Entity attacker = event.getSpellDamageSource().getEntity();
+        Entity attacker = damage.getEntity();
         LivingEntity target = event.getEntity();
         if (!(attacker instanceof ServerPlayer actor)
                 || !(target.level() instanceof ServerLevel level)
@@ -175,11 +245,10 @@ final class IronsEventPhaseRuntimeEvidence {
     }
 
     private static void onPostDamage(LivingDamageEvent.Post event) {
-        if (!(event.getSource() instanceof SpellDamageSource spell)
-                || !DASH.equals(spell.spell().getSpellId())) {
+        if (!DASH.equals(readSourceSpellId(event.getSource()))) {
             return;
         }
-        Entity attacker = spell.getEntity();
+        Entity attacker = event.getSource().getEntity();
         LivingEntity target = event.getEntity();
         if (!(attacker instanceof ServerPlayer actor)
                 || !(target.level() instanceof ServerLevel level)) {
@@ -213,10 +282,12 @@ final class IronsEventPhaseRuntimeEvidence {
             CastSample sample = casts.next();
             if (sample.level.getGameTime() >= sample.tick) {
                 MagicData data = MagicData.getPlayerMagicData(sample.actor);
-                LOG.info("{} type=cast_followup actor_slot={} session_slot={} tick={} recast_after={} mana_after_snapshot={}",
-                        PREFIX, sample.actorSlot, sample.sessionSlot, sample.tick,
-                        data.getPlayerRecasts().hasRecastForSpell(ELDRITCH),
-                        data.getMana());
+                Boolean active = recastActiveSnapshot(data);
+                if (active != null) {
+                    LOG.info("{} type=cast_followup actor_slot={} session_slot={} tick={} recast_after={} mana_after_snapshot={}",
+                            PREFIX, sample.actorSlot, sample.sessionSlot, sample.tick,
+                            active, data.getMana());
+                }
                 casts.remove();
             }
         }
@@ -244,6 +315,7 @@ final class IronsEventPhaseRuntimeEvidence {
         damageEvents = 0;
         sessionCounter = 0;
         budgetWarned = false;
+        providerInterfaceWarned = false;
     }
 
     private static final class CandidateSession {
