@@ -41,7 +41,7 @@ METHODS = {
     },
     "yesman.epicfight.skill.weaponinnate.BladeRushSkill": {
         "checkExecuteCondition": [
-            "LivingEntity.isAlive:", "LivingEntity.distanceToSqr:",
+            "LivingEntity.isAlive:", "distanceToSqr:",
         ],
     },
 }
@@ -154,6 +154,12 @@ class FlowTests(unittest.TestCase):
     def test_swapped_order_fails_closed(self):
         seq = method_instructions(SAMPLE, "executeOnServer")
         self.assertTrue(check_order(seq, ["WeaponInnateSkill.executeOnServer:", "playAnimationSynchronized:"])[1])
+
+    def test_owner_independent_distance_method_keeps_invocation_requirement(self):
+        ins = [(1, "invokevirtual", "a/LivingEntity.isAlive:()Z"),
+               (5, "invokevirtual", "a/Entity.distanceToSqr:(La/LivingEntity;)D")]
+        self.assertEqual(check_order(ins, ["LivingEntity.isAlive:", "distanceToSqr:"])[1], [])
+        self.assertTrue(check_order(ins, ["LivingEntity.isAlive:", "distanceTo:"])[1])
 
     def test_another_method_cannot_satisfy(self):
         seq = method_instructions(SAMPLE, "executeOnServer")
