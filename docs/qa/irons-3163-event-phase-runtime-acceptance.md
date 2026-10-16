@@ -38,6 +38,14 @@ A fixture examina **apenas eventos públicos**: `SpellOnCastEvent` de `irons_spe
 4. **Interrupções/concorrência:** teste isolado de timeout, relog, morte, troca de dimensão, ataque simultâneo ao mesmo alvo, spell cancelado, claims/PvP e outros mods. Quando não houver raiz observada ou houver múltiplas tentativas no mesmo tick/target, exigir **FAIL_CLOSED**.
 5. **Proveniência:** coletar log integral do servidor, Java, NeoForge instalado, lista/fingerprint dos mods pertinentes, hash do JAR auxiliar, condições da execução e captura de jogo; não assumir que o hash do JAR publicado é o do servidor instalado. O fingerprint registrado no log pelo auxiliar ainda precisa ser confrontado com o arquivo físico autorizado.
 
+## Regressão RED → GREEN — integridade dos followups e pós-dano
+
+A [Actions #38832582402](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38832582402) reproduziu **4 falsos positivos no parser** com 17 testes sintéticos: falta do `cast_followup` de um recast, ator diferente no followup, duplicidade do mesmo `attempt_slot` e ocorrência de `post_hits>0` quando `cancelled_event_snapshot=true`. **São problemas do QA, não prova de defeito do Iron's.** O validador agora exige followup para **cada** `type=cast` por `(actor_slot,session_slot,tick)`, rejeita colisões e marca a última contradição como ambígua, porque um listener posterior pode mudar o estado de cancelamento.
+
+A primeira correção revelou que o cenário sintético positivo ainda possuía um recast **sem followup** — [Actions #38832668186](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38832668186) falhou em **1 teste** corretamente por essa nova restrição. O fixture positivo foi corrigido para conter um followup por ativação, **sem relaxar a regra**.
+
+**[GREEN #38832750585](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38832750585) SUCCESS**, com **17/17 testes sintéticos PASS** e `catalogQaProbeJar jar` **BUILD SUCCESSFUL** no Java 21; verificação do companion e isolamento do JAR de produção **PASS**. Nem o teste sintético nem a compilação equivalem a `runGameTestServer`, cliente, dedicated server do pack, recepção de eventos reais ou procedência autenticada de log.
+
 ## Logs e classificação
 
 A tag `[BLACK_ARCANA_PHASE_QA]` é emitida pelo observador read-only:
