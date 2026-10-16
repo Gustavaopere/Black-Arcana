@@ -134,8 +134,15 @@ def inspect(d: dict[str, str]) -> dict:
     verify_marker_sequence(recast, [
         "remainingRecasts", "remainingTicks", "removeRecast",
     ], "PlayerRecasts.decrementRecastCount")
-    if not all(x in recast_tick for x in ("remainingTicks", "RecastResult.TIMEOUT")):
-        raise ValueError("Recast timer/timeout markers absent")
+    # javac emits PlayerRecasts.tick's filter/forEach lambdas as
+    # synthetic lambda$tick$... methods. The public tick() method contains
+    # their invokedynamic callsites, not the entire lambda body.
+    if not all(x in recast_tick for x in
+               ("getGameTime", "invokedynamic", "filter", "forEach")):
+        raise ValueError("Server-side recast tick lambda dispatcher absent")
+    if not all(x in d["player_recasts"] for x in
+               ("lambda$tick$", "remainingTicks", "RecastResult.TIMEOUT")):
+        raise ValueError("Compiled recast timer lambda markers absent")
     if not all(x in add for x in ("removeCooldown", "recastLookup", "syncToPlayer")):
         raise ValueError("Recast add/registration markers absent")
     if not all(x in serial for x in
@@ -154,7 +161,7 @@ def inspect(d: dict[str, str]) -> dict:
             "mana_branch_depends_on_preexisting_recast": "SOURCE_AND_BYTECODE_BRANCH_QA_PENDING",
             "recast_decrement_after_onCast": True,
             "recast_store_resets_remaining_ticks_on_next_charge": True,
-            "expiry_uses_timeout_result": True,
+            "expiry_uses_timeout_result": "CLASS_WIDE_SYNTHETIC_LAMBDA_MARKERS",
             "recast_lifecycle_fields_serialized": True,
             "first_cast_installs_recast_before_hitscan": True,
             "session_uuid_in_recast_instance": "NO_EXPLICIT_FIELD_IN_SOURCE",
