@@ -50,7 +50,7 @@ def typed_method(disassembly: str, name: str, return_type: str) -> str:
     lines = disassembly.splitlines()
     pattern = re.compile(
         r"^  public " + re.escape(return_type) + r" "
-        + re.escape(name) + r"\\([^)]*\\);$"
+        + re.escape(name) + r"\([^)]*\);$"
     )
     methods = [line[2:] for line in lines if pattern.match(line)]
     if len(methods) != 1:
