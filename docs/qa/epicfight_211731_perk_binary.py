@@ -186,6 +186,8 @@ def compare_parameters(documents: dict[str, object]) -> tuple[list[dict], list[s
                     if not isinstance(modifier, dict):
                         failures.append(f"{skill}: non-object legacy modifier")
                         continue
+                    if "id" in modifier:
+                        failures.append(f"{skill}: legacy raw modifier unexpectedly contains modern id")
                     exact.append(tuple(modifier.get(k) for k in
                                        ("attribute", "operation", "amount", "name", "uuid")))
                 if sorted(map(repr, exact)) != sorted(map(repr, legacy_expected)):
@@ -331,6 +333,11 @@ class ContractSelfTest(unittest.TestCase):
         docs = self.sample()
         docs["vengeance"]["attribute_modifiers"][0]["operation"] = "add_value"
         self.assertTrue(any("vengeance" in e for e in compare_parameters(docs)[1]))
+
+    def test_legacy_modifier_migration_requires_reaudit(self):
+        docs = self.sample()
+        docs["bonebreaker"]["attribute_modifiers"][0]["id"] = "epicfight:bonebreaker"
+        self.assertTrue(any("modern id" in e for e in compare_parameters(docs)[1]))
 
     def test_legacy_modifier_missing_fails_closed(self):
         docs = self.sample()
