@@ -1,0 +1,58 @@
+name: Epic Fight 21.17.3.1 exact skill parameters and symbols (Java 21)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/epicfight-211731-perk-binary.yml'
+      - 'docs/qa/epicfight_211731_perk_binary.py'
+      - 'wiki/modpack-catalog/providers/✅-epic-fight/skills/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact_skill_parameters:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 21 for javap
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Self-test fail-closed JSON comparator (synthetic only)
+        run: python3 docs/qa/epicfight_211731_perk_binary.py --self-test
+
+      - name: Download official publisher Maven proxy artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/catalog-epicfight-211731
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-all-errors --connect-timeout 20 --max-time 240 \
+            'https://cursemaven.com/curse/maven/epic-fight-mod-405076/8175609/epic-fight-mod-405076-8175609.jar' \
+            --output build/catalog-epicfight-211731/epicfight-exact.jar
+          echo 'fb199b7bbea2fc402da28ab586e73f47e32f8fc0  build/catalog-epicfight-211731/epicfight-exact.jar' | sha1sum --check
+          echo '8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526  build/catalog-epicfight-211731/epicfight-exact.jar' | sha256sum --check
+
+      - name: Inspect packaged nine skill parameters and compiled method symbols
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/epicfight_211731_perk_binary.py \
+            --jar build/catalog-epicfight-211731/epicfight-exact.jar \
+            --output build/catalog-epicfight-211731/skill-perk-evidence.json
+
+      - name: Upload bounded JSON evidence, never publisher JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: epicfight-211731-perk-binary-\${{ github.sha }}
+          path: build/catalog-epicfight-211731/skill-perk-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
