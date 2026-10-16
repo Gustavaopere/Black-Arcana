@@ -19,6 +19,10 @@ EXPECTED_FIELDS = {
     "impact_guard": {"penalizer": 0.6, "superior_penalizer": 0.2, "damage_reducer": 0.2},
     "swordmaster": {"speed_bonus": 30},
     "forbidden_strength": {},
+    "technician": {},
+    "berserker": {"speed_bonus": 0.5, "damage_bonus": 0.3},
+    "stamina_pillager": {"regen_rate": 30},
+    "death_harvest": {},
     "roll": {"consumption": 4.0},
     "step": {"consumption": 3.0},
     "wrathful_lighting": {"consumption": 50.0},
@@ -34,6 +38,19 @@ EXPECTED_ATTRIBUTE_MODIFIERS = {
         "minecraft:generic.attack_damage": ("add_multiplied_total", 0.05),
         "minecraft:generic.max_health": ("add_value", 4.0),
     },
+    "technician": {
+        "epicfight:stamina_regen": ("add_value", 0.4),
+    },
+    "berserker": {
+        "epicfight:stamina": ("add_value", 6.0),
+    },
+    "stamina_pillager": {
+        "minecraft:generic.attack_damage": ("add_multiplied_total", 0.1),
+        "epicfight:stamina": ("add_value", 3.0),
+    },
+    "death_harvest": {
+        "minecraft:generic.attack_damage": ("add_multiplied_total", 0.15),
+    },
 }
 # These are *symbol-presence* checks in compiled classfiles, not behavioral/ABI proof.
 CLASS_SYMBOLS = {
@@ -47,6 +64,16 @@ CLASS_SYMBOLS = {
         ("onInitiate(", "CONSUME_SKILL", "STAMINA", "HEALTH"),
     "yesman.epicfight.skill.dodge.DodgeSkill":
         ("gatherArguments(", "executeOnServer(", "isExecutableState("),
+    "yesman.epicfight.skill.passive.TechnicianSkill":
+        ("onInitiate(", "ON_DODGE"),
+    "yesman.epicfight.skill.passive.BerserkerSkill":
+        ("speedBonus", "damageBonus", "MODIFY_ATTACK_SPEED", "MODIFY_ATTACK_DAMAGE"),
+    "yesman.epicfight.skill.passive.StaminaPillagerSkill":
+        ("regenRate", "KILL_ENTITY"),
+    "yesman.epicfight.skill.passive.DeathHarvestSkill":
+        ("onInitiate(", "WEAPON_INNATE", "DeathHarvestOrb"),
+    "yesman.epicfight.world.entity.DeathHarvestOrb":
+        ("tick(", "setConsumptionSynchronize"),
     "yesman.epicfight.skill.weaponinnate.WrathfulLightingSkill":
         ("registerPropertiesToAnimation(",),
     "yesman.epicfight.skill.weaponinnate.EverlastingAllegiance":
@@ -186,7 +213,7 @@ class ContractSelfTest(unittest.TestCase):
 
     def test_synthetic_expected_values(self):
         actual, errors = compare_parameters(self.sample())
-        self.assertEqual(len(actual), 9)
+        self.assertEqual(len(actual), 13)
         self.assertEqual(errors, [])
 
     def test_missing_skill_fails_closed(self):
