@@ -214,6 +214,28 @@ class ContractSelfTest(unittest.TestCase):
         docs["parrying"]["parry_window"] = True
         self.assertTrue(any("parry_window" in e for e in compare_parameters(docs)[1]))
 
+    def test_hooks_are_in_nested_compiled_classes(self):
+        entity = "yesman.epicfight.api.event.EpicFightEventHooks$Entity"
+        player = "yesman.epicfight.api.event.EpicFightEventHooks$Player"
+        self.assertIn("MODIFY_ATTACK_SPEED", CLASS_SYMBOLS[entity])
+        self.assertIn("TAKE_DAMAGE_INCOME", CLASS_SYMBOLS[entity])
+        self.assertIn("CONSUME_SKILL", CLASS_SYMBOLS[player])
+        self.assertNotIn("yesman.epicfight.api.event.EpicFightEventHooks", CLASS_SYMBOLS)
+
+    def test_missing_nested_class_fails_closed(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "fixture.jar"
+            with zipfile.ZipFile(path, "w") as z:
+                for name, value in self.sample().items():
+                    z.writestr(PARAMETER_PREFIX + name + ".json", json.dumps(value))
+                for name in CLASS_SYMBOLS:
+                    if name.endswith("$Player"):
+                        continue
+                    z.writestr(name.replace(".", "/") + ".class", b"synthetic-class-placeholder")
+            _docs, errors = read_jar_parameters(path)
+            self.assertTrue(any("EpicFightEventHooks$Player.class" in e for e in errors))
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
