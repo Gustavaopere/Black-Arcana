@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/irons-3163-projectile-bytecode.yml'
       - 'docs/qa/irons_3163_projectile_bytecode.py'
+      - 'docs/qa/irons_3163_recast_dash_bytecode.py'
       - 'docs/qa/minecraft_1211_entity_tick_proof.py'
       - 'docs/qa/irons_3163_arrow_volley_tick_model_test.py'
       - 'docs/qa/irons_3163_arrow_volley_observation_check.py'
@@ -80,6 +81,17 @@ jobs:
             --jar build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar \
             --output build/irons-3163/evidence.json
 
+      - name: Self-test scoped Eldritch Blast and Burning Dash guard
+        run: python3 docs/qa/irons_3163_recast_dash_bytecode.py --self-test
+
+      - name: Inspect compiled Eldritch Blast and Burning Dash methods
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/irons_3163_recast_dash_bytecode.py \
+            --jar build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar \
+            --output build/irons-3163/recast-dash-evidence.json
+
       - name: Self-test official 1.21.1 entity tick provenance collector
         run: python3 docs/qa/minecraft_1211_entity_tick_proof.py --self-test
 
@@ -98,6 +110,7 @@ jobs:
           name: irons-3163-projectile-bytecode-${{ github.sha }}
           path: |
             build/irons-3163/evidence.json
+            build/irons-3163/recast-dash-evidence.json
             build/irons-3163/mojang-1211-entity-tick.json
           if-no-files-found: ignore
           retention-days: 14
