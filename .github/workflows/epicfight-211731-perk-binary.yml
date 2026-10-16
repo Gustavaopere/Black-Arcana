@@ -40,7 +40,7 @@ jobs:
           echo 'fb199b7bbea2fc402da28ab586e73f47e32f8fc0  build/catalog-epicfight-211731/epicfight-exact.jar' | sha1sum --check
           echo '8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526  build/catalog-epicfight-211731/epicfight-exact.jar' | sha256sum --check
 
-      - name: Inspect 27 packaged skill JSONs, 18 entity limits, legacy raw schemas, and compiled symbols
+      - name: Inspect all 42 packaged skill JSONs, 43 compiled registry IDs and 43 classfile symbols
         shell: bash
         run: |
           set -euo pipefail
