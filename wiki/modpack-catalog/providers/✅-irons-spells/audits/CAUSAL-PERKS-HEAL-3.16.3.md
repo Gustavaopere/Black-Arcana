@@ -1,8 +1,12 @@
 # Iron's 3.16.3 — Heal: intenção de cura versus vida recuperada
 
-**Identidade:** `irons_spellbooks:heal` · escola Holy · Iron's 3.16.3 / Minecraft 1.21.1 / NeoForge. ✅ magia entre as 110 identidades catalogadas; 🟡 este é apenas aprofundamento causal; ⚠️ sem classfile específico e observação física; ⛔ hook de multiplicação de cura ou Mastery por evento sem QA/contrato. **+0 objeto semântico.**
+**Identidade:** `irons_spellbooks:heal` · escola Holy · Iron's 3.16.3 / Minecraft 1.21.1 / NeoForge. ✅ magia entre as 110 identidades catalogadas; 🟡 este é apenas aprofundamento causal; ✅ classfile publicado inspecionado; ⚠️ observação física ausente; ⛔ hook de multiplicação de cura ou Mastery por evento sem QA/contrato. **+0 objeto semântico.**
 
 **Fonte versionada:** `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`. Prova de fonte orientada a interoperabilidade e clean-room, não implementação de spell para Black Arcana.
+
+## Prova binária publicada — Java 21
+
+[Actions Java 21 #38834814254](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38834814254) **SUCCESS** confirmou no classfile publicado a criação/publicação de `SpellHealEvent` **antes da invocação de `LivingEntity.heal`**. A inspeção estática registra explicitamente `net_hp_recovery=REQUIRES_LIVE_HP_SNAPSHOT`; não conclui que o evento equivale a HP útil recuperado e não autoriza Mastery por duas notificações. [Relatório binário](../../../../../docs/qa/irons-3163-healing-heartstop-blight-bytecode-evidence.md).
 
 ## Encadeamento causal
 
