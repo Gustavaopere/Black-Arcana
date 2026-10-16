@@ -52,7 +52,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: epicfight-211731-perk-binary-\${{ github.sha }}
+          name: epicfight-211731-perk-binary-${{ github.sha }}
           path: build/catalog-epicfight-211731/skill-perk-evidence.json
           if-no-files-found: ignore
           retention-days: 14
