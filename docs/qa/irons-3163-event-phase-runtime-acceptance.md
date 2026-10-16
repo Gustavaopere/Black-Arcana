@@ -22,6 +22,14 @@ A fixture examina **apenas eventos públicos**: `SpellOnCastEvent` de `irons_spe
 
 **Limites de segurança:** no máximo **8 atores**, **64 alvos**, **64 eventos de cast**, **192 tentativas**, **16 snapshots pendentes simultâneos**, **16 IDs locais de sessão** e intervalo máximo de **100 ticks** entre snapshots de ativação correlacionados. Ultrapassar qualquer limite emite `budget_exhausted`, que o parser considera **FAIL_CLOSED**. Os slots de ator/alvo/sessão são **identificadores locais efêmeros**, não UUIDs reais nem tokens públicos do Iron's. Não são salvos em NBT nem reaproveitados como chave de progressão.
 
+## ABI comprovada — API classifier versus classes internas do provider
+
+**[RED #38832044584](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38832044584)**: `compileCatalogQaProbeJava` **FAIL** quando a fixture tentou usar diretamente `io.redspace.ironsspellbooks.damage.SpellDamageSource` e `io.redspace.ironsspellbooks.capabilities.magic.PlayerRecasts`. O `compileOnly io.redspace:irons_spellbooks:3.16.3:api` fornece `SpellOnCastEvent`, `SpellDamageEvent` e `MagicData`, mas **não disponibiliza essas duas classes internas para compilação do Black Arcana**. A falha é de **limite de distribuição do provider**, não de uma execução de feitiço.
+
+**[GREEN #38832323200](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38832323200)**: **SUCCESS**, `./gradlew --no-daemon catalogQaProbeJar jar` **BUILD SUCCESSFUL** no Java 21; **13/13 testes sintéticos** do parser passaram, e `IronsEventPhaseRuntimeEvidence.class` foi localizada **somente no JAR auxiliar de QA**, ausente do JAR principal.
+
+**Contorno estritamente de observabilidade:** as únicas ligações *compiladas* com Iron's no auxiliar usam eventos `api.events.SpellOnCastEvent`/`SpellDamageEvent` e `api.magic.MagicData` existentes no classifier. Para aferir **o estado de recast** e **a identidade do SpellDamageSource** no JAR físico do provider, o auxiliar usa leitura reflexiva **exclusivamente do método público identificado na fonte fixada e no bytecode auditado** (`MagicData.getPlayerRecasts` → `PlayerRecasts.hasRecastForSpell(String)`, `SpellDamageEvent.getSpellDamageSource` → `SpellDamageSource.spell().getSpellId()`). Incompatibilidade, membro ausente ou exceção em tempo de execução gera `type=probe_unavailable state=FAIL_CLOSED`, e o parser rejeita o trace. Isso **não torna essas classes uma API pública suportada**, não libera adapter de gameplay/perks e não demonstra que o método reflexivo funcionará no modpack físico. Nunca transportar esse contorno para o JAR de produção.
+
 ## Cenários físicos mínimos — não executados até anexar evidência
 
 1. **Burning Dash — caso permitido:** cast legítimo contra alvo LivingEntity controlado, coletando `SpellDamageEvent`, `LivingDamageEvent.Post` e leitura de `invulnerableTime` até o fim do tick. Comparar tentativas e pós-danos, sem multiplicar XP por tick.
