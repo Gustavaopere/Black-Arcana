@@ -16,6 +16,8 @@ RECAST = (HEAD + "type=cast actor_slot=1 session_slot=1 "
           "original_level=1 event_level_snapshot=1")
 FOLLOWUP = (HEAD + "type=cast_followup actor_slot=1 session_slot=1 tick=100 "
             "recast_after=true mana_after_snapshot=80")
+RECAST_FOLLOWUP = (HEAD + "type=cast_followup actor_slot=1 session_slot=1 "
+                   "tick=105 recast_after=true mana_after_snapshot=80")
 DAMAGE = (HEAD + "type=damage_followup attempt_slot=1 actor_slot=1 "
           "target_slot=1 tick=101 cancelled_event_snapshot=true "
           "post_hits=0 ambiguous=false iframe_at_event=0 iframe_at_post_tick=20")
@@ -32,7 +34,7 @@ class SyntheticEventPhaseTests(unittest.TestCase):
         self.assertEqual(1, result["candidate_sessions"])
 
     def test_recast_not_a_second_root(self):
-        result = report(ROOT, RECAST, FOLLOWUP)
+        result = report(ROOT, RECAST, FOLLOWUP, RECAST_FOLLOWUP)
         self.assertEqual(1, result["candidate_sessions"])
         self.assertEqual(2, result["cast_events"])
         self.assertEqual([], result["issues"])
