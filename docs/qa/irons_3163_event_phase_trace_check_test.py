@@ -37,6 +37,24 @@ class SyntheticEventPhaseTests(unittest.TestCase):
         self.assertEqual(2, result["cast_events"])
         self.assertEqual([], result["issues"])
 
+    def test_missing_cast_followup_fails_closed(self):
+        trace = report(ROOT, RECAST, FOLLOWUP)
+        self.assertIn("MISSING_CAST_FOLLOWUP", trace["issues"])
+
+    def test_wrong_followup_actor_fails_closed(self):
+        bad = FOLLOWUP.replace("actor_slot=1", "actor_slot=2")
+        trace = report(ROOT, bad)
+        self.assertIn("FOLLOWUP_ACTOR_MISMATCH", trace["issues"])
+
+    def test_duplicate_damage_attempt_id_fails_closed(self):
+        trace = report(ROOT, FOLLOWUP, DAMAGE, DAMAGE)
+        self.assertIn("DUPLICATE_DAMAGE_ATTEMPT", trace["issues"])
+
+    def test_cancel_snapshot_with_post_hit_is_not_clean_evidence(self):
+        bad = DAMAGE.replace("post_hits=0", "post_hits=1")
+        trace = report(ROOT, FOLLOWUP, bad)
+        self.assertIn("CANCEL_SNAPSHOT_POST_HIT_CONFLICT", trace["issues"])
+
     def test_missing_root_fails_closed(self):
         result = report(RECAST, FOLLOWUP)
         self.assertIn("MISSING_ROOT_FOR_RECAST", result["issues"])
