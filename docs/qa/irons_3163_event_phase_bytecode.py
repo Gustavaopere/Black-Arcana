@@ -45,6 +45,19 @@ def exact_method(disassembly: str, declaration: str) -> str:
     return "\n".join(lines[start:end])
 
 
+def typed_method(disassembly: str, name: str, return_type: str) -> str:
+    """Choose a declared javap return type; ignore compiler-generated bridges."""
+    lines = disassembly.splitlines()
+    pattern = re.compile(
+        r"^  public " + re.escape(return_type) + r" "
+        + re.escape(name) + r"\\([^)]*\\);$"
+    )
+    methods = [line[2:] for line in lines if pattern.match(line)]
+    if len(methods) != 1:
+        raise ValueError(f"Missing or ambiguous {return_type} {name} declaration")
+    return exact_method(disassembly, methods[0])
+
+
 def instructions(block: str) -> list[tuple[int, str, str]]:
     ops = []
     for line in block.splitlines():
@@ -107,7 +120,7 @@ def inspect(d: dict[str, str]) -> dict:
                           "public void decrementRecastCount(java.lang.String);")
     recast_tick = exact_method(d["player_recasts"], "public void tick(int);")
     add = method_block(d["player_recasts"], "addRecast")
-    serial = method_block(d["recast_instance"], "serializeNBT")
+    serial = typed_method(d["recast_instance"], "serializeNBT", "net.minecraft.nbt.CompoundTag")
     burning = method_block(d["burning_effect"], "applyEffectTick")
     eldritch = method_block(d["eldritch"], "onCast")
     damage = method_block(d["damage_sources"], "applyDamage")
@@ -207,6 +220,22 @@ def self_test() -> None:
         raise AssertionError("Absent pop was accepted")
     text = "  public void decrementRecastCount(java.lang.String);\n    Code:\n       0: return\n"
     assert "return" in exact_method(text, "public void decrementRecastCount(java.lang.String);")
+    bridge = (
+        "  public net.minecraft.nbt.CompoundTag serializeNBT(net.minecraft.core.HolderLookup$Provider);\\n"
+        "    Code:\\n       0: areturn\\n"
+        "  public net.minecraft.nbt.Tag serializeNBT(net.minecraft.core.HolderLookup$Provider);\\n"
+        "    Code:\\n       0: areturn\\n"
+    )
+    assert "CompoundTag serializeNBT" in typed_method(
+        bridge, "serializeNBT", "net.minecraft.nbt.CompoundTag"
+    )
+    try:
+        typed_method(bridge, "serializeNBT", "net.minecraft.nbt.StringTag")
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Wrong return type should fail closed")
+
 
 
 if __name__ == "__main__":
