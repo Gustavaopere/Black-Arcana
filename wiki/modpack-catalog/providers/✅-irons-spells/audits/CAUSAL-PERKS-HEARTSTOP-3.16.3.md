@@ -1,8 +1,12 @@
 # Iron's 3.16.3 — Heartstop: dano diferido, mitigação pré-hit e remoção letal
 
-**Identidade:** `irons_spellbooks:heartstop` · escola Blood · Minecraft 1.21.1 / NeoForge · Iron's 3.16.3. **Status:** ✅ identidade já inventariada entre 110; 🟡 auditoria causal source-pinned; ⚠️ binário específico, modpack físico e lifecycle não testados; ⛔ perk de cancelamento/dispel, dano adicional ou XP sem contrato seguro. **+0 objeto semântico.**
+**Identidade:** `irons_spellbooks:heartstop` · escola Blood · Minecraft 1.21.1 / NeoForge · Iron's 3.16.3. **Status:** ✅ identidade já inventariada entre 110; 🟡 auditoria causal source-pinned; ✅ classe compilada do JAR publicado inspecionada; ⚠️ modpack físico e lifecycle não testados; ⛔ perk de cancelamento/dispel, dano adicional ou XP sem contrato seguro. **+0 objeto semântico.**
 
 **Fonte:** `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252` (imutável); referências de interoperabilidade, não reprodução de implementação. O spell é de Iron's; Black Arcana conserva apenas o próprio runtime e RPG Skill Tree permanece sibling de progressão.
+
+## Prova binária publicada — Java 21
+
+O [workflow Java 21 #38834814254](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38834814254) terminou **SUCCESS**. No JAR publicado Iron's 3.16.3, a auditoria de **9 classfiles** confirmou `HeartstopSpell.onCast` aplicando `HEARTSTOP`; `ServerPlayerEvents.onBeforeDamageTaken` com `getOriginalDamage`, `addHeartstopDamage` e `setNewDamage`; `SyncedSpellData.addHeartstopDamage`; e `HeartstopEffect.onEffectRemoved` com **`hurt`, `kill` e reset de acumulador**. O binário **não** prova qual ramo de remoção será tomado em runtime, nem mortalidade efetiva com `tickCount<=60`, NBT/relog ou proteção do mundo. Ver [prova binária](../../../../../docs/qa/irons-3163-healing-heartstop-blight-bytecode-evidence.md).
 
 ## Encadeamento causal
 
