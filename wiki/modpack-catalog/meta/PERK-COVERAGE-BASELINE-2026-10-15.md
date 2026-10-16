@@ -1,5 +1,12 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight — segundo gate binário estático exato para 13 skills (16/10/2026; substitui o gate 9/43)
+
+- **Prova Java 21 nova:** [run #38979547368](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38979547368) terminou **SUCCESS** no publisher CurseForge `405076/8175609`, JAR `21.17.3.1`, SHA-1 físico `fb199b7bbea2fc402da28ab586e73f47e32f8fc0` e SHA-256 `8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526`, ambos verificados. **13/13 arquivos JSON empacotados, 17/17 classes analisadas por símbolos javap, 8/8 testes sintéticos, 0 desvios**, resultado `PASS_STATIC_LIMITED`. [Dossiê exato atualizado](../providers/✅-epic-fight/EXACT-BINARY-PERK-PARAMETERS-21.17.3.1.md). Sem JAR proprietário versionado.
+- **Barras distintas:** core de Epic Fight ✅ 43/43 identidades (3 sobrenaturais já contadas + 40 excluídas da métrica de magia); catalogação aprofundada para perks 🟡 **13/43 (30,23%)** por fonte 21.17.3; extração exata do **JAR 21.17.3.1 dos 13 JSONs e 17 classes de símbolos ✅ 13/43 (30,23%)**. **30/43** restantes em profundidade. A revisão de fonte 21.17.3 **não é globalmente equivalente** ao artefato 21.17.3.1; causalidade instrucional e hook setters continuam ⚠️/⛔, sem adapter/perk/QA de jogo.
+- **Quatro passivas recém-promovidas somente no eixo ESTÁTICO:** `technician` (stamina regen +0.4); `berserker` (speed_bonus0.5, damage_bonus0.3, stamina +6); `stamina_pillager` (regen_rate30, damage +0.1, stamina +3); `death_harvest` (damage +0.15). Fórmulas de dodge refund, health scaling, kill refill e orb/gauge são `SOURCE_ADJACENT` ainda sem confirmação de ordem/semântica da execução no classfile.
+- **Global mágico inalterado:** mínimo **1.856 identificados / 1.854 estritos**, universo —%, +0 magias novas. Stage 06.05 🟡, Stage 09 pendente; PR #825 permanece draft, sem merge. O próximo gate é controle de fluxo efetivo via bytecode/param override e teste com Epic Fight carregado em NeoForge/modpack.
+
 ## Epic Fight 21.17.3.1 — static publisher proof + 4 passivas (16/10/2026; atual)
 
 - **Barra global de magias/rituais:** mínimo **1.856 objetos semânticos identificados / 1.854 estritos**, denominador global ainda indeterminado (**—%**). Este checkpoint adicionou **0 raízes mágicas**. O core Epic Fight permanece **✅ 43/43 skills classificadas por identidade no artefato exato**, sendo **3 ações sobrenaturais COUNTED_EXACT** e 40 **EXCLUDED da métrica mágica, não do estudo de perks**.
