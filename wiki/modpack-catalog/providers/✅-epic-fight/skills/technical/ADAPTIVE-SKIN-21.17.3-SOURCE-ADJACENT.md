@@ -1,0 +1,15 @@
+# Adaptive Skin — tags de dano, adaptação por stack e timeout
+
+**ID:** `epicfight:adaptive_skin` · defensive passive, `EXCLUDED` · 🟡 pesquisa de interoperabilidade.
+
+**Proveniência:** `epicfight` / JAR instalado `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar`, SHA-1 `fb199b7bbea2fc402da28ab586e73f47e32f8fc0`, identidade incluída nos **43 IDs core já classificados**. Métodos/fórmulas abaixo = fonte adjacente oficial `Antikythera-Studios/epicfight@a78aa24b72e90a9d09f5fd61925e4369d117abaf` (**21.17.3**, não equivalência 21.17.3.1). Dados empacotados 21.17.3.1 são gate separado. `EXCLUDED` da métrica de novos feitiços; admissível à documentação de perks do RPG Skill Tree. Nenhum hook/modifier externo foi implementado.
+
+## Evidence source-adjacent
+- [adaptive_skin.json](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/resources/data/epicfight/skill_parameters/adaptive_skin.json) declara `damage_resistance=0.15`, `max_resistance_stack=3`. Seu `attribute_modifiers` de `max_health addition +6` usa **campos legados `name`/`uuid`**: presença no JSON **não prova parsing/aplicação**.
+- [AdaptiveSkinSkill.java L52–65](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/passive/AdaptiveSkinSkill.java#L52-L65) define tags aceitas: `epicfight:is_melee`, vanilla `is_projectile`, `is_fire`, `is_explosion`, Epic Fight `is_magic`. Não equiparar `is_magic` a todas escolas ou DamageTypes de Iron's/Ars/Black Arcana. Seleção baseada na **tag efetiva** de `DamageSource`.
+- [AdaptiveSkinSkill.java L77–139](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/passive/AdaptiveSkinSkill.java#L77-L139): em `TAKE_DAMAGE_PRE`, se a fonte corresponde à tag atualmente resistida, anexa `ValueModifier.multiplier(1-resistance×stacks)` e incrementa stack até 3; ao trocar por tag diferente, com stack `<=1` muda resistência para nova tag com stack1, com stack superior apenas reduz uma stack. O evento acontece **antes** do dano final; não creditar Mastery por callback/FX.
+- [AdaptiveSkinSkill.java L170–182](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/passive/AdaptiveSkinSkill.java#L170-L182): após mais de **300 ticks** desde `TICK_RECORD`, apaga tag e stacks. Observação de UI em 200 ticks é aviso, não o timeout real de clean.
+- Interpretação aritmética apenas da revisão de fonte: stack3 ⇒ multiplicador `1-(0.15×3)=0.55` na fase de modifier, **não redução global garantida de 45% de dano final**; composição de outros modifiers e cancelamento permanecem provider-native.
+
+## Perks
+⚠️ Tipos/tags/stack/timeout só podem ser alterados após ABI do JAR alvo e contrato seguro. ⛔ Sem reescrever `DamageSource` para forçar resistência; ⛔ sem XP por brilho, stacking, tentativa cancelada, dano absorvido sem liquidação. Exigir regressão para DoT/fire/explosion, magic tags, dano indireto, ataque que atravessa armor, ordem de event priorities e substituições de datapacks.
