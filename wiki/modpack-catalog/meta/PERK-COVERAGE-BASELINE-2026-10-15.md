@@ -1,5 +1,12 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight — novo gate compilado de ordem de invocações (16/10/2026; após 43/43 registry)
+
+- **Atributo mágico global:** 1.856 identificados mínimos / 1.854 estritos, denominador aberto. **+0 magias**. Core Epic Fight continua ✅ 43/43 IDs classificados, 42/42 JSONs físicos e 28 dossiês individuais/agrupados; sentinel `epicfight:empty` não é nova ação.
+- **Nova evidência Java21 do JAR exato:** [run #38983851582](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38983851582) **SUCCESS**. Gate original: 42/42 JSONs, 43/43 classfiles com símbolos, 21/21 self-tests. Gate novo: **5/5 métodos** na ordem textual de chamadas dentro do bytecode `javap -p -c`, **8/8 testes sintéticos**, 0 desvios, SHA-1/SHA-256 iguais à modlist. Classes/rotinas: `Skill.loadDatapackParameters`, `PhantomAscentSkill.loadDatapackParameters`, `EviscerateSkill.executeOnServer`, `RushingTempoSkill.executeOnServer`, `BladeRushSkill.checkExecuteCondition`. [Prova e limites](../providers/✅-epic-fight/EXACT-BYTECODE-INVOCATION-ORDER-21.17.3.1.md). **Ordem de referência não prova ramo percorrido, codec aceitar JSON legacy, evento settled ou runtime de perk.**
+- **Falha de CI diagnosticada em outra dimensão:** [Black Arcana CI #38983180663](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38983180663) falhou em `Diff sanity` por trailing whitespace em dois dossiês Epic Fight. Ambas linhas foram corrigidas sem relaxar o gate; continuar acompanhando novo resultado. O GameTest Rift Blades UUID index previamente falho continua sem prova de resolução e não foi alterado aqui.
+- **Status de integração:** 🟡 investigação de contrato de perks em andamento; ⚠️ cinco `attribute_modifiers` legados ainda RAW_ONLY_NOT_PROVEN_LOADED; ⛔ nenhuma perk implementada/homologada. Stage 06.05 🟡, Stage 09 aceitação física pendente, sem merge.
+
 ## Epic Fight — checkpoint final do core: 43/43 IDs, 42/42 JSONs físicos (16/10/2026; supersede a tranche 27/43)
 
 - **Catálogo global:** piso **1.856 objetos semânticos** identificados (**1.854 estritos**), denominador final —%. **Nenhuma magia/ritual novo (+0)**: Epic Fight tem três trident-innates sobrenaturais já contadas; demais IDs marciais/mobilidade/estados, inclusive sentinel `empty`, não são novos spells.
