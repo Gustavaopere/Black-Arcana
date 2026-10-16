@@ -1,6 +1,6 @@
 # Epic Fight 21.17.3.1 — exact binary packaged perk parameters (16/10/2026)
 
-**Proof class:** `COUNTED_EXACT_STATIC_PARAMETER` for **13 pre-existing** researched core skill IDs, **not** behavioral or adapter acceptance.
+**Evidence level (descriptive, not a new registry enum):** exact publisher/physical packaged JSON + compiled symbol presence for **13 pre-existing** core skill IDs. This is **not** behavioral equivalence, a perk hook contract, or adapter/runtime acceptance. Registry disposition remains exactly as established by the separate 43-ID audit.
 
 ## Exact artifact and reproducible run
 
