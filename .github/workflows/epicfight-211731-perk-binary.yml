@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/epicfight-211731-perk-binary.yml'
       - 'docs/qa/epicfight_211731_perk_binary.py'
+      - 'docs/qa/epicfight_211731_invocation_order.py'
       - 'wiki/modpack-catalog/providers/✅-epic-fight/skills/**'
   workflow_dispatch:
 
@@ -48,11 +49,24 @@ jobs:
             --jar build/catalog-epicfight-211731/epicfight-exact.jar \
             --output build/catalog-epicfight-211731/skill-perk-evidence.json
 
+      - name: Self-test method-bounded javap invocation gate
+        run: python3 docs/qa/epicfight_211731_invocation_order.py --self-test
+
+      - name: Probe bounded method invocation ordering in exact JAR
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/epicfight_211731_invocation_order.py \
+            --jar build/catalog-epicfight-211731/epicfight-exact.jar \
+            --output build/catalog-epicfight-211731/invocation-order-evidence.json
+
       - name: Upload bounded JSON evidence, never publisher JAR
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: epicfight-211731-perk-binary-${{ github.sha }}
-          path: build/catalog-epicfight-211731/skill-perk-evidence.json
+          path: |
+            build/catalog-epicfight-211731/skill-perk-evidence.json
+            build/catalog-epicfight-211731/invocation-order-evidence.json
           if-no-files-found: ignore
           retention-days: 14
