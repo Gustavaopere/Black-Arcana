@@ -1,12 +1,16 @@
 # Epic Fight — 21.17.3.1
 
-## Perks — parâmetros de combate (checkpoint 16/10/2026)
+## Perks — parâmetros e causalidade (16/10/2026)
 
-A cobertura do **registro exato 21.17.3.1 permanece 43/43**, incluindo três habilidades sobrenaturais já contadas no universo de magia e 40 skills combat/mobility/passive excluídas apenas dessa métrica. Para implementação de perks, foi iniciada uma dimensão de documentação distinta: **9/43 IDs (20,93%)** receberam aprofundamento de código **source-adjacent** em seis documentos, sem declarar equivalência ao JAR `21.17.3.1` nem hooks aprovados. O upstream `Antikythera-Studios/epicfight@a78aa24b72e90a9d09f5fd61925e4369d117abaf` declara **21.17.3**.
+**Duas evidências com denominadores distintos:**
 
-[Checkpoint com as duas dimensões e próximos gates](skills/PERK-TECHNICAL-CHECKPOINT-2026-10-16.md) · [Parrying](skills/technical/PARRYING-21.17.3-SOURCE-ADJACENT.md) · [Impact Guard](skills/technical/IMPACT-GUARD-21.17.3-SOURCE-ADJACENT.md) · [Swordmaster](skills/technical/SWORDMASTER-21.17.3-SOURCE-ADJACENT.md) · [Forbidden Strength](skills/technical/FORBIDDEN-STRENGTH-21.17.3-SOURCE-ADJACENT.md) · [Roll/Step](skills/technical/DODGE-ROLL-STEP-21.17.3-SOURCE-ADJACENT.md) · [Trident Innates](skills/technical/TRIDENT-INNATES-21.17.3-SOURCE-ADJACENT.md).
+- **Core skill registry exato 21.17.3.1:** ✅ **43/43 identificadas/dispositionadas**; 3 ações sobrenaturais `COUNTED_EXACT` para magia, 40 core skills excluídas apenas da **métrica de magia**. O piso global permanece inalterado.
+- **Aprofundamento causal para perks:** 🟡 **13/43 = 30,23%** pesquisadas em **10 dossiês**, com revisão `21.17.3` **source-adjacent**; as 4 passivas novas (`technician`, `berserker`, `stamina_pillager`, `death_harvest`) permanecem nesse estado.
+- **Parâmetros binários exatos do JAR 21.17.3.1:** ✅ **9/43 = 20,93%** com os nove JSONs empacotados, hashes publisher/pack, símbolos verificados em **12 classes**, 6/6 testes sintéticos, 0 divergências. [Prova estática Java21](EXACT-BINARY-PERK-PARAMETERS-21.17.3.1.md) / [run #38979022783](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38979022783). **Não valida** execução de perks, hook seguro, mundo, override de datapacks, stamina efetiva ou Mastery.
 
-Nenhum novo objeto semântico mágico, perk implementada, adapter ou aceite físico foi declarado nesta tranche; Epic Fight retém autoridade sobre stamina, combat state, weapon capabilities, animações e settlement.
+[Checkpoint de pesquisa e pendências](skills/PERK-TECHNICAL-CHECKPOINT-2026-10-16.md) · [Parrying](skills/technical/PARRYING-21.17.3-SOURCE-ADJACENT.md) · [Impact Guard](skills/technical/IMPACT-GUARD-21.17.3-SOURCE-ADJACENT.md) · [Swordmaster](skills/technical/SWORDMASTER-21.17.3-SOURCE-ADJACENT.md) · [Forbidden Strength](skills/technical/FORBIDDEN-STRENGTH-21.17.3-SOURCE-ADJACENT.md) · [Roll/Step](skills/technical/DODGE-ROLL-STEP-21.17.3-SOURCE-ADJACENT.md) · [Trident Innates](skills/technical/TRIDENT-INNATES-21.17.3-SOURCE-ADJACENT.md) · [Technician](skills/technical/TECHNICIAN-21.17.3-SOURCE-ADJACENT.md) · [Berserker](skills/technical/BERSERKER-21.17.3-SOURCE-ADJACENT.md) · [Stamina Pillager](skills/technical/STAMINA-PILLAGER-21.17.3-SOURCE-ADJACENT.md) · [Death Harvest](skills/technical/DEATH-HARVEST-21.17.3-SOURCE-ADJACENT.md).
+
+Death Harvest gera uma orb de **recuperação de gauge weapon innate** na fonte adjacente, e não um projétil ofensivo independente. Sem objeto mágico novo, perk/adaptor novo, teste de execução real ou avanço de Stage. Epic Fight conserva stamina, state, damage e animações; Black Arcana controla seu runtime mágico.
 
 Status: `✅ CATALOGED / EXACT PHYSICAL=PUBLISHER ARTIFACT / 43-SKILL REGISTRY FULLY DISPOSITIONED / 3 COUNTED_EXACT SUPERNATURAL TRIDENT INNATES / RUNTIME QA SEPARATE`
 
