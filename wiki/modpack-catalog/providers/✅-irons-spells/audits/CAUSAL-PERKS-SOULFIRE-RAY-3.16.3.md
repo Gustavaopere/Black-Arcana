@@ -1,6 +1,8 @@
+> **Retificação de registro — 16/10/2026:** na revisão upstream `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`, esta classe tem sua linha `registerSpell(new ...)` **comentada** no [`SpellRegistry.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/registry/SpellRegistry.java). O dossiê permanece válido como análise técnica de código existente, mas **não prova registro ativo nem cast utilizável**. Não somar esta ficha ao numerador 110 ativo; perks, Mastery e adapters da habilidade: **⛔ fail-closed** sem evidência de registro/configuração do JAR real. Declarações históricas de atividade mais abaixo ficam subordinadas a esta correção.
+
 # Soulfire Ray — Iron's 3.16.3: raycast de dano e redução de cura apenas descrita
 
-**ID:** `irons_spellbooks:soulfire_ray` · Fire LEGENDARY · níveis 1–5 · ✅ previamente inventariada entre 110 magias ativas; 🟡 dossiê causal individual novo; ⚠️ source-pinned sem classfile físico/GameTest. **+0 identidades**.
+**ID:** `irons_spellbooks:soulfire_ray` · Fire LEGENDARY · níveis 1–5 · ⚠️ implementação presente, mas **registro comentado** no `SpellRegistry.java` L151; dossiê source-only, **EXCLUDED da cobertura causal ativa 110**; ⚠️ source-pinned sem classfile físico/GameTest. **+0 identidades**.
 
 **Fonte:** `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`, alvo `irons_spellbooks-1.21.1-3.16.3.jar`. Modlist física NeoForge **21.1.250** versus build Black Arcana **21.1.248**. Iron's controla cast/raycast/dano e efeitos provider-native; RPG Skill Tree apenas progressão/Mastery/perks/gates sob contratos reais; Black Arcana mantém seu próprio runtime. Audit clean-room.
 
