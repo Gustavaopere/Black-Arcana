@@ -221,10 +221,10 @@ def self_test() -> None:
     text = "  public void decrementRecastCount(java.lang.String);\n    Code:\n       0: return\n"
     assert "return" in exact_method(text, "public void decrementRecastCount(java.lang.String);")
     bridge = (
-        "  public net.minecraft.nbt.CompoundTag serializeNBT(net.minecraft.core.HolderLookup$Provider);\\n"
-        "    Code:\\n       0: areturn\\n"
-        "  public net.minecraft.nbt.Tag serializeNBT(net.minecraft.core.HolderLookup$Provider);\\n"
-        "    Code:\\n       0: areturn\\n"
+        "  public net.minecraft.nbt.CompoundTag serializeNBT(net.minecraft.core.HolderLookup$Provider);\n"
+        "    Code:\n       0: areturn\n"
+        "  public net.minecraft.nbt.Tag serializeNBT(net.minecraft.core.HolderLookup$Provider);\n"
+        "    Code:\n       0: areturn\n"
     )
     assert "CompoundTag serializeNBT" in typed_method(
         bridge, "serializeNBT", "net.minecraft.nbt.CompoundTag"
