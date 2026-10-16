@@ -1,6 +1,8 @@
+> **Retificação de registro — 16/10/2026:** na revisão upstream `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`, esta classe tem sua linha `registerSpell(new ...)` **comentada** no [`SpellRegistry.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/registry/SpellRegistry.java). O dossiê permanece válido como análise técnica de código existente, mas **não prova registro ativo nem cast utilizável**. Não somar esta ficha ao numerador 110 ativo; perks, Mastery e adapters da habilidade: **⛔ fail-closed** sem evidência de registro/configuração do JAR real. Declarações históricas de atividade mais abaixo ficam subordinadas a esta correção.
+
 # Iron's 3.16.3 — Thunder Step: recast, orb e dano de trajeto antes do teleporte
 
-**Identidade:** `irons_spellbooks:thunder_step` · Lightning · 1–5 níveis · ✅ spell ID já inventariado nos 110 ativos; 🟡 novo dossiê causal; ⚠️ source-only, sem teste binário ou mundo físico; ⛔ modificar recast, distância, teleporte e trajetos sem contrato/world safety. **+0 nova magia**.
+**Identidade:** `irons_spellbooks:thunder_step` · Lightning · 1–5 níveis · ⚠️ implementação presente, mas **registro comentado** no `SpellRegistry.java` L191; dossiê source-only, **EXCLUDED da cobertura causal ativa 110**; ⚠️ source-only, sem teste binário ou mundo físico; ⛔ modificar recast, distância, teleporte e trajetos sem contrato/world safety. **+0 nova magia**.
 
 **Proveniência exata:** `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`, versão `irons_spellbooks-1.21.1-3.16.3.jar` indicada na modlist física NeoForge 21.1.250; o build Black Arcana usa NeoForge 21.1.248. Não pressupor identidade do bytecode instalado. Black Arcana mantém runtime próprio; Iron's possui spell, orb, recast, custo e teleporte; RPG Skill Tree somente perks/Mastery/gates por contratos reais. Clean-room.
 
