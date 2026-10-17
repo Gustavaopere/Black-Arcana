@@ -115,13 +115,24 @@ jobs:
                                    r" status=OBSERVED_LOADED_REGISTRY modifier_entries=(\d+)\b", log)
               assert len(matches) == 1, f"one registry observation required for {skill}: {matches}"
               evidence["epicfight:" + skill] = int(matches[0])
-          assert re.search(prefix + r" type=end status=OBSERVED observed=5 expected=5\b", log), "loaded registry evidence incomplete"
+          controls_expected = {"swordmaster": 2, "forbidden_strength": 2, "technician": 1}
+          controls_observed = {}
+          for skill, expected in controls_expected.items():
+              matches = re.findall(prefix + r" type=control id=epicfight:" + skill +
+                                   r" status=OBSERVED_LOADED_REGISTRY modifier_entries=(\d+) raw_json_entries=(\d+)\b", log)
+              assert len(matches) == 1, f"one modern control observation required for {skill}: {matches}"
+              actual, raw_count = map(int, matches[0])
+              assert raw_count == expected, f"raw modern JSON count drifted for {skill}: {raw_count}"
+              assert actual == expected, f"modern controls were not loaded for {skill}: {actual}/{expected}"
+              controls_observed["epicfight:" + skill] = actual
+          assert re.search(prefix + r" type=end status=OBSERVED observed=5 expected=5 controls=3 expected_controls=3\b", log), "loaded registry evidence incomplete"
           result = {
-              "scope": "EXACT_PROVIDER_LOADED_REGISTRY_NOT_EQUIPPED_ATTRIBUTES",
+              "scope": "EXACT_PROVIDER_LOADED_REGISTRY_WITH_MODERN_POSITIVE_CONTROLS_NOT_EQUIPPED_ATTRIBUTES",
               "provider": "epicfight", "version": "21.17.3.1",
               "neoforge": "21.1.250", "sha1": "fb199b7bbea2fc402da28ab586e73f47e32f8fc0",
               "status": "PROVIDER_LOADED_REGISTRY_OBSERVED",
               "modifier_entry_counts": evidence,
+              "modern_control_counts": controls_observed,
               "not_evidenced": ["player_attribute_instance", "skill_equip", "skill_unequip",
                                 "datapack_reload", "damage_or_cast", "mastery_hook"],
           }
