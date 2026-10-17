@@ -1,0 +1,54 @@
+# Identity2 2.2.4 — ingressos de transformação, restore de NBT e gate RPG
+
+**Checkpoint 17/10/2026 · PR #825 draft · foco: engenharia causal de progressão, não spell nova.** Há no sibling `neoforge-rpg-skilltree` um mixin opcional que declara veto no HEAD da assinatura `IdentityProgression.morph(ServerPlayer, ResourceLocation, CompoundTag):boolean`. Esse único alvo foi homologado no **JAR publisher** 2.2.4 por bytecode e assinatura; **aplicação no modpack real, policy em login e progresso após respec ainda NÃO foram testados**. Não alteramos o runtime do Identity2, do Black Arcana ou do RPG Skill Tree nesta rodada.
+
+## Identidade, provas e barras
+
+- Mod: `identity2`, CurseForge project `1238155`, file `8792744`, JAR publisher SHA-1 `84c222df0176d7ef83ba7cc361249fe062e29218`. **Publisher** confirmado por hash em GitHub Actions; **instalado** ainda não recebeu medição independente dos bytes e da igualdade do arquivo.
+- [Workflow #39077751784](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39077751784) no HEAD de código `8b919a2fa1b134faa482f9864c2da1450369993f`: **SUCCESS**, 8/8 autotestes do auditor original, **6/6 autotestes adicionais** do [auditor de restore](../../../../docs/qa/identity2_224_morph_restore_path.py), SHA-1 de publisher `OK`, `PASS_BOUNDED_SIGNATURES` e `PASS_DIRECT_RESTORE_BOUNDED`, sem desvios nos logs. [Artefato JSON #12117184517](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39077751784/artifacts/12117184517).
+- `PUBLISHER_BINARY_BOUNDED` significa **somente padrão de invocação dentro de métodos compilados**. `IdentityProgression.restoreMorphFromSavedData(ServerPlayer):void` chama `EntityAccessor.setCurrentIdentity` diretamente e, no mesmo método, **não invoca** `IdentityProgression.morph`. Isso NÃO estabelece se existe um filtro de política antes/depois, em caller, ou na camada de persistência, nem mostra bypass efetivo.
+- **Barra global: —%** (piso documental 1.857 objetos semânticos / 1.855 estritos, denominador global não fechado). **Ars Morph: ✅ 7/7 habilidades Java e 11/11 atribuições JSON documentadas**, glifo Morph 1/1; **Identity2: ⚠️ ingressos/restore parcamente homologados no runtime**, **⛔ 0 adapters per-caster/cooldown/Mastery homologados**, **+0 magias** nesta etapa.
+
+## Entradas provadas no código e alcance do mixin
+
+| Ingresso | Caminho observado em `xGabou/Identity2` (source 1.21.1 fixado) | Gate de `IdentityProgressionMixin` | Risco / aceite |
+|---|---|---|---|
+| C2S de seleção de forma | `ModPackets.handleMorphRequestPacket` valida canSwap, ID, morfabilidade, desbloqueio/variante se necessário; então chama `IdentityProgression.morph(player,id,nbt)`. | **Deveria passar** pela assinatura alvo, SE o mixin opcional estiver de fato aplicado | ⚠️ testar cliente real, ID modded, variantes, permissions e novo pacote após respec |
+| Comando de morph | `IdentityCommand.morph` valida caller/jogador e permissões do provider e chama o mesmo `IdentityProgression.morph(player,id,nbt)`. | **Deveria passar** pelo mesmo alvo mesmo para operador, se aplicado | ⚠️ verificar distinção entre operador/provider unlock e regra de RPG |
+| Morph automático por novo unlock/morte | `IdentityProgression.onLivingDeath` pode chamar `morph(player, targetId, variant)` quando `forceChangeAlways` ou `forceChangeNew` | **Deveria passar** pelo método-alvo | ⚠️ ativação no servidor, charge e permissões antes de efeitos |
+| Seleção diária aleatória | `IdentityProgression.tickDailyRandomMorph` termina em `morph(player,nextId,variant)` | **Deveria passar** pelo alvo | ⚠️ seleção de formas não permitidas e behavior sob veto |
+| Overload de dois parâmetros | `morph(player,id)` chama `morph(player,id,new CompoundTag())` | **Deveria passar** pela assinatura de três parâmetros | ⚠️ observar se todos os callers mantêm o forwarding compilado |
+| Restauração de NBT | `IdentityProgression.restoreMorphFromSavedData(player)` recupera `SELECTED_IDENTITY_TYPE_KEY` e variante e executa `EntityAccessor.setCurrentIdentity(type,variant)`, sem invocar `morph` no método | **NÃO coberto diretamente pela injeção HEAD em morph**; `PASS_DIRECT_RESTORE_BOUNDED` no JAR publisher | **⚠️ principal gap:** relog/respawn após respec ou remoção de permissão; verificar caller e reconciliação posterior, não afirmar bypass comprovado |
+| Limpeza da transformação | `IdentityProgression.clearMorph(player)` limpa NBT/estado diretamente; requisição C2S vazia e comando `clear` o chamam | Não atravessa o mixin em `morph`; **reversão normalmente deve permanecer permitida** | ✅ política desejada de segurança: não bloquear retorno ao jogador base |
+| Transformação para jogador base via `morph` | `MorphIdentityAccess.canMorph` reconhece `minecraft:player` como permitido incondicionalmente (além de rejeitar `player/id` nulos) | O mixin tende a permitir reversão nessa rota | ⚠️ verificar diferença entre `clearMorph` e `morph(minecraft:player)` com charges e lifecycle |
+
+**Localizadores fixos upstream:**
+- [`ModPackets.handleMorphRequestPacket`](https://github.com/xGabou/Identity2/blob/c634278ee637e8b94949a685072c94d67c9b3d4a/common/src/main/java/net/Gabou/identity2/ModPackets.java#L322-L370).
+- [`IdentityCommand.morph/clear`](https://github.com/xGabou/Identity2/blob/c634278ee637e8b94949a685072c94d67c9b3d4a/common/src/main/java/net/Gabou/identity2/commands/IdentityCommand.java#L272-L343).
+- [`IdentityProgression.morph / clearMorph`](https://github.com/xGabou/Identity2/blob/c634278ee637e8b94949a685072c94d67c9b3d4a/common/src/main/java/net/Gabou/identity2/identity/IdentityProgression.java#L274-L405).
+- [`IdentityProgression.restoreMorphFromSavedData`](https://github.com/xGabou/Identity2/blob/c634278ee637e8b94949a685072c94d67c9b3d4a/common/src/main/java/net/Gabou/identity2/identity/IdentityProgression.java#L407-L461).
+- [`tickDailyRandomMorph`](https://github.com/xGabou/Identity2/blob/c634278ee637e8b94949a685072c94d67c9b3d4a/common/src/main/java/net/Gabou/identity2/identity/IdentityProgression.java#L545-L605); [morph on kill/unlock](https://github.com/xGabou/Identity2/blob/c634278ee637e8b94949a685072c94d67c9b3d4a/common/src/main/java/net/Gabou/identity2/identity/IdentityProgression.java#L726-L755).
+- Código anterior à versão publisher também tem as duas rotas [morph](https://github.com/xGabou/Identity2/blob/847202234ae89a1596c6039b473566e34231c213/common/src/main/java/net/Gabou/identity2/identity/IdentityProgression.java#L256-L357) e [restore](https://github.com/xGabou/Identity2/blob/847202234ae89a1596c6039b473566e34231c213/common/src/main/java/net/Gabou/identity2/identity/IdentityProgression.java#L407-L449). Não inferir que todos esses corpos source são byte-idênticos ao JAR 2.2.4; a prova física deste checkpoint é limitada à presença do caminho direct restore.
+
+## Contrato observado no sibling RPG Skill Tree
+
+- [`IdentityProgressionMixin.java`](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/ed5b65b890767b406ce41127bcb793775263c7bd/src/main/java/dev/gustavopere/rpgskilltree/runtime/compat/identity2/mixin/IdentityProgressionMixin.java) declara `@Pseudo`, `@Mixin(targets = "net.Gabou.identity2.identity.IdentityProgression",remap=false)` e `@Inject(method="morph(...CompoundTag;)Z",at=HEAD,cancellable=true)`; rejeição manda mensagem e retorna `false`.
+- [`Identity2MixinPlugin.java`](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/ed5b65b890767b406ce41127bcb793775263c7bd/src/main/java/dev/gustavopere/rpgskilltree/bootstrap/Identity2MixinPlugin.java) checa recurso da classe antes de tentar aplicar a integração. Presença do recurso **não prova** sucesso de aplicação.
+- [`MorphIdentityAccess.java`](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/ed5b65b890767b406ce41127bcb793775263c7bd/src/main/java/dev/gustavopere/rpgskilltree/runtime/compat/identity2/MorphIdentityAccess.java) resolve `MorphFormDescriptor`, `MorphPermissionResolver` e `MorphAccessPolicy` pela progressão do servidor. ID `minecraft:player` retorna true; IDs sem EntityType registrado e formas sem permissão retornam false.
+- Documentação sibling [`docs/integrations/identity-ars-morph.md`](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/ed5b65b890767b406ce41127bcb793775263c7bd/docs/integrations/identity-ars-morph.md) ainda diz que o veto é uma questão em aberto, apesar do mixin presente em código. **Isso é divergência documental do sibling a reconciliar no próprio repositório**, sem editar código de outro projeto na PR Black Arcana.
+- **Limites de authority:** Identity2 mantém estado de forma, origem da mudança, NBT e cooldown; RPG Skill Tree mantém progressão e gate; Black Arcana mantém runtime de magias próprias. Nem a assinatura presente nem o caminho de restore autorizam interceptação de `BuiltinIdentityAbility.execute` ou atribuição de Mastery.
+
+## Protocolo de QA que bloqueia promoção
+
+| Caso físico de teste | Setup mínimo | Critério de aceitação |
+|---|---|---|
+| Login depois de respec | Dar permissão a uma forma, transformar, remover permissão via RPG, desconectar e entrar novamente | **Registrar** forma atual, atributos, cliente, método executado e política: uma forma bloqueada não pode continuar com benefícios indevidos; não marcar PASS sem observar |
+| Respawn/dimensão | Transformação permitida → revogar permissão → morte, respawn ou troca de dimensão | Revisar se `restoreMorphFromSavedData` ou outro ingress contorna veto; verificar atributos e estado persistido |
+| C2S negado | Player sem perk envia solicitação de forma bloqueada com e sem variante | O servidor nega forma sem consumos ou estados parciais; não tomar apenas toast/client HUD como evidência |
+| Comando / operador | Sem permissão RPG mas com permissões Identity2/operador | Definir política intencional de override por administração; observar ordem de gates em servidor |
+| Autoconversão por kill ou troca diária | Habilitar opções nativas de force-change e random-change | Provar passagem pelo veto, e não usar mensagens de chat como substituto de estado |
+| Retorno à base | Player bloqueado/revogado solicita `clearMorph` ou `minecraft:player` | Reversão segura deve funcionar; não bloquear saída de forma proibida |
+| Variantes e modificadores | Formas 1+ variantes, logout/relog, alterar cooldown e permissão durante efeito | Preservar variant NBT de Identity2 e remover benefícios não mais autorizados sem corrupção |
+| Evento de Mastery | Transformação permitida, recast de habilidade e feitiço Ars derivado | Somente eventos verdadeiros de resultado autorizados por contrato recebem XP; impedir double count |
+
+**Estado final do dossiê:** `✅ PUBLISHER_BINARY_BOUNDED_RESTORE` para o método compilado, `⚠️ INSTALLED_JAR_PARITY_PENDING` e `⚠️ REAL_PLAYER_GATE_QA_PENDING`, `⛔` redução de cooldown/mudança de alvo/Mastery ainda sem boundary aprovado. Stage 06.05 🟡, Stage 09 físico PENDING. PR #825 em draft: **sem merge por conclusão documental**.
