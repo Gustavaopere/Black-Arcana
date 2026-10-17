@@ -1,6 +1,20 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
-## Checkpoint vigente — Legendary Spellbooks 10/30 source-causal (17/10/2026)
+## Checkpoint vigente — Legendary Spellbooks 30/30 engenharia causal (17/10/2026)
+
+**Validação documental na PR [#825](https://github.com/Gustavaopere/Black-Arcana/pull/825):** Legendary Spellbooks **✅ 30/30 identidades binárias** (registro estático JAR 0.3.2 exato), **✅ 30/30 fichas individuais com engenharia causal no código source-pinned**. As 20 fichas que faltavam na tranche de 10/30 foram atualizadas, perfazendo 30/30, e conferidas por leitura GitHub; [índice com 30/30](../providers/✅-legendary-spellbooks/PERK-CAUSAL-ENGINEERING-MATRIX-0.3.2.md), [README](../providers/✅-legendary-spellbooks/README.md). Documentação não prova runtime, API de hooks, config efetiva, dano liquidado ou execução com Iron's 3.16.3/Legendary Monsters 2.2.2. **0 adapters, 0 novas raízes, QA físico ⚠️**.
+
+**Barras exigidas por escopo:**
+
+- **GLOBAL — —%**, porque o denominador final de todas as capacidades mágicas permanece indeterminado. **Piso reconciliado 1.857 objetos semânticos globais / 1.855 estritos**, evidenciado pelo [catálogo global](CATALOGO-GLOBAL-MAGIAS.md) e pela [prova Ars Zero 2.0.2](../providers/✅-ars-zero/EXACT-BINARY-GLYPHS-2.0.2.md), que acrescentou seis glifos singulares em 13/10/2026. O piso `1.856/1.854` repetido nos checkpoints posteriores abaixo é **inconsistente** com essas autoridades já existentes; preservar os trechos como histórico superado, não como contagem atual, e **não somar** uma identidade artificial nesta tranche.
+- **LEGENDARY SPELLBOOKS — 30/30 (100%)** tanto de identidades quanto de fichas source-causal; não indica 100% de QA, gameplay ou perks aprovadas.
+- **VAMPIRISM — 19/19 (100%)** identidade e fichas documentais no checkpoint anterior; **COMPANIONS! — 9/9 (100%)** identidade e fichas. Outros providers seguem suas barras específicas e gates próprios.
+
+**Achados técnicos incrementais, ainda source-only:** Cloud Ring usa `CLOUD_RAIL_SPELL` como DamageSource da nuvem; Annihilation Bomb cria `2×floor(bulletAmount/2)` projéteis secundários; Tornado usa helper target12 e raycast fallback42; Quad Tornado conjura 3..7 entidades; Overgrown Shockwave tem retorno de todo `onCast` se `findGround` falhar e até 144 instâncias se não falhar; Ambush Thorns calcula thorns durante `LivingDamageEvent.Pre` com 50% probabilidade; Flame Eater usa `RecastInstance` e `MultiTargetEntityCastData`; Cloud Rail e Ring criam nuvens com damageSource compartilhado. Não equiparar evento pré-dano, evento de cast ou spawn ao settlement confirmado.
+
+**Arquitetura e estágio:** Black Arcana conserva seu runtime, Iron's/Legendary Spellbooks/Legendary Monsters o seu, RPG Skill Tree progressão/Mastery/perks/gates por contrato demonstrado. **Stage 06.05 🟡, Stage 09 físico PENDING, PR #825 draft; merge somente após checks/aceitação pertinentes.**
+
+## Histórico — Legendary Spellbooks 10/30 source-causal (superado) (17/10/2026)
 
 **Dois eixos de barras (não confundir):** GLOBAL **—%**, mínimo já documentado **1.856 objetos semânticos globais / 1.854 estritos** e denominador global desconhecido; PROVIDER Legendary Spellbooks **30/30 (100%) identidades COUNTED_EXACT** no JAR `legendary_spellbooks-1.21.1+neo-0.3.2.jar` SHA-1 `bda5b1fbe50ad834a6a76ad36789743c1057ebf5`, mas apenas **10/30 (33,33%) fichas de engenharia causal aprofundadas nesta tranche**, 20 restantes. **+0 magias e +0 adapters**, Stage 06.05 🟡/Stage 09 PENDING.
 
