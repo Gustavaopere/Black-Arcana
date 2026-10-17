@@ -1,5 +1,14 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Delta vigente — Vampirism 1.10.13, 17/10/2026
+
+**Duas barras operacionais de catalogação (denominadores distintos):**
+
+- **GLOBAL (todos os mods): `—%`**, pois o denominador de objetos mágicos/engenharia aplicável não está fechado. Piso **1.856 semânticos globais / 1.854 estritos**, sem alterar ledger. Não é percentual.
+- **VAMPIRISM: `3/19 = 15,79%` de novas fichas de auditoria causal individual nesta tranche**, com **16/19 ainda sem ficha individual neste padrão**; **19/19 identidades de player actions (100%)** já provadas estaticamente no JAR físico 1.10.13. As demais ações continuam com descrições no catálogo agregado. Não é 3/19 perks funcionais.
+
+Novos cards da PR #825: [Dark Blood Projectile](../providers/✅-vampirism/actions/dark-blood-projectile.md), [Teleport](../providers/✅-vampirism/actions/teleport.md), [Freeze](../providers/✅-vampirism/actions/freeze.md), indexados em [ACTION-CATALOG.md](../providers/✅-vampirism/ACTION-CATALOG.md) e README. Fonte oficial fixa `TeamLapen/Vampirism@e1ed095713cef5e9eb151d0ee58908fa830d6bb7`; registro físico SHA-exato anteriormente comprovado, detalhes downstream **SOURCE_CAUSALITY** até teste binário/gameplay. Principais alertas: `motionFactor` é inertia e range da explosão é squared; config `vrTeleportCooldownMod` default 0.5 fora do mínimo 1; `Freeze.activate` retorna sucesso com lista não vazia ainda que ninguém receba effect. Não implementar Mastery por simples emissão de evento. **+0 novas magias, +0 perks/adapters**, PR ainda em draft, Stage06.05 🟡, Stage09 físico PENDING.
+
 ## Epic Fight — gate armado de player conectado, CI sem cliente não é prova de gameplay (17/10/2026)
 
 - **Novo preflight, scope limitado:** [Actions #39027854991](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39027854991) **SUCCESS**, artefato JSON **12099685054**. Companion QA isolado compilado em Java21/NeoForge físico 21.1.250 com JAR Epic Fight 21.17.3.1 SHA-1/SHA-256 verificados; observador de eventos reais `PlayerLoggedInEvent`, `PlayerRespawnEvent`, `PlayerLoggedOutEvent`, `ServerTickEvent.Post` armado, **sem clientes conectados**, rejeitou falso positivo e registrou `AWAIT_CONNECTED_PLAYER`, `connected_players=0`, `has_proven_join_patch=false`. [Dossiê e Stage09](../providers/✅-epic-fight/EXACT-CONNECTED-PLAYER-LIFECYCLE-OBSERVER-PREFLIGHT-21.17.3.1.md).
