@@ -44,25 +44,31 @@ public final class EpicFightCatalogQaMod {
             return;
         }
 
+        String phase = "resolve_registry_class";
         try {
             Class<?> registriesClass = Class.forName("yesman.epicfight.registry.EpicFightRegistries");
+            phase = "resolve_registry_field";
             Object registryObject = registriesClass.getField("SKILL").get(null);
             if (!(registryObject instanceof Registry<?> skills)) {
                 LOG.warn("{} type=end status=REGISTRY_TYPE_UNAVAILABLE", PREFIX);
                 return;
             }
 
+            phase = "resolve_skill_class";
             Class<?> skillClass = Class.forName("yesman.epicfight.skill.Skill");
+            phase = "resolve_skill_method";
             Method modifierEntries = skillClass.getMethod("getModfierEntry");
             int observed = 0;
 
             for (String skillId : LEGACY_SKILLS) {
                 String qualified = "epicfight:" + skillId;
+                phase = "lookup_skill_" + skillId;
                 Object skill = skills.get(ResourceLocation.fromNamespaceAndPath("epicfight", skillId));
                 if (skill == null || !skillClass.isInstance(skill)) {
                     LOG.warn("{} type=skill id={} status=REGISTRY_VALUE_UNAVAILABLE", PREFIX, qualified);
                     continue;
                 }
+                phase = "read_modifiers_" + skillId;
                 Object entries = modifierEntries.invoke(skill);
                 if (!(entries instanceof Collection<?> modifiers)) {
                     LOG.warn("{} type=skill id={} status=ATTRIBUTE_ENTRY_TYPE_UNAVAILABLE", PREFIX, qualified);
@@ -77,8 +83,10 @@ public final class EpicFightCatalogQaMod {
                 PREFIX, observed == LEGACY_SKILLS.size() ? "OBSERVED" : "INCOMPLETE",
                 observed, LEGACY_SKILLS.size());
         } catch (ReflectiveOperationException | LinkageError | RuntimeException failure) {
-            LOG.warn("{} type=end status=PROVIDER_ABI_UNAVAILABLE exception={}",
-                PREFIX, failure.getClass().getSimpleName());
+            Throwable cause = failure.getCause();
+            LOG.warn("{} type=end status=PROVIDER_ABI_UNAVAILABLE phase={} exception={} cause={}",
+                PREFIX, phase, failure.getClass().getName(),
+                cause == null ? "none" : cause.getClass().getName());
         }
     }
 }
