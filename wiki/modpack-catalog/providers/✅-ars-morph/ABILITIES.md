@@ -1,5 +1,11 @@
 # Ars Morph 2.0.0 — Identity2 ability adapters
 
+## Ampliação individual 17/10/2026 — sete habilidades
+
+Sete fichas `abilities/{weald-walker,wilden-hunter,wilden-stalker,starbuncle,whirlisprig,wixie,firenando}.md` foram criadas com observações por classe e links ao Java 2.0.0 e **11 atribuições JSON**. [Matriz causal das habilidades](ABILITY-PERK-CAUSAL-MATRIX-2.0.0.md). Os 7 adaptadores Java e 11 assignments **não representam onze spells novas**; ações derivadas de Ars continuam provider-native. `cooldown` e `use_duration` são valores JSON sem unidade física confirmada.
+
+O ramo agachado de Wixie pode indexar posições 10/11 da tabela benéfica que tem dez entradas; wrapper captura Throwable, portanto somente QA no pack pode determinar impacto. Whirlisprig faz mutação world Grow e passivo Jump Boost, Firenando é condicional, Weald Walker reutiliza o mesmo `predef` para cinco variantes. **Source-only, sem API de perks ou Mastery homologada**.
+
 Status: `7 JAVA ADAPTERS + 11 DATA ASSIGNMENTS CATALOGED / RUNTIME QA OPEN`
 
 ## Authority
