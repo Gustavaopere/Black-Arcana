@@ -1,5 +1,9 @@
 # Vampirism 1.10.13 — provider audit
 
+## Engenharia causal individual — 17/10/2026
+
+Três fichas **source-pinned** em [`actions/`](actions/): [Dark Blood Projectile](actions/dark-blood-projectile.md), [Teleport](actions/teleport.md), [Freeze](actions/freeze.md). **Inventário físico 19/19 (100%)** / **tranche de dossiês individuais técnicos 3/19 (15,79%)**, sem adicionar ações novas. Esses cards relacionam os eixos de damage, DamageType, AOE, target, projectile hitbox/inertia, range, duração/cooldown, config, fase server e eventos para que o RPG Skill Tree avalie perks **apenas** sobre hooks e limites comprovados. Fonte oficial `TeamLapen/Vampirism@e1ed095713cef5e9eb151d0ee58908fa830d6bb7`; paridade física detalhada, listeners de eventos e integração RPG ainda ⚠️/⛔, Stage 06.05 🟡 e Stage 09 físico pendente. Índice completo: [ACTION-CATALOG.md](ACTION-CATALOG.md).
+
 Status: `✅ CATALOGED / COUNTED_EXACT STATIC PLAYER ACTION IDS 19/19 / VAMPIRE SPELLS 0.0.9 SOURCE-CATALOGADO / RUNTIME QA + BLOODLINES/DEMAIS ADDON INTEROP PENDENTES`
 
 ## Prova binária física — 2026-10-14
