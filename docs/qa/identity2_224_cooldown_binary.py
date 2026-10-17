@@ -106,7 +106,9 @@ def audit(jar_path, expected_sha1):
         raise ValueError(f"SHA-1 mismatch: {sha1} != {expected_sha1.lower()}")
     with zipfile.ZipFile(jar_path) as archive:
         files = set(archive.namelist())
-        absent = [name for name, _ in CASES.values() if name not in files]\n        if MORPH_FILE not in files:\n            absent.append(MORPH_FILE)
+        absent = [name for name, _ in CASES.values() if name not in files]
+        if MORPH_FILE not in files:
+            absent.append(MORPH_FILE)
         if absent:
             raise ValueError(f"missing required classfiles: {absent}")
         metadata = [name for name in ("META-INF/neoforge.mods.toml", "META-INF/mods.toml")
@@ -138,7 +140,8 @@ def audit(jar_path, expected_sha1):
                    "target": "NeoForge 1.21.1 / reported 2.2.4",
                    "evidence_class": "BOUNDED_CLASSFILE_SIGNATURES_NOT_RUNTIME",
                    "limitations": [
-                       "SHA must be independently compared against the installed JAR.",\n                       "Morph descriptor proves only a target signature, not Mixin injection or progression gates.",
+                       "SHA must be independently compared against the installed JAR.",
+                       "Morph descriptor proves only a target signature, not Mixin injection or progression gates.",
                        "Ordered method opcodes do not prove branches are reached.",
                        "No accepted casts, client sync, Wixie exception, or Mastery observations.",
                        "No per-player cooldown modification API approved."]})
