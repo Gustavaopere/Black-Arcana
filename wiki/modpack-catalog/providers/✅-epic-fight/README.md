@@ -1,5 +1,11 @@
 # Epic Fight — 21.17.3.1
 
+## Gate causal de datapack original e restauração — 17/10/2026
+
+✅ [Actions #38999302329](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38999302329) **SUCCESS**: em servidor NeoForge 21.1.250 com Epic Fight físico 21.17.3.1, o datapack descartável original de QA substituiu `data/epicfight/skill_parameters/adaptive_skin.json` por um modifier moderno `id=black_arcana_epicfight_qa:adaptive_skin_control`, `operation=add_value`. Após reload, a coleção `Skill.attributes` de `adaptive_skin` mudou **0→1**; após remover o datapack e novo reload, voltou **1→0**. As outras sete skills controladas permaneceram **0/0/0/0 (legadas)** e **2/2/1 (modernas)**. [Prova de três fases e limites](EXACT-TEMPORARY-DATAPACK-OVERRIDE-RESTORE-21.17.3.1.md).
+
+⚠️ Prova causal **somente do mapa carregado da skill** no servidor isolado. Não prova `AttributeInstance` aplicado no jogador, equip/unequip ou modpack completo de 587 entradas. Nenhum datapack de override de QA foi incluído no produto; nenhum adapter de perks/Mastery foi implementado. O gate anterior de reload sem override permanece válido como evidência histórica separada.
+
 ## Gate de reload real no provider carregado — 17/10/2026
 
 ✅ [CI #38998283536](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38998283536), **SUCCESS**: no servidor dedicado Java21 / NeoForge **21.1.250**, com Epic Fight físico 21.17.3.1 carregado, o QA registrou o mapa `Skill.attributes` das **cinco skills legadas (0/0/0/0/0)** e dos **três controles modernos (2/2/1)**, acionou o **reload real de recursos do MinecraftServer** e reobservou as **oito identidades** após a conclusão do future, sem desvios. [Dossiê de reload e limites](EXACT-SERVER-RELOAD-ATTRIBUTE-CARDINALITY-21.17.3.1.md).
