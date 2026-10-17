@@ -1,5 +1,11 @@
 # Epic Fight 21.17.3.1 — compatibilidade de attribute modifiers legados (16/10/2026)
 
+## Evidência posterior: mod Epic Fight carregado — supera o limite RAW-only deste documento
+
+✅ [Run #38990309407](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38990309407) **SUCCESS**. Em servidor isolado NeoForge **21.1.250** com o JAR exato **21.17.3.1** carregado como mod, a coleção `Skill.attributes` das cinco skills legadas foi observada **vazia (0/0/0/0/0)**. **Controles positivos** modernos no mesmo registro (`swordmaster=2`, `forbidden_strength=2`, `technician=1`) eliminam a hipótese de loader genericamente inativo. [Relatório de registry carregado](EXACT-LOADED-REGISTRY-LEGACY-ATTRIBUTE-PROOF-21.17.3.1.md).
+
+O restante do documento preserva fielmente o **gate anterior de codec vanilla** e seu status RAW-only naquela data. O **estado atual** é `PROVIDER_LOADED_REGISTRY_EMPTY_ISOLATED_SERVER`, mas atributos de player, equip/unequip, reload, addons e modpack completo permanecem ⚠️ **não observados**.
+
 **Estado:** ⚠️ `RAW_ONLY_NOT_PROVEN_LOADED` nos cinco recursos do JAR físico. A existência dos campos serializados é comprovada; sua aplicação efetiva em entidade **não** foi comprovada. O teste abaixo procura **somente** a aceitação sintática pelo codec de Minecraft do classpath de testes, sem iniciar Epic Fight nem carregar datapack do modpack.
 
 ## Autoridade das fontes
