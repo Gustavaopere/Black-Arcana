@@ -1,5 +1,10 @@
 # Epic Fight — 21.17.3.1
 
+## Checkpoint mais recente — Epic Fight carregado no servidor exato (16/10/2026)
+
+- ✅ [Provider-loaded QA #38990309407](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38990309407) **SUCCESS**: JAR 21.17.3.1 SHA-fixado iniciado como mod em servidor NeoForge **21.1.250**. Cinco skills com JSON `name/uuid` legados apresentaram **0/0/0/0/0** entradas em `Skill.attributes`; três controles positivos de JSONs modernos (`swordmaster`, `forbidden_strength`, `technician`) apresentaram **2/2/1**, provando carregamento seletivo em vez de loader inteiramente vazio. [Dossiê provider-loaded e limites](EXACT-LOADED-REGISTRY-LEGACY-ATTRIBUTE-PROOF-21.17.3.1.md).
+- ⚠️ **Status atualizado:** `PROVIDER_LOADED_REGISTRY_EMPTY_ISOLATED_SERVER` para **cinco atributos de skill**, no servidor isolado testado; **não** `PLAYER_ATTRIBUTE_INSTANCE_VALIDATED`, não modpack completo, não equip/unequip, não datapack reload. Todas as observações anteriores `RAW_ONLY_NOT_PROVEN_LOADED` abaixo são **marcos históricos dos gates anteriores**, superados **somente** quanto à existência/contagem da coleção no provider carregado, e **não** quanto à aplicação em jogador. ⛔ Integração de perks/Mastery sem hook homologado.
+
 ## Perks — cobertura integral do registro core (16/10/2026)
 
 - **Identidades exatas do registro:** ✅ **43/43** classificadas no JAR `21.17.3.1`, três ações sobrenaturais `COUNTED_EXACT` já contadas no catálogo mágico e quarenta `EXCLUDED` do numerador mágico. **Nenhuma magia nova neste lote.**
