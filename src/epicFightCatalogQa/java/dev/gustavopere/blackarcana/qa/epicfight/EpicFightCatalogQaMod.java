@@ -117,16 +117,22 @@ public final class EpicFightCatalogQaMod {
             // Never synthesize attributes or mutate any Epic Fight skill here.
             if (observed == LEGACY_SKILLS.size() && controls == MODERN_CONTROLS.size()) {
                 var server = event.getServer();
-                LOG.info("{} type=reload_begin status=REQUESTED", PREFIX);
-                server.reloadResources(server.getPackRepository().getSelectedIds())
-                    .whenComplete((ignored, error) -> server.execute(() -> {
-                        if (error != null) {
-                            LOG.warn("{} type=reload_end status=RESOURCE_RELOAD_FAILED exception={}",
-                                PREFIX, error.getClass().getName());
-                        } else {
-                            emitAfterReload();
-                        }
-                    }));
+                if ("1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_OVERRIDE_CYCLE"))) {
+                    // Opt-in only in disposable CI; normal isolated registry QA
+                    // never creates or mutates datapack resources.
+                    EpicFightOverrideCycleQa.start(server);
+                } else {
+                    LOG.info("{} type=reload_begin status=REQUESTED", PREFIX);
+                    server.reloadResources(server.getPackRepository().getSelectedIds())
+                        .whenComplete((ignored, error) -> server.execute(() -> {
+                            if (error != null) {
+                                LOG.warn("{} type=reload_end status=RESOURCE_RELOAD_FAILED exception={}",
+                                    PREFIX, error.getClass().getName());
+                            } else {
+                                emitAfterReload();
+                            }
+                        }));
+                }
             } else {
                 LOG.warn("{} type=reload_end status=INITIAL_REGISTRY_INCOMPLETE", PREFIX);
             }
