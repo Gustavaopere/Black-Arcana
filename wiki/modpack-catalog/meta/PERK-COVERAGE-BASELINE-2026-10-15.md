@@ -1,5 +1,11 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight — JAR de publisher físico, codec sob NeoForge 21.1.250 (16/10/2026)
+
+- **Nova prova completa de dados do publisher:** [Actions #38987519161](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38987519161) **SUCCESS**; Java 21 e NeoForge físico **21.1.250** (override local do Gradle sem alterar a autoridade `main` NeoForge 21.1.248). JAR `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar` obtido do Maven proxy oficial CF `405076/8175609`, hashes SHA-1/SHA-256 confirmados. **5/5 JSONs legados extraídos diretamente do JAR**, **8/8 modifiers** expostos ao `AttributeModifier.MAP_CODEC` / `NbtOps` vanilla, negativos e controles modernos positivos, **2/2 JUnit sem skip**; registro JUnit XML apenas, sem redistribuição do JAR. [Prova e limites](../providers/✅-epic-fight/EXACT-PUBLISHER-JSON-PACK-NEOFORGE-CODEC-21.17.3.1.md).
+- **Natureza exata da prova:** JAR usado **como fonte ZIP de recursos**, não como mod com classe `Skill` carregada. `Skill.ATTRIBUTE_ENTRY_CODEC`, `AttributeInstance` aplicado, equip/unequip, reload de datapack e GameTest com provider ficaram **sem teste**. Portanto as cinco skills com `name/uuid/addition|multiply_total` continuam ⚠️ `RAW_ONLY_NOT_PROVEN_LOADED` quanto ao comportamento físico; **nenhum bônus de perk/Mastery homologado**, Stage 06.05 🟡 / Stage 09 físico pendente.
+- **Catálogo global não alterado:** Epic Fight core ✅ 43/43, 42/42 JSONs, 28 dossiês, três trident innates previamente contadas, +0 magia nova; piso global **1.856 semânticas mínimas / 1.854 estritas**, denominador aberto.
+
 ## Epic Fight — pacote estendido de codec e lifecycle (16/10/2026)
 
 - **Cobertura do core já encerrada:** ✅ **43/43 IDs** catalogados, **42/42 JSONs físicos**, **28 dossiês**. Numerador mágico não muda: **1.856 objetos semânticos mínimos / 1.854 estritos**, denominador global desconhecido, **+0** novos feitiços.
