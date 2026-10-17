@@ -84,9 +84,17 @@ public final class EpicFightCatalogQaMod {
                 observed, LEGACY_SKILLS.size());
         } catch (ReflectiveOperationException | LinkageError | RuntimeException failure) {
             Throwable cause = failure.getCause();
-            LOG.warn("{} type=end status=PROVIDER_ABI_UNAVAILABLE phase={} exception={} cause={}",
+            String detail = failure.getMessage() == null ? "none" :
+                failure.getMessage().replaceAll("[\\r\\n\\t]", " ");
+            if (detail.length() > 180) {
+                detail = detail.substring(0, 180);
+            }
+            StackTraceElement[] frames = failure.getStackTrace();
+            String location = frames.length == 0 ? "none" :
+                frames[0].getClassName() + "." + frames[0].getMethodName();
+            LOG.warn("{} type=end status=PROVIDER_ABI_UNAVAILABLE phase={} exception={} cause={} location={} detail={}",
                 PREFIX, phase, failure.getClass().getName(),
-                cause == null ? "none" : cause.getClass().getName());
+                cause == null ? "none" : cause.getClass().getName(), location, detail);
         }
     }
 }
