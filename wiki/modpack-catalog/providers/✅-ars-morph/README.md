@@ -1,5 +1,11 @@
 # Ars Morph 2.0.0
 
+## Gate de morph do RPG Skill Tree — fonte e publisher (17/10/2026)
+
+A `main` do sibling [RPG Skill Tree](https://github.com/Gustavaopere/neoforge-rpg-skilltree/tree/ed5b65b890767b406ce41127bcb793775263c7bd) já define um `IdentityProgressionMixin` opcional que, no início de `IdentityProgression.morph(ServerPlayer,ResourceLocation,CompoundTag)`, tenta impedir transformações não autorizadas por `MorphIdentityAccess.canMorph`. O publisher Identity2 `2.2.4` para NeoForge 1.21.1 passou à prova do descriptor exato dessa assinatura e dos quatro métodos de cooldown no [workflow Java21 #39075958128](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39075958128): **8/8 autotestes, SHA-1 publisher válido, `PASS_BOUNDED_SIGNATURES`, sem desvios**. [Dossiê causal completo](IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md).
+
+**⚠️ A existência do Mixin no código, a assinatura no JAR publicado e o resultado do workflow não comprovam sua aplicação efetiva ao runtime do pack**, nem autorizam redutores de cooldown. O próprio sibling mantém documentação antiga que não descreve a injeção atual, exigindo reconciliar o contrato pelo código e testes de jogador conectado. Sem novos spells/adapters Black Arcana.
+
 ## Auditoria do JAR publicado Identity2 — 17/10/2026
 
 **✅ Publisher SHA-1 conferido e quatro métodos inspecionados por bytecode delimitado:** [Java21 #39075533394](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39075533394), Identity2 `2.2.4` NeoForge `1.21.1`, CurseForge `1238155/8792744`, SHA-1 `84c222df0176d7ef83ba7cc361249fe062e29218`. Foram registrados `PASS_BOUNDED_SIGNATURES`, zero desvios e seis autotestes de fail-closed. [Dossiê com detalhes e limites](IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md). **⚠️ Paridade do JAR instalado, runtime de cooldown, emissão de efeitos/settlement e contratos de hooks permanecem pendentes.** A evidência anterior `SOURCE_BRACKET` está preservada como contexto histórico, não status atual único. 0 magias novas e 0 adapters homologados.
