@@ -1,5 +1,11 @@
 # Epic Fight — checkpoint técnico de perks (16/10/2026)
 
+## Gate de elegibilidade do PlayerPatch — 17/10/2026
+
+✅ [QA físico #39003200555](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39003200555) **SUCCESS**, com JSON artifact **12090146205**: servidor NeoForge 21.1.250 com Epic Fight exato 21.17.3.1 e FakePlayer do NeoForge. A attachment provider-native criou **ServerPlayerPatch** para o FakePlayer, com max-health base **20.0**, mas **EntityPatch.initialized=false**. Status **PATCH_ATTACHED_UNINITIALIZED_REQUIRES_JOIN_LIFECYCLE**. [Dossiê e próximo gate de jogador real](../EXACT-FAKE-PLAYER-PATCH-LIFECYCLE-ELIGIBILITY-21.17.3.1.md).
+
+⛔ Portanto não se chamou SkillContainer.setSkill, onInitiate ou onRemoved artificialmente. A prova anterior **0→8→0** em cinco skills diz respeito exclusivamente ao mapa de modifiers de Skill.attributes; AttributeInstance de jogador conectado, ciclo equip/unequip, persistência, sincronização e integração de perks permanecem **pendentes**, sem promoção de Stage.
+
 ## Cobertura causal ampliada: oito modifiers e cinco skills no provider carregado (17/10/2026)
 
 ✅ [CI de oito modificadores #39001996512](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39001996512) **SUCCESS**, com JSON de QA efetivamente publicado como artefato **12089431494**. Servidor Java21 / NeoForge físico **21.1.250**, JAR do Epic Fight **21.17.3.1** verificado por dois hashes. Cinco datapacks de substituição temporária escritos **somente no runner**, usando campos modernos e oito IDs QA distintos: `adaptive_skin 0→1→0`, `adrenaline_fiend 0→2→0`, `catharsis 0→2→0`, `bonebreaker 0→1→0`, `vengeance 0→2→0`; controles modernos `swordmaster/forbidden_strength/technician` estáveis **2/2/1** em três fases. Inclui `epicfight:stamina_regen`, aceito na coleção carregada. [Relatório e escopo](../EXACT-ALL-FIVE-LEGACY-MODIFIER-OVERRIDE-RESTORE-21.17.3.1.md).
