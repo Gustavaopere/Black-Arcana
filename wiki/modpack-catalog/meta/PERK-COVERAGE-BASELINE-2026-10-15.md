@@ -1,5 +1,11 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Checkpoint vigente — Ars Morph Identity2 7/7 (17/10/2026)
+
+**Duas barras:** GLOBAL **—%**, piso 1.857 semânticos / 1.855 estritos e denominador aberto; ARS MORPH **✅ 7/7 implementações de habilidades Identity2 source-causal com fichas individuais**, **11/11 assignment JSON localizados**, glyph próprio 1/1 pré-existente. Cobertura de documentação ≠ gameplay; adapters de perks/Mastery **⛔ 0 homologados**, runtime com Identity2 2.2.4/Ars Nouveau 5.13.1/Ars Elemental 0.7.10.1 **⚠️ pendente**.
+
+Materialização [matriz de habilidades](../providers/✅-ars-morph/ABILITY-PERK-CAUSAL-MATRIX-2.0.0.md) e [README](../providers/✅-ars-morph/README.md), sete páginas `abilities/`; source release-aligned `Alexthw46/Ars-Morph@4a5a2c706fe5a316fc9ad03ac37a3ac1d1dc3c58`, JAR instalado documentado SHA-1 `68ff47cc58c0ffe9570bb907f65c2910311ed45f`, mas sem prova de equivalência integral de bytecode. Regras causais: cinco Weald Walker JSONs usam uma classe, Firenando é condicional, passivos não são casts, Wixie tem seleção potencialmente fora dos limites (índices 10/11 no ramo da tabela 10), source risk sem reprodução física. `cooldown/use_duration` são inteiros sem unidade host-confirmada. **+0 magias/roots e +0 adapters**, Stage 06.05 🟡/Stage 09 físico pendente, PR #825 draft sem merge.
+
 ## Checkpoint vigente — Ars Creo 7/7 bridges (17/10/2026)
 
 **Barras:** GLOBAL **—%** (piso **1.857 semânticos / 1.855 estritos**, denominador global não conhecido); ARS CREO **7/7 (100%) sistemas de ponte Create↔Ars com dossiês causais source-pinned**, **0 glifos/spells próprios**, **+0 objetos** nesta rodada; **⚠️ QA provider/cliente/servidor** e **⛔ 0 adapters de perks homologados**.
