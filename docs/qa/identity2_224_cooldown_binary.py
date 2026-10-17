@@ -12,6 +12,11 @@ import sys
 import unittest
 import zipfile
 
+MORPH_CLASS = "net.Gabou.identity2.identity.IdentityProgression"
+MORPH_FILE = "net/Gabou/identity2/identity/IdentityProgression.class"
+MORPH_DESC = ("(Lnet/minecraft/server/level/ServerPlayer;"
+              "Lnet/minecraft/resources/ResourceLocation;"
+              "Lnet/minecraft/nbt/CompoundTag;)Z")
 DECL = re.compile(r"^\s{2}(?:public|protected|private)\s+.*?\b([\w$]+)\([^;]*\);\s*$")
 INST = re.compile(r"^\s*(\d+):\s+(\w+)\b.*?(?://\s*(?:InterfaceMethod|Method|Field)\s+(.+))?$")
 CASES = {
@@ -79,6 +84,19 @@ def evaluate(javap_by_class):
     return {"result": "PASS_BOUNDED_SIGNATURES" if not deviations else "FAIL_CLOSED",
             "checks": checks, "deviations": deviations}
 
+def morph_target_check(javap_signatures: str):
+    """Exact mixin entry signature, not proof that a Mixin applied."""
+    lines = javap_signatures.splitlines()
+    found = []
+    for i, line in enumerate(lines[:-1]):
+        if re.match(r"^\s{2}public static boolean morph\(", line):
+            descriptor = lines[i + 1].strip()
+            found.append(descriptor)
+    if "descriptor: " + MORPH_DESC not in found:
+        raise ValueError("IdentityProgression.morph three-argument static descriptor absent")
+    return {"class": MORPH_CLASS, "method": "morph", "descriptor": MORPH_DESC,
+            "status": "PASS_MIXIN_TARGET_SIGNATURE_ONLY"}
+
 def audit(jar_path, expected_sha1):
     if not re.fullmatch("[a-fA-F0-9]{40}", expected_sha1):
         raise ValueError("expected SHA-1 must be exactly 40 hex characters")
@@ -88,7 +106,7 @@ def audit(jar_path, expected_sha1):
         raise ValueError(f"SHA-1 mismatch: {sha1} != {expected_sha1.lower()}")
     with zipfile.ZipFile(jar_path) as archive:
         files = set(archive.namelist())
-        absent = [name for name, _ in CASES.values() if name not in files]
+        absent = [name for name, _ in CASES.values() if name not in files]\n        if MORPH_FILE not in files:\n            absent.append(MORPH_FILE)
         if absent:
             raise ValueError(f"missing required classfiles: {absent}")
         metadata = [name for name in ("META-INF/neoforge.mods.toml", "META-INF/mods.toml")
@@ -106,12 +124,21 @@ def audit(jar_path, expected_sha1):
             raise ValueError(f"{cls}: javap exit {p.returncode}: {p.stderr[:180]}")
         javap[cls] = p.stdout
     report = evaluate(javap)
+    target = subprocess.run(["javap", "-classpath", str(jar_path), "-p", "-s", MORPH_CLASS],
+                            capture_output=True, text=True, check=False, timeout=90)
+    if target.returncode:
+        raise ValueError(f"{MORPH_CLASS}: javap -s exit {target.returncode}")
+    try:
+        report["morph_target"] = morph_target_check(target.stdout)
+    except ValueError as exc:
+        report["deviations"].append(str(exc))
+        report["result"] = "FAIL_CLOSED"
     report.update({"sha1": sha1, "sha256": hashlib.sha256(raw).hexdigest(),
                    "jar_bytes": len(raw), "provider": "identity2",
                    "target": "NeoForge 1.21.1 / reported 2.2.4",
                    "evidence_class": "BOUNDED_CLASSFILE_SIGNATURES_NOT_RUNTIME",
                    "limitations": [
-                       "SHA must be independently compared against the installed JAR.",
+                       "SHA must be independently compared against the installed JAR.",\n                       "Morph descriptor proves only a target signature, not Mixin injection or progression gates.",
                        "Ordered method opcodes do not prove branches are reached.",
                        "No accepted casts, client sync, Wixie exception, or Mastery observations.",
                        "No per-player cooldown modification API approved."]})
@@ -169,6 +196,17 @@ class ContractTests(unittest.TestCase):
         altered["net.Gabou.identity2.mixin.EntityMixin"] = altered[
             "net.Gabou.identity2.mixin.EntityMixin"].replace("       3: isub", "       3: iadd")
         self.assertEqual(evaluate(altered)["result"], "FAIL_CLOSED")
+    def test_morph_signature_gate(self):
+        good = ("  public static boolean morph(a.ServerPlayer, a.ResourceLocation, a.CompoundTag);\n"
+                "    descriptor: " + MORPH_DESC + "\n")
+        self.assertEqual(morph_target_check(good)["status"], "PASS_MIXIN_TARGET_SIGNATURE_ONLY")
+
+    def test_wrong_morph_overload_rejected(self):
+        wrong = ("  public static boolean morph(a.ServerPlayer, a.ResourceLocation);\n"
+                 "    descriptor: (La/Player;La/Location;)Z\n")
+        with self.assertRaises(ValueError):
+            morph_target_check(wrong)
+
     def test_bad_checksum_rejected_before_access(self):
         with self.assertRaisesRegex(ValueError, "40 hex"):
             audit(pathlib.Path("missing.jar"), "not-a-hash")
