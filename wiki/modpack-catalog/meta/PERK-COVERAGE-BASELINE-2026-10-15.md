@@ -1,5 +1,15 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Checkpoint vigente — Ars Elemancy 7/7 famílias de equipamentos (17/10/2026)
+
+**Barra global — —%**: piso autoritativo documentado **1.857 semânticos / 1.855 estritos**, denominador total indeterminado e +0 objetos nesta rodada. **Barra Ars Elemancy:** 7/7 famílias de gear mapeadas com fichas source-causal (100% documental), 105/105 items registrados conforme fonte, **0 glifos e 0 perks próprias**, 0 adapters RPG homologados. [Matriz técnica](../providers/✅-ars-elemancy/PERK-CAUSAL-EQUIPMENT-MATRIX-1.18.3.md) e [README](../providers/✅-ars-elemancy/README.md).
+
+As sete fichas `equipment/{tempest,cinder,silt,mire,vapor,lava,elemancer}.md` separam benefício de Curios `getAttributeModifiers`, desconto e amplificação `SpellStats.Builder`, tick ambiental de foco, poder/defesa/fraqueza da armadura, slots do Ars e authority de mana. Source pin exato da release `Lyrellion/Ars-Elemancy@dfb18286106aca1ca39a9b0053d64a1ef5041751`; JAR instalado documentado com SHA-1 `f7e01437c86fc74e2abb2ad93554dc20c30b214b`. Isso é **SOURCE_CAUSALITY** e não prova de paridade binária integral. Host do pack Ars Nouveau 5.13.1 / Ars Elemental 0.7.10.1, Curios e Sauce continuam necessários para validar modifier resolution.
+
+**Findings:** `HeavyArmorE` adiciona +25 defense na escola weaknessMap versus Light −25, Medium −12.5; `ElemancyFocus.getBoostMultiplier` é per-school config default1.0, dobra o valor no builder de amplificação em parte compatível, mas o resultado de dano e desconto líquido são host-owned; `ElemancyBangle` aplica `ADD_VALUE` dinâmico de velocidade, natação, knockback e condição ambiental; `Elemancer` usa `SpellSchools.ELEMENTAL` e não herda automaticamente todas as seis branch-families; `ars_elemancy:four/five/six` são slots e não perks customizadas. **Atributos aplicados em jogo e re-equip/relog/respawn ainda ⚠️, adapter ⛔**.
+
+Stage 06.05 🟡; Stage 09 físico PENDING; PR #825 ainda em draft, não promover Stage nem fazer merge por cobertura documental.
+
 ## Checkpoint vigente — Aeromancy Additions 10/10 causal, SHA físico condicionado (17/10/2026)
 
 **Barra global: —%**, porque o denominador total de objetos mágicos e de interfaces adaptáveis ainda está aberto. Mínimo atual **1.857 objetos semânticos / 1.855 escopo estrito** conforme [catálogo global](CATALOGO-GLOBAL-MAGIAS.md), sem objetos novos nesta etapa. **Barra Aeromancy:** **10/10 (100%) identidades presentes no registro JAR publisher** + **10/10 (100%) fichas source-pinned documentais**, com **0 perks/adapters homologados** e **⚠️ paridade do JAR instalado bloqueada** por SHA-1 legado inválido de 35 dígitos.
