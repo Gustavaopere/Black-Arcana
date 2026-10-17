@@ -27,3 +27,10 @@
 - [Base MorphBoundAbility](https://github.com/Alexthw46/Ars-Morph/blob/4a5a2c706fe5a316fc9ad03ac37a3ac1d1dc3c58/src/main/java/com/alexthw/ars_morph/identity/ability/MorphBoundAbility.java#L15-L62 ).
 
 **QA requerido:** Validar efeito persistindo após troca de forma, reativação antes de expirar, client HUD oculto, logout, atributos da velocidade e evento de cooldown Identity2. Versões físicas usadas como alvo: Ars Nouveau 5.13.1, Identity2 2.2.4, Ars Elemental 0.7.10.1 quando presente, Gabou's Libs 1.8.7. **+0 novas raízes mágicas; 0 adapters implementados.**
+
+## Semântica dos contadores Identity2 — verificação upstream 17/10/2026
+
+**Evidência cruzada do código oficial `xGabou/Identity2`, ramo 1.21.1:** um snapshot anterior (27/05/2026, `847202234ae89a1596c6039b473566e34231c213`) e outro posterior (02/10/2026, `c634278ee637e8b94949a685072c94d67c9b3d4a`, versão fonte 2.2.4.1) mantêm `ModPackets.resolvePrimaryAbilityCooldown=max(0,cooldown+useduration)`; `EntityMixin.baseTick` decrementa contador 1/tick, e o servidor registra o cooldown **antes** de chamar `execute`. Para starbuncle: JSON `cooldown=100` + `use_duration=20` → **120 ticks** para o contador primário, não 100 ticks. Valor usado pelo secundário comum: 100 ticks (sujeito às exceções próprias de outras formas). Um efeito ou resolver Ars derivado pode durar mais/menos e deve ser medido separadamente.
+
+[Protocolo completo de prova e links de código](../IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md). **⚠️ SOURCE_BRACKET**, sem prova de equivalência binária da versão instalada Identity2 2.2.4 ou de execução real; **⛔ nenhum hook de cooldown per-player homologado**.
+
