@@ -112,6 +112,24 @@ public final class EpicFightCatalogQaMod {
                 PREFIX, observed == LEGACY_SKILLS.size() && controls == MODERN_CONTROLS.size() ?
                     "OBSERVED" : "INCOMPLETE",
                 observed, LEGACY_SKILLS.size(), controls, MODERN_CONTROLS.size());
+            // This companion exists only inside the ephemeral QA server. Ask
+            // Minecraft's own resource pipeline to perform a genuine reload.
+            // Never synthesize attributes or mutate any Epic Fight skill here.
+            if (observed == LEGACY_SKILLS.size() && controls == MODERN_CONTROLS.size()) {
+                var server = event.getServer();
+                LOG.info("{} type=reload_begin status=REQUESTED", PREFIX);
+                server.reloadResources(server.getPackRepository().getSelectedIds())
+                    .whenComplete((ignored, error) -> server.execute(() -> {
+                        if (error != null) {
+                            LOG.warn("{} type=reload_end status=RESOURCE_RELOAD_FAILED exception={}",
+                                PREFIX, error.getClass().getName());
+                        } else {
+                            emitAfterReload();
+                        }
+                    }));
+            } else {
+                LOG.warn("{} type=reload_end status=INITIAL_REGISTRY_INCOMPLETE", PREFIX);
+            }
         } catch (ReflectiveOperationException | LinkageError | RuntimeException failure) {
             Throwable cause = failure.getCause();
             String detail = failure.getMessage() == null ? "none" :
@@ -127,4 +145,70 @@ public final class EpicFightCatalogQaMod {
                 cause == null ? "none" : cause.getClass().getName(), location, detail);
         }
     }
+    /**
+     * Runs only on the server executor after the actual resource reload future
+     * has completed. This re-reads provider-owned fields without ever equipping
+     * skills, instantiating players or interpreting publisher implementation.
+     */
+    private static void emitAfterReload() {
+        String phase = "resolve_registry";
+        try {
+            Class<?> registriesClass = Class.forName("yesman.epicfight.registry.EpicFightRegistries");
+            Object registryObject = registriesClass.getField("SKILL").get(null);
+            if (!(registryObject instanceof Registry<?> skills)) {
+                LOG.warn("{} type=reload_end status=REGISTRY_UNAVAILABLE", PREFIX);
+                return;
+            }
+            phase = "resolve_attributes_field";
+            Class<?> skillClass = Class.forName("yesman.epicfight.skill.Skill");
+            Field attributesField = skillClass.getDeclaredField("attributes");
+            attributesField.setAccessible(true);
+
+            int observedLegacy = 0;
+            int observedControls = 0;
+            boolean matching = true;
+            for (String skillId : LEGACY_SKILLS) {
+                phase = "reload_legacy_" + skillId;
+                Object skill = skills.get(ResourceLocation.fromNamespaceAndPath("epicfight", skillId));
+                if (skill == null || !skillClass.isInstance(skill)) {
+                    LOG.warn("{} type=reload_end status=SKILL_UNAVAILABLE id=epicfight:{}", PREFIX, skillId);
+                    return;
+                }
+                Object raw = attributesField.get(skill);
+                if (!(raw instanceof Map<?, ?> entries)) {
+                    LOG.warn("{} type=reload_end status=ATTRIBUTES_UNAVAILABLE id=epicfight:{}", PREFIX, skillId);
+                    return;
+                }
+                LOG.info("{} type=reload_skill id=epicfight:{} modifier_entries={}",
+                    PREFIX, skillId, entries.size());
+                matching &= entries.isEmpty();
+                observedLegacy++;
+            }
+            for (var control : MODERN_CONTROLS.entrySet()) {
+                String skillId = control.getKey();
+                phase = "reload_control_" + skillId;
+                Object skill = skills.get(ResourceLocation.fromNamespaceAndPath("epicfight", skillId));
+                if (skill == null || !skillClass.isInstance(skill)) {
+                    LOG.warn("{} type=reload_end status=CONTROL_UNAVAILABLE id=epicfight:{}", PREFIX, skillId);
+                    return;
+                }
+                Object raw = attributesField.get(skill);
+                if (!(raw instanceof Map<?, ?> entries)) {
+                    LOG.warn("{} type=reload_end status=ATTRIBUTES_UNAVAILABLE id=epicfight:{}", PREFIX, skillId);
+                    return;
+                }
+                LOG.info("{} type=reload_control id=epicfight:{} modifier_entries={} expected={}",
+                    PREFIX, skillId, entries.size(), control.getValue());
+                matching &= entries.size() == control.getValue();
+                observedControls++;
+            }
+            LOG.info("{} type=reload_end status={} observed={} controls={}",
+                PREFIX, matching ? "OBSERVED" : "COUNTS_DRIFT",
+                observedLegacy, observedControls);
+        } catch (ReflectiveOperationException | LinkageError | RuntimeException failure) {
+            LOG.warn("{} type=reload_end status=PROVIDER_ABI_UNAVAILABLE phase={} exception={}",
+                PREFIX, phase, failure.getClass().getName());
+        }
+    }
+
 }
