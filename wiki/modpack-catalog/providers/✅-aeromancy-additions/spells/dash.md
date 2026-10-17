@@ -26,3 +26,21 @@ O source pin contém uma chamada ativa `registerSpell(new DashSpell())` para est
 Esta ficha fecha ID, classe registrada, ownership, escola Wind e estado semântico source-pinned. Mecânica quantitativa, custo, cooldown, acquisition settlement, networking, compatibilidade e comportamento no modpack físico permanecem QA separado quando não explicitamente fechados pelo dossiê.
 
 Source: `../EXACT-1.2.8-SPELL-INVENTORY.md`.
+
+## Engenharia causal para perks — 17/10/2026
+
+**Identidade:** mod ID `aero_additions`, versão `1.2.8`, source fixo `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`. **⚠️ COUNTED_SOURCE_PINNED**: dez registros confirmados em JAR oficial de publicação ([Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191)), mas SHA-1 do JAR *instalado* na modlist histórica é inválido/incompleto (35 dígitos); **NÃO** promover a COUNTED_EXACT instalada. JAR publisher `aero_additions-1.2.8.jar` SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`. Todos os números abaixo vêm do source, não de configuração efetiva/QA físico. Iron's governa casting, mana/cooldown; Aero Additions governa efeitos; RPG Skill Tree somente progressão/perks por contrato real.
+
+**Raiz `aero_additions:dash` — Dash.** Source-only; dados de domínio, raio, alvo e duração são mensurados conforme os métodos abaixo, quando aplicáveis.
+
+| Eixo | Observação fonte-fixada | Mutabilidade por perk |
+|---|---|---|
+| Cast/stats | INSTANT, level 1–5, cooldown 2s, baseMana 20+2/nível, power 10+5/nível, castTime 0. | Sem duplicar gasto ou cooldown do host. |
+| Vetor/cinemática | multiplier `(15+getSpellPower)/12`. Direção = lookAngle.multiply(2,1,2).normalize().scale(multiplier). Em onCast grava ImpulseCastData + setDeltaMovement usando lerp(1,old,vec)=vec, sobrescrevendo velocidade anterior; em onClientCast soma vetor recebido ao movimento client existente. | Risco de divergência server set vs client add, não bug medido; QA jitter/desync. |
+| Proteção | onCast define invulnerableTime=20 e envia DashParticlesPacket a tracking entity + self; não cria DamageSource nem invoca hurt neste body. | Alteração de i-frames/velocity per-player ⛔ sem seam; não confundir invulnerableTime com blindagem universal. |
+| Alvo/range | Self movement, sem AOE/projétil, move na direção do olhar; velocidade depende do power efetivo do caster. | Perk de distance/speed exigiria modificar vetor na origem, antes da replicação. |
+| Causalidade | Um impulso e seus packets/partículas pertencem ao mesmo cast, e não a vários procs de Mastery. | Idempotência C2S e teste de cliente, fall/PvP. |
+
+**Localizadores:** [DashSpell.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/dash/DashSpell.java#L25-L85).
+
+**QA pendente e fail-closed:** QA direções extremas, motion server-vs-client, 20 i-frames, speed de atributos, colisão/claims, reconnect e cost/animation. Os valores são defaults ou constantes, não provas de execução em servidor/cliente. **+0 novas magias; +0 adapters aprovados.**
