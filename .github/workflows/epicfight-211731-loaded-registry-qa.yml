@@ -78,6 +78,7 @@ jobs:
           COMPLETE=0
           for _ in $(seq 1 150); do
             if grep -Fq '[BLACK_ARCANA_EPICFIGHT_LOADED_QA] type=end status=' "$LOG" && \
+               grep -Fq '[BLACK_ARCANA_EPICFIGHT_LOADED_QA] type=reload_end status=' "$LOG" && \
                grep -Eq 'Done \([0-9.]+s\)! For help, type "help"' "$LOG"; then
               COMPLETE=1
               break
@@ -126,6 +127,26 @@ jobs:
               assert actual == expected, f"modern controls were not loaded for {skill}: {actual}/{expected}"
               controls_observed["epicfight:" + skill] = actual
           assert re.search(prefix + r" type=end status=OBSERVED observed=5 expected=5 controls=3 expected_controls=3\b", log), "loaded registry evidence incomplete"
+          # The resource reload is initiated by the QA mod through Minecraft's
+          # actual server reload future, not by resubmitting a static JSON fixture.
+          # Re-validate the same eight skill identities after that future resolves.
+          reload_legacy = {}
+          for skill in ids:
+              found = re.findall(prefix + r" type=reload_skill id=epicfight:" + skill +
+                                 r" modifier_entries=(\d+)\b", log)
+              assert len(found) == 1, f"missing post-reload legacy evidence: {skill} {found}"
+              count = int(found[0])
+              assert count == 0, f"legacy count changed after reload: {skill} {count}"
+              reload_legacy["epicfight:" + skill] = count
+          reload_controls = {}
+          for skill, expected in controls_expected.items():
+              found = re.findall(prefix + r" type=reload_control id=epicfight:" + skill +
+                                 r" modifier_entries=(\d+) expected=(\d+)\b", log)
+              assert len(found) == 1, f"missing post-reload control evidence: {skill} {found}"
+              count, declared = map(int, found[0])
+              assert count == declared == expected, f"modern count drift after reload: {skill} {count}/{expected}"
+              reload_controls["epicfight:" + skill] = count
+          assert re.search(prefix + r" type=reload_end status=OBSERVED observed=5 controls=3\b", log), "provider reload failed/incomplete"
           result = {
               "scope": "EXACT_PROVIDER_LOADED_REGISTRY_WITH_MODERN_POSITIVE_CONTROLS_NOT_EQUIPPED_ATTRIBUTES",
               "provider": "epicfight", "version": "21.17.3.1",
@@ -133,6 +154,9 @@ jobs:
               "status": "PROVIDER_LOADED_REGISTRY_OBSERVED",
               "modifier_entry_counts": evidence,
               "modern_control_counts": controls_observed,
+              "post_reload_modifier_entry_counts": reload_legacy,
+              "post_reload_modern_control_counts": reload_controls,
+              "reload_scope": "MINECRAFT_SERVER_RESOURCE_RELOAD_COMPLETION_OBSERVED",
               "not_evidenced": ["player_attribute_instance", "skill_equip", "skill_unequip",
                                 "datapack_reload", "damage_or_cast", "mastery_hook"],
           }
