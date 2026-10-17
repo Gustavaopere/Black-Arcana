@@ -35,7 +35,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-ars-additions` | 48 | ✅ 5/5 magias/rituais (3 glyphs, 2 rituals) com cadeia e source exato; ⚠️ compatibilidade host/config/QA; ⛔ adapter RPG |
 | `✅-ars-controle` | 25 | ✅ 9/9 glyphs com source 1.6.16 causal exato; ⚠️ runtime/concurrency/scheduler; ⛔ perk adapter RPG |
 | `✅-ars-creo` | 14 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-ars-elemancy` | 11 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-ars-elemancy` | 11 | ✅ 7/7 famílias foci/bangles/essences/armaduras com [fichas causais source-pinned](../providers/✅-ars-elemancy/PERK-CAUSAL-EQUIPMENT-MATRIX-1.18.3.md), registro de 105 items e **0 glyph/perks próprias**; ⚠️ Ars Nouveau 5.13.1/Ars Elemental 0.7.10.1, Curios/atributos e full-pack QA pendentes; ⛔ nenhum adapter RPG homologado |
 | `✅-ars-elemental` | 59 | ✅ 47/47 objetos core (23 effects, 2 methods, 2 propagators, 12 filtros, 8 rituais) com dossiês source-located; ⚠️ config/QA; ⛔ adapter RPG |
 | `✅-ars-hex` | 10 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-morph` | 7 | ✅ 1/1 glyph Morph com dossiê standalone source 2.0.0; ⚠️ host Identity2/current runtime; ⛔ adapter RPG |
