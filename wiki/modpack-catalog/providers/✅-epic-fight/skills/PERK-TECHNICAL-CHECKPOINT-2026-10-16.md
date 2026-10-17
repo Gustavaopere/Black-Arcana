@@ -1,5 +1,11 @@
 # Epic Fight — checkpoint técnico de perks (16/10/2026)
 
+## Gate posterior de reload no servidor — 17/10/2026
+
+✅ [#38998283536](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38998283536), **SUCCESS** — QA separado chamou `MinecraftServer.reloadResources` com os packs selecionados e aguardou conclusão antes de reler oito objetos reais do registry. Cinco skills de modifiers legados continuaram **0/0/0/0/0**; três skills modernas de controle continuaram **2/2/1**. Os logs registram `reload_begin` e `reload_end status=OBSERVED observed=5 controls=3`, com todos os asserts pós-reload aprovados. [Prova dedicada](../EXACT-SERVER-RELOAD-ATTRIBUTE-CARDINALITY-21.17.3.1.md).
+
+⚠️ A igualdade antes/depois com recursos inalterados **não** prova parsing sob datapack override, aplicação no jogador, lifecycle equip/unequip ou comportamento no modpack inteiro. Stage, integração de perks e denominador global permanecem inalterados.
+
 ## Atualização provider-loaded com controles positivos — 16/10/2026
 
 ✅ [Actions #38990309407](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38990309407) **SUCCESS**: o companion `black_arcana_epicfight_qa`, separado do JAR de produção, observou o Epic Fight **21.17.3.1** ativo em servidor **NeoForge 21.1.250**. As cinco skills de modifiers legados `adaptive_skin`, `adrenaline_fiend`, `catharsis`, `bonebreaker` e `vengeance` apresentaram **zero entradas** na coleção interna `Skill.attributes`. Três **controles positivos** da mesma engine física passaram: `swordmaster=2`, `forbidden_strength=2`, `technician=1`. [Prova e matriz completa](../EXACT-LOADED-REGISTRY-LEGACY-ATTRIBUTE-PROOF-21.17.3.1.md).
