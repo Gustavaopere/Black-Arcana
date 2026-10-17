@@ -1,5 +1,9 @@
 # Ars Morph 2.0.0
 
+## Auditoria do JAR publicado Identity2 — 17/10/2026
+
+**✅ Publisher SHA-1 conferido e quatro métodos inspecionados por bytecode delimitado:** [Java21 #39075533394](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39075533394), Identity2 `2.2.4` NeoForge `1.21.1`, CurseForge `1238155/8792744`, SHA-1 `84c222df0176d7ef83ba7cc361249fe062e29218`. Foram registrados `PASS_BOUNDED_SIGNATURES`, zero desvios e seis autotestes de fail-closed. [Dossiê com detalhes e limites](IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md). **⚠️ Paridade do JAR instalado, runtime de cooldown, emissão de efeitos/settlement e contratos de hooks permanecem pendentes.** A evidência anterior `SOURCE_BRACKET` está preservada como contexto histórico, não status atual único. 0 magias novas e 0 adapters homologados.
+
 ## Verificação dos cooldowns no Identity2 — 17/10/2026
 
 Avançou a [auditoria dos contadores do host Identity2 2.2.4](IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md), fonte oficial `xGabou/Identity2` em dois snapshots que delimitam o release 2.2.4: 27/05/2026 e 02/10/2026 (o segundo declara 2.2.4.1). O servidor executa `max(0,cooldown+useduration)`, decremente a cada `baseTick`, recusa primário se contador positivo e registra cooldown **antes** do callback. Os sete contadores derivados são **120/820/900/120/420/220/160 ticks**, na ordem Weald Walker/Wilden Hunter/Wilden Stalker/Starbuncle/Whirlisprig/Wixie/Firenando. Não confundir com duração real dos efeitos e passivos.
