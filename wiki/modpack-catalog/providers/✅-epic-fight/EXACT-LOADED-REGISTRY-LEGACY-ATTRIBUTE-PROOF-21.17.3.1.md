@@ -1,5 +1,9 @@
 # Epic Fight — cinco modifiers legados no registry carregado 21.17.3.1 (16/10/2026)
 
+## Gate posterior: reload real de recursos e nova leitura (17/10/2026)
+
+✅ [GitHub Actions #38998283536](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38998283536) **SUCCESS**. Depois do `ServerStartedEvent`, o companion QA iniciou `MinecraftServer.reloadResources`, aguardou o future e consultou novamente `Skill.attributes`. As cinco skills legadas mantiveram **0/0/0/0/0** e os três controles modernos mantiveram **2/2/1**. [Relatório de estabilidade pós-reload](EXACT-SERVER-RELOAD-ATTRIBUTE-CARDINALITY-21.17.3.1.md). Ainda não houve override real de datapack, comparação de atributos de jogadores ou equip/unequip.
+
 **Estado:** ✅ `PROVIDER_LOADED_REGISTRY_OBSERVED` no ambiente **servidor isolado NeoForge 21.1.250**, com cinco skills legadas **0/0/0/0/0 modificadores em `Skill.attributes`** e três controles modernos positivos **2/2/1**. **Não** é medição de `AttributeInstance` do jogador, nem equivalência com o modpack completo de 587 entradas.
 
 ## Prova executada
