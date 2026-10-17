@@ -99,6 +99,22 @@ class EpicFightVanillaAttributeModifierCodecTest {
     }
 
     @Test
+    void allModernControlListDecodesAndPreservesBothEntries() {
+        ListTag controls = new ListTag();
+        for (String operation : List.of("add_value", "add_multiplied_total")) {
+            CompoundTag modern = new CompoundTag();
+            modern.putString("id", "epicfight:control_" + operation);
+            modern.putDouble("amount", 0.15D);
+            modern.putString("operation", operation);
+            controls.add(modern);
+        }
+        var decoded = Codec.list(AttributeModifier.MAP_CODEC.codec())
+            .parse(NbtOps.INSTANCE, controls).result();
+        assertTrue(decoded.isPresent() && decoded.get().size() == 2,
+            "positive list control must prove the NBT list codec can decode both modern records");
+    }
+
+    @Test
     void fullLegacyModifierListDoesNotDecodeAsModernCodecList() {
         ListTag allLegacy = new ListTag();
         for (LegacyModifierRow row : LEGACY_ROWS) {
