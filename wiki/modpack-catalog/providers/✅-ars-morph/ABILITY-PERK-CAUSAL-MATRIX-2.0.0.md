@@ -1,5 +1,21 @@
 # Ars Morph 2.0.0 — matriz causal Identity2 para perks
 
+## Cálculo de cooldown primário — source bracket Identity2 (17/10/2026)
+
+O próprio Identity2 foi inspecionado nos dois lados da publicação 2.2.4: [commit 27/05/2026](https://github.com/xGabou/Identity2/blob/847202234ae89a1596c6039b473566e34231c213/common/src/main/java/net/Gabou/identity2/ModPackets.java#L225-L275) e [commit 02/10/2026](https://github.com/xGabou/Identity2/blob/c634278ee637e8b94949a685072c94d67c9b3d4a/common/src/main/java/net/Gabou/identity2/ModPackets.java#L203-L253). Ambos usam `max(0,cooldown+useduration)` para o contador primário server-side, incrementam o progresso da ação por mensagens C2S e diminuem o contador em `EntityMixin.baseTick` a cada tick. **O callback é executado depois de fixar o contador**. Já o secundário comum usa `cooldown` sem `useduration`. [Análise completa com gates de versão](IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md).
+
+| Forma | Valores JSON (cooldown + use_duration) | Contador primário derivado — ticks do source |
+|---|---|---:|
+| Weald Walker (5 variantes) | 100 + 20 | **120** |
+| Wilden Hunter | 800 + 20 | **820** |
+| Wilden Stalker | 800 + 100 | **900** |
+| Starbuncle | 100 + 20 | **120** |
+| Whirlisprig | 400 + 20 | **420** |
+| Wixie | 200 + 20 | **220** |
+| Firenando, Ars Elemental condicional | 120 + 40 | **160** |
+
+**Status alterado de 'unidade não compreendida' para 'ticks demonstrados em `SOURCE_BRACKET`'**. O JAR instalado Identity2 2.2.4 **não** foi comparado com o upstream pós-release 2.2.4.1; portanto o contador real do pack continua ⚠️ não homologado. Usar os sete totais como requisitos de QA, não como API para perks. `use_duration` **não** determina duração de Speed, Glide, Grow, potion ou qualquer efeito externo por si só. 0 adapters novos.
+
 **Checkpoint 17/10/2026 · PR #825 draft.** `ars_morph` é ponte Identity2 / Ars Nouveau. Esta matriz indexa as sete classes Java de habilidades e as onze atribuições JSON do source. Cada [ficha individual](abilities/) cobre admissão, targets, entidades/efeitos, velocidade, duração, cooldown bruto, passivos, cancelamentos, políticas para perks e testes.
 
 ## Proveniência e barras
