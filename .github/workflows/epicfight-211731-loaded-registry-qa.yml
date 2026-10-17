@@ -35,7 +35,7 @@ jobs:
           echo 'fb199b7bbea2fc402da28ab586e73f47e32f8fc0  build/epicfight-loaded-qa/epicfight-exact.jar' | sha1sum --check
           echo '8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526  build/epicfight-loaded-qa/epicfight-exact.jar' | sha256sum --check
           jar tf build/epicfight-loaded-qa/epicfight-exact.jar | grep -Fx 'yesman/epicfight/registry/EpicFightRegistries.class'
-          javap -classpath build/epicfight-loaded-qa/epicfight-exact.jar -p yesman.epicfight.skill.Skill | grep -F 'getModfierEntry('
+          javap -classpath build/epicfight-loaded-qa/epicfight-exact.jar -p yesman.epicfight.skill.Skill | grep -F 'attributes;'
 
       - name: Build isolated QA companion with physical NeoForge release
         shell: bash
