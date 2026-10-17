@@ -1,5 +1,15 @@
 # Legendary Spellbooks — catálogo canônico
 
+## Engenharia de perks por spell — 17/10/2026
+
+**Barra do provider (identidades): 30/30 = 100% ✅. Barra de fichas com engenharia causal aprofundada nesta série: 10/30 = 33,33% 🟡**, com **20 fichas restantes** no padrão source-located de targeting, geometria, hitbox, quantidade, tempo, dano, tipo e causalidade. [Matriz e backlog](PERK-CAUSAL-ENGINEERING-MATRIX-0.3.2.md) · [prova binária de 30/30](EXACT-BINARY-SPELLS-0.3.2.md).
+
+Nesta tranche foram aprofundadas **Annihilation Resonance, Annihilation Beam, Annihilation Shockwave, Annihilation Geyser, Glacier Ringburst, Fossilized Fury, Energy Beam, Possessed Soul Blade, Flame Sector e Cumulo Charge**. O código-fonte fixo é `Higurashi34m/Legendary-Spellbooks@62ced2f2b2693aa841251473cbbd726fdd928ed3`; a identidade compilada 0.3.2 é SHA-exata, mas lógica dos handlers/entidades e runtime com Iron's 3.16.3 / Legendary Monsters 2.2.2 ainda exigem validação física.
+
+**Diferenças que importam para perks:** Resonance usa AABB inflate(3) enquanto UI mostra radius(4); Shockwave mostra distância externa diferente da última onda posicionada; Soul Blade constrói até 54 lâminas e muda de escola por nível; Flame Sector consulta `FLAME_EATER_SPELL` ao construir o damage source; Cumulo Charge usa `mobAttack` e aplica STUN sem verificar sucesso do dano; Glacier Ringburst pode tentar até 84 spikes. **São findings SOURCE_CAUSALITY, não bugs físicos confirmados.** Nenhum adapter foi implementado ou homologado, nenhum spell adicional foi contado, nenhuma Stage promovida.
+
+**Barra global: —%** porque o denominador total dos mods/objetos permanece aberto. Piso do checkpoint mais recente: **1.856 semânticos / 1.854 estritos**; números diferentes no material histórico abaixo permanecem evidência do estágio anterior e não substituem o checkpoint atual.
+
 ## Atualização binária exata — 13/10/2026
 
 ✅ [Dossiê 30/30](EXACT-BINARY-SPELLS-0.3.2.md), [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179) **SUCCESS**. CurseForge `8255715`, **510127 bytes**, SHA-1 `bda5b1fbe50ad834a6a76ad36789743c1057ebf5` idêntico ao JAR físico #372: **30** instâncias registradas sem branches em `LSSpellRegistry`, IDs/solo classes extraídos dos campos `ResourceLocation`, escolas compiladas inspecionadas. Confiança de identidade estática `COUNTED_EXACT`; **21/39 exatos / 18/39 pendentes**, +0 raízes, mínimo 1857/1855 inalterado. A fonte pinada abaixo permanece autoridade documental para mecânicas; gameplay, configuração, Iron's 3.16.3, Legendary Monsters 2.2.2 e Survival seguem **⚠️**.
