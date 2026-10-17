@@ -1,5 +1,13 @@
 # Identity2 — cooldown de abilities de Ars Morph 2.0.0: inspeção cruzada do código oficial
 
+## Novo gate de prova física — 17/10/2026
+
+A branch da [PR #825](https://github.com/Gustavaopere/Black-Arcana/pull/825) contém um verificador Python fail-closed [`identity2_224_cooldown_binary.py`](../../../docs/qa/identity2_224_cooldown_binary.py) e um [workflow Java 21](https://github.com/Gustavaopere/Black-Arcana/blob/docs/catalog-perk-causality-20261015/.github/workflows/identity2-224-cooldown-binary.yml). O workflow `pull_request` **executa somente os seis autotestes sintéticos de parsing/fail-closed**, sem baixar JAR ou conferir compatibilidade. Seu ramo `workflow_dispatch` requer **file ID oficial do Identity2 2.2.4 para NeoForge Minecraft 1.21.1 e SHA-1 independente de 40 hex**: sem ambos, **nenhuma auditoria física é executada**. É proibido aproveitar arquivos de Fabric, Minecraft 1.21.11 ou a release 2.2.4.1 como se fossem a build exigida.
+
+Quando explicitamente acionado com esses valores, o job obtém o JAR pelo Curse Maven, confere bytes e metadata `modId=identity2`, verifica as quatro assinaturas delimitadas de métodos nos classfiles por `javap -p -c` e publica **apenas JSON de referências e offsets**, nunca o binário de terceiros. Verifica `resolvePrimaryAbilityCooldown`, `handleIdentityAbilityPacket`, `EntityMixin.identity2$baseTick` e `Identity2Client.onClientTickEnd`. A ordem das chamadas e os opcodes **não provam caminhos de execução nem equivalência com o JAR instalado**. A comparação com o SHA-1 do JAR instalado e o teste em jogador conectado continuam necessários, mesmo se o relatório disser `PASS_BOUNDED_SIGNATURES`.
+
+**Estado deste checkpoint:** script e workflow criados; teste local de seis gates do protótipo equivalente **PASS**; CI remoto e auditoria publisher **PENDING na criação**. O checksum e o file ID do JAR **instalado** ainda não foram fornecidos por snapshot físico. Nenhum contrato de perk liberado. Também foram eliminadas as sete linhas em branco finais apontadas pelo `git diff --check` no CI anterior, com reexecução completa do CI exigida para fechamento.
+
 **Checkpoint 17/10/2026 · PR #825 draft · evidência `UPSTREAM_SOURCE_BRACKET`, runtime `⚠️`.** Investigação solicitada após fechar as 7/7 fichas de `ars_morph`. Não copia código para Black Arcana. A versão do modpack documentada é **Identity2 2.2.4, Minecraft 1.21.1/NeoForge** (e Ars Morph 2.0.0); o JAR físico específico de Identity2 **não foi extraído nem comparado** neste checkpoint. Não declarar `BINARY_EXACT`.
 
 ## Autoridade, proveniência e limitação de versão
