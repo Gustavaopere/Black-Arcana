@@ -117,7 +117,11 @@ public final class EpicFightCatalogQaMod {
             // Never synthesize attributes or mutate any Epic Fight skill here.
             if (observed == LEGACY_SKILLS.size() && controls == MODERN_CONTROLS.size()) {
                 var server = event.getServer();
-                if ("1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_OVERRIDE_CYCLE"))) {
+                if ("1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_FAKE_PLAYER_PREFLIGHT"))) {
+                    // Never equip a skill on a fake player: check whether its
+                    // actual Epic Fight attachment has completed join lifecycle.
+                    EpicFightFakePlayerEligibilityQa.check(server);
+                } else if ("1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_OVERRIDE_CYCLE"))) {
                     // Opt-in only in disposable CI; normal isolated registry QA
                     // never creates or mutates datapack resources.
                     EpicFightOverrideCycleQa.start(server);
