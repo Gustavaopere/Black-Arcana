@@ -1,5 +1,11 @@
 # Epic Fight 21.17.3.1 — datapack original temporário: alterar e restaurar o modifier após reload
 
+## Cobertura causal ampliada: oito modifiers e cinco skills no provider carregado (17/10/2026)
+
+✅ [CI de oito modificadores #39001996512](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39001996512) **SUCCESS**, com JSON de QA efetivamente publicado como artefato **12089431494**. Servidor Java21 / NeoForge físico **21.1.250**, JAR do Epic Fight **21.17.3.1** verificado por dois hashes. Cinco datapacks de substituição temporária escritos **somente no runner**, usando campos modernos e oito IDs QA distintos: `adaptive_skin 0→1→0`, `adrenaline_fiend 0→2→0`, `catharsis 0→2→0`, `bonebreaker 0→1→0`, `vengeance 0→2→0`; controles modernos `swordmaster/forbidden_strength/technician` estáveis **2/2/1** em três fases. Inclui `epicfight:stamina_regen`, aceito na coleção carregada. [Relatório e escopo](EXACT-ALL-FIVE-LEGACY-MODIFIER-OVERRIDE-RESTORE-21.17.3.1.md).
+
+⚠️ Evidência de **mapa do provider**, não de atributos efetivos de jogador; sem `SkillContainer.setSkill`, equip/unequip, client ou modpack completo. Nenhum artefato QA foi transferido à produção; ⛔ hooks de perks e Mastery ainda sem contrato homologado. Core catalogado ✅ 43/43, **+0** magia.
+
 **Data:** 17/10/2026. **Evidência:** ✅ `OVERRIDE_APPLY_AND_RESTORE_OBSERVED` em servidor dedicado isolado Java21 / Minecraft 1.21.1 / NeoForge **21.1.250**. **Provider:** Epic Fight `21.17.3.1`, mod ID `epicfight`, JAR CurseForge file `8175609` / project `405076`; SHA-1 `fb199b7bbea2fc402da28ab586e73f47e32f8fc0` e SHA-256 `8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526`.
 
 ## Procedimento realmente executado
