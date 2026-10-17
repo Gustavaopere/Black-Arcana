@@ -1,5 +1,11 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Checkpoint vigente — Identity2 publisher morph descriptor (17/10/2026)
+
+**GLOBAL — —%** com piso 1.857/1.855 estritos; **Ars Morph — 7/7 abilities e 11/11 JSONs**, sem raízes novas. [Identity2 Java21 #39075958128](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39075958128) passou 8/8 autotestes sintéticos e auditoria `PUBLISHER_BINARY_BOUNDED` do SHA-1 `84c222df0176d7ef83ba7cc361249fe062e29218`, com quatro métodos de cooldown e assinatura pública do `IdentityProgression.morph(ServerPlayer, ResourceLocation, CompoundTag):boolean` confirmada na release publisher 2.2.4, JAR CurseForge file ID 8792744. Artefato [JSON #12116778880](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39075958128/artifacts/12116778880).
+
+Na `main` `neoforge-rpg-skilltree@ed5b65b890767b406ce41127bcb793775263c7bd`, existem `IdentityProgressionMixin`, `Identity2MixinPlugin`, o arquivo `rpgskilltree.mixins.json` e `MorphIdentityAccess.canMorph`, com injeção de veto `@At("HEAD")` declarada. **⚠️ Aplicação runtime do Mixin, veto em jogador conectado e paridade do JAR realmente instalado NÃO foram observados**. ⛔ Cooldown per-caster/Mastery continuam sem API homologada, Stage 06.05 🟡 e Stage 09 QA físico PENDING, PR #825 draft sem merge. [Dossiê central](../providers/✅-ars-morph/IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md).
+
 ## Checkpoint vigente — Identity2 publisher JAR SHA e bytecode delimitado (17/10/2026)
 
 **Barras:** GLOBAL **—%** (piso **1.857 objetos / 1.855 estritos**, denominador aberto); Ars Morph **✅ 7/7** fichas Java de habilidades e **11/11** assignments Identity2. Novidade técnica: [workflow Identity2 #39075533394](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39075533394) **SUCCESS com SHA-1 do publisher `84c222df0176d7ef83ba7cc361249fe062e29218` validado**, metadata/classfiles e assinatura bytecode dos quatro métodos delimitados com `PASS_BOUNDED_SIGNATURES`/zero desvios; seis autotestes sintéticos aprovados; artefato JSON `12116253389`. [Dossiê atualizado](../providers/✅-ars-morph/IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md).
