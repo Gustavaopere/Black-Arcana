@@ -26,3 +26,21 @@ O source pin contém uma chamada ativa `registerSpell(new AirstepSpell())` para 
 Esta ficha fecha ID, classe registrada, ownership, escola Wind e estado semântico source-pinned. Mecânica quantitativa, custo, cooldown, acquisition settlement, networking, compatibilidade e comportamento no modpack físico permanecem QA separado quando não explicitamente fechados pelo dossiê.
 
 Source: `../EXACT-1.2.8-SPELL-INVENTORY.md`.
+
+## Engenharia causal para perks — 17/10/2026
+
+**Identidade:** mod ID `aero_additions`, versão `1.2.8`, source fixo `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`. **⚠️ COUNTED_SOURCE_PINNED**: dez registros confirmados em JAR oficial de publicação ([Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191)), mas SHA-1 do JAR *instalado* na modlist histórica é inválido/incompleto (35 dígitos); **NÃO** promover a COUNTED_EXACT instalada. JAR publisher `aero_additions-1.2.8.jar` SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`. Todos os números abaixo vêm do source, não de configuração efetiva/QA físico. Iron's governa casting, mana/cooldown; Aero Additions governa efeitos; RPG Skill Tree somente progressão/perks por contrato real.
+
+**Raiz `aero_additions:airstep` — Airstep.** Source-only; dados de domínio, raio, alvo e duração são mensurados conforme os métodos abaixo, quando aplicáveis.
+
+| Eixo | Observação fonte-fixada | Mutabilidade por perk |
+|---|---|---|
+| Cast/atributos | LONG, 1–7, cooldown 90 s, castTime 30, mana 60+10/nível, power 30+10/nível; duração `(int)(getSpellPower×30)` ticks, amplifier=level−1. | Power multipliers alteram duração: config base não é duração efetiva. |
+| Counter / slots | onCast aplica AIRSTEPPING e grava AeromancySpellData.airStepHitsRemaining=1+level, isto é, **2..8** saltos; a attachment sync usa AASyncPlayerDataPacket; NBT save escreve Float, load lê Int para a chave homônima. | ⚠️ divergência de tipo NBT source-only; não editar attachment de outro provider. QA save/reload obrigatório. |
+| Pacote C2S | AirstepPacket contém deltaX, deltaZ inteiros sem clamp visto no decoder, usa IPayloadContext.enqueueWork e chama `airstepJump(packet,ctx.player())`; o método de salto checa effect, contador>0 e !onGround, normaliza input e usa move Y=JUMP_STRENGTH+getJumpBoostPower. | ⚠️ input bounds/rate-limit/forged packet necessitam QA; sem perk manipulando rede host. |
+| Fall / reset | LivingFallEvent com effect ativo e distância>=SAFE_FALL_DISTANCE cancela multiplicador de dano (setDamageMultiplier(0)) se restar salto; o handler **recarrega contador em todo LivingFallEvent com efeito**, independentemente do gate de distância. Remoção/expiração do MobEffect limpa contador. | Evento pré-resultado e recarga por evento ≠ novo cast, não atribuir Mastery por tick. |
+| Dano/target | Self locomotion, sem projectile/damageSource/radius de ataque. O movimento pode interagir com fall damage e Epic Fight. | ⛔ per-user jump cap/speed sem boundary real. |
+
+**Localizadores:** [AirstepSpell.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/airstep/AirstepSpell.java#L41-L145) · [AirstepPacket.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/airstep/AirstepPacket.java#L11-L37) · [AeromancySpellData.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/network/AeromancySpellData.java#L42-L124).
+
+**QA pendente e fail-closed:** Testar NBT Float→Int, reload/logout, replay de packet e inputs extremos, fall hooks, PvP, knockback/latência, sprint/Epic Fight e server-authoritative contador. Os valores são defaults ou constantes, não provas de execução em servidor/cliente. **+0 novas magias; +0 adapters aprovados.**
