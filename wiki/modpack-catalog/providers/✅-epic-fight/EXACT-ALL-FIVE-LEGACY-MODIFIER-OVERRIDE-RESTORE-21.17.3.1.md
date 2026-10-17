@@ -1,5 +1,11 @@
 # Epic Fight 21.17.3.1 — todos os oito modificadores legados convertidos em QA e restaurados
 
+## Gate de elegibilidade do PlayerPatch — 17/10/2026
+
+✅ [QA físico #39003200555](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39003200555) **SUCCESS**, com JSON artifact **12090146205**: servidor NeoForge 21.1.250 com Epic Fight exato 21.17.3.1 e FakePlayer do NeoForge. A attachment provider-native criou **ServerPlayerPatch** para o FakePlayer, com max-health base **20.0**, mas **EntityPatch.initialized=false**. Status **PATCH_ATTACHED_UNINITIALIZED_REQUIRES_JOIN_LIFECYCLE**. [Dossiê e próximo gate de jogador real](EXACT-FAKE-PLAYER-PATCH-LIFECYCLE-ELIGIBILITY-21.17.3.1.md).
+
+⛔ Portanto não se chamou SkillContainer.setSkill, onInitiate ou onRemoved artificialmente. A prova anterior **0→8→0** em cinco skills diz respeito exclusivamente ao mapa de modifiers de Skill.attributes; AttributeInstance de jogador conectado, ciclo equip/unequip, persistência, sincronização e integração de perks permanecem **pendentes**, sem promoção de Stage.
+
 **Data do checkpoint:** 17/10/2026. **Evidência:** ✅ `ALL_FIVE_MODERNIZED_MAPS_LOAD_AND_RESTORE` — rótulo documental, não API nem enum de produção. Cenário: servidor dedicado isolado Minecraft 1.21.1 / **NeoForge 21.1.250** / Java21, com JAR exato `epicfight` versão **21.17.3.1** carregado.
 
 ## Prova física do publisher e execução
