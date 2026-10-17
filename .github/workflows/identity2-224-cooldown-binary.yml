@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/identity2-224-cooldown-binary.yml'
       - 'docs/qa/identity2_224_cooldown_binary.py'
+      - 'docs/qa/identity2_224_morph_restore_path.py'
       - 'wiki/modpack-catalog/providers/✅-ars-morph/IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md'
   workflow_dispatch:
     inputs:
@@ -35,6 +36,8 @@ jobs:
         run: python3 docs/qa/identity2_224_cooldown_binary.py --self-test
       # File ID + SHA-1 from the public ShadowCity2.0 V3 manifest; verify bytes before accepting.
       # This manifest is third-party evidence, NOT the user's installed JAR.
+      - name: Six synthetic tests of the morph NBT restore path
+        run: python3 docs/qa/identity2_224_morph_restore_path.py --self-test
       - name: Fetch publisher JAR using pinned public-manifest reference (SHA gate)
         shell: bash
         env:
@@ -60,11 +63,23 @@ jobs:
             --jar build/identity2-224-audit/publisher.jar \
             --expected-sha1 "$SHA1_EXPECTED" \
             --output build/identity2-224-audit/identity2-bytecode-report.json
+      - name: Verify direct NBT restore call path in pinned publisher bytecode
+        shell: bash
+        env:
+          SHA1_EXPECTED: ${{ github.event_name == 'workflow_dispatch' && inputs.expected_sha1 || '84c222df0176d7ef83ba7cc361249fe062e29218' }}
+        run: |
+          set -euo pipefail
+          python3 docs/qa/identity2_224_morph_restore_path.py \
+            --jar build/identity2-224-audit/publisher.jar \
+            --expected-sha1 "$SHA1_EXPECTED" \
+            --output build/identity2-224-audit/identity2-restore-report.json
       - name: Publish JSON evidence only, never publisher JAR
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: identity2-224-bounded-bytecode-${{ github.sha }}
-          path: build/identity2-224-audit/identity2-bytecode-report.json
+          path: |
+            build/identity2-224-audit/identity2-bytecode-report.json
+            build/identity2-224-audit/identity2-restore-report.json
           if-no-files-found: ignore
           retention-days: 14
