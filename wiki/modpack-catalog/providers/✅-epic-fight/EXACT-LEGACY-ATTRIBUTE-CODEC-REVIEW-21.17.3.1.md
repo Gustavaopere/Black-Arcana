@@ -1,0 +1,36 @@
+# Epic Fight 21.17.3.1 — compatibilidade de attribute modifiers legados (16/10/2026)
+
+**Estado:** ⚠️ `RAW_ONLY_NOT_PROVEN_LOADED` nos cinco recursos do JAR físico. A existência dos campos serializados é comprovada; sua aplicação efetiva em entidade **não** foi comprovada. O teste abaixo procura **somente** a aceitação sintática pelo codec de Minecraft do classpath de testes, sem iniciar Epic Fight nem carregar datapack do modpack.
+
+## Autoridade das fontes
+
+- Mod físico instalado: `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar`, mod id `epicfight`, CurseForge `405076/8175609`, SHA-1 `fb199b7bbea2fc402da28ab586e73f47e32f8fc0` e SHA-256 `8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526`. `42/42` JSONs e seus campos declarados foram comparados no [gate #38983180648](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38983180648) e no [gate #38983851582](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38983851582), ambos `SUCCESS`.
+- Fonte comparativa **adjacente**, não exata: [Skill.java L57–71](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/Skill.java#L57-L71) define `ATTRIBUTE_ENTRY_CODEC` com `AttributeModifier.MAP_CODEC`. [Skill.java L128–139](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/Skill.java#L128-L139) limpa os atributos e chama `ATTRIBUTE_ENTRY_CODEC.parse(NbtOps.INSTANCE,...).result().ifPresent(...)`. A revisão upstream declara `21.17.3`, enquanto o JAR do pack declara `21.17.3.1`.
+- Prova adicional exata: o [probe de invocações #38983851582](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38983851582) registra `Codec.parse` antes de `Optional.ifPresent` no método compilado `Skill.loadDatapackParameters`, mas **não** observa se o parse devolve sucesso ou se a chamada é alcançada.
+
+## Cinco JSONs de atributos com formato legado, exatos como dados físicos
+
+| Skill core | Forma dos modificadores no JSON físico | Criticidade |
+|---|---|---|
+| `adaptive_skin` | `max_health`: `addition +6`, `name` e `uuid` | Não assumir bônus de HP |
+| `adrenaline_fiend` | `attack_speed`: `multiply_total +0.1`; `attack_damage`: `multiply_total +0.075` | Não assumir DPS/velocidade alterados |
+| `catharsis` | `stamina_regen`: `addition +0.15`; `attack_damage`: `multiply_total +0.1` | Não creditar regen/dano automaticamente |
+| `bonebreaker` | `attack_speed`: `multiply_total +0.15` | Não assumir ataque mais rápido |
+| `vengeance` | `max_health`: `addition +3`; `attack_damage`: `multiply_total +0.075` | Não assumir HP/dano extra |
+
+Os JSONs físicos trazem nomes/UUIDs, mas não o campo moderno `id` que o formato esperado pela API vanilla da revisão sugere. Isto é uma **hipótese técnica forte**, não um resultado observado de loading no runtime do Epic Fight.
+
+## Teste controlado em implementação de Minecraft real
+
+- [`EpicFightVanillaAttributeModifierCodecTest.java`](https://github.com/Gustavaopere/Black-Arcana/blob/docs/catalog-perk-causality-20261015/src/test/java/dev/gustavopere/blackarcana/integration/epicfight/EpicFightVanillaAttributeModifierCodecTest.java) usa o tipo real `net.minecraft.world.entity.ai.attributes.AttributeModifier.MAP_CODEC` e `NbtOps.INSTANCE`, do classpath unitário Minecraft **1.21.1 / NeoForge 21.1.248** desta `main` (o pack físico aponta NeoForge 21.1.250, diferença **não ignorada**).
+- Controles: shape legado `addition` e `multiply_total` com `name/uuid`, comparados ao shape `id` + `add_value`. Nenhum código/fonte Epic Fight é copiado; são registros NBT independentes reproduzidos a partir de campos públicos do JAR.
+- **Status de execução:** `PENDING_CI` — não inferir resultado até o workflow concluir e os relatórios da execução serem inspecionados. Mesmo em PASS, o teste valida o codec Minecraft no ambiente da CI, não a aplicação de atributos reais nem a transição de datapacks do provider.
+
+## Gate de aceitação ainda bloqueado
+
+1. Confirmar o resultado explícito do teste de `AttributeModifier.MAP_CODEC` em Java21.
+2. Repetir ou inspecionar parsing **dentro do Epic Fight carregado** na versão física 21.17.3.1 e NeoForge 21.1.250, incluindo override dos cinco JSONs e mudanças reais de atributo.
+3. Confirmar event side, lifecycle, eventual fallback/migração de formato e o comportamento correto após reload/death/respawn/dimension.
+4. Somente depois formular hooks de perks fail-closed e de progressão do RPG Skill Tree; Black Arcana continua autoridade do próprio runtime mágico.
+
+**Resultado atual:** 5 casos de dados `RAW_ONLY_NOT_PROVEN_LOADED`, **0 bônus homologados**, sem nova magia global (+0), sem Stage ou merge.
