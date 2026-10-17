@@ -102,6 +102,11 @@ jobs:
           import json, pathlib, re
           log = pathlib.Path("build/epicfight-loaded-qa/server.log").read_text(errors="replace")
           prefix = r"\[BLACK_ARCANA_EPICFIGHT_LOADED_QA\]"
+          # Minimal provider-only diagnostics; no third-party code or server log upload.
+          qa_lines = [line.split("[BLACK_ARCANA_EPICFIGHT_LOADED_QA]", 1)[-1].strip()
+                      for line in log.splitlines()
+                      if "[BLACK_ARCANA_EPICFIGHT_LOADED_QA]" in line]
+          print("QA_DIAGNOSTIC_LINES=" + json.dumps(qa_lines[:30]))
           assert re.search(prefix + r" type=begin provider=epicfight loaded=true\b", log), "Epic Fight mod was not observed loaded"
           ids = ("adaptive_skin", "adrenaline_fiend", "catharsis", "bonebreaker", "vengeance")
           evidence = {}
