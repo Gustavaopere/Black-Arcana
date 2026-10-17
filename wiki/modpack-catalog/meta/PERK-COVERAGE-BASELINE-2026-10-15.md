@@ -1,5 +1,11 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Checkpoint vigente — Identity2 publisher JAR SHA e bytecode delimitado (17/10/2026)
+
+**Barras:** GLOBAL **—%** (piso **1.857 objetos / 1.855 estritos**, denominador aberto); Ars Morph **✅ 7/7** fichas Java de habilidades e **11/11** assignments Identity2. Novidade técnica: [workflow Identity2 #39075533394](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39075533394) **SUCCESS com SHA-1 do publisher `84c222df0176d7ef83ba7cc361249fe062e29218` validado**, metadata/classfiles e assinatura bytecode dos quatro métodos delimitados com `PASS_BOUNDED_SIGNATURES`/zero desvios; seis autotestes sintéticos aprovados; artefato JSON `12116253389`. [Dossiê atualizado](../providers/✅-ars-morph/IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md).
+
+**Qualificação obrigatória:** agora existe **prova binária limitada do JAR publisher**, mas não existem SHA/paridade do JAR instalado, execução real de casos de cooldown, Wixie, network/client, refund, hooks per-caster ou Mastery. **⚠️ instalado e gameplay pendentes; ⛔ zero adapters homologados**. +0 spells, +0 runtime, Stage 06.05 🟡/Stage 09 físico PENDING; PR #825 permanece draft. Checkpoints abaixo que mencionam apenas `SOURCE_BRACKET` são históricos e foram superados no escopo de prova publisher.
+
 ## Checkpoint vigente — gate Identity2 Java 21 e saneamento CI (17/10/2026)
 
 **GLOBAL — —%**, piso **1.857 semânticos / 1.855 estritos**, universo global desconhecido. **Ars Morph — ✅ 7/7 abilities e 11/11 JSONs** com parâmetros source-pinned, **⚠️ Identity2 2.2.4 JAR/cliente e Mastery condicionados, ⛔ adapters per-player bloqueados**. +0 raízes e +0 funcionalidades de runtime.
