@@ -1,5 +1,11 @@
 # Epic Fight — 21.17.3.1
 
+## Stage 09 — observer de jogador conectado armado, sem cliente (17/10/2026)
+
+✅ [QA #39027854991](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39027854991) **SUCCESS**, artifact **12099685054**: compilação Java21 / NeoForge físico **21.1.250** do observer read-only de `PlayerLoggedInEvent`, `PlayerRespawnEvent`, logout e server tick. O Epic Fight exato `21.17.3.1` foi carregado, mas **nenhum jogador conectou-se**; o run comprovou somente `AWAIT_CONNECTED_PLAYER`, `connected_players=0`, `has_proven_join_patch=false`, `equip_invoked=false`, `attribute_mutated=false`. [Protocolo, fonte e limites](EXACT-CONNECTED-PLAYER-LIFECYCLE-OBSERVER-PREFLIGHT-21.17.3.1.md).
+
+⚠️ **Não promover** lifecycle de `ServerPlayerPatch` com cliente, `SkillContainer.setSkill`, `AttributeInstance` aplicado nem Stage 09 com base no no-client smoke. É obrigatório observar um `ServerPlayer` real com `initialized=true` após login/respawn, sem `FakePlayer` ou `onJoinWorld` forçado. ⛔ Integração perks/Mastery ainda sem contrato físico seguro.
+
 ## Gate de elegibilidade do PlayerPatch — 17/10/2026
 
 ✅ [QA físico #39003200555](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39003200555) **SUCCESS**, com JSON artifact **12090146205**: servidor NeoForge 21.1.250 com Epic Fight exato 21.17.3.1 e FakePlayer do NeoForge. A attachment provider-native criou **ServerPlayerPatch** para o FakePlayer, com max-health base **20.0**, mas **EntityPatch.initialized=false**. Status **PATCH_ATTACHED_UNINITIALIZED_REQUIRES_JOIN_LIFECYCLE**. [Dossiê e próximo gate de jogador real](EXACT-FAKE-PLAYER-PATCH-LIFECYCLE-ELIGIBILITY-21.17.3.1.md).
