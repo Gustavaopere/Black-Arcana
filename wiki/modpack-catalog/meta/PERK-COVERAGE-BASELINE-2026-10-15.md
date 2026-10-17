@@ -6,7 +6,7 @@
 
 Foram eliminadas sete linhas finais em branco das fichas Ars Morph que causaram `git diff --check` failure no Black Arcana CI do HEAD `bf41db5473206282528fd39b08615eb21dd5557c`. Esse job havia compilado/testado Java com `BUILD SUCCESSFUL`, mas o passo Diff sanity falhou, impedindo continuação. A correção precisa de novo CI no último HEAD para ser considerada validada.
 
-Novo [auditor binário fail-closed](../../docs/qa/identity2_224_cooldown_binary.py) + [workflow com seis autotestes e dispatch condicionado](../../.github/workflows/identity2-224-cooldown-binary.yml), indexados no [dossiê Identity2](../providers/✅-ars-morph/IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md). O dispatch exige file ID oficial e SHA-1 independente da build **2.2.4 NeoForge 1.21.1** e não aceita presumir a release 2.2.4.1 ou a build de Fabric. Não houve auditoria física, somente elaboração de guard/rotina de inspeção e autotestes sintéticos. Stage 06.05 🟡, Stage 09 físico PENDING, PR #825 draft e sem merge.
+Novo [auditor binário fail-closed](../../../docs/qa/identity2_224_cooldown_binary.py) + [workflow com seis autotestes e dispatch condicionado](../../../.github/workflows/identity2-224-cooldown-binary.yml), indexados no [dossiê Identity2](../providers/✅-ars-morph/IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md). O dispatch exige file ID oficial e SHA-1 independente da build **2.2.4 NeoForge 1.21.1** e não aceita presumir a release 2.2.4.1 ou a build de Fabric. Não houve auditoria física, somente elaboração de guard/rotina de inspeção e autotestes sintéticos. Stage 06.05 🟡, Stage 09 físico PENDING, PR #825 draft e sem merge.
 
 ## Checkpoint vigente — Identity2 cooldown de Ars Morph (17/10/2026)
 
