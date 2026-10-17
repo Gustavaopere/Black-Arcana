@@ -18,19 +18,19 @@
 | `bonebreaker` | `attack_speed`: `multiply_total +0.15` | Não assumir ataque mais rápido |
 | `vengeance` | `max_health`: `addition +3`; `attack_damage`: `multiply_total +0.075` | Não assumir HP/dano extra |
 
-Os JSONs físicos trazem nomes/UUIDs, mas não o campo moderno `id` que o formato esperado pela API vanilla da revisão sugere. Isto é uma **hipótese técnica forte**, não um resultado observado de loading no runtime do Epic Fight.
+Os JSONs físicos trazem nomes/UUIDs, mas não o campo moderno `id` que o formato esperado pela API vanilla da revisão sugere. O experimento de codec vanilla abaixo demonstrou que os dois formatos legados representativos testados **não produzem um AttributeModifier decodificado**, enquanto o controle moderno é aceito. É evidência de **incompatibilidade do formato vanilla nessa versão**; continua **não sendo** observação de loading ou atributos finais no runtime físico do Epic Fight.
 
 ## Teste controlado em implementação de Minecraft real
 
 - [`EpicFightVanillaAttributeModifierCodecTest.java`](https://github.com/Gustavaopere/Black-Arcana/blob/docs/catalog-perk-causality-20261015/src/test/java/dev/gustavopere/blackarcana/integration/epicfight/EpicFightVanillaAttributeModifierCodecTest.java) usa o tipo real `net.minecraft.world.entity.ai.attributes.AttributeModifier.MAP_CODEC` e `NbtOps.INSTANCE`, do classpath unitário Minecraft **1.21.1 / NeoForge 21.1.248** desta `main` (o pack físico aponta NeoForge 21.1.250, diferença **não ignorada**).
 - Controles: shape legado `addition` e `multiply_total` com `name/uuid`, comparados ao shape `id` + `add_value`. Nenhum código/fonte Epic Fight é copiado; são registros NBT independentes reproduzidos a partir de campos públicos do JAR.
-- **Status de execução:** `PENDING_CI` — não inferir resultado até o workflow concluir e os relatórios da execução serem inspecionados. Mesmo em PASS, o teste valida o codec Minecraft no ambiente da CI, não a aplicação de atributos reais nem a transição de datapacks do provider.
+- **Status de execução confirmado:** [Black Arcana CI #38984538266](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38984538266), **SUCCESS** no commit com o teste Java. `Unit tests` passou contendo os **três asserts**: `addition` + `name/uuid` -> **sem resultado de parse**; `multiply_total` + `name/uuid` -> **sem resultado de parse**; controle moderno `id` + `add_value` -> **resultado de parse presente**. O job `verify` também teve `Diff sanity`, NeoForge build, **108/108 Foundation GameTests required** e `Dedicated-server smoke test: PASS`; o job separado de companion Stage 05 também terminou **SUCCESS**. Trata-se do codec real de Minecraft **1.21.1 / NeoForge 21.1.248 usado em CI**, **não** do Epic Fight carregado no pack físico com NeoForge 21.1.250. **Cinco skills seguem RAW_ONLY_NOT_PROVEN_LOADED no runtime** até observação direta ou teste dedicado provider-loaded.
 
 ## Gate de aceitação ainda bloqueado
 
-1. Confirmar o resultado explícito do teste de `AttributeModifier.MAP_CODEC` em Java21.
+1. ✅ **Concluído somente para os dois formatos representativos no codec vanilla testado:** NBT legado `name/uuid/addition` e `name/uuid/multiply_total` rejeitados, `id/add_value` aceito; evidência no CI #38984538266, sem reproduzir o runtime Epic Fight.
 2. Repetir ou inspecionar parsing **dentro do Epic Fight carregado** na versão física 21.17.3.1 e NeoForge 21.1.250, incluindo override dos cinco JSONs e mudanças reais de atributo.
 3. Confirmar event side, lifecycle, eventual fallback/migração de formato e o comportamento correto após reload/death/respawn/dimension.
 4. Somente depois formular hooks de perks fail-closed e de progressão do RPG Skill Tree; Black Arcana continua autoridade do próprio runtime mágico.
 
-**Resultado atual:** 5 casos de dados `RAW_ONLY_NOT_PROVEN_LOADED`, **0 bônus homologados**, sem nova magia global (+0), sem Stage ou merge.
+**Resultado atual:** cinco registros físicos legados ainda classificados `RAW_ONLY_NOT_PROVEN_LOADED` quanto ao runtime do Epic Fight, mesmo após os **3 controles Java unitários aprovados** do codec vanilla. **0 bônus homologados**, **+0 magias**, sem Stage ou merge.
