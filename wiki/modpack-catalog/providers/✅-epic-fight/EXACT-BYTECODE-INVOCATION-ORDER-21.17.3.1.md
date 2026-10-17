@@ -1,6 +1,6 @@
 # Epic Fight 21.17.3.1 — gate de ordem de invocações no classfile (16/10/2026)
 
-**Evidência:** `PASS_BOUNDED_ORDER` para **cinco métodos compilados** do publisher JAR físico `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar`. **Não confundir** com equivalência de Java 21.17.3, controle de fluxo / branch, execução no servidor ou API de perk homologada.
+**Evidência:** `PASS_BOUNDED_ORDER` para **sete métodos compilados** do publisher JAR físico `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar`. **Não confundir** com equivalência de Java 21.17.3, controle de fluxo / branch, execução no servidor ou API de perk homologada.
 
 ## Prova auditável / ambiente
 
@@ -20,6 +20,14 @@
 | `BladeRushSkill.checkExecuteCondition` | `LivingEntity.isAlive` → `distanceToSqr` | A checagem de alvo vivo precede a de distância no texto instrucional. **Não certifica raio efetivo, execution, impacto ou resultado de cast**. |
 
 A contraparte no source fixado `Antikythera-Studios/epicfight@a78aa24b72e90a9d09f5fd61925e4369d117abaf` (versão declarada **21.17.3**, `SOURCE_ADJACENT`) é: [Skill.java L123–139](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/Skill.java#L123-L139); [PhantomAscentSkill.java L47–53](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/mover/PhantomAscentSkill.java#L47-L53); [EviscerateSkill.java L59–63](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/weaponinnate/EviscerateSkill.java#L59-L63); [RushingTempoSkill.java L30–45](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/weaponinnate/RushingTempoSkill.java#L30-L45); [BladeRushSkill.java L153–156](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/weaponinnate/BladeRushSkill.java#L153-L156).
+
+## Extensão de lifecycle de atributos — gate verificado
+
+- [GitHub Actions #38985378708](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38985378708), **SUCCESS**, publisher hash confirmado: `PASS_BOUNDED_ORDER`, **7/7 métodos**, **10/10 self-tests** do verificador de invocação, 0 desvios; o gate separado de parâmetros permanece **42/42 JSONs / 43/43 classfiles e 21/21 self-tests**.
+- `Skill.loadDatapackParameters` agora exige também `CompoundTag.getList` entre `Map.clear` e `Codec.parse`: confirmação do acesso à lista antes do parser, **não** de sucesso de parsing.
+- **`Skill.onInitiate`**: `getAttribute` → `hasModifier` → `addTransientModifier` na ordem de referências compiladas. Upstream 21.17.3 [Skill.java L239–250](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/Skill.java#L239-L250) descreve aplicação apenas sobre as entradas carregadas e quando o atributo existe e não contém o ID; o `javap` **não prova execução ou true branch**.
+- **`Skill.onRemoved`**: `getAttribute` → `hasModifier` → `removeModifier` em um mesmo método compilado. Upstream 21.17.3 [Skill.java L252–260](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/Skill.java#L252-L260). **Não** demonstra que uma entidade física teve modifier presente/removido; os cinco JSONs legados continuam condicionados.
+- Os cinco casos anteriores permanecem preservados. A extensão foi incorporada ao mesmo [verificador fail-closed](https://github.com/Gustavaopere/Black-Arcana/blob/docs/catalog-perk-causality-20261015/docs/qa/epicfight_211731_invocation_order.py). Sem copiar código de terceiro ou distribuir JAR.
 
 ## Contratos e próximos gates
 
