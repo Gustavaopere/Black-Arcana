@@ -1,5 +1,13 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Checkpoint vigente — gate Identity2 Java 21 e saneamento CI (17/10/2026)
+
+**GLOBAL — —%**, piso **1.857 semânticos / 1.855 estritos**, universo global desconhecido. **Ars Morph — ✅ 7/7 abilities e 11/11 JSONs** com parâmetros source-pinned, **⚠️ Identity2 2.2.4 JAR/cliente e Mastery condicionados, ⛔ adapters per-player bloqueados**. +0 raízes e +0 funcionalidades de runtime.
+
+Foram eliminadas sete linhas finais em branco das fichas Ars Morph que causaram `git diff --check` failure no Black Arcana CI do HEAD `bf41db5473206282528fd39b08615eb21dd5557c`. Esse job havia compilado/testado Java com `BUILD SUCCESSFUL`, mas o passo Diff sanity falhou, impedindo continuação. A correção precisa de novo CI no último HEAD para ser considerada validada.
+
+Novo [auditor binário fail-closed](../../docs/qa/identity2_224_cooldown_binary.py) + [workflow com seis autotestes e dispatch condicionado](../../.github/workflows/identity2-224-cooldown-binary.yml), indexados no [dossiê Identity2](../providers/✅-ars-morph/IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md). O dispatch exige file ID oficial e SHA-1 independente da build **2.2.4 NeoForge 1.21.1** e não aceita presumir a release 2.2.4.1 ou a build de Fabric. Não houve auditoria física, somente elaboração de guard/rotina de inspeção e autotestes sintéticos. Stage 06.05 🟡, Stage 09 físico PENDING, PR #825 draft e sem merge.
+
 ## Checkpoint vigente — Identity2 cooldown de Ars Morph (17/10/2026)
 
 **Global — —%** (piso vigente **1.857 semânticos / 1.855 estritos**, denominador desconhecido); **Ars Morph/Identity2 — 7/7 habilidades e 11/11 JSONs documentados**, agora com contrato de cooldown primário source-bracket `max(0,cooldown+useduration)` e decremento por tick. Contadores inferidos do código para as sete abilities: **120/820/900/120/420/220/160 ticks**. [Novo dossiê do host Identity2](../providers/✅-ars-morph/IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md), [matriz atualizada](../providers/✅-ars-morph/ABILITY-PERK-CAUSAL-MATRIX-2.0.0.md) e sete fichas revisadas.
