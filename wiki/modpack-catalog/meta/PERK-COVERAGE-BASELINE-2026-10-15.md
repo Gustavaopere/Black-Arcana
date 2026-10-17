@@ -1,5 +1,19 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Checkpoint vigente — Vampirism completo 19/19 (17/10/2026)
+
+**Este checkpoint substitui a métrica histórica "3/19" do delta abaixo somente quanto à profundidade de fichas, preservando-a como histórico.** A PR [#825](https://github.com/Gustavaopere/Black-Arcana/pull/825) agora contém **19/19 (100%) fichas causais individuais** do Vampirism 1.10.13: 14 Vampire, 3 Hunter e 2 Lord. São 16 novas fichas desde o patamar 3/19, sem novo registry entry ou cast. Materialização: [índice de ações](../providers/✅-vampirism/ACTION-CATALOG.md) e [README](../providers/✅-vampirism/README.md). Source pin `TeamLapen/Vampirism@e1ed095713cef5e9eb151d0ee58908fa830d6bb7`; JAR físico `Vampirism-1.21-1.10.13.jar` SHA-1 `349b6e4ea893c98a580775b1725399903e222228`, [registry Java21 #38664546643](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38664546643). **Identidade exata 19/19, comportamento detalhado source-pinned, gameplay/adapter ainda ⚠️/⛔.**
+
+**Achado de consistência com alto impacto em perks:** [`SpeedLordAction.java`](https://github.com/TeamLapen/Vampirism/blob/e1ed095713cef5e9eb151d0ee58908fa830d6bb7/src/main/java/de/teamlapen/vampirism/entity/player/lord/actions/SpeedLordAction.java#L19-L27) e [`AttackSpeedLordAction.java`](https://github.com/TeamLapen/Vampirism/blob/e1ed095713cef5e9eb151d0ee58908fa830d6bb7/src/main/java/de/teamlapen/vampirism/entity/player/lord/actions/AttackSpeedLordAction.java#L19-L27) somam `super.getCooldown` (**effectDuration = 30×20 = 600 ticks**) com `laLord*Cooldown` default **120** sem `×20`, embora [BalanceConfig](https://github.com/TeamLapen/Vampirism/blob/e1ed095713cef5e9eb151d0ee58908fa830d6bb7/src/main/java/de/teamlapen/vampirism/config/BalanceConfig.java#L458-L463) comente "In seconds". Default **aritmético da fonte** = 720 ticks/36s em vez de 150s descritos anteriormente. QA com configuração efetiva e provider-loaded continua pendente; não afirmar runtime bug nem corrigi-lo artificialmente por perk.
+
+**Duas barras atuais (universos distintos):**
+
+- **GLOBAL — —%**: mínimo canônico documentado **1.856 objetos semânticos globais / 1.854 estritos**, denominador total indeterminado. **+0 roots** em Vampirism e Companions nesta sequência.
+- **VAMPIRISM — 19/19, 100%**: fichas individuais desta engenharia causal e identidades registradas; **0 adapters aprovados**.
+- **COMPANIONS! — 9/9, 100%**: Magic Books e fichas causais source-pinned, [matriz do provider](../providers/✅-companions/PERK-CAUSAL-ENGINEERING-MATRIX-1.3.4.md); **0 adapters aprovados**.
+
+**Não promover Stage:** Stage 06.05 🟡; Stage 09 físico PENDING. `ActionActivatedEvent` não comprova onActivated efetivo. RPG Skill Tree mantém authority de Mastery/perks/gates, Vampirism/Companions controlam sua lógica e Black Arcana preserva seu runtime original. Sem merge automático pela conclusão da documentação.
+
 ## Delta vigente — Vampirism 1.10.13, 17/10/2026
 
 **Duas barras operacionais de catalogação (denominadores distintos):**
