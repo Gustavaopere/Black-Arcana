@@ -1,5 +1,9 @@
 # Epic Fight — JAR físico → codec Minecraft no NeoForge exato do pack
 
+## Evidência posterior distinta — provider-loaded isolado
+
+A limitação de não carregar o Epic Fight descrita abaixo é verdadeira **para este workflow de codec**. Posteriormente, [QA #38990309407](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38990309407) **SUCCESS** observou o **mod Epic Fight carregado** no servidor NeoForge 21.1.250: cinco coleções de modifiers legados vazias (**0/0/0/0/0**) e três controles modernos não vazios (**2/2/1**). [Relatório próprio de provider-loaded](EXACT-LOADED-REGISTRY-LEGACY-ATTRIBUTE-PROOF-21.17.3.1.md). Isso ainda **não** comprova player/atributos, equip/unequip ou comportamento do modpack completo.
+
 **Status da prova nova:** ✅ `PASS_PACK_JAR_TO_VANILLA_CODEC`, [GitHub Actions #38987519161](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38987519161) **SUCCESS**, JUnit **2/2 executados, sem skips**. SHA-1/SHA-256 do publisher conferidos novamente. NeoForge **21.1.250** selecionado por `-Pneo_version`, Java21. O artifact publicado contém **apenas XML de resultado** (ID `12083433977`), sem JAR, código de classes ou assets de terceiros. **Não** declarar `provider-loaded`, atributo aplicado ou controle de fluxo/condição testado. Este é um probe opcional e isolado do codec **vanilla Minecraft**, não um teste de skill ativada do Epic Fight.
 
 ## Evidência-fonte e motivo
