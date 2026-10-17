@@ -1,5 +1,11 @@
 # Epic Fight — checkpoint técnico de perks (16/10/2026)
 
+## Atualização provider-loaded com controles positivos — 16/10/2026
+
+✅ [Actions #38990309407](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38990309407) **SUCCESS**: o companion `black_arcana_epicfight_qa`, separado do JAR de produção, observou o Epic Fight **21.17.3.1** ativo em servidor **NeoForge 21.1.250**. As cinco skills de modifiers legados `adaptive_skin`, `adrenaline_fiend`, `catharsis`, `bonebreaker` e `vengeance` apresentaram **zero entradas** na coleção interna `Skill.attributes`. Três **controles positivos** da mesma engine física passaram: `swordmaster=2`, `forbidden_strength=2`, `technician=1`. [Prova e matriz completa](../EXACT-LOADED-REGISTRY-LEGACY-ATTRIBUTE-PROOF-21.17.3.1.md).
+
+**Novo estado de escopo:** `PROVIDER_LOADED_REGISTRY_EMPTY_ISOLATED_SERVER` para as cinco coleções. O antigo `RAW_ONLY_NOT_PROVEN_LOADED` era correto **antes** deste gate; permanece ⚠️ a verificação de atributos efetivos em entidade/equipar/remover/reload e de comportamento no modpack completo. O probe anterior que refletia métodos falhou por `GuiGraphics` em DEDICATED_SERVER; isso foi resolvido pela leitura restrita do campo, somente para QA. Nenhuma perk homologada, +0 magia, nenhum Stage promovido.
+
 **Mod instalado (autoridade física já documentada):** `epicfight` / `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar` / SHA-1 `fb199b7bbea2fc402da28ab586e73f47e32f8fc0`. Ver [auditoria do artefato exato](../EXACT-21.17.3.1-ARTIFACT-SKILL-AUDIT.md) e [disposition integral](SKILL-DISPOSITION-21.17.3.1.md). O registry core foi classificado em **43/43 IDs exatos**, com **3 ações sobrenaturais** na métrica de magia e **40 skills não mágicas** úteis para pesquisa de perks. Nenhuma nova identidade semântica acrescentada neste lote.
 
 ## Barras separadas por nível de evidência
