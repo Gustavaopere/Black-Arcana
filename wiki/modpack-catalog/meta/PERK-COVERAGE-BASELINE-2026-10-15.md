@@ -1,5 +1,11 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Checkpoint vigente — Identity2 cooldown de Ars Morph (17/10/2026)
+
+**Global — —%** (piso vigente **1.857 semânticos / 1.855 estritos**, denominador desconhecido); **Ars Morph/Identity2 — 7/7 habilidades e 11/11 JSONs documentados**, agora com contrato de cooldown primário source-bracket `max(0,cooldown+useduration)` e decremento por tick. Contadores inferidos do código para as sete abilities: **120/820/900/120/420/220/160 ticks**. [Novo dossiê do host Identity2](../providers/✅-ars-morph/IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md), [matriz atualizada](../providers/✅-ars-morph/ABILITY-PERK-CAUSAL-MATRIX-2.0.0.md) e sete fichas revisadas.
+
+**Proveniência:** fonte oficial `xGabou/Identity2` no ramo Minecraft 1.21.1 antes (27/05/2026) e depois (02/10/2026) da release 2.2.4 de 02/09/2026; segundo snapshot de source declara 2.2.4.1. Método de cooldown preserva fórmula nos dois pontos, embora blobs não sejam idênticos. **SOURCE_BRACKET ≠ BINARY_EXACT**; a aplicação no JAR **instalado** Identity2 2.2.4 requer extração/hash e teste. Server fixa cooldown antes de callback, logo falhas/cancelamentos (Wixie e resolvers Ars) podem consumir contador sem efeito; hipótese de QA, não bug reproduzido. **0 novas magias, 0 adapters novos, 0 stages promovidos**. Stage 06.05 🟡, Stage 09 físico PENDING, PR #825 draft.
+
 ## Checkpoint vigente — Ars Morph Identity2 7/7 (17/10/2026)
 
 **Duas barras:** GLOBAL **—%**, piso 1.857 semânticos / 1.855 estritos e denominador aberto; ARS MORPH **✅ 7/7 implementações de habilidades Identity2 source-causal com fichas individuais**, **11/11 assignment JSON localizados**, glyph próprio 1/1 pré-existente. Cobertura de documentação ≠ gameplay; adapters de perks/Mastery **⛔ 0 homologados**, runtime com Identity2 2.2.4/Ars Nouveau 5.13.1/Ars Elemental 0.7.10.1 **⚠️ pendente**.
