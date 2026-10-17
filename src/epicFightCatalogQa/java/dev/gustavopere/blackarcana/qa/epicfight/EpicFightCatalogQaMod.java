@@ -38,8 +38,19 @@ public final class EpicFightCatalogQaMod {
         "technician", 1
     );
 
+    private static final boolean CONNECTED_PLAYER_PREFLIGHT =
+        "1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_CONNECTED_PLAYER_PREFLIGHT"));
+    private static final EpicFightConnectedPlayerLifecycleQa CONNECTED_PLAYER_QA =
+        new EpicFightConnectedPlayerLifecycleQa();
+
     public EpicFightCatalogQaMod() {
         NeoForge.EVENT_BUS.addListener(EpicFightCatalogQaMod::onServerStarted);
+        if (CONNECTED_PLAYER_PREFLIGHT) {
+            NeoForge.EVENT_BUS.addListener(CONNECTED_PLAYER_QA::onLogin);
+            NeoForge.EVENT_BUS.addListener(CONNECTED_PLAYER_QA::onRespawn);
+            NeoForge.EVENT_BUS.addListener(CONNECTED_PLAYER_QA::onLogout);
+            NeoForge.EVENT_BUS.addListener(CONNECTED_PLAYER_QA::onTick);
+        }
     }
 
     private static void onServerStarted(ServerStartedEvent event) {
@@ -117,7 +128,9 @@ public final class EpicFightCatalogQaMod {
             // Never synthesize attributes or mutate any Epic Fight skill here.
             if (observed == LEGACY_SKILLS.size() && controls == MODERN_CONTROLS.size()) {
                 var server = event.getServer();
-                if ("1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_FAKE_PLAYER_PREFLIGHT"))) {
+                if (CONNECTED_PLAYER_PREFLIGHT) {
+                    CONNECTED_PLAYER_QA.onServerStarted(server);
+                } else if ("1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_FAKE_PLAYER_PREFLIGHT"))) {
                     // Never equip a skill on a fake player: check whether its
                     // actual Epic Fight attachment has completed join lifecycle.
                     EpicFightFakePlayerEligibilityQa.check(server);
