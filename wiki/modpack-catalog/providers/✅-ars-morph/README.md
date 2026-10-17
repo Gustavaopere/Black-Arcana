@@ -1,5 +1,11 @@
 # Ars Morph 2.0.0
 
+## Gate de restauração Identity2 — bytecode físico (17/10/2026)
+
+A auditoria do [JAR publisher Identity2 2.2.4 #39077751784](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39077751784) confirmou `PASS_DIRECT_RESTORE_BOUNDED`: a função compilada `IdentityProgression.restoreMorphFromSavedData(ServerPlayer)` chama `EntityAccessor.setCurrentIdentity` sem chamar `IdentityProgression.morph` **dentro do mesmo método**. Foram aprovados 8/8 + 6/6 autotestes sintéticos no job, com SHA-1 publisher `84c222df0176d7ef83ba7cc361249fe062e29218` confirmado. Artefato de evidência [#12117184517](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39077751784/artifacts/12117184517).
+
+[**Matriz de ingressos e protocolo de teste de revogação/restauração**](IDENTITY2-MORPH-INGRESS-RESTORE-QA-2.2.4.md): requisição C2S, comando, morph automático por kill, transformação diária, `clearMorph`, `morph(minecraft:player)` e restore de NBT comparados com o `IdentityProgressionMixin` presente no RPG Skill Tree. **⚠️ A assinatura e a chamada direta não provam bypass em gameplay nem ausência de controles no caller.** Após respec, relog ou respawn, os resultados reais ainda exigem QA com player conectado. ⛔ Nenhuma perk/cooldown/Mastery homologados; runtime de Black Arcana, RPG e Identity2 permanecem separados.
+
 ## Gate de morph do RPG Skill Tree — fonte e publisher (17/10/2026)
 
 A `main` do sibling [RPG Skill Tree](https://github.com/Gustavaopere/neoforge-rpg-skilltree/tree/ed5b65b890767b406ce41127bcb793775263c7bd) já define um `IdentityProgressionMixin` opcional que, no início de `IdentityProgression.morph(ServerPlayer,ResourceLocation,CompoundTag)`, tenta impedir transformações não autorizadas por `MorphIdentityAccess.canMorph`. O publisher Identity2 `2.2.4` para NeoForge 1.21.1 passou à prova do descriptor exato dessa assinatura e dos quatro métodos de cooldown no [workflow Java21 #39075958128](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39075958128): **8/8 autotestes, SHA-1 publisher válido, `PASS_BOUNDED_SIGNATURES`, sem desvios**. [Dossiê causal completo](IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md).
