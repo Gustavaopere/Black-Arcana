@@ -19,7 +19,14 @@ METHODS = {
     "yesman.epicfight.skill.Skill": {
         "loadDatapackParameters": [
             "CompoundTag.getFloat:", "CompoundTag.getInt:",
-            "Map.clear:", "Codec.parse:", "Optional.ifPresent:",
+            "Map.clear:", "CompoundTag.getList:",
+            "Codec.parse:", "Optional.ifPresent:",
+        ],
+        "onInitiate": [
+            "getAttribute:", "hasModifier:", "addTransientModifier:",
+        ],
+        "onRemoved": [
+            "getAttribute:", "hasModifier:", "removeModifier:",
         ],
     },
     "yesman.epicfight.skill.mover.PhantomAscentSkill": {
@@ -160,6 +167,25 @@ class FlowTests(unittest.TestCase):
                (5, "invokevirtual", "a/Entity.distanceToSqr:(La/LivingEntity;)D")]
         self.assertEqual(check_order(ins, ["LivingEntity.isAlive:", "distanceToSqr:"])[1], [])
         self.assertTrue(check_order(ins, ["LivingEntity.isAlive:", "distanceTo:"])[1])
+
+    def test_attribute_lifecycle_probes_are_method_scoped(self):
+        cls = METHODS["yesman.epicfight.skill.Skill"]
+        self.assertIn("CompoundTag.getList:", cls["loadDatapackParameters"])
+        self.assertEqual(cls["onInitiate"],
+                         ["getAttribute:", "hasModifier:", "addTransientModifier:"])
+        self.assertEqual(cls["onRemoved"],
+                         ["getAttribute:", "hasModifier:", "removeModifier:"])
+
+    def test_attribute_lifecycle_wrong_order_fails_closed(self):
+        synthetic = [
+            (3, "invokevirtual", "net/minecraft/world/entity/LivingEntity.getAttribute:"),
+            (8, "invokevirtual", "net/minecraft/world/entity/ai/attributes/AttributeInstance.hasModifier:"),
+            (12, "invokevirtual", "net/minecraft/world/entity/ai/attributes/AttributeInstance.addTransientModifier:"),
+        ]
+        self.assertEqual(check_order(synthetic,
+                         ["getAttribute:", "hasModifier:", "addTransientModifier:"])[1], [])
+        self.assertTrue(check_order(synthetic,
+                         ["addTransientModifier:", "hasModifier:"])[1])
 
     def test_another_method_cannot_satisfy(self):
         seq = method_instructions(SAMPLE, "executeOnServer")
