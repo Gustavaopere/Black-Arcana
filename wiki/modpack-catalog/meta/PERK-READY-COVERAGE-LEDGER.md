@@ -128,7 +128,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-iss-magic-from-the-east` | 27 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-kubejs-ars-nouveau` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-legendary-monsters` | 26 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-legendary-spellbooks` | 33 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-legendary-spellbooks` | 33 | ✅ 30/30 spells com IDs compilados no JAR 0.3.2 e fichas de engenharia causal source-pinned ([matriz](../providers/✅-legendary-spellbooks/PERK-CAUSAL-ENGINEERING-MATRIX-0.3.2.md)); ⚠️ métodos/dependências e gameplay pendentes; ⛔ nenhum adapter Mastery/perks homologado |
 | `✅-leyline-spellbooks` | 21 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-malum` | 5 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-mobstein` | 78 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
