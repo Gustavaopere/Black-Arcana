@@ -1,0 +1,38 @@
+# Iron's 3.16.3 — Firebolt: auditoria causal para perks
+
+**Escopo e status:** `SOURCE-PINNED / CAUSAL-PARTIAL`. Identidade previamente catalogada, **+0 magias**. Auditoria **somente de código-fonte**, sem afirmar equivalência binária destes métodos, config implantada, adapter, CI ou runtime. MC 1.21.1; Iron's Spells 'n Spellbooks `irons_spellbooks` 3.16.3; source `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`.
+
+**Objeto:** `irons_spellbooks:firebolt` (spell), entidade-projétil `irons_spellbooks:firebolt` (tipo distinto com mesmo path, não outra magia). Ficha player-facing existente: [firebolt](../fire/firebolt.md); documentação pública de descrição: https://iron.wiki/spells/ (não copiar texto proprietário). A origem da progressão, loot e scroll específico não foi revalidada.
+
+## Cadeia de execução verificada
+
+1. **Defaults e recursos:** [FireboltSpell 24–45](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/fire/FireboltSpell.java#L24-L45) registra o ID, escola `FIRE`, rarity `COMMON`, máximo de 10 níveis, cooldown **1 segundo**, `INSTANT`, cast time **0 ticks**, `baseManaCost=10`, `manaCostPerLevel=2`. `baseSpellPower=12`, `spellPowerPerLevel=1`. A config ativa, inclusive multiplicadores e cooldown efetivo, pertence ao provider e está **NÃO VERIFICADA** neste perfil.
+2. **Fórmula de dano:** `getDamage(level,caster)=0,5×getSpellPower(level,caster)`; o método da classe-base aplica atributos de spell power, escola e `POWER_MULTIPLIER` da config. Sem esses modificadores e com defaults unitários: nível 1 → **6** de dano-base; nível 10 → **10,5**. Não inferir teto de 10,5 em equipamentos/perks. [FireboltSpell 72–79](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/fire/FireboltSpell.java#L72-L79), [AbstractSpell 211–225](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L211-L225).
+3. **Spawn:** `onCast` cria exatamente um `FireboltProjectile` associado ao caster, posiciona o centro vertical próximo dos olhos, chama `shoot(lookAngle)`, define o dano e insere a entidade. Não há criação de área/retarget nesse método. [FireboltSpell 62–70](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/fire/FireboltSpell.java#L62-L70).
+4. **Hitbox / render / velocidade:** [EntityRegistry 143–147](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/registries/EntityRegistry.java#L143-L147) declara `EntityType.Builder.sized(0.5f,0.5f)` — dimensões de entidade registradas **0,5 bloco de largura × 0,5 bloco de altura**, não raio explosivo ou escala das partículas. [FireboltProjectile 27–41](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/firebolt/FireboltProjectile.java#L27-L41) usa `setNoGravity(true)` e `getSpeed()=1.75f` (blocos/tick no vetor inicial com direção normalizada de `getLookAngle`). A superclasse faz raycast da trajetória, não apenas overlap de AABB. Traço visual independente: raio de partículas 0,25 em [FireboltProjectile 73–114](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/firebolt/FireboltProjectile.java#L73-L114); alterar partículas **não** altera hitbox.
+5. **Colisão com mundo:** [FireboltProjectile 54–66](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/firebolt/FireboltProjectile.java#L54-L66) descarta ao bater em bloco. Ao atingir entidade, obtém target, encaminha `getDamage()` ao `DamageSources.applyDamage` com `SpellDamageSource`, depois chama `consumeEntityImpact(...,true)`, cuja superclasse implementa piercing/ricochete/descarte. Não presumir que Firebolt configure piercing por default.
+6. **Efeito de fogo:** `FireboltSpell.getDamageSource` usa `setFireTicks(60)`; o listener de `DamageSources.postHitEffects` aplica ignite como efeito **posterior a dano registrado** quando a fonte satisfaz a condição. **60 ticks = 3 segundos à taxa de 20 TPS**, mas a duração final em jogo depende do ciclo de status e de eventuais fatores externos. [FireboltSpell 72–75](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/fire/FireboltSpell.java#L72-L75), [DamageSources 91–110](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L91-L110).
+7. **Dano e eventos:** o caminho `LivingEntity+SpellDamageSource` de [DamageSources 44–65](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L65) publica `SpellDamageEvent` antes de `hurt`, lê seu `setAmount`, depois aplica resistência por escola e guardas de friendly fire. Outros targets/fontes podem bypassar esse evento. Não criar segundo ataque ao escutar evento de dano.
+8. **Lifetime / alcance:** a superclasse `AbstractMagicProjectile` usa `EXPIRE_TIME=15×20=300 ticks`, verifica chunks e remove o projétil ao expirar. Esse teto de existência **não representa alcance garantido**; colisões, chunk, ricochete e outras condições interferem. [Superclasse](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java).
+
+## Matriz aplicável a perks
+
+| Eixo | Parâmetro verificado | Seam de integração |
+|---|---|---|
+| Dano | `0,5×power`; `setDamage` no spawn | `SpellDamageEvent.setAmount` antes de `hurt` em entidades vivas: **HOOK_VERIFICADO apenas para valor por impacto**; adapter e caps ⚠️ |
+| Tipo de dano / fire ticks | `getDamageSource().setFireTicks(60)` | ⛔ Não foi encontrado setter externo de `DamageType` ou duração de burning específico por perk |
+| Projétil (hitbox) | `EntityType.sized(0.5,0.5)` | ⛔ registro estático não é mutabilidade runtime por jogador; escala VFX não serve |
+| Velocidade | `getSpeed()=1.75f` | ⛔ hook/callback de velocidade seguro não demonstrado |
+| Alcance | trajetória + `EXPIRE_TIME=300` + colisões | ⛔ sem `maxRange` per-spell mutável identificado |
+| Tipo de alvo | entidade no primeiro impacto, blocos terminam projétil | ⛔ mudar entity→AOE requer novo contrato pré-settlement |
+| Mana / cooldown | 10+2×(level−1), 1 s default | ⚠️ `SpellOnCastEvent.setManaCost` é **pós-gate** de mana; descontos não liberam casts previamente negados |
+
+### QA pendente
+
+- [ ] SHA/JAR compilado exato para spell + projétil + superclasse + dano; modlist/config efetiva.
+- [ ] Testar 0,5×0,5, raycast com shield/LOE e velocidade no servidor, visual no cliente.
+- [ ] Verificar tick de burning, aplicação de `SpellDamageEvent`, imortalidade/i-frames, PvP e proteção.
+- [ ] Atestar integração com RPG Skill Tree sem cast paralelo, double-hit ou bypass do provider.
+- [ ] Dedicated-server, multiplayer e Survival/acquisition.
+
+Fonte upstream consultada apenas como evidência técnica clean-room; nenhum código de terceiros incorporado.

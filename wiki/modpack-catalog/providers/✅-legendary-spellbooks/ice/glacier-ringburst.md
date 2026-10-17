@@ -36,3 +36,20 @@ Fail-closed para qualquer integração que dependa de um suposto nível 5 até o
 ## Source
 
 `GlacierRingburstSpell.java`, `LSSpellScrollLootProvider.java` @ source pin 0.3.2.
+
+## Engenharia causal para perks — 17/10/2026
+
+**Status:** `legendary_spellbooks:glacier_ringburst` COUNTED_EXACT 0.3.2 para registry; source 0.3.2 fixo `Higurashi34m/Legendary-Spellbooks@62ced2f2b2693aa841251473cbbd726fdd928ed3` para algoritmos, **⚠️ runtime/loot 1–5 versus maxLevel 4 pendente**.
+
+| Eixo | Implementação factual | Mutabilidade externa |
+|---|---|---|
+| Cast/recursos | `DefaultConfig` maxLevel **4**, cooldown **12s**, castTime **20 ticks**, mana `100+10×(level−1)`, spell power `3+2×(level−1)` antes do caster multiplier. `getSpellPower` é convertido a `int` no cast: **truncamento do valor efetivo**, não dano decimal garantido. | Iron's controla mana/bonus de escola e casts; hook per-player para conversão e target não provado. |
+| Origem/área | Centro = `caster.position()`. `ringCount=min(2+level,8)` (níveis 1–4: **3,4,5,6**). Cada anel i tem raio `1.5+i×1.75` blocos; no último anel a borda fica em **5 / 6.75 / 8.5 / 10.25 blocos** respectivamente. Isto é o raio do último anel, não range de aquisição. | `SEM_HOOK_SEGURO` para ampliar/mudar concentricidade, AOE e hitboxes. |
+| Número de projéteis | `spikeCount=2+ringCount×2` é fixo **para todos os anéis do mesmo cast**: 8/10/12/14. Tentativas máximas totais = `ringCount×spikeCount` = **24/40/60/84** entidades por cast, quando `findGround` retorna posição para todos os pontos. | Multiplicação de contagem cresce custo do servidor; sem perk de +X espículas enquanto não houver cap/hook oficial. |
+| Timing | Cada anel i recebe warmup **i×2 ticks**, passado ao construtor `SpellIceSpikeEntity`. A entidade herda `IceSpikeEntity` de Legendary Monsters; momento exato do dano, hitbox, tipo e lifetime **não estão no método auditado**. | `⛔` não prometer tick de dano, freeze, hitbox ou DamageType sem inspecionar versão física Legendary Monsters 2.2.2. |
+| Limites de mundo | Para cada ponto, chama `RaycastUtils.findGround(level, point, 6, 3)`. Se retornar null, `break` encerra somente a **fileira interna desse anel** (loop de pontos), não toda a spell. | Spawn condicionado por terreno; WorldEffectPolicy Black Arcana não protege automaticamente efeitos externos. |
+| Target/dano | Geometria de anel sobre blocos, não entity target/LOS; o cast passa damage (int) e caster a cada espícula. Dano realmente recebido depende do helper/entidade externa, i-frames e equipe. | `CONFIG_NATIVE` para stats globais; `SEM_HOOK_SEGURO` para target, dano por hit e física externa. |
+
+**Âncoras:** [source da spell, formulas, loops](https://github.com/Higurashi34m/Legendary-Spellbooks/blob/62ced2f2b2693aa841251473cbbd726fdd928ed3/src/main/java/dev/higurashi/legendary_spellbooks/common/spells/ice/GlacierRingburstSpell.java#L23-L78); [wrapper `SpellIceSpikeEntity`](https://github.com/Higurashi34m/Legendary-Spellbooks/blob/62ced2f2b2693aa841251473cbbd726fdd928ed3/src/main/java/dev/higurashi/legendary_spellbooks/common/entities/spell/projectile/SpellIceSpikeEntity.java#L9-L23).
+
+**QA necessário:** mínimo e máximo níveis 1–4, loot nível 5, obstáculos/ground find, chuva de 84 entidades, picos de tick e chunk, client/despawn, anti-magic, PvP/friendly, efetivo damage/type. Cada spike é filho da mesma conjuração, não cast próprio. **+0 novas raízes e adapters.**

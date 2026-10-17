@@ -16,9 +16,20 @@ public final class CatalogQaProbeMod {
 
     public CatalogQaProbeMod() {
         NeoForge.EVENT_BUS.addListener(CatalogQaProbeMod::onServerStarted);
+        if (Boolean.getBoolean("black_arcana.catalog_qa.arrow_volley")) {
+            ArrowVolleyRuntimeEvidence.install();
+        }
+        if (Boolean.getBoolean("black_arcana.catalog_qa.irons_event_phase")) {
+            IronsEventPhaseRuntimeEvidence.install();
+        }
     }
 
     private static void onServerStarted(ServerStartedEvent event) {
         CatalogRuntimeEvidence.emit();
+        if (Boolean.getBoolean("black_arcana.catalog_qa.arrow_volley")
+                || Boolean.getBoolean("black_arcana.catalog_qa.irons_event_phase")) {
+            // One shared publisher checksum record, even when both probes run.
+            ArrowVolleyRuntimeEvidence.emitProviderFingerprint();
+        }
     }
 }

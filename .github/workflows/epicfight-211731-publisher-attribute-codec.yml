@@ -1,0 +1,72 @@
+name: Epic Fight 21.17.3.1 physical JSON to Minecraft codec (NeoForge 21.1.250)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/epicfight-211731-publisher-attribute-codec.yml'
+      - 'src/test/java/dev/gustavopere/blackarcana/integration/epicfight/EpicFightPublisherJarAttributeCodecTest.java'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  physical_json_vanilla_codec:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Fetch publisher SHA-exact Epic Fight JAR without redistributing
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/catalog-epicfight-publisher-codec
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-all-errors --connect-timeout 20 --max-time 240 \
+            'https://cursemaven.com/curse/maven/epic-fight-mod-405076/8175609/epic-fight-mod-405076-8175609.jar' \
+            --output build/catalog-epicfight-publisher-codec/epicfight-exact.jar
+          echo 'fb199b7bbea2fc402da28ab586e73f47e32f8fc0  build/catalog-epicfight-publisher-codec/epicfight-exact.jar' | sha1sum --check
+          echo '8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526  build/catalog-epicfight-publisher-codec/epicfight-exact.jar' | sha256sum --check
+
+      - name: Run only exact-publisher JSON codec tests with pack NeoForge 21.1.250
+        shell: bash
+        env:
+          EPICFIGHT_PUBLISHER_JAR: ${{ github.workspace }}/build/catalog-epicfight-publisher-codec/epicfight-exact.jar
+        run: |
+          set -euo pipefail
+          ./gradlew --no-daemon \
+            -Pneo_version=21.1.250 \
+            test --tests 'dev.gustavopere.blackarcana.integration.epicfight.EpicFightPublisherJarAttributeCodecTest'
+
+      - name: Verify both physical tests executed, not disabled
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import pathlib
+          import xml.etree.ElementTree as ET
+          path = pathlib.Path("build/test-results/test/TEST-dev.gustavopere.blackarcana.integration.epicfight.EpicFightPublisherJarAttributeCodecTest.xml")
+          assert path.is_file(), "missing publisher physical test result"
+          root = ET.parse(path).getroot()
+          counts = {x: int(root.attrib[x]) for x in ("tests", "skipped", "failures", "errors")}
+          assert counts == {"tests": 2, "skipped": 0, "failures": 0, "errors": 0}, counts
+          print("PACK_JAR_TO_VANILLA_CODEC_PASS: publisher SHA verified, NeoForge 21.1.250, 2/2 tests executed")
+          PY
+
+      - name: Upload bounded JUnit XML, never publisher JAR or classes
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: epicfight-publisher-codec-junit-${{ github.sha }}
+          path: build/test-results/test/TEST-dev.gustavopere.blackarcana.integration.epicfight.EpicFightPublisherJarAttributeCodecTest.xml
+          if-no-files-found: ignore
+          retention-days: 14

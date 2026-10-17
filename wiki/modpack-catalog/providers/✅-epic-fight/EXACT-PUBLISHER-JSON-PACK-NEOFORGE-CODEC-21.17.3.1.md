@@ -1,0 +1,27 @@
+# Epic Fight — JAR físico → codec Minecraft no NeoForge exato do pack
+
+## Evidência posterior distinta — provider-loaded isolado
+
+A limitação de não carregar o Epic Fight descrita abaixo é verdadeira **para este workflow de codec**. Posteriormente, [QA #38990309407](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38990309407) **SUCCESS** observou o **mod Epic Fight carregado** no servidor NeoForge 21.1.250: cinco coleções de modifiers legados vazias (**0/0/0/0/0**) e três controles modernos não vazios (**2/2/1**). [Relatório próprio de provider-loaded](EXACT-LOADED-REGISTRY-LEGACY-ATTRIBUTE-PROOF-21.17.3.1.md). Isso ainda **não** comprova player/atributos, equip/unequip ou comportamento do modpack completo.
+
+**Status da prova nova:** ✅ `PASS_PACK_JAR_TO_VANILLA_CODEC`, [GitHub Actions #38987519161](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38987519161) **SUCCESS**, JUnit **2/2 executados, sem skips**. SHA-1/SHA-256 do publisher conferidos novamente. NeoForge **21.1.250** selecionado por `-Pneo_version`, Java21. O artifact publicado contém **apenas XML de resultado** (ID `12083433977`), sem JAR, código de classes ou assets de terceiros. **Não** declarar `provider-loaded`, atributo aplicado ou controle de fluxo/condição testado. Este é um probe opcional e isolado do codec **vanilla Minecraft**, não um teste de skill ativada do Epic Fight.
+
+## Evidência-fonte e motivo
+
+- Modlist física sibling, posição **#260/587 entradas**: `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar`, `modid epicfight`, CurseForge `405076 / 8175609`, SHA-1 `fb199b7bbea2fc402da28ab586e73f47e32f8fc0` e SHA-256 `8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526`, NeoForge físico **21.1.250**. A branch main do Black Arcana usa NeoForge **21.1.248**: essas versões não devem ser tratadas como intercambiáveis.
+- [Teste isolado de publisher JAR](https://github.com/Gustavaopere/Black-Arcana/blob/docs/catalog-perk-causality-20261015/src/test/java/dev/gustavopere/blackarcana/integration/epicfight/EpicFightPublisherJarAttributeCodecTest.java) lê **literalmente** `data/epicfight/skill_parameters/{adaptive_skin,adrenaline_fiend,catharsis,bonebreaker,vengeance}.json` do arquivo zip baixado após verificar **os dois hashes**. Usa `JsonOps` → `NbtOps` e `AttributeModifier.MAP_CODEC` do Minecraft real. Exige oito registros físicos distribuídos como **1 + 2 + 2 + 1 + 2**.
+- [Workflow isolado de NeoForge 21.1.250](https://github.com/Gustavaopere/Black-Arcana/blob/docs/catalog-perk-causality-20261015/.github/workflows/epicfight-211731-publisher-attribute-codec.yml) pinou `-Pneo_version=21.1.250`, Java 21, e exige **2/2 testes não ignorados** no XML JUnit; retorna somente XML de QA com retenção curta, **jamais** o JAR do publisher.
+- **Prova executada, conferida no log e JUnit XML:** a primeira asserção inspeciona os 5 recursos empacotados, verifica 8/8 linhas `name/uuid`, ausência de `id`, `operation` legada e resultado de parse vazio para o codec do modifier, inclusive a lista composta por `Codec.list`. A segunda reconstrói apenas controles modernos `id/add_value|add_multiplied_total` preservando os **amounts do publisher**, exigindo parse individual e de lista.
+- **Isolamento:** o teste JUnit somente ativa quando `EPICFIGHT_PUBLISHER_JAR` existe no ambiente. O job independente verifica explicitamente a execução não ignorada no XML. O teste não injeta o Epic Fight no gameTestServer nem classpath de produção, não altera spells/perks/runtime, não redistribui código/asset/JAR de terceiros.
+
+## Limites e próximos gates
+
+Ainda não executa o `Skill.ATTRIBUTE_ENTRY_CODEC` da classe Epic Fight, o reload do datapack no mod instalado ou o lifecycle `Skill.onInitiate/onRemoved` em entidades reais. Mesmo com `SUCCESS`, a classificação dos cinco modifiers continua **⚠️ `RAW_ONLY_NOT_PROVEN_LOADED` no provider**, e perks/atributos não são homologados. Teste realmente **provider-loaded** requer pack com dependencies exatas, inicialização dedicada, equipar/desabilitar skill, comparação de `AttributeInstance`, recarregamento e consistência client/server.
+
+## Resultado observado e precisão do método
+
+No run #38987519161, o job `physical_json_vanilla_codec` terminou **SUCCESS**. O log registra ambos `sha1sum --check`/`sha256sum --check` como `OK`, compilação Gradle com NeoForge 21.1.250 como **BUILD SUCCESSFUL**, e confirmação final `PACK_JAR_TO_VANILLA_CODEC_PASS: publisher SHA verified, NeoForge 21.1.250, 2/2 tests executed`. Os testes executaram asserções reais para os **cinco arquivos embutidos e oito linhas**, analisando `JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE, json)`, `AttributeModifier.MAP_CODEC` e `Codec.list`. Verificaram formatos antigos incompatíveis e formatos modernos de controle aceitos.
+
+**Limitação importante:** `PASS_PACK_JAR_TO_VANILLA_CODEC` é rótulo **descritivo de evidência**, não enum de implementação/provider e não é `PROVIDER_LOADED`. O JAR entrou como *ZIP fonte de JSON*, **não** como mod carregado na engine. Não houve medição de `AttributeInstance`, callbacks `onInitiate/onRemoved`, reload, aplicação real ou Mastery. Esses gates continuam ⚠️/⛔ até prova no provider efetivo.
+
+**Identidades mágicas:** nenhum novo feitiço — core Epic Fight segue 43/43 registros, 42/42 JSONs, 3 trident innates previamente contadas. Piso global 1.856 semânticas mínimas / 1.854 estritas, denominador desconhecido. Stage 06.05 🟡; Stage 09 físico pendente, sem merge.

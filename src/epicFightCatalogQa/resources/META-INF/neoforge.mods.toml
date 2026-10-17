@@ -1,0 +1,36 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="All Rights Reserved"
+
+[[mods]]
+modId="black_arcana_epicfight_qa"
+version="${mod_version}"
+displayName="Black Arcana Epic Fight Runtime QA"
+authors="Gustavaopere"
+description='''Removable, read-only exact-provider loaded registry probe. Never production magic or perk content.'''
+
+[[dependencies.black_arcana_epicfight_qa]]
+modId="black_arcana"
+type="required"
+ordering="AFTER"
+side="SERVER"
+
+[[dependencies.black_arcana_epicfight_qa]]
+modId="epicfight"
+type="required"
+ordering="AFTER"
+side="SERVER"
+
+[[dependencies.black_arcana_epicfight_qa]]
+modId="neoforge"
+type="required"
+versionRange="[${neo_version},)"
+ordering="NONE"
+side="SERVER"
+
+[[dependencies.black_arcana_epicfight_qa]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="SERVER"

@@ -1,0 +1,177 @@
+name: Epic Fight 21.17.3.1 loaded registry QA (NeoForge 21.1.250)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/epicfight-211731-loaded-registry-qa.yml'
+      - 'src/epicFightCatalogQa/**'
+      - 'build.gradle'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact_loaded_registry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download and fingerprint exact physical Epic Fight artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/epicfight-loaded-qa
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-all-errors --connect-timeout 20 --max-time 240 \
+            'https://cursemaven.com/curse/maven/epic-fight-mod-405076/8175609/epic-fight-mod-405076-8175609.jar' \
+            --output build/epicfight-loaded-qa/epicfight-exact.jar
+          echo 'fb199b7bbea2fc402da28ab586e73f47e32f8fc0  build/epicfight-loaded-qa/epicfight-exact.jar' | sha1sum --check
+          echo '8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526  build/epicfight-loaded-qa/epicfight-exact.jar' | sha256sum --check
+          jar tf build/epicfight-loaded-qa/epicfight-exact.jar | grep -Fx 'yesman/epicfight/registry/EpicFightRegistries.class'
+          javap -classpath build/epicfight-loaded-qa/epicfight-exact.jar -p yesman.epicfight.skill.Skill | grep -F 'attributes;'
+
+      - name: Build isolated QA companion with physical NeoForge release
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./gradlew --no-daemon -Pneo_version=21.1.250 epicFightCatalogQaJar
+          QAJAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_epicfight_qa-*.jar' | head -n 1)"
+          test -n "$QAJAR"
+          jar tf "$QAJAR" | grep -Fx 'dev/gustavopere/blackarcana/qa/epicfight/EpicFightCatalogQaMod.class'
+          unzip -p "$QAJAR" META-INF/neoforge.mods.toml | grep -Fq 'modId="epicfight"'
+          unzip -p "$QAJAR" META-INF/neoforge.mods.toml | grep -Fq 'versionRange="[21.1.250,)"'
+          ./gradlew --no-daemon -Pneo_version=21.1.250 jar
+          PROD="$(find build/libs -maxdepth 1 -type f -name 'black_arcana-*.jar' | head -n 1)"
+          test -n "$PROD"
+          if jar tf "$PROD" | grep -Fq 'EpicFightCatalogQaMod'; then
+            echo 'QA-only class leaked into production JAR'
+            exit 1
+          fi
+
+      - name: Boot provider JAR as real NeoForge mod, record loaded skill entries
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p runs/server/mods build/epicfight-loaded-qa
+          PUBLISHER="$PWD/build/epicfight-loaded-qa/epicfight-exact.jar"
+          QAJAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_epicfight_qa-*.jar' | head -n 1)"
+          cp "$PUBLISHER" runs/server/mods/epicfight-21.17.3.1.jar
+          cp "$QAJAR" runs/server/mods/"$(basename "$QAJAR")"
+          printf 'eula=true\n' > runs/server/eula.txt
+          LOG="$PWD/build/epicfight-loaded-qa/server.log"
+          ./gradlew --no-daemon -Pneo_version=21.1.250 runServer > "$LOG" 2>&1 &
+          PID=$!
+          cleanup() {
+            kill "$PID" 2>/dev/null || true
+            wait "$PID" 2>/dev/null || true
+            rm -f runs/server/mods/epicfight-21.17.3.1.jar
+            rm -f runs/server/mods/black_arcana_epicfight_qa-*.jar
+          }
+          trap cleanup EXIT
+          COMPLETE=0
+          for _ in $(seq 1 150); do
+            if grep -Fq '[BLACK_ARCANA_EPICFIGHT_LOADED_QA] type=end status=' "$LOG" && \
+               grep -Fq '[BLACK_ARCANA_EPICFIGHT_LOADED_QA] type=reload_end status=' "$LOG" && \
+               grep -Eq 'Done \([0-9.]+s\)! For help, type "help"' "$LOG"; then
+              COMPLETE=1
+              break
+            fi
+            if ! kill -0 "$PID" 2>/dev/null; then
+              tail -n 100 "$LOG"
+              exit 1
+            fi
+            sleep 2
+          done
+          if [[ "$COMPLETE" != 1 ]]; then
+            tail -n 100 "$LOG"
+            echo 'Loaded provider QA evidence not available'
+            exit 1
+          fi
+
+      - name: Verify exact loaded-skill evidence and write bounded JSON
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, pathlib, re
+          log = pathlib.Path("build/epicfight-loaded-qa/server.log").read_text(errors="replace")
+          prefix = r"\[BLACK_ARCANA_EPICFIGHT_LOADED_QA\]"
+          # Minimal provider-only diagnostics; no third-party code or server log upload.
+          qa_lines = [line.split("[BLACK_ARCANA_EPICFIGHT_LOADED_QA]", 1)[-1].strip()
+                      for line in log.splitlines()
+                      if "[BLACK_ARCANA_EPICFIGHT_LOADED_QA]" in line]
+          print("QA_DIAGNOSTIC_LINES=" + json.dumps(qa_lines[:30]))
+          assert re.search(prefix + r" type=begin provider=epicfight loaded=true\b", log), "Epic Fight mod was not observed loaded"
+          ids = ("adaptive_skin", "adrenaline_fiend", "catharsis", "bonebreaker", "vengeance")
+          evidence = {}
+          for skill in ids:
+              matches = re.findall(prefix + r" type=skill id=epicfight:" + skill +
+                                   r" status=OBSERVED_LOADED_REGISTRY modifier_entries=(\d+)\b", log)
+              assert len(matches) == 1, f"one registry observation required for {skill}: {matches}"
+              original_count = int(matches[0])
+              assert original_count == 0, f"legacy modifier unexpectedly loaded at boot: {skill} {original_count}"
+              evidence["epicfight:" + skill] = original_count
+          controls_expected = {"swordmaster": 2, "forbidden_strength": 2, "technician": 1}
+          controls_observed = {}
+          for skill, expected in controls_expected.items():
+              matches = re.findall(prefix + r" type=control id=epicfight:" + skill +
+                                   r" status=OBSERVED_LOADED_REGISTRY modifier_entries=(\d+) raw_json_entries=(\d+)\b", log)
+              assert len(matches) == 1, f"one modern control observation required for {skill}: {matches}"
+              actual, raw_count = map(int, matches[0])
+              assert raw_count == expected, f"raw modern JSON count drifted for {skill}: {raw_count}"
+              assert actual == expected, f"modern controls were not loaded for {skill}: {actual}/{expected}"
+              controls_observed["epicfight:" + skill] = actual
+          assert re.search(prefix + r" type=end status=OBSERVED observed=5 expected=5 controls=3 expected_controls=3\b", log), "loaded registry evidence incomplete"
+          # The resource reload is initiated by the QA mod through Minecraft's
+          # actual server reload future, not by resubmitting a static JSON fixture.
+          # Re-validate the same eight skill identities after that future resolves.
+          reload_legacy = {}
+          for skill in ids:
+              found = re.findall(prefix + r" type=reload_skill id=epicfight:" + skill +
+                                 r" modifier_entries=(\d+)\b", log)
+              assert len(found) == 1, f"missing post-reload legacy evidence: {skill} {found}"
+              count = int(found[0])
+              assert count == 0, f"legacy count changed after reload: {skill} {count}"
+              reload_legacy["epicfight:" + skill] = count
+          reload_controls = {}
+          for skill, expected in controls_expected.items():
+              found = re.findall(prefix + r" type=reload_control id=epicfight:" + skill +
+                                 r" modifier_entries=(\d+) expected=(\d+)\b", log)
+              assert len(found) == 1, f"missing post-reload control evidence: {skill} {found}"
+              count, declared = map(int, found[0])
+              assert count == declared == expected, f"modern count drift after reload: {skill} {count}/{expected}"
+              reload_controls["epicfight:" + skill] = count
+          assert re.search(prefix + r" type=reload_end status=OBSERVED observed=5 controls=3\b", log), "provider reload failed/incomplete"
+          result = {
+              "scope": "EXACT_PROVIDER_LOADED_REGISTRY_WITH_MODERN_POSITIVE_CONTROLS_NOT_EQUIPPED_ATTRIBUTES",
+              "provider": "epicfight", "version": "21.17.3.1",
+              "neoforge": "21.1.250", "sha1": "fb199b7bbea2fc402da28ab586e73f47e32f8fc0",
+              "status": "PROVIDER_LOADED_REGISTRY_OBSERVED",
+              "modifier_entry_counts": evidence,
+              "modern_control_counts": controls_observed,
+              "post_reload_modifier_entry_counts": reload_legacy,
+              "post_reload_modern_control_counts": reload_controls,
+              "reload_scope": "MINECRAFT_SERVER_RESOURCE_RELOAD_COMPLETION_OBSERVED",
+              "not_evidenced": ["player_attribute_instance", "skill_equip", "skill_unequip",
+                                "datapack_reload", "damage_or_cast", "mastery_hook"],
+          }
+          out = pathlib.Path("build/epicfight-loaded-qa/loaded-skill-evidence.json")
+          out.write_text(json.dumps(result, indent=2) + "\n")
+          print(json.dumps(result, indent=2))
+          PY
+
+      - name: Publish bounded evidence without publisher or QA JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: epicfight-loaded-registry-evidence-${{ github.sha }}
+          path: build/epicfight-loaded-qa/loaded-skill-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14

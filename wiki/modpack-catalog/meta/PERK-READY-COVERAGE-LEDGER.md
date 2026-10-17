@@ -19,7 +19,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-a-good-place` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-aces-spell-utils` | 5 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-acolyte` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-aeromancy-additions` | 16 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-aeromancy-additions` | 16 | ✅ 10/10 spells com fichas source-pinned, [matriz de parâmetros, targeting e WORLD SAFETY](../providers/✅-aeromancy-additions/PERK-CAUSAL-ENGINEERING-MATRIX-1.2.8.md); ⚠️ JAR publisher comprovado, **SHA do instalado inválido**, host/config/Survival/QA pendentes; ⛔ perks/adapters não homologadas |
 | `✅-alexs-caves-continued` | 13 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-alexs-mobs-continued` | 8 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-alshanex-familiars` | 20 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
@@ -35,7 +35,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-ars-additions` | 48 | ✅ 5/5 magias/rituais (3 glyphs, 2 rituals) com cadeia e source exato; ⚠️ compatibilidade host/config/QA; ⛔ adapter RPG |
 | `✅-ars-controle` | 25 | ✅ 9/9 glyphs com source 1.6.16 causal exato; ⚠️ runtime/concurrency/scheduler; ⛔ perk adapter RPG |
 | `✅-ars-creo` | 14 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-ars-elemancy` | 11 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-ars-elemancy` | 11 | ✅ 7/7 famílias foci/bangles/essences/armaduras com [fichas causais source-pinned](../providers/✅-ars-elemancy/PERK-CAUSAL-EQUIPMENT-MATRIX-1.18.3.md), registro de 105 items e **0 glyph/perks próprias**; ⚠️ Ars Nouveau 5.13.1/Ars Elemental 0.7.10.1, Curios/atributos e full-pack QA pendentes; ⛔ nenhum adapter RPG homologado |
 | `✅-ars-elemental` | 59 | ✅ 47/47 objetos core (23 effects, 2 methods, 2 propagators, 12 filtros, 8 rituais) com dossiês source-located; ⚠️ config/QA; ⛔ adapter RPG |
 | `✅-ars-hex` | 10 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-ars-morph` | 7 | ✅ 1/1 glyph Morph com dossiê standalone source 2.0.0; ⚠️ host Identity2/current runtime; ⛔ adapter RPG |
@@ -128,7 +128,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-iss-magic-from-the-east` | 27 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-kubejs-ars-nouveau` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-legendary-monsters` | 26 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-legendary-spellbooks` | 33 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-legendary-spellbooks` | 33 | ✅ 30/30 spells com IDs compilados no JAR 0.3.2 e fichas de engenharia causal source-pinned ([matriz](../providers/✅-legendary-spellbooks/PERK-CAUSAL-ENGINEERING-MATRIX-0.3.2.md)); ⚠️ métodos/dependências e gameplay pendentes; ⛔ nenhum adapter Mastery/perks homologado |
 | `✅-leyline-spellbooks` | 21 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-malum` | 5 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-mobstein` | 78 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |

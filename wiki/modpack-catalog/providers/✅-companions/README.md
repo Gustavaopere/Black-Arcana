@@ -1,5 +1,11 @@
 # Companions! — 1.3.4
 
+## Matriz causal dos nove Magic Books — 17/10/2026 (PR #825, draft)
+
+✅ [9/9 identidades físicas](EXACT-BINARY-MAGIC-BOOKS-1.3.4.md) e ✅ [9/9 fichas aprofundadas por eixo técnico](PERK-CAUSAL-ENGINEERING-MATRIX-1.3.4.md) com base no source oficial `Xylonity/Companions@95c9445e1514648418064ea90b5c373e81375d2f`. Fichas em `magic-books/` incluem alcance, geometria, número e lifetime de entidades, dano/tipo, cura/status, tempo/cooldown e matriz de segurança para perks.
+
+**⚠️** Engenharia source-pinned, sem validar que os corpos de métodos coincidam binariamente com o JAR físico `1.3.4`, sem provider-loaded/gameplay/cliente ou teste de custos efetivos; todos os event hooks/adapters RPG permanecem condicionados ou **⛔ SEM_HOOK_SEGURO** conforme a linha. Os 9 já constavam do ledger (**+0 identidades novas**); nenhum código runtime implementado e nenhum Stage promovido.
+
 **Registro físico SHA-exato (2026-10-13):** ✅ [9/9 Magic Books provider-native](EXACT-BINARY-MAGIC-BOOKS-1.3.4.md), [Java 21 #38458161666](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38458161666) **SUCCESS**. CurseForge file `8857294`, **7189704 bytes**, SHA-1 `23f6e4f27a457a8d016412e495e417c0b36fdcc1` = físico #104. `CompanionsItems.ITEMS` registra nove `ResourceEntry<Item>` com factories de subclasses concretas `AbstractMagicBook` (KnightLib), sem branches. **Não** são spells Iron's; `COUNTED_EXACT` só da identidade estática, catálogo de 9 já existente (+0), campanha **23/39 exatos / 16/39 pendentes**, mínimos **1857 global / 1855 escopo**; configuração e Survival ⚠️.
 
 
