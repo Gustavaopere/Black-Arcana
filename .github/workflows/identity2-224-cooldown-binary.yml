@@ -31,7 +31,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - name: Six deterministic synthetic tests of bounded check and fail-closed paths
+      - name: Eight deterministic synthetic tests of bytecode and optional morph-target gates
         run: python3 docs/qa/identity2_224_cooldown_binary.py --self-test
       # File ID + SHA-1 from the public ShadowCity2.0 V3 manifest; verify bytes before accepting.
       # This manifest is third-party evidence, NOT the user's installed JAR.
