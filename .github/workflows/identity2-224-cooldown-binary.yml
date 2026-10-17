@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/identity2-224-cooldown-binary.yml'
       - 'docs/qa/identity2_224_cooldown_binary.py'
+      - 'wiki/modpack-catalog/providers/✅-ars-morph/IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md'
   workflow_dispatch:
     inputs:
       curseforge_file_id:
@@ -32,12 +33,13 @@ jobs:
           java-version: '21'
       - name: Six deterministic synthetic tests of bounded check and fail-closed paths
         run: python3 docs/qa/identity2_224_cooldown_binary.py --self-test
-      - name: Fetch user-confirmed official publisher JAR (never guess file ID)
-        if: github.event_name == 'workflow_dispatch'
+      # File ID + SHA-1 from the public ShadowCity2.0 V3 manifest; verify bytes before accepting.
+      # This manifest is third-party evidence, NOT the user's installed JAR.
+      - name: Fetch publisher JAR using pinned public-manifest reference (SHA gate)
         shell: bash
         env:
-          CF_FILE: ${{ inputs.curseforge_file_id }}
-          SHA1_EXPECTED: ${{ inputs.expected_sha1 }}
+          CF_FILE: ${{ github.event_name == 'workflow_dispatch' && inputs.curseforge_file_id || '8792744' }}
+          SHA1_EXPECTED: ${{ github.event_name == 'workflow_dispatch' && inputs.expected_sha1 || '84c222df0176d7ef83ba7cc361249fe062e29218' }}
         run: |
           set -euo pipefail
           [[ "$CF_FILE" =~ ^[0-9]{7,9}$ ]] || { echo 'Invalid CurseForge numeric file ID'; exit 2; }
@@ -48,11 +50,10 @@ jobs:
             "https://cursemaven.com/curse/maven/identity2-1238155/${CF_FILE}/identity2-1238155-${CF_FILE}.jar" \
             --output build/identity2-224-audit/publisher.jar
           echo "$SHA1_EXPECTED  build/identity2-224-audit/publisher.jar" | sha1sum --check
-      - name: Bounded Java 21 classfile check (dispatch only; no client/runtime claims)
-        if: github.event_name == 'workflow_dispatch'
+      - name: Bounded Java 21 classfile check (not runtime/installed-JAR proof)
         shell: bash
         env:
-          SHA1_EXPECTED: ${{ inputs.expected_sha1 }}
+          SHA1_EXPECTED: ${{ github.event_name == 'workflow_dispatch' && inputs.expected_sha1 || '84c222df0176d7ef83ba7cc361249fe062e29218' }}
         run: |
           set -euo pipefail
           python3 docs/qa/identity2_224_cooldown_binary.py \
@@ -60,7 +61,7 @@ jobs:
             --expected-sha1 "$SHA1_EXPECTED" \
             --output build/identity2-224-audit/identity2-bytecode-report.json
       - name: Publish JSON evidence only, never publisher JAR
-        if: always() && github.event_name == 'workflow_dispatch'
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: identity2-224-bounded-bytecode-${{ github.sha }}
