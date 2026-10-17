@@ -1,5 +1,11 @@
 # Ars Morph 2.0.0
 
+## Verificação dos cooldowns no Identity2 — 17/10/2026
+
+Avançou a [auditoria dos contadores do host Identity2 2.2.4](IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md), fonte oficial `xGabou/Identity2` em dois snapshots que delimitam o release 2.2.4: 27/05/2026 e 02/10/2026 (o segundo declara 2.2.4.1). O servidor executa `max(0,cooldown+useduration)`, decremente a cada `baseTick`, recusa primário se contador positivo e registra cooldown **antes** do callback. Os sete contadores derivados são **120/820/900/120/420/220/160 ticks**, na ordem Weald Walker/Wilden Hunter/Wilden Stalker/Starbuncle/Whirlisprig/Wixie/Firenando. Não confundir com duração real dos efeitos e passivos.
+
+**⚠️ Evidência SOURCE_BRACKET, não verificação do bytecode instalado.** O JAR Identity2 2.2.4 do modpack não foi comparado; versões de código não têm blobs integrais idênticos. Prioridade de QA: Wixie crouch poderá falhar após registro de cooldown, resolver Ars cancelado poderá não executar após consumir contador; validar no pack. Nenhum hook de redução individual de cooldown ou refund foi homologado, e nenhum objeto mágico novo foi contado.
+
 ## Engenharia causal das habilidades Identity2 — 17/10/2026
 
 **✅ 7/7 implementações Java** de habilidade Identity2 possuem [fichas individuais em `abilities/`](abilities/) com código-fonte fixo, eventos, target, movimento, projetéis, status, tempo, passivos, riscos e QA. Os **11/11 arquivos JSON de atribuições** foram ligados às respectivas fichas; há cinco variantes Weald Walker compartilhando um único `predef`. [Matriz de integração e barras](ABILITY-PERK-CAUSAL-MATRIX-2.0.0.md). O glifo `ars_morph:glyph_morph` permanece 1/1 independente; **+0 novas identidades de magia**. O registro source-aligned é `Alexthw46/Ars-Morph@4a5a2c706fe5a316fc9ad03ac37a3ac1d1dc3c58`, sem paridade do código com JAR instalada.
