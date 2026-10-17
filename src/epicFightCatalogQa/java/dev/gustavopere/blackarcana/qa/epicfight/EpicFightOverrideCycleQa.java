@@ -1,6 +1,8 @@
 package dev.gustavopere.blackarcana.qa.epicfight;
 
 import com.mojang.logging.LogUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 /**
@@ -50,6 +53,41 @@ final class EpicFightOverrideCycleQa {
         "forbidden_strength", 2,
         "technician", 1
     );
+
+    private static final boolean ALL_LEGACY = "1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_ALL_LEGACY"));
+
+    // Original QA fixtures built from physically audited attribute types and
+    // values; no publisher JSON or third-party class source is embedded.
+    private record ModifierSpec(String attribute, String operation, double amount) {}
+    private static final Map<String, List<ModifierSpec>> FULL_LEGACY_REPLACEMENTS = Map.of(
+        "adaptive_skin", List.of(new ModifierSpec("minecraft:generic.max_health", "add_value", 6.0D)),
+        "adrenaline_fiend", List.of(
+            new ModifierSpec("minecraft:generic.attack_speed", "add_multiplied_total", 0.1D),
+            new ModifierSpec("minecraft:generic.attack_damage", "add_multiplied_total", 0.075D)),
+        "catharsis", List.of(
+            new ModifierSpec("epicfight:stamina_regen", "add_value", 0.15D),
+            new ModifierSpec("minecraft:generic.attack_damage", "add_multiplied_total", 0.1D)),
+        "bonebreaker", List.of(new ModifierSpec("minecraft:generic.attack_speed", "add_multiplied_total", 0.15D)),
+        "vengeance", List.of(
+            new ModifierSpec("minecraft:generic.max_health", "add_value", 3.0D),
+            new ModifierSpec("minecraft:generic.attack_damage", "add_multiplied_total", 0.075D))
+    );
+
+    private static String fixtureJson(String skill) {
+        JsonObject document = new JsonObject();
+        JsonArray modifiers = new JsonArray();
+        int i = 0;
+        for (ModifierSpec spec : FULL_LEGACY_REPLACEMENTS.get(skill)) {
+            JsonObject modifier = new JsonObject();
+            modifier.addProperty("attribute", spec.attribute());
+            modifier.addProperty("id", "black_arcana_epicfight_qa:" + skill + "_modifier_" + i++);
+            modifier.addProperty("operation", spec.operation());
+            modifier.addProperty("amount", spec.amount());
+            modifiers.add(modifier);
+        }
+        document.add("attribute_modifiers", modifiers);
+        return document.toString();
+    }
 
     private final MinecraftServer server;
     private final Path packDir;
@@ -103,8 +141,15 @@ final class EpicFightOverrideCycleQa {
             Files.writeString(packDir.resolve("pack.mcmeta"),
                 "{\"pack\":{\"pack_format\":48,\"description\":\"Black Arcana temporary Epic Fight codec QA\"}}\n",
                 StandardCharsets.UTF_8);
-            Files.writeString(parameters.resolve("adaptive_skin.json"),
-                OVERRIDE_JSON, StandardCharsets.UTF_8);
+            if (ALL_LEGACY) {
+                for (String skill : List.of("adaptive_skin", "adrenaline_fiend", "catharsis", "bonebreaker", "vengeance")) {
+                    Files.writeString(parameters.resolve(skill + ".json"),
+                        fixtureJson(skill), StandardCharsets.UTF_8);
+                }
+            } else {
+                Files.writeString(parameters.resolve("adaptive_skin.json"),
+                    OVERRIDE_JSON, StandardCharsets.UTF_8);
+            }
 
             var repo = server.getPackRepository();
             repo.reload();
@@ -122,8 +167,8 @@ final class EpicFightOverrideCycleQa {
                 return;
             }
             selected.add(packId);
-            LOG.info("{} type=override_begin status=REQUESTED pack_id={} pack_format=48",
-                PREFIX, packId);
+            LOG.info("{} type=override_begin status=REQUESTED pack_id={} pack_format=48 scope={}",
+                PREFIX, packId, ALL_LEGACY ? "ALL_FIVE_LEGACY" : "SINGLE_ADAPTIVE_SKIN");
             repo.setSelected(selected);
             server.reloadResources(selected).whenComplete((none, error) ->
                 server.execute(() -> {
@@ -141,7 +186,13 @@ final class EpicFightOverrideCycleQa {
 
     private void onOverrideLoaded() {
         Map<String, Integer> expected = new java.util.HashMap<>(BASELINE_COUNTS);
-        expected.put("adaptive_skin", 1);
+        if (ALL_LEGACY) {
+            for (var row : FULL_LEGACY_REPLACEMENTS.entrySet()) {
+                expected.put(row.getKey(), row.getValue().size());
+            }
+        } else {
+            expected.put("adaptive_skin", 1);
+        }
         if (!readCounts("override", expected)) {
             finishFailure("OVERRIDE_NOT_APPLIED");
             return;
