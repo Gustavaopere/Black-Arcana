@@ -1,5 +1,11 @@
 # Epic Fight — 21.17.3.1
 
+## Gate de reload real no provider carregado — 17/10/2026
+
+✅ [CI #38998283536](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38998283536), **SUCCESS**: no servidor dedicado Java21 / NeoForge **21.1.250**, com Epic Fight físico 21.17.3.1 carregado, o QA registrou o mapa `Skill.attributes` das **cinco skills legadas (0/0/0/0/0)** e dos **três controles modernos (2/2/1)**, acionou o **reload real de recursos do MinecraftServer** e reobservou as **oito identidades** após a conclusão do future, sem desvios. [Dossiê de reload e limites](EXACT-SERVER-RELOAD-ATTRIBUTE-CARDINALITY-21.17.3.1.md).
+
+⚠️ Não houve override de datapack nem equip/unequip em jogador, nem modpack com todos os addons. Resultado limitado à **estabilidade de cardinalidade após reload**, não à aplicação de atributos em `AttributeInstance`, execução de `SkillReloadListener.apply` com nova entrada, nem hook seguro de perks/Mastery.
+
 ## Checkpoint mais recente — Epic Fight carregado no servidor exato (16/10/2026)
 
 - ✅ [Provider-loaded QA #38990309407](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38990309407) **SUCCESS**: JAR 21.17.3.1 SHA-fixado iniciado como mod em servidor NeoForge **21.1.250**. Cinco skills com JSON `name/uuid` legados apresentaram **0/0/0/0/0** entradas em `Skill.attributes`; três controles positivos de JSONs modernos (`swordmaster`, `forbidden_strength`, `technician`) apresentaram **2/2/1**, provando carregamento seletivo em vez de loader inteiramente vazio. [Dossiê provider-loaded e limites](EXACT-LOADED-REGISTRY-LEGACY-ATTRIBUTE-PROOF-21.17.3.1.md).
