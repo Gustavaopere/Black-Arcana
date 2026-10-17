@@ -4,6 +4,18 @@ Status: `COUNTED_EXACT STATIC JAR 1.10.13 / VAMPIRE 14/14 + HUNTER 3/3 + LORD 2/
 
 Canonical source: `TeamLapen/Vampirism@e1ed095713cef5e9eb151d0ee58908fa830d6bb7`
 
+## Fichas causais individuais para perks — tranche 17/10/2026
+
+**3/19 = 15,79% das ações provider-native** com dossiês novos *individualizados* neste padrão específico; **19/19 = 100% de identidades compiladas**, sem confundir essa proporção com hooks aprovados ou execução em Survival. **16** ações restantes para dossiês individuais desta série, ainda que já descritas no presente catálogo agregado. Todos os três usam source oficial `TeamLapen/Vampirism@e1ed095713cef5e9eb151d0ee58908fa830d6bb7`; JAR físico tem registry verificado, **não** equivalência bytecode integral dos comportamentos auxiliares.
+
+| Ação | Ficha | Engenharia documentada |
+|---|---|---|
+| `vampirism:dark_blood_projectile` | [Dark Blood Projectile](actions/dark-blood-projectile.md) | hitbox 0.6×0.6, getInertia vs velocidade, 32 entidades AOE, distância ao quadrado, dano e persistência |
+| `vampirism:teleport` | [Teleport](actions/teleport.md) | raycast 50, posição/DimensionTransition, fallback, risco de config de cooldown 0.5 fora do limite mínimo 1 |
+| `vampirism:freeze` | [Freeze](actions/freeze.md) | AABB inflate(10,5,10), efeitos/ticks, ativação verdadeira sem debuff confirmado |
+
+**Contrato:** `ActionActivatedEvent` fornece veto e setters de cooldown/duração source-verificados, não permite inferir mutação segura de AOE, projectile hitbox, DamageType ou target. Sem provider-loaded/testes/adapter, esses eixos ficam ⛔. **+0 raízes semânticas** e **+0 perks implementadas**; progresso do Black Arcana Stage 06.05 e Stage 09 inalterado.
+
 ## Current binary provenance
 
 The exact publisher [Java21 run #38664546643](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38664546643) matched the installed SHA-1 and verified all **19 distinct compiled action registrations**, their literal IDs, DeferredHolder fields, supplier constructors and IEventBus forwarding. [Evidence dossier](EXACT-BINARY-PLAYER-ACTIONS-1.10.13.md). Every timer and effect below remains a source-level behavioral description, not a completed physical Survival or provider runtime test.
