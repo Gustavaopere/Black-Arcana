@@ -57,6 +57,10 @@ sourceSets {
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
     }
+    epicFightCatalogQa {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
 }
 
 neoForge {
@@ -79,6 +83,9 @@ neoForge {
     // Provider-catalog runtime evidence is a separate removable QA companion. It
     // compiles against the same public dependency APIs but never enters production.
     addModdingDependenciesTo(sourceSets.catalogQaProbe)
+
+    // Isolated runtime-only Epic Fight evidence companion. No production registration.
+    addModdingDependenciesTo(sourceSets.epicFightCatalogQa)
 
     runs {
         client {
@@ -125,6 +132,9 @@ configurations {
     catalogQaProbeImplementation.extendsFrom implementation
     catalogQaProbeCompileOnly.extendsFrom compileOnly
     catalogQaProbeRuntimeOnly.extendsFrom runtimeOnly
+    epicFightCatalogQaImplementation.extendsFrom implementation
+    epicFightCatalogQaCompileOnly.extendsFrom compileOnly
+    epicFightCatalogQaRuntimeOnly.extendsFrom runtimeOnly
 }
 
 sourceSets.test.runtimeClasspath += sourceSets.stage05QaFixture.output
@@ -195,6 +205,20 @@ tasks.named('processCatalogQaProbeResources', ProcessResources).configure {
     }
 }
 
+var epicFightCatalogQaProperties = [
+        minecraft_version_range: minecraft_version_range,
+        neo_version             : neo_version,
+        loader_version_range    : loader_version_range,
+        mod_version             : mod_version,
+]
+
+tasks.named('processEpicFightCatalogQaResources', ProcessResources).configure {
+    inputs.properties epicFightCatalogQaProperties
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand epicFightCatalogQaProperties
+    }
+}
+
 tasks.register('stage05QaFixtureJar', Jar) {
     dependsOn tasks.named('stage05QaFixtureClasses')
     archiveBaseName.set('black_arcana_stage05_qa')
@@ -216,6 +240,18 @@ tasks.register('catalogQaProbeJar', Jar) {
     from('THIRD_PARTY_NOTICES.md')
     manifest {
         attributes('Automatic-Module-Name': 'dev.gustavopere.blackarcana.catalogqa')
+    }
+}
+
+tasks.register('epicFightCatalogQaJar', Jar) {
+    dependsOn tasks.named('epicFightCatalogQaClasses')
+    archiveBaseName.set('black_arcana_epicfight_qa')
+    archiveVersion.set(project.mod_version)
+    from(sourceSets.epicFightCatalogQa.output)
+    from('LICENSE')
+    from('THIRD_PARTY_NOTICES.md')
+    manifest {
+        attributes('Automatic-Module-Name': 'dev.gustavopere.blackarcana.epicfightqa')
     }
 }
 
