@@ -4,17 +4,37 @@ Status: `COUNTED_EXACT STATIC JAR 1.10.13 / VAMPIRE 14/14 + HUNTER 3/3 + LORD 2/
 
 Canonical source: `TeamLapen/Vampirism@e1ed095713cef5e9eb151d0ee58908fa830d6bb7`
 
-## Fichas causais individuais para perks — tranche 17/10/2026
+## Fichas causais individuais para perks — 17/10/2026
 
-**3/19 = 15,79% das ações provider-native** com dossiês novos *individualizados* neste padrão específico; **19/19 = 100% de identidades compiladas**, sem confundir essa proporção com hooks aprovados ou execução em Survival. **16** ações restantes para dossiês individuais desta série, ainda que já descritas no presente catálogo agregado. Todos os três usam source oficial `TeamLapen/Vampirism@e1ed095713cef5e9eb151d0ee58908fa830d6bb7`; JAR físico tem registry verificado, **não** equivalência bytecode integral dos comportamentos auxiliares.
+**19/19 = 100%** das identidades provider-native com fichas técnicas individuais `SOURCE_CAUSALITY` vinculadas às classes e métodos do source **TeamLapen/Vampirism@e1ed095713cef5e9eb151d0ee58908fa830d6bb7**. **19/19 = 100%** das identidades compiladas já eram `COUNTED_EXACT STATIC REGISTRY` no JAR físico da versão 1.10.13; a rodada ampliou fichas de **3→19, +16 dossiês, +0 novas ações**. A engenharia documentada **não** prova equivalência completa JAR→código, instanciamento de abilities, sucesso de cast, mutabilidade per-caster nem integração de perks.
 
-| Ação | Ficha | Engenharia documentada |
-|---|---|---|
-| `vampirism:dark_blood_projectile` | [Dark Blood Projectile](actions/dark-blood-projectile.md) | hitbox 0.6×0.6, getInertia vs velocidade, 32 entidades AOE, distância ao quadrado, dano e persistência |
-| `vampirism:teleport` | [Teleport](actions/teleport.md) | raycast 50, posição/DimensionTransition, fallback, risco de config de cooldown 0.5 fora do limite mínimo 1 |
-| `vampirism:freeze` | [Freeze](actions/freeze.md) | AABB inflate(10,5,10), efeitos/ticks, ativação verdadeira sem debuff confirmado |
+| Grupo | Identidade | Ficha individual | Propriedades de interesse para perks |
+|---|---|---|---|
+| Vampire | `bat` | [Bat](actions/bat.md) | hitbox 0,6×0,6, flight/movement, 3 modifiers, exhaustion, lifecycle |
+| Vampire | `dark_blood_projectile` | [Dark Blood Projectile](actions/dark-blood-projectile.md) | projectile, hitbox, AOE, DamageType, cooldown e impacto |
+| Vampire | `disguise_vampire` | [Disguise Vampire](actions/disguise-vampire.md) | self, specialAttributes, duração e detecção |
+| Vampire | `freeze` | [Freeze](actions/freeze.md) | AABB de efeito, canFreeze, buff/tempo e resultado real |
+| Vampire | `half_invulnerable` | [Half Invulnerable](actions/half-invulnerable.md) | threshold, delayed blood cost e damage settlement |
+| Vampire | `regen` | [Regeneration](actions/regen.md) | Regeneration reapply, timing de heal e refinement |
+| Vampire | `sunscreen` | [Sunscreen](actions/sunscreen.md) | duration multiplier, efeito protetor e cooldown |
+| Vampire | `summon_bat` | [Summon Bat](actions/summon-bat.md) | fan-out 16→8, summon, cooldown e ownership |
+| Vampire | `teleport` | [Teleport](actions/teleport.md) | raycast 50, DimensionTransition, target/position e cooldown |
+| Vampire | `vampire_invisibility` | [Invisibility](actions/vampire-invisibility.md) | estado invisível, lifecycle e efeitos visuais |
+| Vampire | `vampire_rage` | [Rage](actions/vampire-rage.md) | buffs e duração proporcional ao nível |
+| Vampire | `hissing` | [Hissing](actions/hissing.md) | AABB, Mob target e AI goal reset |
+| Vampire | `infect` | [Infect](actions/infect.md) | targeted entity, biteability, visibilidade e conversão |
+| Vampire | `jump_boost` | [Jump Boost](actions/jump-boost.md) | specialAttributes movement e timers |
+| Hunter | `awareness_hunter` | [Awareness](actions/awareness-hunter.md) | raio 25, cliente-only, closest Vampire e intensidade |
+| Hunter | `disguise_hunter` | [Hunter Disguise](actions/disguise-hunter.md) | fade 20, detecção, exclusão de Awareness |
+| Hunter | `potion_resistance_hunter` | [Potion Resistance](actions/potion-resistance-hunter.md) | tag filter e remoção em ticks t%3!=0 |
+| Lord | `lord_speed` | [Lord Speed](actions/lord-speed.md) | AABB ±10, efeito 600 ticks, cálculo de cooldown |
+| Lord | `lord_attack_speed` | [Lord Attack Speed](actions/lord-attack-speed.md) | buff de ataque, AABB ±10 e cooldown efetivo |
 
-**Contrato:** `ActionActivatedEvent` fornece veto e setters de cooldown/duração source-verificados, não permite inferir mutação segura de AOE, projectile hitbox, DamageType ou target. Sem provider-loaded/testes/adapter, esses eixos ficam ⛔. **+0 raízes semânticas** e **+0 perks implementadas**; progresso do Black Arcana Stage 06.05 e Stage 09 inalterado.
+**Cross-provider:** o `ActionEvent.ActionActivatedEvent` público oferece veto e setters de **cooldown/duração**, não de radius/dano/target/projectile size; o event acontece **antes** de `onActivated`. A disponibilidade de uma classe ou campo para leitura não autoriza mutação de resultado por perk. Mastery só em causalidade de sucesso validada, deduplicando childs (bats/projéteis/efeitos) e mantendo recursos/atributos originais.
+
+**Atenção Lord:** `SpeedLordAction.getCooldown` e `AttackSpeedLordAction.getCooldown` somam `super.getCooldown` (**getEffectDuration=600 ticks** com duração default 30s) com a config `laLord*Cooldown=120` **sem multiplicar esse valor por 20**, apesar do comentário de config "In seconds". Resultado aritmético do source para defaults: **720 ticks = 36 segundos** (20 TPS), e não os 150s antes atribuídos. Requer QA com config carregada no servidor e `ActionHandler` efetivo; não tratar como regressão física comprovada.
+
+**Barras independentes:** GLOBAL **—%** (piso documental 1.856 / 1.854 estrito, denominador ainda desconhecido), VAMPIRISM **19/19 = 100%** para identidades e para fichas causais desta série. Os adapters Mastery/perks seguem **⛔ sem homologação** e os testes cliente/servidor/multiplayer/Survival **⚠️ PENDING**. **+0 raízes e nenhum Stage promovido.**
 
 ## Current binary provenance
 
@@ -116,8 +136,8 @@ Defaults:
 
 | Action | Effect | Effect duration | Additional cooldown | Effective default cooldown |
 |---|---|---:|---:|---:|
-| Lord Speed | `LORD_SPEED` | 30s | 120s | 150s |
-| Lord Attack Speed | `LORD_ATTACK_SPEED` | 30s | 120s | 150s |
+| Lord Speed | `LORD_SPEED` | 600 ticks (30s) | 120 **ticks somados**, embora config comente "seconds" | **720 ticks (36s)** no source |
+| Lord Attack Speed | `LORD_ATTACK_SPEED` | 600 ticks (30s) | 120 **ticks somados**, embora config comente "seconds" | **720 ticks (36s)** no source |
 
 Both subclasses force amplifier 0. The base class normally derives amplifier from Lord level, but these two installed actions override that behavior.
 
