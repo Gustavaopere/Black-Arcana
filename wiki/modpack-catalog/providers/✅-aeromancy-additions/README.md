@@ -1,5 +1,15 @@
 # SnackPirate's Aeromancy Additions 1.2.8 — provider dossier
 
+## Engenharia causal para perks — 17/10/2026
+
+**✅ 10/10 fichas individuais** agora documentam parâmetros de custo/cooldown, geometria, targeting, projectiles, força, duração, atributos, status, DamageSource e alterações de mundo com evidência source-pinned por método: [matriz consolidada](PERK-CAUSAL-ENGINEERING-MATRIX-1.2.8.md), [índice de spells](SPELL-CARDS-1.2.8.md) e [fichas individuais](spells/).
+
+**⚠️ Não promover identidade física:** a prova oficial [Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191) confirma 10/10 classes no JAR do publicador 1.2.8, mas o checksum do arquivo *instalado* no histórico sibling é inválido/incompleto (35 caracteres). **COUNTED_SOURCE_PINNED** permanece até hashing físico do JAR instalado; runtime, configuração, Iron's 3.16.3 e QA cliente/servidor continuam pendentes.
+
+**Riscos prioritários de perks:** `FlushSpell` chama `level.setBlock(AIR)`, drops e `BucketPickup` sem world-policy ou gate de claims local; percurso BFS limitado a 90/140/190 visitas (níveis 1–3), com potencial risco de propriedades de blocos. `AirstepSpell` usa attachment própria e pacote C2S, com divergência `putFloat`/`getInt` do contador na serialização. `Updraft` usa recasts e UI de stunDuration diferente da lentidão aplicada (100 ticks). `WindCharge` usa windCharge 1.0 + explosão; `Airblast` troca owner do projétil; `WindShield` usa chance de deflexão 30–70% no `ProjectileImpactEvent` da entidade protegida; `FeatherFall` manipula a GRAVITY via modifier nominal provider-owned.
+
+**Barra por provider:** identidade publicada **10/10 = 100%**, fichas causais **10/10 = 100%**, paridade de arquivo físico ⚠️ condicionada e perks funcionais **⛔ 0 homologadas**. **Barra global: —%** (denominador desconhecido), piso verificado nas autoridades de ledger **1.857 / 1.855 estritos**, +0 novas raízes nesta tranche. `Stage 06.05` 🟡; `Stage 09` físico pendente, PR #825 draft.
+
 **⚠️ Auditoria física parcial 2026-10-13:** [JAR oficial: dez registries estáticos verificados, arquivo físico sem SHA válido](EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md), [Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191) SUCCESS. Publisher file 8251034: 753884 bytes e SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`; modlist sibling #009 confirma a versão instalada 1.2.8, **não** seu checksum completo. `COUNTED_SOURCE_PINNED` permanece; **16/39** exatos/**23/39** pendentes, **+0** raízes, mínimos **1857/1855**. Fonte/defaults abaixo são históricos, não prova de gameplay.
 
 
