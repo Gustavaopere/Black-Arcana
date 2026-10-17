@@ -9,8 +9,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import org.slf4j.Logger;
 
-import java.lang.reflect.Method;
-import java.util.Collection;
+import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.List;
 
 /**
@@ -56,8 +56,11 @@ public final class EpicFightCatalogQaMod {
 
             phase = "resolve_skill_class";
             Class<?> skillClass = Class.forName("yesman.epicfight.skill.Skill");
-            phase = "resolve_skill_method";
-            Method modifierEntries = skillClass.getMethod("getModfierEntry");
+            // Avoid Class.getMethod(): it introspects client-only method
+            // signatures and invokes RuntimeDistCleaner on a dedicated server.
+            phase = "resolve_attributes_field";
+            Field attributesField = skillClass.getDeclaredField("attributes");
+            attributesField.setAccessible(true);
             int observed = 0;
 
             for (String skillId : LEGACY_SKILLS) {
@@ -69,8 +72,8 @@ public final class EpicFightCatalogQaMod {
                     continue;
                 }
                 phase = "read_modifiers_" + skillId;
-                Object entries = modifierEntries.invoke(skill);
-                if (!(entries instanceof Collection<?> modifiers)) {
+                Object entries = attributesField.get(skill);
+                if (!(entries instanceof Map<?, ?> modifiers)) {
                     LOG.warn("{} type=skill id={} status=ATTRIBUTE_ENTRY_TYPE_UNAVAILABLE", PREFIX, qualified);
                     continue;
                 }
