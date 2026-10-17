@@ -1,5 +1,11 @@
 # Epic Fight — checkpoint técnico de perks (16/10/2026)
 
+## Cobertura causal ampliada: oito modifiers e cinco skills no provider carregado (17/10/2026)
+
+✅ [CI de oito modificadores #39001996512](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39001996512) **SUCCESS**, com JSON de QA efetivamente publicado como artefato **12089431494**. Servidor Java21 / NeoForge físico **21.1.250**, JAR do Epic Fight **21.17.3.1** verificado por dois hashes. Cinco datapacks de substituição temporária escritos **somente no runner**, usando campos modernos e oito IDs QA distintos: `adaptive_skin 0→1→0`, `adrenaline_fiend 0→2→0`, `catharsis 0→2→0`, `bonebreaker 0→1→0`, `vengeance 0→2→0`; controles modernos `swordmaster/forbidden_strength/technician` estáveis **2/2/1** em três fases. Inclui `epicfight:stamina_regen`, aceito na coleção carregada. [Relatório e escopo](../EXACT-ALL-FIVE-LEGACY-MODIFIER-OVERRIDE-RESTORE-21.17.3.1.md).
+
+⚠️ Evidência de **mapa do provider**, não de atributos efetivos de jogador; sem `SkillContainer.setSkill`, equip/unequip, client ou modpack completo. Nenhum artefato QA foi transferido à produção; ⛔ hooks de perks e Mastery ainda sem contrato homologado. Core catalogado ✅ 43/43, **+0** magia.
+
 ## Gate causal de datapack original e restauração — 17/10/2026
 
 ✅ [Actions #38999302329](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38999302329) **SUCCESS**: em servidor NeoForge 21.1.250 com Epic Fight físico 21.17.3.1, o datapack descartável original de QA substituiu `data/epicfight/skill_parameters/adaptive_skin.json` por um modifier moderno `id=black_arcana_epicfight_qa:adaptive_skin_control`, `operation=add_value`. Após reload, a coleção `Skill.attributes` de `adaptive_skin` mudou **0→1**; após remover o datapack e novo reload, voltou **1→0**. As outras sete skills controladas permaneceram **0/0/0/0 (legadas)** e **2/2/1 (modernas)**. [Prova de três fases e limites](../EXACT-TEMPORARY-DATAPACK-OVERRIDE-RESTORE-21.17.3.1.md).
