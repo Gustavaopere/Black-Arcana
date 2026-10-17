@@ -32,6 +32,12 @@ public final class EpicFightCatalogQaMod {
         "vengeance"
     );
 
+    private static final Map<String, Integer> MODERN_CONTROLS = Map.of(
+        "swordmaster", 2,
+        "forbidden_strength", 2,
+        "technician", 1
+    );
+
     public EpicFightCatalogQaMod() {
         NeoForge.EVENT_BUS.addListener(EpicFightCatalogQaMod::onServerStarted);
     }
@@ -82,9 +88,30 @@ public final class EpicFightCatalogQaMod {
                 observed++;
             }
 
-            LOG.info("{} type=end status={} observed={} expected={}",
-                PREFIX, observed == LEGACY_SKILLS.size() ? "OBSERVED" : "INCOMPLETE",
-                observed, LEGACY_SKILLS.size());
+            int controls = 0;
+            for (var control : MODERN_CONTROLS.entrySet()) {
+                String skillId = control.getKey();
+                String qualified = "epicfight:" + skillId;
+                phase = "lookup_control_" + skillId;
+                Object skill = skills.get(ResourceLocation.fromNamespaceAndPath("epicfight", skillId));
+                if (skill == null || !skillClass.isInstance(skill)) {
+                    LOG.warn("{} type=control id={} status=REGISTRY_VALUE_UNAVAILABLE", PREFIX, qualified);
+                    continue;
+                }
+                phase = "read_control_" + skillId;
+                Object entries = attributesField.get(skill);
+                if (!(entries instanceof Map<?, ?> modifiers)) {
+                    LOG.warn("{} type=control id={} status=ATTRIBUTE_ENTRY_TYPE_UNAVAILABLE", PREFIX, qualified);
+                    continue;
+                }
+                LOG.info("{} type=control id={} status=OBSERVED_LOADED_REGISTRY modifier_entries={} raw_json_entries={}",
+                    PREFIX, qualified, modifiers.size(), control.getValue());
+                controls++;
+            }
+            LOG.info("{} type=end status={} observed={} expected={} controls={} expected_controls={}",
+                PREFIX, observed == LEGACY_SKILLS.size() && controls == MODERN_CONTROLS.size() ?
+                    "OBSERVED" : "INCOMPLETE",
+                observed, LEGACY_SKILLS.size(), controls, MODERN_CONTROLS.size());
         } catch (ReflectiveOperationException | LinkageError | RuntimeException failure) {
             Throwable cause = failure.getCause();
             String detail = failure.getMessage() == null ? "none" :
