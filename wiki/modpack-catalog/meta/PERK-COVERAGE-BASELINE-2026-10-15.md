@@ -1,5 +1,15 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Checkpoint vigente — Ars Creo 7/7 bridges (17/10/2026)
+
+**Barras:** GLOBAL **—%** (piso **1.857 semânticos / 1.855 estritos**, denominador global não conhecido); ARS CREO **7/7 (100%) sistemas de ponte Create↔Ars com dossiês causais source-pinned**, **0 glifos/spells próprios**, **+0 objetos** nesta rodada; **⚠️ QA provider/cliente/servidor** e **⛔ 0 adapters de perks homologados**.
+
+Ars Creo `5.4.0`, JAR documentado `ars_creo-1.21.1-5.4.0.jar` SHA-1 `22a6afd4fbe76354acc9c1ba076c89a94d120d94`. Método pin `baileyholl/Ars-Creo@6a99d36fab441653478fc49de8f28164f0894eb2`, status **SOURCE_CAUSALITY**, sem comparação binária integral. Criada [matriz Ars Creo](../providers/✅-ars-creo/PERK-CAUSAL-ENGINEERING-MATRIX-5.4.0.md), aprofundadas 7 fichas em `systems/`, README e ledger por provider atualizados. O provider adiciona infra Create/Ars, não novas magias.
+
+**QA prioritário derivado da fonte:** (1) `ITurretBehavior.castSpell` cobra Source de contraption/fallback range6 antes de selecionar MethodProjectile/MethodTouch; sem branch de cast/refund local para outros métodos, presença de FakePlayers e `CasterType.OTHER` impede atribuir Mastery a Player sem contrato; (2) `PotionTank.fill` usa `ceil(mB×0.4)` para jar e retorna mB por outro caminho, exigindo conservação `SIMULATE/EXECUTE`, sem declarar duplicação por inferência; (3) `PortalBehavior.handleEntity` define `fallDistance=0` sem depender de sucesso; (4) `RitualBehavior` usa stand-in `RitualBrazierTile`, consumo potencial de item/Source, e `RitualInteraction` tem interação custom comentada. (5) Creative Source Jar/SourceUtilMixin tem refund externo, sem ledger BA; (6) displays são UI-only. Todas são limitações source-only, **não bugs físicos confirmados**.
+
+Authority e Stage inalterados: Black Arcana controla runtime mágico próprio e WorldEffectPolicy; Ars/Create os seus, RPG Skill Tree apenas progressão/perks/gates por contrato. **Stage 06.05 🟡, Stage 09 físico pendente, PR #825 draft.** Não promover Stage nem merge por dossiê completo.
+
 ## Checkpoint vigente — Ars Elemancy 7/7 famílias de equipamentos (17/10/2026)
 
 **Barra global — —%**: piso autoritativo documentado **1.857 semânticos / 1.855 estritos**, denominador total indeterminado e +0 objetos nesta rodada. **Barra Ars Elemancy:** 7/7 famílias de gear mapeadas com fichas source-causal (100% documental), 105/105 items registrados conforme fonte, **0 glifos e 0 perks próprias**, 0 adapters RPG homologados. [Matriz técnica](../providers/✅-ars-elemancy/PERK-CAUSAL-EQUIPMENT-MATRIX-1.18.3.md) e [README](../providers/✅-ars-elemancy/README.md).
