@@ -2,6 +2,8 @@ package dev.gustavopere.blackarcana.integration.epicfight;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.ListTag;
+import com.mojang.serialization.Codec;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import org.junit.jupiter.api.Test;
 
@@ -94,6 +96,43 @@ class EpicFightVanillaAttributeModifierCodecTest {
             assertTrue(AttributeModifier.MAP_CODEC.codec().parse(NbtOps.INSTANCE, raw)
                     .result().isPresent(), "modern operation must pass with modern id: " + modernOperation);
         }
+    }
+
+    @Test
+    void fullLegacyModifierListDoesNotDecodeAsModernCodecList() {
+        ListTag allLegacy = new ListTag();
+        for (LegacyModifierRow row : LEGACY_ROWS) {
+            CompoundTag raw = new CompoundTag();
+            raw.putString("name", row.name());
+            raw.putString("uuid", row.uuid());
+            raw.putDouble("amount", row.amount());
+            raw.putString("operation", row.operation());
+            allLegacy.add(raw);
+        }
+        assertFalse(Codec.list(AttributeModifier.MAP_CODEC.codec())
+                .parse(NbtOps.INSTANCE, allLegacy).result().isPresent(),
+            "all-eight legacy modifier list must not decode through the vanilla codec list");
+    }
+
+    @Test
+    void oneLegacyEntryBlocksFullResultEvenWithValidModernEntry() {
+        ListTag mixed = new ListTag();
+        CompoundTag modern = new CompoundTag();
+        modern.putString("id", "epicfight:valid_list_control");
+        modern.putDouble("amount", 1.0D);
+        modern.putString("operation", "add_value");
+        mixed.add(modern);
+
+        CompoundTag legacy = new CompoundTag();
+        legacy.putString("name", "adaptive_skin_skill_stat");
+        legacy.putString("uuid", "e9cd15f0-72cc-474b-bfee-66276d06157d");
+        legacy.putDouble("amount", 6.0D);
+        legacy.putString("operation", "addition");
+        mixed.add(legacy);
+
+        assertFalse(Codec.list(AttributeModifier.MAP_CODEC.codec())
+                .parse(NbtOps.INSTANCE, mixed).result().isPresent(),
+            "mixed valid/legacy list must not return a complete successful parse");
     }
 
     @Test
