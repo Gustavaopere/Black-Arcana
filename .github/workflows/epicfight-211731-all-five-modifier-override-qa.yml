@@ -160,6 +160,6 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: epicfight-five-skill-eight-modifiers-evidence-${{ github.sha }}
-          path: build/epicfight-loaded-qa/override-cycle-evidence.json
-          if-no-files-found: ignore
+          path: build/epicfight-loaded-qa/all-five-override-evidence.json
+          if-no-files-found: error
           retention-days: 14
