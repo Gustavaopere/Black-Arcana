@@ -1,5 +1,11 @@
 # Epic Fight 21.17.3.1 — estabilidade do registry de modifiers após reload real (17/10/2026)
 
+## Gate causal de datapack original e restauração — 17/10/2026
+
+✅ [Actions #38999302329](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38999302329) **SUCCESS**: em servidor NeoForge 21.1.250 com Epic Fight físico 21.17.3.1, o datapack descartável original de QA substituiu `data/epicfight/skill_parameters/adaptive_skin.json` por um modifier moderno `id=black_arcana_epicfight_qa:adaptive_skin_control`, `operation=add_value`. Após reload, a coleção `Skill.attributes` de `adaptive_skin` mudou **0→1**; após remover o datapack e novo reload, voltou **1→0**. As outras sete skills controladas permaneceram **0/0/0/0 (legadas)** e **2/2/1 (modernas)**. [Prova de três fases e limites](EXACT-TEMPORARY-DATAPACK-OVERRIDE-RESTORE-21.17.3.1.md).
+
+⚠️ Prova causal **somente do mapa carregado da skill** no servidor isolado. Não prova `AttributeInstance` aplicado no jogador, equip/unequip ou modpack completo de 587 entradas. Nenhum datapack de override de QA foi incluído no produto; nenhum adapter de perks/Mastery foi implementado. O gate anterior de reload sem override permanece válido como evidência histórica separada.
+
 **Resultado:** ✅ `RESOURCE_RELOAD_COMPLETED_REGISTRY_COUNTS_STABLE_ISOLATED_SERVER`, com dados exatos para **8/8 skills** do provider carregado em servidor NeoForge **21.1.250**. Este rótulo é apenas uma **categoria documental de QA**, não enum de API e não significa `PLAYER_ATTRIBUTE_INSTANCE_VALIDATED` nem override de datapack.
 
 ## Artefato e prova
