@@ -26,3 +26,21 @@ O source pin contém uma chamada ativa `registerSpell(new AsphyxiateSpell())` pa
 Esta ficha fecha ID, classe registrada, ownership, escola Wind e estado semântico source-pinned. Mecânica quantitativa, custo, cooldown, acquisition settlement, networking, compatibilidade e comportamento no modpack físico permanecem QA separado quando não explicitamente fechados pelo dossiê.
 
 Source: `../EXACT-1.2.8-SPELL-INVENTORY.md`.
+
+## Engenharia causal para perks — 17/10/2026
+
+**Identidade:** mod ID `aero_additions`, versão `1.2.8`, source fixo `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`. **⚠️ COUNTED_SOURCE_PINNED**: dez registros confirmados em JAR oficial de publicação ([Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191)), mas SHA-1 do JAR *instalado* na modlist histórica é inválido/incompleto (35 dígitos); **NÃO** promover a COUNTED_EXACT instalada. JAR publisher `aero_additions-1.2.8.jar` SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`. Todos os números abaixo vêm do source, não de configuração efetiva/QA físico. Iron's governa casting, mana/cooldown; Aero Additions governa efeitos; RPG Skill Tree somente progressão/perks por contrato real.
+
+**Raiz `aero_additions:asphyxiate` — Asphyxiate.** Source-only; dados de domínio, raio, alvo e duração são mensurados conforme os métodos abaixo, quando aplicáveis.
+
+| Eixo | Observação fonte-fixada | Mutabilidade por perk |
+|---|---|---|
+| Cast/custo | CONTINUOUS, level 1–3, cooldown 20 s, mana base 9 +3/nível, power 3+2/nível; base castTime 100 mas override `getCastTime=100+100×spellLevel` → **200/300/400 ticks**. | Host controle de canal/mana/cancelamento; não duplicar DoT. |
+| Target | Utils.preCastTargetHelper(...,15,0.15f); só aceita LivingEntity resolvida e não marcada em AAEntityTypeTags.ASPHYXIATION_IMMUNE. | Range do helper ≠ area em volta; nenhum retarget livre. |
+| Status pulso | onServerCastTick quando `getCastDurationRemaining()%10==0` renova BREATHLESS por 10 ticks, amplifier level−1 (0..2). DoT real decorre do efeito, não do onCast. | Reaplicar MobEffect não deve contar um novo cast nem necessariamente dano a cada 10 ticks. |
+| Dano/tipo | BreathlessEffect.applyEffectTick tenta `hurt(DamageSources.get(level,AADamageTypes.ASPHYXIATION), 1+0.2×amplifier)`. Frequência `duration%(6−amplifier)==0` = 6/5/4 ticks conforme nível; não checa retorno de hurt. | DamageType ASPHYXIATION do addon, não general Wind magic; Mastery requer dano realmente aceito. |
+| Lifecycle | Cancelamento do channel, alvo perdido/immune e pulsos durante troca de dimensão dependem host; client particles não atribuem dano. | ⛔ sem evento per-damage validado. |
+
+**Localizadores:** [AsphyxiateSpell.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/asphyxiate/AsphyxiateSpell.java#L36-L96) · [BreathlessEffect.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/asphyxiate/BreathlessEffect.java#L18-L27).
+
+**QA pendente e fail-closed:** QA immunes, channel interrompido, i-frames, 4–6 tick DoT, target unloading, death, difference nominal spell damage vs specific ASPHYXIATION, hostile PvP. Os valores são defaults ou constantes, não provas de execução em servidor/cliente. **+0 novas magias; +0 adapters aprovados.**
