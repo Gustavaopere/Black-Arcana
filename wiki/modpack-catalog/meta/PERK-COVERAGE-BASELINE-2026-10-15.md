@@ -1,5 +1,11 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight — codec NBT legado de atributo validado em classpath real de Minecraft (16/10/2026)
+
+- **Evidência adicionada:** o teste Java isolado [`EpicFightVanillaAttributeModifierCodecTest`](../providers/✅-epic-fight/EXACT-LEGACY-ATTRIBUTE-CODEC-REVIEW-21.17.3.1.md) chama de fato `AttributeModifier.MAP_CODEC.codec().parse(NbtOps.INSTANCE, tag)` do Minecraft 1.21.1. No [Black Arcana CI #38984538266](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38984538266), **SUCCESS**: registros legados `name/uuid/addition` e `name/uuid/multiply_total` retornaram parse sem resultado, controle `id/add_value` retornou resultado. O job principal `verify` passou `Unit tests`, `Diff sanity`, build NeoForge, **108/108 Foundation GameTests** e dedicated-server smoke, e `stage05_qa_companion_smoke` terminou SUCCESS.
+- **Limite:** esse teste usa NeoForge **21.1.248** do build do Black Arcana; o pack físico registra **21.1.250**. Não carregou Epic Fight 21.17.3.1, não testou sua transformação de datapack nem inventariou atributos aplicados na entidade. As **cinco skills com JSON legados seguem ⚠️ `RAW_ONLY_NOT_PROVEN_LOADED` em provider runtime**, embora a incompatibilidade de dois shapes com o codec vanilla testado agora tenha prova direta.
+- **Catálogo e Stage:** Core Epic Fight mantém ✅ **43/43 registries** catalogados / **42/42 JSONs físicos** / **28 dossiês**, com zero magias novas; piso global **1.856 objetos semânticos mínimos / 1.854 estritos**, denominador aberto. Integração de perks/Mastery permanece ⛔ sem gate de API real. Stage 06.05 🟡 e Stage 09 físico pendente; sem merge.
+
 ## Epic Fight — novo gate compilado de ordem de invocações (16/10/2026; após 43/43 registry)
 
 - **Atributo mágico global:** 1.856 identificados mínimos / 1.854 estritos, denominador aberto. **+0 magias**. Core Epic Fight continua ✅ 43/43 IDs classificados, 42/42 JSONs físicos e 28 dossiês individuais/agrupados; sentinel `epicfight:empty` não é nova ação.
