@@ -115,7 +115,9 @@ jobs:
               matches = re.findall(prefix + r" type=skill id=epicfight:" + skill +
                                    r" status=OBSERVED_LOADED_REGISTRY modifier_entries=(\d+)\b", log)
               assert len(matches) == 1, f"one registry observation required for {skill}: {matches}"
-              evidence["epicfight:" + skill] = int(matches[0])
+              original_count = int(matches[0])
+              assert original_count == 0, f"legacy modifier unexpectedly loaded at boot: {skill} {original_count}"
+              evidence["epicfight:" + skill] = original_count
           controls_expected = {"swordmaster": 2, "forbidden_strength": 2, "technician": 1}
           controls_observed = {}
           for skill, expected in controls_expected.items():
