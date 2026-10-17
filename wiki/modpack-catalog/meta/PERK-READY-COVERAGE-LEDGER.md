@@ -19,7 +19,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-a-good-place` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-aces-spell-utils` | 5 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-acolyte` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-aeromancy-additions` | 16 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-aeromancy-additions` | 16 | ✅ 10/10 spells com fichas source-pinned, [matriz de parâmetros, targeting e WORLD SAFETY](../providers/✅-aeromancy-additions/PERK-CAUSAL-ENGINEERING-MATRIX-1.2.8.md); ⚠️ JAR publisher comprovado, **SHA do instalado inválido**, host/config/Survival/QA pendentes; ⛔ perks/adapters não homologadas |
 | `✅-alexs-caves-continued` | 13 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-alexs-mobs-continued` | 8 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-alshanex-familiars` | 20 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
