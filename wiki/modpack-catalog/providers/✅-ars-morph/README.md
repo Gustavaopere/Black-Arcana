@@ -1,5 +1,13 @@
 # Ars Morph 2.0.0
 
+## Engenharia causal das habilidades Identity2 — 17/10/2026
+
+**✅ 7/7 implementações Java** de habilidade Identity2 possuem [fichas individuais em `abilities/`](abilities/) com código-fonte fixo, eventos, target, movimento, projetéis, status, tempo, passivos, riscos e QA. Os **11/11 arquivos JSON de atribuições** foram ligados às respectivas fichas; há cinco variantes Weald Walker compartilhando um único `predef`. [Matriz de integração e barras](ABILITY-PERK-CAUSAL-MATRIX-2.0.0.md). O glifo `ars_morph:glyph_morph` permanece 1/1 independente; **+0 novas identidades de magia**. O registro source-aligned é `Alexthw46/Ars-Morph@4a5a2c706fe5a316fc9ad03ac37a3ac1d1dc3c58`, sem paridade do código com JAR instalada.
+
+**Achados para perks:** Wixie sorteia índice 0–11 para tabela de apenas dez efeitos no ramo agachado (risco source de index out of bounds, não crash físico reproduzido); Whirlisprig executa Grow+AOE×3 e Jump Boost passivo; Wilden Stalker sincroniza `isFlying` no servidor; Firenando projeta homing com filtro `Enemy`, condicionado a Ars Elemental; Wilden Hunter remove Summoning Sickness após `postEvent` não cancelado; Starbuncle aplica Speed 3000 ticks. Os campos Identity2 `cooldown`/`use_duration` são valores brutos e **suas unidades não foram certificadas no host instalado**.
+
+**Barras:** GLOBAL —% (piso 1.857 / 1.855 estritos, denominador global aberto); ARS MORPH 7/7 fichas Java e 11/11 assignments (documentação 100%), glyph 1/1, ⚠️ runtime/cooldowns/permissões pendentes, ⛔ 0 adapters homologados. Stage 06.05 🟡, Stage 09 físico pendente; PR #825 draft.
+
 Status: `PHASE 2X — SOURCE CATALOG CLOSED / INSTALLED RUNTIME QA OPEN`
 
 ## Exact installed identity
