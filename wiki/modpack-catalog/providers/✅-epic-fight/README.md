@@ -1,5 +1,10 @@
 # Epic Fight — 21.17.3.1
 
+## Fechamento de linkage compilado das três habilidades (18/10/2026)
+
+✅ [Java21 #39095049311](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39095049311) **SUCCESS**, publisher SHA-1/SHA-256 verificados, 10/10 autotestes de `<clinit>` + `BootstrapMethods`, `PASS_BOUNDED_TRIDENT_REGISTRY_BOOTSTRAP_LINKAGE`. [Dossiê do vínculo ID → supplier → propriedades](EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md): `wrathful_lighting→InvokeDynamic #67→lambda$static$40`, `tsunami→#68→$42`, `everlasting_allegiance→#69→$43`, com `DeferredRegister.register` e holders corretos. Essa prova completa a associação compilada das **configurações de AttackPhase aos IDs exatos**, sem demonstrar execução da skill, dano final, custo real, target/range, callback para perk ou jogador conectado. +0 magias e +0 adapters.
+
+
 ## Novo gate exato de AttackPhase — 18/10/2026
 
 ✅ [Java21 #39094435160](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39094435160) **SUCCESS**, SHA-1/SHA-256 verificados, 11/11 autotestes adicionais e `PASS_BOUNDED_TRIDENT_ATTACK_PHASE_PROPERTIES`, artifact JSON **12124346492**. [Dossiê exato do JAR](EXACT-TRIDENT-ATTACK-PHASE-PROPERTIES-21.17.3.1.md): `EpicFightSkills.lambda$static$40/42/43` possui as propriedades de fases, constantes float, `ValueModifier.setter/adder/multiplier` e `Builder.addProperty` que correspondem a Wrathful Lightning/Tsunami/Everlasting Allegiance. A prova agora cobre os *argumentos de construção* exatos para `MAX_STRIKES`, `DAMAGE`, `ARMOR_NEGATION`, `STUN_TYPE` e `WEAPON_INNATE`. **Não prova resultado final de combate, linkage de bootstrap completo, custo realizado, escala de projétil, target/range, nem player/adapter.** 3/3 magic actions, +0 roots.
