@@ -1,5 +1,8 @@
 # Seis spells — inventário estático exato
 
+**Atualização de fichas técnicas (18/10/2026):** ✅ **6/6 fichas** com source-pin de classe/`onCast`, defaults, geometria, dano/status, lifecycle e boundary de perks, sem copiar implementação. [Matriz transversal](../PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md). Paridade completa de fórmulas com JAR 0.1.2, Iron's 3.16.3, configurações efetivas e gameplay: ⚠️ NÃO VERIFICADO. Quantidade de novas magias: **+0**.
+
+
 **✅ 6/6** identidades em `ModSpellRegistry`, provadas no JAR 0.1.2 com metadata `0.1.0`. [Dossiê técnico](../EXACT-BINARY-SPELLS-0.1.2.md). Disponibilidade in-game e configuração **⚠️**.
 
 1. [Slime Aspect](slime-aspect.md) — `backportedspellbooks:slime_aspect`
