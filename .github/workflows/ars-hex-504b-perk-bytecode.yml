@@ -8,6 +8,7 @@ on:
       - 'docs/qa/ars_hex_504b_perk_bytecode.py'
       - 'docs/qa/ars_hex_504b_numeric_operands.py'
       - 'docs/qa/ars_hex_504b_perk_dataflow.py'
+      - 'docs/qa/ars_hex_504b_scythe_discount_flow.py'
       - 'wiki/modpack-catalog/providers/✅-ars-hex/**'
   workflow_dispatch:
 
@@ -54,6 +55,12 @@ jobs:
           python3 docs/qa/ars_hex_504b_perk_dataflow.py \
             --jar build/ars-hex-504b-audit/publisher.jar \
             --output build/ars-hex-504b-audit/perk-dataflow-report.json
+      - name: Verify the bounded scythe discount bytecode loop
+        run: |
+          python3 docs/qa/ars_hex_504b_scythe_discount_flow.py --self-test
+          python3 docs/qa/ars_hex_504b_scythe_discount_flow.py \
+            --jar build/ars-hex-504b-audit/publisher.jar \
+            --output build/ars-hex-504b-audit/scythe-discount-flow-report.json
       - name: Report minimal compiled opcode layout for dataflow review
         shell: bash
         run: |
@@ -101,5 +108,6 @@ jobs:
             build/ars-hex-504b-audit/perk-bytecode-report.json
             build/ars-hex-504b-audit/numeric-operand-report.json
             build/ars-hex-504b-audit/perk-dataflow-report.json
+            build/ars-hex-504b-audit/scythe-discount-flow-report.json
           if-no-files-found: ignore
           retention-days: 14
