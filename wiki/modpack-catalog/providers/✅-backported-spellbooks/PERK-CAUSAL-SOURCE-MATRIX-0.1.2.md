@@ -1,5 +1,9 @@
 # Backported Spellbooks 0.1.2 — matriz source-pinned de parâmetros, geometria e causalidade
 
+## Vanilla Backport 1.1.7.10 — servidor mínimo e Mixin target-loading (18/10/2026)
+
+✅ [#39178310071](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39178310071) **SUCCESS**, 10/10 testes fail-closed, [dossiê de runtime mínimo](EXACT-RUNTIME-VANILLABACKPORT-MINIMAL-SERVER-1.1.7.10.md). Servidor NeoForge 21.1.250 + Platform 1.3.3 + Vanilla Backport 1.1.7.10, JARs oficiais com SHA-256 fixado, alcançou `Done (10.039s)` sem sinal fatal e reportou `Mixing` de `EntityMixin`, `LivingEntityMixin` e `RangedAttributeMixin` nos targets exatos, uma vez cada. **Ainda não** demonstra bytecode final transformado, callsites após os outros mods, jogador real, Iron's/addon ou atributo resolvido. ⚠️ integração e QA físico pendentes; ⛔ perks bloqueados. **+0 magias/adapters**, Backported **6/6** preservado.
+
 ## NeoForge 21.1.250 — 4 `setDeltaMovement(DDD)` no servidor patchado (18/10/2026)
 
 ✅ [Java21 #39176290939](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39176290939) **SUCCESS**, 7/7 autotestes, hashes exatos do installer 21.1.250, patch server e SRG base. [Dossiê do alvo NeoForge](EXACT-NEOFORGE-211250-MIXIN-TARGETS.md): `Entity.move→collide` 1, `→tryCheckInsideBlocks` 1; `LivingEntity.travel→handleRelativeFrictionAndCalculateMovement` 1, `→setDeltaMovement(DDD)` **4**, quarto callsite `ordinal=3` no PC **1314** do **servidor patchado** (cliente vanilla tinha PC 1240). O construtor `RangedAttribute.<init>(String,DDD)V` foi localizado no SRG base. **Ainda não** prova transformações Mixin do modpack, servidor carregado com providers, cliente NeoForge ou perks externos. **+0 magias/adapters; Backported 6/6 no critério delimitado.**

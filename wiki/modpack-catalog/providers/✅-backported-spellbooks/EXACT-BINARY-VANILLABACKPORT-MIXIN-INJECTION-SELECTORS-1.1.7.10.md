@@ -17,6 +17,10 @@
 
 O [gate Java21 #39170808679](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39170808679) obteve o JAR **cliente Mojang** verificado por SHA-1/tamanho oficiais, resolveu o obfuscation mapping e inspecionou os métodos com `javap -p -c -s`. O [dossiê de callsites](EXACT-MOJANG-1211-VANILLA-CLIENT-CALLSITES.md) certifica **4 chamadas de `setDeltaMovement(DDD)` em `LivingEntity.travel`**, com a quarta em **PC 1240** e `ordinal=3` possível no **cliente vanilla**. Os outros três edges nominalmente verificados têm **uma chamada cada**, e `RangedAttribute.<init>(String,double,double,double)` está presente no classfile. **Isso não demonstra que NeoForge 21.1.250 e demais mixins preservem os callsites nem que a injeção tenha sido aplicada.** É prova mais forte que mapeamento simples, ainda abaixo de aceitação física.
 
+## Loader real isolado — três target-mixing reports do Vanilla Backport (18/10/2026)
+
+✅ [#39178310071](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39178310071) confirmou em servidor mínimo NeoForge 21.1.250 + Platform 1.3.3 + Vanilla Backport 1.1.7.10, após validação de SHA-256 dos JARs, três logs **exatos** `Mixing ... from vanillabackport.mixins.json into ...`: `EntityMixin→Entity`, `LivingEntityMixin→LivingEntity`, `RangedAttributeMixin→RangedAttribute`. [Dossiê e limites](EXACT-RUNTIME-VANILLABACKPORT-MINIMAL-SERVER-1.1.7.10.md), `Done (10.039s)`, 10/10 regressões e zero desvios. Diferenciar **aplicação reportada pelo serviço Mixin** de verificação pós-transformação em bytecode e de callbacks executados: ambos últimos seguem ⚠️. Nem Iron's nem Backported Spellbooks foram carregados nesse servidor mínimo.
+
 ## Sete seletores `@Mixin` validados no classfile
 
 | Classe mixin e destino de `@Mixin` | Handler compilado | Tipo de injeção | Método alvo no metadata | `@At` / selector |
