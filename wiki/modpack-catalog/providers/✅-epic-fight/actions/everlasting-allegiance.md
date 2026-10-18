@@ -8,6 +8,10 @@
 - Semantic type: deliberate supernatural damaging trident recall
 - State: `COUNTED_EXACT`
 
+## Gate posterior — handler instalado, ainda sem hit real (18/10/2026)
+
+✅ [Preflight NeoForge Java21 #39098101364](../EXACT-ARMOR-MIXIN-LOADED-CLASS-PREFLIGHT-21.17.3.1.md) confirmou o handler de armadura do Epic Fight na classe `LivingEntity` transformada. Não foram executados recall do tridente, hit com `DAMAGE_MODIFIER.multiplier(1.4)` nem mitigação `ARMOR_NEGATION_MODIFIER.adder(30)` em entidade real. ⚠️ mundo/jogador/combat QA não executado; ⛔ perks/Mastery.
+
 ## Semântica delimitada do dano e armadura (18/10/2026)
 
 ✅ [Consumidores binários Java21 #39096586191](../EXACT-ATTACK-PHASE-CONSUMERS-21.17.3.1.md): `DAMAGE_MODIFIER.multiplier(1.4)` compõe o `ResultCalculator`, que avalia o acumulador segundo `((set ou base)+add)×multiply`; `calculateDamageAgainst` pode adicionar `extraDamages` depois. `ARMOR_NEGATION_MODIFIER.adder(30)` altera outro acumulador, utilizado no cálculo de absorção compilado de `MixinLivingEntity`. Portanto 1,4 é **input de fase**, não 1,4× de perda de HP demonstrada; 30 não é garantia de 30% de bypass final. Recall, quantidade de alvos/hits, dano real e `HOLD` aplicado seguem ⚠️; perks externas ⛔.
