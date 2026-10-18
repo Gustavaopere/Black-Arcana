@@ -15,7 +15,7 @@ import sys
 import unittest
 import zipfile
 
-from backported_012_perk_consumer_bytecode import hash_and_zip, javap, unique
+from backported_012_perk_consumer_bytecode import hash_and_zip, javap, unique, blocks
 from backported_012_slime_aspect_bytecode import ordered, count
 
 CLASSES = {
@@ -23,6 +23,12 @@ CLASSES = {
     "server": "net.redreaper.backported_spellbooks.events.ServerEvents",
     "items": "net.redreaper.backported_spellbooks.init.ModItems",
 }
+
+def boot_constructor(dis):
+    matches = [(h,ops) for h,ops in blocks(dis) if '.SlimeBootsArmorItem(' in h]
+    if len(matches) != 1:
+        raise ValueError(f'BOOT_CONSTRUCTOR_NOT_UNIQUE: count={len(matches)}')
+    return matches[0][1]
 
 def boot_attributes(ops):
     required = [
@@ -102,7 +108,7 @@ def inspect(dis):
     return {
         "status":"PASS_BACKPORTED_012_SLIME_BOOTS_FALL_BOUNDED_BYTECODE",
         "evidence_class":"EXACT_PUBLISHER_BOUNDED_EQUIPMENT_AND_EVENT_METHODS",
-        "boots":boot_attributes(unique(dis["boots"],"SlimeBootsArmorItem")),
+        "boots":boot_attributes(boot_constructor(dis["boots"])),
         "fall_event":fall_guard(unique(dis["server"],"onFallEvent")),
         "tooltip":"cooldown helper + localized text exist in appendHoverText only; no observed fall-event cooldown gate",
         "item_registry":"literal slime_boots and SLIME_BOOTS field present; exact lambda linkage not formally proved",
