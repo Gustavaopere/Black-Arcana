@@ -2,6 +2,8 @@
 
 Status: `SOURCE CATALOG CLOSED / INSTALLED EQUIPMENT QA OPEN`
 
+**Fichas individuais com source anchors e eixos de implementação:** [Soul Ward](perks/soul-ward.md), [Magic Proficiency](perks/magic-proficiency.md), [Spirit Spoils](perks/spirit-spoils.md) e [Enchanter's Scythe](equipment/enchanters-scythe.md). [Matriz causal](PERK-CAUSAL-ENGINEERING-MATRIX-5.0.4b.md). A fonte foi read-back na revisão fixada; o JAR de perks/foice e o uso em jogador conectado continuam pendentes.
+
 ## Ars thread perks — 3/3 Malum-conditioned
 
 `ArsNouveauRegistry.registerCompatPerks()` registers exactly three perks while Malum is loaded. Hexerei and Iron's perk placeholders are commented and are not production registrations.
