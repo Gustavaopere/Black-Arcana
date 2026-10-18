@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/vanillabackport-11710-mobility-bytecode.yml'
       - 'docs/qa/vanillabackport_11710_mobility_bytecode.py'
+      - 'docs/qa/vanillabackport_11710_mixin_manifest.py'
       - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/**'
   workflow_dispatch:
 
@@ -62,6 +63,17 @@ jobs:
             --jar build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar \
             --output build/catalog-vb-11710/mobility-host-evidence.json
 
+      - name: Fail-closed NeoForge common-mixin manifest regressions
+        run: python3 docs/qa/vanillabackport_11710_mixin_manifest.py --self-test
+
+      - name: Verify exact packaged NeoForge mixin declarations and class presence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/vanillabackport_11710_mixin_manifest.py \
+            --jar build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar \
+            --output build/catalog-vb-11710/mixin-manifest-evidence.json
+
       - name: Bounded diagnostics only when verification fails
         if: failure()
         shell: bash
@@ -83,6 +95,8 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: vanillabackport-11710-mobility-${{ github.sha }}
-          path: build/catalog-vb-11710/mobility-host-evidence.json
+          path: |
+            build/catalog-vb-11710/mobility-host-evidence.json
+            build/catalog-vb-11710/mixin-manifest-evidence.json
           if-no-files-found: ignore
           retention-days: 14
