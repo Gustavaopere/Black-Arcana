@@ -1,5 +1,10 @@
 # Epic Fight 21.17.3.1 — observador read-only de jogador conectado (pré-gate Stage 09)
 
+## Nova prova independente de classe transformada — 18/10/2026
+
+✅ [Workflow Java21 #39098101364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39098101364) **SUCCESS** e [dossiê do armor-mixin](EXACT-ARMOR-MIXIN-LOADED-CLASS-PREFLIGHT-21.17.3.1.md). O mesmo companion QA passou a aceitar opcionalmente `BLACK_ARCANA_EPICFIGHT_QA_ARMOR_MIXIN_PREFLIGHT=1`, observando `LivingEntity.class.getDeclaredMethods()` em um dedicated server iniciado sem cliente. Encontrou `TRANSFORMED_HANDLER_PRESENT handler_count=1` para o método de armadura do Epic Fight. Artefato #**12125471763**, sem JAR de QA em produção. **Isso não muda a ausência de conexão de jogador** registrada neste protocolo: `connected_players=0`, `has_proven_join_patch=false`, `equip_invoked=false`, `attribute_mutated=false`; handler presente **não equivale** a handler invocado em hit real. O teste negativo anterior #39097863144 falhou por erro de escape do matcher CI e foi corrigido mediante fixtures positiva e negativa, mantendo fail-closed.
+
+
 **Data:** 17/10/2026. **Estado:** ✅ `CONNECTED_PLAYER_OBSERVER_NO_CLIENT_GUARD` (armamento e ausência de falso positivo testados); ⚠️ `CONNECTED_SERVER_PLAYER_PATCH_INITIALIZED` **ainda sem execução física com cliente**. O sucesso do teste sem cliente NÃO prova entrada de jogador, inicialização de patch real, skill equipada ou `AttributeInstance` alterado.
 
 ## Evidência executada
