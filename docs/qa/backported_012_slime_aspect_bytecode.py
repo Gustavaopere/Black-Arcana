@@ -76,15 +76,15 @@ def verify_registry(dis):
     header, ops = candidates[0]
     checks = [
         ("getstatic", "ModAttributes.BOUNCINESS:"),
-        ("ldc", "float 0.5f"),
+        ("ldc2_w", "double 0.5d"),
         ("getstatic", "Operation.ADD_VALUE:"),
         ("invokevirtual", "addAttributeModifier:"),
         ("getstatic", "Attributes.JUMP_STRENGTH:"),
-        ("ldc", "float 0.15f"),
+        ("ldc2_w", "double 0.15000000596046448d"),
         ("getstatic", "Operation.ADD_MULTIPLIED_TOTAL:"),
         ("invokevirtual", "addAttributeModifier:"),
         ("getstatic", "ModAttributes.AIR_DRAG_MODIFIER:"),
-        ("ldc", "float -0.1f"),
+        ("ldc2_w", "double -0.10000000149011612d"),
         ("getstatic", "Operation.ADD_MULTIPLIED_TOTAL:"),
         ("invokevirtual", "addAttributeModifier:")
     ]
@@ -94,6 +94,7 @@ def verify_registry(dis):
     if not any(op == "new" and "SlimeAspectMobEffect" in tail for _,op,tail in ops):
         raise ValueError("SLIME_EFFECT_CONSTRUCTOR_MISSING")
     return {"factory_header":header, "modifier_order_pcs":pcs,
+            "float_to_double_conversion": "compiled modifiers call the double-taking addAttributeModifier, with float32 rounding observable as 0.15000000596046448d and -0.10000000149011612d",
             "attributes":[
                 {"name":"BOUNCINESS","operation":"ADD_VALUE","coefficient":0.5},
                 {"name":"JUMP_STRENGTH","operation":"ADD_MULTIPLIED_TOTAL","coefficient":0.15},
@@ -123,19 +124,19 @@ class Tests(unittest.TestCase):
 
     def test_order_accepts_three_attributes(self):
         x=self.fixture(*[
-            ("getstatic","ModAttributes.BOUNCINESS:"),("ldc","float 0.5f"),
+            ("getstatic","ModAttributes.BOUNCINESS:"),("ldc2_w","double 0.5d"),
             ("getstatic","Operation.ADD_VALUE:"),("invokevirtual","addAttributeModifier:"),
-            ("getstatic","Attributes.JUMP_STRENGTH:"),("ldc","float 0.15f"),
+            ("getstatic","Attributes.JUMP_STRENGTH:"),("ldc2_w","double 0.15000000596046448d"),
             ("getstatic","Operation.ADD_MULTIPLIED_TOTAL:"),("invokevirtual","addAttributeModifier:"),
-            ("getstatic","ModAttributes.AIR_DRAG_MODIFIER:"),("ldc","float -0.1f"),
+            ("getstatic","ModAttributes.AIR_DRAG_MODIFIER:"),("ldc2_w","double -0.10000000149011612d"),
             ("getstatic","Operation.ADD_MULTIPLIED_TOTAL:"),("invokevirtual","addAttributeModifier:")
         ])
         self.assertEqual(count(x,"addAttributeModifier:",3,"fixture"),[12,28,44])
 
     def test_wrong_bounce_coefficient_rejected(self):
         with self.assertRaisesRegex(ValueError,"missing"):
-            ordered(self.fixture(("ldc","float 0.4f")),
-                    [("ldc","float 0.5f")],"bounce")
+            ordered(self.fixture(("ldc2_w","double 0.4000000059604645d")),
+                    [("ldc2_w","double 0.5d")],"bounce")
 
     def test_wrong_jump_modifier_mode_rejected(self):
         with self.assertRaisesRegex(ValueError,"missing"):
@@ -144,8 +145,8 @@ class Tests(unittest.TestCase):
 
     def test_wrong_air_drag_sign_rejected(self):
         with self.assertRaisesRegex(ValueError,"missing"):
-            ordered(self.fixture(("ldc","float 0.1f")),
-                    [("ldc","float -0.1f")],"air drag")
+            ordered(self.fixture(("ldc2_w","double 0.10000000149011612d")),
+                    [("ldc2_w","double -0.10000000149011612d")],"air drag")
 
     def test_duplicate_modifier_call_rejected(self):
         with self.assertRaisesRegex(ValueError,"count"):
