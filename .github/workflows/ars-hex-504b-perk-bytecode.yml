@@ -1,0 +1,49 @@
+name: Ars Hex 5.0.4b perk and scythe publisher bytecode (Java 21)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ars-hex-504b-perk-bytecode.yml'
+      - 'docs/qa/ars_hex_504b_perk_bytecode.py'
+      - 'wiki/modpack-catalog/providers/✅-ars-hex/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect_publisher_perk_bytecode:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Run fail-closed synthetic verifier tests
+        run: python3 docs/qa/ars_hex_504b_perk_bytecode.py --self-test
+      - name: Download publication and check immutable publisher hash before javap
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/ars-hex-504b-audit
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
+            --connect-timeout 20 --max-time 240 \
+            'https://cursemaven.com/curse/maven/ars-hex-unity-1357380/7404679/ars-hex-unity-1357380-7404679.jar' \
+            --output build/ars-hex-504b-audit/publisher.jar
+          echo '2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4  build/ars-hex-504b-audit/publisher.jar' | sha1sum --check
+      - name: Audit bounded compiled class references (not gameplay acceptance)
+        run: |
+          python3 docs/qa/ars_hex_504b_perk_bytecode.py \
+            --jar build/ars-hex-504b-audit/publisher.jar \
+            --output build/ars-hex-504b-audit/perk-bytecode-report.json
+      - name: Upload small JSON evidence only (never third-party JAR)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ars-hex-504b-perk-bounded-${{ github.sha }}
+          path: build/ars-hex-504b-audit/perk-bytecode-report.json
+          if-no-files-found: ignore
+          retention-days: 14
