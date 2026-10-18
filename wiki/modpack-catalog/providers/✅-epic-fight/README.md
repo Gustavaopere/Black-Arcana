@@ -1,5 +1,10 @@
 # Epic Fight — 21.17.3.1
 
+## Novo gate exato de AttackPhase — 18/10/2026
+
+✅ [Java21 #39094435160](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39094435160) **SUCCESS**, SHA-1/SHA-256 verificados, 11/11 autotestes adicionais e `PASS_BOUNDED_TRIDENT_ATTACK_PHASE_PROPERTIES`, artifact JSON **12124346492**. [Dossiê exato do JAR](EXACT-TRIDENT-ATTACK-PHASE-PROPERTIES-21.17.3.1.md): `EpicFightSkills.lambda$static$40/42/43` possui as propriedades de fases, constantes float, `ValueModifier.setter/adder/multiplier` e `Builder.addProperty` que correspondem a Wrathful Lightning/Tsunami/Everlasting Allegiance. A prova agora cobre os *argumentos de construção* exatos para `MAX_STRIKES`, `DAMAGE`, `ARMOR_NEGATION`, `STUN_TYPE` e `WEAPON_INNATE`. **Não prova resultado final de combate, linkage de bootstrap completo, custo realizado, escala de projétil, target/range, nem player/adapter.** 3/3 magic actions, +0 roots.
+
+
 ## Three supernatural trident actions — exact compiled causal proof (18/10/2026)
 
 ✅ [Java21 #39093719405](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39093719405) **SUCCESS** on publisher SHA-1/SHA-256 exact, **9/9** synthetic fail-closed checks and `PASS_BOUNDED_TRIDENT_CAUSAL_REFERENCES`; artifact JSON **12124190669**. [Dossiê causal](EXACT-TRIDENT-CAUSAL-REFERENCES-21.17.3.1.md): 3/3 JSONs exact-current `consumption` **50 / 50 / 40** (unit not presumed); trident selector Riptide → Channeling → Loyalty; Tsunami water/rain two animations; Wrathful two phase property callsites; Everlasting condition on thrown-trident ID and server recall/animation/cancel references. Numeric attack-phase modifiers from source 21.17.3 remain **⚠️ adjacent**, not exact 21.17.3.1 binarily confirmed. No gameplay or hook authorization, +0 spells. Epic Fight 43/43 IDs, 42/42 packaged JSONs, 3 magical roots / 40 nonmagical identities usable for perk research; ⛔ Mastery/adapters without real player provider QA.
