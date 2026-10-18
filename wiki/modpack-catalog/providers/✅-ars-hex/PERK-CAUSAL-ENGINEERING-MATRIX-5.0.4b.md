@@ -1,5 +1,8 @@
 # Ars Hex 5.0.4b — matriz de contratos técnicos para perks
 
+✅ [Nova prova Java21 de operandos #39089774180](EXACT-PUBLISHER-NUMERIC-OPERANDS-5.0.4b.md): o JAR publisher SHA-1 `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4` passou **13/13 + 12/12 autotestes**, `PASS_BOUNDED_BYTECODE_REFERENCES` e `PASS_BOUNDED_NUMERIC_OPERANDS`. O classfile contém `iconst_2`, doubles `0.5`/`0.1`/`0.2`, opcodes de multiplicação e leitura de `slotValue` nos métodos aplicáveis. **Isto confirma presença de constantes, não o def-use/CFG integral, valor final de atributo, pagamento de mana, dano nem runtime.** Artefato JSON #12121819084. Nenhuma nova magia/adapter.
+
+
 **Prova binária posterior:** ✅ [workflow Java21 #39087382649](EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md) — hash SHA-1 do JAR publicado 5.0.4b validado, 13/13 autotestes e seis classes compiladas com referências delimitadas; operações/atributos e ingressos da foice confirmados por marcadores, mas **coeficientes, dataflow, pagamento de mana e execução real continuam source-pinned / ⚠️**. Nenhum adapter. [Relatório técnico detalhado](EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md).
 
 **Escopo auditado (17/10/2026):** ✅ glyph próprio 1/1 registrado no JAR; ✅ 3/3 perks de thread e 1/1 equipamento spell-on-hit com fichas individuais **SOURCE_CAUSALITY**; **+0 magias**, +0 adapters, nenhuma equivalência bytecode completa/QA físico certificada nesta tranche. Este denominador de objetos de engenharia não é o denominador de identidades mágicas. Source pin oficial `Alexthw46/Ars-Unity@b25528adf8c0135585cd6d654582efa147e0a227`.
