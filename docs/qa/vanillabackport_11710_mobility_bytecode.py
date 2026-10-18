@@ -16,7 +16,7 @@ import sys
 import unittest
 import zipfile
 
-from backported_012_perk_consumer_bytecode import blocks, unique, javap
+from backported_012_perk_consumer_bytecode import blocks, unique, javap, OPCODE
 from backported_012_slime_aspect_bytecode import ordered, count
 
 PUBLISHER_NAME = "VanillaBackport-neoforge-1.21.1-1.1.7.10.jar"
@@ -75,10 +75,11 @@ def attrs(dis):
                       ("air",init)]:
         if not any(op=="ldc2_w" and "double 2048.0d" in tail for _,op,tail in ops):
             raise ValueError("ATTRIBUTE_MAX_2048_DRIFT:"+label)
-    candidates=[ops for h,ops in blocks(dis) if h=="static {};"]
-    if len(candidates)!=1:
-        raise ValueError(f"ATTRIBUTE_CLINIT_MISSING_OR_AMBIGUOUS:{len(candidates)}")
-    static=candidates[0]
+    if dis.count("  static {};")!=1:
+        raise ValueError("ATTRIBUTE_CLINIT_MISSING_OR_AMBIGUOUS")
+    section=dis.split("  static {};")[1].split("\\n}")[0]
+    static=[(int(m.group(1)),m.group(2),m.group(3).strip())
+            for line in section.splitlines() if (m:=OPCODE.match(line))]
     ordered(static,[
         ("ldc","String minecraft"),
         ("ldc","String air_drag_modifier"),
