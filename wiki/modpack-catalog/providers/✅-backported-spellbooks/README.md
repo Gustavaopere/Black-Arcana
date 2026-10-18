@@ -1,5 +1,9 @@
 # Backported Spellbooks — physical 0.1.2 release / embedded metadata 0.1.0
 
+## Minecraft 1.21.1 — sete assinaturas de métodos-alvo reconhecidas (18/10/2026)
+
+✅ [GitHub Actions #39170006472](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39170006472) **SUCCESS**, 8/8 testes, zero desvios: os mapeamentos Mojang oficiais cliente e servidor de Minecraft **1.21.1** confirmaram [sete métodos-alvo nomeados](EXACT-MOJANG-1211-MIXIN-TARGET-SIGNATURES.md) de `Entity`/`LivingEntity` com parâmetros/retornos exatos; a classe `RangedAttribute` também está presente. O quarto `setDeltaMovement(DDD)V` de `LivingEntity.travel` **não foi contado nem verificado**: `ordinal=3` é só anotação compilada no JAR provider e os mappings não contêm callsites. ⚠️ NeoForge patch, mixin aplicado, cópia física e player ainda não auditados; ⛔ não criar hooks. +0 magias/adapters, Backported 6/6 preservado.
+
 ## Vanilla Backport 1.1.7.10 — anotações e alvos de injeção certificados (18/10/2026)
 
 ✅ [Java21 #39169078531](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39169078531), **34/34 autotestes no workflow** (10 movimento, 12 manifesto, 12 seletores), JAR publisher hash exato, `PASS_VANILLABACKPORT_11710_COMPILED_MIXIN_INJECTION_DECLARATIONS`, zero desvios. [Dossiê de sete handlers](EXACT-BINARY-VANILLABACKPORT-MIXIN-INJECTION-SELECTORS-1.1.7.10.md) comprova em classfile `EntityMixin` (3 seletores `move`), `LivingEntityMixin` (3 seletores em `travel`/`createLivingAttributes`; `@ModifyArg index=1`, `@WrapOperation ordinal=3`) e `RangedAttributeMixin` (`@Inject <init> TAIL`, source-pinned para knockback). ✅ Declaração compilada; ⚠️ transformação aplicada, host físico e jogador não verificados; ⛔ perk adapter não autorizado. +0 magias.
