@@ -1,5 +1,8 @@
 # Epic Fight 21.17.3.1 — precedência de AttackPhase e processamento independente do tridente de retorno
 
+**Atualização de prova temporal posterior:** ✅ [JAR exato Java21 #39103337112](EXACT-TRIDENT-RETURN-KINEMATICS-21.17.3.1.md) verificou a sequência contígua de opcodes da **cinemática de retorno** em `ThrownTridentPatch.tickEnd`: `t=max(tickCount-returnTick-10,0)`, `min(t²×0.0005+abs(t×0.05),min(10,d))` e `setPos`. A afirmação histórica abaixo de que velocidade/tempo eram apenas `SOURCE_ADJACENT` passou a ser superada **para esses operandos e essa fórmula**, sem homologar duração, raio, colisões ou velocidade efetiva em jogador real.
+
+
 **18/10/2026 · ✅ `EXACT_PUBLISHER_METHOD_ORDERED_REFERENCES_AND_OPERANDS` · ⚠️ valor de fase carregada e dano de mundo não observados · ⛔ adapters de perks/Mastery ainda bloqueados.**
 
 ## Artefato e verificação
@@ -33,7 +36,7 @@
 
 **Fonte pública adjacente 21.17.3 (sem promoção automática do conjunto inteiro para 21.17.3.1):** [`ThrownTridentPatch.java`](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/world/capabilities/projectile/ThrownTridentPatch.java), [`WrathfulLightingSkill.java`](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/weaponinnate/WrathfulLightingSkill.java), [`AttackAnimation.java`](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/api/animation/types/AttackAnimation.java#L503-L517) e [`EverlastingAllegiance.java`](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/skill/weaponinnate/EverlastingAllegiance.java#L90-L94).
 
-O source adjacente indica ainda uma fórmula acelerada de retorno dependente de `tickCount - returnTick` com teto de movimento de 10 unidades por tick e passagem pelo loop de dano enquanto `innateActivated`. Esse detalhe permanece **SOURCE_ADJACENT**, sem certificação de operandos e CFG integral da fórmula na release exata. Nenhum limitador explícito de quantidade total de vítimas foi comprovado por esta auditoria.
+O source adjacente indica ainda uma fórmula acelerada de retorno dependente de `tickCount - returnTick` com teto de movimento de 10 unidades por tick e passagem pelo loop de dano enquanto `innateActivated`. Os operandos e a sequência contínua da fórmula agora têm prova **EXACT_PUBLISHER_ORDERED_CONTIGUOUS_COMPILED_OPERANDS** no [novo gate](EXACT-TRIDENT-RETURN-KINEMATICS-21.17.3.1.md); a validação completa de todos os fluxos de controle e efeitos físicos permanece pendente. Nenhum limitador explícito de quantidade total de vítimas foi comprovado por esta auditoria.
 
 ## Correções de modelagem de perks
 
