@@ -1,5 +1,10 @@
 # Backported Spellbooks — physical 0.1.2 release / embedded metadata 0.1.0
 
+## Três consumidores compilados delimitados (18/10/2026)
+
+✅ [Java21 #39131725388](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39131725388) **SUCCESS**, hash publisher `747847c1f38c73250ebac05ea06b41a381187850` igual ao físico e **8/8 autotestes**, `PASS_BACKPORTED_012_BOUNDED_COMPILED_PERK_CONSUMERS` sem desvios; JSON [artefato 12138535465](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39131725388/artifacts/12138535465). [Dossiê de três métodos físicos](EXACT-BINARY-PERK-CONSUMERS-0.1.2.md): SulfurCloudProjectile faz dois `super.tick` compilados; SulfurReleaseSpell.getWitherAmplifier devolve `spellLevel-2`; ResinSpraySpell.onCast contém o fluxo host-native de sessão `MagicData` com reativação e alternativa de criação/registro de projétil. **Aprovou inspeção de callsites, não gameplay, duração efetiva, amp normalizado ou API de extensão.** 6/6 IDs de spells catalogados, 3/6 com foco neste novo gate, +0 roots/adapters.
+
+
 ## Atualização da catalogação técnica de perks (18/10/2026)
 
 ✅ [Matriz source-pinned 6/6](PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md) e [seis fichas individuais enriquecidas](spells/README.md) com valores declarativos de rarity/max level/cooldown, cast type/time, mana defaults, `getSpellPower`, dano, área/alcance, geometria, lifecycle de projéteis/effects, causalidade e riscos de reexecução. A nova prova deriva do source público exato **`RedReaper28/BackportedSpellbooks-1.21.1@07cb65efca0c264762a21c2d6bce0f83e3947226`**, que é **alinhado à data da publicação, sem equivalência binária de implementação demonstrada**. A identidade das 6/6 spells continua ✅ pelo JAR publisher hash-matched, [Java21 #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989). **Não** inferir mana debitada, cooldown efetivo, runtime/config, hitbox do cone nem extensão segura de perks; ⚠️/⛔ até host Iron's 3.16.3 e full-modpack QA. Global atualmente com piso histórico 1.857 semânticos / 1.855 estritos, denominador final aberto, **+0** novas raízes.
