@@ -1,5 +1,8 @@
 # Backported Spellbooks 0.1.2 — matriz source-pinned de parâmetros, geometria e causalidade
 
+**Atualização de evidência binária (18/10/2026):** ✅ [JAR exato #39131725388](EXACT-BINARY-PERK-CONSUMERS-0.1.2.md) certificou três caminhos **delimitados**: as duas chamadas compiladas ao `super.tick` no projétil de Sulfur Clouds, a expressão `spellLevel-2` de Sulfur Release e o encadeamento de session checks/reuso/criação de Resin Spray. As demais fórmulas desta matriz permanecem source-pinned, **não são automaticamente promovidas por esse gate**. Artefato JSON **12138535465**; nenhum hit, duração ou status effect de player observado.
+
+
 **18/10/2026 · ✅ 6/6 identidades no JAR publisher hash-matched, via [prova binária anterior](EXACT-BINARY-SPELLS-0.1.2.md) · 🟡 6/6 fichas técnicas enriquecidas por source de referência no mesmo dia da release · ⚠️ source não demonstrado byte a byte como o JAR e gameplay não ensaiado · ⛔ adapters externos sem hook.**
 
 ## Proveniência e fronteira de evidência
