@@ -9,6 +9,7 @@ on:
       - 'docs/qa/epicfight_211731_invocation_order.py'
       - 'docs/qa/epicfight_211731_trident_causal.py'
       - 'docs/qa/epicfight_211731_trident_attack_phase.py'
+      - 'docs/qa/epicfight_211731_trident_registry_linkage.py'
       - 'wiki/modpack-catalog/providers/✅-epic-fight/actions/**'
       - 'wiki/modpack-catalog/providers/✅-epic-fight/skills/**'
   workflow_dispatch:
@@ -77,28 +78,12 @@ jobs:
             --jar build/catalog-epicfight-211731/epicfight-exact.jar \
             --output build/catalog-epicfight-211731/trident-attack-phase-evidence.json
 
-      - name: Inspect registry bootstrap correspondence for trident innate suppliers
+      - name: Gate exact registry ID to trident supplier bootstrap links
         run: |
-          python3 - <<'PY'
-          import subprocess
-          from pathlib import Path
-          jar=Path("build/catalog-epicfight-211731/epicfight-exact.jar")
-          p=subprocess.run(["javap","-p","-c","-v","-classpath",str(jar),
-                "yesman.epicfight.registry.entries.EpicFightSkills"],
-                capture_output=True,text=True,timeout=90,check=True)
-          lines=p.stdout.splitlines()
-          needles=("String wrathful_lighting","String tsunami","String everlasting_allegiance")
-          for needle in needles:
-              ix=[i for i,ln in enumerate(lines) if needle in ln and ":" in ln]
-              print("REGISTRY_ID_PROBE",needle,"matches",len(ix))
-              for i in ix[-3:]:
-                  print("REGISTRY_ID_CONTEXT",repr("\n".join(lines[max(i-2,0):i+6]))[:2800])
-          for needle in ("lambda$static$40","lambda$static$42","lambda$static$43"):
-              ix=[i for i,ln in enumerate(lines) if "REF_invokeStatic" in ln and needle in ln]
-              print("BOOTSTRAP_PROBE",needle,"matches",len(ix))
-              for i in ix[-3:]:
-                  print("BOOTSTRAP_CONTEXT",repr("\n".join(lines[max(i-3,0):i+3]))[:2800])
-          PY
+          python3 docs/qa/epicfight_211731_trident_registry_linkage.py --self-test
+          python3 docs/qa/epicfight_211731_trident_registry_linkage.py \
+            --jar build/catalog-epicfight-211731/epicfight-exact.jar \
+            --output build/catalog-epicfight-211731/trident-registry-bootstrap-evidence.json
 
       - name: Upload bounded JSON evidence, never publisher JAR
         if: always()
@@ -110,5 +95,6 @@ jobs:
             build/catalog-epicfight-211731/invocation-order-evidence.json
             build/catalog-epicfight-211731/trident-causal-evidence.json
             build/catalog-epicfight-211731/trident-attack-phase-evidence.json
+            build/catalog-epicfight-211731/trident-registry-bootstrap-evidence.json
           if-no-files-found: ignore
           retention-days: 14
