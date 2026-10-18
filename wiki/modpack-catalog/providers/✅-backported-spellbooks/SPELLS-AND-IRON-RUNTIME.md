@@ -1,5 +1,8 @@
 # Backported Spellbooks — spells and Iron's runtime boundary
 
+**Complemento source-pinned (18/10/2026):** [Matriz causal e de parâmetros 6/6](PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md) e [cards](spells/README.md) localizam `onCast`, projéteis/`AoeEntity`, status, targeting/LOS, raio, tempo e deduplicação. Valores são do source de 28/05/2026, **não** dos defaults efetivos provados no JAR. Atenção especial: Sulfur Bomb separa dano de impacto e nuvem, Sulfur Clouds cria 3 projéteis por cast, Resin Spray reutiliza `EntityCastData` em sessão contínua; não tratar as consequências como casts independentes.
+
+
 **Registro binário auditado:** [seis IDs exatos no JAR físico 0.1.2](EXACT-BINARY-SPELLS-0.1.2.md); [cartões individuais](spells/README.md). A tabela numérica abaixo pertence ao **source de referência de 2026-05-28**, não a uma auditoria funcional/binária de cooldown, custo ou nível. **7/39 exatos / 32/39 pendentes** na campanha; +0 novos.
 
 ## Canonical semantic spell inventory at the source ceiling
