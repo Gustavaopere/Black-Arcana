@@ -1,5 +1,8 @@
 # Seis spells — inventário estático exato
 
+**Aprofundamento compilado adicional (18/10/2026):** ✅ [Sulfur Bomb e Pale Thorn: parâmetros exatos de dano, alvo, área e efeitos](../EXACT-BINARY-BOMB-THORN-0.1.2.md) comprovados pelo [workflow #39133252975](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39133252975), 10/10 autotestes, artifact **12138732504**. Estado individual agora: **5/6** spells têm ao menos um caminho causal delimitado binário; Slime Aspect continua com identidade física e parâmetros source-pinned, sem consumer-effect auditado. **6/6** registros já haviam sido contados; nenhum novo ID. ⚠️ QA real e configuração host pendentes.
+
+
 **Prova binária adicional (18/10/2026):** ✅ [3/6 fichas com método compilado delimitado](../EXACT-BINARY-PERK-CONSUMERS-0.1.2.md) — Sulfur Clouds, Sulfur Release e Resin Spray, Java21 [#39131725388](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39131725388), 8/8 autotestes. **6/6 registradas** e **6/6 source-pinned** permanecem intactas; a aprovação de 3 métodos não equivale à homologação dos outros campos, ações ou perks.
 
 
