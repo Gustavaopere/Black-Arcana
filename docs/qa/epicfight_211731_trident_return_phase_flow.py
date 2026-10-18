@@ -25,7 +25,7 @@ CLASSES = {
 }
 
 def exact_method(disasm: str, header: str):
-    found = [(n, instructions(code)) for n, code in blocks(disasm) if n == header]
+    found = [(n, instructions(code)) for n, code in blocks(disasm) if n == header or (header == "public void addProperties(java.util.Set<" and n.startswith(header))]
     if len(found) != 1 or not found[0][1]:
         raise ValueError("missing or duplicate compiled method: " + header)
     return found[0][1]
@@ -82,7 +82,7 @@ def check_methods(dis):
         if not any(op == "aload" and re.match(r"5(?:\s|$)", tail) for _,op,tail in wrath[max(0,i-10):i]):
             raise ValueError("wrathful: phase receiver local index 5 missing")
 
-    phase = exact_method(dis["phase"], "public void addProperties(java.util.Set);")
+    phase = exact_method(dis["phase"], "public void addProperties(java.util.Set<")
     mapped = ordered(phase, [
         ("invokeinterface", "java/util/Set.iterator:"),
         ("invokeinterface", "java/util/Iterator.hasNext:"),
