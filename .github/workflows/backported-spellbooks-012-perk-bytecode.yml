@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/backported-spellbooks-012-perk-bytecode.yml'
       - 'docs/qa/backported_012_perk_consumer_bytecode.py'
+      - 'docs/qa/backported_012_bomb_thorn_bytecode.py'
       - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/**'
   workflow_dispatch:
 
@@ -61,42 +62,22 @@ jobs:
             --jar build/catalog-backported-012/backported-012-exact.jar \
             --output build/catalog-backported-012/perk-consumer-evidence.json
 
-      - name: Inspect bounded bomb and thorn compiled callsite candidates
+      - name: Fail-closed Sulfur Bomb and Pale Thorn regression tests
+        run: python3 docs/qa/backported_012_bomb_thorn_bytecode.py --self-test
+
+      - name: Verify exact Sulfur Bomb and Pale Thorn compiled parameters
         run: |
-          python3 - <<'PY'
-          import subprocess,re,json
-          jar="build/catalog-backported-012/backported-012-exact.jar"
-          specs={
-            "bomb_spell":("net.redreaper.backported_spellbooks.spells.nature.SulfurBombSPell",
-                         ("onCast(", "getRadius(", "getDamage(", "getAOEDamage(")),
-            "bomb_projectile":("net.redreaper.backported_spellbooks.entities.spell.sulfur_bomb.SulfurBombProjectile",
-                         ("onHitEntity(", "onHitBlock(", "createFireField(")),
-            "thorn_spell":("net.redreaper.backported_spellbooks.spells.nature.PaleThornSpell",
-                         ("onCast(", "getRange(", "getDuration(", "getDamage(")),
-            "thorn_vfx":("net.redreaper.backported_spellbooks.entities.spell.pale_thorn.PaleThornVisualEntity",
-                         ("tick(",)),
-          }
-          from pathlib import Path
-          import sys
-          sys.path.insert(0,"docs/qa")
-          from backported_012_perk_consumer_bytecode import blocks
-          for key,(clazz,wanted) in specs.items():
-              dis=subprocess.run(["javap","-p","-c","-classpath",jar,clazz],
-                  capture_output=True,text=True,check=True).stdout
-              for header,ops in blocks(dis):
-                  if not any(needle in header for needle in wanted):
-                      continue
-                  rows=[[pc,op,tail[:118]] for pc,op,tail in ops]
-                  print("BACKPORTED_BOMB_THORN_PROBE="+json.dumps(
-                      {"class":key,"header":header,"length":len(ops),
-                       "ops":rows[:200]},separators=(",",":"))[:33000])
-          PY
+          python3 docs/qa/backported_012_bomb_thorn_bytecode.py \
+            --jar build/catalog-backported-012/backported-012-exact.jar \
+            --output build/catalog-backported-012/bomb-thorn-evidence.json
 
       - name: Publish bounded JSON evidence only, never publisher JAR
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: backported-012-perk-consumer-${{ github.sha }}
-          path: build/catalog-backported-012/perk-consumer-evidence.json
+          path: |
+            build/catalog-backported-012/perk-consumer-evidence.json
+            build/catalog-backported-012/bomb-thorn-evidence.json
           if-no-files-found: ignore
           retention-days: 14
