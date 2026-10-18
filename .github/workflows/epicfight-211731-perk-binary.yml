@@ -122,6 +122,25 @@ jobs:
               print("CONSUMER_PROBE "+json.dumps({"key":key,"methods":methods},separators=(",",":"))[:14000])
           PY
 
+      - name: Inspect exact armor-absorption mixin instructions
+        run: |
+          python3 - <<'PY'
+          import sys,json
+          from pathlib import Path
+          sys.path.insert(0,"docs/qa")
+          from epicfight_211731_trident_causal import javap,blocks,instructions
+          body=javap(Path("build/catalog-epicfight-211731/epicfight-exact.jar"),
+            "yesman.epicfight.mixin.common.MixinLivingEntity")
+          selected=[(name,code) for name,code in blocks(body)
+                    if "epicfight$getDamageAfterArmorAbsorb(" in name]
+          if len(selected)!=1: raise SystemExit("Expected one armor-absorption mixin method: "+str(len(selected)))
+          ops=instructions(selected[0][1])
+          if not 15<len(ops)<130: raise SystemExit("Unexpected mixin bytecode size")
+          print("ARMOR_MIXIN_PROBE "+json.dumps({"name":selected[0][0],
+              "ops":[[pc,op,tail.split("//",1)[-1].strip().split(":",1)[0][:85]]
+                     for pc,op,tail in ops]},separators=(",",":"))[:14000])
+          PY
+
       - name: Upload bounded JSON evidence, never publisher JAR
         if: always()
         uses: actions/upload-artifact@v7
