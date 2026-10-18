@@ -1,5 +1,10 @@
 # Epic Fight — 21.17.3.1
 
+## Wrathful: sobreposição por mapa; Everlasting: dano no patch do projétil (18/10/2026)
+
+✅ [Java21 #39102096383](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39102096383) **SUCCESS** no JAR exato SHA-1/SHA-256 e `PASS_BOUNDED_TRIDENT_PHASE_PRECEDENCE_AND_RETURN_PATH` (9/9 autotestes do gate original; artefato **12127086820**). [Dossiê de precedência e retorno](EXACT-TRIDENT-PHASE-OVERWRITE-RETURN-21.17.3.1.md): `WrathfulLightingSkill.registerPropertiesToAnimation` aplica grupos 0 e 1 **à mesma Phase**, com `Phase.addProperties→Map.put`: o segundo `MAX_STRIKES.setter(3)` sobrescreve o primeiro `setter(1)` nesse caminho de registro. `EverlastingAllegiance.registerPropertiesToAnimation` é um retorno direto, enquanto `ThrownTridentPatch.tickEnd` constrói `EpicFightDamageSource.trident` próprio com `HOLD`, `WEAPON_INNATE`, `baseArmorNegation=30`, `damage multiplier=1.4`, input `8.0f` e varredura de AABB expandida **1 por eixo**. Não extrapolar para 3 alvos/raio esférico/dano final ou player QA. +0 roots, +0 adapters.
+
+
 ## Nova instrumentação de dano provider-native para Stage 09 — 18/10/2026
 
 ✅ [QA servidor sem cliente #39098965924](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39098965924) **SUCCESS**, Java21/NeoForge 21.1.250/Epic Fight 21.17.3.1 publisher SHA-1/SHA-256; observer separado da produção compilado, servidor iniciado e `AWAIT_NATIVE_PLAYER_ATTACK` armado sem falsa amostra de jogador. JSON artefato **12126200760**. [Contrato e matriz de aceitação](NATIVE-PLAYER-DAMAGE-TELEMETRY-QA-21.17.3.1.md): `LivingIncomingDamageEvent` e `LivingDamageEvent.Post` são observados passivamente **somente** com fonte `EpicFightDamageSource` e atacante `ServerPlayer` conectado; coletam dano original/efetivo e reductions ARMOR/ABSORPTION, sem IDs, no máximo 12 samples/fase. **Não há correlação causal automática entre os eventos, ataque real observado nem chamada de handler comprovada**. ⚠️ Stage09 client/combate; ⛔ mudanças externas e Mastery. +0 magias/adapters.
