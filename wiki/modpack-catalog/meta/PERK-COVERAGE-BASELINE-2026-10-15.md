@@ -1,5 +1,14 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight 21.17.3.1 — consumidores de AttackPhase e mitigação de armadura (18/10/2026)
+
+**Duas barras:** GLOBAL **—%**, piso **1.857 objetos semânticos mínimos / 1.855 estritos**, denominador do universo incompleto; **Epic Fight core — 43/43 (100% dos IDs)**, com **3/3 habilidades sobrenaturais do tridente** auditadas no contexto das propriedades de fase. Nenhuma nova magia ou adapter incluído.
+
+✅ [Java21 #39096586191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39096586191) **SUCCESS**, SHA publisher 21.17.3.1 duplo, **8/8 autotestes adicionais**, `PASS_BOUNDED_EPICFIGHT_ATTACK_PHASE_CONSUMERS`, JSON artifact **12124059084**. [Dossiê detalhado](../providers/✅-epic-fight/EXACT-ATTACK-PHASE-CONSUMERS-21.17.3.1.md): `ResultCalculator.getResult` implementa ordem set → add → multiply; `Adder`, `Multiplier`, `Setter` têm callsites nos acumuladores e `Math.min` para setters simultâneos; `AttackAnimation` busca `DAMAGE/ARMOR_NEGATION/MAX_STRIKES/STUN_TYPE/SOURCE_TAG`; `EpicFightDamageSource` usa calculadores separados e `extraDamages` posterior. `MixinLivingEntity.epicfight$getDamageAfterArmorAbsorb` contém `calculateArmorNegation`, `0.01f`, `Math.min(...,1)`, `CombatRules.getDamageAfterAbsorb` e retorno somado quando a fonte atende às guardas. Verificados **métodos compilados**, não injeção Mixin aplicada em JVM real, valores de HP nem substituição de `DamageType`. 
+
+**Gates preservados:** ⚠️ `ServerPlayerPatch.initialized=true` após join natural, paridade de modpack, atributos reais, combate, débito `consumption`, damage settlement e tempo/alcance/área; ⛔ qualquer perk ou Mastery sem boundary seguro; Stage 06.05 🟡, Stage 09 físico PENDING. PR #825 draft, nenhum merge nesta prova estática.
+
+
 ## Epic Fight 21.17.3.1 — vínculo de registro binário das três innates (18/10/2026)
 
 **Barras:** global **—%**, mínimo **1.857 semânticos / 1.855 estritos** e denominador final desconhecido; **Epic Fight core 43/43 (100% IDs catalogados/dispositionados)**, **ações mágicas de tridente 3/3 com prova de ID→lambda→builder (100% da tranche)**. Nenhuma nova magia, adapter ou Stage promovido.
