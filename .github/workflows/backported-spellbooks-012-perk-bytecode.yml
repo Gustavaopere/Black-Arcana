@@ -7,6 +7,7 @@ on:
       - '.github/workflows/backported-spellbooks-012-perk-bytecode.yml'
       - 'docs/qa/backported_012_perk_consumer_bytecode.py'
       - 'docs/qa/backported_012_bomb_thorn_bytecode.py'
+      - 'docs/qa/backported_012_slime_aspect_bytecode.py'
       - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/**'
   workflow_dispatch:
 
@@ -71,6 +72,32 @@ jobs:
             --jar build/catalog-backported-012/backported-012-exact.jar \
             --output build/catalog-backported-012/bomb-thorn-evidence.json
 
+      - name: Fail-closed Slime Aspect modifier and casting method regressions
+        run: python3 docs/qa/backported_012_slime_aspect_bytecode.py --self-test
+
+      - name: Verify bounded Slime Aspect publisher classfile operands
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/backported_012_slime_aspect_bytecode.py \
+            --jar build/catalog-backported-012/backported-012-exact.jar \
+            --output build/catalog-backported-012/slime-aspect-evidence.json
+
+      - name: Bounded diagnostics only when Slime Aspect verification fails
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          F=build/catalog-backported-012/backported-012-exact.jar
+          if [[ -f "$F" ]]; then
+            echo "DIAGNOSTIC: javap method bytecode; not gameplay evidence"
+            for CLASS in \
+              net.redreaper.backported_spellbooks.spells.nature.AspectOfTheSlimeSpell \
+              net.redreaper.backported_spellbooks.init.ModMobEffects; do
+              javap -p -c -classpath "$F" "$CLASS" | tail -n 175
+            done
+          fi
+
       - name: Publish bounded JSON evidence only, never publisher JAR
         if: always()
         uses: actions/upload-artifact@v7
@@ -79,5 +106,6 @@ jobs:
           path: |
             build/catalog-backported-012/perk-consumer-evidence.json
             build/catalog-backported-012/bomb-thorn-evidence.json
+            build/catalog-backported-012/slime-aspect-evidence.json
           if-no-files-found: ignore
           retention-days: 14
