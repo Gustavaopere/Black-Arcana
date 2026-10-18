@@ -1,5 +1,14 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight 21.17.3.1 — revisão crítica de propriedade de fase e dano de retorno (18/10/2026)
+
+**Barras:** catálogo global **—%** por denominador total ainda desconhecido; piso **1.857 objetos semânticos mínimos / 1.855 estritos**; **Epic Fight core 43/43 identidades (100% de identidade core)**, **3/3 sobrenaturais do tridente já contabilizadas**, 40 outras úteis a perks. **+0 novas magias, +0 adapters**.
+
+✅ [Auditoria Java21 #39102096383](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39102096383) **SUCCESS**, SHA-1/SHA-256 publisher Epic Fight 21.17.3.1 fixados, 9/9 autotestes da versão inicialmente executada do novo gate, `PASS_BOUNDED_TRIDENT_PHASE_PRECEDENCE_AND_RETURN_PATH` com desvios `[]`. JSON artifact **12127086820**. [Dossiê](../providers/✅-epic-fight/EXACT-TRIDENT-PHASE-OVERWRITE-RETURN-21.17.3.1.md): **WrathfulLightning** registra os dois mapas de `AttackPhaseProperty` consecutivamente sobre a mesma `Phase` em cada iteração; `Phase.addProperties` usa `Map.put`, portanto `MAX_STRIKES_MODIFIER.setter(3)` do grupo 1 substitui `setter(1)` no caminho de registro, condicionado à execução desse método e ausência de nova mutação. **EverlastingAllegiance.registerPropertiesToAnimation** é `return this`, sem fase editada; **ThrownTridentPatch.tickEnd** possui fonte independente `EpicFightDamageSources.trident` com `StunType.HOLD`, tag `WEAPON_INNATE`, `baseArmorNegation(30f)`, `damage multiplier(1.4f)`, input pré-dano `8.0f`, `AABB.inflate(1,1,1)`, `EnchantmentHelper.modifyDamage` e `Entity.hurt`. AABB é expandida por eixo, não raio esférico. A fórmula exata de velocidade/tempo não foi homologada por este gate.
+
+**Cautelas:** a associação configuracional dos builders era correta mas insuficiente para inferir valores efetivos por fase ou para provar que `Everlasting` aplicava `ARMOR_NEGATION_MODIFIER.adder(30)` como fase animada. O retorno usa `setBaseArmorNegation(30)` em outro objeto/caminho, com semântica distinta. ⚠️ Cliente, `ServerPlayerPatch`, animação carregada, quantidade de hits, dano/HP, tempo/range, charges, FPS/lag, Mixin handler invocado e modpack integral não validados. ⛔ Bridges externos e Mastery até hook causal safe e QA real. Stage 06.05 🟡, Stage 09 físico PENDING, PR #825 draft; nenhum merge.
+
+
 ## Epic Fight 21.17.3.1 — observer de dano de jogador, no-client guard (18/10/2026)
 
 **Barras de continuidade:** catálogo global **—%** (piso **1.857 semânticos mínimos / 1.855 estritos**, denominador final aberto); **Epic Fight core 43/43 = 100% IDs documentados**, incluindo **3/3** innates sobrenaturais de tridente. +0 novas identidades / +0 adapters.
