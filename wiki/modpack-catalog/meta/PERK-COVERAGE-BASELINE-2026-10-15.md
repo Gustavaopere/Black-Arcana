@@ -1,5 +1,14 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Checkpoint — Ars Hex 5.0.4b, prova publisher binária de perks/foice (17/10/2026)
+
+**Barras:** GLOBAL **—%**, piso **1.857/1.855 objetos estritos**, denominador global aberto; **ARS HEX — 1/1 glifo mágico (100% identidade registrada); 3/3 perks threads e 1/1 equipamento spell-on-hit (100% fichas source-causal)**. Sem raízes novas; **+0 adapter**.
+
+✅ [Workflow Java21 #39087382649](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39087382649) **SUCCESS**: 13/13 testes sintéticos, hash SHA-1 `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4` verificado no JAR publicador de 273389 bytes, `PASS_BOUNDED_BYTECODE_REFERENCES` e JSON artifact `12121013880`. Seis classes examinadas para gate de `malum`, 3 `PerkRegistry.registerPerk`, 3 `applyAttributeModifiers`, `EnchanterScythe` e `MalumCompat.workaround`. [Dossiê de evidência](../providers/✅-ars-hex/EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md).
+
+**Limites estritos:** refs e chamadas compiladas; fórmulas `2*slotValue`, `0.5*slotValue`, `0.1*slotValue`, `slotValue` e desconto `ceil(Σ0.2*necromancy_cost)` permanecem provas de source, NÃO fluxo integral de operandos binários. Nenhuma leitura nova de JAR no disco do usuário, `AttributeInstance` de jogador conectado, fee/refund, hits de boomerang, evento Reactive, QA de multi-provider nem perk/Mastery implementada. ⚠️ gameplay e classloading do modpack; ⛔ adaptação de progressão; Stage 06.05 🟡, Stage 09 físico PENDING. PR #825 draft; nenhum merge autorizado por prova de referência.
+
+
 ## Checkpoint — Ars Hex 5.0.4b, threads e foice source-pinned (17/10/2026)
 
 **Duas barras solicitadas:** **GLOBAL — —%**, piso conhecido **1.857 objetos semânticos / 1.855 estritos**, denominador integral aberto; **ARS HEX — 1/1 glyph próprio (100% inventário binário) + 3/3 perks thread e 1/1 equipamento spell-on-hit (100% fichas individuais source-pinned deste escopo)**. As três perks **não são três magias**, o equipamento não é nova raiz e nenhum novo objeto mágico foi contado: **+0 roots, +0 adapters**.
