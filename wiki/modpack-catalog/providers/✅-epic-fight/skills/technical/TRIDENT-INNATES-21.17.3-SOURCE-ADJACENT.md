@@ -1,5 +1,8 @@
 # Epic Fight — trident supernatural innates: parâmetros para perks (source 21.17.3 adjacente)
 
+**Gate posterior de vínculo de registry:** ✅ [Java21 #39095049311](../../EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md) confirmou `<clinit>`, `DeferredRegister.register` e `BootstrapMethods` para as três identidades e suas lambdas compiladas `$40/$42/$43`. Assim, as propriedades binárias verificadas não dependem apenas de inferir identidade pelo tipo retornado. Sem equivalência de runtime/efeito ou API de perk.
+
+
 ## Atualização física: propriedades de AttackPhase compiladas (18/10/2026)
 
 ✅ [GitHub Actions Java21 #39094435160](../../EXACT-TRIDENT-ATTACK-PHASE-PROPERTIES-21.17.3.1.md) `PASS_BOUNDED_TRIDENT_ATTACK_PHASE_PROPERTIES` e 11/11 autotestes: no JAR publisher 21.17.3.1 SHA duplo verificado, as lambdas `$40`, `$42`, `$43` ligam os valores de `MAX_STRIKES_MODIFIER`, `DAMAGE_MODIFIER`, `ARMOR_NEGATION_MODIFIER`, `STUN_TYPE` e tag `WEAPON_INNATE` a `Builder.addProperty` como descrito na matriz abaixo. Estes valores numéricos e enums passam de **SOURCE_ADJACENT** para **EXACT_PUBLISHER_COMPILED_SUPPLIER_PROPERTY_CALLSITES**. O restante do source adjacente (como `EXTRA_DAMAGE` completo, valores finais de combate, hitbox/range/retarget, `WEAPON_CHARGE` realmente gasto e efeitos) não foi promovido. [Dossiê e ressalvas](../../EXACT-TRIDENT-ATTACK-PHASE-PROPERTIES-21.17.3.1.md).
