@@ -8,6 +8,10 @@
 - Semantic type: deliberate supernatural tide/mobility attack
 - State: `COUNTED_EXACT`
 
+## Gate posterior — handler instalado, ainda sem hit real (18/10/2026)
+
+✅ [Preflight NeoForge Java21 #39098101364](../EXACT-ARMOR-MIXIN-LOADED-CLASS-PREFLIGHT-21.17.3.1.md) observou no `LivingEntity` carregado exatamente um handler Epic Fight de absorção de armadura. **Não houve ataque Tsunami, ativação da variante água/chuva ou passagem de `EpicFightDamageSource` por esse método em runtime.** ⚠️ alcance/dano/AA e cliente pendentes; ⛔ adapter.
+
 ## Semântica delimitada de armadura e stun (18/10/2026)
 
 ✅ [Consumidores binários Java21 #39096586191](../EXACT-ATTACK-PHASE-CONSUMERS-21.17.3.1.md): `ARMOR_NEGATION_MODIFIER.adder(100)` alimenta o acumulador de negação de `EpicFightDamageSource`. O ramo compilado de `MixinLivingEntity` aplica `min(A×0.01,1)` e calcula no `CombatRules` apenas o dano restante, **se** a fonte satisfizer as guardas. `KNOCKDOWN` permanece `STUN_TYPE` de fase, não dano mágico automaticamente. Distância do avanço, área, alvos, efeito de água/chuva e dano líquido em jogo continuam **NÃO VERIFICADO**; sem adapter.
