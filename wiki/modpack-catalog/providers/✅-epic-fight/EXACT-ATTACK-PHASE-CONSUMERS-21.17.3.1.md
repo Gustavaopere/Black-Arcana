@@ -1,5 +1,8 @@
 # Epic Fight 21.17.3.1 — consumidores compilados de AttackPhase e negação de armadura
 
+**Preparação posterior de prova física:** ✅ [Java21/NeoForge #39098965924](NATIVE-PLAYER-DAMAGE-TELEMETRY-QA-21.17.3.1.md) compilou e armou em servidor sem cliente um companion passivo que aceita apenas `EpicFightDamageSource` originado por `ServerPlayer` conectado nos eventos `LivingIncomingDamageEvent` e `LivingDamageEvent.Post`. A execução certifica **prontidão de observação, não um ataque real**; `ARMOR`, `ABSORPTION` e `health_damage` permanecem sem samples e o handler não foi invocado experimentalmente.
+
+
 **Prova runtime posterior, restrita:** ✅ [servidor dedicado #39098101364](EXACT-ARMOR-MIXIN-LOADED-CLASS-PREFLIGHT-21.17.3.1.md) detectou um handler `epicfight$getDamageAfterArmorAbsorb` com assinatura esperada **na classe `LivingEntity` transformada** (NeoForge 21.1.250, Epic Fight 21.17.3.1). A ressalva de injeção não observada abaixo é histórica ao workflow estático #39096586191: a **presença instalada** agora foi comprovada em servidor, mas **invocação efetiva no método-alvo, dano, amortecimento de armadura e cliente seguem não medidos**.
 
 
