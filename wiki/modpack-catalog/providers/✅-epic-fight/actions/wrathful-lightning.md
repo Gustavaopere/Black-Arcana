@@ -8,11 +8,15 @@
 - Semantic type: deliberate supernatural lightning invocation
 - State: `COUNTED_EXACT`
 
+## Prova posterior de propriedades compiladas (18/10/2026)
+
+✅ [JAR 21.17.3.1, Java21 #39094435160](../EXACT-TRIDENT-ATTACK-PHASE-PROPERTIES-21.17.3.1.md): no supplier `lambda$static$40` (`WrathfulLightingSkill`), o bytecode confirma, na ordem, `MAX_STRIKES_MODIFIER setter(1)` (primeiro grupo), `DAMAGE_MODIFIER setter(8.0)`, `MAX_STRIKES_MODIFIER setter(3)`, `ARMOR_NEGATION_MODIFIER adder(100)`, `STUN_TYPE=KNOCKDOWN` e `SOURCE_TAG=WEAPON_INNATE` no segundo grupo. São **entradas de AttackPhase**, não dano final nem limite de alvos medido. `EXTRA_DAMAGE` possui chave/builder presentes, mas a composição completa não foi dataflow-validada. Assim, os valores numéricos acima não dependem mais *somente* do source adjacente. ⛔ Hook/perk externo permanece bloqueado.
+
 ## Technical parameters for perks — exact JAR vs adjacent source
 
 ✅ **Exact publisher JAR 21.17.3.1:** packaged `data/epicfight/skill_parameters/wrathful_lighting.json` declares **`consumption=50.0`**, with resource unit/real debit unverified. [Java21 #39093719405](../EXACT-TRIDENT-CAUSAL-REFERENCES-21.17.3.1.md) additionally proves that `WrathfulLightingSkill.registerPropertiesToAnimation` has **two** compiled `addProperties` callsites within the method. This confirms the registration seam, not final damage or the number of real hits.
 
-⚠️ **Source-adjacent 21.17.3 only:** first phase-property group contains `MAX_STRIKES_MODIFIER setter(1)`; second `DAMAGE_MODIFIER setter(8.0)`, `MAX_STRIKES_MODIFIER setter(3)`, `ARMOR_NEGATION_MODIFIER adder(100)`, `STUN_TYPE KNOCKDOWN` and `SOURCE_TAG WEAPON_INNATE`. These are property inputs, **not** guaranteed damage, armor bypass or runtime effects in 21.17.3.1. [Source L337–349](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/registry/entries/EpicFightSkills.java#L337-L349).
+✅ **Valores agora confirmados também no classfile 21.17.3.1 (source 21.17.3 preservado como referência histórica):** first phase-property group contains `MAX_STRIKES_MODIFIER setter(1)`; second `DAMAGE_MODIFIER setter(8.0)`, `MAX_STRIKES_MODIFIER setter(3)`, `ARMOR_NEGATION_MODIFIER adder(100)`, `STUN_TYPE KNOCKDOWN` and `SOURCE_TAG WEAPON_INNATE`. These are exact-publisher compiled builder inputs, **not** guaranteed damage, armor bypass or runtime effects in 21.17.3.1. [Source L337–349](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/registry/entries/EpicFightSkills.java#L337-L349).
 
 **Perk axes:** target type, range, radius/AOE, projectile dimensions/speed, damage type, cast ticks, duration, cooldown and realized cost are **NÃO VERIFICADO** by this class/JSON. ⛔ Do not inject additional thunder/damage or assign RPG Mastery from uncorrelated thunder callbacks. Epic Fight owns innate attack phases, animation, hits and charges; Black Arcana retains its own runtime.
 
