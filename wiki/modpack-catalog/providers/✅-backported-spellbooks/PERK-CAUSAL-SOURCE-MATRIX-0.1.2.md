@@ -1,5 +1,8 @@
 # Backported Spellbooks 0.1.2 — matriz source-pinned de parâmetros, geometria e causalidade
 
+**Nova prova binária com escopo delimitado (18/10/2026):** ✅ [Sulfur Bomb e Pale Thorn no JAR 0.1.2 #39133252975](EXACT-BINARY-BOMB-THORN-0.1.2.md) — SHA físico/publicador confirmado, 10/10 autotestes, `PASS_BACKPORTED_012_BOMB_THORN_BOUNDED_BYTECODE`, JSON **12138732504**. Agora o catálogo soma **5/6 spells com métodos individuais verificados em classfile**, e não 5/6 magias novas. Os valores do quadro para Sulfur Bomb e Pale Thorn possuem **confirmação apenas dos operandos, callsites e ordem cobertos pelo dossiê**; os demais dados source-pinned e o runtime Iron's continuam ⚠️. Slime Aspect ainda requer prova dos consumidores de buff.
+
+
 **Atualização de evidência binária (18/10/2026):** ✅ [JAR exato #39131725388](EXACT-BINARY-PERK-CONSUMERS-0.1.2.md) certificou três caminhos **delimitados**: as duas chamadas compiladas ao `super.tick` no projétil de Sulfur Clouds, a expressão `spellLevel-2` de Sulfur Release e o encadeamento de session checks/reuso/criação de Resin Spray. As demais fórmulas desta matriz permanecem source-pinned, **não são automaticamente promovidas por esse gate**. Artefato JSON **12138535465**; nenhum hit, duração ou status effect de player observado.
 
 
