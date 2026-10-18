@@ -1,5 +1,9 @@
 # Backported Spellbooks 0.1.2 — matriz source-pinned de parâmetros, geometria e causalidade
 
+## Gate NeoForge/Mixin do host 1.1.7.10 (18/10/2026)
+
+✅ [#39164766070](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39164766070) **SUCCESS** com hash SHA-256 publisher fixado, **12/12** testes de manifesto + **10/10** de movimento, zero desvios. [Dossiê de configuração compilada](EXACT-BINARY-VANILLABACKPORT-MIXIN-DECLARATION-1.1.7.10.md): `neoforge.mods.toml` vincula `vanillabackport.mixins.json` com `required=true`, `JAVA_21` e `defaultRequire=1`; lista comum (não client-only) declara `EntityMixin`, `LivingEntityMixin`, `RangedAttributeMixin` e três classes físicas no JAR. Dependências `neoforge[21.1,)`, `minecraft[1.21.1,)`, `platform[1.3.3,)`, todas `side=BOTH`; Platform 1.3.3 figura na modlist #445. **Mixin declarado ≠ runtime aplicado**; loader completo, SHAs locais, atributos resolvidos, gameplay e APIs externas permanecem ⚠️/⛔. +0 magias e +0 adapters.
+
 ## VanillaBackport publisher 1.1.7.10 — limite de atributos e consumidores (18/10/2026)
 
 ✅ [#39156441117](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39156441117) **SUCCESS**, 10/10 testes, hash SHA-256 publisher fixado, [dossiê cross-host](EXACT-BINARY-VANILLABACKPORT-MOBILITY-HOST-1.1.7.10.md). `BOUNCINESS` host default 0 e faixa **[0,1]**, `AIR_DRAG_MODIFIER` e `FRICTION_MODIFIER` default 1 e faixa [0,2048], consumidores em mixins Entity/LivingEntity e fórmula `clamp(1-(1-friction)*modifier,0,1)` certificados **somente em bytecode compilado**. Não afirmar que +2.5 das botas gera bounciness 2.5 real: requer clamping/stacking, amplificador, aplicação do mixin e QA com player. Versões físicas mantidas: Vanilla Backport 1.1.7.10, Iron's 3.16.3, addon 0.1.2; nada de upgrade para 1.2 ou de hooks inventados. Métrica de magias **6/6** inalterada; +0 roots/adapters.

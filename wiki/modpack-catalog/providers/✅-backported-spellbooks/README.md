@@ -1,5 +1,9 @@
 # Backported Spellbooks — physical 0.1.2 release / embedded metadata 0.1.0
 
+## Gate NeoForge/Mixin do host 1.1.7.10 (18/10/2026)
+
+✅ [#39164766070](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39164766070) **SUCCESS** com hash SHA-256 publisher fixado, **12/12** testes de manifesto + **10/10** de movimento, zero desvios. [Dossiê de configuração compilada](EXACT-BINARY-VANILLABACKPORT-MIXIN-DECLARATION-1.1.7.10.md): `neoforge.mods.toml` vincula `vanillabackport.mixins.json` com `required=true`, `JAVA_21` e `defaultRequire=1`; lista comum (não client-only) declara `EntityMixin`, `LivingEntityMixin`, `RangedAttributeMixin` e três classes físicas no JAR. Dependências `neoforge[21.1,)`, `minecraft[1.21.1,)`, `platform[1.3.3,)`, todas `side=BOTH`; Platform 1.3.3 figura na modlist #445. **Mixin declarado ≠ runtime aplicado**; loader completo, SHAs locais, atributos resolvidos, gameplay e APIs externas permanecem ⚠️/⛔. +0 magias e +0 adapters.
+
 ## Host 1.1.7.10 — bounciness limitada a 1.0 (18/10/2026)
 
 ✅ [Java21 #39156441117](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39156441117) verificou publisher `VanillaBackport-neoforge-1.21.1-1.1.7.10.jar` SHA-256 `ecd807ac358e243ede17819455788c7b7a0ce5e0af4aecee82c1c62c586d818d` (54.902.084 bytes), 10/10 autotestes e zero desvios. O [dossiê cross-host](EXACT-BINARY-VANILLABACKPORT-MOBILITY-HOST-1.1.7.10.md) confirma os três `RangedAttribute`: `minecraft:bounciness` default 0, teto **1.0**; `air_drag_modifier`/`friction_modifier` default 1, teto 2048; mixins compilados de colisão, drag e atrito, cuja fórmula é `clamp(1−(1−rawFriction)*modifier,0,1)`. **Teto registral ≠ prova de valor final em player**; +2.5 das Slime Boots e +0.5 da magia não podem ser tratados como fatores físicos finais sem execução do host. SHA da instalação real desconhecido. +0 magias/perks/adapters, integração ⚠️/⛔.
