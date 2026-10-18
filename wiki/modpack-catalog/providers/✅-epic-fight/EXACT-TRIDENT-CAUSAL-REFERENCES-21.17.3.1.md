@@ -1,5 +1,8 @@
 # Epic Fight 21.17.3.1 — auditoria causal delimitada de três ações sobrenaturais do tridente
 
+**Nova prova de semântica de aplicação (18/10/2026):** ✅ [#39102096383](EXACT-TRIDENT-PHASE-OVERWRITE-RETURN-21.17.3.1.md) verificou que Wrathful registra os grupos 0 e 1 para o **mesmo objeto Phase**, com sobrescrita de chaves repetidas, e que Everlasting usa `ThrownTridentPatch` para a lógica de retorno, sem inscrição de propriedades via seu `registerPropertiesToAnimation`. O inventário original permanece, mas a interpretação da configuração de strikes/dano exige estes callsites, não somente o JSON e a lambda do builder.
+
+
 **Status deste gate histórico: ✅ `EXACT_PUBLISHER_JSON_AND_COMPILED_METHOD_SEAMS` para 3/3 identidades; ✅ propriedades numéricas de builder confirmadas em auditoria posterior #39094435160; ⚠️ execução física e resultados em combate; ⛔ adapter de perks/Mastery.** A prova não cria novas magias nem homologa qualquer hook de runtime.
 
 ## Identidade do provider e proveniência
