@@ -26,6 +26,10 @@ A descrição de gameplay é uma leitura limitada da fonte oficial [`@07cb65efca
 
 **Authority:** Iron's conserva casting, recurso, configuração e cooldown. Backported Spellbooks conserva efeitos/entidades. RPG Skill Tree apenas progressão por boundary real, Black Arcana apenas runtime próprio. Não executar efeitos/cobranças duplicadas nem conceder Mastery por projectile, tick ou hit isolado.
 
+## Confirmação posterior no bytecode do JAR 0.1.2 — 18/10/2026
+
+✅ [Java21 #39131725388](../EXACT-BINARY-PERK-CONSUMERS-0.1.2.md) comprovou **duas** instruções `invokespecial ...tick()` com o mesmo proprietário no método compilado `SulfurCloudProjectile.tick()`, ambas anteriores a `createParticleSphere()`. Verificador 8/8 autotestes, SHA-1 publisher físico confirmado, artefato **12138535465**. Isso eleva **a presença das duas chamadas** de SOURCE_PINNED a BINARY_EXACT. A frequência efetiva de atualizações, processamento do host, dano por tick, lifetime e problemas causais em jogo **não** foram medidos. Perks que modificam velocidade/cadência ou concedem Mastery continuam ⛔ sem contrato.
+
 ## Contratos e pendências
 
 - **Authority:** Iron's para cast, mana, cooldown; addon para efeitos/projéteis; Black Arcana não replica o settlement.
