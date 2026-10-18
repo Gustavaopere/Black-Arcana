@@ -1,5 +1,10 @@
 # Epic Fight — 21.17.3.1
 
+## Consumidores compilados de dano, strikes e armadura — 18/10/2026
+
+✅ [Java21 #39096586191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39096586191) **SUCCESS**, SHA-1/SHA-256 publisher exatos, 8/8 novos autotestes e `PASS_BOUNDED_EPICFIGHT_ATTACK_PHASE_CONSUMERS` (JSON #12124059084). [Dossiê de consumo real de propriedades nos métodos compilados](EXACT-ATTACK-PHASE-CONSUMERS-21.17.3.1.md): `ValueModifier.ResultCalculator` recebe `Setter/Adder/Multiplier` (ordem set → soma → multiplica); `AttackAnimation` busca propriedades da fase; `EpicFightDamageSource` mantém acumuladores distintos e processa `extraDamages` após o modificador; o bytecode de `MixinLivingEntity` contempla `calculateArmorNegation*0.01`, `Math.min(...,1)` e `CombatRules.getDamageAfterAbsorb`. **Métodos presentes não provam Mixin aplicado, player/hit/HP real, proc de Mastery ou hook seguro.** 43/43 skills core e 3/3 tridente intactas, +0 identidades.
+
+
 ## Fechamento de linkage compilado das três habilidades (18/10/2026)
 
 ✅ [Java21 #39095049311](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39095049311) **SUCCESS**, publisher SHA-1/SHA-256 verificados, 10/10 autotestes de `<clinit>` + `BootstrapMethods`, `PASS_BOUNDED_TRIDENT_REGISTRY_BOOTSTRAP_LINKAGE`. [Dossiê do vínculo ID → supplier → propriedades](EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md): `wrathful_lighting→InvokeDynamic #67→lambda$static$40`, `tsunami→#68→$42`, `everlasting_allegiance→#69→$43`, com `DeferredRegister.register` e holders corretos. Essa prova completa a associação compilada das **configurações de AttackPhase aos IDs exatos**, sem demonstrar execução da skill, dano final, custo real, target/range, callback para perk ou jogador conectado. +0 magias e +0 adapters.
