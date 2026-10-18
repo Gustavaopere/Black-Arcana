@@ -1,5 +1,8 @@
 # Epic Fight 21.17.3.1 — propriedades de AttackPhase no classfile exato
 
+**Prova posterior dos consumidores:** ✅ [Java21 #39096586191](EXACT-ATTACK-PHASE-CONSUMERS-21.17.3.1.md) confirmou no JAR físico publicado a ordem dos acumuladores de `ValueModifier`, os callsites de `AttackAnimation`, `EpicFightDamageSource` e o método de absorção do mixin `MixinLivingEntity`. A presente ficha permanece prova dos **argumentos do builder**, enquanto o novo dossiê cobre referências do **consumidor**; nenhum dos dois executa um hit no jogador.
+
+
 **Atualização posterior: ✅ [linkagem do registry em bytecode Java21 #39095049311](EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md)**, com `<clinit>` + `BootstrapMethods` ligando os IDs das três skills às lambdas `$40/$42/$43`, `PASS_BOUNDED_TRIDENT_REGISTRY_BOOTSTRAP_LINKAGE`, 10/10 autotestes. A ressalva de linkage não demonstrado abaixo corresponde ao gate original isolado e foi suprida por esta prova nova; sem promover gameplay ou hook.
 
 **Checkpoint:** 18/10/2026. ✅ `EXACT_PUBLISHER_COMPILED_SUPPLIER_PROPERTY_CALLSITES` para os três métodos estáticos selecionados em `EpicFightSkills`. A prova certifica sequências *de construção de propriedades*, não resultados de dano/armor bypass, aplicação de um golpe, seleção efetiva de animations, consumo de recurso, compatibilidade de addons nem API para perks.
