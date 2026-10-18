@@ -10,6 +10,10 @@
 
 ✅ [JAR publisher SHA-1 exato, auditoria Java21 #39087382649](../EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md): em `EnchanterScythe`, `hurtEnemy` contém chamadas/referências `SpellContext`, `SpellResolver`, `onCastOnEntity`; scribing referencia `MethodTouch`; o desconto referencia `NECROMANCY`, `getCastingCost` e `ceil`. Em `MalumCompat.workaround`, o bytecode contém `ScytheBoomerangEntity`, `getDirectEntity` e `hurtEnemy`. **Ramo executado, ordem/custo, 0,2 por glyph, multi-hit, Mastery e player real não foram certificados.** ⚠️ Runtime pendente / ⛔ adapter.
 
+## Evidência binária delimitada do desconto — 18/10/2026
+
+✅ [Auditoria Java21 #39093013655](../EXACT-BINARY-PERK-SCYTHE-DATAFLOW-5.0.4b.md): o método `getManaDiscount` compilado inicializa acumulador double, percorre `Spell.unsafeList()`, aplica `SpellSchools.NECROMANCY.isPartOfSchool(part)`, soma `0.2 × part.getCastingCost()` para as partes elegíveis e retorna `Mth.ceil(sum)`. O verificador checou instruções, variáveis locais, desvios do loop e retorno no JAR publisher com SHA verificado. **Isso prova o cálculo local, não que o host tenha cobrado/refundido mana ou aplicado o desconto; não valida os ingressos de hit/boomerang.** ⚠️ integração real / ⛔ perk/Mastery.
+
 ## Identidade
 - Registro de item: `ars_hex:enchanter_scythe`, condicionado a Malum, factory `new EnchanterScythe(Tiers.NETHERITE, -4F, 0F, 3.0F, LodestoneItemProperties().stacksTo(1))`. Não reinterpretar os três floats do constructor de Malum como stats finais sem verificar o parent.
 - Classe: `com.alexthw.ars_hex.malum.EnchanterScythe extends MagicScytheItem implements ICasterTool, IManaDiscountEquipment`. **Equipamento com spell-on-hit, não novo spell ID.**
