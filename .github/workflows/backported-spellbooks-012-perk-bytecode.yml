@@ -1,0 +1,71 @@
+name: Backported Spellbooks 0.1.2 exact perk-causal bytecode
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/backported-spellbooks-012-perk-bytecode.yml'
+      - 'docs/qa/backported_012_perk_consumer_bytecode.py'
+      - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bounded_compiled_provider_methods:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Fail-closed synthetic method and publisher-hash regressions
+        run: python3 docs/qa/backported_012_perk_consumer_bytecode.py --self-test
+
+      - name: Download the known publisher JAR and enforce installed SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/catalog-backported-012
+          FILE=build/catalog-backported-012/backported-012-exact.jar
+          EXPECTED=747847c1f38c73250ebac05ea06b41a381187850
+          ok=0
+          for URL in \
+            'https://mediafilez.forgecdn.net/files/8158/731/backportedspellbooks-0.1.2.jar' \
+            'https://media.forgecdn.net/files/8158/731/backportedspellbooks-0.1.2.jar' \
+            'https://www.curseforge.com/api/v1/mods/1543731/files/8158731/download'
+          do
+            rm -f "$FILE"
+            if curl --fail --silent --show-error --location --retry 2 \
+                    --connect-timeout 12 --max-time 95 "$URL" --output "$FILE"; then
+              if echo "$EXPECTED  $FILE" | sha1sum --check --status; then
+                ok=1
+                break
+              fi
+            fi
+          done
+          test "$ok" -eq 1
+          test "$(wc -c < "$FILE")" -eq 209868
+          echo "EXACT_PUBLISHER_SHA1_MATCH=$EXPECTED"
+
+      - name: Verify three bounded compiled provider methods
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/backported_012_perk_consumer_bytecode.py \
+            --jar build/catalog-backported-012/backported-012-exact.jar \
+            --output build/catalog-backported-012/perk-consumer-evidence.json
+
+      - name: Publish bounded JSON evidence only, never publisher JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: backported-012-perk-consumer-\${{ github.sha }}
+          path: build/catalog-backported-012/perk-consumer-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
