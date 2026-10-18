@@ -10,6 +10,10 @@
 
 ✅ [JAR publisher SHA-1 exato, auditoria Java21 #39087382649](../EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md): `SoulWardPerk.applyAttributeModifiers` contém referências compiladas aos dois atributos Malum, operações `ADD_VALUE` e `ADD_MULTIPLIED_BASE`, e `withModifierAdded`. **2 × slotValue / 0,5 × slotValue** são fórmulas da fonte, **não dataflow dos operandos comprovado**. Ainda ⚠️ sem `AttributeInstance` de player real / ⛔ sem adapter.
 
+## Evidência binária de dataflow concluída — 18/10/2026
+
+✅ [Auditoria Java21 #39093013655](../EXACT-BINARY-PERK-SCYTHE-DATAFLOW-5.0.4b.md): a pilha compilada dos dois `withModifierAdded` foi rastreada até os construtores de `AttributeModifier`. **`SOUL_WARD_CAPACITY = 2 * slotValue`, `ADD_VALUE`**; **`SOUL_WARD_INTEGRITY = 0.5 * slotValue`, `ADD_MULTIPLIED_BASE`**, com `EquipmentSlotGroup` e registry ID da perk como operandos. Escopo: método compilado SHA-verificado, sem equip/unequip, stacking final de Malum ou `ServerPlayer` real. ⚠️ runtime / ⛔ adapter.
+
 ## Identidade e propósito
 - ID source: `ars_hex:thread_soul_ward`; classe `com.alexthw.ars_hex.malum.perks.SoulWardPerk`.
 - Descrição técnica (paráfrase): thread de Ars que aumenta capacidade e integridade do Soul Ward mantido por Malum.
