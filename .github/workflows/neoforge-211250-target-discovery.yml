@@ -1,0 +1,121 @@
+name: NeoForge 21.1.250 exact installed-server target discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211250-target-discovery.yml'
+      - 'docs/qa/neoforge_211250_target_bytecode.py'
+      - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/EXACT-NEOFORGE-211250-MIXIN-TARGETS.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  neoforge_211250_server_target_discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Exact official NeoForge 21.1.250 installer digest and download
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250
+          mkdir -p build/catalog-neoforge-211250/server
+          cd build/catalog-neoforge-211250/server
+          curl --fail --silent --show-error --location --retry 2 --connect-timeout 15 --max-time 110 \
+            "$BASE/neoforge-21.1.250-installer.jar.sha256" -o neo-installer.sha256
+          curl --fail --silent --show-error --location --retry 2 --connect-timeout 15 --max-time 110 \
+            "$BASE/neoforge-21.1.250-installer.jar" -o neoforge-21.1.250-installer.jar
+          EXPECTED="$(awk '{print $1}' neo-installer.sha256)"
+          ACTUAL="$(sha256sum neoforge-21.1.250-installer.jar | awk '{print $1}')"
+          test "$EXPECTED" = "$ACTUAL"
+          test "$(wc -c < neoforge-21.1.250-installer.jar)" -gt 5000000
+          unzip -tq neoforge-21.1.250-installer.jar
+          echo "OFFICIAL_NEOFORGE_INSTALLER_SHA256=$ACTUAL"
+          echo "OFFICIAL_NEOFORGE_INSTALLER_BYTES=$(wc -c < neoforge-21.1.250-installer.jar)"
+      - name: Build exact 21.1.250 server classfile target from official installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/catalog-neoforge-211250/server
+          java -jar neoforge-21.1.250-installer.jar --installServer > neoforge-installer.log 2>&1 || {
+            echo "::error::NEOFORGE_211250_INSTALL_SERVER_FAILED"
+            tail -n 95 neoforge-installer.log
+            exit 2
+          }
+          echo "NEOFORGE_211250_INSTALLER_EXIT=0"
+          find . -maxdepth 6 -type f \
+            \( -name '*.jar' -o -name 'run.sh' -o -name '*args.txt' \) \
+            | sed 's@^./@@' | sort | head -n 130
+      - name: Discover patched official target classfiles without assuming jar path
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, BadZipFile
+          import hashlib, json, subprocess
+          root=Path('build/catalog-neoforge-211250/server')
+          needs=[
+            'net/minecraft/world/entity/Entity.class',
+            'net/minecraft/world/entity/LivingEntity.class',
+            'net/minecraft/world/entity/ai/attributes/RangedAttribute.class'
+          ]
+          output={'status':'DISCOVERY_ONLY','neoforge_version':'21.1.250','minecraft_version':'1.21.1',
+                  'installed_server':True,'jar_candidates':[],'limits':[
+                  'Classfile presence is not proof of Mixin transformation.',
+                  'JAR may contain obfuscated classes or patched classfiles loaded by ModLauncher.',
+                  'No player, third-party mods or external perk hook exercised.']}
+          jars=list(root.rglob('*.jar'))
+          for path in sorted(jars):
+            if len(output['jar_candidates'])>=60:break
+            try:
+              with ZipFile(path) as archive:
+                names=set(archive.namelist())
+              matched=[n for n in needs if n in names]
+              if not matched: continue
+              stat=path.stat()
+              relative=str(path.relative_to(root))
+              payload={'path':relative,'bytes':stat.st_size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
+                       'matched_class_entries':matched}
+              output['jar_candidates'].append(payload)
+              print('NEOFORGE_211250_TARGET_JAR='+relative)
+              print('NEOFORGE_211250_CLASS_MATCHES='+','.join(matched))
+              print('NEOFORGE_211250_TARGET_SHA256='+payload['sha256'])
+              if len(matched)==len(needs):
+                # Only probe class/method boundaries; never publish Mojang classfiles.
+                for cls in ('net.minecraft.world.entity.Entity',
+                            'net.minecraft.world.entity.LivingEntity',
+                            'net.minecraft.world.entity.ai.attributes.RangedAttribute'):
+                  cmd=['javap','-p','-s','-classpath',str(path),cls]
+                  p=subprocess.run(cmd,capture_output=True,text=True)
+                  output.setdefault('javap_probes',[]).append({
+                      'jar':relative,'class':cls,'exit':p.returncode,
+                      'matching_headers':[line.strip() for line in p.stdout.splitlines()
+                                          if any(token in line for token in
+                                                 [' move(', ' collide(', ' tryCheckInsideBlocks(', ' travel(',
+                                                  ' setDeltaMovement(', ' handleRelativeFrictionAndCalculateMovement(',
+                                                  ' RangedAttribute('])][:18]})
+            except (BadZipFile,OSError):
+              continue
+          output_path=Path('build/catalog-neoforge-211250/target-discovery.json')
+          output_path.parent.mkdir(exist_ok=True,parents=True)
+          output_path.write_text(json.dumps(output,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+          print('NEOFORGE_211250_TARGET_CLASS_JARS='+str(len(output['jar_candidates'])))
+          for data in output.get('javap_probes',[]):
+            print('NEOFORGE_211250_JAVAP='+json.dumps(data,sort_keys=True))
+          PY
+      - name: Preserve only compact discovery metadata (no JARs or patched classfiles)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: neoforge-211250-target-discovery-${{ github.sha }}
+          path: build/catalog-neoforge-211250/target-discovery.json
+          if-no-files-found: ignore
+          retention-days: 14
