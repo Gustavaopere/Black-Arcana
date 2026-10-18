@@ -1,5 +1,14 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Checkpoint — Ars Hex 5.0.4b, proof de dataflow publisher (18/10/2026)
+
+**Barras:** global **—%** (piso **1.857 objetos semânticos identificados / 1.855 estritos**, denominador final aberto); Ars Hex ✅ **1/1 glifo próprio (100% ID/registry)** e ✅ **3/3 perks threads + 1/1 equipamento com fichas e bytecode causal delimitado (100% da tranche técnica, sem gameplay)**. **+0 magias, +0 adapters, +0 Stage promotions**.
+
+✅ [Java21 #39093013655](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39093013655) **SUCCESS**, SHA-1 publisher `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4` confirmado, 13/13 referências + 12/12 operandos + 12/12 dataflow simbólico das perks + 11/11 desconto da foice. `PASS_BOUNDED_PERK_DATAFLOW` demonstra as operações/fórmulas de três `applyAttributeModifiers` até os atributos exatos via `withModifierAdded`; `PASS_BOUNDED_SCYTHE_DISCOUNT_FLOW` valida os offsets, branches e acumulador das partes Necromancy em `getManaDiscount`. Artifact JSON `12122559466`. [Dossiê consolidado](../providers/✅-ars-hex/EXACT-BINARY-PERK-SCYTHE-DATAFLOW-5.0.4b.md).
+
+**Limites:** publisher equal-to-historical-physical-SHA, sem nova leitura do disco usuário; símbolos/formulas nos métodos apenas, não autorização de runtime. Ainda ⚠️ `ServerPlayer` conectado com `AttributeInstance`, equip/unequip, valores finais, multi-slot, mana debit/refund, boomerang/Reactive, causality/dedup, servidor completo/cliente; ⛔ RPG perk/Mastery adapter. Autoridade Black Arcana sobre runtime próprio; Ars/Malum/Lodestone sobre sistemas provider; RPG Skill Tree apenas progressão por contracts reais. Stage 06.05 🟡, Stage 09 PENDING. PR #825 draft; merge condicionado.
+
+
 ## Checkpoint — Ars Hex 5.0.4b, operandos numéricos publisher (17/10/2026)
 
 **GLOBAL — —%**, piso **1.857 semânticos / 1.855 estritos** com denominador definitivo aberto. **ARS HEX — 1/1 glyph mágico (100%) e 4/4 superfícies técnicas auxiliares (3 thread perks + 1 foice) com source e evidência binária limitada (100% da tranche)**. +0 identidades; +0 adapters. [Prova específica](../providers/✅-ars-hex/EXACT-PUBLISHER-NUMERIC-OPERANDS-5.0.4b.md).
