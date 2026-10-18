@@ -178,7 +178,7 @@ class Tests(unittest.TestCase):
     def test_changed_quadratic_constant(self):
         x=self.fixture()
         i=next(i for i,(_,op,t) in enumerate(x) if "5.0E-4d" in t)
-        x[i]=(x[i][0],op,"double 0.0004d")
+        x[i]=(x[i][0],x[i][1],"double 0.0004d")
         with self.assertRaisesRegex(ValueError,"sequence"):
             verify(x)
     def test_swapped_mins(self):
