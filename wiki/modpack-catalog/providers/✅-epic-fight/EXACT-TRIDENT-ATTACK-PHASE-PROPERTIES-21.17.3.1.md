@@ -1,5 +1,8 @@
 # Epic Fight 21.17.3.1 — propriedades de AttackPhase no classfile exato
 
+**Distinção posterior de aplicação de propriedades (18/10/2026):** ✅ [auditoria #39102096383](EXACT-TRIDENT-PHASE-OVERWRITE-RETURN-21.17.3.1.md) separou os valores presentes no builder da inserção nas `AttackAnimation.Phase`. Wrathful Lightning aplica **ambos os grupos em sequência sobre cada Phase**, e `Map.put` faz o `MAX_STRIKES.setter(3)` posterior substituir `setter(1)` nesse caminho; `EverlastingAllegiance.registerPropertiesToAnimation` retorna `this` sem gravar fases, enquanto seu `ThrownTridentPatch.tickEnd` constrói a fonte de dano de retorno. Os quadros abaixo continuam provas de **configuração**, e não devem ser lidos como duas fases fixas 1/3 ou como efeito garantido do builder sobre dano do tridente.
+
+
 **Prova posterior dos consumidores:** ✅ [Java21 #39096586191](EXACT-ATTACK-PHASE-CONSUMERS-21.17.3.1.md) confirmou no JAR físico publicado a ordem dos acumuladores de `ValueModifier`, os callsites de `AttackAnimation`, `EpicFightDamageSource` e o método de absorção do mixin `MixinLivingEntity`. A presente ficha permanece prova dos **argumentos do builder**, enquanto o novo dossiê cobre referências do **consumidor**; nenhum dos dois executa um hit no jogador.
 
 
