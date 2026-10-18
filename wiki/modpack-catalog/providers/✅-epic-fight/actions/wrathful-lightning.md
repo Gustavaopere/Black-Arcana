@@ -8,6 +8,10 @@
 - Semantic type: deliberate supernatural lightning invocation
 - State: `COUNTED_EXACT`
 
+## Vínculo do registro comprovado — 18/10/2026
+
+✅ [JAR publisher Java21 #39095049311](../EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md) demonstrou a sequência `String wrathful_lighting → InvokeDynamic #67 → DeferredRegister.register → WRATHFUL_LIGHTING`; o bootstrap aponta para `EpicFightSkills.lambda$static$40` (`WrathfulLightingSkill`), método que recebe os coeficientes abaixo. A relação **ID → builder** está comprovada no binário exato. ⚠️ Dano final/cast real pendentes.
+
 ## Prova posterior de propriedades compiladas (18/10/2026)
 
 ✅ [JAR 21.17.3.1, Java21 #39094435160](../EXACT-TRIDENT-ATTACK-PHASE-PROPERTIES-21.17.3.1.md): no supplier `lambda$static$40` (`WrathfulLightingSkill`), o bytecode confirma, na ordem, `MAX_STRIKES_MODIFIER setter(1)` (primeiro grupo), `DAMAGE_MODIFIER setter(8.0)`, `MAX_STRIKES_MODIFIER setter(3)`, `ARMOR_NEGATION_MODIFIER adder(100)`, `STUN_TYPE=KNOCKDOWN` e `SOURCE_TAG=WEAPON_INNATE` no segundo grupo. São **entradas de AttackPhase**, não dano final nem limite de alvos medido. `EXTRA_DAMAGE` possui chave/builder presentes, mas a composição completa não foi dataflow-validada. Assim, os valores numéricos acima não dependem mais *somente* do source adjacente. ⛔ Hook/perk externo permanece bloqueado.
