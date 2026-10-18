@@ -8,6 +8,10 @@
 - Semantic type: deliberate supernatural tide/mobility attack
 - State: `COUNTED_EXACT`
 
+## Semântica delimitada de armadura e stun (18/10/2026)
+
+✅ [Consumidores binários Java21 #39096586191](../EXACT-ATTACK-PHASE-CONSUMERS-21.17.3.1.md): `ARMOR_NEGATION_MODIFIER.adder(100)` alimenta o acumulador de negação de `EpicFightDamageSource`. O ramo compilado de `MixinLivingEntity` aplica `min(A×0.01,1)` e calcula no `CombatRules` apenas o dano restante, **se** a fonte satisfizer as guardas. `KNOCKDOWN` permanece `STUN_TYPE` de fase, não dano mágico automaticamente. Distância do avanço, área, alvos, efeito de água/chuva e dano líquido em jogo continuam **NÃO VERIFICADO**; sem adapter.
+
 ## Vínculo do registro comprovado — 18/10/2026
 
 ✅ [JAR publisher Java21 #39095049311](../EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md): `String tsunami → InvokeDynamic #68 → DeferredRegister.register → TSUNAMI`; `BootstrapMethods` associa ao método `EpicFightSkills.lambda$static$42` (`ConditionalWeaponInnateSkill`). **ID → builder** comprovado para as propriedades abaixo, sem provar alcance/dash ou hit em runtime.
