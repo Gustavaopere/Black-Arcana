@@ -33,6 +33,10 @@ A inspeção adicional de [`ModMobEffects.SLIME_ASPECT` (L31–34)](https://gith
 
 **Authority:** Iron's conserva casting, recurso, configuração e cooldown. Backported Spellbooks conserva efeitos/entidades. RPG Skill Tree apenas progressão por boundary real, Black Arcana apenas runtime próprio. Não executar efeitos/cobranças duplicadas nem conceder Mastery por projectile, tick ou hit isolado.
 
+## Equipamento correlato — Slime Boots (não é a magia)
+
+✅ O JAR 0.1.2 também teve [auditoria binária separada de Slime Boots e `ServerEvents.onFallEvent`](../EXACT-BINARY-SLIME-BOOTS-FALL-0.1.2.md) em [Java21 #39153448024](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39153448024) (11/11 testes, zero desvios). As botas usam quatro modifiers próprios — Jump `0.1 ADD_MULTIPLIED_BASE`, Friction `0.3 ADD_MULTIPLIED_BASE`, Bounciness `2.5 ADD_VALUE` e Air Drag `-0.5 ADD_MULTIPLIED_BASE`. O handler de queda consulta **slot FEET e item Slime Boots**, não `SLIME_ASPECT` nesse método. `addEffect` da magia e `setCanceled` da queda são caminhos causais distintos. O gate não validou física real, stacking nem hook para alteração via perk. +0 magias/adapters.
+
 ## Contratos e pendências
 
 - **Authority:** Iron's para cast, mana, cooldown; addon para efeitos/projéteis; Black Arcana não replica o settlement.

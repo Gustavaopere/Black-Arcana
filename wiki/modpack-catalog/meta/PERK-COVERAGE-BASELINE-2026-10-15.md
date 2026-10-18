@@ -1,5 +1,13 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Slime Boots 0.1.2 — evidência binária separada do Slime Aspect (18/10/2026)
+
+✅ [Java21 #39153448024](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39153448024) **SUCCESS**, publisher `backportedspellbooks-0.1.2.jar` SHA-1 `747847c1f38c73250ebac05ea06b41a381187850` igual ao snapshot físico; **11/11 autotestes**, `PASS_BACKPORTED_012_SLIME_BOOTS_FALL_BOUNDED_BYTECODE`, zero desvios, [JSON #12145728990](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39153448024/artifacts/12145728990). [Dossiê técnico exato](../providers/✅-backported-spellbooks/EXACT-BINARY-SLIME-BOOTS-FALL-0.1.2.md), [verificador](../../../docs/qa/backported_012_slime_boots_fall_bytecode.py) e [workflow](../../../.github/workflows/backported-spellbooks-012-perk-bytecode.yml).
+
+`SlimeBootsArmorItem.<init>`: `JUMP_STRENGTH=0.1d ADD_MULTIPLIED_BASE`, `FRICTION_MODIFIER=0.3d ADD_MULTIPLIED_BASE`, `BOUNCINESS=2.5d ADD_VALUE`, `AIR_DRAG_MODIFIER=-0.5d ADD_MULTIPLIED_BASE`. `ServerEvents.onFallEvent`: Player, slot `FEET`, `ModItems.SLIME_BOOTS`, `ItemStack.is` e `setCanceled(true)` compilados; nenhum callsite direto para `SLIME_ASPECT` ou `getCooldowns` nesse método. Tooltip consulta `Utils.applyCooldownReduction`, mas não atesta um cooldown real no handler. ✅ Operandos/callsites **não** são gameplay, lançamento de evento nem atributos resolvidos. ⚠️ Teste com host instalado Vanilla Backport 1.1.7.10/Iron's 3.16.3, jogador real e stacking continua pendente. ⛔ Hook de mutação externa/perks não demonstrado.
+
+**Contagens preservadas:** Slime Boots é equipamento, não sétima magia. Backported Spellbooks mantém **6/6 raízes, 6/6 fichas e 6/6 magias com métodos binários delimitados**; **+0** novas magias, **+0** adapters, global **—%** (piso 1.857 / 1.855 estritos). Stage 06.05 🟡 e Stage 09 físico PENDING; nenhuma promoção ou merge nesta evidência.
+
 ## Backported Spellbooks 0.1.2 — Slime Aspect exact bounded modifier gate (18/10/2026)
 
 **Barras atuais e categorias distintas:** catálogo global **—%**, mínimo **1.857 raízes semânticas globais / 1.855 estritas**, universo final aberto; **Backported Spellbooks 6/6 IDs estáticas certificadas**, **6/6 fichas individuais técnico-source-pinned** e agora **6/6 magias com pelo menos um caminho individual compilado certificado** (**100% SOMENTE deste critério delimitado**). **+0** magias, **+0** adapters/perks, nenhum Stage promovido. Os 5/6 dos checkpoints abaixo referem-se ao estado histórico anterior a esta prova.
