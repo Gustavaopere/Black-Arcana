@@ -8,6 +8,7 @@ on:
       - 'docs/qa/backported_012_perk_consumer_bytecode.py'
       - 'docs/qa/backported_012_bomb_thorn_bytecode.py'
       - 'docs/qa/backported_012_slime_aspect_bytecode.py'
+      - 'docs/qa/backported_012_slime_boots_fall_bytecode.py'
       - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/**'
   workflow_dispatch:
 
@@ -98,6 +99,32 @@ jobs:
             done
           fi
 
+      - name: Fail-closed Slime Boots equipment and fall-guard regression tests
+        run: python3 docs/qa/backported_012_slime_boots_fall_bytecode.py --self-test
+
+      - name: Verify Slime Boots publisher attributes and separate fall cancel
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/backported_012_slime_boots_fall_bytecode.py \
+            --jar build/catalog-backported-012/backported-012-exact.jar \
+            --output build/catalog-backported-012/slime-boots-fall-evidence.json
+
+      - name: Bounded fall and Slime Boots diagnostic if gate fails
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          F=build/catalog-backported-012/backported-012-exact.jar
+          if [[ -f "$F" ]]; then
+            echo "DIAGNOSTIC: compiled operands, not player QA"
+            for CLASS in \
+              net.redreaper.backported_spellbooks.item.armor.SlimeBootsArmorItem \
+              net.redreaper.backported_spellbooks.events.ServerEvents; do
+              javap -p -c -classpath "$F" "$CLASS" | tail -n 170
+            done
+          fi
+
       - name: Publish bounded JSON evidence only, never publisher JAR
         if: always()
         uses: actions/upload-artifact@v7
@@ -107,5 +134,6 @@ jobs:
             build/catalog-backported-012/perk-consumer-evidence.json
             build/catalog-backported-012/bomb-thorn-evidence.json
             build/catalog-backported-012/slime-aspect-evidence.json
+            build/catalog-backported-012/slime-boots-fall-evidence.json
           if-no-files-found: ignore
           retention-days: 14
