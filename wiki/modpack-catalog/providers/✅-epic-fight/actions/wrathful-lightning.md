@@ -8,6 +8,10 @@
 - Semantic type: deliberate supernatural lightning invocation
 - State: `COUNTED_EXACT`
 
+## Precedência real de grupos no registro de fases (18/10/2026)
+
+✅ [Auditoria de bytecode #39102096383](../EXACT-TRIDENT-PHASE-OVERWRITE-RETURN-21.17.3.1.md) no JAR 21.17.3.1: a mesma `AttackAnimation.Phase` recebe `properties[0]` e depois `properties[1]`, ambos via `Phase.addProperties→Map.put`. Na chave compartilhada `MAX_STRIKES_MODIFIER`, o `setter(3)` do grupo 1 **substitui** `setter(1)` do grupo 0 nesse caminho. **Dois grupos de builder NÃO significam duas fases com limites 1/3.** Nenhuma contagem real de vítimas ou aplicação de player foi mensurada. Corrigir qualquer perk que assuma “fase 1 = 1 alvo / fase 2 = 3 alvos”; hook externo continua ⛔.
+
 ## Gate posterior — handler instalado, ainda sem hit real (18/10/2026)
 
 ✅ [Preflight NeoForge Java21 #39098101364](../EXACT-ARMOR-MIXIN-LOADED-CLASS-PREFLIGHT-21.17.3.1.md) observou o handler de absorção de armadura Epic Fight na `LivingEntity` transformada com assinatura exata em servidor sem cliente. Isso resolve a dúvida da **presença do método** nesse ambiente isolado; **não prova que Wrathful Lightning o acionou, nem o dano/negation efetivo**. ⚠️ gameplay e integração; ⛔ perks externas.
