@@ -64,6 +64,7 @@ jobs:
           LOG="$PWD/build/epicfight-loaded-qa/connected-player-no-client.log"
           BLACK_ARCANA_EPICFIGHT_QA_CONNECTED_PLAYER_PREFLIGHT=1 \
           BLACK_ARCANA_EPICFIGHT_QA_ARMOR_MIXIN_PREFLIGHT=1 \
+          BLACK_ARCANA_EPICFIGHT_QA_NATIVE_DAMAGE_PREFLIGHT=1 \
             ./gradlew --no-daemon -Pneo_version=21.1.250 runServer > "$LOG" 2>&1 &
           PID=$!
           cleanup() {
@@ -122,6 +123,19 @@ jobs:
           assert not re.search(installed, negative_control), (
               "Negative matcher fixture must not match"
           )
+          damage_prefix = r'\[BLACK_ARCANA_EPICFIGHT_NATIVE_DAMAGE_QA\]'
+          native_armed = (
+              damage_prefix
+              + r' type=armed status=AWAIT_NATIVE_PLAYER_ATTACK '
+              + r'source_class_available=true connected_players=0 '
+              + r'incoming_count=0 post_count=0 no_client_proof=false\b'
+          )
+          assert len(re.findall(native_armed, log)) == 1, (
+              "Native Epic Fight damage observer must arm once with no client"
+          )
+          assert not re.search(damage_prefix + r' type=sample\b', log), (
+              "No native player attack sample may be claimed in clientless CI"
+          )
           diagnostic = re.findall(mixin_prefix + r' type=result [^\r\n]*', log)
           print("EPICFIGHT_ARMOR_MIXIN_QA_DIAGNOSTIC", json.dumps(diagnostic))
           assert len(re.findall(installed, log)) == 1, (
@@ -142,7 +156,11 @@ jobs:
               "armor_mixin_handler_present_in_loaded_LivingEntity": True,
               "armor_mixin_handler_invoked": False,
               "armor_damage_tested": False,
-              "not_evidenced": ["armor_mixin_handler_invocation", "armor_damage_result",
+              "native_damage_telemetry_armed_without_client": True,
+              "native_damage_player_samples_observed": 0,
+              "native_damage_health_loss_validated": False,
+              "not_evidenced": ["provider_native_connected_player_damage", "event_damage_correlated",
+                               "armor_mixin_handler_invocation", "armor_damage_result",
                                "connected_player", "ServerPlayerPatch_initialized",
                                 "onInitiate", "onRemoved", "AttributeInstance_applied",
                                 "client_sync", "full_modpack", "mastery_hook"],
