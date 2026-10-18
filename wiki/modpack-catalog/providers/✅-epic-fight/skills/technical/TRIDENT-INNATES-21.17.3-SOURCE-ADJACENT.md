@@ -1,5 +1,10 @@
 # Epic Fight — trident supernatural innates: parâmetros para perks (source 21.17.3 adjacente)
 
+## Atualização física: propriedades de AttackPhase compiladas (18/10/2026)
+
+✅ [GitHub Actions Java21 #39094435160](../../EXACT-TRIDENT-ATTACK-PHASE-PROPERTIES-21.17.3.1.md) `PASS_BOUNDED_TRIDENT_ATTACK_PHASE_PROPERTIES` e 11/11 autotestes: no JAR publisher 21.17.3.1 SHA duplo verificado, as lambdas `$40`, `$42`, `$43` ligam os valores de `MAX_STRIKES_MODIFIER`, `DAMAGE_MODIFIER`, `ARMOR_NEGATION_MODIFIER`, `STUN_TYPE` e tag `WEAPON_INNATE` a `Builder.addProperty` como descrito na matriz abaixo. Estes valores numéricos e enums passam de **SOURCE_ADJACENT** para **EXACT_PUBLISHER_COMPILED_SUPPLIER_PROPERTY_CALLSITES**. O restante do source adjacente (como `EXTRA_DAMAGE` completo, valores finais de combate, hitbox/range/retarget, `WEAPON_CHARGE` realmente gasto e efeitos) não foi promovido. [Dossiê e ressalvas](../../EXACT-TRIDENT-ATTACK-PHASE-PROPERTIES-21.17.3.1.md).
+
+
 ## Evidência posterior da release física 21.17.3.1 (18/10/2026)
 
 ✅ [JAR SHA-1/SHA-256 exato, Java21 #39093719405](../../EXACT-TRIDENT-CAUSAL-REFERENCES-21.17.3.1.md) `PASS_BOUNDED_TRIDENT_CAUSAL_REFERENCES` confirmou os três campos JSON `consumption` = **50/50/40**, precedence de seleção e callsites limitados de Tsunami (água/chuva), Wrathful (duas propriedades por phase) e Everlasting (recall no servidor); [dossiê](../../EXACT-TRIDENT-CAUSAL-REFERENCES-21.17.3.1.md). **Os valores de `AttackPhaseProperty` discutidos abaixo continuam source-adjacent 21.17.3; não foram promovidos a exato 21.17.3.1.** Nenhum cooldown/dano/raio efetivo comprovado.
