@@ -1,5 +1,10 @@
 # Epic Fight 21.17.3.1 — observador read-only de jogador conectado (pré-gate Stage 09)
 
+## Observer adicional de dano com filtro de jogador real — 18/10/2026
+
+✅ [Workflow #39098965924](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39098965924) **SUCCESS** compilou e armou um observador opt-in independente de `LivingIncomingDamageEvent` / `LivingDamageEvent.Post` com [matriz e runbook](NATIVE-PLAYER-DAMAGE-TELEMETRY-QA-21.17.3.1.md). O novo modo `BLACK_ARCANA_EPICFIGHT_QA_NATIVE_DAMAGE_PREFLIGHT=1` é separado do modo de lifecycle e não interfere nas skills. O CI confirmou **zero samples** sem cliente, `connected_players=0`, `source_class_available=true` e artefato #**12126200760**. **Não** inferir `ServerPlayerPatch.initialized=true`, hit, armadura ou Mastery como validados.
+
+
 ## Nova prova independente de classe transformada — 18/10/2026
 
 ✅ [Workflow Java21 #39098101364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39098101364) **SUCCESS** e [dossiê do armor-mixin](EXACT-ARMOR-MIXIN-LOADED-CLASS-PREFLIGHT-21.17.3.1.md). O mesmo companion QA passou a aceitar opcionalmente `BLACK_ARCANA_EPICFIGHT_QA_ARMOR_MIXIN_PREFLIGHT=1`, observando `LivingEntity.class.getDeclaredMethods()` em um dedicated server iniciado sem cliente. Encontrou `TRANSFORMED_HANDLER_PRESENT handler_count=1` para o método de armadura do Epic Fight. Artefato #**12125471763**, sem JAR de QA em produção. **Isso não muda a ausência de conexão de jogador** registrada neste protocolo: `connected_players=0`, `has_proven_join_patch=false`, `equip_invoked=false`, `attribute_mutated=false`; handler presente **não equivale** a handler invocado em hit real. O teste negativo anterior #39097863144 falhou por erro de escape do matcher CI e foi corrigido mediante fixtures positiva e negativa, mantendo fail-closed.
