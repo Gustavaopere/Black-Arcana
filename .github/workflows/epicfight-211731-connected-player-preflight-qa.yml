@@ -105,8 +105,25 @@ jobs:
           marker = prefix + r' type=armed status=AWAIT_CONNECTED_PLAYER connected_count=0 equip_invoked=false attribute_mutated=false\b'
           assert len(re.findall(marker, log)) == 1, "Observer must arm once with zero connected players"
           assert not re.search(prefix + r' type=(queued|result|inspection)', log), "No real player should be observed during no-client CI"
-          mixin_prefix = r'\\[BLACK_ARCANA_EPICFIGHT_ARMOR_MIXIN_QA\\]'
-          installed = mixin_prefix + r' type=result status=TRANSFORMED_HANDLER_PRESENT handler_count=1\\b'
+          mixin_prefix = r'\[BLACK_ARCANA_EPICFIGHT_ARMOR_MIXIN_QA\]'
+          installed = mixin_prefix + r' type=result status=TRANSFORMED_HANDLER_PRESENT handler_count=1\b'
+          positive_control = (
+              "[BLACK_ARCANA_EPICFIGHT_ARMOR_MIXIN_QA] "
+              "type=result status=TRANSFORMED_HANDLER_PRESENT handler_count=1 "
+              "handler_invoked=false damage_tested=false client_connected=false"
+          )
+          negative_control = (
+              "[BLACK_ARCANA_EPICFIGHT_ARMOR_MIXIN_QA] "
+              "type=result status=HANDLER_SIGNATURE_NOT_EXACT matching=0 mismatched=0"
+          )
+          assert len(re.findall(installed, positive_control)) == 1, (
+              "Positive matcher fixture must match once"
+          )
+          assert not re.search(installed, negative_control), (
+              "Negative matcher fixture must not match"
+          )
+          diagnostic = re.findall(mixin_prefix + r' type=result [^\r\n]*', log)
+          print("EPICFIGHT_ARMOR_MIXIN_QA_DIAGNOSTIC", json.dumps(diagnostic))
           assert len(re.findall(installed, log)) == 1, (
               "No valid transformed LivingEntity armor handler observed in running dedicated server"
           )
