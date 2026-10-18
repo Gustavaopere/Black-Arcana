@@ -1,5 +1,9 @@
 # Backported Spellbooks 0.1.2 — matriz source-pinned de parâmetros, geometria e causalidade
 
+## NeoForge 21.1.250 — 4 `setDeltaMovement(DDD)` no servidor patchado (18/10/2026)
+
+✅ [Java21 #39176290939](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39176290939) **SUCCESS**, 7/7 autotestes, hashes exatos do installer 21.1.250, patch server e SRG base. [Dossiê do alvo NeoForge](EXACT-NEOFORGE-211250-MIXIN-TARGETS.md): `Entity.move→collide` 1, `→tryCheckInsideBlocks` 1; `LivingEntity.travel→handleRelativeFrictionAndCalculateMovement` 1, `→setDeltaMovement(DDD)` **4**, quarto callsite `ordinal=3` no PC **1314** do **servidor patchado** (cliente vanilla tinha PC 1240). O construtor `RangedAttribute.<init>(String,DDD)V` foi localizado no SRG base. **Ainda não** prova transformações Mixin do modpack, servidor carregado com providers, cliente NeoForge ou perks externos. **+0 magias/adapters; Backported 6/6 no critério delimitado.**
+
 ## Minecraft 1.21.1 vanilla — `ordinal=3` presente em `travel` (18/10/2026)
 
 ✅ [#39170808679](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39170808679) **SUCCESS**, **16/16 autotestes**, SHA-1 e tamanho oficiais conferidos: [dossiê binário do cliente 1.21.1](EXACT-MOJANG-1211-VANILLA-CLIENT-CALLSITES.md) confirmou `Entity.move` com 1 `collide` + 1 `tryCheckInsideBlocks`, `LivingEntity.travel` com 1 `handleRelativeFrictionAndCalculateMovement` e **4 `setDeltaMovement(DDD)`**, quarto callsite `PC 1240`. `RangedAttribute.<init>(String,double,double,double)` certificado no classfile. A quarta ocorrência satisfaz o índice **zero-based `ordinal=3` no cliente vanilla**, sem provar que seja mantida pelos patches NeoForge 21.1.250 e mixins concorrentes. ⚠️ Runtime/distribuição transformada/servidor continuam pendentes. +0 magias e adapters; Backported 6/6 preservado.

@@ -2,6 +2,10 @@
 
 **18/10/2026 · ✅ `OFFICIAL_HASH_VERIFIED_VANILLA_CLIENT_CLASSFILE_CALLSITES` · ⚠️ alvo NeoForge 21.1.250 não verificado · ⛔ perks sem boundary.**
 
+## Estado posterior do alvo NeoForge servidor (18/10/2026)
+
+✅ O [JAR patchado de servidor NeoForge 21.1.250](EXACT-NEOFORGE-211250-MIXIN-TARGETS.md) foi **auditado posteriormente** no [workflow Java21 #39176290939](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39176290939): 7/7 testes, 4 `setDeltaMovement(DDD)` em `LivingEntity.travel`, quarta instrução PC **1314**. A condição de "alvo NeoForge não verificado" descrita no snapshot abaixo se refere ao **checkpoint anterior**; agora a contagem de servidor patchado está certificada. **Ainda permanecem ⚠️ não certificados** aplicação do mixin Vanilla Backport, cardinalidade após todos os mods, dedicated server conectado e cliente NeoForge.
+
 ## Evidência binária, não inferência de mapeamento
 
 - **Distribuição:** `Minecraft 1.21.1` **client JAR oficial Mojang, sem patches NeoForge**, recuperado do `downloads.client` do JSON da release selecionada por [`version_manifest_v2.json`](https://piston-meta.mojang.com/mc/game/version_manifest_v2.json). O gate compara o SHA-1 e tamanho do JAR baixado com a metadata Mojang, verifica a integridade ZIP e utiliza exclusivamente `client_mappings` também validados pelo SHA-1 oficial. A identificação dos nomes originais ↔ obfuscados é derivada desse arquivo exato de mapeamento, não de classes supostas.
