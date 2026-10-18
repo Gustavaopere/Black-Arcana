@@ -1,5 +1,8 @@
 # Backported Spellbooks — spells and Iron's runtime boundary
 
+**Complemento Java21 (18/10/2026):** ✅ [#39133252975](EXACT-BINARY-BOMB-THORN-0.1.2.md) verificou no JAR oficial 0.1.2 **apenas** os operandos/callsites delimitados de Sulfur Bomb (geometria AABB, LOS, raio, queda de dano e construção de nuvem) e Pale Thorn (raycast, VFX, escalas de dano/duração e status). São caminhos de execução que dependem de `AbstractSpell`, `Utils` e `DamageSources` do Iron's; o gate não inspecionou a implementação desses hosts. Portanto nenhum novo callback seguro, proc, Mastery ou perk é autorizado.
+
+
 **Prova de classfile adicional (18/10/2026):** ✅ [Java21 #39131725388](EXACT-BINARY-PERK-CONSUMERS-0.1.2.md) validou no JAR publisher 0.1.2 três contratos de **código compilado**, sem executar Iron's: dois `super.tick()` em Sulfur Clouds, `getWitherAmplifier=level-2` em Sulfur Release e os callsites de sessão/casting de Resin Spray. Esses achados limitados não transferem autoridade sobre `MagicData`, lifecycle, custo ou cooldown do host.
 
 
