@@ -1,5 +1,8 @@
 # Ars Hex 5.0.4b — matriz de contratos técnicos para perks
 
+**Ampliação de evidência (18/10/2026):** ✅ [dataflow compilado das três perks e do desconto da foice](EXACT-BINARY-PERK-SCYTHE-DATAFLOW-5.0.4b.md) no JAR publisher SHA verificado, Java21 [#39093013655](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39093013655). As associações atributo/coeficiente/operação de `applyAttributeModifiers` foram comprovadas por pilha simbólica delimitada; o desconto de `EnchanterScythe.getManaDiscount` recebeu assinatura de loop/branches verificada. **Não autoriza** pressupor efeitos finais, consumos de mana, grants de Mastery, retarget/aoe ou hooks funcionais. Sem novos spells/adapters.
+
+
 ✅ [Nova prova Java21 de operandos #39089774180](EXACT-PUBLISHER-NUMERIC-OPERANDS-5.0.4b.md): o JAR publisher SHA-1 `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4` passou **13/13 + 12/12 autotestes**, `PASS_BOUNDED_BYTECODE_REFERENCES` e `PASS_BOUNDED_NUMERIC_OPERANDS`. O classfile contém `iconst_2`, doubles `0.5`/`0.1`/`0.2`, opcodes de multiplicação e leitura de `slotValue` nos métodos aplicáveis. **Isto confirma presença de constantes, não o def-use/CFG integral, valor final de atributo, pagamento de mana, dano nem runtime.** Artefato JSON #12121819084. Nenhuma nova magia/adapter.
 
 
