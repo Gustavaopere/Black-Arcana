@@ -111,11 +111,39 @@ jobs:
           for data in output.get('javap_probes',[]):
             print('NEOFORGE_211250_JAVAP='+json.dumps(data,sort_keys=True))
           PY
+      - name: Fail-closed patched NeoForge 21.1.250 classfile regression tests
+        run: python3 docs/qa/neoforge_211250_target_bytecode.py --self-test
+
+      - name: Verify patched server invoke callsites and RangedAttribute constructor
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/neoforge_211250_target_bytecode.py \
+            --root build/catalog-neoforge-211250/server \
+            --output build/catalog-neoforge-211250/target-bytecode-evidence.json
+
+      - name: Diagnostic classfile invoke locations on bytecode gate failure
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=build/catalog-neoforge-211250/server/libraries/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-server.jar
+          if [[ -f "$P" ]]; then
+            for CLASS in net.minecraft.world.entity.Entity net.minecraft.world.entity.LivingEntity; do
+              echo "FAILED_GATE_JAVAP_CLASS=$CLASS"
+              javap -p -c -s -classpath "$P" "$CLASS" \
+                | grep -E 'collide:|tryCheckInsideBlocks:|setDeltaMovement:|handleRelativeFrictionAndCalculateMovement:|travel\(' \
+                | head -n 40 || true
+            done
+          fi
+
       - name: Preserve only compact discovery metadata (no JARs or patched classfiles)
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: neoforge-211250-target-discovery-${{ github.sha }}
-          path: build/catalog-neoforge-211250/target-discovery.json
+          path: |
+            build/catalog-neoforge-211250/target-discovery.json
+            build/catalog-neoforge-211250/target-bytecode-evidence.json
           if-no-files-found: ignore
           retention-days: 14
