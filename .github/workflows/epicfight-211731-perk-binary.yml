@@ -85,6 +85,43 @@ jobs:
             --jar build/catalog-epicfight-211731/epicfight-exact.jar \
             --output build/catalog-epicfight-211731/trident-registry-bootstrap-evidence.json
 
+      - name: Probe exact compiled property-consumer methods without game execution
+        run: |
+          python3 - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          sys.path.insert(0,"docs/qa")
+          from epicfight_211731_trident_causal import javap,blocks,instructions
+          jar=Path("build/catalog-epicfight-211731/epicfight-exact.jar")
+          targets={
+            "result":"yesman.epicfight.api.utils.math.ValueModifier$ResultCalculator",
+            "adder":"yesman.epicfight.api.utils.math.ValueModifier$Adder",
+            "multiplier":"yesman.epicfight.api.utils.math.ValueModifier$Multiplier",
+            "setter":"yesman.epicfight.api.utils.math.ValueModifier$Setter",
+            "attack":"yesman.epicfight.api.animation.types.AttackAnimation",
+            "source":"yesman.epicfight.world.damagesource.EpicFightDamageSource",
+          }
+          wanted={"result":("getResult","attach"),"adder":("attach",),
+             "multiplier":("attach",),"setter":("attach",),
+             "attack":("getMaxStrikes","getEpicFightDamageSource"),
+             "source":("calculateDamageAgainst","calculateArmorNegation",
+                      "attachDamageModifier","attachArmorNegationModifier")}
+          for key,class_name in targets.items():
+              body=javap(jar,class_name)
+              methods=[]
+              for name,code in blocks(body):
+                  if not any(w+"(" in name for w in wanted[key]): continue
+                  ops=instructions(code)
+                  output=[]
+                  for pc,op,tail in ops:
+                      comment=tail.split("//",1)[-1].strip().split(":",1)[0]
+                      if op.startswith("invoke") or op in ("getfield","putfield","getstatic","fadd","fmul","fstore_2","fload_2"):
+                          output.append([pc,op,comment[:90]])
+                  methods.append({"name":name,"n":len(ops),"selected":output[:65]})
+              print("CONSUMER_PROBE "+json.dumps({"key":key,"methods":methods},separators=(",",":"))[:14000])
+          PY
+
       - name: Upload bounded JSON evidence, never publisher JAR
         if: always()
         uses: actions/upload-artifact@v7
