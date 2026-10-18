@@ -1,5 +1,8 @@
 # Seis spells — inventário estático exato
 
+**Prova binária adicional (18/10/2026):** ✅ [3/6 fichas com método compilado delimitado](../EXACT-BINARY-PERK-CONSUMERS-0.1.2.md) — Sulfur Clouds, Sulfur Release e Resin Spray, Java21 [#39131725388](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39131725388), 8/8 autotestes. **6/6 registradas** e **6/6 source-pinned** permanecem intactas; a aprovação de 3 métodos não equivale à homologação dos outros campos, ações ou perks.
+
+
 **Atualização de fichas técnicas (18/10/2026):** ✅ **6/6 fichas** com source-pin de classe/`onCast`, defaults, geometria, dano/status, lifecycle e boundary de perks, sem copiar implementação. [Matriz transversal](../PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md). Paridade completa de fórmulas com JAR 0.1.2, Iron's 3.16.3, configurações efetivas e gameplay: ⚠️ NÃO VERIFICADO. Quantidade de novas magias: **+0**.
 
 
