@@ -120,16 +120,12 @@ def study(dis: dict[str, str], jsons: dict[str, dict]):
     ordered_markers(conditional, ("getAnimationInCondition", "playAnimationSynchronized"),
                     "conditional_animation_selection")
 
-    recall_gate = choose(methods["recall"], ("THROWN_TRIDENT_ENTITY_ID",),
-                         "recall_trident_id_gate")
-    if "checkExecuteCondition" not in recall_gate["declaration"]:
-        # Several lifecycle methods can access this key; isolate exact gate rather than
-        # picking the first coincidental constant occurrence.
-        gates = [(n, c) for n, c in methods["recall"]
-                 if "checkExecuteCondition(" in n and "THROWN_TRIDENT_ENTITY_ID" in c]
-        if len(gates) != 1:
-            raise ValueError("Everlasting Allegiance exact gate not unique")
-        recall_gate = choose(gates, ("THROWN_TRIDENT_ENTITY_ID",), "recall_gate")
+    # Isolate the named method: the trident ID key also occurs in other lifecycle methods.
+    gates = [(name, code) for name, code in methods["recall"]
+             if "checkExecuteCondition(" in name]
+    recall_gate = choose(gates, ("THROWN_TRIDENT_ENTITY_ID",), "recall_gate")
+    if not any(op == "iflt" or op == "ifge" for _, op, _ in recall_gate["ops"]):
+        raise ValueError("Everlasting Allegiance gate lacks signed entity-ID boundary")
     recall = choose(methods["recall"],
         ("recalledBySkill", "playAnimationSynchronized", "cancelOnServer"),
         "recall_server_settlement")
