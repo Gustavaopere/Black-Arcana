@@ -1,5 +1,7 @@
 # Ars Hex 5.0.4b — matriz de contratos técnicos para perks
 
+**Prova binária posterior:** ✅ [workflow Java21 #39087382649](EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md) — hash SHA-1 do JAR publicado 5.0.4b validado, 13/13 autotestes e seis classes compiladas com referências delimitadas; operações/atributos e ingressos da foice confirmados por marcadores, mas **coeficientes, dataflow, pagamento de mana e execução real continuam source-pinned / ⚠️**. Nenhum adapter. [Relatório técnico detalhado](EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md).
+
 **Escopo auditado (17/10/2026):** ✅ glyph próprio 1/1 registrado no JAR; ✅ 3/3 perks de thread e 1/1 equipamento spell-on-hit com fichas individuais **SOURCE_CAUSALITY**; **+0 magias**, +0 adapters, nenhuma equivalência bytecode completa/QA físico certificada nesta tranche. Este denominador de objetos de engenharia não é o denominador de identidades mágicas. Source pin oficial `Alexthw46/Ars-Unity@b25528adf8c0135585cd6d654582efa147e0a227`.
 
 | Objeto / ID | Owner efetivo | Alteração técnica observada | Faixa de perk segura agora? | Ficha |
