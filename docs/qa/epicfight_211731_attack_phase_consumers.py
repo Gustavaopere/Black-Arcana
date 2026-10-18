@@ -209,8 +209,7 @@ def main() -> int:
     try:
         # Authenticates publisher SHA1/SHA256, exact registry and original trident JSON.
         prior = inspect_publisher(args.jar)
-        phase = evaluate_phase(javap(args.jar, CLASSES.get("attack", "")) if False else
-                               javap(args.jar, "yesman.epicfight.registry.entries.EpicFightSkills"))
+        phase = evaluate_phase(javap(args.jar, "yesman.epicfight.registry.entries.EpicFightSkills"))
         result = inspect_consumers({k: javap(args.jar, c) for k, c in CLASSES.items()})
         result["publisher_sha1"] = prior["sha1"]
         result["publisher_sha256"] = prior["sha256"]
