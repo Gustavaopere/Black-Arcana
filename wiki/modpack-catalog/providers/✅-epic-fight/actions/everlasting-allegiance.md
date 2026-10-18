@@ -8,6 +8,10 @@
 - Semantic type: deliberate supernatural damaging trident recall
 - State: `COUNTED_EXACT`
 
+## Cinemática exata do tridente retornando (18/10/2026)
+
+✅ [Java21 #39103337112](../EXACT-TRIDENT-RETURN-KINEMATICS-21.17.3.1.md) no classfile físico 21.17.3.1 confirmou o offset temporal `t=max(tickCount-returnTick-10,0)`, o deslocamento pedido em cada atualização `min(t²×0.0005+abs(t×0.05), min(10, distância até os olhos do proprietário))`, vetor normalizado apontando ao proprietário, zeragem de `setDeltaMovement` e `setPos` somando o vetor ao ponto atual. **Eixo para eventual perk:** velocidade/aceleração nominal está no `ThrownTridentPatch.tickEnd`; **não** é atributo comum do `AttackPhase`, nem API/hook público demonstrado. O teto calculado de 10 blocos por atualização não delimita distância máxima, target lock, tempo total ou velocidade observada. 8/8 autotestes, artifact #12127228567; Stage 09/client real ⚠️ PENDING, adapter ⛔.
+
 ## Dano do tridente retornando: patch e não fase de animação (18/10/2026)
 
 ✅ [Auditoria JAR exato #39102096383](../EXACT-TRIDENT-PHASE-OVERWRITE-RETURN-21.17.3.1.md): `EverlastingAllegiance.registerPropertiesToAnimation` consiste em `aload_0; areturn`, **sem escrita de AttackPhase nesse método**. O `ThrownTridentPatch.tickEnd` compilado cria, separadamente, `EpicFightDamageSources.trident` com `StunType.HOLD`, tag `WEAPON_INNATE`, `setBaseArmorNegation(30.0f)` e `ValueModifier.multiplier(1.4f)`. Em sua região de dano, utiliza input `8.0f`, `EnchantmentHelper.modifyDamage` e `Entity.hurt`; detecta entidades em `AABB.inflate(1,1,1)` — expansão **por eixo**, não raio circular ou alvo único. A configuração builder `ARMOR_NEGATION_MODIFIER.adder(30)` **não é a mesma operação** que `setBaseArmorNegation(30)` no source de retorno. Não inferir dano efetivo, alvo máximo, procs por tick ou ausência de i-frames. ⚠️ cliente real / ⛔ perks e Mastery.
