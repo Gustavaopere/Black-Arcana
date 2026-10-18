@@ -1,5 +1,16 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Backported Spellbooks 0.1.2 — 3 provas binárias de métodos de consumer (18/10/2026)
+
+**Barras:** catálogo global **—%**, piso **1.857 semânticos / 1.855 estritos** e denominador total aberto; **Backported Spellbooks — 6/6 identidades registradas**, **6/6 fichas source-pinned** e **3/6 spells com caminhos específicos de bytecode certificados nesta rodada**. Os percentuais representam escopos diferentes: 6/6 não indica integração concluída nem 3/6 uma avaliação de gameplay. **+0** novas magias, **+0** adapters.
+
+✅ [Workflow Java21 #39131725388](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39131725388) **SUCCESS**, 8/8 autotestes, `PASS_BACKPORTED_012_BOUNDED_COMPILED_PERK_CONSUMERS`, `deviations=[]`, SHA-1 publisher/physical `747847c1f38c73250ebac05ea06b41a381187850` e 209.868 bytes. JSON artefato [**12138535465**](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39131725388/artifacts/12138535465). [Dossiê exato](../providers/✅-backported-spellbooks/EXACT-BINARY-PERK-CONSUMERS-0.1.2.md), [verificador](../../../../docs/qa/backported_012_perk_consumer_bytecode.py), [workflow](../../../../.github/workflows/backported-spellbooks-012-perk-bytecode.yml). A primeira execução #39131655290 validou o JAR e 8/8 testes, mas falhou na publicação do JSON por um nome de artefato inválido; a segunda execução corrigida concluiu também o upload.
+
+No classfile compilado: **SulfurCloudProjectile.tick** contém duas chamadas `super.tick` a um mesmo proprietário antes de `createParticleSphere`; **SulfurReleaseSpell.getWitherAmplifier** retorna literalmente `spellLevel-2`, logo o método recebe nível 1 e devolve -1 sem prova da normalização pelo host; **ResinSpraySpell.onCast** contém `MagicData` guardas de sessão, `EntityCastData` e paths alternativos de `setDealDamageActive` / `new ResinSprayProjectile`, `Level.addFreshEntity`, `setAdditionalCastData`. **Não** provou duplicação de dano, bug funcional, vida útil de nuvem, efeito com amp -1 em entity, loop de cast contínuo real ou hook público.
+
+⚠️ Sem player/cliente real, Iron's 3.16.3/configuração efetiva, runtime impact/HP/cooldown/mana/LOS/friendly-fire/claims; fórmulas restantes source-adjacent. ⛔ Adapter de perks/Mastery e double-processing externo. Stage 06.05 🟡; Stage 09 físico PENDING; PR #825 draft, nenhum merge.
+
+
 ## Backported Spellbooks 0.1.2 — fichas técnicas 6/6 por source-pin de release (18/10/2026)
 
 **Barras:** catálogo global **—%** com piso **1.857 semânticos / 1.855 estritos**, denominador total em aberto; **Backported Spellbooks — 6/6 = 100% das identidades com fichas de parâmetros source-pinned** (registro exato 6/6 já provado), sem atestar 100% de QA/runtime. +0 novas magias/adapters.
