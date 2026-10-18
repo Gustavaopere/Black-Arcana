@@ -1,5 +1,12 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight 21.17.3.1 — prova binária de propriedades AttackPhase (18/10/2026)
+
+**Barras:** GLOBAL **—%** (piso **1.857 objetos semânticos / 1.855 estritos**, denominador aberto); **EPIC FIGHT CORE — 43/43 (100% identidades e classificação)**; **TRIDENT SOBRENATURAL — 3/3 (100% fichas individuais com propriedades builder compiladas)**. Sem novas magias ou adapters.
+
+✅ [Java21 #39094435160](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39094435160) SUCCESS, JAR publisher 21.17.3.1 SHA-1/SHA-256 confirmado, **11/11 novos autotestes**, `PASS_BOUNDED_TRIDENT_ATTACK_PHASE_PROPERTIES` e artifact JSON **12124346492**. [Dossiê de campos e operações reais do builder](../providers/✅-epic-fight/EXACT-TRIDENT-ATTACK-PHASE-PROPERTIES-21.17.3.1.md): Wrathful `MAX_STRIKES setter(1)`, `DAMAGE setter(8)`, `MAX_STRIKES setter(3)`, `ARMOR_NEGATION adder(100)`, `KNOCKDOWN`; Tsunami `ARMOR_NEGATION adder(100)`, `KNOCKDOWN`; Everlasting `ARMOR_NEGATION adder(30)`, `DAMAGE multiplier(1.4)`, `HOLD`; tags `WEAPON_INNATE`. Valores agora **EXACT_PUBLISHER_COMPILED_SUPPLIER_PROPERTY_CALLSITES**, não somente fonte adjacente 21.17.3. Não representa dano/armadura/custo reais, reconstrução integral de bootstrap, client/player GameTest, compat full modpack ou hook de perks homologado. Stage 06.05 🟡 e Stage 09 físico PENDING, PR #825 draft, merge não realizado.
+
+
 ## Epic Fight 21.17.3.1 — tridente, três ações com fonte compilada delimitada (18/10/2026)
 
 **Barras de progresso:** **global —%**, piso conhecido **1.857 semânticos / 1.855 estritos**, universo total aberto; **Epic Fight core 43/43 = 100% identidades classificadas** (3 `COUNTED_EXACT` raízes mágicas já contadas, 40 excluídas somente da métrica mágica), **3/3 ações sobrenaturais com fichas individuais**. **+0 novas identidades e +0 adapters**.
