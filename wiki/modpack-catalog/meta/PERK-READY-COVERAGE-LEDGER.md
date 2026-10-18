@@ -50,7 +50,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-arsdelight` | 6 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-artifacts` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-asterism-arcanum` | 18 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-backported-spellbooks` | 12 | ✅ 6/6 fichas com [matriz causal source-pinned release-day](../providers/✅-backported-spellbooks/PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md) e parâmetros por spell (6 registros físicos no JAR 0.1.2 já comprovados); ⚠️ fórmulas/efeitos binários e configurações Iron's/Survival não validados; ⛔ adapters/perks sem hook |
+| `✅-backported-spellbooks` | 12 | ✅ [3/6 métodos de consumidor binário publisher 0.1.2 #39131725388](../providers/✅-backported-spellbooks/EXACT-BINARY-PERK-CONSUMERS-0.1.2.md) (2 super.tick do SulfurCloud, getWitherAmplifier=level-2, sessão de ResinSpray; 8/8 autotestes; runtime ⚠️; adapter ⛔); ✅ 6/6 fichas com [matriz causal source-pinned release-day](../providers/✅-backported-spellbooks/PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md) e parâmetros por spell (6 registros físicos no JAR 0.1.2 já comprovados); ⚠️ fórmulas/efeitos binários e configurações Iron's/Survival não validados; ⛔ adapters/perks sem hook |
 | `✅-betterend` | 53 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-betternether` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-bloodlines` | 39 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
