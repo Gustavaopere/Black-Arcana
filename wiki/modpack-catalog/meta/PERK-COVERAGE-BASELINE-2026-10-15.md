@@ -1,5 +1,14 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight 21.17.3.1 — observer de dano de jogador, no-client guard (18/10/2026)
+
+**Barras de continuidade:** catálogo global **—%** (piso **1.857 semânticos mínimos / 1.855 estritos**, denominador final aberto); **Epic Fight core 43/43 = 100% IDs documentados**, incluindo **3/3** innates sobrenaturais de tridente. +0 novas identidades / +0 adapters.
+
+✅ [GitHub Actions #39098965924](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39098965924) **SUCCESS**: compilação `epicFightCatalogQa` Java21 contra NeoForge 21.1.250, JAR oficial Epic Fight 21.17.3.1 com SHA-1/SHA-256 exato; QA excluído do JAR de produção. Dedicated server sem cliente confirmou `AWAIT_NATIVE_PLAYER_ATTACK` e **zero** `type=sample` com usuário, além de manter `TRANSFORMED_HANDLER_PRESENT` do mixin de armadura. JSON artifact **12126200760**, `native_damage_health_loss_validated=false`. [Contrato de observação sem mutação](../providers/✅-epic-fight/NATIVE-PLAYER-DAMAGE-TELEMETRY-QA-21.17.3.1.md): `LivingIncomingDamageEvent` / `LivingDamageEvent.Post`, `EpicFightDamageSource`, atacante `ServerPlayer` conectado, reductions `ARMOR` / `ABSORPTION` e tag `BYPASSES_ARMOR`; amostras limitadas e sem PII.
+
+⚠️ **Sem cliente real nem ataques demonstrados**; eventos não possuem chave causal compartilhada nesse observer, logo nenhuma amostra é considerada prova de cálculo final ou invocação do handler. `ServerPlayerPatch.initialized`, login/respawn, hit, cost, perks/Mastery, targeting, range, dano final e full-modpack seguem PENDING/⛔. Stage 06.05 🟡; Stage 09 físico PENDING; PR #825 draft e merge não realizado.
+
+
 ## Epic Fight 21.17.3.1 — preflight runtime de handler de armadura instalado (18/10/2026)
 
 **Barras:** global **—%**, mínimo **1.857 semânticos / 1.855 estritos**, denominador aberto; Epic Fight core **43/43 = 100% identidades catalogadas**, com 3/3 ações sobrenaturais já contadas e 40 habilidades não mágicas relevantes às perks. **+0 roots / +0 adapters / +0 Stage promotions**.
