@@ -8,6 +8,10 @@
 - Semantic type: deliberate supernatural lightning invocation
 - State: `COUNTED_EXACT`
 
+## Semântica delimitada dos modifiers após o builder (18/10/2026)
+
+✅ [Consumidores binários Java21 #39096586191](../EXACT-ATTACK-PHASE-CONSUMERS-21.17.3.1.md): o `DAMAGE_MODIFIER.setter(8)` entra na semântica de `ValueModifier.ResultCalculator` (define a referência do valor a ser combinado; não fixa 8 HP na vítima). Os `MAX_STRIKES_MODIFIER.setter(1)` / `setter(3)` são usados por `AttackAnimation.getMaxStrikes`, não provam 1/3 acertos reais em toda situação. `ARMOR_NEGATION_MODIFIER.adder(100)` abastece `EpicFightDamageSource.calculateArmorNegation`; o mixin compilado usa `min(A×0.01,1)` antes de `CombatRules` quando a fonte é elegível. **⚠️** Mixin aplicado, ataques multi-phase e dano real não homologados; ⛔ sem perk de dano/alcance externo.
+
 ## Vínculo do registro comprovado — 18/10/2026
 
 ✅ [JAR publisher Java21 #39095049311](../EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md) demonstrou a sequência `String wrathful_lighting → InvokeDynamic #67 → DeferredRegister.register → WRATHFUL_LIGHTING`; o bootstrap aponta para `EpicFightSkills.lambda$static$40` (`WrathfulLightingSkill`), método que recebe os coeficientes abaixo. A relação **ID → builder** está comprovada no binário exato. ⚠️ Dano final/cast real pendentes.
