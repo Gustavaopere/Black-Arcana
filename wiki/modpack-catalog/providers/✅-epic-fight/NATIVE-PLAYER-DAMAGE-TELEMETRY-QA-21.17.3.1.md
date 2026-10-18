@@ -1,6 +1,13 @@
 # Epic Fight 21.17.3.1 — observabilidade read-only de dano nativo para Stage 09
 
-**18/10/2026 — 🟡 Instrumentação de QA em implementação; ⚠️ nenhuma amostra de ataque de jogador conectado; ⛔ perks/Mastery e mudanças de dano sem homologação.**
+**18/10/2026 — ✅ Observador de QA compilado, separado da produção e armado no servidor sem cliente; ⚠️ nenhuma amostra de ataque de jogador conectado; ⛔ perks/Mastery e mudanças de dano sem homologação.**
+
+## Evidência executada
+
+- [Workflow #39098965924](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39098965924): **SUCCESS** no job `connected_player_observer_no_client_guard`. O runner validou hashes publisher, compilou `epicFightCatalogQaJar` sob NeoForge 21.1.250/Java 21, confirmou que as classes de QA não entram no JAR de produção, iniciou dedicated server com Epic Fight 21.17.3.1 e validou o preflight com **zero jogadores**.
+- O CI exigiu o marcador exato `[BLACK_ARCANA_EPICFIGHT_NATIVE_DAMAGE_QA] type=armed status=AWAIT_NATIVE_PLAYER_ATTACK source_class_available=true connected_players=0 incoming_count=0 post_count=0 no_client_proof=false` uma única vez. O teste rejeita toda linha `type=sample` sem cliente e exige, em paralelo, `TRANSFORMED_HANDLER_PRESENT` de armadura e `AWAIT_CONNECTED_PLAYER` do observer de lifecycle. **Nenhum ataque de jogador, HP ou handler invocado foi observado**.
+- Evidência JSON publicada: artefato GitHub Actions **#12126200760**, incluindo `native_damage_telemetry_armed_without_client=true`, `native_damage_player_samples_observed=0` e `native_damage_health_loss_validated=false`. Não contém JAR do publicador.
+- A assinatura dos eventos foi confirmada **por compilação real** contra a versão NeoForge 21.1.250 no workflow, além do source de NeoForge 1.21.1 consultado anteriormente.
 
 ## Objeto da auditoria
 
@@ -27,8 +34,8 @@ As evidências já aprovadas são [consumidores de propriedades compilados](EXAC
 
 | Cenário | Evidência requerida | Resultado atual |
 |---|---|---|
-| Compilação Java 21 do companion com NeoForge 21.1.250 | `epicFightCatalogQaJar`, JAR de produção sem classes QA | 🟡 workflow de preflight configurado |
-| Servidor dedicado sem cliente | marcador `AWAIT_NATIVE_PLAYER_ATTACK`, contagens 0/0, zero linhas `type=sample` | 🟡 workflow `connected_player_observer_no_client_guard` configurado |
+| Compilação Java 21 do companion com NeoForge 21.1.250 | `epicFightCatalogQaJar`, JAR de produção sem classes QA | ✅ #39098965924 SUCCESS, separação QA/produção comprovada |
+| Servidor dedicado sem cliente | marcador `AWAIT_NATIVE_PLAYER_ATTACK`, contagens 0/0, zero linhas `type=sample` | ✅ #39098965924 PASS, zero amostras de player e observer armado |
 | Jogador conectado, login natural | `ServerPlayerPatch.initialized=true` no observer de lifecycle independente | ⚠️ ainda não observado |
 | Dano nativo do Epic Fight | ao menos um `type=sample phase=post source=EPICFIGHT_CONNECTED_PLAYER` por ataque real autorizado | ⚠️ ainda não observado |
 | Mitigação de armadura | observar samples `Post` em alvos/armaduras distintos, com `bypasses_armor`, reductions e controle vanilla | ⚠️ não mensurado |
