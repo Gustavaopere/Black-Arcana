@@ -10,6 +10,10 @@
 
 ✅ [JAR publisher SHA-1 exato, auditoria Java21 #39087382649](../EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md): `SPIRIT_SPOILS`, `ADD_VALUE` e `withModifierAdded` presentes no método compilado. **`slotValue` como quantidade** segue derivado do source; drop/RNG/payout de Malum não examinados. ⚠️ Player real e recompensa pendentes / ⛔ adapter.
 
+## Evidência binária de dataflow concluída — 18/10/2026
+
+✅ [Auditoria Java21 #39093013655](../EXACT-BINARY-PERK-SCYTHE-DATAFLOW-5.0.4b.md): o argumento `slotValue` é convertido e ligado ao `AttributeModifier` de `SPIRIT_SPOILS`, `ADD_VALUE`, antes de `withModifierAdded`. Não foi auditada a interpretação desse atributo nos drops/kill events do Malum ou sua concessão em player real. ⚠️ payout e equipamento / ⛔ perk/reward adapter.
+
 ## Identidade e propósito
 - ID source: `ars_hex:thread_soul_spoils` (não `spirit_spoils`); classe `SpiritSpoilsPerk`.
 - Descrição técnica (paráfrase): thread que eleva o atributo de Malum associado aos espíritos obtidos em eliminações elegíveis; **não** é fonte autônoma de espíritos.
