@@ -130,7 +130,7 @@ jobs:
                       else:
                           selected.append([pc,opcode,com])
                   print("EPIC_NEW_PROBE="+json.dumps({"key":key,"method":name,
-                    "instruction_count":len(ops),"ops":selected[:150]},separators=(",",":")[:26000])
+                    "instruction_count":len(ops),"ops":selected[:150]},separators=(",",":"))[:26000])
           PY
 
       - name: Upload bounded JSON evidence, never publisher JAR
