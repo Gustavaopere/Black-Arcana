@@ -51,36 +51,38 @@ jobs:
           sha1sum "$FILE"
           wc -c "$FILE"
 
-      - name: Inspect only declared attribute and motion host classfiles
+      - name: Fail-closed mobility host exact-hash and operand regressions
+        run: python3 docs/qa/vanillabackport_11710_mobility_bytecode.py --self-test
+
+      - name: Verify exact publisher ranged attributes and motion consumers
         shell: bash
         run: |
           set -euo pipefail
-          FILE=build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar
-          python3 - <<'PY'
-          from zipfile import ZipFile
-          from pathlib import Path
-          f=Path('build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar')
-          items=[
-              'com/blackgear/vanillabackport/common/registries/ModAttributes.class',
-              'com/blackgear/vanillabackport/core/mixin/common/entities/EntityMixin.class',
-              'com/blackgear/vanillabackport/core/mixin/common/entities/LivingEntityMixin.class',
-          ]
-          with ZipFile(f) as z:
-              contents=set(z.namelist())
-          for x in items:
-              print(f"EXACT_CLASS_PRESENT={x}:{x in contents}")
-              if x not in contents:
-                  raise SystemExit(2)
-          PY
-          for CLASS in \
+          python3 docs/qa/vanillabackport_11710_mobility_bytecode.py \
+            --jar build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar \
+            --output build/catalog-vb-11710/mobility-host-evidence.json
+
+      - name: Bounded diagnostics only when verification fails
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          JAR=build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar
+          if [[ -f "$JAR" ]]; then
+            for CLASS in \
               com.blackgear.vanillabackport.common.registries.ModAttributes \
               com.blackgear.vanillabackport.core.mixin.common.entities.EntityMixin \
               com.blackgear.vanillabackport.core.mixin.common.entities.LivingEntityMixin; do
-            echo "=== BOUNDED_PUBLISHER_JAVAP_CLASS=$CLASS ==="
-            javap -p -c -classpath "$FILE" "$CLASS" | head -n 430
-          done
+              echo "BOUNDED_DIAGNOSTIC=$CLASS"
+              javap -p -c -classpath "$JAR" "$CLASS" | head -n 430
+            done
+          fi
 
-      - name: Never upload proprietary JAR or source
+      - name: Publish JSON method-evidence only, never publisher JAR
         if: always()
-        shell: bash
-        run: echo "Only GitHub Actions stdout carries bounded javap diagnostic. No JAR archived."
+        uses: actions/upload-artifact@v7
+        with:
+          name: vanillabackport-11710-mobility-${{ github.sha }}
+          path: build/catalog-vb-11710/mobility-host-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
