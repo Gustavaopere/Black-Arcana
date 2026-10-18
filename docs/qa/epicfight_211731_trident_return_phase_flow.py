@@ -66,7 +66,7 @@ def check_methods(dis):
         ("invokeinterface", "java/util/Map.entrySet:"),
         ("invokevirtual", "AttackAnimation$Phase.addProperties:")
     ], "wrathful group zero")
-    second = ordered(wrath, [
+    second = ordered([row for row in wrath if row[0] > first[-1]], [
         ("getfield", "Field properties:"),
         ("iconst_1", ""), ("invokeinterface", "java/util/List.get:"),
         ("invokeinterface", "java/util/Map.entrySet:"),
