@@ -1,5 +1,11 @@
 # Backported Spellbooks 0.1.2 — matriz source-pinned de parâmetros, geometria e causalidade
 
+## Complemento source-pinned — Slime Aspect, três modificadores de atributo (18/10/2026)
+
+A revisão de [`ModMobEffects.SLIME_ASPECT`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/init/ModMobEffects.java#L31-L34) liga as constantes de `SlimeAspectMobEffect` a **três modificadores de atributo reais no source**: `BOUNCINESS` 0.5 `ADD_VALUE`, `JUMP_STRENGTH` 0.15 `ADD_MULTIPLIED_TOTAL`, `AIR_DRAG_MODIFIER` -0.10 `ADD_MULTIPLIED_TOTAL`. O cast é self-only, duração `int(getSpellPower*20)` ticks, amplificador `spellLevel-1`, sem projétil/área/dano diretos nesse método. A tooltip usa helpers cujos nomes sugerem damage/speed/spell power, porém representam bounce/jump/air drag; **não** atribuir bônus ofensivos que não constam dos modifiers. [Dossiê](SOURCE-CAUSAL-SLIME-ASPECT-0.1.2.md) e [ficha individual](spells/slime-aspect.md) guardam anchors, operações, dependência de VanillaBackport e riscos de confundir com Slime Boots.
+
+**Classe de evidência:** `SOURCE_PINNED_RELEASE_DAY` para a mecânica; o registro da magia é `COUNTED_EXACT` no JAR, mas os **três modificadores ainda não foram verificados no bytecode físico**. Cobertura de métodos compilados continua **5/6**, seis identidades/fichas continuam **6/6**, **+0** magias/adapters. QA de movimentação e integração seguem ⚠️/⛔; o progresso global fica **—%** porque seu denominador não foi fechado.
+
 **Nova prova binária com escopo delimitado (18/10/2026):** ✅ [Sulfur Bomb e Pale Thorn no JAR 0.1.2 #39133252975](EXACT-BINARY-BOMB-THORN-0.1.2.md) — SHA físico/publicador confirmado, 10/10 autotestes, `PASS_BACKPORTED_012_BOMB_THORN_BOUNDED_BYTECODE`, JSON **12138732504**. Agora o catálogo soma **5/6 spells com métodos individuais verificados em classfile**, e não 5/6 magias novas. Os valores do quadro para Sulfur Bomb e Pale Thorn possuem **confirmação apenas dos operandos, callsites e ordem cobertos pelo dossiê**; os demais dados source-pinned e o runtime Iron's continuam ⚠️. Slime Aspect ainda requer prova dos consumidores de buff.
 
 
