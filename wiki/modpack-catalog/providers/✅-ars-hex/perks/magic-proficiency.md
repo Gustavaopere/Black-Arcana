@@ -10,6 +10,10 @@
 
 ✅ [JAR publisher SHA-1 exato, auditoria Java21 #39087382649](../EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md): método `applyAttributeModifiers` referência `MAGIC_PROFICIENCY`, `ADD_MULTIPLIED_BASE`, `withModifierAdded`; **0,1 × slotValue** permanece fórmula da fonte, sem fluxo de operandos ou consumidores de dano comprovados. ⚠️ Player equipado e efeitos finais não testados / ⛔ adapter.
 
+## Evidência binária de dataflow concluída — 18/10/2026
+
+✅ [Auditoria Java21 #39093013655](../EXACT-BINARY-PERK-SCYTHE-DATAFLOW-5.0.4b.md): `MagicProficencyPerk.applyAttributeModifiers` envia **`0.1 * slotValue`** ao `AttributeModifier` do atributo `MAGIC_PROFICIENCY`, operação `ADD_MULTIPLIED_BASE`, e à chamada `withModifierAdded`. Prova delimitada ao bytecode publisher; efeito percentual total, consumidores de dano Lodestone, player real e progressão continuam **não verificados**. ⚠️ runtime / ⛔ adapter.
+
 ## Identidade e propósito
 - ID source: `ars_hex:thread_magic_proficiency`; classe compilável no source `MagicProficencyPerk` (**grafia efetiva**, sem corrigir artificialmente).
 - Descrição técnica (paráfrase): thread que aumenta o atributo de proficiência mágica do Lodestone; quais tipos de ataque são afetados e em que magnitude final depende do provider.
