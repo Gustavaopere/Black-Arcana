@@ -1,5 +1,10 @@
 # Ars Hex 5.0.4b
 
+## Fecho delimitado de bytecode das três perks e desconto — 18/10/2026
+
+✅ [Java21 #39093013655](EXACT-BINARY-PERK-SCYTHE-DATAFLOW-5.0.4b.md) **SUCCESS** com SHA publisher verificado, **13+12+12+11 = 48 autotestes** sintéticos aprovados e métodos reais inspecionados: `PASS_BOUNDED_PERK_DATAFLOW` associou as operações e fórmulas aos três atributos; `PASS_BOUNDED_SCYTHE_DISCOUNT_FLOW` confirmou seleção de partes Necromancy, laço, acumulador de 20% e arredondamento de `getManaDiscount`. [Dossiê de prova técnica](EXACT-BINARY-PERK-SCYTHE-DATAFLOW-5.0.4b.md), artifact JSON `12122559466`. **Isto não é teste de `AttributeInstance` de player, mana cobrada nem de boomerang em runtime**. 1/1 glyph próprio e 4/4 superfícies técnicas auxiliares documentadas; **+0 raízes, +0 adapters**. ⚠️ QA/interop; ⛔ perks e Mastery.
+
+
 ✅ [Nova prova Java21 de operandos #39089774180](EXACT-PUBLISHER-NUMERIC-OPERANDS-5.0.4b.md): o JAR publisher SHA-1 `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4` passou **13/13 + 12/12 autotestes**, `PASS_BOUNDED_BYTECODE_REFERENCES` e `PASS_BOUNDED_NUMERIC_OPERANDS`. O classfile contém `iconst_2`, doubles `0.5`/`0.1`/`0.2`, opcodes de multiplicação e leitura de `slotValue` nos métodos aplicáveis. **Isto confirma presença de constantes, não o def-use/CFG integral, valor final de atributo, pagamento de mana, dano nem runtime.** Artefato JSON #12121819084. Nenhuma nova magia/adapter.
 
 
