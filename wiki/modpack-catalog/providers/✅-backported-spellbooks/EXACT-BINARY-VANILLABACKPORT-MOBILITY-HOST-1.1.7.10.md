@@ -20,7 +20,7 @@ A classe exata `com.blackgear.vanillabackport.common.registries.ModAttributes` r
 | `minecraft:air_drag_modifier` | 1.0 | [0.0, 2048.0] | mesmo arquivo |
 | `minecraft:friction_modifier` | 1.0 | [0.0, 2048.0] | mesmo arquivo |
 
-**Ponto de risco:** `SlimeBootsArmorItem` possui `+2.5 ADD_VALUE` em `BOUNCINESS`, enquanto `SlimeAspect` declara `+0.5 ADD_VALUE`. O **teto de registro de 1.0 é compilado no host**, mas esta prova **não executou** `AttributeInstance` e `RangedAttribute.sanitizeValue` nem mediu o valor após aplicar os dois conjuntos. A hipótese de saturação acima de 1.0 depende da semântica de resolução do host e precisa de teste conectado. Não interpretar 2.5 como restituição final.
+**Ponto de risco:** `SlimeBootsArmorItem` possui `+2.5 ADD_VALUE` em `BOUNCINESS`, enquanto `SlimeAspect` declara `+0.5 ADD_VALUE`. O **teto de registro de 1.0 é compilado no host**, mas esta prova **não executou** a resolução final do `AttributeInstance` nem a lógica de limitação do `RangedAttribute` nem mediu o valor após aplicar os dois conjuntos. A hipótese de saturação acima de 1.0 depende da semântica de resolução do host e precisa de teste conectado. Não interpretar 2.5 como restituição final.
 
 ## Consumidores de movimento compilados
 
