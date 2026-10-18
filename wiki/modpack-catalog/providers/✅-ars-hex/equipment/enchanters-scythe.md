@@ -2,6 +2,10 @@
 
 **Tipo de evidência:** `SOURCE_CAUSALITY`, fonte exata de revisão alinhada à release 5.0.4b; **não** há prova de equivalência integral de bytecode com o JAR instalado nem QA de equip/unequip em jogador real. JAR físico `ars_hex-1.21.1-5.0.4b.jar`, SHA-1 documentado `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`. Minecraft 1.21.1, NeoForge; Malum presente na modlist.
 
+## Delimitação adicional do desconto compilado — 17/10/2026
+
+✅ [Prova SHA-exata Java21 #39089774180](../EXACT-PUBLISHER-NUMERIC-OPERANDS-5.0.4b.md): `getManaDiscount` inclui constante double `0.2` e multiplicação. O teste anterior também confirma referências a `NECROMANCY`, `getCastingCost` e `ceil`; **a associação exata def-use, composição final do custo e evento de pagamento/boomerang seguem não provados**. ⚠️ gameplay / ⛔ adapter.
+
 ## Prova binária adicional — 17/10/2026
 
 ✅ [JAR publisher SHA-1 exato, auditoria Java21 #39087382649](../EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md): em `EnchanterScythe`, `hurtEnemy` contém chamadas/referências `SpellContext`, `SpellResolver`, `onCastOnEntity`; scribing referencia `MethodTouch`; o desconto referencia `NECROMANCY`, `getCastingCost` e `ceil`. Em `MalumCompat.workaround`, o bytecode contém `ScytheBoomerangEntity`, `getDirectEntity` e `hurtEnemy`. **Ramo executado, ordem/custo, 0,2 por glyph, multi-hit, Mastery e player real não foram certificados.** ⚠️ Runtime pendente / ⛔ adapter.
