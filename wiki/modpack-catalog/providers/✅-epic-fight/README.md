@@ -1,5 +1,10 @@
 # Epic Fight — 21.17.3.1
 
+## Three supernatural trident actions — exact compiled causal proof (18/10/2026)
+
+✅ [Java21 #39093719405](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39093719405) **SUCCESS** on publisher SHA-1/SHA-256 exact, **9/9** synthetic fail-closed checks and `PASS_BOUNDED_TRIDENT_CAUSAL_REFERENCES`; artifact JSON **12124190669**. [Dossiê causal](EXACT-TRIDENT-CAUSAL-REFERENCES-21.17.3.1.md): 3/3 JSONs exact-current `consumption` **50 / 50 / 40** (unit not presumed); trident selector Riptide → Channeling → Loyalty; Tsunami water/rain two animations; Wrathful two phase property callsites; Everlasting condition on thrown-trident ID and server recall/animation/cancel references. Numeric attack-phase modifiers from source 21.17.3 remain **⚠️ adjacent**, not exact 21.17.3.1 binarily confirmed. No gameplay or hook authorization, +0 spells. Epic Fight 43/43 IDs, 42/42 packaged JSONs, 3 magical roots / 40 nonmagical identities usable for perk research; ⛔ Mastery/adapters without real player provider QA.
+
+
 ## Stage 09 — observer de jogador conectado armado, sem cliente (17/10/2026)
 
 ✅ [QA #39027854991](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39027854991) **SUCCESS**, artifact **12099685054**: compilação Java21 / NeoForge físico **21.1.250** do observer read-only de `PlayerLoggedInEvent`, `PlayerRespawnEvent`, logout e server tick. O Epic Fight exato `21.17.3.1` foi carregado, mas **nenhum jogador conectou-se**; o run comprovou somente `AWAIT_CONNECTED_PLAYER`, `connected_players=0`, `has_proven_join_patch=false`, `equip_invoked=false`, `attribute_mutated=false`. [Protocolo, fonte e limites](EXACT-CONNECTED-PLAYER-LIFECYCLE-OBSERVER-PREFLIGHT-21.17.3.1.md).
