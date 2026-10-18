@@ -211,7 +211,7 @@ class Regression(unittest.TestCase):
             exact_method("class Empty {\n}\n","f","()V")
     def test_exact_method_selects_overload_by_descriptor(self):
         fake="  public void a(int);\n    descriptor: (I)V\n    Code:\n    0: return\n\n  public void a(double);\n    descriptor: (D)V\n    Code:\n    0: return\n}\n"
-        self.assertIn("descriptor: (D)V",exact_method(fake,"a","(D)V"))
+        self.assertIn("    descriptor: (D)V",exact_method(fake,"a","(D)V"))
     def test_jvm_primitive(self):
         self.assertEqual(jvm_type("double",{}),"D")
         self.assertEqual(jvm_type("void",{}),"V")
