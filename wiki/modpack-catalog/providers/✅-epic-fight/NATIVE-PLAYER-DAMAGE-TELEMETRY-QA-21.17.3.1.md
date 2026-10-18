@@ -1,5 +1,8 @@
 # Epic Fight 21.17.3.1 — observabilidade read-only de dano nativo para Stage 09
 
+**Complemento espacial/temporal (18/10/2026):** ✅ [cinemática de retorno verificada no JAR exato #39103337112](EXACT-TRIDENT-RETURN-KINEMATICS-21.17.3.1.md), com offset temporal, aceleração nominal e teto de deslocamento por atualização. Este observador de dano **não** coleta posições/identificadores nem verifica speed real; a validação do movimento requer um ensaio físico **separado** com logs controlados sem PII, além da correlação causal de danos descrita abaixo.
+
+
 **18/10/2026 — ✅ Observador de QA compilado, separado da produção e armado no servidor sem cliente; ⚠️ nenhuma amostra de ataque de jogador conectado; ⛔ perks/Mastery e mudanças de dano sem homologação.**
 
 ## Evidência executada
