@@ -2,6 +2,10 @@
 
 **Tipo de evidência:** `SOURCE_CAUSALITY`, fonte exata de revisão alinhada à release 5.0.4b; **não** há prova de equivalência integral de bytecode com o JAR instalado nem QA de equip/unequip em jogador real. JAR físico `ars_hex-1.21.1-5.0.4b.jar`, SHA-1 documentado `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`. Minecraft 1.21.1, NeoForge; Malum presente na modlist.
 
+## Prova binária adicional — 17/10/2026
+
+✅ [JAR publisher SHA-1 exato, auditoria Java21 #39087382649](../EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md): em `EnchanterScythe`, `hurtEnemy` contém chamadas/referências `SpellContext`, `SpellResolver`, `onCastOnEntity`; scribing referencia `MethodTouch`; o desconto referencia `NECROMANCY`, `getCastingCost` e `ceil`. Em `MalumCompat.workaround`, o bytecode contém `ScytheBoomerangEntity`, `getDirectEntity` e `hurtEnemy`. **Ramo executado, ordem/custo, 0,2 por glyph, multi-hit, Mastery e player real não foram certificados.** ⚠️ Runtime pendente / ⛔ adapter.
+
 ## Identidade
 - Registro de item: `ars_hex:enchanter_scythe`, condicionado a Malum, factory `new EnchanterScythe(Tiers.NETHERITE, -4F, 0F, 3.0F, LodestoneItemProperties().stacksTo(1))`. Não reinterpretar os três floats do constructor de Malum como stats finais sem verificar o parent.
 - Classe: `com.alexthw.ars_hex.malum.EnchanterScythe extends MagicScytheItem implements ICasterTool, IManaDiscountEquipment`. **Equipamento com spell-on-hit, não novo spell ID.**
