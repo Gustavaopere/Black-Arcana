@@ -69,11 +69,24 @@ def verify_manifest_text(mods_toml: bytes, config_json: bytes, names: set[str]):
     if MIXIN_PATH not in names or TOML_PATH not in names:
         raise ValueError("DECLARED_MIXIN_RESOURCES_MISSING")
 
+    if meta.get("modLoader") != "javafml":
+        raise ValueError("NEOFORGE_MODLOADER_DRIFT")
     deps=meta.get("dependencies",{}).get("vanillabackport",[])
-    actual_dep_ids = {v.get("modId") for v in deps if isinstance(v,dict) and v.get("type")=="required"}
-    expected_deps={"neoforge","minecraft","platform"}
-    if not expected_deps.issubset(actual_dep_ids):
+    required_deps=[v for v in deps if isinstance(v,dict) and v.get("type")=="required"]
+    actual_dep_ids={v.get("modId") for v in required_deps}
+    expected_ranges={
+        "neoforge":"[21.1,)",
+        "minecraft":"[1.21.1,)",
+        "platform":"[1.3.3,)",
+    }
+    if not set(expected_ranges).issubset(actual_dep_ids):
         raise ValueError("REQUIRED_NEOFORGE_PROVIDER_DEPS_MISSING: "+repr(actual_dep_ids))
+    for dep, expected_range in expected_ranges.items():
+        matches=[v for v in required_deps if v.get("modId")==dep]
+        if len(matches)!=1 or matches[0].get("versionRange") != expected_range:
+            raise ValueError(f"REQUIRED_DEP_VERSION_RANGE_DRIFT: {dep}")
+        if matches[0].get("side")!="BOTH":
+            raise ValueError(f"REQUIRED_DEP_SIDE_DRIFT: {dep}")
     return {
         "declaration_status":"PACKAGED_NEOFORGE_MIXIN_CONFIG_DECLARED",
         "mod_id":"vanillabackport",
@@ -83,7 +96,7 @@ def verify_manifest_text(mods_toml: bytes, config_json: bytes, names: set[str]):
         "required":True,
         "compatibility_level":"JAVA_21",
         "default_require":1,
-        "required_dependencies":sorted(actual_dep_ids),
+        "required_dependencies":{k:expected_ranges[k] for k in sorted(expected_ranges)},
         "declared_common_mixins":[
             {"class":MIXIN_PACKAGE+"."+rel,
              "target_in_source":target,
@@ -127,9 +140,9 @@ class ManifestRegression(unittest.TestCase):
             'modLoader = "javafml"\n'
             '[[mods]]\nmodId = "vanillabackport"\nversion = "'+version+'"\n'
             '[[mixins]]\nconfig = "'+MIXIN_PATH+'"\n'
-            '[[dependencies.vanillabackport]]\nmodId = "neoforge"\ntype = "required"\n'
-            '[[dependencies.vanillabackport]]\nmodId = "minecraft"\ntype = "required"\n'
-            '[[dependencies.vanillabackport]]\nmodId = "platform"\ntype = "required"\n'
+            '[[dependencies.vanillabackport]]\nmodId = "neoforge"\ntype = "required"\nversionRange = "[21.1,)"\nside = "BOTH"\n'
+            '[[dependencies.vanillabackport]]\nmodId = "minecraft"\ntype = "required"\nversionRange = "[1.21.1,)"\nside = "BOTH"\n'
+            '[[dependencies.vanillabackport]]\nmodId = "platform"\ntype = "required"\nversionRange = "[1.3.3,)"\nside = "BOTH"\n'
         ).encode()
         active=list(SERVER_MIXINS)
         client=[]
@@ -182,6 +195,17 @@ class ManifestRegression(unittest.TestCase):
         t,j,n=self.fixture()
         t=t.replace(b'modId = "platform"',b'modId = "optionalplatform"')
         with self.assertRaisesRegex(ValueError,"REQUIRED_NEOFORGE_PROVIDER_DEPS_MISSING"):
+            verify_manifest_text(t,j,n)
+    def test_platform_minimum_version_range_drift_rejected(self):
+        t,j,n=self.fixture()
+        t=t.replace(b'versionRange = "[1.3.3,)"',b'versionRange = "[1.3.2,)"')
+        with self.assertRaisesRegex(ValueError,"REQUIRED_DEP_VERSION_RANGE_DRIFT"):
+            verify_manifest_text(t,j,n)
+    def test_required_dependency_wrong_side_rejected(self):
+        t,j,n=self.fixture()
+        t=t.replace(b'versionRange = "[21.1,)"\\nside = "BOTH"',
+                    b'versionRange = "[21.1,)"\\nside = "CLIENT"')
+        with self.assertRaisesRegex(ValueError,"REQUIRED_DEP_SIDE_DRIFT"):
             verify_manifest_text(t,j,n)
     def test_wrong_publisher_identity_rejected(self):
         from tempfile import TemporaryDirectory
