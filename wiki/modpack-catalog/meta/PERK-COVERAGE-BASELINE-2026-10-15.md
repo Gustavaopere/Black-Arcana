@@ -1,5 +1,14 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight 21.17.3.1 — vínculo de registro binário das três innates (18/10/2026)
+
+**Barras:** global **—%**, mínimo **1.857 semânticos / 1.855 estritos** e denominador final desconhecido; **Epic Fight core 43/43 (100% IDs catalogados/dispositionados)**, **ações mágicas de tridente 3/3 com prova de ID→lambda→builder (100% da tranche)**. Nenhuma nova magia, adapter ou Stage promovido.
+
+✅ [Java21 #39095049311](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39095049311) **SUCCESS**, JAR publisher 21.17.3.1 SHA-1/SHA-256 exatos, `PASS_BOUNDED_TRIDENT_REGISTRY_BOOTSTRAP_LINKAGE`, 10/10 autotestes novos. `EpicFightSkills.<clinit>` associa literal `wrathful_lighting` ao bootstrap 67 `lambda$static$40`, `tsunami` ao 68 `lambda$static$42`, `everlasting_allegiance` ao 69 `lambda$static$43`; cada um passa por `DeferredRegister.register` e `putstatic`. O gate anterior já havia confirmado os `ValueModifier` e `AttackPhaseProperty` dentro dessas lambdas. [Dossiê detalhado](../providers/✅-epic-fight/EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md), JSON artifact **12124241789**.
+
+**Riscos preservados:** nenhuma prova de gameplay, hit, dano final, armadura efetiva, target/range/AOE, duração/cooldown, custo real, player conectado, `ServerPlayerPatch.initialized=true`, Mastery/perk hook ou compatibilidade no modpack completo. Epic Fight controla combate/movesets, RPG Skill Tree progressão por contratos reais, Black Arcana seu próprio runtime mágico. Stage 06.05 🟡, Stage09 físico PENDING; PR #825 draft, sem merge.
+
+
 ## Epic Fight 21.17.3.1 — prova binária de propriedades AttackPhase (18/10/2026)
 
 **Barras:** GLOBAL **—%** (piso **1.857 objetos semânticos / 1.855 estritos**, denominador aberto); **EPIC FIGHT CORE — 43/43 (100% identidades e classificação)**; **TRIDENT SOBRENATURAL — 3/3 (100% fichas individuais com propriedades builder compiladas)**. Sem novas magias ou adapters.
