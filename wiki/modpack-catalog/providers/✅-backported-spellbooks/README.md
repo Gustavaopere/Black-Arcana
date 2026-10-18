@@ -1,5 +1,12 @@
 # Backported Spellbooks — physical 0.1.2 release / embedded metadata 0.1.0
 
+## Sulfur Bomb e Pale Thorn: parâmetros no JAR exato (18/10/2026)
+
+✅ [Java21 #39133252975](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39133252975) **SUCCESS** — 10/10 autotestes, hash físico/publisher conferido, `PASS_BACKPORTED_012_BOMB_THORN_BOUNDED_BYTECODE` sem desvios, [JSON #12138732504](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39133252975/artifacts/12138732504). [Dossiê de geometria, dano e targeting](EXACT-BINARY-BOMB-THORN-0.1.2.md): Sulfur Bomb tem raio `3+entityPowerMultiplier`, coeficiente de dano da nuvem `0.185`, expansão AABB seguida de distância²/`canHitEntity`/LOS, queda radial de dano, cloud com duração configurada em 200 ticks e contador de três colisões de bloco; Pale Thorn tem alcance `15.0f`, raycast `0.15f`, duração `(int)(spellPower*100)`, fontes de dano Nature/Eldritch e VFX descartada após `tickCount>30`. **Limite:** opcode não é efeito observado, nem demonstra segurança de PvP/claims, dano HP final ou hook externo de alteração.
+
+**Cobertura agora:** 6/6 IDs estáticos ✅, 6/6 fichas de parâmetros source-pinned ✅, **5/6 spells com ao menos um caminho de código delimitado certificado em classfile** (as três anteriores + Sulfur Bomb + Pale Thorn). Slime Aspect aguarda prova de código de efeitos. +0 novas magias, +0 adapters.
+
+
 ## Três consumidores compilados delimitados (18/10/2026)
 
 ✅ [Java21 #39131725388](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39131725388) **SUCCESS**, hash publisher `747847c1f38c73250ebac05ea06b41a381187850` igual ao físico e **8/8 autotestes**, `PASS_BACKPORTED_012_BOUNDED_COMPILED_PERK_CONSUMERS` sem desvios; JSON [artefato 12138535465](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39131725388/artifacts/12138535465). [Dossiê de três métodos físicos](EXACT-BINARY-PERK-CONSUMERS-0.1.2.md): SulfurCloudProjectile faz dois `super.tick` compilados; SulfurReleaseSpell.getWitherAmplifier devolve `spellLevel-2`; ResinSpraySpell.onCast contém o fluxo host-native de sessão `MagicData` com reativação e alternativa de criação/registro de projétil. **Aprovou inspeção de callsites, não gameplay, duração efetiva, amp normalizado ou API de extensão.** 6/6 IDs de spells catalogados, 3/6 com foco neste novo gate, +0 roots/adapters.
