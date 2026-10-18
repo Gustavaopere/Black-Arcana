@@ -8,6 +8,10 @@
 - Semantic type: deliberate supernatural damaging trident recall
 - State: `COUNTED_EXACT`
 
+## Dano do tridente retornando: patch e não fase de animação (18/10/2026)
+
+✅ [Auditoria JAR exato #39102096383](../EXACT-TRIDENT-PHASE-OVERWRITE-RETURN-21.17.3.1.md): `EverlastingAllegiance.registerPropertiesToAnimation` consiste em `aload_0; areturn`, **sem escrita de AttackPhase nesse método**. O `ThrownTridentPatch.tickEnd` compilado cria, separadamente, `EpicFightDamageSources.trident` com `StunType.HOLD`, tag `WEAPON_INNATE`, `setBaseArmorNegation(30.0f)` e `ValueModifier.multiplier(1.4f)`. Em sua região de dano, utiliza input `8.0f`, `EnchantmentHelper.modifyDamage` e `Entity.hurt`; detecta entidades em `AABB.inflate(1,1,1)` — expansão **por eixo**, não raio circular ou alvo único. A configuração builder `ARMOR_NEGATION_MODIFIER.adder(30)` **não é a mesma operação** que `setBaseArmorNegation(30)` no source de retorno. Não inferir dano efetivo, alvo máximo, procs por tick ou ausência de i-frames. ⚠️ cliente real / ⛔ perks e Mastery.
+
 ## Gate posterior — handler instalado, ainda sem hit real (18/10/2026)
 
 ✅ [Preflight NeoForge Java21 #39098101364](../EXACT-ARMOR-MIXIN-LOADED-CLASS-PREFLIGHT-21.17.3.1.md) confirmou o handler de armadura do Epic Fight na classe `LivingEntity` transformada. Não foram executados recall do tridente, hit com `DAMAGE_MODIFIER.multiplier(1.4)` nem mitigação `ARMOR_NEGATION_MODIFIER.adder(30)` em entidade real. ⚠️ mundo/jogador/combat QA não executado; ⛔ perks/Mastery.
