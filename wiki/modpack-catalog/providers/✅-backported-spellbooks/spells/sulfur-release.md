@@ -25,6 +25,10 @@ A descrição de gameplay é uma leitura limitada da fonte oficial [`@07cb65efca
 
 **Authority:** Iron's conserva casting, recurso, configuração e cooldown. Backported Spellbooks conserva efeitos/entidades. RPG Skill Tree apenas progressão por boundary real, Black Arcana apenas runtime próprio. Não executar efeitos/cobranças duplicadas nem conceder Mastery por projectile, tick ou hit isolado.
 
+## Confirmação posterior da aritmética compilada — 18/10/2026
+
+✅ [Java21 #39131725388](../EXACT-BINARY-PERK-CONSUMERS-0.1.2.md) comprovou o corpo exato de `getWitherAmplifier(int,LivingEntity)` como `iload_1; iconst_2; isub; ireturn`, portanto a função compilada é **`spellLevel-2`**. Para argumento de nível 1, **o método devolve -1**. Isso não estabelece o amplificador efetivo após `MobEffectInstance` nem configurações do host, que seguem ⚠️. O workflow validou SHA-1 publisher, 8/8 autotestes, PASS de método e artifact **12138535465**. Não ajustar duração/efeito ou gameplay sem hook público e QA, ⛔.
+
 ## Contratos e pendências
 
 - **Authority:** Iron's para cast, mana, cooldown; addon para efeitos/projéteis; Black Arcana não replica o settlement.
