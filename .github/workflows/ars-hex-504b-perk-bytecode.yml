@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/ars-hex-504b-perk-bytecode.yml'
       - 'docs/qa/ars_hex_504b_perk_bytecode.py'
+      - 'docs/qa/ars_hex_504b_numeric_operands.py'
       - 'wiki/modpack-catalog/providers/✅-ars-hex/**'
   workflow_dispatch:
 
@@ -24,6 +25,8 @@ jobs:
           java-version: '21'
       - name: Run fail-closed synthetic verifier tests
         run: python3 docs/qa/ars_hex_504b_perk_bytecode.py --self-test
+      - name: Twelve deterministic numeric operand boundary tests
+        run: python3 docs/qa/ars_hex_504b_numeric_operands.py --self-test
       - name: Download publication and check immutable publisher hash before javap
         shell: bash
         run: |
@@ -39,11 +42,18 @@ jobs:
           python3 docs/qa/ars_hex_504b_perk_bytecode.py \
             --jar build/ars-hex-504b-audit/publisher.jar \
             --output build/ars-hex-504b-audit/perk-bytecode-report.json
+      - name: Audit bounded compiled numerical operands (not arithmetic data flow)
+        run: |
+          python3 docs/qa/ars_hex_504b_numeric_operands.py \
+            --jar build/ars-hex-504b-audit/publisher.jar \
+            --output build/ars-hex-504b-audit/numeric-operand-report.json
       - name: Upload small JSON evidence only (never third-party JAR)
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: ars-hex-504b-perk-bounded-${{ github.sha }}
-          path: build/ars-hex-504b-audit/perk-bytecode-report.json
+          path: |
+            build/ars-hex-504b-audit/perk-bytecode-report.json
+            build/ars-hex-504b-audit/numeric-operand-report.json
           if-no-files-found: ignore
           retention-days: 14
