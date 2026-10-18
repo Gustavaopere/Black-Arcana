@@ -1,5 +1,8 @@
 # Epic Fight 21.17.3.1 — consumidores compilados de AttackPhase e negação de armadura
 
+**Prova runtime posterior, restrita:** ✅ [servidor dedicado #39098101364](EXACT-ARMOR-MIXIN-LOADED-CLASS-PREFLIGHT-21.17.3.1.md) detectou um handler `epicfight$getDamageAfterArmorAbsorb` com assinatura esperada **na classe `LivingEntity` transformada** (NeoForge 21.1.250, Epic Fight 21.17.3.1). A ressalva de injeção não observada abaixo é histórica ao workflow estático #39096586191: a **presença instalada** agora foi comprovada em servidor, mas **invocação efetiva no método-alvo, dano, amortecimento de armadura e cliente seguem não medidos**.
+
+
 **18/10/2026 · ✅ `PUBLISHER_COMPILED_CONSUMER_METHOD_OPCODE_REFERENCES` delimitado · ⚠️ execução de combate/instalação do mixin não testadas · ⛔ bridges de perks/Mastery não autorizadas.** Este documento estende a cadeia [ID → supplier → builder](EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md), sem somar magias.
 
 ## Artefato, testes e reprodutibilidade
