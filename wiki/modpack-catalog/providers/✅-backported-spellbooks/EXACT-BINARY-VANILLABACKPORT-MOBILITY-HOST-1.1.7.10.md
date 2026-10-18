@@ -14,6 +14,10 @@
 
 ✅ [Java21 #39164766070](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39164766070) passou **12/12** autotestes de manifesto e **10/10** de consumers, publisher hash SHA-256 igual ao já certificado, [JSON #12150455560](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39164766070/artifacts/12150455560). O [dossiê de mixins físicos](EXACT-BINARY-VANILLABACKPORT-MIXIN-DECLARATION-1.1.7.10.md) confirma que `neoforge.mods.toml` referencia `vanillabackport.mixins.json`; `EntityMixin`, `LivingEntityMixin`, `RangedAttributeMixin` constam uma vez na lista comum (não apenas client) e suas classes constam no ZIP. TOML exige NeoForge [21.1,), Minecraft [1.21.1,) e Platform [1.3.3,) para ambos os lados; a modlist tem Platform 1.3.3 (#445). **Aplicação real do Mixin e leitura de atributos em jogador não foram executadas**, assim como o SHA do host instalado. ⚠️ gameplay/integração; ⛔ perk sem hook.
 
+## Anotações e pontos de injeção físicos (18/10/2026)
+
+A [prova Java21 #39169078531](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39169078531) certificou em `javap -p -v` as anotações de classe e sete métodos de injeção [listados no dossiê](EXACT-BINARY-VANILLABACKPORT-MIXIN-INJECTION-SELECTORS-1.1.7.10.md), com **12/12 autotestes de seletores**, além dos 22 testes existentes de consumidor/manifesto. Em especial `LivingEntityMixin.vb$applyAirDrag` seleciona `setDeltaMovement(DDD)V` no método `travel` com `ordinal=3`, e `vb$handleMovementFriction` usa `index=1`. Mixin e injection metadata compilados != transformação efetivamente aplicada ao Minecraft. O código source-pinned `RangedAttributeMixin` lida com knockback resistance e **não** deve ser citado como causa do teto 1.0 de `BOUNCINESS`.
+
 ## Registro compilado dos atributos
 
 A classe exata `com.blackgear.vanillabackport.common.registries.ModAttributes` registra, via `CoreRegistry.holder`, três atributos no namespace **`minecraft`**. Seus suppliers de `RangedAttribute` contêm os seguintes argumentos para `(String, double default, double min, double max)` e chamada `setSyncable(true)`:

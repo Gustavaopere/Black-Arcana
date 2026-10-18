@@ -1,5 +1,9 @@
 # Backported Spellbooks — physical 0.1.2 release / embedded metadata 0.1.0
 
+## Vanilla Backport 1.1.7.10 — anotações e alvos de injeção certificados (18/10/2026)
+
+✅ [Java21 #39169078531](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39169078531), **34/34 autotestes no workflow** (10 movimento, 12 manifesto, 12 seletores), JAR publisher hash exato, `PASS_VANILLABACKPORT_11710_COMPILED_MIXIN_INJECTION_DECLARATIONS`, zero desvios. [Dossiê de sete handlers](EXACT-BINARY-VANILLABACKPORT-MIXIN-INJECTION-SELECTORS-1.1.7.10.md) comprova em classfile `EntityMixin` (3 seletores `move`), `LivingEntityMixin` (3 seletores em `travel`/`createLivingAttributes`; `@ModifyArg index=1`, `@WrapOperation ordinal=3`) e `RangedAttributeMixin` (`@Inject <init> TAIL`, source-pinned para knockback). ✅ Declaração compilada; ⚠️ transformação aplicada, host físico e jogador não verificados; ⛔ perk adapter não autorizado. +0 magias.
+
 ## Gate NeoForge/Mixin do host 1.1.7.10 (18/10/2026)
 
 ✅ [#39164766070](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39164766070) **SUCCESS** com hash SHA-256 publisher fixado, **12/12** testes de manifesto + **10/10** de movimento, zero desvios. [Dossiê de configuração compilada](EXACT-BINARY-VANILLABACKPORT-MIXIN-DECLARATION-1.1.7.10.md): `neoforge.mods.toml` vincula `vanillabackport.mixins.json` com `required=true`, `JAVA_21` e `defaultRequire=1`; lista comum (não client-only) declara `EntityMixin`, `LivingEntityMixin`, `RangedAttributeMixin` e três classes físicas no JAR. Dependências `neoforge[21.1,)`, `minecraft[1.21.1,)`, `platform[1.3.3,)`, todas `side=BOTH`; Platform 1.3.3 figura na modlist #445. **Mixin declarado ≠ runtime aplicado**; loader completo, SHAs locais, atributos resolvidos, gameplay e APIs externas permanecem ⚠️/⛔. +0 magias e +0 adapters.

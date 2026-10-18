@@ -10,6 +10,10 @@
 - **Evidência de fonte complementar (não prova de build source↔JAR):** [`vanillabackport.mixins.json`](https://github.com/ItsBlackGear/VanillaBackport/blob/adb579d205a05bcc7d1f34ce402cea6f1335a760/common/src/main/resources/vanillabackport.mixins.json) e [`META-INF/neoforge.mods.toml`](https://github.com/ItsBlackGear/VanillaBackport/blob/adb579d205a05bcc7d1f34ce402cea6f1335a760/neoforge/src/main/resources/META-INF/neoforge.mods.toml), commit oficial `adb579d205a05bcc7d1f34ce402cea6f1335a760`, marcado como `1.1.7.10`.
 - **Autoridade física:** a modlist identifica filename/versão, **não fornece SHA do JAR local VanillaBackport**. Esta prova testa o publisher *da mesma versão nominal*, ainda não o binário instalado no computador.
 
+## Resultado posterior: alvos de `@Mixin` e handlers compilados (18/10/2026)
+
+✅ [CI #39169078531](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39169078531) **SUCCESS** (12/12 regressões de seletores, [JSON #12151413141](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39169078531/artifacts/12151413141)) prova [sete handlers compilados e seus targets/`@At`/`ordinal`/`index`](EXACT-BINARY-VANILLABACKPORT-MIXIN-INJECTION-SELECTORS-1.1.7.10.md) por `RuntimeVisibleAnnotations` de método, além dos `@Mixin` por `RuntimeInvisibleAnnotations` de classe. Isso amplia a prova de **manifesto declarado** para **selectors compiled**, mas **não** valida aplicação de mixin em jogo, ordem de outros mixins, players, client/dedicated server ou hook de perks.
+
 ## Ligação no JAR de publicação
 
 O verificador leu o conteúdo do ZIP e aprovou os seguintes fatos **no artefato exato**:
