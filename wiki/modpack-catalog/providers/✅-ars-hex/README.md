@@ -1,5 +1,10 @@
 # Ars Hex 5.0.4b
 
+## Matriz nova de engenharia para perks — 17/10/2026
+
+**Duas métricas independentes:** ✅ glyph mágico `1/1` com registry binário; ✅ **3/3 threads/perks e 1/1 item spell-on-hit documentados individualmente** no source exato de revisão 5.0.4b, conforme [matriz técnica para perks](PERK-CAUSAL-ENGINEERING-MATRIX-5.0.4b.md). Estes quatro objetos auxiliares não acrescentam magias. A source pin foi conferida diretamente em `Alexthw46/Ars-Unity@b25528adf8c0135585cd6d654582efa147e0a227`; faltam paridade de classfiles de perks/foice, `AttributeInstance` real e dedup do `LivingDamageEvent.Post`. ⛔ Nenhum adapter de perks/Mastery homologado.
+
+
 Status: `COUNTED_EXACT GLYPH 1/1 (PHYSICAL JAR REGISTRY) / INSTALLED FULL-MODPACK RUNTIME + CONFIG + SURVIVAL QA OPEN`
 
 ## Fechamento binário posterior — 2026-10-12
