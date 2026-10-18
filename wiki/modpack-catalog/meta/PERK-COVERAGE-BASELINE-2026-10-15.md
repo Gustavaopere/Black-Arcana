@@ -1,5 +1,12 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight 21.17.3.1 — tridente, três ações com fonte compilada delimitada (18/10/2026)
+
+**Barras de progresso:** **global —%**, piso conhecido **1.857 semânticos / 1.855 estritos**, universo total aberto; **Epic Fight core 43/43 = 100% identidades classificadas** (3 `COUNTED_EXACT` raízes mágicas já contadas, 40 excluídas somente da métrica mágica), **3/3 ações sobrenaturais com fichas individuais**. **+0 novas identidades e +0 adapters**.
+
+✅ [Workflow Java21 #39093719405](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39093719405) SUCCESS, publisher JAR 21.17.3.1 SHA-1/SHA-256 exatos, 9/9 self-tests adicionais, `PASS_BOUNDED_TRIDENT_CAUSAL_REFERENCES`, JSON artifact **12124190669**. [Dossiê do provider](../providers/✅-epic-fight/EXACT-TRIDENT-CAUSAL-REFERENCES-21.17.3.1.md): JSON `consumption` 50/50/40 verificado, selector por encantamento, condição water/rain, chamada dual de propriedades do Wrathful, condição e recall de Everlasting. **AttackPhase numeric source version 21.17.3 adjacente** permanece ⚠️ sem prova exata de coeficientes/resultado final. ⛔ range/target/AOE/projectile/time/damage type edits e Mastery sem callback server-safe comprovado; ⚠️ `ServerPlayerPatch.initialized=true` não observado com jogador conectado e modpack integral não validado. Stage 06.05 🟡 / Stage 09 físico pendente, PR #825 draft, sem merge.
+
+
 ## Checkpoint — Ars Hex 5.0.4b, proof de dataflow publisher (18/10/2026)
 
 **Barras:** global **—%** (piso **1.857 objetos semânticos identificados / 1.855 estritos**, denominador final aberto); Ars Hex ✅ **1/1 glifo próprio (100% ID/registry)** e ✅ **3/3 perks threads + 1/1 equipamento com fichas e bytecode causal delimitado (100% da tranche técnica, sem gameplay)**. **+0 magias, +0 adapters, +0 Stage promotions**.
