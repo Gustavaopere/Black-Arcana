@@ -78,9 +78,12 @@ def check_methods(dis):
                    if op == "invokevirtual" and "AttackAnimation$Phase.addProperties:" in tail]
     if len(group_calls) != 2:
         raise ValueError("wrathful: expected exactly two Phase.addProperties calls")
-    for i, _ in group_calls:
-        if not any(op == "aload" and re.match(r"5(?:\s|$)", tail) for _,op,tail in wrath[max(0,i-10):i]):
-            raise ValueError("wrathful: phase receiver local index 5 missing")
+    phase_receivers = [pc for pc, op, tail in wrath
+                       if op == "aload" and tail.strip() == "5"]
+    if not (len(phase_receivers) == 2
+            and phase_receivers[0] < group_calls[0][1]
+            < phase_receivers[1] < group_calls[1][1]):
+        raise ValueError(f"wrathful: same-phase local 5 not loaded before each group: {phase_receivers}")
 
     phase = exact_method(dis["phase"], "public void addProperties(java.util.Set<")
     mapped = ordered(phase, [
