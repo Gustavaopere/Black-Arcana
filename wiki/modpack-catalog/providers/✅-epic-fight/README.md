@@ -1,5 +1,10 @@
 # Epic Fight — 21.17.3.1
 
+## Cinemática binária do retorno de Everlasting Allegiance — 18/10/2026
+
+✅ [Java21 #39103337112](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39103337112) **SUCCESS**, JAR publisher exato SHA-1/SHA-256, novo verificador de sequência de movimento **8/8 autotestes**, `PASS_EXACT_TRIDENT_RETURN_KINEMATICS_BOUNDED` e JSON artefato **12127228567**. [Dossiê de movimento do tridente](EXACT-TRIDENT-RETURN-KINEMATICS-21.17.3.1.md): `t=max(tickCount-returnTick-10,0)`; deslocamento solicitado `min(t²*0.0005+abs(t*0.05), min(10, distância aos olhos do proprietário))` na direção normalizada; `setDeltaMovement(0,0,0)` e `setPos`. **O teto de 10 é por execução do movimento, não limite de alcance, e o offset 10 não é cooldown nem duração garantida.** Sem player/anim real, hook de perks, medição de dano/colisão ou adapter autorizado; +0 spells.
+
+
 ## Wrathful: sobreposição por mapa; Everlasting: dano no patch do projétil (18/10/2026)
 
 ✅ [Java21 #39102096383](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39102096383) **SUCCESS** no JAR exato SHA-1/SHA-256 e `PASS_BOUNDED_TRIDENT_PHASE_PRECEDENCE_AND_RETURN_PATH` (9/9 autotestes do gate original; artefato **12127086820**). [Dossiê de precedência e retorno](EXACT-TRIDENT-PHASE-OVERWRITE-RETURN-21.17.3.1.md): `WrathfulLightingSkill.registerPropertiesToAnimation` aplica grupos 0 e 1 **à mesma Phase**, com `Phase.addProperties→Map.put`: o segundo `MAX_STRIKES.setter(3)` sobrescreve o primeiro `setter(1)` nesse caminho de registro. `EverlastingAllegiance.registerPropertiesToAnimation` é um retorno direto, enquanto `ThrownTridentPatch.tickEnd` constrói `EpicFightDamageSource.trident` próprio com `HOLD`, `WEAPON_INNATE`, `baseArmorNegation=30`, `damage multiplier=1.4`, input `8.0f` e varredura de AABB expandida **1 por eixo**. Não extrapolar para 3 alvos/raio esférico/dano final ou player QA. +0 roots, +0 adapters.
