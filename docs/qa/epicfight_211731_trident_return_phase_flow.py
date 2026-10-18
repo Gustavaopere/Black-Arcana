@@ -53,6 +53,10 @@ def nearby_float(ops, method_fragment: str, value: float):
         raise ValueError(f"{method_fragment}: direct float input {value} not proven")
     return {"constant_pc": predecessor[0], "call_pc": pc, "expected_float": value}
 
+def require_direct_this_return(ops, label):
+    if [(op, tail.strip()) for _, op, tail in ops] != [("aload_0", ""), ("areturn", "")]:
+        raise ValueError(f"{label}: not the bounded no-op")
+
 def check_methods(dis):
     if set(dis) != set(CLASSES):
         raise ValueError("incomplete required class set")
@@ -99,8 +103,7 @@ def check_methods(dis):
         raise ValueError("Phase.addProperties: unexpected write behavior")
     everlasting = exact_method(dis["everlasting"],
         "public yesman.epicfight.skill.weaponinnate.WeaponInnateSkill registerPropertiesToAnimation();")
-    if [(op,tail.strip()) for _,op,tail in everlasting] != [("aload_0",""),("areturn","")]:
-        raise ValueError("EverlastingAllegiance: animation registration is not the bounded no-op")
+    require_direct_this_return(everlasting, "EverlastingAllegiance.registerPropertiesToAnimation")
 
     tick = exact_method(dis["trident"], "public void tickEnd();")
     dconst = [(pc,op) for pc,op,_ in tick if op == "dconst_1"]
@@ -205,10 +208,12 @@ class Tests(unittest.TestCase):
     def test_missing_class_set_fail(self):
         with self.assertRaisesRegex(ValueError,"class set"):
             check_methods({})
+    def test_everlasting_noop_positive(self):
+        require_direct_this_return(fixture_ops(("aload_0", ""), ("areturn", "")), "control")
     def test_everlasting_noop_drift_fail(self):
-        # Whitelist excludes even a harmless extra opcode or an outgoing call.
-        a=[("aload_0",""),("nop",""),("areturn","")]
-        self.assertNotEqual(a,[("aload_0",""),("areturn","")])
+        with self.assertRaisesRegex(ValueError, "not the bounded no-op"):
+            require_direct_this_return(
+                fixture_ops(("aload_0", ""), ("nop", ""), ("areturn", "")), "drift")
 
 def main():
     p=argparse.ArgumentParser()
