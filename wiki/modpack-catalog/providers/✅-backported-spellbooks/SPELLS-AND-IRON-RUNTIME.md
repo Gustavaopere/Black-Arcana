@@ -1,5 +1,8 @@
 # Backported Spellbooks — spells and Iron's runtime boundary
 
+**Prova de classfile adicional (18/10/2026):** ✅ [Java21 #39131725388](EXACT-BINARY-PERK-CONSUMERS-0.1.2.md) validou no JAR publisher 0.1.2 três contratos de **código compilado**, sem executar Iron's: dois `super.tick()` em Sulfur Clouds, `getWitherAmplifier=level-2` em Sulfur Release e os callsites de sessão/casting de Resin Spray. Esses achados limitados não transferem autoridade sobre `MagicData`, lifecycle, custo ou cooldown do host.
+
+
 **Complemento source-pinned (18/10/2026):** [Matriz causal e de parâmetros 6/6](PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md) e [cards](spells/README.md) localizam `onCast`, projéteis/`AoeEntity`, status, targeting/LOS, raio, tempo e deduplicação. Valores são do source de 28/05/2026, **não** dos defaults efetivos provados no JAR. Atenção especial: Sulfur Bomb separa dano de impacto e nuvem, Sulfur Clouds cria 3 projéteis por cast, Resin Spray reutiliza `EntityCastData` em sessão contínua; não tratar as consequências como casts independentes.
 
 
