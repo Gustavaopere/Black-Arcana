@@ -1,5 +1,9 @@
 # Backported Spellbooks — physical 0.1.2 release / embedded metadata 0.1.0
 
+## Host 1.1.7.10 — bounciness limitada a 1.0 (18/10/2026)
+
+✅ [Java21 #39156441117](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39156441117) verificou publisher `VanillaBackport-neoforge-1.21.1-1.1.7.10.jar` SHA-256 `ecd807ac358e243ede17819455788c7b7a0ce5e0af4aecee82c1c62c586d818d` (54.902.084 bytes), 10/10 autotestes e zero desvios. O [dossiê cross-host](EXACT-BINARY-VANILLABACKPORT-MOBILITY-HOST-1.1.7.10.md) confirma os três `RangedAttribute`: `minecraft:bounciness` default 0, teto **1.0**; `air_drag_modifier`/`friction_modifier` default 1, teto 2048; mixins compilados de colisão, drag e atrito, cuja fórmula é `clamp(1−(1−rawFriction)*modifier,0,1)`. **Teto registral ≠ prova de valor final em player**; +2.5 das Slime Boots e +0.5 da magia não podem ser tratados como fatores físicos finais sem execução do host. SHA da instalação real desconhecido. +0 magias/perks/adapters, integração ⚠️/⛔.
+
 ## Slime Boots — modificadores de equipamento e cancelamento de queda (18/10/2026)
 
 ✅ [Java21 #39153448024](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39153448024) **SUCCESS**, 11/11 testes, SHA-1 publisher igual ao instalado, [JSON #12145728990](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39153448024/artifacts/12145728990). [Dossiê dedicado](EXACT-BINARY-SLIME-BOOTS-FALL-0.1.2.md): atributos declarados `JUMP_STRENGTH +0.1`, `FRICTION_MODIFIER +0.3`, `BOUNCINESS +2.5`, `AIR_DRAG_MODIFIER -0.5` com operações compiladas; handler seleciona Player com `SLIME_BOOTS` em `FEET` antes de `setCanceled(true)`. Nenhuma referência direta ao status da magia ou ao cooldown nesse método. Tooltip com fórmula de cooldown não demonstra período de recarga no evento. **Equipamento != 7ª magia**, nenhuma nova raiz. Gameplay/evento realmente invocado e stacking com `Slime Aspect` continuam ⚠️, mutação via perk ⛔.

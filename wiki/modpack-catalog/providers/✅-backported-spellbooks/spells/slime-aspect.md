@@ -37,6 +37,10 @@ A inspeção adicional de [`ModMobEffects.SLIME_ASPECT` (L31–34)](https://gith
 
 ✅ O JAR 0.1.2 também teve [auditoria binária separada de Slime Boots e `ServerEvents.onFallEvent`](../EXACT-BINARY-SLIME-BOOTS-FALL-0.1.2.md) em [Java21 #39153448024](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39153448024) (11/11 testes, zero desvios). As botas usam quatro modifiers próprios — Jump `0.1 ADD_MULTIPLIED_BASE`, Friction `0.3 ADD_MULTIPLIED_BASE`, Bounciness `2.5 ADD_VALUE` e Air Drag `-0.5 ADD_MULTIPLIED_BASE`. O handler de queda consulta **slot FEET e item Slime Boots**, não `SLIME_ASPECT` nesse método. `addEffect` da magia e `setCanceled` da queda são caminhos causais distintos. O gate não validou física real, stacking nem hook para alteração via perk. +0 magias/adapters.
 
+## Limites do host de movimento — Vanilla Backport 1.1.7.10
+
+✅ [Prova compilada Java21 #39156441117](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39156441117), [dossiê físico de atributos](../EXACT-BINARY-VANILLABACKPORT-MOBILITY-HOST-1.1.7.10.md): `BOUNCINESS` registra default 0 e range **0–1**; `AIR_DRAG_MODIFIER`/`FRICTION_MODIFIER` registram default 1, range 0–2048. Os mixins compilados consultam bounciness e drag e calculam atrito com clamp `[0,1]`. A magia adiciona `+0.5 ADD_VALUE` bounciness, `+0.15 ADD_MULTIPLIED_TOTAL` jump e `−0.10 ADD_MULTIPLIED_TOTAL` air drag; botas adicionam modifiers **diferentes**. O valor final de rebote/air drag, efeitos por amplificador, integração/atributos do jogador, instalação física do JAR host e hook de perk ainda são ⚠️/⛔. Não somar os modifiers e declarar resultado sem QA.
+
 ## Contratos e pendências
 
 - **Authority:** Iron's para cast, mana, cooldown; addon para efeitos/projéteis; Black Arcana não replica o settlement.
