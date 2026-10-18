@@ -1,5 +1,10 @@
 # Epic Fight — 21.17.3.1
 
+## Nova instrumentação de dano provider-native para Stage 09 — 18/10/2026
+
+✅ [QA servidor sem cliente #39098965924](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39098965924) **SUCCESS**, Java21/NeoForge 21.1.250/Epic Fight 21.17.3.1 publisher SHA-1/SHA-256; observer separado da produção compilado, servidor iniciado e `AWAIT_NATIVE_PLAYER_ATTACK` armado sem falsa amostra de jogador. JSON artefato **12126200760**. [Contrato e matriz de aceitação](NATIVE-PLAYER-DAMAGE-TELEMETRY-QA-21.17.3.1.md): `LivingIncomingDamageEvent` e `LivingDamageEvent.Post` são observados passivamente **somente** com fonte `EpicFightDamageSource` e atacante `ServerPlayer` conectado; coletam dano original/efetivo e reductions ARMOR/ABSORPTION, sem IDs, no máximo 12 samples/fase. **Não há correlação causal automática entre os eventos, ataque real observado nem chamada de handler comprovada**. ⚠️ Stage09 client/combate; ⛔ mudanças externas e Mastery. +0 magias/adapters.
+
+
 ## Mixin de armadura observado na classe transformada — 18/10/2026
 
 ✅ [QA servidor dedicado #39098101364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39098101364) **SUCCESS**, Java21/NeoForge 21.1.250 e publisher Epic Fight 21.17.3.1 SHA-1/SHA-256 fixados. [Dossiê de preflight runtime](EXACT-ARMOR-MIXIN-LOADED-CLASS-PREFLIGHT-21.17.3.1.md): observer QA opt-in identificou **exatamente um** handler de `epicfight$getDamageAfterArmorAbsorb` com assinatura `DamageSource, float, CallbackInfoReturnable` no `LivingEntity.class` carregado pelo servidor (`TRANSFORMED_HANDLER_PRESENT`). Compilação e isolamento QA/produção confirmados, JSON artefato **12125471763**. A primeira execução #39097863144 falhou por regex de verificação duplicadamente escapado; os controles positivo e negativo passaram após correção. **Ainda nenhum handler invocado por dano real, jogador conectado, dano final ou perk/Mastery validada**; ⚠️ Stage 09 e ⛔ adapters permanecem.
