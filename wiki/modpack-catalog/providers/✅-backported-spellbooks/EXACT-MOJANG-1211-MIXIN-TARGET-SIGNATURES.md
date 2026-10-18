@@ -25,6 +25,10 @@ Estas sete assinaturas constam **tanto nos mapeamentos de cliente quanto nos de 
 
 A classe `net.minecraft.world.entity.ai.attributes.RangedAttribute` também aparece nos dois mapping sets. Seu construtor `<init>(String,double,double,double)V` **não é registrado como método comum no mapping ProGuard**, portanto este gate atesta apenas a **classe**, não o descritor do construtor. O bytecode do mixin [já certificou](EXACT-BINARY-VANILLABACKPORT-MIXIN-INJECTION-SELECTORS-1.1.7.10.md) que ele *declara* `@Inject(<init>,TAIL)`, mas a existência do construtor no alvo vanilla/NeoForge exige análise separada de classfile.
 
+## Avanço posterior — contagem efetiva de invocações no cliente vanilla 1.21.1
+
+O [gate Java21 #39170808679](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39170808679) obteve o JAR **cliente Mojang** verificado por SHA-1/tamanho oficiais, resolveu o obfuscation mapping e inspecionou os métodos com `javap -p -c -s`. O [dossiê de callsites](EXACT-MOJANG-1211-VANILLA-CLIENT-CALLSITES.md) certifica **4 chamadas de `setDeltaMovement(DDD)` em `LivingEntity.travel`**, com a quarta em **PC 1240** e `ordinal=3` possível no **cliente vanilla**. Os outros três edges nominalmente verificados têm **uma chamada cada**, e `RangedAttribute.<init>(String,double,double,double)` está presente no classfile. **Isso não demonstra que NeoForge 21.1.250 e demais mixins preservem os callsites nem que a injeção tenha sido aplicada.** É prova mais forte que mapeamento simples, ainda abaixo de aceitação física.
+
 ## Fronteiras e riscos
 
 - **O que passou:** nomes, parâmetros e retornos definidos pela distribuição oficial do Minecraft **1.21.1** em **dois conjuntos** de mapeamento (cliente e servidor), além da classe `RangedAttribute`. O script falha se houver classe, overload, tipo de argumento ou retorno esperado ausente; baixa por hosts oficiais da Mojang e verifica hashes publicados.

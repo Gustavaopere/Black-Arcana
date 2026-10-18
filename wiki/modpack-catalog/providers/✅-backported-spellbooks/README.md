@@ -1,5 +1,9 @@
 # Backported Spellbooks — physical 0.1.2 release / embedded metadata 0.1.0
 
+## Minecraft 1.21.1 vanilla — `ordinal=3` presente em `travel` (18/10/2026)
+
+✅ [#39170808679](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39170808679) **SUCCESS**, **16/16 autotestes**, SHA-1 e tamanho oficiais conferidos: [dossiê binário do cliente 1.21.1](EXACT-MOJANG-1211-VANILLA-CLIENT-CALLSITES.md) confirmou `Entity.move` com 1 `collide` + 1 `tryCheckInsideBlocks`, `LivingEntity.travel` com 1 `handleRelativeFrictionAndCalculateMovement` e **4 `setDeltaMovement(DDD)`**, quarto callsite `PC 1240`. `RangedAttribute.<init>(String,double,double,double)` certificado no classfile. A quarta ocorrência satisfaz o índice **zero-based `ordinal=3` no cliente vanilla**, sem provar que seja mantida pelos patches NeoForge 21.1.250 e mixins concorrentes. ⚠️ Runtime/distribuição transformada/servidor continuam pendentes. +0 magias e adapters; Backported 6/6 preservado.
+
 ## Minecraft 1.21.1 — sete assinaturas de métodos-alvo reconhecidas (18/10/2026)
 
 ✅ [GitHub Actions #39170006472](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39170006472) **SUCCESS**, 8/8 testes, zero desvios: os mapeamentos Mojang oficiais cliente e servidor de Minecraft **1.21.1** confirmaram [sete métodos-alvo nomeados](EXACT-MOJANG-1211-MIXIN-TARGET-SIGNATURES.md) de `Entity`/`LivingEntity` com parâmetros/retornos exatos; a classe `RangedAttribute` também está presente. O quarto `setDeltaMovement(DDD)V` de `LivingEntity.travel` **não foi contado nem verificado**: `ordinal=3` é só anotação compilada no JAR provider e os mappings não contêm callsites. ⚠️ NeoForge patch, mixin aplicado, cópia física e player ainda não auditados; ⛔ não criar hooks. +0 magias/adapters, Backported 6/6 preservado.

@@ -13,6 +13,10 @@
 
 ✅ [Workflow #39170006472](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39170006472) verificou os hashes publicados pela Mojang e encontrou, em ambos os mapping sets, **sete métodos-alvo vanilla com nomes, parâmetros e retornos**; [dossiê de assinaturas](EXACT-MOJANG-1211-MIXIN-TARGET-SIGNATURES.md) e [JSON #12152385800](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39170006472/artifacts/12152385800). `Entity.setDeltaMovement(DDD)V` existe no owner `Entity`, mas **não foi certificado** que `LivingEntity.travel` contém quatro chamadas correspondentes ou a quarta é o alvo correto. `RangedAttribute` existe no mapeamento, porém seu construtor não é coberto como método comum. Ainda exige bytecode alvo NeoForge/Mixin aplicado e QA físico para qualquer conclusão de compatibilidade. Não promove Stage nem altera contagem.
 
+## Avanço posterior — contagem efetiva de invocações no cliente vanilla 1.21.1
+
+O [gate Java21 #39170808679](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39170808679) obteve o JAR **cliente Mojang** verificado por SHA-1/tamanho oficiais, resolveu o obfuscation mapping e inspecionou os métodos com `javap -p -c -s`. O [dossiê de callsites](EXACT-MOJANG-1211-VANILLA-CLIENT-CALLSITES.md) certifica **4 chamadas de `setDeltaMovement(DDD)` em `LivingEntity.travel`**, com a quarta em **PC 1240** e `ordinal=3` possível no **cliente vanilla**. Os outros três edges nominalmente verificados têm **uma chamada cada**, e `RangedAttribute.<init>(String,double,double,double)` está presente no classfile. **Isso não demonstra que NeoForge 21.1.250 e demais mixins preservem os callsites nem que a injeção tenha sido aplicada.** É prova mais forte que mapeamento simples, ainda abaixo de aceitação física.
+
 ## Sete seletores `@Mixin` validados no classfile
 
 | Classe mixin e destino de `@Mixin` | Handler compilado | Tipo de injeção | Método alvo no metadata | `@At` / selector |
