@@ -1,5 +1,14 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Backported Spellbooks 0.1.2 — fichas técnicas 6/6 por source-pin de release (18/10/2026)
+
+**Barras:** catálogo global **—%** com piso **1.857 semânticos / 1.855 estritos**, denominador total em aberto; **Backported Spellbooks — 6/6 = 100% das identidades com fichas de parâmetros source-pinned** (registro exato 6/6 já provado), sem atestar 100% de QA/runtime. +0 novas magias/adapters.
+
+✅ Revisão dos seis arquivos Java `AspectOfTheSlimeSpell`, `SulfurBombSPell`, `SulfurCloudSpell`, `SulfurReleaseSpell`, `PaleThornSpell`, `ResinSpraySpell` no source público fixo `RedReaper28/BackportedSpellbooks-1.21.1@07cb65efca0c264762a21c2d6bce0f83e3947226`; revisão também dos efeitos/entidades diretamente consumidos (SulfurBombProjectile, SulfurGasCloud, SulfurCloudProjectile, ResinSprayProjectile, SlimeAspectMobEffect e PaleThornVisualEntity). [Matriz de 6 spells](../providers/✅-backported-spellbooks/PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md) e fichas individuais acrescentam defaults mana/cooldown/cast time, dano, geometria, scaling, status, entidades responsáveis, lifecycle, riscos de double-processing e entradas da API não verificadas. `COUNTED_EXACT` **somente** para seis IDs estáticas do JAR release 0.1.2 pelo workflow Java21 [#38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989).
+
+⚠️ **Limite:** o source de mesma data não é byte-identical comprovado ao JAR, nem o ambiente de build Iron's 3.15.4 garante assinatura no host instalado Iron's 3.16.3. Custo/cooldown efetivo, valores numéricos no JAR, gameplay/Survival, friendly fire, claims, AOE, continuação da magia contínua, player conectado e causal IDs continuam PENDING; ⛔ perks/bridges até host event/hook comprovado. Stage 06.05 🟡, Stage 09 físico PENDING; PR #825 draft, sem merge.
+
+
 ## Epic Fight 21.17.3.1 — movimento de retorno certificado no bytecode (18/10/2026)
 
 **Barras:** Global **—%**, piso **1.857 semânticos / 1.855 estritos**, denominador total aberto; Epic Fight core **43/43 identidades (100%)**, 3/3 raízes sobrenaturais catalogadas e 40 skills marciais relevantes para perks. **+0** magias/adapters/Stages.
