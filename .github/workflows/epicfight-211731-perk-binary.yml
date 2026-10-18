@@ -12,6 +12,7 @@ on:
       - 'docs/qa/epicfight_211731_trident_registry_linkage.py'
       - 'docs/qa/epicfight_211731_attack_phase_consumers.py'
       - 'docs/qa/epicfight_211731_trident_return_phase_flow.py'
+      - 'docs/qa/epicfight_211731_trident_return_kinematics.py'
       - 'wiki/modpack-catalog/providers/✅-epic-fight/actions/**'
       - 'wiki/modpack-catalog/providers/✅-epic-fight/skills/**'
   workflow_dispatch:
@@ -101,23 +102,12 @@ jobs:
             --jar build/catalog-epicfight-211731/epicfight-exact.jar \
             --output build/catalog-epicfight-211731/trident-return-phase-flow-evidence.json
 
-      - name: Inspect exact compiled returning-trident kinematics operands
+      - name: Gate exact returning-trident kinematics operands and temporal limits
         run: |
-          python3 - <<'PY'
-          import json,sys
-          from pathlib import Path
-          sys.path.insert(0,"docs/qa")
-          from epicfight_211731_trident_causal import javap,blocks,instructions
-          jar=Path("build/catalog-epicfight-211731/epicfight-exact.jar")
-          code=javap(jar,"yesman.epicfight.world.capabilities.projectile.ThrownTridentPatch")
-          match=[(name,ins) for name,ins in blocks(code) if name=="public void tickEnd();"]
-          if len(match)!=1:
-              raise SystemExit("expected exactly one tickEnd() method")
-          ops=instructions(match[0][1])
-          for label,left,right in (("movement",335,515),("damage",63,270)):
-              selected=[[pc,op,tail.strip()] for pc,op,tail in ops if left<=pc<=right]
-              print("TRIDENT_EXACT_OPS="+json.dumps({"section":label,"instructions":selected},separators=(",",":")))
-          PY
+          python3 docs/qa/epicfight_211731_trident_return_kinematics.py --self-test
+          python3 docs/qa/epicfight_211731_trident_return_kinematics.py \
+            --jar build/catalog-epicfight-211731/epicfight-exact.jar \
+            --output build/catalog-epicfight-211731/trident-return-kinematics-evidence.json
 
       - name: Upload bounded JSON evidence, never publisher JAR
         if: always()
@@ -132,5 +122,6 @@ jobs:
             build/catalog-epicfight-211731/trident-registry-bootstrap-evidence.json
             build/catalog-epicfight-211731/attack-phase-consumer-evidence.json
             build/catalog-epicfight-211731/trident-return-phase-flow-evidence.json
+            build/catalog-epicfight-211731/trident-return-kinematics-evidence.json
           if-no-files-found: ignore
           retention-days: 14
