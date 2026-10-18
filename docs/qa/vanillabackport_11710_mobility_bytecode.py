@@ -75,7 +75,10 @@ def attrs(dis):
                       ("air",init)]:
         if not any(op=="ldc2_w" and "double 2048.0d" in tail for _,op,tail in ops):
             raise ValueError("ATTRIBUTE_MAX_2048_DRIFT:"+label)
-    static=unique(dis,"<clinit>")
+    candidates=[ops for h,ops in blocks(dis) if h=="static {};"]
+    if len(candidates)!=1:
+        raise ValueError(f"ATTRIBUTE_CLINIT_MISSING_OR_AMBIGUOUS:{len(candidates)}")
+    static=candidates[0]
     ordered(static,[
         ("ldc","String minecraft"),
         ("ldc","String air_drag_modifier"),
