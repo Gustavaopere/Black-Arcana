@@ -93,6 +93,46 @@ jobs:
             --jar build/catalog-epicfight-211731/epicfight-exact.jar \
             --output build/catalog-epicfight-211731/attack-phase-consumer-evidence.json
 
+      - name: Inspect phase property precedence and trident recall source in exact classfiles
+        run: |
+          python3 - <<'PY'
+          import json,sys
+          from pathlib import Path
+          sys.path.insert(0,"docs/qa")
+          from epicfight_211731_trident_causal import javap,blocks,instructions
+          jar=Path("build/catalog-epicfight-211731/epicfight-exact.jar")
+          specs=[
+            ("wrathful","yesman.epicfight.skill.weaponinnate.WrathfulLightingSkill",
+             ["registerPropertiesToAnimation"]),
+            ("phase","yesman.epicfight.api.animation.types.AttackAnimation$Phase",["addProperties"]),
+            ("everlasting","yesman.epicfight.skill.weaponinnate.EverlastingAllegiance",
+             ["registerPropertiesToAnimation"]),
+            ("trident","yesman.epicfight.world.capabilities.projectile.ThrownTridentPatch",
+             ["tickEnd","recalledBySkill"])
+          ]
+          for key,klass,wanted in specs:
+              body=javap(jar,klass)
+              matched=[(n,c) for n,c in blocks(body) if any(t+"(" in n for t in wanted)]
+              if not matched or len(matched)>4:
+                  raise SystemExit("unexpected methods in "+key+": "+str(len(matched)))
+              for name,code in matched:
+                  ops=instructions(code)
+                  if not ops or len(ops)>850: raise SystemExit("unexpected size "+key)
+                  selected=[]
+                  for i,(pc,opcode,tail) in enumerate(ops):
+                      com=tail.split("//",1)[-1].strip()[:105]
+                      if key=="trident":
+                          if (any(x in com for x in ["getEntities","inflate:","multiplier","setBaseArmorNegation","getPickupItemStackOrigin",
+                              "modifyDamage","hurt:","setPos:","Math.pow:","Math.min:","tickCount","recalledBySkill","dealtDamage",
+                              "float 8.0f","double 1.0d","double 10.0d","double 0.05d","double 0.0005d",
+                              "INNATE","HOLD","getOwner:"]) or opcode.startswith(("fconst","dconst"))):
+                              selected.append([pc,opcode,com])
+                      else:
+                          selected.append([pc,opcode,com])
+                  print("EPIC_NEW_PROBE="+json.dumps({"key":key,"method":name,
+                    "instruction_count":len(ops),"ops":selected[:150]},separators=(",",":")[:26000])
+          PY
+
       - name: Upload bounded JSON evidence, never publisher JAR
         if: always()
         uses: actions/upload-artifact@v7
