@@ -44,6 +44,10 @@ public final class EpicFightCatalogQaMod {
         new EpicFightConnectedPlayerLifecycleQa();
     private static final boolean ARMOR_MIXIN_PREFLIGHT =
         "1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_ARMOR_MIXIN_PREFLIGHT"));
+    private static final boolean NATIVE_DAMAGE_PREFLIGHT =
+        "1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_NATIVE_DAMAGE_PREFLIGHT"));
+    private static final EpicFightNativeDamageTelemetryQa NATIVE_DAMAGE_QA =
+        new EpicFightNativeDamageTelemetryQa();
 
 
     public EpicFightCatalogQaMod() {
@@ -53,6 +57,10 @@ public final class EpicFightCatalogQaMod {
             NeoForge.EVENT_BUS.addListener(CONNECTED_PLAYER_QA::onRespawn);
             NeoForge.EVENT_BUS.addListener(CONNECTED_PLAYER_QA::onLogout);
             NeoForge.EVENT_BUS.addListener(CONNECTED_PLAYER_QA::onTick);
+        }
+        if (NATIVE_DAMAGE_PREFLIGHT) {
+            NeoForge.EVENT_BUS.addListener(NATIVE_DAMAGE_QA::onIncoming);
+            NeoForge.EVENT_BUS.addListener(NATIVE_DAMAGE_QA::onDamagePost);
         }
     }
 
@@ -65,6 +73,9 @@ public final class EpicFightCatalogQaMod {
         }
         if (ARMOR_MIXIN_PREFLIGHT) {
             EpicFightArmorMixinAppliedQa.inspectLoadedTarget();
+        }
+        if (NATIVE_DAMAGE_PREFLIGHT) {
+            NATIVE_DAMAGE_QA.onServerStarted(event.getServer());
         }
 
         String phase = "resolve_registry_class";
