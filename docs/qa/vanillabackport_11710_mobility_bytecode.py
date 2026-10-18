@@ -64,14 +64,17 @@ def attr_lambda(dis,name,description,defaults):
             "verified_syncable":True}
 
 def attrs(dis):
-    init=unique(dis,"lambda$static$0")
-    bounce=attr_lambda(dis,"lambda$static$1","attribute.name.bounciness",
+    # The generic javap method parser deliberately does not recognize "static {};".
+    # Split that initializer out or it bleeds into the final supplier lambda.
+    methods=dis.split("  static {};")[0]
+    init=unique(methods,"lambda$static$0")
+    bounce=attr_lambda(methods,"lambda$static$1","attribute.name.bounciness",
                        ["dconst_0","dconst_0","dconst_1"])
-    friction=attr_lambda(dis,"lambda$static$2","attribute.name.friction_modifier",
+    friction=attr_lambda(methods,"lambda$static$2","attribute.name.friction_modifier",
                          ["dconst_1","dconst_0","ldc2_w"])
-    air=attr_lambda(dis,"lambda$static$0","attribute.name.air_drag_modifier",
+    air=attr_lambda(methods,"lambda$static$0","attribute.name.air_drag_modifier",
                     ["dconst_1","dconst_0","ldc2_w"])
-    for label,ops in [("friction",unique(dis,"lambda$static$2")),
+    for label,ops in [("friction",unique(methods,"lambda$static$2")),
                       ("air",init)]:
         if not any(op=="ldc2_w" and "double 2048.0d" in tail for _,op,tail in ops):
             raise ValueError("ATTRIBUTE_MAX_2048_DRIFT:"+label)
