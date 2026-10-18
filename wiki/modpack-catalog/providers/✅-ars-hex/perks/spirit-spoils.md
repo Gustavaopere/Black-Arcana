@@ -2,6 +2,10 @@
 
 **Tipo de evidência:** `SOURCE_CAUSALITY`, fonte exata de revisão alinhada à release 5.0.4b; **não** há prova de equivalência integral de bytecode com o JAR instalado nem QA de equip/unequip em jogador real. JAR físico `ars_hex-1.21.1-5.0.4b.jar`, SHA-1 documentado `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`. Minecraft 1.21.1, NeoForge; Malum presente na modlist.
 
+## Delimitação adicional de operandos compilados — 17/10/2026
+
+✅ [Prova SHA-exata Java21 #39089774180](../EXACT-PUBLISHER-NUMERIC-OPERANDS-5.0.4b.md): método `applyAttributeModifiers` lê o argumento inteiro `slotValue` (índice de variável local 3), além das referências de atributo/operação já comprovadas. Essa constatação não estabelece o valor efetivo de espíritos recebidos no host Malum. ⚠️ QA / ⛔ adapter.
+
 ## Prova binária adicional — 17/10/2026
 
 ✅ [JAR publisher SHA-1 exato, auditoria Java21 #39087382649](../EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md): `SPIRIT_SPOILS`, `ADD_VALUE` e `withModifierAdded` presentes no método compilado. **`slotValue` como quantidade** segue derivado do source; drop/RNG/payout de Malum não examinados. ⚠️ Player real e recompensa pendentes / ⛔ adapter.
