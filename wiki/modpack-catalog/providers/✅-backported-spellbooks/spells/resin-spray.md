@@ -26,6 +26,10 @@ A descrição de gameplay é uma leitura limitada da fonte oficial [`@07cb65efca
 
 **Authority:** Iron's conserva casting, recurso, configuração e cooldown. Backported Spellbooks conserva efeitos/entidades. RPG Skill Tree apenas progressão por boundary real, Black Arcana apenas runtime próprio. Não executar efeitos/cobranças duplicadas nem conceder Mastery por projectile, tick ou hit isolado.
 
+## Confirmação posterior da bifurcação de casting — 18/10/2026
+
+✅ [Java21 #39131725388](../EXACT-BINARY-PERK-CONSUMERS-0.1.2.md) verificou no método compilado `ResinSpraySpell.onCast` os callsites ordenados `MagicData.isCasting`, `getCastingSpellId`, `getAdditionalCastData` e `EntityCastData.getCastingEntity`, guardas de tipo `EntityCastData`/`AbstractConeProjectile`, além de `setDealDamageActive` e do ramo subsequente com `new ResinSprayProjectile`, `Level.addFreshEntity` e `MagicData.setAdditionalCastData`. SHA publisher confirmado, 8/8 autotestes, artefato **12138535465**. Confirma **a presença do fluxo compilado**, não a condição escolhida em cliente real, persistência, emissão de dano por tick ou API segura para perk. Não tratar reativação como novo cast; ⛔ sem boundary real.
+
 ## Contratos e pendências
 
 - **Authority:** Iron's para cast, mana, cooldown; addon para efeitos/projéteis; Black Arcana não replica o settlement.
