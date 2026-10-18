@@ -1,5 +1,7 @@
 # Epic Fight 21.17.3.1 — propriedades de AttackPhase no classfile exato
 
+**Atualização posterior: ✅ [linkagem do registry em bytecode Java21 #39095049311](EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md)**, com `<clinit>` + `BootstrapMethods` ligando os IDs das três skills às lambdas `$40/$42/$43`, `PASS_BOUNDED_TRIDENT_REGISTRY_BOOTSTRAP_LINKAGE`, 10/10 autotestes. A ressalva de linkage não demonstrado abaixo corresponde ao gate original isolado e foi suprida por esta prova nova; sem promover gameplay ou hook.
+
 **Checkpoint:** 18/10/2026. ✅ `EXACT_PUBLISHER_COMPILED_SUPPLIER_PROPERTY_CALLSITES` para os três métodos estáticos selecionados em `EpicFightSkills`. A prova certifica sequências *de construção de propriedades*, não resultados de dano/armor bypass, aplicação de um golpe, seleção efetiva de animations, consumo de recurso, compatibilidade de addons nem API para perks.
 
 ## Autoridade e execução
