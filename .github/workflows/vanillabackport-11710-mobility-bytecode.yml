@@ -6,6 +6,7 @@ on:
       - '.github/workflows/vanillabackport-11710-mobility-bytecode.yml'
       - 'docs/qa/vanillabackport_11710_mobility_bytecode.py'
       - 'docs/qa/vanillabackport_11710_mixin_manifest.py'
+      - 'docs/qa/vanillabackport_11710_mixin_injections.py'
       - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/**'
   workflow_dispatch:
 
@@ -74,29 +75,16 @@ jobs:
             --jar build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar \
             --output build/catalog-vb-11710/mixin-manifest-evidence.json
 
-      - name: Inspect bounded classfile injection metadata shape
+      - name: Fail-closed compiled mixin method injection regressions
+        run: python3 docs/qa/vanillabackport_11710_mixin_injections.py --self-test
+
+      - name: Verify compiled mixin targets points ordinals and argument indices
         shell: bash
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import subprocess
-          jar='build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar'
-          classes=[
-              'com.blackgear.vanillabackport.core.mixin.common.entities.EntityMixin',
-              'com.blackgear.vanillabackport.core.mixin.common.entities.LivingEntityMixin',
-              'com.blackgear.vanillabackport.core.mixin.common.attributes.RangedAttributeMixin'
-          ]
-          for cls in classes:
-              data=subprocess.run(['javap','-p','-v','-classpath',jar,cls],check=True,capture_output=True,text=True).stdout.splitlines()
-              print('INJECTION_JAVAP_CLASS='+cls)
-              blocks=[i for i,line in enumerate(data) if line.strip() in ('RuntimeVisibleAnnotations:','RuntimeInvisibleAnnotations:')]
-              print('ANNOTATION_BLOCKS='+str(len(blocks)))
-              for i in blocks[:18]:
-                  print('ANNOTATION_EXCERPT_START')
-                  for line in data[max(0,i-4):min(len(data),i+24)]:
-                      print(line[:235])
-                  print('ANNOTATION_EXCERPT_END')
-          PY
+          python3 docs/qa/vanillabackport_11710_mixin_injections.py \
+            --jar build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar \
+            --output build/catalog-vb-11710/mixin-injection-evidence.json
 
       - name: Bounded diagnostics only when verification fails
         if: failure()
@@ -122,5 +110,6 @@ jobs:
           path: |
             build/catalog-vb-11710/mobility-host-evidence.json
             build/catalog-vb-11710/mixin-manifest-evidence.json
+            build/catalog-vb-11710/mixin-injection-evidence.json
           if-no-files-found: ignore
           retention-days: 14
