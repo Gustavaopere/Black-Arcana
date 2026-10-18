@@ -8,6 +8,10 @@
 - Semantic type: deliberate supernatural damaging trident recall
 - State: `COUNTED_EXACT`
 
+## Semântica delimitada do dano e armadura (18/10/2026)
+
+✅ [Consumidores binários Java21 #39096586191](../EXACT-ATTACK-PHASE-CONSUMERS-21.17.3.1.md): `DAMAGE_MODIFIER.multiplier(1.4)` compõe o `ResultCalculator`, que avalia o acumulador segundo `((set ou base)+add)×multiply`; `calculateDamageAgainst` pode adicionar `extraDamages` depois. `ARMOR_NEGATION_MODIFIER.adder(30)` altera outro acumulador, utilizado no cálculo de absorção compilado de `MixinLivingEntity`. Portanto 1,4 é **input de fase**, não 1,4× de perda de HP demonstrada; 30 não é garantia de 30% de bypass final. Recall, quantidade de alvos/hits, dano real e `HOLD` aplicado seguem ⚠️; perks externas ⛔.
+
 ## Vínculo do registro comprovado — 18/10/2026
 
 ✅ [JAR publisher Java21 #39095049311](../EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md): `String everlasting_allegiance → InvokeDynamic #69 → DeferredRegister.register → EVERLASTING_ALLEGIANCE`; bootstrap `EpicFightSkills.lambda$static$43` (`EverlastingAllegiance`). Configuração `DAMAGE multiplier(1.4)` agora ligada ao ID exato por instruções compiladas; não significa HP damage medido nem recall executado.
