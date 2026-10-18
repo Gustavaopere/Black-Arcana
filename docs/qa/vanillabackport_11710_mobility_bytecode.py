@@ -56,7 +56,7 @@ def attr_lambda(dis,name,description,defaults):
         raise ValueError(f"ATTRIBUTE_LIMIT_OPCODES_DRIFT:{name} expected={expected} got={got}")
     if not any(description in tail for _,op,tail in ops if op=="ldc"):
         raise ValueError("ATTRIBUTE_NAME_DRIFT:"+name)
-    if count(ops,"RangedAttribute.",1,name)!=[p for p,o,t in ops if o=="invokespecial"]:
+    if count(ops,'RangedAttribute."<init>":',1,name)!=[p for p,o,t in ops if o=="invokespecial"]:
         raise ValueError("ATTRIBUTE_RANGE_CTOR_DRIFT:"+name)
     if count(ops,"RangedAttribute.setSyncable:",1,name)!=[p for p,o,t in ops if o=="invokevirtual"]:
         raise ValueError("ATTRIBUTE_SYNCABLE_DRIFT:"+name)
