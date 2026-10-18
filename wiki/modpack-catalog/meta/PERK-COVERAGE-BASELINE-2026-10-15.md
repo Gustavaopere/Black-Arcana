@@ -1,5 +1,14 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight 21.17.3.1 — preflight runtime de handler de armadura instalado (18/10/2026)
+
+**Barras:** global **—%**, mínimo **1.857 semânticos / 1.855 estritos**, denominador aberto; Epic Fight core **43/43 = 100% identidades catalogadas**, com 3/3 ações sobrenaturais já contadas e 40 habilidades não mágicas relevantes às perks. **+0 roots / +0 adapters / +0 Stage promotions**.
+
+✅ [Workflow Java21 NeoForge 21.1.250 #39098101364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39098101364) **SUCCESS** e JSON artefato **12125471763**, provider publisher 21.17.3.1 SHA-1/SHA-256 confirmado. Novo QA companion opt-in compilado separado da distribuição de produção observou, dentro da **`LivingEntity` carregada pelo dedicated server**, exatamente **um** método `handler$...epicfight$getDamageAfterArmorAbsorb(DamageSource,float,CallbackInfoReturnable)` e retornou `TRANSFORMED_HANDLER_PRESENT`. [Dossiê do caso e da falha corrigida de regex](../providers/✅-epic-fight/EXACT-ARMOR-MIXIN-LOADED-CLASS-PREFLIGHT-21.17.3.1.md). A execução inicial #39097863144 falhou por `\\` duplicado no regex do workflow, sem demonstrar ausência de mixin; controles matcher positivo/negativo foram adicionados e o segundo run comprovou o marker.
+
+**Limite principal:** presença de handler transformado **não comprova execução de handler durante `getDamageAfterArmorAbsorb`**, dano real/HP, redução efetiva, efeito da tag `BYPASSES_ARMOR`, `ServerPlayerPatch.initialized=true`, login/respawn com cliente, `AttributeInstance` ou hook de Mastery/perks. O servidor tinha zero jogadores conectados, e nenhum ataque foi simulado. Stage 06.05 🟡, Stage 09 físico PENDING; PR #825 draft, sem merge; authority Epic Fight sobre combate/skills e RPG Skill Tree somente progressão por contrato real; Black Arcana mantém seu runtime mágico.
+
+
 ## Epic Fight 21.17.3.1 — consumidores de AttackPhase e mitigação de armadura (18/10/2026)
 
 **Duas barras:** GLOBAL **—%**, piso **1.857 objetos semânticos mínimos / 1.855 estritos**, denominador do universo incompleto; **Epic Fight core — 43/43 (100% dos IDs)**, com **3/3 habilidades sobrenaturais do tridente** auditadas no contexto das propriedades de fase. Nenhuma nova magia ou adapter incluído.
