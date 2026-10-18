@@ -12,6 +12,20 @@ Projétil de Sulfur Bomb e settlement de hit/AOE pertencem ao addon; valores de 
 
 A descrição de gameplay é uma leitura limitada da fonte oficial [`@07cb65efca0c`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/tree/07cb65efca0c264762a21c2d6bce0f83e3947226), não uma garantia de bytecode funcional exato ou configuração do pack.
 
+## Dossiê técnico para perks — source oficial de referência (18/10/2026)
+
+**Localizador do Codex:** [`SulfurBombSPell.java`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/); consumidores [2]: [`SulfurBombProjectile.java`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/), [`SulfurGasCloud.java`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/). Registry no JAR exato é o documentado no início da ficha. Método principal `onCast`; consumidores e métodos de efeito abaixo quando presentes.
+
+- **Casting/defaults da fonte:** `LONG`, `castTime=20`, Nature, UNCOMMON, máximo 8, cooldown 12 s, mana base 30, mana por nível 5, spell power base 8, power por nível 3.
+- **Geometria:** spawna um `SulfurBombProjectile` no olhar do caster com impulso vertical +0.2; entidade declara `getSpeed=1.15f` (interação com `shoot` host ainda não auditada). Raio `r=3+getEntityPowerMultiplier(caster)`; `AABB.inflate(r)` para candidatos, **filtro separado** `distanceSq<r²` e LOS para dano de impacto.
+- **Dano:** valor inserido no projétil `8*getEntityPowerMultiplier(caster)`; no impacto a fonte aplica `damage*(1-distanceSq/r²)`. O caster também injeta `aoeDamage=getSpellPower(level,caster)*0.185f` no projétil; este valor é usado no `SulfurGasCloud`, **não somar como dano imediato garantido**.
+- **Causalidade pós-cast:** colisão com bloco provoca bounce; `bounces>=3` descarta. Impactos/blocos criam `SulfurGasCloud` com duração declarada 200 ticks, mesmo raio e dano AoE; o cloud usa `ISSDamageTypes.POISON_CLOUD`, `target.hurt`, Wither/Confusion 120 ticks. É **efeito secundário do mesmo cast**, não uma nova identidade.
+- **Risco:** caminho `onHitEntity` faz cast de `entity` para `LivingEntity` após `canHitEntity`; elegibilidade e segurança para entidades não-vivas requerem teste real. Nenhum claim/PvP safe foi inferido.
+
+**Classe de evidência:** `SOURCE_PINNED_RELEASE_DAY`, com ID estático `BINARY_EXACT_0.1.2`; números/fórmulas **não** certificados no bytecode 0.1.2 nem em gameplay. Os defaults do `DefaultConfig` podem ser alterados pelo host; custo/cooldown realizado e assinatura de hook para perks = **NÃO VERIFICADO / ⛔**. [Matriz comparativa](../PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md).
+
+**Authority:** Iron's conserva casting, recurso, configuração e cooldown. Backported Spellbooks conserva efeitos/entidades. RPG Skill Tree apenas progressão por boundary real, Black Arcana apenas runtime próprio. Não executar efeitos/cobranças duplicadas nem conceder Mastery por projectile, tick ou hit isolado.
+
 ## Contratos e pendências
 
 - **Authority:** Iron's para cast, mana, cooldown; addon para efeitos/projéteis; Black Arcana não replica o settlement.
