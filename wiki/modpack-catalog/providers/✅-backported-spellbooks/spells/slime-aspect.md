@@ -14,7 +14,7 @@ A descrição de gameplay é uma leitura limitada da fonte oficial [`@07cb65efca
 
 ## Dossiê técnico para perks — source oficial de referência (18/10/2026)
 
-**Localizador do Codex:** [`AspectOfTheSlimeSpell.java`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/); consumidores [1]: [`SlimeAspectMobEffect.java`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/). Registry no JAR exato é o documentado no início da ficha. Método principal `onCast`; consumidores e métodos de efeito abaixo quando presentes.
+**Localizador do Codex:** [`AspectOfTheSlimeSpell.java`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/spells/nature/AspectOfTheSlimeSpell.java); consumidores [1]: [`SlimeAspectMobEffect.java`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/effect/SlimeAspectMobEffect.java). Registry no JAR exato é o documentado no início da ficha. Método principal `onCast`; consumidores e métodos de efeito abaixo quando presentes.
 
 - **Casting/defaults da fonte:** `INSTANT`, `castTime=0` (campo do construtor), Nature, RARE, máximo 5, cooldown declarado 90 s, `baseManaCost=35`, `manaCostPerLevel=5`, `baseSpellPower=20`, `spellPowerPerLevel=5`. Custo efetivo = **NÃO VERIFICADO**.
 - **Alvo:** apenas o próprio caster em `onCast`; sem range/projétil/área declarados nesse método.
