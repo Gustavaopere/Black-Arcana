@@ -1,5 +1,14 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Checkpoint — Ars Hex 5.0.4b, operandos numéricos publisher (17/10/2026)
+
+**GLOBAL — —%**, piso **1.857 semânticos / 1.855 estritos** com denominador definitivo aberto. **ARS HEX — 1/1 glyph mágico (100%) e 4/4 superfícies técnicas auxiliares (3 thread perks + 1 foice) com source e evidência binária limitada (100% da tranche)**. +0 identidades; +0 adapters. [Prova específica](../providers/✅-ars-hex/EXACT-PUBLISHER-NUMERIC-OPERANDS-5.0.4b.md).
+
+✅ [Java21 #39089774180](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39089774180) **SUCCESS**, hash publisher SHA-1 `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4` validado, **13/13** testes de referências e **12/12** de operandos, `PASS_BOUNDED_BYTECODE_REFERENCES` + `PASS_BOUNDED_NUMERIC_OPERANDS`. Artefato JSON #12121819084. Metodologia: bytecode de seis classes, presença de constantes e opcodes dentro dos métodos, incluindo `2`, `0.5`, `0.1`, `0.2` e `slotValue` quando aplicável. Não foi executada análise def-use/CFG completa. Coeficientes source-pinned continuam com escopo de evidência separado; sem comprovação de `AttributeInstance` real, causalidade de Mastery, mana/refund ou hits da foice em modpack.
+
+**Autoridades e gates:** Ars Hex/Ars/Malum/Lodestone preservam semânticas nativas; RPG Skill Tree progressão/perks/gates somente por boundaries reais; Black Arcana runtime próprio. ⚠️ instalado, full-modpack, cliente e dataflow avançado pendentes; ⛔ adapter/Mastery; Stage 06.05 🟡 e Stage09 físico PENDING; PR #825 aberta em draft e sem merge.
+
+
 ## Checkpoint — Ars Hex 5.0.4b, prova publisher binária de perks/foice (17/10/2026)
 
 **Barras:** GLOBAL **—%**, piso **1.857/1.855 objetos estritos**, denominador global aberto; **ARS HEX — 1/1 glifo mágico (100% identidade registrada); 3/3 perks threads e 1/1 equipamento spell-on-hit (100% fichas source-causal)**. Sem raízes novas; **+0 adapter**.
