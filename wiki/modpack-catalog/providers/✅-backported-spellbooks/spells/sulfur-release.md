@@ -14,7 +14,7 @@ A descrição de gameplay é uma leitura limitada da fonte oficial [`@07cb65efca
 
 ## Dossiê técnico para perks — source oficial de referência (18/10/2026)
 
-**Localizador do Codex:** [`SulfurReleaseSpell.java`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/). Registry no JAR exato é o documentado no início da ficha. Método principal `onCast`; consumidores e métodos de efeito abaixo quando presentes.
+**Localizador do Codex:** [`SulfurReleaseSpell.java`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/spells/nature/SulfurReleaseSpell.java). Registry no JAR exato é o documentado no início da ficha. Método principal `onCast`; consumidores e métodos de efeito abaixo quando presentes.
 
 - **Casting/defaults da fonte:** `LONG`, `castTime=24`, Nature, COMMON, máximo 5, cooldown 60 s, mana base 90, mana/nível 22, power base 6, power/nível 3.
 - **Área/targeting:** explosão com centro no caster. Busca `entity.getBoundingBox().inflate(radius,4,radius)`, onde `radius=5+0.5*spellLevel`. Em seguida exige distância Euclidiana **estritamente menor** que `radius`, alvo `LivingEntity`, `!DamageSources.isFriendlyFireBetween(target,caster)` e `Utils.hasLineOfSight(...,false)`. Altura de seleção AABB ±4 não é raio esférico.
