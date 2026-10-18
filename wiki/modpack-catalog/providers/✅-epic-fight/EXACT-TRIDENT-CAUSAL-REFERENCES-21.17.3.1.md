@@ -1,6 +1,6 @@
 # Epic Fight 21.17.3.1 — auditoria causal delimitada de três ações sobrenaturais do tridente
 
-**Status: ✅ `EXACT_PUBLISHER_JSON_AND_COMPILED_METHOD_SEAMS` para 3/3 identidades; ⚠️ propriedades de ataque source-adjacent e execução física; ⛔ adapter de perks/Mastery.** A prova não cria novas magias nem homologa qualquer hook de runtime.
+**Status deste gate histórico: ✅ `EXACT_PUBLISHER_JSON_AND_COMPILED_METHOD_SEAMS` para 3/3 identidades; ✅ propriedades numéricas de builder confirmadas em auditoria posterior #39094435160; ⚠️ execução física e resultados em combate; ⛔ adapter de perks/Mastery.** A prova não cria novas magias nem homologa qualquer hook de runtime.
 
 ## Identidade do provider e proveniência
 
