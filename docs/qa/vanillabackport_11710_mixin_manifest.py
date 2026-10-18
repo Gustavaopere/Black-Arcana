@@ -203,8 +203,7 @@ class ManifestRegression(unittest.TestCase):
             verify_manifest_text(t,j,n)
     def test_required_dependency_wrong_side_rejected(self):
         t,j,n=self.fixture()
-        t=t.replace(b'versionRange = "[21.1,)"\\nside = "BOTH"',
-                    b'versionRange = "[21.1,)"\\nside = "CLIENT"')
+        t=t.replace(b'side = "BOTH"', b'side = "CLIENT"', 1)
         with self.assertRaisesRegex(ValueError,"REQUIRED_DEP_SIDE_DRIFT"):
             verify_manifest_text(t,j,n)
     def test_wrong_publisher_identity_rejected(self):
