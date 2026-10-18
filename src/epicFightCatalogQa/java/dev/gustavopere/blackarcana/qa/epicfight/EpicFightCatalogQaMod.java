@@ -42,6 +42,9 @@ public final class EpicFightCatalogQaMod {
         "1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_CONNECTED_PLAYER_PREFLIGHT"));
     private static final EpicFightConnectedPlayerLifecycleQa CONNECTED_PLAYER_QA =
         new EpicFightConnectedPlayerLifecycleQa();
+    private static final boolean ARMOR_MIXIN_PREFLIGHT =
+        "1".equals(System.getenv("BLACK_ARCANA_EPICFIGHT_QA_ARMOR_MIXIN_PREFLIGHT"));
+
 
     public EpicFightCatalogQaMod() {
         NeoForge.EVENT_BUS.addListener(EpicFightCatalogQaMod::onServerStarted);
@@ -59,6 +62,9 @@ public final class EpicFightCatalogQaMod {
         if (!loaded) {
             LOG.warn("{} type=end status=PROVIDER_NOT_LOADED", PREFIX);
             return;
+        }
+        if (ARMOR_MIXIN_PREFLIGHT) {
+            EpicFightArmorMixinAppliedQa.inspectLoadedTarget();
         }
 
         String phase = "resolve_registry_class";
