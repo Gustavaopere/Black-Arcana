@@ -7,7 +7,7 @@
 - [GitHub Actions #39087382649](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39087382649) — job `inspect_publisher_perk_bytecode` **SUCCESS**, Java 21, 13/13 testes sintéticos e verificação estática no JAR publicado.
 - Artefato JSON **12121013880**, nome `ars-hex-504b-perk-bounded-55f8421f72acbfc712c60e9a1c03b24be5568f59`. Os logs mostram download SHA OK, `PASS_BOUNDED_BYTECODE_REFERENCES` e `deviations=[]`. O hash do artefato ZIP é `4d6b0d082ed85107b9886ef71688745d81c85d729cfea216410d245dd998c846` (não é hash do JAR).
 - JAR publicado: [CurseForge Ars Hex Unity file 7404679](https://www.curseforge.com/minecraft/mc-mods/ars-hex-unity/files/7404679), **273389 bytes**, SHA-1 **`2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`**. Corresponde ao SHA-1 histórico da modlist física, mas não houve nova leitura do disco do usuário.
-- Novos arquivos: [verificador fail-closed Java21](../../../docs/qa/ars_hex_504b_perk_bytecode.py) e [workflow](../../../.github/workflows/ars-hex-504b-perk-bytecode.yml). A auditoria não redistribui o JAR; publica apenas JSON estreito.
+- Novos arquivos: [verificador fail-closed Java21](../../../../docs/qa/ars_hex_504b_perk_bytecode.py) e [workflow](../../../../.github/workflows/ars-hex-504b-perk-bytecode.yml). A auditoria não redistribui o JAR; publica apenas JSON estreito.
 
 ## Assinaturas/callsites delimitados
 
