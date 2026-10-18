@@ -1,0 +1,86 @@
+name: Vanilla Backport 1.1.7.10 exact mobility host bytecode
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/vanillabackport-11710-mobility-bytecode.yml'
+      - 'docs/qa/vanillabackport_11710_mobility_bytecode.py'
+      - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact_mobility_host_discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download exact official NeoForge publisher file, not an upgrade
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/catalog-vb-11710
+          FILE=build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar
+          ok=0
+          for URL in \
+            'https://mediafilez.forgecdn.net/files/8229/724/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar' \
+            'https://media.forgecdn.net/files/8229/724/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar' \
+            'https://www.curseforge.com/api/v1/mods/417430/files/8229724/download'
+          do
+            rm -f "$FILE"
+            if curl --fail --silent --show-error --location --retry 2 \
+                 --connect-timeout 12 --max-time 120 "$URL" --output "$FILE"; then
+              if unzip -tq "$FILE" >/dev/null 2>&1; then
+                ok=1
+                break
+              fi
+            fi
+          done
+          test "$ok" -eq 1
+          test "$(wc -c < "$FILE")" -gt 50000000
+          test "$(wc -c < "$FILE")" -lt 60000000
+          sha256sum "$FILE"
+          sha1sum "$FILE"
+          wc -c "$FILE"
+
+      - name: Inspect only declared attribute and motion host classfiles
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE=build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar
+          python3 - <<'PY'
+          from zipfile import ZipFile
+          from pathlib import Path
+          f=Path('build/catalog-vb-11710/VanillaBackport-neoforge-1.21.1-1.1.7.10.jar')
+          items=[
+              'com/blackgear/vanillabackport/common/registries/ModAttributes.class',
+              'com/blackgear/vanillabackport/core/mixin/common/entities/EntityMixin.class',
+              'com/blackgear/vanillabackport/core/mixin/common/entities/LivingEntityMixin.class',
+          ]
+          with ZipFile(f) as z:
+              contents=set(z.namelist())
+          for x in items:
+              print(f"EXACT_CLASS_PRESENT={x}:{x in contents}")
+              if x not in contents:
+                  raise SystemExit(2)
+          PY
+          for CLASS in \
+              com.blackgear.vanillabackport.common.registries.ModAttributes \
+              com.blackgear.vanillabackport.core.mixin.common.entities.EntityMixin \
+              com.blackgear.vanillabackport.core.mixin.common.entities.LivingEntityMixin; do
+            echo "=== BOUNDED_PUBLISHER_JAVAP_CLASS=$CLASS ==="
+            javap -p -c -classpath "$FILE" "$CLASS" | head -n 430
+          done
+
+      - name: Never upload proprietary JAR or source
+        if: always()
+        shell: bash
+        run: echo "Only GitHub Actions stdout carries bounded javap diagnostic. No JAR archived."
