@@ -2,6 +2,10 @@
 
 **Tipo de evidência:** `SOURCE_CAUSALITY`, fonte exata de revisão alinhada à release 5.0.4b; **não** há prova de equivalência integral de bytecode com o JAR instalado nem QA de equip/unequip em jogador real. JAR físico `ars_hex-1.21.1-5.0.4b.jar`, SHA-1 documentado `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`. Minecraft 1.21.1, NeoForge; Malum presente na modlist.
 
+## Delimitação adicional de constantes compiladas — 17/10/2026
+
+✅ [Prova SHA-exata de operandos Java21 #39089774180](../EXACT-PUBLISHER-NUMERIC-OPERANDS-5.0.4b.md): double `0.1`, multiplicação e leitura de `slotValue` presentes em `applyAttributeModifiers`. O impacto real sobre qualquer dano depende de consumidores Lodestone não testados; nenhuma prova de dataflow integral ou adapter.
+
 ## Prova binária adicional — 17/10/2026
 
 ✅ [JAR publisher SHA-1 exato, auditoria Java21 #39087382649](../EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md): método `applyAttributeModifiers` referência `MAGIC_PROFICIENCY`, `ADD_MULTIPLIED_BASE`, `withModifierAdded`; **0,1 × slotValue** permanece fórmula da fonte, sem fluxo de operandos ou consumidores de dano comprovados. ⚠️ Player equipado e efeitos finais não testados / ⛔ adapter.
