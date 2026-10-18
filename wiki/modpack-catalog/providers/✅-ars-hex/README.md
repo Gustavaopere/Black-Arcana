@@ -1,5 +1,10 @@
 # Ars Hex 5.0.4b
 
+## Nova evidência binária de perks e foice — 17/10/2026
+
+✅ [Java 21 #39087382649](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39087382649) **SUCCESS**, 13/13 autotestes e JAR Ars Hex 5.0.4b de 273389 bytes SHA-1 `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4` verificado. [Prova delimitada](EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md): 3 registros de perk compilados, três conjuntos de attribute refs, `hurtEnemy→onCastOnEntity`, `MethodTouch`, `NECROMANCY/getCastingCost/ceil`, e callback de boomerang. **Aritmética exata permanece source-pinned, não dataflow comprovado; QA real/instalado/adapter pendentes.** Sem +magias, +Mastery ou Stage promotion.
+
+
 ## Matriz nova de engenharia para perks — 17/10/2026
 
 **Duas métricas independentes:** ✅ glyph mágico `1/1` com registry binário; ✅ **3/3 threads/perks e 1/1 item spell-on-hit documentados individualmente** no source exato de revisão 5.0.4b, conforme [matriz técnica para perks](PERK-CAUSAL-ENGINEERING-MATRIX-5.0.4b.md). Estes quatro objetos auxiliares não acrescentam magias. A source pin foi conferida diretamente em `Alexthw46/Ars-Unity@b25528adf8c0135585cd6d654582efa147e0a227`; faltam paridade de classfiles de perks/foice, `AttributeInstance` real e dedup do `LivingDamageEvent.Post`. ⛔ Nenhum adapter de perks/Mastery homologado.
