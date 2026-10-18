@@ -8,6 +8,14 @@
 - Semantic type: deliberate supernatural tide/mobility attack
 - State: `COUNTED_EXACT`
 
+## Technical parameters for perks — exact JAR vs adjacent source
+
+✅ **Exact publisher JAR 21.17.3.1:** packaged `data/epicfight/skill_parameters/tsunami.json` declares **`consumption=50.0`**, unit/charge settlement unverified. The [bounded Java21 proof #39093719405](../EXACT-TRIDENT-CAUSAL-REFERENCES-21.17.3.1.md) confirms `isInWaterOrRain` with two compiled results in `EpicFightSkills` and both animations `TSUNAMI` / `TSUNAMI_REINFORCED`. `ConditionalWeaponInnateSkill` selects an animation and invokes `playAnimationSynchronized`. This establishes an environmental selection seam, not measured dash distance/damage.
+
+⚠️ **Source-adjacent 21.17.3 only:** `ARMOR_NEGATION_MODIFIER adder(100)`, `STUN_TYPE KNOCKDOWN`, and tag `WEAPON_INNATE` in its configured attack phase. [Source L352–360](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/registry/entries/EpicFightSkills.java#L352-L360). The constant 100 is not proof of a 100% HP-damage bonus or full armor bypass.
+
+**Perk axes:** target, range, dash length, AOE radius, hitbox, projectile velocity/scale, real damage type, cast duration, cooldown and settled cost remain **NÃO VERIFICADO**. A perk may not permanently apply the rain variant or duplicate water particles as casts; both animations belong to one Tsunami root. ⛔ External retarget/range manipulation without safe provider hook.
+
 ## Identity and selector
 
 The exact `EpicFightMovesets.TRIDENT` innate selector resolves Tsunami when the trident has Riptide.
