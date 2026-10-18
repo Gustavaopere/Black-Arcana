@@ -1,5 +1,14 @@
 # Black Arcana — baseline de cobertura por habilidade e por provider (2026-10-15)
 
+## Epic Fight 21.17.3.1 — movimento de retorno certificado no bytecode (18/10/2026)
+
+**Barras:** Global **—%**, piso **1.857 semânticos / 1.855 estritos**, denominador total aberto; Epic Fight core **43/43 identidades (100%)**, 3/3 raízes sobrenaturais catalogadas e 40 skills marciais relevantes para perks. **+0** magias/adapters/Stages.
+
+✅ [Workflow Java21 #39103337112](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39103337112) **SUCCESS** com JAR publisher Epic Fight 21.17.3.1 SHA-1/SHA-256 verificado, 8/8 autotestes do novo gate, `PASS_EXACT_TRIDENT_RETURN_KINEMATICS_BOUNDED` sem desvios, artefato JSON **12127228567**. [Dossiê físico de cinemática](../providers/✅-epic-fight/EXACT-TRIDENT-RETURN-KINEMATICS-21.17.3.1.md). O método `ThrownTridentPatch.tickEnd` compilado contém `t=max(tickCount-returnTick-10,0)`, `distance=|ownerEye-tridentPos|`, `stepRequested=min(t²*0.0005+abs(t*0.05),min(10,distance))`, vetor normalizado e atualização `setPos` depois de `setDeltaMovement(0,0,0)`. O teto de 10 **restringe o deslocamento solicitado por atualização**, não é alcance máximo nem velocidade medida em mundo real; o termo `-10` não prova cast delay/cooldown observado.
+
+⚠️ `ServerPlayerPatch.initialized=true`, login/respawn, colisões, recall duration, hits, dano/HP, custos, efeitos em cenário completo e hook estável de modificação continuam **PENDING**. Stage 06.05 🟡 e Stage 09 físico pendente. ⛔ Perks/Mastery externas sem boundary; PR #825 draft sem merge.
+
+
 ## Epic Fight 21.17.3.1 — revisão crítica de propriedade de fase e dano de retorno (18/10/2026)
 
 **Barras:** catálogo global **—%** por denominador total ainda desconhecido; piso **1.857 objetos semânticos mínimos / 1.855 estritos**; **Epic Fight core 43/43 identidades (100% de identidade core)**, **3/3 sobrenaturais do tridente já contabilizadas**, 40 outras úteis a perks. **+0 novas magias, +0 adapters**.
