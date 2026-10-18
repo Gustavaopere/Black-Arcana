@@ -8,6 +8,10 @@
 - Semantic type: deliberate supernatural damaging trident recall
 - State: `COUNTED_EXACT`
 
+## Vínculo do registro comprovado — 18/10/2026
+
+✅ [JAR publisher Java21 #39095049311](../EXACT-TRIDENT-REGISTRY-BOOTSTRAP-LINKAGE-21.17.3.1.md): `String everlasting_allegiance → InvokeDynamic #69 → DeferredRegister.register → EVERLASTING_ALLEGIANCE`; bootstrap `EpicFightSkills.lambda$static$43` (`EverlastingAllegiance`). Configuração `DAMAGE multiplier(1.4)` agora ligada ao ID exato por instruções compiladas; não significa HP damage medido nem recall executado.
+
 ## Prova posterior de propriedades compiladas (18/10/2026)
 
 ✅ [JAR 21.17.3.1, Java21 #39094435160](../EXACT-TRIDENT-ATTACK-PHASE-PROPERTIES-21.17.3.1.md): `EpicFightSkills.lambda$static$43` (`EverlastingAllegiance`) liga `ARMOR_NEGATION_MODIFIER adder(30)` e `DAMAGE_MODIFIER multiplier(1.4)` aos `Builder.addProperty`, além de `STUN_TYPE=HOLD` e `WEAPON_INNATE`. Há também `EXTRA_DAMAGE`, mas a composição inteira da expressão permanece fora deste gate. **Não significa 1,4× HP damage medido ou penetração efetiva de 30%.** ⛔ Sem alterações externas de recall/damage ou Mastery.
