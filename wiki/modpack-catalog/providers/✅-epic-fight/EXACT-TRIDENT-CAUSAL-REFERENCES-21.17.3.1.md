@@ -20,15 +20,19 @@
 
 **Valor `consumption`:** campo declarativo numérico no JSON exato do provider. Não é rotulado aqui como mana, stamina, ticks, segundos ou `WEAPON_CHARGE` efetivamente cobrada sem validação do settlement provider-native. O source adjacente 21.17.3 usa a categoria `Resource.WEAPON_CHARGE` para `ConditionalWeaponInnateSkill`; isso não equivale a debitar 50 unidades demonstradas no jogo 21.17.3.1.
 
-## Propriedades de AttackPhase que permanecem SOURCE_ADJACENT
+## Propriedades de AttackPhase — atualização posterior (18/10/2026)
 
-A revisão upstream `Antikythera-Studios/epicfight@a78aa24b72e90a9d09f5fd61925e4369d117abaf` identifica os seguintes valores em `EpicFightSkills.java`, **versão 21.17.3**, não confirmada byte-a-byte como 21.17.3.1:
+✅ [Java21 #39094435160](EXACT-TRIDENT-ATTACK-PHASE-PROPERTIES-21.17.3.1.md) demonstrou, no JAR publicado exato, as associações compiladas `AttackPhaseProperty` + float/enum + factory de `ValueModifier` + `Builder.addProperty` das três habilidades. As constantes `1/8/3/100` para Wrathful, `100` para Tsunami e `30/1.4` para Everlasting, mais `KNOCKDOWN/HOLD` e `WEAPON_INNATE`, agora têm prova **EXACT_PUBLISHER_COMPILED_SUPPLIER_PROPERTY_CALLSITES**. A narrativa abaixo documenta a proveniência histórica `SOURCE_ADJACENT`; ela não descreve mais a evidência máxima disponível para **esses campos específicos**. A prova não cobre formulação de dano final, runtime ou composição integral de `EXTRA_DAMAGE`.
+
+## Proveniência histórica das propriedades (source adjacente)
+
+A revisão upstream `Antikythera-Studios/epicfight@a78aa24b72e90a9d09f5fd61925e4369d117abaf` identifica os seguintes valores em `EpicFightSkills.java`, **versão 21.17.3**; as entradas numéricas específicas de builder abaixo foram posteriormente confirmadas no bytecode exato 21.17.3.1, conforme seção anterior:
 
 - Wrathful Lightning: `MAX_STRIKES_MODIFIER setter(1)` no primeiro grupo; no segundo `DAMAGE_MODIFIER setter(8.0)`, `MAX_STRIKES_MODIFIER setter(3)`, `ARMOR_NEGATION_MODIFIER adder(100)`, `STUN_TYPE KNOCKDOWN` e tag `WEAPON_INNATE`.
 - Tsunami: `ARMOR_NEGATION_MODIFIER adder(100)`, `STUN_TYPE KNOCKDOWN`, tag `WEAPON_INNATE`.
 - Everlasting Allegiance: `ARMOR_NEGATION_MODIFIER adder(30)`, `DAMAGE_MODIFIER multiplier(1.4)`, `STUN_TYPE HOLD`, tag `WEAPON_INNATE`.
 
-[Source primária com as três configurações, L337–371](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/registry/entries/EpicFightSkills.java#L337-L371). **Esses números não são resultados efetivos de dano, nem porcentagens de armor bypass, alcance ou raio.** A auditoria compilada atual comprova pontos de chamada/identidade, não fluxo numérico de `AttackPhaseProperty`.
+[Source primária com as três configurações, L337–371](https://github.com/Antikythera-Studios/epicfight/blob/a78aa24b72e90a9d09f5fd61925e4369d117abaf/src/main/java/yesman/epicfight/registry/entries/EpicFightSkills.java#L337-L371). **Esses números não são resultados efetivos de dano, nem porcentagens de armor bypass, alcance ou raio.** O novo gate comprova o fluxo delimitado dos argumentos `AttackPhaseProperty` até `Builder.addProperty`; continua sem comprovar dano real, resultado de armadura, cadeia de `EXTRA_DAMAGE` ou ligação bootstrap completa.
 
 ## Eixos de perk, double-processing e authority
 
