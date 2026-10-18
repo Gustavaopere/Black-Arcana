@@ -2,6 +2,10 @@
 
 **Tipo de evidência:** `SOURCE_CAUSALITY`, fonte exata de revisão alinhada à release 5.0.4b; **não** há prova de equivalência integral de bytecode com o JAR instalado nem QA de equip/unequip em jogador real. JAR físico `ars_hex-1.21.1-5.0.4b.jar`, SHA-1 documentado `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4`. Minecraft 1.21.1, NeoForge; Malum presente na modlist.
 
+## Prova binária adicional — 17/10/2026
+
+✅ [JAR publisher SHA-1 exato, auditoria Java21 #39087382649](../EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md): `SPIRIT_SPOILS`, `ADD_VALUE` e `withModifierAdded` presentes no método compilado. **`slotValue` como quantidade** segue derivado do source; drop/RNG/payout de Malum não examinados. ⚠️ Player real e recompensa pendentes / ⛔ adapter.
+
 ## Identidade e propósito
 - ID source: `ars_hex:thread_soul_spoils` (não `spirit_spoils`); classe `SpiritSpoilsPerk`.
 - Descrição técnica (paráfrase): thread que eleva o atributo de Malum associado aos espíritos obtidos em eliminações elegíveis; **não** é fonte autônoma de espíritos.
