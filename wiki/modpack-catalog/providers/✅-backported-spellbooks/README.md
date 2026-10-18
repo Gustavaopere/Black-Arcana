@@ -1,5 +1,9 @@
 # Backported Spellbooks — physical 0.1.2 release / embedded metadata 0.1.0
 
+## Slime Aspect — sexto feitiço com consumer compilado (18/10/2026)
+
+✅ [Java 21 #39149742796](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39149742796) **SUCCESS**, 9/9 autotestes, SHA1 do publisher igual ao físico, `PASS_BACKPORTED_012_SLIME_BOUNDED_BYTECODE`. [Dossiê exato](EXACT-BINARY-SLIME-ASPECT-0.1.2.md): `onCast` contém duração `int(getSpellPower*20)`, amp `level-1` e um `LivingEntity.addEffect`; supplier `ModMobEffects.lambda$static$2` registra BOUNCINESS/JUMP_STRENGTH/AIR_DRAG_MODIFIER em operações ADD_VALUE/ADD_MULTIPLIED_TOTAL com operandos `double` derivados de constantes float. **Estado atual: 6/6 IDs, 6/6 fichas, 6/6 spells com uma prova binária específica delimitada (100% apenas dessa métrica).** Nenhum atributo efetivo, player, perk/hook ou config física validada. **Os 5/6 abaixo são o checkpoint anterior.** [Artefato JSON #12144269318](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39149742796/artifacts/12144269318).
+
 ## Sulfur Bomb e Pale Thorn: parâmetros no JAR exato (18/10/2026)
 
 ✅ [Java21 #39133252975](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39133252975) **SUCCESS** — 10/10 autotestes, hash físico/publisher conferido, `PASS_BACKPORTED_012_BOMB_THORN_BOUNDED_BYTECODE` sem desvios, [JSON #12138732504](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39133252975/artifacts/12138732504). [Dossiê de geometria, dano e targeting](EXACT-BINARY-BOMB-THORN-0.1.2.md): Sulfur Bomb tem raio `3+entityPowerMultiplier`, coeficiente de dano da nuvem `0.185`, expansão AABB seguida de distância²/`canHitEntity`/LOS, queda radial de dano, cloud com duração configurada em 200 ticks e contador de três colisões de bloco; Pale Thorn tem alcance `15.0f`, raycast `0.15f`, duração `(int)(spellPower*100)`, fontes de dano Nature/Eldritch e VFX descartada após `tickCount>30`. **Limite:** opcode não é efeito observado, nem demonstra segurança de PvP/claims, dano HP final ou hook externo de alteração.
@@ -30,7 +34,7 @@ Status: `EXACT PHYSICAL ARTIFACT + EXACT PUBLISHER 0.1.2 RELEASE / RELEASE-DAY O
 - physical SHA-1: `747847c1f38c73250ebac05ea06b41a381187850`
 - Minecraft: `1.21.1`
 - loader: NeoForge
-- physical pack loader: NeoForge `21.1.248`
+- physical snapshot pack loader: NeoForge `21.1.250` (Black Arcana build baseline `21.1.248`)
 
 The filename/release label and embedded metadata disagree. This catalog preserves both layers and does not normalize one into the other.
 
@@ -136,7 +140,7 @@ Still fail-closed:
 - byte-for-byte source↔physical-JAR reproducibility;
 - exact publisher ↔ physical JAR SHA equality and six-class spell-registry static parity are **now verified** in [run #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989); this is not proof of all resources or functional source↔binary equivalence;
 - complete physical-JAR resource/behavior parity with release-day source remains unverified;
-- runtime compatibility of source baseline NeoForge 21.1.216 / Iron's 3.15.4 against physical NeoForge 21.1.248 / Iron's 3.16.3;
+- runtime compatibility of source baseline NeoForge 21.1.216 / Iron's 3.15.4 against physical NeoForge 21.1.250 / Iron's 3.16.3;
 - behavior if undeclared Vanilla Backport / Iron's / Ace's dependencies are absent or change API;
 - full-modpack worldgen/recipe reload and server/client behavior;
 - Slime Boots tooltip cooldown language versus the observed unconditional fall-event cancellation path;
