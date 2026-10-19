@@ -7,7 +7,7 @@ from pathlib import Path
 from somake_109_perk_method_probe import GateError
 from somake_109_controller_radius_bridge import (
   FQCN,CONSTRUCTOR_DESC,FLOAT_SLOTS,GETTER_DESC,
-  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape,synced_entity_float_getter,synced_radius_constructor_setter,synced_accessor_method_inventory,direct_synched_radius_setter,direct_constructor_setter_call
+  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape,synced_entity_float_getter,synced_radius_constructor_setter,synced_accessor_method_inventory,direct_synched_radius_setter,direct_constructor_setter_call,setter_structural_shape
 )
 
 def specimen(getter=None,slot=3):
@@ -328,5 +328,47 @@ class RadiusBridgeTests(unittest.TestCase):
         self.assertEqual(0,local_id("aload_0","","aload"))
         self.assertEqual(8,local_id("fload","8","fload"))
         self.assertIsNone(local_id("dload_2","","fload"))
+
+class RadiusSetterStructuralEvidenceTests(unittest.TestCase):
+    def test_exact_direct_setter_reports_shape_but_not_extra_proof(self):
+        body=[
+            "0: aload_0",
+            "1: getfield #2 // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;",
+            "4: getstatic #3 // Field DATA_RADIUS:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+            "7: fload_1",
+            "8: invokestatic #4 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;",
+            "11: invokevirtual #5 // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V",
+            "14: return"]
+        p=setter_structural_shape(body,"DATA_RADIUS")
+        self.assertEqual("STRUCTURAL_ONLY_NO_SETTER_ARGUMENT_CAUSALITY",p["proof_status"])
+        self.assertEqual(7,p["instruction_count"])
+        self.assertEqual(1,p["owned_accessor_getstatic_count"])
+        self.assertEqual(1,p["synched_data_set_call_count"])
+        self.assertEqual(1,p["float_box_call_count"])
+        self.assertEqual([1],p["float_local_load_slots"])
+        self.assertEqual(0,p["branch_instruction_count"])
+        self.assertEqual(0,p["numeric_operation_or_conversion_count"])
+        self.assertNotIn("constructor_argument",p)
+
+    def test_extra_operations_and_branch_remain_observational(self):
+        body=[
+            "0: fload_1","1: fconst_1","2: fadd",
+            "3: ifeq 8","6: fload_1","7: return","8: return"]
+        p=setter_structural_shape(body,"DATA_RADIUS")
+        self.assertEqual(1,p["branch_instruction_count"])
+        self.assertEqual(1,p["numeric_operation_or_conversion_count"])
+        self.assertEqual([1],p["float_local_load_slots"])
+        self.assertEqual(2,p["return_instruction_count"])
+        self.assertEqual(0,p["synched_data_set_call_count"])
+        self.assertEqual("STRUCTURAL_ONLY_NO_SETTER_ARGUMENT_CAUSALITY",p["proof_status"])
+
+    def test_foreign_accessors_and_unresolved_invocations_fail_closed(self):
+        body=[
+            "0: getstatic #2 // Field external/mod/Other.DATA_RADIUS:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+            "3: return"]
+        p=setter_structural_shape(body,"DATA_RADIUS")
+        self.assertEqual(0,p["owned_accessor_getstatic_count"])
+        with self.assertRaises(GateError):
+            setter_structural_shape(["0: invokevirtual #9","3: return"],"DATA_RADIUS")
 
 if __name__=="__main__":unittest.main()
