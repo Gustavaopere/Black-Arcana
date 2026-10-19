@@ -145,6 +145,35 @@ def interpret(body:list[str], descriptor:str)->dict:
             "jvm_instructions":topology["instruction_count"],
             "limitations":"Symbolic return only; not loaded gameplay, LOS, hitbox or per-player perk API."}
 
+EXPECTED_EXACT_109_RADIUS_PATHS = {
+    "caster != null": {
+        "jvm_float_expression": "Mth.clamp_f32(((9.5+(i2f(level)*0.82))+(Math.max_f32(0,(d2f(schoolPower(caster))-1))*0.65)),10.0,15.0)",
+        "calls": ["getSchoolType", "SchoolType.getPowerFor", "Math.max", "Mth.clamp"],
+    },
+    "caster == null": {
+        "jvm_float_expression": "Mth.clamp_f32(((9.5+(i2f(level)*0.82))+(Math.max_f32(0,(1-1))*0.65)),10.0,15.0)",
+        "calls": ["Math.max", "Mth.clamp"],
+    },
+}
+
+def certify_exact_109(proof:dict)->None:
+    """Lock both complete return paths to the exact installed publisher release."""
+    if proof.get("status")!="PROVED_TWO_PATH_JVM_FLOAT_EXPRESSION":
+        raise GateError("no complete proof")
+    paths=proof.get("paths",[])
+    if len(paths)!=2 or len({p.get("condition") for p in paths})!=2:
+        raise GateError("ambiguous or duplicated radius branches")
+    if proof.get("jvm_instructions")!=28:
+        raise GateError("JVM method fingerprint drift")
+    by_condition={p["condition"]:p for p in paths}
+    if set(by_condition)!=set(EXPECTED_EXACT_109_RADIUS_PATHS):
+        raise GateError("unexpected radius branch guard")
+    for condition,expected in EXPECTED_EXACT_109_RADIUS_PATHS.items():
+        actual=by_condition[condition]
+        if any(actual.get(k)!=v for k,v in expected.items()):
+            raise GateError("exact Somake radius symbolic return drift: "+condition)
+
+
 def inspect(jar:Path)->dict:
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("wrong Somake filename/type/size")
@@ -168,6 +197,7 @@ def inspect(jar:Path)->dict:
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed while inspecting")
     if proof["status"]!="PROVED_TWO_PATH_JVM_FLOAT_EXPRESSION":
         raise GateError("strict proof incomplete: "+proof["reason"])
+    certify_exact_109(proof)
     return {"status":"PASS_EXACT_SOMAKE_RADIUS_TWO_PATH_RETURN",
             "sha1":digest,"fqcn":SOMAKE_CLASS,"descriptor":desc,
             "proof":proof,"boundary":"Static JVM proof only; no observed loaded provider or safe mutator."}
