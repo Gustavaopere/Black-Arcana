@@ -55,3 +55,13 @@ O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `
 - **0** novos spells, **0** adapters mutadores homologados. Dano/Wither/cura/impulso/NBT foram identificados como símbolos do bud, não há fórmula numérica ou execução física comprovada.
 
 **Autoridades e gates:** Somake mantém runtime do provider; Iron's mantém host/recursos/dano host; RPG Skill Tree atributos/perks/Mastery por boundary efetivo; Black Arcana rege seu próprio runtime. Stage 06.05 🟡, Stage 09 físico PENDING sob D035. [Dossiê do bud](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-BUD-1.0.9.md).
+
+## Somake 1.0.9 — quinta camada: entidade Funeral Bloom Impact (19/10/2026)
+
+- [Java21 #39198753251](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39198753251) `SUCCESS`, publisher File 8867079/ SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, **sete testes sintéticos**, classe `FuneralBloomImpactEntity` com **8 métodos nomeados** (Scale sincronizado, `setScale` com `Mth.clamp`, abertura com `tickCount/smoothstep`, `tick/discard`, NBT de Scale).
+- **Global —%**: número total de magias/rituais/ações e universo de mods ainda não denominados; não promover completude do catálogo.
+- **Somake — registry 83/83 = 100% identidades**; **5/83 = 6,02%** das fichas com pelo menos uma auditoria de entidade downstream, sem alteração. A Funeral Bloom continua sendo a mesma magia.
+- **7 classfiles downstream distintos inspecionados** neste recorte acumulado: cinco do primeiro lote, `FuneralBloomBudEntity` e agora `FuneralBloomImpactEntity`. Não é prova de que todas as entidades mágicas do Somake foram encontradas.
+- **0 novas identidades; 0 adapters mutadores certificados**. Nenhum callsite direto de dano, cura ou status apareceu nos oito métodos da entidade de impacto, o que não exclui execução herdada/delegada. A natureza exclusivamente visual permanece hipótese.
+
+**Gates:** custos e cooldown permanecem owner Iron's; Black Arcana conserva apenas seu runtime; RPG Skill Tree fornece perks/Mastery por contrato real. Stage 06.05 🟡, Stage 09 físico pendente sob D035. Próxima prioridade é análise de constantes, dataflow de `FuneralBloomBudEntity.impact`/controller e perfil real provider-loaded. [Dossiê exato](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-IMPACT-1.0.9.md).
