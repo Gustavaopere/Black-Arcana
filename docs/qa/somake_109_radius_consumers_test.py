@@ -174,6 +174,43 @@ class WaveInflateCausalOperandTests(unittest.TestCase):
             f"{pc+3}: areturn"])
         return body
 
+    @staticmethod
+    def xz_radius_y_literal():
+        return [
+            "0: aload_0",
+            "1: invokevirtual #1 // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;",
+            "4: aload_0",
+            "5: invokevirtual #2 // Method getRadius:()F",
+            "8: f2d",
+            "9: ldc2_w #3 // double 2.0d",
+            "12: aload_0",
+            "13: invokevirtual #2 // Method getRadius:()F",
+            "16: f2d",
+            "17: invokevirtual #4 // Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;",
+            "20: areturn"
+        ]
+
+    def test_xz_radius_with_literal_y_requires_exact_stack(self):
+        x=prove_wave_inflate_operands(self.xz_radius_y_literal())
+        self.assertEqual("PROVED_AABB_XZ_CONTROLLER_RADIUS_Y_LITERAL_DOUBLE",x["status"],x)
+        self.assertEqual(["X","Z"],x["radius_axes"])
+        self.assertEqual("2.0",x["vertical_double_literal"])
+        self.assertNotIn("entity_selection_proved",x)
+
+    def test_xz_y_expression_or_malformed_constant_fails_closed(self):
+        rows=self.xz_radius_y_literal()
+        rows[5]=rows[5].replace("double 2.0d","float 2.0f")
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(rows)["status"])
+        rows=self.xz_radius_y_literal()
+        rows[5]=rows[5].replace("ldc2_w #3 // double 2.0d",
+            "invokestatic #3 // Method getVerticalArea:()D")
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(rows)["status"])
+
+    def test_xz_radius_caller_must_be_this(self):
+        rows=self.xz_radius_y_literal()
+        rows[6]=rows[6].replace("aload_0","aload_1")
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(rows)["status"])
+
     def test_xyz_arguments_are_all_local_controller_radius_for_exact_pattern(self):
         result=prove_wave_inflate_operands(self.triple_radius())
         self.assertEqual("PROVED_THREE_AABB_INFLATE_ARGUMENTS_FROM_CONTROLLER_RADIUS",result["status"],result)
