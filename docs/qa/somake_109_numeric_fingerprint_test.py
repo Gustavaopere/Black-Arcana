@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from somake_109_perk_method_probe import GateError
-from somake_109_numeric_fingerprint import decode_numeric, fingerprint, parse_selected_javap, prove_straight_line_integer_expression
+from somake_109_numeric_fingerprint import decode_numeric, fingerprint, parse_selected_javap, prove_straight_line_integer_expression, verify_exact_release_contract, EXPECTED_EXACT_INTEGER_GETTERS
 
 SYNTHETIC = """public class NumericFixture {
   public NumericFixture();
@@ -134,6 +134,36 @@ class NumericTests(unittest.TestCase):
                          prove_straight_line_integer_expression(["0: iconst_1","1: ireturn"],"(F)F")["status"])
         self.assertEqual("NOT_PROVED",
                          prove_straight_line_integer_expression(["0: iconst_1","1: iconst_2","2: ireturn"],"(I)I")["status"])
+
+    def test_exact_release_formula_snapshots_pass_and_fail_closed(self):
+        spell_methods={
+            name:{"straight_line_integer_expression":{
+                "status":"PROVED_STRAIGHT_LINE_JVM_INT_EXPRESSION","expression":expression
+            }} for name, expression in EXPECTED_EXACT_INTEGER_GETTERS.items()
+        }
+        spell_methods["getRadius"]={"direct_trailing_clamp_literals":[
+            {"second_argument_literal":"10.0","third_argument_literal":"15.0"}]}
+        rows={
+            "funeral_bloom_spell":{"methods":spell_methods},
+            "funeral_bloom_impact":{"methods":{"setScale":{"direct_trailing_clamp_literals":[
+                {"second_argument_literal":"0.65","third_argument_literal":"1.6"}]}}},
+        }
+        verify_exact_release_contract(rows)
+        spell_methods["getDuration"]["straight_line_integer_expression"]["expression"]="240"
+        with self.assertRaises(GateError):
+            verify_exact_release_contract(rows)
+
+    def test_exact_release_clamp_snapshot_blocks_drift(self):
+        spell_methods={name:{"straight_line_integer_expression":{
+            "status":"PROVED_STRAIGHT_LINE_JVM_INT_EXPRESSION","expression":exp
+        }} for name,exp in EXPECTED_EXACT_INTEGER_GETTERS.items()}
+        spell_methods["getRadius"]={"direct_trailing_clamp_literals":[
+            {"second_argument_literal":"10.0","third_argument_literal":"15.0"}]}
+        rows={"funeral_bloom_spell":{"methods":spell_methods},
+              "funeral_bloom_impact":{"methods":{"setScale":{
+                  "direct_trailing_clamp_literals":[{"second_argument_literal":"0.65","third_argument_literal":"9.9"}]}}}}
+        with self.assertRaises(GateError):
+            verify_exact_release_contract(rows)
 
     def test_java21_compiled_literals(self):
         with tempfile.TemporaryDirectory() as temp:
