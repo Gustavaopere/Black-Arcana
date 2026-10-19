@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 from somake_109_perk_method_probe import GateError
-from somake_109_float_dataflow import decode_descriptor, float_formula, selected_methods, TARGETS
+from somake_109_float_dataflow import decode_descriptor, float_formula, selected_methods, TARGETS, certify_exact_release, EXACT_DAMAGE_EXPRESSION
 from somake_109_numeric_fingerprint import CODE
 
 SAMPLE = """public class FuneralBloomSpell {
@@ -103,6 +103,28 @@ class FloatDataflowTests(unittest.TestCase):
         rows=selected_methods(SAMPLE.replace(marker,stat))
         self.assertEqual("PROVED_STRAIGHT_LINE_JVM_FLOAT_EXPRESSION",
                          rows["getImpactDamage"]["symbolic_dataflow"]["status"])
+
+    def test_exact_release_requires_verified_expression_and_radius_pair(self):
+        rows=selected_methods(SAMPLE)
+        rows["getImpactDamage"]["symbolic_dataflow"]["expression"]=EXACT_DAMAGE_EXPRESSION
+        rows["getRadius"]["direct_trailing_clamp_literals"]=[{
+            "descriptor":"(FFF)F","second_argument_literal":"10.0",
+            "third_argument_literal":"15.0"}]
+        certify_exact_release(rows)
+        rows["getRadius"]["direct_trailing_clamp_literals"][0]["third_argument_literal"]="16.0"
+        with self.assertRaises(GateError):
+            certify_exact_release(rows)
+
+    def test_exact_release_refuses_formula_drift(self):
+        rows=selected_methods(SAMPLE)
+        rows["getImpactDamage"]["symbolic_dataflow"]["expression"]="(1.5+(spellPower(level_input,caster)*0.75))"
+        rows["getRadius"]["direct_trailing_clamp_literals"]=[{
+            "descriptor":"(FFF)F","second_argument_literal":"10.0",
+            "third_argument_literal":"15.0"}]
+        certify_exact_release(rows)
+        rows["getImpactDamage"]["symbolic_dataflow"]["expression"]="(spellPower(level_input,caster)*0.75)"
+        with self.assertRaises(GateError):
+            certify_exact_release(rows)
 
     def test_real_java21_compiler_fixture(self):
         with tempfile.TemporaryDirectory() as temp:
