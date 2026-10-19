@@ -27,7 +27,7 @@ CLASSES = {
 }
 DECL = re.compile(r"^  (?:public|protected|private) (?!class\s|interface\s).*\([^;]*\);$")
 DESC = re.compile(r"^\s*descriptor:\s*(\([^)]*\).+)$")
-OP = re.compile(r"^\s*\d+:\s+([a-z][a-z0-9_]*)\b.*?(?://\s*(.*))?$")
+OP = re.compile(r"^\s*\d+:\s+([a-z][a-z0-9_]*)\b")
 SYMBOL = re.compile(r"^(Method|InterfaceMethod|Field)\s+(.+)$")
 FOCUS = re.compile(r"^(?:on[A-Z]|get[A-Z]|check[A-Z]|can[A-Z]|is[A-Z]|"
                    r"set[A-Z]|should[A-Z]|lambda\$|cast|tick|summon|apply|"
@@ -63,10 +63,11 @@ def parse_javap(data: str, simple: str) -> dict:
         invoke_count = 0
         branch_count = 0
         for line in body:
-            m = OP.match(line)
+            before, separator, after = line.partition("//")
+            m = OP.match(before)
             if not m:
                 continue
-            opcode, comment = m.group(1), (m.group(2) or "").strip()
+            opcode, comment = m.group(1), after.strip() if separator else ""
             if opcode.startswith(("if", "goto")) or opcode in ("tableswitch", "lookupswitch"):
                 branch_count += 1
             if not FOCUS.match(name):
