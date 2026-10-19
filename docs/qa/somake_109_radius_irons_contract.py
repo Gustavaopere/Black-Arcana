@@ -117,7 +117,7 @@ def radius_cfg(body:list[str])->dict:
 def callsite_descriptors(body:list[str],member:str)->list[str]:
     result=[]
     for _,opcode,_,comment in opcode_rows(body):
-        if opcode.startswith("invoke") and member+":" in comment:
+        if opcode.startswith("invoke") and re.search(r"\b"+re.escape(member)+r"\b",comment):
             matched=re.search(re.escape(member)+r":(\([^)]*\)[A-Za-z0-9_/\[;$]+)",comment)
             if not matched:raise GateError("missing callsite method descriptor "+member)
             result.append(matched.group(1))
