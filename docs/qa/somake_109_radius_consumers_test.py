@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -112,6 +112,159 @@ class ConsumerProbeTests(unittest.TestCase):
         # Only callsites; no asserted constructor operand mapping.
         self.assertNotIn("argument_binding",d)
         self.assertNotIn("causal_radius",d)
+
+class WaveRadiusAabbShapeTests(unittest.TestCase):
+    @staticmethod
+    def specimen():
+        return [
+            "0: aload_0",
+            "1: invokevirtual #1 // Method getRadius:()F",
+            "4: f2d",
+            "5: dstore_2",
+            "6: aload_0",
+            "7: invokevirtual #2 // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;",
+            "10: dload_2",
+            "11: dconst_1",
+            "12: dload_2",
+            "13: invokevirtual #3 // Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;",
+            "16: pop",
+            "17: return",
+        ]
+
+    def test_bounded_ordered_calls_are_observed_without_inventing_dataflow(self):
+        p=wave_radius_aabb_shape(self.specimen())
+        self.assertEqual("STRUCTURAL_ONLY_NO_AABB_OPERAND_PROVENANCE",p["status"])
+        self.assertEqual(1,p["radius_call_count"])
+        self.assertEqual(1,p["inflate_call_count"])
+        self.assertTrue(p["radius_before_inflate"])
+        self.assertEqual(12,p["instruction_count"])
+        self.assertEqual(1,p["f2d_instruction_count"])
+        self.assertEqual(0,p["branch_instruction_count"])
+        self.assertNotIn("aabb_radius_proved",p)
+
+    def test_inflate_without_getter_never_becomes_radius_proof(self):
+        rows=[x for x in self.specimen() if "getRadius:()F" not in x]
+        p=wave_radius_aabb_shape(rows)
+        self.assertEqual("NOT_PROVED",p["status"])
+
+    def test_inverted_order_never_becomes_radius_proof(self):
+        original=self.specimen()
+        radius=[x for x in original if "getRadius:()F" in x][0]
+        rows=[x for x in original if "getRadius:()F" not in x]
+        rows.insert(-1,radius)
+        rows=[str(3*i)+":"+line.split(":",1)[1] for i,line in enumerate(rows)]
+        p=wave_radius_aabb_shape(rows)
+        self.assertEqual("NOT_PROVED",p["status"])
+
+class WaveInflateCausalOperandTests(unittest.TestCase):
+    @staticmethod
+    def triple_radius():
+        body=["0: aload_0",
+              "1: invokevirtual #1 // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;"]
+        pc=4
+        for i in range(3):
+            body.extend([
+                f"{pc}: aload_0",
+                f"{pc+1}: invokevirtual #2 // Method getRadius:()F",
+                f"{pc+4}: f2d"
+            ])
+            pc+=5
+        body.extend([
+            f"{pc}: invokevirtual #3 // Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;",
+            f"{pc+3}: areturn"])
+        return body
+
+    @staticmethod
+    def xz_radius_y_literal():
+        return [
+            "0: aload_0",
+            "1: invokevirtual #1 // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;",
+            "4: aload_0",
+            "5: invokevirtual #2 // Method getRadius:()F",
+            "8: f2d",
+            "9: ldc2_w #3 // double 2.0d",
+            "12: aload_0",
+            "13: invokevirtual #2 // Method getRadius:()F",
+            "16: f2d",
+            "17: invokevirtual #4 // Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;",
+            "20: areturn"
+        ]
+
+    def test_xz_radius_with_literal_y_requires_exact_stack(self):
+        x=prove_wave_inflate_operands(self.xz_radius_y_literal())
+        self.assertEqual("PROVED_AABB_XZ_CONTROLLER_RADIUS_Y_LITERAL_DOUBLE",x["status"],x)
+        self.assertEqual(["X","Z"],x["radius_axes"])
+        self.assertEqual("2.0",x["vertical_double_literal"])
+        self.assertNotIn("entity_selection_proved",x)
+
+    def test_xz_y_expression_or_malformed_constant_fails_closed(self):
+        rows=self.xz_radius_y_literal()
+        rows[5]=rows[5].replace("double 2.0d","float 2.0f")
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(rows)["status"])
+        rows=self.xz_radius_y_literal()
+        rows[5]=rows[5].replace("ldc2_w #3 // double 2.0d",
+            "invokestatic #3 // Method getVerticalArea:()D")
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(rows)["status"])
+
+    def test_xz_radius_caller_must_be_this(self):
+        rows=self.xz_radius_y_literal()
+        rows[6]=rows[6].replace("aload_0","aload_1")
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(rows)["status"])
+
+    def test_xyz_arguments_are_all_local_controller_radius_for_exact_pattern(self):
+        result=prove_wave_inflate_operands(self.triple_radius())
+        self.assertEqual("PROVED_THREE_AABB_INFLATE_ARGUMENTS_FROM_CONTROLLER_RADIUS",result["status"],result)
+        self.assertEqual(["X","Y","Z"],result["axes"])
+        self.assertEqual("F_TO_D",result["conversion"])
+        self.assertNotIn("world_hit_targets_proved",result)
+
+    def test_only_two_radius_arguments_fail_closed(self):
+        body=self.triple_radius()
+        body[9]=body[9].replace("getRadius:()F","otherFloat:()F")
+        result=prove_wave_inflate_operands(body)
+        self.assertEqual("NOT_PROVED",result["status"])
+
+    def test_foreign_method_and_arithmetic_fail_closed(self):
+        body=self.triple_radius()
+        body[3]=body[3].replace("Method getRadius:()F",
+            "Method external/mod/Other.getRadius:()F")
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(body)["status"])
+        body=self.triple_radius()
+        body[4]=body[4].replace("f2d","fadd")
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(body)["status"])
+
+    def test_external_branch_into_argument_sequence_fail_closed(self):
+        body=self.triple_radius()
+        body.insert(0,"0: goto 10")
+        body=[str(i*5)+":"+r.split(":",1)[1] for i,r in enumerate(body)]
+        # Make the branch target hit the second instruction of the AABB argument slice.
+        body[0]="0: goto 20"
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(body)["status"])
+
+class Exact109WaveCertificationGateTests(unittest.TestCase):
+    def test_exact_release_105_vertical_and_two_radius_axes_required(self):
+        expected={
+            "status":"PROVED_AABB_XZ_CONTROLLER_RADIUS_Y_LITERAL_DOUBLE",
+            "radius_axes":["X","Z"],
+            "vertical_double_literal":"10.5",
+            "source_call_count":2,
+            "conversion":"F_TO_D",
+            "source_method":"FuneralBloomControllerEntity.getRadius:()F",
+            "aabb_method_descriptor":"(DDD)Lnet/minecraft/world/phys/AABB;",
+            "method_instruction_count":196,
+        }
+        certify_exact_wave_aabb_109(expected)
+        for change in (
+            {"vertical_double_literal":"11.0"},
+            {"radius_axes":["X","Y","Z"]},
+            {"source_call_count":3},
+            {"status":"NOT_PROVED"},
+            {"method_instruction_count":195},
+        ):
+            sample=dict(expected,**change)
+            with self.subTest(change=change):
+                with self.assertRaises(GateError):
+                    certify_exact_wave_aabb_109(sample)
 
 if __name__=="__main__":
     unittest.main()
