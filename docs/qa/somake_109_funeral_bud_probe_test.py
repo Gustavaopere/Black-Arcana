@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from somake_109_perk_method_probe import GateError
-from somake_109_funeral_bud_probe import CATEGORIES, FQCN, FOCUS_ALL_NAMED, classify, summarize
+from somake_109_funeral_bud_probe import CATEGORIES, FQCN, FOCUS_ALL_NAMED, classify, summarize, isolate_named_methods
 from somake_109_cast_refs import parse_javap
 
 FIXTURE = """public class BudFixture {
@@ -70,6 +70,24 @@ class BudProbeTests(unittest.TestCase):
         parsed["methods"][0]["members"] = ["Method aa.foo:()V"] * 461
         with self.assertRaises(GateError):
             summarize(parsed)
+
+    def test_static_initializer_does_not_leak_into_terminal_method(self):
+        initializer = """  static {};
+    Code:
+       0: invokestatic #7 // Method fake/External.getHealth:()F
+       3: return
+}
+"""
+        original = FIXTURE.replace("}\n", initializer)
+        sanitized = isolate_named_methods(original)
+        self.assertNotIn("fake/External.getHealth", sanitized)
+        parsed = summarize(parse_javap(sanitized, "BudFixture", focus_pattern=FOCUS_ALL_NAMED))
+        self.assertEqual(3, parsed["named_methods_analyzed"])
+        self.assertEqual([], parsed["candidate_categories"]["healing"])
+
+    def test_duplicate_static_initializer_declaration_fails(self):
+        with self.assertRaises(GateError):
+            isolate_named_methods("  static {};\n  static {};\n")
 
     def test_java21_compiled_fixture(self):
         with tempfile.TemporaryDirectory() as directory:
