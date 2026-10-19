@@ -37,6 +37,15 @@ CATEGORIES = {
 MAX_JAR_SIZE = 20_000_000
 MAX_REFS = 460
 
+def isolate_named_methods(javap_text: str) -> str:
+    """Exclude static initializer code so it cannot pollute the last named method."""
+    markers = list(re.finditer(r"^  static \{\};\s*$", javap_text, re.MULTILINE))
+    if len(markers) > 1:
+        raise GateError("multiple static initializer declarations")
+    if not markers:
+        return javap_text
+    return javap_text[:markers[0].start()] + "\n}\n"
+
 def classify(methods: list[dict]) -> dict[str, list[str]]:
     result = {name: [] for name in CATEGORIES}
     for entry in methods:
@@ -88,7 +97,7 @@ def inspect(jar: Path) -> dict:
                        capture_output=True, text=True, timeout=50, check=False)
     if p.returncode or len(p.stdout) > 1_000_000 or not p.stdout:
         raise GateError("bounded javap failed")
-    data = summarize(parse_javap(p.stdout, "FuneralBloomBudEntity",
+    data = summarize(parse_javap(isolate_named_methods(p.stdout), "FuneralBloomBudEntity",
                                   focus_pattern=FOCUS_ALL_NAMED))
     if hashlib.sha1(jar.read_bytes()).hexdigest() != initial_hash:
         raise GateError("publisher bytes changed during analysis")
