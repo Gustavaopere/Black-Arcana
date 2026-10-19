@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/vanillabackport-11710-minimal-server-bootstrap.yml'
       - 'docs/qa/vanillabackport_11710_minimal_bootstrap.py'
+      - 'docs/qa/vanillabackport_11710_postmixin_export.py'
       - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/EXACT-RUNTIME-VANILLABACKPORT-MINIMAL-SERVER-1.1.7.10.md'
   workflow_dispatch:
 
@@ -89,7 +90,7 @@ jobs:
           set -euo pipefail
           cd build/vb-minimal-11710/server
           set +e
-          JAVA_TOOL_OPTIONS='-Dmixin.debug.verbose=true -Dmixin.debug.countInjections=true' \
+          JAVA_TOOL_OPTIONS='-Dmixin.debug.verbose=true -Dmixin.debug.countInjections=true -Dmixin.debug.export=true -Dmixin.debug.export.filter=net.minecraft.world.entity.**' \
             timeout --signal=TERM --kill-after=15 105 ./run.sh nogui > server-bootstrap.log 2>&1
           CODE=$?
           set -e
@@ -102,11 +103,22 @@ jobs:
             --exit-code "$CODE" \
             --output ../minimal-bootstrap-evidence.json
 
+      - name: Post-Mixin exported classfile read-only diagnostic
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/vanillabackport_11710_postmixin_export.py --self-test
+          python3 docs/qa/vanillabackport_11710_postmixin_export.py \
+            --root build/vb-minimal-11710/server \
+            --output build/vb-minimal-11710/postmixin-export-evidence.json
+
       - name: Publish only redacted bounded JSON metadata, never mod JAR or server log
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: vanilla-backport-11710-minimal-server-${{ github.sha }}
-          path: build/vb-minimal-11710/minimal-bootstrap-evidence.json
+          path: |
+            build/vb-minimal-11710/minimal-bootstrap-evidence.json
+            build/vb-minimal-11710/postmixin-export-evidence.json
           if-no-files-found: ignore
           retention-days: 14
