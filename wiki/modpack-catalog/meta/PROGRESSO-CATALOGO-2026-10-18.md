@@ -130,3 +130,10 @@ O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `
 - **Integração:** zero novas interfaces mutadoras; ⛔ `FAIL_CLOSED`; Stage 06.05 🟡 e Stage 09 condicionado sob D035. Sem promover status com base em testes sintéticos ou na presença de callsites.
 
 [Dossiê de auditoria do construtor/raio](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md).
+
+## Somake 1.0.9 — décima segunda camada: `DATA_RADIUS` sincronizado (19/10/2026)
+
+- **JAR exato** File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`. [Java21 #39288405552](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39288405552), `SUCCESS` 16 testes, prova do caminho `FuneralBloomControllerEntity.getRadius():float → SynchedEntityData.get(DATA_RADIUS) → Float.floatValue()`. O getter possui sete instruções, 0 branches, 0 operações aritméticas e um único retorno.
+- [Varredura de 30 métodos #39289130886](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39289130886), `SUCCESS`: `defineSynchedData`, `getRadius`, `setRadius(float)` referenciam o accessor; `setRadius` também possui referências a `Float.valueOf` e `SynchedEntityData.set`. A escrita direta no construtor e a interpretação completa do setter continuam `NOT_PROVED`.
+- **Contagens inalteradas:** global —% (denominador desconhecido; piso histórico >=1.857 objetos); Somake **83/83 (100%)** identidades, **5/83 (6,02%)** fichas com entidades downstream auditadas e sete classfiles downstream no conjunto anterior. Novo trabalho aprofunda a mesma entidade e não adiciona ID de magia.
+- **Bloqueios:** `0` adapters de alteração do raio homologados; ⛔ `FAIL_CLOSED` para perks sem contrato; Stage 06.05 🟡 e Stage 09 condicionado conforme D035. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md).
