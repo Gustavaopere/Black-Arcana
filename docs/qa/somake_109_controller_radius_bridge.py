@@ -243,6 +243,54 @@ def direct_constructor_setter_call(body:list[str])->dict:
             **FLOAT_SLOTS[candidates[0]],
             "boundary":"Ctor passes this float to setRadius; onCast argument source not analyzed."}
 
+def float_literal_f32(row:tuple)->float|None:
+    """Only literals javap explicitly types as float, or JVM fconst_0..2."""
+    _,op,_,comment=row
+    if op in ("fconst_0","fconst_1","fconst_2"):
+        return float(op[-1])
+    if op not in ("ldc","ldc_w"):
+        return None
+    m=re.fullmatch(r"float (-?(?:\d+(?:\.\d*)?|\.\d+)(?:[Ee][+-]?\d+)?)[fF]",comment)
+    if not m:return None
+    v=float(m.group(1))
+    if not (-1_000_000<=v<=1_000_000):
+        return None
+    return v
+
+def certified_clamped_synched_radius_setter(body:list[str],accessor_name:str)->dict:
+    """Only exact ten-opcode this.entityData.set(DATA_RADIUS,Float.valueOf(clamp(arg,lo,hi)))."""
+    rows=opcode_rows(body)
+    def fail(reason):return {"status":"NOT_PROVED","reason":reason}
+    if len(rows)!=10:return fail("setter_not_exact_ten_opcode_clamp_write")
+    if [r[1] for r in rows[:4]]!=["aload_0","getfield","getstatic","fload_1"]:
+        return fail("setter_pre_clamp_provenance_not_proved")
+    if [r[1] for r in rows[6:]]!=["invokestatic","invokestatic","invokevirtual","return"]:
+        return fail("setter_clamp_box_and_write_order_not_proved")
+    if rows[1][3]!="Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;":
+        return fail("setter_entity_data_field_not_proved")
+    m=re.fullmatch(
+        r"Field (?:(?:([A-Za-z0-9_/$]+))\.)?([A-Za-z0-9_$]+):Lnet/minecraft/network/syncher/EntityDataAccessor;",
+        rows[2][3])
+    if not m or m.group(2)!=accessor_name or m.group(1) not in (None,SELF_JVM_OWNER):
+        return fail("setter_accessor_not_same_proved_getter")
+    lo=float_literal_f32(rows[4])
+    hi=float_literal_f32(rows[5])
+    if lo is None or hi is None or lo>hi:
+        return fail("setter_clamp_literal_bounds_not_proved")
+    if rows[6][3]!="Method net/minecraft/util/Mth.clamp:(FFF)F":
+        return fail("setter_float_clamp_signature_not_proved")
+    if rows[7][3]!="Method java/lang/Float.valueOf:(F)Ljava/lang/Float;":
+        return fail("setter_float_box_not_proved")
+    if rows[8][3]!=( "Method net/minecraft/network/syncher/SynchedEntityData.set:"
+                     "(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"):
+        return fail("setter_synched_data_set_not_proved")
+    return {"status":"PROVED_CLAMPED_FLOAT_SETTER_TO_SYNCED_RADIUS",
+            "accessor_field":accessor_name,
+            "setter_parameter_local_slot":1,
+            "clamp_lower_float":lo,"clamp_upper_float":hi,
+            "jvm_clamp_descriptor":"(FFF)F",
+            "boundary":"Setter-local transformation only. Constructor argument, onCast and perk mutability not proven."}
+
 def setter_structural_shape(body:list[str],accessor_name:str)->dict:
     """Bounded reference-level diagnostics; never claim float argument provenance."""
     rows=opcode_rows(body)
@@ -349,8 +397,12 @@ def analyze(text:str)->dict:
     setter=({"status":"NOT_PROVED","reason":"missing_or_ambiguous_setRadius"}
        if len(setters)!=1 or synced["status"]!="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
        else direct_synched_radius_setter(setters[0],synced["accessor_field"]))
+    clamped_setter=({"status":"NOT_PROVED","reason":"missing_or_ambiguous_setRadius"}
+       if len(setters)!=1 or synced["status"]!="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
+       else certified_clamped_synched_radius_setter(setters[0],synced["accessor_field"]))
     ctor_call=({"status":"NOT_PROVED","reason":"setter_not_proven"}
        if setter["status"]!="PROVED_DIRECT_FLOAT_SETTER_TO_SYNCED_RADIUS"
+          and clamped_setter["status"]!="PROVED_CLAMPED_FLOAT_SETTER_TO_SYNCED_RADIUS"
        else direct_constructor_setter_call(constructors[0][1]))
     setter_shape=(
         setter_structural_shape(setters[0],synced["accessor_field"])
@@ -358,6 +410,7 @@ def analyze(text:str)->dict:
         else {"proof_status":"NOT_PROVED","reason":"setter_or_synced_accessor_unavailable"})
     return {
       "setter_structure":setter_shape,
+      "clamped_setter_to_synced_accessor":clamped_setter,
       "constructor_descriptor":CONSTRUCTOR_DESC,
       "constructor_float_argument_slots":[{"jvm_local_slot":slot,**v} for slot,v in FLOAT_SLOTS.items()],
       "getter_descriptor":GETTER_DESC,
@@ -398,11 +451,16 @@ def inspect(jar:Path)->dict:
             else ("PASS_EXACT_SHA_CTOR_FLOAT_VIA_SYNCED_RADIUS_SETTER"
                   if (proof["setter_to_synced_accessor"]["status"]=="PROVED_DIRECT_FLOAT_SETTER_TO_SYNCED_RADIUS"
                       and proof["constructor_to_setter"]["status"]=="PROVED_DIRECT_CTOR_FLOAT_ARGUMENT_TO_SETTER")
-                  else ("PASS_EXACT_SHA_SYNCED_FLOAT_CONSTRUCTOR_BRIDGE"
+                  else ("PASS_EXACT_SHA_CTOR_FLOAT_VIA_CLAMPED_SYNCED_RADIUS_SETTER"
+                        if (proof["clamped_setter_to_synced_accessor"]["status"]=="PROVED_CLAMPED_FLOAT_SETTER_TO_SYNCED_RADIUS"
+                            and proof["constructor_to_setter"]["status"]=="PROVED_DIRECT_CTOR_FLOAT_ARGUMENT_TO_SETTER")
+                        else ("PASS_EXACT_SHA_CLAMPED_FLOAT_SETTER_CONSTRUCTOR_NOT_PROVED"
+                              if proof["clamped_setter_to_synced_accessor"]["status"]=="PROVED_CLAMPED_FLOAT_SETTER_TO_SYNCED_RADIUS"
+                              else ("PASS_EXACT_SHA_SYNCED_FLOAT_CONSTRUCTOR_BRIDGE"
                         if proof["constructor_to_synced_accessor"]["status"]=="PROVED_DIRECT_CONSTRUCTOR_FLOAT_TO_SYNCED_RADIUS"
                         else ("PASS_EXACT_SHA_SYNCED_FLOAT_GETTER_CONSTRUCTOR_BRIDGE_NOT_PROVED"
                               if proof["synced_data_getter"]["status"]=="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
-                              else "PASS_EXACT_SHA_OBSERVATIONAL_ONLY_BRIDGE_NOT_PROVED"))))
+                              else "PASS_EXACT_SHA_OBSERVATIONAL_ONLY_BRIDGE_NOT_PROVED"))))))
     return {"status":status,
             "sha1":digest,"fqcn":FQCN,"evidence":proof,
             "limits":["Independent controller getter/constructor analysis, not onCast value provenance.",
