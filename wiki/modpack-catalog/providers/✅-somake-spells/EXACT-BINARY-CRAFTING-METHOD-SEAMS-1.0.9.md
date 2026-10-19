@@ -6,7 +6,7 @@
 
 - JAR: `somakespells-1.0.9-1.21.1.jar`, CurseForge File `8867079`, SHA-1 físico/publisher `171841ac9f802be9309ecc166c1d972ac6d404c0`.
 - [Workflow Java 21 #39186593493](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39186593493) — `SUCCESS`; job `117850201891`; **7/7 testes sintéticos**, parser com casos negativos, correspondência de 7/7 métodos `public boolean allowCrafting()` e ausência de discrepâncias entre as classificações da auditoria anterior e as classes exatas.
-- [Verificador limitado](../../../docs/qa/somake_109_perk_method_probe.py), [testes sintéticos](../../../docs/qa/somake_109_perk_method_probe_test.py) e [workflow](../../../.github/workflows/somake-109-perk-methods.yml). Os logs mostram FQCN e símbolos de campos/métodos; o artefato de evidência JSON contém somente esses fatos, sem implementação ou JAR.
+- [Verificador limitado](../../../../docs/qa/somake_109_perk_method_probe.py), [testes sintéticos](../../../../docs/qa/somake_109_perk_method_probe_test.py) e [workflow](../../../../.github/workflows/somake-109-perk-methods.yml). Os logs mostram FQCN e símbolos de campos/métodos; o artefato de evidência JSON contém somente esses fatos, sem implementação ou JAR.
 - Este gate **não** executou Minecraft, Iron's, Somake carregado, loot/crafting real, servidor modpack, player, perk ou adapter. É inspeção estática de `javap` sob SHA exata.
 
 ## Matriz exata por identidade
