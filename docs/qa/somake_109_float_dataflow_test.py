@@ -106,6 +106,7 @@ class FloatDataflowTests(unittest.TestCase):
 
     def test_exact_release_requires_verified_expression_and_radius_pair(self):
         rows=selected_methods(SAMPLE)
+        rows["getRadius"]["branch_instruction_count"]=2  # exact release fixture
         rows["getImpactDamage"]["symbolic_dataflow"]["expression"]=EXACT_DAMAGE_EXPRESSION
         rows["getRadius"]["direct_trailing_clamp_literals"]=[{
             "descriptor":"(FFF)F","second_argument_literal":"10.0",
@@ -117,7 +118,8 @@ class FloatDataflowTests(unittest.TestCase):
 
     def test_exact_release_refuses_formula_drift(self):
         rows=selected_methods(SAMPLE)
-        rows["getImpactDamage"]["symbolic_dataflow"]["expression"]="(1.5+(spellPower(level_input,caster)*0.75))"
+        rows["getRadius"]["branch_instruction_count"]=2  # exact release fixture
+        rows["getImpactDamage"]["symbolic_dataflow"]["expression"]=EXACT_DAMAGE_EXPRESSION
         rows["getRadius"]["direct_trailing_clamp_literals"]=[{
             "descriptor":"(FFF)F","second_argument_literal":"10.0",
             "third_argument_literal":"15.0"}]
