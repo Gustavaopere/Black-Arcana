@@ -44,8 +44,56 @@ MAX_SYMBOLS_PER_METHOD=110
 MAX_SYMBOL_LEN=900
 
 def prove_wave_inflate_operands(body:list[str])->dict:
-    """Conservative typed provenance gate for all three inflate(double) arguments."""
-    return {"status":"NOT_PROVED","reason":"wave_inflate_argument_proof_not_implemented"}
+    """Certify only exact adjacent three-argument JVM stack provenance.
+
+    This verifies a bounded consumer-local expression, not entity selection,
+    collision, gameplay reach, safe mutation or any external-provider runtime.
+    """
+    rows=opcode_rows(body)
+    def fail(reason):return {"status":"NOT_PROVED","reason":reason}
+    if len(rows)>250:return fail("wave_method_exceeds_budget")
+    inflate_symbol="Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;"
+    radius_symbols={
+        "Method getRadius:()F",
+        "Method com/somake/somakespells/entity/FuneralBloomControllerEntity.getRadius:()F",
+    }
+    inflates=[i for i,r in enumerate(rows) if r[1]=="invokevirtual" and r[3]==inflate_symbol]
+    getters=[i for i,r in enumerate(rows) if r[1]=="invokevirtual" and r[3] in radius_symbols]
+    if len(inflates)!=1 or len(getters)!=3:
+        return fail("unique_inflate_and_three_controller_getters_not_proved")
+    idx=inflates[0]
+    if idx<9 or getters!=[idx-8,idx-5,idx-2]:
+        return fail("three_adjacent_controller_radius_producers_not_proved")
+    # The operand stack has an existing AABB receiver below exactly three
+    # expressions; each aload_0/getRadius/f2d pushes one double in JVM order.
+    for start in (idx-9,idx-6,idx-3):
+        a,b,c=rows[start:start+3]
+        if (a[1]!="aload_0" or b[1]!="invokevirtual" or
+            b[3] not in radius_symbols or c[1]!="f2d"):
+            return fail("controller_receiver_getter_or_float_to_double_unproved")
+    first_pc=rows[idx-9][0]
+    last_pc=rows[idx][0]
+    for i,(pc,op,operand,_) in enumerate(rows):
+        if idx-9<=i<=idx:continue
+        if op.startswith(("if","goto","jsr")):
+            target=operand.split(" ",1)[0]
+            if not re.fullmatch(r"\d+",target):
+                return fail("unrecognized_external_branch_target")
+            if first_pc<int(target)<=last_pc:
+                return fail("external_branch_enters_argument_stack_window")
+        elif op in ("tableswitch","lookupswitch","jsr_w","ret","wide"):
+            return fail("unsupported_external_branch_topology")
+    return {
+        "status":"PROVED_THREE_AABB_INFLATE_ARGUMENTS_FROM_CONTROLLER_RADIUS",
+        "axes":["X","Y","Z"],
+        "conversion":"F_TO_D",
+        "source_method":"FuneralBloomControllerEntity.getRadius:()F",
+        "aabb_method_descriptor":"(DDD)Lnet/minecraft/world/phys/AABB;",
+        "certified_expression":"inflate(f2d(getRadius()),f2d(getRadius()),f2d(getRadius()))",
+        "source_call_count":3,
+        "method_instruction_count":len(rows),
+        "boundary":"Argument-level proof only; AABB receiver origin, query consumption, hitbox and gameplay mutation NOT proved.",
+    }
 
 def wave_radius_aabb_shape(body:list[str])->dict:
     """Return bounded callsite topology only; never infer values by co-occurrence."""
