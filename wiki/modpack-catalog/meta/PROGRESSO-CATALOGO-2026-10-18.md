@@ -43,3 +43,15 @@ Fonte da tranche: [Somake — matriz de sete gates](../providers/✅-somake-spel
 O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `DamageSources.applyDamage` no Vortex/Bell, além de filtragem de aliados/alvos e efeitos Wither/Blessing. Estes são símbolos compilados, não provas de que `SpellDamageEvent` seja consumido em todos os caminhos, de hitbox/raio numericamentes modificáveis ou de equivalência com o pack real. [Matriz exata](../providers/✅-somake-spells/EXACT-BINARY-ENTITY-CALLSITES-1.0.9.md).
 
 **Próximo gate:** `FuneralBloomBudEntity` e `pulseDamage`/`tick` com dataflow, caps e coexistência de eventos; preservar autoridade do Somake, Iron's e RPG Skill Tree sem dupla cobrança/dano/Mastery. Stage 06.05 continua 🟡; Stage 09 preserva todos os gates físicos.
+
+## Somake 1.0.9 — quarta camada: bud e impacto secundário (19/10/2026)
+
+**Evidência auditada:** [Java21 #39197671447](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39197671447) `SUCCESS`, **10 testes sintéticos**, classfile `FuneralBloomBudEntity` SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, **26 métodos JVM** inspeccionados com o inicializador estático isolado. A primeira execução #39197533908 não é usada para a atribuição final de símbolos por possível contaminação da última rotina pelo `<clinit>`.
+
+- **Barra global de todo o conteúdo mágico:** **—%**, denominador não determinado; piso histórico de pelo menos 1.857 objetos semânticos não recebe nova raiz por esta entidade.
+- **Barra Somake — identidades da registry:** **83/83 = 100%** inventariadas no release, independente de reachability/castability.
+- **Somake — fichas com auditoria de entidades downstream:** **5/83 = 6,02%** das identidades tiveram no mínimo uma entidade analisada no lote anterior; a Funeral Bloom é **a mesma identidade** enriquecida novamente, portanto o percentual não sobe.
+- **Subescopo de classfiles downstream inspecionados:** seis classes distintas: `FragmentedSwordRainEntity`, `FuneralBloomControllerEntity`, `WitheredRoseVortexEntity`, `CustodiaCaeliSigilEntity`, `BellEntity` e agora `FuneralBloomBudEntity`. Uma sétima classe conhecida, `FuneralBloomImpactEntity`, foi referenciada pelo bud e **não** está inspecionada. Esse conjunto é apenas a cadeia descoberta até agora; não apresenta percentual global de todas as entidades do mod.
+- **0** novos spells, **0** adapters mutadores homologados. Dano/Wither/cura/impulso/NBT foram identificados como símbolos do bud, não há fórmula numérica ou execução física comprovada.
+
+**Autoridades e gates:** Somake mantém runtime do provider; Iron's mantém host/recursos/dano host; RPG Skill Tree atributos/perks/Mastery por boundary efetivo; Black Arcana rege seu próprio runtime. Stage 06.05 🟡, Stage 09 físico PENDING sob D035. [Dossiê do bud](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-BUD-1.0.9.md).
