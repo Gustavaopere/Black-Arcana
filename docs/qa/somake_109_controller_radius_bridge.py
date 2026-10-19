@@ -82,6 +82,40 @@ def getter_structural_shape(body:list[str])->dict:
         "proof_status":"STRUCTURAL_ONLY_NO_ARGUMENT_PROVENANCE",
     }
 
+def synced_entity_float_getter(body:list[str])->dict:
+    """Recognize the complete seven-opcode synced-data float retrieval, if present."""
+    rows=opcode_rows(body)
+    def fail(reason):return {"status":"NOT_PROVED","reason":reason}
+    if len(rows)!=7:return fail("not_seven_opcode_synced_float_getter")
+    ops=[x[1] for x in rows]
+    if ops!=["aload_0","getfield","getstatic","invokevirtual",
+             "checkcast","invokevirtual","freturn"]:
+        return fail("unrecognized_synced_float_getter_flow")
+    data=re.fullmatch(
+      r"Field (?:(?:[A-Za-z0-9_/$]+)\.)?([A-Za-z0-9_$]+):Lnet/minecraft/network/syncher/SynchedEntityData;",
+      rows[1][3])
+    accessor=re.fullmatch(
+      r"Field (?:(?:([A-Za-z0-9_/$]+))\.)?([A-Za-z0-9_$]+):Lnet/minecraft/network/syncher/EntityDataAccessor;",
+      rows[2][3])
+    if not data or not accessor:
+        return fail("synched_data_or_accessor_type_not_proven")
+    if accessor.group(1) not in (None,SELF_JVM_OWNER):
+        return fail("accessor_not_owned_by_controller")
+    expected_get=(
+      "Method net/minecraft/network/syncher/SynchedEntityData.get:"
+      "(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;")
+    expected_float="Method java/lang/Float.floatValue:()F"
+    if rows[3][3]!=expected_get or rows[4][3]!="class java/lang/Float" or rows[5][3]!=expected_float:
+        return fail("synched_data_get_or_float_unbox_signature_not_proven")
+    return {
+      "status":"PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER",
+      "entity_data_field":data.group(1),
+      "accessor_field":accessor.group(2),
+      "accessor_owner":accessor.group(1) or SELF_JVM_OWNER,
+      "value_conversion":"java/lang/Float.floatValue:()F",
+      "boundary":"Read-only getter dataflow; constructor EntityData.set and onCast args remain unproved.",
+    }
+
 def constructor_direct_assignments(body:list[str], target_field:str)->dict:
     rows=opcode_rows(body)
     opcodes=[row[1] for row in rows]
@@ -126,6 +160,7 @@ def analyze(text:str)->dict:
       "constructor_float_argument_slots":[{"jvm_local_slot":slot,**v} for slot,v in FLOAT_SLOTS.items()],
       "getter_descriptor":GETTER_DESC,
       "getter":getter,
+      "synced_data_getter":synced_entity_float_getter(getters[0][1]),
       "getter_structure":getter_structural_shape(getters[0][1]),
       "constructor_to_getter":binding,
       "boundary":"Only direct local-argument store and field getter; caller stack and inflate dataflow not proven."
@@ -151,7 +186,9 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_CONTROLLER_RADIUS_BRIDGE",json.dumps(proof,sort_keys=True))
     status=("PASS_EXACT_SHA_DIRECT_CONSTRUCTOR_RADIUS_BRIDGE"
             if proof["constructor_to_getter"]["status"]=="PROVED_DIRECT_FLOAT_ARGUMENT_FIELD_BINDING"
-            else "PASS_EXACT_SHA_OBSERVATIONAL_ONLY_BRIDGE_NOT_PROVED")
+            else ("PASS_EXACT_SHA_SYNCED_FLOAT_GETTER_CONSTRUCTOR_BRIDGE_NOT_PROVED"
+                  if proof["synced_data_getter"]["status"]=="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
+                  else "PASS_EXACT_SHA_OBSERVATIONAL_ONLY_BRIDGE_NOT_PROVED"))
     return {"status":status,
             "sha1":digest,"fqcn":FQCN,"evidence":proof,
             "limits":["Independent controller getter/constructor analysis, not onCast value provenance.",
