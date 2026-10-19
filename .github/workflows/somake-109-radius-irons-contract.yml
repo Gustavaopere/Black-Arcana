@@ -40,7 +40,7 @@ jobs:
             --connect-timeout 20 --max-time 180 \
             'https://code.redspace.io/releases/io/redspace/irons_spellbooks/1.21.1-3.16.3/irons_spellbooks-1.21.1-3.16.3-api.jar' \
             --output build/somake-radius-api/irons_spellbooks-1.21.1-3.16.3-api.jar
-          sha256sum build/somake-radius-api/irons_spellbooks-1.21.1-3.16.3-api.jar
+          echo '69e81104a9fd31a402d9c89ab09c2a6b2fd6d2ab98db5a37bb159517363ee9ad  build/somake-radius-api/irons_spellbooks-1.21.1-3.16.3-api.jar' | sha256sum --check
       - name: Validate radius CFG and exact Iron's API method descriptor
         run: |
           python3 docs/qa/somake_109_radius_irons_contract.py \
