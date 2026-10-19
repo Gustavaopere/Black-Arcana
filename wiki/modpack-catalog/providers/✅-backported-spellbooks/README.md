@@ -1,5 +1,9 @@
 # Backported Spellbooks — physical 0.1.2 release / embedded metadata 0.1.0
 
+## Vanilla Backport 1.1.7.10 — sete invokes pós-Mixin certificados (18/10/2026)
+
+✅ [CI #39180390922](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39180390922) **SUCCESS**, 7/7 regressões, zero desvios; [dossiê de sete vínculos pós-transformação](EXACT-RUNTIME-VANILLABACKPORT-POSTMIXIN-CALLLINK-1.1.7.10.md), [evidência JSON #12155268844](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39180390922/artifacts/12155268844). No servidor mínimo NeoForge 21.1.250 + Platform 1.3.3 + Vanilla Backport 1.1.7.10, o exportador Mixin gerou classfiles `Entity`, `LivingEntity` e `RangedAttribute`. O verificador encontrou os **7 handlers distintos invocados 1× diretamente dos métodos-alvo transformados**: `move` 3, `travel` 2, `createLivingAttributes` 1, `RangedAttribute.<init>` 1. **Vínculos estáticos no bytecode exportado ≠ handlers executados por jogador**, atributos resolvidos ou coexistência com o modpack completo. ⚠️ gameplay e provider interaction pendentes; ⛔ perk hook. +0 magias e adapters; 6/6 raízes Backported preservadas.
+
 ## Vanilla Backport 1.1.7.10 — servidor mínimo e Mixin target-loading (18/10/2026)
 
 ✅ [#39178310071](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39178310071) **SUCCESS**, 10/10 testes fail-closed, [dossiê de runtime mínimo](EXACT-RUNTIME-VANILLABACKPORT-MINIMAL-SERVER-1.1.7.10.md). Servidor NeoForge 21.1.250 + Platform 1.3.3 + Vanilla Backport 1.1.7.10, JARs oficiais com SHA-256 fixado, alcançou `Done (10.039s)` sem sinal fatal e reportou `Mixing` de `EntityMixin`, `LivingEntityMixin` e `RangedAttributeMixin` nos targets exatos, uma vez cada. **Ainda não** demonstra bytecode final transformado, callsites após os outros mods, jogador real, Iron's/addon ou atributo resolvido. ⚠️ integração e QA físico pendentes; ⛔ perks bloqueados. **+0 magias/adapters**, Backported **6/6** preservado.

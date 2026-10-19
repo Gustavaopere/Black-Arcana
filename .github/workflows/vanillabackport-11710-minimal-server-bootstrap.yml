@@ -7,6 +7,7 @@ on:
       - 'docs/qa/vanillabackport_11710_minimal_bootstrap.py'
       - 'docs/qa/vanillabackport_11710_postmixin_export.py'
       - 'docs/qa/vanillabackport_11710_postmixin_invoke_gate.py'
+      - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/EXACT-RUNTIME-VANILLABACKPORT-POSTMIXIN-CALLLINK-1.1.7.10.md'
       - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/EXACT-RUNTIME-VANILLABACKPORT-MINIMAL-SERVER-1.1.7.10.md'
   workflow_dispatch:
 

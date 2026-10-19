@@ -2,6 +2,10 @@
 
 **18/10/2026 · ✅ `ISOLATED_MINIMAL_DEDICATED_SERVER_STARTUP_LOG_ONLY` e `EXACT_TARGET_MIXING_LOADER_REPORTS` · ⚠️ bytecode pós-transformação, modpack completo e jogador real · ⛔ hooks externos de perks.**
 
+## Prova subsequente — callsites no classfile exportado pós-Mixin
+
+✅ O [workflow Java21 #39180390922](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39180390922) **SUCCESS** avançou além dos três logs `Mixing`: a [auditoria de classes exportadas](EXACT-RUNTIME-VANILLABACKPORT-POSTMIXIN-CALLLINK-1.1.7.10.md) demonstrou **sete invocações handler→caller específicas** nos classfiles `Entity`, `LivingEntity` e `RangedAttribute` pós-transformação, sem desvios, [JSON #12155268844](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39180390922/artifacts/12155268844). O conteúdo abaixo retrata o checkpoint anterior (apenas bootstrap e log); a nova prova é classfile estático, ainda não um handler exercitado, jogador conectado ou modpack completo. QA físico e Stage 09 continuam ⚠️.
+
 ## Material auditado e limites de autoridade
 
 - **Modlist física histórica (#001, #445, #560):** NeoForge `21.1.250`, `Platform-neoforge-1.21.1-1.3.3.jar` e `VanillaBackport-neoforge-1.21.1-1.1.7.10.jar` para Minecraft `1.21.1`/Java 21. A modlist não disponibiliza SHA novo dos binários locais nem cópia atual do mundo, e o snapshot 587 linhas continua distinto das adições pós-snapshot. **Nada instalado no computador do usuário foi alterado ou revalidado fisicamente.**
