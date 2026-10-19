@@ -7,7 +7,7 @@ from pathlib import Path
 from somake_109_perk_method_probe import GateError
 from somake_109_controller_radius_bridge import (
   FQCN,CONSTRUCTOR_DESC,FLOAT_SLOTS,GETTER_DESC,
-  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape,synced_entity_float_getter,synced_radius_constructor_setter,synced_accessor_method_inventory
+  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape,synced_entity_float_getter,synced_radius_constructor_setter,synced_accessor_method_inventory,direct_synched_radius_setter,direct_constructor_setter_call
 )
 
 def specimen(getter=None,slot=3):
@@ -191,6 +191,50 @@ class RadiusBridgeTests(unittest.TestCase):
                  for line,offset in zip(setter[:-1],[0,1,4,7,8,11])]
         duplicated=[*setter[:-1],*shifted,"34: return"]
         self.assertEqual("NOT_PROVED",synced_radius_constructor_setter(duplicated,"OTHER_RADIUS")["status"])
+
+    def test_exact_seven_opcode_float_setter_proves_accessor_but_not_caller(self):
+        body=[
+           "0: aload_0",
+           "1: getfield #2 // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;",
+           "4: getstatic #3 // Field DATA_RADIUS:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+           "7: fload_1",
+           "8: invokestatic #4 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;",
+           "11: invokevirtual #5 // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V",
+           "14: return"]
+        record=direct_synched_radius_setter(body,"DATA_RADIUS")
+        self.assertEqual("PROVED_DIRECT_FLOAT_SETTER_TO_SYNCED_RADIUS",record["status"],record)
+        self.assertEqual(1,record["setter_parameter_local_slot"])
+        self.assertNotIn("constructor_argument",record)
+
+    def test_sync_setter_rejects_wrong_float_source(self):
+        body=[
+           "0: aload_0",
+           "1: getfield #2 // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;",
+           "4: getstatic #3 // Field DATA_RADIUS:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+           "7: fload_2",
+           "8: invokestatic #4 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;",
+           "11: invokevirtual #5 // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V",
+           "14: return"]
+        self.assertEqual("NOT_PROVED",direct_synched_radius_setter(body,"DATA_RADIUS")["status"])
+
+    def test_constructor_direct_setter_argument_requires_adjacent_same_caster(self):
+        body=["0: aload_0","1: fload_3",
+              "2: invokevirtual #8 // Method setRadius:(F)V",
+              "5: return"]
+        proof=direct_constructor_setter_call(body)
+        self.assertEqual("PROVED_DIRECT_CTOR_FLOAT_ARGUMENT_TO_SETTER",proof["status"])
+        self.assertEqual(3,proof["jvm_local_slot"])
+        second=[x.replace("fload_3","fload 8") for x in body]
+        self.assertEqual(8,direct_constructor_setter_call(second)["jvm_local_slot"])
+
+    def test_constructor_indirect_or_conditional_setter_cannot_be_certified(self):
+        bad=["0: aload_0","1: fload_3","2: fconst_1","3: fadd",
+             "4: invokevirtual #8 // Method setRadius:(F)V","7: return"]
+        self.assertEqual("NOT_PROVED",direct_constructor_setter_call(bad)["status"])
+        branch=["0: aload_0","1: ifnull 9",
+                "4: fload_3","5: invokevirtual #8 // Method setRadius:(F)V",
+                "9: return"]
+        self.assertEqual("NOT_PROVED",direct_constructor_setter_call(branch)["status"])
 
     def test_accessor_method_inventory_discovers_but_does_not_prove_setter(self):
         method=[
