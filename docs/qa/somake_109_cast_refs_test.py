@@ -61,6 +61,11 @@ class DiscoveryTests(unittest.TestCase):
         with self.assertRaises(GateError):
             parse_javap("x" * 1_000_001, "Fixture")
 
+    def test_abnormally_long_symbol_rejected(self):
+        oversized = SAMPLE.replace("my/pkg/Fixture.radius:F", "A" * 2050)
+        with self.assertRaises(GateError):
+            parse_javap(oversized, "Fixture")
+
     def test_real_java21_symbols(self):
         with tempfile.TemporaryDirectory() as temp:
             d=Path(temp)
