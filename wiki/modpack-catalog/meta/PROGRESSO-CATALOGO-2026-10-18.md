@@ -120,3 +120,13 @@ O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `
 - **Perks mutadoras homologadas:** 0. ⛔ `FAIL_CLOSED`; Stage 06.05 🟡 e Stage 09 condicionado (D035). RPG Skill Tree fornece progressão sem controlar casting/efeitos do Black Arcana ou dos providers.
 
 [Dossiê de consumidores do raio](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md).
+
+## Somake 1.0.9 — décima primeira camada: tentativa de vínculo construtor → raio (19/10/2026)
+
+- [Auditoria exata #39286470816](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39286470816): `SUCCESS` com 13 testes Java21 e SHA-1 físico Somake 1.0.9 `171841ac9f802be9309ecc166c1d972ac6d404c0`.
+- **Resultado da prova:** `FuneralBloomControllerEntity.getRadius()` não é o getter direto de três opcodes esperado pelo scanner (`NOT_PROVED`). Por consequência, ainda não foi demonstrado qual dos dois floats do construtor (slots JVM 3 e 8) origina o getter. Esta é uma rejeição **restrita ao padrão direto**, não uma incompatibilidade do mod.
+- **Revisão subsequente na PR #837:** agrega metadados estruturais (contagens, campos `float` e referências) para determinar a próxima auditoria; a execução no HEAD final ainda precisa ser comprovada.
+- **Barra global:** —% (denominador total indisponível; piso histórico >=1.857 objetos semânticos sem alteração). **Somake:** 83/83 identidades = 100%; 5/83 fichas com entidades downstream = 6,02%; as sete classes downstream conhecidas e o conjunto de magias permanecem inalterados.
+- **Integração:** zero novas interfaces mutadoras; ⛔ `FAIL_CLOSED`; Stage 06.05 🟡 e Stage 09 condicionado sob D035. Sem promover status com base em testes sintéticos ou na presença de callsites.
+
+[Dossiê de auditoria do construtor/raio](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md).
