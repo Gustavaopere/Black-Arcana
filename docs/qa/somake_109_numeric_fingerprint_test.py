@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from somake_109_perk_method_probe import GateError
-from somake_109_numeric_fingerprint import decode_numeric, fingerprint, parse_selected_javap
+from somake_109_numeric_fingerprint import decode_numeric, fingerprint, parse_selected_javap, prove_straight_line_integer_expression
 
 SYNTHETIC = """public class NumericFixture {
   public NumericFixture();
@@ -104,6 +104,36 @@ class NumericTests(unittest.TestCase):
 """)
         d=parse_selected_javap(data,("tick",))
         self.assertNotIn("900000",repr(d))
+
+    def test_straight_line_formula_proved_when_every_opcode_supported(self):
+        body=[
+            "       0: iload_1",
+            "       1: iconst_1",
+            "       2: iconst_5",
+            "       3: invokestatic #9 // Method net/minecraft/util/Mth.clamp:(III)I",
+            "       6: iconst_4",
+            "       7: iadd",
+            "       8: ireturn",
+        ]
+        proof=prove_straight_line_integer_expression(body,"(I)I")
+        self.assertEqual("PROVED_STRAIGHT_LINE_JVM_INT_EXPRESSION",proof["status"])
+        self.assertEqual("(clamp(level,1,5)+4)",proof["expression"])
+
+    def test_branch_disqualifies_formula(self):
+        body=["0: iload_1", "1: ifeq 9", "4: iconst_1", "5: ireturn"]
+        x=prove_straight_line_integer_expression(body,"(I)I")
+        self.assertEqual("NOT_PROVED",x["status"])
+        self.assertEqual("branch_or_throw",x["reason"])
+
+    def test_unknown_invocation_fails_closed(self):
+        body=["0: iload_1","1: invokestatic #2 // Method External.foo:(I)I","4: ireturn"]
+        self.assertEqual("NOT_PROVED",prove_straight_line_integer_expression(body,"(I)I")["status"])
+
+    def test_bad_descriptor_and_unbalanced_return_fail_closed(self):
+        self.assertEqual("NOT_PROVED",
+                         prove_straight_line_integer_expression(["0: iconst_1","1: ireturn"],"(F)F")["status"])
+        self.assertEqual("NOT_PROVED",
+                         prove_straight_line_integer_expression(["0: iconst_1","1: iconst_2","2: ireturn"],"(I)I")["status"])
 
     def test_java21_compiled_literals(self):
         with tempfile.TemporaryDirectory() as temp:
