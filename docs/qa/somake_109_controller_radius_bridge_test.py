@@ -428,8 +428,13 @@ class CertifiedClampedSynchedSetterTests(unittest.TestCase):
     def test_branch_or_extra_operation_is_not_supported(self):
         body=self.fixture()
         body.insert(4,"8: fconst_1")
+        body[5:]=[str(int(row.split(":",1)[0])+1)+":"+row.split(":",1)[1]
+                  for row in body[5:]]
         self.assertEqual("NOT_PROVED",
             certified_clamped_synched_radius_setter(body,"DATA_RADIUS")["status"])
+        guarded=[row.replace("fload_1","ifnonnull 21") for row in self.fixture()]
+        self.assertEqual("NOT_PROVED",
+            certified_clamped_synched_radius_setter(guarded,"DATA_RADIUS")["status"])
 
     def test_fconst_bounds_are_type_checked(self):
         body=self.fixture()
