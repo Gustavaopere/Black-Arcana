@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -112,6 +112,48 @@ class ConsumerProbeTests(unittest.TestCase):
         # Only callsites; no asserted constructor operand mapping.
         self.assertNotIn("argument_binding",d)
         self.assertNotIn("causal_radius",d)
+
+class WaveRadiusAabbShapeTests(unittest.TestCase):
+    @staticmethod
+    def specimen():
+        return [
+            "0: aload_0",
+            "1: invokevirtual #1 // Method getRadius:()F",
+            "4: f2d",
+            "5: dstore_2",
+            "6: aload_0",
+            "7: invokevirtual #2 // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;",
+            "10: dload_2",
+            "11: dconst_1",
+            "12: dload_2",
+            "13: invokevirtual #3 // Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;",
+            "16: pop",
+            "17: return",
+        ]
+
+    def test_bounded_ordered_calls_are_observed_without_inventing_dataflow(self):
+        p=wave_radius_aabb_shape(self.specimen())
+        self.assertEqual("STRUCTURAL_ONLY_NO_AABB_OPERAND_PROVENANCE",p["status"])
+        self.assertEqual(1,p["radius_call_count"])
+        self.assertEqual(1,p["inflate_call_count"])
+        self.assertTrue(p["radius_before_inflate"])
+        self.assertEqual(11,p["instruction_count"])
+        self.assertEqual(1,p["f2d_instruction_count"])
+        self.assertEqual(0,p["branch_instruction_count"])
+        self.assertNotIn("aabb_radius_proved",p)
+
+    def test_inflate_without_getter_never_becomes_radius_proof(self):
+        rows=[x for x in self.specimen() if "getRadius:()F" not in x]
+        p=wave_radius_aabb_shape(rows)
+        self.assertEqual("NOT_PROVED",p["status"])
+
+    def test_inverted_order_never_becomes_radius_proof(self):
+        rows=self.specimen()
+        radius=rows.pop(1)
+        rows.insert(-1,radius.replace("1:", "16:", 1))
+        # Offsets must be unique and sorted; malformed JVM samples fail closed.
+        with self.assertRaises(GateError):
+            wave_radius_aabb_shape(rows)
 
 if __name__=="__main__":
     unittest.main()
