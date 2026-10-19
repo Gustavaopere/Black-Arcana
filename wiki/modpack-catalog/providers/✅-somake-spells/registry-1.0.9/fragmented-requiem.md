@@ -84,3 +84,13 @@ Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-M
 - getSwordDamage references getSpellPower, and getSwordCount references Mth.clamp. The exact damage formula, sword count thresholds, impact lifecycle, LOS and per-entity owner/deduplication have not been established by this call-reference audit.
 
 **Limite de perks:** apenas assinaturas e referências simbólicas do JAR exato foram certificadas para FragmentedSwordRainEntity. Config ativa, fórmula numérica, tipo/alcance de alvo, colisão, duração efetiva, reentrância, dano/cura aplicado e hook mutador por jogador continuam **⚠️/⛔ NÃO HOMOLOGADOS**. Não transferir casting, custos ou efeitos do provider ao RPG Skill Tree; evitar callbacks de dano repetidos.
+
+## Entidade downstream — auditoria JVM exata (19/10/2026)
+
+**Fonte:** JAR Somake 1.0.9 com SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, [auditoria Java 21 #39195233005](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39195233005). Classe: `com.somake.somakespells.entity.FragmentedSwordRainEntity`. Evidência `PASS_STATIC_ENTITY_REFERENCE_DISCOVERY` — sem execução do efeito em jogo.
+
+- `FragmentedSwordRainEntity#updateServerStage(LivingEntity)` referencia `applyDamage(LivingEntity,Set)`, que consulta candidatos com `Level.getEntitiesOfClass(Class,AABB,Predicate)`.
+- `applyDamage` referencia `FragmentedRequiemSpell.getDamageSource(Entity,Entity)` e `LivingEntity.hurt(DamageSource,float)`. **Não foi encontrada nesta rotina a referência ao helper `DamageSources.applyDamage`**, portanto um hook exclusivo desse helper não deve ser presumido.
+- Há `tick`, `findSpawnPoint`, `getGroundY/setGroundY` e `spawnImpactBlood`. Fórmula de dano, janela de impacto, seleção final por vítima, número de espadas e descarte efetivo seguem sem dataflow/QA de runtime.
+
+**Boundary de perks:** ⚠️ métodos/refs comprovados, mas fórmulas, caps, ordem de settlement, config efetiva, alvos e multiplayer pendentes; ⛔ `FAIL_CLOSED` para alterações de dano/área/duração/alvo sem API por jogador real. [Matriz das cinco entidades](../EXACT-BINARY-ENTITY-CALLSITES-1.0.9.md).
