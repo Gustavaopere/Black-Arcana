@@ -3,7 +3,7 @@
 import unittest
 from somake_109_perk_method_probe import GateError
 from somake_109_radius_irons_contract import (
-    POWER_DESC, radius_cfg, callsite_descriptors, opcode_rows, sections,
+    POWER_DESC, SOMAKE_GETTER_DESC, radius_cfg, callsite_descriptors, opcode_rows, sections,
 )
 
 RADIUS=[
@@ -23,7 +23,7 @@ DAMAGE=[
     "       0: aload_0",
     "       1: iload_1",
     "       2: aload_2",
-    "       3: invokevirtual #3 // Method getSpellPower:(ILnet/minecraft/world/entity/LivingEntity;)F",
+    "       3: invokevirtual #3 // Method getSpellPower:(ILnet/minecraft/world/entity/Entity;)F",
     "       6: freturn",
 ]
 CLASSFILE="""public class FuneralBloomSpell {
@@ -42,7 +42,7 @@ CLASSFILE="""public class FuneralBloomSpell {
        0: aload_0
        1: iload_1
        2: aload_2
-       3: invokevirtual #3 // Method getSpellPower:(ILnet/minecraft/world/entity/LivingEntity;)F
+       3: invokevirtual #3 // Method getSpellPower:(ILnet/minecraft/world/entity/Entity;)F
        6: freturn
 }
 """
@@ -74,14 +74,14 @@ class CfgContracts(unittest.TestCase):
         self.assertEqual([],callsite_descriptors(DAMAGE,"getSchoolType"))
 
     def test_missing_callsite_signature_fail_closed(self):
-        broken=[x.replace("getSpellPower:(ILnet/minecraft/world/entity/LivingEntity;)F","getSpellPower") for x in DAMAGE]
+        broken=[x.replace("getSpellPower:(ILnet/minecraft/world/entity/Entity;)F","getSpellPower") for x in DAMAGE]
         with self.assertRaises(GateError):
             callsite_descriptors(broken,"getSpellPower")
 
     def test_sections_exact_descriptors(self):
         result=sections(CLASSFILE)
         self.assertEqual(["getRadius","getImpactDamage"],[x[0] for x in result])
-        self.assertEqual([POWER_DESC,POWER_DESC],[x[1] for x in result])
+        self.assertEqual([SOMAKE_GETTER_DESC,SOMAKE_GETTER_DESC],[x[1] for x in result])
 
     def test_invalid_duplicate_method_offsets(self):
         with self.assertRaises(GateError):
