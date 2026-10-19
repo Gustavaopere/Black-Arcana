@@ -515,6 +515,14 @@ class SomakeOnCastConstructorArgumentTests(unittest.TestCase):
         rows[8]=rows[8].replace("iconst_1","unknown_op")
         self.assertEqual("NOT_PROVED",oncast_controller_radius_argument(rows)["status"])
 
+    def test_external_branch_must_not_enter_inside_constructor_window(self):
+        body=self.sample()
+        body=[str(int(row.split(":",1)[0])+5)+":"+row.split(":",1)[1] for row in body]
+        body.insert(0,"0: goto 15")  # skips NEW at 5 and enters DUP at 10
+        result=oncast_controller_radius_argument(body)
+        self.assertEqual("NOT_PROVED",result["status"],result)
+        self.assertEqual("external_branch_enters_constructor_argument_window",result["reason"])
+
     def test_jvm_descriptor_parser_bounds(self):
         args,ret=descriptor_types(CONSTRUCTOR_DESC)
         self.assertEqual(["Lnet/minecraft/world/level/Level;",
