@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from somake_109_perk_method_probe import GateError
-from somake_109_entity_method_probe import ENTITIES, indicators, summarize
+from somake_109_entity_method_probe import ENTITIES, ENTITY_FOCUS, indicators, summarize
 from somake_109_cast_refs import parse_javap
 
 CLASSFILE = """Compiled from "SyntheticEntity.java"
@@ -45,6 +45,12 @@ class EntityMethodTests(unittest.TestCase):
         self.assertIn("tick", result["indicator_methods"]["damage"])
         self.assertIn("tick", result["indicator_methods"]["entity_targets"])
         self.assertEqual("()V", result["methods"][0]["descriptor"])
+
+    def test_pulse_and_finale_helpers_are_included(self):
+        sample = CLASSFILE.replace("public void tick();", "public void pulseDamage();")
+        parsed = parse_javap(sample, "SyntheticEntity", focus_pattern=ENTITY_FOCUS)
+        self.assertIn("pulseDamage", [x["method"] for x in parsed["methods"]])
+        self.assertIn("pulseDamage", summarize(parsed)["indicator_methods"]["damage"])
 
     def test_absent_method_is_not_runtime_absence(self):
         parsed = parse_javap(CLASSFILE.replace("DamageSources.applyDamage", "OtherUtils.adjustValue"),
