@@ -44,11 +44,7 @@ MAX_SYMBOLS_PER_METHOD=110
 MAX_SYMBOL_LEN=900
 
 def prove_wave_inflate_operands(body:list[str])->dict:
-    """Certify only exact adjacent three-argument JVM stack provenance.
-
-    This verifies a bounded consumer-local expression, not entity selection,
-    collision, gameplay reach, safe mutation or any external-provider runtime.
-    """
+    """Certify a complete *local* JVM operand sequence, never world effects."""
     rows=opcode_rows(body)
     def fail(reason):return {"status":"NOT_PROVED","reason":reason}
     if len(rows)>250:return fail("wave_method_exceeds_budget")
@@ -58,23 +54,60 @@ def prove_wave_inflate_operands(body:list[str])->dict:
         "Method com/somake/somakespells/entity/FuneralBloomControllerEntity.getRadius:()F",
     }
     inflates=[i for i,r in enumerate(rows) if r[1]=="invokevirtual" and r[3]==inflate_symbol]
-    getters=[i for i,r in enumerate(rows) if r[1]=="invokevirtual" and r[3] in radius_symbols]
-    if len(inflates)!=1 or len(getters)!=3:
-        return fail("unique_inflate_and_three_controller_getters_not_proved")
+    if len(inflates)!=1:return fail("unique_AABB_inflate_call_not_proved")
     idx=inflates[0]
-    if idx<9 or getters!=[idx-8,idx-5,idx-2]:
-        return fail("three_adjacent_controller_radius_producers_not_proved")
-    # The operand stack has an existing AABB receiver below exactly three
-    # expressions; each aload_0/getRadius/f2d pushes one double in JVM order.
-    for start in (idx-9,idx-6,idx-3):
+    if idx<7:return fail("not_enough_instructions_for_aabb_arguments")
+    getter_idx=[i for i,r in enumerate(rows) if r[1]=="invokevirtual" and r[3] in radius_symbols]
+    before=[g for g in getter_idx if g<idx]
+    def is_radius_triple(start):
         a,b,c=rows[start:start+3]
-        if (a[1]!="aload_0" or b[1]!="invokevirtual" or
-            b[3] not in radius_symbols or c[1]!="f2d"):
-            return fail("controller_receiver_getter_or_float_to_double_unproved")
-    first_pc=rows[idx-9][0]
+        return a[1]=="aload_0" and b[1]=="invokevirtual" and b[3] in radius_symbols and c[1]=="f2d"
+    if idx>=9 and before==[idx-8,idx-5,idx-2] and all(
+        is_radius_triple(j) for j in (idx-9,idx-6,idx-3)
+    ):
+        first=idx-9
+        proof={
+            "status":"PROVED_THREE_AABB_INFLATE_ARGUMENTS_FROM_CONTROLLER_RADIUS",
+            "axes":["X","Y","Z"],"conversion":"F_TO_D",
+            "source_method":"FuneralBloomControllerEntity.getRadius:()F",
+            "aabb_method_descriptor":"(DDD)Lnet/minecraft/world/phys/AABB;",
+            "certified_expression":"inflate(f2d(getRadius()),f2d(getRadius()),f2d(getRadius()))",
+            "source_call_count":3,
+        }
+    elif idx>=7 and before==[idx-6,idx-2] and (
+        is_radius_triple(idx-7) and is_radius_triple(idx-3)
+    ):
+        first=idx-7
+        # Only typed constant creation can certify Y without dataflow beyond
+        # this exact contiguous JVM argument sequence.
+        from somake_109_numeric_fingerprint import decode_numeric
+        import math
+        _,op,operand,comment=rows[idx-4]
+        literal=decode_numeric(op,operand,comment)
+        if not literal or literal[0]!="double":
+            return fail("vertical_double_argument_not_typed_constant")
+        try: vertical=float(literal[1])
+        except ValueError:return fail("invalid_vertical_double_literal")
+        if not math.isfinite(vertical) or not -4096<=vertical<=4096:
+            return fail("vertical_double_literal_nonfinite_or_unbounded")
+        proof={
+            "status":"PROVED_AABB_XZ_CONTROLLER_RADIUS_Y_LITERAL_DOUBLE",
+            "radius_axes":["X","Z"],
+            "vertical_double_literal":literal[1],
+            "conversion":"F_TO_D",
+            "source_method":"FuneralBloomControllerEntity.getRadius:()F",
+            "aabb_method_descriptor":"(DDD)Lnet/minecraft/world/phys/AABB;",
+            "source_call_count":2,
+            "certified_expression":"inflate(f2d(getRadius()),vertical_literal_double,f2d(getRadius()))",
+        }
+    else:
+        return fail("aabb_xyz_argument_producer_sequence_not_proved")
+    # A branch to the *inside* of an expression could bypass a producer.
+    # It would invalidate all claims even if the nearby opcodes matched.
+    first_pc=rows[first][0]
     last_pc=rows[idx][0]
     for i,(pc,op,operand,_) in enumerate(rows):
-        if idx-9<=i<=idx:continue
+        if first<=i<=idx:continue
         if op.startswith(("if","goto","jsr")):
             target=operand.split(" ",1)[0]
             if not re.fullmatch(r"\d+",target):
@@ -83,17 +116,13 @@ def prove_wave_inflate_operands(body:list[str])->dict:
                 return fail("external_branch_enters_argument_stack_window")
         elif op in ("tableswitch","lookupswitch","jsr_w","ret","wide"):
             return fail("unsupported_external_branch_topology")
-    return {
-        "status":"PROVED_THREE_AABB_INFLATE_ARGUMENTS_FROM_CONTROLLER_RADIUS",
-        "axes":["X","Y","Z"],
-        "conversion":"F_TO_D",
-        "source_method":"FuneralBloomControllerEntity.getRadius:()F",
-        "aabb_method_descriptor":"(DDD)Lnet/minecraft/world/phys/AABB;",
-        "certified_expression":"inflate(f2d(getRadius()),f2d(getRadius()),f2d(getRadius()))",
-        "source_call_count":3,
-        "method_instruction_count":len(rows),
-        "boundary":"Argument-level proof only; AABB receiver origin, query consumption, hitbox and gameplay mutation NOT proved.",
-    }
+    proof["method_instruction_count"]=len(rows)
+    proof["boundary"]=(
+        "Local AABB.inflate DDD operand provenance only. AABB receiver origin, "
+        "query consumption, target eligibility, effective range and perk API NOT proved."
+    )
+    return proof
+
 
 def wave_radius_aabb_shape(body:list[str])->dict:
     """Return bounded callsite topology only; never infer values by co-occurrence."""
