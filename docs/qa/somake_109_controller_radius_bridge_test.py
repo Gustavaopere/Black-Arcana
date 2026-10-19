@@ -187,7 +187,9 @@ class RadiusBridgeTests(unittest.TestCase):
           "11: invokevirtual #5 // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V",
           "14: return"]
         self.assertEqual("NOT_PROVED",synced_radius_constructor_setter(setter,"DATA_RADIUS")["status"])
-        duplicated=[*setter[:-1],*setter[:-1],setter[-1]]
+        shifted=[line.replace(str(offset)+":",str(offset+20)+":",1)
+                 for line,offset in zip(setter[:-1],[0,1,4,7,8,11])]
+        duplicated=[*setter[:-1],*shifted,"34: return"]
         self.assertEqual("NOT_PROVED",synced_radius_constructor_setter(duplicated,"OTHER_RADIUS")["status"])
 
     def test_compiled_java21_constructor_field_getter(self):
