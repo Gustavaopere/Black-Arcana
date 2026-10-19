@@ -62,7 +62,7 @@ class NumericTests(unittest.TestCase):
         self.assertEqual([],proof)  # i2f immediately precedes clamp, so fail closed
         direct=SYNTHETIC.replace(
             "       4: bipush 10\n       6: i2f\n",
-            "       4: ldc #6 // float 10.0f\n"
+            "       4: ldc #5 // float 3.5f\n       6: ldc #6 // float 10.0f\n"
         )
         e=parse_selected_javap(direct,("getRadius",))
         self.assertEqual(1,len(e["getRadius"]["direct_trailing_clamp_literals"]))
@@ -73,7 +73,7 @@ class NumericTests(unittest.TestCase):
     def test_intervening_arithmetic_never_certifies_trailing_literals(self):
         direct=SYNTHETIC.replace(
             "       4: bipush 10\n       6: i2f\n",
-            "       4: ldc #6 // float 10.0f\n       6: fmul\n"
+            "       4: ldc #5 // float 3.5f\n       6: fmul\n       7: ldc #6 // float 10.0f\n"
         )
         q=parse_selected_javap(direct,("getRadius",))
         self.assertEqual([],q["getRadius"]["direct_trailing_clamp_literals"])
