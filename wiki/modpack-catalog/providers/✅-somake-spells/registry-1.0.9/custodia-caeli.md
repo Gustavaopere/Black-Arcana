@@ -84,3 +84,13 @@ Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-M
 - onCast references MagicData.getAdditionalCastData, TargetAreaCastData.getCenter or getTargetedSigilPosition, then CustodiaCaeliSigilEntity construction. Supporting getters include getBlessingDuration, getMaxHealthBonusPercent, getArmorBonus and getArmorToughnessBonus. The exact radius, attribute values, duration, allowed targets and mutation API are not proven here.
 
 **Limite de perks:** apenas assinaturas e referências simbólicas do JAR exato foram certificadas para CustodiaCaeliSigilEntity. Config ativa, fórmula numérica, tipo/alcance de alvo, colisão, duração efetiva, reentrância, dano/cura aplicado e hook mutador por jogador continuam **⚠️/⛔ NÃO HOMOLOGADOS**. Não transferir casting, custos ou efeitos do provider ao RPG Skill Tree; evitar callbacks de dano repetidos.
+
+## Entidade downstream — auditoria JVM exata (19/10/2026)
+
+**Fonte:** JAR Somake 1.0.9 com SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, [auditoria Java 21 #39195233005](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39195233005). Classe: `com.somake.somakespells.entity.CustodiaCaeliSigilEntity`. Evidência `PASS_STATIC_ENTITY_REFERENCE_DISCOVERY` — sem execução do efeito em jogo.
+
+- `CustodiaCaeliSigilEntity#applyBlessing()` referencia `Level.getEntitiesOfClass` em AABB, `Player.isSpectator`, distância ao quadrado, `ModMobEffects.CUSTODIA_CAELI_BLESSING`, `MobEffectInstance` e `Player.addEffect`.
+- `getRadius/setRadius`, `getDuration/setDuration` e `tick` existem na entidade. A seleção real de beneficiários, interação com PvP/times e stacking precisam ser auditados antes de mudar área/duração por perk.
+- Não assumir dano ou healing direto a partir do nome Blessing. A entidade tem authority provider-native; progressão externa precisa de boundary demonstrado.
+
+**Boundary de perks:** ⚠️ métodos/refs comprovados, mas fórmulas, caps, ordem de settlement, config efetiva, alvos e multiplayer pendentes; ⛔ `FAIL_CLOSED` para alterações de dano/área/duração/alvo sem API por jogador real. [Matriz das cinco entidades](../EXACT-BINARY-ENTITY-CALLSITES-1.0.9.md).
