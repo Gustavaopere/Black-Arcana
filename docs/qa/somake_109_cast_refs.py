@@ -33,7 +33,8 @@ FOCUS = re.compile(r"^(?:on[A-Z]|get[A-Z]|check[A-Z]|can[A-Z]|is[A-Z]|"
                    r"set[A-Z]|should[A-Z]|lambda\$|cast|tick|summon|apply|"
                    r"hurt|damage|heal|spawn|create|perform)", re.I)
 
-def parse_javap(data: str, simple: str) -> dict:
+def parse_javap(data: str, simple: str, *, focus_pattern: re.Pattern | None = None) -> dict:
+    focus_pattern = focus_pattern or FOCUS
     if not isinstance(data, str) or len(data) > 1_000_000:
         raise GateError("disassembly missing or unbounded")
     lines = data.splitlines()
@@ -70,7 +71,7 @@ def parse_javap(data: str, simple: str) -> dict:
             opcode, comment = m.group(1), after.strip() if separator else ""
             if opcode.startswith(("if", "goto")) or opcode in ("tableswitch", "lookupswitch"):
                 branch_count += 1
-            if not FOCUS.match(name):
+            if not focus_pattern.match(name):
                 continue
             if opcode.startswith("invoke") or opcode in ("getfield", "getstatic", "putfield", "putstatic"):
                 match = SYMBOL.match(comment)
@@ -87,10 +88,10 @@ def parse_javap(data: str, simple: str) -> dict:
                     members.append(normalized)
                 if len(members) > 90:
                     raise GateError("too many member references")
-        records.append({"method": name, "descriptor": desc, "is_focus": bool(FOCUS.match(name)),
-                        "branches": branch_count if FOCUS.match(name) else None,
-                        "invokes": invoke_count if FOCUS.match(name) else None,
-                        "members": members if FOCUS.match(name) else []})
+        records.append({"method": name, "descriptor": desc, "is_focus": bool(focus_pattern.match(name)),
+                        "branches": branch_count if focus_pattern.match(name) else None,
+                        "invokes": invoke_count if focus_pattern.match(name) else None,
+                        "members": members if focus_pattern.match(name) else []})
     if not records:
         raise GateError("no real methods")
     focus = [x for x in records if x["is_focus"]]
