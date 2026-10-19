@@ -169,3 +169,13 @@ Para `level` inteiro e `caster != null`, o retorno estático segue `Mth.clamp_f3
 **Eixos para perks:** nível (coeficiente 0.82), bônus por poder de escola (coeficiente 0.65 e floor 0), clamp com operandos 10..15 e rota sem caster foram identificados em bytecode. A unidade em blocos, a projeção para área/targets, valores efetivos de escola/config, condições downstream, propriedade de eventos e interfaces para alterar por personagem continuam ⚠️/⛔. O getter **não** autoriza mutação de alcance diretamente. Nenhum double-processing de custo/cooldown/Mastery/impact é admissível.
 
 **Estado:** ✅ retorno JVM do raio por ambos os caminhos; ⚠️ efeito em jogo e classe consumidora ainda não comprovados; ⛔ `FAIL_CLOSED` para adapter per-player. Somake 83/83 identidades sem alterações; Stage 06.05 🟡 e Stage 09 condicionado.
+
+## Consumidores estruturais do raio — controller / bud (19/10/2026)
+
+**Fonte:** Somake 1.0.9 JAR File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`; [Java21 #39262591589](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39262591589), 9 testes `SUCCESS` e 3 classfiles inspecionados; [dossiê de consumidores](../EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md).
+
+**Callsites de versão exata:** `FuneralBloomSpell.onCast` referencia `getRadius(int,LivingEntity):float`, `getImpactDamage(int,LivingEntity):float` e o construtor da `FuneralBloomControllerEntity(Level,LivingEntity,float,int,int,int,int,float,int,int)`. `Controller.tick`/`launchWave` possuem chamadas a `getRadius():float`. `launchWave` usa `AABB.inflate(double,double,double)`, `ServerLevel.getEntitiesOfClass` e constrói buds. `FuneralBloomBudEntity.impact` usa outra `AABB.inflate(double,double,double)`, consulta entidades, e referencia `DamageSources.applyDamage`, `SpellHealEvent`, cura e owner. O método `bud.impact` não contém invocação direta ao getter `getRadius`.
+
+**Limite de prova:** referências co-presentes não certificam qual retorno alimenta os float do construtor, quais operandos dimensionam cada AABB, nem como um alvo elegível se transforma em impacto. Existem duas **superfícies diferentes de seleção/área** (controller wave e impacto individual); não tratá-las como sinônimos. Em `onCast` e `launchWave` há `invokedynamic`, contado sem atribuir corpo de lambda.
+
+**Perks:** ⚠️ fórmulas de getter conhecidas e fontes consumidoras estruturais conhecidas; ⛔ `FAIL_CLOSED` para modificar raio, hitbox, quantidade de alvos, dano/Heal ou Mastery por caster sem prova de passagem de parâmetros e interface real. Nenhuma nova magia ou adapter foi criada.
