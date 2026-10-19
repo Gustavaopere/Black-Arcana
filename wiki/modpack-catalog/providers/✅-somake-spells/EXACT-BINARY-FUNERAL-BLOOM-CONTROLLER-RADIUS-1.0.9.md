@@ -81,3 +81,11 @@ O antigo `NOT_PROVED / setter_not_exact_seven_opcode_float_write` permanece vál
 - ⛔ **Sem hook/API pública mutadora por jogador**; a existência de `setRadius(float)` interno e a fórmula de raio não autorizam alterar, recriar, cancelar ou duplicar um cast Somake, custos Iron's nem perks/Mastery RPG. Estado `FAIL_CLOSED`.
 
 Esta adição **supera apenas a pendência histórica de proveniência do primeiro float do callsite**, mantendo as incertezas sobre AABBs, target selection, configuração efetiva, classloading, Survival, PvP, multiplayer, cliente e integração. É uma prova estática, não QA físico. Identidades Somake **83/83**, fichas com downstream nesta campanha **5/83**, adapters homologados **0**; Stage 06.05 🟡, Stage 09 PENDING.
+
+## Consumidor direto: `launchWave.AABB.inflate` — 19/10/2026, PR #840
+
+Uma auditoria posterior do exato JAR Somake 1.0.9, [Java21 #39304248399](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39304248399), **SUCCESS / 21 testes**, fecha a proveniência **local dos três argumentos `double`** de `AABB.inflate` em `FuneralBloomControllerEntity.launchWave(ServerLevel)`: **X = `(double)getRadius()`; Y = `10.5d`; Z = `(double)getRadius()`**. O método tem 196 instruções, com três chamadas totais a `getRadius`, mas somente duas anteriores à expansão; a terceira não foi atribuída a essa chamada `inflate`.
+
+**Cadeia agora certificada até os operandos dessa expansão:** `FuneralBloomSpell.getRadius(int,LivingEntity)` → argumento `float` ordinal 3 da controller → `setRadius(float)` clamp `6–18` → `DATA_RADIUS` → `controller.getRadius()` → argumentos X/Z da AABB. A expressão upstream do getter do spell, clamp `10–15` para entradas finitas, permanece prova separada.
+
+**Não encerrado:** origem/identidade efetiva de todos os argumentos do getter de spell, objeto AABB receptor, propagação do **retorno** de `inflate` à lista de entidades, filtros e quantidade de alvos, dano/cura, `FuneralBloomBudEntity.impact` e hook público de mutação de área por jogador. Essa certificação **não autoriza** declarar que `R` seja raio de dano no mundo ou altura real de uma perk; permanece ⛔ `FAIL_CLOSED`. [Dossiê do consumidor](EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md).
