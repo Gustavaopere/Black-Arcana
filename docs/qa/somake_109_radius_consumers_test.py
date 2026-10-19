@@ -183,7 +183,7 @@ class WaveInflateCausalOperandTests(unittest.TestCase):
 
     def test_only_two_radius_arguments_fail_closed(self):
         body=self.triple_radius()
-        body[8]=body[8].replace("getRadius:()F","otherFloat:()F")
+        body[9]=body[9].replace("getRadius:()F","otherFloat:()F")
         result=prove_wave_inflate_operands(body)
         self.assertEqual("NOT_PROVED",result["status"])
 
