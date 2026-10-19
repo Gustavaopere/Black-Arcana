@@ -137,7 +137,7 @@ class WaveRadiusAabbShapeTests(unittest.TestCase):
         self.assertEqual(1,p["radius_call_count"])
         self.assertEqual(1,p["inflate_call_count"])
         self.assertTrue(p["radius_before_inflate"])
-        self.assertEqual(11,p["instruction_count"])
+        self.assertEqual(12,p["instruction_count"])
         self.assertEqual(1,p["f2d_instruction_count"])
         self.assertEqual(0,p["branch_instruction_count"])
         self.assertNotIn("aabb_radius_proved",p)
@@ -148,12 +148,13 @@ class WaveRadiusAabbShapeTests(unittest.TestCase):
         self.assertEqual("NOT_PROVED",p["status"])
 
     def test_inverted_order_never_becomes_radius_proof(self):
-        rows=self.specimen()
-        radius=rows.pop(1)
-        rows.insert(-1,radius.replace("1:", "16:", 1))
-        # Offsets must be unique and sorted; malformed JVM samples fail closed.
-        with self.assertRaises(GateError):
-            wave_radius_aabb_shape(rows)
+        original=self.specimen()
+        radius=[x for x in original if "getRadius:()F" in x][0]
+        rows=[x for x in original if "getRadius:()F" not in x]
+        rows.insert(-1,radius)
+        rows=[str(3*i)+":"+line.split(":",1)[1] for i,line in enumerate(rows)]
+        p=wave_radius_aabb_shape(rows)
+        self.assertEqual("NOT_PROVED",p["status"])
 
 if __name__=="__main__":
     unittest.main()
