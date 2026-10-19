@@ -7,7 +7,7 @@ from pathlib import Path
 from somake_109_perk_method_probe import GateError
 from somake_109_controller_radius_bridge import (
   FQCN,CONSTRUCTOR_DESC,FLOAT_SLOTS,GETTER_DESC,
-  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape,synced_entity_float_getter,synced_radius_constructor_setter
+  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape,synced_entity_float_getter,synced_radius_constructor_setter,synced_accessor_method_inventory
 )
 
 def specimen(getter=None,slot=3):
@@ -191,6 +191,31 @@ class RadiusBridgeTests(unittest.TestCase):
                  for line,offset in zip(setter[:-1],[0,1,4,7,8,11])]
         duplicated=[*setter[:-1],*shifted,"34: return"]
         self.assertEqual("NOT_PROVED",synced_radius_constructor_setter(duplicated,"OTHER_RADIUS")["status"])
+
+    def test_accessor_method_inventory_discovers_but_does_not_prove_setter(self):
+        method=[
+           "0: aload_0",
+           "1: getfield #2 // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;",
+           "4: getstatic #3 // Field DATA_RADIUS:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+           "7: fload_1",
+           "8: invokestatic #4 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;",
+           "11: invokevirtual #5 // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V",
+           "14: return"]
+        result=synced_accessor_method_inventory([("setRadius","(F)V",method)],"DATA_RADIUS")
+        self.assertEqual(1,result["methods_examined"])
+        item=result["methods_with_relevant_symbols"][0]
+        self.assertEqual("setRadius",item["method"])
+        self.assertEqual([1],item["float_local_load_slots"])
+        self.assertEqual(1,item["direct_getstatic_accessor_count"])
+        self.assertEqual("STRUCTURAL_METHOD_REFERENCE_DISCOVERY_ONLY",result["status"])
+        self.assertNotIn("constructor_parameter",item)
+
+    def test_accessor_inventory_does_not_conflate_different_getstatic_accessor(self):
+        body=[
+           "0: getstatic #3 // Field DATA_OTHER:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+           "3: return"]
+        result=synced_accessor_method_inventory([("whatever","()V",body)],"DATA_RADIUS")
+        self.assertEqual([],result["methods_with_relevant_symbols"])
 
     def test_compiled_java21_constructor_field_getter(self):
         """Compiler output exercises real javap field comments and local slots."""
