@@ -64,7 +64,8 @@ class EntityMethodTests(unittest.TestCase):
             summarize(parsed)
 
     def test_duplicate_method_rejected(self):
-        source = CLASSFILE.replace("public boolean shouldBeSaved();", "public void tick();")
+        source = CLASSFILE.replace("public boolean shouldBeSaved();", "public void tick();").replace(
+            "descriptor: ()Z", "descriptor: ()V")
         with self.assertRaises(GateError):
             parse_javap(source, "SyntheticEntity")
 
