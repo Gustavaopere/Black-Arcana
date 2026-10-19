@@ -24,6 +24,7 @@ SOMAKE_GETTER_DESC="(ILnet/minecraft/world/entity/LivingEntity;)F"
 POWER_DESC="(ILnet/minecraft/world/entity/Entity;)F"
 IRON_VERSION="1.21.1-3.16.3"
 IRON_API_FILENAME="irons_spellbooks-1.21.1-3.16.3-api.jar"
+IRON_API_SHA256="69e81104a9fd31a402d9c89ab09c2a6b2fd6d2ab98db5a37bb159517363ee9ad"
 MAX_IRON_BYTES=5_000_000
 MAX_JAVAP_BYTES=1_500_000
 MAX_METHOD_INSTRUCTIONS=300
@@ -158,8 +159,8 @@ def inspect(somake:Path,iron:Path,expected_api_sha256:str|None)->dict:
         if SOMAKE_CLASS.replace(".","/")+".class" not in names:
             raise GateError("Somake spell class missing")
     api_hash=validate_irons_api(iron)
-    if expected_api_sha256 is not None and api_hash!=expected_api_sha256:
-        raise GateError("Iron's official API SHA-256 mismatch")
+    if api_hash!=IRON_API_SHA256 or (expected_api_sha256 is not None and expected_api_sha256!=IRON_API_SHA256):
+        raise GateError("Iron's exact 3.16.3 official API SHA-256 mismatch")
     spell=sections(javap(somake,SOMAKE_CLASS))
     matches={}
     for name,desc,body in spell:
@@ -171,8 +172,10 @@ def inspect(somake:Path,iron:Path,expected_api_sha256:str|None)->dict:
         raise GateError("missing required Somake methods")
     radius=radius_cfg(matches["getRadius"][1])
     numeric=fingerprint(matches["getRadius"][1])
-    if radius["conditional_branches"]+radius["unconditional_branches"]!=2:
-        raise GateError("Somake exact radius branch count changed")
+    if not (radius["instruction_count"]==28 and radius["conditional_branches"]==1
+            and radius["unconditional_branches"]==1 and radius["branch_predicates"]==["ifnonnull"]
+            and radius["join_points"]==1 and radius["terminal_returns"]==1 and radius["back_edges"]==0):
+        raise GateError("Somake exact radius structural CFG fingerprint changed")
     if not any("SchoolType.getPowerFor:" in c for c in radius["method_calls"]):
         raise GateError("radius no longer references SchoolType.getPowerFor")
     power_calls=callsite_descriptors(matches["getImpactDamage"][1],"getSpellPower")
@@ -184,6 +187,11 @@ def inspect(somake:Path,iron:Path,expected_api_sha256:str|None)->dict:
         raise GateError("exact Iron's public API getSpellPower descriptor unavailable/ambiguous")
     api_refs=sorted(set(c for _,op,_,c in opcode_rows(matching[0][2]) if op.startswith("invoke") and c))
     if len(api_refs)>40:raise GateError("Iron's method reference budget exceeded")
+    if not all(any(signal in ref for ref in api_refs) for signal in (
+            "SpellConfigManager.getSpellConfigValue:",
+            "SchoolType.getPowerFor:",
+            "LivingEntity.getAttributeValue:")):
+        raise GateError("Iron's exact API power attribute/config callsite fingerprint changed")
     # A method descriptor match verifies binary linkage, not override/behavior.
     if hashlib.sha1(somake.read_bytes()).hexdigest()!=SHA1 or hashlib.sha256(iron.read_bytes()).hexdigest()!=api_hash:
         raise GateError("JAR changed during inspection")
