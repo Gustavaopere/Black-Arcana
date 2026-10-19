@@ -48,3 +48,23 @@ A tentativa subsequente de exigir um setter **exatamente** de sete instruções 
 **Pendências objetivas:** interpretar o fluxo inteiro de `setRadius(float)` e rastrear a eventual chamada do construtor com o slot `float` correto; examinar o argumento efetivamente enviado por `FuneralBloomSpell.onCast`; distinguir uso do getter da controller nos operandos de `AABB.inflate` da wave e no impacto independente da bud. Não atribuir raio, hitbox ou tamanho de alvo por semelhança de nome.
 
 **Boundary:** ⛔ `FAIL_CLOSED` para mutação de parâmetros native-Somake e para atribuir contratos de perks do RPG Skill Tree. As conclusões acima são binárias e estáticas, não QA provider-loaded/Survival/multiplayer nem prova de alteração do runtime Black Arcana.
+
+## Prova posterior: setter sincronizado com clamp e vínculo local do construtor — 19/10/2026 (PR #838)
+
+A pendência de **dataflow local construtor → setter → `DATA_RADIUS` → getter** registrada acima foi encerrada por um verificador de **corpo integral, dez opcodes** após a auditoria estrutural de `setRadius(float)`. Evidência física no JAR oficial 1.0.9 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`: [GitHub Actions #39292948277](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39292948277), `SUCCESS`, 31 testes Java21 no HEAD `db24ea457eaa24c977d990ddf199ff4bc968c60c`. Testes de regressão específicos adicionais na PR #838 devem ser aferidos no HEAD subsequente, não inferidos deste run.
+
+| Elo / parâmetro | Resultado estritamente certificado |
+|---|---|
+| Construtor `(Level,LivingEntity,float,int,int,int,int,float,int,int)` | ✅ chamada direta `this.setRadius(float)` com o primeiro float, **slot JVM 3 / argumento ordinal 3**. Segundo float permanece no **slot 8**, sem ser associado a raio neste elo |
+| `setRadius(float)` → clamp | ✅ corpo integral com 10 instruções, `fload_1`, limites float **6.0f e 18.0f**, `Mth.clamp:(FFF)F` |
+| Clamp → sincronização | ✅ `Float.valueOf:(F)Ljava/lang/Float;` seguido de `SynchedEntityData.set(DATA_RADIUS,...)`, com accessor do mesmo owner |
+| `getRadius():float` | ✅ leitura completa de `SynchedEntityData.get(DATA_RADIUS)` e `Float.floatValue()` (já comprovada na PR #837) |
+| `FuneralBloomSpell.onCast` → valor de cada float no construtor | ⚠️ **não examinado neste gate**: chamada presente, sem atribuição certificada das expressões/argumentos |
+| `controller.launchWave` / `bud.impact` → argumentos de `AABB.inflate` | ⚠️ **não demonstrado** que ambas as áreas usem esse raio, nem a unidade ou efeito por alvo |
+| Hook per-player/perk | ⛔ **FAIL_CLOSED**: método interno de entidade não equivale a API oficial mutadora |
+
+A expressão **certificada apenas no escopo interno do setter** é `DATA_RADIUS := Float.valueOf(Mth.clamp(setRadius_argument_float, 6.0f, 18.0f))`. A trilha do primeiro float do construtor até a leitura posterior da controller está certificada, mas isso **não** identifica a expressão que a spell usou para construí-la. Tampouco autoriza prometer que 18 seja o raio máximo de efeito no mundo: seleção e impacto secundário têm consumidores próprios.
+
+O antigo `NOT_PROVED / setter_not_exact_seven_opcode_float_write` permanece válido apenas para o **padrão de sete opcodes sem clamp**, que a implementação real não segue. Não usá-lo para negar a prova posterior de dez opcodes. O `NOT_PROVED` da escrita **direta pelo construtor em `SynchedEntityData.set`** também continua correto, porque a escrita agora é comprovadamente **indireta pelo setter**.
+
+**Contagens e autoridade invariantes:** 83/83 identidades Somake; 5/83 fichas com entidade downstream na campanha; +0 novas identidades e +0 adapters homologados. Somake controla magia/efeito, Iron's hospeda casting/custos e RPG Skill Tree controla perks/Mastery via contratos reais; Black Arcana não duplica esses runtimes. Stage 06.05 🟡, Stage 09 de QA físico pendente.

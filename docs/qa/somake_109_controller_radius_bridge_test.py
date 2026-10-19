@@ -7,7 +7,7 @@ from pathlib import Path
 from somake_109_perk_method_probe import GateError
 from somake_109_controller_radius_bridge import (
   FQCN,CONSTRUCTOR_DESC,FLOAT_SLOTS,GETTER_DESC,
-  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape,synced_entity_float_getter,synced_radius_constructor_setter,synced_accessor_method_inventory,direct_synched_radius_setter,direct_constructor_setter_call
+  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape,synced_entity_float_getter,synced_radius_constructor_setter,synced_accessor_method_inventory,direct_synched_radius_setter,direct_constructor_setter_call,setter_structural_shape,certified_clamped_synched_radius_setter,float_literal_f32
 )
 
 def specimen(getter=None,slot=3):
@@ -328,5 +328,120 @@ class RadiusBridgeTests(unittest.TestCase):
         self.assertEqual(0,local_id("aload_0","","aload"))
         self.assertEqual(8,local_id("fload","8","fload"))
         self.assertIsNone(local_id("dload_2","","fload"))
+
+class RadiusSetterStructuralEvidenceTests(unittest.TestCase):
+    def test_exact_direct_setter_reports_shape_but_not_extra_proof(self):
+        body=[
+            "0: aload_0",
+            "1: getfield #2 // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;",
+            "4: getstatic #3 // Field DATA_RADIUS:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+            "7: fload_1",
+            "8: invokestatic #4 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;",
+            "11: invokevirtual #5 // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V",
+            "14: return"]
+        p=setter_structural_shape(body,"DATA_RADIUS")
+        self.assertEqual("STRUCTURAL_ONLY_NO_SETTER_ARGUMENT_CAUSALITY",p["proof_status"])
+        self.assertEqual(7,p["instruction_count"])
+        self.assertEqual(1,p["owned_accessor_getstatic_count"])
+        self.assertEqual(1,p["synched_data_set_call_count"])
+        self.assertEqual(1,p["float_box_call_count"])
+        self.assertEqual([1],p["float_local_load_slots"])
+        self.assertEqual(0,p["branch_instruction_count"])
+        self.assertEqual(0,p["numeric_operation_or_conversion_count"])
+        self.assertNotIn("constructor_argument",p)
+
+    def test_extra_operations_and_branch_remain_observational(self):
+        body=[
+            "0: fload_1","1: fconst_1","2: fadd",
+            "3: ifeq 8","6: fload_1","7: return","8: return"]
+        p=setter_structural_shape(body,"DATA_RADIUS")
+        self.assertEqual(1,p["branch_instruction_count"])
+        self.assertEqual(1,p["numeric_operation_or_conversion_count"])
+        self.assertEqual([1],p["float_local_load_slots"])
+        self.assertEqual(2,p["return_instruction_count"])
+        self.assertEqual(0,p["synched_data_set_call_count"])
+        self.assertEqual("STRUCTURAL_ONLY_NO_SETTER_ARGUMENT_CAUSALITY",p["proof_status"])
+
+    def test_foreign_accessors_and_unresolved_invocations_fail_closed(self):
+        body=[
+            "0: getstatic #2 // Field external/mod/Other.DATA_RADIUS:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+            "3: return"]
+        p=setter_structural_shape(body,"DATA_RADIUS")
+        self.assertEqual(0,p["owned_accessor_getstatic_count"])
+        with self.assertRaises(GateError):
+            setter_structural_shape(["0: invokevirtual #9","3: return"],"DATA_RADIUS")
+
+class CertifiedClampedSynchedSetterTests(unittest.TestCase):
+    @staticmethod
+    def fixture():
+        return [
+            "0: aload_0",
+            "1: getfield #2 // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;",
+            "4: getstatic #3 // Field DATA_RADIUS:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+            "7: fload_1",
+            "8: ldc #10 // float 6.0f",
+            "10: ldc #11 // float 18.0f",
+            "12: invokestatic #12 // Method net/minecraft/util/Mth.clamp:(FFF)F",
+            "15: invokestatic #13 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;",
+            "18: invokevirtual #14 // Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V",
+            "21: return",
+        ]
+
+    def test_strict_clamped_setter_returns_only_setter_local_proof(self):
+        p=certified_clamped_synched_radius_setter(self.fixture(),"DATA_RADIUS")
+        self.assertEqual("PROVED_CLAMPED_FLOAT_SETTER_TO_SYNCED_RADIUS",p["status"])
+        self.assertEqual((6.0,18.0),(p["clamp_lower_float"],p["clamp_upper_float"]))
+        self.assertEqual(1,p["setter_parameter_local_slot"])
+        self.assertNotIn("constructor_argument",p)
+        self.assertNotIn("perk_hook",p)
+
+    def test_wrong_float_arg_is_not_promoted(self):
+        body=[s.replace("fload_1","fload_2") for s in self.fixture()]
+        p=certified_clamped_synched_radius_setter(body,"DATA_RADIUS")
+        self.assertEqual("NOT_PROVED",p["status"])
+
+    def test_foreign_accessor_or_wrong_owner_is_not_promoted(self):
+        body=[s.replace("Field DATA_RADIUS:","Field external/mod/Other.DATA_RADIUS:")
+              for s in self.fixture()]
+        self.assertEqual("NOT_PROVED",
+            certified_clamped_synched_radius_setter(body,"DATA_RADIUS")["status"])
+        self.assertEqual("NOT_PROVED",
+            certified_clamped_synched_radius_setter(self.fixture(),"DATA_OTHER")["status"])
+
+    def test_numeric_bounds_must_be_literal_floats_in_correct_order(self):
+        body=[s.replace("float 6.0f","int 6") for s in self.fixture()]
+        self.assertEqual("NOT_PROVED",
+            certified_clamped_synched_radius_setter(body,"DATA_RADIUS")["status"])
+        backwards=[s.replace("6.0f","90.0f") for s in self.fixture()]
+        self.assertEqual("NOT_PROVED",
+            certified_clamped_synched_radius_setter(backwards,"DATA_RADIUS")["status"])
+        self.assertIsNone(float_literal_f32((0,"ldc","#3","float NaNf")))
+
+    def test_wrong_clamp_target_does_not_prove_dataflow(self):
+        body=[s.replace("Mth.clamp:(FFF)F","Mth.abs:(F)F") for s in self.fixture()]
+        self.assertEqual("NOT_PROVED",
+            certified_clamped_synched_radius_setter(body,"DATA_RADIUS")["status"])
+        body=[s.replace("SynchedEntityData.set:","Other.set:") for s in self.fixture()]
+        self.assertEqual("NOT_PROVED",
+            certified_clamped_synched_radius_setter(body,"DATA_RADIUS")["status"])
+
+    def test_branch_or_extra_operation_is_not_supported(self):
+        body=self.fixture()
+        body.insert(4,"8: fconst_1")
+        body[5:]=[str(int(row.split(":",1)[0])+1)+":"+row.split(":",1)[1]
+                  for row in body[5:]]
+        self.assertEqual("NOT_PROVED",
+            certified_clamped_synched_radius_setter(body,"DATA_RADIUS")["status"])
+        guarded=[row.replace("fload_1","ifnonnull 21") for row in self.fixture()]
+        self.assertEqual("NOT_PROVED",
+            certified_clamped_synched_radius_setter(guarded,"DATA_RADIUS")["status"])
+
+    def test_fconst_bounds_are_type_checked(self):
+        body=self.fixture()
+        body[4]="8: fconst_0"
+        body[5]="9: fconst_2"
+        p=certified_clamped_synched_radius_setter(body,"DATA_RADIUS")
+        self.assertEqual("PROVED_CLAMPED_FLOAT_SETTER_TO_SYNCED_RADIUS",p["status"])
+        self.assertEqual((0.0,2.0),(p["clamp_lower_float"],p["clamp_upper_float"]))
 
 if __name__=="__main__":unittest.main()
