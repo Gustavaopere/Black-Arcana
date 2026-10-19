@@ -18,7 +18,7 @@
 | Gate reforçado | [#39178310071](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39178310071) | **SUCCESS**; 10/10 autotestes, `Done (10.039s)`, Platform e Vanilla Backport SHA-256 exatos, três `Mixing` de alvos verificados, `deviations=[]`; [JSON #12154822835](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39178310071/artifacts/12154822835) |
 
 O teste foi executado em **dedicated server mínimo**, com EULA aceita no diretório efêmero do runner, `mixin.debug.verbose=true` e timeout controlado **depois** do `Done` (`exit-code=124`). O timeout encerra o processo de observação; **não** é prova de falha de startup nem de shutdown gracioso. Os recursos do teste incluem **apenas** NeoForge 21.1.250, Platform 1.3.3 e Vanilla Backport 1.1.7.10, não os demais mods do perfil nem mundo do usuário. O teste não abre janela cliente, não conecta jogador, não inspeciona save existente e não testa magias.
- 
+
 O [verificador fail-closed](../../../../docs/qa/vanillabackport_11710_minimal_bootstrap.py) testa presença de `Done`, encerramento esperado do smoke, ausência de padrões de falha fatal, menção a providers e **três mensagens de mistura com alvos exatos, cada uma exatamente uma vez**, sem aceitar coincidência de nomes genéricos. O [workflow](../../../../.github/workflows/vanillabackport-11710-minimal-server-bootstrap.yml) publica somente relatório JSON resumido: JARs de terceiros, servidor gerado, arquivos `mixin.debug.export`, logs brutos e dados do mundo não são anexados ao repositório.
 
 ## Três relações do serviço Mixin realmente reportadas no servidor mínimo
