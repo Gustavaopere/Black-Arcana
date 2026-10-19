@@ -57,6 +57,16 @@ class RadiusBridgeTests(unittest.TestCase):
                                      "putfield #10 // Field impactDamage:F"))
         self.assertEqual("NOT_PROVED",x["constructor_to_getter"]["status"])
 
+    def test_foreign_field_owner_is_never_claimed_as_controller_radius(self):
+        foreign="external/mod/OtherEntity.radius:F"
+        x=analyze(specimen().replace("Field radius:F", "Field "+foreign))
+        self.assertEqual("NOT_PROVED",x["getter"]["status"])
+
+    def test_foreign_constructor_field_write_does_not_bind_local_getter(self):
+        x=analyze(specimen().replace("putfield #10 // Field radius:F",
+            "putfield #10 // Field external/mod/OtherEntity.radius:F"))
+        self.assertEqual("NOT_PROVED",x["constructor_to_getter"]["status"])
+
     def test_unknown_local_source_not_guessed(self):
         x=analyze(specimen(slot=4))
         self.assertEqual("NOT_PROVED",x["constructor_to_getter"]["status"])
