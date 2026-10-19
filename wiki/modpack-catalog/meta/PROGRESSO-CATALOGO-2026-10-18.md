@@ -137,3 +137,19 @@ O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `
 - [Varredura de 30 métodos #39289130886](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39289130886), `SUCCESS`: `defineSynchedData`, `getRadius`, `setRadius(float)` referenciam o accessor; `setRadius` também possui referências a `Float.valueOf` e `SynchedEntityData.set`. A escrita direta no construtor e a interpretação completa do setter continuam `NOT_PROVED`.
 - **Contagens inalteradas:** global —% (denominador desconhecido; piso histórico >=1.857 objetos); Somake **83/83 (100%)** identidades, **5/83 (6,02%)** fichas com entidades downstream auditadas e sete classfiles downstream no conjunto anterior. Novo trabalho aprofunda a mesma entidade e não adiciona ID de magia.
 - **Bloqueios:** `0` adapters de alteração do raio homologados; ⛔ `FAIL_CLOSED` para perks sem contrato; Stage 06.05 🟡 e Stage 09 condicionado conforme D035. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md).
+
+## Continuação da campanha — Somake Funeral Bloom: construtor → raio interno (19/10/2026, PR #838)
+
+**Barra geral — magias, rituais e ações sobrenaturais de todos os mods:** **—%** porque o denominador global segue aberto. Pisos históricos divergem entre **1.856** (reconciliação Requiem) e **1.857** objetos; usar conservadoramente `>=1.856`, sem somar entidades, helpers ou as mesmas magias repetidas. Nenhuma nova raiz foi identificada neste lote.
+
+**Barra Somake 1.0.9 — identidades de spells:** **83/83 = 100%** da registry física, não 100% dos dados causais nem de perks. **Profundidade de efeitos downstream no recorte acumulado:** **5/83 = 6,02%** fichas de origem com entidade auditada, sete classfiles downstream distintos observados; esta prova aprofunda a Funeral Bloom já contada, sem aumentar 5/83. **Perks de mutação homologadas: 0**; percentual de cobertura de mutações permanece —% por falta de denominador de demandas/hook testado.
+
+**Nova evidência de artefato exato:** [workflow SHA-exato #39292948277](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39292948277), `SUCCESS`, Java 21, 31 testes até HEAD `db24ea457eaa24c977d990ddf199ff4bc968c60c`. JAR Somake File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`.
+
+- ✅ `FuneralBloomControllerEntity.<init>(Level,LivingEntity,float,int,int,int,int,float,int,int)`: primeiro `float` no slot JVM **3** passado diretamente à chamada interna `setRadius(float)`; segundo `float` slot **8** não é associado ao raio pela presente prova.
+- ✅ `setRadius(float)`: caminho linear integral de **10 opcodes** com `Mth.clamp:(FFF)F` e limites **6.0f / 18.0f**, `Float.valueOf` e `SynchedEntityData.set(DATA_RADIUS,...)`.
+- ✅ `getRadius():float`: `SynchedEntityData.get(DATA_RADIUS)`, `Float.floatValue()` (prova de leitura antecedente preservada).
+- ⚠️ Não aferidos o stack dos argumentos de `FuneralBloomSpell.onCast`, uso do valor nos operandos `AABB.inflate` de controller/bud, configuração e targeting/raio de impacto reais.
+- ⛔ Sem hook oficial de mutação per-player, adapter do RPG Skill Tree ou QA real do modpack: **FAIL_CLOSED**. Stage 06.05 🟡, Stage 09 físico PENDING sob D035.
+
+As três relações locais acima **superam o resultado negativo anterior referente ao setter de sete opcodes**, sem invalidar o registro histórico de sua rejeição. Testes negativos adicionais da PR #838 e o CI do HEAD final exigem observação separada, antes de merge. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md) e [ficha individual](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
