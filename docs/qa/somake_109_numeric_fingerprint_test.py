@@ -56,6 +56,28 @@ class NumericTests(unittest.TestCase):
         self.assertEqual(3,d["getRadius"]["numeric_literal_occurrences"])
         self.assertEqual([{"type":"int","literal":"-1","occurrences":1}],d["tick"]["numeric_literals"])
 
+    def test_direct_clamp_literal_operand_positions(self):
+        d=parse_selected_javap(SYNTHETIC,("getRadius",))
+        proof=d["getRadius"]["direct_trailing_clamp_literals"]
+        self.assertEqual([],proof)  # i2f immediately precedes clamp, so fail closed
+        direct=SYNTHETIC.replace(
+            "       4: bipush 10\n       6: i2f\n",
+            "       4: ldc #6 // float 10.0f\n"
+        )
+        e=parse_selected_javap(direct,("getRadius",))
+        self.assertEqual(1,len(e["getRadius"]["direct_trailing_clamp_literals"]))
+        literal=e["getRadius"]["direct_trailing_clamp_literals"][0]
+        self.assertEqual("3.5",literal["second_argument_literal"])
+        self.assertEqual("10.0",literal["third_argument_literal"])
+
+    def test_intervening_arithmetic_never_certifies_trailing_literals(self):
+        direct=SYNTHETIC.replace(
+            "       4: bipush 10\n       6: i2f\n",
+            "       4: ldc #6 // float 10.0f\n       6: fmul\n"
+        )
+        q=parse_selected_javap(direct,("getRadius",))
+        self.assertEqual([],q["getRadius"]["direct_trailing_clamp_literals"])
+
     def test_missing_method_fails_closed(self):
         with self.assertRaises(GateError):
             parse_selected_javap(SYNTHETIC,("getDamage",))
