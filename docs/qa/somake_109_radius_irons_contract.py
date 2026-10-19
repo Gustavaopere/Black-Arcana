@@ -20,7 +20,8 @@ from somake_109_numeric_fingerprint import CODE, fingerprint
 
 SOMAKE_CLASS="com.somake.somakespells.spells.blood.FuneralBloomSpell"
 IRON_CLASS="io.redspace.ironsspellbooks.api.spells.AbstractSpell"
-POWER_DESC="(ILnet/minecraft/world/entity/LivingEntity;)F"
+SOMAKE_GETTER_DESC="(ILnet/minecraft/world/entity/LivingEntity;)F"
+POWER_DESC="(ILnet/minecraft/world/entity/Entity;)F"
 IRON_VERSION="1.21.1-3.16.3"
 IRON_API_FILENAME="irons_spellbooks-1.21.1-3.16.3-api.jar"
 MAX_IRON_BYTES=5_000_000
@@ -164,7 +165,7 @@ def inspect(somake:Path,iron:Path,expected_api_sha256:str|None)->dict:
     for name,desc,body in spell:
         if name in ("getRadius","getImpactDamage"):
             if name in matches:raise GateError("duplicated spell method")
-            if desc!=POWER_DESC:raise GateError("unexpected Somake spell descriptor")
+            if desc!=SOMAKE_GETTER_DESC:raise GateError("unexpected Somake spell descriptor")
             matches[name]=(desc,body)
     if set(matches)!={"getRadius","getImpactDamage"}:
         raise GateError("missing required Somake methods")
@@ -192,7 +193,7 @@ def inspect(somake:Path,iron:Path,expected_api_sha256:str|None)->dict:
                     **{k:v for k,v in radius.items() if k!="method_calls"},
                     "symbolic_invocations":radius["method_calls"][:30],
                     "clamp_operand_proofs":numeric["direct_trailing_clamp_literals"]},
-                  "impact_damage":{"descriptor":POWER_DESC,
+                  "impact_damage":{"descriptor":SOMAKE_GETTER_DESC,
                                    "getSpellPower_invocation_descriptors":power_calls}},
         "irons_api":{"version":IRON_VERSION,"sha256":api_hash,"fqcn":IRON_CLASS,
                      "getSpellPower_descriptor":POWER_DESC,"method_calls":api_refs},
