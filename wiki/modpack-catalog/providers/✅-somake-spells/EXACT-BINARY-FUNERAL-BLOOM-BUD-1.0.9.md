@@ -1,25 +1,35 @@
-# Somake Spells 1.0.9 — Funeral Bloom Bud: auditoria binária do efeito secundário
+# Somake Spells 1.0.9 — FuneralBloomBudEntity: efeito downstream SHA-exato
 
-**Estado deste checkpoint:** 🟡 `PENDING_EXACT_SHA1_BUD_PROBE`, sem execução de jogo, fórmula ou hook homologado.
+**Estado:** ✅ `EXACT_SHA1_FUNERAL_BLOOM_BUD_JVM_REFERENCES` / ⚠️ causalidade de runtime, valores e integração ainda condicionados / ⛔ sem mutador de perks homologado.
 
-## Origem e autoridade física
+## Artefato e trilha de QA
 
-- Mod ID `somakespells`, modlist do RPG Skill Tree `main@ed5b65b890767b406ce41127bcb793775263c7bd`, entrada #513, JAR `somakespells-1.0.9-1.21.1.jar`, Minecraft 1.21.1/NeoForge.
-- CurseForge File `8867079`, SHA-1 físico/publisher `171841ac9f802be9309ecc166c1d972ac6d404c0`.
-- O dossiê anterior [das cinco entidades](EXACT-BINARY-ENTITY-CALLSITES-1.0.9.md) provou a referência de `FuneralBloomControllerEntity` a `FuneralBloomBudEntity` em métodos de cancelamento/pruning, mas não inspecionou o classfile da bud.
-- A nova auditoria [scanner](../../../../docs/qa/somake_109_funeral_bud_probe.py), [testes](../../../../docs/qa/somake_109_funeral_bud_probe_test.py) e [workflow](../../../../.github/workflows/somake-109-funeral-bud.yml) verifica somente `com.somake.somakespells.entity.FuneralBloomBudEntity` do artefato exato.
+- Modlist sibling `neoforge-rpg-skilltree/main@ed5b65b890767b406ce41127bcb793775263c7bd`, entrada #513, `somakespells-1.0.9-1.21.1.jar`, CurseForge File 8867079, mod ID `somakespells`, SHA-1 físico/publisher `171841ac9f802be9309ecc166c1d972ac6d404c0`.
+- [Workflow Java 21 #39197671447](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39197671447) **SUCCESS**, 10 testes sintéticos Java21, 26 métodos nomeados analisados, FQCN exato `com.somake.somakespells.entity.FuneralBloomBudEntity`, hash e metadata exigidos antes da inspeção.
+- A primeira execução [#39197533908](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39197533908) passou, mas auditoria posterior identificou que o parser incluía o corpo de inicialização estática no último método nomeado. O script foi corrigido e passou novamente com dois testes adicionais: exclusão do inicializador estático e rejeição de múltiplos inicializadores. **A evidência usada aqui é apenas o resultado corrigido #39197671447.**
+- [Scanner](../../../../docs/qa/somake_109_funeral_bud_probe.py), [testes](../../../../docs/qa/somake_109_funeral_bud_probe_test.py), [workflow](../../../../.github/workflows/somake-109-funeral-bud.yml). O JAR/código de terceiros não integra o repositório; somente símbolos, descritores e branches são registrados.
 
-## Perguntas para a engenharia de perks
+## Métodos e relações observadas no classfile
 
-| Dimensão | Precisa ser distinguido antes de autorizar perk | Estado |
+| Superfície | Assinaturas/callsites exatos | Consequência para engenharia |
 |---|---|---|
-| Origem de dano | `LivingEntity.hurt` direto, helper `DamageSources.applyDamage`, outra entidade ou efeito delegado | 🟡 Sob inspeção; nenhum evento assumido |
-| Alvo/LOS | AABB, raycast, distância, aliados, espectador e regras de PvP | ⚠️ Limites, condições e caps não verificados |
-| Cura/Wither | Entidade pode produzir efeitos indiretos após hit | ⚠️ Código causal downstream pendente |
-| Ciclo de vida | tick, arming, impacto, expiração, anti-magic, cancelamento e remoção | ⚠️ Não inferir descarte em todas as branches |
-| Proprietário | Caster/UUID/owner, bud/controller, correlação de impacto com cast | ⛔ Sem deduplicação de Mastery comprovada |
-| Parâmetros para perks | raio, dano, duração, quantidades, velocidade, hitbox e alvo | ⛔ Sem setter seguro por personagem homologado |
+| Identidade e alvo | `getControllerId/setControllerId(UUID)`, `getTargetUuid/setTargetUuid(UUID)`, `findController(ServerLevel)` | O bud possui referências sincronizadas de controlador e alvo; não comprova se o owner continuará válido em todos os eventos |
+| Posicionamento | `getImpactPosition/setImpactPosition(Vec3)`, `updatePrediction(ServerLevel)`, `ServerLevel.getEntity(UUID)`, `LivingEntity.isAlive`, `FuneralBloomControllerEntity.groundPosition` | Há uma rota de predição do alvo e posicionamento de impacto; range/LOS/prediction lead numéricos não aferidos |
+| Fases e duração | `getTelegraphTicks/setTelegraphTicks(int)`, `getFallTicks/setFallTicks(int)`, `beginRetreat`, `getTelegraphProgress`, `getFallProgress`, `getRetreatProgress` | Timers e estado `DATA_RETREATING` são campos separados, com `Math.max` e `Mth.clamp` em helpers; nenhuma fórmula/cap completo homologado |
+| Ciclo de vida | `tick()` (11 instruções de branch no método capturado) referencia `Projectile.tick`, controlador, `beginRetreat`, `discard` e `impact` | Não concluir que cada tick causa hit, que o bud desaparece sempre ou que o disparo não é reentrante sem dataflow e servidor |
+| Impacto | `impact(ServerLevel)` (31 instruções de branch) consulta `getImpactPosition`, `getOwner`, cria AABB, seleciona entidades com `getEntitiesOfClass`, consulta `isAlive`, `isAlliedTo`, `LivingEntity.hasEffect(WITHER)` e bounding boxes | Tipos/limites de alvo, critérios condicionais e tamanho da AABB dependem de análise de fluxo; não confundir shortlist com alvos atingidos |
+| Dano | `impact` referencia `FuneralBloomSpell.getDamageSource`, `impactDamage` e `DamageSources.applyDamage(Entity,float,DamageSource)` | Candidato ao pipeline do Iron's, mas sem prova de dispatch de `SpellDamageEvent` ou hook de perk per-player |
+| Wither | `impact` referencia `MobEffects.WITHER`, campos `witherDuration/witherAmplifier`, `MobEffectInstance` e `LivingEntity.addEffect` | Status separado de dano; valor, empilhamento e condições de aplicação pendentes |
+| Cura | `impact` referencia `SpellHealEvent(LivingEntity,LivingEntity,float,SchoolType)`, `NeoForge.EVENT_BUS.post` e `LivingEntity.heal(float)` | **Callsite de evento encontrado**; evento pode ser condicionado, sem confirmação de leitura de eventual valor alterado/cancelamento ou quantidade real curada |
+| Knockback e efeito visual | `LivingEntity.push(DDD)`, `hurtMarked`, `FuneralBloomImpactEntity.<init>(Level,Vec3,float)` e `ServerLevel.addFreshEntity` | Existem referências de impulso e entidade de impacto visual/secundária; funcionalidade dessa nova classe segue NÃO AUDITADA |
+| Persistência | `readAdditionalSaveData(CompoundTag)`, `addAdditionalSaveData(CompoundTag)` referenciam controlador/alvo UUID, impact position, telegraph/fall, retreat, impactDamage e Wither metadata | Superfície NBT identificada, sem teste de round-trip, tolerância a NBT malformado, restart ou correlação de Mastery |
 
-**Clean-room:** serão preservados apenas os nomes/descritores de métodos, símbolos de chamadas, contagens de branches e campos. Sem decompilação exportada, método Java/bytecode ou assets do provider. As referências JVM não demonstram execução, fórmula, valores ou permissões da API. Não introduzir pipeline alternativo de dano, custos ou cooldown.
+## Limites e consequências para perks
 
-**Critério de conclusão deste recorte:** verificar a classe física, documentar resultados concretos a partir do job Java 21 no HEAD atual, integrar nas fichas afetadas e só então avaliar merge com todos os testes. A totalização de magias continua 83 identidades; nenhuma ação nova será presumida a partir de um bud.
+Uma magia **não deve** recompensar Mastery uma vez pelo casting, outra por cada bud e ainda outra por cada dano sem contrato explícito de correlação e contagem. Uma futura perk de dano e uma perk de cura precisam respeitar os pipelines independentes indicados em `impact()` e a autoridade original do Somake e do host Iron's. A presença de `SpellHealEvent` é prova de referência Java no JAR compilado, **não** prova de que qualquer handler, cancelamento ou mutação será aplicado em todas as condições.
+
+Não derivar numerais, raio, quantidade de buds, duração, fórmula de escala, cooldown, proteção de mundo, cálculo de empuxo, multiplicidade ou compatibilidade de callback sem prova adicional. O valor numérico de um getter, a disponibilidade real do config, o processamento de branches e a validade do owner continuam desconhecidos neste gate. `FAIL_CLOSED` para adapters de mutação. Nenhum estado Stage 06.05/Stage 09 foi promovido.
+
+**Seguinte cadeia causal a auditar:** `FuneralBloomSpell.onCast → FuneralBloomControllerEntity.launchWave → FuneralBloomBudEntity.tick/impact → FuneralBloomImpactEntity` (entidade de impacto ainda não inspecionada). A seta representa **relações de referências e dependências catalogadas**, não execução garantida ou ordem causal provada em cada cast.
+
+Fontes: [dossiê das cinco entidades](EXACT-BINARY-ENTITY-CALLSITES-1.0.9.md), [sete classes de casting](EXACT-BINARY-CAST-CALLSITES-1.0.9.md), [ficha da magia](registry-1.0.9/funeral-bloom.md).
