@@ -1,6 +1,6 @@
 # Somake Spells 1.0.9 — Funeral Bloom: ponte de argumento float da controller
 
-**Estado:** ✅ comprovada a leitura por `SynchedEntityData.get(DATA_RADIUS)` e `Float.floatValue()` no getter da controller; ⚠️ a origem no construtor e a aplicação nas AABBs permanecem `NOT_PROVED`; ⛔ nenhuma perk mutadora homologada.
+**Estado vigente (PR #839):** ✅ cadeia estática `onCast.getRadius` → primeiro float do construtor → setter clamp 6–18 → `DATA_RADIUS` → getter da controller comprovada; ⚠️ operandos de AABB, alvos e gameplay não demonstrados; ⛔ nenhuma perk mutadora homologada. Os resultados históricos abaixo preservam seu escopo temporal.
 
 ## Artefato e método
 
@@ -68,3 +68,16 @@ A expressão **certificada apenas no escopo interno do setter** é `DATA_RADIUS 
 O antigo `NOT_PROVED / setter_not_exact_seven_opcode_float_write` permanece válido apenas para o **padrão de sete opcodes sem clamp**, que a implementação real não segue. Não usá-lo para negar a prova posterior de dez opcodes. O `NOT_PROVED` da escrita **direta pelo construtor em `SynchedEntityData.set`** também continua correto, porque a escrita agora é comprovadamente **indireta pelo setter**.
 
 **Contagens e autoridade invariantes:** 83/83 identidades Somake; 5/83 fichas com entidade downstream na campanha; +0 novas identidades e +0 adapters homologados. Somake controla magia/efeito, Iron's hospeda casting/custos e RPG Skill Tree controla perks/Mastery via contratos reais; Black Arcana não duplica esses runtimes. Stage 06.05 🟡, Stage 09 de QA físico pendente.
+
+## Continuação: origem do primeiro float no `onCast` — 19/10/2026 (PR #839)
+
+**Nova prova física exata:** [Java 21 #39296264174](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39296264174), `SUCCESS`, **45 testes** em `Somake Spells 1.0.9`, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` igual à modlist sibling. Um scanner de descritores e pilha JVM analisou a **janela local de 31 instruções** entre a alocação de `FuneralBloomControllerEntity` e a única invocação exata do seu construtor. Rejeita branches, `invokedynamic`, opcodes/tipos não modelados, deslocamento de origem, receptores divergentes e alterações de assinatura.
+
+- ✅ `FuneralBloomSpell.getRadius(int,LivingEntity):float` fornece **diretamente o primeiro argumento `float` do construtor**. Resultado do scanner: `PROVED_ONCAST_GET_RADIUS_TO_FIRST_CTOR_FLOAT` / `exact_getRadius_call_stack_argument`, argumento ordinal **3**.
+- ✅ Provas independentes anteriores: argumento do construtor (slot local JVM **3**) → `setRadius(float)` → `Mth.clamp(float,6.0f,18.0f)` → `SynchedEntityData.set(DATA_RADIUS)` → `getRadius():float`. A expressão de retorno de `FuneralBloomSpell.getRadius` é documentada separadamente com seu próprio clamp **10.0f–15.0f** em [dossiê tipado](EXACT-BINARY-FUNERAL-BLOOM-RADIUS-TYPED-1.0.9.md).
+- ✅ O **segundo argumento `float`** do construtor recebe um retorno classificado como `other_method` na janela; **não se certificou** qual método ou semântica para essa posição.
+- ⚠️ As fontes dos argumentos `int` e `LivingEntity` da chamada `getRadius` ainda não foram certificadas até os parâmetros/estado reais de `onCast`; tampouco foram provadas unidades e efeitos em jogo.
+- ⚠️ O getter da controller é referenciado por `launchWave` e o método também possui `AABB.inflate`, mas os três operandos `double` não foram associados por dataflow à leitura do accessor. O volume independente de `FuneralBloomBudEntity.impact` segue em aberto.
+- ⛔ **Sem hook/API pública mutadora por jogador**; a existência de `setRadius(float)` interno e a fórmula de raio não autorizam alterar, recriar, cancelar ou duplicar um cast Somake, custos Iron's nem perks/Mastery RPG. Estado `FAIL_CLOSED`.
+
+Esta adição **supera apenas a pendência histórica de proveniência do primeiro float do callsite**, mantendo as incertezas sobre AABBs, target selection, configuração efetiva, classloading, Survival, PvP, multiplayer, cliente e integração. É uma prova estática, não QA físico. Identidades Somake **83/83**, fichas com downstream nesta campanha **5/83**, adapters homologados **0**; Stage 06.05 🟡, Stage 09 PENDING.
