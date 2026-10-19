@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -240,6 +240,31 @@ class WaveInflateCausalOperandTests(unittest.TestCase):
         # Make the branch target hit the second instruction of the AABB argument slice.
         body[0]="0: goto 20"
         self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(body)["status"])
+
+class Exact109WaveCertificationGateTests(unittest.TestCase):
+    def test_exact_release_105_vertical_and_two_radius_axes_required(self):
+        expected={
+            "status":"PROVED_AABB_XZ_CONTROLLER_RADIUS_Y_LITERAL_DOUBLE",
+            "radius_axes":["X","Z"],
+            "vertical_double_literal":"10.5",
+            "source_call_count":2,
+            "conversion":"F_TO_D",
+            "source_method":"FuneralBloomControllerEntity.getRadius:()F",
+            "aabb_method_descriptor":"(DDD)Lnet/minecraft/world/phys/AABB;",
+            "method_instruction_count":196,
+        }
+        certify_exact_wave_aabb_109(expected)
+        for change in (
+            {"vertical_double_literal":"11.0"},
+            {"radius_axes":["X","Y","Z"]},
+            {"source_call_count":3},
+            {"status":"NOT_PROVED"},
+            {"method_instruction_count":195},
+        ):
+            sample=dict(expected,**change)
+            with self.subTest(change=change):
+                with self.assertRaises(GateError):
+                    certify_exact_wave_aabb_109(sample)
 
 if __name__=="__main__":
     unittest.main()
