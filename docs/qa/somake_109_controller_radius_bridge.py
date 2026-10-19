@@ -243,6 +243,55 @@ def direct_constructor_setter_call(body:list[str])->dict:
             **FLOAT_SLOTS[candidates[0]],
             "boundary":"Ctor passes this float to setRadius; onCast argument source not analyzed."}
 
+def setter_structural_shape(body:list[str],accessor_name:str)->dict:
+    """Bounded reference-level diagnostics; never claim float argument provenance."""
+    rows=opcode_rows(body)
+    if len(rows)>250:raise GateError("setter inspection budget exceeded")
+    accessor_uses=0
+    synced_sets=0
+    float_boxes=0
+    floads=set()
+    invoked=set()
+    branches=0
+    numeric_ops=0
+    for _,op,operand,comment in rows:
+        slot=local_id(op,operand,"fload")
+        if slot is not None:floads.add(slot)
+        if op=="getstatic":
+            m=re.fullmatch(
+              r"Field (?:(?:([A-Za-z0-9_/$]+))\.)?([A-Za-z0-9_$]+):Lnet/minecraft/network/syncher/EntityDataAccessor;",
+              comment)
+            if m and m.group(2)==accessor_name and m.group(1) in (None,SELF_JVM_OWNER):
+                accessor_uses+=1
+        if op in ("invokestatic","invokevirtual","invokespecial","invokeinterface"):
+            m=re.fullmatch(r"(?:Method|InterfaceMethod) (.{1,190})",comment)
+            if not m:raise GateError("unrecognized setter JVM method symbol")
+            invoked.add(m.group(1))
+            if comment==("Method net/minecraft/network/syncher/SynchedEntityData.set:"
+                         "(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"):
+                synced_sets+=1
+            if comment=="Method java/lang/Float.valueOf:(F)Ljava/lang/Float;":
+                float_boxes+=1
+        if op.startswith(("if","goto","jsr")) or op in ("tableswitch","lookupswitch"):
+            branches+=1
+        if op in ("fadd","fsub","fmul","fdiv","frem","fneg","dadd","dsub",
+                  "dmul","ddiv","drem","dneg","i2f","d2f","f2d","f2i","f2l"):
+            numeric_ops+=1
+    if len(invoked)>28 or len(floads)>12:raise GateError("setter symbol budget exceeded")
+    return {
+        "proof_status":"STRUCTURAL_ONLY_NO_SETTER_ARGUMENT_CAUSALITY",
+        "instruction_count":len(rows),
+        "owned_accessor_getstatic_count":accessor_uses,
+        "synched_data_set_call_count":synced_sets,
+        "float_box_call_count":float_boxes,
+        "float_local_load_slots":sorted(floads),
+        "branch_instruction_count":branches,
+        "numeric_operation_or_conversion_count":numeric_ops,
+        "return_instruction_count":sum(op=="return" for _,op,_,_ in rows),
+        "invoked_method_symbols":sorted(invoked),
+        "boundary":"Co-occurrence, even without arithmetic, is not a dataflow proof or public perk hook.",
+    }
+
 def synced_accessor_method_inventory(methods:list,accessor_name:str)->dict:
     """Method-level symbols only; no code, offsets, control/data flow exported."""
     found=[]
@@ -303,7 +352,12 @@ def analyze(text:str)->dict:
     ctor_call=({"status":"NOT_PROVED","reason":"setter_not_proven"}
        if setter["status"]!="PROVED_DIRECT_FLOAT_SETTER_TO_SYNCED_RADIUS"
        else direct_constructor_setter_call(constructors[0][1]))
+    setter_shape=(
+        setter_structural_shape(setters[0],synced["accessor_field"])
+        if len(setters)==1 and synced["status"]=="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
+        else {"proof_status":"NOT_PROVED","reason":"setter_or_synced_accessor_unavailable"})
     return {
+      "setter_structure":setter_shape,
       "constructor_descriptor":CONSTRUCTOR_DESC,
       "constructor_float_argument_slots":[{"jvm_local_slot":slot,**v} for slot,v in FLOAT_SLOTS.items()],
       "getter_descriptor":GETTER_DESC,
