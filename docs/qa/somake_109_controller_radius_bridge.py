@@ -436,7 +436,7 @@ def oncast_controller_radius_argument(body:list[str])->dict:
         if start<=i<=end:continue
         if op.startswith(("if","goto")):
             target=operand.split(" ",1)[0]
-            if not re.fullmatch(r"\\d+",target):
+            if not re.fullmatch(r"\d+",target):
                 return stop("unrecognized_external_branch_target")
             if lower<int(target)<=upper:
                 return stop("external_branch_enters_constructor_argument_window")
