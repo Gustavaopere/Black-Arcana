@@ -120,3 +120,20 @@ O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `
 - **Perks mutadoras homologadas:** 0. ⛔ `FAIL_CLOSED`; Stage 06.05 🟡 e Stage 09 condicionado (D035). RPG Skill Tree fornece progressão sem controlar casting/efeitos do Black Arcana ou dos providers.
 
 [Dossiê de consumidores do raio](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md).
+
+## Somake 1.0.9 — décima primeira camada: tentativa de vínculo construtor → raio (19/10/2026)
+
+- [Auditoria exata #39286470816](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39286470816): `SUCCESS` com 13 testes Java21 e SHA-1 físico Somake 1.0.9 `171841ac9f802be9309ecc166c1d972ac6d404c0`.
+- **Resultado da prova:** `FuneralBloomControllerEntity.getRadius()` não é o getter direto de três opcodes esperado pelo scanner (`NOT_PROVED`). Por consequência, ainda não foi demonstrado qual dos dois floats do construtor (slots JVM 3 e 8) origina o getter. Esta é uma rejeição **restrita ao padrão direto**, não uma incompatibilidade do mod.
+- **Revisão subsequente na PR #837:** agrega metadados estruturais (contagens, campos `float` e referências) para determinar a próxima auditoria; a execução no HEAD final ainda precisa ser comprovada.
+- **Barra global:** —% (denominador total indisponível; piso histórico >=1.857 objetos semânticos sem alteração). **Somake:** 83/83 identidades = 100%; 5/83 fichas com entidades downstream = 6,02%; as sete classes downstream conhecidas e o conjunto de magias permanecem inalterados.
+- **Integração:** zero novas interfaces mutadoras; ⛔ `FAIL_CLOSED`; Stage 06.05 🟡 e Stage 09 condicionado sob D035. Sem promover status com base em testes sintéticos ou na presença de callsites.
+
+[Dossiê de auditoria do construtor/raio](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md).
+
+## Somake 1.0.9 — décima segunda camada: `DATA_RADIUS` sincronizado (19/10/2026)
+
+- **JAR exato** File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`. [Java21 #39288405552](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39288405552), `SUCCESS` 16 testes, prova do caminho `FuneralBloomControllerEntity.getRadius():float → SynchedEntityData.get(DATA_RADIUS) → Float.floatValue()`. O getter possui sete instruções, 0 branches, 0 operações aritméticas e um único retorno.
+- [Varredura de 30 métodos #39289130886](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39289130886), `SUCCESS`: `defineSynchedData`, `getRadius`, `setRadius(float)` referenciam o accessor; `setRadius` também possui referências a `Float.valueOf` e `SynchedEntityData.set`. A escrita direta no construtor e a interpretação completa do setter continuam `NOT_PROVED`.
+- **Contagens inalteradas:** global —% (denominador desconhecido; piso histórico >=1.857 objetos); Somake **83/83 (100%)** identidades, **5/83 (6,02%)** fichas com entidades downstream auditadas e sete classfiles downstream no conjunto anterior. Novo trabalho aprofunda a mesma entidade e não adiciona ID de magia.
+- **Bloqueios:** `0` adapters de alteração do raio homologados; ⛔ `FAIL_CLOSED` para perks sem contrato; Stage 06.05 🟡 e Stage 09 condicionado conforme D035. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md).
