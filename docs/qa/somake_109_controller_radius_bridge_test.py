@@ -131,6 +131,23 @@ class RadiusBridgeTests(unittest.TestCase):
             self.assertEqual(3,proof["jvm_local_slot"])
             self.assertEqual(1,proof["float_ordinal"])
 
+    def test_conditional_assignment_never_certifies_constructor_bridge(self):
+        body=["0: aload_1","1: ifnull 11",
+              "4: aload_0","5: fload_3",
+              "6: putfield #1 // Field radius:F","9: goto 11",
+              "11: return"]
+        result=constructor_direct_assignments(body,"radius")
+        self.assertEqual("NOT_PROVED",result["status"])
+        self.assertEqual("constructor_contains_conditional_or_unsupported_control_flow",
+                         result["reason"])
+
+    def test_early_return_rejected_even_with_a_direct_store(self):
+        body=["0: return","1: aload_0","2: fload_3",
+              "3: putfield #1 // Field radius:F","6: return"]
+        result=constructor_direct_assignments(body,"radius")
+        self.assertEqual("NOT_PROVED",result["status"])
+        self.assertEqual("constructor_has_nonterminal_or_ambiguous_return",result["reason"])
+
     def test_strict_load_slot_parser(self):
         self.assertEqual(0,local_id("aload_0","","aload"))
         self.assertEqual(8,local_id("fload","8","fload"))
