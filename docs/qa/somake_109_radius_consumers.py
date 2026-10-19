@@ -101,6 +101,38 @@ def analyze_javap(text:str, label:str)->dict:
     if len(selected)>14:raise GateError("excessive method overloads")
     return {"fqcn":CLASSES[label],"selected_methods":selected}
 
+def certify_exact_consumer_surface(outcome:dict)->None:
+    """Ensure exact version callsite relations do not silently change."""
+    def single(label,method):
+        methods=outcome[label]["selected_methods"]
+        found=[row for key,row in methods.items() if key.startswith(method+"(")]
+        if len(found)!=1:raise GateError("missing/ambiguous "+label+"."+method)
+        return found[0]
+    spell=single("spell","onCast")
+    tick=single("controller","tick")
+    wave=single("controller","launchWave")
+    impact=single("bud","impact")
+    def require(record,category,match,label):
+        symbols=record["classified"][category]
+        if not any(match in x for x in symbols):
+            raise GateError("exact downstream callsite missing: "+label)
+    require(spell,"radius","getRadius:(ILnet/minecraft/world/entity/LivingEntity;)F","spell getter")
+    require(spell,"spawn_controller",'''FuneralBloomControllerEntity."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;FIIIIFII)V''',"controller constructor")
+    require(tick,"radius","getRadius:()F","controller.tick radius access")
+    require(tick,"wave","launchWave:(Lnet/minecraft/server/level/ServerLevel;)V","controller wave dispatch")
+    require(wave,"radius","getRadius:()F","wave radius access")
+    require(wave,"aabb","AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;","wave AABB")
+    require(wave,"query","getEntitiesOfClass:","wave targeting")
+    require(wave,"wave",'''FuneralBloomBudEntity."<init>":''',"bud creation")
+    require(impact,"aabb","AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;","impact AABB")
+    require(impact,"query","getEntitiesOfClass:","impact target query")
+    require(impact,"damage","DamageSources.applyDamage:","impact damage")
+    require(impact,"heal","SpellHealEvent","impact heal event")
+    if impact["classified"]["radius"]:
+        raise GateError("unanticipated direct getRadius in bud impact")
+    if spell["invokedynamic_count"]<1 or wave["invokedynamic_count"]<1:
+        raise GateError("dynamic invocation fingerprint changed")
+
 def inspect(jar:Path)->dict:
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("wrong Somake file")
@@ -128,12 +160,13 @@ def inspect(jar:Path)->dict:
                   "invokes",metrics["invoke_count"],"dynamic",metrics["invokedynamic_count"],
                   "classified",json.dumps(metrics["classified"],sort_keys=True),
                   "fields",json.dumps(metrics["field_symbols"]))
+    certify_exact_consumer_surface(outcome)
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
     return {"status":"PASS_SHA_EXACT_METHOD_SYMBOL_DISCOVERY_ONLY",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
             "scope":outcome,
             "limits":[
-                "Callsite co-presence is NOT JVM operand provenance or constructor-argument mapping.",
+                "Method-level callsite and exact descriptors are pinned but NOT constructor-argument mapping or value propagation.",
                 "Without dataflow, a radius getter call does NOT prove it is the radius of an AABB or projectile.",
                 "No loaded modpack, live player, Survival, client or multiplayer evidence.",
                 "No provider JAR, classfile, bytecode or implementation exported.",
