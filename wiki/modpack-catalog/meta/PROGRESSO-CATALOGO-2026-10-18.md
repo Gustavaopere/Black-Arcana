@@ -19,3 +19,7 @@ Campanha de evidência física do recorte histórico **39 providers** na `main`:
 Para cada provider o acompanhamento deve sempre expor: `registrados confirmados / identificados`, `fichas com campos técnicos comprovados / objetos elegíveis`, `hooks mutadores validados / demandas de mutação` (quando houver denominador) e `QA físico`. Se qualquer denominador estiver aberto, usar **—%** e declarar explicitamente o escopo, sem completar com estimativas.
 
 Fonte da tranche: [Somake — matriz de sete gates](../providers/✅-somake-spells/PERK-REACHABILITY-GATES-1.0.9.md). Fonte global: [catálogo canônico](CATALOGO-GLOBAL-MAGIAS.md), [pendências](PENDENCIAS-MAGICAS-ATUAIS.md) e [regras técnicas](PERK-READY-TECHNICAL-STANDARD.md).
+
+## Continuação Somake — prova de métodos de crafting no JAR (18/10/2026)
+
+[CI SHA-exata #39186593493](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39186593493): **7/7 métodos de `allowCrafting()` com classe/descritor comprovados, 7/7 testes sintéticos**, incluindo quatro dependentes de três campos `Config.DISABLE_*` identificados no bytecode e três constantes `false`. Evidência estritamente estática/clean-room; [matriz compilada](../providers/✅-somake-spells/EXACT-BINARY-CRAFTING-METHOD-SEAMS-1.0.9.md). Barras inalteradas em seu escopo: global —% (denominador aberto), Somake identidades 83/83 (100%), aprofundamento **7/83 = 8,43% no recorte de métodos de aquisição**. Nenhuma QA física Survival, API de perk ou implementação nova inferida.
