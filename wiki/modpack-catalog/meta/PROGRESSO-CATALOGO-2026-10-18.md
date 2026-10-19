@@ -88,3 +88,13 @@ O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `
 - **Perks de alteração de dano/área aprovadas:** **0**; `FAIL_CLOSED` até API/evento/callback per-player versionado e prova de causalidade downstream. Sem alterações em Black Arcana runtime, host Iron's, RPG Skill Tree, Mastery, custo ou cooldown.
 
 **Pendências:** CFG completo de `getRadius`/`SchoolType.getPowerFor`, origem e configuração de `getSpellPower` no host 3.16.3, consumo do `impactDamage` pelo bud, dano efetivo/Wither/cura/knockback, bounds, FPS/carga, cliente/multiplayer/Survival e modpack físico (D035). Stage 06.05 permanece 🟡; Stage 09 condicionado. [Dossiê float](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-FLOAT-DATAFLOW-1.0.9.md).
+
+## Somake 1.0.9 — oitava camada: CFG do raio e assinatura do host Iron's (19/10/2026)
+
+- [Java21 #39246133056](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39246133056) `SUCCESS` — nove testes sintéticos e dois JARs de release específica. Somake File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`; API Iron's 3.16.3 SHA-256 `69e81104a9fd31a402d9c89ab09c2a6b2fd6d2ab98db5a37bb159517363ee9ad`. CI final de PR será registrado separadamente.
+- ✅ `getImpactDamage` do Somake chama `getSpellPower(int,Entity):float`; assinatura encontrada no `AbstractSpell` da API oficial. ⚠️ Corpo do método API referencia `SpellConfigManager.getSpellConfigValue`, `SchoolType.getPowerFor` e `LivingEntity.getAttributeValue`, sem prova de fórmula/config/atributo real do RPG Skill Tree.
+- ✅ CFG estrutural de `getRadius`: 28 instruções alcançáveis, `ifnonnull` + `goto`, uma junção/retorno e clamp 10.0f/15.0f. ⚠️ Condição concreta e fórmula integral do raio permanecem sem prova.
+- **Barra global:** —% (denominador não estabelecido; piso histórico de >=1.857 objetos semânticos, sem aumento). **Barra Somake:** 83/83 identidades = 100% inventariadas; 5/83 (6,02%) fichas com auditoria downstream, sete classfiles distintos anteriormente examinados. Esta rodada aprofunda a mesma magia, não acrescenta IDs ou classfiles de efeito.
+- **Hooks per-player validados nesta rodada:** 0; ⛔ `FAIL_CLOSED`. Black Arcana mantém apenas seu runtime; Somake efeitos provider-native; Iron's host; RPG Skill Tree somente progressão com contrato real. Stage 06.05 🟡 e Stage 09 condicionado sob D035.
+
+[Relatório técnico de CFG/host](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-IRONS-1.0.9.md).
