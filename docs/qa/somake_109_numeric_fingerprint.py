@@ -117,6 +117,85 @@ def immediate_clamp_literals(body: list[str]) -> list[dict]:
     return found
 
 
+STRAIGHT_LINE_GETTERS = {"getMaxTargets", "getDuration", "getWaveInterval", "getWitherDuration"}
+
+def prove_straight_line_integer_expression(body: list[str], descriptor: str) -> dict:
+    """Prove an integer expression only for branchless, wholly supported JVM opcodes.
+
+    This deliberately cannot derive target/hit/cast runtime behavior. Integer
+    operators retain JVM int overflow/division semantics; do not substitute
+    real-valued arithmetic or reinterpret an expression as an attribute setter.
+    """
+    fail=lambda reason: {"status":"NOT_PROVED","reason":reason}
+    if descriptor != "(I)I":
+        return fail("descriptor_not_integer_getter")
+    instructions=[]
+    for line in body:
+        before,divider,after=line.partition("//")
+        m=CODE.match(before)
+        if m:
+            instructions.append((m.group(1),(m.group(2) or "").strip(),
+                                 after.strip() if divider else ""))
+    if not 2 <= len(instructions) <= 90:
+        return fail("instruction_budget")
+    stack=[]
+    for i,(op,args,comment) in enumerate(instructions):
+        if op.startswith(("if","goto")) or op in ("tableswitch","lookupswitch","athrow"):
+            return fail("branch_or_throw")
+        literal=decode_numeric(op,args,comment)
+        if literal is not None:
+            if literal[0]!="int":
+                return fail("noninteger_literal")
+            stack.append(literal[1])
+        elif op.startswith("iload_") and op[6:].isdigit():
+            index=int(op[6:])
+            if index!=1:
+                return fail("non_parameter_int_load")
+            stack.append("level")
+        elif op=="iload" and args=="1":
+            stack.append("level")
+        elif op in {"iadd","isub","imul","idiv","irem"}:
+            if len(stack)<2:
+                return fail("arithmetic_stack_underflow")
+            rhs=stack.pop();lhs=stack.pop()
+            operator={"iadd":"+","isub":"-","imul":"*","idiv":"idiv","irem":"irem"}[op]
+            stack.append(f"jvm_{operator}({lhs},{rhs})" if op in {"idiv","irem"}
+                         else f"({lhs}{operator}{rhs})")
+        elif op=="ineg":
+            if not stack:return fail("neg_stack_underflow")
+            stack.append(f"(-{stack.pop()})")
+        elif op=="invokestatic":
+            if "Mth.clamp:(III)I" in comment:
+                name="clamp"
+            elif "Math.max:(II)I" in comment:
+                name="max"
+            elif "Math.min:(II)I" in comment:
+                name="min"
+            else:
+                return fail("unsupported_invocation")
+            arity=3 if name=="clamp" else 2
+            if len(stack)<arity:
+                return fail("invocation_stack_underflow")
+            args_expr=stack[-arity:]
+            del stack[-arity:]
+            stack.append(f"{name}({','.join(args_expr)})")
+        elif op=="ireturn":
+            if i!=len(instructions)-1 or len(stack)!=1:
+                return fail("return_not_single_terminal")
+            expression=stack.pop()
+            if len(expression)>1200:
+                return fail("expression_budget")
+            return {"status":"PROVED_STRAIGHT_LINE_JVM_INT_EXPRESSION",
+                    "expression":expression,
+                    "parameter":"level (int input, not necessarily actual player spell level)",
+                    "limits":"Algebraic JVM int dataflow only; not verified live duration, distance, target count, client sync or perk mutability."}
+        else:
+            return fail("unsupported_opcode_"+op)
+        if len(stack)>30:
+            return fail("stack_budget")
+    return fail("no_integer_return")
+
+
 def fingerprint(body: list[str]) -> dict:
     if not 0 < len(body) <= MAX_METHOD_LINES:
         raise GateError("method body length outside guard")
@@ -181,7 +260,10 @@ def parse_selected_javap(text: str, names: tuple[str, ...]) -> dict:
         descriptor=descriptors[0]
         if not re.fullmatch(r"\([^)]*\)[A-Za-z0-9/\[;$]+",descriptor):
             raise GateError("invalid JVM method descriptor")
-        discovered[name]={"descriptor":descriptor,**fingerprint(lines[start+1:end])}
+        record={"descriptor":descriptor,**fingerprint(lines[start+1:end])}
+        if name in STRAIGHT_LINE_GETTERS:
+            record["straight_line_integer_expression"]=prove_straight_line_integer_expression(lines[start+1:end],descriptor)
+        discovered[name]=record
     if set(discovered)!=set(names):
         raise GateError("missing exact selected methods: "+repr(sorted(set(names)-set(discovered))))
     return {name:discovered[name] for name in names}
@@ -222,7 +304,8 @@ def inspect(jar: Path)->dict:
                   "arithmetic",json.dumps(info["arithmetic_opcode_counts"]),
                   "branches",info["branch_instruction_count"],
                   "calls",json.dumps(info["bounded_callsite_counts"]),
-                  "direct_clamp",json.dumps(info["direct_trailing_clamp_literals"]))
+                  "direct_clamp",json.dumps(info["direct_trailing_clamp_literals"]),
+                  "int_expression",json.dumps(info.get("straight_line_integer_expression")))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:
         raise GateError("artifact changed during inspection")
     return {
