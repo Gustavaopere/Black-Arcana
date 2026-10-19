@@ -21,7 +21,7 @@
 | Dano | `impact` referencia `FuneralBloomSpell.getDamageSource`, `impactDamage` e `DamageSources.applyDamage(Entity,float,DamageSource)` | Candidato ao pipeline do Iron's, mas sem prova de dispatch de `SpellDamageEvent` ou hook de perk per-player |
 | Wither | `impact` referencia `MobEffects.WITHER`, campos `witherDuration/witherAmplifier`, `MobEffectInstance` e `LivingEntity.addEffect` | Status separado de dano; valor, empilhamento e condições de aplicação pendentes |
 | Cura | `impact` referencia `SpellHealEvent(LivingEntity,LivingEntity,float,SchoolType)`, `NeoForge.EVENT_BUS.post` e `LivingEntity.heal(float)` | **Callsite de evento encontrado**; evento pode ser condicionado, sem confirmação de leitura de eventual valor alterado/cancelamento ou quantidade real curada |
-| Knockback e efeito visual | `LivingEntity.push(DDD)`, `hurtMarked`, `FuneralBloomImpactEntity.<init>(Level,Vec3,float)` e `ServerLevel.addFreshEntity` | Existem referências de impulso e entidade de impacto visual/secundária; funcionalidade dessa nova classe segue NÃO AUDITADA |
+| Knockback e efeito visual | `LivingEntity.push(DDD)`, `hurtMarked`, `FuneralBloomImpactEntity.<init>(Level,Vec3,float)` e `ServerLevel.addFreshEntity` | Existem referências de impulso e de uma entidade adicional de impacto; se essa entidade tem comportamento visual, mecânico ou ambos permanece NÃO AUDITADO |
 | Persistência | `readAdditionalSaveData(CompoundTag)`, `addAdditionalSaveData(CompoundTag)` referenciam controlador/alvo UUID, impact position, telegraph/fall, retreat, impactDamage e Wither metadata | Superfície NBT identificada, sem teste de round-trip, tolerância a NBT malformado, restart ou correlação de Mastery |
 
 ## Limites e consequências para perks
