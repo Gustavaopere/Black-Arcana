@@ -210,3 +210,13 @@ Para `level` inteiro e `caster != null`, o retorno estático segue `Mth.clamp_f3
 | Modificação via RPG Skill Tree | ⛔ `FAIL_CLOSED`: `setRadius` interno não é hook público per-player; não inferir mudanças em raio, hitbox, tipo de alvo ou procs por disponibilidade de método |
 
 **Escopo:** estreita e confirma a cadeia interna de dados sincronizados, sem criar magia, permitir perk ou demonstrar QA carregado/Survival. Esta seção **substitui exclusivamente a pendência antiga do setter/slot** nas auditorias históricas acima; os demais `NOT_PROVED` continuam vigentes. Identidade Somake segue 83/83 e esta magia permanece uma única raiz.
+
+## Proveniência do primeiro `float` do `onCast` — prova exata (19/10/2026, PR #839)
+
+- **Auditoria:** [GitHub Actions #39296264174](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39296264174), Java 21 `SUCCESS` / **45 testes**, Somake File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, [dossiê da cadeia](../EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md).
+- **Método/callsite:** `com.somake.somakespells.spells.blood.FuneralBloomSpell#onCast` invoca `getRadius(int,LivingEntity):float`, e **seu retorno é o primeiro `float`** transmitido diretamente à `FuneralBloomControllerEntity.<init>(Level,LivingEntity,float,int,int,int,int,float,int,int)` (argumento ordinal 3, posição que vira slot JVM 3 no construtor). Janela de 31 instruções da chamada verificada por pilha tipada e checagem estrita de descritores.
+- **Cadeia de estado:** no construtor, esse float alimenta `setRadius(float)`, cujo corpo linear grava `DATA_RADIUS` após `Mth.clamp(input,6.0f,18.0f)`. O getter lê exatamente esse accessor.
+- **Raio numérico de origem:** `FuneralBloomSpell.getRadius` possui expressão independente de nível/poder escolar e clamp `10.0f–15.0f`, com ramos `LivingEntity` nulo/não nulo certificados em [auditoria numérica](../EXACT-BINARY-FUNERAL-BLOOM-RADIUS-TYPED-1.0.9.md). Os valores numéricos indicam **estado interno** para entradas finitas; não provaram raio de `AABB` nem alcance real do cast.
+- **Limites:** o scanner não estabelece identidade efetiva do `LivingEntity` enviado a `getRadius`, nem atribuição do segundo float, raio de `launchWave`, volume do impacto da bud, bloqueios PvP/claims, execução ao vivo ou hook seguro para perk. ⛔ `FAIL_CLOSED` na mutação, geração de dano/cura e Mastery; não repetir `onCast`.
+
+Resultado: uma **única identidade** `somakespells:funeral_bloom`, ainda condicional para alcance/Survival e **sem adapter mutador**. A pendência de origem do primeiro float registrada em etapas históricas da ficha fica superada por esta auditoria específica, sem promover as demais.
