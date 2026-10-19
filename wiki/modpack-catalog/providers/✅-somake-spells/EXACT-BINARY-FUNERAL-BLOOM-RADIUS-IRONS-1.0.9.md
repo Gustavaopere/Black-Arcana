@@ -49,3 +49,12 @@ O método do artefato de API (`AbstractSpell`) possui referências simbólicas c
 - ⚠️ Config efetiva, Survival, jogador conectado, multiplayer, client render e modpack completo permanecem pendentes sob D035. Stage 06.05 🟡; Stage 09 condicionado.
 
 **Contagem:** `somakespells:funeral_bloom` permanece uma única magia entre 83/83 identidades do provider já cadastradas; nenhuma entidade nem ação semântica nova foi adicionada. Este lote aumenta a profundidade da ficha, sem inflar a barra geral.
+
+## Atualização posterior: valor dos dois caminhos JVM — 19/10/2026
+
+**A pendência de fórmula de retorno identificada neste dossiê foi parcialmente encerrada em auditoria posterior.** [Prova tipada SHA-exata](EXACT-BINARY-FUNERAL-BLOOM-RADIUS-TYPED-1.0.9.md), [workflow Java21 #39259507432](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39259507432) `SUCCESS`, dez testes: o sujeito do `ifnonnull` é o argumento `caster` e os dois caminhos terminam em `Mth.clamp_f32` com limites literais 10.0/15.0.
+
+- `caster != null`: retorno JVM `clamp_f32((9.5 + i2f(level)*0.82) + max_f32(0,d2f(SchoolType.getPowerFor(caster))-1)*0.65,10,15)`; `getSchoolType` e `SchoolType.getPowerFor` referenciados somente neste ramo.
+- `caster == null`: retorno JVM `clamp_f32((9.5 + i2f(level)*0.82) + max_f32(0,1-1)*0.65,10,15)`; não há chamada a SchoolType nesse ramo.
+
+Estas apresentações algébricas devem preservar a ordem exata e conversões float32/double como detalhado no dossiê posterior. O status `NOT_PROVED` nesta auditoria histórica se referia ao parser **linear** que não suportava branches; o novo interpretador verificou os dois caminhos estáticos. Persistem ⚠️ interpretação no mundo, formula efetiva de SpellPower e ⛔ ausência de contrato mutador per-player.

@@ -98,3 +98,14 @@ O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `
 - **Hooks per-player validados nesta rodada:** 0; ⛔ `FAIL_CLOSED`. Black Arcana mantém apenas seu runtime; Somake efeitos provider-native; Iron's host; RPG Skill Tree somente progressão com contrato real. Stage 06.05 🟡 e Stage 09 condicionado sob D035.
 
 [Relatório técnico de CFG/host](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-IRONS-1.0.9.md).
+
+## Somake 1.0.9 — nona camada: duas fórmulas de ramo do raio (19/10/2026)
+
+- [Java21 #39259507432](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39259507432) `SUCCESS`, dez testes sintéticos/negativos e fixture Java21, JAR Somake File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`: o interpretador JVM tipado validou os 28 opcodes do `getRadius` nos dois caminhos de `ifnonnull(caster)`, guard `caster == null` ou `caster != null`.
+- ✅ Retorno de raio: `clamp_f32((9.5 + i2f(level)*0.82) + max_f32(0, P-1)*0.65, 10,15)` para caster não nulo, com `P=d2f(SchoolType.getPowerFor(caster))`; mesmo cálculo com `P=1` para caster nulo. São representações matemáticas das operações float32 do JAR; sem prova de raio/hitbox/alcance aplicados em jogo.
+- ✅ Agora há **sete getters com expressões JVM de retorno examinadas nesta cadeia específica da Funeral Bloom**: cinco inteiros, `getImpactDamage` float e `getRadius` float por dois caminhos. Não contar os dois ramos como duas magias ou duas identidades independentes.
+- **Barra global:** —%, denominador final não comprovado; piso histórico de pelo menos 1.857 objetos semânticos sem variação neste incremento.
+- **Barra Somake (identidades):** **83/83 = 100%** dos IDs da registry; **5/83 = 6,02%** fichas com entidades downstream auditadas (cohort anterior), sete classfiles distintos de entidades já examinados; não houve nova magia nem nova classe nesta PR.
+- **Integração:** 0 adapters mutadores per-player homologados. ⛔ `FAIL_CLOSED` para perks de área/dano/tempo/targets até provar consumidores/eventos/atributos/config e QA provider-loaded; Stage 06.05 🟡; Stage 09 condicionado sob D035.
+
+[Dossiê tipado de ramo e raio](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-TYPED-1.0.9.md).
