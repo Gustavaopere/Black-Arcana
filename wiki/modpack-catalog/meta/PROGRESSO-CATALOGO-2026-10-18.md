@@ -162,3 +162,16 @@ As três relações locais acima **superam o resultado negativo anterior referen
 - **Pendências mantidas:** `onCast` origem efetiva dos parâmetros do getter e do segundo float, operandos de `AABB.inflate` em `launchWave` e `bud.impact`, efeitos/dano/cura por alvo, configs efetivas/Survival, cliente, multiplayer/claims e contrato público de mudança por perk. ⛔ `FAIL_CLOSED`; Stage 06.05 🟡, Stage 09 físico PENDING; nenhuma promoção de Stage.
 
 Provas por método em [dossiê de radius controller](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md) e [ficha individual](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md). Esta evidência é estática/clean-room, sem exportar código ou bytecode de terceiros.
+
+## Continuação Somake — `launchWave` e três operandos de `AABB.inflate` (19/10/2026, PR #840)
+
+**Barra geral (todas as magias/rituais/ações sobrenaturais dos mods): —%**, por denominador global ainda aberto; piso histórico conservador `>=1.856` objetos semânticos até reconciliar checkpoints `1.856/1.857`. **Sem novas identidades** neste lote.
+
+**Barra Somake 1.0.9 (identidades de registry): 83/83 = 100%.** **Subbarra de fichas com entidades downstream auditadas nesta campanha: 5/83 = 6,02%.** Aprofundamento da mesma `somakespells:funeral_bloom` já catalogada; sete classfiles downstream acumulados não crescem. Mutadores per-player aprovados **0**, e o percentual de cobertura de perks segue —% por denominador de demandas ainda não auditado.
+
+- [Java21 #39303857720](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39303857720), `SUCCESS`, SHA exata: prova estrutural de 196 instruções, três chamadas a `getRadius` no método, mas só duas anteriores ao único `AABB.inflate(DDD)`. A hipótese dos três getters consecutivos foi **rejeitada** corretamente no gate causal.
+- [Java21 SHA-exata #39304248399](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39304248399), `SUCCESS`, **21 testes**: sequência JVM tipada sem ingressos de desvios prova que **X/Z recebem `f2d(controller.getRadius())`** e **Y recebe literal `double 10.5d`** em `FuneralBloomControllerEntity.launchWave(ServerLevel).AABB.inflate(DDD)`. Publisher File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`; mesma modlist física sibling.
+- **Cadeia local certificada:** spell getter (clamp retorno 10–15 para entrada finita) → argumento 3 do construtor → setter da controller (clamp 6–18) → `DATA_RADIUS` → getter da controller → X/Z da expansão AABB; Y = 10.5d, separado do raio.
+- **Pendências:** origem da AABB receptora, uso da AABB retornada na query e filtros/alvos, existência real e cardinalidade de buds, `FuneralBloomBudEntity.impact` e suas dimensões, dano/cura/Wither, QA em Survival/provider-loaded, cliente/multiplayer, API externa segura de modificação per-player. ⛔ `FAIL_CLOSED`; Stage 06.05 🟡 e Stage 09 físico PENDING. A prova de operandos não é contrato de perk ou validação de raio/hitbox no mundo.
+
+[Detalhes de consumidores](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md), [cadeia da controller](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md) e [ficha individual](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
