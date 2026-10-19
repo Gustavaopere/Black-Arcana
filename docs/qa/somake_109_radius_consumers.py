@@ -43,6 +43,10 @@ MAX_METHOD_INSTRUCTIONS=2800
 MAX_SYMBOLS_PER_METHOD=110
 MAX_SYMBOL_LEN=900
 
+def wave_radius_aabb_shape(body:list[str])->dict:
+    """Bounded local callsite shape; not a value-propagation certificate."""
+    return {"status":"NOT_PROVED","reason":"diagnostic_not_implemented"}
+
 def calls_in_method(body:list[str])->dict:
     """Only bytecode callsite comments; fields are separately counted."""
     if len(body)>4500:raise GateError("oversized method section")
@@ -99,7 +103,13 @@ def analyze_javap(text:str, label:str)->dict:
         if not any(k.startswith(target+"(") for k in selected):
             raise GateError("missing focused method: "+label+"."+target)
     if len(selected)>14:raise GateError("excessive method overloads")
-    return {"fqcn":CLASSES[label],"selected_methods":selected}
+    report={"fqcn":CLASSES[label],"selected_methods":selected}
+    if label=="controller":
+        candidates=[body for name,desc,body in declared
+                    if name=="launchWave" and desc=="(Lnet/minecraft/server/level/ServerLevel;)V"]
+        if len(candidates)!=1:raise GateError("missing exact launchWave descriptor")
+        report["wave_radius_aabb_shape"]=wave_radius_aabb_shape(candidates[0])
+    return report
 
 def certify_exact_consumer_surface(outcome:dict)->None:
     """Ensure exact version callsite relations do not silently change."""
