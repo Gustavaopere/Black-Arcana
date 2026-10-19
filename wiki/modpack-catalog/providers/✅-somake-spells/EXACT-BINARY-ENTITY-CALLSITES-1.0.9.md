@@ -49,7 +49,12 @@ Após a matriz de cinco classes, a análise alcançou a classe subordinada `com.
 
 - `impact` referencia `DamageSources.applyDamage`, `SpellHealEvent`, `NeoForge.EVENT_BUS.post`, `LivingEntity.heal`, `MobEffects.WITHER`, `LivingEntity.push`, `AABB` e `getOwner` — **não** prova evento ou efeito em todas as branches.
 - `tick`, `updatePrediction` e `beginRetreat` referenciam fases de telegraph/fall/retreat e ligação por UUID ao controller/target; o código compilado possui métodos de NBT para dados de efeito.
-- `FuneralBloomImpactEntity` foi localizada como próxima classe subordinada referenciada pelo método `impact`, **ainda sem auditoria do classfile**.
+- `FuneralBloomImpactEntity` foi localizada como classe subordinada referenciada por `impact`; sua auditoria de classfile foi **posteriormente concluída em [workflow #39198753251](EXACT-BINARY-FUNERAL-BLOOM-IMPACT-1.0.9.md)**, sem inferência de gameplay.
 - Os números originais de 105 declarações/78 métodos interessam exclusivamente às primeiras **cinco classes**; **não os somar à lista total de spells**. A campanha agora possui **seis classfiles downstream examinados** (cinco anteriores + este bud), todos com prova de presença e símbolos estáticos. Sem prova de cobertura exaustiva de toda a árvore de efeitos Somake.
 
 **Perks:** nenhuma API segura e per-player foi homologada. Dano/cura/status e contabilização de Mastery precisam correlação de cast/bud/impact; impedir duplo processamento e observar owner válido. Tests de Survival, jogador real, config efetiva e host Iron's permanecem pendentes.
+
+
+## Extensão de downstream: FuneralBloomImpactEntity — 19/10/2026
+
+O [workflow exato #39198753251](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39198753251) verificou **8 métodos** do classfile adicional: `DATA_SCALE` via `SynchedEntityData`, `getScale/setScale`, `getOpenProgress/smoothstep`, `tick/discard` e NBT. **Nenhuma referência direta de dano/cura/status foi observada nos oito métodos**, mas ausência de símbolos na classe não demonstra inexistência de efeito herdado/delegado. A campanha acumulada agora contém **7 classfiles downstream distintos** com prova estática; 5/83 fichas Somake tiveram análise de entidade e o denominador total do provider segue em aberto. [Dossiê](EXACT-BINARY-FUNERAL-BLOOM-IMPACT-1.0.9.md). Não introduzir hook de Scale ou ganho de Mastery sem API e dataflow de versão exata.
