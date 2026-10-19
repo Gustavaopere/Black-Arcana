@@ -48,6 +48,7 @@ def calls_in_method(body:list[str])->dict:
     if len(body)>4500:raise GateError("oversized method section")
     records=[]
     fields=[]
+    dynamic_invokes=0
     opcount=0
     for line in body:
         before,sep,after=line.partition("//")
@@ -62,9 +63,13 @@ def calls_in_method(body:list[str])->dict:
             comment=after.strip()
             if len(comment)>MAX_SYMBOL_LEN:raise GateError("symbol oversized")
             sm=SYMBOL.match(comment)
-            if op.startswith("invoke"):
+            if op=="invokedynamic":
+                if not re.match(r"^InvokeDynamic\s+#\d+:[^ ]+",comment):
+                    raise GateError("invalid invokedynamic bootstrap descriptor")
+                dynamic_invokes+=1
+            elif op.startswith("invoke"):
                 if not sm or sm.group(1) not in ("Method","InterfaceMethod"):
-                    raise GateError("invocation missing JVM symbol")
+                    raise GateError("invocation missing JVM symbol for "+op)
                 records.append(sm.group(2))
             elif op in ("getfield","putfield","getstatic","putstatic"):
                 if sm and sm.group(1)=="Field":
@@ -73,6 +78,7 @@ def calls_in_method(body:list[str])->dict:
     return {
         "instruction_count":opcount,
         "invoke_count":len(records),
+        "invokedynamic_count":dynamic_invokes,
         "callsite_symbols":sorted(set(records)),
         "field_symbols":sorted(set(fields))[:40],
         "classified":{category:sorted(set(x for x in records if any(k in x for k in keywords)))
@@ -119,7 +125,7 @@ def inspect(jar:Path)->dict:
         for method,metrics in result["selected_methods"].items():
             print("SOMAKE_RADIUS_CONSUMER",label,method,
                   "ops",metrics["instruction_count"],
-                  "invokes",metrics["invoke_count"],
+                  "invokes",metrics["invoke_count"],"dynamic",metrics["invokedynamic_count"],
                   "classified",json.dumps(metrics["classified"],sort_keys=True),
                   "fields",json.dumps(metrics["field_symbols"]))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
