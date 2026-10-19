@@ -189,6 +189,60 @@ def constructor_direct_assignments(body:list[str], target_field:str)->dict:
             "field":target_field,"jvm_local_slot":slot,
             **FLOAT_SLOTS[slot]}
 
+def direct_synched_radius_setter(body:list[str],accessor_name:str)->dict:
+    """Entire seven-opcode method must write its sole float argument to accessor."""
+    rows=opcode_rows(body)
+    def fail(reason):return {"status":"NOT_PROVED","reason":reason}
+    if len(rows)!=7:return fail("setter_not_exact_seven_opcode_float_write")
+    if [x[1] for x in rows]!=["aload_0","getfield","getstatic","fload_1",
+                               "invokestatic","invokevirtual","return"]:
+        return fail("setter_has_unknown_transform_or_control_flow")
+    if rows[1][3]!="Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;":
+        return fail("setter_data_field_not_proven")
+    m=re.fullmatch(
+        r"Field (?:(?:([A-Za-z0-9_/$]+))\.)?([A-Za-z0-9_$]+):Lnet/minecraft/network/syncher/EntityDataAccessor;",
+        rows[2][3])
+    if not m or m.group(2)!=accessor_name or m.group(1) not in (None,SELF_JVM_OWNER):
+        return fail("setter_accessor_not_same_proved_getter")
+    if rows[4][3]!="Method java/lang/Float.valueOf:(F)Ljava/lang/Float;":
+        return fail("setter_float_box_not_proven")
+    if rows[5][3]!=(
+        "Method net/minecraft/network/syncher/SynchedEntityData.set:"
+        "(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"):
+        return fail("setter_synched_data_set_not_proven")
+    return {"status":"PROVED_DIRECT_FLOAT_SETTER_TO_SYNCED_RADIUS",
+            "setter_parameter_local_slot":1,
+            "accessor_field":accessor_name,
+            "boundary":"setRadius(F)V writes its argument; caller and constructor remain separately audited."}
+
+def direct_constructor_setter_call(body:list[str])->dict:
+    """Only an immediately adjacent this + raw float constructor-local call."""
+    rows=opcode_rows(body)
+    def fail(reason):return {"status":"NOT_PROVED","reason":reason}
+    if any(op.startswith(("if","goto","jsr")) or op in ("tableswitch","lookupswitch",
+             "athrow","ret","wide") for _,op,_,_ in rows):
+        return fail("constructor_conditional_provenance_not_supported")
+    candidates=[]
+    calls=0
+    for i,(_,opcode,_,comment) in enumerate(rows):
+        if opcode not in ("invokevirtual","invokespecial"):continue
+        m=re.fullmatch(r"Method (?:(?:([A-Za-z0-9_/$]+))\.)?setRadius:\(F\)V",comment)
+        if not m or m.group(1) not in (None,SELF_JVM_OWNER):
+            continue
+        calls+=1
+        if i<2:continue
+        first,second=rows[i-2:i]
+        if local_id(first[1],first[2],"aload")!=0:continue
+        slot=local_id(second[1],second[2],"fload")
+        if slot in FLOAT_SLOTS:candidates.append(slot)
+    if calls!=1 or len(candidates)!=1:
+        return {"status":"NOT_PROVED","reason":"unique_raw_ctor_float_to_setRadius_not_proven",
+                "setRadius_calls":calls,"direct_candidates":len(candidates)}
+    return {"status":"PROVED_DIRECT_CTOR_FLOAT_ARGUMENT_TO_SETTER",
+            "jvm_local_slot":candidates[0],
+            **FLOAT_SLOTS[candidates[0]],
+            "boundary":"Ctor passes this float to setRadius; onCast argument source not analyzed."}
+
 def synced_accessor_method_inventory(methods:list,accessor_name:str)->dict:
     """Method-level symbols only; no code, offsets, control/data flow exported."""
     found=[]
@@ -242,6 +296,13 @@ def analyze(text:str)->dict:
     synced_binding=({"status":"NOT_PROVED","reason":"no_certified_synched_accessor"}
          if synced["status"]!="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
          else synced_radius_constructor_setter(constructors[0][1],synced["accessor_field"]))
+    setters=[body for name,desc,body in rows if name=="setRadius" and desc=="(F)V"]
+    setter=({"status":"NOT_PROVED","reason":"missing_or_ambiguous_setRadius"}
+       if len(setters)!=1 or synced["status"]!="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
+       else direct_synched_radius_setter(setters[0],synced["accessor_field"]))
+    ctor_call=({"status":"NOT_PROVED","reason":"setter_not_proven"}
+       if setter["status"]!="PROVED_DIRECT_FLOAT_SETTER_TO_SYNCED_RADIUS"
+       else direct_constructor_setter_call(constructors[0][1]))
     return {
       "constructor_descriptor":CONSTRUCTOR_DESC,
       "constructor_float_argument_slots":[{"jvm_local_slot":slot,**v} for slot,v in FLOAT_SLOTS.items()],
@@ -249,6 +310,8 @@ def analyze(text:str)->dict:
       "getter":getter,
       "synced_data_getter":synced,
       "constructor_to_synced_accessor":synced_binding,
+      "setter_to_synced_accessor":setter,
+      "constructor_to_setter":ctor_call,
       "synced_accessor_method_inventory":(
           synced_accessor_method_inventory(rows,synced["accessor_field"])
           if synced["status"]=="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
@@ -278,11 +341,14 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_CONTROLLER_RADIUS_BRIDGE",json.dumps(proof,sort_keys=True))
     status=("PASS_EXACT_SHA_DIRECT_CONSTRUCTOR_RADIUS_BRIDGE"
             if proof["constructor_to_getter"]["status"]=="PROVED_DIRECT_FLOAT_ARGUMENT_FIELD_BINDING"
-            else ("PASS_EXACT_SHA_SYNCED_FLOAT_CONSTRUCTOR_BRIDGE"
-                  if proof["constructor_to_synced_accessor"]["status"]=="PROVED_DIRECT_CONSTRUCTOR_FLOAT_TO_SYNCED_RADIUS"
-                  else ("PASS_EXACT_SHA_SYNCED_FLOAT_GETTER_CONSTRUCTOR_BRIDGE_NOT_PROVED"
-                        if proof["synced_data_getter"]["status"]=="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
-                        else "PASS_EXACT_SHA_OBSERVATIONAL_ONLY_BRIDGE_NOT_PROVED")))
+            else ("PASS_EXACT_SHA_CTOR_FLOAT_VIA_SYNCED_RADIUS_SETTER"
+                  if (proof["setter_to_synced_accessor"]["status"]=="PROVED_DIRECT_FLOAT_SETTER_TO_SYNCED_RADIUS"
+                      and proof["constructor_to_setter"]["status"]=="PROVED_DIRECT_CTOR_FLOAT_ARGUMENT_TO_SETTER")
+                  else ("PASS_EXACT_SHA_SYNCED_FLOAT_CONSTRUCTOR_BRIDGE"
+                        if proof["constructor_to_synced_accessor"]["status"]=="PROVED_DIRECT_CONSTRUCTOR_FLOAT_TO_SYNCED_RADIUS"
+                        else ("PASS_EXACT_SHA_SYNCED_FLOAT_GETTER_CONSTRUCTOR_BRIDGE_NOT_PROVED"
+                              if proof["synced_data_getter"]["status"]=="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
+                              else "PASS_EXACT_SHA_OBSERVATIONAL_ONLY_BRIDGE_NOT_PROVED"))))
     return {"status":status,
             "sha1":digest,"fqcn":FQCN,"evidence":proof,
             "limits":["Independent controller getter/constructor analysis, not onCast value provenance.",
