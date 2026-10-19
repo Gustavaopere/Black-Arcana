@@ -6,6 +6,7 @@ on:
       - '.github/workflows/vanillabackport-11710-minimal-server-bootstrap.yml'
       - 'docs/qa/vanillabackport_11710_minimal_bootstrap.py'
       - 'docs/qa/vanillabackport_11710_postmixin_export.py'
+      - 'docs/qa/vanillabackport_11710_postmixin_invoke_gate.py'
       - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/EXACT-RUNTIME-VANILLABACKPORT-MINIMAL-SERVER-1.1.7.10.md'
   workflow_dispatch:
 
@@ -112,6 +113,17 @@ jobs:
             --root build/vb-minimal-11710/server \
             --output build/vb-minimal-11710/postmixin-export-evidence.json
 
+      - name: Fail-closed seven exact post-Mixin handler invocation regressions
+        run: python3 docs/qa/vanillabackport_11710_postmixin_invoke_gate.py --self-test
+
+      - name: Require seven handler callsites in transformed server target methods
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/vanillabackport_11710_postmixin_invoke_gate.py \
+            --root build/vb-minimal-11710/server \
+            --output build/vb-minimal-11710/postmixin-invoke-evidence.json
+
       - name: Publish only redacted bounded JSON metadata, never mod JAR or server log
         if: always()
         uses: actions/upload-artifact@v7
@@ -120,5 +132,6 @@ jobs:
           path: |
             build/vb-minimal-11710/minimal-bootstrap-evidence.json
             build/vb-minimal-11710/postmixin-export-evidence.json
+            build/vb-minimal-11710/postmixin-invoke-evidence.json
           if-no-files-found: ignore
           retention-days: 14
