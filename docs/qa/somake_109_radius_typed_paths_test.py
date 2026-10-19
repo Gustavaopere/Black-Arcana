@@ -7,6 +7,7 @@ from pathlib import Path
 
 from somake_109_radius_typed_paths import interpret, certify_exact_109, EXPECTED_EXACT_109_RADIUS_PATHS
 from somake_109_radius_irons_contract import SOMAKE_GETTER_DESC, radius_cfg, opcode_rows
+from somake_109_perk_method_probe import GateError
 
 GOOD=[
  "   0: aload_2",
@@ -79,7 +80,7 @@ class RadiusPathTests(unittest.TestCase):
         paths=[{"condition":condition,**attrs}
                for condition,attrs in EXPECTED_EXACT_109_RADIUS_PATHS.items()]
         paths[0]["jvm_float_expression"]=paths[0]["jvm_float_expression"].replace("0.82","0.83")
-        with self.assertRaises(Exception):
+        with self.assertRaises(GateError):
             certify_exact_109({"status":"PROVED_TWO_PATH_JVM_FLOAT_EXPRESSION",
                                "jvm_instructions":28,"paths":paths})
 
@@ -87,14 +88,14 @@ class RadiusPathTests(unittest.TestCase):
         paths=[{"condition":condition,**attrs}
                for condition,attrs in EXPECTED_EXACT_109_RADIUS_PATHS.items()]
         paths[0]["calls"]=["Math.max","Mth.clamp"]
-        with self.assertRaises(Exception):
+        with self.assertRaises(GateError):
             certify_exact_109({"status":"PROVED_TWO_PATH_JVM_FLOAT_EXPRESSION",
                                "jvm_instructions":28,"paths":paths})
 
     def test_exact_release_rejects_ambiguous_branch_identity(self):
         paths=[{"condition":"caster == null",**attrs}
                for attrs in EXPECTED_EXACT_109_RADIUS_PATHS.values()]
-        with self.assertRaises(Exception):
+        with self.assertRaises(GateError):
             certify_exact_109({"status":"PROVED_TWO_PATH_JVM_FLOAT_EXPRESSION",
                                "jvm_instructions":28,"paths":paths})
 
