@@ -41,3 +41,9 @@ Os argumentos do clamp constituem evidência de limites **daquela chamada JVM**,
 Somake continua owner da execução da magia; Iron's é authority de host e recursos; RPG Skill Tree fornece progressão/Mastery/perks apenas por boundaries reais; Black Arcana mantém somente seu próprio runtime. Sem nova identidade de magia, Stage 06.05 continua 🟡.
 
 **Continuidade:** analisar CFG e caminho de `SchoolType.getPowerFor` para `getRadius`; confirmar descriptor/implementação admissível de `getSpellPower` no Iron's 3.16.3, configuração do pack e a aplicação downstream de dano. Relacionados: [dossiê numérico](EXACT-BINARY-FUNERAL-BLOOM-NUMERIC-1.0.9.md), [bud](EXACT-BINARY-FUNERAL-BLOOM-BUD-1.0.9.md), [ficha](registry-1.0.9/funeral-bloom.md).
+
+## Complemento: ligação binária Iron's 3.16.3 e grafo estrutural do raio
+
+A auditoria [Somake CFG / Iron's API](EXACT-BINARY-FUNERAL-BLOOM-RADIUS-IRONS-1.0.9.md) comparou dois artefatos físicos: Somake SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` e API oficial Iron's 3.16.3 SHA-256 `69e81104a9fd31a402d9c89ab09c2a6b2fd6d2ab98db5a37bb159517363ee9ad`. O getter Somake aceita `(int,LivingEntity):float`, mas seu callsite `getSpellPower` usa o descriptor `(int,Entity):float` e **corresponde ao método na API oficial**. O `AbstractSpell.getSpellPower` referencia `SpellConfigManager.getSpellConfigValue`, `SchoolType.getPowerFor` e `LivingEntity.getAttributeValue`. São dependências simbólicas, não fórmula completa ou atributos do RPG Skill Tree comprovados.
+
+O CFG de `getRadius` contém 28 instruções alcançáveis, um `ifnonnull`, um `goto`, um ponto de junção e um `freturn`; `SchoolType.getPowerFor`, `Math.max` e `Mth.clamp` estão presentes. Os dois operandos finais do clamp seguem 10.0f/15.0f. **Permanece NOT_PROVED** a expressão matemática completa e o alvo da condição `ifnonnull`, assim como a área efetiva em jogo. Nenhuma perk mutadora foi homologada.
