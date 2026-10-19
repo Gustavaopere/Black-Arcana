@@ -57,7 +57,7 @@ Todos os números acima são **literais tipados do classfile**, não unidades de
 - ✅ `getMaxTargets`, `getDuration`, `getWaveInterval`, `getWitherDuration` e `getTelegraphTicks` possuem expressões JVM lineares demonstradas, independentes de hipóteses sobre jogabilidade.
 - ⚠️ Para `getRadius` e `getImpactDamage`, é necessário resolver branches e callbacks de escola/SpellPower antes de afirmar alcance/dano por level. Para `getTelegraphTicks`, o retorno matemático está provado, mas aplicação temporal em jogo ainda não.
 - ⚠️ Para controller/bud/impact, ainda não é seguro inferir hitbox, cooldown, intervalo real de ataque, dano aplicado ou cura observada a partir de literais numéricos.
-- ⛔ Um literal, uma fórmula de getter ou um setter interno como `setScale` não cria API pública de perk por jogador. Não sobrescrever casts, custos, cooldown ou dano nativo do Somake/Iron's nem duplicar Mastery por bud.
+- ⛔ **FAIL_CLOSED:** um literal, uma fórmula de getter ou um setter interno como `setScale` não cria API pública de perk por jogador. Não sobrescrever casts, custos, cooldown ou dano nativo do Somake/Iron's nem duplicar Mastery por bud.
 - ⚠️ Multiplayer, provider-loaded, real client, Survival, reload/NBT e modpack seguem sob D035; Stage 06.05 🟡 e Stage 09 condicionado.
 
 **Catálogo:** `somakespells:funeral_bloom` continua uma única identidade entre 83; a campanha cobre 4 classfiles usados neste probe numérico, sem acrescentar nenhuma magia. Fontes relacionadas: [ficha individual](registry-1.0.9/funeral-bloom.md), [controller/bud](EXACT-BINARY-FUNERAL-BLOOM-BUD-1.0.9.md), [impact](EXACT-BINARY-FUNERAL-BLOOM-IMPACT-1.0.9.md).
