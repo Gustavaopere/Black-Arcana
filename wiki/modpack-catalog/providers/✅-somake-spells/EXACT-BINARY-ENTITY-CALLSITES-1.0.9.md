@@ -42,3 +42,14 @@ A auditoria prova **referências simbólicas** sob SHA-1 exata; uma chamada pode
 ## Próximo gate
 
 Auditar `FuneralBloomBudEntity` e demais efeitos delegados, inspecionar dataflow de `tick`/`pulseDamage`/`applyDamage`, numerais e caps com unidades, e executar prova provider-loaded e multiplayer em ambiente real antes de qualquer adapter mutador. Nenhuma Stage promovida; 83/83 registros Somake já conhecidos continuam sem novos IDs.
+
+## Extensão de downstream: FuneralBloomBudEntity — 19/10/2026
+
+Após a matriz de cinco classes, a análise alcançou a classe subordinada `com.somake.somakespells.entity.FuneralBloomBudEntity`. [Java21 #39197671447](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39197671447) **SUCCESS** no JAR SHA-1 exato `171841ac9f802be9309ecc166c1d972ac6d404c0`, **26 métodos**, **10 testes sintéticos**; [dossiê autônomo](EXACT-BINARY-FUNERAL-BLOOM-BUD-1.0.9.md).
+
+- `impact` referencia `DamageSources.applyDamage`, `SpellHealEvent`, `NeoForge.EVENT_BUS.post`, `LivingEntity.heal`, `MobEffects.WITHER`, `LivingEntity.push`, `AABB` e `getOwner` — **não** prova evento ou efeito em todas as branches.
+- `tick`, `updatePrediction` e `beginRetreat` referenciam fases de telegraph/fall/retreat e ligação por UUID ao controller/target; o código compilado possui métodos de NBT para dados de efeito.
+- `FuneralBloomImpactEntity` foi localizada como próxima classe subordinada referenciada pelo método `impact`, **ainda sem auditoria do classfile**.
+- Os números originais de 105 declarações/78 métodos interessam exclusivamente às primeiras **cinco classes**; **não os somar à lista total de spells**. A campanha agora possui **seis classfiles downstream examinados** (cinco anteriores + este bud), todos com prova de presença e símbolos estáticos. Sem prova de cobertura exaustiva de toda a árvore de efeitos Somake.
+
+**Perks:** nenhuma API segura e per-player foi homologada. Dano/cura/status e contabilização de Mastery precisam correlação de cast/bud/impact; impedir duplo processamento e observar owner válido. Tests de Survival, jogador real, config efetiva e host Iron's permanecem pendentes.
