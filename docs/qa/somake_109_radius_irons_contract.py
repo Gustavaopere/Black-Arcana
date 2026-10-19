@@ -176,7 +176,7 @@ def inspect(somake:Path,iron:Path,expected_api_sha256:str|None)->dict:
         raise GateError("radius no longer references SchoolType.getPowerFor")
     power_calls=callsite_descriptors(matches["getImpactDamage"][1],"getSpellPower")
     if power_calls!=[POWER_DESC]:
-        raise GateError("Somake getSpellPower call descriptor mismatch")
+        raise GateError("Somake getSpellPower call descriptor mismatch: "+repr(power_calls))
     parsed_api=sections(javap(iron,IRON_CLASS))
     matching=[(name,desc,body) for name,desc,body in parsed_api if name=="getSpellPower" and desc==POWER_DESC]
     if len(matching)!=1:
