@@ -50,6 +50,38 @@ def direct_float_getter(body:list[str])->dict:
     if not name:return {"status":"NOT_PROVED","reason":"missing_typed_float_field"}
     return {"status":"PROVED_DIRECT_INSTANCE_FLOAT_GETTER","field":name}
 
+def getter_structural_shape(body:list[str])->dict:
+    """Bounded semantic aggregate; never export opcode sequence or raw method body."""
+    rows=opcode_rows(body)
+    if len(rows)>250:raise GateError("getter inspection budget exceeded")
+    reads=set()
+    invokes=set()
+    math_count=0
+    branch_count=0
+    for _,op,_,comment in rows:
+        if op=="getfield":
+            name=field(comment)
+            if name:reads.add(name)
+        elif op.startswith("invoke"):
+            m=re.fullmatch(r"(?:Method|InterfaceMethod) (.{1,190})",comment)
+            if not m:raise GateError("unrecognized getter JVM method symbol")
+            invokes.add(m.group(1))
+        if op.startswith(("fadd","fsub","fmul","fdiv","dadd","dsub","dmul","ddiv","i2f","d2f","fneg","dneg")):
+            math_count+=1
+        if op.startswith(("if","goto")) or op in ("tableswitch","lookupswitch"):
+            branch_count+=1
+    if len(reads)>18 or len(invokes)>28:
+        raise GateError("getter symbol budget exceeded")
+    return {
+        "instruction_count":len(rows),
+        "float_field_names_read":sorted(reads),
+        "float_arithmetic_and_conversion_instructions":math_count,
+        "branch_instruction_count":branch_count,
+        "invoked_method_symbols":sorted(invokes),
+        "float_return_instructions":sum(row[1]=="freturn" for row in rows),
+        "proof_status":"STRUCTURAL_ONLY_NO_ARGUMENT_PROVENANCE",
+    }
+
 def constructor_direct_assignments(body:list[str], target_field:str)->dict:
     rows=opcode_rows(body)
     opcodes=[row[1] for row in rows]
@@ -94,6 +126,7 @@ def analyze(text:str)->dict:
       "constructor_float_argument_slots":[{"jvm_local_slot":slot,**v} for slot,v in FLOAT_SLOTS.items()],
       "getter_descriptor":GETTER_DESC,
       "getter":getter,
+      "getter_structure":getter_structural_shape(getters[0][1]),
       "constructor_to_getter":binding,
       "boundary":"Only direct local-argument store and field getter; caller stack and inflate dataflow not proven."
     }
