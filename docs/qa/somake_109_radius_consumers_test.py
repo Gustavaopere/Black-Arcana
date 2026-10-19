@@ -51,6 +51,18 @@ class ConsumerProbeTests(unittest.TestCase):
         self.assertEqual(1,d["invoke_count"])
         self.assertEqual(4,d["instruction_count"])
 
+    def test_invokedynamic_is_tracked_but_not_attributed_to_method(self):
+        d=calls_in_method([
+            "0: invokedynamic #10, 0 // InvokeDynamic #0:run:()Ljava/lang/Runnable;",
+            "5: return"])
+        self.assertEqual(1,d["invokedynamic_count"])
+        self.assertEqual(0,d["invoke_count"])
+        self.assertEqual([],d["callsite_symbols"])
+
+    def test_malformed_invokedynamic_fails_closed(self):
+        with self.assertRaises(GateError):
+            calls_in_method(["0: invokedynamic #10 // InvokeDynamic malformed"])
+
     def test_field_not_counted_as_method(self):
         d=calls_in_method(["0: getfield #1 // Field com/Example.radius:F",
                            "3: invokevirtual #2 // Method getRadius:(I)F","6: freturn"])
