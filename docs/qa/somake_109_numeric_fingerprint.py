@@ -79,6 +79,44 @@ def decode_numeric(opcode: str, args: str, comment: str) -> tuple[str, str] | No
         return (m.group(1), m.group(2).lower().rstrip("fdl"))
     return None
 
+def immediate_clamp_literals(body: list[str]) -> list[dict]:
+    """Only certify the two literal-producing instructions immediately before clamp.
+
+    This is a narrowly scoped operand-position proof, not a complete dataflow
+    model; methods with conversions, loads or calculations between producers
+    and callsite remain unclassified.
+    """
+    instructions=[]
+    for line in body:
+        before, divider, after=line.partition("//")
+        match=CODE.match(before)
+        if match:
+            instructions.append((match.group(1),(match.group(2) or "").strip(),
+                                 after.strip() if divider else ""))
+    found=[]
+    for index,(opcode,_,comment) in enumerate(instructions):
+        if opcode!="invokestatic" or index<2:
+            continue
+        descriptor_match=re.search(r"Mth\.clamp:\((FFF|III|DDD)\)(F|I|D)(?:\s|$)",comment)
+        if not descriptor_match:
+            continue
+        expected={"FFF":"float","III":"int","DDD":"double"}[descriptor_match.group(1)]
+        trailing=[decode_numeric(*item) for item in instructions[index-2:index]]
+        if any(value is None or value[0]!=expected for value in trailing):
+            continue
+        found.append({
+            "call":"Mth.clamp",
+            "descriptor":f"({descriptor_match.group(1)}){descriptor_match.group(2)}",
+            "second_argument_literal":trailing[0][1],
+            "third_argument_literal":trailing[1][1],
+            "argument_type":expected,
+            "claim":"Only the direct two operand pushes are proved; no gameplay scaling or mutability inferred."
+        })
+    if len(found)>12:
+        raise GateError("excessive direct clamp callsites")
+    return found
+
+
 def fingerprint(body: list[str]) -> dict:
     if not 0 < len(body) <= MAX_METHOD_LINES:
         raise GateError("method body length outside guard")
@@ -118,6 +156,7 @@ def fingerprint(body: list[str]) -> dict:
         "numeric_literals":[{"type":t,"literal":n,"occurrences":count}
                             for (t,n),count in sorted(seen.items())],
         "arithmetic_opcode_counts":dict(sorted(arithmetic.items())),
+        "direct_trailing_clamp_literals":immediate_clamp_literals(body),
         "branch_instruction_count":branches,
         "bounded_callsite_counts":dict(sorted(calls.items())),
         "contract":"Literal inventory is NOT a formula, unit, clamp bound, or runtime setting.",
@@ -182,7 +221,8 @@ def inspect(jar: Path)->dict:
                   "literals",json.dumps(info["numeric_literals"]),
                   "arithmetic",json.dumps(info["arithmetic_opcode_counts"]),
                   "branches",info["branch_instruction_count"],
-                  "calls",json.dumps(info["bounded_callsite_counts"]))
+                  "calls",json.dumps(info["bounded_callsite_counts"]),
+                  "direct_clamp",json.dumps(info["direct_trailing_clamp_literals"]))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:
         raise GateError("artifact changed during inspection")
     return {
