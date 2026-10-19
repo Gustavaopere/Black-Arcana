@@ -179,3 +179,13 @@ Para `level` inteiro e `caster != null`, o retorno estático segue `Mth.clamp_f3
 **Limite de prova:** referências co-presentes não certificam qual retorno alimenta os float do construtor, quais operandos dimensionam cada AABB, nem como um alvo elegível se transforma em impacto. Existem duas **superfícies diferentes de seleção/área** (controller wave e impacto individual); não tratá-las como sinônimos. Em `onCast` e `launchWave` há `invokedynamic`, contado sem atribuir corpo de lambda.
 
 **Perks:** ⚠️ fórmulas de getter conhecidas e fontes consumidoras estruturais conhecidas; ⛔ `FAIL_CLOSED` para modificar raio, hitbox, quantidade de alvos, dano/Heal ou Mastery por caster sem prova de passagem de parâmetros e interface real. Nenhuma nova magia ou adapter foi criada.
+
+## Controller: parâmetro float ainda sem vínculo causal ao getter (19/10/2026)
+
+**Prova física:** [Java 21 #39286470816](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39286470816), `SUCCESS`, 13 testes, JAR Somake 1.0.9 File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`. [Dossiê específico](../EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md).
+
+- `FuneralBloomControllerEntity.<init>` tem argumentos float nos slots JVM 3 e 8; **a função de cada um não está certificada** pelo scanner.
+- `FuneralBloomControllerEntity.getRadius():float` retornou `NOT_PROVED / getter_is_not_exact_three_opcode_direct_field_read`; a associação de um campo a esse getter e à atribuição do construtor também retornou `NOT_PROVED / no_certified_getter_field`.
+- O padrão direto investigado era uma hipótese de auditoria. Sua rejeição **não** invalida a expressão `FuneralBloomSpell.getRadius(int,LivingEntity)` já demonstrada, porque são getters de **classes diferentes**. Nem implica que a controller ignore raio: falta o dataflow interno.
+
+**Status:** ⚠️ parâmetros do construtor e assinatura conhecidos; ⛔ `FAIL_CLOSED` para perks mutadoras de área/raio/targets e dedução de dimensões de `AABB.inflate`. O complemento de resumo estrutural do getter permanece condicionado ao CI do HEAD final da PR #837. Nenhuma magia ou adapter nova.
