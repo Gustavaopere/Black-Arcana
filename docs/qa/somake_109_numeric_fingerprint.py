@@ -117,7 +117,7 @@ def immediate_clamp_literals(body: list[str]) -> list[dict]:
     return found
 
 
-STRAIGHT_LINE_GETTERS = {"getMaxTargets", "getDuration", "getWaveInterval", "getWitherDuration"}
+STRAIGHT_LINE_GETTERS = {"getMaxTargets", "getDuration", "getWaveInterval", "getWitherDuration", "getTelegraphTicks"}
 
 def prove_straight_line_integer_expression(body: list[str], descriptor: str) -> dict:
     """Prove an integer expression only for branchless, wholly supported JVM opcodes.
