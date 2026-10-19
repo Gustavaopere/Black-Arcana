@@ -81,7 +81,7 @@ def parse_javap(data: str, simple: str) -> dict:
                 if opcode.startswith("invoke"):
                     invoke_count += 1
                 normalized = kind + " " + reference
-                if len(normalized) > 250:
+                if len(normalized) > 2048:
                     raise GateError("unbounded JVM symbol")
                 if normalized not in members:
                     members.append(normalized)
