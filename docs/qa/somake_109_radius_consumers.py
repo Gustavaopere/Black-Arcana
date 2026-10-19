@@ -138,6 +138,17 @@ def wave_radius_aabb_shape(body:list[str])->dict:
         "intervening_float_to_double_count":sum(op=="f2d" for _,op,_,_ in between),
         "intervening_double_arithmetic_count":sum(op in
             ("dadd","dsub","dmul","ddiv","dneg","drem") for _,op,_,_ in between),
+        "getter_to_inflate_gaps":sorted([a-x-1 for x in radius if x<a],reverse=True),
+        "f2d_to_inflate_gaps":sorted([a-i-1 for i,row in enumerate(rows)
+                                       if i<a and row[1]=="f2d"],reverse=True),
+        "getter_receiver_is_controller_this":[
+            bool(i>0 and rows[i-1][1]=="aload_0") for i in radius if i<a],
+        "double_local_load_count_pre_inflate":sum(
+            op=="dload" or re.fullmatch(r"dload_[0-3]",op) is not None
+            for _,op,_,_ in rows[:a]),
+        "double_local_store_count_pre_inflate":sum(
+            op=="dstore" or re.fullmatch(r"dstore_[0-3]",op) is not None
+            for _,op,_,_ in rows[:a]),
         "boundary":"Callsite order and opcode counts only; AABB DDD operand stack and world hitbox NOT proved."
     }
 
