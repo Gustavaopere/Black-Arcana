@@ -109,3 +109,14 @@ O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `
 - **Integração:** 0 adapters mutadores per-player homologados. ⛔ `FAIL_CLOSED` para perks de área/dano/tempo/targets até provar consumidores/eventos/atributos/config e QA provider-loaded; Stage 06.05 🟡; Stage 09 condicionado sob D035.
 
 [Dossiê tipado de ramo e raio](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-TYPED-1.0.9.md).
+
+## Somake 1.0.9 — décima camada: consumidores de área da Funeral Bloom (19/10/2026)
+
+- [Java21 #39262591589](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39262591589), **SUCCESS / 9 testes**: inspeção SHA-exata de `FuneralBloomSpell`, `FuneralBloomControllerEntity`, `FuneralBloomBudEntity` em seis métodos. Somake File 8867079, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`.
+- `Spell.onCast`: 81 instruções, chamada `getRadius(int,LivingEntity)` e construção da controller com dois argumentos float. `Controller.tick`: 156 instruções, chama `getRadius()` e `launchWave`. `Controller.launchWave`: 196 instruções, `getRadius()`, `AABB.inflate`, `ServerLevel.getEntitiesOfClass` e construção de buds. `Bud.impact`: 279 instruções, outra `AABB.inflate`, query de entidades, `DamageSources.applyDamage`, `SpellHealEvent`/`heal`, sem chamada direta `getRadius`.
+- ⚠️ **Não concluir** que o getter determina ambas as AABB: callsites por método não demonstram dataflow do float nos construtores, operandos `inflate`, ramificações nem efeito recebido por entidade. `invokedynamic` permanece sem destino de callback reconstruído.
+- **Barra global:** —% (denominador de todos mods/actions ainda aberto); piso histórico >=1857 objetos semânticos sem aumento.
+- **Barra Somake:** **83/83 = 100%** identidades registry, **5/83 = 6,02%** fichas com entidades downstream auditadas na campanha, sete classfiles de entidades distintos já conhecidos. Novo lote de callsites em três classes **existentes**, sem nova magia ou entidade adicional.
+- **Perks mutadoras homologadas:** 0. ⛔ `FAIL_CLOSED`; Stage 06.05 🟡 e Stage 09 condicionado (D035). RPG Skill Tree fornece progressão sem controlar casting/efeitos do Black Arcana ou dos providers.
+
+[Dossiê de consumidores do raio](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md).
