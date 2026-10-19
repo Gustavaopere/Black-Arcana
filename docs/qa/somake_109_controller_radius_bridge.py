@@ -116,6 +116,52 @@ def synced_entity_float_getter(body:list[str])->dict:
       "boundary":"Read-only getter dataflow; constructor EntityData.set and onCast args remain unproved.",
     }
 
+def synced_radius_constructor_setter(body:list[str],accessor_field:str)->dict:
+    """Prove a unique, adjacent JVM float argument -> synced accessor set call."""
+    rows=opcode_rows(body)
+    if len(rows)>700:return {"status":"NOT_PROVED","reason":"constructor_instruction_budget"}
+    if any(op.startswith(("if","goto","jsr")) or op in
+           ("tableswitch","lookupswitch","athrow","ret","wide") for _,op,_,_ in rows):
+        return {"status":"NOT_PROVED","reason":"conditional_constructor_dataflow_not_supported"}
+    if sum(op=="return" for _,op,_,_ in rows)!=1 or rows[-1][1]!="return":
+        return {"status":"NOT_PROVED","reason":"ambiguous_constructor_return"}
+    set_desc=(
+      "Method net/minecraft/network/syncher/SynchedEntityData.set:"
+      "(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V")
+    data_field=(
+      "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;")
+    box_float="Method java/lang/Float.valueOf:(F)Ljava/lang/Float;"
+    candidates=[]
+    seen_accessors=0
+    for i,(_,op,_,comment) in enumerate(rows):
+        if op!="getstatic":continue
+        m=re.fullmatch(
+          r"Field (?:(?:([A-Za-z0-9_/$]+))\.)?([A-Za-z0-9_$]+):Lnet/minecraft/network/syncher/EntityDataAccessor;",
+          comment)
+        if not m or m.group(2)!=accessor_field or m.group(1) not in (None,SELF_JVM_OWNER):
+            continue
+        seen_accessors+=1
+        if i<2 or i+3>=len(rows):continue
+        pre=rows[i-2:i]
+        aft=rows[i+1:i+4]
+        if local_id(pre[0][1],pre[0][2],"aload")!=0:
+            continue
+        if pre[1][1]!="getfield" or pre[1][3]!=data_field:
+            continue
+        slot=local_id(aft[0][1],aft[0][2],"fload")
+        if slot not in FLOAT_SLOTS:continue
+        if (aft[1][1],aft[1][3])!=("invokestatic",box_float):continue
+        if (aft[2][1],aft[2][3])!=("invokevirtual",set_desc):continue
+        candidates.append(slot)
+    if seen_accessors!=1 or len(candidates)!=1:
+        return {"status":"NOT_PROVED","reason":"unique_direct_synched_set_not_proved",
+                "accessor_reads":seen_accessors,"matching_assignments":len(candidates)}
+    return {"status":"PROVED_DIRECT_CONSTRUCTOR_FLOAT_TO_SYNCED_RADIUS",
+            "accessor_field":accessor_field,
+            "jvm_local_slot":candidates[0],
+            **FLOAT_SLOTS[candidates[0]],
+            "boundary":"Ctor-level call only; onCast argument mapping and subsequent setter writes remain unknown."}
+
 def constructor_direct_assignments(body:list[str], target_field:str)->dict:
     rows=opcode_rows(body)
     opcodes=[row[1] for row in rows]
@@ -155,12 +201,17 @@ def analyze(text:str)->dict:
     binding=({"status":"NOT_PROVED","reason":"no_certified_getter_field"}
              if getter["status"]!="PROVED_DIRECT_INSTANCE_FLOAT_GETTER"
              else constructor_direct_assignments(constructors[0][1],getter["field"]))
+    synced=synced_entity_float_getter(getters[0][1])
+    synced_binding=({"status":"NOT_PROVED","reason":"no_certified_synched_accessor"}
+         if synced["status"]!="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
+         else synced_radius_constructor_setter(constructors[0][1],synced["accessor_field"]))
     return {
       "constructor_descriptor":CONSTRUCTOR_DESC,
       "constructor_float_argument_slots":[{"jvm_local_slot":slot,**v} for slot,v in FLOAT_SLOTS.items()],
       "getter_descriptor":GETTER_DESC,
       "getter":getter,
-      "synced_data_getter":synced_entity_float_getter(getters[0][1]),
+      "synced_data_getter":synced,
+      "constructor_to_synced_accessor":synced_binding,
       "getter_structure":getter_structural_shape(getters[0][1]),
       "constructor_to_getter":binding,
       "boundary":"Only direct local-argument store and field getter; caller stack and inflate dataflow not proven."
@@ -186,9 +237,11 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_CONTROLLER_RADIUS_BRIDGE",json.dumps(proof,sort_keys=True))
     status=("PASS_EXACT_SHA_DIRECT_CONSTRUCTOR_RADIUS_BRIDGE"
             if proof["constructor_to_getter"]["status"]=="PROVED_DIRECT_FLOAT_ARGUMENT_FIELD_BINDING"
-            else ("PASS_EXACT_SHA_SYNCED_FLOAT_GETTER_CONSTRUCTOR_BRIDGE_NOT_PROVED"
-                  if proof["synced_data_getter"]["status"]=="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
-                  else "PASS_EXACT_SHA_OBSERVATIONAL_ONLY_BRIDGE_NOT_PROVED"))
+            else ("PASS_EXACT_SHA_SYNCED_FLOAT_CONSTRUCTOR_BRIDGE"
+                  if proof["constructor_to_synced_accessor"]["status"]=="PROVED_DIRECT_CONSTRUCTOR_FLOAT_TO_SYNCED_RADIUS"
+                  else ("PASS_EXACT_SHA_SYNCED_FLOAT_GETTER_CONSTRUCTOR_BRIDGE_NOT_PROVED"
+                        if proof["synced_data_getter"]["status"]=="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
+                        else "PASS_EXACT_SHA_OBSERVATIONAL_ONLY_BRIDGE_NOT_PROVED")))
     return {"status":status,
             "sha1":digest,"fqcn":FQCN,"evidence":proof,
             "limits":["Independent controller getter/constructor analysis, not onCast value provenance.",
