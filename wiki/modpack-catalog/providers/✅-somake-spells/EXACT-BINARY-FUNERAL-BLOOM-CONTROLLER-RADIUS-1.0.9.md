@@ -1,6 +1,6 @@
 # Somake Spells 1.0.9 — Funeral Bloom: ponte de argumento float da controller
 
-**Estado:** 🟡 auditoria exata em andamento. Esta prova é restrita ao armazenamento do parâmetro `float` no construtor e ao retorno direto de `getRadius():float`, se ambos estiverem integralmente comprovados. Não concluir passagem de `Spell.getRadius` ou valor dos operandos de `AABB.inflate`.
+**Estado:** ⚠️ JAR exato auditado: o getter `getRadius():float` **não** corresponde à sequência direta `aload_0 → getfield → freturn`; portanto, o elo construtor → getter permanece **`NOT_PROVED`**. O próximo incremento coleta apenas um resumo estrutural do getter, ainda dependente do CI do HEAD final. ⛔ Nenhuma perk mutadora homologada.
 
 ## Artefato e método
 
@@ -18,3 +18,14 @@
 Mesmo se o elo interno for certificado, o scanner **não analisa** os argumentos de `invokespecial` no método `FuneralBloomSpell.onCast`, nem as expressões passadas aos três parâmetros `double` de `AABB.inflate` em `controller.launchWave` ou `bud.impact`. O vínculo entre esses métodos segue ⚠️ condicionado. Uma atribuição local também não é um setter público de perk.
 
 **Autoridade:** Black Arcana controla apenas seu runtime; Somake executa a magia; Iron's conserva recursos e casting provider-native; RPG Skill Tree fornece progressão por contratos reais. Zero adapters novos; ⛔ `FAIL_CLOSED` para mudança per-player de área, targeting e impacto. Stage 06.05 🟡 e Stage 09 condicionado conforme D035. Contagem Somake 83/83 identidades sem alteração.
+
+## Resultado físico da primeira auditoria (19/10/2026)
+
+O [workflow #39286470816](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39286470816) concluiu com **`SUCCESS`**, após **13 testes** sintéticos/compilados em Java 21, incluindo gate do SHA-1 exato do Somake 1.0.9. A saída literal de status foi **`PASS_EXACT_SHA_OBSERVATIONAL_ONLY_BRIDGE_NOT_PROVED`**.
+
+- `getRadius():float`: **`NOT_PROVED`**, razão `getter_is_not_exact_three_opcode_direct_field_read`.
+- `constructor_to_getter`: **`NOT_PROVED`**, razão `no_certified_getter_field`.
+- Os argumentos `float` do construtor permanecem distintos nos slots JVM **3** e **8**, sem atribuição comprovada de qualquer deles ao getter.
+- Essa é uma **rejeição do padrão específico de leitura direta**, não demonstra que o getter jamais utilize qualquer campo do construtor. Não atribuir semântica ao slot pelo nome do parâmetro ou proximidade de callsites.
+
+**Próximo recorte:** o verificador agora produz apenas número de instruções, campos `float` diretamente referenciados, chamadas simbólicas, quantidade de operações aritméticas/conversões e branches do getter, para orientar uma auditoria de fluxo completo posterior. Esse resumo estrutural ainda **não** constitui uma fórmula ou vínculo causal. Aguardam-se testes do HEAD que contém esse complemento.
