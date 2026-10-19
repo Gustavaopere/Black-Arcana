@@ -120,7 +120,7 @@ def float_formula(body:list[str], desc:str)->dict:
         elif opcode in ("invokevirtual","invokespecial","invokestatic","invokeinterface"):
             if not re.search(r"(?:Method|InterfaceMethod) (?:[A-Za-z0-9_/$]+\.)?getSpellPower:",comment):
                 return blocked("unsupported_invocation")
-            match=re.search(r"\.getSpellPower:(\([^)]*\)[^ ]+)",comment)
+            match=re.search(r"(?:\.)?getSpellPower:(\([^)]*\)[^ ]+)",comment)
             if not match:return blocked("missing_spellpower_descriptor")
             try:
                 argtypes,ret=decode_descriptor(match.group(1))
