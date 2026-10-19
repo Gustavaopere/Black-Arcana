@@ -44,8 +44,50 @@ MAX_SYMBOLS_PER_METHOD=110
 MAX_SYMBOL_LEN=900
 
 def wave_radius_aabb_shape(body:list[str])->dict:
-    """Bounded local callsite shape; not a value-propagation certificate."""
-    return {"status":"NOT_PROVED","reason":"diagnostic_not_implemented"}
+    """Return bounded callsite topology only; never infer values by co-occurrence."""
+    rows=opcode_rows(body)
+    if len(rows)>250:raise GateError("oversized Funeral Bloom wave method")
+    radius=[];inflates=[]
+    for i,(_,op,_,symbol) in enumerate(rows):
+        if op in ("invokevirtual","invokespecial"):
+            if symbol in (
+                "Method getRadius:()F",
+                "Method com/somake/somakespells/entity/FuneralBloomControllerEntity.getRadius:()F"):
+                radius.append(i)
+            if symbol=="Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;":
+                inflates.append(i)
+    if not radius or not inflates:
+        return {"status":"NOT_PROVED","reason":"radius_or_inflate_not_found",
+                "radius_call_count":len(radius),"inflate_call_count":len(inflates)}
+    pairs=[(r,a) for r in radius for a in inflates if r<a]
+    branch=sum(op.startswith(("if","goto")) or op in ("tableswitch","lookupswitch")
+               for _,op,_,_ in rows)
+    if not pairs:
+        return {"status":"NOT_PROVED","reason":"radius_does_not_precede_inflate",
+                "radius_call_count":len(radius),"inflate_call_count":len(inflates)}
+    r,a=min(pairs,key=lambda pair:pair[1]-pair[0])
+    between=rows[r+1:a]
+    callnames=sorted(set(symbol for _,op,_,symbol in between if op.startswith("invoke")))
+    if len(callnames)>30:return {"status":"NOT_PROVED","reason":"intervening_method_symbol_budget"}
+    return {
+        "status":"STRUCTURAL_ONLY_NO_AABB_OPERAND_PROVENANCE",
+        "radius_call_count":len(radius),
+        "inflate_call_count":len(inflates),
+        "radius_before_inflate":True,
+        "instruction_count":len(rows),
+        "f2d_instruction_count":sum(op=="f2d" for _,op,_,_ in rows),
+        "branch_instruction_count":branch,
+        "invokedynamic_instruction_count":sum(op=="invokedynamic" for _,op,_,_ in rows),
+        "nearest_radius_to_inflate_instruction_gap":a-r-1,
+        "intervening_method_symbols":callnames,
+        "intervening_branch_instruction_count":sum(
+            op.startswith(("if","goto")) or op in ("tableswitch","lookupswitch")
+            for _,op,_,_ in between),
+        "intervening_float_to_double_count":sum(op=="f2d" for _,op,_,_ in between),
+        "intervening_double_arithmetic_count":sum(op in
+            ("dadd","dsub","dmul","ddiv","dneg","drem") for _,op,_,_ in between),
+        "boundary":"Callsite order and opcode counts only; AABB DDD operand stack and world hitbox NOT proved."
+    }
 
 def calls_in_method(body:list[str])->dict:
     """Only bytecode callsite comments; fields are separately counted."""
@@ -171,6 +213,7 @@ def inspect(jar:Path)->dict:
                   "classified",json.dumps(metrics["classified"],sort_keys=True),
                   "fields",json.dumps(metrics["field_symbols"]))
     certify_exact_consumer_surface(outcome)
+    print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
     return {"status":"PASS_SHA_EXACT_METHOD_SYMBOL_DISCOVERY_ONLY",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
