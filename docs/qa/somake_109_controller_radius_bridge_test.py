@@ -7,7 +7,7 @@ from pathlib import Path
 from somake_109_perk_method_probe import GateError
 from somake_109_controller_radius_bridge import (
   FQCN,CONSTRUCTOR_DESC,FLOAT_SLOTS,GETTER_DESC,
-  analyze,local_id,direct_float_getter,constructor_direct_assignments
+  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape
 )
 
 def specimen(getter=None,slot=3):
@@ -47,6 +47,30 @@ class RadiusBridgeTests(unittest.TestCase):
         result=analyze(specimen(slot=8))
         self.assertEqual(8,result["constructor_to_getter"]["jvm_local_slot"])
         self.assertEqual(2,result["constructor_to_getter"]["float_ordinal"])
+
+    def test_non_direct_getter_remains_unproved_but_yields_bounded_shape(self):
+        modified=["0: aload_0","1: getfield #10 // Field radius:F",
+                  "4: fconst_1","5: fadd","6: freturn"]
+        record=analyze(specimen(getter=modified))
+        self.assertEqual("NOT_PROVED",record["getter"]["status"])
+        shape=record["getter_structure"]
+        self.assertEqual(5,shape["instruction_count"])
+        self.assertEqual(["radius"],shape["float_field_names_read"])
+        self.assertEqual(1,shape["float_arithmetic_and_conversion_instructions"])
+        self.assertEqual("STRUCTURAL_ONLY_NO_ARGUMENT_PROVENANCE",shape["proof_status"])
+
+    def test_bounded_getter_calls_are_symbols_not_proven_arguments(self):
+        shape=getter_structural_shape([
+            "0: aload_0",
+            "1: invokevirtual #2 // Method getBaseRadius:()F",
+            "4: freturn"])
+        self.assertEqual(["getBaseRadius:()F"],shape["invoked_method_symbols"])
+        self.assertEqual([],shape["float_field_names_read"])
+        self.assertNotIn("constructor_argument",shape)
+
+    def test_getter_invocation_without_symbol_rejected(self):
+        with self.assertRaises(GateError):
+            getter_structural_shape(["0: aload_0","1: invokevirtual #2","4: freturn"])
 
     def test_getter_with_operation_is_not_certified_direct(self):
         getter=["0: aload_0","1: getfield #10 // Field radius:F",
