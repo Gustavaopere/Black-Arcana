@@ -30,9 +30,15 @@ def local_id(opcode:str, operand:str,stem:str)->int|None:
     m=re.fullmatch(re.escape(stem)+r"_([0-3])",opcode)
     return int(m.group(1)) if m else None
 
+SELF_JVM_OWNER=FQCN.replace(".","/")
+
 def field(comment:str)->str|None:
-    m=re.fullmatch(r"Field ([A-Za-z0-9_/$]+\.)?([A-Za-z0-9_$]+):F",comment)
-    return (m.group(2) if m else None)
+    """Accept unqualified same-class javap symbols or the exact owner only."""
+    m=re.fullmatch(r"Field (?:(?P<owner>[A-Za-z0-9_/$]+)\.)?(?P<name>[A-Za-z0-9_$]+):F",comment)
+    if not m:return None
+    owner=m.group("owner")
+    if owner is not None and owner!=SELF_JVM_OWNER:return None
+    return m.group("name")
 
 def direct_float_getter(body:list[str])->dict:
     rows=opcode_rows(body)
@@ -104,7 +110,10 @@ def inspect(jar:Path)->dict:
     proof=analyze(p.stdout)
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("artifact changed")
     print("SOMAKE_CONTROLLER_RADIUS_BRIDGE",json.dumps(proof,sort_keys=True))
-    return {"status":"PASS_EXACT_SHA_STATIC_CONSTRUCTOR_AND_GETTER_AUDIT",
+    status=("PASS_EXACT_SHA_DIRECT_CONSTRUCTOR_RADIUS_BRIDGE"
+            if proof["constructor_to_getter"]["status"]=="PROVED_DIRECT_FLOAT_ARGUMENT_FIELD_BINDING"
+            else "PASS_EXACT_SHA_OBSERVATIONAL_ONLY_BRIDGE_NOT_PROVED")
+    return {"status":status,
             "sha1":digest,"fqcn":FQCN,"evidence":proof,
             "limits":["Independent controller getter/constructor analysis, not onCast value provenance.",
                       "A direct float binding is not a player-accessible setter or mutable perk API.",
