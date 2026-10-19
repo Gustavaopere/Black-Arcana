@@ -1,0 +1,47 @@
+name: Somake 1.0.9 Funeral Bloom radius consumers exact member references (Java 21)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/somake-109-radius-consumers.yml'
+      - 'docs/qa/somake_109_radius_consumers.py'
+      - 'docs/qa/somake_109_radius_consumers_test.py'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  radius_consumers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic negative parser regressions
+        run: python3 docs/qa/somake_109_radius_consumers_test.py -v
+      - name: Verify publisher artifact exact physical hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/somake-radius-consumers
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/somake-spells-irons-spells-addon-1461634/8867079/somake-spells-irons-spells-addon-1461634-8867079.jar' \
+            --output build/somake-radius-consumers/somakespells-1.0.9-1.21.1.jar
+          echo '171841ac9f802be9309ecc166c1d972ac6d404c0  build/somake-radius-consumers/somakespells-1.0.9-1.21.1.jar' | sha1sum --check
+      - name: Scan native spell, controller and bud method-level consumers
+        run: |
+          python3 docs/qa/somake_109_radius_consumers.py \
+            --jar build/somake-radius-consumers/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-radius-consumers/evidence.json
+      - name: Upload bounded method references only
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: somake-radius-consumers-${{ github.sha }}
+          path: build/somake-radius-consumers/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
