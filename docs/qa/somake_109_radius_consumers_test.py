@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -155,6 +155,54 @@ class WaveRadiusAabbShapeTests(unittest.TestCase):
         rows=[str(3*i)+":"+line.split(":",1)[1] for i,line in enumerate(rows)]
         p=wave_radius_aabb_shape(rows)
         self.assertEqual("NOT_PROVED",p["status"])
+
+class WaveInflateCausalOperandTests(unittest.TestCase):
+    @staticmethod
+    def triple_radius():
+        body=["0: aload_0",
+              "1: invokevirtual #1 // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;"]
+        pc=4
+        for i in range(3):
+            body.extend([
+                f"{pc}: aload_0",
+                f"{pc+1}: invokevirtual #2 // Method getRadius:()F",
+                f"{pc+4}: f2d"
+            ])
+            pc+=5
+        body.extend([
+            f"{pc}: invokevirtual #3 // Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;",
+            f"{pc+3}: areturn"])
+        return body
+
+    def test_xyz_arguments_are_all_local_controller_radius_for_exact_pattern(self):
+        result=prove_wave_inflate_operands(self.triple_radius())
+        self.assertEqual("PROVED_THREE_AABB_INFLATE_ARGUMENTS_FROM_CONTROLLER_RADIUS",result["status"],result)
+        self.assertEqual(["X","Y","Z"],result["axes"])
+        self.assertEqual("F_TO_D",result["conversion"])
+        self.assertNotIn("world_hit_targets_proved",result)
+
+    def test_only_two_radius_arguments_fail_closed(self):
+        body=self.triple_radius()
+        body[8]=body[8].replace("getRadius:()F","otherFloat:()F")
+        result=prove_wave_inflate_operands(body)
+        self.assertEqual("NOT_PROVED",result["status"])
+
+    def test_foreign_method_and_arithmetic_fail_closed(self):
+        body=self.triple_radius()
+        body[3]=body[3].replace("Method getRadius:()F",
+            "Method external/mod/Other.getRadius:()F")
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(body)["status"])
+        body=self.triple_radius()
+        body[4]=body[4].replace("f2d","fadd")
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(body)["status"])
+
+    def test_external_branch_into_argument_sequence_fail_closed(self):
+        body=self.triple_radius()
+        body.insert(0,"0: goto 10")
+        body=[str(i*5)+":"+r.split(":",1)[1] for i,r in enumerate(body)]
+        # Make the branch target hit the second instruction of the AABB argument slice.
+        body[0]="0: goto 20"
+        self.assertEqual("NOT_PROVED",prove_wave_inflate_operands(body)["status"])
 
 if __name__=="__main__":
     unittest.main()
