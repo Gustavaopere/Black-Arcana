@@ -149,3 +149,13 @@ Fórmula total **ainda não comprovada** de `getRadius` (2 branches, dependênci
 - O efeito de `FuneralBloomBudEntity.impact` mantém owner Somake e referencia o helper de dano do Iron's, Wither e `SpellHealEvent`. Ainda não está demonstrado como mutar o retorno por personagem sem afetar outro cast, como resolver o valor real de SpellPower nem como evitar dupla Mastery por bud.
 
 **Boundary:** ✅ retorno JVM de `getImpactDamage` certificado; ⚠️ dano aplicado, evento e `getRadius` integral pendentes; ⛔ `FAIL_CLOSED` para perks de dano, raio, duração, alvo e recursos enquanto não existir contrato real testado. Somake 83/83 identidades segue inalterado.
+
+## Contrato host de poder e CFG de raio — Iron's 3.16.3 (19/10/2026)
+
+**Fonte:** JAR Somake 1.0.9 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` + API oficial Iron's 3.16.3 SHA-256 `69e81104a9fd31a402d9c89ab09c2a6b2fd6d2ab98db5a37bb159517363ee9ad`, [workflow Java21 #39246133056](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39246133056). [Dossiê CFG e host](../EXACT-BINARY-FUNERAL-BLOOM-RADIUS-IRONS-1.0.9.md).
+
+- `getImpactDamage` e `getRadius` recebem `(int,LivingEntity):float`; `getImpactDamage` invoca `getSpellPower(int,Entity):float`. O descriptor invocado **existe em `AbstractSpell` no artefato oficial de API**. Não tratar `Entity` como indicação de evento per-player.
+- O método host compilado referencia configuração via `SpellConfigManager.getSpellConfigValue`, atributos com `LivingEntity.getAttributeValue` e poder da escola com `SchoolType.getPowerFor`. Ainda não se comprovou a combinação exata das dependências nem os atributos/config ativos.
+- O CFG do raio registra 28 instruções, uma branch `ifnonnull`, um `goto`, uma junção e um retorno, sem loops. `Math.max(float,float)` e `Mth.clamp(float,float,float)` são referências verificadas; somente os limites literais 10.0f e 15.0f estão provados. A fórmula integral permanece ⚠️ `NOT_PROVED`.
+
+**Integração:** ⛔ `FAIL_CLOSED` para perks de dano, raio ou alterações de contexto do caster até prova de contrato de versão exata, condições reais do branch, settings e QA provider-loaded. Nenhuma nova magia ou estágio promovido.
