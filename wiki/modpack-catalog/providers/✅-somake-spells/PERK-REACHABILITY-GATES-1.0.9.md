@@ -40,3 +40,13 @@ Os **76 restantes** não possuem override de `allowCrafting()` próprio no relea
 **Próximo gate preciso:** no artifact 1.0.9 inspecionar por spell `getSpellResource`, `onCast`, classes de projétil/efeito, extensão verificada e condições `allowCrafting` completas; testar estado `enableSpellLockSystem` efetivo e host Iron's 3.16.3 em servidor controlado antes de liberar qualquer mutação.
 
 **Fontes locais:** [registry exata](EXACT-1.0.9-REGISTRY-AUDIT.md), [mapa de predicados opcionais](EXACT-1.0.9-REGISTRATION-GATE-MAP.md), [checklist de revalidação](CURRENT-1.0.9-REVALIDATION-CHECKLIST.md), [catálogo de 83 IDs](SPELL-CATALOG-1.0.9.md). Nenhum byte de código, JAR ou texto proprietários foi copiado; foram conservados fatos funcionais necessários à interoperabilidade.
+
+## Continuação: método exato 7/7 e campos de configuração (18/10/2026)
+
+Auditoria Java 21 [#39186593493](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39186593493) terminou **SUCCESS**, **7/7 testes sintéticos**; 7/7 FQCN foram localizadas no JAR SHA-1 exato, com método público `allowCrafting():boolean` e classificação das três constantes `false` e quatro não constantes. A [matriz por classe compilada](EXACT-BINARY-CRAFTING-METHOD-SEAMS-1.0.9.md) e as sete fichas agora possuem os FQCN e referências simbólicas. Quatro overrides chamam `ModConfigSpec$BooleanValue.get()` e `Boolean.booleanValue()`; seus campos são:
+
+- Funeral Bloom e Withered Rose Vortex: `Config.DISABLE_WITHERED_ROSE_SPELLS_CRAFTING_AND_LOOTING` (**compartilhado**);
+- Custodia Caeli: `Config.DISABLE_CUSTODIA_CAELI_CRAFTING_AND_LOOTING`;
+- Jingle Bell: `Config.DISABLE_JINGLE_BELL_CRAFTING_AND_LOOTING`.
+
+**Limite:** símbolos e contagens de branches não comprovam valor efetivo/default dos campos, tabela verdade do método, regra de loot, hook público per-player nem mudança de casting/dano/targeting. A identidade continua 83/83; 7/83 recebem aprofundamento de método nesta campanha; 0 adapters aprovados.
