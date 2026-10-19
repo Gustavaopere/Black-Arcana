@@ -33,6 +33,10 @@ INDICATORS = {
     "ownership": (".getOwner:", ".getCaster:", "getOwnerUUID:", ".isAlliedTo:", ".isAllied:", "isSpectator:"),
     "world": ("ExplosionEvent", ".explode:", "mobGriefing", ".setBlock:", "Level.destroyBlock:"),
 }
+ENTITY_FOCUS = re.compile(
+    r"^(?:on|get|set|tick|apply|spawn|should|lambda\$|pulse|launch|cancel|prune|"
+    r"trigger|find|resolve|finish|process|handle|check|is|can|select|do|perform|"
+    r"remove|update|expire|hurt|damage|heal|move|pull)", re.I)
 MAX_BYTES = 20_000_000
 MAX_MEMBERS_PER_ENTITY = 400
 
@@ -96,7 +100,7 @@ def inspect(jar: Path) -> dict:
                               capture_output=True, text=True, timeout=40, check=False)
         if proc.returncode or not proc.stdout or len(proc.stdout) > 1_000_000:
             raise GateError("javap failed or oversized for " + spell_id)
-        parsed = parse_javap(proc.stdout, classname.rsplit(".", 1)[-1])
+        parsed = parse_javap(proc.stdout, classname.rsplit(".", 1)[-1], focus_pattern=ENTITY_FOCUS)
         row = summarize(parsed)
         rows[spell_id] = {"fqcn": classname, **row}
         print("SOMAKE_ENTITY", spell_id, classname, "methods", row["declared_methods"],
