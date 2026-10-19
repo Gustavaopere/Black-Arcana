@@ -1,26 +1,41 @@
-# Somake Spells 1.0.9 — FuneralBloomImpactEntity: auditoria do último efeito identificado
+# Somake Spells 1.0.9 — FuneralBloomImpactEntity: métodos compilados
 
-**Estado:** 🟡 `PENDING_EXACT_SHA1_IMPACT_PROBE`. Sem prova de execução em jogo, fórmula ou hook per-player.
+**Estado:** ✅ `EXACT_SHA1_FUNERAL_IMPACT_ENTITY_JVM_SYMBOLS` · ⚠️ comportamento em jogo e constantes numéricas pendentes · ⛔ nenhum contrato mutador de perks homologado.
 
-## Escopo pinado
+## Prova física e testes
 
-- Release exato: `somakespells-1.0.9-1.21.1.jar`; CurseForge File `8867079`; SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, conforme modlist de `neoforge-rpg-skilltree/main@ed5b65b890767b406ce41127bcb793775263c7bd`.
-- A classe `com.somake.somakespells.entity.FuneralBloomImpactEntity` apareceu no callsite de `FuneralBloomBudEntity.impact(ServerLevel)` da auditoria [do bud](EXACT-BINARY-FUNERAL-BLOOM-BUD-1.0.9.md).
-- A nova auditoria de símbolos é executada com [probe](../../../../docs/qa/somake_109_funeral_impact_probe.py), [testes](../../../../docs/qa/somake_109_funeral_impact_probe_test.py) e [workflow](../../../../.github/workflows/somake-109-funeral-impact.yml).
+- Mod ID `somakespells`, versão **1.0.9**, modlist sibling `neoforge-rpg-skilltree/main@ed5b65b890767b406ce41127bcb793775263c7bd`; JAR `somakespells-1.0.9-1.21.1.jar`, CurseForge File `8867079`, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`.
+- [GitHub Actions #39198753251](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39198753251) `SUCCESS`: sete testes sintéticos, verificação do publisher JAR por hash/metadata, classe concreta `com.somake.somakespells.entity.FuneralBloomImpactEntity` presente e **8 métodos nomeados** verificados por descritores e símbolos `javap`.
+- [Probe](../../../../docs/qa/somake_109_funeral_impact_probe.py) · [testes](../../../../docs/qa/somake_109_funeral_impact_probe_test.py) · [workflow](../../../../.github/workflows/somake-109-funeral-impact.yml). Saída limita-se a símbolos JVM e contagens, sem código compilado ou assets de terceiros.
 
-## Matriz de verificação
+## Matriz dos oito métodos no classfile exato
 
-| Dimensão | Investigação necessária | Resultado atual |
+| Método e descriptor | Fato verificável nas referências JVM |
+|---|---|
+| `defineSynchedData(SynchedEntityData.Builder):void` | Declara `DATA_SCALE` como dado sincronizado |
+| `getScale():float` | Lê `DATA_SCALE` de `SynchedEntityData` |
+| `setScale(float):void` | Referencia `Mth.clamp(float,float,float)` e `SynchedEntityData.set` |
+| `getOpenProgress(float):float` | Referencia `tickCount`, `Mth.clamp`, `smoothstep(float)` |
+| `smoothstep(float):float` | Método presente; não há referências simbólicas externas capturadas |
+| `tick():void` | Duas instruções de branch; referencia `Entity.tick`, `Level.isClientSide`, `tickCount` e `discard()` |
+| `readAdditionalSaveData(CompoundTag):void` | Lê `float` via `CompoundTag.getFloat` e chama `setScale` |
+| `addAdditionalSaveData(CompoundTag):void` | Lê `getScale` e grava `float` via `CompoundTag.putFloat` |
+
+## Matriz para perks
+
+| Dimensão | Evidência | Condição de integração |
 |---|---|---|
-| Construção/identidade | Classe exata encontrada em arquivo do publisher | 🟡 Aguardar CI |
-| Métodos/tick | Métodos e chamadas compiladas no classfile | 🟡 Aguardar CI |
-| Dano/cura | Chamada direta a dano, cura, evento ou somente apresentação | ⚠️ Não comprovado |
-| Geometria | AABB, tamanho, velocidade, raio, colisões | ⚠️ Não comprovado |
-| Persistência/lifecycle | `tick`, descarte, NBT, spawn e remoção | ⚠️ Não comprovado |
-| Hook por jogador | Parâmetros ou eventos de mutação seguros via contrato provider-host | ⛔ FAIL_CLOSED |
+| Tamanho / visual do impacto | `DATA_SCALE` sincronizado, `setScale` chama clamp | ⚠️ Valores mínimo/máximo, unidade, geometria renderizada e influência sobre hitbox/dano **não verificados**. Não expor setter como hook per-player |
+| Abertura e tempo | `getOpenProgress` usa `tickCount`, clamp e smoothstep; `tick` referencia `discard` | ⚠️ Duração em ticks e condições de descarte sem dataflow completo |
+| Persistência | Pares `readAdditionalSaveData`/`addAdditionalSaveData` referenciam `Scale` | ⚠️ Round-trip, restart e estado cliente/servidor não testados |
+| Dano / cura / status | No conjunto de **oito métodos nomeados analisados**, nenhum símbolo direto de `DamageSources.applyDamage`, `LivingEntity.hurt`, `SpellHealEvent`, `heal` ou `addEffect` foi observado | ⚠️ Não é prova negativa de execução herdada/delegada; sem fórmula ou evento disponível |
+| Geometria de alvo | Nenhum callsite explícito de aquisição por AABB/raycast identificado nesses oito métodos | ⚠️ Não concluir que o efeito não interage com outros mecanismos |
+| Mutação por perk | Um setter `setScale(float)` compilado não representa contrato API seguro | ⛔ `FAIL_CLOSED` até adapter real de versão exata e observação por jogador |
 
-**Critério clean-room:** registrar só FQCN, descritores JVM, referências simbólicas e quantidades de branches. Não exportar implementação Java, bytecode, classes, JAR, recursos ou assets. Um método com nome `tick` não comprova dano/efeito efetivo. Ausência de callsites no classfile não exclui execução delegada ou herdada.
+**Interpretação restrita:** os nomes e membros são consistentes com uma entidade de apresentação transitória do impacto; esta é uma **inferência estrutural**, não prova de comportamento exclusivamente visual. O dano, Wither, cura e knockback identificados na [FuneralBloomBudEntity](EXACT-BINARY-FUNERAL-BLOOM-BUD-1.0.9.md) continuam os callsites de efeito mecânico já localizados. A auditoria não reconstrói todas as branches do pipeline, não prova valores ou ausência de métodos herdados.
 
-**Cadeia de investigação:** `FuneralBloomSpell.onCast` → `FuneralBloomControllerEntity.launchWave` → `FuneralBloomBudEntity.tick/impact` → `FuneralBloomImpactEntity`. Setas significam dependências observadas, não prova causal de todos os casts. Evitar dupla contagem de Mastery, aplicação de dano ou segunda mana. Black Arcana rege seu runtime próprio; Somake rege o efeito provider-native; Iron's o host; RPG Skill Tree fornece atributos/perks só por boundary verificado.
+## Ownership e continuação
 
-Nenhuma nova magia nem Stage promovida nesta etapa.
+O Black Arcana mantém somente a autoridade sobre seu runtime próprio. Somake é owner da entidade; Iron's dos seus contratos de casting/recursos e helpers quando utilizados; RPG Skill Tree expõe progressão/perks apenas através de contratos reais. Não duplicar danos, curas, custos, cooldown ou créditos de Mastery com base no spawn de uma entidade de apresentação.
+
+**Próximo gate:** auditoria de valores numéricos e dataflow dos `getRadius/getImpactDamage/getHealing`, clamps e dos caminhos de `tick/impact`, com a mesma identidade física; depois QA provider-loaded, cliente, multiplayer, Survival e modpack sob D035. Nenhuma nova magia ou Stage promovida.
