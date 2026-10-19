@@ -195,3 +195,18 @@ Para `level` inteiro e `caster != null`, o retorno estático segue `Mth.clamp_f3
 - **Prova:** JAR Somake 1.0.9 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, [Java21 #39288405552](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39288405552) `SUCCESS` / 16 testes, [dossiê](../EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md). O método da controller `getRadius():float` lê **`SynchedEntityData.get(DATA_RADIUS)`** e converte `Float.floatValue()`. A leitura completa de sete instruções foi comprovada, sem cálculos adicionais no getter.
 - **Escrita:** a varredura binária de 30 métodos localizou `defineSynchedData`, `setRadius(float)` e o accessor `DATA_RADIUS`; no método `setRadius` coexistem `Float.valueOf`, `SynchedEntityData.set` e carregamento `float` do slot 1. A fórmula inteira do setter e o vínculo com qualquer slot do construtor **não** foram demonstrados pelo interpretador.
 - **Efeito em perks:** um `EntityDataAccessor` interno não é API pública para alterar um cast per-player. `onCast → construtor → setRadius → getRadius → wave AABB` permanece **⚠️ condicionado**; impacto da bud é superfície de área independente. ⛔ `FAIL_CLOSED` para perks mutadoras e dupla Mastery.
+
+## Atualização causal do raio — slot do construtor e clamp do setter (19/10/2026, PR #838)
+
+**Prova binária física:** Somake 1.0.9 File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, [workflow #39292948277](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39292948277) `SUCCESS` (31 testes no commit `db24ea4`). [Dossiê com assinatura e limites](../EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md).
+
+| Eixo de perk | Evidência nova / decisão |
+|---|---|
+| Raio de estado da controller | ✅ primeiro argumento float do `FuneralBloomControllerEntity.<init>(Level,LivingEntity,float,int,int,int,int,float,int,int)` (**slot JVM 3**, não slot 8) passa diretamente a `setRadius(float)` |
+| Fórmula do setter | ✅ `Mth.clamp` sobre argumento float do setter com limites **6.0f–18.0f**, grava `Float.valueOf` no accessor `DATA_RADIUS` |
+| Leitura de estado | ✅ `getRadius()` lê `SynchedEntityData.get(DATA_RADIUS)`, converte `Float.floatValue()`, sem aritmética adicional |
+| Input de spell / níveis / atributos | ⚠️ a expressão de `FuneralBloomSpell.onCast` passada ao primeiro float **não** está ligada por dataflow nesta auditoria; `getRadius(int,LivingEntity)` tem outra prova numérica isolada, que não substitui a chamada concreta |
+| Targeting, área e dano/cura | ⚠️ `launchWave` referencia `getRadius`, `AABB.inflate` e criação de buds; `bud.impact` usa outra AABB. **Sem prova da propagação do valor aos dois volumes e às vítimas** |
+| Modificação via RPG Skill Tree | ⛔ `FAIL_CLOSED`: `setRadius` interno não é hook público per-player; não inferir mudanças em raio, hitbox, tipo de alvo ou procs por disponibilidade de método |
+
+**Escopo:** estreita e confirma a cadeia interna de dados sincronizados, sem criar magia, permitir perk ou demonstrar QA carregado/Survival. Esta seção **substitui exclusivamente a pendência antiga do setter/slot** nas auditorias históricas acima; os demais `NOT_PROVED` continuam vigentes. Identidade Somake segue 83/83 e esta magia permanece uma única raiz.
