@@ -181,6 +181,26 @@ def selected_methods(javap_text:str)->dict[str,dict]:
         raise GateError("branchy radius method must not be called straight-line")
     return records
 
+EXACT_DAMAGE_EXPRESSION = "(1.5+(spellPower(level_input,caster)*0.75))"
+
+def certify_exact_release(rows:dict)->None:
+    """Pin exact publisher bytecode evidence; never accept a silent semantic drift."""
+    damage=rows["getImpactDamage"]["symbolic_dataflow"]
+    if (damage.get("status")!="PROVED_STRAIGHT_LINE_JVM_FLOAT_EXPRESSION"
+        or damage.get("expression")!=EXACT_DAMAGE_EXPRESSION
+        or damage.get("external_calls")!=["getSpellPower"]):
+        raise GateError("exact publisher damage method no longer matches certified dataflow")
+    radius=rows["getRadius"]
+    if radius["branch_instruction_count"]!=2 or radius["symbolic_dataflow"].get("status")!="NOT_PROVED":
+        raise GateError("radius branch boundary unexpectedly changed")
+    clamps=radius["direct_trailing_clamp_literals"]
+    if not any(x.get("descriptor")=="(FFF)F"
+               and x.get("second_argument_literal")=="10.0"
+               and x.get("third_argument_literal")=="15.0"
+               for x in clamps):
+        raise GateError("radius exact publisher clamp operand pair changed")
+
+
 def inspect(jar:Path)->dict:
     if not jar.is_file() or jar.is_symlink() or jar.name!=FILENAME:
         raise GateError("incorrect physical file")
@@ -198,6 +218,7 @@ def inspect(jar:Path)->dict:
                      capture_output=True,text=True,timeout=50,check=False)
     if p.returncode or not p.stdout or len(p.stdout)>MAX_TEXT:raise GateError("javap failure/budget")
     rows=selected_methods(p.stdout)
+    certify_exact_release(rows)
     for name,row in rows.items():
         print("SOMAKE_FLOAT_DATAFLOW",name,json.dumps(row,sort_keys=True))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("artifact changed during run")
