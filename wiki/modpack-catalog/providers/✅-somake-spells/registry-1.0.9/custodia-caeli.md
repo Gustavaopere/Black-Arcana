@@ -74,3 +74,13 @@ Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-M
 - Compilado: **2 branches**, chamada a `ModConfigSpec$BooleanValue.get()` e `Boolean.booleanValue()`, com leitura do campo exato `com.somake.somakespells.config.Config.DISABLE_CUSTODIA_CAELI_CRAFTING_AND_LOOTING`. Este símbolo é factual; a tabela verdade do predicado, o valor default e o config COMMON efetivo **não foram verificados**.
 - Evidência independente: [GitHub Actions #39186593493](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39186593493), Java21, 7/7 testes sintéticos e 7/7 classes auditadas; [matriz consolidada](../EXACT-BINARY-CRAFTING-METHOD-SEAMS-1.0.9.md).
 - **Mutabilidade por perk:** ⛔ nenhum hook/callback por jogador comprovado; `allowCrafting` não informa dano, geometria, mana, castability ou loot ativo.
+
+## Cast e efeito — referências compiladas exatas (18/10/2026)
+
+**Fonte física:** Somake 1.0.9 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`; [Java21 #39192999780](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39192999780), `PASS_STATIC_METHOD_REFERENCES_ONLY`, [matriz de sete classes](../EXACT-BINARY-CAST-CALLSITES-1.0.9.md).
+
+- getCastType references CastType.LONG; onServerPreCast references TargetedAreaEntity.createTargetAreaEntity, TargetAreaCastData construction and MagicData.setAdditionalCastData.
+- getTargetedSigilPosition references RaycastBuilder.begin, range, checkForBlocks, bbInflation, build and Utils.moveToRelativeGroundLevel.
+- onCast references MagicData.getAdditionalCastData, TargetAreaCastData.getCenter or getTargetedSigilPosition, then CustodiaCaeliSigilEntity construction. Supporting getters include getBlessingDuration, getMaxHealthBonusPercent, getArmorBonus and getArmorToughnessBonus. The exact radius, attribute values, duration, allowed targets and mutation API are not proven here.
+
+**Limite de perks:** apenas assinaturas e referências simbólicas do JAR exato foram certificadas para CustodiaCaeliSigilEntity. Config ativa, fórmula numérica, tipo/alcance de alvo, colisão, duração efetiva, reentrância, dano/cura aplicado e hook mutador por jogador continuam **⚠️/⛔ NÃO HOMOLOGADOS**. Não transferir casting, custos ou efeitos do provider ao RPG Skill Tree; evitar callbacks de dano repetidos.
