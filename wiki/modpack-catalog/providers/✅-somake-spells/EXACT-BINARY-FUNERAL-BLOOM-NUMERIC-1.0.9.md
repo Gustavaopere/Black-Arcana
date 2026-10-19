@@ -42,7 +42,7 @@ Em `getRadius` há **duas instruções de branch**, uma chamada `SchoolType.getP
 
 | Método | Literais observados no próprio método | O que permanece pendente |
 |---|---|---|
-| `FuneralBloomSpell.getImpactDamage(int,LivingEntity)` | float `0.75`, `1.5`; 1 `fadd`, 1 `fmul`, `getSpellPower` referenciado | Expressão dependente de poder mágico, escola, destinatário e evento real; sem multiplicador de perk homologado |
+| `FuneralBloomSpell.getImpactDamage(int,LivingEntity)` | float `0.75`, `1.5`; 1 `fadd`, 1 `fmul`, `getSpellPower` referenciado | ✅ Fórmula JVM float do **retorno** comprovada na [auditoria seguinte](EXACT-BINARY-FUNERAL-BLOOM-FLOAT-DATAFLOW-1.0.9.md): `1.5f + (getSpellPower(level,caster)*0.75f)`; ⚠️ dano final/eventos/SpellPower reais ainda desconhecidos |
 | `FuneralBloomSpell.getWitherAmplifier(int)` | int `0`, `1`, `5` e 2 branches | Tabela de ramificações, configuração de amplificador, caps finais |
 | `FuneralBloomControllerEntity.tick` | float `0.01`, `0.025`, `0.035`, `0.07`, `0.16`, `0.38`, `0.52`, `0.82`, `0.85`, `1.55`, outros números, 12 branches | Cadência de ondas, custos por tick, eventos de entidades e unidade dos parâmetros sem dataflow completo |
 | `FuneralBloomControllerEntity.launchWave` | double `0.34`, `0.35`, `0.55`, `0.62`, `2.0`, `2.8` e constantes adicionais; 6 branches | Geometria, variação aleatória, posição dos buds, quantidade e limites de world-safety |
@@ -55,9 +55,13 @@ Todos os números acima são **literais tipados do classfile**, não unidades de
 ## Contratos de engenharia e próximos gates
 
 - ✅ `getMaxTargets`, `getDuration`, `getWaveInterval`, `getWitherDuration` e `getTelegraphTicks` possuem expressões JVM lineares demonstradas, independentes de hipóteses sobre jogabilidade.
-- ⚠️ Para `getRadius` e `getImpactDamage`, é necessário resolver branches e callbacks de escola/SpellPower antes de afirmar alcance/dano por level. Para `getTelegraphTicks`, o retorno matemático está provado, mas aplicação temporal em jogo ainda não.
+- ⚠️ Para `getRadius`, permanecem 2 branches e callback de escola sem fluxo integral. Para `getImpactDamage`, o retorno float já foi certificado estaticamente na [auditoria seguinte](EXACT-BINARY-FUNERAL-BLOOM-FLOAT-DATAFLOW-1.0.9.md); a implementação efetiva de `getSpellPower`, consumo e dano sofrido por alvos ainda precisam de prova. Para `getTelegraphTicks`, o retorno matemático está provado, mas aplicação temporal em jogo ainda não.
 - ⚠️ Para controller/bud/impact, ainda não é seguro inferir hitbox, cooldown, intervalo real de ataque, dano aplicado ou cura observada a partir de literais numéricos.
 - ⛔ **FAIL_CLOSED:** um literal, uma fórmula de getter ou um setter interno como `setScale` não cria API pública de perk por jogador. Não sobrescrever casts, custos, cooldown ou dano nativo do Somake/Iron's nem duplicar Mastery por bud.
 - ⚠️ Multiplayer, provider-loaded, real client, Survival, reload/NBT e modpack seguem sob D035; Stage 06.05 🟡 e Stage 09 condicionado.
 
 **Catálogo:** `somakespells:funeral_bloom` continua uma única identidade entre 83; a campanha cobre 4 classfiles usados neste probe numérico, sem acrescentar nenhuma magia. Fontes relacionadas: [ficha individual](registry-1.0.9/funeral-bloom.md), [controller/bud](EXACT-BINARY-FUNERAL-BLOOM-BUD-1.0.9.md), [impact](EXACT-BINARY-FUNERAL-BLOOM-IMPACT-1.0.9.md).
+
+## Extensão: retorno float de impacto (19/10/2026)
+
+O [workflow #39243467444](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39243467444) realizou interpretação abstrata JVM estritamente linear de `getImpactDamage(int,LivingEntity)`: **`1.5f + (getSpellPower(level_input,caster)*0.75f)`**, com 0 branches e tipos checados. `getRadius` continua com **2 branches**, clamp 10.0f/15.0f e `NOT_PROVED` para fórmula integral. A prova não resolve eventos, HP efetivamente removido, escolaridade, targets, hook per-player ou a execução de consumidor. [Dossiê específico](EXACT-BINARY-FUNERAL-BLOOM-FLOAT-DATAFLOW-1.0.9.md).

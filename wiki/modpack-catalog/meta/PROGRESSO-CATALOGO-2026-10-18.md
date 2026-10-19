@@ -77,3 +77,14 @@ O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `
 - **0** novas magias, **0** adapters de mutação homologados, **0** validações Survival/cliente provadas neste incremento.
 
 **Critérios pendentes:** aplicar as expressões aos consumidores da versão exata, identificar unidade de duração/raio/ticks, dados de SpellPower/escola/branch, proteger contra duplicação de dano/cura/Mastery, e executar QA provider-loaded/multiplayer/Survival do modpack. Stage 06.05 segue 🟡; Stage 09 condicionado conforme D035. [Dossiê numérico](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-NUMERIC-1.0.9.md).
+
+## Somake 1.0.9 — sétima camada: dataflow float de dano da Funeral Bloom (19/10/2026)
+
+- Artefato: `somakespells-1.0.9-1.21.1.jar`, publisher CurseForge File 8867079, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` (modlist sibling `neoforge-rpg-skilltree/main@ed5b65b890767b406ce41127bcb793775263c7bd`).
+- [Auditoria Java21 #39243467444](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39243467444): `SUCCESS`, **10 testes** de interpretação abstrata tipada (inclui Java compilado), prova integral do **retorno float** de `FuneralBloomSpell.getImpactDamage(int,LivingEntity)` como `1.5f + (getSpellPower(level_input,caster)*0.75f)` (0 branches, 1 chamada externa tipada); `getRadius` retorna `NOT_PROVED / branch_or_throw` por ter 2 branches, embora clamp 10.0f/15.0f esteja identificado.
+- A PR também inclui regressões de snapshot negativas para impedir que uma mudança no JAR seja interpretada como prova do mesmo retorno; o gate final do HEAD será verificado separadamente.
+- **Barra global:** —% (universo de spells/rituais/poderes e providers não fechado; piso histórico >=1857 ações/objetos não é denominador).
+- **Barra Somake — identidades:** 83/83 = **100%** catalogadas. **5/83 = 6,02%** fichas com auditoria de pelo menos uma entidade downstream, sem incremento; sete classes downstream acumuladas (não novas magias). A análise presente adiciona profundidade a `somakespells:funeral_bloom`, não cobertura de novos IDs.
+- **Perks de alteração de dano/área aprovadas:** **0**; `FAIL_CLOSED` até API/evento/callback per-player versionado e prova de causalidade downstream. Sem alterações em Black Arcana runtime, host Iron's, RPG Skill Tree, Mastery, custo ou cooldown.
+
+**Pendências:** CFG completo de `getRadius`/`SchoolType.getPowerFor`, origem e configuração de `getSpellPower` no host 3.16.3, consumo do `impactDamage` pelo bud, dano efetivo/Wither/cura/knockback, bounds, FPS/carga, cliente/multiplayer/Survival e modpack físico (D035). Stage 06.05 permanece 🟡; Stage 09 condicionado. [Dossiê float](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-FLOAT-DATAFLOW-1.0.9.md).
