@@ -159,3 +159,13 @@ Fórmula total **ainda não comprovada** de `getRadius` (2 branches, dependênci
 - O CFG do raio registra 28 instruções, uma branch `ifnonnull`, um `goto`, uma junção e um retorno, sem loops. `Math.max(float,float)` e `Mth.clamp(float,float,float)` são referências verificadas; somente os limites literais 10.0f e 15.0f estão provados. A fórmula integral permanece ⚠️ `NOT_PROVED`.
 
 **Integração:** ⛔ `FAIL_CLOSED` para perks de dano, raio ou alterações de contexto do caster até prova de contrato de versão exata, condições reais do branch, settings e QA provider-loaded. Nenhuma nova magia ou estágio promovido.
+
+## Raio — prova de dois caminhos JVM com caster (19/10/2026)
+
+**Artefato:** Somake 1.0.9 File 8867079, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`; [Java21 #39259507432](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39259507432), dez testes `SUCCESS`; [dossiê completo](../EXACT-BINARY-FUNERAL-BLOOM-RADIUS-TYPED-1.0.9.md). A análise do CFG linear em #834 foi superada por verificação tipada dos **dois caminhos**.
+
+Para `level` inteiro e `caster != null`, o retorno estático segue `Mth.clamp_f32((9.5 + i2f(level)*0.82) + (Math.max_f32(0,d2f(SchoolType.getPowerFor(caster))-1)*0.65), 10.0,15.0)`. Para `caster == null`, substitui a contribuição escolar por `Math.max_f32(0,1-1)*0.65` (= 0). A semântica e ordem float32 são essenciais; não interpretar a apresentação como álgebra de precisão infinita. O `ifnonnull` testa **o argumento caster**.
+
+**Eixos para perks:** nível (coeficiente 0.82), bônus por poder de escola (coeficiente 0.65 e floor 0), clamp com operandos 10..15 e rota sem caster foram identificados em bytecode. A unidade em blocos, a projeção para área/targets, valores efetivos de escola/config, condições downstream, propriedade de eventos e interfaces para alterar por personagem continuam ⚠️/⛔. O getter **não** autoriza mutação de alcance diretamente. Nenhum double-processing de custo/cooldown/Mastery/impact é admissível.
+
+**Estado:** ✅ retorno JVM do raio por ambos os caminhos; ⚠️ efeito em jogo e classe consumidora ainda não comprovados; ⛔ `FAIL_CLOSED` para adapter per-player. Somake 83/83 identidades sem alterações; Stage 06.05 🟡 e Stage 09 condicionado.
