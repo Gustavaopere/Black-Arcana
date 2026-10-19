@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Positive/negative direct field provenance fixtures; no provider bytecode."""
 import unittest
+import subprocess
+import tempfile
+from pathlib import Path
 from somake_109_perk_method_probe import GateError
 from somake_109_controller_radius_bridge import (
   FQCN,CONSTRUCTOR_DESC,FLOAT_SLOTS,GETTER_DESC,
@@ -81,6 +84,52 @@ class RadiusBridgeTests(unittest.TestCase):
         x=constructor_direct_assignments(body,"radius")
         self.assertEqual("NOT_PROVED",x["status"])
         self.assertEqual(2,x["field_write_count"])
+
+    def test_compiled_java21_constructor_field_getter(self):
+        """Compiler output exercises real javap field comments and local slots."""
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            classes=root/"classes"
+            files={
+                "net/minecraft/world/level/Level.java":
+                    "package net.minecraft.world.level; public class Level {}\n",
+                "net/minecraft/world/entity/LivingEntity.java":
+                    "package net.minecraft.world.entity; public class LivingEntity {}\n",
+                "com/somake/somakespells/entity/FuneralBloomControllerEntity.java":
+                    "package com.somake.somakespells.entity;\n"
+                    "import net.minecraft.world.level.Level;\n"
+                    "import net.minecraft.world.entity.LivingEntity;\n"
+                    "public class FuneralBloomControllerEntity {\n"
+                    " private final float radius;\n"
+                    " private final float impactDamage;\n"
+                    " public FuneralBloomControllerEntity(Level level, LivingEntity caster,"
+                    " float radius,int a,int b,int c,int d,float impactDamage,int e,int f) {\n"
+                    "   this.radius=radius;\n"
+                    "   this.impactDamage=impactDamage;\n"
+                    " }\n"
+                    " public float getRadius() {return this.radius;}\n"
+                    "}\n",
+            }
+            sources=[]
+            for rel,source in files.items():
+                path=root/rel
+                path.parent.mkdir(parents=True,exist_ok=True)
+                path.write_text(source)
+                sources.append(str(path))
+            comp=subprocess.run(["javac","-d",str(classes),*sources],
+                                text=True,capture_output=True)
+            self.assertEqual(0,comp.returncode,comp.stderr)
+            scan=subprocess.run(["javap","-p","-c","-s","-classpath",str(classes),FQCN],
+                                text=True,capture_output=True)
+            self.assertEqual(0,scan.returncode,scan.stderr)
+            result=analyze(scan.stdout)
+            self.assertEqual("PROVED_DIRECT_INSTANCE_FLOAT_GETTER",
+                             result["getter"]["status"],result)
+            proof=result["constructor_to_getter"]
+            self.assertEqual("PROVED_DIRECT_FLOAT_ARGUMENT_FIELD_BINDING",
+                             proof["status"],proof)
+            self.assertEqual(3,proof["jvm_local_slot"])
+            self.assertEqual(1,proof["float_ordinal"])
 
     def test_strict_load_slot_parser(self):
         self.assertEqual(0,local_id("aload_0","","aload"))
