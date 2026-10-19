@@ -1,0 +1,48 @@
+name: Somake 1.0.9 exact cast-reference discovery (Java 21)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/somake-109-cast-refs.yml'
+      - 'docs/qa/somake_109_cast_refs.py'
+      - 'docs/qa/somake_109_cast_refs_test.py'
+      - 'docs/qa/somake_109_perk_method_probe.py'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-CAST-CALLSITES-1.0.9.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compiled_cast_refs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Test bounded JVM method/descriptor parser
+        run: python3 docs/qa/somake_109_cast_refs_test.py -v
+      - name: Fetch exact official JAR, fail if physical SHA differs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/somake-109-cast
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/somake-spells-irons-spells-addon-1461634/8867079/somake-spells-irons-spells-addon-1461634-8867079.jar' \
+            --output build/somake-109-cast/somakespells-1.0.9-1.21.1.jar
+          echo '171841ac9f802be9309ecc166c1d972ac6d404c0  build/somake-109-cast/somakespells-1.0.9-1.21.1.jar' | sha1sum --check
+      - name: Inspect seven exact spell class methods and reference callsites
+        run: |
+          python3 docs/qa/somake_109_cast_refs.py \
+            --jar build/somake-109-cast/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-109-cast/evidence.json
+      - name: Export bounded JSON evidence, never publisher JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: somake-109-cast-reference-identities-${{ github.sha }}
+          path: build/somake-109-cast/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
