@@ -74,3 +74,13 @@ Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-M
 - Compilado: instruções de `allowCrafting()` com **retorno `false` constante**, zero branches e zero referências a campos/métodos no próprio override; isso não exclui obtenção por outras rotas.
 - Evidência independente: [GitHub Actions #39186593493](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39186593493), Java21, 7/7 testes sintéticos e 7/7 classes auditadas; [matriz consolidada](../EXACT-BINARY-CRAFTING-METHOD-SEAMS-1.0.9.md).
 - **Mutabilidade por perk:** ⛔ nenhum hook/callback por jogador comprovado; `allowCrafting` não informa dano, geometria, mana, castability ou loot ativo.
+
+## Cast e efeito — referências compiladas exatas (18/10/2026)
+
+**Fonte física:** Somake 1.0.9 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`; [Java21 #39192999780](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39192999780), `PASS_STATIC_METHOD_REFERENCES_ONLY`, [matriz de sete classes](../EXACT-BINARY-CAST-CALLSITES-1.0.9.md).
+
+- getCastType references CastType.INSTANT.
+- onCast references ModMobEffects.ROSE_SECRET, MobEffectInstance construction and LivingEntity.addEffect.
+- getEffectDuration references getSpellPower, Math.round and Mth.clamp. Effective duration, amplifier, target eligibility and benefit/penalty have not been fully analyzed; no new spell root for the status-effect instance.
+
+**Limite de perks:** apenas assinaturas e referências simbólicas do JAR exato foram certificadas para ModMobEffects.ROSE_SECRET. Config ativa, fórmula numérica, tipo/alcance de alvo, colisão, duração efetiva, reentrância, dano/cura aplicado e hook mutador por jogador continuam **⚠️/⛔ NÃO HOMOLOGADOS**. Não transferir casting, custos ou efeitos do provider ao RPG Skill Tree; evitar callbacks de dano repetidos.
