@@ -117,3 +117,25 @@ Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-M
 - **Nenhuma referência direta de dano, cura ou status** foi encontrada nesses oito métodos. É uma observação negativa **apenas do escopo inspecionado**; a entidade pode herdar/delegar outros comportamentos. Dano/Wither/cura seguem com provas de callsites na bud, não se conclui efeito duplicado.
 
 **Perks:** não homologar `setScale` como ajuste por jogador; continua ⛔ `FAIL_CLOSED` para ampliar raio, dano, efeitos, velocidade e tempo sem API/contrato real do provider e QA. [Dossiê técnico completo](../EXACT-BINARY-FUNERAL-BLOOM-IMPACT-1.0.9.md).
+
+## Fórmulas inteiras comprovadas — Funeral Bloom (19/10/2026)
+
+**Fonte primária:** JAR Somake 1.0.9 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, [Java 21 #39201041605](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39201041605) `SUCCESS`, 15 testes, 4 classfiles, 17 métodos. O verificador só declara fórmula completa se todo o fluxo do getter inteiro for linear, coberto e terminar em `ireturn`. [Dossiê de prova](../EXACT-BINARY-FUNERAL-BLOOM-NUMERIC-1.0.9.md).
+
+Para **L = clamp(level_int,1,5)** nos quatro getters de nível limitado; `getTelegraphTicks` utiliza diretamente o nível recebido e divisão inteira Java truncada em direção a zero. As cinco expressões e saídas foram reconstruídas com prova de pilha JVM:
+
+| Getter | Fórmula de retorno | Para L=1 até 5 |
+|---|---|---|
+| `getMaxTargets(int)` | `4 + L` | `5, 6, 7, 8, 9` |
+| `getDuration(int)` | `240 + 20*(L-1)` | `240, 260, 280, 300, 320` |
+| `getWaveInterval(int)` | `18 - L` | `17, 16, 15, 14, 13` |
+| `getWitherDuration(int)` | `60 + 12*L` | `72, 84, 96, 108, 120` |
+| `getTelegraphTicks(int)` | `max(9, 13 - jvm_idiv(level_int,2))` | `13, 12, 12, 11, 11` para level_int=1..5 |
+
+**Limites técnicos:** os retornos são do bytecode estático para um parâmetro inteiro, não garantem unidade de ticks, consumidor executado ou configuração efetiva no servidor. O argumento `level_int` não foi demonstrado como atributo específico de Mastery, Skill Tree ou item.
+
+Clamps com dois operandos literais diretamente anteriores ao callsite: `getRadius(int,LivingEntity)` usa `Mth.clamp(FFF)F` com argumentos **10.0/15.0**; `FuneralBloomImpactEntity.setScale(float)` usa **0.65/1.6**; `getOpenProgress(float)` tem dois clamps **0.0/1.0**. Não interpretar esses argumentos como raio/hitbox efetivos ou suporte a perks.
+
+Fórmula total **ainda não comprovada** de `getRadius` (2 branches, dependência de `SchoolType.getPowerFor`), `getImpactDamage` (`getSpellPower` e literais `0.75/1.5`) e `getWitherAmplifier` (2 branches). `getTelegraphTicks` tem fórmula matemática comprovada, mas sua aplicação como tempo em jogo depende de consumidores do provider. Os métodos `FuneralBloomBudEntity.impact` e `FuneralBloomControllerEntity.launchWave` têm branches relevantes, portanto literals isolados não resolvem dano real, cura, knockback, quantidade de buds ou hitbox.
+
+**Decisão de integração:** ✅ limites algébricos dos cinco retornos catalogados; ⚠️ consumidores do provider e dimensões reais não validados; ⛔ `FAIL_CLOSED` para alteração per-player de level, área, duração, alvo, dano, custo e escala via RPG Skill Tree sem contrato seguro e QA provider-loaded. Nenhuma nova raiz de magia ou adapter foi criada.

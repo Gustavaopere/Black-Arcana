@@ -25,7 +25,7 @@
 
 | Dimensão | Evidência | Condição de integração |
 |---|---|---|
-| Tamanho / visual do impacto | `DATA_SCALE` sincronizado, `setScale` chama clamp | ⚠️ Valores mínimo/máximo, unidade, geometria renderizada e influência sobre hitbox/dano **não verificados**. Não expor setter como hook per-player |
+| Tamanho / visual do impacto | `DATA_SCALE` sincronizado, `setScale` chama clamp | ✅ dois argumentos literais do `Mth.clamp(FFF)F` da entidade confirmados em **0.65**/**1.6** na [auditoria numérica](EXACT-BINARY-FUNERAL-BLOOM-NUMERIC-1.0.9.md); ⚠️ unidade, tamanho visual, influência sobre hitbox/dano e autorização de mutação **não verificadas**. Não expor setter como hook per-player |
 | Abertura e tempo | `getOpenProgress` usa `tickCount`, clamp e smoothstep; `tick` referencia `discard` | ⚠️ Duração em ticks e condições de descarte sem dataflow completo |
 | Persistência | Pares `readAdditionalSaveData`/`addAdditionalSaveData` referenciam `Scale` | ⚠️ Round-trip, restart e estado cliente/servidor não testados |
 | Dano / cura / status | No conjunto de **oito métodos nomeados analisados**, nenhum símbolo direto de `DamageSources.applyDamage`, `LivingEntity.hurt`, `SpellHealEvent`, `heal` ou `addEffect` foi observado | ⚠️ Não é prova negativa de execução herdada/delegada; sem fórmula ou evento disponível |
@@ -39,3 +39,9 @@
 O Black Arcana mantém somente a autoridade sobre seu runtime próprio. Somake é owner da entidade; Iron's dos seus contratos de casting/recursos e helpers quando utilizados; RPG Skill Tree expõe progressão/perks apenas através de contratos reais. Não duplicar danos, curas, custos, cooldown ou créditos de Mastery com base no spawn de uma entidade de apresentação.
 
 **Próximo gate:** auditoria de valores numéricos e dataflow dos `getRadius/getImpactDamage/getHealing`, clamps e dos caminhos de `tick/impact`, com a mesma identidade física; depois QA provider-loaded, cliente, multiplayer, Survival e modpack sob D035. Nenhuma nova magia ou Stage promovida.
+
+## Gate adicional de operandos numéricos (19/10/2026)
+
+A [auditoria Java 21 de constantes e fluxos](EXACT-BINARY-FUNERAL-BLOOM-NUMERIC-1.0.9.md) identificou no classfile físico exato `setScale(float)` com **dois argumentos finais literais consecutivos** do `Mth.clamp(FFF)F`: `0.65` e `1.6`. `getOpenProgress(float)` contém **duas chamadas** de clamp com argumentos imediatos `0.0` e `1.0`; também foram observados literais `4.0`, `5.0` e `7.0` neste método, sem fórmula total de abertura comprovada. `tick()` contém literal inteiro `12`, mas o retorno/condição completa do descarte não foi reconstituído.
+
+**Status:** ✅ operandos diretos verificados sob SHA-1 exato; ⚠️ geometria/aplicação real, duração, units e cliente sem QA; ⛔ `setScale` não é API de perk por jogador. Esses dados numéricos não provam que a entidade produza dano ou tenha hitbox de raio 0.65 a 1.6.

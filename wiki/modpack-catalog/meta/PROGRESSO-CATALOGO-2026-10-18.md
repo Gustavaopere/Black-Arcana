@@ -65,3 +65,15 @@ O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `
 - **0 novas identidades; 0 adapters mutadores certificados**. Nenhum callsite direto de dano, cura ou status apareceu nos oito métodos da entidade de impacto, o que não exclui execução herdada/delegada. A natureza exclusivamente visual permanece hipótese.
 
 **Gates:** custos e cooldown permanecem owner Iron's; Black Arcana conserva apenas seu runtime; RPG Skill Tree fornece perks/Mastery por contrato real. Stage 06.05 🟡, Stage 09 físico pendente sob D035. Próxima prioridade é análise de constantes, dataflow de `FuneralBloomBudEntity.impact`/controller e perfil real provider-loaded. [Dossiê exato](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-IMPACT-1.0.9.md).
+
+## Somake 1.0.9 — sexta camada: prova aritmética JVM da Funeral Bloom (19/10/2026)
+
+- **Fonte física exata:** CurseForge File 8867079, `somakespells-1.0.9-1.21.1.jar`, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`; sibling modlist `neoforge-rpg-skilltree/main@ed5b65b890767b406ce41127bcb793775263c7bd`.
+- **Auditoria numérica Java21 [#39201393631](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39201393631):** `SUCCESS` em 15 testes sintéticos/integrados, 4 classfiles e 17 métodos. As cinco provas de getter `int` são derivadas por avaliador JVM estritamente linear, com fluxos ramificados/não suportados rejeitados. O HEAD final será atualizado com snapshots de fórmulas para fail-closed.
+- **Fórmulas comprovadas** para `L=clamp(level,1,5)`: `getMaxTargets=4+L`, `getDuration=240+20*(L-1)`, `getWaveInterval=18-L`, `getWitherDuration=60+12*L`. `getTelegraphTicks=max(9,13-jvm_idiv(level,2))` usa `level` sem clamp e semântica de divisão inteira Java.
+- **Limites de clamp diretamente demonstrados** em callsites: `FuneralBloomSpell.getRadius` passa 10.0/15.0 como segundo/terceiro argumentos, `FuneralBloomImpactEntity.setScale` passa 0.65/1.6, `getOpenProgress` passa 0/1 em duas chamadas. Isto **não** é prova da dimensão final ou da possibilidade de perk alterar o método.
+- **Barra global:** —% (denominador completo de mods/magias/ações mágicas ainda sem prova); piso histórico 1.857 objetos não alterado.
+- **Barra Somake — registry:** **83/83 = 100%** identidades; **5/83 = 6,02%** fichas com auditoria de uma ou mais entidades downstream; 7 classfiles distintos permanecem no acumulado. O novo probe examina 4 classes **já conhecidas**, sem aumentar as contagens.
+- **0** novas magias, **0** adapters de mutação homologados, **0** validações Survival/cliente provadas neste incremento.
+
+**Critérios pendentes:** aplicar as expressões aos consumidores da versão exata, identificar unidade de duração/raio/ticks, dados de SpellPower/escola/branch, proteger contra duplicação de dano/cura/Mastery, e executar QA provider-loaded/multiplayer/Survival do modpack. Stage 06.05 segue 🟡; Stage 09 condicionado conforme D035. [Dossiê numérico](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-NUMERIC-1.0.9.md).

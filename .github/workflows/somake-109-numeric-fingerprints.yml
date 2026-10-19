@@ -1,0 +1,47 @@
+name: Somake 1.0.9 Funeral Bloom exact numeric method fingerprints (Java 21)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/somake-109-numeric-fingerprints.yml'
+      - 'docs/qa/somake_109_numeric_fingerprint.py'
+      - 'docs/qa/somake_109_numeric_fingerprint_test.py'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-NUMERIC-1.0.9.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact_numeric_fingerprints:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic and Java21 numeric parser checks
+        run: python3 docs/qa/somake_109_numeric_fingerprint_test.py -v
+      - name: Retrieve exact Somake 1.0.9 artifact under SHA-1 gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/somake-109-numeric
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/somake-spells-irons-spells-addon-1461634/8867079/somake-spells-irons-spells-addon-1461634-8867079.jar' \
+            --output build/somake-109-numeric/somakespells-1.0.9-1.21.1.jar
+          echo '171841ac9f802be9309ecc166c1d972ac6d404c0  build/somake-109-numeric/somakespells-1.0.9-1.21.1.jar' | sha1sum --check
+      - name: Audit source-pinned spell/controller/bud/impact numeric methods
+        run: |
+          python3 docs/qa/somake_109_numeric_fingerprint.py \
+            --jar build/somake-109-numeric/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-109-numeric/evidence.json
+      - name: Archive bounded method summaries only
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: somake-109-numeric-fingerprints-${{ github.sha }}
+          path: build/somake-109-numeric/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
