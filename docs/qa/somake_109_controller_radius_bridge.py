@@ -377,7 +377,185 @@ def synced_accessor_method_inventory(methods:list,accessor_name:str)->dict:
             "methods_with_relevant_symbols":found,
             "limits":"Co-occurrence is not proof that the accessor is passed to set or that the float comes from a constructor slot."}
 
-def analyze(text:str)->dict:
+SPELL_FQCN="com.somake.somakespells.spells.blood.FuneralBloomSpell"
+ONCAST_DESC=("(Lnet/minecraft/world/level/Level;ILnet/minecraft/world/entity/LivingEntity;"
+             "Lio/redspace/ironsspellbooks/api/spells/CastSource;"
+             "Lio/redspace/ironsspellbooks/api/magic/MagicData;)V")
+GET_RADIUS_CALL_DESC="(ILnet/minecraft/world/entity/LivingEntity;)F"
+CTOR_OWNER=FQCN.replace(".","/")
+SPELL_OWNER=SPELL_FQCN.replace(".","/")
+
+def descriptor_types(descriptor:str)->tuple[list[str],str]:
+    """Parse exact JVM method descriptors, rejecting unsupported or malformed types."""
+    if not descriptor.startswith("(") or ")" not in descriptor:
+        raise GateError("malformed method descriptor")
+    end=descriptor.index(")")
+    raw=descriptor[1:end]
+    result=[]
+    pos=0
+    while pos<len(raw):
+        start=pos
+        while pos<len(raw) and raw[pos]=="[":pos+=1
+        if pos>=len(raw):raise GateError("incomplete array type")
+        if raw[pos]=="L":
+            terminator=raw.find(";",pos)
+            if terminator<0:raise GateError("unterminated reference type")
+            pos=terminator+1
+        elif raw[pos] in "BCDFIJSZ":
+            pos+=1
+        else:
+            raise GateError("invalid descriptor argument")
+        result.append(raw[start:pos])
+        if len(result)>18:raise GateError("too many arguments")
+    ret=descriptor[end+1:]
+    if not re.fullmatch(r"(?:V|[BCDFIJSZ]|\[*L[A-Za-z0-9_/$]+;|\[[BCDFIJSZ])",ret):
+        raise GateError("invalid descriptor return")
+    return result,ret
+
+def oncast_controller_radius_argument(body:list[str])->dict:
+    """Prove only a bounded straight-line NEW→INVOKESPECIAL constructor stack slice.
+
+    Does not inspect, serialize or return third-party implementation/bytecode.
+    Unsupported opcodes, branches and local provenance all fail closed.
+    """
+    rows=opcode_rows(body)
+    expected_ctor="Method "+CTOR_OWNER+'."<init>":'+CONSTRUCTOR_DESC
+    newclass="class "+CTOR_OWNER
+    starts=[i for i,r in enumerate(rows) if r[1]=="new" and r[3]==newclass]
+    ends=[i for i,r in enumerate(rows) if r[1]=="invokespecial" and r[3]==expected_ctor]
+    def stop(reason,**metadata):
+        return {"status":"NOT_PROVED","reason":reason,**metadata}
+    if len(starts)!=1 or len(ends)!=1 or starts[0]>=ends[0]:
+        return stop("unique_controller_allocation_and_ctor_call_not_proved",
+                    allocations=len(starts),constructor_calls=len(ends))
+    start,end=starts[0],ends[0]
+    window=rows[start:end+1]
+    if len(window)>65:return stop("constructor_window_budget_exceeded")
+    if any((op.startswith(("if","goto","jsr")) or op in
+            ("tableswitch","lookupswitch","athrow","ret","wide","monitorenter",
+             "monitorexit","invokedynamic") or op.endswith("return"))
+           for _,op,_,_ in window):
+        return stop("non_linear_or_unsupported_constructor_argument_window",
+                    instruction_count=len(window))
+    stack=[]
+    locals_seen={}
+    def push(typ,tag):
+        stack.append((typ,tag))
+        if len(stack)>45:raise GateError("callsite stack budget exceeded")
+    def pop(expected=None):
+        if not stack:raise GateError("constructor window stack underflow")
+        typ,tag=stack.pop()
+        if expected is not None:
+            if expected in ("I","F","D","J") and typ!=expected:
+                raise GateError("callsite primitive stack type mismatch")
+            if expected.startswith(("L","[")) and not typ.startswith(("L","[")):
+                raise GateError("callsite reference stack type mismatch")
+        return (typ,tag)
+    try:
+        for _,op,operand,comment in window:
+            if op=="new":
+                if comment!=newclass:raise GateError("nested allocation unmodelled")
+                push("L"+CTOR_OWNER+";","uninit_controller")
+            elif op=="dup":
+                if not stack or not stack[-1][0].startswith(("L","[")):
+                    raise GateError("unsafe reference dup")
+                push(*stack[-1])
+            elif op=="swap":
+                if len(stack)<2 or stack[-1][0] in ("D","J") or stack[-2][0] in ("D","J"):
+                    raise GateError("unsafe swap")
+                stack[-1],stack[-2]=stack[-2],stack[-1]
+            elif op=="pop":
+                pop()
+            elif any(op==root or re.fullmatch(root+r"_[0-3]",op)
+                     for root in ("aload","iload","fload","dload","lload")):
+                root=op.split("_",1)[0]
+                slot=local_id(op,operand,root)
+                if slot is None:raise GateError("unrecognized load slot")
+                typ={"aload":"Ljava/lang/Object;","iload":"I",
+                     "fload":"F","dload":"D","lload":"J"}[root]
+                tag=("this_spell" if root=="aload" and slot==0 else
+                     locals_seen.get(slot,(typ,"local_unknown"))[1])
+                push(typ,tag)
+            elif any(op==root or re.fullmatch(root+r"_[0-3]",op)
+                     for root in ("astore","istore","fstore","dstore","lstore")):
+                root=op.split("_",1)[0]
+                slot=local_id(op,operand,root)
+                if slot is None:raise GateError("unrecognized store slot")
+                typ={"astore":"Ljava/lang/Object;","istore":"I",
+                     "fstore":"F","dstore":"D","lstore":"J"}[root]
+                locals_seen[slot]=pop(typ)
+            elif op in ("aconst_null",):
+                push("Ljava/lang/Object;","null")
+            elif op in ("iconst_m1","iconst_0","iconst_1","iconst_2","iconst_3",
+                        "iconst_4","iconst_5","bipush","sipush"):
+                push("I","constant")
+            elif op in ("fconst_0","fconst_1","fconst_2"):
+                push("F","constant")
+            elif op in ("dconst_0","dconst_1","lconst_0","lconst_1"):
+                push("D" if op.startswith("d") else "J","constant")
+            elif op in ("ldc","ldc_w","ldc2_w"):
+                if comment.startswith("float "):typ="F"
+                elif comment.startswith("double "):typ="D"
+                elif comment.startswith("long "):typ="J"
+                elif comment.startswith("int "):typ="I"
+                elif comment.startswith(("String ","class ")):typ="Ljava/lang/Object;"
+                else:raise GateError("unsupported constant type")
+                push(typ,"constant")
+            elif op in ("i2f","d2f","f2d","i2d","f2i"):
+                source={"i2f":"I","d2f":"D","f2d":"F","i2d":"I","f2i":"F"}[op]
+                out={"i2f":"F","d2f":"F","f2d":"D","i2d":"D","f2i":"I"}[op]
+                pop(source);push(out,"derived")
+            elif op in ("fadd","fsub","fmul","fdiv","iadd","isub","imul","idiv"):
+                typ="F" if op.startswith("f") else "I"
+                pop(typ);pop(typ);push(typ,"derived")
+            elif op in ("getfield","getstatic"):
+                m=re.fullmatch(r"Field [A-Za-z0-9_/$\.]+:([A-Za-z0-9_/$;\[]+)",comment)
+                if not m:raise GateError("unrecognized field descriptor")
+                if op=="getfield":pop("Ljava/lang/Object;")
+                push(m.group(1),"field_unknown")
+            elif op=="checkcast":
+                typ,tag=pop("Ljava/lang/Object;")
+                if not re.fullmatch(r"class [A-Za-z0-9_/$]+",comment):
+                    raise GateError("unsafe checkcast symbol")
+                push(typ,tag)
+            elif op in ("invokevirtual","invokespecial","invokestatic","invokeinterface"):
+                m=re.fullmatch(r"(?:Method|InterfaceMethod) ([^:]{1,350}):(\([^)]*\).{1,200})",comment)
+                if not m:raise GateError("unrecognized invocation descriptor")
+                method,desc=m.groups()
+                argtypes,ret=descriptor_types(desc)
+                arguments=[pop(t) for t in reversed(argtypes)][::-1]
+                receiver=pop("Ljava/lang/Object;") if op!="invokestatic" else None
+                if comment==expected_ctor:
+                    if receiver!=( "L"+CTOR_OWNER+";","uninit_controller"):
+                        raise GateError("constructor receiver is not new controller")
+                    if len(arguments)!=10 or arguments[2][0]!="F" or arguments[7][0]!="F":
+                        raise GateError("constructor signature/float slots inconsistent")
+                    return {"status":(
+                         "PROVED_ONCAST_GET_RADIUS_TO_FIRST_CTOR_FLOAT"
+                         if arguments[2][1]=="spell_getRadius" else
+                         "NOT_PROVED"),
+                         "reason":("exact_getRadius_call_stack_argument"
+                                   if arguments[2][1]=="spell_getRadius" else
+                                   "first_ctor_float_source_not_exact_spell_getRadius"),
+                         "first_float_argument_source":arguments[2][1],
+                         "second_float_argument_source":arguments[7][1],
+                         "constructor_argument_ordinal":3,
+                         "controller_constructor_descriptor":CONSTRUCTOR_DESC,
+                         "instruction_window_count":len(window),
+                         "boundary":"onCast callsite only; downstream AABBs, mutability and provider-loaded QA unproved."}
+                is_radius=(method in ("getRadius",SPELL_OWNER+".getRadius")
+                           and desc==GET_RADIUS_CALL_DESC and
+                           receiver is not None and receiver[1]=="this_spell")
+                if ret!="V":
+                    push(ret,"spell_getRadius" if is_radius else "other_method")
+            else:
+                raise GateError("unsupported callsite opcode "+op)
+    except GateError as e:
+        return stop("argument_provenance_not_modelled",classification=str(e),
+                    instruction_count=len(window))
+    return stop("constructor_call_not_reached")
+
+def analyze(text:str,spell_javap:str|None=None)->dict:
     if not text or len(text)>MAX_TEXT:raise GateError("javap length invalid")
     rows=sections(text)
     constructors=[(desc,body) for name,desc,body in rows
@@ -408,7 +586,15 @@ def analyze(text:str)->dict:
         setter_structural_shape(setters[0],synced["accessor_field"])
         if len(setters)==1 and synced["status"]=="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
         else {"proof_status":"NOT_PROVED","reason":"setter_or_synced_accessor_unavailable"})
+    oncast_proof={"status":"NOT_PROVED","reason":"onCast_javap_not_provided"}
+    if spell_javap is not None:
+        candidate=[body for name,desc,body in sections(spell_javap)
+                   if name=="onCast"]
+        if len(candidate)!=1:
+            raise GateError("missing or ambiguous Somake onCast")
+        oncast_proof=oncast_controller_radius_argument(candidate[0])
     return {
+      "oncast_to_controller":oncast_proof,
       "setter_structure":setter_shape,
       "clamped_setter_to_synced_accessor":clamped_setter,
       "constructor_descriptor":CONSTRUCTOR_DESC,
@@ -443,7 +629,11 @@ def inspect(jar:Path)->dict:
     p=subprocess.run(["javap","-p","-c","-s","-classpath",str(jar.resolve()),FQCN],
                      capture_output=True,text=True,check=False,timeout=50)
     if p.returncode or not p.stdout or len(p.stdout)>MAX_TEXT:raise GateError("javap failed/oversized")
-    proof=analyze(p.stdout)
+    spell=subprocess.run(["javap","-p","-c","-s","-classpath",str(jar.resolve()),SPELL_FQCN],
+                         capture_output=True,text=True,check=False,timeout=50)
+    if spell.returncode or not spell.stdout or len(spell.stdout)>MAX_TEXT:
+        raise GateError("Somake onCast class javap failed/oversized")
+    proof=analyze(p.stdout,spell.stdout)
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("artifact changed")
     print("SOMAKE_CONTROLLER_RADIUS_BRIDGE",json.dumps(proof,sort_keys=True))
     status=("PASS_EXACT_SHA_DIRECT_CONSTRUCTOR_RADIUS_BRIDGE"
@@ -463,7 +653,7 @@ def inspect(jar:Path)->dict:
                               else "PASS_EXACT_SHA_OBSERVATIONAL_ONLY_BRIDGE_NOT_PROVED"))))))
     return {"status":status,
             "sha1":digest,"fqcn":FQCN,"evidence":proof,
-            "limits":["Independent controller getter/constructor analysis, not onCast value provenance.",
+            "limits":["onCast callsite proof is local to the certified invocation window; receiver-level, semantics and AABB operands remain separate.",
                       "A direct float binding is not a player-accessible setter or mutable perk API.",
                       "No wave.inflate, bud.impact AABB argument propagation, loaded server or client proven.",
                       "No JAR, JVM disassembly, classfile, code or assets included."]}
