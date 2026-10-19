@@ -189,3 +189,9 @@ Para `level` inteiro e `caster != null`, o retorno estático segue `Mth.clamp_f3
 - O padrão direto investigado era uma hipótese de auditoria. Sua rejeição **não** invalida a expressão `FuneralBloomSpell.getRadius(int,LivingEntity)` já demonstrada, porque são getters de **classes diferentes**. Nem implica que a controller ignore raio: falta o dataflow interno.
 
 **Status:** ⚠️ parâmetros do construtor e assinatura conhecidos; ⛔ `FAIL_CLOSED` para perks mutadoras de área/raio/targets e dedução de dimensões de `AABB.inflate`. O complemento de resumo estrutural do getter permanece condicionado ao CI do HEAD final da PR #837. Nenhuma magia ou adapter nova.
+
+## Controller — accessor de raio sincronizado identificado (19/10/2026)
+
+- **Prova:** JAR Somake 1.0.9 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, [Java21 #39288405552](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39288405552) `SUCCESS` / 16 testes, [dossiê](../EXACT-BINARY-FUNERAL-BLOOM-CONTROLLER-RADIUS-1.0.9.md). O método da controller `getRadius():float` lê **`SynchedEntityData.get(DATA_RADIUS)`** e converte `Float.floatValue()`. A leitura completa de sete instruções foi comprovada, sem cálculos adicionais no getter.
+- **Escrita:** a varredura binária de 30 métodos localizou `defineSynchedData`, `setRadius(float)` e o accessor `DATA_RADIUS`; no método `setRadius` coexistem `Float.valueOf`, `SynchedEntityData.set` e carregamento `float` do slot 1. A fórmula inteira do setter e o vínculo com qualquer slot do construtor **não** foram demonstrados pelo interpretador.
+- **Efeito em perks:** um `EntityDataAccessor` interno não é API pública para alterar um cast per-player. `onCast → construtor → setRadius → getRadius → wave AABB` permanece **⚠️ condicionado**; impacto da bud é superfície de área independente. ⛔ `FAIL_CLOSED` para perks mutadoras e dupla Mastery.
