@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from somake_109_radius_typed_paths import interpret
+from somake_109_radius_typed_paths import interpret, certify_exact_109, EXPECTED_EXACT_109_RADIUS_PATHS
 from somake_109_radius_irons_contract import SOMAKE_GETTER_DESC, radius_cfg, opcode_rows
 
 GOOD=[
@@ -68,6 +68,35 @@ class RadiusPathTests(unittest.TestCase):
     def test_bad_branch_target_refused(self):
         bad=[x.replace("ifnonnull 10","ifnonnull 999") for x in GOOD]
         self.assertEqual("NOT_PROVED",interpret(bad,SOMAKE_GETTER_DESC)["status"])
+
+    def test_exact_release_path_snapshot_accepts_both_original_chains(self):
+        paths=[{"condition":condition,**attrs}
+               for condition,attrs in EXPECTED_EXACT_109_RADIUS_PATHS.items()]
+        certify_exact_109({"status":"PROVED_TWO_PATH_JVM_FLOAT_EXPRESSION",
+                           "jvm_instructions":28,"paths":paths})
+
+    def test_exact_release_rejects_level_coefficient_drift(self):
+        paths=[{"condition":condition,**attrs}
+               for condition,attrs in EXPECTED_EXACT_109_RADIUS_PATHS.items()]
+        paths[0]["jvm_float_expression"]=paths[0]["jvm_float_expression"].replace("0.82","0.83")
+        with self.assertRaises(Exception):
+            certify_exact_109({"status":"PROVED_TWO_PATH_JVM_FLOAT_EXPRESSION",
+                               "jvm_instructions":28,"paths":paths})
+
+    def test_exact_release_rejects_lost_school_dependency(self):
+        paths=[{"condition":condition,**attrs}
+               for condition,attrs in EXPECTED_EXACT_109_RADIUS_PATHS.items()]
+        paths[0]["calls"]=["Math.max","Mth.clamp"]
+        with self.assertRaises(Exception):
+            certify_exact_109({"status":"PROVED_TWO_PATH_JVM_FLOAT_EXPRESSION",
+                               "jvm_instructions":28,"paths":paths})
+
+    def test_exact_release_rejects_ambiguous_branch_identity(self):
+        paths=[{"condition":"caster == null",**attrs}
+               for attrs in EXPECTED_EXACT_109_RADIUS_PATHS.values()]
+        with self.assertRaises(Exception):
+            certify_exact_109({"status":"PROVED_TWO_PATH_JVM_FLOAT_EXPRESSION",
+                               "jvm_instructions":28,"paths":paths})
 
     def test_java21_compiled_branch_shape(self):
         with tempfile.TemporaryDirectory() as tmp:
