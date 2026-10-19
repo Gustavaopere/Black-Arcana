@@ -84,3 +84,13 @@ Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-M
 - getDamagePerPulse references getSpellPower; getRadius references SchoolType.getPowerFor; getLifetimeTicks references Mth.clamp. Do not infer tick interval, sphere/box damage, pull mechanics, target cap or AOE mutation hook from a class name.
 
 **Limite de perks:** apenas assinaturas e referências simbólicas do JAR exato foram certificadas para WitheredRoseVortexEntity. Config ativa, fórmula numérica, tipo/alcance de alvo, colisão, duração efetiva, reentrância, dano/cura aplicado e hook mutador por jogador continuam **⚠️/⛔ NÃO HOMOLOGADOS**. Não transferir casting, custos ou efeitos do provider ao RPG Skill Tree; evitar callbacks de dano repetidos.
+
+## Entidade downstream — auditoria JVM exata (19/10/2026)
+
+**Fonte:** JAR Somake 1.0.9 com SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, [auditoria Java 21 #39195233005](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39195233005). Classe: `com.somake.somakespells.entity.WitheredRoseVortexEntity`. Evidência `PASS_STATIC_ENTITY_REFERENCE_DISCOVERY` — sem execução do efeito em jogo.
+
+- `WitheredRoseVortexEntity#pulseDamage(ServerLevel)` referencia `AABB.inflate`, `ServerLevel.getEntitiesOfClass`, `LivingEntity.isAlliedTo` e `WitheredRoseVortexSpell.getDamageSource`.
+- O mesmo método referencia `io.redspace.ironsspellbooks.damage.DamageSources.applyDamage(Entity,float,DamageSource)` e `MobEffects.WITHER` via `MobEffectInstance`/`LivingEntity.addEffect`. Não presumir callback único nem event bus sem verificar o overload efetivo.
+- `getRadius/setRadius`, `getTotalLifetime/setTotalLifetime`, `getPulseStrength`, `tick` e `onAntiMagic` aparecem nas assinaturas; raio, frequência dos pulsos, potência e duração real não foram extraídos.
+
+**Boundary de perks:** ⚠️ métodos/refs comprovados, mas fórmulas, caps, ordem de settlement, config efetiva, alvos e multiplayer pendentes; ⛔ `FAIL_CLOSED` para alterações de dano/área/duração/alvo sem API por jogador real. [Matriz das cinco entidades](../EXACT-BINARY-ENTITY-CALLSITES-1.0.9.md).

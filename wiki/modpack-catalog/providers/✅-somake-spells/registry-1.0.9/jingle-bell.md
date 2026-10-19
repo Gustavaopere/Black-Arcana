@@ -84,3 +84,13 @@ Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-M
 - getDamagePerPulse references getSpellPower; lifetime references Mth.clamp. TunesCompat callsite does not prove that the optional Tunes provider is loaded, that its effect executes, or that a perk can alter bell hitbox, radius or healing.
 
 **Limite de perks:** apenas assinaturas e referências simbólicas do JAR exato foram certificadas para BellEntity. Config ativa, fórmula numérica, tipo/alcance de alvo, colisão, duração efetiva, reentrância, dano/cura aplicado e hook mutador por jogador continuam **⚠️/⛔ NÃO HOMOLOGADOS**. Não transferir casting, custos ou efeitos do provider ao RPG Skill Tree; evitar callbacks de dano repetidos.
+
+## Entidade downstream — auditoria JVM exata (19/10/2026)
+
+**Fonte:** JAR Somake 1.0.9 com SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, [auditoria Java 21 #39195233005](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39195233005). Classe: `com.somake.somakespells.entity.BellEntity`. Evidência `PASS_STATIC_ENTITY_REFERENCE_DISCOVERY` — sem execução do efeito em jogo.
+
+- `BellEntity#pulseDamage(ServerLevel)` referencia `AABB.inflate`, `ServerLevel.getEntitiesOfClass`, `JingleBellSpell.getDamageSource` e `DamageSources.applyDamage(Entity,float,DamageSource)`.
+- Há `getOwnerEntity(ServerLevel)`, `triggerFinale(ServerLevel)`, `tick` e predicado de alvo `lambda$pulseDamage$1`; seu resultado e a frequência dos pulsos não foram certificados neste gate.
+- O callsite de `TunesCompat.spawnCelestialHealingCircle` aparece em `JingleBellSpell.onCast`, não prova que uma rotina nativa do Bell seja uma cura ou que a compatibilidade esteja ativada em runtime. Evitar duplo processamento.
+
+**Boundary de perks:** ⚠️ métodos/refs comprovados, mas fórmulas, caps, ordem de settlement, config efetiva, alvos e multiplayer pendentes; ⛔ `FAIL_CLOSED` para alterações de dano/área/duração/alvo sem API por jogador real. [Matriz das cinco entidades](../EXACT-BINARY-ENTITY-CALLSITES-1.0.9.md).

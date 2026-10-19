@@ -29,3 +29,17 @@ Fonte da tranche: [Somake — matriz de sete gates](../providers/✅-somake-spel
 [Java21 #39192999780](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39192999780) **SUCCESS**, SHA-1 físico/publisher verificado. O novo probe compilado cobriu as **7/7 classes desta campanha**, encontrou 116 declarações de métodos (101 com nomes de interesse para inspeção), incluindo onCast, onServerCastTick, pre-cast, getters de dano/cura/raio/duração e referências a entidades downstream. A [matriz causal estática](../providers/✅-somake-spells/EXACT-BINARY-CAST-CALLSITES-1.0.9.md) e as sete fichas foram atualizadas. O primeiro run #39192927218 falhou pelo teto de 250 caracteres para uma referência JVM, corrigido para 2048 com teste negativo; a execução seguinte passou.
 
 **Barras invariantes:** global **—%** (universo ainda sem denominador); Somake **83/83 = 100% identidades**. A campanha limitada de **métodos de cast/efeito cobre 7/83 = 8,43%** das fichas atuais, sem equivaler a profundidade causal de runtime, fórmula completa ou perks homologadas. Identidades novas +0; adapters +0; Stage 06.05 🟡; validações físicas/Survival ainda pendentes.
+
+## Somake 1.0.9 — terceira camada: auditoria de entidades
+
+**Fonte:** [GitHub Actions #39195233005](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39195233005), Java 21, JAR Somake 1.0.9 com SHA-1 exata `171841ac9f802be9309ecc166c1d972ac6d404c0`, `SUCCESS`, **8 testes sintéticos**. O gate de cast dependente [#39195233020](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39195233020) também passou. Inspeção estática, não QA de jogador/mundo.
+
+- **Barra geral:** —% (denominador final do universo de todos os providers e ações semânticas ainda aberto). O checkpoint histórico de 1.857 objetos globais é piso, sem promoção desta campanha.
+- **Somake — identidade de registry:** 83/83 = **100%**, mantido; novas identidades: **0**.
+- **Somake — métodos de spell/casting:** 7/83 = **8,43%** das fichas receberam exploração de assinaturas/referências no lote anterior; não representa fórmula completa.
+- **Somake — entidades downstream:** 5/83 = **6,02%** das fichas agora possuem nova referência binária de entidade específica auditada; **5/5 = 100% deste recorte fechado** (21 + 28 + 23 + 18 + 15 = 105 declarações e 15 + 22 + 17 + 15 + 9 = 78 métodos de interesse). A existência dessas cinco entidades não implica que as 78 rotinas tenham execução efetiva comprovada.
+- **Hooks mutadores por jogador validados neste lote:** 0 (não inferir percentual sem denominador de demandas de perks). **Survival/provider-loaded/real-client**: ⚠️ pendentes; **perks de mutação**: ⛔ FAIL_CLOSED.
+
+O scanner evidencia `LivingEntity.hurt` direto no Fragmented Sword Rain versus `DamageSources.applyDamage` no Vortex/Bell, além de filtragem de aliados/alvos e efeitos Wither/Blessing. Estes são símbolos compilados, não provas de que `SpellDamageEvent` seja consumido em todos os caminhos, de hitbox/raio numericamentes modificáveis ou de equivalência com o pack real. [Matriz exata](../providers/✅-somake-spells/EXACT-BINARY-ENTITY-CALLSITES-1.0.9.md).
+
+**Próximo gate:** `FuneralBloomBudEntity` e `pulseDamage`/`tick` com dataflow, caps e coexistência de eventos; preservar autoridade do Somake, Iron's e RPG Skill Tree sem dupla cobrança/dano/Mastery. Stage 06.05 continua 🟡; Stage 09 preserva todos os gates físicos.
