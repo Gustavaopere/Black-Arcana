@@ -182,8 +182,19 @@ def wave_radius_aabb_shape(body:list[str])->dict:
     }
 
 def certify_exact_wave_aabb_109(proof:dict)->None:
-    """Close exact physical Somake 1.0.9 AABB argument gate."""
-    return None
+    """Hard-gate version-exact wave-axis evidence on every physical run."""
+    expected={
+        "status":"PROVED_AABB_XZ_CONTROLLER_RADIUS_Y_LITERAL_DOUBLE",
+        "radius_axes":["X","Z"],
+        "vertical_double_literal":"10.5",
+        "source_call_count":2,
+        "conversion":"F_TO_D",
+        "source_method":"FuneralBloomControllerEntity.getRadius:()F",
+        "aabb_method_descriptor":"(DDD)Lnet/minecraft/world/phys/AABB;",
+        "method_instruction_count":196,
+    }
+    if not isinstance(proof,dict) or any(proof.get(k)!=v for k,v in expected.items()):
+        raise GateError("exact Somake 1.0.9 wave AABB XZ/Y operand proof drift")
 
 def calls_in_method(body:list[str])->dict:
     """Only bytecode callsite comments; fields are separately counted."""
@@ -310,10 +321,11 @@ def inspect(jar:Path)->dict:
                   "classified",json.dumps(metrics["classified"],sort_keys=True),
                   "fields",json.dumps(metrics["field_symbols"]))
     certify_exact_consumer_surface(outcome)
+    certify_exact_wave_aabb_109(outcome["controller"]["wave_inflate_operand_proof"])
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
-    return {"status":"PASS_SHA_EXACT_METHOD_SYMBOL_DISCOVERY_ONLY",
+    return {"status":"PASS_SHA_EXACT_WAVE_XZ_RADIUS_Y_10_5_OPERANDS",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
             "scope":outcome,
             "limits":[
