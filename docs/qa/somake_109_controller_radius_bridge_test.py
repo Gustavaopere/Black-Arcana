@@ -500,7 +500,7 @@ class SomakeOnCastConstructorArgumentTests(unittest.TestCase):
         rows[7]=rows[7].replace("getRadius","otherRadius")
         self.assertEqual("NOT_PROVED",oncast_controller_radius_argument(rows)["status"])
         rows=self.sample()
-        rows.insert(0,"-1: new #2 // class "+CTOR_OWNER)
+        rows.insert(0,rows[0])
         # duplicate offsets are rejected by the parser, never accidentally certified
         with self.assertRaises(GateError):
             oncast_controller_radius_argument(rows)
