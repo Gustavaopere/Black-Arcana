@@ -7,7 +7,7 @@ from pathlib import Path
 from somake_109_perk_method_probe import GateError
 from somake_109_controller_radius_bridge import (
   FQCN,CONSTRUCTOR_DESC,FLOAT_SLOTS,GETTER_DESC,
-  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape,synced_entity_float_getter,synced_radius_constructor_setter,synced_accessor_method_inventory,direct_synched_radius_setter,direct_constructor_setter_call,setter_structural_shape,certified_clamped_synched_radius_setter,float_literal_f32
+  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape,synced_entity_float_getter,synced_radius_constructor_setter,synced_accessor_method_inventory,direct_synched_radius_setter,direct_constructor_setter_call,setter_structural_shape,certified_clamped_synched_radius_setter,float_literal_f32,oncast_controller_radius_argument,descriptor_types,CTOR_OWNER,CONSTRUCTOR_DESC
 )
 
 def specimen(getter=None,slot=3):
@@ -443,5 +443,87 @@ class CertifiedClampedSynchedSetterTests(unittest.TestCase):
         p=certified_clamped_synched_radius_setter(body,"DATA_RADIUS")
         self.assertEqual("PROVED_CLAMPED_FLOAT_SETTER_TO_SYNCED_RADIUS",p["status"])
         self.assertEqual((0.0,2.0),(p["clamp_lower_float"],p["clamp_upper_float"]))
+
+class SomakeOnCastConstructorArgumentTests(unittest.TestCase):
+    @staticmethod
+    def sample():
+        rows=[
+            ("new","// class "+CTOR_OWNER),
+            ("dup",""),
+            ("aload_1",""),("aload_3",""),
+            ("aload_0",""),("iload_2",""),("aload_3",""),
+            ("invokevirtual","// Method getRadius:(ILnet/minecraft/world/entity/LivingEntity;)F"),
+            ("iconst_1",""),("iconst_2",""),("iconst_3",""),("iconst_4",""),
+            ("aload_0",""),("iload_2",""),("aload_3",""),
+            ("invokevirtual","// Method getImpactDamage:(ILnet/minecraft/world/entity/LivingEntity;)F"),
+            ("iconst_1",""),("iconst_1",""),
+            ("invokespecial",'// Method '+CTOR_OWNER+'."<init>":'+CONSTRUCTOR_DESC),
+        ]
+        return [str(i*5)+": "+op+(" #2 "+comment if comment else "") for i,(op,comment) in enumerate(rows)]
+
+    def test_exact_spell_radius_is_first_controller_float_only(self):
+        p=oncast_controller_radius_argument(self.sample())
+        self.assertEqual("PROVED_ONCAST_GET_RADIUS_TO_FIRST_CTOR_FLOAT",p["status"],p)
+        self.assertEqual("spell_getRadius",p["first_float_argument_source"])
+        self.assertEqual("other_method",p["second_float_argument_source"])
+        self.assertEqual(3,p["constructor_argument_ordinal"])
+        self.assertEqual(19,p["instruction_window_count"])
+
+    def test_floating_operation_between_getter_and_constructor_rejects_proof(self):
+        rows=self.sample()
+        rows.insert(8,"37: fconst_1")
+        rows.insert(9,"38: fadd")
+        rows=[str(i*5)+":"+row.split(":",1)[1] for i,row in enumerate(rows)]
+        p=oncast_controller_radius_argument(rows)
+        self.assertEqual("NOT_PROVED",p["status"],p)
+        self.assertEqual("derived",p.get("first_float_argument_source"))
+
+    def test_unknown_getter_receiver_is_not_certified(self):
+        rows=self.sample()
+        rows[4]=rows[4].replace("aload_0","aload_1")
+        p=oncast_controller_radius_argument(rows)
+        self.assertEqual("NOT_PROVED",p["status"],p)
+        self.assertEqual("other_method",p.get("first_float_argument_source"))
+
+    def test_no_argument_mapping_if_branch_or_dynamic_within_window(self):
+        rows=self.sample()
+        rows[8]=rows[8].replace("iconst_1","ifnonnull 100")
+        p=oncast_controller_radius_argument(rows)
+        self.assertEqual("NOT_PROVED",p["status"])
+        self.assertEqual("non_linear_or_unsupported_constructor_argument_window",p["reason"])
+        rows=self.sample()
+        rows[8]=rows[8].replace("iconst_1","invokedynamic")
+        self.assertEqual("NOT_PROVED",oncast_controller_radius_argument(rows)["status"])
+
+    def test_outside_getter_or_duplicate_constructor_cannot_certify(self):
+        rows=self.sample()
+        rows[7]=rows[7].replace("getRadius","otherRadius")
+        self.assertEqual("NOT_PROVED",oncast_controller_radius_argument(rows)["status"])
+        rows=self.sample()
+        rows.insert(0,"-1: new #2 // class "+CTOR_OWNER)
+        # duplicate offsets are rejected by the parser, never accidentally certified
+        with self.assertRaises(GateError):
+            oncast_controller_radius_argument(rows)
+
+    def test_type_mismatch_and_unknown_opcode_fail_closed(self):
+        rows=self.sample()
+        rows[7]=rows[7].replace("getRadius:(ILnet/minecraft/world/entity/LivingEntity;)F",
+                                  "getRadius:(ILnet/minecraft/world/entity/LivingEntity;)I")
+        p=oncast_controller_radius_argument(rows)
+        self.assertEqual("NOT_PROVED",p["status"])
+        rows=self.sample()
+        rows[8]=rows[8].replace("iconst_1","unknown_op")
+        self.assertEqual("NOT_PROVED",oncast_controller_radius_argument(rows)["status"])
+
+    def test_jvm_descriptor_parser_bounds(self):
+        args,ret=descriptor_types(CONSTRUCTOR_DESC)
+        self.assertEqual(["Lnet/minecraft/world/level/Level;",
+                          "Lnet/minecraft/world/entity/LivingEntity;",
+                          "F","I","I","I","I","F","I","I"],args)
+        self.assertEqual("V",ret)
+        with self.assertRaises(GateError):
+            descriptor_types("(I)X")
+        with self.assertRaises(GateError):
+            descriptor_types("(Lbroken)F")
 
 if __name__=="__main__":unittest.main()
