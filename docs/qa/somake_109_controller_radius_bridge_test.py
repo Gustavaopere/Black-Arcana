@@ -7,7 +7,7 @@ from pathlib import Path
 from somake_109_perk_method_probe import GateError
 from somake_109_controller_radius_bridge import (
   FQCN,CONSTRUCTOR_DESC,FLOAT_SLOTS,GETTER_DESC,
-  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape
+  analyze,local_id,direct_float_getter,constructor_direct_assignments,getter_structural_shape,synced_entity_float_getter
 )
 
 def specimen(getter=None,slot=3):
@@ -67,6 +67,45 @@ class RadiusBridgeTests(unittest.TestCase):
         self.assertEqual(["getBaseRadius:()F"],shape["invoked_method_symbols"])
         self.assertEqual([],shape["float_field_names_read"])
         self.assertNotIn("constructor_argument",shape)
+
+    def test_full_sync_float_getter_is_proved_without_constructor_guess(self):
+        body=[
+           "0: aload_0",
+           "1: getfield #2 // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;",
+           "4: getstatic #3 // Field DATA_RADIUS:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+           "7: invokevirtual #4 // Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;",
+           "10: checkcast #5 // class java/lang/Float",
+           "13: invokevirtual #6 // Method java/lang/Float.floatValue:()F",
+           "16: freturn"]
+        record=analyze(specimen(getter=body))
+        self.assertEqual("NOT_PROVED",record["getter"]["status"])
+        self.assertEqual("PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER",
+                         record["synced_data_getter"]["status"])
+        self.assertEqual("DATA_RADIUS",record["synced_data_getter"]["accessor_field"])
+        self.assertEqual("NOT_PROVED",record["constructor_to_getter"]["status"])
+
+    def test_sync_getter_requires_float_cast_and_unbox(self):
+        body=[
+           "0: aload_0",
+           "1: getfield #2 // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;",
+           "4: getstatic #3 // Field DATA_RADIUS:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+           "7: invokevirtual #4 // Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;",
+           "10: checkcast #5 // class java/lang/Double",
+           "13: invokevirtual #6 // Method java/lang/Float.floatValue:()F",
+           "16: freturn"]
+        proof=synced_entity_float_getter(body)
+        self.assertEqual("NOT_PROVED",proof["status"])
+
+    def test_foreign_synched_accessor_is_refused(self):
+        body=[
+           "0: aload_0",
+           "1: getfield #2 // Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;",
+           "4: getstatic #3 // Field external/mod/OtherController.DATA_RADIUS:Lnet/minecraft/network/syncher/EntityDataAccessor;",
+           "7: invokevirtual #4 // Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;",
+           "10: checkcast #5 // class java/lang/Float",
+           "13: invokevirtual #6 // Method java/lang/Float.floatValue:()F",
+           "16: freturn"]
+        self.assertEqual("NOT_PROVED",synced_entity_float_getter(body)["status"])
 
     def test_getter_invocation_without_symbol_rejected(self):
         with self.assertRaises(GateError):
