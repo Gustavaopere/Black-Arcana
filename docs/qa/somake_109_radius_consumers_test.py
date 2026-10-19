@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -68,6 +68,42 @@ class ConsumerProbeTests(unittest.TestCase):
                            "3: invokevirtual #2 // Method getRadius:(I)F","6: freturn"])
         self.assertEqual(1,d["invoke_count"])
         self.assertEqual(1,len(d["field_symbols"]))
+
+    def test_snapshot_missing_causal_surface_fails_closed(self):
+        def record(*, radius=(), spawn=(), wave=(), aabb=(), query=(),
+                   damage=(), heal=(), dyn=1):
+            classified={k:[] for k in KEYS}
+            for k,values in (("radius",radius),("spawn_controller",spawn),
+                             ("wave",wave),("aabb",aabb),("query",query),
+                             ("damage",damage),("heal",heal)):
+                classified[k]=list(values)
+            return {"classified":classified,"invokedynamic_count":dyn}
+        outcome={
+           "spell":{"selected_methods":{"onCast()V":record(
+               radius=["getRadius:(ILnet/minecraft/world/entity/LivingEntity;)F"],
+               spawn=['com/somake/somakespells/entity/FuneralBloomControllerEntity."<init>":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;FIIIIFII)V'])}},
+           "controller":{"selected_methods":{
+               "tick()V":record(radius=["getRadius:()F"],
+                                wave=["launchWave:(Lnet/minecraft/server/level/ServerLevel;)V"]),
+               "launchWave()V":record(radius=["getRadius:()F"],
+                    wave=['FuneralBloomBudEntity."<init>":(Lnet/minecraft/world/level/Level;)V'],
+                    aabb=["AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;"],
+                    query=["ServerLevel.getEntitiesOfClass:(Ljava/lang/Class;)Ljava/util/List;"]) }},
+           "bud":{"selected_methods":{
+               "impact()V":record(aabb=["AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;"],
+                 query=["ServerLevel.getEntitiesOfClass:(Ljava/lang/Class;)Ljava/util/List;"],
+                 damage=["DamageSources.applyDamage:(...)Z"],
+                 heal=['SpellHealEvent."<init>":(...)V'])}}}
+        certify_exact_consumer_surface(outcome)
+        outcome["controller"]["selected_methods"]["launchWave()V"]["classified"]["radius"]=[]
+        with self.assertRaises(GateError):
+            certify_exact_consumer_surface(outcome)
+
+    def test_bud_direct_radius_is_not_inferred_from_aabb(self):
+        d=calls_in_method(["0: invokevirtual #1 // Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;",
+                           "2: invokevirtual #2 // Method ServerLevel.getEntitiesOfClass:()Ljava/util/List;"])
+        self.assertTrue(d["classified"]["aabb"])
+        self.assertEqual([],d["classified"]["radius"])
 
     def test_no_inference_from_same_method_cooccurrence(self):
         d=analyze_javap(synthetic(),"spell")["selected_methods"]["onCast()V"]
