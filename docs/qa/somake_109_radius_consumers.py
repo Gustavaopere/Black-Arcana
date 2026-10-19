@@ -43,6 +43,10 @@ MAX_METHOD_INSTRUCTIONS=2800
 MAX_SYMBOLS_PER_METHOD=110
 MAX_SYMBOL_LEN=900
 
+def prove_wave_inflate_operands(body:list[str])->dict:
+    """Conservative typed provenance gate for all three inflate(double) arguments."""
+    return {"status":"NOT_PROVED","reason":"wave_inflate_argument_proof_not_implemented"}
+
 def wave_radius_aabb_shape(body:list[str])->dict:
     """Return bounded callsite topology only; never infer values by co-occurrence."""
     rows=opcode_rows(body)
@@ -151,6 +155,7 @@ def analyze_javap(text:str, label:str)->dict:
                     if name=="launchWave" and desc=="(Lnet/minecraft/server/level/ServerLevel;)V"]
         if len(candidates)!=1:raise GateError("missing exact launchWave descriptor")
         report["wave_radius_aabb_shape"]=wave_radius_aabb_shape(candidates[0])
+        report["wave_inflate_operand_proof"]=prove_wave_inflate_operands(candidates[0])
     return report
 
 def certify_exact_consumer_surface(outcome:dict)->None:
@@ -214,6 +219,7 @@ def inspect(jar:Path)->dict:
                   "fields",json.dumps(metrics["field_symbols"]))
     certify_exact_consumer_surface(outcome)
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
+    print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
     return {"status":"PASS_SHA_EXACT_METHOD_SYMBOL_DISCOVERY_ONLY",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
