@@ -52,6 +52,12 @@ def direct_float_getter(body:list[str])->dict:
 
 def constructor_direct_assignments(body:list[str], target_field:str)->dict:
     rows=opcode_rows(body)
+    opcodes=[row[1] for row in rows]
+    if any(op.startswith(("if","goto","jsr")) or op in
+           ("tableswitch","lookupswitch","athrow","ret","wide") for op in opcodes):
+        return {"status":"NOT_PROVED","reason":"constructor_contains_conditional_or_unsupported_control_flow"}
+    if opcodes.count("return")!=1 or opcodes[-1]!="return":
+        return {"status":"NOT_PROVED","reason":"constructor_has_nonterminal_or_ambiguous_return"}
     assignments=[]
     touched=0
     for i,row in enumerate(rows):
