@@ -174,7 +174,7 @@ class RadiusBridgeTests(unittest.TestCase):
           "16: return"]
         self.assertEqual("NOT_PROVED",synced_radius_constructor_setter(setter,"DATA_RADIUS")["status"])
         guarded=setter.copy()
-        guarded.insert(0,"0: ifnonnull 16")
+        guarded[0]="0: ifnonnull 16"
         self.assertEqual("NOT_PROVED",synced_radius_constructor_setter(guarded,"DATA_RADIUS")["status"])
 
     def test_synched_setter_rejects_wrong_accessor_and_duplicate(self):
