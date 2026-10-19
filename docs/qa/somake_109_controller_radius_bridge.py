@@ -189,6 +189,43 @@ def constructor_direct_assignments(body:list[str], target_field:str)->dict:
             "field":target_field,"jvm_local_slot":slot,
             **FLOAT_SLOTS[slot]}
 
+def synced_accessor_method_inventory(methods:list,accessor_name:str)->dict:
+    """Method-level symbols only; no code, offsets, control/data flow exported."""
+    found=[]
+    for name,desc,body in methods:
+        rows=opcode_rows(body)
+        direct_accessors=0
+        set_calls=0
+        boxed_float_calls=0
+        floads=set()
+        for _,op,operand,comment in rows:
+            if op=="getstatic":
+                m=re.fullmatch(
+                  r"Field (?:(?:([A-Za-z0-9_/$]+))\.)?([A-Za-z0-9_$]+):Lnet/minecraft/network/syncher/EntityDataAccessor;",
+                  comment)
+                if m and m.group(2)==accessor_name and m.group(1) in (None,SELF_JVM_OWNER):
+                    direct_accessors+=1
+            if op=="invokevirtual" and comment==(
+              "Method net/minecraft/network/syncher/SynchedEntityData.set:"
+              "(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"):
+                set_calls+=1
+            if op=="invokestatic" and comment=="Method java/lang/Float.valueOf:(F)Ljava/lang/Float;":
+                boxed_float_calls+=1
+            fl=local_id(op,operand,"fload")
+            if fl is not None:floads.add(fl)
+        if direct_accessors or set_calls:
+            found.append({"method":name,"descriptor":desc,
+                          "direct_getstatic_accessor_count":direct_accessors,
+                          "synched_data_set_call_count":set_calls,
+                          "float_box_call_count":boxed_float_calls,
+                          "float_local_load_slots":sorted(floads)})
+    if len(found)>35:raise GateError("excess accessor method report")
+    return {"status":"STRUCTURAL_METHOD_REFERENCE_DISCOVERY_ONLY",
+            "accessor":accessor_name,
+            "methods_examined":len(methods),
+            "methods_with_relevant_symbols":found,
+            "limits":"Co-occurrence is not proof that the accessor is passed to set or that the float comes from a constructor slot."}
+
 def analyze(text:str)->dict:
     if not text or len(text)>MAX_TEXT:raise GateError("javap length invalid")
     rows=sections(text)
@@ -212,6 +249,10 @@ def analyze(text:str)->dict:
       "getter":getter,
       "synced_data_getter":synced,
       "constructor_to_synced_accessor":synced_binding,
+      "synced_accessor_method_inventory":(
+          synced_accessor_method_inventory(rows,synced["accessor_field"])
+          if synced["status"]=="PROVED_EXACT_SYNCED_ENTITY_DATA_FLOAT_GETTER"
+          else {"status":"NOT_PROVED","reason":"getter_accessor_not_certified"}),
       "getter_structure":getter_structural_shape(getters[0][1]),
       "constructor_to_getter":binding,
       "boundary":"Only direct local-argument store and field getter; caller stack and inflate dataflow not proven."
