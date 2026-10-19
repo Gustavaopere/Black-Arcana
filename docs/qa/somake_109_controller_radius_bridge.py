@@ -429,6 +429,19 @@ def oncast_controller_radius_argument(body:list[str])->dict:
         return stop("unique_controller_allocation_and_ctor_call_not_proved",
                     allocations=len(starts),constructor_calls=len(ends))
     start,end=starts[0],ends[0]
+    lower,upper=rows[start][0],rows[end][0]
+    # Reject any external control-flow ingress that can skip part of the window.
+    # Local linearity alone cannot prove all predecessor stacks are equivalent.
+    for i,(pc,op,operand,_) in enumerate(rows):
+        if start<=i<=end:continue
+        if op.startswith(("if","goto")):
+            target=operand.split(" ",1)[0]
+            if not re.fullmatch(r"\\d+",target):
+                return stop("unrecognized_external_branch_target")
+            if lower<int(target)<=upper:
+                return stop("external_branch_enters_constructor_argument_window")
+        elif op in ("tableswitch","lookupswitch","jsr","ret","wide"):
+            return stop("unsupported_external_control_flow")
     window=rows[start:end+1]
     if len(window)>65:return stop("constructor_window_budget_exceeded")
     if any((op.startswith(("if","goto","jsr")) or op in
