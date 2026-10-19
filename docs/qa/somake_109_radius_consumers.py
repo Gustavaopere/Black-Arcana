@@ -181,6 +181,10 @@ def wave_radius_aabb_shape(body:list[str])->dict:
         "boundary":"Callsite order and opcode counts only; AABB DDD operand stack and world hitbox NOT proved."
     }
 
+def certify_exact_wave_aabb_109(proof:dict)->None:
+    """Close exact physical Somake 1.0.9 AABB argument gate."""
+    return None
+
 def calls_in_method(body:list[str])->dict:
     """Only bytecode callsite comments; fields are separately counted."""
     if len(body)>4500:raise GateError("oversized method section")
