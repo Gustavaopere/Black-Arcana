@@ -56,6 +56,8 @@ def calls_in_method(body:list[str])->dict:
             opcount+=1
             if opcount>MAX_METHOD_INSTRUCTIONS:raise GateError("oversized method")
             op=match.group(1)
+            if op.startswith("invoke") and not sep:
+                raise GateError("invocation missing JVM symbol")
             if not sep:continue
             comment=after.strip()
             if len(comment)>MAX_SYMBOL_LEN:raise GateError("symbol oversized")
