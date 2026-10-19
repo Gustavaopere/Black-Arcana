@@ -268,6 +268,31 @@ def parse_selected_javap(text: str, names: tuple[str, ...]) -> dict:
         raise GateError("missing exact selected methods: "+repr(sorted(set(names)-set(discovered))))
     return {name:discovered[name] for name in names}
 
+EXPECTED_EXACT_INTEGER_GETTERS = {
+    "getMaxTargets": "(4+clamp(level,1,5))",
+    "getDuration": "(240+((clamp(level,1,5)-1)*20))",
+    "getWaveInterval": "(18-clamp(level,1,5))",
+    "getWitherDuration": "(60+(clamp(level,1,5)*12))",
+    "getTelegraphTicks": "max(9,(13-jvm_idiv(level,2)))",
+}
+
+def verify_exact_release_contract(rows: dict) -> None:
+    """Fail closed when the exact-release method proofs regress or drift."""
+    spell=rows.get("funeral_bloom_spell",{}).get("methods",{})
+    for method, expected in EXPECTED_EXACT_INTEGER_GETTERS.items():
+        actual=spell.get(method,{}).get("straight_line_integer_expression",{})
+        if actual.get("status")!="PROVED_STRAIGHT_LINE_JVM_INT_EXPRESSION" or actual.get("expression")!=expected:
+            raise GateError("exact SHA numeric getter proof mismatch: "+method)
+    for label, method, lower, upper in (
+        ("funeral_bloom_spell","getRadius","10.0","15.0"),
+        ("funeral_bloom_impact","setScale","0.65","1.6"),
+    ):
+        proofs=rows.get(label,{}).get("methods",{}).get(method,{}).get("direct_trailing_clamp_literals",[])
+        if not any(x.get("second_argument_literal")==lower and
+                   x.get("third_argument_literal")==upper for x in proofs):
+            raise GateError("exact SHA clamp literal proof mismatch: "+label+"."+method)
+
+
 def inspect(jar: Path)->dict:
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME:
         raise GateError("invalid physical JAR path")
@@ -306,10 +331,11 @@ def inspect(jar: Path)->dict:
                   "calls",json.dumps(info["bounded_callsite_counts"]),
                   "direct_clamp",json.dumps(info["direct_trailing_clamp_literals"]),
                   "int_expression",json.dumps(info.get("straight_line_integer_expression")))
+    verify_exact_release_contract(rows)
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:
         raise GateError("artifact changed during inspection")
     return {
-        "status":"PASS_STATIC_NUMERIC_FINGERPRINTS_NOT_FORMULAS",
+        "status":"PASS_STATIC_NUMERIC_FINGERPRINTS_AND_FIVE_LINEAR_INT_FORMULAS",
         "evidence":"SHA_EXACT_SOMAKE_109_FUNERAL_BLOOM_NUMERIC_METHODS",
         "provider_version":"1.0.9",
         "mod_id":"somakespells",
