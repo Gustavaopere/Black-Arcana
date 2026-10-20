@@ -351,7 +351,7 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
         seen.add(key)
         if len(found)>=12:raise GateError("unbounded wave lambda candidate count")
         if not re.fullmatch(r"\([^)]{0,350}\)[ZV]",descriptor):
-            raise GateError("wave lambda invalid or unsupported descriptor")
+            raise GateError("wave lambda unsupported descriptor "+name+" "+descriptor[:350])
         opcodes=opcode_rows(body)
         if len(opcodes)>240:raise GateError("wave lambda method exceeds budget")
         inventory=calls_in_method(body)
