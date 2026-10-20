@@ -124,6 +124,10 @@ def prove_wave_inflate_operands(body:list[str])->dict:
     return proof
 
 
+def wave_query_aabb_link(body:list[str])->dict:
+    """Bounded diagnostic; never infer AABB propagation from callsite co-occurrence."""
+    return {"status":"NOT_PROVED","reason":"query_aabb_stack_not_certified"}
+
 def wave_radius_aabb_shape(body:list[str])->dict:
     """Return bounded callsite topology only; never infer values by co-occurrence."""
     rows=opcode_rows(body)
@@ -259,6 +263,7 @@ def analyze_javap(text:str, label:str)->dict:
         if len(candidates)!=1:raise GateError("missing exact launchWave descriptor")
         report["wave_radius_aabb_shape"]=wave_radius_aabb_shape(candidates[0])
         report["wave_inflate_operand_proof"]=prove_wave_inflate_operands(candidates[0])
+        report["wave_query_aabb_link"]=wave_query_aabb_link(candidates[0])
     return report
 
 def certify_exact_consumer_surface(outcome:dict)->None:
@@ -324,6 +329,7 @@ def inspect(jar:Path)->dict:
     certify_exact_wave_aabb_109(outcome["controller"]["wave_inflate_operand_proof"])
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
+    print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
     return {"status":"PASS_SHA_EXACT_WAVE_XZ_RADIUS_Y_10_5_OPERANDS",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
