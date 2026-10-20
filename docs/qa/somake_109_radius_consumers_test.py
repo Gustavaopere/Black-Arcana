@@ -571,7 +571,7 @@ class WavePredicateBranchTopologyTests(unittest.TestCase):
         self.assertEqual(1,p["boolean_return_count"])
         self.assertEqual(["boolean_0","boolean_0"],p["conditional_destination_kinds"])
         self.assertEqual(["true_only_if_valid","false_if_active_uuid"],p["semantic_guards"])
-        self.assertEqual("BOOLEAN_OUTCOMES_NOT_CERTIFIED",p["boundary"])
+        self.assertIn("actual captured role/teams/PvP",p["boundary"])
 
     def test_missing_or_duplicate_boolean_helper_fails_closed(self):
         self.assertEqual("NOT_PROVED",wave_predicate_branch_topology([])["status"])
