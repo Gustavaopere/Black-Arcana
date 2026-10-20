@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -354,6 +354,36 @@ class WaveQueryAabbCausalityTests(unittest.TestCase):
         rows=self.direct_query()
         rows.append("25: invokevirtual #6 // Method net/minecraft/server/level/ServerLevel.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;")
         self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+
+class ExactWaveQueryPhysicalGateTests(unittest.TestCase):
+    @staticmethod
+    def expected():
+        return {
+            "status":"PROVED_WAVE_INFLATE_RESULT_CONSUMED_BY_ENTITY_QUERY",
+            "inflate_call_count":1,
+            "entity_query_call_count":1,
+            "aabb_transport":"via_local_3",
+            "between_instruction_count":9,
+            "query_descriptor":"(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+            "predicate_semantics":"unknown_predicate_body",
+            "instruction_count":196,
+        }
+
+    def test_exact_wave_slot3_query_proof_is_hard_gated(self):
+        original=self.expected()
+        certify_exact_wave_query_109(original)
+        for edits in (
+            {"aabb_transport":"via_local_2"},
+            {"between_instruction_count":8},
+            {"status":"NOT_PROVED"},
+            {"entity_query_call_count":2},
+            {"query_descriptor":"(Ljava/lang/Class;)Ljava/util/List;"},
+            {"predicate_semantics":"proved_filters"},
+            {"instruction_count":195},
+        ):
+            with self.subTest(edits=edits):
+                with self.assertRaises(GateError):
+                    certify_exact_wave_query_109(dict(original,**edits))
 
 if __name__=="__main__":
     unittest.main()
