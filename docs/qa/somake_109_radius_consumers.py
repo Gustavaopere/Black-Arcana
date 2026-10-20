@@ -423,7 +423,7 @@ def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory
         +re.escape(desc)+r"\s*$"
     )
     if len(re.findall(pattern,block))!=1:
-        handles=re.findall(r"(?m)^\\s*#\\d+ (REF_invoke[A-Za-z]+) ([^\\n]{1,350})",block)
+        handles=re.findall(r"(?m)^\s*#\d+ (REF_invoke[A-Za-z]+) ([^\n]{1,350})",block)
         diagnostic=[{"kind":kind,"member":member}
                     for kind,member in handles if "lambda$launchWave$" in member]
         return reject("missing_or_ambiguous_exact_boolean_wave_helper_handle",
