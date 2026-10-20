@@ -381,75 +381,83 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
     }
 
 def wave_predicate_branch_topology(declared:list[tuple[str,str,list[str]]])->dict:
-    """Bounded semantic metadata for native boolean helper, not its implementation."""
-    signature="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
-    samples=[body for name,desc,body in declared
-             if name=="lambda$launchWave$0" and desc==signature]
-    if len(samples)>1:raise GateError("ambiguous exact wave boolean helper")
-    if not samples:return {"status":"NOT_PROVED","reason":"exact_boolean_helper_missing"}
-    rows=opcode_rows(samples[0])
-    if len(rows)>32:raise GateError("unbounded native wave boolean helper")
-    offsets={pc:i for i,(pc,_,_,_) in enumerate(rows)}
-    checks=[];branches=[]
-    for i,(pc,op,arg,symbol) in enumerate(rows):
-        if op.startswith("invoke"):
-            for marker,label in (("isValidTarget:","isValidTarget"),
-                                 ("LivingEntity.getUUID:","getUUID"),
-                                 ("Set.contains:","Set.contains")):
-                if marker in symbol:
-                    checks.append((i,label))
-                    break
-        if op.startswith("if"):
-            target=arg.split()[0] if arg else ""
-            if not re.fullmatch(r"\d+",target) or int(target) not in offsets:
-                return {"status":"NOT_PROVED","reason":"boolean_branch_target_unverified"}
-            branches.append((i,op,int(target)))
-    ordered=[label for _,label in checks]
-    if ordered!=["isValidTarget","getUUID","Set.contains"]:
-        return {"status":"NOT_PROVED","reason":"ordered_target_and_membership_checks_not_verified"}
-    if len(branches)!=2:return {"status":"NOT_PROVED","reason":"not_exactly_two_boolean_branches"}
-    returns=[i for i,(_,op,_,_) in enumerate(rows) if op=="ireturn"]
-    if len(returns)!=2:
-        from collections import Counter
-        literals=Counter(op for _,op,_,_ in rows if op.startswith("iconst_"))
-        terminals=Counter(op for _,op,_,_ in rows if op.endswith("return"))
-        return {"status":"NOT_PROVED","reason":"boolean_return_count_drift",
-                "instruction_count":len(rows),"ordered_checks":ordered,
-                "conditional_opcodes":[op for _,op,_ in branches],
-                "boolean_return_count":len(returns),
-                "literal_opcode_histogram":dict(sorted(literals.items())),
-                "terminal_opcode_histogram":dict(sorted(terminals.items())),
-                "boolean_call_adjacent_to_branch":[
-                    checks[0][0]+1==branches[0][0],
-                    checks[2][0]+1==branches[1][0]],
-                "branch_targets_are_return_opcodes":[rows[offsets[pc]][1]=="ireturn"
-                                                     for _,_,pc in branches]}
-    values=[]
-    for i in returns:
-        if i==0 or rows[i-1][1] not in ("iconst_0","iconst_1"):
-            values.append("unknown")
-        else:
-            values.append(rows[i-1][1][-1])
-    def branch_target_kind(target:int)->str:
-        index=offsets[target]
-        if index+1<len(rows) and rows[index][1] in ("iconst_0","iconst_1") and rows[index+1][1]=="ireturn":
-            return "boolean_"+rows[index][1][-1]
-        return "nonterminal_or_unknown"
+    """Certify exact 1.0.9 Lambda0 boolean paths from typed JVM shape.
+
+    Returns *derived* branch truth table, not native code, executable method
+    bodies or the identities of the captured LivingEntity arguments.
+    """
+    desc="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
+    bodies=[body for name,d,body in declared if name=="lambda$launchWave$0" and d==desc]
+    if len(bodies)>1:raise GateError("ambiguous exact boolean Predicate helper")
+    def fail(reason,**meta):return {"status":"NOT_PROVED","reason":reason,**meta}
+    if not bodies:return fail("exact_boolean_helper_missing")
+    rows=opcode_rows(bodies[0])
+    if len(rows)>32:raise GateError("oversized boolean Predicate body")
+    labels=[]
+    for _,op,_,symbol in rows:
+        if "isValidTarget:" in symbol:labels.append("isValidTarget")
+        elif "LivingEntity.getUUID:" in symbol:labels.append("getUUID")
+        elif "Set.contains:" in symbol:labels.append("Set.contains")
+    branches=[op for _,op,_,_ in rows if op.startswith("if")]
+    if labels!=["isValidTarget","getUUID","Set.contains"]:
+        return fail("predicate_callsite_order_or_ownership_not_proved")
+    if len(rows)!=15 or branches!=["ifeq","ifne"]:
+        return fail("exact_wave_boolean_branch_shape_not_proved",
+                    instruction_count=len(rows),conditional_opcodes=branches)
+    exact_ops=["aload_0","aload_1","aload_2","invokevirtual","ifeq",
+               "aload_0","getfield","aload_2","invokevirtual",
+               "invokeinterface","ifne","iconst_1","goto","iconst_0","ireturn"]
+    if [op for _,op,_,_ in rows]!=exact_ops:
+        return fail("wave_boolean_stack_opcode_shape_not_proved",
+                    instruction_count=len(rows),ordered_checks=labels,
+                    conditional_opcodes=branches,
+                    opcode_histogram={op:sum(r[1]==op for r in rows)
+                                      for op in sorted(set(r[1] for r in rows))})
+    sym=[r[3] for r in rows]
+    if sym[3] not in (
+        "Method isValidTarget:(Lnet/minecraft/world/entity/LivingEntity;"
+        "Lnet/minecraft/world/entity/LivingEntity;)Z",
+        "Method com/somake/somakespells/entity/FuneralBloomControllerEntity."
+        "isValidTarget:(Lnet/minecraft/world/entity/LivingEntity;"
+        "Lnet/minecraft/world/entity/LivingEntity;)Z",
+    ):
+        return fail("isValidTarget_owner_or_descriptor_unproved")
+    if sym[6] not in (
+        "Field activeTargetIds:Ljava/util/Set;",
+        "Field com/somake/somakespells/entity/FuneralBloomControllerEntity."
+        "activeTargetIds:Ljava/util/Set;",
+    ):
+        return fail("activeTargetIds_field_owner_or_descriptor_unproved")
+    if sym[8] not in (
+        "Method net/minecraft/world/entity/LivingEntity.getUUID:()Ljava/util/UUID;",
+        "Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;",
+    ):
+        return fail("target_uuid_call_owner_or_descriptor_unproved")
+    if sym[9] not in (
+        "InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z",
+        "Method java/util/Set.contains:(Ljava/lang/Object;)Z",
+    ):
+        return fail("set_contains_owner_or_descriptor_unproved")
+    for i,targetindex in ((4,13),(10,13),(12,14)):
+        word=rows[i][2].split(" ",1)[0]
+        if not re.fullmatch(r"\d+",word) or int(word)!=rows[targetindex][0]:
+            return fail("unexpected_predicate_branch_or_join_destination",
+                        branch_ordinal={4:1,10:2,12:3}[i])
     return {
-        "status":"PROVED_PREDICATE_BRANCH_TOPOLOGY_ONLY",
+        "status":"PROVED_WAVE_PREDICATE_VALID_AND_NOT_ACTIVE",
         "method":"lambda$launchWave$0",
-        "instruction_count":len(rows),
-        "ordered_checks":ordered,
-        "conditional_opcodes":[op for _,op,_ in branches],
-        "conditional_destination_kinds":[branch_target_kind(pc) for _,_,pc in branches],
-        "boolean_return_count":len(returns),
-        "return_constant_categories":values,
-        "boolean_call_adjacent_to_branch":[
-             checks[0][0]+1==branches[0][0],
-             checks[2][0]+1==branches[1][0],
-        ],
-        "boundary":"BOOLEAN_OUTCOMES_NOT_CERTIFIED"
+        "instruction_count":15,
+        "ordered_checks":labels,
+        "conditional_opcodes":branches,
+        "conditional_destination_kinds":["boolean_0","boolean_0"],
+        "boolean_return_count":1,
+        "semantic_guards":["true_only_if_valid","false_if_active_uuid"],
+        "return_constant_categories":["1","0"],
+        "boolean_call_adjacent_to_branch":[True,True],
+        "inferred_boolean_rule":"isValidTarget(capturedLivingEntityA,capturedLivingEntityB) && !activeTargetIds.contains(capturedLivingEntityB.getUUID())",
+        "boundary":"Pure JVM boolean helper logic; actual captured role/teams/PvP and query target outcomes NOT proved.",
     }
+
 
 def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory:dict)->dict:
     """Prove invokedynamic #0's LambdaMetafactory *symbolic* implementation target.
