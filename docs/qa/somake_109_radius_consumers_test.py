@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -384,6 +384,158 @@ class ExactWaveQueryPhysicalGateTests(unittest.TestCase):
             with self.subTest(edits=edits):
                 with self.assertRaises(GateError):
                     certify_exact_wave_query_109(dict(original,**edits))
+
+
+class WavePredicateHelperInventoryTests(unittest.TestCase):
+    @staticmethod
+    def candidate():
+        return [(
+            "lambda$launchWave$0",
+            "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+            ["0: aload_0",
+             "1: aload_1",
+             "2: invokevirtual #1 // Method isValidTarget:(Lnet/minecraft/world/entity/LivingEntity;)Z",
+             "5: ifeq 11",
+             "8: iconst_1",
+             "9: ireturn",
+             "11: iconst_0",
+             "12: ireturn"]
+        )]
+
+    def test_observe_predicate_candidate_without_proving_bootstrap_binding(self):
+        p=lambda_selection_candidate_inventory(self.candidate())
+        self.assertEqual("PREDICATE_HELPER_CANDIDATES_ONLY",p["status"],p)
+        self.assertEqual(1,p["candidate_count"])
+        one=p["candidates"][0]
+        self.assertEqual("lambda$launchWave$0",one["method"])
+        self.assertEqual(8,one["instruction_count"])
+        self.assertTrue(one["mentions_isValidTarget"])
+        self.assertEqual(1,one["conditional_branch_count"])
+        self.assertEqual("BOOTSTRAP_BINDING_NOT_PROVED",p["boundary"])
+
+    def test_non_wave_lambda_and_missing_candidate_fail_closed(self):
+        p=lambda_selection_candidate_inventory([(
+            "lambda$impact$0","()Z",["0: iconst_1","1: ireturn"])])
+        self.assertEqual("NOT_PROVED",p["status"])
+
+    def test_ambiguous_duplicate_candidate_is_rejected(self):
+        with self.assertRaises(GateError):
+            lambda_selection_candidate_inventory(self.candidate()+self.candidate())
+
+    def test_unbounded_candidate_method_is_rejected(self):
+        oversized=[("lambda$launchWave$0","()Z",
+                   [f"{i}: nop" for i in range(251)])]
+        with self.assertRaises(GateError):
+            lambda_selection_candidate_inventory(oversized)
+
+
+class WavePredicateBootstrapBindingTests(unittest.TestCase):
+    @staticmethod
+    def inventory():
+        return lambda_selection_candidate_inventory(WavePredicateHelperInventoryTests.candidate())
+
+    @staticmethod
+    def caller():
+        return [
+            "0: aload_0",
+            "1: aload_2",
+            "2: invokedynamic #6, 0 // InvokeDynamic #0:test:(Lcom/somake/somakespells/entity/FuneralBloomControllerEntity;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/function/Predicate;",
+            "7: pop",
+            "8: return",
+        ]
+
+    @staticmethod
+    def bootstrap():
+        return (
+            "BootstrapMethods:\n"
+            "  0: #314 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(...)\n"
+            "    Method arguments:\n"
+            "      #1 (Ljava/lang/Object;)Z\n"
+            "      #2 REF_invokeVirtual com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$0:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z\n"
+            "      #3 (Ljava/lang/Object;)Z\n"
+            "  1: #315 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(...)\n"
+            "    Method arguments:\n"
+            "      #8 REF_invokeStatic com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$1:(Lnet/minecraft/world/entity/LivingEntity;)D\n"
+            "InnerClasses:\n"
+        )
+
+    def test_exact_bootstrap_zero_links_predicate_to_boolean_wave_helper(self):
+        p=wave_predicate_bootstrap_binding(self.bootstrap(),self.caller(),self.inventory())
+        self.assertEqual("PROVED_QUERY_PREDICATE_BOOTSTRAP_TO_LAUNCHWAVE_LAMBDA0",p["status"],p)
+        self.assertEqual("lambda$launchWave$0",p["implementation_method"])
+        self.assertEqual(0,p["bootstrap_index"])
+        self.assertEqual("BODY_BRANCH_OUTCOMES_NOT_PROVED",p["boundary"])
+
+    def test_static_method_handle_is_not_the_physical_predicate_binding(self):
+        self.assertEqual("NOT_PROVED",wave_predicate_bootstrap_binding(
+            self.bootstrap().replace("REF_invokeVirtual com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$0",
+                                     "REF_invokeStatic com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$0"),
+            self.caller(),self.inventory())["status"])
+
+    def test_wrong_bootstrap_or_nonpredicate_caller_fails_closed(self):
+        self.assertEqual("NOT_PROVED",wave_predicate_bootstrap_binding(
+            self.bootstrap().replace("lambda$launchWave$0","lambda$launchWave$9"),
+            self.caller(),self.inventory())["status"])
+        self.assertEqual("NOT_PROVED",wave_predicate_bootstrap_binding(
+            self.bootstrap(),[x.replace("#0:test:","#1:test:") for x in self.caller()],
+            self.inventory())["status"])
+
+    def test_malformed_and_duplicate_bootstrap_implementation_fails_closed(self):
+        self.assertEqual("NOT_PROVED",wave_predicate_bootstrap_binding(
+            "no bootstrap",self.caller(),self.inventory())["status"])
+        extra="      #4 REF_invokeStatic com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$0:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z\n"
+        self.assertEqual("NOT_PROVED",wave_predicate_bootstrap_binding(
+            self.bootstrap().replace("  1: #315",extra+"  1: #315"),self.caller(),self.inventory())["status"])
+
+class ExactWavePredicate109GateTests(unittest.TestCase):
+    @staticmethod
+    def exact_inventory():
+        return {
+            "status":"PREDICATE_HELPER_CANDIDATES_ONLY",
+            "candidate_count":2,
+            "candidates":[
+                {"method":"lambda$launchWave$0",
+                 "descriptor":"(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+                 "instruction_count":15,"conditional_branch_count":2,
+                 "mentions_isValidTarget":True,"mentions_activeTargetIds":True},
+                {"method":"lambda$launchWave$1",
+                 "descriptor":"(Lnet/minecraft/world/entity/LivingEntity;)D",
+                 "instruction_count":4,"conditional_branch_count":0,
+                 "mentions_isValidTarget":False,"mentions_activeTargetIds":False},
+            ],
+        }
+
+    @staticmethod
+    def exact_link():
+        return {
+            "status":"PROVED_QUERY_PREDICATE_BOOTSTRAP_TO_LAUNCHWAVE_LAMBDA0",
+            "bootstrap_index":0,
+            "implementation_method":"lambda$launchWave$0",
+            "implementation_descriptor":"(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+            "helper_instruction_count":15,
+            "helper_conditional_branch_count":2,
+            "references_isValidTarget":True,
+            "references_activeTargetIds":True,
+            "boundary":"BODY_BRANCH_OUTCOMES_NOT_PROVED",
+        }
+
+    def test_physical_gate_rejects_link_or_helper_drift(self):
+        link=self.exact_link()
+        inventory=self.exact_inventory()
+        certify_exact_wave_predicate_109(link,inventory)
+        for k,v in (("bootstrap_index",1),("implementation_method","lambda$launchWave$1"),
+                    ("references_isValidTarget",False),("references_activeTargetIds",False),
+                    ("helper_instruction_count",14),("boundary","FILTER_OUTCOMES_PROVED"),
+                    ("status","NOT_PROVED")):
+            with self.subTest(k=k):
+                with self.assertRaises(GateError):
+                    certify_exact_wave_predicate_109(dict(link,**{k:v}),inventory)
+        with self.assertRaises(GateError):
+            certify_exact_wave_predicate_109(link,dict(inventory,candidate_count=1))
+        bad=self.exact_inventory()
+        bad["candidates"][1]["instruction_count"]=5
+        with self.assertRaises(GateError):
+            certify_exact_wave_predicate_109(link,bad)
 
 if __name__=="__main__":
     unittest.main()

@@ -1,6 +1,6 @@
 # Somake 1.0.9 — Funeral Bloom: consumidores estruturais de raio e seleção de alvos
 
-**Estado vigente (PR #841; 20/10/2026):** ✅ SHA-exata a cadeia de raio até os argumentos X/Z de `AABB.inflate(R,10.5d,R)` e **o resultado dessa expansão entregue ao argumento AABB de `ServerLevel.getEntitiesOfClass(Class,AABB,Predicate)` pelo slot JVM 3** · ⚠️ caixa receptora, comportamento do predicado, alvos aceitos, buds/impacto real e QA físico não demonstrados · ⛔ perk mutadora `FAIL_CLOSED`. Resultados históricos abaixo conservam o escopo de cada prova.
+**Estado vigente após PR #842 (20/10/2026):** ✅ raio sincronizado → AABB expandida → consulta de candidatos e **bootstrap #0 do `Predicate` vinculado a `lambda$launchWave$0` por `REF_invokeVirtual`** · ⚠️ resultados dos branches, elegibilidade, alvo final, `maxTargets`, buds/impacto e QA físico não demonstrados · ⛔ perks mutadoras `FAIL_CLOSED`. As seções históricas mantêm seu escopo temporal.
 
 ## Proveniência física
 
@@ -67,3 +67,18 @@ O [workflow #39465768438](https://github.com/Gustavaopere/Black-Arcana/actions/r
 **RED → GREEN:** a fixture de passagem direta falhou corretamente no [RED #39465037334](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39465037334), pois o JAR real possui armazenamento intermediário; o [GREEN #39465768438](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39465768438) certificou o novo padrão. O gate de regressão físico falhou de propósito em sete desvios no [RED #39465962139](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39465962139) e passou no [GREEN #39466062186](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39466062186), que exige slot local 3, nove instruções, descriptor exato e fingerprint de 196 instruções.
 
 **Limites:** a relação **expansão → consulta de candidatos** está comprovada, mas não a geometria inicial da caixa receptora, nem o resultado efetivo do `Predicate`, elegibilidade PvP/aliados, distância extra, cardinalidade, escolha final, formação de buds ou AABB independente em `FuneralBloomBudEntity.impact`. Não há API/hook homologado de mutação per-player; **⛔ FAIL_CLOSED**. Esta auditoria acrescenta profundidade a uma magia preexistente, não IDs ou adapters. Não redistribui JAR, bytecode, implementação ou assets do provider.
+
+## Prova de vínculo `Predicate → lambda$launchWave$0` (20/10/2026, PR #842)
+
+A [auditoria Java 21 SHA-exata #39471626461](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39471626461), **SUCCESS / 38 testes**, validou o publisher Somake 1.0.9 File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` e elevou o vínculo entre a consulta de entidades e sua implementação de `Predicate` de mera coocorrência para **`PROVED_QUERY_PREDICATE_BOOTSTRAP_TO_LAUNCHWAVE_LAMBDA0`**. O gate físico `PASS_SHA_EXACT_WAVE_QUERY_PREDICATE_BOOTSTRAP_BOUND` exige `InvokeDynamic #0:test`, `BootstrapMethods[0]` com `LambdaMetafactory.metafactory`, **`REF_invokeVirtual`** da própria `FuneralBloomControllerEntity`, helper booleano e fingerprints locais.
+
+| Método do provider (JAR físico) | Evidência técnica certificada | Restrição |
+|---|---|---|
+| `lambda$launchWave$0(LivingEntity,LivingEntity):boolean` | **15 instruções, 2 branches condicionais**, chama `isValidTarget:(LivingEntity,LivingEntity)Z`, `LivingEntity.getUUID()`, `Set.contains(Object)` e lê `activeTargetIds:Ljava/util/Set;`. O bootstrap **#0**, consumido como `Predicate` por `getEntitiesOfClass(Class,AABB,Predicate)`, aponta para este helper por `REF_invokeVirtual`. | **Não** se certificou o valor booleano de cada ramo, o tratamento de owner/caster, a expressão lógica composta ou quais alvos passam |
+| `lambda$launchWave$1(LivingEntity):double` | **4 instruções, zero branches**, chama `LivingEntity.distanceToSqr(Entity):double`. | A existência do helper **não prova** ainda o uso como comparador/ordenador, seu binding de bootstrap ou distância máxima |
+
+**Cadeia de aquisição até o filtro:** `FuneralBloomSpell.getRadius → first constructor float → setRadius(clamp 6–18) → DATA_RADIUS → controller.getRadius() → AABB.inflate(R,10.5d,R) → local 3 → getEntitiesOfClass(LivingEntity.class,AABB,Predicate)` com `Predicate` vinculado fisicamente ao helper `lambda$launchWave$0`. A AABB base, os resultados booleanos dos dois branches, exclusão por equipe/PvP/claim, iteração da lista, `maxTargets`, criação das buds e a AABB independente de `FuneralBloomBudEntity.impact` **seguem não comprovados**.
+
+**RED–GREEN:** a hipótese de method handle estático foi rejeitada em [RED #39471158372](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39471158372); o [GREEN #39471258573](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39471258573) demonstrou `REF_invokeVirtual`; oito casos negativos do gate físico de impressão digital falharam deliberadamente em [RED #39471476260](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39471476260) e passaram em [GREEN #39471626461](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39471626461). A auditoria limita sua exportação a assinaturas, contagens e símbolos relevantes, sem JAR/bytecode/implementação/asset de terceiro.
+
+**Perks:** nenhum hook de mutação de `Predicate`, `activeTargetIds` ou `maxTargets` é autorizado; **⛔ FAIL_CLOSED**. Nenhuma alteração de runtime/casting/dano ou Stage.
