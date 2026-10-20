@@ -444,6 +444,123 @@ def wave_max_targets_surface(body:list[str])->dict:
     }
 
 
+def certify_exact_native_target_cfg_109(edges:dict, early:dict)->None:
+    """Fail exact 1.0.9 if native target branch or early predicate contract drifts."""
+    edge_expected={
+        "status":"ISVALIDTARGET_BRANCH_EDGES_ONLY",
+        "instruction_count":41,"branch_count":6,"return_count":3,
+        "branch_edges":[
+            {"index":2,"opcode":"ifeq","target_index":9,"destination_kind":"constant_zero"},
+            {"index":5,"opcode":"ifne","target_index":9,"destination_kind":"constant_zero"},
+            {"index":8,"opcode":"if_acmpne","target_index":11,"destination_kind":"other"},
+            {"index":12,"opcode":"ifnull","target_index":19,"destination_kind":"other"},
+            {"index":16,"opcode":"ifeq","target_index":19,"destination_kind":"other"},
+            {"index":36,"opcode":"ifgt","target_index":39,"destination_kind":"constant_zero"},
+        ],
+        "boundary":"PATH_PREDICATES_AND_ENTITY_ROLES_NOT_PROVED",
+    }
+    early_expected={
+        "status":"PROVED_NATIVE_EARLY_ALIVE_NOT_SPECTATOR_NOT_IDENTICAL",
+        "examined_jvm_local":2,"compared_jvm_local":1,
+        "branch_ops":["ifeq","ifne","if_acmpne"],
+        "rejection_mode":"DIRECT_ZERO_RETURN_ON_THREE_REJECTIONS",
+        "boundary":"Semantics of later branches and actor roles remain unproved",
+    }
+    if not isinstance(edges,dict) or any(edges.get(k)!=v for k,v in edge_expected.items()):
+        raise GateError("Somake 1.0.9 native target conditional edges drift")
+    if not isinstance(early,dict) or any(early.get(k)!=v for k,v in early_expected.items()):
+        raise GateError("Somake 1.0.9 native target early-guard operands drift")
+
+
+def native_isvalidtarget_early_guards(declared:list[tuple[str,str,list[str]]])->dict:
+    """Certify only the first three JVM guards of the native target helper."""
+    desc="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
+    if len(declared)>MAX_METHODS:raise GateError("unbounded boolean helper declaration set")
+    methods=[body for name,d,body in declared if name=="isValidTarget" and d==desc]
+    if len(methods)>1:raise GateError("ambiguous native isValidTarget")
+    def fail(reason):return {"status":"NOT_PROVED","reason":reason}
+    if not methods:return fail("exact_native_isValidTarget_not_found")
+    rows=opcode_rows(methods[0])
+    if len(rows)>72:raise GateError("native isValidTarget oversized")
+    if len(rows)<12:return fail("native_precondition_window_missing")
+    ops=[r[1] for r in rows[:11]]
+    expected=["aload_2","invokevirtual","ifeq","aload_2","invokevirtual",
+              "ifne","aload_2","aload_1","if_acmpne","iconst_0","ireturn"]
+    if ops!=expected:
+        mismatches=[{"position":i,"expected":want,"observed":have}
+                    for i,(want,have) in enumerate(zip(expected,ops)) if want!=have]
+        return {"status":"NOT_PROVED","reason":"early_jvm_operands_not_exact",
+                "mismatch_count":len(mismatches),"mismatch_positions":mismatches[:8]}
+    permitted_alive={
+        "Method net/minecraft/world/entity/LivingEntity.isAlive:()Z",
+        "Method net/minecraft/world/entity/Entity.isAlive:()Z",
+    }
+    permitted_spectator={
+        "Method net/minecraft/world/entity/LivingEntity.isSpectator:()Z",
+        "Method net/minecraft/world/entity/Entity.isSpectator:()Z",
+    }
+    if rows[1][3] not in permitted_alive or rows[4][3] not in permitted_spectator:
+        return fail("guard_method_owners_or_descriptors_not_proved")
+    for idx,target in ((2,9),(5,9),(8,11)):
+        word=rows[idx][2].split(" ",1)[0]
+        if not re.fullmatch(r"\d+",word) or int(word)!=rows[target][0]:
+            return fail("early_guard_target_mismatch")
+    return {
+        "status":"PROVED_NATIVE_EARLY_ALIVE_NOT_SPECTATOR_NOT_IDENTICAL",
+        "examined_jvm_local":2,
+        "compared_jvm_local":1,
+        "branch_ops":["ifeq","ifne","if_acmpne"],
+        "rejection_mode":"DIRECT_ZERO_RETURN_ON_THREE_REJECTIONS",
+        "boundary":"Semantics of later branches and actor roles remain unproved",
+    }
+
+
+def native_isvalidtarget_branch_edges(declared:list[tuple[str,str,list[str]]])->dict:
+    """Bounded JVM branch destinations. Does not publish provider instructions."""
+    descriptor="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
+    if not isinstance(declared,list) or len(declared)>MAX_METHODS:
+        raise GateError("unbounded isValidTarget declarations")
+    bodies=[body for name,desc,body in declared if name=="isValidTarget" and desc==descriptor]
+    if len(bodies)>1:raise GateError("ambiguous isValidTarget method")
+    if not bodies:return {"status":"NOT_PROVED","reason":"exact_boolean_member_missing"}
+    rows=opcode_rows(bodies[0])
+    if len(rows)>72:raise GateError("native isValidTarget CFG exceeds budget")
+    offset_lookup={pc:i for i,(pc,_,_,_) in enumerate(rows)}
+    if len(offset_lookup)!=len(rows):
+        raise GateError("duplicate JVM offset in boolean member")
+    branches=[]
+    for ordinal,(offset,op,operand,_) in enumerate(rows):
+        if not op.startswith("if"):continue
+        target=(operand or "").split(" ",1)[0]
+        if not re.fullmatch(r"\d+",target):
+            return {"status":"NOT_PROVED","reason":"non_numeric_branch_target"}
+        target_idx=offset_lookup.get(int(target))
+        if target_idx is None:
+            return {"status":"NOT_PROVED","reason":"branch_target_not_an_instruction"}
+        dest="other"
+        if (target_idx+1<len(rows) and rows[target_idx][1]=="iconst_0"
+             and rows[target_idx+1][1]=="ireturn"):
+            dest="constant_zero"
+        elif (target_idx+1<len(rows) and rows[target_idx][1]=="iconst_1"
+              and rows[target_idx+1][1]=="ireturn"):
+            dest="constant_one"
+        elif rows[target_idx][1]=="ireturn":
+            dest="shared_boolean_return"
+        branches.append({"index":ordinal,"opcode":op,"target_index":target_idx,
+                         "destination_kind":dest})
+    if len(branches)>12:
+        raise GateError("native isValidTarget too many conditional branches")
+    if not branches:return {"status":"NOT_PROVED","reason":"no_boolean_control_edges"}
+    return {
+        "status":"ISVALIDTARGET_BRANCH_EDGES_ONLY",
+        "instruction_count":len(rows),
+        "branch_count":len(branches),
+        "branch_edges":branches,
+        "return_count":sum(op=="ireturn" for _,op,_,_ in rows),
+        "boundary":"PATH_PREDICATES_AND_ENTITY_ROLES_NOT_PROVED",
+    }
+
+
 def native_isvalidtarget_surface(declared:list[tuple[str,str,list[str]]])->dict:
     """Report only bounded symbols/branch topology of the native helper."""
     desc="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
@@ -705,6 +822,8 @@ def analyze_javap(text:str, label:str)->dict:
         report["wave_lambda_candidates"]=lambda_selection_candidate_inventory(declared)
         report["wave_predicate_branch_topology"]=wave_predicate_branch_topology(declared)
         report["native_isvalidtarget_surface"]=native_isvalidtarget_surface(declared)
+        report["native_isvalidtarget_branch_edges"]=native_isvalidtarget_branch_edges(declared)
+        report["native_isvalidtarget_early_guards"]=native_isvalidtarget_early_guards(declared)
         report["wave_max_targets_surface"]=wave_max_targets_surface(candidates[0])
     return report
 
@@ -785,6 +904,8 @@ def inspect(jar:Path)->dict:
     certify_exact_wave_boolean_109(outcome["controller"]["wave_predicate_branch_topology"])
     certify_exact_native_selection_109(outcome["controller"]["native_isvalidtarget_surface"],
                                        outcome["controller"]["wave_max_targets_surface"])
+    certify_exact_native_target_cfg_109(outcome["controller"]["native_isvalidtarget_branch_edges"],
+                                        outcome["controller"]["native_isvalidtarget_early_guards"])
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
@@ -793,11 +914,14 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_WAVE_PREDICATE_EXACT_GATE", "PASS_EXACT_LAMBDA0_REF_INVOKEVIRTUAL_AND_HELPERS")
     print("SOMAKE_WAVE_PREDICATE_BRANCH_TOPOLOGY",json.dumps(outcome["controller"]["wave_predicate_branch_topology"],sort_keys=True))
     print("SOMAKE_NATIVE_ISVALIDTARGET_SURFACE",json.dumps(outcome["controller"]["native_isvalidtarget_surface"],sort_keys=True))
+    print("SOMAKE_ISVALIDTARGET_BRANCH_EDGES",json.dumps(outcome["controller"]["native_isvalidtarget_branch_edges"],sort_keys=True))
+    print("SOMAKE_ISVALIDTARGET_EARLY_GUARDS",json.dumps(outcome["controller"]["native_isvalidtarget_early_guards"],sort_keys=True))
+    print("SOMAKE_NATIVE_ISVALIDTARGET_CFG_EXACT_GATE","PASS_3_EARLY_REJECTION_GUARDS_6_RESOLVED_BRANCHES")
     print("SOMAKE_WAVE_MAXTARGETS_SURFACE",json.dumps(outcome["controller"]["wave_max_targets_surface"],sort_keys=True))
     print("SOMAKE_NATIVE_SELECTION_EXACT_GATE","PASS_SHAPE_ONLY_TARGET_FILTER_AND_CAP_COSITES")
     print("SOMAKE_WAVE_PREDICATE_BOOLEAN_EXACT_GATE","PASS_EXACT_VALID_TARGET_AND_UNSEEN_UUID")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
-    return {"status":"PASS_SHA_EXACT_NATIVE_SELECTION_SHAPE_AND_MAXTARGETS_COSITES",
+    return {"status":"PASS_SHA_EXACT_NATIVE_ISVALIDTARGET_EARLY_GUARDS_AND_CFG",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
             "scope":outcome,
             "limits":[
