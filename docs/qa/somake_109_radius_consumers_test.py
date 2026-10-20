@@ -825,14 +825,14 @@ class NativeIsValidTargetEarlyGuardsTests(unittest.TestCase):
             "isValidTarget",
             "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
             [
-                "0: aload_1",
+                "0: aload_2",
                 "1: invokevirtual #1 // Method net/minecraft/world/entity/LivingEntity.isAlive:()Z",
                 "4: ifeq 17",
-                "7: aload_1",
+                "7: aload_2",
                 "8: invokevirtual #2 // Method net/minecraft/world/entity/LivingEntity.isSpectator:()Z",
                 "11: ifne 17",
-                "14: aload_1",
-                "15: aload_2",
+                "14: aload_2",
+                "15: aload_1",
                 "16: if_acmpne 19",
                 "17: iconst_0",
                 "18: ireturn",
@@ -845,8 +845,8 @@ class NativeIsValidTargetEarlyGuardsTests(unittest.TestCase):
     def test_first_arg_must_be_alive_not_spectator_and_different_from_second(self):
         p=native_isvalidtarget_early_guards(self.body())
         self.assertEqual("PROVED_NATIVE_EARLY_ALIVE_NOT_SPECTATOR_NOT_IDENTICAL",p["status"],p)
-        self.assertEqual(1,p["examined_jvm_local"])
-        self.assertEqual(2,p["compared_jvm_local"])
+        self.assertEqual(2,p["examined_jvm_local"])
+        self.assertEqual(1,p["compared_jvm_local"])
         self.assertEqual(["ifeq","ifne","if_acmpne"],p["branch_ops"])
         self.assertEqual("DIRECT_ZERO_RETURN_ON_THREE_REJECTIONS",p["rejection_mode"])
         self.assertNotIn("owner_is_caster",p)
@@ -860,7 +860,7 @@ class NativeIsValidTargetEarlyGuardsTests(unittest.TestCase):
     def test_self_comparison_and_false_return_must_remain_exact(self):
         n,d,body=self.body()[0]
         rows=body.copy()
-        rows[7]=rows[7].replace("aload_2","aload_1")
+        rows[7]=rows[7].replace("aload_1","aload_2")
         self.assertEqual("NOT_PROVED",native_isvalidtarget_early_guards([(n,d,rows)])["status"])
         rows=body.copy()
         rows[9]=rows[9].replace("iconst_0","iconst_1")
