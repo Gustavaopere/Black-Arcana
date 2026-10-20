@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -427,6 +427,59 @@ class WavePredicateHelperInventoryTests(unittest.TestCase):
                    [f"{i}: nop" for i in range(251)])]
         with self.assertRaises(GateError):
             lambda_selection_candidate_inventory(oversized)
+
+
+class WavePredicateBootstrapBindingTests(unittest.TestCase):
+    @staticmethod
+    def inventory():
+        return lambda_selection_candidate_inventory(WavePredicateHelperInventoryTests.candidate())
+
+    @staticmethod
+    def caller():
+        return [
+            "0: aload_0",
+            "1: aload_2",
+            "2: invokedynamic #6, 0 // InvokeDynamic #0:test:(Lcom/somake/somakespells/entity/FuneralBloomControllerEntity;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/function/Predicate;",
+            "7: pop",
+            "8: return",
+        ]
+
+    @staticmethod
+    def bootstrap():
+        return (
+            "BootstrapMethods:\n"
+            "  0: #314 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(...)\n"
+            "    Method arguments:\n"
+            "      #1 (Ljava/lang/Object;)Z\n"
+            "      #2 REF_invokeStatic com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$0:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z\n"
+            "      #3 (Ljava/lang/Object;)Z\n"
+            "  1: #315 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(...)\n"
+            "    Method arguments:\n"
+            "      #8 REF_invokeStatic com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$1:(Lnet/minecraft/world/entity/LivingEntity;)D\n"
+            "InnerClasses:\n"
+        )
+
+    def test_exact_bootstrap_zero_links_predicate_to_boolean_wave_helper(self):
+        p=wave_predicate_bootstrap_binding(self.bootstrap(),self.caller(),self.inventory())
+        self.assertEqual("PROVED_QUERY_PREDICATE_BOOTSTRAP_TO_LAUNCHWAVE_LAMBDA0",p["status"],p)
+        self.assertEqual("lambda$launchWave$0",p["implementation_method"])
+        self.assertEqual(0,p["bootstrap_index"])
+        self.assertEqual("BODY_BRANCH_OUTCOMES_NOT_PROVED",p["boundary"])
+
+    def test_wrong_bootstrap_or_nonpredicate_caller_fails_closed(self):
+        self.assertEqual("NOT_PROVED",wave_predicate_bootstrap_binding(
+            self.bootstrap().replace("lambda$launchWave$0","lambda$launchWave$9"),
+            self.caller(),self.inventory())["status"])
+        self.assertEqual("NOT_PROVED",wave_predicate_bootstrap_binding(
+            self.bootstrap(),[x.replace("#0:test:","#1:test:") for x in self.caller()],
+            self.inventory())["status"])
+
+    def test_malformed_and_duplicate_bootstrap_implementation_fails_closed(self):
+        self.assertEqual("NOT_PROVED",wave_predicate_bootstrap_binding(
+            "no bootstrap",self.caller(),self.inventory())["status"])
+        extra="      #4 REF_invokeStatic com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$0:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z\n"
+        self.assertEqual("NOT_PROVED",wave_predicate_bootstrap_binding(
+            self.bootstrap().replace("  1: #315",extra+"  1: #315"),self.caller(),self.inventory())["status"])
 
 if __name__=="__main__":
     unittest.main()
