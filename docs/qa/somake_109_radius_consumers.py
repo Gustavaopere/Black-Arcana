@@ -380,6 +380,10 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
         "boundary":"BOOTSTRAP_BINDING_NOT_PROVED"
     }
 
+def wave_predicate_branch_topology(declared:list[tuple[str,str,list[str]]])->dict:
+    """Fail closed: branch and return topology is not yet audited."""
+    return {"status":"NOT_PROVED","reason":"predicate_boolean_cfg_unimplemented"}
+
 def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory:dict)->dict:
     """Prove invokedynamic #0's LambdaMetafactory *symbolic* implementation target.
 
@@ -502,6 +506,7 @@ def analyze_javap(text:str, label:str)->dict:
         report["wave_inflate_operand_proof"]=prove_wave_inflate_operands(candidates[0])
         report["wave_query_aabb_link"]=wave_query_aabb_link(candidates[0])
         report["wave_lambda_candidates"]=lambda_selection_candidate_inventory(declared)
+        report["wave_predicate_branch_topology"]=wave_predicate_branch_topology(declared)
     return report
 
 def certify_exact_consumer_surface(outcome:dict)->None:
@@ -584,6 +589,7 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_WAVE_LAMBDA_CANDIDATES",json.dumps(outcome["controller"]["wave_lambda_candidates"],sort_keys=True))
     print("SOMAKE_WAVE_PREDICATE_BOOTSTRAP",json.dumps(outcome["controller"]["wave_predicate_bootstrap"],sort_keys=True))
     print("SOMAKE_WAVE_PREDICATE_EXACT_GATE", "PASS_EXACT_LAMBDA0_REF_INVOKEVIRTUAL_AND_HELPERS")
+    print("SOMAKE_WAVE_PREDICATE_BRANCH_TOPOLOGY",json.dumps(outcome["controller"]["wave_predicate_branch_topology"],sort_keys=True))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
     return {"status":"PASS_SHA_EXACT_WAVE_QUERY_PREDICATE_BOOTSTRAP_BOUND",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
