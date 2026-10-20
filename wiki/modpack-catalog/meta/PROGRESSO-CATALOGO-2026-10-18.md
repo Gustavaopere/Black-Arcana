@@ -213,4 +213,3 @@ Provas por método em [dossiê de radius controller](../providers/✅-somake-spe
 - **Pendências mantidas:** owner/caster/candidato efetivos, corpo/branches de `isValidTarget`, defaults/caps de `maxTargets`, iteração/sort/seleção, spawn/impacto das buds, alcance real, dano/cura, física provider-loaded/cliente/Survival/multiplayer, hook mutador e autorização PvP/claims. ⛔ `FAIL_CLOSED`, Stage 06.05 🟡 e Stage 09 físico PENDING conforme D035. Nenhuma promoção, adapter ou runtime alterado.
 
 [Dossiê dos consumidores](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md) · [ficha individual](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
-
