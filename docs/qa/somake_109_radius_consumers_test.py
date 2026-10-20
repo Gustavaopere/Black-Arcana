@@ -827,10 +827,10 @@ class NativeIsValidTargetEarlyGuardsTests(unittest.TestCase):
             [
                 "0: aload_1",
                 "1: invokevirtual #1 // Method net/minecraft/world/entity/LivingEntity.isAlive:()Z",
-                "4: ifeq 16",
+                "4: ifeq 17",
                 "7: aload_1",
                 "8: invokevirtual #2 // Method net/minecraft/world/entity/LivingEntity.isSpectator:()Z",
-                "11: ifne 16",
+                "11: ifne 17",
                 "14: aload_1",
                 "15: aload_2",
                 "16: if_acmpne 19",
@@ -854,7 +854,7 @@ class NativeIsValidTargetEarlyGuardsTests(unittest.TestCase):
     def test_inverted_spectator_branch_rejected(self):
         n,d,body=self.body()[0]
         rows=body.copy()
-        rows[5]=rows[5].replace("ifne 16","ifeq 16")
+        rows[5]=rows[5].replace("ifne 17","ifeq 17")
         self.assertEqual("NOT_PROVED",native_isvalidtarget_early_guards([(n,d,rows)])["status"])
 
     def test_self_comparison_and_false_return_must_remain_exact(self):
