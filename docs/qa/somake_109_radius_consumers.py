@@ -381,8 +381,61 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
     }
 
 def wave_predicate_branch_topology(declared:list[tuple[str,str,list[str]]])->dict:
-    """Fail closed: branch and return topology is not yet audited."""
-    return {"status":"NOT_PROVED","reason":"predicate_boolean_cfg_unimplemented"}
+    """Bounded semantic metadata for native boolean helper, not its implementation."""
+    signature="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
+    samples=[body for name,desc,body in declared
+             if name=="lambda$launchWave$0" and desc==signature]
+    if len(samples)>1:raise GateError("ambiguous exact wave boolean helper")
+    if not samples:return {"status":"NOT_PROVED","reason":"exact_boolean_helper_missing"}
+    rows=opcode_rows(samples[0])
+    if len(rows)>32:raise GateError("unbounded native wave boolean helper")
+    offsets={pc:i for i,(pc,_,_,_) in enumerate(rows)}
+    checks=[];branches=[]
+    for i,(pc,op,arg,symbol) in enumerate(rows):
+        if op.startswith("invoke"):
+            for marker,label in (("isValidTarget:","isValidTarget"),
+                                 ("LivingEntity.getUUID:","getUUID"),
+                                 ("Set.contains:","Set.contains")):
+                if marker in symbol:
+                    checks.append((i,label))
+                    break
+        if op.startswith("if"):
+            target=arg.split()[0] if arg else ""
+            if not re.fullmatch(r"\d+",target) or int(target) not in offsets:
+                return {"status":"NOT_PROVED","reason":"boolean_branch_target_unverified"}
+            branches.append((i,op,int(target)))
+    ordered=[label for _,label in checks]
+    if ordered!=["isValidTarget","getUUID","Set.contains"]:
+        return {"status":"NOT_PROVED","reason":"ordered_target_and_membership_checks_not_verified"}
+    if len(branches)!=2:return {"status":"NOT_PROVED","reason":"not_exactly_two_boolean_branches"}
+    returns=[i for i,(_,op,_,_) in enumerate(rows) if op=="ireturn"]
+    if len(returns)!=2:return {"status":"NOT_PROVED","reason":"boolean_return_count_drift"}
+    values=[]
+    for i in returns:
+        if i==0 or rows[i-1][1] not in ("iconst_0","iconst_1"):
+            values.append("unknown")
+        else:
+            values.append(rows[i-1][1][-1])
+    def branch_target_kind(target:int)->str:
+        index=offsets[target]
+        if index+1<len(rows) and rows[index][1] in ("iconst_0","iconst_1") and rows[index+1][1]=="ireturn":
+            return "boolean_"+rows[index][1][-1]
+        return "nonterminal_or_unknown"
+    return {
+        "status":"PROVED_PREDICATE_BRANCH_TOPOLOGY_ONLY",
+        "method":"lambda$launchWave$0",
+        "instruction_count":len(rows),
+        "ordered_checks":ordered,
+        "conditional_opcodes":[op for _,op,_ in branches],
+        "conditional_destination_kinds":[branch_target_kind(pc) for _,_,pc in branches],
+        "boolean_return_count":len(returns),
+        "return_constant_categories":values,
+        "boolean_call_adjacent_to_branch":[
+             checks[0][0]+1==branches[0][0],
+             checks[2][0]+1==branches[1][0],
+        ],
+        "boundary":"BOOLEAN_OUTCOMES_NOT_CERTIFIED"
+    }
 
 def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory:dict)->dict:
     """Prove invokedynamic #0's LambdaMetafactory *symbolic* implementation target.
