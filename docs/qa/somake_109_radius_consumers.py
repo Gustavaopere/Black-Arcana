@@ -380,6 +380,106 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
         "boundary":"BOOTSTRAP_BINDING_NOT_PROVED"
     }
 
+def wave_predicate_branch_topology(declared:list[tuple[str,str,list[str]]])->dict:
+    """Certify exact 1.0.9 Lambda0 boolean paths from typed JVM shape.
+
+    Returns *derived* branch truth table, not native code, executable method
+    bodies or the identities of the captured LivingEntity arguments.
+    """
+    desc="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
+    bodies=[body for name,d,body in declared if name=="lambda$launchWave$0" and d==desc]
+    if len(bodies)>1:raise GateError("ambiguous exact boolean Predicate helper")
+    def fail(reason,**meta):return {"status":"NOT_PROVED","reason":reason,**meta}
+    if not bodies:return fail("exact_boolean_helper_missing")
+    rows=opcode_rows(bodies[0])
+    if len(rows)>32:raise GateError("oversized boolean Predicate body")
+    labels=[]
+    for _,op,_,symbol in rows:
+        if "isValidTarget:" in symbol:labels.append("isValidTarget")
+        elif "LivingEntity.getUUID:" in symbol:labels.append("getUUID")
+        elif "Set.contains:" in symbol:labels.append("Set.contains")
+    branches=[op for _,op,_,_ in rows if op.startswith("if")]
+    if labels!=["isValidTarget","getUUID","Set.contains"]:
+        return fail("predicate_callsite_order_or_ownership_not_proved")
+    if len(rows)!=15 or branches!=["ifeq","ifne"]:
+        return fail("exact_wave_boolean_branch_shape_not_proved",
+                    instruction_count=len(rows),conditional_opcodes=branches)
+    exact_ops=["aload_0","aload_1","aload_2","invokevirtual","ifeq",
+               "aload_0","getfield","aload_2","invokevirtual",
+               "invokeinterface","ifne","iconst_1","goto","iconst_0","ireturn"]
+    if [op for _,op,_,_ in rows]!=exact_ops:
+        return fail("wave_boolean_stack_opcode_shape_not_proved",
+                    instruction_count=len(rows),ordered_checks=labels,
+                    conditional_opcodes=branches,
+                    opcode_histogram={op:sum(r[1]==op for r in rows)
+                                      for op in sorted(set(r[1] for r in rows))})
+    sym=[r[3] for r in rows]
+    if sym[3] not in (
+        "Method isValidTarget:(Lnet/minecraft/world/entity/LivingEntity;"
+        "Lnet/minecraft/world/entity/LivingEntity;)Z",
+        "Method com/somake/somakespells/entity/FuneralBloomControllerEntity."
+        "isValidTarget:(Lnet/minecraft/world/entity/LivingEntity;"
+        "Lnet/minecraft/world/entity/LivingEntity;)Z",
+    ):
+        return fail("isValidTarget_owner_or_descriptor_unproved")
+    if sym[6] not in (
+        "Field activeTargetIds:Ljava/util/Set;",
+        "Field com/somake/somakespells/entity/FuneralBloomControllerEntity."
+        "activeTargetIds:Ljava/util/Set;",
+    ):
+        return fail("activeTargetIds_field_owner_or_descriptor_unproved")
+    if sym[8] not in (
+        "Method net/minecraft/world/entity/LivingEntity.getUUID:()Ljava/util/UUID;",
+        "Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;",
+    ):
+        return fail("target_uuid_call_owner_or_descriptor_unproved")
+    if sym[9] not in (
+        "InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z",
+        "Method java/util/Set.contains:(Ljava/lang/Object;)Z",
+    ):
+        return fail("set_contains_owner_or_descriptor_unproved")
+    for i,targetindex in ((4,13),(10,13),(12,14)):
+        word=rows[i][2].split(" ",1)[0]
+        if not re.fullmatch(r"\d+",word) or int(word)!=rows[targetindex][0]:
+            return fail("unexpected_predicate_branch_or_join_destination",
+                        branch_ordinal={4:1,10:2,12:3}[i])
+    return {
+        "status":"PROVED_WAVE_PREDICATE_VALID_AND_NOT_ACTIVE",
+        "method":"lambda$launchWave$0",
+        "instruction_count":15,
+        "ordered_checks":labels,
+        "conditional_opcodes":branches,
+        "conditional_destination_kinds":["boolean_0","boolean_0"],
+        "boolean_return_count":1,
+        "semantic_guards":["true_only_if_valid","false_if_active_uuid"],
+        "return_constant_categories":["1","0"],
+        "boolean_call_adjacent_to_branch":[True,True],
+        "inferred_boolean_rule":"isValidTarget(capturedLivingEntityA,capturedLivingEntityB) && !activeTargetIds.contains(capturedLivingEntityB.getUUID())",
+        "boundary":"Pure JVM boolean helper logic; actual captured role/teams/PvP and query target outcomes NOT proved.",
+    }
+
+
+def certify_exact_wave_boolean_109(shape:dict)->None:
+    """Hard fail if exact 1.0.9 boolean target/UUID gate changes."""
+    expected={
+        "status":"PROVED_WAVE_PREDICATE_VALID_AND_NOT_ACTIVE",
+        "method":"lambda$launchWave$0",
+        "instruction_count":15,
+        "ordered_checks":["isValidTarget","getUUID","Set.contains"],
+        "conditional_opcodes":["ifeq","ifne"],
+        "conditional_destination_kinds":["boolean_0","boolean_0"],
+        "boolean_return_count":1,
+        "semantic_guards":["true_only_if_valid","false_if_active_uuid"],
+        "return_constant_categories":["1","0"],
+        "boolean_call_adjacent_to_branch":[True,True],
+        "inferred_boolean_rule":(
+            "isValidTarget(capturedLivingEntityA,capturedLivingEntityB) && "
+            "!activeTargetIds.contains(capturedLivingEntityB.getUUID())"
+        ),
+    }
+    if not isinstance(shape,dict) or any(shape.get(k)!=value for k,value in expected.items()):
+        raise GateError("Somake 1.0.9 compiled Predicate boolean/UUID gate drift")
+
 def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory:dict)->dict:
     """Prove invokedynamic #0's LambdaMetafactory *symbolic* implementation target.
 
@@ -502,6 +602,7 @@ def analyze_javap(text:str, label:str)->dict:
         report["wave_inflate_operand_proof"]=prove_wave_inflate_operands(candidates[0])
         report["wave_query_aabb_link"]=wave_query_aabb_link(candidates[0])
         report["wave_lambda_candidates"]=lambda_selection_candidate_inventory(declared)
+        report["wave_predicate_branch_topology"]=wave_predicate_branch_topology(declared)
     return report
 
 def certify_exact_consumer_surface(outcome:dict)->None:
@@ -578,14 +679,17 @@ def inspect(jar:Path)->dict:
     certify_exact_wave_query_109(outcome["controller"]["wave_query_aabb_link"])
     certify_exact_wave_predicate_109(outcome["controller"]["wave_predicate_bootstrap"],
                                     outcome["controller"]["wave_lambda_candidates"])
+    certify_exact_wave_boolean_109(outcome["controller"]["wave_predicate_branch_topology"])
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
     print("SOMAKE_WAVE_LAMBDA_CANDIDATES",json.dumps(outcome["controller"]["wave_lambda_candidates"],sort_keys=True))
     print("SOMAKE_WAVE_PREDICATE_BOOTSTRAP",json.dumps(outcome["controller"]["wave_predicate_bootstrap"],sort_keys=True))
     print("SOMAKE_WAVE_PREDICATE_EXACT_GATE", "PASS_EXACT_LAMBDA0_REF_INVOKEVIRTUAL_AND_HELPERS")
+    print("SOMAKE_WAVE_PREDICATE_BRANCH_TOPOLOGY",json.dumps(outcome["controller"]["wave_predicate_branch_topology"],sort_keys=True))
+    print("SOMAKE_WAVE_PREDICATE_BOOLEAN_EXACT_GATE","PASS_EXACT_VALID_TARGET_AND_UNSEEN_UUID")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
-    return {"status":"PASS_SHA_EXACT_WAVE_QUERY_PREDICATE_BOOTSTRAP_BOUND",
+    return {"status":"PASS_SHA_EXACT_WAVE_BOOLEAN_VALID_AND_UUID_NOT_ACTIVE",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
             "scope":outcome,
             "limits":[

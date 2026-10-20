@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -536,6 +536,100 @@ class ExactWavePredicate109GateTests(unittest.TestCase):
         bad["candidates"][1]["instruction_count"]=5
         with self.assertRaises(GateError):
             certify_exact_wave_predicate_109(link,bad)
+
+class WavePredicateBranchTopologyTests(unittest.TestCase):
+    @staticmethod
+    def compiled_like_boolean_body():
+        return [(
+            "lambda$launchWave$0",
+            "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+            [
+                "0: aload_0",
+                "1: aload_1",
+                "2: aload_2",
+                "3: invokevirtual #1 // Method isValidTarget:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+                "6: ifeq 30",
+                "9: aload_0",
+                "10: getfield #2 // Field activeTargetIds:Ljava/util/Set;",
+                "13: aload_2",
+                "14: invokevirtual #3 // Method net/minecraft/world/entity/LivingEntity.getUUID:()Ljava/util/UUID;",
+                "17: invokeinterface #4, 2 // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z",
+                "22: ifne 30",
+                "25: iconst_1",
+                "26: goto 31",
+                "30: iconst_0",
+                "31: ireturn",
+            ],
+        )]
+
+    def test_boolean_helper_call_order_and_branch_topology_are_visible(self):
+        p=wave_predicate_branch_topology(self.compiled_like_boolean_body())
+        self.assertEqual("PROVED_WAVE_PREDICATE_VALID_AND_NOT_ACTIVE",p["status"],p)
+        self.assertEqual(["isValidTarget","getUUID","Set.contains"],p["ordered_checks"])
+        self.assertEqual(["ifeq","ifne"],p["conditional_opcodes"])
+        self.assertEqual(15,p["instruction_count"])
+        self.assertEqual(1,p["boolean_return_count"])
+        self.assertEqual(["boolean_0","boolean_0"],p["conditional_destination_kinds"])
+        self.assertEqual(["true_only_if_valid","false_if_active_uuid"],p["semantic_guards"])
+        self.assertIn("actual captured role/teams/PvP",p["boundary"])
+
+    def test_missing_or_duplicate_boolean_helper_fails_closed(self):
+        self.assertEqual("NOT_PROVED",wave_predicate_branch_topology([])["status"])
+        with self.assertRaises(GateError):
+            wave_predicate_branch_topology(
+                self.compiled_like_boolean_body()*2)
+
+    def test_ambiguous_call_order_does_not_certify_predicate_checks(self):
+        c=self.compiled_like_boolean_body()
+        rows=c[0][2].copy()
+        rows[3]=rows[3].replace("isValidTarget","notAValidTarget")
+        value=wave_predicate_branch_topology([(c[0][0],c[0][1],rows)])
+        self.assertEqual("NOT_PROVED",value["status"])
+
+    def test_inverted_membership_branch_or_false_target_fails_closed(self):
+        n,desc,rows=self.compiled_like_boolean_body()[0]
+        change=rows.copy()
+        change[10]=change[10].replace("ifne 30","ifeq 30")
+        self.assertEqual("NOT_PROVED",wave_predicate_branch_topology([(n,desc,change)])["status"])
+        change=rows.copy()
+        change[4]=change[4].replace("ifeq 30","ifeq 25")
+        self.assertEqual("NOT_PROVED",wave_predicate_branch_topology([(n,desc,change)])["status"])
+
+    def test_field_and_membership_owner_replacement_fail_closed(self):
+        n,desc,rows=self.compiled_like_boolean_body()[0]
+        change=rows.copy()
+        change[6]=change[6].replace("activeTargetIds","otherSet")
+        self.assertEqual("NOT_PROVED",wave_predicate_branch_topology([(n,desc,change)])["status"])
+        change=rows.copy()
+        change[9]=change[9].replace("java/util/Set.contains","external/FakeSet.contains")
+        self.assertEqual("NOT_PROVED",wave_predicate_branch_topology([(n,desc,change)])["status"])
+
+    def test_invalid_branch_target_fails_closed(self):
+        c=self.compiled_like_boolean_body()
+        rows=c[0][2].copy()
+        rows[4]=rows[4].replace("ifeq 30","ifeq 999")
+        result=wave_predicate_branch_topology([(c[0][0],c[0][1],rows)])
+        self.assertEqual("NOT_PROVED",result["status"])
+
+class Exact109PredicateBooleanGateTests(unittest.TestCase):
+    def test_exact_valid_and_unseen_predicate_gate_rejects_mutations(self):
+        proof=wave_predicate_branch_topology(WavePredicateBranchTopologyTests.compiled_like_boolean_body())
+        self.assertEqual("PROVED_WAVE_PREDICATE_VALID_AND_NOT_ACTIVE",proof["status"])
+        certify_exact_wave_boolean_109(proof)
+        for change in (
+            {"status":"NOT_PROVED"},
+            {"conditional_opcodes":["ifne","ifne"]},
+            {"conditional_destination_kinds":["boolean_0","boolean_1"]},
+            {"boolean_return_count":2},
+            {"semantic_guards":["true_only_if_valid","false_if_new_uuid"]},
+            {"ordered_checks":["Set.contains","getUUID","isValidTarget"]},
+            {"instruction_count":14},
+            {"return_constant_categories":["0","1"]},
+            {"boolean_call_adjacent_to_branch":[False,True]},
+        ):
+            with self.subTest(change=change):
+                with self.assertRaises(GateError):
+                    certify_exact_wave_boolean_109(dict(proof,**change))
 
 if __name__=="__main__":
     unittest.main()
