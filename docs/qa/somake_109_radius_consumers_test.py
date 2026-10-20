@@ -556,7 +556,7 @@ class WavePredicateBranchTopologyTests(unittest.TestCase):
                 "17: invokeinterface #4, 2 // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z",
                 "22: ifne 30",
                 "25: iconst_1",
-                "26: ireturn",
+                "26: goto 31",
                 "30: iconst_0",
                 "31: ireturn",
             ],
@@ -564,11 +564,13 @@ class WavePredicateBranchTopologyTests(unittest.TestCase):
 
     def test_boolean_helper_call_order_and_branch_topology_are_visible(self):
         p=wave_predicate_branch_topology(self.compiled_like_boolean_body())
-        self.assertEqual("PROVED_PREDICATE_BRANCH_TOPOLOGY_ONLY",p["status"],p)
+        self.assertEqual("PROVED_WAVE_PREDICATE_VALID_AND_NOT_ACTIVE",p["status"],p)
         self.assertEqual(["isValidTarget","getUUID","Set.contains"],p["ordered_checks"])
         self.assertEqual(["ifeq","ifne"],p["conditional_opcodes"])
         self.assertEqual(15,p["instruction_count"])
-        self.assertEqual(2,p["boolean_return_count"])
+        self.assertEqual(1,p["boolean_return_count"])
+        self.assertEqual(["boolean_0","boolean_0"],p["conditional_destination_kinds"])
+        self.assertEqual(["true_only_if_valid","false_if_active_uuid"],p["semantic_guards"])
         self.assertEqual("BOOLEAN_OUTCOMES_NOT_CERTIFIED",p["boundary"])
 
     def test_missing_or_duplicate_boolean_helper_fails_closed(self):
@@ -583,6 +585,24 @@ class WavePredicateBranchTopologyTests(unittest.TestCase):
         rows[3]=rows[3].replace("isValidTarget","notAValidTarget")
         value=wave_predicate_branch_topology([(c[0][0],c[0][1],rows)])
         self.assertEqual("NOT_PROVED",value["status"])
+
+    def test_inverted_membership_branch_or_false_target_fails_closed(self):
+        n,desc,rows=self.compiled_like_boolean_body()[0]
+        change=rows.copy()
+        change[10]=change[10].replace("ifne 30","ifeq 30")
+        self.assertEqual("NOT_PROVED",wave_predicate_branch_topology([(n,desc,change)])["status"])
+        change=rows.copy()
+        change[4]=change[4].replace("ifeq 30","ifeq 25")
+        self.assertEqual("NOT_PROVED",wave_predicate_branch_topology([(n,desc,change)])["status"])
+
+    def test_field_and_membership_owner_replacement_fail_closed(self):
+        n,desc,rows=self.compiled_like_boolean_body()[0]
+        change=rows.copy()
+        change[6]=change[6].replace("activeTargetIds","otherSet")
+        self.assertEqual("NOT_PROVED",wave_predicate_branch_topology([(n,desc,change)])["status"])
+        change=rows.copy()
+        change[9]=change[9].replace("java/util/Set.contains","external/FakeSet.contains")
+        self.assertEqual("NOT_PROVED",wave_predicate_branch_topology([(n,desc,change)])["status"])
 
     def test_invalid_branch_target_fails_closed(self):
         c=self.compiled_like_boolean_body()
