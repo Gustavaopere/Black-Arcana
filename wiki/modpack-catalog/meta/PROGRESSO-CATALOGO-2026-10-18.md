@@ -203,3 +203,13 @@ Provas por método em [dossiê de radius controller](../providers/✅-somake-spe
 - **Pendências e segurança:** implementação de `isValidTarget` e identidade A/B, critérios PvP/equipe, resultado da consulta, ordenação por distância, `maxTargets` como gate quantitativo, criação de buds e área independente `FuneralBloomBudEntity.impact`, dano/cura, QA real cliente/provider-loaded/Survival/multiplayer, hook de mutação por player. **⛔ FAIL_CLOSED**, Stage 06.05 🟡 e Stage 09 físico PENDING conforme D035. Esta prova é estática e não promove Stage.
 
 [Detalhes da seleção](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md) · [ficha individual](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+## Continuação Somake — isValidTarget e maxTargets (20/10/2026; PR #844)
+
+**Catálogo global de ações sobrenaturais:** **—%**, denominador final ainda desconhecido; conservar piso histórico >=1.856 objetos e discrepância 1.856/1.857 sob reconciliação. **Somake 1.0.9 identidades:** **83/83 = 100%**, registry físico SHA-exato. **Subbarra de fichas com auditoria downstream na campanha:** **5/83 = 6,02%**. Nenhum novo spell/método semântico independente foi adicionado; nenhuma perk mutadora homologada (**0**), percentual de demandas indeterminado.
+
+- [Java 21 Somake SHA-exata #39507349822](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39507349822), **SUCCESS / 53 testes**, File 8867079 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`. `isValidTarget(LivingEntity,LivingEntity):boolean` possui 41 instruções, 9 invocações, 6 branches, 3 retornos; referencia `isAlive`, `isSpectator`, `isAlliedTo`, `distanceToSqr`, `getX/Y/Z` e `getRadius`. A semântica dos ramos permanece **NOT_PROVED**.
+- `launchWave` contém 2 leituras `maxTargets:I` e 1 chamada ao construtor da bud, com 49 instruções da primeira leitura até a chamada. **A causalidade do cap quantitativo ainda não foi provada**; a mera coocorrência não homologa cardinalidade de buds.
+- **Pendências mantidas:** owner/caster/candidato efetivos, corpo/branches de `isValidTarget`, defaults/caps de `maxTargets`, iteração/sort/seleção, spawn/impacto das buds, alcance real, dano/cura, física provider-loaded/cliente/Survival/multiplayer, hook mutador e autorização PvP/claims. ⛔ `FAIL_CLOSED`, Stage 06.05 🟡 e Stage 09 físico PENDING conforme D035. Nenhuma promoção, adapter ou runtime alterado.
+
+[Dossiê dos consumidores](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md) · [ficha individual](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).

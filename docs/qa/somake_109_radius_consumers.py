@@ -380,6 +380,107 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
         "boundary":"BOOTSTRAP_BINDING_NOT_PROVED"
     }
 
+def certify_exact_native_selection_109(native:dict, cap:dict)->None:
+    """Fail-closed version-exact structural proof; never claim semantic cap."""
+    want_native={
+        "status":"ISVALIDTARGET_MEMBER_SHAPE_ONLY",
+        "descriptor":"(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+        "instruction_count":41,
+        "conditional_opcodes":["ifeq","ifne","if_acmpne","ifnull","ifeq","ifgt"],
+        "boolean_return_count":3,
+        "invoke_count":9,
+        "field_read_count":0,
+        "field_write_count":0,
+        "callsite_symbols":[
+            "getRadius:()F","getX:()D","getZ:()D",
+            "net/minecraft/world/entity/LivingEntity.distanceToSqr:(DDD)D",
+            "net/minecraft/world/entity/LivingEntity.getY:()D",
+            "net/minecraft/world/entity/LivingEntity.isAlive:()Z",
+            "net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z",
+            "net/minecraft/world/entity/LivingEntity.isSpectator:()Z",
+        ],
+        "boundary":"FILTER_OUTCOMES_NOT_PROVED",
+    }
+    want_cap={
+        "status":"MAXTARGETS_AND_BUD_COSITES_ONLY",
+        "instruction_count":196,
+        "max_targets_field_read_count":2,
+        "bud_ctor_call_count":1,
+        "first_max_targets_read_before_first_bud_ctor":True,
+        "first_read_to_ctor_instruction_gap":49,
+        "conditional_branch_count":4,
+        "boundary":"TARGET_COUNT_CAP_NOT_PROVED",
+    }
+    if not isinstance(native,dict) or any(native.get(k)!=v for k,v in want_native.items()):
+        raise GateError("Somake 1.0.9 native isValidTarget body fingerprint drift")
+    if not isinstance(cap,dict) or any(cap.get(k)!=v for k,v in want_cap.items()):
+        raise GateError("Somake 1.0.9 wave maxTargets or bud structural fingerprint drift")
+
+
+def wave_max_targets_surface(body:list[str])->dict:
+    """Catalog source-level native field/bud references, never infer cap effect."""
+    rows=opcode_rows(body)
+    if len(rows)>250:raise GateError("unbounded native wave method")
+    target_fields=[i for i,(_,op,_,symbol) in enumerate(rows)
+                   if op=="getfield" and symbol in (
+                       "Field maxTargets:I",
+                       "Field com/somake/somakespells/entity/FuneralBloomControllerEntity.maxTargets:I")]
+    bud_ctors=[i for i,(_,op,_,symbol) in enumerate(rows)
+               if op=="invokespecial" and
+               symbol.startswith('Method com/somake/somakespells/entity/FuneralBloomBudEntity."<init>":')]
+    if not target_fields or not bud_ctors:
+        return {"status":"NOT_PROVED","reason":"field_or_bud_constructor_not_both_found",
+                "max_targets_field_read_count":len(target_fields),
+                "bud_ctor_call_count":len(bud_ctors)}
+    return {
+        "status":"MAXTARGETS_AND_BUD_COSITES_ONLY",
+        "instruction_count":len(rows),
+        "max_targets_field_read_count":len(target_fields),
+        "bud_ctor_call_count":len(bud_ctors),
+        "first_max_targets_read_before_first_bud_ctor":target_fields[0]<bud_ctors[0],
+        "first_read_to_ctor_instruction_gap":bud_ctors[0]-target_fields[0]-1,
+        "conditional_branch_count":sum(op.startswith("if") for _,op,_,_ in rows),
+        "boundary":"TARGET_COUNT_CAP_NOT_PROVED",
+    }
+
+
+def native_isvalidtarget_surface(declared:list[tuple[str,str,list[str]]])->dict:
+    """Report only bounded symbols/branch topology of the native helper."""
+    desc="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
+    if len(declared)>MAX_METHODS:raise GateError("unbounded native method declaration set")
+    matches=[body for name,signature,body in declared
+             if name=="isValidTarget" and signature==desc]
+    if len(matches)>1:raise GateError("duplicate exact isValidTarget member")
+    if not matches:return {"status":"NOT_PROVED","reason":"exact_isValidTarget_boolean_member_missing"}
+    rows=opcode_rows(matches[0])
+    if len(rows)>320:raise GateError("unbounded isValidTarget member")
+    meta=calls_in_method(matches[0])
+    from collections import Counter
+    opcodes=[op for _,op,_,_ in rows]
+    cond=[op for op in opcodes if op.startswith("if")]
+    returns=[op for op in opcodes if op.endswith("return")]
+    fields=meta["field_symbols"]
+    methods=meta["callsite_symbols"]
+    if len(fields)>40 or len(methods)>MAX_SYMBOLS_PER_METHOD:
+        raise GateError("unbounded isValidTarget symbol inventory")
+    return {
+        "status":"ISVALIDTARGET_MEMBER_SHAPE_ONLY",
+        "method":"isValidTarget",
+        "descriptor":desc,
+        "instruction_count":len(rows),
+        "conditional_opcodes":cond[:60],
+        "boolean_return_count":opcodes.count("ireturn"),
+        "return_opcodes":dict(sorted(Counter(returns).items())),
+        "invoke_count":meta["invoke_count"],
+        "invokedynamic_count":meta["invokedynamic_count"],
+        "callsite_symbols":methods[:60],
+        "field_symbols":fields[:40],
+        "field_read_count":sum(op in ("getfield","getstatic") for op in opcodes),
+        "field_write_count":sum(op in ("putfield","putstatic") for op in opcodes),
+        "boundary":"FILTER_OUTCOMES_NOT_PROVED",
+    }
+
+
 def wave_predicate_branch_topology(declared:list[tuple[str,str,list[str]]])->dict:
     """Certify exact 1.0.9 Lambda0 boolean paths from typed JVM shape.
 
@@ -603,6 +704,8 @@ def analyze_javap(text:str, label:str)->dict:
         report["wave_query_aabb_link"]=wave_query_aabb_link(candidates[0])
         report["wave_lambda_candidates"]=lambda_selection_candidate_inventory(declared)
         report["wave_predicate_branch_topology"]=wave_predicate_branch_topology(declared)
+        report["native_isvalidtarget_surface"]=native_isvalidtarget_surface(declared)
+        report["wave_max_targets_surface"]=wave_max_targets_surface(candidates[0])
     return report
 
 def certify_exact_consumer_surface(outcome:dict)->None:
@@ -680,6 +783,8 @@ def inspect(jar:Path)->dict:
     certify_exact_wave_predicate_109(outcome["controller"]["wave_predicate_bootstrap"],
                                     outcome["controller"]["wave_lambda_candidates"])
     certify_exact_wave_boolean_109(outcome["controller"]["wave_predicate_branch_topology"])
+    certify_exact_native_selection_109(outcome["controller"]["native_isvalidtarget_surface"],
+                                       outcome["controller"]["wave_max_targets_surface"])
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
@@ -687,9 +792,12 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_WAVE_PREDICATE_BOOTSTRAP",json.dumps(outcome["controller"]["wave_predicate_bootstrap"],sort_keys=True))
     print("SOMAKE_WAVE_PREDICATE_EXACT_GATE", "PASS_EXACT_LAMBDA0_REF_INVOKEVIRTUAL_AND_HELPERS")
     print("SOMAKE_WAVE_PREDICATE_BRANCH_TOPOLOGY",json.dumps(outcome["controller"]["wave_predicate_branch_topology"],sort_keys=True))
+    print("SOMAKE_NATIVE_ISVALIDTARGET_SURFACE",json.dumps(outcome["controller"]["native_isvalidtarget_surface"],sort_keys=True))
+    print("SOMAKE_WAVE_MAXTARGETS_SURFACE",json.dumps(outcome["controller"]["wave_max_targets_surface"],sort_keys=True))
+    print("SOMAKE_NATIVE_SELECTION_EXACT_GATE","PASS_SHAPE_ONLY_TARGET_FILTER_AND_CAP_COSITES")
     print("SOMAKE_WAVE_PREDICATE_BOOLEAN_EXACT_GATE","PASS_EXACT_VALID_TARGET_AND_UNSEEN_UUID")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
-    return {"status":"PASS_SHA_EXACT_WAVE_BOOLEAN_VALID_AND_UUID_NOT_ACTIVE",
+    return {"status":"PASS_SHA_EXACT_NATIVE_SELECTION_SHAPE_AND_MAXTARGETS_COSITES",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
             "scope":outcome,
             "limits":[
