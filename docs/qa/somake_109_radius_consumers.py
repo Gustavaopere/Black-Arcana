@@ -460,8 +460,25 @@ def wave_predicate_branch_topology(declared:list[tuple[str,str,list[str]]])->dic
 
 
 def certify_exact_wave_boolean_109(shape:dict)->None:
-    """Version-locked 1.0.9 boolean Predicate path gate (RED seam)."""
-    return None
+    """Hard fail if exact 1.0.9 boolean target/UUID gate changes."""
+    expected={
+        "status":"PROVED_WAVE_PREDICATE_VALID_AND_NOT_ACTIVE",
+        "method":"lambda$launchWave$0",
+        "instruction_count":15,
+        "ordered_checks":["isValidTarget","getUUID","Set.contains"],
+        "conditional_opcodes":["ifeq","ifne"],
+        "conditional_destination_kinds":["boolean_0","boolean_0"],
+        "boolean_return_count":1,
+        "semantic_guards":["true_only_if_valid","false_if_active_uuid"],
+        "return_constant_categories":["1","0"],
+        "boolean_call_adjacent_to_branch":[True,True],
+        "inferred_boolean_rule":(
+            "isValidTarget(capturedLivingEntityA,capturedLivingEntityB) && "
+            "!activeTargetIds.contains(capturedLivingEntityB.getUUID())"
+        ),
+    }
+    if not isinstance(shape,dict) or any(shape.get(k)!=value for k,value in expected.items()):
+        raise GateError("Somake 1.0.9 compiled Predicate boolean/UUID gate drift")
 
 def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory:dict)->dict:
     """Prove invokedynamic #0's LambdaMetafactory *symbolic* implementation target.
@@ -670,8 +687,9 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_WAVE_PREDICATE_BOOTSTRAP",json.dumps(outcome["controller"]["wave_predicate_bootstrap"],sort_keys=True))
     print("SOMAKE_WAVE_PREDICATE_EXACT_GATE", "PASS_EXACT_LAMBDA0_REF_INVOKEVIRTUAL_AND_HELPERS")
     print("SOMAKE_WAVE_PREDICATE_BRANCH_TOPOLOGY",json.dumps(outcome["controller"]["wave_predicate_branch_topology"],sort_keys=True))
+    print("SOMAKE_WAVE_PREDICATE_BOOLEAN_EXACT_GATE","PASS_EXACT_VALID_TARGET_AND_UNSEEN_UUID")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
-    return {"status":"PASS_SHA_EXACT_WAVE_QUERY_PREDICATE_BOOTSTRAP_BOUND",
+    return {"status":"PASS_SHA_EXACT_WAVE_BOOLEAN_VALID_AND_UUID_NOT_ACTIVE",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
             "scope":outcome,
             "limits":[
