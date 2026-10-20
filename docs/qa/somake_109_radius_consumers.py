@@ -340,8 +340,45 @@ def calls_in_method(body:list[str])->dict:
     }
 
 def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]])->dict:
-    """Bounded, read-only predicate helper inventory; bootstrap owner not yet proved."""
-    return {"status":"NOT_PROVED","reason":"lambda_candidate_inventory_unimplemented"}
+    """Fingerprint wave lambda candidates without assuming invokedynamic linkage."""
+    if not isinstance(declared,list) or len(declared)>MAX_METHODS:
+        raise GateError("unbounded method declarations for predicate candidates")
+    found=[];seen=set()
+    for name,descriptor,body in declared:
+        if not re.fullmatch(r"lambda\\$launchWave\\$[0-9]+",name):continue
+        key=(name,descriptor)
+        if key in seen:raise GateError("duplicate wave lambda method signature")
+        seen.add(key)
+        if len(found)>=12:raise GateError("unbounded wave lambda candidate count")
+        if not re.fullmatch(r"\\([^)]{0,350}\\)[ZV]",descriptor):
+            raise GateError("wave lambda invalid or unsupported descriptor")
+        opcodes=opcode_rows(body)
+        if len(opcodes)>240:raise GateError("wave lambda method exceeds budget")
+        inventory=calls_in_method(body)
+        symbols=inventory["callsite_symbols"]
+        fields=inventory["field_symbols"]
+        found.append({
+            "method":name,
+            "descriptor":descriptor,
+            "instruction_count":len(opcodes),
+            "conditional_branch_count":sum(op.startswith("if") for _,op,_,_ in opcodes),
+            "invoke_count":inventory["invoke_count"],
+            "invokedynamic_count":inventory["invokedynamic_count"],
+            "mentions_isValidTarget":any("isValidTarget:" in x for x in symbols),
+            "mentions_getRadius":any("getRadius:" in x for x in symbols),
+            "mentions_maxTargets":any("maxTargets:" in x for x in fields),
+            "mentions_activeTargetIds":any("activeTargetIds:" in x for x in fields),
+            "callsite_symbols":symbols[:35],
+            "field_symbols":fields[:22],
+        })
+    if not found:
+        return {"status":"NOT_PROVED","reason":"no_wave_lambda_method_candidate"}
+    return {
+        "status":"PREDICATE_HELPER_CANDIDATES_ONLY",
+        "candidate_count":len(found),
+        "candidates":sorted(found,key=lambda x:(x["method"],x["descriptor"])),
+        "boundary":"BOOTSTRAP_BINDING_NOT_PROVED"
+    }
 
 def analyze_javap(text:str, label:str)->dict:
     if not text or len(text)>MAX_TEXT:raise GateError("oversized class output")
