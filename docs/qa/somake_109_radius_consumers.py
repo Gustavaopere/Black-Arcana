@@ -380,6 +380,10 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
         "boundary":"BOOTSTRAP_BINDING_NOT_PROVED"
     }
 
+def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory:dict)->dict:
+    """Fail-closed exact bootstrap-linkage probe for query predicate."""
+    return {"status":"NOT_PROVED","reason":"bootstrap_linkage_not_implemented"}
+
 def analyze_javap(text:str, label:str)->dict:
     if not text or len(text)>MAX_TEXT:raise GateError("oversized class output")
     declared=sections(isolate_named_methods(text))
@@ -457,6 +461,16 @@ def inspect(jar:Path)->dict:
         if process.returncode or len(process.stdout)>MAX_TEXT:
             raise GateError("javap failed or exceeded budget: "+label)
         result=analyze_javap(process.stdout,label)
+        if label=="controller":
+            verbose=subprocess.run(["javap","-v","-p","-classpath",str(jar.resolve()),cls],
+                                   capture_output=True,text=True,timeout=50,check=False)
+            if verbose.returncode or not verbose.stdout or len(verbose.stdout)>MAX_TEXT:
+                raise GateError("bounded controller bootstrap metadata unavailable")
+            wave=[body for name,desc,body in sections(process.stdout)
+                  if name=="launchWave" and desc=="(Lnet/minecraft/server/level/ServerLevel;)V"]
+            if len(wave)!=1:raise GateError("ambiguous controller wave bootstrap caller")
+            result["wave_predicate_bootstrap"]=wave_predicate_bootstrap_binding(
+                verbose.stdout,wave[0],result["wave_lambda_candidates"])
         outcome[label]=result
         for method,metrics in result["selected_methods"].items():
             print("SOMAKE_RADIUS_CONSUMER",label,method,
@@ -471,6 +485,7 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
     print("SOMAKE_WAVE_LAMBDA_CANDIDATES",json.dumps(outcome["controller"]["wave_lambda_candidates"],sort_keys=True))
+    print("SOMAKE_WAVE_PREDICATE_BOOTSTRAP",json.dumps(outcome["controller"]["wave_predicate_bootstrap"],sort_keys=True))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
     return {"status":"PASS_SHA_EXACT_WAVE_XZ_RADIUS_Y_10_5_AND_QUERY_AABB_LINK",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
