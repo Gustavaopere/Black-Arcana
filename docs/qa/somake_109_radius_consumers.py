@@ -445,8 +445,49 @@ def wave_max_targets_surface(body:list[str])->dict:
 
 
 def native_isvalidtarget_branch_edges(declared:list[tuple[str,str,list[str]]])->dict:
-    """Fail-closed CFG metadata; no third-party method body or operand list."""
-    return {"status":"NOT_PROVED","reason":"boolean_cfg_unimplemented"}
+    """Bounded JVM branch destinations. Does not publish provider instructions."""
+    descriptor="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
+    if not isinstance(declared,list) or len(declared)>MAX_METHODS:
+        raise GateError("unbounded isValidTarget declarations")
+    bodies=[body for name,desc,body in declared if name=="isValidTarget" and desc==descriptor]
+    if len(bodies)>1:raise GateError("ambiguous isValidTarget method")
+    if not bodies:return {"status":"NOT_PROVED","reason":"exact_boolean_member_missing"}
+    rows=opcode_rows(bodies[0])
+    if len(rows)>72:raise GateError("native isValidTarget CFG exceeds budget")
+    offset_lookup={pc:i for i,(pc,_,_,_) in enumerate(rows)}
+    if len(offset_lookup)!=len(rows):
+        raise GateError("duplicate JVM offset in boolean member")
+    branches=[]
+    for ordinal,(offset,op,operand,_) in enumerate(rows):
+        if not op.startswith("if"):continue
+        target=(operand or "").split(" ",1)[0]
+        if not re.fullmatch(r"\d+",target):
+            return {"status":"NOT_PROVED","reason":"non_numeric_branch_target"}
+        target_idx=offset_lookup.get(int(target))
+        if target_idx is None:
+            return {"status":"NOT_PROVED","reason":"branch_target_not_an_instruction"}
+        dest="other"
+        if (target_idx+1<len(rows) and rows[target_idx][1]=="iconst_0"
+             and rows[target_idx+1][1]=="ireturn"):
+            dest="constant_zero"
+        elif (target_idx+1<len(rows) and rows[target_idx][1]=="iconst_1"
+              and rows[target_idx+1][1]=="ireturn"):
+            dest="constant_one"
+        elif rows[target_idx][1]=="ireturn":
+            dest="shared_boolean_return"
+        branches.append({"index":ordinal,"opcode":op,"target_index":target_idx,
+                         "destination_kind":dest})
+    if len(branches)>12:
+        raise GateError("native isValidTarget too many conditional branches")
+    if not branches:return {"status":"NOT_PROVED","reason":"no_boolean_control_edges"}
+    return {
+        "status":"ISVALIDTARGET_BRANCH_EDGES_ONLY",
+        "instruction_count":len(rows),
+        "branch_count":len(branches),
+        "branch_edges":branches,
+        "return_count":sum(op=="ireturn" for _,op,_,_ in rows),
+        "boundary":"PATH_PREDICATES_AND_ENTITY_ROLES_NOT_PROVED",
+    }
 
 
 def native_isvalidtarget_surface(declared:list[tuple[str,str,list[str]]])->dict:
