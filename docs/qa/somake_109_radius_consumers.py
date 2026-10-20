@@ -409,7 +409,21 @@ def wave_predicate_branch_topology(declared:list[tuple[str,str,list[str]]])->dic
         return {"status":"NOT_PROVED","reason":"ordered_target_and_membership_checks_not_verified"}
     if len(branches)!=2:return {"status":"NOT_PROVED","reason":"not_exactly_two_boolean_branches"}
     returns=[i for i,(_,op,_,_) in enumerate(rows) if op=="ireturn"]
-    if len(returns)!=2:return {"status":"NOT_PROVED","reason":"boolean_return_count_drift"}
+    if len(returns)!=2:
+        from collections import Counter
+        literals=Counter(op for _,op,_,_ in rows if op.startswith("iconst_"))
+        terminals=Counter(op for _,op,_,_ in rows if op.endswith("return"))
+        return {"status":"NOT_PROVED","reason":"boolean_return_count_drift",
+                "instruction_count":len(rows),"ordered_checks":ordered,
+                "conditional_opcodes":[op for _,op,_ in branches],
+                "boolean_return_count":len(returns),
+                "literal_opcode_histogram":dict(sorted(literals.items())),
+                "terminal_opcode_histogram":dict(sorted(terminals.items())),
+                "boolean_call_adjacent_to_branch":[
+                    checks[0][0]+1==branches[0][0],
+                    checks[2][0]+1==branches[1][0]],
+                "branch_targets_are_return_opcodes":[rows[offsets[pc]][1]=="ireturn"
+                                                     for _,_,pc in branches]}
     values=[]
     for i in returns:
         if i==0 or rows[i-1][1] not in ("iconst_0","iconst_1"):
