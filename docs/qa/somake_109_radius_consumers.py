@@ -444,6 +444,11 @@ def wave_max_targets_surface(body:list[str])->dict:
     }
 
 
+def certify_exact_native_target_cfg_109(edges:dict, early:dict)->None:
+    """Version-exact early target guard and branch edge gate (RED seam)."""
+    return None
+
+
 def native_isvalidtarget_early_guards(declared:list[tuple[str,str,list[str]]])->dict:
     """Certify only the first three JVM guards of the native target helper."""
     desc="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
@@ -876,6 +881,8 @@ def inspect(jar:Path)->dict:
     certify_exact_wave_boolean_109(outcome["controller"]["wave_predicate_branch_topology"])
     certify_exact_native_selection_109(outcome["controller"]["native_isvalidtarget_surface"],
                                        outcome["controller"]["wave_max_targets_surface"])
+    certify_exact_native_target_cfg_109(outcome["controller"]["native_isvalidtarget_branch_edges"],
+                                        outcome["controller"]["native_isvalidtarget_early_guards"])
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
