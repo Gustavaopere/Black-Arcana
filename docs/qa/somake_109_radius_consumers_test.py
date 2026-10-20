@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109,native_isvalidtarget_surface,wave_max_targets_surface,certify_exact_native_selection_109,native_isvalidtarget_branch_edges,native_isvalidtarget_early_guards
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109,native_isvalidtarget_surface,wave_max_targets_surface,certify_exact_native_selection_109,native_isvalidtarget_branch_edges,native_isvalidtarget_early_guards,certify_exact_native_target_cfg_109
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -869,6 +869,59 @@ class NativeIsValidTargetEarlyGuardsTests(unittest.TestCase):
     def test_ambiguous_method_rejected(self):
         with self.assertRaises(GateError):
             native_isvalidtarget_early_guards(self.body()*2)
+
+class Exact109NativeTargetCfgGateTests(unittest.TestCase):
+    @staticmethod
+    def physical_edges():
+        return {
+            "status":"ISVALIDTARGET_BRANCH_EDGES_ONLY",
+            "instruction_count":41,
+            "branch_count":6,
+            "return_count":3,
+            "branch_edges":[
+                {"index":2,"opcode":"ifeq","target_index":9,"destination_kind":"constant_zero"},
+                {"index":5,"opcode":"ifne","target_index":9,"destination_kind":"constant_zero"},
+                {"index":8,"opcode":"if_acmpne","target_index":11,"destination_kind":"other"},
+                {"index":12,"opcode":"ifnull","target_index":19,"destination_kind":"other"},
+                {"index":16,"opcode":"ifeq","target_index":19,"destination_kind":"other"},
+                {"index":36,"opcode":"ifgt","target_index":39,"destination_kind":"constant_zero"},
+            ],
+            "boundary":"PATH_PREDICATES_AND_ENTITY_ROLES_NOT_PROVED",
+        }
+
+    @staticmethod
+    def early():
+        return {
+            "status":"PROVED_NATIVE_EARLY_ALIVE_NOT_SPECTATOR_NOT_IDENTICAL",
+            "examined_jvm_local":2,
+            "compared_jvm_local":1,
+            "branch_ops":["ifeq","ifne","if_acmpne"],
+            "rejection_mode":"DIRECT_ZERO_RETURN_ON_THREE_REJECTIONS",
+            "boundary":"Semantics of later branches and actor roles remain unproved",
+        }
+
+    def test_release_gate_requires_exact_physical_cfg_edges_and_early_guards(self):
+        edges,early=self.physical_edges(),self.early()
+        certify_exact_native_target_cfg_109(edges,early)
+        for change in (
+            {"branch_count":5},{"instruction_count":40},{"return_count":2},
+            {"status":"NOT_PROVED"},{"boundary":"ALL_GAMEPLAY_PROVED"},
+        ):
+            with self.subTest(change=change):
+                with self.assertRaises(GateError):
+                    certify_exact_native_target_cfg_109(dict(edges,**change),early)
+        changed=self.physical_edges()
+        changed["branch_edges"][0]["target_index"]=19
+        with self.assertRaises(GateError):
+            certify_exact_native_target_cfg_109(changed,early)
+        for change in (
+            {"examined_jvm_local":1},{"compared_jvm_local":2},
+            {"branch_ops":["ifeq","ifeq","if_acmpne"]},
+            {"rejection_mode":"REJECTS_ONLY_SPECTATORS"},
+        ):
+            with self.subTest(change=change):
+                with self.assertRaises(GateError):
+                    certify_exact_native_target_cfg_109(edges,dict(early,**change))
 
 if __name__=="__main__":
     unittest.main()
