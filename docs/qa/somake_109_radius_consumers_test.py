@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109,native_isvalidtarget_surface,wave_max_targets_surface
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109,native_isvalidtarget_surface,wave_max_targets_surface,certify_exact_native_selection_109
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -708,6 +708,69 @@ class WaveMaxTargetsSurfaceTests(unittest.TestCase):
     def test_missing_bud_constructor_is_fail_closed(self):
         body=[s.replace("FuneralBloomBudEntity.", "OtherEntity.") for s in self.sample()]
         self.assertEqual("NOT_PROVED",wave_max_targets_surface(body)["status"])
+
+class Exact109NativeSelectionShapeTests(unittest.TestCase):
+    @staticmethod
+    def native():
+        return {
+            "status":"ISVALIDTARGET_MEMBER_SHAPE_ONLY",
+            "descriptor":"(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+            "instruction_count":41,
+            "conditional_opcodes":["ifeq","ifne","if_acmpne","ifnull","ifeq","ifgt"],
+            "boolean_return_count":3,
+            "invoke_count":9,
+            "field_read_count":0,
+            "field_write_count":0,
+            "callsite_symbols":[
+                "getRadius:()F","getX:()D","getZ:()D",
+                "net/minecraft/world/entity/LivingEntity.distanceToSqr:(DDD)D",
+                "net/minecraft/world/entity/LivingEntity.getY:()D",
+                "net/minecraft/world/entity/LivingEntity.isAlive:()Z",
+                "net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z",
+                "net/minecraft/world/entity/LivingEntity.isSpectator:()Z",
+            ],
+            "boundary":"FILTER_OUTCOMES_NOT_PROVED",
+        }
+
+    @staticmethod
+    def cap():
+        return {
+            "status":"MAXTARGETS_AND_BUD_COSITES_ONLY",
+            "instruction_count":196,
+            "max_targets_field_read_count":2,
+            "bud_ctor_call_count":1,
+            "first_max_targets_read_before_first_bud_ctor":True,
+            "first_read_to_ctor_instruction_gap":49,
+            "conditional_branch_count":4,
+            "boundary":"TARGET_COUNT_CAP_NOT_PROVED",
+        }
+
+    def test_exact_release_requires_native_method_and_cap_fingerprint(self):
+        native,cap=self.native(),self.cap()
+        certify_exact_native_selection_109(native,cap)
+        for change in (
+            {"status":"NOT_PROVED"},
+            {"instruction_count":40},
+            {"conditional_opcodes":["ifeq","ifne"]},
+            {"boolean_return_count":2},
+            {"invoke_count":8},
+            {"field_read_count":1},
+            {"callsite_symbols":native["callsite_symbols"][:-1]},
+            {"boundary":"ALL_TARGETING_PROVED"},
+        ):
+            with self.subTest(native_change=change):
+                with self.assertRaises(GateError):
+                    certify_exact_native_selection_109(dict(native,**change),cap)
+        for change in (
+            {"max_targets_field_read_count":1},
+            {"bud_ctor_call_count":2},
+            {"first_read_to_ctor_instruction_gap":48},
+            {"first_max_targets_read_before_first_bud_ctor":False},
+            {"boundary":"TARGET_COUNT_CAP_PROVED"},
+        ):
+            with self.subTest(cap_change=change):
+                with self.assertRaises(GateError):
+                    certify_exact_native_selection_109(native,dict(cap,**change))
 
 if __name__=="__main__":
     unittest.main()
