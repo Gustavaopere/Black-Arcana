@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109,native_isvalidtarget_surface,wave_max_targets_surface,certify_exact_native_selection_109
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109,native_isvalidtarget_surface,wave_max_targets_surface,certify_exact_native_selection_109,native_isvalidtarget_branch_edges
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -771,6 +771,52 @@ class Exact109NativeSelectionShapeTests(unittest.TestCase):
             with self.subTest(cap_change=change):
                 with self.assertRaises(GateError):
                     certify_exact_native_selection_109(native,dict(cap,**change))
+
+class NativeIsValidTargetBranchEdgesTests(unittest.TestCase):
+    @staticmethod
+    def method():
+        return [(
+            "isValidTarget",
+            "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+            [
+                "0: aload_1",
+                "1: invokevirtual #1 // Method net/minecraft/world/entity/LivingEntity.isAlive:()Z",
+                "4: ifeq 16",
+                "7: aload_2",
+                "8: invokevirtual #2 // Method net/minecraft/world/entity/LivingEntity.isSpectator:()Z",
+                "11: ifne 16",
+                "14: iconst_1",
+                "15: ireturn",
+                "16: iconst_0",
+                "17: ireturn",
+            ],
+        )]
+
+    def test_bounded_branches_resolve_targets_without_claiming_gameplay(self):
+        p=native_isvalidtarget_branch_edges(self.method())
+        self.assertEqual("ISVALIDTARGET_BRANCH_EDGES_ONLY",p["status"],p)
+        self.assertEqual(10,p["instruction_count"])
+        self.assertEqual(2,p["branch_count"])
+        self.assertEqual(["ifeq","ifne"],[b["opcode"] for b in p["branch_edges"]])
+        self.assertEqual([8,8],[b["target_index"] for b in p["branch_edges"]])
+        self.assertEqual(["constant_zero","constant_zero"],
+                         [b["destination_kind"] for b in p["branch_edges"]])
+        self.assertEqual("PATH_PREDICATES_AND_ENTITY_ROLES_NOT_PROVED",p["boundary"])
+        self.assertNotIn("accepts_player",p)
+
+    def test_unresolvable_branch_target_is_fail_closed(self):
+        method=self.method()
+        name,desc,rows=method[0]
+        rows=rows.copy()
+        rows[2]=rows[2].replace("ifeq 16","ifeq 999")
+        self.assertEqual("NOT_PROVED",native_isvalidtarget_branch_edges([(name,desc,rows)])["status"])
+
+    def test_ambiguous_or_oversized_method_is_rejected(self):
+        with self.assertRaises(GateError):
+            native_isvalidtarget_branch_edges(self.method()*2)
+        name,desc,_=self.method()[0]
+        with self.assertRaises(GateError):
+            native_isvalidtarget_branch_edges([(name,desc,[f"{i}: nop" for i in range(90)])])
 
 if __name__=="__main__":
     unittest.main()
