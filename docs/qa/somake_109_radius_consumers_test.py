@@ -451,7 +451,7 @@ class WavePredicateBootstrapBindingTests(unittest.TestCase):
             "  0: #314 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(...)\n"
             "    Method arguments:\n"
             "      #1 (Ljava/lang/Object;)Z\n"
-            "      #2 REF_invokeStatic com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$0:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z\n"
+            "      #2 REF_invokeVirtual com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$0:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z\n"
             "      #3 (Ljava/lang/Object;)Z\n"
             "  1: #315 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(...)\n"
             "    Method arguments:\n"
@@ -465,6 +465,12 @@ class WavePredicateBootstrapBindingTests(unittest.TestCase):
         self.assertEqual("lambda$launchWave$0",p["implementation_method"])
         self.assertEqual(0,p["bootstrap_index"])
         self.assertEqual("BODY_BRANCH_OUTCOMES_NOT_PROVED",p["boundary"])
+
+    def test_static_method_handle_is_not_the_physical_predicate_binding(self):
+        self.assertEqual("NOT_PROVED",wave_predicate_bootstrap_binding(
+            self.bootstrap().replace("REF_invokeVirtual com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$0",
+                                     "REF_invokeStatic com/somake/somakespells/entity/FuneralBloomControllerEntity.lambda$launchWave$0"),
+            self.caller(),self.inventory())["status"])
 
     def test_wrong_bootstrap_or_nonpredicate_caller_fails_closed(self):
         self.assertEqual("NOT_PROVED",wave_predicate_bootstrap_binding(
