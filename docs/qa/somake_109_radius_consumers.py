@@ -339,6 +339,10 @@ def calls_in_method(body:list[str])->dict:
                       for category,keywords in KEYS.items()},
     }
 
+def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]])->dict:
+    """Bounded, read-only predicate helper inventory; bootstrap owner not yet proved."""
+    return {"status":"NOT_PROVED","reason":"lambda_candidate_inventory_unimplemented"}
+
 def analyze_javap(text:str, label:str)->dict:
     if not text or len(text)>MAX_TEXT:raise GateError("oversized class output")
     declared=sections(isolate_named_methods(text))
@@ -361,6 +365,7 @@ def analyze_javap(text:str, label:str)->dict:
         report["wave_radius_aabb_shape"]=wave_radius_aabb_shape(candidates[0])
         report["wave_inflate_operand_proof"]=prove_wave_inflate_operands(candidates[0])
         report["wave_query_aabb_link"]=wave_query_aabb_link(candidates[0])
+        report["wave_lambda_candidates"]=lambda_selection_candidate_inventory(declared)
     return report
 
 def certify_exact_consumer_surface(outcome:dict)->None:
@@ -428,6 +433,7 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
+    print("SOMAKE_WAVE_LAMBDA_CANDIDATES",json.dumps(outcome["controller"]["wave_lambda_candidates"],sort_keys=True))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
     return {"status":"PASS_SHA_EXACT_WAVE_XZ_RADIUS_Y_10_5_AND_QUERY_AABB_LINK",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
