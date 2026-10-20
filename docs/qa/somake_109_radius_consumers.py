@@ -178,12 +178,32 @@ def wave_query_aabb_link(body:list[str])->dict:
        r"\(Lcom/somake/somakespells/entity/FuneralBloomControllerEntity;\)"
        r"Ljava/util/function/Predicate;",between[1][3]):
         mode="captured_this_predicate"
+    elif shape==["astore_3","new","dup","aload_1","ldc","aload_3",
+                 "aload_0","aload_2","invokedynamic"]:
+        # The return value of inflate is the top-of-stack AABB; astore_3
+        # consumes it. No intervening write to slot 3 is possible in this
+        # complete bounded window. aload_3 then supplies the exact query AABB.
+        new_symbol=between[1][3]
+        klass=between[4][3]
+        pred=between[8][3]
+        if not re.fullmatch(r"class [A-Za-z0-9_/$]+",new_symbol):
+            return fail("unrecognized_collection_allocation_symbol")
+        if klass!="class net/minecraft/world/entity/LivingEntity":
+            return fail("query_entity_class_not_living_entity")
+        if not re.fullmatch(
+            r"InvokeDynamic #\d+:test:"
+            r"\(Lcom/somake/somakespells/entity/FuneralBloomControllerEntity;"
+            r"Lnet/minecraft/world/entity/LivingEntity;\)"
+            r"Ljava/util/function/Predicate;",pred):
+            return fail("predicate_capture_descriptor_unproven")
+        mode="via_local_3"
     else:
         return fail("intervening_predicate_stack_not_certified",**window_summary())
     return {
         "status":"PROVED_WAVE_INFLATE_RESULT_CONSUMED_BY_ENTITY_QUERY",
         "inflate_call_count":1,"entity_query_call_count":1,
         "aabb_transport":mode,
+        "predicate_semantics":"unknown_predicate_body",
         "between_instruction_count":len(shape),
         "query_descriptor":"(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
         "instruction_count":len(rows),
