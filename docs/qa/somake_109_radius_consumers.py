@@ -444,6 +444,11 @@ def wave_max_targets_surface(body:list[str])->dict:
     }
 
 
+def native_isvalidtarget_early_guards(declared:list[tuple[str,str,list[str]]])->dict:
+    """Fail-closed candidate early-guard diagnostic; no semantics by co-occurrence."""
+    return {"status":"NOT_PROVED","reason":"early_guard_stack_shape_unimplemented"}
+
+
 def native_isvalidtarget_branch_edges(declared:list[tuple[str,str,list[str]]])->dict:
     """Bounded JVM branch destinations. Does not publish provider instructions."""
     descriptor="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
@@ -752,6 +757,7 @@ def analyze_javap(text:str, label:str)->dict:
         report["wave_predicate_branch_topology"]=wave_predicate_branch_topology(declared)
         report["native_isvalidtarget_surface"]=native_isvalidtarget_surface(declared)
         report["native_isvalidtarget_branch_edges"]=native_isvalidtarget_branch_edges(declared)
+        report["native_isvalidtarget_early_guards"]=native_isvalidtarget_early_guards(declared)
         report["wave_max_targets_surface"]=wave_max_targets_surface(candidates[0])
     return report
 
@@ -841,6 +847,7 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_WAVE_PREDICATE_BRANCH_TOPOLOGY",json.dumps(outcome["controller"]["wave_predicate_branch_topology"],sort_keys=True))
     print("SOMAKE_NATIVE_ISVALIDTARGET_SURFACE",json.dumps(outcome["controller"]["native_isvalidtarget_surface"],sort_keys=True))
     print("SOMAKE_ISVALIDTARGET_BRANCH_EDGES",json.dumps(outcome["controller"]["native_isvalidtarget_branch_edges"],sort_keys=True))
+    print("SOMAKE_ISVALIDTARGET_EARLY_GUARDS",json.dumps(outcome["controller"]["native_isvalidtarget_early_guards"],sort_keys=True))
     print("SOMAKE_WAVE_MAXTARGETS_SURFACE",json.dumps(outcome["controller"]["wave_max_targets_surface"],sort_keys=True))
     print("SOMAKE_NATIVE_SELECTION_EXACT_GATE","PASS_SHAPE_ONLY_TARGET_FILTER_AND_CAP_COSITES")
     print("SOMAKE_WAVE_PREDICATE_BOOLEAN_EXACT_GATE","PASS_EXACT_VALID_TARGET_AND_UNSEEN_UUID")
