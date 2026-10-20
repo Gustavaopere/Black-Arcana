@@ -445,8 +445,39 @@ def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory
     }
 
 def certify_exact_wave_predicate_109(link:dict, inventory:dict)->None:
-    """Strict physical Somake 1.0.9 predicate bootstrap/helper release gate."""
-    return None
+    """Reject predicate bootstrap or method fingerprints other than exact 1.0.9."""
+    predicate={
+        "status":"PROVED_QUERY_PREDICATE_BOOTSTRAP_TO_LAUNCHWAVE_LAMBDA0",
+        "bootstrap_index":0,
+        "implementation_method":"lambda$launchWave$0",
+        "implementation_descriptor":"(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+        "helper_instruction_count":15,
+        "helper_conditional_branch_count":2,
+        "references_isValidTarget":True,
+        "references_activeTargetIds":True,
+        "boundary":"BODY_BRANCH_OUTCOMES_NOT_PROVED",
+    }
+    if not isinstance(link,dict) or any(link.get(k)!=v for k,v in predicate.items()):
+        raise GateError("Somake 1.0.9 Predicate bootstrap binding drift")
+    if not isinstance(inventory,dict) or inventory.get("status")!="PREDICATE_HELPER_CANDIDATES_ONLY" or inventory.get("candidate_count")!=2:
+        raise GateError("Somake 1.0.9 wave helper inventory count drift")
+    candidates=inventory.get("candidates",[])
+    if not isinstance(candidates,list) or len(candidates)!=2:
+        raise GateError("Somake 1.0.9 wave helper set drift")
+    expected=[
+        {"method":"lambda$launchWave$0",
+         "descriptor":"(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+         "instruction_count":15,"conditional_branch_count":2,
+         "mentions_isValidTarget":True,"mentions_activeTargetIds":True},
+        {"method":"lambda$launchWave$1",
+         "descriptor":"(Lnet/minecraft/world/entity/LivingEntity;)D",
+         "instruction_count":4,"conditional_branch_count":0,
+         "mentions_isValidTarget":False,"mentions_activeTargetIds":False},
+    ]
+    for i,spec in enumerate(expected):
+        candidate=candidates[i]
+        if not isinstance(candidate,dict) or any(candidate.get(k)!=v for k,v in spec.items()):
+            raise GateError("Somake 1.0.9 wave helper fingerprint drift")
 
 def analyze_javap(text:str, label:str)->dict:
     if not text or len(text)>MAX_TEXT:raise GateError("oversized class output")
@@ -552,8 +583,9 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
     print("SOMAKE_WAVE_LAMBDA_CANDIDATES",json.dumps(outcome["controller"]["wave_lambda_candidates"],sort_keys=True))
     print("SOMAKE_WAVE_PREDICATE_BOOTSTRAP",json.dumps(outcome["controller"]["wave_predicate_bootstrap"],sort_keys=True))
+    print("SOMAKE_WAVE_PREDICATE_EXACT_GATE", "PASS_EXACT_LAMBDA0_REF_INVOKEVIRTUAL_AND_HELPERS")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
-    return {"status":"PASS_SHA_EXACT_WAVE_XZ_RADIUS_Y_10_5_AND_QUERY_AABB_LINK",
+    return {"status":"PASS_SHA_EXACT_WAVE_QUERY_PREDICATE_BOOTSTRAP_BOUND",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
             "scope":outcome,
             "limits":[
