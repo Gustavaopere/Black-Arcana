@@ -381,8 +381,40 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
     }
 
 def native_isvalidtarget_surface(declared:list[tuple[str,str,list[str]]])->dict:
-    """Bounded native method summary, without claiming branch semantics."""
-    return {"status":"NOT_PROVED","reason":"native_isvalidtarget_scan_not_implemented"}
+    """Report only bounded symbols/branch topology of the native helper."""
+    desc="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
+    if len(declared)>MAX_METHODS:raise GateError("unbounded native method declaration set")
+    matches=[body for name,signature,body in declared
+             if name=="isValidTarget" and signature==desc]
+    if len(matches)>1:raise GateError("duplicate exact isValidTarget member")
+    if not matches:return {"status":"NOT_PROVED","reason":"exact_isValidTarget_boolean_member_missing"}
+    rows=opcode_rows(matches[0])
+    if len(rows)>320:raise GateError("unbounded isValidTarget member")
+    meta=calls_in_method(matches[0])
+    from collections import Counter
+    opcodes=[op for _,op,_,_ in rows]
+    cond=[op for op in opcodes if op.startswith("if")]
+    returns=[op for op in opcodes if op.endswith("return")]
+    fields=meta["field_symbols"]
+    methods=meta["callsite_symbols"]
+    if len(fields)>40 or len(methods)>MAX_SYMBOLS_PER_METHOD:
+        raise GateError("unbounded isValidTarget symbol inventory")
+    return {
+        "status":"ISVALIDTARGET_MEMBER_SHAPE_ONLY",
+        "method":"isValidTarget",
+        "descriptor":desc,
+        "instruction_count":len(rows),
+        "conditional_opcodes":cond[:60],
+        "boolean_return_count":opcodes.count("ireturn"),
+        "return_opcodes":dict(sorted(Counter(returns).items())),
+        "invoke_count":meta["invoke_count"],
+        "invokedynamic_count":meta["invokedynamic_count"],
+        "callsite_symbols":methods[:60],
+        "field_symbols":fields[:40],
+        "field_read_count":sum(op in ("getfield","getstatic") for op in opcodes),
+        "field_write_count":sum(op in ("putfield","putstatic") for op in opcodes),
+        "boundary":"FILTER_OUTCOMES_NOT_PROVED",
+    }
 
 
 def wave_predicate_branch_topology(declared:list[tuple[str,str,list[str]]])->dict:
