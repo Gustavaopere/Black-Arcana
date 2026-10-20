@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -610,6 +610,26 @@ class WavePredicateBranchTopologyTests(unittest.TestCase):
         rows[4]=rows[4].replace("ifeq 30","ifeq 999")
         result=wave_predicate_branch_topology([(c[0][0],c[0][1],rows)])
         self.assertEqual("NOT_PROVED",result["status"])
+
+class Exact109PredicateBooleanGateTests(unittest.TestCase):
+    def test_exact_valid_and_unseen_predicate_gate_rejects_mutations(self):
+        proof=wave_predicate_branch_topology(WavePredicateBranchTopologyTests.compiled_like_boolean_body())
+        self.assertEqual("PROVED_WAVE_PREDICATE_VALID_AND_NOT_ACTIVE",proof["status"])
+        certify_exact_wave_boolean_109(proof)
+        for change in (
+            {"status":"NOT_PROVED"},
+            {"conditional_opcodes":["ifne","ifne"]},
+            {"conditional_destination_kinds":["boolean_0","boolean_1"]},
+            {"boolean_return_count":2},
+            {"semantic_guards":["true_only_if_valid","false_if_new_uuid"]},
+            {"ordered_checks":["Set.contains","getUUID","isValidTarget"]},
+            {"instruction_count":14},
+            {"return_constant_categories":["0","1"]},
+            {"boolean_call_adjacent_to_branch":[False,True]},
+        ):
+            with self.subTest(change=change):
+                with self.assertRaises(GateError):
+                    certify_exact_wave_boolean_109(dict(proof,**change))
 
 if __name__=="__main__":
     unittest.main()
