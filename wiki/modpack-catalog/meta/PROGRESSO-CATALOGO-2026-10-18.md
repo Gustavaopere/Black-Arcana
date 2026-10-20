@@ -1,5 +1,43 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
+## Checkpoint operacional reconciliado — 20/10/2026 (documentação; sem nova prova binária)
+
+**Authority revisada:** `Black-Arcana/main@2e23b94638b4eed9a6d7b83cd1a6b7a82ad6e91b` após merge [#845](https://github.com/Gustavaopere/Black-Arcana/pull/845); modlist sibling `neoforge-rpg-skilltree/main@ed5b65b890767b406ce41127bcb793775263c7bd`; Enshrouded `main@a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este checkpoint apenas reconcilia informações **já documentadas**; hashes de JAR e validações de gameplay não foram reexecutados.
+
+**Barra 1 — universo global de todas as magias, rituais, técnicas e ações sobrenaturais:**
+
+```text
+TODOS OS MODS  [????????????????????]  —%  denominador total não identificado
+Piso atual do ledger: >=1.856 objetos semânticos (>=1.854 no escopo estrito).
+Histórico 1.857/1.855 mantido em revisão após exclusão de registro não publicado.
+```
+
+**Subcampanha fechada (não substitui a barra global):** `[██████████████████░░] 35/39 = 89,74%` providers com registro **binário exato** no recorte fixo de 39, conforme checkpoint Hazen de 15/10 no [tracker de pendências](PENDENCIAS-MAGICAS-ATUAIS.md). A diferença 4/39 não define quais quatro magias faltam, tampouco a quantidade de fichas técnicas. PRs #811, #812, #817 e #820 continuam **abertas**, e não se confundem com `main` nem recebem merge por essa métrica.
+
+**Barra 2 — Somake Spells 1.0.9, provider sendo aprofundado:**
+
+```text
+IDENTIDADES     [████████████████████]  83/83   = 100% catalogadas na registry
+DOWNSTREAM      [█░░░░░░░░░░░░░░░░░░░]   5/83   =   6,02% neste recorte
+PERKS MUTADORAS [????????????????????]  —% (0 hooks aprovados; demanda sem denominador)
+```
+
+O aprofundamento adicional de `somakespells:funeral_bloom` em [ficha individual](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md) não aumenta a contagem de identidades nem o número 5 de fichas downstream já visitadas. Após [#845](https://github.com/Gustavaopere/Black-Arcana/pull/845), **três condições de rejeição de `isValidTarget` são comprovadas**, porém três branches posteriores, papéis de A/B, `maxTargets` efetivo, efeitos da bud e hooks continuam `NOT_PROVED`; `FAIL_CLOSED`.
+
+**Painel de providers e escopo correto da contagem:**
+
+| Provider | Identidades/objetos conhecidos | Aprofundamento técnico e estado de integração |
+|---|---|---|
+| Somake Spells 1.0.9 | ✅ 83/83 IDs de spell | ⚠️ 5/83 fichas com auditoria downstream; ⛔ 0 hooks mutadores homologados |
+| Iron's Spells 'n Spellbooks 3.16.3 | ✅ 110/110 **IDs ativos** no catálogo | 🟡 **110/110 dossiês causais source-pinned** apenas na [PR #825 draft](https://github.com/Gustavaopere/Black-Arcana/pull/825); 110 fichas-base mapeadas na [PR #795 draft](https://github.com/Gustavaopere/Black-Arcana/pull/795); ⚠️ sem equivalência JAR instalado/QA universal; ⛔ adapters não dedutíveis da cobertura documental |
+| Epic Fight 21.17.3.1 | ✅ 43/43 IDs core classificados; 42/42 JSONs físicos e 28 dossiês reportados na branch #825 | ⚠️ técnicas, ataque/fase/dano e carregamento têm provas por eixo, mas nenhum número de perks homologadas inferido; PR #825 permanece **draft** |
+| Universo de outras famílias | ⚠️ recorte parcial com mínimos semânticos documentados | 🟡 identificar todos os providers pela modlist; ⛔ nenhuma conclusão global de completude até fechar o denominador |
+
+O **ledger da PR #825** corrige a fila ativa do Iron's: `soulfire_ray` e `thunder_step` têm implementações de fonte mas **registro comentado**, portanto **fora** das 110 magias ativas; `cloud_of_regeneration` está **deprecated**, preservada como LEGACY, fora do denominador. Checkpoints intermediários 101/110 e 102/110 daquela mesma branch são históricos e não devem sobrescrever o novo 110/110 causal.
+
+**Guardas para o próximo trabalho:** separar identidade registrada, parâmetros estáticos, dataflow downstream, hook per-player e comportamento efetivo no mundo; inserir classes/métodos/source pins por ficha; não transformar evento observacional em setter. Custos e casting permanecem em Iron's/Somake, dano/mundo mágico próprio em Black Arcana, e Mastery/perks no RPG Skill Tree por contrato real. Stage 06.05 🟡 em auditoria; Stage 09 físico PENDING. Este checkpoint de documentação não modifica runtime, testes binários ou Stage.
+
+
 **Checkpoint documental com base em `Black-Arcana/main@511ec03f0da62ebfc1722825def50354594976c3` e modlist física indexada no `neoforge-rpg-skilltree/main@ed5b65b890767b406ce41127bcb793775263c7bd`.** Este arquivo distingue a cobertura dos objetos mágicos, a dos registros binários, o aprofundamento por campo e a habilitação real de perks.
 
 ## Barra 1 — universo de magias/rituais/ações sobrenaturais de todos os mods
