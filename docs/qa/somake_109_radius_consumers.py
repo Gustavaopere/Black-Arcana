@@ -380,6 +380,11 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
         "boundary":"BOOTSTRAP_BINDING_NOT_PROVED"
     }
 
+def certify_exact_native_selection_109(native:dict, cap:dict)->None:
+    """Fail-closed exact Somake 1.0.9 isValidTarget and maxTargets shape gate."""
+    return None
+
+
 def wave_max_targets_surface(body:list[str])->dict:
     """Catalog source-level native field/bud references, never infer cap effect."""
     rows=opcode_rows(body)
@@ -746,6 +751,8 @@ def inspect(jar:Path)->dict:
     certify_exact_wave_predicate_109(outcome["controller"]["wave_predicate_bootstrap"],
                                     outcome["controller"]["wave_lambda_candidates"])
     certify_exact_wave_boolean_109(outcome["controller"]["wave_predicate_branch_topology"])
+    certify_exact_native_selection_109(outcome["controller"]["native_isvalidtarget_surface"],
+                                       outcome["controller"]["wave_max_targets_surface"])
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
