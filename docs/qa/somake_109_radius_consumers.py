@@ -456,8 +456,8 @@ def native_isvalidtarget_early_guards(declared:list[tuple[str,str,list[str]]])->
     if len(rows)>72:raise GateError("native isValidTarget oversized")
     if len(rows)<12:return fail("native_precondition_window_missing")
     ops=[r[1] for r in rows[:11]]
-    expected=["aload_1","invokevirtual","ifeq","aload_1","invokevirtual",
-              "ifne","aload_1","aload_2","if_acmpne","iconst_0","ireturn"]
+    expected=["aload_2","invokevirtual","ifeq","aload_2","invokevirtual",
+              "ifne","aload_2","aload_1","if_acmpne","iconst_0","ireturn"]
     if ops!=expected:
         mismatches=[{"position":i,"expected":want,"observed":have}
                     for i,(want,have) in enumerate(zip(expected,ops)) if want!=have]
@@ -479,8 +479,8 @@ def native_isvalidtarget_early_guards(declared:list[tuple[str,str,list[str]]])->
             return fail("early_guard_target_mismatch")
     return {
         "status":"PROVED_NATIVE_EARLY_ALIVE_NOT_SPECTATOR_NOT_IDENTICAL",
-        "examined_jvm_local":1,
-        "compared_jvm_local":2,
+        "examined_jvm_local":2,
+        "compared_jvm_local":1,
         "branch_ops":["ifeq","ifne","if_acmpne"],
         "rejection_mode":"DIRECT_ZERO_RETURN_ON_THREE_REJECTIONS",
         "boundary":"Semantics of later branches and actor roles remain unproved",
