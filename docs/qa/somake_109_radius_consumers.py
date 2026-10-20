@@ -445,8 +445,31 @@ def wave_max_targets_surface(body:list[str])->dict:
 
 
 def certify_exact_native_target_cfg_109(edges:dict, early:dict)->None:
-    """Version-exact early target guard and branch edge gate (RED seam)."""
-    return None
+    """Fail exact 1.0.9 if native target branch or early predicate contract drifts."""
+    edge_expected={
+        "status":"ISVALIDTARGET_BRANCH_EDGES_ONLY",
+        "instruction_count":41,"branch_count":6,"return_count":3,
+        "branch_edges":[
+            {"index":2,"opcode":"ifeq","target_index":9,"destination_kind":"constant_zero"},
+            {"index":5,"opcode":"ifne","target_index":9,"destination_kind":"constant_zero"},
+            {"index":8,"opcode":"if_acmpne","target_index":11,"destination_kind":"other"},
+            {"index":12,"opcode":"ifnull","target_index":19,"destination_kind":"other"},
+            {"index":16,"opcode":"ifeq","target_index":19,"destination_kind":"other"},
+            {"index":36,"opcode":"ifgt","target_index":39,"destination_kind":"constant_zero"},
+        ],
+        "boundary":"PATH_PREDICATES_AND_ENTITY_ROLES_NOT_PROVED",
+    }
+    early_expected={
+        "status":"PROVED_NATIVE_EARLY_ALIVE_NOT_SPECTATOR_NOT_IDENTICAL",
+        "examined_jvm_local":2,"compared_jvm_local":1,
+        "branch_ops":["ifeq","ifne","if_acmpne"],
+        "rejection_mode":"DIRECT_ZERO_RETURN_ON_THREE_REJECTIONS",
+        "boundary":"Semantics of later branches and actor roles remain unproved",
+    }
+    if not isinstance(edges,dict) or any(edges.get(k)!=v for k,v in edge_expected.items()):
+        raise GateError("Somake 1.0.9 native target conditional edges drift")
+    if not isinstance(early,dict) or any(early.get(k)!=v for k,v in early_expected.items()):
+        raise GateError("Somake 1.0.9 native target early-guard operands drift")
 
 
 def native_isvalidtarget_early_guards(declared:list[tuple[str,str,list[str]]])->dict:
@@ -893,11 +916,12 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_NATIVE_ISVALIDTARGET_SURFACE",json.dumps(outcome["controller"]["native_isvalidtarget_surface"],sort_keys=True))
     print("SOMAKE_ISVALIDTARGET_BRANCH_EDGES",json.dumps(outcome["controller"]["native_isvalidtarget_branch_edges"],sort_keys=True))
     print("SOMAKE_ISVALIDTARGET_EARLY_GUARDS",json.dumps(outcome["controller"]["native_isvalidtarget_early_guards"],sort_keys=True))
+    print("SOMAKE_NATIVE_ISVALIDTARGET_CFG_EXACT_GATE","PASS_3_EARLY_REJECTION_GUARDS_6_RESOLVED_BRANCHES")
     print("SOMAKE_WAVE_MAXTARGETS_SURFACE",json.dumps(outcome["controller"]["wave_max_targets_surface"],sort_keys=True))
     print("SOMAKE_NATIVE_SELECTION_EXACT_GATE","PASS_SHAPE_ONLY_TARGET_FILTER_AND_CAP_COSITES")
     print("SOMAKE_WAVE_PREDICATE_BOOLEAN_EXACT_GATE","PASS_EXACT_VALID_TARGET_AND_UNSEEN_UUID")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
-    return {"status":"PASS_SHA_EXACT_NATIVE_SELECTION_SHAPE_AND_MAXTARGETS_COSITES",
+    return {"status":"PASS_SHA_EXACT_NATIVE_ISVALIDTARGET_EARLY_GUARDS_AND_CFG",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
             "scope":outcome,
             "limits":[
