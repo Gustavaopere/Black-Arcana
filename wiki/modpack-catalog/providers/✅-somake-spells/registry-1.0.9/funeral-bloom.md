@@ -252,3 +252,13 @@ Resultado: uma **única identidade** `somakespells:funeral_bloom`, ainda condici
 - **Identidade e parâmetros:** a expressão acima usa nomes abstratos `A/B` para as duas referências `LivingEntity` capturadas; papéis de caster, owner ou alvo efetivo e o conteúdo interno de `isValidTarget` não foram certificados. O campo `maxTargets:I` aparece em `launchWave`, **sem prova do limite de buds**, nem de ordenação ou de escolha final.
 - **AABBs e efeitos:** cadeia anterior confirmada até a consulta `AABB.inflate(R,10.5d,R) → getEntitiesOfClass(LivingEntity.class,AABB,Predicate)`; nenhuma conclusão nova para a AABB inicial, impacto de `FuneralBloomBudEntity.impact`, dano/cura real, Wither, área de acerto ou física em Survival.
 - **Perks:** ⛔ `FAIL_CLOSED` para alterar target, equipe/PvP, `maxTargets`, raio ou deduplicação sem hook público de provider e teste físico. Sem novas magias, sem adapters, sem integração de Mastery. Somake **83/83** catalogadas; ficha já entre as **5/83** com downstream.
+
+## isValidTarget e maxTargets — superfícies nativas auditadas (20/10/2026, PR #844)
+
+**Prova física:** [Java21 #39507349822](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39507349822), `SUCCESS` / **53 testes**, Somake 1.0.9 File 8867079, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, `PASS_SHA_EXACT_NATIVE_SELECTION_SHAPE_AND_MAXTARGETS_COSITES`.
+
+- `FuneralBloomControllerEntity.isValidTarget(LivingEntity,LivingEntity):boolean` possui 41 instruções, 6 desvios e 3 retornos booleanos; chama `isAlive`, `isSpectator`, `isAlliedTo`, `distanceToSqr`, `getX/Y/Z` e `getRadius`. **A semântica concreta de cada branch, a fórmula de distância e a identidade gameplay de A/B não estão comprovadas.** Não atribuir rejeição de aliados, espectador ou alcance de bloco com base na mera referência.
+- `FuneralBloomControllerEntity.launchWave(ServerLevel)` lê o campo `maxTargets:I` **2 vezes** e possui **1** chamada ao construtor de `FuneralBloomBudEntity`; a primeira leitura antecede o construtor em 49 instruções. **Não está demonstrado** que um limite quantitativo resulte dessas operações, tampouco quantas buds efetivamente nascem em gameplay.
+- O `Predicate` interno já tinha regra `isValidTarget(A,B) && !activeTargetIds.contains(B.getUUID())` comprovada pela PR #843; esta rodada aprofunda **referências dentro** de `isValidTarget`, mas não fecha as entradas/capturas, checks PvP/aliados, nem `bud.impact`, cura/dano, física ou cliente.
+- **Perks:** nenhuma API homologada para alterar validação de alvo, cap, áreas ou efeitos. `FAIL_CLOSED`; conservar provider-native casting e Mastery sem duplicação. A identidade `somakespells:funeral_bloom` permanece única, já nas **5/83** fichas com downstream na campanha.
+
