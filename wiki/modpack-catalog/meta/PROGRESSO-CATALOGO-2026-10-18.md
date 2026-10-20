@@ -213,3 +213,11 @@ Provas por método em [dossiê de radius controller](../providers/✅-somake-spe
 - **Pendências mantidas:** owner/caster/candidato efetivos, corpo/branches de `isValidTarget`, defaults/caps de `maxTargets`, iteração/sort/seleção, spawn/impacto das buds, alcance real, dano/cura, física provider-loaded/cliente/Survival/multiplayer, hook mutador e autorização PvP/claims. ⛔ `FAIL_CLOSED`, Stage 06.05 🟡 e Stage 09 físico PENDING conforme D035. Nenhuma promoção, adapter ou runtime alterado.
 
 [Dossiê dos consumidores](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md) · [ficha individual](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+## Continuação Somake — três guardas de isValidTarget certificados (20/10/2026, PR #845)
+
+**Global:** —%, piso conservador histórico `>=1.856` objetos semânticos, denominador final ainda aberto e divergência 1.856/1.857 ainda não reconciliada. **Somake 1.0.9:** 83/83 IDs físicos catalogados (100% de identidades); **5/83 = 6,02%** fichas com downstream na campanha. Nenhum novo ID, adapter ou hook mutador.
+
+- [Auditoria SHA-exata Java21 #39511081176](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39511081176): `SUCCESS / 61 testes`, File 8867079, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, gate `PASS_SHA_EXACT_NATIVE_ISVALIDTARGET_EARLY_GUARDS_AND_CFG`. A identificação dos **seis destinos** de desvio de `isValidTarget(LivingEntity,LivingEntity):boolean` foi fixada, incluindo **três rejeições causais comprovadas**: slot JVM 2 deve `isAlive()`, não deve `isSpectator()` e não pode ser a mesma referência de slot JVM 1. O método possui 41 instruções e três `ireturn`.
+- ⚠️ **Pendente:** provar o significado e a fórmula dos três branches posteriores, owner/caster/candidato, `isAlliedTo`, `distanceToSqr`/alcance, `maxTargets` até cardinalidade de buds, construção/spawn real, `FuneralBloomBudEntity.impact` independente, dano/cura, modpack físico e API pública para modificadores.
+- ⛔ `FAIL_CLOSED` para perks mutadoras; Stage 06.05 🟡 e Stage 09 físico PENDING. Esta prova estática **não** valida a experiência de jogo nem avança Stage. [Dossiê técnico](../providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md).
