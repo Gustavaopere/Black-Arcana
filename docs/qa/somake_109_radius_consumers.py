@@ -417,7 +417,7 @@ def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory
     if "REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:" not in headers[k].group(2):
         return reject("wrong_lambda_bootstrap_factory")
     pattern=(
-        r"(?m)^\s*#\d+ REF_invokeStatic "
+        r"(?m)^\s*#\d+ REF_invokeVirtual "
         r"com/somake/somakespells/entity/FuneralBloomControllerEntity"
         r"\.lambda\$launchWave\$0:"
         +re.escape(desc)+r"\s*$"
