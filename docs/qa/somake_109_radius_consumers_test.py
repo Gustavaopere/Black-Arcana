@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -384,6 +384,49 @@ class ExactWaveQueryPhysicalGateTests(unittest.TestCase):
             with self.subTest(edits=edits):
                 with self.assertRaises(GateError):
                     certify_exact_wave_query_109(dict(original,**edits))
+
+
+class WavePredicateHelperInventoryTests(unittest.TestCase):
+    @staticmethod
+    def candidate():
+        return [(
+            "lambda$launchWave$0",
+            "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+            ["0: aload_0",
+             "1: aload_1",
+             "2: invokevirtual #1 // Method isValidTarget:(Lnet/minecraft/world/entity/LivingEntity;)Z",
+             "5: ifeq 11",
+             "8: iconst_1",
+             "9: ireturn",
+             "11: iconst_0",
+             "12: ireturn"]
+        )]
+
+    def test_observe_predicate_candidate_without_proving_bootstrap_binding(self):
+        p=lambda_selection_candidate_inventory(self.candidate())
+        self.assertEqual("PREDICATE_HELPER_CANDIDATES_ONLY",p["status"],p)
+        self.assertEqual(1,p["candidate_count"])
+        one=p["candidates"][0]
+        self.assertEqual("lambda$launchWave$0",one["method"])
+        self.assertEqual(8,one["instruction_count"])
+        self.assertTrue(one["mentions_isValidTarget"])
+        self.assertEqual(1,one["conditional_branch_count"])
+        self.assertEqual("BOOTSTRAP_BINDING_NOT_PROVED",p["boundary"])
+
+    def test_non_wave_lambda_and_missing_candidate_fail_closed(self):
+        p=lambda_selection_candidate_inventory([(
+            "lambda$impact$0","()Z",["0: iconst_1","1: ireturn"])])
+        self.assertEqual("NOT_PROVED",p["status"])
+
+    def test_ambiguous_duplicate_candidate_is_rejected(self):
+        with self.assertRaises(GateError):
+            lambda_selection_candidate_inventory(self.candidate()+self.candidate())
+
+    def test_unbounded_candidate_method_is_rejected(self):
+        oversized=[("lambda$launchWave$0","()Z",
+                   [f"{i}: nop" for i in range(251)])]
+        with self.assertRaises(GateError):
+            lambda_selection_candidate_inventory(oversized)
 
 if __name__=="__main__":
     unittest.main()
