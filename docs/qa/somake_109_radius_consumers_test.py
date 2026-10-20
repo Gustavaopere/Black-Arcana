@@ -293,6 +293,52 @@ class WaveQueryAabbCausalityTests(unittest.TestCase):
         self.assertEqual("direct_stack",p["aabb_transport"])
         self.assertNotIn("filter_semantics_proved",p)
 
+    @staticmethod
+    def stored_then_loaded():
+        return [
+            "0: aload_0",
+            "1: invokevirtual #1 // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;",
+            "4: dconst_1",
+            "5: dconst_1",
+            "6: dconst_1",
+            "7: invokevirtual #2 // Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;",
+            "10: astore_3",
+            "11: new #3 // class java/util/ArrayList",
+            "14: dup",
+            "15: aload_1",
+            "16: ldc #4 // class net/minecraft/world/entity/LivingEntity",
+            "18: aload_3",
+            "19: aload_0",
+            "20: aload_2",
+            "21: invokedynamic #5, 0 // InvokeDynamic #0:test:(Lcom/somake/somakespells/entity/FuneralBloomControllerEntity;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/function/Predicate;",
+            "26: invokevirtual #6 // Method net/minecraft/server/level/ServerLevel.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+            "29: invokespecial #7 // Method java/util/ArrayList.\"<init>\":(Ljava/util/Collection;)V",
+            "32: areturn",
+        ]
+
+    def test_stored_aabb_reloaded_as_query_argument(self):
+        p=wave_query_aabb_link(self.stored_then_loaded())
+        self.assertEqual("PROVED_WAVE_INFLATE_RESULT_CONSUMED_BY_ENTITY_QUERY",p["status"],p)
+        self.assertEqual("via_local_3",p["aabb_transport"])
+        self.assertEqual(9,p["between_instruction_count"])
+        self.assertEqual("unknown_predicate_body",p["predicate_semantics"])
+
+    def test_slot_overwrite_is_not_proven(self):
+        rows=self.stored_then_loaded()
+        rows[12]=rows[12].replace("aload_3","aload_2")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+        rows=self.stored_then_loaded()
+        rows[7]=rows[7].replace("astore_3","astore_2")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+
+    def test_lambda_signature_and_box_type_must_match(self):
+        rows=self.stored_then_loaded()
+        rows[15]=rows[15].replace("java/util/function/Predicate","java/util/function/Function")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+        rows=self.stored_then_loaded()
+        rows[11]=rows[11].replace("LivingEntity","Other")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+
     def test_unrelated_query_or_stored_box_must_fail_closed(self):
         rows=self.direct_query()
         rows[9]=rows[9].replace("getEntitiesOfClass","getEntities")
