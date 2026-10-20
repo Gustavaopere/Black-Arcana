@@ -381,8 +381,40 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
     }
 
 def certify_exact_native_selection_109(native:dict, cap:dict)->None:
-    """Fail-closed exact Somake 1.0.9 isValidTarget and maxTargets shape gate."""
-    return None
+    """Fail-closed version-exact structural proof; never claim semantic cap."""
+    want_native={
+        "status":"ISVALIDTARGET_MEMBER_SHAPE_ONLY",
+        "descriptor":"(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+        "instruction_count":41,
+        "conditional_opcodes":["ifeq","ifne","if_acmpne","ifnull","ifeq","ifgt"],
+        "boolean_return_count":3,
+        "invoke_count":9,
+        "field_read_count":0,
+        "field_write_count":0,
+        "callsite_symbols":[
+            "getRadius:()F","getX:()D","getZ:()D",
+            "net/minecraft/world/entity/LivingEntity.distanceToSqr:(DDD)D",
+            "net/minecraft/world/entity/LivingEntity.getY:()D",
+            "net/minecraft/world/entity/LivingEntity.isAlive:()Z",
+            "net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z",
+            "net/minecraft/world/entity/LivingEntity.isSpectator:()Z",
+        ],
+        "boundary":"FILTER_OUTCOMES_NOT_PROVED",
+    }
+    want_cap={
+        "status":"MAXTARGETS_AND_BUD_COSITES_ONLY",
+        "instruction_count":196,
+        "max_targets_field_read_count":2,
+        "bud_ctor_call_count":1,
+        "first_max_targets_read_before_first_bud_ctor":True,
+        "first_read_to_ctor_instruction_gap":49,
+        "conditional_branch_count":4,
+        "boundary":"TARGET_COUNT_CAP_NOT_PROVED",
+    }
+    if not isinstance(native,dict) or any(native.get(k)!=v for k,v in want_native.items()):
+        raise GateError("Somake 1.0.9 native isValidTarget body fingerprint drift")
+    if not isinstance(cap,dict) or any(cap.get(k)!=v for k,v in want_cap.items()):
+        raise GateError("Somake 1.0.9 wave maxTargets or bud structural fingerprint drift")
 
 
 def wave_max_targets_surface(body:list[str])->dict:
@@ -762,9 +794,10 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_WAVE_PREDICATE_BRANCH_TOPOLOGY",json.dumps(outcome["controller"]["wave_predicate_branch_topology"],sort_keys=True))
     print("SOMAKE_NATIVE_ISVALIDTARGET_SURFACE",json.dumps(outcome["controller"]["native_isvalidtarget_surface"],sort_keys=True))
     print("SOMAKE_WAVE_MAXTARGETS_SURFACE",json.dumps(outcome["controller"]["wave_max_targets_surface"],sort_keys=True))
+    print("SOMAKE_NATIVE_SELECTION_EXACT_GATE","PASS_SHAPE_ONLY_TARGET_FILTER_AND_CAP_COSITES")
     print("SOMAKE_WAVE_PREDICATE_BOOLEAN_EXACT_GATE","PASS_EXACT_VALID_TARGET_AND_UNSEEN_UUID")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
-    return {"status":"PASS_SHA_EXACT_WAVE_BOOLEAN_VALID_AND_UUID_NOT_ACTIVE",
+    return {"status":"PASS_SHA_EXACT_NATIVE_SELECTION_SHAPE_AND_MAXTARGETS_COSITES",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
             "scope":outcome,
             "limits":[
