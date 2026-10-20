@@ -124,6 +124,107 @@ def prove_wave_inflate_operands(body:list[str])->dict:
     return proof
 
 
+def wave_query_aabb_link(body:list[str])->dict:
+    """Certify direct, bounded AABB return handoff into the exact entity query.
+
+    The JVM stack already has ServerLevel and Class before the AABB receiver.
+    Without intervening stack mutations, the inflated AABB remains the
+    query's AABB argument. A predicate value is tracked independently.
+    """
+    rows=opcode_rows(body)
+    def fail(reason,**extra):return {"status":"NOT_PROVED","reason":reason,**extra}
+    if len(rows)>250:return fail("unbounded_wave_method")
+    box="Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;"
+    query=("Method net/minecraft/server/level/ServerLevel.getEntitiesOfClass:"
+           "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;"
+           "Ljava/util/function/Predicate;)Ljava/util/List;")
+    box_indices=[i for i,r in enumerate(rows) if r[1]=="invokevirtual" and r[3]==box]
+    query_indices=[i for i,r in enumerate(rows) if r[1]=="invokevirtual" and r[3]==query]
+    if len(box_indices)!=1 or len(query_indices)!=1:
+        return fail("nonunique_or_missing_box_or_query",inflate_call_count=len(box_indices),
+                    entity_query_call_count=len(query_indices))
+    start,end=box_indices[0],query_indices[0]
+    if end<=start:return fail("query_not_after_box")
+    between=rows[start+1:end]
+    shape=[op for _,op,_,_ in between]
+    from collections import Counter
+    def window_summary():
+        # Aggregate only: no publisher instruction sequence or JVM disassembly.
+        loads=sorted(set(op for op in shape if op.startswith(("aload","iload","fload","dload"))))
+        stores=sorted(set(op for op in shape if op.startswith(("astore","istore","fstore","dstore"))))
+        methods=sorted(set(comment for _,op,_,comment in between if op.startswith("invoke")
+                           and op!="invokedynamic"))
+        dynamic=sorted(set(comment for _,op,_,comment in between if op=="invokedynamic"))
+        return {"between_instruction_count":len(shape),"opcode_histogram":dict(sorted(Counter(shape).items())),
+                "load_opcodes":loads[:20],"store_opcodes":stores[:20],
+                "intervening_method_symbols":methods[:12],"lambda_descriptors":dynamic[:6]}
+    if len(shape)>15:return fail("intervening_window_exceeds_budget",**window_summary())
+    for i,(pc,op,operand,_) in enumerate(rows):
+        if start<=i<=end:continue
+        if op.startswith(("if","goto","jsr")):
+            dest=operand.split()[0] if operand else ""
+            if not re.fullmatch(r"\d+",dest):
+                return fail("unknown_external_branch_target")
+            if rows[start][0]<int(dest)<=rows[end][0]:
+                return fail("external_branch_enters_query_window")
+        elif op in ("tableswitch","lookupswitch","jsr_w","ret","wide"):
+            return fail("unhandled_external_branch")
+    if shape==["invokedynamic"] and re.fullmatch(
+       r"InvokeDynamic #\d+:[A-Za-z0-9_$]+:\(\)Ljava/util/function/Predicate;",
+       between[0][3]):
+        mode="direct_stack"
+    elif shape==["aload_0","invokedynamic"] and re.fullmatch(
+       r"InvokeDynamic #\d+:[A-Za-z0-9_$]+:"
+       r"\(Lcom/somake/somakespells/entity/FuneralBloomControllerEntity;\)"
+       r"Ljava/util/function/Predicate;",between[1][3]):
+        mode="captured_this_predicate"
+    elif shape==["astore_3","new","dup","aload_1","ldc","aload_3",
+                 "aload_0","aload_2","invokedynamic"]:
+        # The return value of inflate is the top-of-stack AABB; astore_3
+        # consumes it. No intervening write to slot 3 is possible in this
+        # complete bounded window. aload_3 then supplies the exact query AABB.
+        new_symbol=between[1][3]
+        klass=between[4][3]
+        pred=between[8][3]
+        if not re.fullmatch(r"class [A-Za-z0-9_/$]+",new_symbol):
+            return fail("unrecognized_collection_allocation_symbol")
+        if klass!="class net/minecraft/world/entity/LivingEntity":
+            return fail("query_entity_class_not_living_entity")
+        if not re.fullmatch(
+            r"InvokeDynamic #\d+:test:"
+            r"\(Lcom/somake/somakespells/entity/FuneralBloomControllerEntity;"
+            r"Lnet/minecraft/world/entity/LivingEntity;\)"
+            r"Ljava/util/function/Predicate;",pred):
+            return fail("predicate_capture_descriptor_unproven")
+        mode="via_local_3"
+    else:
+        return fail("intervening_predicate_stack_not_certified",**window_summary())
+    return {
+        "status":"PROVED_WAVE_INFLATE_RESULT_CONSUMED_BY_ENTITY_QUERY",
+        "inflate_call_count":1,"entity_query_call_count":1,
+        "aabb_transport":mode,
+        "predicate_semantics":"unknown_predicate_body",
+        "between_instruction_count":len(shape),
+        "query_descriptor":"(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+        "instruction_count":len(rows),
+        "boundary":"Proves query AABB argument only. Predicate eligibility, returned targets, spawn and impact unproven.",
+    }
+
+def certify_exact_wave_query_109(proof:dict)->None:
+    """Fail exact physical Somake release when certified wave query link drifts."""
+    expected={
+        "status":"PROVED_WAVE_INFLATE_RESULT_CONSUMED_BY_ENTITY_QUERY",
+        "inflate_call_count":1,
+        "entity_query_call_count":1,
+        "aabb_transport":"via_local_3",
+        "between_instruction_count":9,
+        "query_descriptor":"(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+        "predicate_semantics":"unknown_predicate_body",
+        "instruction_count":196,
+    }
+    if not isinstance(proof,dict) or any(proof.get(k)!=value for k,value in expected.items()):
+        raise GateError("Somake 1.0.9 exact wave-AABB local-3 query link drift")
+
 def wave_radius_aabb_shape(body:list[str])->dict:
     """Return bounded callsite topology only; never infer values by co-occurrence."""
     rows=opcode_rows(body)
@@ -259,6 +360,7 @@ def analyze_javap(text:str, label:str)->dict:
         if len(candidates)!=1:raise GateError("missing exact launchWave descriptor")
         report["wave_radius_aabb_shape"]=wave_radius_aabb_shape(candidates[0])
         report["wave_inflate_operand_proof"]=prove_wave_inflate_operands(candidates[0])
+        report["wave_query_aabb_link"]=wave_query_aabb_link(candidates[0])
     return report
 
 def certify_exact_consumer_surface(outcome:dict)->None:
@@ -322,10 +424,12 @@ def inspect(jar:Path)->dict:
                   "fields",json.dumps(metrics["field_symbols"]))
     certify_exact_consumer_surface(outcome)
     certify_exact_wave_aabb_109(outcome["controller"]["wave_inflate_operand_proof"])
+    certify_exact_wave_query_109(outcome["controller"]["wave_query_aabb_link"])
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
+    print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
-    return {"status":"PASS_SHA_EXACT_WAVE_XZ_RADIUS_Y_10_5_OPERANDS",
+    return {"status":"PASS_SHA_EXACT_WAVE_XZ_RADIUS_Y_10_5_AND_QUERY_AABB_LINK",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
             "scope":outcome,
             "limits":[

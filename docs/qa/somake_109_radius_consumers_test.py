@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -265,6 +265,125 @@ class Exact109WaveCertificationGateTests(unittest.TestCase):
             with self.subTest(change=change):
                 with self.assertRaises(GateError):
                     certify_exact_wave_aabb_109(sample)
+
+class WaveQueryAabbCausalityTests(unittest.TestCase):
+    @staticmethod
+    def direct_query():
+        return [
+            "0: aload_1",
+            "1: ldc #2 // class net/minecraft/world/entity/LivingEntity",
+            "3: aload_0",
+            "4: invokevirtual #3 // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;",
+            "7: dconst_1",
+            "8: dconst_1",
+            "9: dconst_1",
+            "10: invokevirtual #4 // Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;",
+            "13: invokedynamic #5, 0 // InvokeDynamic #0:test:()Ljava/util/function/Predicate;",
+            "18: invokevirtual #6 // Method net/minecraft/server/level/ServerLevel.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+            "21: pop",
+            "22: return",
+        ]
+
+    def test_direct_inflate_return_used_by_exact_entity_query(self):
+        p=wave_query_aabb_link(self.direct_query())
+        self.assertEqual("PROVED_WAVE_INFLATE_RESULT_CONSUMED_BY_ENTITY_QUERY",p["status"],p)
+        self.assertEqual(1,p["inflate_call_count"])
+        self.assertEqual(1,p["entity_query_call_count"])
+        self.assertEqual(1,p["between_instruction_count"])
+        self.assertEqual("direct_stack",p["aabb_transport"])
+        self.assertNotIn("filter_semantics_proved",p)
+
+    @staticmethod
+    def stored_then_loaded():
+        return [
+            "0: aload_0",
+            "1: invokevirtual #1 // Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;",
+            "4: dconst_1",
+            "5: dconst_1",
+            "6: dconst_1",
+            "7: invokevirtual #2 // Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;",
+            "10: astore_3",
+            "11: new #3 // class java/util/ArrayList",
+            "14: dup",
+            "15: aload_1",
+            "16: ldc #4 // class net/minecraft/world/entity/LivingEntity",
+            "18: aload_3",
+            "19: aload_0",
+            "20: aload_2",
+            "21: invokedynamic #5, 0 // InvokeDynamic #0:test:(Lcom/somake/somakespells/entity/FuneralBloomControllerEntity;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/function/Predicate;",
+            "26: invokevirtual #6 // Method net/minecraft/server/level/ServerLevel.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+            "29: invokespecial #7 // Method java/util/ArrayList.\"<init>\":(Ljava/util/Collection;)V",
+            "32: areturn",
+        ]
+
+    def test_stored_aabb_reloaded_as_query_argument(self):
+        p=wave_query_aabb_link(self.stored_then_loaded())
+        self.assertEqual("PROVED_WAVE_INFLATE_RESULT_CONSUMED_BY_ENTITY_QUERY",p["status"],p)
+        self.assertEqual("via_local_3",p["aabb_transport"])
+        self.assertEqual(9,p["between_instruction_count"])
+        self.assertEqual("unknown_predicate_body",p["predicate_semantics"])
+
+    def test_slot_overwrite_is_not_proven(self):
+        rows=self.stored_then_loaded()
+        rows[11]=rows[11].replace("aload_3","aload_2")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+        rows=self.stored_then_loaded()
+        rows[6]=rows[6].replace("astore_3","astore_2")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+
+    def test_lambda_signature_and_box_type_must_match(self):
+        rows=self.stored_then_loaded()
+        rows[14]=rows[14].replace("java/util/function/Predicate","java/util/function/Function")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+        rows=self.stored_then_loaded()
+        rows[10]=rows[10].replace("LivingEntity","Other")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+
+    def test_unrelated_query_or_stored_box_must_fail_closed(self):
+        rows=self.direct_query()
+        rows[9]=rows[9].replace("getEntitiesOfClass","getEntities")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+        rows=self.direct_query()
+        rows.insert(8,"12: astore_3")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+
+    def test_missing_predicate_or_duplicate_query_must_fail_closed(self):
+        rows=self.direct_query()
+        rows[8]=rows[8].replace("invokedynamic","nop")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+        rows=self.direct_query()
+        rows.append("25: invokevirtual #6 // Method net/minecraft/server/level/ServerLevel.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;")
+        self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
+
+class ExactWaveQueryPhysicalGateTests(unittest.TestCase):
+    @staticmethod
+    def expected():
+        return {
+            "status":"PROVED_WAVE_INFLATE_RESULT_CONSUMED_BY_ENTITY_QUERY",
+            "inflate_call_count":1,
+            "entity_query_call_count":1,
+            "aabb_transport":"via_local_3",
+            "between_instruction_count":9,
+            "query_descriptor":"(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+            "predicate_semantics":"unknown_predicate_body",
+            "instruction_count":196,
+        }
+
+    def test_exact_wave_slot3_query_proof_is_hard_gated(self):
+        original=self.expected()
+        certify_exact_wave_query_109(original)
+        for edits in (
+            {"aabb_transport":"via_local_2"},
+            {"between_instruction_count":8},
+            {"status":"NOT_PROVED"},
+            {"entity_query_call_count":2},
+            {"query_descriptor":"(Ljava/lang/Class;)Ljava/util/List;"},
+            {"predicate_semantics":"proved_filters"},
+            {"instruction_count":195},
+        ):
+            with self.subTest(edits=edits):
+                with self.assertRaises(GateError):
+                    certify_exact_wave_query_109(dict(original,**edits))
 
 if __name__=="__main__":
     unittest.main()
