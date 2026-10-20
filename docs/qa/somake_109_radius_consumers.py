@@ -125,8 +125,64 @@ def prove_wave_inflate_operands(body:list[str])->dict:
 
 
 def wave_query_aabb_link(body:list[str])->dict:
-    """Bounded diagnostic; never infer AABB propagation from callsite co-occurrence."""
-    return {"status":"NOT_PROVED","reason":"query_aabb_stack_not_certified"}
+    """Certify direct, bounded AABB return handoff into the exact entity query.
+
+    The JVM stack already has ServerLevel and Class before the AABB receiver.
+    Without intervening stack mutations, the inflated AABB remains the
+    query's AABB argument. A predicate value is tracked independently.
+    """
+    rows=opcode_rows(body)
+    def fail(reason,**extra):return {"status":"NOT_PROVED","reason":reason,**extra}
+    if len(rows)>250:return fail("unbounded_wave_method")
+    box="Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;"
+    query=("Method net/minecraft/server/level/ServerLevel.getEntitiesOfClass:"
+           "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;"
+           "Ljava/util/function/Predicate;)Ljava/util/List;")
+    box_indices=[i for i,r in enumerate(rows) if r[1]=="invokevirtual" and r[3]==box]
+    query_indices=[i for i,r in enumerate(rows) if r[1]=="invokevirtual" and r[3]==query]
+    if len(box_indices)!=1 or len(query_indices)!=1:
+        return fail("nonunique_or_missing_box_or_query",inflate_call_count=len(box_indices),
+                    entity_query_call_count=len(query_indices))
+    start,end=box_indices[0],query_indices[0]
+    if end<=start:return fail("query_not_after_box")
+    between=rows[start+1:end]
+    shape=[op for _,op,_,_ in between]
+    if len(shape)>8:return fail("intervening_window_exceeds_budget",
+                                between_instruction_count=len(shape))
+    for i,(pc,op,operand,_) in enumerate(rows):
+        if start<=i<=end:continue
+        if op.startswith(("if","goto","jsr")):
+            dest=operand.split()[0] if operand else ""
+            if not re.fullmatch(r"\d+",dest):
+                return fail("unknown_external_branch_target")
+            if rows[start][0]<int(dest)<=rows[end][0]:
+                return fail("external_branch_enters_query_window")
+        elif op in ("tableswitch","lookupswitch","jsr_w","ret","wide"):
+            return fail("unhandled_external_branch")
+    if shape==["invokedynamic"] and re.fullmatch(
+       r"InvokeDynamic #\d+:[A-Za-z0-9_$]+:\(\)Ljava/util/function/Predicate;",
+       between[0][3]):
+        mode="direct_stack"
+    elif shape==["aload_0","invokedynamic"] and re.fullmatch(
+       r"InvokeDynamic #\d+:[A-Za-z0-9_$]+:"
+       r"\(Lcom/somake/somakespells/entity/FuneralBloomControllerEntity;\)"
+       r"Ljava/util/function/Predicate;",between[1][3]):
+        mode="captured_this_predicate"
+    else:
+        return fail("intervening_predicate_stack_not_certified",
+                    between_instruction_count=len(shape),
+                    invokedynamic_count=shape.count("invokedynamic"),
+                    aload_count=sum(o.startswith("aload") for o in shape),
+                    local_store_count=sum(o.endswith("store") or "store_" in o for o in shape))
+    return {
+        "status":"PROVED_WAVE_INFLATE_RESULT_CONSUMED_BY_ENTITY_QUERY",
+        "inflate_call_count":1,"entity_query_call_count":1,
+        "aabb_transport":mode,
+        "between_instruction_count":len(shape),
+        "query_descriptor":"(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+        "instruction_count":len(rows),
+        "boundary":"Proves query AABB argument only. Predicate eligibility, returned targets, spawn and impact unproven.",
+    }
 
 def wave_radius_aabb_shape(body:list[str])->dict:
     """Return bounded callsite topology only; never infer values by co-occurrence."""
