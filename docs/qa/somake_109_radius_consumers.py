@@ -458,7 +458,11 @@ def native_isvalidtarget_early_guards(declared:list[tuple[str,str,list[str]]])->
     ops=[r[1] for r in rows[:11]]
     expected=["aload_1","invokevirtual","ifeq","aload_1","invokevirtual",
               "ifne","aload_1","aload_2","if_acmpne","iconst_0","ireturn"]
-    if ops!=expected:return fail("early_jvm_operands_not_exact")
+    if ops!=expected:
+        mismatches=[{"position":i,"expected":want,"observed":have}
+                    for i,(want,have) in enumerate(zip(expected,ops)) if want!=have]
+        return {"status":"NOT_PROVED","reason":"early_jvm_operands_not_exact",
+                "mismatch_count":len(mismatches),"mismatch_positions":mismatches[:8]}
     permitted_alive={
         "Method net/minecraft/world/entity/LivingEntity.isAlive:()Z",
         "Method net/minecraft/world/entity/Entity.isAlive:()Z",
