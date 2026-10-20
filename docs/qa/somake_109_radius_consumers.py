@@ -210,6 +210,10 @@ def wave_query_aabb_link(body:list[str])->dict:
         "boundary":"Proves query AABB argument only. Predicate eligibility, returned targets, spawn and impact unproven.",
     }
 
+def certify_exact_wave_query_109(proof:dict)->None:
+    """Enforce exact publisher JAR query-AABB provenance; currently fail-closed."""
+    return None
+
 def wave_radius_aabb_shape(body:list[str])->dict:
     """Return bounded callsite topology only; never infer values by co-occurrence."""
     rows=opcode_rows(body)
@@ -409,6 +413,7 @@ def inspect(jar:Path)->dict:
                   "fields",json.dumps(metrics["field_symbols"]))
     certify_exact_consumer_surface(outcome)
     certify_exact_wave_aabb_109(outcome["controller"]["wave_inflate_operand_proof"])
+    certify_exact_wave_query_109(outcome["controller"]["wave_query_aabb_link"])
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
