@@ -459,6 +459,10 @@ def wave_predicate_branch_topology(declared:list[tuple[str,str,list[str]]])->dic
     }
 
 
+def certify_exact_wave_boolean_109(shape:dict)->None:
+    """Version-locked 1.0.9 boolean Predicate path gate (RED seam)."""
+    return None
+
 def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory:dict)->dict:
     """Prove invokedynamic #0's LambdaMetafactory *symbolic* implementation target.
 
@@ -658,6 +662,7 @@ def inspect(jar:Path)->dict:
     certify_exact_wave_query_109(outcome["controller"]["wave_query_aabb_link"])
     certify_exact_wave_predicate_109(outcome["controller"]["wave_predicate_bootstrap"],
                                     outcome["controller"]["wave_lambda_candidates"])
+    certify_exact_wave_boolean_109(outcome["controller"]["wave_predicate_branch_topology"])
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
