@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109,native_isvalidtarget_surface
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -630,6 +630,54 @@ class Exact109PredicateBooleanGateTests(unittest.TestCase):
             with self.subTest(change=change):
                 with self.assertRaises(GateError):
                     certify_exact_wave_boolean_109(dict(proof,**change))
+
+class NativeIsValidTargetSurfaceTests(unittest.TestCase):
+    @staticmethod
+    def sample():
+        return [(
+            "isValidTarget",
+            "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+            [
+                "0: aload_1",
+                "1: invokevirtual #1 // Method net/minecraft/world/entity/LivingEntity.isAlive:()Z",
+                "4: ifeq 19",
+                "7: aload_1",
+                "8: aload_2",
+                "9: invokevirtual #2 // Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z",
+                "12: ifne 19",
+                "15: iconst_1",
+                "16: ireturn",
+                "19: iconst_0",
+                "20: ireturn",
+            ]
+        )]
+
+    def test_exact_method_shape_is_reported_without_inferred_filter_semantics(self):
+        p=native_isvalidtarget_surface(self.sample())
+        self.assertEqual("ISVALIDTARGET_MEMBER_SHAPE_ONLY",p["status"],p)
+        self.assertEqual(11,p["instruction_count"])
+        self.assertEqual(["ifeq","ifne"],p["conditional_opcodes"])
+        self.assertEqual(2,p["boolean_return_count"])
+        self.assertEqual(2,p["invoke_count"])
+        self.assertEqual("FILTER_OUTCOMES_NOT_PROVED",p["boundary"])
+        self.assertNotIn("passes_allies",p)
+
+    def test_missing_member_fails_closed(self):
+        p=native_isvalidtarget_surface([])
+        self.assertEqual("NOT_PROVED",p["status"])
+
+    def test_duplicate_and_unbounded_member_are_rejected(self):
+        with self.assertRaises(GateError):
+            native_isvalidtarget_surface(self.sample()+self.sample())
+        name,desc,body=self.sample()[0]
+        with self.assertRaises(GateError):
+            native_isvalidtarget_surface([(name,desc,
+                [f"{i}: nop" for i in range(351)])])
+
+    def test_nonboolean_signature_does_not_claim_filter(self):
+        name,desc,body=self.sample()[0]
+        p=native_isvalidtarget_surface([(name,desc.replace(")Z",")I"),body)])
+        self.assertEqual("NOT_PROVED",p["status"])
 
 if __name__=="__main__":
     unittest.main()
