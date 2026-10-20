@@ -381,8 +381,30 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
     }
 
 def wave_max_targets_surface(body:list[str])->dict:
-    """No semantic cap inference; report only bounded field-to-creation calls."""
-    return {"status":"NOT_PROVED","reason":"maxTargets_wave_surface_not_implemented"}
+    """Catalog source-level native field/bud references, never infer cap effect."""
+    rows=opcode_rows(body)
+    if len(rows)>250:raise GateError("unbounded native wave method")
+    target_fields=[i for i,(_,op,_,symbol) in enumerate(rows)
+                   if op=="getfield" and symbol in (
+                       "Field maxTargets:I",
+                       "Field com/somake/somakespells/entity/FuneralBloomControllerEntity.maxTargets:I")]
+    bud_ctors=[i for i,(_,op,_,symbol) in enumerate(rows)
+               if op=="invokespecial" and
+               symbol.startswith('Method com/somake/somakespells/entity/FuneralBloomBudEntity."<init>":')]
+    if not target_fields or not bud_ctors:
+        return {"status":"NOT_PROVED","reason":"field_or_bud_constructor_not_both_found",
+                "max_targets_field_read_count":len(target_fields),
+                "bud_ctor_call_count":len(bud_ctors)}
+    return {
+        "status":"MAXTARGETS_AND_BUD_COSITES_ONLY",
+        "instruction_count":len(rows),
+        "max_targets_field_read_count":len(target_fields),
+        "bud_ctor_call_count":len(bud_ctors),
+        "first_max_targets_read_before_first_bud_ctor":target_fields[0]<bud_ctors[0],
+        "first_read_to_ctor_instruction_gap":bud_ctors[0]-target_fields[0]-1,
+        "conditional_branch_count":sum(op.startswith("if") for _,op,_,_ in rows),
+        "boundary":"TARGET_COUNT_CAP_NOT_PROVED",
+    }
 
 
 def native_isvalidtarget_surface(declared:list[tuple[str,str,list[str]]])->dict:
