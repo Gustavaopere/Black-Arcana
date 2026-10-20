@@ -2,7 +2,7 @@
 """Bounded radius consumer symbolic inventory regression tests."""
 import unittest
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109,native_isvalidtarget_surface
+from somake_109_radius_consumers import analyze_javap,calls_in_method,certify_exact_consumer_surface,KEYS,wave_radius_aabb_shape,prove_wave_inflate_operands,certify_exact_wave_aabb_109,wave_query_aabb_link,certify_exact_wave_query_109,lambda_selection_candidate_inventory,wave_predicate_bootstrap_binding,certify_exact_wave_predicate_109,wave_predicate_branch_topology,certify_exact_wave_boolean_109,native_isvalidtarget_surface,wave_max_targets_surface
 
 def synthetic(more_oncast:str=""):
     return """public class FuneralBloomSpell {
@@ -678,6 +678,36 @@ class NativeIsValidTargetSurfaceTests(unittest.TestCase):
         name,desc,body=self.sample()[0]
         p=native_isvalidtarget_surface([(name,desc.replace(")Z",")I"),body)])
         self.assertEqual("NOT_PROVED",p["status"])
+
+class WaveMaxTargetsSurfaceTests(unittest.TestCase):
+    @staticmethod
+    def sample():
+        return [
+            "0: aload_0",
+            "1: getfield #1 // Field maxTargets:I",
+            "4: istore_2",
+            "5: new #2 // class com/somake/somakespells/entity/FuneralBloomBudEntity",
+            "8: dup",
+            '9: invokespecial #3 // Method com/somake/somakespells/entity/FuneralBloomBudEntity."<init>":()V',
+            "12: return",
+        ]
+
+    def test_field_and_bud_callsite_inventory_is_structural_only(self):
+        p=wave_max_targets_surface(self.sample())
+        self.assertEqual("MAXTARGETS_AND_BUD_COSITES_ONLY",p["status"],p)
+        self.assertEqual(1,p["max_targets_field_read_count"])
+        self.assertEqual(1,p["bud_ctor_call_count"])
+        self.assertEqual(7,p["instruction_count"])
+        self.assertEqual("TARGET_COUNT_CAP_NOT_PROVED",p["boundary"])
+        self.assertNotIn("cap_enforced",p)
+
+    def test_missing_max_targets_read_is_fail_closed(self):
+        body=[s.replace("maxTargets","unrelatedField") for s in self.sample()]
+        self.assertEqual("NOT_PROVED",wave_max_targets_surface(body)["status"])
+
+    def test_missing_bud_constructor_is_fail_closed(self):
+        body=[s.replace("FuneralBloomBudEntity.", "OtherEntity.") for s in self.sample()]
+        self.assertEqual("NOT_PROVED",wave_max_targets_surface(body)["status"])
 
 if __name__=="__main__":
     unittest.main()
