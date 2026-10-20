@@ -381,8 +381,63 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
     }
 
 def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory:dict)->dict:
-    """Fail-closed exact bootstrap-linkage probe for query predicate."""
-    return {"status":"NOT_PROVED","reason":"bootstrap_linkage_not_implemented"}
+    """Prove invokedynamic #0's LambdaMetafactory *symbolic* implementation target.
+
+    Never infer boolean outcomes or copy third-party bytecode/implementation.
+    """
+    def reject(reason):return {"status":"NOT_PROVED","reason":reason}
+    if not verbose or len(verbose)>MAX_TEXT:
+        return reject("missing_or_unbounded_verbose_class")
+    rows=opcode_rows(wave_body)
+    invoke=(
+        "InvokeDynamic #0:test:"
+        "(Lcom/somake/somakespells/entity/FuneralBloomControllerEntity;"
+        "Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/function/Predicate;"
+    )
+    matching=[r for r in rows if r[1]=="invokedynamic" and r[3]==invoke]
+    if len(matching)!=1:return reject("missing_or_ambiguous_query_predicate_dynamic_call")
+    if inventory.get("status")!="PREDICATE_HELPER_CANDIDATES_ONLY":
+        return reject("lambda_inventory_not_certified")
+    desc="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
+    candidates=[item for item in inventory.get("candidates",[])
+                if item.get("method")=="lambda$launchWave$0"
+                and item.get("descriptor")==desc]
+    if len(candidates)!=1:return reject("boolean_predicate_helper_missing_from_inventory")
+    start=re.search(r"(?m)^BootstrapMethods:\s*$",verbose)
+    if not start:return reject("BootstrapMethods_attribute_missing")
+    tail=verbose[start.end():]
+    if len(tail)>120_000:return reject("bootstrap_metadata_exceeds_budget")
+    headers=list(re.finditer(r"(?m)^  ([0-9]+): (.+)$",tail))
+    if not 1<=len(headers)<=100:return reject("unbounded_or_missing_bootstrap_entries")
+    target=[i for i,match in enumerate(headers) if match.group(1)=="0"]
+    if len(target)!=1:return reject("ambiguous_bootstrap_index_zero")
+    k=target[0]
+    block=tail[headers[k].start():headers[k+1].start() if k+1<len(headers) else len(tail)]
+    if len(block)>9000:return reject("bootstrap_entry_exceeds_budget")
+    if "REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:" not in headers[k].group(2):
+        return reject("wrong_lambda_bootstrap_factory")
+    pattern=(
+        r"(?m)^\s*#\d+ REF_invokeStatic "
+        r"com/somake/somakespells/entity/FuneralBloomControllerEntity"
+        r"\.lambda\$launchWave\$0:"
+        +re.escape(desc)+r"\s*$"
+    )
+    if len(re.findall(pattern,block))!=1:
+        return reject("missing_or_ambiguous_exact_boolean_wave_helper_handle")
+    handle_lines=re.findall(r"(?m)^\s*#\d+ REF_invoke(?:Static|Virtual|Special|Interface) "
+                            r"[^\n]{1,350}lambda\$launchWave\$[0-9]+:[^\n]*$",block)
+    if len(handle_lines)!=1:return reject("other_wave_lambda_handle_inside_query_bootstrap")
+    return {
+        "status":"PROVED_QUERY_PREDICATE_BOOTSTRAP_TO_LAUNCHWAVE_LAMBDA0",
+        "bootstrap_index":0,
+        "implementation_method":"lambda$launchWave$0",
+        "implementation_descriptor":desc,
+        "helper_instruction_count":candidates[0]["instruction_count"],
+        "helper_conditional_branch_count":candidates[0]["conditional_branch_count"],
+        "references_isValidTarget":candidates[0]["mentions_isValidTarget"],
+        "references_activeTargetIds":candidates[0]["mentions_activeTargetIds"],
+        "boundary":"BODY_BRANCH_OUTCOMES_NOT_PROVED",
+    }
 
 def analyze_javap(text:str, label:str)->dict:
     if not text or len(text)>MAX_TEXT:raise GateError("oversized class output")
