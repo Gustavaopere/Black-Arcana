@@ -147,8 +147,18 @@ def wave_query_aabb_link(body:list[str])->dict:
     if end<=start:return fail("query_not_after_box")
     between=rows[start+1:end]
     shape=[op for _,op,_,_ in between]
-    if len(shape)>8:return fail("intervening_window_exceeds_budget",
-                                between_instruction_count=len(shape))
+    from collections import Counter
+    def window_summary():
+        # Aggregate only: no publisher instruction sequence or JVM disassembly.
+        loads=sorted(set(op for op in shape if op.startswith(("aload","iload","fload","dload"))))
+        stores=sorted(set(op for op in shape if op.startswith(("astore","istore","fstore","dstore"))))
+        methods=sorted(set(comment for _,op,_,comment in between if op.startswith("invoke")
+                           and op!="invokedynamic"))
+        dynamic=sorted(set(comment for _,op,_,comment in between if op=="invokedynamic"))
+        return {"between_instruction_count":len(shape),"opcode_histogram":dict(sorted(Counter(shape).items())),
+                "load_opcodes":loads[:20],"store_opcodes":stores[:20],
+                "intervening_method_symbols":methods[:12],"lambda_descriptors":dynamic[:6]}
+    if len(shape)>15:return fail("intervening_window_exceeds_budget",**window_summary())
     for i,(pc,op,operand,_) in enumerate(rows):
         if start<=i<=end:continue
         if op.startswith(("if","goto","jsr")):
@@ -169,11 +179,7 @@ def wave_query_aabb_link(body:list[str])->dict:
        r"Ljava/util/function/Predicate;",between[1][3]):
         mode="captured_this_predicate"
     else:
-        return fail("intervening_predicate_stack_not_certified",
-                    between_instruction_count=len(shape),
-                    invokedynamic_count=shape.count("invokedynamic"),
-                    aload_count=sum(o.startswith("aload") for o in shape),
-                    local_store_count=sum(o.endswith("store") or "store_" in o for o in shape))
+        return fail("intervening_predicate_stack_not_certified",**window_summary())
     return {
         "status":"PROVED_WAVE_INFLATE_RESULT_CONSUMED_BY_ENTITY_QUERY",
         "inflate_call_count":1,"entity_query_call_count":1,
