@@ -445,8 +445,42 @@ def wave_max_targets_surface(body:list[str])->dict:
 
 
 def native_isvalidtarget_early_guards(declared:list[tuple[str,str,list[str]]])->dict:
-    """Fail-closed candidate early-guard diagnostic; no semantics by co-occurrence."""
-    return {"status":"NOT_PROVED","reason":"early_guard_stack_shape_unimplemented"}
+    """Certify only the first three JVM guards of the native target helper."""
+    desc="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
+    if len(declared)>MAX_METHODS:raise GateError("unbounded boolean helper declaration set")
+    methods=[body for name,d,body in declared if name=="isValidTarget" and d==desc]
+    if len(methods)>1:raise GateError("ambiguous native isValidTarget")
+    def fail(reason):return {"status":"NOT_PROVED","reason":reason}
+    if not methods:return fail("exact_native_isValidTarget_not_found")
+    rows=opcode_rows(methods[0])
+    if len(rows)>72:raise GateError("native isValidTarget oversized")
+    if len(rows)<12:return fail("native_precondition_window_missing")
+    ops=[r[1] for r in rows[:11]]
+    expected=["aload_1","invokevirtual","ifeq","aload_1","invokevirtual",
+              "ifne","aload_1","aload_2","if_acmpne","iconst_0","ireturn"]
+    if ops!=expected:return fail("early_jvm_operands_not_exact")
+    permitted_alive={
+        "Method net/minecraft/world/entity/LivingEntity.isAlive:()Z",
+        "Method net/minecraft/world/entity/Entity.isAlive:()Z",
+    }
+    permitted_spectator={
+        "Method net/minecraft/world/entity/LivingEntity.isSpectator:()Z",
+        "Method net/minecraft/world/entity/Entity.isSpectator:()Z",
+    }
+    if rows[1][3] not in permitted_alive or rows[4][3] not in permitted_spectator:
+        return fail("guard_method_owners_or_descriptors_not_proved")
+    for idx,target in ((2,9),(5,9),(8,11)):
+        word=rows[idx][2].split(" ",1)[0]
+        if not re.fullmatch(r"\d+",word) or int(word)!=rows[target][0]:
+            return fail("early_guard_target_mismatch")
+    return {
+        "status":"PROVED_NATIVE_EARLY_ALIVE_NOT_SPECTATOR_NOT_IDENTICAL",
+        "examined_jvm_local":1,
+        "compared_jvm_local":2,
+        "branch_ops":["ifeq","ifne","if_acmpne"],
+        "rejection_mode":"DIRECT_ZERO_RETURN_ON_THREE_REJECTIONS",
+        "boundary":"Semantics of later branches and actor roles remain unproved",
+    }
 
 
 def native_isvalidtarget_branch_edges(declared:list[tuple[str,str,list[str]]])->dict:
