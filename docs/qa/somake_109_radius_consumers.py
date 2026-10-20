@@ -345,12 +345,12 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
         raise GateError("unbounded method declarations for predicate candidates")
     found=[];seen=set()
     for name,descriptor,body in declared:
-        if not re.fullmatch(r"lambda\\$launchWave\\$[0-9]+",name):continue
+        if not re.fullmatch(r"lambda\$launchWave\$[0-9]+",name):continue
         key=(name,descriptor)
         if key in seen:raise GateError("duplicate wave lambda method signature")
         seen.add(key)
         if len(found)>=12:raise GateError("unbounded wave lambda candidate count")
-        if not re.fullmatch(r"\\([^)]{0,350}\\)[ZV]",descriptor):
+        if not re.fullmatch(r"\([^)]{0,350}\)[ZV]",descriptor):
             raise GateError("wave lambda invalid or unsupported descriptor")
         opcodes=opcode_rows(body)
         if len(opcodes)>240:raise GateError("wave lambda method exceeds budget")
