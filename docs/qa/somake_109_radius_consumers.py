@@ -380,6 +380,11 @@ def lambda_selection_candidate_inventory(declared:list[tuple[str,str,list[str]]]
         "boundary":"BOOTSTRAP_BINDING_NOT_PROVED"
     }
 
+def native_isvalidtarget_surface(declared:list[tuple[str,str,list[str]]])->dict:
+    """Bounded native method summary, without claiming branch semantics."""
+    return {"status":"NOT_PROVED","reason":"native_isvalidtarget_scan_not_implemented"}
+
+
 def wave_predicate_branch_topology(declared:list[tuple[str,str,list[str]]])->dict:
     """Certify exact 1.0.9 Lambda0 boolean paths from typed JVM shape.
 
@@ -603,6 +608,7 @@ def analyze_javap(text:str, label:str)->dict:
         report["wave_query_aabb_link"]=wave_query_aabb_link(candidates[0])
         report["wave_lambda_candidates"]=lambda_selection_candidate_inventory(declared)
         report["wave_predicate_branch_topology"]=wave_predicate_branch_topology(declared)
+        report["native_isvalidtarget_surface"]=native_isvalidtarget_surface(declared)
     return report
 
 def certify_exact_consumer_surface(outcome:dict)->None:
@@ -687,6 +693,7 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_WAVE_PREDICATE_BOOTSTRAP",json.dumps(outcome["controller"]["wave_predicate_bootstrap"],sort_keys=True))
     print("SOMAKE_WAVE_PREDICATE_EXACT_GATE", "PASS_EXACT_LAMBDA0_REF_INVOKEVIRTUAL_AND_HELPERS")
     print("SOMAKE_WAVE_PREDICATE_BRANCH_TOPOLOGY",json.dumps(outcome["controller"]["wave_predicate_branch_topology"],sort_keys=True))
+    print("SOMAKE_NATIVE_ISVALIDTARGET_SURFACE",json.dumps(outcome["controller"]["native_isvalidtarget_surface"],sort_keys=True))
     print("SOMAKE_WAVE_PREDICATE_BOOLEAN_EXACT_GATE","PASS_EXACT_VALID_TARGET_AND_UNSEEN_UUID")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
     return {"status":"PASS_SHA_EXACT_WAVE_BOOLEAN_VALID_AND_UUID_NOT_ACTIVE",
