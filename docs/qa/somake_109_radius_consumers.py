@@ -385,7 +385,7 @@ def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory
 
     Never infer boolean outcomes or copy third-party bytecode/implementation.
     """
-    def reject(reason):return {"status":"NOT_PROVED","reason":reason}
+    def reject(reason,**metadata):return {"status":"NOT_PROVED","reason":reason,**metadata}
     if not verbose or len(verbose)>MAX_TEXT:
         return reject("missing_or_unbounded_verbose_class")
     rows=opcode_rows(wave_body)
@@ -423,7 +423,12 @@ def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory
         +re.escape(desc)+r"\s*$"
     )
     if len(re.findall(pattern,block))!=1:
-        return reject("missing_or_ambiguous_exact_boolean_wave_helper_handle")
+        handles=re.findall(r"(?m)^\\s*#\\d+ (REF_invoke[A-Za-z]+) ([^\\n]{1,350})",block)
+        diagnostic=[{"kind":kind,"member":member}
+                    for kind,member in handles if "lambda$launchWave$" in member]
+        return reject("missing_or_ambiguous_exact_boolean_wave_helper_handle",
+                      bootstrap0_wave_handles=diagnostic[:8],
+                      bootstrap0_total_handles=len(handles))
     handle_lines=re.findall(r"(?m)^\s*#\d+ REF_invoke(?:Static|Virtual|Special|Interface) "
                             r"[^\n]{1,350}lambda\$launchWave\$[0-9]+:[^\n]*$",block)
     if len(handle_lines)!=1:return reject("other_wave_lambda_handle_inside_query_bootstrap")
