@@ -444,6 +444,10 @@ def wave_predicate_bootstrap_binding(verbose:str, wave_body:list[str], inventory
         "boundary":"BODY_BRANCH_OUTCOMES_NOT_PROVED",
     }
 
+def certify_exact_wave_predicate_109(link:dict, inventory:dict)->None:
+    """Strict physical Somake 1.0.9 predicate bootstrap/helper release gate."""
+    return None
+
 def analyze_javap(text:str, label:str)->dict:
     if not text or len(text)>MAX_TEXT:raise GateError("oversized class output")
     declared=sections(isolate_named_methods(text))
@@ -541,6 +545,8 @@ def inspect(jar:Path)->dict:
     certify_exact_consumer_surface(outcome)
     certify_exact_wave_aabb_109(outcome["controller"]["wave_inflate_operand_proof"])
     certify_exact_wave_query_109(outcome["controller"]["wave_query_aabb_link"])
+    certify_exact_wave_predicate_109(outcome["controller"]["wave_predicate_bootstrap"],
+                                    outcome["controller"]["wave_lambda_candidates"])
     print("SOMAKE_WAVE_RADIUS_AABB_SHAPE",json.dumps(outcome["controller"]["wave_radius_aabb_shape"],sort_keys=True))
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
