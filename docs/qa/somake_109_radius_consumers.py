@@ -211,8 +211,19 @@ def wave_query_aabb_link(body:list[str])->dict:
     }
 
 def certify_exact_wave_query_109(proof:dict)->None:
-    """Enforce exact publisher JAR query-AABB provenance; currently fail-closed."""
-    return None
+    """Fail exact physical Somake release when certified wave query link drifts."""
+    expected={
+        "status":"PROVED_WAVE_INFLATE_RESULT_CONSUMED_BY_ENTITY_QUERY",
+        "inflate_call_count":1,
+        "entity_query_call_count":1,
+        "aabb_transport":"via_local_3",
+        "between_instruction_count":9,
+        "query_descriptor":"(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+        "predicate_semantics":"unknown_predicate_body",
+        "instruction_count":196,
+    }
+    if not isinstance(proof,dict) or any(proof.get(k)!=value for k,value in expected.items()):
+        raise GateError("Somake 1.0.9 exact wave-AABB local-3 query link drift")
 
 def wave_radius_aabb_shape(body:list[str])->dict:
     """Return bounded callsite topology only; never infer values by co-occurrence."""
@@ -418,7 +429,7 @@ def inspect(jar:Path)->dict:
     print("SOMAKE_WAVE_AABB_OPERANDS",json.dumps(outcome["controller"]["wave_inflate_operand_proof"],sort_keys=True))
     print("SOMAKE_WAVE_QUERY_AABB_LINK",json.dumps(outcome["controller"]["wave_query_aabb_link"],sort_keys=True))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("JAR changed")
-    return {"status":"PASS_SHA_EXACT_WAVE_XZ_RADIUS_Y_10_5_OPERANDS",
+    return {"status":"PASS_SHA_EXACT_WAVE_XZ_RADIUS_Y_10_5_AND_QUERY_AABB_LINK",
             "publisher_sha1":digest,"version":"1.0.9","mod_id":"somakespells",
             "scope":outcome,
             "limits":[
