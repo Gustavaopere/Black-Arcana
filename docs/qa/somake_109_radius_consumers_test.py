@@ -325,18 +325,18 @@ class WaveQueryAabbCausalityTests(unittest.TestCase):
 
     def test_slot_overwrite_is_not_proven(self):
         rows=self.stored_then_loaded()
-        rows[12]=rows[12].replace("aload_3","aload_2")
+        rows[11]=rows[11].replace("aload_3","aload_2")
         self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
         rows=self.stored_then_loaded()
-        rows[7]=rows[7].replace("astore_3","astore_2")
+        rows[6]=rows[6].replace("astore_3","astore_2")
         self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
 
     def test_lambda_signature_and_box_type_must_match(self):
         rows=self.stored_then_loaded()
-        rows[15]=rows[15].replace("java/util/function/Predicate","java/util/function/Function")
+        rows[14]=rows[14].replace("java/util/function/Predicate","java/util/function/Function")
         self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
         rows=self.stored_then_loaded()
-        rows[11]=rows[11].replace("LivingEntity","Other")
+        rows[10]=rows[10].replace("LivingEntity","Other")
         self.assertEqual("NOT_PROVED",wave_query_aabb_link(rows)["status"])
 
     def test_unrelated_query_or_stored_box_must_fail_closed(self):
