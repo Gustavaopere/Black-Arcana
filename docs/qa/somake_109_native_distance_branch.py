@@ -25,11 +25,11 @@ from somake_109_native_filter_middle import middle_guard, certify_exact_native_m
 CLASS="com.somake.somakespells.entity.FuneralBloomControllerEntity"
 DESC="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
 METHODS={
-    "distance":re.compile(r"^Method net/minecraft/world/entity/(?:LivingEntity|Entity)\\.distanceToSqr:\\(DDD\\)D$"),
-    "radius":re.compile(r"^Method (?:(?:com/somake/somakespells/entity/FuneralBloomControllerEntity)\\.)?getRadius:\\(\\)F$"),
-    "x":re.compile(r"^Method net/minecraft/world/entity/(?:LivingEntity|Entity)\\.getX:\\(\\)D$"),
-    "y":re.compile(r"^Method net/minecraft/world/entity/(?:LivingEntity|Entity)\\.getY:\\(\\)D$"),
-    "z":re.compile(r"^Method net/minecraft/world/entity/(?:LivingEntity|Entity)\\.getZ:\\(\\)D$"),
+    "distance":re.compile(r"^Method net/minecraft/world/entity/(?:LivingEntity|Entity)\.distanceToSqr:\(DDD\)D$"),
+    "radius":re.compile(r"^Method (?:(?:com/somake/somakespells/entity/FuneralBloomControllerEntity)\.)?getRadius:\(\)F$"),
+    "x":re.compile(r"^Method net/minecraft/world/entity/(?:LivingEntity|Entity)\.getX:\(\)D$"),
+    "y":re.compile(r"^Method net/minecraft/world/entity/(?:LivingEntity|Entity)\.getY:\(\)D$"),
+    "z":re.compile(r"^Method net/minecraft/world/entity/(?:LivingEntity|Entity)\.getZ:\(\)D$"),
 }
 def not_proved(reason, **extra):
     return {"status":"NOT_PROVED","reason":reason,**extra}
@@ -88,7 +88,7 @@ def arithmetic_window(declared):
             if op in ("dconst_0","dconst_1","fconst_0","fconst_1","fconst_2"):
                 stack.append(("D" if op.startswith("d") else "F",op.split("_")[1]));continue
             if op in ("ldc","ldc2_w"):
-                numeric=re.search(r"(double|float)\\s+(-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)(?:[df])?\\b",symbol)
+                numeric=re.search(r"(double|float)\s+(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)(?:[df])?\b",symbol)
                 if not numeric:raise ValueError("unsupported_numeric_literal")
                 stack.append(("D" if numeric.group(1)=="double" else "F",numeric.group(2)));continue
             if op=="f2d":
@@ -143,7 +143,7 @@ def inspect(jar:Path):
         if len(names)!=len(set(names)):raise GateError("duplicate zip entries")
         if CLASS.replace(".","/")+".class" not in names:raise GateError("controller class missing")
         metadata=z.read("META-INF/neoforge.mods.toml")
-        if len(metadata)>250_000 or not re.search(rb"\\bmodId\\s*=\\s*['\"]somakespells['\"]",metadata):
+        if len(metadata)>250_000 or not re.search(rb"\bmodId\s*=\s*['\"]somakespells['\"]",metadata):
             raise GateError("mod id mismatch")
     p=subprocess.run(["javap","-p","-s","-c","-classpath",str(jar.resolve()),CLASS],
                      capture_output=True,text=True,timeout=60,check=False)
