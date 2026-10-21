@@ -32,12 +32,15 @@ def classify_comment(op,comment):
         m=re.search(r"\bField (?:[\w/$]+\.)?([\w$]+):",comment)
         return {"kind":"field","name":m.group(1)[:70] if m else "unknown"}
     if op.startswith("invoke"):
-        m=re.search(r"(?:Method|InterfaceMethod) (?:[\w/$]+\.)?([\w$<>]+):(\([^ ]+\).*)$",comment)
+        m=re.search(r"(?:Method|InterfaceMethod) (?:[\w/$]+\.)?([\w$<>]+):(\([^ ]*\).*)$",comment)
         if m:
             name=m.group(1).replace('"',"")[:70]
             descriptor=m.group(2)
             return {"kind":"call","name":name,"descriptor":descriptor[:130]}
         return {"kind":"call","name":"unknown"}
+    if op in ("instanceof","checkcast","new"):
+        m=re.search(r"\bclass ([\w/$]+)",comment)
+        return {"kind":"class","type":m.group(1)[:115] if m else "unknown"}
     if op.startswith(("ldc","bipush","sipush")):
         m=re.search(r"\b(?:double|float|int|long) (-?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?)[dfl]?\b",comment)
         return {"kind":"literal","value":m.group(1)} if m else {"kind":"literal","value":"symbolic"}
