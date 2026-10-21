@@ -96,7 +96,9 @@ def certify_final_apply_stack(rows):
     if len(float_stores)!=1:
         raise GateError("missing or ambiguous upstream float value in local_3")
     # Reject unexpected branches into the middle of the straight-line call tail.
-    interiors={x[0] for x in terminal[1:]}
+    # A normal branch may legitimately exit to the terminal return; reject only
+    # branches into the incomplete operand construction or the call itself.
+    interiors={x[0] for x in terminal[1:9]}
     for _,op,arg,_ in rows:
         if not op.startswith(("if","goto")):
             continue
