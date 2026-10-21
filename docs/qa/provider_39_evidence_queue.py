@@ -28,6 +28,7 @@ MATRIX_LINE = re.compile(r'^\| \[(?P<provider>[^|\]]+)\]\([^|)]+\) \| (?P<versio
 KNOWN_EXACT = {'Hazen N Stuff': ('1.4.0.14', 38),
                'Werewolves': ('2.0.3.3', 8),
                'Bloodlines': ('3.0.9', 28),
+               'Monsters & Spellbooks': ('0.0.16.3', 98),
                'Ars Nouveau': ('5.13.1', 109),
                "Ypsilon's Fundamentalism": ('1.1.7.1', 15),
                "Fire's Ender Expansion": ('2.4.1', 11),

@@ -1,5 +1,10 @@
 # Black Arcana — checkpoint do catálogo pós-PR #825 (21/10/2026)
 
+## Atualização posterior — 38/39 identidades binárias (21/10/2026)
+
+A matriz canônica agora reconhece **Monsters & Spellbooks 0.0.16.3 em `COUNTED_EXACT`** somente para 98/98 identidades compiladas SHA-exatas, apoiadas por [Java21 #39668594072](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39668594072) e CI após PR #869 [#39670154524](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39670154524). Campanha selecionada: **38/39 = 97,44%**, com Aeromancy Additions **1/39** ⚠️ por falta de SHA físico completo independente. Mínimos atuais **≥1.856/≥1.854**, +0 novos objetos, barra global **—%**. A fotografia anterior 37/39 e a tabela pós-#825 permanecem registros históricos. Ninguém promoveu Stage 06.05/09 nem homologou perks ou runtime provider-native.
+
+
 ## Resolução da divergência e avanço binário — atualização posterior
 
 A divergência histórica 1.857/1.855 versus 1.856/1.854 deste checkpoint foi esclarecida: **−1** corresponde a `ess_requiem:gong` / `WEAKENING_GONG`, source-only em Requiem 0.1.7 e ausente no JAR exato. Usar mínimo atual **≥1.856/1.854**, denominador universal ainda aberto (—%). A campanha selecionada avança de **35/39 para 37/39 (94,87%)** após incorporar evidência SHA-exata de Werewolves e Bloodlines no PR #868, com Monsters & Spellbooks e Aeromancy Additions ainda ⚠️/⛔. A tabela abaixo é fotografia histórica pós-#825; não republicar seus valores como atuais. [Matriz](REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md).

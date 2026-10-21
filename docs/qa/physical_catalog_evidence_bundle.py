@@ -158,6 +158,7 @@ def _valid_collector_report(name: str, doc: dict | None, exit_code: int) -> bool
                 known = {'Hazen N Stuff': ('1.4.0.14', 38),
                           'Werewolves': ('2.0.3.3', 8),
                           'Bloodlines': ('3.0.9', 28),
+                          'Monsters & Spellbooks': ('0.0.16.3', 98),
                           'Ars Nouveau': ('5.13.1', 109),
                           "Ypsilon's Fundamentalism": ('1.1.7.1', 15),
                          "Fire's Ender Expansion": ('2.4.1', 11),
@@ -217,11 +218,11 @@ def _valid_collector_report(name: str, doc: dict | None, exit_code: int) -> bool
                     return False
             else:
                 return False
-        return (len(seen) == 39 and prior_exact == 37
+        return (len(seen) == 39 and prior_exact == 38
                 and type(doc.get('catalog_exact_preexisting')) is int
-                and doc['catalog_exact_preexisting'] == 37
+                and doc['catalog_exact_preexisting'] == 38
                 and type(doc.get('registry_proofs_remaining')) is int
-                and doc['registry_proofs_remaining'] == 2
+                and doc['registry_proofs_remaining'] == 1
                 and type(doc.get('fingerprinted_pending_registry')) is int
                 and doc['fingerprinted_pending_registry'] == fingerprinted
                 and type(doc.get('blocked_physical_artifact')) is int
