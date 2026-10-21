@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Original synthetic fixtures for the Somake distance branch clean-room probe."""
 import unittest
-from somake_109_native_distance_branch import arithmetic_window, method_kind
+from somake_109_native_distance_branch import arithmetic_window, method_kind, certify_exact_final_distance_109
+from somake_109_perk_method_probe import GateError
 
 DESC="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
 DIST="Method net/minecraft/world/entity/LivingEntity.distanceToSqr:(DDD)D"
@@ -42,6 +43,41 @@ class FinalDistanceTest(unittest.TestCase):
                          r["derived_rejection_condition"])
         self.assertEqual(["x","y","z","distance","radius","radius"],r["call_categories"])
         self.assertEqual(39,r["false_return_index"])
+    def test_physical_release_fingerprint_guard_rejects_every_relevant_drift(self):
+        baseline=arithmetic_window(fixture())
+        certify_exact_final_distance_109(baseline)
+        for delta in (
+            {"status":"NOT_PROVED"},
+            {"window_instruction_count":17},
+            {"derived_rejection_condition":"cmp(distSq(slot2,x(slot0),y(slot0),z(slot0)),(R*R)) > 0"},
+            {"comparison_semantics":"unknown"},
+            {"last_conditional_index":35},
+            {"false_return_index":38},
+            {"call_categories":["distance","x","y","z","radius","radius"]},
+            {"call_positions":[]},
+            {"opcode_histogram":{}},
+            {"math_opcode_histogram":{"dmul":1}},
+            {"boundary":"PERK_MUTATOR_APPROVED"},
+        ):
+            with self.subTest(delta=delta):
+                with self.assertRaises(GateError):
+                    certify_exact_final_distance_109(dict(baseline,**delta))
+        with self.assertRaises(GateError):
+            certify_exact_final_distance_109(None)
+    def test_jvm_nan_and_float_rounding_are_not_overclaimed(self):
+        proof=arithmetic_window(fixture())
+        self.assertIn("cmp(",proof["derived_rejection_condition"])
+        self.assertEqual(1,proof["math_opcode_histogram"]["fmul"])
+        self.assertEqual(1,proof["math_opcode_histogram"]["f2d"])
+        self.assertEqual(1,proof["math_opcode_histogram"]["dcmpg"])
+    def test_wrong_height_operand_is_rejected_by_release_gate(self):
+        d=fixture()
+        d[0][2][22]="22: aload_0"
+        p=arithmetic_window(d)
+        self.assertEqual("PROVED_FINAL_IFGT_NUMERIC_COMPARISON",p["status"])
+        with self.assertRaises(GateError):
+            certify_exact_final_distance_109(p)
+
     def test_unknown_call_never_certifies_formula(self):
         d=fixture()
         rows=d[0][2]
