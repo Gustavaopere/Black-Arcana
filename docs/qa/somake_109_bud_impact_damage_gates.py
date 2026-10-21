@@ -171,6 +171,72 @@ def heal_conditional_scout(declared):
         "boundary":"Only method/branch shapes; heal amount and event validity NOT proved",
     }
 
+
+def certify_heal_guard_and_event_path(declared):
+    """Prove only JVM branch gate, event post and heal call; no healing outcome."""
+    members=[b for n,d,b in declared if n=="impact" and d==DESC]
+    if len(members)!=1:return {"status":"NOT_PROVED","reason":"missing_or_ambiguous_impact"}
+    rows=opcode_rows(members[0])
+    def fail(reason):return {"status":"NOT_PROVED","reason":reason}
+    if len(rows)!=279:return fail("release_impact_instruction_count_drift")
+    def local(i,op,slot):
+        a,operation,operand,comment=rows[i]
+        return operation==op+"_"+str(slot) or (operation==op and operand==str(slot))
+    if not (local(146,"aload",4) and rows[147][1]=="ifnull"
+            and branch_target(rows,147)==173
+            and local(148,"iload",6) and rows[149][1]=="ifle"
+            and branch_target(rows,149)==173):
+        return fail("nullable_object_and_positive_int_guard_not_exact")
+    if call_indices(rows,'SpellHealEvent."<init>":')!=[167]:
+        return fail("unique_spell_heal_event_constructor_not_proved")
+    if call_indices(rows,".post:")!=[168] or rows[168][1] not in ("invokevirtual","invokeinterface"):
+        return fail("event_bus_post_not_proved")
+    if not (rows[169][1]=="pop" and local(170,"aload",4)
+            and local(171,"fload",7) and rows[172][1]=="invokevirtual"
+            and "LivingEntity.heal:(F)V" in rows[172][3]
+            and call_indices(rows,".heal:")==[172]):
+        return fail("post_ignored_and_heal_target_amount_not_proved")
+    for i in range(150,173):
+        op=rows[i][1]
+        if op.startswith(("if","goto","jsr")) or op in (
+            "tableswitch","lookupswitch","ret","jsr_w","wide","return","athrow"):
+            return fail("branch_in_heal_region")
+    pcs={pc:i for i,(pc,_,_,_) in enumerate(rows)}
+    if len(pcs)!=279:return fail("ambiguous_offsets")
+    for i,(pc,op,operand,_) in enumerate(rows):
+        if not op.startswith(("if","goto","jsr")):continue
+        raw=operand.split(" ",1)[0] if operand else ""
+        dest=pcs.get(int(raw)) if raw.isdecimal() else None
+        if dest is None:return fail("unrecognized_branch")
+        if 150<=dest<=172 and not 150<=i<=172:
+            return fail("outside_jump_into_heal_region")
+    return {
+        "status":"PROVED_BUD_HEAL_GUARDED_EVENT_POST_THEN_HEAL_CALL",
+        "instruction_count":279,
+        "nullable_receiver_slot":4,"guard_ifnull_index":147,"guard_ifnull_skip_index":173,
+        "positive_integer_slot":6,"guard_ifle_index":149,"guard_ifle_skip_index":173,
+        "event_constructor_index":167,"event_post_index":168,
+        "event_post_return_discarded":True,
+        "heal_receiver_slot":4,"heal_amount_float_slot":7,"heal_call_index":172,
+        "healing_region_external_ingress":False,
+        "boundary":"Event and heal calls on normal guarded path only; no true healing amount, cancellation semantics, damage-to-heal attribution, PvP, player role, double-processing or perk hook proved",
+    }
+
+def certify_exact_heal_event_gate_109(proof):
+    expected={
+        "status":"PROVED_BUD_HEAL_GUARDED_EVENT_POST_THEN_HEAL_CALL",
+        "instruction_count":279,
+        "nullable_receiver_slot":4,"guard_ifnull_index":147,"guard_ifnull_skip_index":173,
+        "positive_integer_slot":6,"guard_ifle_index":149,"guard_ifle_skip_index":173,
+        "event_constructor_index":167,"event_post_index":168,
+        "event_post_return_discarded":True,
+        "heal_receiver_slot":4,"heal_amount_float_slot":7,"heal_call_index":172,
+        "healing_region_external_ingress":False,
+        "boundary":"Event and heal calls on normal guarded path only; no true healing amount, cancellation semantics, damage-to-heal attribution, PvP, player role, double-processing or perk hook proved",
+    }
+    if not isinstance(proof,dict) or any(proof.get(k)!=v for k,v in expected.items()):
+        raise GateError("Somake 1.0.9 healing gate/SpellHealEvent/target/amount fingerprint drift")
+
 def inspect(jar):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("invalid Somake publisher file")
@@ -197,11 +263,14 @@ def inspect(jar):
     certify_exact_damage_effect_gate_109(gated)
     heal_scout=heal_conditional_scout(d)
     print("SOMAKE_BUD_HEAL_GUARD_SCOUT",json.dumps(heal_scout,sort_keys=True))
+    heal_gate=certify_heal_guard_and_event_path(d)
+    print("SOMAKE_BUD_HEAL_EVENT_GATE_PROOF",json.dumps(heal_gate,sort_keys=True))
+    certify_exact_heal_event_gate_109(heal_gate)
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:
         raise GateError("JAR changed during inspection")
     return {"status":"SHA_EXACT_BUD_DAMAGE_BRANCH_SCOUT","sha1":digest,
             "version":"1.0.9","mod_id":"somakespells","damage_flow":proof,
-            "damage_effect_gate":gated,"heal_scout":heal_scout,
+            "damage_effect_gate":gated,"heal_scout":heal_scout,"heal_gate":heal_gate,
             "limits":"Static call/branch topology only; provider-loaded behavior and perk hooks unproven"}
 
 def main():
@@ -215,5 +284,6 @@ def main():
     print("SOMAKE_BUD_DAMAGE_BRANCH_SCOUT",json.dumps(v["damage_flow"],sort_keys=True))
     print("SOMAKE_BUD_DAMAGE_BRANCH_SHA",v["sha1"])
     print("SOMAKE_BUD_DAMAGE_EFFECT_GATE", "PASS_SHA_EXACT_BOOLEAN_DAMAGE_WITHER_AND_PUSH")
+    print("SOMAKE_BUD_HEAL_EVENT_GATE", "PASS_SHA_EXACT_NONNULL_POSITIVE_COUNTER_POST_THEN_HEAL")
 if __name__=="__main__":
     main()
