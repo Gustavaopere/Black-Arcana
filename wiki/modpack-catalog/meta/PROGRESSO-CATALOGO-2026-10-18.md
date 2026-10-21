@@ -1,5 +1,12 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
+## Somake 1.0.9 — AABB independente de Funeral Bloom Bud (21/10/2026, PR #850)
+
+**Barra geral:** `—%`, denominador universal aberto, piso histórico conservador **≥1.856** objetos semânticos. **Barra Somake — identidades:** `83/83 = 100%`; fichas com auditoria downstream na campanha: `5/83 = 6,02%`; hooks mutadores homologados: **0** (taxa sem denominador). Subcampanha física fixa de providers: `35/39 = 89,74%` no último checkpoint com denominador fechado, não uma taxa de cobertura de todos os mods.
+
+A [auditoria Java21 #39529183029](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39529183029) confirmou SHA do Somake 1.0.9 (File 8867079), **14 testes** e o uso de `getImpactPosition` como centro de `AABB(Vec3,Vec3).inflate(1.75d,1.35d,1.75d)`, com armazenamento no slot 5 e consulta posterior `ServerLevel.getEntitiesOfClass(LivingEntity.class,AABB)`. Região de **3,50 × 2,70 × 3,50 blocos** para origem coincidente. Não usar essa geometria como prova de dano/cura/Wither ou mutabilidade por jogador. Efeitos no corpo foram localizados, mas sem guardas efetivamente resolvidos. Nenhum novo ID/adaptador, Stage 06.05 permanece 🟡, Stage 09 físico PENDING e todos os mutadores externos mantêm ⛔ `FAIL_CLOSED`. [Ficha individual](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+
 ## Somake — `maxTargets` ligado ao corte de lista e iteração normal de buds (20/10/2026; PR #849)
 
 **Barras inalteradas:** geral —% (piso global conservador **≥1.856** objetos semânticos, denominador total ainda aberto), Somake 1.0.9 **83/83 IDs = 100%**, aprofundamento downstream nesta campanha **5/83 = 6,02%**, `0` hooks mutadores aprovados (taxa indefinida sem universo de perks). Subcampanha fixa de registro exato em providers: **35/39 = 89,74%** no checkpoint documentado, sem equivalência à completude universal.

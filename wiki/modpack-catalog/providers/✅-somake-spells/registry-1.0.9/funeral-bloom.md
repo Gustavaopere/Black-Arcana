@@ -347,3 +347,22 @@ Resultado: uma **única identidade** `somakespells:funeral_bloom`, ainda condici
 **Separação de conceitos:** `getMaxTargets(level)=4+clamp(level,1,5)` é a expressão de getter anteriormente certificada; este gate certifica **o consumo do campo `maxTargets:I` em `launchWave`**, não sua atribuição pela cadeia completa de argumentos de cast. Mesmo quando `subList` limita a lista, um limite de *tentativas normais por wave* não prova sucesso de todas as spawns, limites globais/totais ao longo do tempo, nem client/Survival/multiplayer. A ordenação e os filtros existentes não autorizam novos casts ou processamento duplicado.
 
 **Continuam ⚠️:** papéis reais dos parâmetros owner/caster/alvo, dataflow do parâmetro de cast ao campo `maxTargets`, contagem de buds vivas/persistidas, tratamento de reinício e `FuneralBloomBudEntity.impact` (AABB/dano/cura). Nenhuma magia nova, nenhum adapter criado, nem Stage promovido. Black Arcana governa seu próprio runtime, RPG Skill Tree progressão/perks mediante contrato, e Somake/Iron's mantêm autoridade sobre efeitos/casting dos respectivos providers. Stage 06.05 🟡 e Stage 09 físico PENDING.
+
+## AABB própria de FuneralBloomBudEntity.impact — prova SHA-exata (21/10/2026, PR #850)
+
+**JAR publisher:** `somakespells-1.0.9-1.21.1.jar`, CurseForge File `8867079`, mod ID `somakespells`, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`. A [auditoria Java 21 #39529183029](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39529183029) concluiu com `SUCCESS` e **14 regressões sintéticas**, provando a cadeia local entre posição, AABB e consulta. O gate físico estrito `certify_exact_impact_geometry_109` exige reexecução no HEAD final da PR, após as alterações documentais.
+
+| Eixo de integração da magia | Fato provado no método `FuneralBloomBudEntity.impact(ServerLevel)` | Limite |
+|---|---|---|
+| Origem do centro | `getImpactPosition():Vec3` sobre a bud, guardado no slot JVM **2** | Não comprova o posicionamento efetivo de toda bud durante gameplay |
+| AABB inicial | `new AABB(Vec3,Vec3)`, ambos os argumentos referenciam o slot JVM **2** | Caixa de origem degenerada no ponto da bud antes da expansão |
+| Argumentos de expansão | `AABB.inflate(1.75d, 1.35d, 1.75d)` | Expansão geométrica X/Y/Z independente da `controller.getRadius()` |
+| Tamanho teórico da região consultada | **3,50 × 2,70 × 3,50 blocos**, se a caixa tiver seus dois extremos iguais | Dimensões da **região de consulta**, não alcance de cast, volume de dano garantido ou hitbox da entidade |
+| Transferência JVM | Resultado da expansão salvo em `astore 5`, recuperado por `aload 5` | Vincula a AABB calculada ao argumento seguinte |
+| Consulta de candidatos | `ServerLevel.getEntitiesOfClass(LivingEntity.class,AABB)` com `Class` e caixa comprovadas | O método de consulta não aplica `Predicate` nessa chamada; o filtro real ocorre depois em branches do próprio `impact` |
+| Efeitos coexistentes no corpo | `DamageSources.applyDamage`, `addEffect`, `push`, `SpellHealEvent` e `LivingEntity.heal` foram localizados | ⚠️ Pré-condições, alvos, ordem/causalidade de settlement, efeitos repetidos e source real de dano **não certificados por esta auditoria geométrica** |
+| Contrato de perk | Nenhum mutador por jogador homologado | ⛔ Não ajustar dinamicamente `inflate`, dano, cura, knockback, hitbox, duração ou identificação da vítima por API presumida |
+
+**Separação essencial:** o raio `controller.getRadius()` governa uma etapa anterior de seleção/launchWave; `bud.impact` usa **literais geométricos próprios**, e o método de impacto não contém um callsite direto `getRadius`. Uma perk que aumente a área de wave não implica ampliação do hitbox de impacto, e uma perk que modifique o dano também não implica alteração do volume de consulta. Para implementar quaisquer das duas, comprovar hook externo real e testes provider-loaded; caso contrário, `FAIL_CLOSED`.
+
+**Seguimento prioritário:** reconstruir, por CFG e operandos tipados, os filtros dentro do laço de `impact` e a condição da chamada `DamageSources.applyDamage` antes de associar Wither, empurrão ou `SpellHealEvent` a um evento causal único. Provar owner/alvo, PvP/claims, dano efetivo, cura e idempotência; por enquanto `NOT_PROVED`. Nenhuma nova identidade mágica, adapter ou mudança de runtime; Stage 06.05 🟡 e Stage 09 QA físico pendente. [Scanner](../../../../docs/qa/somake_109_bud_impact_geometry.py) · [Testes](../../../../docs/qa/somake_109_bud_impact_geometry_test.py).
