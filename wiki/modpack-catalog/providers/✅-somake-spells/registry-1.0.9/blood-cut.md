@@ -99,3 +99,9 @@ O [gate Java21 #39599959888](https://github.com/Gustavaopere/Black-Arcana/action
 Também há um gate de exclusão: **`event.getSource() instanceof SpellDamageSource` resulta em retorno imediato**, antes do dano secundário. Isso não comprova imunidade a todas as formas de recursão ou dano efetivo. O argumento `LivingEntity` representa a entidade de origem do dano, **não necessariamente o caster original**.
 
 A fórmula numérica certificada para o valor intermediário é `getNewDamage() * (((float)(amplifier + 1) * getEntityPowerMultiplier(sourceEntity)) * 0.1f)`, preservando a ordem `float`. O alvo efetivo de `DamageSources.applyDamage`, a mitigação e a cura permanecem ⚠️; hooks per-player seguem ⛔. [Dossiê causal completo](../EXACT-BINARY-BLOOD-CUT-CAUSAL-EVENT-1.0.9.md). Nenhum spell ou adapter adicional.
+
+## Novo gate exato: alvo e source de DamageSources.applyDamage (PR #862, 21/10/2026)
+
+[Java 21 #39604864087](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39604864087) **SUCCESS**, SHA-1 publisher Somake 1.0.9, **86 testes sintéticos**. No final de `BloodCutEffect.onLivingDamage`, o `applyDamage(Entity,float,DamageSource):boolean` recebe **`event.getEntity()` como alvo**, **`local_3` como float de dano solicitado** e **`BloodCutSpell.getDamageSource(local_1)` como source**. `local_1` é a entidade associada à fonte do dano original, comprovada no PR #861. A chamada de dano tem índice 100; o booleano é descartado, portanto não certifica sucesso do dano.
+
+**Distinção de sobrecarga essencial:** o handler usa `getDamageSource(Entity)` (1 arg), enquanto o setter nominal de lifesteal `0.15f` foi observado na sobrecarga `getDamageSource(Entity,Entity)` (2 args). Delegação entre elas e cura real **não estão provadas**; ⚠️ condicionado e perks ⛔ FAIL_CLOSED. [Dossiê de aplicação do dano](../EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md).
