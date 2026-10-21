@@ -158,8 +158,50 @@ def certify_native_source_actor(rows):
 
 
 def certify_effect_holder_receiver(rows):
-    """Unproven until effect instance to source entity link is certified."""
-    raise GateError("native Blood Cut effect holder provenance not implemented")
+    """Verify Blood Cut effect lookup on typed source entity and null-effect guard."""
+    getters=[i for i,(_,op,_,c) in enumerate(rows)
+             if op.startswith("invoke") and "LivingEntity.getEffect:" in c]
+    if len(getters)!=1:
+        raise GateError("missing/ambiguous native LivingEntity effect getter")
+    g=getters[0]
+    if g<2 or g+3>=len(rows):
+        raise GateError("not enough JVM instructions around effect getter")
+    expected=["aload_1","getstatic","invokevirtual","astore_2","aload_2","ifnull"]
+    opcodes=[op for _,op,_,_ in rows[g-2:g+4]]
+    if opcodes!=expected:
+        raise GateError("Blood Cut native effect source/guard opcode sequence drift")
+    if ("ModMobEffects.BLOOD_CUT:" not in rows[g-1][3]
+            or "getEffect:" not in rows[g][3]
+            or "Lnet/minecraft/world/effect/MobEffectInstance;" not in rows[g][3]):
+        raise GateError("native Blood Cut effect registry/getter descriptor drift")
+    target=rows[g+3][2]
+    offset_to_index={pc:i for i,(pc,_,_,_) in enumerate(rows)}
+    if not re.fullmatch(r"\d+",target) or int(target) not in offset_to_index:
+        raise GateError("invalid null-effect guard target")
+    if rows[offset_to_index[int(target)]][1]!="return":
+        raise GateError("missing effect must lead to a normal return")
+    amplifiers=[i for i,(_,op,_,c) in enumerate(rows)
+                if op.startswith("invoke") and "MobEffectInstance.getAmplifier:()I" in c]
+    if len(amplifiers)!=1 or amplifiers[0]<=g+3:
+        raise GateError("effect amplifier source missing/ambiguous")
+    amp=amplifiers[0]
+    if rows[amp-1][1]!="aload_2":
+        raise GateError("effect amplifier receiver must be guarded local_2")
+    for _,op,arg,_ in rows[g+1:amp]:
+        if op=="astore_2" and _ != rows[g+1][0]:
+            raise GateError("intervening effect local_2 overwrite")
+        if op=="astore" and arg.strip()=="2":
+            raise GateError("intervening effect local_2 overwrite")
+    return {
+        "assurance":"BLOOD_CUT_FROM_SOURCE_ENTITY",
+        "effect_receiver_local":"local_1",
+        "effect_storage_local":"local_2",
+        "verified_effect_id":"BLOOD_CUT",
+        "effect_lookup_index":g,
+        "null_effect_guard_index":g+3,
+        "amplifier_receiver_verified":"local_2",
+        "boundary":"Native getter obtains Blood Cut effect from the damage source LivingEntity, not necessarily the original caster. Event dispatch, proc eligibility and actual damage remain unproven."
+    }
 
 
 def inspect(jar:Path) -> dict:
@@ -180,6 +222,7 @@ def inspect(jar:Path) -> dict:
     result=examine_event_callsite(found[0])
     direct_float=certify_native_damage_expression(found[0])
     source_actor=certify_native_source_actor(found[0])
+    effect_holder=certify_effect_holder_receiver(found[0])
     if len(found[0])!=103 or graph["syntactic_paths_to_apply"]!=2 or graph["syntactic_paths_without_apply"]!=3:
         raise GateError("Blood Cut native event CFG changed")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=SHA1:
@@ -190,6 +233,7 @@ def inspect(jar:Path) -> dict:
             "callsite_evidence":result,
             "direct_float_stack_handoff":direct_float,
             "source_actor_provenance":source_actor,
+            "effect_holder_provenance":effect_holder,
             "limits":"No producer-consumer typed stack proof yet; no gameplay, host settlement, recursion or perk hook verified."}
 
 
@@ -205,6 +249,7 @@ def main():
     print("BLOOD_CUT_ARG_PROXIMITY",json.dumps(evidence["callsite_evidence"],sort_keys=True))
     print("BLOOD_CUT_FLOAT_HANDOFF",json.dumps(evidence["direct_float_stack_handoff"],sort_keys=True))
     print("BLOOD_CUT_SOURCE_ACTOR",json.dumps(evidence["source_actor_provenance"],sort_keys=True))
+    print("BLOOD_CUT_EFFECT_OWNER",json.dumps(evidence["effect_holder_provenance"],sort_keys=True))
 
 
 if __name__=="__main__":
