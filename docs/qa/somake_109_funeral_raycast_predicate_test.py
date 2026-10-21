@@ -52,7 +52,7 @@ class FalsePredicateGateTests(unittest.TestCase):
         p=constant_fixture();p[1][2][0]="0: iconst_1"
         self.assertEqual("NOT_PROVED",certify_constant_false_predicate(p)["status"])
     def test_additional_condition_fails(self):
-        p=constant_fixture();p[1][2].insert(1,"1: nop")
+        p=constant_fixture();p[1]=("lambda$onCast$0",PRED,["0: iconst_0","1: nop","2: ireturn"])
         self.assertEqual("NOT_PROVED",certify_constant_false_predicate(p)["status"])
     def test_wrong_oncast_bootstrap_fails(self):
         p=constant_fixture();p[0][2][13]=p[0][2][13].replace("#0:test","#1:test")
