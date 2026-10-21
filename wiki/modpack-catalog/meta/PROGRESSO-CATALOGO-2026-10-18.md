@@ -1,6 +1,6 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
-## Somake 1.0.9 — filtros efetivos do bloco de dano e cura da bud (21/10/2026, PR #851)
+## Somake 1.0.9 — filtros efetivos do bloco de dano e cura da bud (20/10/2026, PR #851)
 
 **Barras sem aumento artificial de identidade:** universo global **—%** (piso conservador **≥1.856** objetos semânticos; denominador final aberto), Somake **83/83 IDs = 100%**, recorte de fichas downstream **5/83 = 6,02%**, subcampanha fixa de providers exatos **35/39 = 89,74%** no último checkpoint. A prova acrescenta profundidade técnica a `somakespells:funeral_bloom`, **+0** novos feitiços e **+0** adapters. Hooks de perks mutadoras homologados: **0**, percentual indefinido sem denominador.
 
