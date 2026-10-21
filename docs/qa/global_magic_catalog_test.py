@@ -231,7 +231,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         }, {entry["field"]: entry["root"] for entry in rows
             if entry["field"].lower() != entry["root"]})
         cards = (provider / "SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md").read_text(encoding="utf-8")
-        headings = list(re.finditer(r"^### (\\d{2}) — `([A-Z_]+)`$", cards, re.MULTILINE))
+        headings = list(re.finditer(r"^### (\d{2}) — `([A-Z_]+)`$", cards, re.MULTILINE))
         self.assertEqual(98, len(headings))
         for idx, heading in enumerate(headings):
             field = heading.group(2)
