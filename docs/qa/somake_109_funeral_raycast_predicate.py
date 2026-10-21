@@ -56,6 +56,54 @@ def survey(methods):
             "candidate_lambdas":candidates,
             "boundary":"Native lambda branch/call shape only; entity passed to raycast, policy, final raycast target and hooks remain unproven"}
 
+
+def certify_constant_false_predicate(methods):
+    """Exact native JVM body; not proof of linkage or raycast fallback."""
+    matched=[opcode_rows(b) for n,d,b in methods if
+             n=="lambda$onCast$0" and d=="(Lnet/minecraft/world/entity/Entity;)Z"]
+    if len(matched)!=1:return {"status":"NOT_PROVED","reason":"lambda_signature_missing_or_ambiguous"}
+    r=matched[0]
+    siblings=[(n,d) for n,d,b in methods if n.startswith("lambda$onCast$")]
+    if len(siblings)!=1:return {"status":"NOT_PROVED","reason":"unexpected_oncast_lambda_set"}
+    if len(r)!=2 or r[0][1]!="iconst_0" or r[1][1]!="ireturn":
+        return {"status":"NOT_PROVED","reason":"predicate_body_not_constant_false"}
+    casts=[opcode_rows(b) for n,d,b in methods if n=="onCast" and d==SPELL_ONCAST_DESC]
+    if len(casts)!=1 or len(casts[0])!=81:
+        return {"status":"NOT_PROVED","reason":"onCast_shape_drift"}
+    cast=casts[0]
+    if cast[13][1]!="invokedynamic" or "InvokeDynamic #0:test:()Ljava/util/function/Predicate;" not in cast[13][3]:
+        return {"status":"NOT_PROVED","reason":"onCast_predicate_factory_signature_drift"}
+    if cast[14][1]!="invokestatic" or "raycastForEntity:" not in cast[14][3]:
+        return {"status":"NOT_PROVED","reason":"raycast_function_unproven"}
+    return {"status":"PROVED_ONCAST_UNLINKED_LAMBDA_CONSTANT_FALSE",
+            "lambda_name":"lambda$onCast$0",
+            "lambda_descriptor":"(Lnet/minecraft/world/entity/Entity;)Z",
+            "lambda_instruction_count":2,"lambda_boolean_result":False,
+            "invokedynamic_index":13,"invokedynamic_bootstrap_index":0,
+            "raycast_call_index":14,
+            "boundary":"Actual invokedynamic bootstrap linkage, raycastForEntity library behavior, final target and world-position fallback require separate evidence"}
+
+def bootstrap_scout(verbose_text):
+    marker="\nBootstrapMethods:"
+    pos=verbose_text.find(marker)
+    if pos<0:return {"status":"NOT_PROVED","reason":"bootstrap_table_missing"}
+    part=verbose_text[pos+len(marker):]
+    part=part[:part.find("\nInnerClasses:")] if "\nInnerClasses:" in part else part[:20000]
+    if len(part)>20000:return {"status":"NOT_PROVED","reason":"bootstrap_data_oversized"}
+    entries=re.split(r"(?m)^\s{2}(\d+):\s+",part)
+    # The parser deliberately never returns third-party method bodies.
+    found=[]
+    for i in range(1,len(entries),2):
+        number=int(entries[i]);block=entries[i+1][:3500]
+        found.append({"index":number,
+                      "lambda_metafactory":("LambdaMetafactory.metafactory" in block.splitlines()[0]),
+                      "funeral_lambda_handle":bool(re.search(
+                         r"REF_invokeStatic\s+[\w/$]+FuneralBloomSpell\.lambda\$onCast\$0:"
+                         r"\(Lnet/minecraft/world/entity/Entity;\)Z",block)),
+                      "predicate_method_shape":("(Lnet/minecraft/world/entity/Entity;)Z" in block)})
+    return {"status":"OBSERVED_BOOTSTRAP_METHOD_REFERENCES","bootstrap_entries":found[:20],
+            "boundary":"Symbolic bootstrap references only; no proof of raycastForEntity external implementation"}
+
 def inspect(jar:Path):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("invalid Somake publisher file")
@@ -81,10 +129,20 @@ def inspect(jar:Path):
     certify_exact_controller_lifecycle_109(prove_controller_field_lifecycle(controller))
     certify_exact_wither_handoff_109(certify_wither_constructor_handoff(bud,controller))
     result=survey(spell)
+    false_body=certify_constant_false_predicate(spell)
+    print("SOMAKE_RAYCAST_FALSE_LAMBDA_PROOF",json.dumps(false_body,sort_keys=True))
+    if false_body["status"]!="PROVED_ONCAST_UNLINKED_LAMBDA_CONSTANT_FALSE":
+        raise GateError("lambda false body changed:"+false_body.get("reason","unknown"))
+    verbose=subprocess.run(["javap","-p","-v","-classpath",str(jar.resolve()),SPELL],
+                           capture_output=True,text=True,timeout=60,check=False)
+    if verbose.returncode or not verbose.stdout or len(verbose.stdout)>MAX_JAVAP:
+        raise GateError("bounded verbose javap unavailable")
+    bootstrap=bootstrap_scout(verbose.stdout)
+    print("SOMAKE_RAYCAST_BOOTSTRAP_SCOUT",json.dumps(bootstrap,sort_keys=True))
     if result["status"]!="OBSERVED_RAYCAST_LAMBDA_TYPED_SHAPES":
         raise GateError("native lambda shape unknown:"+result.get("reason",""))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=sha:raise GateError("artifact changed during inspection")
-    return {"sha1":sha,"version":"1.0.9","mod_id":"somakespells","raycast_lambda":result}
+    return {"sha1":sha,"version":"1.0.9","mod_id":"somakespells","raycast_lambda":result,"false_lambda":false_body,"bootstrap":bootstrap}
 
 def main():
     a=argparse.ArgumentParser()
