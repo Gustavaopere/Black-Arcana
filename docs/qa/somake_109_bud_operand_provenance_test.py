@@ -22,7 +22,7 @@ class ScoutTests(unittest.TestCase):
         proof=scout(fixture())
         self.assertEqual("OBSERVED_TYPED_OPERAND_WINDOWS_ONLY",proof["status"],proof)
         self.assertEqual(279,proof["instruction_count"])
-        self.assertEqual(4,len(proof["ranges"]))
+        self.assertEqual(6,len(proof["ranges"]))
         self.assertIn("NOT_PROVED",proof["boundary"])
     def test_local_and_call_metadata(self):
         x=describe_instruction(__import__("somake_109_radius_irons_contract",fromlist=["opcode_rows"]).opcode_rows(fixture()[0][2]),146)
