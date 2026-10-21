@@ -118,8 +118,43 @@ def certify_native_damage_expression(rows):
 
 
 def certify_native_source_actor(rows):
-    """Fail closed until source-entity to local_1 typed producer is proven."""
-    raise GateError("native damage source actor provenance not yet implemented")
+    """Verify event damage source entity is guarded and cast to LivingEntity local_1."""
+    if len(rows)<11:
+        raise GateError("native entry method too short")
+    entry=rows[:10]
+    expected=["aload_0","invokevirtual","invokevirtual","astore_2",
+              "aload_2","instanceof","ifeq","aload_2","checkcast","astore_1"]
+    if [op for _,op,_,_ in entry]!=expected:
+        raise GateError("source entity guarded entry fingerprint drift")
+    get_source=entry[1][3]
+    get_entity=entry[2][3]
+    if ("getSource:()Lnet/minecraft/world/damagesource/DamageSource;" not in get_source
+            or "DamageSource.getEntity:()Lnet/minecraft/world/entity/Entity;" not in get_entity):
+        raise GateError("damage-source entity JVM descriptor changed")
+    guarded_type="class net/minecraft/world/entity/LivingEntity"
+    if (guarded_type not in entry[5][3] or guarded_type not in entry[8][3]):
+        raise GateError("native source entity guard/cast type changed")
+    target=entry[6][2]
+    if not re.fullmatch(r"\d+",target):
+        raise GateError("invalid source guard branch operand")
+    offset_to_index={pc:i for i,(pc,_,_,_) in enumerate(rows)}
+    target_i=offset_to_index.get(int(target))
+    if target_i is None or rows[target_i][1]!="return":
+        raise GateError("source guard must fail to a return")
+    stores=[i for i,(_,op,arg,_) in enumerate(rows)
+            if op=="astore_1" or (op=="astore" and arg.strip()=="1")]
+    if stores!=[9]:
+        raise GateError("source typed local_1 assigned outside canonical guard")
+    return {
+        "assurance":"SOURCE_ENTITY_TYPED_LOCAL1",
+        "origin":"event.getSource().getEntity()",
+        "verified_cast_type":"LivingEntity",
+        "source_entity_call_index":2,
+        "cast_to_living_index":8,
+        "local1_store_index":9,
+        "guard_failed_returns_without_downstream_modifier":target_i==len(rows)-1,
+        "boundary":"DamageSource.getEntity is not automatically the original spell caster, player, or owner; no runtime event/recursion fact certified."
+    }
 
 
 def inspect(jar:Path) -> dict:
@@ -139,6 +174,7 @@ def inspect(jar:Path) -> dict:
     graph=graph_paths(found[0],expected_branches=5)
     result=examine_event_callsite(found[0])
     direct_float=certify_native_damage_expression(found[0])
+    source_actor=certify_native_source_actor(found[0])
     if len(found[0])!=103 or graph["syntactic_paths_to_apply"]!=2 or graph["syntactic_paths_without_apply"]!=3:
         raise GateError("Blood Cut native event CFG changed")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=SHA1:
@@ -148,6 +184,7 @@ def inspect(jar:Path) -> dict:
             "event":"BloodCutEffect.onLivingDamage(LivingDamageEvent.Post)",
             "callsite_evidence":result,
             "direct_float_stack_handoff":direct_float,
+            "source_actor_provenance":source_actor,
             "limits":"No producer-consumer typed stack proof yet; no gameplay, host settlement, recursion or perk hook verified."}
 
 
@@ -162,6 +199,7 @@ def main():
     print("BLOOD_CUT_EVENT_CALLSITES",evidence["status"],evidence["sha1"])
     print("BLOOD_CUT_ARG_PROXIMITY",json.dumps(evidence["callsite_evidence"],sort_keys=True))
     print("BLOOD_CUT_FLOAT_HANDOFF",json.dumps(evidence["direct_float_stack_handoff"],sort_keys=True))
+    print("BLOOD_CUT_SOURCE_ACTOR",json.dumps(evidence["source_actor_provenance"],sort_keys=True))
 
 
 if __name__=="__main__":
