@@ -1,5 +1,10 @@
 # Monsters & Spellbooks 0.0.16.3 — publisher SHA-exact binary proof gate
 
+## Promoção do ledger — evidência estática, 21/10/2026
+
+A auditoria `0.0.16.3` já **PASSOU** ([#39668594072](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39668594072), [#39669169025](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39669169025), [pós-merge #39670154524](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39670154524)): 98/98 registros estáticos, IDs, classes e hash. Este dossiê preserva o histórico de gate e a distinção entre `monsterspellbooks` (mod ID de 17 caracteres) e `monstersspellbooks` (nome do arquivo com 18). A matriz e seus consumidores foram promovidos separadamente para `COUNTED_EXACT` **apenas de identidade binária**, campanha **38/39**. Nenhum QA de casting em jogo, sem contagem nova (+0), efeitos/perks/Survival ainda ⚠️/⛔. As seções abaixo descrevem a investigação anterior, quando ainda constava `COUNTED_RELEASE_BOUNDED` e 37/39.
+
+
 State: **✅ SHA-exact publisher binary spell registry evidence 98/98 PASS, #39668594072; ⚠️ loaded registry, configuration and physical/Survival QA remain pending.**
 
 ## Authority

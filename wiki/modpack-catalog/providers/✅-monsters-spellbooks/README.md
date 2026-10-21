@@ -1,5 +1,10 @@
 # Monsters & Spellbooks — provider catalog
 
+## Identidade binária instalada — checkpoint 21/10/2026
+
+✅ **98/98 IDs/classes compilados SHA-exatos** na versão 0.0.16.3, verificados em [Java21 #39668594072](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39668594072) e [pós-merge #39670154524](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39670154524). O `modId` do `neoforge.mods.toml` é **`monsterspellbooks` (17)**, enquanto `monstersspellbooks-0.0.16.3.jar` é o **filename** (18 no stem): não confundir os dois contratos. O progresso da campanha de 39 sobe a **38/39 `COUNTED_EXACT`** apenas para identidades estáticas, sem novos objetos (+0). **Spell schools ativas, custos, cooldown, efeitos, target/dano, summon ownership, perks e Survival ainda não homologados; sem API/hook real, bloquear mutações.** Descrições source-observed e histórico abaixo conservados, mas não substituem o JAR exato.
+
+
 ## Installed identity
 
 - Minecraft: `1.21.1`
