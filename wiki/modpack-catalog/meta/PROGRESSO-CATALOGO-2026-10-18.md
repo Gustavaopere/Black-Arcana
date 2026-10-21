@@ -1,5 +1,12 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
+## Continuação Somake: dois branches intermediários provados (20/10/2026; PR #847)
+
+**Barras de cobertura inalteradas:** universo global **—%** (denominador final aberto, piso conservador **≥1.856** ações/objetos semânticos); Somake 1.0.9 **83/83 (100%)** identidades físicas; auditoria downstream **5/83 (6,02%)** fichas nesta campanha; **0** hooks de mutação por jogador homologados (percentual sem denominador). Subcampanha binária do recorte fixo: **35/39 (89,74%)** no último checkpoint integrado, sem equiparar esse número à completude de todos os mods.
+
+[GitHub Actions Java 21 #39521070264](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39521070264) retornou `SUCCESS` após confronto com Somake 1.0.9 File 8867079 SHA-1 exato; `isValidTarget` agora tem prova causal explícita de **rejeição por aliança**: a referência `slot 1` não pode ser nula para ativar o teste; `slot 2.isAlliedTo(slot 1)` verdadeiro resulta em `false`; valor falso de `isAlliedTo` apenas prossegue. Esta análise amplia o gate anterior de três guardas iniciais sem criar nova identidade, modificar runtime ou promover Stage. **Pendente:** expressão e semântica do `ifgt` final, papéis de caster/owner/alvo, cardinalidade de buds, área de `bud.impact`, configuração e testes provider-loaded/multiplayer/Survival; todos os mutadores seguem ⛔ `FAIL_CLOSED`. `Stage 06.05` 🟡; `Stage 09` QA físico pendente. [Ficha detalhada](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+
 ## Checkpoint operacional reconciliado — 20/10/2026 (documentação; sem nova prova binária)
 
 **Authority revisada:** `Black-Arcana/main@2e23b94638b4eed9a6d7b83cd1a6b7a82ad6e91b` após merge [#845](https://github.com/Gustavaopere/Black-Arcana/pull/845); modlist sibling `neoforge-rpg-skilltree/main@ed5b65b890767b406ce41127bcb793775263c7bd`; Enshrouded `main@a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este checkpoint apenas reconcilia informações **já documentadas**; hashes de JAR e validações de gameplay não foram reexecutados.
