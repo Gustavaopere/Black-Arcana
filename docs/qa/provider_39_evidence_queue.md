@@ -1,5 +1,8 @@
 # 39 providers — fila de evidências para validação binária
 
+**Novo checkpoint 21/10/2026 — 37/39 identidades estáticas exatas (94,87%), 2/39 condicionadas:** Werewolves 2.0.3.3 (9 compiled IAction / 8 semantic) e Bloodlines 3.0.9 (29 compiled IAction / 28 semantic) têm hashes publisher iguais aos físicos e verificadores Java21 incorporados no PR #868. Provas originais [Werewolves #38601736375](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38601736375) e [Bloodlines #38673831810](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38673831810). Restantes: Monsters & Spellbooks 0.0.16.3 (CI físico falhou) e Aeromancy Additions 1.2.8 (SHA físico inválido). **O coletor de fingerprints não certifica registry nem altera `registry_proofs_completed=0`.** Requiem corrige piso global 1.857/1.855→**1.856/1.854** por `ess_requiem:gong` ausente no binário; sem novo objeto. QA modpack/perks pendentes.
+
+
 **Hazen N Stuff static binary checkpoint 2026-10-15:** 38/38 class→ID registrations matched in [Java21 #38606162180](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38606162180). Reconciled campaign **35/39 exact / 4/39 conditional**, +0 roots, strict minimum 1856/1854. Separate fingerprint collector continues to report `registry_proofs_completed=0` by design. Loaded registry and Survival ⚠️.
 
 **Ars Nouveau compiled ID checkpoint 2026-10-15:** [Java21 #38691889186](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38691889186) SUCCESS em 109/109 pares owner→ResourceLocation binários (85 glyphs + 24 rituals). Campaign **34/39 exact / 5/39 conditional**; +0 objetos novos, mínimo 1856/1854. Fingerprint collector continua reportando `registry_proofs_completed=0` porque não executa a auditoria independente. Config/Survival ⚠️.

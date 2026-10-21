@@ -105,12 +105,16 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_real_frozen_campaign_has_thirty_five_existing_exact_registries(self):
+    def test_real_frozen_campaign_has_thirty_seven_existing_exact_registries(self):
         matrix = mod.load_matrix()
         self.assertEqual(39, len(matrix))
-        self.assertEqual(35, sum(
+        self.assertEqual(37, sum(
             x['catalog_evidence'] == 'COUNTED_EXACT' for x in matrix.values()
         ))
+        self.assertEqual({'version': '2.0.3.3', 'semantic_objects': 8,
+                          'catalog_evidence': 'COUNTED_EXACT'}, matrix['Werewolves'])
+        self.assertEqual({'version': '3.0.9', 'semantic_objects': 28,
+                          'catalog_evidence': 'COUNTED_EXACT'}, matrix['Bloodlines'])
         self.assertEqual({'version': '1.0.8', 'semantic_objects': 52,
                           'catalog_evidence': 'COUNTED_EXACT'},
                          matrix['Reliquified Artifacts'])
@@ -340,7 +344,7 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             next(r for r in report['entries'] if r['provider'] == orig
                  )['provider'] = name
         result = mod.build_queue(matrix, crosswalk, report)
-        self.assertEqual(35, result['catalog_exact_preexisting'])
+        self.assertEqual(37, result['catalog_exact_preexisting'])
         self.assertEqual(4, result['registry_proofs_remaining'])
         self.assertEqual(0, result['registry_proofs_completed'])
         exact_rows = [x for x in result['providers']
