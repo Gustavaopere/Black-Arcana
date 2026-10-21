@@ -143,6 +143,34 @@ def certify_exact_damage_effect_gate_109(proof):
     if not isinstance(proof,dict) or any(proof.get(k)!=v for k,v in expected.items()):
         raise GateError("Somake 1.0.9 bud damage-result/Wither/push CFG fingerprint drift")
 
+
+def heal_conditional_scout(declared):
+    m=[b for n,d,b in declared if n=="impact" and d==DESC]
+    if len(m)!=1:return {"status":"NOT_PROVED","reason":"ambiguous_impact"}
+    rows=opcode_rows(m[0])
+    if len(rows)!=279:return {"status":"NOT_PROVED","reason":"impact_drift"}
+    return {
+        "status":"OBSERVED_HEAL_COSITES_ONLY",
+        "guard_147":{"opcode":rows[147][1],"target_index":branch_target(rows,147)},
+        "guard_149":{"opcode":rows[149][1],"target_index":branch_target(rows,149)},
+        "selected_operand_producers":[
+            {"index":i,"op":rows[i][1],
+             "local":rows[i][2] if rows[i][1] in ("aload","fload","iload","dload") else (
+                rows[i][1][-1] if re.fullmatch(r"[afid]load_[0-9]",rows[i][1]) else None)}
+            for i in (146,148,150,151,164,165,166,169,170,171)
+        ],
+        "calls":{
+            "event_ctor":call_indices(rows,'SpellHealEvent."<init>":'),
+            "event_post":call_indices(rows,".post:"),
+            "heal":call_indices(rows,".heal:")
+        },
+        "post_event_branch_indices":[
+            {"index":i,"opcode":rows[i][1],"target_index":branch_target(rows,i)}
+            for i in range(146,173) if rows[i][1].startswith(("if","goto"))
+        ],
+        "boundary":"Only method/branch shapes; heal amount and event validity NOT proved",
+    }
+
 def inspect(jar):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("invalid Somake publisher file")
@@ -167,11 +195,13 @@ def inspect(jar):
     gated=certify_damage_success_effect_path(d)
     print("SOMAKE_BUD_DAMAGE_EFFECT_GATE_PROOF",json.dumps(gated,sort_keys=True))
     certify_exact_damage_effect_gate_109(gated)
+    heal_scout=heal_conditional_scout(d)
+    print("SOMAKE_BUD_HEAL_GUARD_SCOUT",json.dumps(heal_scout,sort_keys=True))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:
         raise GateError("JAR changed during inspection")
     return {"status":"SHA_EXACT_BUD_DAMAGE_BRANCH_SCOUT","sha1":digest,
             "version":"1.0.9","mod_id":"somakespells","damage_flow":proof,
-            "damage_effect_gate":gated,
+            "damage_effect_gate":gated,"heal_scout":heal_scout,
             "limits":"Static call/branch topology only; provider-loaded behavior and perk hooks unproven"}
 
 def main():
