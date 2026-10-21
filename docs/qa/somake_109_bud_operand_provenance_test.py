@@ -54,6 +54,7 @@ def exact_contract_fixture():
        10:"checkcast #4 // class net/minecraft/world/entity/LivingEntity",
        11:"astore 5",12:"aload 5",13:"goto 15",14:"aconst_null",15:"astore 4",
        26:"iconst_0",27:"istore 6",
+       101:"aload 8",
        102:"getstatic #7 // Field net/minecraft/world/effect/MobEffects.WITHER:Lnet/minecraft/core/Holder;",
        103:"invokevirtual #8 // Method net/minecraft/world/entity/LivingEntity.hasEffect:(Lnet/minecraft/core/Holder;)Z",
        104:"istore 14",
@@ -92,6 +93,14 @@ class ExactNativeOperandTests(unittest.TestCase):
     def test_owner_guard_type_drift_fails(self):
         f=exact_contract_fixture()
         f[0][2][7]="7: instanceof #4 // class net/minecraft/world/entity/Player"
+        self.assertEqual("NOT_PROVED",operand_contract(f)["status"])
+    def test_unlicensed_branch_into_count_increment_fails_closed(self):
+        f=exact_contract_fixture()
+        f[0][2][207]="207: goto 144"
+        self.assertEqual("NOT_PROVED",operand_contract(f)["status"])
+    def test_wrong_existing_wither_receiver_fails_closed(self):
+        f=exact_contract_fixture()
+        f[0][2][101]="101: aload 3"
         self.assertEqual("NOT_PROVED",operand_contract(f)["status"])
     def test_wrong_wither_counter_provenance_fails(self):
         f=exact_contract_fixture()
