@@ -39,19 +39,19 @@ class WaveCardinalityScoutTests(unittest.TestCase):
 def cap_fixture():
     """Independent synthetic arithmetic and list-slot flow, not vendor instructions."""
     x=[f"{i}: nop" for i in range(196)]
-    x[40]="40: aload 2"
+    x[40]="40: aload 4"
     x[41]="41: invokeinterface #3, 1 // InterfaceMethod java/util/List.size:()I"
     x[42]="42: aload_0"
     x[43]="43: getfield #1 // Field maxTargets:I"
     x[44]="44: if_icmple 51"
-    x[45]="45: aload 2"
+    x[45]="45: aload 4"
     x[46]="46: iconst_0"
     x[47]="47: aload_0"
     x[48]="48: getfield #1 // Field maxTargets:I"
     x[49]="49: invokeinterface #4, 3 // InterfaceMethod java/util/List.subList:(II)Ljava/util/List;"
-    x[50]="50: astore 2"
+    x[50]="50: astore 4"
     x[51]="51: iconst_0"
-    x[53]="53: aload 2"
+    x[53]="53: aload 4"
     x[54]="54: invokeinterface #5, 1 // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;"
     return [("launchWave",D,x)]
 
@@ -60,7 +60,7 @@ class WaveCapOperandTests(unittest.TestCase):
         proof=prove_wave_list_cap(cap_fixture())
         self.assertEqual("PROVED_WAVE_CANDIDATE_LIST_TRUNCATION",proof["status"],proof)
         self.assertEqual("list_size_greater_than_maxTargets",proof["truncation_condition"])
-        self.assertEqual(2,proof["list_local"])
+        self.assertEqual(4,proof["list_local"])
         self.assertEqual(51,proof["branch_skip_index"])
         self.assertIn("not bud count",proof["boundary"])
     def test_inverse_branch_rejected(self):
@@ -73,10 +73,10 @@ class WaveCapOperandTests(unittest.TestCase):
         d=cap_fixture();d[0][2][48]="48: getfield #8 // Field otherLimit:I"
         self.assertEqual("NOT_PROVED",prove_wave_list_cap(d)["status"])
     def test_list_slot_reassignment_rejected(self):
-        d=cap_fixture();d[0][2][50]="50: astore 3"
+        d=cap_fixture();d[0][2][50]="50: astore 2"
         self.assertEqual("NOT_PROVED",prove_wave_list_cap(d)["status"])
     def test_wrong_iterator_source_rejected(self):
-        d=cap_fixture();d[0][2][53]="53: aload 3"
+        d=cap_fixture();d[0][2][53]="53: aload 2"
         self.assertEqual("NOT_PROVED",prove_wave_list_cap(d)["status"])
     def test_external_jump_into_sublist_rejected(self):
         d=cap_fixture();d[0][2][18]="18: goto 46"
