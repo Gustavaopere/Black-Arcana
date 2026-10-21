@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Synthetic RED/GREEN tests for exact-version native mid-filter guard model."""
 import unittest
-from somake_109_native_filter_middle import middle_guard
+from somake_109_native_filter_middle import middle_guard, certify_exact_native_middle_109
+from somake_109_perk_method_probe import GateError
 
 D="(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z"
 ALLY="Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
@@ -27,6 +28,34 @@ class MiddleGuardTests(unittest.TestCase):
         self.assertEqual((1,2,1),(p["null_test_operand_local"],p["allied_receiver_local"],p["allied_argument_local"]))
         self.assertIs(p["rejection_value"],False)
         self.assertNotIn("caster_role",p)
+
+    def test_exact_publisher_guard_snapshot_and_negative_mutations(self):
+        certified=middle_guard(sample())
+        certify_exact_native_middle_109(certified)
+        for mutation in (
+            {"null_test_operand_local":2},
+            {"allied_receiver_local":1},
+            {"allied_argument_local":2},
+            {"instruction_count":40},
+            {"status":"NOT_PROVED"},
+            {"skip_false_return_branches":["ifnull","ifne"]},
+            {"shared_continuation_index":18},
+            {"rejection_value":True},
+            {"boundary":"all_players_can_mutate_targeting"},
+        ):
+            with self.subTest(mutation=mutation):
+                with self.assertRaises(GateError):
+                    certify_exact_native_middle_109(dict(certified,**mutation))
+        with self.assertRaises(GateError):
+            certify_exact_native_middle_109(None)
+
+    def test_different_jvm_slot_mapping_cannot_be_promoted_for_this_release(self):
+        t=sample()
+        t[0][2][13]="13: aload_1"
+        inferred=middle_guard(t)
+        self.assertEqual("PROVED_NATIVE_NONNULL_AND_ALLIED_REJECTS",inferred["status"])
+        with self.assertRaises(GateError):
+            certify_exact_native_middle_109(inferred)
 
     def test_alliance_call_altered_or_removed_fails_closed(self):
         t=sample();t[0][2][15]="15: invokevirtual #12 // Method x/y/Mock.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
