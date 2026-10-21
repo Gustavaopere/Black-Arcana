@@ -147,3 +147,8 @@ RPG Skill Tree may provide progression/mastery/perks only through a real contrac
 - Somake Aqua focus/acquisition/reachability — `UNVERIFIED / CONDITIONAL`; Traveloptics is currently installed, while its publisher baseline has no active Aqua spell IDs and its exact-current `7b74816e...` registry delta remains unverified. Aqua coexistence/authority therefore stays `CURRENT CONDITIONAL / FAIL-CLOSED`.
 
 The ARR artifact was inspected only to retain factual hash/metadata, resource/registry identities, class/member signatures and narrow control-flow/config predicates needed for catalog interoperability. No implementation body, source reconstruction, asset, model, sound or upstream prose is copied/adapted or treated as reusable material.
+
+
+## Blood Cut 1.0.9 — CFG normal e fórmula derivada do bytecode (21/10/2026)
+
+[Auditoria Java21 #39553030589](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39553030589), SHA1 físico/publicador validado e **41 testes sintéticos**: handler `onLivingDamage` possui 2 caminhos normais para a chamada a `applyDamage` e 3 caminhos de saída sem a chamada. O getter `getDamageModifier(int,LivingEntity)` retorna `((float)(a+1) * (e != null ? getEntityPowerMultiplier(e) : 1.0f)) * 0.1f` (duas multiplicações float; retorno estático, não dano real). [Prova de CFG e float](EXACT-BINARY-BLOOD-CUT-CFG-MODIFIER-1.0.9.md). Os gates de perks, evento vivo, config, Survival e deduplicação de Mastery seguem ⚠️/⛔.

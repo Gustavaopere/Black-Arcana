@@ -37,3 +37,12 @@ O mesmo método anotado para evento Post contém a aplicação potencial de novo
 **Autoridades:** Somake controla efeito específico; Iron's controla casting, custos, cooldowns e damage settlement; RPG Skill Tree fornece progressão/perks mediante contrato; Black Arcana não duplica o runtime externo.
 
 **Progresso conservador:** +0 magias, +0 adapters; Somake **83/83 IDs**, **8/83** com métodos estáticos auditados no recorte, **5/83** no recorte aprofundado downstream anterior. Global **—%**, piso semântico **≥1.856**, denominador final aberto.
+
+
+## Continuação — CFG normal e retorno de getDamageModifier (PR #859, 21/10/2026)
+
+A [prova Java21 #39553030589](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39553030589) derivou o grafo normal do handler: **2 caminhos compilados para o único applyDamage / 3 sem passagem pelo callsite**, em **103 instruções** e **5 desvios**. Um intérprete de pilha independente derivou a fórmula de retorno do getter:
+
+`((float)(a + 1) * (e != null ? BloodCutSpell.getEntityPowerMultiplier(e) : 1.0f)) * 0.1f`.
+
+Esse valor é **o retorno do getter**, não o dano aplicado. Os parâmetros ainda exigem vínculo causal com os argumentos concretos de `onLivingDamage`, e os predicados dos guards não foram homologados. Ver [dossiê de CFG/float](EXACT-BINARY-BLOOD-CUT-CFG-MODIFIER-1.0.9.md). Sem hook, adapter, Stage promotion ou QA provider-loaded.

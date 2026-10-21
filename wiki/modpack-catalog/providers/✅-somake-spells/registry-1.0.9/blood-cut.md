@@ -67,3 +67,20 @@ A presença de `LivingDamageEvent.Post` e `DamageSources.applyDamage` na mesma c
 No método onLivingDamage há **103 instruções**, **5 desvios** (ifeq, ifeq, ifnull, ifne e goto), **uma** referência invocada a getNewDamage e **uma** a DamageSources.applyDamage. A ordem de callsites situa a fonte de dano Blood Cut antes de applyDamage, mas não determina quais branches são atravessados. getDamageModifier possui **19 instruções** e **dois desvios**, sem fórmula homologada.
 
 **Engenharia de perks:** aumentar dano/área, alterar alvo ou ativar proc/Mastery no evento Post continua **⛔ FAIL_CLOSED** até inspeção de predicados, deduplicação, configuração de Iron's e QA real. [Dossiê de evento](../EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md). Nenhuma magia/adapter adicionado.
+
+
+## CFG compilado e retorno float exato — 21/10/2026 (PR #859)
+
+A [auditoria Java21 #39553030589](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39553030589) confirmou o mesmo SHA-1 físico **171841ac9f802be9309ecc166c1d972ac6d404c0**, com **41 testes sintéticos**, e inspecionou o fluxo de métodos do JAR 1.0.9.
+
+- **onLivingDamage(LivingDamageEvent.Post)**: grafo normal de **103 instruções / 5 desvios**, com **2 caminhos sintáticos** que alcançam o único callsite de `DamageSources.applyDamage` e **3 que não alcançam**. Não são 5 eventos nem probabilidades, e o grafo não resolve filtros/recursão.
+- **BloodCutEffect.getDamageModifier(int a, LivingEntity e):float** — duas rotas até `freturn`, certificadas por pilha JVM:
+
+```text
+factor = (e != null) ? BloodCutSpell.getEntityPowerMultiplier(e) : 1.0f
+return ((float)(a + 1) * factor) * 0.1f
+```
+
+Preservar exatamente as duas multiplicações `float` na ordem compilada; `a` e `e` são argumentos do getter, **a proveniência a partir do evento permanece por comprovar**. O retorno não equivale a dano final ou permissão para modificá-lo via RPG Skill Tree. A função `getEntityPowerMultiplier`, os filtros de `onLivingDamage`, as configurações efetivas, dano secundário e Survival continuam condicionados. **⛔ FAIL_CLOSED para mutações de perk.**
+
+[Dossiê detalhado de CFG e retorno numérico](../EXACT-BINARY-BLOOD-CUT-CFG-MODIFIER-1.0.9.md). Nenhuma raiz adicional ou adapter foi implementado.

@@ -8,10 +8,20 @@ on:
       - 'docs/qa/somake_109_blood_cut_refs_test.py'
       - 'docs/qa/somake_109_blood_cut_event_gate.py'
       - 'docs/qa/somake_109_blood_cut_event_gate_test.py'
+      - 'docs/qa/somake_109_blood_cut_cfg.py'
+      - 'docs/qa/somake_109_blood_cut_cfg_test.py'
+      - 'docs/qa/somake_109_blood_cut_modifier_flow.py'
+      - 'docs/qa/somake_109_blood_cut_modifier_flow_test.py'
       - 'docs/qa/somake_109_cast_refs.py'
       - 'docs/qa/somake_109_perk_method_probe.py'
+      - 'docs/qa/somake_109_radius_irons_contract.py'
+      - 'docs/qa/somake_109_funeral_bud_probe.py'
+      - 'docs/qa/somake_109_numeric_fingerprint.py'
       - 'wiki/modpack-catalog/providers/✅-somake-spells/registry-1.0.9/blood-cut.md'
       - 'wiki/modpack-catalog/providers/✅-somake-spells/registry-1.0.9/blood-cut-technical-gate.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-CFG-MODIFIER-1.0.9.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/README.md'
       - 'wiki/modpack-catalog/meta/PROGRESSO-CATALOGO-2026-10-18.md'
   workflow_dispatch:
 permissions:
@@ -31,6 +41,8 @@ jobs:
           python3 docs/qa/somake_109_cast_refs_test.py -v
           python3 docs/qa/somake_109_blood_cut_refs_test.py -v
           python3 docs/qa/somake_109_blood_cut_event_gate_test.py -v
+          python3 docs/qa/somake_109_blood_cut_cfg_test.py -v
+          python3 docs/qa/somake_109_blood_cut_modifier_flow_test.py -v
       - name: Download and verify exact publisher/pack artifact
         shell: bash
         run: |
@@ -50,6 +62,16 @@ jobs:
           python3 docs/qa/somake_109_blood_cut_event_gate.py \
             --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
             --output build/somake-blood-cut/blood-cut-event-evidence.json
+      - name: Prove bounded normal JVM CFG and modifier operand fingerprints
+        run: |
+          python3 docs/qa/somake_109_blood_cut_cfg.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-cfg-evidence.json
+      - name: Prove nullable entity symbolic float return dataflow
+        run: |
+          python3 docs/qa/somake_109_blood_cut_modifier_flow.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-float-dataflow.json
       - name: Export only bounded derived evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -58,5 +80,7 @@ jobs:
           path: |
             build/somake-blood-cut/evidence.json
             build/somake-blood-cut/blood-cut-event-evidence.json
+            build/somake-blood-cut/blood-cut-cfg-evidence.json
+            build/somake-blood-cut/blood-cut-float-dataflow.json
           if-no-files-found: ignore
           retention-days: 14

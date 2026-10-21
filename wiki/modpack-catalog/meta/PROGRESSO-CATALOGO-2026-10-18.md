@@ -1,4 +1,10 @@
-# Black Arcana — progresso da catalogação técnica
+# Black Arcana — acompanhamento do catálogo de magias
+
+## Somake Blood Cut — grafo normal e retorno float exatos (21/10/2026, PR #859)
+
+Evidência física [GitHub Actions #39553030589](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39553030589): SHA-1 Somake 1.0.9 `171841ac9f802be9309ecc166c1d972ac6d404c0`, **41 testes sintéticos**, grafo normal de **2 caminhos sintáticos que alcançam applyDamage / 3 que não alcançam** no handler de 103 instruções e cinco desvios; `getDamageModifier(int a,LivingEntity e)` retorna `((float)(a+1) * (e != null ? getEntityPowerMultiplier(e) : 1.0f)) * 0.1f`. São dados de classfile, não dano final ou contagem de eventos de gameplay. [Dossiê técnico](../providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-CFG-MODIFIER-1.0.9.md). Ainda pendentes: vínculo dos argumentos do evento, todos os predicados, recursão, host config e QA físico. Nenhuma perk mutadora homologada.
+
+**Barra global de completude técnica:** —% (piso semântico registrado **≥1.856**, denominador final aberto). **Barra Somake**: **83/83 IDs = 100%** de registry, **8/83 = 9,64%** de fichas no recorte estático de métodos, **5/83 = 6,02%** no recorte aprofundado anterior (sem nova raiz nem promoção automática). Campanha independente de providers exatos: **35/39 = 89,74%** no checkpoint. **+0 magias e +0 adapters**. Stage 06.05 🟡, Stage 09 QA físico pendente.
 
 ## Somake Blood Cut — anotação de evento e risco de segundo dano (21/10/2026; PR #858)
 
