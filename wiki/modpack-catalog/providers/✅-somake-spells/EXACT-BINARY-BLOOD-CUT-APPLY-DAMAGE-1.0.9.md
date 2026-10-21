@@ -1,6 +1,6 @@
 # Somake Spells 1.0.9 — Blood Cut: argumentos da chamada secundária applyDamage
 
-**Certificação:** ✅ `SHA_EXACT_TYPED_APPLY_HANDOFF`; ⚠️ resultado runtime, compatibilidade host e ligação da sobrecarga de lifesteal; ⛔ perks mutadoras sem hook real.
+**Certificação:** ✅ `SHA_EXACT_TYPED_APPLY_HANDOFF` e ✅ despacho virtual host → override → setter `0.15f` (PR #863); ⚠️ resultado de dano/cura efetiva; ⛔ perks mutadoras sem hook real.
 
 ## Artefato físico e método
 
@@ -53,9 +53,9 @@ A chamada neste handler é **`BloodCutSpell.getDamageSource(Entity)` (um argumen
 
 O [dossiê de lifesteal anterior](EXACT-BINARY-BLOOD-CUT-LIFESTEAL-1.0.9.md) comprovou o literal `0.15f` passado a `SpellDamageSource.setLifestealPercent(float)` **na sobrecarga `getDamageSource(Entity,Entity)` (dois argumentos)**.
 
-**Não foi demonstrado** que a sobrecarga de um argumento delegue para a sobrecarga de dois, nem que a fonte retornada pelo callsite secundário conserve o literal `0.15f`. A relação entre sobrecargas precisa de inspeção do host Iron's 3.16.3, incluindo dispatch e possíveis overrides, antes de afirmar que o dano secundário aplica lifesteal de 15%.
+**A ligação foi demonstrada posteriormente, no PR #863.** A [auditoria física do Iron's 3.16.3 #39613550972](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39613550972) prova que o método herdado de um argumento chama a sobrecarga de dois argumentos via `invokevirtual`, repassando a mesma entidade duas vezes; o `BloodCutSpell` a sobrescreve e passa `0.15f` ao setter. Isto **certifica o parâmetro nominal da fonte do hit secundário**, mas não uma cura aplicada de 15%.
 
-Portanto o fato seguro é: **Blood Cut possui um setter compilado de `0.15f` em uma sobrecarga; a chamada de dano secundário utiliza outra sobrecarga**. Cura real e taxa efetiva continuam desconhecidas.
+O fato seguro atualizado é: **o dano secundário usa a sobrecarga herdada de um argumento, que despacha virtualmente para a override do Somake com dois argumentos e `setLifestealPercent(0.15f)`**. A cura real e a taxa efetiva continuam desconhecidas. [Dossiê de despacho virtual](EXACT-BINARY-BLOOD-CUT-IRONS-VIRTUAL-LIFESTEAL-1.0.9.md).
 
 ## Implicações para perks de RPG Skill Tree
 
@@ -66,6 +66,6 @@ Portanto o fato seguro é: **Blood Cut possui um setter compilado de `0.15f` em 
 - **Proteção contra recursão:** o handler retorna quando o evento original tem `SpellDamageSource`, mas não há prova de proteção contra todas as fontes não mágicas/terceiros.
 - **Integração:** sem contrato real de mutação por caster, não alterar dano por interceptação, não reaplicar dano para simular perk, não cobrar custo/cooldown extra e não duplicar eventos de Mastery. **⛔ FAIL_CLOSED**.
 
-**Testes ainda necessários:** inspecionar a sobrecarga de um argumento no host; confirmar o despacho até a de dois argumentos se existir; executar dedicated server e modpack com provedor real, medir dano/vida/restauração, validar PvP, invulnerabilidade e acerto secundário. CI sintético e GameTests do Black Arcana não equivalem a esses testes reais.
+**Testes ainda necessários:** inspecionar o processamento de lifesteal e o settlement efetivo no host; executar dedicated server e modpack com ambos os providers, medir dano/vida/restauração, validar PvP, invulnerabilidade e acerto secundário. CI sintético e GameTests do Black Arcana não equivalem a esses testes reais.
 
 **Estado:** Somake ✅ **83/83 IDs**, 🟡 análise estática em andamento (**8/83** neste recorte), ⚠️ comportamento host/real condicionado e ⛔ hook per-player bloqueado. Catálogo global —% (denominador aberto, piso documental ≥1.856). Nenhuma magia/adapter novos; Stage 06.05 🟡, Stage 09 físico PENDING.
