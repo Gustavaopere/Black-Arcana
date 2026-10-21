@@ -1,5 +1,12 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
+## Somake — constructor handoff de Wither e dano na bud (20/10/2026; PR #853)
+
+**Barras inalteradas:** global **—%**, universo total aberto, piso conservador **≥1.856** objetos semânticos; Somake Spells 1.0.9 **83/83 IDs = 100%**, downstream por ficha **5/83 = 6,02%**, subcampanha fixa de JARs de providers exatos **35/39 = 89,74%** no checkpoint publicado. Hooks de perks mutadoras homologados: **0**, sem denominador.
+
+[Prova Java21 #39536052412](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39536052412), `SUCCESS` com **14 testes** e JAR publisher File `8867079` SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`: `FuneralBloomControllerEntity.launchWave` encaminha `impactDamage:F`, `witherDuration:I` e `witherAmplifier:I` da controller ao construtor especializado de `FuneralBloomBudEntity`. O construtor da bud armazena `impactDamage`, limita `witherDuration = Math.max(30,argumento)` e `witherAmplifier = Math.max(0,argumento)`; construtor básico tem default de duração 80. Nova prova estática **não** comprova origem desses fields na controller, imutabilidade em lifecycle, dedup entre buds/controllers, sucesso de efeitos em gameplay ou API per-player. **+0 IDs, +0 adapters**, Stage 06.05 🟡 / Stage 09 real PENDING; perks mutadoras ⛔ `FAIL_CLOSED`. [Ficha](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+
 ## Somake 1.0.9 — parâmetros nativos de Wither, push e cura da bud (20/10/2026, PR #852)
 
 **Cobertura global:** `—%` — denominador aberto; piso conservador **≥1.856** objetos semânticos catalogáveis, não equivalentes a todas as habilidades implementadas. **Identidades Somake:** `83/83 = 100%` dos IDs físicos registrados; **auditoria downstream:** `5/83 = 6,02%` fichas neste recorte. **Subcampanha de providers com release exato:** `35/39 = 89,74%` no checkpoint fechado. **Hooks mutadores aprovados:** zero, sem denominador conhecido.
