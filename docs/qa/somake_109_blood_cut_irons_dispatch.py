@@ -73,7 +73,7 @@ def certify_virtual_lifesteal_bridge(base_methods,child_methods):
     if len(parent)!=1 or len(child)!=1:
         raise GateError("missing or ambiguous source overload pair")
     base=parent[0];over=child[0]
-    if [op for _,op,_,_ in base]!=["aload_0","aload_1","aconst_null",
+    if [op for _,op,_,_ in base]!=["aload_0","aload_1","aload_1",
                                     "invokevirtual","areturn"]:
         raise GateError("parent one-arg virtual forwarding opcode drift")
     if [op for _,op,_,_ in over]!=["aload_0","aload_1","aload_2",
@@ -92,7 +92,8 @@ def certify_virtual_lifesteal_bridge(base_methods,child_methods):
         "assurance":"SHA_EXACT_VIRTUAL_DISPATCH_WITH_015F_SETTER",
         "base_dispatch_opcode":"invokevirtual",
         "base_receiver_operand":"aload_0",
-        "default_second_entity_operand":"aconst_null",
+        "forwarded_second_entity_operand":"aload_1",
+        "forwarded_first_entity_operand":"aload_1",
         "base_virtual_call_descriptor":TWO,
         "child_super_call_opcode":"invokespecial",
         "child_super_call_descriptor":TWO,
@@ -100,7 +101,7 @@ def certify_virtual_lifesteal_bridge(base_methods,child_methods):
         "setter_argument_type":"float",
         "setter_invocation_opcode":"invokevirtual",
         "child_return_opcode":"areturn",
-        "interpretation":"On a BloodCutSpell receiver, the inherited 1-Entity method invokes the 2-Entity override with a null second Entity; that override passes 0.15f to the SpellDamageSource lifesteal setter.",
+        "interpretation":"On a BloodCutSpell receiver, the inherited 1-Entity method invokes the 2-Entity override with the same Entity in both argument positions; that override passes 0.15f to the SpellDamageSource lifesteal setter.",
         "limits":"Compiled virtual dispatch + nominal setter parameter only. Actual damage, heal percent of applied damage, caps, player owner and runtime execution are not certified."
     }
 
