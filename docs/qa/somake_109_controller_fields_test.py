@@ -121,6 +121,9 @@ class ControllerLifecycleNativeTests(unittest.TestCase):
     def test_nbt_restore_type_changed_rejected(self):
         x=lifecycle_fixture();x[2][2][32]="32: invokevirtual #12 // Method net/minecraft/nbt/CompoundTag.getInt:(Ljava/lang/String;)I"
         self.assertEqual("NOT_PROVED",prove_controller_field_lifecycle(x)["status"])
+    def test_prune_UUID_collection_receiver_drift_rejected(self):
+        x=lifecycle_fixture();x[4][2][34]="34: aload_3"
+        self.assertEqual("NOT_PROVED",prove_controller_field_lifecycle(x)["status"])
     def test_prune_retainAll_replaced_rejected(self):
         x=lifecycle_fixture();x[4][2][43]="43: invokeinterface #18, 2 // InterfaceMethod java/util/Set.addAll:(Ljava/util/Collection;)Z"
         self.assertEqual("NOT_PROVED",prove_controller_field_lifecycle(x)["status"])
