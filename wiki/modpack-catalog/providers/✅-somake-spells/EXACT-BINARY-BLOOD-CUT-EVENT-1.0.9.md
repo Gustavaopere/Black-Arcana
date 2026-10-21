@@ -41,7 +41,7 @@ O mesmo método anotado para evento Post contém a aplicação potencial de novo
 
 ## Continuação — CFG normal e retorno de getDamageModifier (PR #859, 21/10/2026)
 
-A [prova Java21 #39552478074](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39552478074) derivou o grafo normal do handler: **2 caminhos compilados para o único applyDamage / 3 sem passagem pelo callsite**, em **103 instruções** e **5 desvios**. Um intérprete de pilha independente derivou a fórmula de retorno do getter:
+A [prova Java21 #39553030589](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39553030589) derivou o grafo normal do handler: **2 caminhos compilados para o único applyDamage / 3 sem passagem pelo callsite**, em **103 instruções** e **5 desvios**. Um intérprete de pilha independente derivou a fórmula de retorno do getter:
 
 `((float)(a + 1) * (e != null ? BloodCutSpell.getEntityPowerMultiplier(e) : 1.0f)) * 0.1f`.
 
