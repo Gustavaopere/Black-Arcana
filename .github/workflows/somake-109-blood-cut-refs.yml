@@ -93,6 +93,11 @@ jobs:
           python3 docs/qa/somake_109_blood_cut_event_args.py \
             --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
             --output build/somake-blood-cut/blood-cut-event-argument-callsites.json
+      - name: Survey bounded native applyDamage callsite
+        run: |
+          python3 docs/qa/somake_109_blood_cut_apply.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-apply-survey.json
       - name: Export only bounded derived evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -105,5 +110,6 @@ jobs:
             build/somake-blood-cut/blood-cut-float-dataflow.json
             build/somake-blood-cut/blood-cut-lifesteal.json
             build/somake-blood-cut/blood-cut-event-argument-callsites.json
+            build/somake-blood-cut/blood-cut-apply-survey.json
           if-no-files-found: ignore
           retention-days: 14
