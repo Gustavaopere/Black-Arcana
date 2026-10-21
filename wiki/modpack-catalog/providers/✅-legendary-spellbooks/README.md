@@ -1,5 +1,18 @@
 # Legendary Spellbooks — catálogo canônico
 
+## Engenharia de perks por spell — 17/10/2026
+
+**Identidades compiladas: ✅ 30/30 (100%). Engenharia causal por ficha: ✅ 30/30 (100% de cobertura documental source-pinned).** As **20 páginas restantes** da série anterior foram aprofundadas nesta retomada, sem criar spells ou novos adapters. [Matriz técnica das trinta](PERK-CAUSAL-ENGINEERING-MATRIX-0.3.2.md), [registry físico 30/30](EXACT-BINARY-SPELLS-0.3.2.md). A matriz e as próprias fichas incluem alcance, alvo, Source/damage, condições e limites da seleção, fórmulas de mana/power/timing, quantidades de entidades, posicionamento/area, duração, efeitos derivados e gates de QA quando aplicáveis; `N/A` e `NÃO VERIFICADO` são explícitos.
+
+**Source authority:** `Higurashi34m/Legendary-Spellbooks@62ced2f2b2693aa841251473cbbd726fdd928ed3`, versão declarada 0.3.2. Registro JAR do addon SHA-1 `bda5b1fbe50ad834a6a76ad36789743c1057ebf5` é exato, **mas paridade de corpo de métodos e de handlers externos NÃO foi certificada**. O upstream compila contra Iron's 3.16.1/Legendary Monsters 2.1.14, enquanto o modpack usa 3.16.3/2.2.2. Nenhuma perk de targeting, DamageType, raio, hitbox, fan-out ou temporização por caster foi homologada.
+
+**Divergências importantes:** Resonance tem UI radius 4, AABB scan 3; Shockwave mostra alcance diferente da última onda; Flame Sector e Cloud Ring compartilham `DamageSource` de outra spell em classes derivadas (`FLAME_EATER_SPELL` e `CLOUD_RAIL_SPELL`); Cumulo Charge causa dano `mobAttack`, não automaticamente Lightning; Annihilation Bomb realiza `2×floor(bulletAmount/2)` spawns secundários; Tornado e Quad Tornado apresentam políticas distintas de range/quantidade; Overgrown Shockwave pode abortar cast ao falhar `findGround`; Ambush Thorns observa `LivingDamageEvent.Pre`, não settlement. São **fatos SOURCE_CAUSALITY**, não resultados experimentais de bug/runtime.
+
+**Barra global = —%**, com denominador ainda aberto. A [autoridade semântica global atual](../../meta/CATALOGO-GLOBAL-MAGIAS.md) registra piso **1.857 objetos / 1.855 estritos** desde a adição binária de seis glyphs próprios em Ars Zero. O histórico posterior que cita `1.856/1.854` é inconsistente com a série de provas e foi reconciliado neste checkpoint, sem acrescentar magias nesta rodada.
+
+**Stages:** Stage 06.05 🟡; Stage 09 QA físico pendente; PR #825 draft, sem merge automático por conclusão documental. RPG Skill Tree é somente provider de Mastery/perks/gates; Legendary Spellbooks/Iron's/Legendary Monsters permanecem donos das magias.
+
+
 ## Atualização binária exata — 13/10/2026
 
 ✅ [Dossiê 30/30](EXACT-BINARY-SPELLS-0.3.2.md), [Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179) **SUCCESS**. CurseForge `8255715`, **510127 bytes**, SHA-1 `bda5b1fbe50ad834a6a76ad36789743c1057ebf5` idêntico ao JAR físico #372: **30** instâncias registradas sem branches em `LSSpellRegistry`, IDs/solo classes extraídos dos campos `ResourceLocation`, escolas compiladas inspecionadas. Confiança de identidade estática `COUNTED_EXACT`; **21/39 exatos / 18/39 pendentes**, +0 raízes, mínimo 1857/1855 inalterado. A fonte pinada abaixo permanece autoridade documental para mecânicas; gameplay, configuração, Iron's 3.16.3, Legendary Monsters 2.2.2 e Survival seguem **⚠️**.

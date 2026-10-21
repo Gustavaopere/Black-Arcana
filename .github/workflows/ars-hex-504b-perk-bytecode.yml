@@ -1,0 +1,113 @@
+name: Ars Hex 5.0.4b perk and scythe publisher bytecode (Java 21)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ars-hex-504b-perk-bytecode.yml'
+      - 'docs/qa/ars_hex_504b_perk_bytecode.py'
+      - 'docs/qa/ars_hex_504b_numeric_operands.py'
+      - 'docs/qa/ars_hex_504b_perk_dataflow.py'
+      - 'docs/qa/ars_hex_504b_scythe_discount_flow.py'
+      - 'wiki/modpack-catalog/providers/✅-ars-hex/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect_publisher_perk_bytecode:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Run fail-closed synthetic verifier tests
+        run: python3 docs/qa/ars_hex_504b_perk_bytecode.py --self-test
+      - name: Twelve deterministic numeric operand boundary tests
+        run: python3 docs/qa/ars_hex_504b_numeric_operands.py --self-test
+      - name: Download publication and check immutable publisher hash before javap
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/ars-hex-504b-audit
+          curl --fail --location --silent --show-error --retry 3 --retry-all-errors \
+            --connect-timeout 20 --max-time 240 \
+            'https://cursemaven.com/curse/maven/ars-hex-unity-1357380/7404679/ars-hex-unity-1357380-7404679.jar' \
+            --output build/ars-hex-504b-audit/publisher.jar
+          echo '2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4  build/ars-hex-504b-audit/publisher.jar' | sha1sum --check
+      - name: Audit bounded compiled class references (not gameplay acceptance)
+        run: |
+          python3 docs/qa/ars_hex_504b_perk_bytecode.py \
+            --jar build/ars-hex-504b-audit/publisher.jar \
+            --output build/ars-hex-504b-audit/perk-bytecode-report.json
+      - name: Audit bounded compiled numerical operands (not arithmetic data flow)
+        run: |
+          python3 docs/qa/ars_hex_504b_numeric_operands.py \
+            --jar build/ars-hex-504b-audit/publisher.jar \
+            --output build/ars-hex-504b-audit/numeric-operand-report.json
+      - name: Verify exact attribute-to-operand stack flow in three perk methods
+        run: |
+          python3 docs/qa/ars_hex_504b_perk_dataflow.py --self-test
+          python3 docs/qa/ars_hex_504b_perk_dataflow.py \
+            --jar build/ars-hex-504b-audit/publisher.jar \
+            --output build/ars-hex-504b-audit/perk-dataflow-report.json
+      - name: Verify the bounded scythe discount bytecode loop
+        run: |
+          python3 docs/qa/ars_hex_504b_scythe_discount_flow.py --self-test
+          python3 docs/qa/ars_hex_504b_scythe_discount_flow.py \
+            --jar build/ars-hex-504b-audit/publisher.jar \
+            --output build/ars-hex-504b-audit/scythe-discount-flow-report.json
+      - name: Report minimal compiled opcode layout for dataflow review
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import re
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, "docs/qa")
+          from ars_hex_504b_perk_bytecode import CLASSES, javap, method_block
+
+          jar = Path("build/ars-hex-504b-audit/publisher.jar")
+          target_methods = {
+              "soul_ward": "applyAttributeModifiers",
+              "magic_proficiency": "applyAttributeModifiers",
+              "spirit_spoils": "applyAttributeModifiers",
+              "scythe": "getManaDiscount",
+          }
+          report = {}
+          pattern = re.compile(r"^\s*(\d+):\s+([a-z][a-z0-9_]*)\b(.*)")
+          for key, method in target_methods.items():
+              block = method_block(javap(jar, CLASSES[key]), method)
+              seq = []
+              for line in block.splitlines():
+                  m = pattern.match(line)
+                  if not m:
+                      continue
+                  tail = m.group(3).strip()
+                  comment = tail.split("//", 1)[1].strip() if "//" in tail else ""
+                  ref = comment.split(":", 1)[0] if comment else ""
+                  if comment.startswith("double ") or comment.startswith("float "):
+                      ref = comment
+                  seq.append([int(m.group(1)), m.group(2), ref[:95]])
+              if not seq or len(seq) > 160:
+                  raise SystemExit("unexpected method size: " + key + " " + str(len(seq)))
+              report[key] = seq
+          print("BOUNDED_LAYOUT_JSON=" + json.dumps(report, separators=(",", ":"), sort_keys=True))
+          PY
+      - name: Upload small JSON evidence only (never third-party JAR)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ars-hex-504b-perk-bounded-${{ github.sha }}
+          path: |
+            build/ars-hex-504b-audit/perk-bytecode-report.json
+            build/ars-hex-504b-audit/numeric-operand-report.json
+            build/ars-hex-504b-audit/perk-dataflow-report.json
+            build/ars-hex-504b-audit/scythe-discount-flow-report.json
+          if-no-files-found: ignore
+          retention-days: 14

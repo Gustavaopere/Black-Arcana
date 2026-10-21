@@ -1,0 +1,41 @@
+# Iron's 3.16.3 — Touch Dig: quebra real de bloco, tier de mineração e proteção
+
+**Identidade:** `irons_spellbooks:touch_dig` · Nature · 1–3 níveis · ✅ entre 110 spells ativos já inventariados; 🟡 dossiê causal individual novo; ⚠️ análise de fonte versionada, sem JAR físico/validação de claims. **+0 novas magias.**
+
+**Proveniência:** `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`; modlist `irons_spellbooks-1.21.1-3.16.3.jar`, NeoForge físico **21.1.250**, build Black Arcana NeoForge **21.1.248**. **Provider Iron's é dono dessa destruição de bloco**; `WorldEffectPolicy` do Black Arcana governa magias próprias e não é comprovadamente chamado por Touch Dig.
+
+## Admissão e valores nominais
+
+1. `TouchDigSpell` declara `distance=8` blocos, Nature, RARE, `maxLevel=3`, cooldown default **0,5 s (10 ticks)**, `CastType.INSTANT`, `castTime=0`, mana **15** fixa e spell power default `10+3*(level−1)` = **10, 13, 16**. `getSpellPower` da base também aplica atributos/config, podendo mudar tier. [TouchDigSpell.java#L41-L86](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/TouchDigSpell.java#L41-L86); [AbstractSpell.java#L211-L225](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L211-L225).
+2. `getHarvestLevel(power)` classifica `power>=15` como **NETHERITE**, `power>=13` como **DIAMOND**, senão **IRON**; equivalência de nível-base: lvl 1 IRON, lvl 2 DIAMOND, lvl 3 NETHERITE. A checagem real `canBreak` é **`getDestroySpeed(level,pos)>=0`** e negação da tag `INCORRECT_FOR_{tier}_TOOL`, não simulação de pickaxe/enchants nem lista universal de blocos autorizados. [TouchDigSpell.java#L89-L108](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/TouchDigSpell.java#L89-L108).
+3. `checkPreCastConditions` rejeita **`ServerPlayer` em `GameType.ADVENTURE`**, exige `Utils.getTargetBlock(...,Fluid.NONE,reach=8)` do tipo BLOCK e `canBreak` nesse bloco. `Utils.getTargetBlock` faz `ClipContext.Block.COLLIDER` a partir do olho e vetor de olhar. A checagem acontece **antes** do cast e não constitui reserva transacional do bloco. [TouchDigSpell.java#L110-L130](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/TouchDigSpell.java#L110-L130); [Utils.java#L261-L266](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L261-L266).
+
+## Quebra de mundo — contrato de segurança especialmente relevante
+
+- `onCast` executa **novo** `getTargetBlock` em vez de reutilizar o `BlockPos` aprovado no precast. Produz partículas de rastro e **25 `CRIT`** no impacto independentemente de o bloco terminar quebrado. Antes da mutação, reexecuta `canBreak`. Isso reduz mismatch de tier, mas **não reexecuta neste método o gate Adventure nem verifica explicitamente `blockhit.getType()==BLOCK`**. Alvo e estado de mundo podem mudar entre pré-checagem e cast. O motor de casting ainda possui seu gate, mas o **TOCTOU** de seleção requer GameTest e não deve ser chamado de seguro por inspeção estática. [TouchDigSpell.java#L133-L151](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/TouchDigSpell.java#L133-L151).
+- Para **`ServerPlayer`**, antes de `doDestroyBlock`, chama `net.neoforged.neoforge.common.CommonHooks.fireBlockBreak(world,gameMode,player,pos,state)` e só procede se o evento **não** for cancelado. Para um caster **não-ServerPlayer**, esse callsite **não invoca** `fireBlockBreak` e pode executar `doDestroyBlock` se `canBreak` permitir. **Não afirmar proteção equivalente de claims/permissions, fake players ou cast de mobs** sem testes no servidor e inspeção dos outros listeners; esta diferença é material. [TouchDigSpell.java#L143-L150](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/TouchDigSpell.java#L143-L150).
+- `doDestroyBlock` lê `BlockState` e `FluidState`; se o bloco não é ar, emite `levelEvent(2001,...)` salvo para `BaseFireBlock`, chama **`Block.dropResources(blockstate,level,pos,blockEntity,caster,caster.getMainHandItem())`**, e então **`level.setBlock(pos,fluidstate.createLegacyBlock(),3)`**. Apenas se `setBlock` retorna true publica `GameEvent.BLOCK_DESTROY`. A chamada de drops **ocorre antes** do resultado de `setBlock`, portanto o source não prova atomicidade de drops/remoção. Isso é mutação persistente efetiva, diferente de partículas visuais de Earthquake/Stomp. [TouchDigSpell.java#L153-L167](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/TouchDigSpell.java#L153-L167).
+- A emissão de partículas e a chamada a `super.onCast` não atestam quebra bem-sucedida. O wrapper não retorna booleano de bloco efetivamente alterado nem guarda token de bloco destruído; `SpellOnCastEvent`/cobrança de mana/cooldown são tratados pela infraestrutura Iron's fora deste método. Uma eventual perk de Mastery por mineração exigiria **BlockPos/dimension, estado inicial/final, ator, cast raiz, resultado de `setBlock` e drops** e não pode basear-se apenas em `onCast`/particle count. [TouchDigSpell.java#L133-L167](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/TouchDigSpell.java#L133-L167); [AbstractSpell.java#L305-L332](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L305-L332).
+
+## Parâmetros de perks e fronteiras
+
+| Eixo | Evidência | Tratamento |
+|---|---|---|
+| Mana/cooldown | 15 mana, 0,5s cooldown | **A condicionado** à autoridade Iron's; evitar custo duplo |
+| Range | `distance=8` constante, raycast `COLLIDER` | **D/⛔** não há setter de alcance por perk comprovado |
+| Tier | `getSpellPower` + thresholds 13/15 | **A condicionado:** atributo nativo pode atravessar threshold; não confundir com upgrade universal de ferramentas |
+| Blocos elegíveis | hardness >=0 + tags de nível de ferramenta | **C/⛔:** sem presumir proteção por claim, filtragem adicional ou whitelists |
+| Drops | `Block.dropResources` usando item mão principal | **C/⛔:** sem autorização de Fortune/Silk Touch/procs extras via magia |
+| World mutation | `level.setBlock` + fluid legacy + BLOCK_DESTROY | **D/⛔:** Black Arcana `WorldEffectPolicy` só cobre runtime próprio, não modifica Iron's automaticamente |
+| Mastery | um cast pode tentar uma quebra e gerar drops/FX | **D/⛔:** somente bloco realmente removido com causalidade/economia auditada |
+| Non-player | sem `fireBlockBreak` neste callsite | **⛔** caso crítico de proteção, exigindo testes do provider e servidor |
+
+## QA de aceite
+
+- [ ] JAR/metadata/SHA e bytecode de `TouchDigSpell`, `Utils.getTargetBlock`, `CommonHooks.fireBlockBreak` na versão física.
+- [ ] Verificar lvl1/2/3 e thresholds com atributos, tags de mineração, blocos imunes, blocos com BlockEntity/loot, líquidos, double drops, inventory/creative/adventure.
+- [ ] GameTest de TOCTOU: mover mira/trocar bloco entre `checkPreCastConditions` e `onCast`; avaliar MISS; bloqueio de claims/permissions tanto para ServerPlayer quanto mobs/casts alternativos.
+- [ ] Testar `fireBlockBreak` cancelado, `setBlock` false, drops anteriores, custo e cooldown, logging/grief e server-authority; nunca homologar bypass de proteção.
+- [ ] Não ativar perks de mineração/loot/destruição ou crédito de Mastery até haver evento causal e `WorldEffectPolicy` adequada para **magias originais** do Black Arcana.
+
+**Estado:** `SOURCE_CAUSALITY` ✅ · `EXACT_BINARY` ⚠️ não provado nesta tranche · `PHYSICAL_QA` PENDING · perks destrutivas/claims ⛔ · Stage 06.05 🟡.

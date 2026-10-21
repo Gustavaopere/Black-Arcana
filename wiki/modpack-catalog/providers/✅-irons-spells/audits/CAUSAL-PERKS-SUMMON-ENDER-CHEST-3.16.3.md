@@ -1,0 +1,26 @@
+# Summon Ender Chest — inventário vanilla e scroll consumido antes de abrir menu
+
+**ID registrado:** `irons_spellbooks:summon_ender_chest` · Ender RARE · nível único (1) · ✅ identidade de base já catalogada; 🟡 novo dossiê de causalidade. [SpellRegistry.java L100–110](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/registry/SpellRegistry.java#L100-L110).
+
+**Proveniência:** source público original `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`, declarado para Minecraft 1.21.1 / Iron's `1.21.1-3.16.3`; modlist alvo `irons_spellbooks-1.21.1-3.16.3.jar`. **SOURCE_CAUSALITY / SOURCE_PINNED** documental, não prova de equivalência bytecode com o JAR físico, flags reais, servidor dedicado ou QA no cliente. NeoForge do snapshot do pack 21.1.250 versus Black Arcana build 21.1.248: divergência não homologada. Black Arcana preserva seu casting e world safety próprios; Iron's é authority destes spells; RPG Skill Tree só se conecta por boundary real. Referência clean-room: fatos e comportamento, sem reaproveitamento de implementação ou assets.
+
+## Sequência verificável de execução
+
+- `SummonEnderChestSpell` define `CastType.INSTANT`, `castTime=0`, mana base **25**, `manaCostPerLevel=1` (sem efeito prático de crescimento porque `maxLevel=1`), cooldown default **5 segundos**. SpellPower base 1, increment 1, mas `onCast` não calcula dano/heal nem projétil e não usa spellPower nesta função. [SummonEnderChestSpell.java L19–49](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/SummonEnderChestSpell.java#L19-L49).
+- O efeito real requer `entity instanceof ServerPlayer`. Somente neste ramo, o método **chama manualmente `Scroll.attemptRemoveScrollAfterCast(player)` ANTES do menu**, por razão documentada no source: abrir a tela cancela o cast e poderia interromper consumo normal do scroll. Essa semântica precisa de teste provider-native de item realmente decrementado uma vez, inclusive erro no UI/cast, e não deve ser duplicada em adapter. [SummonEnderChestSpell.java L52–63](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/SummonEnderChestSpell.java#L52-L63).
+- A seguir consulta o container persistente nativo `player.getEnderChestInventory()` e abre `ChestMenu.threeRows` via `SimpleMenuProvider` com título traduzido `container.enderchest`. Não cria um novo storage, inventário compartilhado, Ender Chest no mundo, entidade invocada nem transporte cross-dimensional nesse método. Alvo: **o próprio ServerPlayer**; `LivingEntity` não player ainda executa `super.onCast` mas não recebe menu. [SummonEnderChestSpell.java L52–64](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/SummonEnderChestSpell.java#L52-L64).
+- Animação inicial declarada: `SpellAnimations.SELF_CAST_ANIMATION`. UI local/sync de containers, proteção contra duplo cast, packet e efeitos do cancelamento não auditados além deste método. [SummonEnderChestSpell.java L66–69](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/SummonEnderChestSpell.java#L66-L69).
+- **Escopo negativo:** nenhum `getRadius`, `raycast`, tipo de dano, projétil, área, status, duração de entity, world block mutation, `SpellDamageEvent` ou `SpellHealEvent` é acionado diretamente por esse `onCast`. Não supor que valores de `spellPower` alterem capacidade do baú. Níveis/custos/config efetivos no modpack ainda exigem QA.
+
+## Matriz para perks e boundaries
+
+| Eixo | Valor/fase | Estado seguro |
+|---|---|---|
+| Custo/cooldown | mana 25, cooldown default 5 s; cast instant0t | **CONTRATO_CONDICIONAL**; preflight e consumo do scroll precisam de sequência exata do Iron's |
+| Target/área | self `ServerPlayer`, UI `ChestMenu.threeRows` | **SEM_HOOK_SEGURO** para abrir menu de outro jogador, inventário múltiplo ou AOE |
+| Dano/tipo/alcance/projétil/hitbox | **N/A** no `onCast` atual | sem dano para multiplicar; sem objeto balístico para redimensionar |
+| Duração/estado | janela do container vanilla, não buff temporário | **SEM_HOOK_SEGURO** para inventário persistente extra ou replicação |
+| Recursos de item | remoção manual do scroll **antes** do `openMenu` | **⛔** não cobrar duas vezes nem permitir cancelamento recuperar cast consumido sem API |
+| Mastery | uma tentativa de abrir storage por spell root | **⛔** não pagar XP por clique/slot/inventário UI; provar sucesso útil e antifarm |
+
+**QA pendente:** player real em Survival, scroll único/stack, spellbook versus scroll, mana insuficiente, cancelamentos simultâneos, tentativas repetidas, servidor dedicado/headless, menu de Ender Chest aberto durante world save/relog, permissões de UI, outros mods de inventário/containers e proteção de dados. Nenhum perk/adapter/runtime executado ou testado nesta tranche. Stage 06.05 🟡 / Stage 09 físico pendente.

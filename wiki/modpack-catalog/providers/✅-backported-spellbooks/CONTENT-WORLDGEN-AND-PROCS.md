@@ -1,5 +1,9 @@
 # Backported Spellbooks — content, worldgen and proc boundary
 
+## Slime Boots — gate binário dos quatro modificadores e do fall-event (18/10/2026)
+
+✅ [Java21 #39153448024](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39153448024), **11/11 autotestes** e `PASS_BACKPORTED_012_SLIME_BOOTS_FALL_BOUNDED_BYTECODE` contra publisher/instalado SHA-1 igual. [Dossiê físico](EXACT-BINARY-SLIME-BOOTS-FALL-0.1.2.md): `SlimeBootsArmorItem` declara no constructor Jump `0.1d ADD_MULTIPLIED_BASE`, Friction `0.3d ADD_MULTIPLIED_BASE`, Bounciness `2.5d ADD_VALUE` e Air Drag `-0.5d ADD_MULTIPLIED_BASE`. `ServerEvents.onFallEvent` contém sequência Player → `EquipmentSlot.FEET` → `ModItems.SLIME_BOOTS` → `ItemStack.is` → `setCanceled(true)`, sem consulta direta a `SLIME_ASPECT` ou cooldown nesse método. A tooltip contém helper de cooldown, mas isso **não comprova cooldown de queda**. Não comprovado runtime, listener invocado, desfecho da queda ou stacking com a magia.
+
 ## Registry surface
 
 At the May 28 official source ceiling, explicit provider registration/data surfaces close as follows:

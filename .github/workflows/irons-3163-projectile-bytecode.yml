@@ -1,0 +1,149 @@
+name: Iron's 3.16.3 projectile bytecode evidence (Java 21)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/irons-3163-projectile-bytecode.yml'
+      - 'docs/qa/irons_3163_projectile_bytecode.py'
+      - 'docs/qa/irons_3163_recast_dash_bytecode.py'
+      - 'docs/qa/irons_3163_event_phase_bytecode.py'
+      - 'docs/qa/irons_3163_heal_heartstop_blight_bytecode.py'
+      - 'docs/qa/irons_3163_event_phase_trace_check.py'
+      - 'docs/qa/irons_3163_event_phase_trace_check_test.py'
+      - 'docs/qa/minecraft_1211_entity_tick_proof.py'
+      - 'docs/qa/irons_3163_arrow_volley_tick_model_test.py'
+      - 'docs/qa/irons_3163_arrow_volley_observation_check.py'
+      - 'docs/qa/irons_3163_arrow_volley_observation_check_test.py'
+      - 'src/catalogQaProbe/java/dev/gustavopere/blackarcana/qa/catalog/ArrowVolleyRuntimeEvidence.java'
+      - 'src/catalogQaProbe/java/dev/gustavopere/blackarcana/qa/catalog/IronsEventPhaseRuntimeEvidence.java'
+      - 'src/catalogQaProbe/java/dev/gustavopere/blackarcana/qa/catalog/CatalogQaProbeMod.java'
+      - 'docs/qa/irons-3163-projectile-bytecode-pending.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect_published_provider_jar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up exact Java major version
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Fail-closed parser self-test (does not inspect publisher JAR)
+        run: python3 docs/qa/irons_3163_projectile_bytecode.py --self-test
+
+      - name: Test source-constrained Arrow Volley tick model (not GameTest)
+        run: python3 docs/qa/irons_3163_arrow_volley_tick_model_test.py
+
+      - name: Fail-closed parser synthetic tests (not GameTests)
+        run: python3 docs/qa/irons_3163_arrow_volley_observation_check_test.py
+
+      - name: Test synthetic Iron's event-phase trace classifier (not GameTest)
+        run: python3 docs/qa/irons_3163_event_phase_trace_check_test.py
+
+      - name: Compile removable runtime observer and verify production isolation
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./gradlew --no-daemon catalogQaProbeJar jar
+          CATALOG_JAR="$(find build/libs -maxdepth 1 -name 'black_arcana_catalog_qa-*.jar' -print -quit)"
+          PROD_JAR="$(find build/libs -maxdepth 1 -name 'black_arcana-*.jar' -print -quit)"
+          test -n "$CATALOG_JAR"
+          test -n "$PROD_JAR"
+          jar tf "$CATALOG_JAR" | grep -Fx 'dev/gustavopere/blackarcana/qa/catalog/ArrowVolleyRuntimeEvidence.class'
+          jar tf "$CATALOG_JAR" | grep -Fx 'dev/gustavopere/blackarcana/qa/catalog/IronsEventPhaseRuntimeEvidence.class'
+          if jar tf "$PROD_JAR" | grep -Eq 'ArrowVolleyRuntimeEvidence|IronsEventPhaseRuntimeEvidence'; then
+            echo 'QA-only passive observer leaked into production'
+            exit 1
+          fi
+          echo 'Removable QA probe build/isolation: PASS'
+
+      - name: Download publisher CurseForge file ID 8680204
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/irons-3163
+          JAR='build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar'
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 240 \
+            'https://mediafilez.forgecdn.net/files/8680/204/irons_spellbooks-1.21.1-3.16.3.jar' \
+            --output "$JAR"
+          test "$(stat -c '%s' "$JAR")" -gt 10000000
+          echo '13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73  build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar' | sha256sum --check
+          sha256sum "$JAR" | tee build/irons-3163/download-sha256.txt
+          jar tf "$JAR" | grep -F 'io/redspace/ironsspellbooks/entity/spells/ArrowVolleyEntity.class'
+          # This validates an externally fetched publisher file, not the user's installed JAR.
+
+      - name: Inspect compiled class method boundaries with javap
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/irons_3163_projectile_bytecode.py \
+            --jar build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar \
+            --output build/irons-3163/evidence.json
+
+      - name: Self-test scoped Eldritch Blast and Burning Dash guard
+        run: python3 docs/qa/irons_3163_recast_dash_bytecode.py --self-test
+
+      - name: Inspect compiled Eldritch Blast and Burning Dash methods
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/irons_3163_recast_dash_bytecode.py \
+            --jar build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar \
+            --output build/irons-3163/recast-dash-evidence.json
+
+      - name: Test fail-closed damage/recast event-phase guards
+        run: python3 docs/qa/irons_3163_event_phase_bytecode.py --self-test
+
+      - name: Inspect compiled Burning Dash and Eldritch recast event phases
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/irons_3163_event_phase_bytecode.py \
+            --jar build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar \
+            --output build/irons-3163/event-phase-evidence.json
+
+      - name: Fail-closed static healer/Heartstop/Blight self-test
+        run: python3 docs/qa/irons_3163_heal_heartstop_blight_bytecode.py --self-test
+
+      - name: Inspect compiled healing, Heartstop and Blight callbacks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/irons_3163_heal_heartstop_blight_bytecode.py \
+            --jar build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar \
+            --output build/irons-3163/healing-heartstop-blight-evidence.json
+
+      - name: Self-test official 1.21.1 entity tick provenance collector
+        run: python3 docs/qa/minecraft_1211_entity_tick_proof.py --self-test
+
+      - name: Inspect official Mojang 1.21.1 server tickNonPassenger method
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/minecraft_1211_entity_tick_proof.py \
+            --output build/irons-3163/mojang-1211-entity-tick.json
+          # Only a provenance report; no Minecraft server runtime or NeoForge transforms.
+
+      - name: Upload evidence only (never copyrighted provider JAR)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: irons-3163-projectile-bytecode-${{ github.sha }}
+          path: |
+            build/irons-3163/evidence.json
+            build/irons-3163/recast-dash-evidence.json
+            build/irons-3163/event-phase-evidence.json
+            build/irons-3163/healing-heartstop-blight-evidence.json
+            build/irons-3163/mojang-1211-entity-tick.json
+          if-no-files-found: ignore
+          retention-days: 14

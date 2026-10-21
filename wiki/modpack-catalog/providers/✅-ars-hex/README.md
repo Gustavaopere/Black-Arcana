@@ -1,5 +1,23 @@
 # Ars Hex 5.0.4b
 
+## Fecho delimitado de bytecode das três perks e desconto — 18/10/2026
+
+✅ [Java21 #39093013655](EXACT-BINARY-PERK-SCYTHE-DATAFLOW-5.0.4b.md) **SUCCESS** com SHA publisher verificado, **13+12+12+11 = 48 autotestes** sintéticos aprovados e métodos reais inspecionados: `PASS_BOUNDED_PERK_DATAFLOW` associou as operações e fórmulas aos três atributos; `PASS_BOUNDED_SCYTHE_DISCOUNT_FLOW` confirmou seleção de partes Necromancy, laço, acumulador de 20% e arredondamento de `getManaDiscount`. [Dossiê de prova técnica](EXACT-BINARY-PERK-SCYTHE-DATAFLOW-5.0.4b.md), artifact JSON `12122559466`. **Isto não é teste de `AttributeInstance` de player, mana cobrada nem de boomerang em runtime**. 1/1 glyph próprio e 4/4 superfícies técnicas auxiliares documentadas; **+0 raízes, +0 adapters**. ⚠️ QA/interop; ⛔ perks e Mastery.
+
+
+✅ [Nova prova Java21 de operandos #39089774180](EXACT-PUBLISHER-NUMERIC-OPERANDS-5.0.4b.md): o JAR publisher SHA-1 `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4` passou **13/13 + 12/12 autotestes**, `PASS_BOUNDED_BYTECODE_REFERENCES` e `PASS_BOUNDED_NUMERIC_OPERANDS`. O classfile contém `iconst_2`, doubles `0.5`/`0.1`/`0.2`, opcodes de multiplicação e leitura de `slotValue` nos métodos aplicáveis. **Isto confirma presença de constantes, não o def-use/CFG integral, valor final de atributo, pagamento de mana, dano nem runtime.** Artefato JSON #12121819084. Nenhuma nova magia/adapter.
+
+
+## Nova evidência binária de perks e foice — 17/10/2026
+
+✅ [Java 21 #39087382649](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39087382649) **SUCCESS**, 13/13 autotestes e JAR Ars Hex 5.0.4b de 273389 bytes SHA-1 `2354710ea312e2a6e0fbc3eb2dbafb8e06f10cf4` verificado. [Prova delimitada](EXACT-PUBLISHER-PERK-SCYTHE-REFERENCES-5.0.4b.md): 3 registros de perk compilados, três conjuntos de attribute refs, `hurtEnemy→onCastOnEntity`, `MethodTouch`, `NECROMANCY/getCastingCost/ceil`, e callback de boomerang. **Aritmética exata permanece source-pinned, não dataflow comprovado; QA real/instalado/adapter pendentes.** Sem +magias, +Mastery ou Stage promotion.
+
+
+## Matriz nova de engenharia para perks — 17/10/2026
+
+**Duas métricas independentes:** ✅ glyph mágico `1/1` com registry binário; ✅ **3/3 threads/perks e 1/1 item spell-on-hit documentados individualmente** no source exato de revisão 5.0.4b, conforme [matriz técnica para perks](PERK-CAUSAL-ENGINEERING-MATRIX-5.0.4b.md). Estes quatro objetos auxiliares não acrescentam magias. A source pin foi conferida diretamente em `Alexthw46/Ars-Unity@b25528adf8c0135585cd6d654582efa147e0a227`; faltam paridade de classfiles de perks/foice, `AttributeInstance` real e dedup do `LivingDamageEvent.Post`. ⛔ Nenhum adapter de perks/Mastery homologado.
+
+
 Status: `COUNTED_EXACT GLYPH 1/1 (PHYSICAL JAR REGISTRY) / INSTALLED FULL-MODPACK RUNTIME + CONFIG + SURVIVAL QA OPEN`
 
 ## Fechamento binário posterior — 2026-10-12

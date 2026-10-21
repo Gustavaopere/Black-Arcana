@@ -1,0 +1,36 @@
+# Epic Fight 21.17.3.1 — observador read-only de jogador conectado (pré-gate Stage 09)
+
+## Observer adicional de dano com filtro de jogador real — 18/10/2026
+
+✅ [Workflow #39098965924](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39098965924) **SUCCESS** compilou e armou um observador opt-in independente de `LivingIncomingDamageEvent` / `LivingDamageEvent.Post` com [matriz e runbook](NATIVE-PLAYER-DAMAGE-TELEMETRY-QA-21.17.3.1.md). O novo modo `BLACK_ARCANA_EPICFIGHT_QA_NATIVE_DAMAGE_PREFLIGHT=1` é separado do modo de lifecycle e não interfere nas skills. O CI confirmou **zero samples** sem cliente, `connected_players=0`, `source_class_available=true` e artefato #**12126200760**. **Não** inferir `ServerPlayerPatch.initialized=true`, hit, armadura ou Mastery como validados.
+
+
+## Nova prova independente de classe transformada — 18/10/2026
+
+✅ [Workflow Java21 #39098101364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39098101364) **SUCCESS** e [dossiê do armor-mixin](EXACT-ARMOR-MIXIN-LOADED-CLASS-PREFLIGHT-21.17.3.1.md). O mesmo companion QA passou a aceitar opcionalmente `BLACK_ARCANA_EPICFIGHT_QA_ARMOR_MIXIN_PREFLIGHT=1`, observando `LivingEntity.class.getDeclaredMethods()` em um dedicated server iniciado sem cliente. Encontrou `TRANSFORMED_HANDLER_PRESENT handler_count=1` para o método de armadura do Epic Fight. Artefato #**12125471763**, sem JAR de QA em produção. **Isso não muda a ausência de conexão de jogador** registrada neste protocolo: `connected_players=0`, `has_proven_join_patch=false`, `equip_invoked=false`, `attribute_mutated=false`; handler presente **não equivale** a handler invocado em hit real. O teste negativo anterior #39097863144 falhou por erro de escape do matcher CI e foi corrigido mediante fixtures positiva e negativa, mantendo fail-closed.
+
+
+**Data:** 17/10/2026. **Estado:** ✅ `CONNECTED_PLAYER_OBSERVER_NO_CLIENT_GUARD` (armamento e ausência de falso positivo testados); ⚠️ `CONNECTED_SERVER_PLAYER_PATCH_INITIALIZED` **ainda sem execução física com cliente**. O sucesso do teste sem cliente NÃO prova entrada de jogador, inicialização de patch real, skill equipada ou `AttributeInstance` alterado.
+
+## Evidência executada
+
+- [GitHub Actions #39027854991](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39027854991), job `connected_player_observer_no_client_guard`, **SUCCESS**. JAR oficial Epic Fight `21.17.3.1` baixado e confirmado por SHA-1 `fb199b7bbea2fc402da28ab586e73f47e32f8fc0` e SHA-256 `8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526`, NeoForge **21.1.250**, Minecraft **1.21.1**, Java **21**. O companion QA foi compilado separadamente e o job confirmou ausência de suas classes no JAR de produção.
+- Evidência publicada como JSON limitado **artifact ID 12099685054**; campos `connected_players=0`, `has_proven_join_patch=false`, `skill_equipped=false`, `attribute_mutated=false`. A saída de servidor exigida é `type=armed status=AWAIT_CONNECTED_PLAYER connected_count=0 equip_invoked=false attribute_mutated=false`; qualquer linha `type=queued`, `type=result` ou `type=inspection` no run sem cliente reprovaria o gate. Não foi publicado nenhum JAR do publisher ou do companion.
+- [Observer Java opt-in](https://github.com/Gustavaopere/Black-Arcana/blob/docs/catalog-perk-causality-20261015/src/epicFightCatalogQa/java/dev/gustavopere/blackarcana/qa/epicfight/EpicFightConnectedPlayerLifecycleQa.java) e [workflow](https://github.com/Gustavaopere/Black-Arcana/blob/docs/catalog-perk-causality-20261015/.github/workflows/epicfight-211731-connected-player-preflight-qa.yml) pertencem **somente** ao source set `epicFightCatalogQa`. Ativação exige `BLACK_ARCANA_EPICFIGHT_QA_CONNECTED_PLAYER_PREFLIGHT=1`. A execução padrão de QA, o FakePlayer e os ciclos de datapack continuam em caminhos distintos.
+
+## Contrato observado no código e guarda do probe
+
+O observer registra apenas eventos NeoForge 1.21.1 já verificados em `PlayerEvent`: `PlayerLoggedInEvent`, `PlayerRespawnEvent`, `PlayerLoggedOutEvent`, além de `ServerTickEvent.Post`. O código não registra nomes/UUIDs do jogador no log. Descarta `FakePlayer`, não considera objeto desconectado como sessão válida, aguarda no máximo **80 ticks** depois de um evento de login/respawn e consulta os campos do **provider real** `EpicFightAttachmentTypes.ENTITY_PATCH` / `AttachmentEntityPatchProvider.entitypatch` / `EntityPatch.original` / `EntityPatch.initialized` através de reflexão de **campos apenas**, evitando `Class.getMethod` que anteriormente acionava `RuntimeDistCleaner` em `GuiGraphics`.
+
+Critério do próximo gate físico: um cliente **real** ingressa no servidor, emite `type=queued source=login status=WAIT_NATIVE_PATCH`, e depois a observação `type=result source=login status=CONNECTED_PATCH_INITIALIZED equip_invoked=false attribute_mutated=false`. Após respawn, a mesma condição precisa ser verificada com `source=respawn`. `PATCH_UNINITIALIZED_AFTER_TIMEOUT`, `NOT_CONNECTED_AT_OBSERVATION`, `ABI_OR_RUNTIME_UNAVAILABLE`, `PATCH_TYPE_MISMATCH`, `PATCH_ORIGINAL_MISMATCH` ou ausência de evento **não constituem PASS**; registrar como ⚠️/⛔ e investigar em vez de simular inicialização.
+
+## Próxima execução física (manual, cliente real)
+
+1. Iniciar ambiente **descartável** com a versão exata do Epic Fight, NeoForge físico 21.1.250, Black Arcana e companion QA opt-in. Não misturar o artefato de QA na distribuição do modpack.
+2. Conectar cliente real compatível com o conjunto de mods e registrar o marcador de patch inicializado **após** a entrada natural. O workflow CI sem cliente não realiza essa etapa.
+3. Verificar o marcador novamente após respawn natural e garantir que logout invalida observações pendentes. Caso a conexão com a composição completa do pack produza diferença, registrá-la separadamente.
+4. Somente depois de confirmar jogador conectado, patch inicializado, categoria/slot exatos e contrato de `SkillContainer.setSkill` do JAR **21.17.3.1**, instrumentar **outro** teste de equipar/remover `adaptive_skin` com datapack original de QA e observar `AttributeInstance` de `minecraft:generic.max_health` antes, durante e depois, incluindo deduplicação e limpeza. **Este observer não executa equip/unequip**.
+
+O [FakePlayer previamente observado](EXACT-FAKE-PLAYER-PATCH-LIFECYCLE-ELIGIBILITY-21.17.3.1.md) tinha `ServerPlayerPatch.initialized=false`. Não chamar manualmente `onJoinWorld`, construir `PlayerPatch` alternativo, burlar a guarda `FakePlayer` ou registrar efeito de jogador com base apenas no mapa de modifiers das skills.
+
+**Catálogo e runtime:** Epic Fight core ✅ 43/43 identidades e 42/42 JSONs, 28 dossiês técnico-causais anteriores, +0 novas magias. Piso global 1.856 semânticas mínimas / 1.854 estritas, denominador global aberto. Stage 06.05 🟡, Stage 09 físico pendente, integração Mastery/perks ⛔ sem hook homologado. Black Arcana preserva seu runtime mágico e a PR #825 permanece draft, sem merge.

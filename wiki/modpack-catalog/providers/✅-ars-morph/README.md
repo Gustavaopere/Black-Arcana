@@ -1,5 +1,35 @@
 # Ars Morph 2.0.0
 
+## Gate de restauração Identity2 — bytecode físico (17/10/2026)
+
+A auditoria do [JAR publisher Identity2 2.2.4 #39077751784](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39077751784) confirmou `PASS_DIRECT_RESTORE_BOUNDED`: a função compilada `IdentityProgression.restoreMorphFromSavedData(ServerPlayer)` chama `EntityAccessor.setCurrentIdentity` sem chamar `IdentityProgression.morph` **dentro do mesmo método**. Foram aprovados 8/8 + 6/6 autotestes sintéticos no job, com SHA-1 publisher `84c222df0176d7ef83ba7cc361249fe062e29218` confirmado. Artefato de evidência [#12117184517](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39077751784/artifacts/12117184517).
+
+[**Matriz de ingressos e protocolo de teste de revogação/restauração**](IDENTITY2-MORPH-INGRESS-RESTORE-QA-2.2.4.md): requisição C2S, comando, morph automático por kill, transformação diária, `clearMorph`, `morph(minecraft:player)` e restore de NBT comparados com o `IdentityProgressionMixin` presente no RPG Skill Tree. **⚠️ A assinatura e a chamada direta não provam bypass em gameplay nem ausência de controles no caller.** Após respec, relog ou respawn, os resultados reais ainda exigem QA com player conectado. ⛔ Nenhuma perk/cooldown/Mastery homologados; runtime de Black Arcana, RPG e Identity2 permanecem separados.
+
+## Gate de morph do RPG Skill Tree — fonte e publisher (17/10/2026)
+
+A `main` do sibling [RPG Skill Tree](https://github.com/Gustavaopere/neoforge-rpg-skilltree/tree/ed5b65b890767b406ce41127bcb793775263c7bd) já define um `IdentityProgressionMixin` opcional que, no início de `IdentityProgression.morph(ServerPlayer,ResourceLocation,CompoundTag)`, tenta impedir transformações não autorizadas por `MorphIdentityAccess.canMorph`. O publisher Identity2 `2.2.4` para NeoForge 1.21.1 passou à prova do descriptor exato dessa assinatura e dos quatro métodos de cooldown no [workflow Java21 #39075958128](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39075958128): **8/8 autotestes, SHA-1 publisher válido, `PASS_BOUNDED_SIGNATURES`, sem desvios**. [Dossiê causal completo](IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md).
+
+**⚠️ A existência do Mixin no código, a assinatura no JAR publicado e o resultado do workflow não comprovam sua aplicação efetiva ao runtime do pack**, nem autorizam redutores de cooldown. O próprio sibling mantém documentação antiga que não descreve a injeção atual, exigindo reconciliar o contrato pelo código e testes de jogador conectado. Sem novos spells/adapters Black Arcana.
+
+## Auditoria do JAR publicado Identity2 — 17/10/2026
+
+**✅ Publisher SHA-1 conferido e quatro métodos inspecionados por bytecode delimitado:** [Java21 #39075533394](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39075533394), Identity2 `2.2.4` NeoForge `1.21.1`, CurseForge `1238155/8792744`, SHA-1 `84c222df0176d7ef83ba7cc361249fe062e29218`. Foram registrados `PASS_BOUNDED_SIGNATURES`, zero desvios e seis autotestes de fail-closed. [Dossiê com detalhes e limites](IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md). **⚠️ Paridade do JAR instalado, runtime de cooldown, emissão de efeitos/settlement e contratos de hooks permanecem pendentes.** A evidência anterior `SOURCE_BRACKET` está preservada como contexto histórico, não status atual único. 0 magias novas e 0 adapters homologados.
+
+## Verificação dos cooldowns no Identity2 — 17/10/2026
+
+Avançou a [auditoria dos contadores do host Identity2 2.2.4](IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md), fonte oficial `xGabou/Identity2` em dois snapshots que delimitam o release 2.2.4: 27/05/2026 e 02/10/2026 (o segundo declara 2.2.4.1). O servidor executa `max(0,cooldown+useduration)`, decremente a cada `baseTick`, recusa primário se contador positivo e registra cooldown **antes** do callback. Os sete contadores derivados são **120/820/900/120/420/220/160 ticks**, na ordem Weald Walker/Wilden Hunter/Wilden Stalker/Starbuncle/Whirlisprig/Wixie/Firenando. Não confundir com duração real dos efeitos e passivos.
+
+**⚠️ Evidência SOURCE_BRACKET, não verificação do bytecode instalado.** O JAR Identity2 2.2.4 do modpack não foi comparado; versões de código não têm blobs integrais idênticos. Prioridade de QA: Wixie crouch poderá falhar após registro de cooldown, resolver Ars cancelado poderá não executar após consumir contador; validar no pack. Nenhum hook de redução individual de cooldown ou refund foi homologado, e nenhum objeto mágico novo foi contado.
+
+## Engenharia causal das habilidades Identity2 — 17/10/2026
+
+**✅ 7/7 implementações Java** de habilidade Identity2 possuem [fichas individuais em `abilities/`](abilities/) com código-fonte fixo, eventos, target, movimento, projetéis, status, tempo, passivos, riscos e QA. Os **11/11 arquivos JSON de atribuições** foram ligados às respectivas fichas; há cinco variantes Weald Walker compartilhando um único `predef`. [Matriz de integração e barras](ABILITY-PERK-CAUSAL-MATRIX-2.0.0.md). O glifo `ars_morph:glyph_morph` permanece 1/1 independente; **+0 novas identidades de magia**. O registro source-aligned é `Alexthw46/Ars-Morph@4a5a2c706fe5a316fc9ad03ac37a3ac1d1dc3c58`, sem paridade do código com JAR instalada.
+
+**Achados para perks:** Wixie sorteia índice 0–11 para tabela de apenas dez efeitos no ramo agachado (risco source de index out of bounds, não crash físico reproduzido); Whirlisprig executa Grow+AOE×3 e Jump Boost passivo; Wilden Stalker sincroniza `isFlying` no servidor; Firenando projeta homing com filtro `Enemy`, condicionado a Ars Elemental; Wilden Hunter remove Summoning Sickness após `postEvent` não cancelado; Starbuncle aplica Speed 3000 ticks. Os campos Identity2 `cooldown`/`use_duration` são valores brutos e **suas unidades não foram certificadas no host instalado**.
+
+**Barras:** GLOBAL —% (piso 1.857 / 1.855 estritos, denominador global aberto); ARS MORPH 7/7 fichas Java e 11/11 assignments (documentação 100%), glyph 1/1, ⚠️ runtime/cooldowns/permissões pendentes, ⛔ 0 adapters homologados. Stage 06.05 🟡, Stage 09 físico pendente; PR #825 draft.
+
 Status: `PHASE 2X — SOURCE CATALOG CLOSED / INSTALLED RUNTIME QA OPEN`
 
 ## Exact installed identity

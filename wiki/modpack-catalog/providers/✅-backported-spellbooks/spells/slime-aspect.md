@@ -8,9 +8,38 @@
 
 ## Comportamento documentado (fonte de referência)
 
-Status effect Slime Aspect e interações de mobilidade (source de referência); impulse, air drag, bounce e parâmetros efetivos ainda não certificados no JAR 0.1.2 ou no jogo.
+Status effect Slime Aspect e interações de mobilidade. Os operandos compilados de `onCast` e do registro dos três modifiers foram certificados no JAR 0.1.2; **valores finais de movimento, impulso, salto e arrasto no jogo não foram observados**.
 
 A descrição de gameplay é uma leitura limitada da fonte oficial [`@07cb65efca0c`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/tree/07cb65efca0c264762a21c2d6bce0f83e3947226), não uma garantia de bytecode funcional exato ou configuração do pack.
+
+## Dossiê técnico para perks — source oficial de referência (18/10/2026)
+
+**Localizador do Codex:** [`AspectOfTheSlimeSpell.java`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/spells/nature/AspectOfTheSlimeSpell.java); consumidores [1]: [`SlimeAspectMobEffect.java`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/effect/SlimeAspectMobEffect.java). Registry no JAR exato é o documentado no início da ficha. Método principal `onCast`; consumidores e métodos de efeito abaixo quando presentes.
+
+- **Casting/defaults da fonte:** `INSTANT`, `castTime=0` (campo do construtor), Nature, RARE, máximo 5, cooldown declarado 90 s, `baseManaCost=35`, `manaCostPerLevel=5`, `baseSpellPower=20`, `spellPowerPerLevel=5`. Custo efetivo = **NÃO VERIFICADO**.
+- **Alvo:** apenas o próprio caster em `onCast`; sem range/projétil/área declarados nesse método.
+- **Efeito:** aplica `ModMobEffects.SLIME_ASPECT` por `int(getSpellPower(level,caster)*20)` **ticks**, amp `level-1`. O effect class expõe coeficientes `BOUNCE_PER_LEVEL=0.5`, `JUMP_PER_LEVEL=0.15`, `AIR_DRAG_PER_LEVEL=-0.10`; o registro dos consumidores é detalhado abaixo; aplicação/resultado físico ainda não verificados.
+- **Perk axes:** duração e potência de mobilidade são **campos de cálculo provider-owned**, não hooks de mutação. Ao modelar duração, preservar a conversão float → int; não aplicar buff extra por callback de efeito.
+
+## Consumer registral do buff — fonte e bytecode delimitado certificados
+
+A inspeção adicional de [`ModMobEffects.SLIME_ASPECT` (L31–34)](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/init/ModMobEffects.java#L31-L34) identificou **onde os coeficientes são registrados**: `ModAttributes.BOUNCINESS` +0.5 com `ADD_VALUE`; `Attributes.JUMP_STRENGTH` +0.15 com `ADD_MULTIPLIED_TOTAL`; `ModAttributes.AIR_DRAG_MODIFIER` -0.10 com `ADD_MULTIPLIED_TOTAL`. Esses são os parâmetros declarados do **efeito**, não medições do atributo final e nem setters públicos de perks. A fonte [`SlimeAspectMobEffect`](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/effect/SlimeAspectMobEffect.java#L7-L15) não implementa tick próprio. O host determina a mecânica de aplicação do modificador e seu dimensionamento com amplificador.
+
+**UI vs implementação:** os métodos nomeados `getPercentAttackDamage`, `getPercentSpeed` e `getPercentSpellPower` populam a tooltip de *bounciness*, salto e arrasto do ar; **não** são evidência de mutação de dano de ataque, movimento horizontal ou spell power. O equipamento [Slime Boots](https://github.com/RedReaper28/BackportedSpellbooks-1.21.1/blob/07cb65efca0c264762a21c2d6bce0f83e3947226/src/main/java/net/redreaper/backported_spellbooks/item/armor/SlimeBootsArmorItem.java#L25-L34) aplica modificadores independentes, incluindo atrito, e seu cancelamento de queda vem de `ServerEvents.onFallEvent`, **não** do `SlimeAspectMobEffect` nesta fonte.
+
+**Perk gates:** duração, bônus por atributo, conversão em AOE/target e alterações de amplitude continuam sem contrato de mutação pública verificado. Para validar extensão será necessário validar os outros caminhos do JAR, host Iron's 3.16.3, VanillaBackport, atributos resolvidos em jogador conectado e stacking/relog. **O novo gate `EXACT_PUBLISHER_COMPILED_CALLSITES_ONLY` certificou esses callsites e coeficientes: cobertura delimitada agora 6/6 (100% apenas do recorte de métodos).** [Dossiê causal dos consumidores e matrizes](../SOURCE-CAUSAL-SLIME-ASPECT-0.1.2.md).
+
+**Classe de evidência:** ID estático `BINARY_EXACT_0.1.2`; `onCast` e supplier de três atributos `EXACT_PUBLISHER_COMPILED_CALLSITES_ONLY` pelo [dossiê Java 21](../EXACT-BINARY-SLIME-ASPECT-0.1.2.md). Os defaults de config, outros métodos de `SlimeAspectMobEffect`, atributos finais e gameplay **não** estão certificados. Os defaults do `DefaultConfig` podem ser alterados pelo host; custo/cooldown realizado e assinatura de hook para perks = **NÃO VERIFICADO / ⛔**. [Matriz comparativa](../PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md).
+
+**Authority:** Iron's conserva casting, recurso, configuração e cooldown. Backported Spellbooks conserva efeitos/entidades. RPG Skill Tree apenas progressão por boundary real, Black Arcana apenas runtime próprio. Não executar efeitos/cobranças duplicadas nem conceder Mastery por projectile, tick ou hit isolado.
+
+## Equipamento correlato — Slime Boots (não é a magia)
+
+✅ O JAR 0.1.2 também teve [auditoria binária separada de Slime Boots e `ServerEvents.onFallEvent`](../EXACT-BINARY-SLIME-BOOTS-FALL-0.1.2.md) em [Java21 #39153448024](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39153448024) (11/11 testes, zero desvios). As botas usam quatro modifiers próprios — Jump `0.1 ADD_MULTIPLIED_BASE`, Friction `0.3 ADD_MULTIPLIED_BASE`, Bounciness `2.5 ADD_VALUE` e Air Drag `-0.5 ADD_MULTIPLIED_BASE`. O handler de queda consulta **slot FEET e item Slime Boots**, não `SLIME_ASPECT` nesse método. `addEffect` da magia e `setCanceled` da queda são caminhos causais distintos. O gate não validou física real, stacking nem hook para alteração via perk. +0 magias/adapters.
+
+## Limites do host de movimento — Vanilla Backport 1.1.7.10
+
+✅ [Prova compilada Java21 #39156441117](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39156441117), [dossiê físico de atributos](../EXACT-BINARY-VANILLABACKPORT-MOBILITY-HOST-1.1.7.10.md): `BOUNCINESS` registra default 0 e range **0–1**; `AIR_DRAG_MODIFIER`/`FRICTION_MODIFIER` registram default 1, range 0–2048. Os mixins compilados consultam bounciness e drag e calculam atrito com clamp `[0,1]`. A magia adiciona `+0.5 ADD_VALUE` bounciness, `+0.15 ADD_MULTIPLIED_TOTAL` jump e `−0.10 ADD_MULTIPLIED_TOTAL` air drag; botas adicionam modifiers **diferentes**. O valor final de rebote/air drag, efeitos por amplificador, integração/atributos do jogador, instalação física do JAR host e hook de perk ainda são ⚠️/⛔. Não somar os modifiers e declarar resultado sem QA.
 
 ## Contratos e pendências
 

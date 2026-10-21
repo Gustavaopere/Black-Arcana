@@ -1,5 +1,11 @@
 # SnackPirate's Aeromancy Additions 1.2.8 — fichas canônicas de spells
 
+## Atualização de engenharia causal — 17/10/2026
+
+As **10/10 fichas** em `spells/` contêm matriz técnica source-pinned com ranges, targets, geometria, projectiles, modificadores, status, custos, tempo, segurança, fases de execução, limites de perks e QA pendente. [PERK-CAUSAL-ENGINEERING-MATRIX-1.2.8.md](PERK-CAUSAL-ENGINEERING-MATRIX-1.2.8.md) agrega os principais achados.
+
+**Status:** ✅ catalogação documental 10/10; ⚠️ paridade exata do JAR instalado **não homologada** (SHA físico legado truncado), efeitos/host Iron's 3.16.3 e gameplay ainda condicionados; ⛔ zero adapters per-caster validados. **+0 IDs** vs JAR publisher. **Flush** permanece gate de WORLD SAFETY antes de qualquer perk de raio/bloco/fluido. O contador Airstep e a origem de dano dos projectiles exigem QA server/client e persistência. Não interpretar valores `DefaultConfig` como valores efetivos do pack.
+
 **Adendo publisher 2026-10-13:** [dez IDs no JAR oficial 1.2.8](EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md), [Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191), sem novos IDs vs fichas. **⚠️ Paridade com JAR físico bloqueada** por SHA-1 legado inválido; não promover a `COUNTED_EXACT` ou proclamar runtime. Índice de dez fichas continua ✅ catalogado, `COUNTED_SOURCE_PINNED` 10/10; 16/39 provas físicas exatas no cohort.
 
 

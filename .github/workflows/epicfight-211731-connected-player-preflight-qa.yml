@@ -1,0 +1,180 @@
+name: Epic Fight 21.17.3.1 connected player QA observer compile and no-client guard (NeoForge 21.1.250)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/epicfight-211731-connected-player-preflight-qa.yml'
+      - 'src/epicFightCatalogQa/**'
+      - 'build.gradle'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  connected_player_observer_no_client_guard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download and fingerprint exact physical Epic Fight artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/epicfight-loaded-qa
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-all-errors --connect-timeout 20 --max-time 240 \
+            'https://cursemaven.com/curse/maven/epic-fight-mod-405076/8175609/epic-fight-mod-405076-8175609.jar' \
+            --output build/epicfight-loaded-qa/epicfight-exact.jar
+          echo 'fb199b7bbea2fc402da28ab586e73f47e32f8fc0  build/epicfight-loaded-qa/epicfight-exact.jar' | sha1sum --check
+          echo '8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526  build/epicfight-loaded-qa/epicfight-exact.jar' | sha256sum --check
+          jar tf build/epicfight-loaded-qa/epicfight-exact.jar | grep -Fx 'yesman/epicfight/world/capabilities/entitypatch/EntityPatch.class'
+
+      - name: Compile the opt-in observer under exact pack NeoForge and check production isolation
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./gradlew --no-daemon -Pneo_version=21.1.250 epicFightCatalogQaJar
+          QAJAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_epicfight_qa-*.jar' | head -n 1)"
+          test -n "$QAJAR"
+          jar tf "$QAJAR" | grep -Fx 'dev/gustavopere/blackarcana/qa/epicfight/EpicFightConnectedPlayerLifecycleQa.class'
+          ./gradlew --no-daemon -Pneo_version=21.1.250 jar
+          PROD="$(find build/libs -maxdepth 1 -type f -name 'black_arcana-*.jar' | head -n 1)"
+          test -n "$PROD"
+          if jar tf "$PROD" | grep -Eq 'EpicFightConnectedPlayerLifecycleQa|EpicFightCatalogQaMod'; then
+            echo 'QA-only lifecycle observer leaked to production artifact'
+            exit 1
+          fi
+
+      - name: Boot provider and arm observer without a connected client
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p runs/server/mods build/epicfight-loaded-qa
+          cp build/epicfight-loaded-qa/epicfight-exact.jar runs/server/mods/epicfight-21.17.3.1.jar
+          QAJAR="$(find build/libs -maxdepth 1 -type f -name 'black_arcana_epicfight_qa-*.jar' | head -n 1)"
+          cp "$QAJAR" runs/server/mods/"$(basename "$QAJAR")"
+          printf 'eula=true\n' > runs/server/eula.txt
+          LOG="$PWD/build/epicfight-loaded-qa/connected-player-no-client.log"
+          BLACK_ARCANA_EPICFIGHT_QA_CONNECTED_PLAYER_PREFLIGHT=1 \
+          BLACK_ARCANA_EPICFIGHT_QA_ARMOR_MIXIN_PREFLIGHT=1 \
+          BLACK_ARCANA_EPICFIGHT_QA_NATIVE_DAMAGE_PREFLIGHT=1 \
+            ./gradlew --no-daemon -Pneo_version=21.1.250 runServer > "$LOG" 2>&1 &
+          PID=$!
+          cleanup() {
+            kill "$PID" 2>/dev/null || true
+            wait "$PID" 2>/dev/null || true
+            rm -f runs/server/mods/epicfight-21.17.3.1.jar
+            rm -f runs/server/mods/black_arcana_epicfight_qa-*.jar
+          }
+          trap cleanup EXIT
+          COMPLETE=0
+          for _ in $(seq 1 150); do
+            if grep -Fq '[BLACK_ARCANA_EPICFIGHT_CONNECTED_PLAYER_QA] type=armed status=' "$LOG" && \
+               grep -Eq 'Done \([0-9.]+s\)! For help, type "help"' "$LOG"; then
+              COMPLETE=1
+              break
+            fi
+            if ! kill -0 "$PID" 2>/dev/null; then
+              tail -n 100 "$LOG"
+              exit 1
+            fi
+            sleep 2
+          done
+          if [[ "$COMPLETE" != 1 ]]; then
+            tail -n 100 "$LOG"
+            echo 'Connected player QA observer was not armed'
+            exit 1
+          fi
+
+      - name: Fail closed if CI without a client claims connected player evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, pathlib, re
+          path = pathlib.Path("build/epicfight-loaded-qa/connected-player-no-client.log")
+          log = path.read_text(errors="replace")
+          assert re.search(r'\[BLACK_ARCANA_EPICFIGHT_LOADED_QA\] type=begin provider=epicfight loaded=true\b', log)
+          prefix = r'\[BLACK_ARCANA_EPICFIGHT_CONNECTED_PLAYER_QA\]'
+          marker = prefix + r' type=armed status=AWAIT_CONNECTED_PLAYER connected_count=0 equip_invoked=false attribute_mutated=false\b'
+          assert len(re.findall(marker, log)) == 1, "Observer must arm once with zero connected players"
+          assert not re.search(prefix + r' type=(queued|result|inspection)', log), "No real player should be observed during no-client CI"
+          mixin_prefix = r'\[BLACK_ARCANA_EPICFIGHT_ARMOR_MIXIN_QA\]'
+          installed = mixin_prefix + r' type=result status=TRANSFORMED_HANDLER_PRESENT handler_count=1\b'
+          positive_control = (
+              "[BLACK_ARCANA_EPICFIGHT_ARMOR_MIXIN_QA] "
+              "type=result status=TRANSFORMED_HANDLER_PRESENT handler_count=1 "
+              "handler_invoked=false damage_tested=false client_connected=false"
+          )
+          negative_control = (
+              "[BLACK_ARCANA_EPICFIGHT_ARMOR_MIXIN_QA] "
+              "type=result status=HANDLER_SIGNATURE_NOT_EXACT matching=0 mismatched=0"
+          )
+          assert len(re.findall(installed, positive_control)) == 1, (
+              "Positive matcher fixture must match once"
+          )
+          assert not re.search(installed, negative_control), (
+              "Negative matcher fixture must not match"
+          )
+          damage_prefix = r'\[BLACK_ARCANA_EPICFIGHT_NATIVE_DAMAGE_QA\]'
+          native_armed = (
+              damage_prefix
+              + r' type=armed status=AWAIT_NATIVE_PLAYER_ATTACK '
+              + r'source_class_available=true connected_players=0 '
+              + r'incoming_count=0 post_count=0 no_client_proof=false\b'
+          )
+          assert len(re.findall(native_armed, log)) == 1, (
+              "Native Epic Fight damage observer must arm once with no client"
+          )
+          assert not re.search(damage_prefix + r' type=sample\b', log), (
+              "No native player attack sample may be claimed in clientless CI"
+          )
+          diagnostic = re.findall(mixin_prefix + r' type=result [^\r\n]*', log)
+          print("EPICFIGHT_ARMOR_MIXIN_QA_DIAGNOSTIC", json.dumps(diagnostic))
+          assert len(re.findall(installed, log)) == 1, (
+              "No valid transformed LivingEntity armor handler observed in running dedicated server"
+          )
+          assert not re.search(mixin_prefix + r' type=result status=(HANDLER_SIGNATURE_NOT_EXACT|REFLECTION_OR_LINKAGE_UNAVAILABLE)', log), (
+              "Conflicting negative mixin observation"
+          )
+          report = {
+              "scope": "CONNECTED_PLAYER_OBSERVER_ARMED_WITHOUT_CLIENT_NOT_PLAYER_ATTRIBUTE_PROOF",
+              "status": "AWAIT_CONNECTED_PLAYER_STAGE09",
+              "epicfight": "21.17.3.1",
+              "neoforge": "21.1.250",
+              "connected_players": 0,
+              "has_proven_join_patch": False,
+              "skill_equipped": False,
+              "attribute_mutated": False,
+              "armor_mixin_handler_present_in_loaded_LivingEntity": True,
+              "armor_mixin_handler_invoked": False,
+              "armor_damage_tested": False,
+              "native_damage_telemetry_armed_without_client": True,
+              "native_damage_player_samples_observed": 0,
+              "native_damage_health_loss_validated": False,
+              "not_evidenced": ["provider_native_connected_player_damage", "event_damage_correlated",
+                               "armor_mixin_handler_invocation", "armor_damage_result",
+                               "connected_player", "ServerPlayerPatch_initialized",
+                                "onInitiate", "onRemoved", "AttributeInstance_applied",
+                                "client_sync", "full_modpack", "mastery_hook"],
+          }
+          out = pathlib.Path("build/epicfight-loaded-qa/connected-player-no-client-evidence.json")
+          out.write_text(json.dumps(report, indent=2) + "\n")
+          print(json.dumps(report, indent=2))
+          PY
+
+      - name: Publish bounded no-client readiness evidence only
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: epicfight-connected-player-no-client-preflight-${{ github.sha }}
+          path: build/epicfight-loaded-qa/connected-player-no-client-evidence.json
+          if-no-files-found: error
+          retention-days: 14

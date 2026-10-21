@@ -26,3 +26,20 @@ O source pin contém uma chamada ativa `registerSpell(new WindBladeSpell())` par
 Esta ficha fecha ID, classe registrada, ownership, escola Wind e estado semântico source-pinned. Mecânica quantitativa, custo, cooldown, acquisition settlement, networking, compatibilidade e comportamento no modpack físico permanecem QA separado quando não explicitamente fechados pelo dossiê.
 
 Source: `../EXACT-1.2.8-SPELL-INVENTORY.md`.
+
+## Engenharia causal para perks — 17/10/2026
+
+**Identidade:** mod ID `aero_additions`, versão `1.2.8`, source fixo `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`. **⚠️ COUNTED_SOURCE_PINNED**: dez registros confirmados em JAR oficial de publicação ([Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191)), mas SHA-1 do JAR *instalado* na modlist histórica é inválido/incompleto (35 dígitos); **NÃO** promover a COUNTED_EXACT instalada. JAR publisher `aero_additions-1.2.8.jar` SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`. Todos os números abaixo vêm do source, não de configuração efetiva/QA físico. Iron's governa casting, mana/cooldown; Aero Additions governa efeitos; RPG Skill Tree somente progressão/perks por contrato real.
+
+**Raiz `aero_additions:wind_blade` — Wind Blade.** Source-only; dados de domínio, raio, alvo e duração são mensurados conforme os métodos abaixo, quando aplicáveis.
+
+| Eixo | Observação fonte-fixada | Mutabilidade por perk |
+|---|---|---|
+| Cast/stats | INSTANT, nível 1–10, cooldown 1s, castTime 0, mana 10+2/nível, power 12+1/nível; getDamage=0.5×getSpellPower. | Não confundir power com dano final ao tocar target. |
+| Spawn/física | Cria um WindBladeProjectile por cast a altura ocular corrigida pelo bounding box, owner caster; shoot(lookAngle), getSpeed=1.75 e setNoGravity(true). | SEM_HOOK_SEGURO para tamanho/velocidade/range por caster. |
+| Dano/impacto | WindBladeProjectile.onHitEntity tenta knockback de intensidade `getDamage` em LivingEntity **antes** de DamageSources.applyDamage(..., getDamage, spell.getDamageSource(projectile,owner)), sem checar sucesso do dano; descarta depois de hit. | Knockback é consequência separada do damage settlement; Mastery de hit só se dano confirmado. |
+| Bloco/owner | onHitBlock descarta; source de dano vem `AASpells.WIND_BLADE`, não vanilla wind charge; hitbox/tempo max dependem de AbstractMagicProjectile do Iron's. | Owner e spawn probados em source, gameplay host pendente. |
+
+**Localizadores:** [WindBladeSpell.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/wind_blade/WindBladeSpell.java#L25-L70) · [WindBladeProjectile.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/wind_blade/WindBladeProjectile.java#L46-L80).
+
+**QA pendente e fail-closed:** QA cancelamento damage mantendo knockback, PvP allies, collision, anti-magic, no gravity e origem de DamageType. Os valores são defaults ou constantes, não provas de execução em servidor/cliente. **+0 novas magias; +0 adapters aprovados.**

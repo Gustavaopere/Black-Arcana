@@ -1,5 +1,13 @@
 # Ars Creo — Ars Nouveau ↔ Create bridge provider
 
+## Engenharia causal dos sistemas — 17/10/2026
+
+**✅ 7/7 sistemas de compatibilidade com dossiês causais source-pinned**: Starbuncle Wheel, Moving Turrets, Source on Contraptions, Moving Portals, Moving Rituals, Potion Jar Fluid Bridge e Create Display Sources. As [sete fichas em `systems/`](systems/) receberam parâmetros que afetam casting, atributos/recursos, temporização, targeting, área, owners, efeitos e limites, quando aplicáveis. [Matriz de engenharia e QA](PERK-CAUSAL-ENGINEERING-MATRIX-5.4.0.md).
+
+**Novas observações de código relevantes para perks:** `ITurretBehavior` cobra Source antes de selecionar MethodProjectile/MethodTouch; `ContraptionCaster` reporta `CasterType.OTHER` e `expendMana` vazio. `PortalBehavior` zera fallDistance após tentativa de teleport, mesmo sem confirmação no método. `RitualBehavior` tem tile mockada e não guarda todo o `tryTick` por `!isClientSide`; interação custom com mão/tablet está comentada. `PotionTank` converte unidades Ars em 2.5 mB, realiza `ceil(mB×0.4)` ao registrar fill/drain e mostra possíveis divergências entre volume reportado e adição à jar; **nenhum bug runtime foi reproduzido**, host pode limitar efeitos.
+
+**Barra global: —%** (piso de última auditoria 1.857 objetos semânticos / 1.855 estritos, denominador aberto). **Barra Ars Creo: 7/7 famílias = 100% de documentação source-causal; 0 glyphs, 0 novos IDs mágicos; ⚠️ QA físico/provider/Survival pendente; ⛔ 0 adapters homologados.** O source oficial é `baileyholl/Ars-Creo@6a99d36fab441653478fc49de8f28164f0894eb2`, não paridade byte-a-byte dos métodos com JAR instalado. Black Arcana preserva seus próprios casting, rituais e WorldEffectPolicy; Ars/Create preservam seus mecanismos externos.
+
 Status: `PHASE 2S / SOURCE-PINNED 5.4.0 CATALOG COMPLETE / RUNTIME+PACK QA PENDING`
 
 ## Exact installed identity

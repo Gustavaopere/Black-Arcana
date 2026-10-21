@@ -1,5 +1,17 @@
 # Ars Morph 2.0.0 — Identity2 ability adapters
 
+## Regra do host: cooldown + use_duration — 17/10/2026
+
+Inspeção de `xGabou/Identity2` em commits anteriores e posteriores à publicação 2.2.4 confirma que `ModPackets` define contador primário `max(0,cooldown+useduration)`, `EntityMixin.baseTick` reduz em **1 por tick**, e o servidor fixa o valor **antes** de executar o callback. Exemplo: Wixie JSON `200/20` corresponde a **220 ticks** de contador primário no source, não 200; Wilden Stalker `800/100` corresponde a **900 ticks**. Veja [dossiê cross-version](IDENTITY2-ABILITY-COOLDOWN-SOURCE-BRACKET-2.2.4.md) e [matriz com sete totais](ABILITY-PERK-CAUSAL-MATRIX-2.0.0.md).
+
+Isso resolve a **unidade operacional do source** (ticks), não certifica o binário instalado da versão 2.2.4, nem substitui duração dos efeitos de cada spell Ars. O callback Wixie pode lançar exceção depois de o cooldown ser fixado; não há refund explícito no handler observado. **⛔ Nenhum adapter de modificação per-player**.
+
+## Ampliação individual 17/10/2026 — sete habilidades
+
+Sete fichas `abilities/{weald-walker,wilden-hunter,wilden-stalker,starbuncle,whirlisprig,wixie,firenando}.md` foram criadas com observações por classe e links ao Java 2.0.0 e **11 atribuições JSON**. [Matriz causal das habilidades](ABILITY-PERK-CAUSAL-MATRIX-2.0.0.md). Os 7 adaptadores Java e 11 assignments **não representam onze spells novas**; ações derivadas de Ars continuam provider-native. `cooldown` e `use_duration` são valores JSON sem unidade física confirmada.
+
+O ramo agachado de Wixie pode indexar posições 10/11 da tabela benéfica que tem dez entradas; wrapper captura Throwable, portanto somente QA no pack pode determinar impacto. Whirlisprig faz mutação world Grow e passivo Jump Boost, Firenando é condicional, Weald Walker reutiliza o mesmo `predef` para cinco variantes. **Source-only, sem API de perks ou Mastery homologada**.
+
 Status: `7 JAVA ADAPTERS + 11 DATA ASSIGNMENTS CATALOGED / RUNTIME QA OPEN`
 
 ## Authority

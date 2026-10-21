@@ -1,5 +1,62 @@
 # Backported Spellbooks — physical 0.1.2 release / embedded metadata 0.1.0
 
+## Vanilla Backport 1.1.7.10 — sete invokes pós-Mixin certificados (18/10/2026)
+
+✅ [CI #39180390922](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39180390922) **SUCCESS**, 7/7 regressões, zero desvios; [dossiê de sete vínculos pós-transformação](EXACT-RUNTIME-VANILLABACKPORT-POSTMIXIN-CALLLINK-1.1.7.10.md), [evidência JSON #12155268844](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39180390922/artifacts/12155268844). No servidor mínimo NeoForge 21.1.250 + Platform 1.3.3 + Vanilla Backport 1.1.7.10, o exportador Mixin gerou classfiles `Entity`, `LivingEntity` e `RangedAttribute`. O verificador encontrou os **7 handlers distintos invocados 1× diretamente dos métodos-alvo transformados**: `move` 3, `travel` 2, `createLivingAttributes` 1, `RangedAttribute.<init>` 1. **Vínculos estáticos no bytecode exportado ≠ handlers executados por jogador**, atributos resolvidos ou coexistência com o modpack completo. ⚠️ gameplay e provider interaction pendentes; ⛔ perk hook. +0 magias e adapters; 6/6 raízes Backported preservadas.
+
+## Vanilla Backport 1.1.7.10 — servidor mínimo e Mixin target-loading (18/10/2026)
+
+✅ [#39178310071](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39178310071) **SUCCESS**, 10/10 testes fail-closed, [dossiê de runtime mínimo](EXACT-RUNTIME-VANILLABACKPORT-MINIMAL-SERVER-1.1.7.10.md). Servidor NeoForge 21.1.250 + Platform 1.3.3 + Vanilla Backport 1.1.7.10, JARs oficiais com SHA-256 fixado, alcançou `Done (10.039s)` sem sinal fatal e reportou `Mixing` de `EntityMixin`, `LivingEntityMixin` e `RangedAttributeMixin` nos targets exatos, uma vez cada. **Ainda não** demonstra bytecode final transformado, callsites após os outros mods, jogador real, Iron's/addon ou atributo resolvido. ⚠️ integração e QA físico pendentes; ⛔ perks bloqueados. **+0 magias/adapters**, Backported **6/6** preservado.
+
+## NeoForge 21.1.250 — 4 `setDeltaMovement(DDD)` no servidor patchado (18/10/2026)
+
+✅ [Java21 #39176290939](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39176290939) **SUCCESS**, 7/7 autotestes, hashes exatos do installer 21.1.250, patch server e SRG base. [Dossiê do alvo NeoForge](EXACT-NEOFORGE-211250-MIXIN-TARGETS.md): `Entity.move→collide` 1, `→tryCheckInsideBlocks` 1; `LivingEntity.travel→handleRelativeFrictionAndCalculateMovement` 1, `→setDeltaMovement(DDD)` **4**, quarto callsite `ordinal=3` no PC **1314** do **servidor patchado** (cliente vanilla tinha PC 1240). O construtor `RangedAttribute.<init>(String,DDD)V` foi localizado no SRG base. **Ainda não** prova transformações Mixin do modpack, servidor carregado com providers, cliente NeoForge ou perks externos. **+0 magias/adapters; Backported 6/6 no critério delimitado.**
+
+## Minecraft 1.21.1 vanilla — `ordinal=3` presente em `travel` (18/10/2026)
+
+✅ [#39170808679](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39170808679) **SUCCESS**, **16/16 autotestes**, SHA-1 e tamanho oficiais conferidos: [dossiê binário do cliente 1.21.1](EXACT-MOJANG-1211-VANILLA-CLIENT-CALLSITES.md) confirmou `Entity.move` com 1 `collide` + 1 `tryCheckInsideBlocks`, `LivingEntity.travel` com 1 `handleRelativeFrictionAndCalculateMovement` e **4 `setDeltaMovement(DDD)`**, quarto callsite `PC 1240`. `RangedAttribute.<init>(String,double,double,double)` certificado no classfile. A quarta ocorrência satisfaz o índice **zero-based `ordinal=3` no cliente vanilla**, sem provar que seja mantida pelos patches NeoForge 21.1.250 e mixins concorrentes. ⚠️ Runtime/distribuição transformada/servidor continuam pendentes. +0 magias e adapters; Backported 6/6 preservado.
+
+## Minecraft 1.21.1 — sete assinaturas de métodos-alvo reconhecidas (18/10/2026)
+
+✅ [GitHub Actions #39170006472](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39170006472) **SUCCESS**, 8/8 testes, zero desvios: os mapeamentos Mojang oficiais cliente e servidor de Minecraft **1.21.1** confirmaram [sete métodos-alvo nomeados](EXACT-MOJANG-1211-MIXIN-TARGET-SIGNATURES.md) de `Entity`/`LivingEntity` com parâmetros/retornos exatos; a classe `RangedAttribute` também está presente. O quarto `setDeltaMovement(DDD)V` de `LivingEntity.travel` **não foi contado nem verificado**: `ordinal=3` é só anotação compilada no JAR provider e os mappings não contêm callsites. ⚠️ NeoForge patch, mixin aplicado, cópia física e player ainda não auditados; ⛔ não criar hooks. +0 magias/adapters, Backported 6/6 preservado.
+
+## Vanilla Backport 1.1.7.10 — anotações e alvos de injeção certificados (18/10/2026)
+
+✅ [Java21 #39169078531](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39169078531), **34/34 autotestes no workflow** (10 movimento, 12 manifesto, 12 seletores), JAR publisher hash exato, `PASS_VANILLABACKPORT_11710_COMPILED_MIXIN_INJECTION_DECLARATIONS`, zero desvios. [Dossiê de sete handlers](EXACT-BINARY-VANILLABACKPORT-MIXIN-INJECTION-SELECTORS-1.1.7.10.md) comprova em classfile `EntityMixin` (3 seletores `move`), `LivingEntityMixin` (3 seletores em `travel`/`createLivingAttributes`; `@ModifyArg index=1`, `@WrapOperation ordinal=3`) e `RangedAttributeMixin` (`@Inject <init> TAIL`, source-pinned para knockback). ✅ Declaração compilada; ⚠️ transformação aplicada, host físico e jogador não verificados; ⛔ perk adapter não autorizado. +0 magias.
+
+## Gate NeoForge/Mixin do host 1.1.7.10 (18/10/2026)
+
+✅ [#39164766070](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39164766070) **SUCCESS** com hash SHA-256 publisher fixado, **12/12** testes de manifesto + **10/10** de movimento, zero desvios. [Dossiê de configuração compilada](EXACT-BINARY-VANILLABACKPORT-MIXIN-DECLARATION-1.1.7.10.md): `neoforge.mods.toml` vincula `vanillabackport.mixins.json` com `required=true`, `JAVA_21` e `defaultRequire=1`; lista comum (não client-only) declara `EntityMixin`, `LivingEntityMixin`, `RangedAttributeMixin` e três classes físicas no JAR. Dependências `neoforge[21.1,)`, `minecraft[1.21.1,)`, `platform[1.3.3,)`, todas `side=BOTH`; Platform 1.3.3 figura na modlist #445. **Mixin declarado ≠ runtime aplicado**; loader completo, SHAs locais, atributos resolvidos, gameplay e APIs externas permanecem ⚠️/⛔. +0 magias e +0 adapters.
+
+## Host 1.1.7.10 — bounciness limitada a 1.0 (18/10/2026)
+
+✅ [Java21 #39156441117](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39156441117) verificou publisher `VanillaBackport-neoforge-1.21.1-1.1.7.10.jar` SHA-256 `ecd807ac358e243ede17819455788c7b7a0ce5e0af4aecee82c1c62c586d818d` (54.902.084 bytes), 10/10 autotestes e zero desvios. O [dossiê cross-host](EXACT-BINARY-VANILLABACKPORT-MOBILITY-HOST-1.1.7.10.md) confirma os três `RangedAttribute`: `minecraft:bounciness` default 0, teto **1.0**; `air_drag_modifier`/`friction_modifier` default 1, teto 2048; mixins compilados de colisão, drag e atrito, cuja fórmula é `clamp(1−(1−rawFriction)*modifier,0,1)`. **Teto registral ≠ prova de valor final em player**; +2.5 das Slime Boots e +0.5 da magia não podem ser tratados como fatores físicos finais sem execução do host. SHA da instalação real desconhecido. +0 magias/perks/adapters, integração ⚠️/⛔.
+
+## Slime Boots — modificadores de equipamento e cancelamento de queda (18/10/2026)
+
+✅ [Java21 #39153448024](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39153448024) **SUCCESS**, 11/11 testes, SHA-1 publisher igual ao instalado, [JSON #12145728990](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39153448024/artifacts/12145728990). [Dossiê dedicado](EXACT-BINARY-SLIME-BOOTS-FALL-0.1.2.md): atributos declarados `JUMP_STRENGTH +0.1`, `FRICTION_MODIFIER +0.3`, `BOUNCINESS +2.5`, `AIR_DRAG_MODIFIER -0.5` com operações compiladas; handler seleciona Player com `SLIME_BOOTS` em `FEET` antes de `setCanceled(true)`. Nenhuma referência direta ao status da magia ou ao cooldown nesse método. Tooltip com fórmula de cooldown não demonstra período de recarga no evento. **Equipamento != 7ª magia**, nenhuma nova raiz. Gameplay/evento realmente invocado e stacking com `Slime Aspect` continuam ⚠️, mutação via perk ⛔.
+
+## Slime Aspect — sexto feitiço com consumer compilado (18/10/2026)
+
+✅ [Java 21 #39149742796](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39149742796) **SUCCESS**, 9/9 autotestes, SHA1 do publisher igual ao físico, `PASS_BACKPORTED_012_SLIME_BOUNDED_BYTECODE`. [Dossiê exato](EXACT-BINARY-SLIME-ASPECT-0.1.2.md): `onCast` contém duração `int(getSpellPower*20)`, amp `level-1` e um `LivingEntity.addEffect`; supplier `ModMobEffects.lambda$static$2` registra BOUNCINESS/JUMP_STRENGTH/AIR_DRAG_MODIFIER em operações ADD_VALUE/ADD_MULTIPLIED_TOTAL com operandos `double` derivados de constantes float. **Estado atual: 6/6 IDs, 6/6 fichas, 6/6 spells com uma prova binária específica delimitada (100% apenas dessa métrica).** Nenhum atributo efetivo, player, perk/hook ou config física validada. **Os 5/6 abaixo são o checkpoint anterior.** [Artefato JSON #12144269318](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39149742796/artifacts/12144269318).
+
+## Sulfur Bomb e Pale Thorn: parâmetros no JAR exato (18/10/2026)
+
+✅ [Java21 #39133252975](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39133252975) **SUCCESS** — 10/10 autotestes, hash físico/publisher conferido, `PASS_BACKPORTED_012_BOMB_THORN_BOUNDED_BYTECODE` sem desvios, [JSON #12138732504](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39133252975/artifacts/12138732504). [Dossiê de geometria, dano e targeting](EXACT-BINARY-BOMB-THORN-0.1.2.md): Sulfur Bomb tem raio `3+entityPowerMultiplier`, coeficiente de dano da nuvem `0.185`, expansão AABB seguida de distância²/`canHitEntity`/LOS, queda radial de dano, cloud com duração configurada em 200 ticks e contador de três colisões de bloco; Pale Thorn tem alcance `15.0f`, raycast `0.15f`, duração `(int)(spellPower*100)`, fontes de dano Nature/Eldritch e VFX descartada após `tickCount>30`. **Limite:** opcode não é efeito observado, nem demonstra segurança de PvP/claims, dano HP final ou hook externo de alteração.
+
+**Cobertura agora:** 6/6 IDs estáticos ✅, 6/6 fichas de parâmetros source-pinned ✅, **5/6 spells com ao menos um caminho de código delimitado certificado em classfile** (as três anteriores + Sulfur Bomb + Pale Thorn). Slime Aspect aguarda prova de código de efeitos. +0 novas magias, +0 adapters.
+
+
+## Três consumidores compilados delimitados (18/10/2026)
+
+✅ [Java21 #39131725388](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39131725388) **SUCCESS**, hash publisher `747847c1f38c73250ebac05ea06b41a381187850` igual ao físico e **8/8 autotestes**, `PASS_BACKPORTED_012_BOUNDED_COMPILED_PERK_CONSUMERS` sem desvios; JSON [artefato 12138535465](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39131725388/artifacts/12138535465). [Dossiê de três métodos físicos](EXACT-BINARY-PERK-CONSUMERS-0.1.2.md): SulfurCloudProjectile faz dois `super.tick` compilados; SulfurReleaseSpell.getWitherAmplifier devolve `spellLevel-2`; ResinSpraySpell.onCast contém o fluxo host-native de sessão `MagicData` com reativação e alternativa de criação/registro de projétil. **Aprovou inspeção de callsites, não gameplay, duração efetiva, amp normalizado ou API de extensão.** 6/6 IDs de spells catalogados, 3/6 com foco neste novo gate, +0 roots/adapters.
+
+
+## Atualização da catalogação técnica de perks (18/10/2026)
+
+✅ [Matriz source-pinned 6/6](PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md) e [seis fichas individuais enriquecidas](spells/README.md) com valores declarativos de rarity/max level/cooldown, cast type/time, mana defaults, `getSpellPower`, dano, área/alcance, geometria, lifecycle de projéteis/effects, causalidade e riscos de reexecução. A nova prova deriva do source público exato **`RedReaper28/BackportedSpellbooks-1.21.1@07cb65efca0c264762a21c2d6bce0f83e3947226`**, que é **alinhado à data da publicação, sem equivalência binária de implementação demonstrada**. A identidade das 6/6 spells continua ✅ pelo JAR publisher hash-matched, [Java21 #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989). **Não** inferir mana debitada, cooldown efetivo, runtime/config, hitbox do cone nem extensão segura de perks; ⚠️/⛔ até host Iron's 3.16.3 e full-modpack QA. Global atualmente com piso histórico 1.857 semânticos / 1.855 estritos, denominador final aberto, **+0** novas raízes.
+
+
 **Nova prova física (2026-10-12):** [JAR 0.1.2, seis spells registradas](EXACT-BINARY-SPELLS-0.1.2.md), [auditoria Java 21 #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989). SHA físico/publicador igual; `COUNTED_EXACT` somente para registro estático 6/6. Campanha 7/39 exatos / 32/39 pendentes; +0 novos, 1851/1849 preservados. Metadata interno 0.1.0 permanece distinto. Sem gameplay/config/Survival aprovado.
 
 Status: `EXACT PHYSICAL ARTIFACT + EXACT PUBLISHER 0.1.2 RELEASE / RELEASE-DAY OFFICIAL SOURCE CEILING / 6 IRON'S SPELL REGISTRATIONS / 1 SCHOOL / CONTENT+WORLDGEN+EQUIPMENT PROCS / EMBEDDED VERSION MISMATCH PRESERVED / BYTE+FULL-PACK QA FAIL-CLOSED`
@@ -13,7 +70,7 @@ Status: `EXACT PHYSICAL ARTIFACT + EXACT PUBLISHER 0.1.2 RELEASE / RELEASE-DAY O
 - physical SHA-1: `747847c1f38c73250ebac05ea06b41a381187850`
 - Minecraft: `1.21.1`
 - loader: NeoForge
-- physical pack loader: NeoForge `21.1.248`
+- physical snapshot pack loader: NeoForge `21.1.250` (Black Arcana build baseline `21.1.248`)
 
 The filename/release label and embedded metadata disagree. This catalog preserves both layers and does not normalize one into the other.
 
@@ -119,7 +176,7 @@ Still fail-closed:
 - byte-for-byte source↔physical-JAR reproducibility;
 - exact publisher ↔ physical JAR SHA equality and six-class spell-registry static parity are **now verified** in [run #38318268989](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38318268989); this is not proof of all resources or functional source↔binary equivalence;
 - complete physical-JAR resource/behavior parity with release-day source remains unverified;
-- runtime compatibility of source baseline NeoForge 21.1.216 / Iron's 3.15.4 against physical NeoForge 21.1.248 / Iron's 3.16.3;
+- runtime compatibility of source baseline NeoForge 21.1.216 / Iron's 3.15.4 against physical NeoForge 21.1.250 / Iron's 3.16.3;
 - behavior if undeclared Vanilla Backport / Iron's / Ace's dependencies are absent or change API;
 - full-modpack worldgen/recipe reload and server/client behavior;
 - Slime Boots tooltip cooldown language versus the observed unconditional fall-event cancellation path;

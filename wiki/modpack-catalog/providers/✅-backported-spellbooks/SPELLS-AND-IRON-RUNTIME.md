@@ -1,5 +1,14 @@
 # Backported Spellbooks — spells and Iron's runtime boundary
 
+**Complemento Java21 (18/10/2026):** ✅ [#39133252975](EXACT-BINARY-BOMB-THORN-0.1.2.md) verificou no JAR oficial 0.1.2 **apenas** os operandos/callsites delimitados de Sulfur Bomb (geometria AABB, LOS, raio, queda de dano e construção de nuvem) e Pale Thorn (raycast, VFX, escalas de dano/duração e status). São caminhos de execução que dependem de `AbstractSpell`, `Utils` e `DamageSources` do Iron's; o gate não inspecionou a implementação desses hosts. Portanto nenhum novo callback seguro, proc, Mastery ou perk é autorizado.
+
+
+**Prova de classfile adicional (18/10/2026):** ✅ [Java21 #39131725388](EXACT-BINARY-PERK-CONSUMERS-0.1.2.md) validou no JAR publisher 0.1.2 três contratos de **código compilado**, sem executar Iron's: dois `super.tick()` em Sulfur Clouds, `getWitherAmplifier=level-2` em Sulfur Release e os callsites de sessão/casting de Resin Spray. Esses achados limitados não transferem autoridade sobre `MagicData`, lifecycle, custo ou cooldown do host.
+
+
+**Complemento source-pinned (18/10/2026):** [Matriz causal e de parâmetros 6/6](PERK-CAUSAL-SOURCE-MATRIX-0.1.2.md) e [cards](spells/README.md) localizam `onCast`, projéteis/`AoeEntity`, status, targeting/LOS, raio, tempo e deduplicação. Valores são do source de 28/05/2026, **não** dos defaults efetivos provados no JAR. Atenção especial: Sulfur Bomb separa dano de impacto e nuvem, Sulfur Clouds cria 3 projéteis por cast, Resin Spray reutiliza `EntityCastData` em sessão contínua; não tratar as consequências como casts independentes.
+
+
 **Registro binário auditado:** [seis IDs exatos no JAR físico 0.1.2](EXACT-BINARY-SPELLS-0.1.2.md); [cartões individuais](spells/README.md). A tabela numérica abaixo pertence ao **source de referência de 2026-05-28**, não a uma auditoria funcional/binária de cooldown, custo ou nível. **7/39 exatos / 32/39 pendentes** na campanha; +0 novos.
 
 ## Canonical semantic spell inventory at the source ceiling

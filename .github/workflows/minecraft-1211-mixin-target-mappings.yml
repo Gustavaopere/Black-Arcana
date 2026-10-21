@@ -1,0 +1,59 @@
+name: Minecraft 1.21.1 official Mixin target declaration audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/minecraft-1211-mixin-target-mappings.yml'
+      - 'docs/qa/minecraft_1211_mojang_mixin_target_mappings.py'
+      - 'docs/qa/minecraft_1211_vanilla_target_callsites.py'
+      - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/EXACT-BINARY-VANILLABACKPORT-MIXIN-INJECTION-SELECTORS-1.1.7.10.md'
+      - 'wiki/modpack-catalog/providers/✅-backported-spellbooks/README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pinned_official_1211_target_mappings:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Verify fail-closed target mapping regression tests
+        run: python3 docs/qa/minecraft_1211_mojang_mixin_target_mappings.py --self-test
+
+      - name: Compare scoped target signatures to Mojang official 1.21.1 mappings
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/minecraft_1211_mojang_mixin_target_mappings.py \
+            --output build/catalog-minecraft-1211/target-mapping-evidence.json
+
+      - name: Fail-closed official vanilla client bytecode regression tests
+        run: python3 docs/qa/minecraft_1211_vanilla_target_callsites.py --self-test
+
+      - name: Inspect hash-checked official Minecraft 1.21.1 client callsites
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/minecraft_1211_vanilla_target_callsites.py \
+            --output build/catalog-minecraft-1211/vanilla-client-callsites.json
+
+      - name: Publish bounded JSON only, never mappings or vanilla JARs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: minecraft-1211-mixin-target-names-${{ github.sha }}
+          path: |
+            build/catalog-minecraft-1211/target-mapping-evidence.json
+            build/catalog-minecraft-1211/vanilla-client-callsites.json
+          if-no-files-found: ignore
+          retention-days: 14

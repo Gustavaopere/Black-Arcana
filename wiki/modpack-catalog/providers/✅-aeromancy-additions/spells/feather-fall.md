@@ -30,3 +30,21 @@ O source pin registra literalmente `aero_additions:feather_fall` através de `Fe
 Esta ficha fecha ID, classe registrada, ownership, escola Wind e estado semântico source-pinned. Mecânica quantitativa, custo, cooldown, acquisition settlement, networking, compatibilidade e comportamento no modpack físico permanecem QA separado quando não explicitamente fechados pelo dossiê.
 
 Source: `../EXACT-1.2.8-SPELL-INVENTORY.md`.
+
+## Engenharia causal para perks — 17/10/2026
+
+**Identidade:** mod ID `aero_additions`, versão `1.2.8`, source fixo `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`. **⚠️ COUNTED_SOURCE_PINNED**: dez registros confirmados em JAR oficial de publicação ([Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191)), mas SHA-1 do JAR *instalado* na modlist histórica é inválido/incompleto (35 dígitos); **NÃO** promover a COUNTED_EXACT instalada. JAR publisher `aero_additions-1.2.8.jar` SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`. Todos os números abaixo vêm do source, não de configuração efetiva/QA físico. Iron's governa casting, mana/cooldown; Aero Additions governa efeitos; RPG Skill Tree somente progressão/perks por contrato real.
+
+**Raiz `aero_additions:feather_fall` — Feather Fall.** Source-only; dados de domínio, raio, alvo e duração são mensurados conforme os métodos abaixo, quando aplicáveis.
+
+| Eixo | Observação fonte-fixada | Mutabilidade por perk |
+|---|---|---|
+| Cast/custo | LONG, níveis 1–5, cooldown 90 s, mana 50+20/nível, power 30+30/nível, castTime=50; duração `(int)(getSpellPower×20)` ticks. | Valores base sujeitos ao school power real. |
+| Alvo/área | Precast usa Utils.preCastTargetHelper(...,32,0.35,false) e faz fallback para self; visual TargetedArea radius=3. onCast varre `target.getBoundingBox().inflate(3)` e filtra distância esférica `<9` e Utils.shouldHealEntity. | Geometria broadphase AABB + sphere, nunca raio AOE de ataque. Nenhuma capacidade de trocar target via API comprovada. |
+| Máximo alvos | Constante MAX_TARGETS=5; cada LivingEntity qualificada recebe MobEffect FLIGHT amplifier 0 por duration. A seleção é ordem da iteração, não priority targeting comprovada. | ⛔ aumento de caps/limites sem hook e testes de custo. |
+| Efeito de gravidade | FlightEffect a cada 20 entity ticks remove modifier `aero_additions:flight.gravity`, calcula weightScore por equipamento (0 light/empty, 4 heavy, 10 anvil, 2 demais), aplica `ADD_VALUE=(weightScore/4)-0.08` na GRAVITY quando score!=0; remove modifier no fim do efeito. | Perk de gravidade interage diretamente com AttributeInstance; não sobrescrever ID e não assumir que sempre reduz gravidade. |
+| Outros handlers | AAServerEvents registra PlayerSwimEvent para entidade com FLIGHT como SUCCESS; o comportamento real de natação/queda deve ser observado. | FLIGHT effect provider-owned; sem duplicação por Black Arcana. |
+
+**Localizadores:** [FeatherFallSpell.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/feather_fall/FeatherFallSpell.java#L29-L106) · [FlightEffect.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/feather_fall/FlightEffect.java#L23-L69) · [AAServerEvents.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/AAServerEvents.java#L120-L124).
+
+**QA pendente e fail-closed:** QA raio exato 3 e max5, buffs hostis/aliados, gravity weights com armor, equipment changes, modifier removal e compat Epic Fight. Os valores são defaults ou constantes, não provas de execução em servidor/cliente. **+0 novas magias; +0 adapters aprovados.**

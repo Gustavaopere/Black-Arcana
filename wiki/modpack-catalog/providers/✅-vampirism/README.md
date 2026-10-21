@@ -1,5 +1,15 @@
 # Vampirism 1.10.13 — provider audit
 
+## Engenharia causal individual — 17/10/2026
+
+**19/19 (100%)** ações provider-native com [fichas individuais `SOURCE_CAUSALITY`](ACTION-CATALOG.md): **14 Vampire + 3 Hunter + 2 Lord**. Este trabalho ampliou as fichas específicas de 3 para 19 (+16), preservando o mesmo **19/19 de identidade registral SHA-exata** e acrescentando **+0 objetos semânticos**. As fichas em [`actions/`](actions/) incluem parâmetros reais de alvo/raycast/AABB, movimento, dano/fonte, hitbox, área, quantidade e lifetime de summons, status, custo blood diferido, cooldown, duração, gates, eventos e deduplicação para Mastery. Algumas categorias não se aplicam a cada ação; elas são marcadas **N/A** em vez de fabricadas.
+
+- Código-fonte fixo: `TeamLapen/Vampirism@e1ed095713cef5e9eb151d0ee58908fa830d6bb7` (Java 21, versão 1.10.13); detalhe de métodos é **source-pinned**, não paridade binária integral do JAR. Os 19 registros estáticos foram provados em [EXACT-BINARY-PLAYER-ACTIONS-1.10.13.md](EXACT-BINARY-PLAYER-ACTIONS-1.10.13.md).
+- **Achado prioritário Lord:** `lord_speed` e `lord_attack_speed` fazem cooldown = **600 ticks** de duração + **120** diretamente da configuração, sem `*20` para o segundo termo; defaults do source = **720 ticks (36s)**, apesar do comentário "In seconds" na configuração. O catálogo anterior informava 150s; [a matriz foi corrigida](ACTION-CATALOG.md). O runtime sob config instalada ainda está ⚠️.
+- Eventos oficiais de action permitem veto/cooldown/duração antes de `onActivated`; sem hook seguro de raio, DamageType, retarget, tamanho de projétil ou multiplicação de summons confirmado. **⛔** nenhuma perk/adapter implementada; Vampirism continua dono de sangue, facções, efeitos, timers e summons.
+- **Barra geral —%**, denominador global desconhecido, piso **1.856 semânticos / 1.854 estritos**. **Barra Vampirism = 19/19, 100%** das identidades e das fichas técnicas desta série. Stage 06.05 🟡, Stage 09 QA físico pendente, PR #825 draft sem merge.
+
+
 Status: `✅ CATALOGED / COUNTED_EXACT STATIC PLAYER ACTION IDS 19/19 / VAMPIRE SPELLS 0.0.9 SOURCE-CATALOGADO / RUNTIME QA + BLOODLINES/DEMAIS ADDON INTEROP PENDENTES`
 
 ## Prova binária física — 2026-10-14

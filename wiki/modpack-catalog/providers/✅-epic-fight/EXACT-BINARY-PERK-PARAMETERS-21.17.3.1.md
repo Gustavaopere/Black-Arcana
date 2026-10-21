@@ -1,0 +1,75 @@
+# Epic Fight 21.17.3.1 — exact binary packaged perk parameters (16/10/2026)
+
+**Evidence level (descriptive, not a new registry enum):** exact publisher/physical packaged JSON + compiled symbol presence for **42 configured core skill IDs** plus **one `empty` sentinel**. This is **not** behavioral equivalence, a perk hook contract, or adapter/runtime acceptance. Registry disposition remains exactly as established by the separate 43-ID audit.
+
+## Exact artifact and reproducible run
+
+- Sibling physical authority: `neoforge-rpg-skilltree/PROJECT-INSTRUCTIONS/modlist/Adventure and RPG + API and Library + Armor, Tools, and Weapons/✅-epic-fight v21.17.3.1.md`, `modlist(1).txt` #260, `epic-fight-21.17.3.1-mc1.21.1-neoforge.jar`, mod id `epicfight`, Minecraft 1.21.1, NeoForge.
+- Publisher CurseForge project/file **405076 / 8175609** fetched from `https://cursemaven.com/curse/maven/epic-fight-mod-405076/8175609/epic-fight-mod-405076-8175609.jar`.
+- Installed/publisher SHA-1 **`fb199b7bbea2fc402da28ab586e73f47e32f8fc0`**; exact publisher SHA-256 **`8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526`**. Workflow hard-gates **both hashes before reading any skill**.
+- Reproducible verifier: [`docs/qa/epicfight_211731_perk_binary.py`](https://github.com/Gustavaopere/Black-Arcana/blob/docs/catalog-perk-causality-20261015/docs/qa/epicfight_211731_perk_binary.py), [GitHub workflow](https://github.com/Gustavaopere/Black-Arcana/blob/docs/catalog-perk-causality-20261015/.github/workflows/epicfight-211731-perk-binary.yml).
+- **First run:** [38978906335](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38978906335) `FAILURE` even with both hashes, 9 JSON and other class symbols matching, because the verifier incorrectly looked for event constants in outer `EpicFightEventHooks` rather than inner `EpicFightEventHooks$Entity` and `$Player`. The three false-negative assertions were corrected without dropping the checks.
+- **Corrected initial run:** [38979022783](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38979022783), **SUCCESS** on corrected script commit `0c8cc892d60b7e4fb7f78f77ef5b1b8e80ef5734` (run checkout merge ref is distinct). Historical scope: **6/6 synthetic tests PASS; 9/9 packaged JSONs; 12/12 classfile symbols; 0 deviations**; JSON-only artifact `12079209973`.
+- **Previous expanded proof:** [38979547368](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38979547368), **SUCCESS** after adding four passives, on script commit `ea272cf44f075c0054eac7e29c219c0c0f2a904b`: **8/8 synthetic tests PASS, 13/13 exact packaged JSONs, 17/17 classfiles with symbols present, 0 deviations**. Bounded JSON-only artifact `12080695954`. Both hashes independently matched again. Neither publisher JAR nor class bytecode is redistributed.
+
+- **Previous expanded proof (21 skills):** [GitHub Actions run #38981181742](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38981181742), **SUCCESS** on scripted comparison commit `a5aa528555536d1dc6f08b5dc3a56b7cdd9d997c`. Java 21 with the **publisher SHA-1 and SHA-256 both matched**, **21/21 packaged JSON skill resources compared, 25/25 compiled classfiles symbol-checked, 11/11 comparator self-tests PASS and 0 deviations** (`PASS_STATIC_LIMITED`). Artifact is **JSON evidence only** (ID `12081660151`); no provider JAR redistribution. The comparator preserves legacy-shaped attribute records as `RAW_ONLY_NOT_PROVEN_LOADED` for four skills instead of equating their raw presence with valid `AttributeModifier.MAP_CODEC` parsing.
+
+- **Previous proof (27 skills):** [GitHub Actions #38982065994](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38982065994) **SUCCESS** on script `208758674c84b768f5f6a95bf74fb428d898be84`: **15/15 synthetic tests, 27/27 packaged JSONs, 31/31 classfiles with selected symbols, zero deviations, PASS_STATIC_LIMITED**; both publisher fingerprints matched. Six additional IDs audited: `adaptive_skin`, `meteor_slam`, `revelation`, `demolition_leap`, `phantom_ascent`, `grasping_spire`. Revelation's **18 per-entity limits** are **packaged raw map** only; `adaptive_skin` modifier is **LEGACY RAW ONLY**.
+
+## Latest verification and complete registry boundary
+
+- **Latest exact JAR proof:** [GitHub Actions run #38982933095](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38982933095) **SUCCESS**, Java21 **21/21 synthetic tests**, **42/42 packaged skill JSONs**, **43/43 chosen compiled classfile symbol probes**, **43/43 expected literal core registry IDs found in compiled `EpicFightSkills`**, zero deviations. Publisher SHA-1/SHA-256 matched physical modlist. Previous run [#38982644998](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38982644998) failed closed because `javap` displayed `setExecute` / `reserveAnimation` as *invocation* symbols rather than declaration-shaped `setExecute(`/`reserveAnimation(`; corrected without deleting symbol checks, verified by earlier [#38982825208](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38982825208) success (20/20 tests).
+- **Counting invariant:** `epicfight:empty` is a registry sentinel pointing at `Skill.EMPTY`, with no `empty.json` in the 42 packaged data resources. **43/43 core IDs dispositioned**, **42/42 packaged JSONs**, **43/43 matching literal registry ID strings** and **28 source-adjacent dossiers covering all 43 IDs**. Registry presence is not gameplay, external skill source equivalence, adapter hook safety or an additional magic.
+- **New 15 packaged JSONs:** `combo_attacks={}`, `knockdown_wakeup=6`, `sweeping_edge=24`, `dancing_edge=30`, `the_guillotine=24`, `heartpiercer=40`, `steel_whirlwind=60`, `battojutsu=30`, `rushing_tempo=25/max_stacks=3`, `relentless_combo=20`, `sharp_stab=30`, `liechtenauer=40/max_duration=240/return_duration=60`, `eviscerate=25/damage_cap=20`, `blade_rush=25/max_stacks=4`, `battojutsu_passive=5`. The simple values are `consumption` where applicable; **not necessarily stamina/mana**, and all require provider-native execution before claiming a real cost.
+- **Source dossier links:** [sentinel, combo and knockdown](skills/technical/CORE-SENTINEL-COMBO-WAKEUP-21.17.3-SOURCE-ADJACENT.md), [six simple weapon innates](skills/technical/SIMPLE-WEAPON-INNATES-21.17.3-SOURCE-ADJACENT.md), [six complex weapon innates](skills/technical/COMPLEX-WEAPON-INNATES-21.17.3-SOURCE-ADJACENT.md), [Battojutsu passive](skills/technical/BATTOJUTSU-PASSIVE-21.17.3-SOURCE-ADJACENT.md).
+- **Boundaries:** raw JSON and symbol strings do not establish Java instruction equivalence, `AttributeModifier.MAP_CODEC` legacy parsing, executed effects/damage, server-side gate ordering, loaded datapacks, or Mastery/perk integration. **No new magic semantic object; no addon, client/modpack or Stage accepted.**
+
+## Precisely verified packaged data (42 JSON resources plus an `empty` registry sentinel)
+
+| Core registry ID (all previously classified) | Exact packaged resource facts |
+|---|---|
+| `epicfight:adaptive_skin` | `damage_resistance=0.15`, `max_resistance_stack=3`; `max_health addition +6` uses **LEGACY RAW ONLY** schema `name/uuid`, **NOT PROVEN TO LOAD** |
+| `epicfight:meteor_slam` | Packaged skill parameter object is `{}`; no configured consumption, range or damage value in JSON |
+| `epicfight:revelation` | `max_duration=20`, `block_stacks=3`, `parry_stacks=6`, `dodge_stacks=8`, `default_revelation_stacks=20`, plus **18 exact `max_revelations` entity-type entries**, RAW map, registry/load not tested |
+| `epicfight:demolition_leap` | `consumption=0.6` nominal, adjacent source uses repeated charge-tick costs |
+| `epicfight:phantom_ascent` | `extra_jumps=1`, `jump_power=0.6`; `consumption=0.2` assigned in adjacent Java source, **not packaged JSON** |
+| `epicfight:grasping_spire` | `consumption=40` nominal native weapon innate resource, not proven stamina/mana |
+| `epicfight:guard` | `penalizer=0.6` |
+| `epicfight:endurance` | `consumption=12`, `max_duration=160`, `stamina_ratio=0.3`; modern modifier `max_health add_value +2`, `epicfight:stamina add_value +4` |
+| `epicfight:hypervitality` | `consumption=6`, `max_stacks=1`; modern modifier `epicfight:stamina add_value +2`, `max_health add_value +4` |
+| `epicfight:adrenaline_fiend` | `attribute_modifiers` **LEGACY RAW ONLY**: `attack_speed multiply_total +0.1`, `attack_damage multiply_total +0.075`, using `name/uuid`; **NOT PROVEN TO LOAD** |
+| `epicfight:catharsis` | `regen_bonus=0.5`; **LEGACY RAW ONLY**: `stamina_regen addition +0.15`, `attack_damage multiply_total +0.1`; **NOT PROVEN TO LOAD** |
+| `epicfight:emergency_escape` | `consumption=5`, modern modifier `epicfight:stamina_regen add_value +0.3` |
+| `epicfight:bonebreaker` | `damage_bonus=0.1`, `max_damage_bonus_stacks=8`; **LEGACY RAW ONLY**: `attack_speed multiply_total +0.15`; **NOT PROVEN TO LOAD** |
+| `epicfight:vengeance` | `damage_bonus=0.3`, `max_duration=200`; **LEGACY RAW ONLY**: `max_health addition +3`, `attack_damage multiply_total +0.075`; **NOT PROVEN TO LOAD** |
+| `epicfight:parrying` | `penalizer=0.6`, `parry_window=8` |
+| `epicfight:impact_guard` | `penalizer=0.6`, `superior_penalizer=0.2`, `damage_reducer=0.2` |
+| `epicfight:swordmaster` | `speed_bonus=30`; `epicfight:stamina_regen` `add_value +0.2`, `epicfight:stamina` `add_value +2` |
+| `epicfight:forbidden_strength` | `minecraft:generic.attack_damage` `add_multiplied_total +0.05`; `minecraft:generic.max_health` `add_value +4` |
+| `epicfight:technician` | `epicfight:stamina_regen` `add_value +0.4` |
+| `epicfight:berserker` | `speed_bonus=0.5`, `damage_bonus=0.3`, `epicfight:stamina` `add_value +6` |
+| `epicfight:stamina_pillager` | `regen_rate=30`, `minecraft:generic.attack_damage` `add_multiplied_total +0.1`, `epicfight:stamina` `add_value +3` |
+| `epicfight:death_harvest` | `minecraft:generic.attack_damage` `add_multiplied_total +0.15` |
+| `epicfight:roll` | `consumption=4` |
+| `epicfight:step` | `consumption=3` |
+| `epicfight:wrathful_lighting` | `consumption=50` (unit/resource semantics **not** inferred from JSON alone) |
+| `epicfight:tsunami` | `consumption=50` |
+| `epicfight:everlasting_allegiance` | `consumption=40` |
+
+Data comes from packaged `data/epicfight/skill_parameters/<id>.json`; parser verifies object identity and required scalars plus modern modifier operation/amount for supported records. **Five legacy-shaped resources** (`adaptive_skin`, `adrenaline_fiend`, `catharsis`, `bonebreaker`, `vengeance`) are verified for raw `attribute`/`operation`/`amount`/`name`/`uuid` fields, **not treated as loaded/active modifiers**. The official source 21.17.3 calls `AttributeModifier.MAP_CODEC`, which warrants follow-up on parsing of legacy `name/uuid` versus `id`. In the exact JAR this gate verifies selected symbols but does not execute codec parsing. It does **not** certify that a world's datapack did not override these values.
+
+**Classfile symbol presence** from Java21 `javap -p -c -constants`: `ParryingSkill`, `ImpactGuardSkill`, `SwordmasterSkill`, `ForbiddenStrengthSkill`, `DodgeSkill`, **`TechnicianSkill`, `BerserkerSkill`, `StaminaPillagerSkill`, `DeathHarvestSkill`, `DeathHarvestOrb`**, `WrathfulLightingSkill`, `EverlastingAllegiance`, `EpicFightMovesets`, `EpicFightSkills`, **`EpicFightEventHooks$Entity`**, **`EpicFightEventHooks$Player`**, `SkillContainer`, plus `AdaptiveSkinSkill`, `MeteorSlamSkill`, `RevelationSkill`, `DemolitionLeapSkill`, `PhantomAscentSkill`, `GraspingSpireSkill`, `GuardSkill`, `EnduranceSkill`, `HyperVitalitySkill`, `AdrenalineFiendSkill`, `CatharsisSkill`, `EmergencyEscapeSkill`, `BonebreakerSkill`, `VengeanceSkill`. Checks require names of selected hooks, fields, methods and selector identities. Existence of string/symbol != correct instruction sequence, event ordering, non-cancelled hit, effective attribute adjustment or modification surface for optional perks.
+
+## Counts / status boundaries
+
+- **Exact core registry remains 43/43 dispositioned** (previous exact audit). Three trident innates already counted magical; 40 core skills excluded from magic metric.
+- **Latest exact static evidence: ✅ all 42/42 JSON-bearing core IDs and 43/43 compiled registry ID literals (one additional `empty` sentinel).** **43 classfiles** were checked for chosen symbols; 43 classfiles is not 43 semantic skills or 43 tested behaviors.
+- **Aprofundamento source para perks:** as passivas `technician`, `berserker`, `stamina_pillager`, `death_harvest` e oito novas skills (Guard, Endurance, HyperVitality, Adrenaline Fiend, Catharsis, Emergency Escape, Bonebreaker, Vengeance) são analisadas causalmente na revisão upstream **21.17.3**, não por equivalência completa de bytecode. Agora seus **JSONs empacotados e símbolos compilados** também foram confirmados no JAR **21.17.3.1** (run 38979547368), mas **não** a instrução-por-instrução, event phase ou settlement. **43/43 = 100% core ID source-adjacent dossier coverage**, now 28 technical dossier files. This does not promote any behavior into a safe provider hook.
+- **Global magic semantic floor unchanged:** 1,856 minimum / 1,854 strict, unknown denominator. This proof adds **0** new magical identities.
+- **Runtime/adapter/perk acceptance:** ⚠️/⛔ not validated. Stage 06.05 🟡, physical Stage 09 pending. In particular, do not equate `consumption` with committed stamina, mana or cooldown; do not duplicate hit, thunder, trident return, kill proc, dodge or cost.
+
+**Version boundary:** static JSON values and selected class symbols are verified in exact **21.17.3.1**. Method-level causal explanations remain source-adjacent **21.17.3**. This probe does not execute jumps, hits, collision, world effects, datapack override, parsing of legacy attributes or hook suitability. Five JSONs now have raw legacy attribute format. Meteor Slam empty JSON and Revelation per-entity limits do not add new magic.
+
+## Required next proof
+
+Expand structural verification from symbols to **bounded instruction/control-flow fragments** for conditions, sidedness, event subscription and settlement; inspect data overrides in the **assembled 587-entry pack**, validate `stamina` attributes, protection, multiplayer, Arcana/Iron's co-existence, `RPG Skill Tree` real provider contract. Only after this may a perk hook be called SAFE. No Java runtime integration or client test is asserted here.

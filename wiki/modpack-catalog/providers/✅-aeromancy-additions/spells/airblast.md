@@ -26,3 +26,21 @@ O source pin contém uma chamada ativa `registerSpell(new AirblastSpell())` para
 Esta ficha fecha ID, classe registrada, ownership, escola Wind e estado semântico source-pinned. Mecânica quantitativa, custo, cooldown, acquisition settlement, networking, compatibilidade e comportamento no modpack físico permanecem QA separado quando não explicitamente fechados pelo dossiê.
 
 Source: `../EXACT-1.2.8-SPELL-INVENTORY.md`.
+
+## Engenharia causal para perks — 17/10/2026
+
+**Identidade:** mod ID `aero_additions`, versão `1.2.8`, source fixo `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`. **⚠️ COUNTED_SOURCE_PINNED**: dez registros confirmados em JAR oficial de publicação ([Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191)), mas SHA-1 do JAR *instalado* na modlist histórica é inválido/incompleto (35 dígitos); **NÃO** promover a COUNTED_EXACT instalada. JAR publisher `aero_additions-1.2.8.jar` SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`. Todos os números abaixo vêm do source, não de configuração efetiva/QA físico. Iron's governa casting, mana/cooldown; Aero Additions governa efeitos; RPG Skill Tree somente progressão/perks por contrato real.
+
+**Raiz `aero_additions:airblast` — Airblast.** Source-only; dados de domínio, raio, alvo e duração são mensurados conforme os métodos abaixo, quando aplicáveis.
+
+| Eixo | Observação fonte-fixada | Mutabilidade por perk |
+|---|---|---|
+| Cast/stats | INSTANT, level 1–5, cooldown default 0.75s, castTime 0, mana 30+4/nível, power 5+1/nível. | Cooldown decimal provider-host, não arredondar sem inspecionar host. |
+| Geometria/scan | Busca Projectile.class na AABB do caster inflate(radius), com `radius=2+spellLevel` (3..7); depois filtra distância real `<radius`, owner != caster, e tipo não REFLECTION_IMMUNE; por fim exige ângulo entre direção do olhar e caster→proj **< getArc(level)=20+5×level graus**, isto é, 25..45° de **semiângulo**, não ângulo total de cone. | SEM_HOOK_SEGURO para radius/arc/target cap; scan per-cast sujeito a densidade. |
+| Ação/owner | Para cada projétil elegível, `deflect` define owner=deflector, velocidade=normalize(deflector.look)×(0.15×getSpellPower) se Player; se não Player, usa unit look sem escala, hasImpulse=true. | Alteração owner afeta atribuição de dano/Kill credit; RPG não reatribui casts/hits sem causalidade. |
+| Dano/tipo | Sem chamada hurt no corpo Airblast; trajetória resultante e dano do projétil rebatido dependem da entidade original, não são um novo spell Wind. | Não conceder Mastery ofensiva por reflexão sem hit aceito. |
+| Lado de execução | onCast não possui local !isClientSide guard antes de setOwner/setDeltaMovement; verificações de host e network side precisam teste. | ⛔ client-owned perks e mutação duplicada. |
+
+**Localizadores:** [AirblastSpell.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/airblast/AirblastSpell.java#L29-L118).
+
+**QA pendente e fail-closed:** QA raio 3..7, ângulos exatos < e owner chain, projéteis aliados e protegidos, entity cap, Armor/Attribute scaling e sides. Os valores são defaults ou constantes, não provas de execução em servidor/cliente. **+0 novas magias; +0 adapters aprovados.**

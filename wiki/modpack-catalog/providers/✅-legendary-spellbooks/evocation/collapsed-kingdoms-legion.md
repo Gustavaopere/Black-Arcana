@@ -32,3 +32,18 @@ Não manter segundo ownership ledger, timer, despawn, damage scaling ou recompen
 ## Source
 
 `CollapsedKingdomsLegionSpell.java`, `BaseSummonSpell.java` @ source pin 0.3.2.
+
+## Engenharia causal para perks — 17/10/2026
+
+**Prova:** `legendary_spellbooks` 0.3.2, JAR `legendary_spellbooks-1.21.1+neo-0.3.2.jar` SHA-1 `bda5b1fbe50ad834a6a76ad36789743c1057ebf5`, registro de 30/30 spells COUNTED_EXACT ([auditoria Java 21 #38453654179](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38453654179)). Mecânicas abaixo **SOURCE_CAUSALITY** do pin `Higurashi34m/Legendary-Spellbooks@62ced2f2b2693aa841251473cbbd726fdd928ed3`; equivalência integral do bytecode e execução com Iron's 3.16.3/Legendary Monsters 2.2.2 **não testadas**. Nenhum adapter RPG aprovado.
+
+| Eixo | Evidência fonte | Boundary da perk |
+|---|---|---|
+| Cast/stats | School EVOCATION, níveis 1–3, cooldown 120s, castTime=45 ticks, mana 180+40×(nível−1), power 8+4×(nível−1). | Mana/school power sob Iron's. |
+| Fan-out | getEntitiesToSummon retorna três fixos: SummonedHauntedGuardEntity, SummonedHauntedKnightEntity, SummonedFracturedApostleEntity, independente do nível. Não contar três casts. | Fan-out, targeting e owner mantidos pelo addon/host. |
+| Setup/lifecycle | BaseSummonSpell.setupAttributes(level,power) quando ISummonedMob e SummonManager.initSummon por 12.000 ticks; RecastInstance count=2. getHealth helper=50+15×nível, dano helper igual a power. | Valores efetivos da AI e condições de spawn dependem de classes derivadas e precisam teste. |
+| Comportamento condicional | settingSpawnMob customiza HauntedGuardEntity e HauntedKnightEntity quando instance-of. Revisar distinções de classe e inicialização antes de aplicar buff por família. | Sem hook de AI/target/critical damage verificado. |
+
+**Âncoras de código:** [CollapsedKingdomsLegionSpell.java](https://github.com/Higurashi34m/Legendary-Spellbooks/blob/62ced2f2b2693aa841251473cbbd726fdd928ed3/src/main/java/dev/higurashi/legendary_spellbooks/common/spells/evocation/CollapsedKingdomsLegionSpell.java#L25-L79) · [BaseSummonSpell.java](https://github.com/Higurashi34m/Legendary-Spellbooks/blob/62ced2f2b2693aa841251473cbbd726fdd928ed3/src/main/java/dev/higurashi/legendary_spellbooks/api/spells/BaseSummonSpell.java#L45-L81).
+
+**QA / fail-closed:** Testar três summon variants, attrs e friendlies, outro recast, unload/death/ownership e spawn lotado. Não criar segundo cast/cooldown/mana, não conceder Mastery sem settlement server-authoritative e dedup do cast pai. **+0 novos spells.**
