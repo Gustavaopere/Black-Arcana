@@ -104,6 +104,40 @@ def bootstrap_scout(verbose_text):
     return {"status":"OBSERVED_BOOTSTRAP_METHOD_REFERENCES","bootstrap_entries":found[:20],
             "boundary":"Symbolic bootstrap references only; no proof of raycastForEntity external implementation"}
 
+
+def certify_exact_raycast_lambda_link_109(false_body,bootstrap):
+    """Fail-closed contract: onCast invokedynamic #0 -> single false predicate."""
+    expected_body={
+        "status":"PROVED_ONCAST_UNLINKED_LAMBDA_CONSTANT_FALSE",
+        "lambda_name":"lambda$onCast$0",
+        "lambda_descriptor":"(Lnet/minecraft/world/entity/Entity;)Z",
+        "lambda_instruction_count":2,"lambda_boolean_result":False,
+        "invokedynamic_index":13,"invokedynamic_bootstrap_index":0,
+        "raycast_call_index":14,
+        "boundary":"Actual invokedynamic bootstrap linkage, raycastForEntity library behavior, final target and world-position fallback require separate evidence",
+    }
+    expected_bootstrap={
+        "status":"OBSERVED_BOOTSTRAP_METHOD_REFERENCES",
+        "bootstrap_entries":[{"index":0,"lambda_metafactory":True,
+                              "funeral_lambda_handle":True,
+                              "predicate_method_shape":True}],
+        "boundary":"Symbolic bootstrap references only; no proof of raycastForEntity external implementation",
+    }
+    if (not isinstance(false_body,dict) or not isinstance(bootstrap,dict)
+        or false_body!=expected_body or bootstrap!=expected_bootstrap):
+        raise GateError("SHA-exact Funeral Bloom invokedynamic false-lambda linkage drift")
+    return {
+        "status":"PROVED_SHA_EXACT_ONCAST_RAYCAST_PREDICATE_ALWAYS_FALSE",
+        "raycast_predicate_factory_index":13,
+        "bootstrap_index":0,
+        "bootstrap_factory":"LambdaMetafactory.metafactory",
+        "linked_target":"FuneralBloomSpell.lambda$onCast$0(Entity):boolean",
+        "predicate_boolean_result":False,
+        "linked_method_instructions":2,
+        "downstream_call":"raycastForEntity",
+        "boundary":"An always-false candidate predicate is compiled and passed to raycastForEntity. Its hit/miss behavior, location fallback, collision semantics and provider-loaded gameplay are not certified. No per-player hook.",
+    }
+
 def inspect(jar:Path):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("invalid Somake publisher file")
@@ -139,10 +173,12 @@ def inspect(jar:Path):
         raise GateError("bounded verbose javap unavailable")
     bootstrap=bootstrap_scout(verbose.stdout)
     print("SOMAKE_RAYCAST_BOOTSTRAP_SCOUT",json.dumps(bootstrap,sort_keys=True))
+    linked=certify_exact_raycast_lambda_link_109(false_body,bootstrap)
+    print("SOMAKE_RAYCAST_LINKED_PREDICATE_PROOF",json.dumps(linked,sort_keys=True))
     if result["status"]!="OBSERVED_RAYCAST_LAMBDA_TYPED_SHAPES":
         raise GateError("native lambda shape unknown:"+result.get("reason",""))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=sha:raise GateError("artifact changed during inspection")
-    return {"sha1":sha,"version":"1.0.9","mod_id":"somakespells","raycast_lambda":result,"false_lambda":false_body,"bootstrap":bootstrap}
+    return {"sha1":sha,"version":"1.0.9","mod_id":"somakespells","raycast_lambda":result,"false_lambda":false_body,"bootstrap":bootstrap,"linked_predicate":linked}
 
 def main():
     a=argparse.ArgumentParser()
@@ -154,5 +190,6 @@ def main():
     args.output.write_text(json.dumps(result,sort_keys=True,indent=2)+"\n")
     print("SOMAKE_RAYCAST_LAMBDA_SCOUT",json.dumps(result["raycast_lambda"],sort_keys=True))
     print("SOMAKE_RAYCAST_LAMBDA_SHA",result["sha1"])
+    print("SOMAKE_RAYCAST_PREDICATE_GATE","PASS_SHA_EXACT_ONCAST_FALSE_PREDICATE_LINKED")
 if __name__=="__main__":
     main()
