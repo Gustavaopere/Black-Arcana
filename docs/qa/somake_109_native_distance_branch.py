@@ -148,6 +148,34 @@ def arithmetic_window(declared):
         return not_proved(str(e),**facts)
     return not_proved("no_terminal_ifgt_value",**facts)
 
+def certify_exact_final_distance_109(proof):
+    """Versioned 1.0.9 source-pin gate: a new shape must NOT be promoted."""
+    expected={
+        "status":"PROVED_FINAL_IFGT_NUMERIC_COMPARISON",
+        "window_instruction_count":18,
+        "last_conditional_index":36,
+        "false_return_index":39,
+        "call_categories":["x","y","z","distance","radius","radius"],
+        "call_positions":[
+            {"instruction_index":21,"category":"x"},
+            {"instruction_index":23,"category":"y"},
+            {"instruction_index":25,"category":"z"},
+            {"instruction_index":26,"category":"distance"},
+            {"instruction_index":30,"category":"radius"},
+            {"instruction_index":32,"category":"radius"},
+        ],
+        "opcode_histogram":{
+            "aload_0":4,"aload_2":2,"dcmpg":1,"dload_3":1,"dstore_3":1,
+            "f2d":1,"fmul":1,"ifgt":1,"invokevirtual":6,
+        },
+        "math_opcode_histogram":{"dcmpg":1,"f2d":1,"fmul":1},
+        "derived_rejection_condition":"cmp(distSq(slot2,x(slot0),y(slot2),z(slot0)),(R*R)) > 0",
+        "comparison_semantics":"Java JVM cmp instruction then ifgt, branches to false return",
+        "boundary":"No actual player roles, targeting/perk API, world-space hitbox or gameplay accepted",
+    }
+    if not isinstance(proof,dict) or any(proof.get(k)!=v for k,v in expected.items()):
+        raise GateError("Somake 1.0.9 final distance getter/float-multiply/branch fingerprint drift")
+
 def inspect(jar:Path):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("wrong jar filename or size")
@@ -168,6 +196,7 @@ def inspect(jar:Path):
                                         native_isvalidtarget_early_guards(declared))
     certify_exact_native_middle_109(middle_guard(declared))
     res=arithmetic_window(declared)
+    certify_exact_final_distance_109(res)
     return {"status":"PASS_SHA_EXACT_DISTANCE_BRANCH_ANALYSIS","sha1":digest,
             "mod_id":"somakespells","version":"1.0.9","final_branch":res,
             "limits":"This is JVM static analysis, not provider-loaded QA or a mutator seam"}
@@ -182,5 +211,6 @@ def main():
     args.output.write_text(json.dumps(evidence,sort_keys=True,indent=2)+"\n")
     print("SOMAKE_FINAL_DISTANCE_PROBE",json.dumps(evidence["final_branch"],sort_keys=True))
     print("SOMAKE_FINAL_DISTANCE_SHA",evidence["sha1"])
+    print("SOMAKE_FINAL_DISTANCE_EXACT_GATE","PASS_SHA_EXACT_HORIZONTAL_DISTANCE_RADIUS_SQUARED_F32")
 if __name__=="__main__":
     main()
