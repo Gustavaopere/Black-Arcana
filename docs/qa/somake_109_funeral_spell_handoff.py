@@ -153,7 +153,15 @@ def certify_spell_cast_getters_109(methods):
            44:("getImpactDamage","(ILnet/minecraft/world/entity/LivingEntity;)F"),
            47:("getWitherDuration","(I)I"),
            50:("getWitherAmplifier","(I)I")}
+    # Every getter must consume the *cast-level local 2*; living-sensitive
+    # getters must additionally consume the *cast actor local 3*.
     for index,(name,desc) in calls.items():
+        prefix=[25,26,27] if index==28 else (
+            [41,42,43] if index==44 else [index-2,index-1])
+        slots=[meaning(j,cast[j]).get("slot") for j in prefix]
+        expected_slots=[0,2,3] if index in (28,44) else [0,2]
+        if slots!=expected_slots:
+            return {"status":"NOT_PROVED","reason":"spell_getter_cast_inputs_drift_"+name}
         t=meaning(index,cast[index])
         if t.get("call")!=name or t.get("descriptor")!=desc:
             return fail("getter_call_order_or_signature_drift_"+name)
