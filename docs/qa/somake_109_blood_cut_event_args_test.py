@@ -3,7 +3,7 @@
 import unittest
 
 from somake_109_perk_method_probe import GateError
-from somake_109_blood_cut_event_args import examine_event_callsite, certify_native_damage_expression, certify_native_source_actor
+from somake_109_blood_cut_event_args import examine_event_callsite, certify_native_damage_expression, certify_native_source_actor, certify_effect_holder_receiver
 
 AMP="Method net/minecraft/world/effect/MobEffectInstance.getAmplifier:()I"
 SOURCE="Method net/minecraft/world/damagesource/DamageSource.getEntity:()Lnet/minecraft/world/entity/Entity;"
@@ -130,6 +130,48 @@ class SourceActorTests(unittest.TestCase):
     def test_wrong_exit_target_rejected(self):
         rows=source_fixture();rows[6]=(12,"ifeq","19","")
         with self.assertRaises(GateError):certify_native_source_actor(rows)
+
+
+
+EFFECT_FIELD="Field com/somake/somakespells/registries/ModMobEffects.BLOOD_CUT:Lnet/neoforged/neoforge/registries/DeferredHolder;"
+EFFECT_GETTER="Method net/minecraft/world/entity/LivingEntity.getEffect:(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/effect/MobEffectInstance;"
+
+def holder_fixture():
+    return [
+      (0,"aload_1","",""),
+      (1,"getstatic","",EFFECT_FIELD),
+      (4,"invokevirtual","",EFFECT_GETTER),
+      (7,"astore_2","",""),
+      (8,"aload_2","",""),
+      (9,"ifnull","30",""),
+      (12,"aload_0","",""),
+      (13,"invokevirtual","",NEW_DAMAGE),
+      (16,"aload_2","",""),
+      (17,"invokevirtual","",AMP),
+      (20,"nop","",""),
+      (21,"nop","",""),
+      (30,"return","","")
+    ]
+
+
+class EffectOwnerTests(unittest.TestCase):
+    def test_blood_cut_effect_loaded_from_source_actor(self):
+        got=certify_effect_holder_receiver(holder_fixture())
+        self.assertEqual("BLOOD_CUT_FROM_SOURCE_ENTITY",got["assurance"])
+        self.assertEqual("local_1",got["effect_receiver_local"])
+        self.assertEqual("local_2",got["effect_storage_local"])
+
+    def test_changed_effect_owner_fails(self):
+        rows=holder_fixture();rows[0]=(0,"aload_0","","")
+        with self.assertRaises(GateError):certify_effect_holder_receiver(rows)
+
+    def test_wrong_mob_effect_fails(self):
+        rows=holder_fixture();rows[1]=(1,"getstatic","",EFFECT_FIELD.replace("BLOOD_CUT","POISON"))
+        with self.assertRaises(GateError):certify_effect_holder_receiver(rows)
+
+    def test_unprotected_effect_instance_fails(self):
+        rows=holder_fixture();rows[5]=(9,"nop","","")
+        with self.assertRaises(GateError):certify_effect_holder_receiver(rows)
 
 
 if __name__=="__main__":
