@@ -1,5 +1,10 @@
 # Black Arcana — checkpoint do catálogo pós-PR #825 (21/10/2026)
 
+## Resolução da divergência e avanço binário — atualização posterior
+
+A divergência histórica 1.857/1.855 versus 1.856/1.854 deste checkpoint foi esclarecida: **−1** corresponde a `ess_requiem:gong` / `WEAKENING_GONG`, source-only em Requiem 0.1.7 e ausente no JAR exato. Usar mínimo atual **≥1.856/1.854**, denominador universal ainda aberto (—%). A campanha selecionada avança de **35/39 para 37/39 (94,87%)** após incorporar evidência SHA-exata de Werewolves e Bloodlines no PR #868, com Monsters & Spellbooks e Aeromancy Additions ainda ⚠️/⛔. A tabela abaixo é fotografia histórica pós-#825; não republicar seus valores como atuais. [Matriz](REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md).
+
+
 ## Escopo e autoridade
 - **Base congelada:** `Black-Arcana/main@1cded69beef79f860454ecd2ace2de611e248168`; entrega da [PR #825](https://github.com/Gustavaopere/Black-Arcana/pull/825), squash em `1cded69beef79f860454ecd2ace2de611e248168`. Modlist sibling consultada em `neoforge-rpg-skilltree/main@ed5b65b890767b406ce41127bcb793775263c7bd`.
 - **Modlist:** árvore da pasta `PROJECT-INSTRUCTIONS/modlist/` contém **591 arquivos Markdown** no SHA sibling. Isto é uma contagem de fichas da modlist, **não** o denominador de mods mágicos ou de objetos mágicos.

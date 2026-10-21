@@ -1,5 +1,10 @@
 # Catálogo Global de Magias e Sistemas Sobrenaturais — Black Arcana
 
+## Revisão do total global e da campanha binária — 21/10/2026
+
+O mínimo canônico é **≥1.856 global / ≥1.854 escopo**: Requiem 0.1.7 não inclui `ess_requiem:gong` no registro compilado ([#38655251099](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38655251099)); o checkpoint **1.857/1.855** abaixo é histórico. A campanha física de **39 providers selecionados** passa a **37/39** provas exatas por Werewolves e Bloodlines (duas provas antigas reproduzidas no PR #868), 2 condicionados: Monsters & Spellbooks e Aeromancy Additions. Denominador universal aberto (—%); +0 novas identidades. [Matriz atualizada](REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md).
+
+
 ## Reliquified Ars Nouveau 0.8.1 — vigésima quinta prova binária, 2026-10-13
 
 **Vigésima quinta prova binária (2026-10-13):** [Reliquified Ars Nouveau 0.8.1](../providers/✅-reliquified-ars-nouveau/EXACT-BINARY-RELIC-ABILITIES-0.8.1.md), [Java21 #38461801129](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38461801129) **SUCCESS**. CurseForge `8104341`, JAR **1183912 bytes**, SHA-1 `4be1f4b0fd7fbec6618596e2e7c3705db88a7579` idêntico ao físico. Exatamente **19 itens** `DeferredRegister<Item>` e **19 habilidades principais** `AbilityTemplate.builder` em classes únicas, sem desvio no registro. **25/39 exatos / 14/39 pendentes**, +0 raízes, mínimos **1857 global / 1855 escopo** preservados. Subabilities não são novos spells Ars; gameplay/loot/Survival ⚠️.

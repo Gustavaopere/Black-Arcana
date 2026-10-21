@@ -1,5 +1,20 @@
 # Semantic Magic Coverage Ledger
 
+## Prova binária proposta 21/10/2026 — Werewolves e Bloodlines
+
+**37/39 (94,87%) identidades de providers certificadas no escopo da campanha de 39 após incorporar os dois verificadores SHA-exatos**; **2/39 (5,13%) condicionados**. Esta é uma métrica de prova estática de identidade, **não** total dos mods, não % global de spells nem aprovação de gameplay. Os 35/39 anteriores permanecem como checkpoint histórico. As verificações originais foram aprovadas, e o novo PR #868 repete os gates antes do merge.
+
+- ✅ **Werewolves 2.0.3.3:** [#38601736375](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38601736375) SUCCESS, SHA-1 físico `12a400d50c6e2afdcd96caf73cb80d37877147c8`, **9/9** registries compilados `IAction`, **8** ações semânticas já catalogadas. `hide_name` é controle de apresentação excluído. Dossiê [Werewolves](../../../docs/qa/werewolves-2033-exact-registry-pending.md). `COUNTED_EXACT` somente quanto à identidade do JAR, não aquisição/proc/transformação em jogo.
+- ✅ **Bloodlines 3.0.9:** [#38673831810](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38673831810) SUCCESS, SHA-1 físico `b14ff359c7530c0e40ca289cc023bd1c19a070af`, **29/29** `IAction` compilados, **28** ações semânticas existentes. `gravebound_crit_action` compilado mas sem rota normal source-pinned de aquisição: EXCLUDED. [Dossiê](../providers/✅-bloodlines/EXACT-BINARY-PLAYER-ACTIONS-3.0.9.md). Apenas identidade compilada.
+- ⚠️/⛔ **Monsters & Spellbooks 0.0.16.3:** **98** objetos `COUNTED_RELEASE_BOUNDED`; PR #817 [run #38663805740](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38663805740) FAILED; versão declarada pelo source público ainda 0.0.14. Sem prova binária bem-sucedida da versão física.
+- ⚠️/⛔ **Aeromancy Additions 1.2.8:** **10** `COUNTED_SOURCE_PINNED`; publicador 10/10, mas o SHA-1 físico antigo possui **35 caracteres**, sem paridade SHA do JAR instalado. Não promover.
+
+**Reconciliação do mínimo global:** histórico **≥1.857 global / ≥1.855 escopo** foi corrigido em Requiem 0.1.7 após [#38655251099](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38655251099) demonstrar ausência de registro binário de `ess_requiem:gong` / `WEAKENING_GONG` presente somente no source pin. O mínimo atual é **≥1.856 global / ≥1.854 escopo**, delta **−1** contra checkpoint antigo, não uma magia adicionada ou removida do mod em runtime. [Dossiê](../providers/✅-enders-spells-and-stuff-requiem/EXACT-BINARY-SPELLS-0.1.7.md). Denominador total ainda desconhecido, barra global **—%**.
+
+Sem mutação de runtime, perks/adapters, Mastery, configs, PvP/claims, cliente real ou Survival verificados. Stage 06.05 🟡, Stage 09 ⚠️, hooks sem contrato ⛔.
+
+
+
 ## Hazen N Stuff 1.4.0.14 compiled spell IDs (2026-10-15)
 
 **35ª prova binária — Hazen N Stuff 1.4.0.14 (2026-10-15):** [auditoria Java 21 #38606162180](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38606162180) SUCCESS no publisher CurseForge `8277644` e JAR físico sibling #312 de SHA-1 `3be20bacb44c1923348ab6f61b685eec6aacfdcd`, 7.921.289 bytes, SHA-256 `eeacf5b5536bbe2691e1687902a8c37cff775829457db6e116261bbff7a00462`: **38/38 classes→campos→IDs de Spell** correspondem ao inventário de fonte, sem contagem de `reign_of_tyros` comentado. As 38 raízes já inventariadas mudam `COUNTED_SOURCE_PINNED → COUNTED_EXACT` apenas para identidade compilada, **+0** novos objetos. Campanha **35/39 exatos / 4/39 condicionados**; mínimos **1.856 global / 1.854 escopo** preservados. Registro carregado, tiers, configurações, mana, loot/crafting, Survival e integração RPG ainda ⚠️; Stage 06.05 🟡 e Stage 09 PENDING.

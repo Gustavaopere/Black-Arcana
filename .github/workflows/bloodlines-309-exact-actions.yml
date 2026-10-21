@@ -1,0 +1,56 @@
+name: Bloodlines 3.0.9 SHA-matched 29 player IAction registry proof
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/bloodlines-309-exact-actions.yml'
+      - 'docs/qa/bloodlines_309_action_binary_audit.py'
+      - 'docs/qa/bloodlines_309_action_binary_audit_test.py'
+      - 'wiki/modpack-catalog/providers/✅-bloodlines/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/bloodlines-309-exact-actions.yml'
+      - 'docs/qa/bloodlines_309_action_binary_audit.py'
+      - 'docs/qa/bloodlines_309_action_binary_audit_test.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compiled_action_29_registry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Validate source-pinned semantics with clean-room Java21 compiled fixtures
+        run: python3 docs/qa/bloodlines_309_action_binary_audit_test.py -v
+      - name: Retrieve official CurseForge publisher Bloodlines 3.0.9 with installed SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/bloodlines-309
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://mediafilez.forgecdn.net/files/8639/194/bloodlines-1.21-3.0.9.jar' \
+            --output build/bloodlines-309/bloodlines-1.21-3.0.9.jar
+          echo 'b14ff359c7530c0e40ca289cc023bd1c19a070af  build/bloodlines-309/bloodlines-1.21-3.0.9.jar' | sha1sum --check
+      - name: Prove 29 exact compiled IAction IDs, holders, constructors and event-bus forwarding
+        run: |
+          python3 docs/qa/bloodlines_309_action_binary_audit.py \
+            --jar build/bloodlines-309/bloodlines-1.21-3.0.9.jar \
+            --output build/bloodlines-309/evidence.json
+      - name: Publish evidence JSON only; no third-party JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: bloodlines-309-static-action-evidence
+          path: build/bloodlines-309/evidence.json
+          retention-days: 14
+          if-no-files-found: ignore

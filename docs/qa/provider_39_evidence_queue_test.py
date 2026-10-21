@@ -105,12 +105,16 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_real_frozen_campaign_has_thirty_five_existing_exact_registries(self):
+    def test_real_frozen_campaign_has_thirty_seven_existing_exact_registries(self):
         matrix = mod.load_matrix()
         self.assertEqual(39, len(matrix))
-        self.assertEqual(35, sum(
+        self.assertEqual(37, sum(
             x['catalog_evidence'] == 'COUNTED_EXACT' for x in matrix.values()
         ))
+        self.assertEqual({'version': '2.0.3.3', 'semantic_objects': 8,
+                          'catalog_evidence': 'COUNTED_EXACT'}, matrix['Werewolves'])
+        self.assertEqual({'version': '3.0.9', 'semantic_objects': 28,
+                          'catalog_evidence': 'COUNTED_EXACT'}, matrix['Bloodlines'])
         self.assertEqual({'version': '1.0.8', 'semantic_objects': 52,
                           'catalog_evidence': 'COUNTED_EXACT'},
                          matrix['Reliquified Artifacts'])
@@ -293,7 +297,7 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_thirty_four_independent_prior_exact_providers_not_report_promoted(self):
+    def test_thirty_seven_independent_prior_exact_providers_not_report_promoted(self):
         matrix, crosswalk, report = fixture()
         for name, orig, version, count in (
             ('Ars Nouveau', 'Provider 0', '5.13.1', 109),
@@ -331,6 +335,8 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             ('Vampirism', 'Provider 31', '1.10.13', 19),
             ('Eidolon: Repraised', 'Provider 32', '0.5.0.2', 42),
             ('Malum', 'Provider 33', '1.8.2', 26),
+            ('Werewolves', 'Provider 35', '2.0.3.3', 8),
+            ('Bloodlines', 'Provider 36', '3.0.9', 28),
         ):
             filename = crosswalk.pop(orig)
             matrix.pop(orig)
@@ -340,15 +346,15 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             next(r for r in report['entries'] if r['provider'] == orig
                  )['provider'] = name
         result = mod.build_queue(matrix, crosswalk, report)
-        self.assertEqual(35, result['catalog_exact_preexisting'])
-        self.assertEqual(4, result['registry_proofs_remaining'])
+        self.assertEqual(37, result['catalog_exact_preexisting'])
+        self.assertEqual(2, result['registry_proofs_remaining'])
         self.assertEqual(0, result['registry_proofs_completed'])
         exact_rows = [x for x in result['providers']
                       if x['status'] == 'CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT']
         self.assertEqual({'Hazen N Stuff', 'Ars Nouveau', 'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
                           'Dreamless Spells', 'Paladin Spells', "Wind's Spellbooks", 'Backported Spellbooks',
                           'Deeper & Darker Spellbooks', "GTBC's Geomancy Plus",
-                          "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", 'Ars Controle', 'Ars Technica', 'Ars Zero', 'Ars Elemental', 'IronSable', "Fire's Ender Expansion", "Ypsilon's Fundamentalism", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice's Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum"},
+                          "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", 'Ars Controle', 'Ars Technica', 'Ars Zero', 'Ars Elemental', 'IronSable', "Fire's Ender Expansion", "Ypsilon's Fundamentalism", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice's Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum", "Werewolves", "Bloodlines"},
                          {x['provider'] for x in exact_rows})
         self.assertTrue(all(not x['registry_verified'] and
                             not x['promotion_allowed'] and
