@@ -36,7 +36,7 @@ Essa reconstrução representa **resolução de sobrecarga e despacho JVM**, nã
 
 **Certificado:** o caminho compilado que constrói a fonte do dano secundário no `LivingDamageEvent.Post` chega ao setter `setLifestealPercent(0.15f)`, com o mesmo `Entity` encaminhado duas vezes pelo host.
 
-**Não certificado:** o percentual da vida efetivamente recuperada, a identidade final do beneficiário, se o booleano de `applyDamage` representa aplicação bem-sucedida, efeitos de armadura/proteção/invulnerabilidade, regras PvP/claims, composição com outros handlers, tetos internos e a fórmula do processamento do lifesteal. Também não foi executado servidor com ambos os providers carregados neste lote.
+**Complementado pelo [gate físico do runtime Iron's 3.16.3](EXACT-BINARY-BLOOD-CUT-IRONS-3163-POSTHIT-HEAL-1.0.9.md):** `DamageSources.postHitEffects` chama `LivingEntity.heal(getLifestealPercent() * event.getNewDamage())` no `LivingEntity` retornado por `event.getSource().getEntity()`, condicionado a guards de efeito pós-hit, tipo e taxa positiva. Continuam **não certificados** o despacho real do evento, vida efetivamente restaurada, caps, outcome de `applyDamage`, mitigação/alterações de outros mods, PvP/claims e QA provider-loaded.
 
 O host Iron's permanece autoridade sobre a semântica efetiva de `SpellDamageSource`, `DamageSources.applyDamage` e liquidação de dano/cura. Somake controla o efeito Blood Cut. Black Arcana não substitui esse pipeline. RPG Skill Tree é apenas provider de atributos/Mastery/perks mediante boundary real.
 
