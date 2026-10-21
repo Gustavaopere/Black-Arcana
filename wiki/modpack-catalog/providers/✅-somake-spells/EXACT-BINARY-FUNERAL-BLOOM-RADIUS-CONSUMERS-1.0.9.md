@@ -131,4 +131,3 @@ O [workflow Java 21 #39507349822](https://github.com/Gustavaopere/Black-Arcana/a
 A causalidade local corresponde a `slot1 != null && slot2.isAlliedTo(slot1) ⇒ rejeição`. **Ainda não está certificado** se slot 1 significa owner/caster ou se slot 2 significa candidato no contexto de jogo; `ifgt` / `distanceToSqr`, `maxTargets`, criação efetiva das buds, PvP/claims e hooks por jogador permanecem `NOT_PROVED`. Contrato de perk: **⛔ FAIL_CLOSED**. Somake 83/83 identidades; 5/83 fichas com downstream desta campanha, inalteradas.
 
 [Scanner middle guards](../../../docs/qa/somake_109_native_filter_middle.py) · [testes](../../../docs/qa/somake_109_native_filter_middle_test.py) · [ficha](registry-1.0.9/funeral-bloom.md).
-
