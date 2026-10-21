@@ -165,3 +165,7 @@ A [auditoria física Java21 #39599959888](https://github.com/Gustavaopere/Black-
 ## Blood Cut 1.0.9 — receiver do applyDamage e sobrecargas (21/10/2026, PR #862)
 
 A [prova exata Java 21 #39604864087](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39604864087), com 86 testes sintéticos, identifica o alvo `event.getEntity()`, float `local_3` e origem `BloodCutSpell.getDamageSource(local_1)` na chamada `DamageSources.applyDamage`. O método retorna booleano descartado. **A sobrecarga de 1 argumento da fonte usada nesse handler não é a mesma sobrecarga de 2 argumentos que contém `setLifestealPercent(0.15f)`.** Healing host e contrato de perk continuam condicionados/bloqueados. [Dossiê completo](EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md).
+
+## Blood Cut — fonte secundária e lifesteal `0.15f` (21/10/2026)
+
+[Auditoria Java 21 #39613550972](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39613550972): **97 testes sintéticos**, Somake 1.0.9 e Iron's API 3.16.3 hash-pinned. O método de um `Entity` herdado do Iron's chama virtualmente `getDamageSource(e,e)`, com o mesmo `Entity` nas duas posições. A override do Somake chama `super` e executa `setLifestealPercent(0.15f)`. **O vínculo compilado entre as sobrecargas está agora certificado**; cura efetiva e perks mutadoras continuam ⚠️/⛔. [Dossiê](EXACT-BINARY-BLOOD-CUT-IRONS-VIRTUAL-LIFESTEAL-1.0.9.md).
