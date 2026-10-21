@@ -19,7 +19,9 @@ class WaveCardinalityScoutTests(unittest.TestCase):
         self.assertEqual([21,78],p["max_targets_field_read_indices"])
         self.assertEqual([128],p["bud_constructor_indices"])
         self.assertEqual(3,len(p["branch_map"]))
-        self.assertIn("NOT proved",p["boundary"])
+        self.assertTrue(p["boundary"].startswith("No target-count cap"))
+        self.assertNotIn("cap_enforced",p)
+        self.assertNotIn("spawn_count",p)
     def test_wrong_member_not_proved(self):
         self.assertEqual("NOT_PROVED",wave_cardinality_scout([("launchWave","()V",sample()[0][2])])["status"])
     def test_ambiguous_member_not_proved(self):
