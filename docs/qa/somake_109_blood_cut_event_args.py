@@ -217,6 +217,8 @@ def certify_early_post_damage_exclusion(rows):
     matched=re.search(r"\bclass\s+([A-Za-z0-9_/$.]+)",part[2][3])
     if not matched:
         raise GateError("missing typed instanceof class token")
+    if matched.group(1)!="io/redspace/ironsspellbooks/damage/SpellDamageSource":
+        raise GateError("Blood Cut SpellDamageSource early type exclusion class drift")
     t=part[3][2].strip()
     if not re.fullmatch(r"\d+",t) or int(t)!=part[5][0]:
         raise GateError("unexpected early exclusion fallthrough target")
