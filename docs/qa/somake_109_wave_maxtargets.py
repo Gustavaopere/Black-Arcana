@@ -234,6 +234,21 @@ def prove_wave_loop_spawn_sites(declared):
         "boundary":"Normal bytecode path only; not successful bud spawn, UUID object identity, runtime QA or perk hook",
     }
 
+def certify_exact_wave_loop_109(proof):
+    """Pin physical 1.0.9 normal iteration path without claiming spawn success."""
+    expected={
+        "status":"PROVED_ONE_BUD_SPAWN_ATTEMPT_AND_UUID_SET_ADD_PER_NORMAL_ITERATION",
+        "loop_receiver_slot":6,"loop_head_index":56,
+        "has_next_index":57,"exit_branch_index":58,"exit_index":166,
+        "next_index":60,"bud_constructor_index":93,
+        "spawn_call_index":156,"spawn_boolean_result_discarded":True,
+        "active_uuid_set_add_index":162,"uuid_add_result_discarded":True,
+        "loop_step_index":164,"back_edge_index":165,
+        "boundary":"Normal bytecode path only; not successful bud spawn, UUID object identity, runtime QA or perk hook",
+    }
+    if not isinstance(proof,dict) or any(proof.get(k)!=v for k,v in expected.items()):
+        raise GateError("Somake 1.0.9 loop bud/spawn attempt/UUID set fingerprint drift")
+
 def inspect(jar):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("wrong Somake file")
@@ -259,8 +274,7 @@ def inspect(jar):
     certify_exact_wave_list_cap_109(proof)
     loop=prove_wave_loop_spawn_sites(declarations)
     print('SOMAKE_WAVE_LOOP_PROBE',json.dumps(loop,sort_keys=True))
-    if loop.get('status')!='PROVED_ONE_BUD_SPAWN_ATTEMPT_AND_UUID_SET_ADD_PER_NORMAL_ITERATION':
-        raise GateError('Somake wave loop spawn/UUID proof not certified')
+    certify_exact_wave_loop_109(loop)
     if evidence["status"]!="OBSERVED_WAVE_BRANCH_AND_MAXTARGETS_CALLSITES_ONLY":
         raise GateError("wave structure changed")
     return {"version":"1.0.9","mod_id":"somakespells","sha1":sha,
@@ -277,5 +291,6 @@ def main():
     print("SOMAKE_WAVE_MAXTARGETS_SCOUT",json.dumps(result["wave"],sort_keys=True))
     print("SOMAKE_WAVE_MAXTARGETS_CAP",json.dumps(result["candidate_cap"],sort_keys=True))
     print("SOMAKE_WAVE_MAXTARGETS_SHA",result["sha1"])
+    print("SOMAKE_WAVE_CAP_AND_LOOP_EXACT_GATE","PASS_LIST_TRUNCATION_AND_SINGLE_NORMAL_SPAWN_ATTEMPT")
 if __name__=="__main__":
     main()
