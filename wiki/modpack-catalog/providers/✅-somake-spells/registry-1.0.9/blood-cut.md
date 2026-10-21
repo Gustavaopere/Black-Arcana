@@ -41,9 +41,20 @@ Iron's owns host casting/resource/cooldown settlement. Somake owns this spell id
 
 Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-MAP.md`, `../SPELL-CATALOG-1.0.9.md`.
 
+## Dossiê compilado de casting, efeito e caminho de dano (21/10/2026)
 
-## Auditoria técnica em andamento — Blood Cut (21/10/2026)
+**Prova nova:** [auditoria Java21 #39546058075](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39546058075) **SUCCESS**, JAR SHA-1 físico `171841ac9f802be9309ecc166c1d972ac6d404c0`, **16 testes sintéticos**, duas classes únicas, **7 métodos de spell e 2 de efeito** com referências simbólicas conferidas. [Matriz técnica completa](blood-cut-technical-gate.md).
 
-A [nova matriz de prova](blood-cut-technical-gate.md) propõe verificar a FQCN concreta, descritores de métodos e símbolos de efeito no JAR Somake 1.0.9 SHA-1 exato, por um workflow Java 21 com testes sintéticos negativos. **A existência de uma classe candidata `BloodCutSpell` e os seus métodos ainda não estão certificados por esta nova execução**; a identidade de registry `somakespells:blood_cut` permanece comprovada no catálogo físico anterior.
+| Eixo útil para perks | Prova exata / limite |
+|---|---|
+| Classe de spell | `com.somake.somakespells.spells.blood.BloodCutSpell` |
+| Cast | `getCastType()` referencia `CastType.INSTANT`; `onCast(Level,int,LivingEntity,CastSource,MagicData)` invoca `getSpellPower`, cria `MobEffectInstance` do `ModMobEffects.BLOOD_CUT` e chama `LivingEntity.addEffect` e `AbstractSpell.onCast` |
+| Efeito downstream | `com.somake.somakespells.effect.blood.BloodCutEffect` contém `onLivingDamage(LivingDamageEvent.Post)` com **cinco branches** |
+| Causalidade / dano | `onLivingDamage` referencia `getNewDamage`, `getSource`, `getEntity`, `MobEffectInstance.getAmplifier`, `getDamageModifier`, `LivingEntity.invulnerableTime` e `DamageSources.applyDamage`; o registro do listener e os gates condicionais permanecem pendentes |
+| Escalonamento | `BloodCutEffect.getDamageModifier(int,LivingEntity)` referencia `ModSpells.BLOOD_CUT` e `BloodCutSpell.getEntityPowerMultiplier` (**dois branches**); **fórmula e limites NÃO verificados** |
+| Lifesteal | `getDamageSource` referencia `SpellDamageSource.setLifestealPercent(float)`; taxa, origem, condições e cura resultante NÃO verificadas |
+| Targeting / geometria | Alvo real, distância, LOS, área, hitbox, projetil, raio, velocidade e limites NÃO verificados. `SELF_CAST_ANIMATION` é apenas um marcador de animação |
+| Recursos / tempo | Mana, cooldown, duração do efeito, ticks, config host e gates Survival NÃO verificados |
+| Mutabilidade por perk | ⛔ `FAIL_CLOSED`: nenhuma API/hook mutador por jogador foi certificada; não criar segundo pipeline de dano, cura ou custo |
 
-Os eixos de targeting (self/entidade/área), raycast/LOS, raio, hitbox, tamanho/velocidade de projétil, dano/tipo, status, duração, escalonamento, custos, cooldown, caps e identidade de hit/proc continuam **NÃO VERIFICADOS nesta ficha**. Nenhuma API de modificação por jogador foi homologada: ⛔ `FAIL_CLOSED`. Reavaliar a ficha com as evidências extraídas pelo CI antes de publicar qualquer fórmula.
+A presença de `LivingDamageEvent.Post` e `DamageSources.applyDamage` na mesma classe torna necessária uma prova de **filtros e prevenção de proc-chain** antes de qualquer integração que amplifique dano. O resultado é uma topologia de callsites compilados, não observação de execução real nem permissão de alterar o provider.
