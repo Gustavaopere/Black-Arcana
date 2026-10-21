@@ -71,6 +71,13 @@ def examine_event_callsite(rows: list[tuple[int,str,str,str]]) -> dict:
     }
 
 
+
+def certify_native_damage_expression(rows):
+    """Fail closed until exact typed JVM float stack handoff is certified."""
+    raise GateError("native damage expression stack gate not yet implemented")
+
+
+
 def inspect(jar:Path) -> dict:
     jar=Path(jar)
     if jar.name!=FILENAME or jar.is_symlink() or not jar.is_file():
