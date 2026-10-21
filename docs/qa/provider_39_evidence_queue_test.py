@@ -38,7 +38,7 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         self.assertEqual(39, len(matrix))
         self.assertEqual(69, len(crosswalk))
         self.assertTrue(set(matrix).issubset(crosswalk))
-        self.assertEqual(915, sum(x['semantic_objects'] for x in matrix.values()))
+        self.assertEqual(914, sum(x['semantic_objects'] for x in matrix.values()))
         self.assertEqual('ars_nouveau-1.21.1-5.13.1.jar', crosswalk['Ars Nouveau'])
 
     def test_missing_69_still_keeps_39_pending(self):
@@ -105,12 +105,41 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_real_frozen_campaign_has_twenty_five_existing_exact_registries(self):
+    def test_real_frozen_campaign_has_thirty_five_existing_exact_registries(self):
         matrix = mod.load_matrix()
         self.assertEqual(39, len(matrix))
-        self.assertEqual(25, sum(
+        self.assertEqual(35, sum(
             x['catalog_evidence'] == 'COUNTED_EXACT' for x in matrix.values()
         ))
+        self.assertEqual({'version': '1.0.8', 'semantic_objects': 52,
+                          'catalog_evidence': 'COUNTED_EXACT'},
+                         matrix['Reliquified Artifacts'])
+        self.assertEqual({'version': '5.13.1', 'semantic_objects': 109, 'catalog_evidence': 'COUNTED_EXACT'}, matrix['Ars Nouveau'])
+        self.assertEqual({'version': '1.4.0.14', 'semantic_objects': 38, 'catalog_evidence': 'COUNTED_EXACT'}, matrix['Hazen N Stuff'])
+        self.assertEqual({'version': '1.10.13', 'semantic_objects': 19,
+                          'catalog_evidence': 'COUNTED_EXACT'}, matrix['Vampirism'])
+        self.assertEqual({'version': '0.5.0.2', 'semantic_objects': 42,
+                          'catalog_evidence': 'COUNTED_EXACT'}, matrix['Eidolon: Repraised'])
+        self.assertEqual({'version': '1.8.2', 'semantic_objects': 26,
+                          'catalog_evidence': 'COUNTED_EXACT'},matrix['Malum'])
+        self.assertEqual({'version': '0.1.7', 'semantic_objects': 52,
+                          'catalog_evidence': 'COUNTED_EXACT'},
+                         matrix["Ender's Spells and Stuff: Requiem"])
+        self.assertEqual(
+            {'version': '0.9.7.1', 'semantic_objects': 83,
+             'catalog_evidence': 'COUNTED_EXACT'},
+            matrix["Apprentice's Codex"],
+        )
+        self.assertEqual(
+            {'version': '0.2.7', 'semantic_objects': 25,
+             'catalog_evidence': 'COUNTED_EXACT'},
+            matrix["Reliquified Iron's Spells 'n Spellbooks"],
+        )
+        self.assertEqual(
+            {'version': '1.3.7', 'semantic_objects': 29,
+             'catalog_evidence': 'COUNTED_EXACT'},
+            matrix['Hexalia'],
+        )
         self.assertEqual(
             {'version': '21.3.0', 'semantic_objects': 5,
              'catalog_evidence': 'COUNTED_EXACT'},
@@ -264,9 +293,11 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_queue(matrix, crosswalk, report)
 
-    def test_twenty_five_independent_prior_exact_providers_not_report_promoted(self):
+    def test_thirty_four_independent_prior_exact_providers_not_report_promoted(self):
         matrix, crosswalk, report = fixture()
         for name, orig, version, count in (
+            ('Ars Nouveau', 'Provider 0', '5.13.1', 109),
+            ('Hazen N Stuff', 'Provider 34', '1.4.0.14', 38),
             ('Ars Additions', 'Provider 1', '21.3.0', 5),
             ('Ars Hex', 'Provider 2', '5.0.4b', 1),
             ('Crystal Chronicles', 'Provider 3', '0.1.3-alpha', 1),
@@ -292,6 +323,14 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             ("Companions!", 'Provider 23', '1.3.4', 9),
             ("Waystones", 'Provider 24', '21.1.45', 3),
             ("Reliquified Ars Nouveau", 'Provider 25', '0.8.1', 19),
+            ("Apprentice's Codex", 'Provider 26', '0.9.7.1', 83),
+            ("Reliquified Iron's Spells 'n Spellbooks", 'Provider 27', '0.2.7', 25),
+            ('Hexalia', 'Provider 28', '1.3.7', 29),
+            ("Ender's Spells and Stuff: Requiem", 'Provider 29', '0.1.7', 52),
+            ('Reliquified Artifacts', 'Provider 30', '1.0.8', 52),
+            ('Vampirism', 'Provider 31', '1.10.13', 19),
+            ('Eidolon: Repraised', 'Provider 32', '0.5.0.2', 42),
+            ('Malum', 'Provider 33', '1.8.2', 26),
         ):
             filename = crosswalk.pop(orig)
             matrix.pop(orig)
@@ -301,15 +340,15 @@ class Provider39EvidenceQueueTest(unittest.TestCase):
             next(r for r in report['entries'] if r['provider'] == orig
                  )['provider'] = name
         result = mod.build_queue(matrix, crosswalk, report)
-        self.assertEqual(25, result['catalog_exact_preexisting'])
-        self.assertEqual(14, result['registry_proofs_remaining'])
+        self.assertEqual(35, result['catalog_exact_preexisting'])
+        self.assertEqual(4, result['registry_proofs_remaining'])
         self.assertEqual(0, result['registry_proofs_completed'])
         exact_rows = [x for x in result['providers']
                       if x['status'] == 'CATALOG_EXACT_PRIOR_INDEPENDENT_AUDIT']
-        self.assertEqual({'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
+        self.assertEqual({'Hazen N Stuff', 'Ars Nouveau', 'Ars Additions', 'Ars Hex', 'Crystal Chronicles',
                           'Dreamless Spells', 'Paladin Spells', "Wind's Spellbooks", 'Backported Spellbooks',
                           'Deeper & Darker Spellbooks', "GTBC's Geomancy Plus",
-                          "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", 'Ars Controle', 'Ars Technica', 'Ars Zero', 'Ars Elemental', 'IronSable', "Fire's Ender Expansion", "Ypsilon's Fundamentalism", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau"},
+                          "Farmer's Spell 'n Spellbooks", "Ars 'n' Spells", 'Ars Controle', 'Ars Technica', 'Ars Zero', 'Ars Elemental', 'IronSable', "Fire's Ender Expansion", "Ypsilon's Fundamentalism", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice's Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum"},
                          {x['provider'] for x in exact_rows})
         self.assertTrue(all(not x['registry_verified'] and
                             not x['promotion_allowed'] and

@@ -29,3 +29,12 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe exata:** [`EffectCharm.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectCharm.java) fonte pinned 0.7.10.1, sem prova de byte-equality ao JAR.
+- **Admissão:** cast válido só para shooter `Player` em `ServerLevel`, alvo `Mob` não `CHARM_BLACKLIST`; admite `mob.getMaxHealth()<GENERIC_INT` (default 150) ou UUID especial de desenvolvimento, depois divide Enemy/NeutralMob e Animal.
+- **Chance hostil:** `resistance=10+100*(currentHealth/maxHealth)` convertido para int na chamada; `chanceBoost=10+5*ampMultiplier`, com +50 se undead e `NecroticFocus.hasFocus`; sucesso quando `rand.nextInt(0,resistance)+chanceBoost>=resistance`. No sucesso aplica `ENTHRALLED` com duração `getBaseDuration()*20+getExtendTimeDuration()*getDurationInTicks` e owner.
+- **Domesticadores:** TamableAnimal, AbstractHorse, Fox e Animal love têm tentativas individuais com `rollToSeduce(100 ou 90,25*(1+ampMultiplier),random)`; isso não equivale a controle de inimigos e não garante sucesso em todos os mobs.
+- **Perks:** evitar bônus que ignorem blacklist/HP cap, duplicação de tame/owner ou uso de efeitos de controle em players; sorteio não é função da UI.
+- **Estado:** ✅ ID JAR + código exato no source commit; ⚠️ gameplay/config/host/auxiliares requerem confirmação; ⛔ adapter de perk RPG não implementado, sem duplicar status, mana ou dano.

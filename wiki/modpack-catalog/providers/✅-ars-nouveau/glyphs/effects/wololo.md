@@ -40,3 +40,12 @@ If future Black Arcana transmutation overlaps, uniqueness must be mechanical rat
 ## QA / runtime
 
 Source is pinned to 5.13.1. Full-pack recipe/mod-interaction QA remains pending.
+
+## Engenharia de perks — evidência de execução individual
+
+- **Classe versionada:** [`EffectWololo.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectWololo.java) no Ars Nouveau 5.13.1.
+- **Registry:** a classe declara `super("wololo","Wololo")`; ficha usa `ars_nouveau:wololo` e não `ars_nouveau:glyph_wololo`.
+- **Escolha de cor:** `getDye` lê dye de inventário de `TileCaster`, offhand de outros casters, ou fallback Randomize/partícula da spell. **Entidades:** colore `Sheep`, componentes `BASE_COLOR/DYED_COLOR` de itens/equipamentos, ou usa `MobAccessor.callMobInteract` por fake player.
+- **Mundo:** em blocos implementando `IWololoable` chama `setColor`; em sinais tenta `DyeItem.tryApplyToSign`; senão resolve receita de crafting de dye e bloco, converte blockstate mantendo propriedades e restaura block entity data quando mesma classe. Cache de receitas `FixedStack` com máximo `16`.
+- **Perks:** alteração cromática não significa dano/status. Sensitivity e randomization afetam alvo/paleta por código; efeitos de bloco são provider-owned e não podem ser duplicados por observer.
+- **Status:** ✅ code pin/identidade; ⚠️ downstream, config e Survival pendentes; mutação por RPG perk só pode ocorrer via [eventos reais](../../VERIFIED-EVENT-SURFACES-5.13.1.md) e adapter validado, não por inferência temática.

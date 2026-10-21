@@ -29,3 +29,16 @@ On living targets, Freeze applies vanilla Slowness. On blocks it can convert wat
 Ars Nouveau owns this fluid/ice conversion and slowing primitive. Independent Black Arcana freezing/world mutation must remain `WorldEffectPolicy`-controlled and must not replay Ars conversions.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectFreeze`).
+
+## Dossiê de engenharia para perks — causalidade exata
+
+- **Código versionado:** [`EffectFreeze.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectFreeze.java), `com.hollingsworth.arsnouveau.common.spell.effect.EffectFreeze` no Ars 5.13.1, método `onResolveBlock`.
+- **Geometria:** percorre `SpellUtil.calcAOEBlocks(... getAoeMultiplier(), count(Pierce))` e aplica `extinguishOrFreeze` **na posição e nas seis direções**; toda alteração pode propagar `ShapersFocus.tryPropagateBlockSpell`. **Mutações:** água acima → Ice/Frosted Ice com Sensitive; lava acima → Obsidian, flowing lava → Cobblestone; fogo acima é removido; Ice→Packed Ice→Blue Ice. **Entidades:** `applyConfigPotion(...MOVEMENT_SLOWDOWN)`; config default duração 10, Extend Time 5; Sensitive limit 1. **Risco:** não há claim check individual em `extinguishOrFreeze`, mas isso não demonstra ausência de admissão externa: verificar o resolver antes de tratar como vulnerabilidade. AOE×vizinhos requer cap.
+- **Limite de integração:** ✅ source pin confirmado, ⚠️ config e classes auxiliares demandam QA; ⛔ hook de mutação RPG não verificado. Provider mantém autoridade de mana/efeito/owner; sem segundo cast/proc/settlement. Survival: PENDING.
+
+## Auditoria do executor secundário — limitações verificáveis
+
+- **Java:** [`api/util/SpellUtil.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/api/util/SpellUtil.java).
+- **Helper de área `SpellUtil.calcAOEBlocks`:** quando recebe `SpellStats`, usa `aoeBonus=stats.getAoeMultiplier()` e `pierceBonus=count(Pierce)`; overload double calcula `width=(int)(1+floor(aoeBonus))`, `height=(int)(1+ceil(aoeBonus))`, `depth=1+pierceBonus`. A implementação monta a grade orientada pelo hit e inclui a origem. `EffectFreeze` ainda chama `extinguishOrFreeze` no centro **e em seis vizinhos** de cada célula, com possíveis overlaps. O número bruto de *tentativas* pode chegar a `7*|calcAOEBlocks|` antes de filtrar casos inválidos, não é número de blocos únicos alterados. Não há cap universal evidente nesse helper; validar limites de augments/config/execução.
+
+**Limite:** fatos lidos do source pin, não prova de comportamento no JAR físico ou de adapter RPG. QA no modpack ainda pendente.

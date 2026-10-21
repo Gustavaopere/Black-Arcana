@@ -181,3 +181,9 @@ The source catalog is complete enough for Phase 2 deduplication, but the followi
 - dedicated-server/client interoperability.
 
 None of those runtime checks are reported as PASS by this documentation checkpoint.
+
+## Engenharia por objeto para perks — PR #796
+
+- ✅ **11/11 spell parts** (10 effects + 1 augment) ganharam cada um seu arquivo `glyphs/*.md` com source 2.7.6, fórmula, receita, custos e causalidade. [Matriz técnica 2.7.6](PERK-ENGINEERING-MATRIX-2.7.6.md) e [índice GLYPHS](GLYPHS.md).
+- ⚠️ Riscos source-only: Insert Split com denominador possivelmente vazio, Apply extractor de caster automatizado com consumo de 1 por chamada independente de `count`, world blocks sem claim gate local explícito. Não declarar dupe/bypass/crash sem reproduzir no runtime.
+- **Estado:** ✅ fonte/identidade e documentação no PR draft; ⚠️ config física/compatibilidade/Survival; ⛔ adapter RPG não implementado ou testado. Nenhuma alteração de runtime Black Arcana ou promoção de Stage.

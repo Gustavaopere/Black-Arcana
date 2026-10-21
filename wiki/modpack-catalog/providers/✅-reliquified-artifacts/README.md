@@ -1,6 +1,6 @@
 # Reliquified Artifacts — 1.0.8
 
-Status: `✅ CATALOGED / CURRENT PHYSICAL 1.0.8 / COUNTED_SOURCE_PINNED / 48 ARTIFACT OWNERS / 52 OWNER-SCOPED ABILITY ROOTS / +52 STRICT / ASSEMBLED QA SEPARATE`
+Status: `✅ CATALOGED / CURRENT PHYSICAL 1.0.8 / COUNTED_EXACT STATIC BINARY / 48 ARTIFACT OWNERS / 52 OWNER-SCOPED ABILITY ROOTS / +52 STRICT / ASSEMBLED QA SEPARATE`
 
 ## Current physical identity
 
@@ -14,6 +14,18 @@ Current physical Project Library authority records:
 - Minecraft / loader: 1.21.1 / NeoForge.
 
 Official CurseForge identifies the 1.21.1 `1.0.8` build as the current Beta release published 2026-08-22. The project is All Rights Reserved; this catalog is clean-room factual inspection only.
+
+## Latest exact compiled owner-to-constructor result — 2026-10-14
+
+[Java 21 #38662072936](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38662072936) **SUCCESS** on the identical official 1.0.8 publisher JAR with physical SHA-1 `00ad43d5a1aa287fd0084bc3b48546821494ff80`. The compiled two-stage Java String switch, case targets and LambdaMetafactory constructor handles establish **45 wearable + 3 direct = 48/48 owner→concrete class** associations, **47 implementation classes, 51 class-level ability builders and 52 distinct owner-scoped semantic roots**, with **zero deviations**. These **existing** 52 identities are now `COUNTED_EXACT` for static identity, **+0 roots**. See [exact owner-ability dossier](EXACT-BINARY-OWNER-ABILITIES-1.0.8.md).
+
+⚠️ Exact compiled redirect *does not* prove its successful injection into deployed Artifacts 13.2.5 or actual Relics 0.12.8, Curios, loot, XP, effect, client/Survival or multiplayer behavior. Black Arcana Stage 06.05 remains 🟡 and Stage09 physical acceptance PENDING.
+
+## Independent physical classfile corroboration — 2026-10-14
+
+Java 21 [run #38659260300](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38659260300) finished **SUCCESS** using the official Modrinth 1.0.8 publisher JAR with a SHA-1 exactly matching sibling physical #477. Size: **699,260 bytes**; SHA-256: `360fd701d575b5421675bfdc50c6ed8a22614410eb92dd782424f9b5fb5c0006`. All **47 class files**, **51 unique class-level AbilityTemplate.builder roots**, **48 compiled ModItemsMixin owner literals** and **52 owner-scoped source inventory identities** matched with zero observed discrepancies. See [physical static evidence](PARTIAL-BINARY-ABILITY-EVIDENCE-1.0.8.md).
+
+**Historical limitation (superseded by the causal binary proof above):** the earlier run verified class templates and owner-case literals separately without their compiled linkage. The new proof establishes that *static* linkage only; loaded Mixin behavior against Artifacts 13.2.5 / Relics 0.12.8 remains untested. Therefore these 52 roots **remain COUNTED_SOURCE_PINNED**; no COUNTED_EXACT promotion or addition to the semantic minimum. The installed 1.0.8 remains authoritative even though publisher 1.0.9 was released on 2026-10-12.
 
 ## Exact source-version checkpoint
 
@@ -61,7 +73,7 @@ The Black Arcana semantic metric counts discrete provider-owned supernatural abi
 
 Reliquified Artifacts therefore contributes:
 
-**+52 `COUNTED_SOURCE_PINNED` semantic magic objects**.
+**52 previously counted semantic objects, now `COUNTED_EXACT` for compiled owner-scoped identity; +0 new roots**.
 
 This does not count the 48 Artifact item containers, `mimi_dust`, loot entries or rank modifiers as additional magic objects.
 
@@ -78,7 +90,7 @@ This does not count the 48 Artifact item containers, `mimi_dust`, loot entries o
 
 As **52** habilidades owner-scoped da fonte 1.0.8 foram individualizadas em [ABILITY-CARDS-1.0.8.md](ABILITY-CARDS-1.0.8.md) com fichas por `artifacts:owner` e ability root, classe source-pinned e rota de obtenção somente quando comprovada.
 
-**✅ 52/52 fichas documentais; +0 novas identidades** (as 52 já constavam do ledger). Esta entrega **não** prova igualdade binária source↔JAR instalado, nem APIs, configuração ou funcionamento físico. O status permanece `COUNTED_SOURCE_PINNED`; as verificações de Survival continuam ⚠️.
+**✅ 52/52 fichas documentais; +0 novas identidades** (as 52 já constavam do ledger). As fichas originais eram source-pinned. A prova independente posterior de SHA igual e owner→construtor compilado atualizou a **identidade estática** para `COUNTED_EXACT`; não comprova API dinâmica, configuração ou Survival ⚠️.
 
 A modlist sibling atualizada documenta Artifacts **13.2.5** no topo do dossiê, em contraste com o baseline **13.2.3** usado no fix histórico de Reliquified 1.0.8. A combinação efetiva necessita regressão física, não promoção por changelog.
 
@@ -97,6 +109,6 @@ Catalog closure is not an assembled-pack PASS. Important runtime regression gate
 
 ## Result
 
-**✅ Cataloged — `COUNTED_SOURCE_PINNED`.**
+**✅ Cataloged — `COUNTED_EXACT` (compiled owner/ability identity); ⚠️ runtime/Survival pending.**
 
 Current semantic inventory: **52 owner-scoped Reliquified Artifacts ability roots**. Strict semantic delta: **+52**.

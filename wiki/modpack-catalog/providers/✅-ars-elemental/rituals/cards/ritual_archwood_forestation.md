@@ -43,3 +43,13 @@ The Source Gems here are radius augment inputs. The inherited source path does n
 Os campos acima reproduzem os contratos factuais da auditoria do source e do Ars 5.13.1 quando herdados. Não constituem medição no pack físico. Recursos Source, alteração de blocos/biomas, entidades, scheduler, persistência e cleanup permanecem provider-owned. Black Arcana não cobra Source duas vezes nem reexecuta rituais; efeitos destrutivos próprios passam por `WorldEffectPolicy`. Sem hook real, integração **⛔ fail-closed**.
 
 **Fontes:** [rituais](../../RITUALS.md) · [registries](../../REGISTRIES.md) · [acquisition](../../ACQUISITION.md). Clean-room factual, sem código/JSON/assets upstream.
+
+## Engenharia de perks — contrato causal do ritual 0.7.10.1
+
+- **Source checkpoint exato:** [`ArchwoodForestationRitual.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/rituals/forest/ArchwoodForestationRitual.java). Pin de versionamento, **não** prova binária de equivalência da implementação ao JAR.
+- **Executor herdado:** [Ars Nouveau ConjureBiomeRitual/FeaturePlacementRitual](https://github.com/baileyholl/Ars-Nouveau/tree/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/api/ritual) no host 5.13.1.
+- **Executor confirmado:** estende `FeaturePlacementRitual` Ars 5.13.1: Source Gem incrementa checkRadius a partir de 7; alvos embaralhados em raio, avanço por posições, retorna após um `onPlace` bem-sucedido, persiste `featureIndex`, `positionIndex` e `checkRadius` no pai.
+- **Seleção/outputs:** `addFeatures` sempre inclui `BonemealFeature(6,0.4)` e `PlaceableLightFeature(4,0.1)`; `biomeType` 0..4 seleciona Blazing, Cascading, Vexing, Flourishing ou Flashing tree (RandomTreeFeature distance8/chance0.8), planta tema e Archpod; default -1 mistura cinco tipos de árvore e diferentes Archpods.
+- **Mutação em admissão:** `canConsumeItem(stack)` modifica `biomeType` quando recebe sapling selecionável; também o redefine para -1 em stack não-seletor e só chama super/retorna o resultado no final. Isto é detalhe operacional a verificar em reload/ordem de consumo: não interpretar verificação como função pura.
+- **QA/perks:** `biomeType` não é serializado neste trecho pelo addon (pai só index/radius). Persistência exata da variante após reload não está demonstrada; não alterar Source ou plano de feature por perk.
+- **Estado:** ✅ ID física do JAR e assinatura do source pinned; ⚠️ equivalência implementation-JAR, config deploy, helpers/host, protection e Survival pendentes; ⛔ adapter de perks RPG e mutabilidade externa não comprovados. Sem dupla Source/cast/concessão de Mastery.

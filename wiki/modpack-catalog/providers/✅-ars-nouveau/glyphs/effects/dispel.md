@@ -26,3 +26,16 @@ Compatible augments: none in the exact 5.13.1 class.
 This is a real Ars-supported event/interface surface, but it remains Ars authority. A future Black Arcana adapter may observe/use a supported seam only after exact API-contract review; it must not reinterpret Dispel as authority over Black Arcana state, Corruption, Strain or arbitrary third-party effects.
 
 Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / API CANDIDATE SEAM IDENTIFIED / RUNTIME QA PENDING`.
+
+## Dossiê de engenharia para perks — cadeia e interfaces
+
+- **Source pin:** [`EffectDispel.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectDispel.java), Ars Nouveau 5.13.1.
+- **Boundary real:** `NeoForge.EVENT_BUS.post(new DispelEvent.Pre(hit,world,shooter,spellStats,spellContext))` antes da resolução, com `isCanceled()`; `DispelEvent.Post` depois, condicionado ao ramo. Evento concreto é prova de veto/observação para **Dispel**, não de mutação universal das magias Ars. **Mob effects:** remove `EffectCures.MILK` exceto `PotionEffectTags.DISPEL_DENY`, também remove exceções `DISPEL_ALLOW`; chama `IDispellable.onDispel(shooter)` em entidades vivas. Blocos/BlockEntities `IDispellable` recebem callback próprio. **Augments:** nenhum na classe.
+- **Estado:** ✅ classe exata lida; ⚠️ helpers/config real e Survival pendentes; mutabilidade via RPG Skill Tree ⛔ sem interface comprovada que altere esses parâmetros. Ars conserva authority de recursos/efeitos.
+
+## API pública do Dispel — assinatura e escopo comprovados
+
+- Fonte do evento: [`com.hollingsworth.arsnouveau.api.event.DispelEvent`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/api/event/DispelEvent.java); `Pre extends DispelEvent implements ICancellableEvent` e `Post extends DispelEvent` (não cancelável).
+- Payload público exato: `HitResult rayTraceResult`, `Level world`, `LivingEntity shooter`, `SpellStats augments`, `SpellContext context`. `EffectDispel` publica `Pre` e usa `isCanceled()` antes de resolver; publica `Post` nos caminhos que prosseguem.
+- **Hooks demonstrados:** veto de Dispel em Pre; observação de Post com ressalva de caminhos precoces; `IDispellable.onDispel(LivingEntity)` para alvos elegíveis. Reatribuir campos do evento não prova que `EffectDispel` passará a consumir valores substituídos, pois o corpo continua usando suas variáveis locais.
+- **RPG perk:** candidato de bridge de veto/observação, ainda não conectado. Ver [matriz geral de eventos](../../VERIFIED-EVENT-SURFACES-5.13.1.md). Sem teste do evento no modpack e sem contrato de deduplicação, não conceder Mastery por simples Post.

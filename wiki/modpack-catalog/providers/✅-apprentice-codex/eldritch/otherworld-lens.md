@@ -52,3 +52,30 @@ Registered through Iron's spell registry. Exact 0.9.7.1 scroll/loot acquisition 
 ## Confidence
 
 `SOURCE-PINNED SPELL + SERVER TARGET/SESSION LIFECYCLE / CLIENT VIEW RENDER + FULL MODPACK QA PENDING`
+
+## Localizadores para Codex — source exato
+
+- **Registry + identidade:** `apprenticecodex:otherworld_lens` → `SpellRegistry.reg("otherworld_lens", OtherworldLens::new)` no source 0.9.7.1.
+- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.otherworldlens.OtherworldLens`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/otherworldlens/OtherworldLens.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
+- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
+- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
+- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+---
+
+## Engenharia causal aprofundada — lote persistente 0.9.7.1
+
+**Classes verificadas:** [`otherworldlens/OtherworldLens.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/otherworldlens/OtherworldLens.java) · [`otherworldlens/OtherworldLensSessionManager.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/otherworldlens/OtherworldLensSessionManager.java) · [`otherworldlens/OtherworldLensTargetSafety.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/otherworldlens/OtherworldLensTargetSafety.java) · [`otherworldlens/OtherworldLensEvents.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/otherworldlens/OtherworldLensEvents.java) · [`otherworldlens/OtherworldLensBlock.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/otherworldlens/OtherworldLensBlock.java). Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` declarado 0.9.7.1; **não** há prova de equivalência bytecode dos métodos com o JAR físico da modlist. A inspeção não é um QA provider-native.
+
+### Execução e integridade
+
+- **Validação da mira:** `OtherworldLensTargetSafety.validate` rejeita block target incompleto ou coordenadas não finitas; exige `placePos == hitPos.relative(hitFace)`, face oposta coerente, espaço de colocação dentro de altura e em `isAir()`. Reexecuta **raycast no servidor** por `caster.pick(range+0.25,...) ` e compara bloco, face e ponto dentro de `0.25²`, além de exigir sólido opaco/model e fluido vazio no hit.
+- **Sessão server-owned:** `OtherworldLensSessionManager.start` cria UUID da sessão e associa o UUID do caster, dimensão, posição da lens, alvo e timestamp nos mapas `BY_CASTER` e `BY_POSITION`. São estruturas em memória neste manager, não persistência NBT demonstrada. `validate` cancela se sessão/token mudaram, caster morreu, dimensão mudou, player se afastou mais de `KEEP_RANGE_SQ=12²`, ou bloco lens foi removido/substituído.
+- **Encerramento:** `finish` remove os dois registros e destrói **somente** o bloco ainda do tipo `OTHERWORLD_LENS_LENS`; `OtherworldLensEvents` cobre morte, login, logout, mudança de dimensão e parada do servidor. Não concluir cleanup correto após crash sem prova runtime.
+- **Riscos:** claim de colocação/destroição, reentrância de cast, chunk unload, sessão sem token e NBT ausente, servidor reiniciado, lente não owner e distância. A lente faz parte da root `otherworld_lens`; não criar segundo mirroring/remote-control BA.
+
+### Interoperabilidade e QA
+
+**Raiz contável:** `apprenticecodex:otherworld_lens`, já presente nas 83 spells. Efeitos secundários/ticks/entidades continuam provider-owned (Iron's/Apprentice's). **⛔** RPG Skill Tree só pode oferecer progressão/atributos/gates via contrato real; nenhum adapter de perks/Mastery foi implementado. Black Arcana não reexecuta nem debita recursos/cooldowns do provider. **⚠️** Persistem QA físico, modpack Survival, server+client, config, multiplayer, claims, lifecycle NBT e método de JAR. Stage 06.05 sem promoção.
+
+[Matriz técnica da etapa](../PERK-ENGINEERING-MATRIX-PERSISTENT-0.9.7.1.md).

@@ -54,3 +54,22 @@ Occupies the **rapid Fire homing missile + compact AoE burst** niche. Black Arca
 ## Confidence
 
 `SOURCE-PINNED SPELL + MISSILE ENTITY / PACK CONFIG MULTIPLIER + FULL RUNTIME QA PENDING`
+
+## Localizadores para Codex — source exato
+
+- **Código da implementação:** [`MagicSpear.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/magicspear/MagicSpear.java); classe `jp.aquafactory.apprenticecodex.spell.magicspear.MagicSpear`.
+- **Registro comprovado:** `SpellRegistry.reg("magic_spear", MagicSpear::new)`; entrada distinta de escola, registry e documento.
+- **Localização de parâmetros:** conservar as fórmulas, constantes, tempo, mana, configurações e advertências da seção `Exact source coefficients` desta própria ficha; conferir na classe qualquer setter de entidade/efeito, sem presumir que o campo possa ser alterado externamente.
+- **Atributos/modificadores:** como addon do Iron's, `AbstractSpell` resolve spell power/custo e escola conforme seu contrato exato; parâmetros como raio, alvos e projéteis podem depender da classe acima ou de helpers/entidades *provider-owned*. Sua mutabilidade por perk está **CONDICIONADA** a evento/API/adapter validado na versão exata.
+- **Causalidade e proteção:** associar progressão ao cast original; não premiar projétil, dano indireto, summon ou recast como outro cast automaticamente. Nenhum teste de alteração de runtime, Survival ou hook foi conduzido por esta ficha.
+- **Proveniência:** fonte no commit 0.9.7.1 `305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. Metadados e localizadores factuais; nenhuma cópia de implementação ou asset upstream.
+
+## Engenharia causal aprofundada — ofensiva/movimento/sensoriamento (2026-10-14)
+
+**Source:** [`magicspear/MagicSpear.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/magicspear/MagicSpear.java) · [`magicspear/MagicSpearMissileEntity.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/magicspear/MagicSpearMissileEntity.java).
+
+- **Persistência/lançamento:** `MagicSpear.nextSide` alterna esquerda/direita na chave de persistent data `apprenticecodex.magic_spear.next_left`; busca mira assistida em até **64 blocos**. Ao voar/nadar usa vetor de visão, nos demais casos direção plana.
+- **Lifecycle de míssil:** `MagicSpearMissileEntity.tickServer` alterna `RELEASE` (5 ticks), `BOOST` (2.2 blocos/tick; direção altera até 5°/tick), `BURST` (14 ticks). Projétil serializa `Phase`, `PhaseTicks`, vetores e `Target` UUID. Impacto `applyBlastDamage` em raio **1.5** e dedup por entidade; `onAntiMagic` altera para burst **sem dano**, se ainda não estava em burst.
+- **QA:** lado persistido após restart, target stale, detecção de colisão e anti-magic, dono do splash e política de dano; não premiar fases do projétil como cast extra.
+
+🟡 Source-level causal; ⚠️ bytecode do JAR, config e QA modpack/Survival não certificados; ⛔ RPG perks/Mastery sem adapter homologado. Iron's e Apprentice's mantêm mana/casting/efeitos; Black Arcana não duplica runtime.

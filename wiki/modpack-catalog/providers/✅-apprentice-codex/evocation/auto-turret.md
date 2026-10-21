@@ -70,3 +70,33 @@ Black Arcana must not duplicate the turret target loop, ammo ledger, restock pay
 ## Confidence
 
 `SOURCE-PINNED PLACEMENT + STATS + AUTONOMOUS TIMING + OWNER RESTOCK / FULL MODPACK TARGETING AND PERSISTENCE QA PENDING`
+
+## Localizadores para Codex — source exato
+
+- **Registry + identidade:** `apprenticecodex:auto_turret` → `SpellRegistry.reg("auto_turret", AutoTurret::new)` no source 0.9.7.1.
+- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.autoturret.AutoTurret`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/autoturret/AutoTurret.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
+- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
+- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
+- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+---
+
+## Engenharia causal aprofundada — entidades 0.9.7.1
+
+**Source pin declarado:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`. **Classes lidas:** [`autoturret/AutoTurret.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/autoturret/AutoTurret.java) · [`autoturret/AutoTurretEntity.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/autoturret/AutoTurretEntity.java) · [`autoturret/AutoTurretPlacementHelper.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/autoturret/AutoTurretPlacementHelper.java). O arquivo físico da modlist é 0.9.7.1; **igualdade de corpo dos métodos no bytecode compilado não foi atestada nesta etapa**. Este conteúdo é engenharia documental factual, não código incorporado.
+
+### Cadeia de execução e recibo provider-owned
+
+- **Entrada, alvo e materialização:** `AutoTurret.checkPreCastConditions` resolve colocação no servidor com `AutoTurretPlacementHelper.resolveServer` e rejeita sobreposição `hasNearbyTurret` consultando `AutoTurretEntity` na `placementBox().inflate(0.1)`. A posição aceita é guardada em `AutoTurretCastData` e revalidada em `onCast` antes de `serverLevel.addFreshEntity`. A entidade recebe owner, ancoragem, dano, munição inicial, custo de restock e vida via setters locais do provider.
+- **Tick e combate:** `AutoTurretEntity.tickOnServer` descarta entidade sem owner vivo na mesma dimensão. Com suporte abaixo, mantém posição ancorada; sem suporte, volta a seguir física da entidade. Atualiza alvo periodicamente (a cada 10 ticks no ramo sem alvo/saturação), testa linha de visão, usa `CHARGE_TICK=15` e `COOLDOWN_TICK=8`, além de timers de lock e de descarte. `fire` aplica `CombatTools.applyDamage` com `DamageTypes.AUTO_TURRET`, owner e escola; só redireciona a agressividade de `Mob` quando `damaged==true`.
+- **Restock é outro tipo de operação:** `mobInteract` requer `MAIN_HAND` e o UUID do dono, recusa quando já cheio ou sem mana e debita `restockManaCost` de `MagicData` ao reabastecer. Depois sincroniza `SyncManaPacket`, restaura a munição e reinicia o prazo de descarte. Não é uma nova execução do feitiço `auto_turret`.
+- **Riscos para perks:** o disparo periódico, reposição, dano e spawn não constituem casts independentes. Testar targeting PvP, owner offline, múltiplas torres, proteção de world placement, restock concorrente e estados do JAR físico. Ação e gasto continuam sob Iron's/Apprentice's.
+
+### Atribuição técnica e condições para perks
+
+- **Identidade semântica:** exatamente uma raiz `apprenticecodex:auto_turret`; eventos de entidades, timers, limpeza, efeitos derivados, recursos e cooldown são de Iron's/Apprentice's, não casts BA adicionais.
+- **Observabilidade:** sem boundary/receipt interoperável comprovado, ⛔ Mastery, perks ou efeitos de RPG Skill Tree que suponham cast confirmado, hit, spawn ou settlement. Não inventar API de bridge.
+- **QA pendente ⚠️:** configuração efetiva, JAR físico dos métodos, dedicated/full-modpack, Survival, cross-dimension, persistência, claim/PvP e compatibilidade de inventário. Não promover Stage 06.05.
+- **Clean-room:** apenas comportamento observado no source é descrito. Black Arcana conserva seu próprio casting, Corruption, Strain e WorldEffectPolicy.
+
+[Matriz de lifecycle](../PERK-ENGINEERING-MATRIX-LIFECYCLE-0.9.7.1.md).

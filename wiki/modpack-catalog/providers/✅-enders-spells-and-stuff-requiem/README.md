@@ -1,6 +1,10 @@
 # Ender's Spells and Stuff: Requiem — 0.1.7
 
-Status: `✅ CATALOGED / PHYSICAL 0.1.7 SHA-PINNED / EXACT 0.1.7 SOURCE-PINNED / 58 REGISTERED ROOTS / 53 STRICT SEMANTIC ACTIONS / 5 TECHNICAL-RESIDUAL ROOTS EXCLUDED / RUNTIME QA FAIL-CLOSED`
+Status: `✅ CATALOGED / PHYSICAL 0.1.7 SHA-MATCHED / COUNTED_EXACT 57 COMPILED ROOTS / 52 STRICT SEMANTIC ACTIONS / 5 TECHNICAL EXCLUSIONS / SOURCE-ONLY GONG / RUNTIME QA FAIL-CLOSED`
+
+## Publisher-binary supersession — 2026-10-14
+
+[Java 21 #38655251099](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38655251099) verified **57/57 compiled registrations and class-local spell IDs**, not the source-derived 58. The exact publisher build omits `WEAKENING_GONG`/`ess_requiem:gong`; source pin `04ab715d...` contains that declaration, so its 53 counted candidates were one too high for the installed release. Physical strict contribution is **52**; five technical/AI roots remain excluded. The original source snapshot and its 58/53 figures below are historical source evidence, not canonical installed-byte counts. [Exact binary dossier](EXACT-BINARY-SPELLS-0.1.7.md). Live registration, config and Survival remain untested.
 
 ## Current physical identity
 
@@ -70,7 +74,7 @@ The semantic metric counts provider-owned player-facing spells/actions and exclu
 Current disposition:
 
 - registered roots: **58**;
-- strict semantic actions: **53**;
+- source-derived semantic candidates: **53**; physical compiled semantic actions: **52**;
 - excluded technical/residual roots: **5**.
 
 Excluded:
@@ -92,7 +96,7 @@ Conversely, the three Cataphract action roots are counted because exact source r
 
 Strict semantic contribution:
 
-**+53 `COUNTED_SOURCE_PINNED`**
+**Historical source hypothesis: +53 `COUNTED_SOURCE_PINNED`; physically corrected to +52 `COUNTED_EXACT`.**
 
 See `SOURCE-0.1.7-SPELL-INVENTORY.md`.
 
@@ -118,7 +122,7 @@ Iron's Spells owns the host registry, casting/mana/cooldown framework and base s
 Requiem owns:
 
 - its 58 registered source roots;
-- its 53 catalog-counted semantic actions;
+- its 52 physically registered catalog-counted semantic actions;
 - its custom Spellblade school;
 - its weapons/spellbooks/curios;
 - its summons/effects and provider-specific event behavior.
@@ -148,4 +152,4 @@ Catalog closure does not prove:
 
 The current physical provider is 0.1.7, its exact release-correlated source registry contains 58 roots, and 53 provider-owned player-facing semantic actions are reconstructible under the Black Arcana metric.
 
-Strict semantic delta: **+53**.
+Strict physical semantic delta: **+52** (`COUNTED_EXACT` for compiled registry identity).

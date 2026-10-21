@@ -47,3 +47,23 @@ Direct overlap with Order/barrier/counter concepts. A BA barrier needs materiall
 ## Confidence
 
 `SOURCE-PINNED SPELL + DEFENSE EVENT ENTRY/EXIT / EXACT ABSORBABLE ATTACK SET + COUNTER PROJECTILE FORMULA QA PENDING`
+
+## Localizadores para Codex — source exato
+
+- **Registry + identidade:** `apprenticecodex:mystic_shield` → `SpellRegistry.reg("mystic_shield", MysticShield::new)` no source 0.9.7.1.
+- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.mysticshield.MysticShield`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/mysticshield/MysticShield.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
+- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
+- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
+- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia causal aprofundada — mundo, channel e defesa (2026-10-14)
+
+**ID causal:** `apprenticecodex:mystic_shield` — uma magia Iron's-native; ticks/jobs/entidades/impactos são efeitos-filhos, nunca um novo cast.
+
+**Source pin:** [MysticShield.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/mysticshield/MysticShield.java); [MysticShieldDefenseEvent.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/mysticshield/MysticShieldDefenseEvent.java); [MysticShieldShieldEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/mysticshield/MysticShieldShieldEntity.java); [MysticShieldProjectileEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/mysticshield/MysticShieldProjectileEntity.java).
+
+**Cadeia verificada em source:** MysticShieldDefenseEvent.onLivingAttack (LivingIncomingDamageEvent HIGHEST) cancela ataque frontal ativo; shouldAccumulateDamage aplica cooldown por source/game time e armazena o agregado em PersistentData. spawnShieldEntity associa shield e entity ID. releaseStoredDamage inicia fade, consome flag de interrupção por CounterSpell, lê e limpa o ledger antes de emitir projectile se agregado positivo e sem interrupção. MysticShieldProjectileEntity.onHitEntity aplica dano e descarta. ID de entidade é local, não chave persistente global.
+
+**QA prioritário (não executado):** Reload de entity ID/ledger NBT, hits de mesma fonte e multipart, interrupção de CounterSpell, directional gate, reflexo duplicado.
+
+**Boundary:** mana/casting Iron's e efeitos Apprentice's; nenhuma segunda liquidação/XP/Mastery por Black Arcana; contrato RPG sem hook comprovado: ⛔ fail-closed. ⚠️ Sem prova de bytecode do JAR instalado, config nem QA físico.

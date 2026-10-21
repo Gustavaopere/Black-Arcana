@@ -37,3 +37,11 @@ Independent Black Arcana environmental mutation remains bounded and subject to p
 ## QA
 
 Source behavior is pinned to 5.13.1. Protection/claim compatibility for every feature implementation remains full-pack runtime QA.
+
+## Engenharia para perks — contrato de ritual
+
+- **Fonte:** [`FloweringRitual.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/ritual/FloweringRitual.java), `com.hollingsworth.arsnouveau.common.ritual.FloweringRitual`, Ars 5.13.1. [`FeaturePlacementRitual.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/api/ritual/FeaturePlacementRitual.java) é executor auxiliar.
+- **Herança:** `FloweringRitual extends FeaturePlacementRitual` com `checkRadius=7`; `onStart` do pai soma `ItemTagProvider.SOURCE_GEM_TAG` conforme `ItemStack.getCount()`, monta `targetPositions` em raio geométrico, embaralha e processa features sequencialmente. O pai conclui após esgotar cada lista e **retorna após um sucesso** de `onPlace` em seu tick; tentativas falhadas podem ser percorridas no mesmo tick.
+- **Features por modo:** sem sand-tag: `PlaceBlockFeature(1.5,0.8,randomFlower16)` e `BonemealFeature(5,0.8)`. Com `ItemTags.SAND`: `PlaceBlockFeature(3,0.04,CACTUS)` e `PlaceBlockFeature(1.5,0.1,DEAD_BUSH)`. `canConsumeItem` aceita no máximo um seletor sand enquanto não usado, além de Source Gems.
+- **Persistência/QA:** pai grava `featureIndex`, `positionIndex`, `checkRadius` e reconstrói via `setup()` no read; seleção aleatória/featureMap merece QA após save/restart. Aumentar raio afeta candidatos potenciais e custo do loop; nenhum budget adicional externo provado. WorldEffectPolicy vale para mutações próprias do Black Arcana, não para um segundo replay Ars.
+- **Estado:** ✅ source-pinned; ⚠️ tempo, recursos e proteção exigem observar config/JAR runtime. ⛔ não existe adapter RPG/Black Arcana demonstrado para reescrever Source, progresso, alvos ou world effects deste ritual.

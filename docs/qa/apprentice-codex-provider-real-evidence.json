@@ -1,0 +1,94 @@
+{
+  "schema": "black_arcana_apprentice_codex_provider_real_v1",
+  "evidence_class": "OPERATOR_REPORTED_MANUAL_QA_NOT_AUTOMATIC_GAMEPLAY_PROOF",
+  "provider": {
+    "jar": "apprentice_codex-0.9.7.1+mc1.21.1.jar",
+    "mod_id": "apprenticecodex",
+    "sha1": "b514315add32b93b0049c8673075627d7ef812e0",
+    "sha256": "f0dfab67154f344c02c6fbe561f73456fa46ed9d018fae661dcdf4da95c67fe2",
+    "source_pin": "305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e"
+  },
+  "campaign": {
+    "candidate_sha": null,
+    "black_arcana_jar_sha256": null,
+    "modlist_commit": null,
+    "instance_manifest_sha256": null,
+    "minecraft": "1.21.1",
+    "neoforge": null,
+    "irons_version": null,
+    "operator_tag": null,
+    "started_utc": null
+  },
+  "rows": [
+    {
+      "id": "AC-P01",
+      "state": "PENDING",
+      "assertions": {
+        "exact_provider_jar": null,
+        "correct_mod_ids_and_versions": null,
+        "dedicated_server_boot": null,
+        "real_client_spell_registry": null
+      },
+      "observed": null,
+      "checked_utc": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "AC-P02",
+      "state": "PENDING",
+      "assertions": {
+        "baseline_without_cast_damage": null,
+        "tick_cadence_measured": null,
+        "server_damage_attribution": null,
+        "cancel_despawn_observed": null
+      },
+      "observed": null,
+      "checked_utc": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "AC-P03",
+      "state": "PENDING",
+      "assertions": {
+        "normal_impact_baseline": null,
+        "antimagic_before_burst": null,
+        "amplified_burst_observed": null,
+        "owner_ally_world_safety_checked": null
+      },
+      "observed": null,
+      "checked_utc": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "AC-P04",
+      "state": "PENDING",
+      "assertions": {
+        "pastel_staff_held": null,
+        "precast_cancel_observed": null,
+        "staff_affinity_applied": null,
+        "mana_cooldown_audited": null
+      },
+      "observed": null,
+      "checked_utc": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "AC-P05",
+      "state": "PENDING",
+      "assertions": {
+        "item_identity_swap_tested": null,
+        "repair_amounts_recorded": null,
+        "relog_restart_tested": null,
+        "no_duplicate_repair_or_cost": null
+      },
+      "observed": null,
+      "checked_utc": null,
+      "evidence": [],
+      "blocker": null
+    }
+  ]
+}

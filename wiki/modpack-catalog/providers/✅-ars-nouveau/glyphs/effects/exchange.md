@@ -26,3 +26,9 @@ On entities, Exchange swaps caster and target positions, subject to teleport sup
 Ars Nouveau owns both entity-position swapping and this inventory-backed block exchange transaction. Black Arcana should not clone a generic swap spell or double-consume/return blocks when Ars is causal.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectExchange`).
+
+## Dossiê de engenharia para perks — cadeia e interfaces
+
+- **Source pin:** [`EffectExchange.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectExchange.java), Ars Nouveau 5.13.1.
+- **Entidades:** `onResolveEntity` rejeita `TELEPORTING_NOT_SUPPORTED` e `FakePlayer`; verifica `EventHooks.onEnderTeleport` separadamente em caster e alvo, de modo que um dos movimentos pode ser cancelado sem cancelar o outro (troca não necessariamente atômica). **Blocos:** `SpellUtil.calcAOEBlocks` com AOE/Pierce, equivalência de `origState.getBlock()`, harvest/protection, extração de `BlockItem` via `InventoryManager` (Randomize altera seleção); `attemptPlace` simula Silk Touch, quebra com `BlockUtil.breakExtraBlock`, coloca state, atualiza tags/components e diminui stack em sucesso. **Perks:** block volume exige budget e inventário consistente; sem segundo loot ou segundo teleporte.
+- **Estado:** ✅ classe exata lida; ⚠️ helpers/config real e Survival pendentes; mutabilidade via RPG Skill Tree ⛔ sem interface comprovada que altere esses parâmetros. Ars conserva authority de recursos/efeitos.

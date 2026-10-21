@@ -26,3 +26,11 @@ Harvest operates on mature crops and similar harvestable vegetation, obtains dro
 Ars Nouveau owns this crop-harvest spell, its loot handling and replant semantics. Black Arcana should not duplicate generic remote crop harvesting or double-award drops when Ars is the causal provider.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectHarvest`).
+
+## Engenharia para perks — caminho causal individual
+
+- **Source pin:** [`EffectHarvest.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectHarvest.java) do Ars 5.13.1.
+- **Targeting:** `onResolveBlock` usa `SpellUtil.calcAOEBlocks(shooter,hitPos,hit,stats)`; pode redirecionar FarmBlock e posições com Crop/NetherWart/`HARVEST_STEMS` acima. Seleciona Cocoa (AGE 2), Nether Wart (AGE 3), stem elegível ou `CropBlock.isMaxAge`.
+- **Drops/replant:** `processAndSpawnDrops` usa `Block.getDrops` ou Fortune loot context com `count(Fortune)`, reduz 1 stack de seed/bloco que replanta quando apropriado, exclui `MAGE_BLOOM_CROP` do drop e gera `ItemEntity`. Restaura AGE 0 para Cocoa/NetherWart, AGE 1 para Crop; stem é quebrado por `destroyBlockSafely`.
+- **Proteção/QA:** não há `destroyRespectsClaim` explícito no corpo deste `onResolveBlock`; não inferir bypass sem auditar pipeline de events/modpack. **Perks:** cada cultura é world mutation/loot do Ars, não multiplicador universal de rendimentos ou uma nova raiz de Mastery.
+- **Estado:** ✅ origem e lógica source-pinned; ⚠️ helpers, itens externos e runtime QA pendentes; ⛔ adapter de perks do RPG sem teste nem contrato para duplo settlement. Ars conserva mana, inventário e efeitos.

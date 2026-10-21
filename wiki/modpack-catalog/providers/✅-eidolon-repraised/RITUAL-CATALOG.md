@@ -1,8 +1,12 @@
 # Eidolon: Repraised 0.5.0.2 — Ritual Catalog
 
-Status: `10/10 GENERIC RITUAL PROTOTYPES + 24/24 OFFICIAL RITUAL RECIPES INVENTORIED / RUNTIME QA PENDING`
+Status: `10/10 GENERIC RITUAL PROTOTYPES SOURCE-PINNED / 24/24 OFFICIAL RITUAL RECIPES COUNTED_EXACT STATIC JAR / RUNTIME QA PENDING`
 
 Canonical source: `Alexthw46/Eidolon-Repraised@696a47333e43970be7f697790eac0af76b6a04b8`
+
+## Publisher physical recipe identity
+
+[Java21 #38669010587](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38669010587) proved the 24 packaged official ritual JSON identities: 10 generic, 11 summon, 2 health-gated crafting and one Catacombs locator, on SHA-equal installed 0.5.0.2. Full [exact dossier](EXACT-PACKAGED-CHANT-RITUAL-RECIPES-0.5.0.2.md). It does not prove loaded RecipeManager, successful summoning/ownership or survival payment.
 
 ## Runtime architecture
 

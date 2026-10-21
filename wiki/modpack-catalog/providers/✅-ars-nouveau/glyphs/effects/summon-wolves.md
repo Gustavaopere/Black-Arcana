@@ -28,3 +28,9 @@ Summons two tamed `SummonWolf` allies using the biome-appropriate wolf variant. 
 Ars Nouveau owns these temporary combat summons, ownership, lifetime and Summoning Sickness. They are not Black Arcana familiars and must not be double-counted in a second summon ledger.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectSummonWolves`).
+
+## Dossiê de engenharia para perks — causalidade exata
+
+- **Código versionado:** [`EffectSummonWolves.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectSummonWolves.java), `com.hollingsworth.arsnouveau.common.spell.effect.EffectSummonWolves` no Ars 5.13.1, método `onResolve`.
+- **Admissão:** exige `canSummon(shooter)` e caster não nulo. **Duração:** `ticks=(int)(20*(GENERIC_INT.get()+EXTEND_TIME.get()*durationMultiplier))`, defaults 60 e 60 segundos; descarta `ticks<=0`. **Spawn:** laço fixo `i<2` gera **dois** `SummonWolf` com `ticksLeft`, variante do bioma, tame/target/agressividade; delega `summonLivingEntity`. **Pressão:** aplica `applySummoningSickness(shooter,ticks)` após invocação. **Perks:** multiplicar contagem do summon sem boundary real pode bypassar caps/Summoning Sickness; inventário, ownership e lifecycle são provider-owned.
+- **Limite de integração:** ✅ source pin confirmado, ⚠️ config e classes auxiliares demandam QA; ⛔ hook de mutação RPG não verificado. Provider mantém autoridade de mana/efeito/owner; sem segundo cast/proc/settlement. Survival: PENDING.

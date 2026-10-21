@@ -30,3 +30,9 @@ Delay suspends resolution of all spell parts to its right by creating a `Delayed
 This is an Ars spell-composition scheduler primitive, not merely a visual delay. Black Arcana must not reuse or replace Ars' delayed resolution queue for its own canonical cast pipeline, and must not insert a second settlement path around Ars spells.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectDelay`).
+
+## Dossiê de engenharia para perks — cadeia e interfaces
+
+- **Source pin:** [`EffectDelay.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectDelay.java), Ars Nouveau 5.13.1.
+- **Lifecycle:** `sendPacket` só agenda se houver spell parts à direita do currentIndex. `DelayedSpellEvent` é guardado em `spellContext.delay`, adicionado a `EventQueue` e sincronizado por `PacketClientDelayEffect`. **Duração:** `duration=GENERIC_INT+EXTEND_TIME*20*count(Extend Time)-DURATION_DOWN_TIME*count(Duration Down)`; defaults 20 ticks, 1 e 10. **Randomize:** `world.random.nextIntBetweenInclusive((int)(duration*(1-r)),(int)(duration*(1+r)))`, `r=count(Randomize)*RANDOMIZE_CHANCE` default 0.25. Limites de duração/config negativos requerem QA, não assumir comportamento garantido. **Perks:** spell continuation não é cast novo.
+- **Estado:** ✅ classe exata lida; ⚠️ helpers/config real e Survival pendentes; mutabilidade via RPG Skill Tree ⛔ sem interface comprovada que altere esses parâmetros. Ars conserva authority de recursos/efeitos.

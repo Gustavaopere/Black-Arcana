@@ -1,0 +1,56 @@
+name: Vampirism 1.10.13 exact physical 19 player action registry proof
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/vampirism-11013-actions-exact-jar.yml'
+      - 'docs/qa/vampirism_11013_action_registry_binary_audit.py'
+      - 'docs/qa/vampirism_11013_action_registry_binary_audit_test.py'
+      - 'docs/qa/fixtures/VampirismActionRegistryFixture.java'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/vampirism-11013-actions-exact-jar.yml'
+      - 'docs/qa/vampirism_11013_action_registry_binary_audit.py'
+      - 'docs/qa/vampirism_11013_action_registry_binary_audit_test.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compiled_player_action_proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify fail-closed synthetic Java21 action registry contracts
+        run: python3 docs/qa/vampirism_11013_action_registry_binary_audit_test.py -v
+      - name: Retrieve official 1.10.13 CurseForge JAR and verify installed SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/vampirism-11013
+          curl --fail --show-error --silent --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://mediafilez.forgecdn.net/files/8814/121/Vampirism-1.21-1.10.13.jar' \
+            --output build/vampirism-11013/Vampirism-1.21-1.10.13.jar
+          echo '349b6e4ea893c98a580775b1725399903e222228  build/vampirism-11013/Vampirism-1.21-1.10.13.jar' | sha1sum --check
+      - name: Verify 14 Vampire + 3 Hunter + 2 Lord compiled action constructors
+        run: |
+          python3 docs/qa/vampirism_11013_action_registry_binary_audit.py \
+            --jar build/vampirism-11013/Vampirism-1.21-1.10.13.jar \
+            --output build/vampirism-11013/evidence.json
+      - name: Upload JSON proof only; no copyrighted JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: vampirism-11013-actions
+          path: build/vampirism-11013/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14

@@ -62,3 +62,21 @@ For progression, one Extract cast is one causal action. Potion splash targets ar
 ## Confidence
 
 `SOURCE-PINNED FLASK ADMISSION + CAST SNAPSHOT + PROJECTILE/DOSE SETTLEMENT / FULL MODPACK POTION-COMPAT RUNTIME QA PENDING`
+
+## Localizadores para Codex — source exato
+
+- **Registry + identidade:** `apprenticecodex:extract` → `SpellRegistry.reg("extract", Extract::new)` no source 0.9.7.1.
+- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.extract.Extract`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/extract/Extract.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
+- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
+- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
+- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia causal aprofundada — utilidades, persistência e recursos (2026-10-14)
+
+**Registry:** `apprenticecodex:extract`. **Proveniência source:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (versão declarada 0.9.7.1); classes e helpers: [Extract.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/extract/Extract.java); [ExtractPotionProjectileEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/extract/ExtractPotionProjectileEntity.java).
+
+**Cadeia causal no código-fonte:** Extract.checkPreCastConditions exige Alchemist's Flask com dose disponível, armazena hand e cópia de storedItem em ExtractCastData; onServerPreCast sinaliza o item. Extract.onCast reobtém o frasco e compõe potionStack via createExtractedPotionForThrow; cria ExtractPotionProjectileEntity (subclasse ThrownPotion) e só chama consumeResolvedDose após serverLevel.addFreshEntity retornar sucesso. A entidade onAntiMagic descarta no servidor; hit é regido pela ThrownPotion base, sem segundo cast na extração/efeito.
+
+**QA prioritário pendente:** Troca do frasco durante preparação, inventário e dose com mods de Curios, falha spawn/dedup, tipos splash incompatíveis, anti-magic e compatibilidade das poções modded.
+
+**Governança:** o host Iron's controla cast/mana/recast; o addon controla o estado/efeito/custo especializado verificado. Um pulso, dano periódico, bloco, item gerado, job tick, cast visual ou cast derivado não é uma identidade semântica nova nem gatilho de Mastery/XP automático. Black Arcana não reprocessa recursos, eventos, mutação do mundo ou callback dos providers. ⚠️ Source-level não comprova bytecode idêntico/config efetiva/teste físico. ⛔ Nenhum contrato de RPG Skill Tree perks/Mastery homologado: fail-closed.

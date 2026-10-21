@@ -29,3 +29,10 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe fonte:** [`EffectSummonBee.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectSummonBee.java) pin fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d, não igualdade criptográfica source/JAR.
+- **Gates:** exige `canSummon(shooter)`; `ticks=(int)(20*(60+60*durationMultiplier))`; quantidade `3+getBuffCount(Split)`; cada `SummonBee` recebe owner, target `shooter.getLastHurtMob()`, aggressive=true e passa por `summonLivingEntity`.
+- **Sickness:** quando `!CompatUtils.isSummonRework()`, chama `applySummoningSickness(shooter,(int)(ticks*0.80))`; se Summon Rework estiver ativo, este helper não é chamado neste glyph. **Perks:** count de bees não é count de casts; source não demonstra budget adicional externo, validar entidade e tame/owner.
+- **Estado:** ✅ símbolo/assinatura reais e ID registral física; ⚠️ config, helper, entidade e Survival runtime pendentes; ⛔ perks RPG/adapters não implementados nem comprovados, settlement/cast pertence ao Ars.

@@ -55,3 +55,21 @@ Occupies the **floating/waterloggable magical lantern placement** niche, adjacen
 ## Confidence
 
 `SOURCE-PINNED SPELL + TARGET CLAMP + PLACEMENT / PACK PROTECTION-MOD QA PENDING`
+
+## Localizadores para Codex — source exato
+
+- **Registry + identidade:** `apprenticecodex:wizardlamp` → `SpellRegistry.reg("wizardlamp", Wizardlamp::new)` no source 0.9.7.1.
+- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.wizardlamp.Wizardlamp`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/wizardlamp/Wizardlamp.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
+- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
+- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
+- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia causal aprofundada — utilidades, persistência e recursos (2026-10-14)
+
+**Registry:** `apprenticecodex:wizardlamp`. **Proveniência source:** `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (versão declarada 0.9.7.1); classes e helpers: [Wizardlamp.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/wizardlamp/Wizardlamp.java); [WizardlampLanternBlock.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/wizardlamp/WizardlampLanternBlock.java); [WizardlampLanternBlockEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/wizardlamp/WizardlampLanternBlockEntity.java).
+
+**Cadeia causal no código-fonte:** Wizardlamp.checkPreCastConditions resolve posição server-validated e guarda WizardlampCastData; onCast reutiliza a posição ou revalida, calcula WATERLOGGED quando o fluido é água e só liquida placement via BlockTools.tryPlaceBlockByEntity. WizardlampLanternBlockEntity é uma BlockEntity simples sem ticker implementado no source fixado, não uma job loop nem cast adicional por tick.
+
+**QA prioritário pendente:** Handoff de target cliente para servidor, waterlogged/reload, claims/BlockTools, placement negado e persistência do bloco sem owner/pagamento extra.
+
+**Governança:** o host Iron's controla cast/mana/recast; o addon controla o estado/efeito/custo especializado verificado. Um pulso, dano periódico, bloco, item gerado, job tick, cast visual ou cast derivado não é uma identidade semântica nova nem gatilho de Mastery/XP automático. Black Arcana não reprocessa recursos, eventos, mutação do mundo ou callback dos providers. ⚠️ Source-level não comprova bytecode idêntico/config efetiva/teste físico. ⛔ Nenhum contrato de RPG Skill Tree perks/Mastery homologado: fail-closed.

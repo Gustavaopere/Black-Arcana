@@ -27,3 +27,11 @@ Estado: **✅ `COUNTED_SOURCE_PINNED` — ritual individualizado** · **⚠️ c
 Os campos acima reproduzem os contratos factuais da auditoria do source e do Ars 5.13.1 quando herdados. Não constituem medição no pack físico. Recursos Source, alteração de blocos/biomas, entidades, scheduler, persistência e cleanup permanecem provider-owned. Black Arcana não cobra Source duas vezes nem reexecuta rituais; efeitos destrutivos próprios passam por `WorldEffectPolicy`. Sem hook real, integração **⛔ fail-closed**.
 
 **Fontes:** [rituais](../../RITUALS.md) · [registries](../../REGISTRIES.md) · [acquisition](../../ACQUISITION.md). Clean-room factual, sem código/JSON/assets upstream.
+
+## Engenharia de perks — contrato causal do ritual 0.7.10.1
+
+- **Source checkpoint exato:** [`DetectionRitual.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/rituals/DetectionRitual.java). Pin de versionamento, **não** prova binária de equivalência da implementação ao JAR.
+- **Cronologia:** em servidor, `incrementProgress()` quando `gameTime%20==0`; assim que `progress>=15`, busca `Monster` em AABB `inflate(128)` do brazier, aplica `MobEffects.GLOWING` por `12000` ticks (600 segundos), amplifier 0 e flags false/false, e finaliza.
+- **Custo e alvo:** `getSourceCost=250`, sem prova de débito efetivo da instância. Não há permissão para deduzir alcance esférico exato ou visibilidade de entidades fora de chunks carregados; `getEntitiesOfClass` usa mundo presente, não scan global.
+- **Perks:** observação de glowing não pode recompensar cada Monster como cast, e não prova detecção em chunks descarregados.
+- **Estado:** ✅ ID física do JAR e assinatura do source pinned; ⚠️ equivalência implementation-JAR, config deploy, helpers/host, protection e Survival pendentes; ⛔ adapter de perks RPG e mutabilidade externa não comprovados. Sem dupla Source/cast/concessão de Mastery.

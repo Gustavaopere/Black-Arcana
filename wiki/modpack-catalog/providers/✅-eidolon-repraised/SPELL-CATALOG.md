@@ -1,8 +1,12 @@
 # Eidolon: Repraised 0.5.0.2 — Spell Catalog
 
-Status: `20/20 REGISTRY INVENTORIED / STATIC SPELL SEMANTICS NORMALIZED / DATA-DRIVEN CHANTS + RUNTIME SETTLEMENT QA PENDING`
+Status: `20/20 TECHNICAL SPELL REGISTRY SOURCE-PINNED; 18/18 NORMAL CHANT RECIPES COUNTED_EXACT STATIC JAR; RUNTIME SETTLEMENT QA PENDING`
 
 Canonical source: `Alexthw46/Eidolon-Repraised@696a47333e43970be7f697790eac0af76b6a04b8`
+
+## Publisher packaging proof
+
+The [exact official SHA-matched 0.5.0.2 recipe audit](EXACT-PACKAGED-CHANT-RITUAL-RECIPES-0.5.0.2.md) verifies all 18 official normal chant JSON IDs and SignSequences, not the separate 20-entry compiled Java registry. No promotion of `undead_lure` or `basic_incense` to normal player chants and no execution/Survival PASS.
 
 ## Registry
 

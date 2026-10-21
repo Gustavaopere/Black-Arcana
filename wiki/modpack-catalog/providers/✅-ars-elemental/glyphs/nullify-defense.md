@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe:** [`EffectNullify.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectNullify.java), commit exato `fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d`, identidade estática do JAR físico já provada separadamente.
+- **Única mutação do método:** se a entidade atingida é `LivingEntity`, faz `entity.invulnerableTime=0` sem dano, remoção de armor, quebra de invulnerabilidade absoluta, ou redução de resistance neste trecho. Custo mana default 1000, Tier III e nenhum augment.
+- **Aquisição:** o registry do effect está presente no JAR, mas a receita de aprendizagem permanece default-disabled conforme checkpoint de config (`frame_skip_recipe=false`). Contagem semântica não garante disponibilidade Survival.
+- **Perks:** zerar invulnerability frames não autoriza interferir em proteção PvP, de outros mods ou flags `isInvulnerable`. A saída do effect não é confirmação de hit/dano posterior; manter `fail-closed` para haste/double hit.
+- **Estado:** ✅ fonte/métodos source-located, ID confirmada no JAR; ⚠️ código-fonte→bytes JAR não equivalentes comprovados, config/QA de host não validados; ⛔ hook e adapter de perks RPG/Black Arcana não aprovados, sem duplicar mana ou efeitos.

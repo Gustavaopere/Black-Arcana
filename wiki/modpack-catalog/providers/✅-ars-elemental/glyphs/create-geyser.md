@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe exata:** [`EffectGeyser.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectGeyser.java) fonte pinned 0.7.10.1, sem prova de byte-equality ao JAR.
+- **Dimensão/altura:** `onResolve` aborta client; `height=(float)max(0,4+2*ampMultiplier)`; `aoe=(float)getAoeMultiplier()`. Direção padrão UP; Sensitive preserva face do hit em bloco, permitindo lateral. Procura base não-air recuando pelo vetor oposto à direção até cerca de `height*2` tentativas.
+- **Duração/tipo:** `duration=POTION_TIME.get()*20+(int)(EXTEND_TIME.get()*durationMultiplier*20)`, defaults 5 segundos e +1 segundo, sem clamp local. Cria `EntityLavaGeyser` se `fireCheck(resolverContext)` verdadeiro, senão `EntityGeyser`; lifecycle de damage/Soaked/Fire está nessa entidade, não no glyph.
+- **Perks:** mudança de altura/raio afeta entidade world-owned; Sensitive não é imunidade. Não inferir alcance de fogo/fluido de um único campo do glyph.
+- **Estado:** ✅ ID JAR + código exato no source commit; ⚠️ gameplay/config/host/auxiliares requerem confirmação; ⛔ adapter de perk RPG não implementado, sem duplicar status, mana ou dano.

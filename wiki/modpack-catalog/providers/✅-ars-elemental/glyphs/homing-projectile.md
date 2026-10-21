@@ -28,3 +28,11 @@ Projetis e spell contexts downstream são filhos do cast original Ars, não novo
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — propagação e cadeia de cast
+
+- **Classe:** [`MethodHomingProjectile.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/MethodHomingProjectile.java), commit fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d.
+- **Count/velocity:** `numSplits=1+getBuffCount(Split)`, velocidade `max(0.2f,0.5f+accMultiplier/5.0f)`; Dampen ativa gravidade nas entidades. TTL configurável default `max_lifespan=30s`, não duração garantida de hit.
+- **Filtros concretos:** `basicIgnores` exclui caster, mortos, `FamiliarEntity`, `FlashjackEntity`, invisíveis e aliados. Sem Sensitive exclui Players; para caster Player filtra summons/pets próprios, para caster ISummon filtra summons/pets do mesmo owner, e aplica filtros na cadeia via `GlyphEffectUtil.getFilters(...)/checkIgnoreFilters(...)`.
+- **Admissão:** `onCastOnBlock` sem player em formato `BlockHitResult` retorna FAILURE; player/entidade usa summons. **Perks:** Sensitive habilita elegibilidade de Players mas não permite burlar PvP policy; cada projectile continua parte do cast raiz.
+- **Status:** ✅ identidade do JAR e fonte consultada; ⚠️ equivalência da implementação no JAR, addons/servidor/clientes e limites físicos pendentes; ⛔ nenhuma integração RPG ou perk aprovada nesta branch. O Ars mantém autoridade sobre SpellResolver, mana e entidade.

@@ -28,3 +28,11 @@ Linger converts the remaining spell into an `EntityLingeringSpell`: it creates a
 This is a provider-owned persistent spell-execution runtime, not merely an area effect. Black Arcana must not route Ars lingering execution through a second Black Arcana cast pipeline or duplicate provider costs/effect settlement.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectLinger`).
+
+## Dossiê de engenharia para perks — classe de efeito
+
+- **Source pin:** [`EffectLinger.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectLinger.java), Ars Nouveau 5.13.1.
+- **Transferência:** quando há partes restantes, `onResolve` cria `EntityLingeringSpell`, child `SpellContext`, cancela a continuação no parent e armazena o resolver novo.
+- **Estados:** entidade recebe `AOE`, `Sensitive`, `setAccelerates((int)getAccMultiplier())`, `extendedTime=getDurationMultiplier()`, `setShouldFall(!hasBuff(Dampen))`; área, periodicidade real e tempo de vida efetivo são implementados downstream pela entidade.
+- **Limites:** source default `PER_SPELL_LIMIT=1`, `Sensitive=1`, registrado em `EffectReset.RESET_LIMITS`; custo default 500. **Perks:** procs por tick/target devem preservar causalidade da área e work budget; não se basear em VFX de cloud para conferir hits.
+- **Status:** ✅ source exato lido; ⚠️ entidade auxiliar, caps runtime e Survival requerem testes; API por efeito não foi validada contra RPG/Black Arcana. Sem autorização para segunda liquidação de dano/recurso/target.

@@ -94,3 +94,7 @@ Black Arcana/RPG integrations must not:
 - cosmetic copy for Ars decoratable entities;
 - Identity2 rejection path produces no success smoke;
 - multiplayer permission/friendly-target behavior under current Identity2/provider configuration.
+
+## Ficha técnica individual de perks — PR #796
+
+O registro deste arquivo permanece a síntese de identidade. O novo [dossiê individual `glyphs/morph.md`](glyphs/morph.md) oferece a cadeia do `EffectMorph` por branch/condição, e a [matriz de perks](PERK-ENGINEERING-MATRIX-2.0.0.md) consolida os hooks ainda não comprovados. Isso não adiciona uma segunda identidade à contagem semântica.

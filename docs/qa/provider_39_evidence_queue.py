@@ -25,7 +25,9 @@ CROSSWALK_LINE = re.compile(r'^\| (?P<provider>[^|]+) \| #\d{3} \| \x60(?P<filen
 MATRIX_LINE = re.compile(r'^\| \[(?P<provider>[^|\]]+)\]\([^|)]+\) \| (?P<version>[^|]+) \| (?P<count>\d+) \| (?P<evidence>COUNTED_SOURCE_PINNED|COUNTED_RELEASE_BOUNDED|COUNTED_EXACT) \|')
 # Only these independently audited identities can appear as COUNTED_EXACT in the
 # frozen campaign. No arbitrarily supplied exact row or fingerprint is trusted.
-KNOWN_EXACT = {"Ypsilon's Fundamentalism": ('1.1.7.1', 15),
+KNOWN_EXACT = {'Hazen N Stuff': ('1.4.0.14', 38),
+               'Ars Nouveau': ('5.13.1', 109),
+               "Ypsilon's Fundamentalism": ('1.1.7.1', 15),
                "Fire's Ender Expansion": ('2.4.1', 11),
                'IronSable': ('1.2.0', 7),
                'Ars Elemental': ('0.7.10.1', 47),
@@ -49,7 +51,15 @@ KNOWN_EXACT = {"Ypsilon's Fundamentalism": ('1.1.7.1', 15),
                "Discerning The Eldritch": ('1.4.4', 22),
                "Companions!": ('1.3.4', 9),
                "Waystones": ('21.1.45', 3),
-               "Reliquified Ars Nouveau": ('0.8.1', 19)}
+               "Reliquified Ars Nouveau": ('0.8.1', 19),
+               "Apprentice's Codex": ('0.9.7.1', 83),
+               "Reliquified Iron's Spells 'n Spellbooks": ('0.2.7', 25),
+               "Hexalia": ('1.3.7', 29),
+               "Ender's Spells and Stuff: Requiem": ('0.1.7', 52),
+               "Reliquified Artifacts": ('1.0.8', 52),
+               'Vampirism': ('1.10.13', 19),
+               'Eidolon: Repraised': ('0.5.0.2', 42),
+               'Malum': ('1.8.2', 26)}
 SHA1 = re.compile(r'[a-f0-9]{40}\Z')
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
 STATUSES = ('FINGERPRINTED', 'MISSING', 'UNSAFE', 'OVERSIZED', 'INVALID_JAR', 'UNREADABLE', 'CHANGED_DURING_SCAN')

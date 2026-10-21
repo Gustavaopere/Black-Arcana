@@ -59,3 +59,21 @@ This is a direct Divination overlap. Black Arcana must not run a second nearby-u
 ## Confidence
 
 `SOURCE-PINNED SPELL + ENTITY/SPAWNER SNAPSHOT / CLIENT HIGHLIGHT RENDER + DATAPACK VARIANT CONTENT QA PENDING`
+
+## Localizadores para Codex — source exato
+
+- **Registry + identidade:** `apprenticecodex:sense_evil` → `SpellRegistry.reg("sense_evil", SenseEvil::new)` no source 0.9.7.1.
+- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.senseevil.SenseEvil`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/senseevil/SenseEvil.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
+- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
+- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
+- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia causal aprofundada — ofensiva/movimento/sensoriamento (2026-10-14)
+
+**Source:** [`senseevil/SenseEvil.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/senseevil/SenseEvil.java) · [`senseevil/SenseEvilHighlightManager.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/senseevil/SenseEvilHighlightManager.java).
+
+- **Snapshot server → cliente:** `SenseEvil.onCast` coleta e envia `SenseEvilHighlightsPacket` apenas para `ServerPlayer`. `collectUndeadEntities` exige entidade viva distinta do caster e aceita tipo configurado pelo `SenseEvilHighlightManager` ou classificação `UndeadTools`.
+- **Sem geração de chunks:** `collectUndeadSpawners` usa `level.getChunkSource().getChunkNow`; percorre apenas block entities em chunks já carregados e interpreta `SpawnData`/`SpawnPotentials`, com teste final de inclusão no cubo. Não se vê limite explícito de quantidade de highlights no coletor analisado.
+- **QA:** alta densidade de spawners/mobs, gasto de NBT, tamanho de packet e visibilidade no cliente; highlight não é informação/efeito originado pelo runtime BA.
+
+🟡 Source-level causal; ⚠️ bytecode do JAR, config e QA modpack/Survival não certificados; ⛔ RPG perks/Mastery sem adapter homologado. Iron's e Apprentice's mantêm mana/casting/efeitos; Black Arcana não duplica runtime.

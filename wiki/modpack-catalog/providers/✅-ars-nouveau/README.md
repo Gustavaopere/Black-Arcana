@@ -182,4 +182,8 @@ Ars core already exposes Heal, Hex, Wither, Ignite, Flare, Gravity, summons, det
 - Presence/version: current 2026-09-06 modlist — HIGH.
 - Glyph architecture, registry IDs, tiers, base costs and descriptions above: current public Ars 1.21.1 guide — HIGH.
 - The guide is addon-aware; ownership is determined by registry namespace, not page location.
-- No Java bytecode was decompiled for this catalog.
+- [Exact Java21 physical ID proof #38691889186](EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md) certified **109/109 unique compiled class→ResourceLocation identities** (85 Forms/Effects/Augments, 24 rituals) in the SHA-identical official 5.13.1 JAR, including the three unprefixed literals and the special Sense Magic INSTANCE factory. The 109 pre-existing roots now have **`COUNTED_EXACT` for static binary identity only**, +0 new. Loaded registries, mana/Source costs, configurations, spell resolution, Survival, Stage09 and RPG adapter remain ⚠️/⛔.
+
+## Fichas técnicas para Codex e perks
+
+A campanha transversal ampliou a leitura de código para **85/85 Glyph Parts** (5 Forms, 67 Effects, 13 Augments) e **24/24 rituais**, incluindo executores `ANExplosion`, `LightningEntity`, `RuneTile`, `SpellUtil`, `IPotionEffect` e `SpellStats`. [Matriz de implementação para Codex](PERK-ENGINEERING-MATRIX-5.13.1.md) e [padrão universal](../../meta/PERK-READY-TECHNICAL-STANDARD.md). O núcleo Ars está **completo em dossiês source-located de objetos individuais** (109/109), mas os eventos, efeitos derivados, JAR físico, addons e o adapter RPG ainda requerem testes e QA; não se afirma implementado. Foram localizados eventos públicos concretos de spell/effect/cost/dispel: [contratos source-pinned](VERIFIED-EVENT-SURFACES-5.13.1.md). Hooks existem para certos passos, mas nenhum adapter RPG passou testes reais. Essa documentação não cria outro SpellResolver, não autoriza mutação externa e não representa QA do modpack.

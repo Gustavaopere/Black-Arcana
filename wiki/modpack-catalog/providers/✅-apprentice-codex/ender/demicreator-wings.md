@@ -60,3 +60,34 @@ Occupies the **bounded temporary creative-flight zone tied to a provider-managed
 ## Confidence
 
 `SOURCE-PINNED SPELL / EXACT CAST+AREA-VALUE+DURATION FORMULAS+RECAST / MANAGER GEOMETRY+FLIGHT PERMISSION EDGE CASES+RUNTIME QA PENDING`
+
+## Localizadores para Codex — source exato
+
+- **Registry + identidade:** `apprenticecodex:demicreator_wings` → `SpellRegistry.reg("demicreator_wings", DemicreatorWings::new)` no source 0.9.7.1.
+- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.demicreatorwings.DemicreatorWings`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/demicreatorwings/DemicreatorWings.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
+- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
+- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
+- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+---
+
+## Engenharia causal aprofundada — 0.9.7.1 (audit de source, 2026-10-13)
+
+**Prova rastreável:** [`demicreatorwings/DemicreatorWings.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/demicreatorwings/DemicreatorWings.java) · [`demicreatorwings/DemicreatorWingsManager.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/demicreatorwings/DemicreatorWingsManager.java) · [`demicreatorwings/DemicreatorWingsFlightEvent.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/demicreatorwings/DemicreatorWingsFlightEvent.java) · [`demicreatorwings/DemicreatorWingsCoreEntity.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/demicreatorwings/DemicreatorWingsCoreEntity.java). Source `hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e` (declara 0.9.7.1); o JAR físico da modlist tem identidade/versionamento corroborados, **sem equivalência dos corpos compilados demonstrada**.
+
+### Domínio espacial, licença de voo e cleanup
+
+- **Ativação do núcleo:** `DemicreatorWingsManager.activate` primeiro chama `deactivate(player,false)`, cria `DemicreatorWingsCoreEntity` e `DemicreatorWingsWingEntity`, grava IDs em `DEMICREATOR_WINGS_STATE` e registra `RecastInstance` de Iron's. `deactivate(player,true)` descarta entidades gerenciadas, retira voo concedido pela habilidade e remove recast.
+- **Geometria realmente verificada:** `isInsideCoreArea(ServerPlayer,core)` testa **`abs(player.x-core.x)<=core.getAllowedRadius()` e `abs(player.z-core.z)<=core.getAllowedRadius()`**. **Não contém condição Y nesse método.** Portanto a fronteira da autorização examinada é horizontal em X/Z (região quadrada axis-aligned nessa etapa), não esfera/volume tridimensional certificado. As regras da entidade core e colisão exigem auditoria separada.
+- **Permissão temporária:** `ensureFlightGranted` só opera com estado ativo e evita sobrescrever criativo (`instabuild`) ou espectador; quando necessário marca `abilities.mayfly=true` e `state.grantedFlight=true`. O tick `DemicreatorWingsFlightEvent.onPlayerTick(PlayerTickEvent.Pre)` desativa se o core do player não existe ou ele sai dessa área, revalida wing e zera `fallDistance`.
+- **Lifecycle:** login, logout, troca de dimensão e morte acionam `deactivate(player,true)`. `stripGrantedFlight` pode definir `abilities.flying=false` e `abilities.mayfly=false` quando `state.grantedFlight` estava ligado; **não possui nesse corpo uma negociação com outros providers de `mayfly`**. Risco de interferência com benefícios legítimos de outras fontes, a testar sem concluir bug universal.
+- **Perks:** voo concedido, ticks em voo, alertas e recast constituem uma sessão provider-owned; BA não gerencia `mayfly` externo e RPG não deve pagar Mastery por tick. QA de deactivation, dimensão, death, survival, outras fontes de flight e reconexão é gate pré-adapter.
+
+### Perfil para integração de perks e QA
+
+- **A / atributo e rank:** stats e estado de Iron's/Codex são lidos do provider, sem sobrescrita automática. Valores efetivos dependem de configuração e outros mods.
+- **B / causalidade:** raiz `apprenticecodex:demicreator_wings`, mantendo eventos, tarefas e recursos da cadeia sob authority externa; não atribuir Mastery por cada callback de efeito secundário.
+- **C/D / política:** nenhuma API/hook de RPG Skill Tree homologada pela simples presença desses métodos. **⛔** fail-closed para adapter e **⚠️** QA da versão instalada (JAR, host, Survival, servidor, multiplayer, dependências opcionais e claims).
+- **Clean-room:** somente especificação factual própria; não transplantar implementação upstream.
+
+[Matriz causal desta etapa](../PERK-ENGINEERING-MATRIX-HIGH-RISK-0.9.7.1.md).

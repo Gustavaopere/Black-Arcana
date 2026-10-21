@@ -28,3 +28,12 @@ Animate Block converts an eligible block into an Ars combat summon, preserving b
 Ars Nouveau owns this block-animation summon lifecycle, state capture and restoration/conversion behavior. Black Arcana should not duplicate the summon or take ownership of stored block data.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectAnimate`).
+
+## Engenharia para perks — caminho causal individual
+
+- **Fonte exata:** [`EffectAnimate.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectAnimate.java), `com.hollingsworth.arsnouveau.common.spell.effect.EffectAnimate` (Ars 5.13.1).
+- **Block ingress:** `onResolveBlock` só passa se `EnchantedFallingBlock.canFall(world,pos,shooter,stats)`; antes de substituir o bloco pelo estado legado do fluido, registra `BlockState` e `BlockEntity.saveWithoutMetadata(world.registryAccess())` (ou NBT vazio) para o summon.
+- **Entity ingress:** `onResolveEntity` converte `EnchantedFallingBlock` não removido em summon, copiando `getBlockState()`, `blockData`, velocidade atual, `hurtMarked` e reset de fall distance; descarta o falling block original para evitar duplicação.
+- **Summon e duração:** `animateBlock(...)` seleciona `AnimHeadSummon` quando bloco é `AbstractSkullBlock`, senão `AnimBlockSummon`; `ticks=(int)(20*(GENERIC_INT.get()+EXTEND_TIME.get()*durationMultiplier))`, defaults 60s e 60s. Marca tame/aggressiveness/target do shooter e delega `summonLivingEntity`. Não aplica Summoning Sickness nesta classe.
+- **Perks:** propriedade, restauração dos blocos, data components e drop pós-morte residem no summon downstream; não implantar segunda cópia do BlockEntity nem pagar Mastery por bloco e summon separadamente.
+- **Estado:** ✅ assinatura/fórmula do source pin; ⚠️ config carregada, auxiliar e testes físicos pendentes. Contratos de `EffectResolveEvent.Pre` são existentes, porém o adapter RPG, clamps, causalidade e escrita externa **não** foram validados: ⛔ fail-closed até testes.

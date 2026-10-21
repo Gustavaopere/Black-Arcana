@@ -47,3 +47,23 @@ Black Arcana must not duplicate the volley, re-settle feather damage, or treat t
 ## Confidence
 
 `SOURCE-PINNED CAST + BURST RATE + PROJECTILE LIFECYCLE / FULL MODPACK RUNTIME QA PENDING`
+
+## Localizadores para Codex — source exato
+
+- **Registry + identidade:** `apprenticecodex:feather_rush` → `SpellRegistry.reg("feather_rush", FeatherRush::new)` no source 0.9.7.1.
+- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.featherrush.FeatherRush`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/featherrush/FeatherRush.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
+- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
+- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
+- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia causal aprofundada — mundo, channel e defesa (2026-10-14)
+
+**ID causal:** `apprenticecodex:feather_rush` — uma magia Iron's-native; ticks/jobs/entidades/impactos são efeitos-filhos, nunca um novo cast.
+
+**Source pin:** [FeatherRush.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/featherrush/FeatherRush.java); [FeatherRushWingEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/featherrush/FeatherRushWingEntity.java); [FeatherRushProjectileEntity.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/featherrush/FeatherRushProjectileEntity.java); [FeatherRushGravityControlEvent.java](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/featherrush/FeatherRushGravityControlEvent.java).
+
+**Cadeia verificada em source:** FeatherRush.onCastNoWeapon cria wing; onCastTickWithWeapon atualiza FEATHER_RUSH_STATE e emite salvas governadas por fireIntervalTicks e projectilesPerBurst. onCastCompleteWithWeapon limpa estado e libera weapon. FeatherRushGravityControlEvent.onPlayerTick (server Pre) valida wing entity ID/owner, saneia timestamps futuros, desliga noGravity quando shift ou fora do alvo aéreo e zera queda durante channel; grace = 2 ticks. FeatherRushProjectileEntity mantém direção por fases, dano via CombatTools e descarte na colisão.
+
+**QA prioritário (não executado):** Reconexão com IDs inválidos, concorrência de setNoGravity com outros providers, tick spam, hits PvP e lifetime dos projéteis.
+
+**Boundary:** mana/casting Iron's e efeitos Apprentice's; nenhuma segunda liquidação/XP/Mastery por Black Arcana; contrato RPG sem hook comprovado: ⛔ fail-closed. ⚠️ Sem prova de bytecode do JAR instalado, config nem QA físico.

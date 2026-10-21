@@ -23,3 +23,9 @@ On compatible glyphs, Pierce adds depth/continuation semantics. Projectile expli
 Ars Nouveau owns Pierce interpretation per glyph. Black Arcana penetration/linked-target geometry remains explicitly bounded by its own server targeting and work budgets.
 
 Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG QA PENDING`.
+
+## Mapeamento de perk para Codex — transformação real
+
+- **Source pin:** [`AugmentPierce.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/augment/AugmentPierce.java) no Ars Nouveau 5.13.1.
+- **Implementação exata:** `AugmentPierce` não sobrescreve `applyModifiers` neste source; consumidores usam `spellStats.getBuffCount(AugmentPierce.INSTANCE)`; custo default 40 e tier II. **Dois significados distintos:** `MethodProjectile` permite atravessar hits adicionais; `EffectBreak` e `EffectFreeze` transferem count de Pierce a `SpellUtil.calcAOEBlocks` como **profundidade de blocos**. **Perks:** mesma tag não autoriza teleport de alvos ou penetração arbitrária; conservar tipo de alvo, claims, bounds, custo e ordem do SpellResolver; hook externo não verificado.
+- **Bridge:** `source identified / mutation hook NOT VERIFIED / provider-owned`. Não implementar segundo `SpellStats` no Black Arcana, nem usar atributos RPG sem seam verificado. Testes em modpack/Survival PENDING.

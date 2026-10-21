@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe fonte:** [`EffectSummonSlime.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectSummonSlime.java) pin fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d, não igualdade criptográfica source/JAR.
+- **Gates/quantidade:** exige `canSummon`; `ticks=(int)(20*(60+60*durationMultiplier))`; `count=3+getBuffCount(Split)`; cada SummonSlime recebe owner, agressividade e `setSize((int)(2+ampMultiplier),true)`.
+- **Variantes:** `getVariant(resolver)` prioriza UUID especial (MK), depois focus Fire/Water/Earth/Air, `SHAPERS_FOCUS`, ou SUMMON genérico. Isso define variante de minion, não nova escola/cast. Sickness `0.8*ticks` apenas quando Summon Rework inativo.
+- **Perks:** tamanho, variante, quantidade e duração são eixos distintos, exigindo clamps em integração validada; efeitos de kills posteriores não são novo cast.
+- **Estado:** ✅ símbolo/assinatura reais e ID registral física; ⚠️ config, helper, entidade e Survival runtime pendentes; ⛔ perks RPG/adapters não implementados nem comprovados, settlement/cast pertence ao Ars.

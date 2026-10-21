@@ -29,3 +29,11 @@ O Tier, a mana e os parâmetros acima são defaults do source, não medidas do c
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — execução individual 0.7.10.1
+
+- **Classe exata:** [`EffectConflagrate.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/EffectConflagrate.java) fonte pinned 0.7.10.1, sem prova de byte-equality ao JAR.
+- **Gatilho:** no `ServerLevel`, alvo inicial precisa `LivingEntity.isOnFire()` e aceitar `attemptDamage` com `DAMAGE+AMP_VALUE*ampMultiplier` (defaults 9+5*amp). Caso contrário não faz nova explosão.
+- **Efeito:** itera `world.getEntities(shooter,AABB(center).inflate(3+aoeMultiplier))` em forma de AABB, adiciona 60 fire ticks inclusive a entidades não-living; nos living secundários que aceitam `attemptDamage(damage*0.75)` pode aplicar BLAST por 200 ticks com chance condicionada a `random.nextDouble()>0.9` (aproximadamente 10% sob RNG uniforme).
+- **Perks:** dano central, dano secundário, burning e BLAST atrasado têm atribuições distintas sob um cast; não reproduzir fire spread ou segundo damage settlement por observador.
+- **Estado:** ✅ ID JAR + código exato no source commit; ⚠️ gameplay/config/host/auxiliares requerem confirmação; ⛔ adapter de perk RPG não implementado, sem duplicar status, mana ou dano.

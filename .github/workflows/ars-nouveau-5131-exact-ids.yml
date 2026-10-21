@@ -1,0 +1,76 @@
+name: Ars Nouveau 5.13.1 exact compiled 109 namespaced spell and ritual IDs
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ars-nouveau-5131-exact-ids.yml'
+      - 'docs/qa/ars_5131_static_registry_audit.py'
+      - 'docs/qa/ars_5131_static_registry_audit_test.py'
+      - 'docs/qa/fixtures/ArsRegistrationFixture.java'
+      - 'docs/qa/ars_5131_exact_ids_binary_audit.py'
+      - 'docs/qa/ars_5131_exact_ids_binary_audit_test.py'
+      - 'docs/qa/ars_5131_glyph_class_id_manifest.json'
+      - 'docs/qa/ars_5131_ritual_class_id_manifest.json'
+      - 'wiki/modpack-catalog/providers/✅-ars-nouveau/**'
+      - 'wiki/modpack-catalog/meta/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact_109_resource_ids:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Independent fail-closed Java 21 synthetic tests
+        run: |
+          python3 docs/qa/ars_5131_static_registry_audit_test.py -v
+          python3 docs/qa/ars_5131_exact_ids_binary_audit_test.py -v
+      - name: Resolve publisher Modrinth version and verify physical SHA1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/ars-5131
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 90 \
+            'https://api.modrinth.com/v2/version/qEFs5RRw' \
+            --output build/ars-5131/version.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlparse
+          d=Path('build/ars-5131')
+          x=json.loads((d/'version.json').read_text())
+          assert x['id']=='qEFs5RRw'
+          assert x['version_number']=='5.13.1'
+          assert '1.21.1' in x['game_versions'] and 'neoforge' in x['loaders']
+          matches=[f for f in x['files'] if f['filename']=='ars_nouveau-1.21.1-5.13.1.jar']
+          assert len(matches)==1
+          f=matches[0]
+          assert f['hashes']['sha1']=='02782d071ee5fab3b5c4b8ced67b7e1748277dfd'
+          uri=f['url'];parsed=urlparse(uri)
+          assert parsed.scheme=='https' and parsed.hostname in ('cdn.modrinth.com','cdn-raw.modrinth.com')
+          (d/'url.txt').write_text(uri)
+          PY
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 240 \
+            "$(cat build/ars-5131/url.txt)" \
+            --output build/ars-5131/ars_nouveau-1.21.1-5.13.1.jar
+          echo '02782d071ee5fab3b5c4b8ced67b7e1748277dfd  build/ars-5131/ars_nouveau-1.21.1-5.13.1.jar' | sha1sum --check
+      - name: Audit compiled 85 glyph and 24 ritual class-to-ResourceLocation pairs
+        run: |
+          python3 docs/qa/ars_5131_exact_ids_binary_audit.py \
+            --jar build/ars-5131/ars_nouveau-1.21.1-5.13.1.jar \
+            --output build/ars-5131/evidence.json
+      - name: Export JSON identities only, never third-party JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ars-5131-exact-109-resource-ids
+          path: build/ars-5131/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14

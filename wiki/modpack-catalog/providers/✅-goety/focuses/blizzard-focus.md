@@ -23,3 +23,13 @@ Goety é a autoridade de Soul Energy, Focus/Staff casting, custos, recipe execut
 - [Fronteira de integração](../INTEGRATION-RULES.md) e [catálogo anterior](../FOCUS-CATALOG.md).
 
 **Clean-room:** a ficha contém dados factuais de identidade e proveniência, não código, assets, tradução de tooltip ou implementação upstream.
+
+## Dossiê para Codex e perks — identidade binária, lógica condicionada
+
+- **Objeto real confirmado:** `goety:blizzard_focus` é um Focus físico do Goety `3.1.4`, conforme inventário de 123 Focuses no JAR SHA-matched. Esta ficha **não** comprova que o Focus seja uma classe distinta nem que o ID do item seja um spell ID executável.
+- **Identidade do artefato:** `goety-3.1.4.jar`, SHA-1 `a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7`; [proveniência e auditoria](../EXACT-3.1.4-ARTIFACT-AUDIT.md).
+- **Código/assinaturas do runtime exato:** classe do feitiço/Focus, método de `cast`, registration de subspell, custo real de Soul Energy, cooldown, radius, targeting, duração, dano, damage type e eventos de interceptação: **NÃO VERIFICADO** no artefato atual por este dossiê. Não preencher utilizando branch Goety `1.20` ou versões 3.1.5/3.2.0: não são o JAR instalado.
+- **Matriz de perks:** `source-linked-class=⛔`, `native-resource-authority=Goety`, `damage/range/area/targets=⛔ sem contrato`, `spawn/servant owner=Goety`, `RPG Skill Tree=progressão somente quando existir boundary legítimo`.
+- **Próxima prova exigida:** class/member/bytecode da versão SHA-exata, vínculo item → spell executor, config real, contexto da área, política de alvo, consumo e eventos; após isso passar para análise de mutabilidade, caps e QA. **Fail-closed** para perks geométricas e custo.
+
+**Status separado:** ✅ item/identidade binária já catalogados; ⚠️ parâmetros e causalidade do cast ainda não catalogados com evidência suficiente; ⛔ bridge de mutação sem hook. Esta anotação não altera os 123 objetos semânticos.

@@ -39,3 +39,11 @@ Capture, lift, lifetime and pop damage are provider-owned settlement. Black Arca
 ## QA
 
 Entity lifecycle behavior is source-pinned at the spell entry point; full `BubbleEntity` behavior and full-pack runtime interactions remain provider/runtime QA.
+
+## Engenharia para perks — caminho causal individual
+
+- **Fonte exata:** [`EffectBubble.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectBubble.java), `com.hollingsworth.arsnouveau.common.spell.effect.EffectBubble` (Ars 5.13.1).
+- **Criador:** `createBubble` instancia `BubbleEntity(level,(int)(100+getDurationMultiplier()*EXTEND_TIME.getAsInt()),(float)(DAMAGE.getAsDouble()+getAmpMultiplier()*AMP_VALUE.getAsDouble()+getDamageModifier()))`; defaults 100 ticks, ExtendTime config 3, DAMAGE 5 e amp 2.
+- **Alvos e owner:** ramo em bloco posiciona a bubble no hit; ramo em entidade faz spawn e `bubble.tryCapturing(target)` imediatamente. `bubble.setOwner(shooter)` só é aplicado com `isNotFakePlayer(shooter)`.
+- **Perks:** dano calculado é **dano de pop da entidade Bubble**, não dano instantâneo da resolução do glyph. Duração e captura/persistência exigem ler `BubbleEntity`; evento de resolução não prova captura ou pop. Não creditar duplicadamente.
+- **Estado:** ✅ assinatura/fórmula do source pin; ⚠️ config carregada, auxiliar e testes físicos pendentes. Contratos de `EffectResolveEvent.Pre` são existentes, porém o adapter RPG, clamps, causalidade e escrita externa **não** foram validados: ⛔ fail-closed até testes.

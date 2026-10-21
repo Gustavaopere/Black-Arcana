@@ -2,6 +2,10 @@
 
 Status: `58/58 REGISTERED ROOTS INVENTORIED / 53 COUNTED / 5 EXCLUDED / SOURCE PIN 04ab715d657368b177267a8df196c32329acf3f6`
 
+## Exact publisher correction — 2026-10-14
+
+This file preserves the **58/53 source-pinned hypothesis** for traceability. The SHA-matched publisher `0.1.7` JAR contains only **57 compiled registrations**, 52 counted and five excluded. The source row `ess_requiem:gong` corresponds to `WEAKENING_GONG` and is **not a registered physical spell**; it must not contribute to the installed strict minimum. See [exact binary proof](EXACT-BINARY-SPELLS-0.1.7.md) and Java21 run #38655251099. Every other source ID was independently found in its compiled class constructor/getter. The 58/53 source totals below are not current physical totals.
+
 ## Evidence
 
 Physical:
@@ -55,7 +59,7 @@ Localization cross-check:
 | `ess_requiem:forever_dreaming` | COUNTED_SOURCE_PINNED | DTE-gated registry; DTE 1.4.4 is physically present and Dream Ripper source embeds this spell |
 | `ess_requiem:gild_summon` | EXCLUDED | Battle Standard summon-AI sub-action; not a separate player action |
 | `ess_requiem:glacial_sculpting` | COUNTED_SOURCE_PINNED | current 0.1.7 provider registration; ordinary or source-bounded equipment/focus reachability |
-| `ess_requiem:gong` | COUNTED_SOURCE_PINNED | current 0.1.7 provider registration; ordinary or source-bounded equipment/focus reachability |
+| `ess_requiem:gong` | COUNTED_SOURCE_PINNED | **SOURCE-ONLY / ABSENT FROM PUBLISHER JAR REGISTRY**: the source declares `WEAKENING_GONG`, but the official binary contains no such registration; zero current physical semantic contribution |
 | `ess_requiem:homunculus_summon` | COUNTED_SOURCE_PINNED | current 0.1.7 provider registration; ordinary or source-bounded equipment/focus reachability |
 | `ess_requiem:hone_edge` | COUNTED_SOURCE_PINNED | current 0.1.7 provider registration; ordinary or source-bounded equipment/focus reachability |
 | `ess_requiem:lord_of_the_final_frost` | COUNTED_SOURCE_PINNED | current 0.1.7 provider registration; ordinary or source-bounded equipment/focus reachability |

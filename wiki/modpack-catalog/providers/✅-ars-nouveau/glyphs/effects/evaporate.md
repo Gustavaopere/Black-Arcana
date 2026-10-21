@@ -30,3 +30,11 @@ The inspected `EffectEvaporate` path does not itself show the claim check used b
 Ars Nouveau owns this fluid-removal spell. Independent Black Arcana fluid destruction must route through `WorldEffectPolicy`; Black Arcana must not replay an Ars Evaporate mutation.
 
 Source checkpoint: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` (`EffectEvaporate`).
+
+## Engenharia para perks — caminho causal individual
+
+- **Fonte versionada:** [`EffectEvaporate.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/effect/EffectEvaporate.java), Ars Nouveau 5.13.1.
+- **Geometria:** `onResolveBlock` percorre `SpellUtil.calcAOEBlocks(...AOE,count(Pierce))` e chama `evaporate` na posição **e em todas as seis direções**; potencial 7 tentativas por candidato antes de overlaps, não 7 conversões garantidas.
+- **Mutação:** se há FluidState não vazio **e** `state.getBlock() instanceof LiquidBlock`, muda para AIR; caso contrário se `SimpleWaterloggedBlock` com propriedade `WATERLOGGED`, altera a property para false. Em ambos os ramos pode propagar `ShapersFocus.tryPropagateBlockSpell`.
+- **QA de proteção:** esta classe não chama `destroyRespectsClaim` no trecho mutador; é uma pendência para investigar admissão externa e claims, sem afirmar exploit. Mana default 50, augments apenas AOE/Pierce; não impor adicional via RPG nem usar o caminho Ars para WorldEffectPolicy de Black Arcana.
+- **Estado:** ✅ source pin com métodos/fórmulas; ⚠️ auxiliaries, config real e Survival QA pendentes. API de `EffectResolveEvent.Pre` existe, mas adapter RPG para este glyph não foi implementado/testado; sem duplicação de custo/efeito/WorldEffectPolicy.

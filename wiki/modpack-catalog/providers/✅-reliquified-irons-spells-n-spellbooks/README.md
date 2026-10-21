@@ -1,6 +1,6 @@
 # Reliquified Iron's Spells 'n Spellbooks — 0.2.7
 
-Status: `✅ CATALOGED / CURRENT PHYSICAL 0.2.7 / COUNTED_SOURCE_PINNED / 25 PROVIDER-OWNED RELIC ABILITY ROOTS / +25 STRICT / RUNTIME QA SEPARATE`
+Status: `✅ CATALOGED / CURRENT PHYSICAL 0.2.7 / COUNTED_EXACT / 25 PROVIDER-OWNED RELIC ABILITY ROOTS / +25 STRICT / RUNTIME QA SEPARATE`
 
 ## Current physical identity
 
@@ -94,11 +94,11 @@ This closes a provider-native source-level acquisition route through Iron's stru
 
 The Black Arcana semantic metric counts discrete provider-owned supernatural player actions, while excluding the item/gear container itself and downstream effects.
 
-These 25 ability roots are provider-owned Relics-framework actions with distinct causal gameplay identities. They are therefore **`COUNTED_SOURCE_PINNED`**.
+These 25 ability roots are provider-owned Relics-framework actions with distinct causal gameplay identities. They are therefore **`COUNTED_EXACT` for source-to-publisher compiled registration identity after Java21 #38595504032**, while runtime and Survival remain unverified.
 
 Semantic contribution: **+25 strict objects**.
 
-The physical JAR hash is known, but byte-for-byte equivalence between the installed artifact and the public source build has not been established; therefore this is not labeled `COUNTED_EXACT`.
+The official publisher JAR (file 8221834) was checked against the sibling physical SHA-1; exact compiled item registrations and ability-template root IDs were inspected, with 0 differences. This proves only the audited registration callsites—not full source-vs-binary method equivalence or gameplay.
 
 ## Authority boundaries
 
@@ -123,6 +123,11 @@ Catalog closure does not assert assembled-pack PASS. Relevant runtime gates incl
 
 ## Result
 
-**✅ Cataloged — `COUNTED_SOURCE_PINNED`.**
+**✅ Cataloged — `COUNTED_EXACT` at the audited binary registration boundary; ⚠️ gameplay unverified.**
 
 Current semantic inventory: **25 provider-owned supernatural relic ability roots**. Strict global semantic delta: **+25**.
+
+
+## Publisher bytecode evidence — 2026-10-14
+
+[Java 21 run #38595504032](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38595504032) **SUCCESS** for official CurseForge **8221834** on NeoForge 1.21.1, `0.2.7`. JAR **653,721 bytes**, SHA-1 `e22fd94c87cb88b3cfa4637c48a1058260d35a9b` matching the sibling physical entry #478, SHA-256 `36f938eb757134de24e51d33a745c4bf52088be764688f330b74757316c40ed7`. Read-only `javap -c -p` confirmed `RISASItems` **24/24** static item registers and **25/25 unique provider-owned** `AbilityTemplate.builder(String)` IDs in **23** ability-bearing item classes; deviations `{}`. `HatOfOmniscience` has no primary ability; Slicer and Shadow Claws have two each. Synthetic Java21 fixtures validate the collector separately. ⚠️ No local Minecraft instance run, loaded Relics registry, actual loot/chests, mana/cooldown, multiplayer or Survival proof; `COUNTED_EXACT` concerns the binary registry only. ⛔ No RPG progress adapter/Stage 06.05 promotion.

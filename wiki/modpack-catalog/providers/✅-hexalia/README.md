@@ -2,7 +2,7 @@
 
 ## Status
 
-`✅ CATALOGED / PHYSICAL 1.3.7 / RELEASE-SOURCE-PINNED 1.3.7 / NATURE'S RITUAL 23/23 / CELESTIAL INFUSION 6/6 / BREWS 9/9 / CURRENT SEMANTIC MAGIC SURFACE 29 / 1.3.7 CONTENT DELTA AUDITED / ASSEMBLED RUNTIME QA SEPARATE`
+`✅ CATALOGED / PHYSICAL 1.3.7 / COUNTED_EXACT RECIPE DATA 29/29 / RELEASE-SOURCE-PINNED 1.3.7 / NATURE'S RITUAL 23/23 / CELESTIAL INFUSION 6/6 / BREWS 9/9 / CURRENT SEMANTIC MAGIC SURFACE 29 / 1.3.7 CONTENT DELTA AUDITED / ASSEMBLED RUNTIME QA SEPARATE`
 
 ## Current physical identity
 
@@ -236,3 +236,8 @@ No audited Hexalia source-pinned surface proves Black Arcana's proposed server-a
 ## Phase 3 gate
 
 Hexalia now has current 1.3.7 release-source-pinned semantic coverage across its ritual/infusion action surface and a bounded 1.3.7 content-delta audit. Provider-specific Black Arcana hooks remain fail-closed until stable integration boundaries and assembled-pack runtime behavior are verified. Catalog completion is not installed-runtime validation.
+
+
+## Exact SHA-matched packaged recipe audit — 2026-10-14
+
+[Independent physical audit #38612851733](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38612851733) **SUCCESS** using official CurseForge **8875587**, JAR **1,880,110 bytes**, SHA-1 `ca90edf1664cf6d44fe7e5318c71069050499c7e` and SHA-256 `08e6a39c0713fe16087842352af23a458ad39ed635faa4e91aa41cc1691e662b`. **✅ 23/23 `hexalia:natures_ritual` IDs + 6/6 `hexalia:celestial_infusion` IDs present and schema-audited within the actual installed-version JAR; 29 unique IDs, 0 deviations.** Summon Cacofey and Silk Moth both have verified soul requirement and matching entity declaration. Full [binary QA note](../../../../docs/qa/hexalia-137-exact-rituals-note.md). This upgrades the **static packaged recipe boundary** to `COUNTED_EXACT`, not source-build byte parity, recipe reload, Survival/claims or provider-native settlement. Earlier sections of this README describing `COUNTED_SOURCE_PINNED` are historical source-only checkpoints. **+0** additional roots; 29 already in semantic ledger. Stage 06.05 and RPG adapter remain gated.

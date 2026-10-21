@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Documentation-only checks for the canonical magic-provider catalog index."""
 from __future__ import annotations
+import json
 import re
 import unittest
 from pathlib import Path
@@ -1439,7 +1440,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                 self.assertIn("Sem \x60LootTemplate\x60 local", text)
         self.assertIn("✅ 52/52 habilidades individualizadas", index)
         self.assertIn("**+0 novas identidades semânticas**", index)
-        self.assertIn("não \x60COUNTED_EXACT\x60", index)
+        self.assertIn("COUNTED_EXACT", index)
+        self.assertIn("38662072936", index)
+        self.assertIn("EXACT-BINARY-OWNER-ABILITIES-1.0.8.md", index)
         self.assertIn("ABILITY-CARDS-1.0.8.md", self.index)
         for doc in ("README.md", "ABILITY-INVENTORY-1.0.8.md"):
             self.assertIn(
@@ -1542,9 +1545,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(25, len(exact))
+        self.assertEqual(35, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau"},
+            {"Hazen N Stuff", "Ars Nouveau", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice\'s Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
@@ -1601,9 +1604,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(25, len(exact))
+        self.assertEqual(35, len(exact))
         self.assertEqual(
-            {"Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau"},
+            {"Hazen N Stuff", "Ars Nouveau", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice\'s Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -2369,6 +2372,61 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("denominador semântico final permanece aberto", self.index)
         self.assertIn("COUNTED_EXACT", self.cards)
         self.assertIn("não verificados", self.cards)
+
+
+    def test_ars_nouveau_5131_exact_static_109_registry_ids(self):
+        folder = PROVIDERS / "✅-ars-nouveau"
+        dossier = (folder / "EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md").read_text(encoding="utf-8")
+        self.assertIn("38691889186", dossier)
+        self.assertIn("02782d071ee5fab3b5c4b8ced67b7e1748277dfd", dossier)
+        self.assertIn("99dff85e8778f7ae21dfd51cdedadf20f555a834fc757c0afe5f03c10eea96f2", dossier)
+        self.assertIn("COUNTED_EXACT", dossier)
+        self.assertIn("Survival", dossier)
+        self.assertIn("+0", dossier)
+        self.assertIn("34 exact / 5 conditional", dossier)
+        self.assertIn("EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md", (folder / "README.md").read_text(encoding="utf-8"))
+        glyphs=json.loads((ROOT / "docs/qa/ars_5131_glyph_class_id_manifest.json").read_text(encoding="utf-8"))
+        rituals=json.loads((ROOT / "docs/qa/ars_5131_ritual_class_id_manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual((85,24),(len(glyphs),len(rituals)))
+        self.assertEqual(109,len(set(glyphs.values()) | set(rituals.values())))
+        self.assertEqual("ars_nouveau:reset",glyphs["EffectReset"])
+        self.assertEqual("ars_nouveau:rewind",glyphs["EffectRewind"])
+        self.assertEqual("ars_nouveau:wololo",glyphs["EffectWololo"])
+        self.assertEqual("ars_nouveau:glyph_sense_magic",glyphs["EffectSenseMagic"])
+        tracker=(ROOT / "wiki/modpack-catalog/meta/REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row=next(x for x in tracker.splitlines() if x.startswith("| [Ars Nouveau]"))
+        self.assertIn("| 5.13.1 | 109 | COUNTED_EXACT |",row)
+        ledger=(ROOT / "wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        semantic=next(x for x in ledger.splitlines() if x.startswith("| [Ars Nouveau]"))
+        self.assertIn("| 5.13.1 | 109 | `COUNTED_EXACT` |",semantic)
+        self.assertIn("1856",ledger)
+        self.assertIn("1854",ledger)
+
+
+    def test_hazen_14014_exact_static_38_spell_ids(self):
+        provider = PROVIDERS / "✅-hazen-n-stuff"
+        readme = (provider / "README.md").read_text(encoding="utf-8")
+        self.assertIn("COUNTED_EXACT", readme)
+        self.assertIn("38606162180", readme)
+        inventory = (provider / "SOURCE-1.4.0.14-SPELL-INVENTORY.md").read_text(encoding="utf-8")
+        self.assertIn("38", inventory)
+        proof = (ROOT / "docs/qa/hazen-14014-binary-registry.md").read_text(encoding="utf-8")
+        for token in ("38606162180", "compiled_registration_pairs=38",
+                      "exact_spell_id_class_match_count=38",
+                      "3be20bacb44c1923348ab6f61b685eec6aacfdcd",
+                      "eeacf5b5536bbe2691e1687902a8c37cff775829457db6e116261bbff7a00462",
+                      "COUNTED_EXACT", "Survival"):
+            self.assertIn(token, proof)
+        matrix = (ROOT / "wiki/modpack-catalog/meta/REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
+        row = next(x for x in matrix.splitlines() if x.startswith("| [Hazen N Stuff]"))
+        self.assertIn("| 1.4.0.14 | 38 | COUNTED_EXACT |", row)
+        semantic = (ROOT / "wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
+        row = next(x for x in semantic.splitlines() if x.startswith("| [Hazen N Stuff]"))
+        self.assertIn("| 1.4.0.14 | 38 | `COUNTED_EXACT` |", row)
+        self.assertIn("35/39", matrix)
+        self.assertIn("4/39", matrix)
+        self.assertIn("1.856", matrix)
+        self.assertIn("1.854", matrix)
 
 
 if __name__ == "__main__":

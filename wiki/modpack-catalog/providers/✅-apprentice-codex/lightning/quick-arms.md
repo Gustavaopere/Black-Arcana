@@ -56,3 +56,21 @@ Occupies the **short-duration magical handgun / rapid bounded recast** niche. Bl
 ## Confidence
 
 `SOURCE-PINNED SPELL + RECAST WEAPON / PACK CONFIG MULTIPLIER + ENTITY SHOT QA PENDING`
+
+## Localizadores para Codex — source exato
+
+- **Registry + identidade:** `apprenticecodex:quick_arms` → `SpellRegistry.reg("quick_arms", QuickArms::new)` no source 0.9.7.1.
+- **Classe Java verificável:** [`jp.aquafactory.apprenticecodex.spell.quickarms.QuickArms`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/quickarms/QuickArms.java) (`hexqua/apprentice_codex@305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e`).
+- **Leitura para perks:** consultar os coeficientes, fórmulas, condições de alvo e relações causa→efeito já registrados nesta ficha; rastrear métodos da classe e classes auxiliares antes de afirmar que qualquer área, alvo, número de entidades ou duração é modificável externamente.
+- **Contrato:** host Iron's controla casting e mana; Apprentice's Codex controla o efeito; RPG Skill Tree controla perks/Mastery/gates; Black Arcana só integra via boundary real, sem segunda liquidação de custo/efeito. Sem hook comprovado para a mutação: **⚠️ condicionado/fail-closed**.
+- **Pendências:** classificar hooks com signature e validar entidades/efeitos secundários, QA no JAR físico e Survival. O link é prova de localização estática, não de interoperabilidade implementada.
+
+## Engenharia causal aprofundada — fechamento das nove fichas (2026-10-14)
+
+**Source:** [`quickarms/QuickArms.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/quickarms/QuickArms.java) · [`quickarms/QuickArmsHandgunEntity.java`](https://github.com/hexqua/apprentice_codex/blob/305ea6aef7bb9642a9d1fc2b9042f3dfb2ce5b2e/src/main/java/jp/aquafactory/apprenticecodex/spell/quickarms/QuickArmsHandgunEntity.java).
+
+- **Uma arma, vários disparos:** `QuickArms` estende `AbstractSummonWeaponRecastSpell`, janela de **60 ticks**, `getActivateCount=min(16,2+round(4*spellPower/100))`; no cast inicial invoca `QuickArmsHandgunEntity` com `standbyTick=20`. `onPreRecastWithWeapon` bloqueia recast enquanto `weapon.canFire()` é falso, e `onPreRecastNoWeapon` é falso; `onRecastFinishedWithWeapon` libera arma.
+- **Hit/cliente:** `QuickArmsHandgunEntity.tickOnServer` dispara automaticamente primeira vez ao esgotar standby; `fire(level,getDamage(...))` resolve raycast a **24 blocos**, aplica dano na autoridade e envia `GunSpellTracerPacket` visual ao tracking. A entidade salva `Range`, `StandbyDamage`, `IsStandbyFirstFire` e `StandbyTick` em NBT.
+- **QA:** recast vs primeira shot, desligamento owner, cooldown, sincronização visual e dedup de progresso. Recast é contrato do provider; não inventar nova cobrança ou receipt de mana BA.
+
+🟡 Dossiê causal source-level; ⚠️ equivalência bytecode/JAR/config, PvP/claims e QA Survival/dedicated pendentes; ⛔ sem adapter Mastery/perks real. Black Arcana não apropria casts, mana ou efeitos do provider.

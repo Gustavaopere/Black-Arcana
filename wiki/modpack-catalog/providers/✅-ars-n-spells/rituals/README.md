@@ -23,3 +23,7 @@ Individual pages:
 The four one-shot entries extend the baseline `AnsRitual` lifecycle with a default 60-server-tick completion interval. Mana Well does not use that one-shot base and must not inherit that duration by assumption.
 
 The five ritual identities count as provider capabilities. The eight internal `ars_cross_*` Iron's proxy objects are cataloged separately as transport infrastructure and are not added to the ritual or standalone-spell count.
+
+## Engenharia source 3.3.3 — cartões no PR #796
+
+As cinco fichas desta pasta receberam análise de métodos do `otectus/ars-n-spells@41fac17065c381104b17fdaab307d89ba21b49ab` **3.3.3**, com IDs binários 3.3.4 previamente confirmados. Consultar [matriz de engenharia](../PERK-ENGINEERING-MATRIX-3.3.4.md). Nenhuma API/método de 3.3.4 foi inferido da versão anterior; há gates ⚠️ runtime e ⛔ adapters.

@@ -1,0 +1,65 @@
+name: Reliquified Irons 0.2.7 exact-JAR relic ability evidence
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/reliquified-irons-027-binary-audit.yml'
+      - 'docs/qa/reliquified_irons_binary_audit.py'
+      - 'docs/qa/reliquified_irons_binary_audit_test.py'
+      - 'docs/qa/reliquified-irons-027-exact-binary-pending.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/reliquified-irons-027-binary-audit.yml'
+      - 'docs/qa/reliquified_irons_binary_audit.py'
+      - 'docs/qa/reliquified_irons_binary_audit_test.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  relic_ability_static_registry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Test synthetic Java 21 classfile collector
+        run: python3 docs/qa/reliquified_irons_binary_audit_test.py -v
+
+      - name: Download CurseForge file 8221834 with mandatory physical SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/reliquified-irons-binary
+          JAR='build/reliquified-irons-binary/reliquified_irons_spells_and_spellbooks-1.21.1-0.2.7.jar'
+          curl --fail --show-error --silent --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://mediafilez.forgecdn.net/files/8221/834/reliquified_irons_spells_and_spellbooks-1.21.1-0.2.7.jar' \
+            --output "$JAR"
+          echo "e22fd94c87cb88b3cfa4637c48a1058260d35a9b  $JAR" | sha1sum --check --status
+          test "$(stat -c %s "$JAR")" -gt 250000
+
+      - name: Audit exact SHA-matched 24 items and 25 ability roots in bytecode
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/reliquified_irons_binary_audit.py \
+            --jar 'build/reliquified-irons-binary/reliquified_irons_spells_and_spellbooks-1.21.1-0.2.7.jar' \
+            --output build/reliquified-irons-binary/evidence.json
+
+      - name: Upload narrow JSON only, not copyrighted publisher JAR
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reliquified-irons-027-binary-${{ github.sha }}
+          path: build/reliquified-irons-binary/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14

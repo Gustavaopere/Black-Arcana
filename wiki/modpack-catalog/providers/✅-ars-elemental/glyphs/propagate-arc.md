@@ -28,3 +28,11 @@ O propagador reemite a cadeia provider-owned através de Ars context/resolver, e
 **Authority:** Ars Nouveau/Ars Elemental retêm mana, Source, custos, spell grammar, execução, targeting, world effects e cleanup. Black Arcana não pode cobrar ou resolver novamente o mesmo cast, inserir segundo loop ou mutação. **⛔** Sem contrato real de hook/API, integração fail-closed.
 
 **Fontes:** [matriz](../GLYPHS.md) · [acquisition](../ACQUISITION.md) · [registries](../REGISTRIES.md) · [provider](../README.md). Clean-room: somente fatos registrados na auditoria do Black Arcana, sem código/assets upstream.
+
+## Engenharia de perks — propagação e cadeia de cast
+
+- **Classe:** [`PropagatorArc.java`](https://github.com/Alexthw46/Ars-Elemental/blob/fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d/src/main/java/alexthw/ars_elemental/common/glyphs/PropagatorArc.java), commit fe9d37e947c5fffd4f89a6ae4dd87ae52489b30d.
+- **Contrato:** `IPropagator` declara `getCastType=MethodArcProjectile.INSTANCE`; construtor registra o glyph em `EffectReset.RESET_LIMITS`. `onResolve` chama `copyResolver` para continuar a cadeia no novo local; `getTypeIndex=8`.
+- **Quantidade:** `propagate` cria 1 projectile central e mais `getBuffCount(Split)` laterais, tipo `SPELL_PROJ_ARC`, com gravidade e `velocity=MethodArcProjectile.getProjectileSpeed(stats)`. Direção parte de `IPropagator.getDirection`; com Extract ou `FakePlayer` usa vetor de propagação, senão orientação do shooter.
+- **Perks:** cada propagação usa resolver derivado e não é novo cast nem autoriza reset de mana/Mastery. `EffectReset.RESET_LIMITS` é gramática Ars, não mecanismo de poder ilimitado Black Arcana.
+- **Status:** ✅ identidade do JAR e fonte consultada; ⚠️ equivalência da implementação no JAR, addons/servidor/clientes e limites físicos pendentes; ⛔ nenhuma integração RPG ou perk aprovada nesta branch. O Ars mantém autoridade sobre SpellResolver, mana e entidade.
