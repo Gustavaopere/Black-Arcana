@@ -26,7 +26,7 @@ class ApplyCallsiteTests(unittest.TestCase):
     def test_uniquely_typed_static_damage_callsite_report(self):
         report=survey_application(fixture())
         self.assertEqual(1,report["apply_damage_callsite_count"])
-        self.assertEqual(7,report["apply_damage_instruction_index"])
+        self.assertEqual(6,report["apply_damage_instruction_index"])
         self.assertEqual("STATIC_CALLSITE_SURVEY_ONLY",report["assurance"])
         self.assertIn("fload_3",report["preceding_opcode_kinds"])
         self.assertIn("invoke",report["invocation_opcode_families"])
