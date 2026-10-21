@@ -1,5 +1,12 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
+## Somake — campos da controller e deduplicação de UUID por instância (21/10/2026; PR #854)
+
+**Barra global:** —% porque o denominador universal permanece aberto; piso conservador **≥1.856** objetos semânticos. **Barra Somake:** **83/83 IDs = 100%**; aprofundamento downstream em **5/83 fichas = 6,02%**; subcampanha fixa de providers com JAR exato **35/39 = 89,74%** no checkpoint documentado. +0 magias, +0 adapters e nenhum hook mutador homologado.
+
+A [prova física Java 21 #39538804021](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39538804021), com SHA oficial Somake 1.0.9 `171841ac9f802be9309ecc166c1d972ac6d404c0`, passou **12 testes** e certificou os defaults `witherDuration=80`, `maxTargets=8`, os clamps especializados `maxTargets>=1`, `witherDuration>=30`, `witherAmplifier>=0`, a atribuição `impactDamage:float` e os callsites de armazenamento/restauração NBT dos três campos de efeito. `activeTargetIds` pertence à instância da controller: `lambda$launchWave$0` usa `contains(candidateUUID)` para exclusão e `pruneTargets` usa `retainAll`. **Não** inferir dedup entre controllers, persistência de UUIDs, sucesso real de spawn, valores de cast ou API por jogador. Stage 06.05 🟡, Stage 09 físico PENDING; perks modificadoras **⛔ FAIL_CLOSED**. [Ficha](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+
 ## Somake — constructor handoff de Wither e dano na bud (20/10/2026; PR #853)
 
 **Barras inalteradas:** global **—%**, universo total aberto, piso conservador **≥1.856** objetos semânticos; Somake Spells 1.0.9 **83/83 IDs = 100%**, downstream por ficha **5/83 = 6,02%**, subcampanha fixa de JARs de providers exatos **35/39 = 89,74%** no checkpoint publicado. Hooks de perks mutadoras homologados: **0**, sem denominador.
