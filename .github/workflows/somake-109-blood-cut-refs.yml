@@ -6,9 +6,13 @@ on:
       - '.github/workflows/somake-109-blood-cut-refs.yml'
       - 'docs/qa/somake_109_blood_cut_refs.py'
       - 'docs/qa/somake_109_blood_cut_refs_test.py'
+      - 'docs/qa/somake_109_blood_cut_event_gate.py'
+      - 'docs/qa/somake_109_blood_cut_event_gate_test.py'
       - 'docs/qa/somake_109_cast_refs.py'
       - 'docs/qa/somake_109_perk_method_probe.py'
       - 'wiki/modpack-catalog/providers/✅-somake-spells/registry-1.0.9/blood-cut.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/registry-1.0.9/blood-cut-technical-gate.md'
+      - 'wiki/modpack-catalog/meta/PROGRESSO-CATALOGO-2026-10-18.md'
   workflow_dispatch:
 permissions:
   contents: read
@@ -26,6 +30,7 @@ jobs:
         run: |
           python3 docs/qa/somake_109_cast_refs_test.py -v
           python3 docs/qa/somake_109_blood_cut_refs_test.py -v
+          python3 docs/qa/somake_109_blood_cut_event_gate_test.py -v
       - name: Download and verify exact publisher/pack artifact
         shell: bash
         run: |
@@ -40,11 +45,18 @@ jobs:
           python3 docs/qa/somake_109_blood_cut_refs.py \
             --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
             --output build/somake-blood-cut/evidence.json
+      - name: Inspect Blood Cut Post-damage annotation and branch metadata
+        run: |
+          python3 docs/qa/somake_109_blood_cut_event_gate.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-event-evidence.json
       - name: Export only bounded derived evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: somake-109-blood-cut-static
-          path: build/somake-blood-cut/evidence.json
+          path: |
+            build/somake-blood-cut/evidence.json
+            build/somake-blood-cut/blood-cut-event-evidence.json
           if-no-files-found: ignore
           retention-days: 14

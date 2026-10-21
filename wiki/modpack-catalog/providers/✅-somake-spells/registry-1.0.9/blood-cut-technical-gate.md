@@ -47,3 +47,10 @@ O [verificador](../../../../../docs/qa/somake_109_blood_cut_refs.py), seus [test
 **Autoridades:** Somake produz efeito e regras específicas; Iron's mantém casting, custo e cooldown; RPG Skill Tree só fornece progressão e perks por contrato real; Black Arcana não reimplementa esse pipeline.
 
 **Outras fontes:** [registry física](../EXACT-1.0.9-REGISTRY-AUDIT.md), [lista 1.0.9](../SPELL-CATALOG-1.0.9.md), [padrão editorial](../../../meta/PERK-READY-TECHNICAL-STANDARD.md).
+
+
+## Atualização SHA-exata: anotações de evento e ordem dos callsites (21/10/2026)
+
+A [auditoria física Java 21 #39549751471](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39549751471) confirmou a anotação de classe **net.neoforged.fml.common.EventBusSubscriber** e a anotação de método **net.neoforged.bus.api.SubscribeEvent** em BloodCutEffect.onLivingDamage. A rotina contém **103 instruções** e a sequência de desvios **ifeq, ifeq, ifnull, ifne, goto**. O getDamageModifier tem **19 instruções**, **2 desvios** e dependência nominal de getEntityPowerMultiplier. A rotina de evento lê getNewDamage e pode chamar applyDamage em seu fluxo compilado; não se comprovou despacho ou resultado de dano em gameplay.
+
+[Relatório derivativo e matriz](../EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md). As provas novas **não** certificam valores de dano, compatibilidade de outros handlers, alvo, invulnerabilidade, recursão ou APIs de alteração por perk. ⛔ **FAIL_CLOSED** mantém-se.

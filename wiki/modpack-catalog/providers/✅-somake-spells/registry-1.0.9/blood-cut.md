@@ -58,3 +58,12 @@ Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-M
 | Mutabilidade por perk | ⛔ `FAIL_CLOSED`: nenhuma API/hook mutador por jogador foi certificada; não criar segundo pipeline de dano, cura ou custo |
 
 A presença de `LivingDamageEvent.Post` e `DamageSources.applyDamage` na mesma classe torna necessária uma prova de **filtros e prevenção de proc-chain** antes de qualquer integração que amplifique dano. O resultado é uma topologia de callsites compilados, não observação de execução real nem permissão de alterar o provider.
+
+
+## Prova exata de inscrição declarativa do evento — 21/10/2026 (PR #858)
+
+[Java21 #39549751471](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39549751471) passou com JAR SHA-1 idêntico e **20 testes sintéticos**. Foram identificados **EventBusSubscriber** como anotação runtime da classe BloodCutEffect e **SubscribeEvent** como anotação runtime de onLivingDamage(LivingDamageEvent.Post). As duas anotações são símbolos efetivos do classfile, não observação de despacho em jogo ou exposição de API mutadora.
+
+No método onLivingDamage há **103 instruções**, **5 desvios** (ifeq, ifeq, ifnull, ifne e goto), **uma** referência invocada a getNewDamage e **uma** a DamageSources.applyDamage. A ordem de callsites situa a fonte de dano Blood Cut antes de applyDamage, mas não determina quais branches são atravessados. getDamageModifier possui **19 instruções** e **dois desvios**, sem fórmula homologada.
+
+**Engenharia de perks:** aumentar dano/área, alterar alvo ou ativar proc/Mastery no evento Post continua **⛔ FAIL_CLOSED** até inspeção de predicados, deduplicação, configuração de Iron's e QA real. [Dossiê de evento](../EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md). Nenhuma magia/adapter adicionado.

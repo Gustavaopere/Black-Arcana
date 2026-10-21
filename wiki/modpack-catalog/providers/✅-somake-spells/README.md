@@ -27,6 +27,10 @@ The previous exact physical SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`, Fi
 
 See [`CURRENT-1.0.9-REVALIDATION-CHECKLIST.md`](CURRENT-1.0.9-REVALIDATION-CHECKLIST.md) and [`PHYSICAL-1.0.9-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-1.0.9-FINGERPRINT-CHECKPOINT.md).
 
+## Blood Cut 1.0.9 — evento de dano registrado no classfile (21/10/2026)
+
+[Auditoria Java21 #39550061369](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39550061369) identifica **EventBusSubscriber** na classe BloodCutEffect e **SubscribeEvent** em onLivingDamage(LivingDamageEvent.Post). O método tem 103 instruções, cinco desvios e chama simbolicamente DamageSources.applyDamage. A fórmula getDamageModifier e condições contra recursão não foram certificadas; o runtime real ainda requer QA. A evidência integral está em [EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md](EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md) e na [ficha individual](registry-1.0.9/blood-cut.md). Nenhum novo spell, perk mutadora ou adapter foi integrado.
+
 ## Historical Phase 2BF exact-artifact reconciliation — 1.0.8-fix
 
 Phase 2AI correctly stopped at the publisher evidence ceiling. Phase 2BF supersedes only that technical ceiling by materializing the exact CurseForge/Curse Maven File ID `8417850` and requiring SHA-1 equality with the physical modlist: `b0ad94c1504709662bee2d08700375ccecbb5ec7`.
