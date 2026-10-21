@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Synthetic original wave-cardinality scanner regressions."""
 import unittest
-from somake_109_wave_maxtargets import wave_cardinality_scout, prove_wave_list_cap
+from somake_109_wave_maxtargets import wave_cardinality_scout, prove_wave_list_cap, prove_wave_loop_spawn_sites
 D="(Lnet/minecraft/server/level/ServerLevel;)V"
 def sample():
     x=[f"{i}: nop" for i in range(196)]
@@ -81,6 +81,50 @@ class WaveCapOperandTests(unittest.TestCase):
     def test_external_jump_into_sublist_rejected(self):
         d=cap_fixture();d[0][2][18]="18: goto 46"
         self.assertEqual("NOT_PROVED",prove_wave_list_cap(d)["status"])
+
+
+def loop_fixture():
+    row=cap_fixture()[0][2]
+    row[55]="55: astore 5"
+    row[56]="56: aload 5"
+    row[57]="57: invokeinterface #1, 1 // InterfaceMethod java/util/Iterator.hasNext:()Z"
+    row[58]="58: ifeq 166"
+    row[59]="59: aload 5"
+    row[60]="60: invokeinterface #2, 1 // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;"
+    row[93]='93: invokespecial #3 // Method com/somake/somakespells/entity/FuneralBloomBudEntity."<init>":()V'
+    row[156]="156: invokevirtual #4 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+    row[157]="157: pop"
+    row[159]="159: getfield #5 // Field activeTargetIds:Ljava/util/Set;"
+    row[161]="161: invokevirtual #6 // Method net/minecraft/world/entity/LivingEntity.getUUID:()Ljava/util/UUID;"
+    row[162]="162: invokeinterface #7, 2 // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z"
+    row[163]="163: pop"
+    row[164]="164: iinc 7, 1"
+    row[165]="165: goto 56"
+    return [("launchWave",D,row)]
+
+class WaveNormalPathLoopTests(unittest.TestCase):
+    def test_single_spawn_attempt_per_iteration_but_not_success(self):
+        p=prove_wave_loop_spawn_sites(loop_fixture())
+        self.assertEqual("PROVED_ONE_BUD_SPAWN_ATTEMPT_AND_UUID_SET_ADD_PER_NORMAL_ITERATION",p["status"],p)
+        self.assertEqual(93,p["bud_constructor_index"])
+        self.assertEqual(156,p["spawn_call_index"])
+        self.assertTrue(p["spawn_boolean_result_discarded"])
+        self.assertIn("not successful bud spawn",p["boundary"])
+    def test_skip_over_spawn_inside_loop_fails(self):
+        d=loop_fixture();d[0][2][104]="104: goto 160"
+        self.assertEqual("NOT_PROVED",prove_wave_loop_spawn_sites(d)["status"])
+    def test_missing_boolean_pop_fails(self):
+        d=loop_fixture();d[0][2][157]="157: nop"
+        self.assertEqual("NOT_PROVED",prove_wave_loop_spawn_sites(d)["status"])
+    def test_uuid_add_drift_fails(self):
+        d=loop_fixture();d[0][2][162]="162: invokeinterface #7, 2 // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z"
+        self.assertEqual("NOT_PROVED",prove_wave_loop_spawn_sites(d)["status"])
+    def test_changed_iterator_receiver_fails(self):
+        d=loop_fixture();d[0][2][59]="59: aload 4"
+        self.assertEqual("NOT_PROVED",prove_wave_loop_spawn_sites(d)["status"])
+    def test_wrong_loop_exit_fails(self):
+        d=loop_fixture();d[0][2][58]="58: ifeq 160"
+        self.assertEqual("NOT_PROVED",prove_wave_loop_spawn_sites(d)["status"])
 
 if __name__=="__main__":
     unittest.main()
