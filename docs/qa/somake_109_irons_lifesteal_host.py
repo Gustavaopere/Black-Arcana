@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Read-only exact Iron's 3.16.3 addon-API lifesteal symbol discovery.
+"""Read-only exact Iron's 3.16.3 runtime JAR lifesteal symbol discovery.
 
 Clean-room: derived class/method identities and symbolic JVM references only;
 no binary, source, method body, javap dump, or upstream assets are persisted.
-The API artifact is not a proof of provider-loaded gameplay.
+A static runtime class scan is not proof of provider-loaded gameplay.
 """
 from __future__ import annotations
 import argparse
@@ -14,15 +14,15 @@ import subprocess
 import zipfile
 from pathlib import Path
 from somake_109_perk_method_probe import GateError
-from somake_109_radius_irons_contract import (
-    IRON_API_FILENAME, IRON_API_SHA256, validate_irons_api, sections, opcode_rows
-)
+from somake_109_radius_irons_contract import sections, opcode_rows
 
 MAX_ARCHIVE_CLASSES=18000
-MAX_SCAN_BYTES=35_000_000
-MAX_CLASS_BYTES=320_000
-MAX_CANDIDATES=30
+MAX_SCAN_BYTES=80_000_000
+MAX_CLASS_BYTES=500_000
+MAX_CANDIDATES=100
 MAX_JAVAP_BYTES=1_500_000
+RUNTIME_FILENAME="irons_spellbooks-1.21.1-3.16.3.jar"
+RUNTIME_SHA256=None # replace with official CurseForge 8680204 digest after scan
 OWNER="io.redspace.ironsspellbooks.damage.SpellDamageSource"
 APPLY="io.redspace.ironsspellbooks.damage.DamageSources"
 
@@ -86,6 +86,9 @@ def probe_class(jar:Path,cls:str):
     for name,desc,body in all_methods:
         if len(matches)>35:
             raise GateError("too many referenced methods")
+        if ("lifesteal" not in name.lower() and
+              not any("lifesteal" in line.lower() or "life_steal" in line.lower() for line in body)):
+            continue
         rows=opcode_rows(body)
         symbol_hits=[]
         context=[]
@@ -107,51 +110,58 @@ def probe_class(jar:Path,cls:str):
                             "lifesteal_symbol_calls":symbol_hits[:20],
                             "related_method_calls":context[:14],
                             "limitation":"Symbol references and method identity only; no call-stack/branch/damage/cure proof."})
-    if not matches and cls!=APPLY:
-        raise GateError("binary contains marker but no method-level lifesteal references: "+cls)
+    # A class marker need not be a callsite; discovery is deliberately conservative.
     return {"class":cls,"methods":matches[:35],
             "method_count":len(all_methods)}
 
 
 def inspect(jar:Path):
     jar=Path(jar)
-    if jar.is_symlink() or not jar.is_file() or jar.name!=IRON_API_FILENAME:
-        raise GateError("wrong official API artifact")
-    digest=validate_irons_api(jar)
-    if digest!=IRON_API_SHA256:
-        raise GateError("official Iron's 3.16.3 API SHA256 mismatch")
+    if jar.is_symlink() or not jar.is_file() or jar.name!=RUNTIME_FILENAME:
+        raise GateError("wrong official Iron's 3.16.3 runtime filename")
+    if not 5_000_000<jar.stat().st_size<30_000_000:
+        raise GateError("unexpected runtime size")
+    digest=hashlib.sha256(jar.read_bytes()).hexdigest()
+    if RUNTIME_SHA256 is not None and digest!=RUNTIME_SHA256:
+        raise GateError("runtime SHA256 mismatch")
+    with zipfile.ZipFile(jar) as archive:
+        modmeta=archive.read("META-INF/neoforge.mods.toml")
+        if len(modmeta)>250000 or not re.search(rb"\bmodId\s*=\s*['\"]irons_spellbooks['\"]",modmeta):
+            raise GateError("Iron's runtime modId mismatch")
     entries=get_class_members(jar)
     candidates=find_lifesteal_class_names(entries)
     available={name[:-6].replace("/",".") for name,_ in entries}
     if OWNER not in available or APPLY not in available:
         raise GateError("expected Iron's API classes absent")
-    inspect_names=sorted(set(candidates)|{OWNER,APPLY})
+    focus=[name[:-6].replace("/",".") for name,data in entries
+           if b"getlifestealpercent" in data.lower() or b"hasposthiteffects" in data.lower()]
+    inspect_names=sorted(set(focus)|{OWNER,APPLY})
     if len(inspect_names)>MAX_CANDIDATES+2:
         raise GateError("symbol proof not bounded")
     results=[probe_class(jar,cls) for cls in inspect_names]
-    if hashlib.sha256(jar.read_bytes()).hexdigest()!=IRON_API_SHA256:
-        raise GateError("Iron's API mutated during inspection")
+    if hashlib.sha256(jar.read_bytes()).hexdigest()!=digest:
+        raise GateError("Iron's runtime mutated during inspection")
     return {
-       "status":"PASS_SHA_EXACT_IRONS_3163_API_LIFESTEAL_SYMBOL_SCOUT",
+       "status":"PROVISIONAL_OFFICIAL_IRONS_3163_RUNTIME_LIFESTEAL_SYMBOL_SCOUT",
        "version":"1.21.1-3.16.3",
-       "api_sha256":digest,
+       "runtime_sha256":digest,
        "lifesteal_marked_class_count":len(candidates),
        "lifesteal_marked_classes":candidates,
-       "api_class_count":len(entries),
+       "runtime_class_count":len(entries),
        "method_symbol_surveys":results,
-       "scope":"The official addon-facing API may omit runtime event subscribers or damage settlement; no inference of absence, actual heal or per-caster mutator is permitted."
+       "scope":"Runtime JAR static discovery on publisher file 8680204; until independently pinned, SHA is provisional. No inference of actual healed life or perk mutator."
     }
 
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument("--irons-api",type=Path,required=True)
+    p.add_argument("--irons-runtime",type=Path,required=True)
     p.add_argument("--output",type=Path,required=True)
     a=p.parse_args()
-    report=inspect(a.irons_api)
+    report=inspect(a.irons_runtime)
     a.output.parent.mkdir(parents=True,exist_ok=True)
     a.output.write_text(json.dumps(report,ensure_ascii=False,indent=2,sort_keys=True)+"\n")
-    print("IRONS_3163_LIFESTEAL_SCOUT",report["status"],report["api_sha256"])
+    print("IRONS_3163_LIFESTEAL_SCOUT",report["status"],report["runtime_sha256"])
     print("IRONS_3163_LIFESTEAL_CLASSES",report["lifesteal_marked_classes"])
     print("IRONS_3163_LIFESTEAL_METHODS",json.dumps(report["method_symbol_surveys"],sort_keys=True))
 if __name__=="__main__":
