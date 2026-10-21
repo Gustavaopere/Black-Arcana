@@ -85,6 +85,109 @@ def ctor_scout(bud,controller):
             "wave_argument_window":wave_window,
             "boundary":"No assignment chain or cross-bud dedup certified by callsite cooccurrence. No gameplay or per-player mutator proved."}
 
+
+CTOR_BASE_DESC="(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V"
+CTOR_WAVE_DESC="(Lnet/minecraft/world/level/Level;Lcom/somake/somakespells/entity/FuneralBloomControllerEntity;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/phys/Vec3;IFII)V"
+
+def certify_wither_constructor_handoff(bud,controller):
+    """Original interoperability test for JVM arguments and construction-time clamps.
+
+    Does NOT certify upstream controller field assignment, later entity mutations,
+    successful spawn, repeated-bud dedup or per-player mutation hooks.
+    """
+    def fail(reason):return {"status":"NOT_PROVED","reason":reason}
+    ctors=[(desc,opcode_rows(body)) for name,desc,body in bud if
+           name.rsplit(".",1)[-1]=="FuneralBloomBudEntity"]
+    if len(ctors)!=2 or set(d for d,_ in ctors)!={CTOR_BASE_DESC,CTOR_WAVE_DESC}:
+        return fail("constructor_signature_set_drift")
+    by_desc=dict(ctors)
+    base=by_desc[CTOR_BASE_DESC];expanded=by_desc[CTOR_WAVE_DESC]
+    if len(base)!=17 or len(expanded)!=41:return fail("constructor_instruction_count_drift")
+    waves=[opcode_rows(body) for name,desc,body in controller
+           if name=="launchWave" and desc==LAUNCH_DESC]
+    if len(waves)!=1 or len(waves[0])!=196:return fail("launch_wave_shape_drift")
+    w=waves[0]
+    def local(rows,i,prefix,slot):
+        op,args=rows[i][1],rows[i][2]
+        return op==f"{prefix}_{slot}" or (op==prefix and args==str(slot))
+    def field(rows,i,opcode,name,desc):
+        d=san(i,rows[i])
+        return (d["op"]==opcode and d.get("field")==name and d.get("descriptor")==desc)
+    def math_max(rows,i):
+        d=san(i,rows[i])
+        return d["op"]=="invokestatic" and d.get("call")=="max" and d.get("descriptor")=="(II)I" and "java/lang/Math.max:(II)I" in rows[i][3]
+    if not (local(base,4,"aload",0) and base[5][1]=="bipush"
+            and base[5][2]=="80" and field(base,6,"putfield","witherDuration","I")):
+        return fail("base_ctor_wither_default_not_80")
+    basic_writes=[i for i,r in enumerate(base) if r[1]=="putfield" and
+                  (d:=san(i,r)).get("field") in ("witherDuration","witherAmplifier")]
+    if basic_writes!=[6]:return fail("unexpected_base_wither_field_write")
+    if not (local(expanded,27,"aload",0) and local(expanded,28,"fload",6)
+            and field(expanded,29,"putfield","impactDamage","F")
+            and local(expanded,30,"aload",0) and expanded[31][1]=="bipush"
+            and expanded[31][2]=="30" and local(expanded,32,"iload",7)
+            and math_max(expanded,33) and field(expanded,34,"putfield","witherDuration","I")
+            and local(expanded,35,"aload",0) and expanded[36][1]=="iconst_0"
+            and local(expanded,37,"iload",8) and math_max(expanded,38)
+            and field(expanded,39,"putfield","witherAmplifier","I")):
+        return fail("expanded_ctor_field_value_chain_not_proved")
+    writes=[(i,san(i,r).get("field")) for i,r in enumerate(expanded) if
+            r[1]=="putfield" and san(i,r).get("field") in ("impactDamage","witherDuration","witherAmplifier")]
+    if writes!=[(29,"impactDamage"),(34,"witherDuration"),(39,"witherAmplifier")]:
+        return fail("unexpected_extra_relevant_field_write")
+    if not (w[79][1]=="new" and "class com/somake/somakespells/entity/FuneralBloomBudEntity" in w[79][3]
+            and w[80][1]=="dup" and local(w,81,"aload",1)
+            and local(w,82,"aload",0) and local(w,83,"aload",7)
+            and local(w,84,"aload",8) and local(w,85,"fload",9)
+            and w[86][1]=="invokestatic" and "Math.ceil:(F)I" in w[86][3]
+            and local(w,87,"aload",0) and field(w,88,"getfield","impactDamage","F")
+            and local(w,89,"aload",0) and field(w,90,"getfield","witherDuration","I")
+            and local(w,91,"aload",0) and field(w,92,"getfield","witherAmplifier","I")
+            and w[93][1]=="invokespecial"
+            and "FuneralBloomBudEntity" in w[93][3]
+            and san(93,w[93]).get("descriptor")==CTOR_WAVE_DESC):
+        return fail("controller_field_arguments_not_mapped_to_bud_ctor")
+    return {
+        "status":"PROVED_CONSTRUCTION_TIME_BUD_WITHER_CLAMPS_FROM_CONTROLLER_FIELDS",
+        "base_default_wither_duration":80,
+        "base_ctor_instruction_count":17,
+        "wave_ctor_instruction_count":41,
+        "wave_ctor_descriptor":CTOR_WAVE_DESC,
+        "bud_impact_damage":"float_input_slot6",
+        "bud_wither_duration":"Math.max_int(30,input_int_slot7)",
+        "bud_wither_amplifier":"Math.max_int(0,input_int_slot8)",
+        "controller_wither_duration":"controller.witherDuration:int",
+        "controller_wither_amplifier":"controller.witherAmplifier:int",
+        "controller_impact_damage":"controller.impactDamage:float",
+        "controller_new_bud_index":79,
+        "controller_ctor_invocation_index":93,
+        "level_arg":"launchWave_serverlevel_slot1",
+        "effect_center_arg":"launchWave_vec3_slot8",
+        "boundary":"Construction-time field handoff only; no upstream controller assignment, later mutation, runtime success, dedup between buds or perk hooks proved",
+    }
+
+def certify_exact_wither_handoff_109(proof):
+    expected={
+        "status":"PROVED_CONSTRUCTION_TIME_BUD_WITHER_CLAMPS_FROM_CONTROLLER_FIELDS",
+        "base_default_wither_duration":80,
+        "base_ctor_instruction_count":17,
+        "wave_ctor_instruction_count":41,
+        "wave_ctor_descriptor":CTOR_WAVE_DESC,
+        "bud_impact_damage":"float_input_slot6",
+        "bud_wither_duration":"Math.max_int(30,input_int_slot7)",
+        "bud_wither_amplifier":"Math.max_int(0,input_int_slot8)",
+        "controller_wither_duration":"controller.witherDuration:int",
+        "controller_wither_amplifier":"controller.witherAmplifier:int",
+        "controller_impact_damage":"controller.impactDamage:float",
+        "controller_new_bud_index":79,
+        "controller_ctor_invocation_index":93,
+        "level_arg":"launchWave_serverlevel_slot1",
+        "effect_center_arg":"launchWave_vec3_slot8",
+        "boundary":"Construction-time field handoff only; no upstream controller assignment, later mutation, runtime success, dedup between buds or perk hooks proved",
+    }
+    if not isinstance(proof,dict) or any(proof.get(k)!=v for k,v in expected.items()):
+        raise GateError("Somake 1.0.9 native controller/bud Wither field handoff drift")
+
 def inspect(jar):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("wrong artifact")
@@ -108,11 +211,14 @@ def inspect(jar):
     certify_exact_wave_list_cap_109(prove_wave_list_cap(wave))
     certify_exact_wave_loop_109(prove_wave_loop_spawn_sites(wave))
     result=ctor_scout(bud,wave)
+    handoff=certify_wither_constructor_handoff(bud,wave)
+    print("SOMAKE_BUD_WITHER_HANDOFF_PROOF",json.dumps(handoff,sort_keys=True))
+    certify_exact_wither_handoff_109(handoff)
     if result["status"]!="OBSERVED_CONSTRUCTOR_AND_WAVE_ARGUMENT_WINDOWS_ONLY":
         raise GateError("constructor/launch wave topology NOT_PROVED:"+result.get("reason","unknown"))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=sha:raise GateError("artifact changed")
     return {"mod_id":"somakespells","version":"1.0.9","sha1":sha,
-            "constructor_and_wave":result,"scope":"CLEAN_ROOM_METADATA_ONLY"}
+            "constructor_and_wave":result,"certified_handoff":handoff,"scope":"CLEAN_ROOM_METADATA_ONLY"}
 
 def main():
     a=argparse.ArgumentParser()
@@ -124,5 +230,6 @@ def main():
     args.output.write_text(json.dumps(out,indent=2,sort_keys=True)+"\n")
     print("SOMAKE_BUD_CTOR_WAVE_SCOUT",json.dumps(out["constructor_and_wave"],sort_keys=True))
     print("SOMAKE_BUD_CTOR_SHA",out["sha1"])
+    print("SOMAKE_BUD_WITHER_HANDOFF_GATE","PASS_SHA_EXACT_CONTROLLER_FIELD_TO_BUD_CLAMP")
 if __name__=="__main__":
     main()
