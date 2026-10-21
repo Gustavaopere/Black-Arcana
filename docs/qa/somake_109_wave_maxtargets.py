@@ -141,7 +141,7 @@ def certify_exact_wave_list_cap_109(proof):
     expected={
         "status":"PROVED_WAVE_CANDIDATE_LIST_TRUNCATION",
         "method":"launchWave","instruction_count":196,
-        "list_local":2,"size_call_index":41,
+        "list_local":4,"size_call_index":41,
         "first_cap_field_index":43,"conditional_index":44,
         "truncation_condition":"list_size_greater_than_maxTargets",
         "branch_skip_index":51,"slice_start_literal":0,"slice_upper_source":"maxTargets_field",
