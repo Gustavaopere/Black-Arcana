@@ -234,6 +234,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         cards = (provider / "SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md").read_text(encoding="utf-8")
         headings = list(re.finditer(r"^### (\d{2}) — `([A-Z_]+)`$", cards, re.MULTILINE))
         self.assertEqual(98, len(headings))
+        self.assertIn("98/98 fichas com campos, classes e IDs do JAR SHA-exato", cards)
+        self.assertIn("registro carregado", cards)
+        self.assertIn("PENDENTES", cards)
         for idx, heading in enumerate(headings):
             field = heading.group(2)
             entry = by_field[field]

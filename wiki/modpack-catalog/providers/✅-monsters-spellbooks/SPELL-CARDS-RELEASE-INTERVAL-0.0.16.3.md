@@ -1226,5 +1226,5 @@ Status: **✅ 98/98 fichas com identidade `COUNTED_EXACT` do JAR SHA-exato 0.0.1
 
 - `aero` = **0 registros** na fonte `ModSpellRegistry`; não acrescentar feitiços por menção a escola decompilada ou fonte com versão desatualizada.
 - Não contar school, equipment, projectile, summon entity, effects e itens como segunda identidade do mesmo registro.
-- Exatamente **98/98 fichas de campos/classes da fonte**. A paridade de IDs e classes no JAR instalado, configuração efetiva, aquisição em Survival, comportamento e hooks permanece ⚠️ **PENDENTE**, não promovida por documentação.
+- Exatamente **98/98 fichas com campos, classes e IDs do JAR SHA-exato comprovados estaticamente** (auditoria física Java21 #39670154524). A **instanciação e registro carregado** no modpack, configuração efetiva, custos/target/duração/dano, aquisição em Survival, comportamento e hooks de perks permanecem ⚠️ **PENDENTES**; a documentação não os promove.
 - Sem novos casts, bridges, APIs, hooks, balance, dano ou efeitos adicionados ao runtime Black Arcana. Etapa 06.05 e futuras etapas não avançam por esta tarefa.
