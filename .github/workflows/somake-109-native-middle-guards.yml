@@ -1,0 +1,47 @@
+name: Somake 1.0.9 native target middle-guards (SHA-exact Java 21)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/somake-109-native-middle-guards.yml'
+      - 'docs/qa/somake_109_native_filter_middle.py'
+      - 'docs/qa/somake_109_native_filter_middle_test.py'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact_native_middle_guard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Bounded synthetic branch-regression tests
+        run: python3 docs/qa/somake_109_native_filter_middle_test.py -v
+      - name: Retrieve verified publisher 1.0.9 JAR
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/somake-middle
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/somake-spells-irons-spells-addon-1461634/8867079/somake-spells-irons-spells-addon-1461634-8867079.jar' \
+            --output build/somake-middle/somakespells-1.0.9-1.21.1.jar
+          echo '171841ac9f802be9309ecc166c1d972ac6d404c0  build/somake-middle/somakespells-1.0.9-1.21.1.jar' | sha1sum --check
+      - name: Scan exact native middle filter branch and log derived facts only
+        run: |
+          python3 docs/qa/somake_109_native_filter_middle.py \
+            --jar build/somake-middle/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-middle/middle-guard-evidence.json
+      - name: Upload JSON facts only
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: somake-109-middle-guard-${{ github.sha }}
+          path: build/somake-middle/middle-guard-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
