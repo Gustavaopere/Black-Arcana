@@ -1,3 +1,7 @@
+## Somake Blood Cut — novo gate estático de métodos (21/10/2026)
+
+**Checkpoint de preparação, não conclusão física.** O gate proposto em [Blood Cut](../providers/✅-somake-spells/registry-1.0.9/blood-cut-technical-gate.md) valida o classfile candidato com SHA-1 físico `171841ac9f802be9309ecc166c1d972ac6d404c0` e extrai apenas descritores/membros para futura análise de targeting, dano e tempo. A execução do workflow e os resultados concretos ainda exigem confirmação. Logo a cobertura global segue **—%** (denominador universal aberto; piso **≥1.856**), Somake permanece **83/83 IDs** e **5/83 fichas no recorte downstream já comprovado**, sem alteração desse numerador por iniciar auditoria. Campanha fechada anterior de providers exatos: **35/39** no seu checkpoint; mutações externas de perks **⛔ sem hooks homologados**.
+
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
 ## Somake 1.0.9 — `onCast` raycast Predicate e linkage JVM exato (21/10/2026, PR #856)
