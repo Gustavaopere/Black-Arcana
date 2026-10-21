@@ -1,5 +1,12 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
+## Somake 1.0.9 — `onCast` raycast Predicate e linkage JVM exato (21/10/2026, PR #856)
+
+**Barras inalteradas:** global **—%** (piso conservador **≥1.856** objetos semânticos, universo universal aberto), **Somake IDs 83/83 = 100%**, recorte de auditorias downstream **5/83 = 6,02%**, campanha física registrada de providers **35/39 = 89,74%** no respectivo checkpoint. +0 magias, +0 adapters; sem hooks de perks mutadoras homologados.
+
+O [workflow Java 21 #39543931954](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39543931954) confrontou Somake File 8867079 ao SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` e passou **15 testes**. O novo gate prova que `FuneralBloomSpell.onCast` constrói `Predicate` por `invokedynamic` índice 13, cujo `BootstrapMethods[0]` via `LambdaMetafactory` referencia `lambda$onCast$0(Entity):Z`; esta lambda é **`iconst_0; ireturn`**, portanto sempre `false`. A invocação de `raycastForEntity` ocorre em seguida. Isso não demonstra o algoritmo de raycast do host, fallback de blocos, resultado de posição, criação efetiva da controller, targeting da wave ou gameplay. As condições de `activeTargetIds` permanecem por controller, sem dedup entre instâncias. Perks mutadoras **⛔ FAIL_CLOSED**; Stage 06.05 🟡 e Stage 09 QA físico PENDING. [Ficha](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+
 ## Somake — `FuneralBloomSpell.onCast` e oito getters nativos (21/10/2026; PR #855)
 
 **Barra global:** **—%** (denominador universal ainda aberto; piso documentado **≥1.856** objetos semânticos). **Barra Somake:** **83/83 = 100%** para identidades registradas; **5/83 = 6,02%** para aprofundamento downstream por ficha; campanha fixa anterior de providers com release exato **35/39 = 89,74%** no checkpoint próprio. Esta auditoria adiciona **+0 magias, +0 adapters**, hooks mutadores homologados **0**, taxa de perks sem denominador.
