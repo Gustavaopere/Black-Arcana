@@ -78,6 +78,7 @@ def arithmetic_window(declared):
     # A deliberately small type-checked JVM symbolic evaluator rejects unknown opcodes,
     # underflow, receiver confusion, and unsupported method descriptors (FAIL_CLOSED).
     stack=[]
+    locals_by_slot={}
     def pop(typ):
         if not stack:raise ValueError("operand_underflow")
         val=stack.pop()
@@ -86,6 +87,16 @@ def arithmetic_window(declared):
     try:
         for index,(_,op,arg,symbol) in enumerate(window,start=19):
             if op=="nop":continue
+            save=re.fullmatch(r"dstore_([0-9]+)",op)
+            if save:
+                slot=int(save.group(1))
+                if slot!=3 or slot in locals_by_slot:raise ValueError("unapproved_or_reassigned_double_local")
+                locals_by_slot[slot]=pop("D");continue
+            retrieve=re.fullmatch(r"dload_([0-9]+)",op)
+            if retrieve:
+                slot=int(retrieve.group(1))
+                if slot!=3 or slot not in locals_by_slot:raise ValueError("missing_saved_double_local")
+                stack.append(("D",locals_by_slot[slot]));continue
             m=re.fullmatch(r"aload_([0-3])",op)
             if m:
                 stack.append(("O","slot"+m.group(1)));continue
