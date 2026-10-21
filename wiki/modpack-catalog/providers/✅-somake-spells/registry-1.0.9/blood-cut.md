@@ -91,3 +91,11 @@ Preservar exatamente as duas multiplicações `float` na ordem compilada; `a` e 
 [Auditoria Java 21 #39594615862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39594615862) **SUCCESS**, SHA-1 físico Somake 1.0.9 conferido, **51 testes sintéticos**. O método compilado `BloodCutSpell.getDamageSource(Entity,Entity):SpellDamageSource` contém sete instruções: chamada à fonte-base do Iron's (índice 3), `ldc` carregando **`0.15f`** (índice 4), `SpellDamageSource.setLifestealPercent(float)` (índice 5), seguido de `areturn` (índice 6). A adjacência certifica o **parâmetro literal passado ao setter**.
 
 O parâmetro nominal é `0.15f`; **não** se pode afirmar que Blood Cut cure 15% do dano sem examinar o tratamento efetivo do setter e do dano secundário pelo host. Hooks por caster, dano aplicado, alvo da cura, caps e QA real continuam ⚠️/⛔. [Dossiê de lifesteal e limites](../EXACT-BINARY-BLOOD-CUT-LIFESTEAL-1.0.9.md).
+
+## Causalidade do evento Post, entidade e amplificador (PR #861, 21/10/2026)
+
+O [gate Java21 #39598535901](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39598535901), com **72 testes sintéticos** e SHA-1 Somake 1.0.9 confirmado, provou no classfile: `event.getSource().getEntity()` → guarda `LivingEntity` → `local_1`; `local_1.getEffect(BLOOD_CUT)` → `local_2`; `local_2.getAmplifier()` → `getDamageModifier(int,LivingEntity)` juntamente com `local_1`. `event.getNewDamage()` multiplica o resultado por `fmul` e armazena `fstore_3`.
+
+Também há um gate de exclusão: **`event.getSource() instanceof SpellDamageSource` resulta em retorno imediato**, antes do dano secundário. Isso não comprova imunidade a todas as formas de recursão ou dano efetivo. O argumento `LivingEntity` representa a entidade de origem do dano, **não necessariamente o caster original**.
+
+A fórmula numérica certificada para o valor intermediário é `getNewDamage() * (((float)(amplifier + 1) * getEntityPowerMultiplier(sourceEntity)) * 0.1f)`, preservando a ordem `float`. O alvo efetivo de `DamageSources.applyDamage`, a mitigação e a cura permanecem ⚠️; hooks per-player seguem ⛔. [Dossiê causal completo](../EXACT-BINARY-BLOOD-CUT-CAUSAL-EVENT-1.0.9.md). Nenhum spell ou adapter adicional.
