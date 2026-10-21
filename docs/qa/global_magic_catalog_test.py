@@ -1545,17 +1545,17 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                      if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(providers))
         exact = [row for row in providers if "| COUNTED_EXACT |" in row]
-        self.assertEqual(37, len(exact))
+        self.assertEqual(38, len(exact))
         self.assertEqual(
-            {"Hazen N Stuff", "Ars Nouveau", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice\'s Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum", "Werewolves", "Bloodlines"},
+            {"Hazen N Stuff", "Ars Nouveau", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice\'s Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum", "Werewolves", "Bloodlines", "Monsters & Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", row).group(1) for row in exact},
         )
         other = (ROOT / "wiki/modpack-catalog/meta" /
                  "PENDENCIAS-MAGICAS-ATUAIS.md").read_text(encoding="utf-8")
         self.assertIn("0 novas provas binary-exact", other)
         self.assertIn("JARs fora da categoria Magic", other)
-        self.assertIn("2/39", other)
-        self.assertIn("37/39", other)
+        self.assertIn("1/39", other)
+        self.assertIn("38/39", other)
         ledger = (ROOT / "wiki/modpack-catalog/meta" /
                   "SEMANTIC-MAGIC-COVERAGE.md").read_text(encoding="utf-8")
         entry = next(row for row in ledger.splitlines()
@@ -1604,9 +1604,9 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                   if line.startswith("| [") and line.count(" | ") >= 4]
         self.assertEqual(39, len(roster))
         exact = [line for line in roster if "| COUNTED_EXACT |" in line]
-        self.assertEqual(37, len(exact))
+        self.assertEqual(38, len(exact))
         self.assertEqual(
-            {"Hazen N Stuff", "Ars Nouveau", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice\'s Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum", "Werewolves", "Bloodlines"},
+            {"Hazen N Stuff", "Ars Nouveau", "Ypsilon's Fundamentalism", "Fire's Ender Expansion", "IronSable", "Ars Elemental", "Ars Zero", "Ars Technica", "Ars Controle", "Ars Additions", "Ars Hex", "Crystal Chronicles", "Dreamless Spells", "Paladin Spells", "Wind's Spellbooks", "Backported Spellbooks", "Deeper & Darker Spellbooks", "GTBC\'s Geomancy Plus", "Farmer\'s Spell \'n Spellbooks", "Ars \'n\' Spells", "Tunes n' Tomes", "ISS: Magic From The East", "Legendary Spellbooks", "Discerning The Eldritch", "Companions!", "Waystones", "Reliquified Ars Nouveau", "Apprentice\'s Codex", "Reliquified Iron's Spells 'n Spellbooks", "Hexalia", "Ender's Spells and Stuff: Requiem", "Reliquified Artifacts", "Vampirism", "Eidolon: Repraised", "Malum", "Werewolves", "Bloodlines", "Monsters & Spellbooks"},
             {re.search(r"^\| \[([^\]]+)\]", line).group(1) for line in exact},
         )
         self.assertIn(name, tracker)
@@ -1616,8 +1616,8 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                       if line.startswith("| [Ars Hex]"))
         self.assertIn("| 5.0.4b | 1 | \x60COUNTED_EXACT\x60 |", hexrow)
         self.assertIn(name, ledger)
-        self.assertIn("2/39", self.index)
-        self.assertIn("37/39", self.index)
+        self.assertIn("1/39", self.index)
+        self.assertIn("38/39", self.index)
         self.assertIn(name, self.index)
 
     def test_crystal_chronicles_static_binary_013_has_exact_registration_only(self):
