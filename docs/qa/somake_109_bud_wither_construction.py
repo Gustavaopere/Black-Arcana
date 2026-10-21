@@ -139,7 +139,7 @@ def certify_wither_constructor_handoff(bud,controller):
             and w[80][1]=="dup" and local(w,81,"aload",1)
             and local(w,82,"aload",0) and local(w,83,"aload",7)
             and local(w,84,"aload",8) and local(w,85,"fload",9)
-            and w[86][1]=="invokestatic" and "Math.ceil:(F)I" in w[86][3]
+            and w[86][1]=="invokestatic" and "net/minecraft/util/Mth.ceil:(F)I" in w[86][3]
             and local(w,87,"aload",0) and field(w,88,"getfield","impactDamage","F")
             and local(w,89,"aload",0) and field(w,90,"getfield","witherDuration","I")
             and local(w,91,"aload",0) and field(w,92,"getfield","witherAmplifier","I")
