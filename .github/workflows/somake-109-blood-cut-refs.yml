@@ -12,6 +12,8 @@ on:
       - 'docs/qa/somake_109_blood_cut_cfg_test.py'
       - 'docs/qa/somake_109_blood_cut_modifier_flow.py'
       - 'docs/qa/somake_109_blood_cut_modifier_flow_test.py'
+      - 'docs/qa/somake_109_blood_cut_lifesteal.py'
+      - 'docs/qa/somake_109_blood_cut_lifesteal_test.py'
       - 'docs/qa/somake_109_cast_refs.py'
       - 'docs/qa/somake_109_perk_method_probe.py'
       - 'docs/qa/somake_109_radius_irons_contract.py'
@@ -43,6 +45,7 @@ jobs:
           python3 docs/qa/somake_109_blood_cut_event_gate_test.py -v
           python3 docs/qa/somake_109_blood_cut_cfg_test.py -v
           python3 docs/qa/somake_109_blood_cut_modifier_flow_test.py -v
+          python3 docs/qa/somake_109_blood_cut_lifesteal_test.py -v
       - name: Download and verify exact publisher/pack artifact
         shell: bash
         run: |
@@ -72,6 +75,11 @@ jobs:
           python3 docs/qa/somake_109_blood_cut_modifier_flow.py \
             --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
             --output build/somake-blood-cut/blood-cut-float-dataflow.json
+      - name: Prove Blood Cut lifesteal source and setter callsite
+        run: |
+          python3 docs/qa/somake_109_blood_cut_lifesteal.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-lifesteal.json
       - name: Export only bounded derived evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -82,5 +90,6 @@ jobs:
             build/somake-blood-cut/blood-cut-event-evidence.json
             build/somake-blood-cut/blood-cut-cfg-evidence.json
             build/somake-blood-cut/blood-cut-float-dataflow.json
+            build/somake-blood-cut/blood-cut-lifesteal.json
           if-no-files-found: ignore
           retention-days: 14
