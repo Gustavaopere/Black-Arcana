@@ -1,8 +1,117 @@
 #!/usr/bin/env python3
-"""Clean-room audit of Somake Blood Cut overload and Iron's 3.16.3 API.
-A binary method name does not establish overload dispatch or actual lifesteal.
+"""SHA-exact Somake 1.0.9 Blood Cut / Iron's 3.16.3 overload evidence.
+
+Clean-room: publish method identity, invocation descriptors and bounded opcode
+census only. No JAR/classfile/method body/source code redistribution.
 """
-from somake_109_perk_method_probe import GateError
+from __future__ import annotations
+import argparse
+import hashlib
+import json
+import re
+import subprocess
+from pathlib import Path
+from somake_109_perk_method_probe import GateError, FILENAME, SHA1
+from somake_109_radius_irons_contract import (
+    IRON_API_FILENAME, IRON_API_SHA256, IRON_CLASS,
+    validate_irons_api, sections, opcode_rows
+)
+
+CHILD="com.somake.somakespells.spells.blood.BloodCutSpell"
+ENTITY="Lnet/minecraft/world/entity/Entity;"
+SOURCE="Lio/redspace/ironsspellbooks/damage/SpellDamageSource;"
+ONE="("+ENTITY+")"+SOURCE
+TWO="("+ENTITY+ENTITY+")"+SOURCE
+
 
 def survey_overload_family(base_methods,child_methods):
-    raise GateError("overload dispatch contract has not yet been certified")
+    def get_exact(methods,desc):
+        found=[r for r in methods if r[0]=="getDamageSource" and r[1]==desc]
+        if len(found)!=1:
+            raise GateError("missing or ambiguous exact getDamageSource overload")
+        rows=found[0][2]
+        if not 2<=len(rows)<=140:
+            raise GateError("unbounded or empty method")
+        return rows
+    parent=get_exact(base_methods,ONE)
+    child=get_exact(child_methods,TWO)
+    if parent[-1][1]!="areturn" or child[-1][1]!="areturn":
+        raise GateError("source overload return opcode changed")
+    def calls(rows):
+        output=[]
+        for i,(_,op,arg,comment) in enumerate(rows):
+            if not op.startswith("invoke") or "getDamageSource:" not in comment:
+                continue
+            match=re.search(r"getDamageSource:(\([^)]*\)[A-Za-z0-9_/$;\[]+)",comment)
+            if not match:raise GateError("untyped getDamageSource invocation")
+            output.append({"index":i,"opcode":op,"descriptor":match.group(1),
+                           "self_or_super_reference":"AbstractSpell" in comment or
+                           comment.startswith("Method getDamageSource:")})
+        return output
+    calls_parent=calls(parent)
+    calls_child=calls(child)
+    return {
+        "assurance":"OVERLOAD_DECLARATIONS_ONLY",
+        "base_one_entity_descriptor":ONE,
+        "child_two_entity_descriptor":TWO,
+        "base_one_arg_instruction_count":len(parent),
+        "child_two_arg_instruction_count":len(child),
+        "base_one_arg_getDamageSource_calls":calls_parent,
+        "child_two_arg_getDamageSource_calls":calls_child,
+        "base_one_arg_invocation_opcodes":[op for _,op,_,_ in parent if op.startswith("invoke")][:30],
+        "child_two_arg_invocation_opcodes":[op for _,op,_,_ in child if op.startswith("invoke")][:30],
+        "base_one_arg_return_count":sum(op=="areturn" for _,op,_,_ in parent),
+        "child_two_arg_return_count":sum(op=="areturn" for _,op,_,_ in child),
+        "boundary":"Method declarations and typed callsite references only; virtual dispatch, healing and game-event results need separate gates."
+    }
+
+
+def javap(jar,cls):
+    q=subprocess.run(["javap","-p","-s","-c","-classpath",str(jar.resolve()),cls],
+         capture_output=True,text=True,timeout=50,check=False)
+    if q.returncode or not 100<len(q.stdout)<1_500_000:
+        raise GateError("exact class javap unavailable")
+    return q.stdout
+
+
+def inspect(somake,irons):
+    somake=Path(somake);irons=Path(irons)
+    if somake.is_symlink() or not somake.is_file() or somake.name!=FILENAME:
+        raise GateError("invalid Somake jar")
+    if hashlib.sha1(somake.read_bytes()).hexdigest()!=SHA1:
+        raise GateError("Somake SHA-1 mismatch")
+    digest=validate_irons_api(irons)
+    if digest!=IRON_API_SHA256:raise GateError("Iron's API SHA-256 mismatch")
+    raw_parent=javap(irons,IRON_CLASS)
+    raw_child=javap(somake,CHILD)
+    parent=[(name,desc,opcode_rows(body)) for name,desc,body in sections(raw_parent) if name=="getDamageSource"]
+    child=[(name,desc,opcode_rows(body)) for name,desc,body in sections(raw_child) if name=="getDamageSource"]
+    result=survey_overload_family(parent,child)
+    # Ensure the physical class's ancestry mentions the actual host class.
+    header=" ".join(raw_child.splitlines()[:8])
+    if "extends io.redspace.ironsspellbooks.api.spells.AbstractSpell" not in header:
+        raise GateError("Somake spell superclass differs from host")
+    if hashlib.sha1(somake.read_bytes()).hexdigest()!=SHA1 or hashlib.sha256(irons.read_bytes()).hexdigest()!=digest:
+        raise GateError("binary modified during analysis")
+    return {"status":"PASS_SHA_EXACT_SOMAKE_IRONS_OVERLOAD_DECLARATIONS",
+        "somake_sha1":SHA1,"irons_api_sha256":digest,
+        "somake_version":"1.0.9","irons_version":"1.21.1-3.16.3",
+        "base_class":IRON_CLASS,"child_class":CHILD,
+        "class_ancestry":"direct AbstractSpell superclass proven",
+        "overloads":result,
+        "limit":"No physical gameplay, applied healing or per-caster mutator certified."}
+
+
+def main():
+    p=argparse.ArgumentParser()
+    p.add_argument("--somake",required=True,type=Path)
+    p.add_argument("--irons-api",required=True,type=Path)
+    p.add_argument("--output",required=True,type=Path)
+    a=p.parse_args()
+    data=inspect(a.somake,a.irons_api)
+    a.output.parent.mkdir(parents=True,exist_ok=True)
+    a.output.write_text(json.dumps(data,indent=2,sort_keys=True)+"\n")
+    print("BLOOD_CUT_OVERLOAD",data["status"],data["somake_sha1"],data["irons_api_sha256"])
+    print("BLOOD_CUT_OVERLOAD_METHODS",json.dumps(data["overloads"],sort_keys=True))
+if __name__=="__main__":
+    main()
