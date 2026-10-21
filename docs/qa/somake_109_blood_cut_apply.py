@@ -55,6 +55,14 @@ def survey_application(rows):
         "following_opcode_kinds":[op for _,op,_,_ in after],
         "invocation_opcode_families":sorted(set("invoke" for _,op,_,_ in rows if op.startswith("invoke"))),
         "nearby_typed_invocation_symbols":typed_sites[-12:],
+        "final_invocation_descriptors":[{
+            "index":j,"symbol":c.split(":",1)[0].split(" ",1)[-1][-125:],
+            "descriptor":c.split(":",1)[1].strip()[:240]
+        } for j,(_,k,_,c) in enumerate(rows[max(0,i-14):i+1],start=max(0,i-14))
+            if k.startswith("invoke") and ":" in c],
+        "final_cast_types":[{"index":j,"type":c[:120]} for j,(_,k,_,c) in
+            enumerate(rows[max(0,i-14):i+1],start=max(0,i-14))
+            if k=="checkcast"],
         "local_3_float_store_indices":[j for j,(_,o,arg,_) in enumerate(rows[:i]) if o=="fstore_3" or o=="fstore" and arg.strip()=="3"],
         "limit":"Symbol/type and opcode-window survey only: no stack argument provenance, target, actual host damage or heal validated."
     }
