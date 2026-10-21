@@ -187,8 +187,8 @@ def certify_effect_holder_receiver(rows):
     amp=amplifiers[0]
     if rows[amp-1][1]!="aload_2":
         raise GateError("effect amplifier receiver must be guarded local_2")
-    for _,op,arg,_ in rows[g+1:amp]:
-        if op=="astore_2" and _ != rows[g+1][0]:
+    for index,(_,op,arg,_) in enumerate(rows[g+1:amp],start=g+1):
+        if op=="astore_2" and index != g+1:
             raise GateError("intervening effect local_2 overwrite")
         if op=="astore" and arg.strip()=="2":
             raise GateError("intervening effect local_2 overwrite")
