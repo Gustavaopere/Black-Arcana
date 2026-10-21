@@ -111,6 +111,7 @@ def probe_class(jar:Path,cls:str):
                  "related_method_calls":context[:14],
                  "limitation":"Symbol references and method identity only; no call-stack/branch/damage/cure proof."}
             if cls==APPLY and name=="postHitEffects":
+                row["certified_host_lifesteal_heal_stack"]=certify_post_hit_lifesteal(rows)
                 row["bounded_host_diagnostic"]={
                   "all_invoke_symbols":[{"index":i,"opcode":op,"reference":c[:220]}
                       for i,(_,op,_,c) in enumerate(rows)
@@ -170,8 +171,57 @@ def inspect(jar:Path):
     }
 
 def certify_post_hit_lifesteal(rows):
-    """Fail closed until host healer and float operands are proven."""
-    raise GateError("host post-hit lifesteal JVM stack provenance not certified")
+    """Certify bounded native Post-event source-entity heal stack, not game healing."""
+    if len(rows)!=65 or [pc for pc,_,_,_ in rows]!=sorted(set(pc for pc,_,_,_ in rows)):
+        raise GateError("postHitEffects exact 65-instruction fingerprint changed")
+    expected={
+      14:("fstore_3",""), 17:("astore","4"), 21:("astore","5"),
+      22:("aload","5"), 24:("ifeq",None),25:("aload","5"),
+      27:("astore","6"),28:("aload_2",""),30:("fconst_0",""),
+      31:("fcmpl",""),32:("ifle",None),33:("aload","6"),
+      34:("aload_2",""),36:("fload_3",""),37:("fmul","")
+    }
+    for index,(op,arg) in expected.items():
+        if rows[index][1]!=op or (arg is not None and rows[index][2].strip()!=arg):
+            raise GateError("typed event lifesteal/heal local stack drift")
+    refs={
+      13:"LivingDamageEvent$Post.getNewDamage:()F",
+      16:"LivingDamageEvent$Post.getEntity:()Lnet/minecraft/world/entity/LivingEntity;",
+      19:"LivingDamageEvent$Post.getSource:()Lnet/minecraft/world/damagesource/DamageSource;",
+      20:"DamageSource.getEntity:()Lnet/minecraft/world/entity/Entity;",
+      29:"SpellDamageSource.getLifestealPercent:()F",
+      35:"SpellDamageSource.getLifestealPercent:()F",
+      38:"LivingEntity.heal:(F)V",
+    }
+    for index,ref in refs.items():
+        if rows[index][1]!="invokevirtual" or ref not in rows[index][3]:
+            raise GateError("typed postHitEffects host invocation mismatch")
+    if (rows[23][1]!="instanceof" or
+        "class net/minecraft/world/entity/LivingEntity" not in rows[23][3] or
+        rows[26][1]!="checkcast" or
+        "class net/minecraft/world/entity/LivingEntity" not in rows[26][3]):
+        raise GateError("sourceEntity LivingEntity type guard drift")
+    guard_target=rows[24][2].strip()
+    rate_target=rows[32][2].strip()
+    pcs={pc for pc,_,_,_ in rows}
+    if (not re.fullmatch(r"\d+",guard_target) or guard_target!=rate_target or
+        int(guard_target) not in pcs or int(guard_target)<=rows[38][0]):
+        raise GateError("source caster and positive-rate guards must skip heal block")
+    return {
+       "assurance":"HOST_POSTHIT_TYPED_HEAL_STACK",
+       "event_new_damage_getter_instruction_index":13,
+       "new_damage_float_local":"local_3",
+       "event_target_local":"local_4",
+       "damage_source_entity_local":"local_5",
+       "validated_living_source_entity_local":"local_6",
+       "heal_receiver":"event.getSource().getEntity() as LivingEntity",
+       "source_entity_type_guard":"instanceof LivingEntity then checkcast, otherwise no heal",
+       "lifesteal_rate_guard":"getLifestealPercent() > 0.0f",
+       "requested_heal_expression":"getLifestealPercent() * event.getNewDamage()",
+       "heal_invocation":"LivingEntity.heal(float)",
+       "heal_instruction_index":38,
+       "boundary":"Compiled call is conditional; actual health restoration, effective caps, hit settlement and live event dispatch are not measured."
+    }
 
 
 
