@@ -106,10 +106,23 @@ def probe_class(jar:Path,cls:str):
                 context.append({"instruction_index":i,"opcode":op,
                                 "reference":comment[:190]})
         if symbol_hits or "lifesteal" in name.lower():
-            matches.append({"method":name,"descriptor":desc,"instruction_count":len(rows),
-                            "lifesteal_symbol_calls":symbol_hits[:20],
-                            "related_method_calls":context[:14],
-                            "limitation":"Symbol references and method identity only; no call-stack/branch/damage/cure proof."})
+            row={"method":name,"descriptor":desc,"instruction_count":len(rows),
+                 "lifesteal_symbol_calls":symbol_hits[:20],
+                 "related_method_calls":context[:14],
+                 "limitation":"Symbol references and method identity only; no call-stack/branch/damage/cure proof."}
+            if cls==APPLY and name=="postHitEffects":
+                row["bounded_host_diagnostic"]={
+                  "all_invoke_symbols":[{"index":i,"opcode":op,"reference":c[:220]}
+                      for i,(_,op,_,c) in enumerate(rows)
+                      if op.startswith("invoke") and c][:32],
+                  "opcode_kinds_24_to_42":[op for _,op,_,_ in rows[24:43]],
+                  "conditional_opcode_indices":[{"index":i,"opcode":op,
+                                                  "target_program_counter":arg}
+                      for i,(_,op,arg,_) in enumerate(rows)
+                      if op.startswith("if")][:18],
+                  "scope":"Diagnostic opcode kinds and typed callsites only; no verbatim method body."
+                }
+            matches.append(row)
     # A class marker need not be a callsite; discovery is deliberately conservative.
     return {"class":cls,"methods":matches[:35],
             "method_count":len(all_methods)}
