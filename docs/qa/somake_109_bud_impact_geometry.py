@@ -165,6 +165,26 @@ def prove_impact_box_and_query(declared):
         "boundary":"Geometry and query argument only. Per-target eligibility, actual impact damage, healing, status, targeting perks NOT proved.",
     }
 
+def certify_exact_impact_geometry_109(proof):
+    """Fail SHA-pinned 1.0.9 if the original bud AABB/query dataflow changes."""
+    expected={
+        "status":"PROVED_BUD_INFLATED_BOX_CONSUMED_BY_LIVING_ENTITY_QUERY",
+        "impact_method_instruction_count":279,
+        "impact_position_to_local2":True,
+        "aabb_constructor_operands":["local2_Vec3","local2_Vec3"],
+        "inflate_double_xyz":["1.75","1.35","1.75"],
+        "inflated_aabb_stored_local":5,
+        "query_aabb_loaded_local":5,
+        "query_entity_class":"LivingEntity",
+        "query_descriptor_mode":"two_args",
+        "aabb_constructor_index":20,
+        "inflate_index":24,
+        "query_index":31,
+        "boundary":"Geometry and query argument only. Per-target eligibility, actual impact damage, healing, status, targeting perks NOT proved.",
+    }
+    if not isinstance(proof,dict) or any(proof.get(key)!=v for key,v in expected.items()):
+        raise GateError("Somake 1.0.9 bud impact geometry and query fingerprint drift")
+
 def inspect(jar):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("Somake publisher filename/size invalid")
@@ -186,8 +206,7 @@ def inspect(jar):
         raise GateError("impact topology unproved:"+x.get("reason","unknown"))
     geo=prove_impact_box_and_query(sections(j.stdout))
     print("SOMAKE_BUD_GEOMETRY_PROOF",json.dumps(geo,sort_keys=True))
-    if geo.get("status")!="PROVED_BUD_INFLATED_BOX_CONSUMED_BY_LIVING_ENTITY_QUERY":
-        raise GateError("impact AABB geometry remains NOT_PROVED")
+    certify_exact_impact_geometry_109(geo)
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=sha:
         raise GateError("source artifact changed during inspection")
     return {"status":"SHA_EXACT_BUD_IMPACT_SCOUT","mod_id":"somakespells",
@@ -204,5 +223,6 @@ def main():
     args.output.write_text(json.dumps(result,sort_keys=True,indent=2)+"\n")
     print("SOMAKE_BUD_IMPACT_SCOUT",json.dumps(result["impact"],sort_keys=True))
     print("SOMAKE_BUD_IMPACT_SHA",result["sha1"])
+    print("SOMAKE_BUD_IMPACT_GEOMETRY_GATE","PASS_SHA_EXACT_1_75_1_35_1_75_TO_LIVING_QUERY")
 if __name__=="__main__":
     main()
