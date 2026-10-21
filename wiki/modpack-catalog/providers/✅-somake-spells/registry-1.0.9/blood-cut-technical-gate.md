@@ -11,7 +11,7 @@
 
 ## Gate executável
 
-O [verificador de método](../../../../docs/qa/somake_109_blood_cut_refs.py) e o [workflow](../../../../.github/workflows/somake-109-blood-cut-refs.yml) testam SHA-1, mod ID, pacote/classe candidata, métodos, descritores JVM e referências simbólicas (invocação/campo); o artefato exportado contém apenas metadados derivativos, sem implementação do provider.
+O [verificador de método](../../../../../docs/qa/somake_109_blood_cut_refs.py) e o [workflow](../../../../.github/workflows/somake-109-blood-cut-refs.yml) testam SHA-1, mod ID, pacote/classe candidata, métodos, descritores JVM e referências simbólicas (invocação/campo); o artefato exportado contém apenas metadados derivativos, sem implementação do provider.
 
 Os testes sintéticos cobrem ausência, ambiguidade, duplicação e tentativa de path traversal na descoberta de classe, além de uma classe Java 21 compilada de exemplo.
 
