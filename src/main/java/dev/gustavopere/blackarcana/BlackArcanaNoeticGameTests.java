@@ -29,41 +29,43 @@ public final class BlackArcanaNoeticGameTests {
         target.setCustomName(Component.literal("N".repeat(NoeticSafetyCeilings.MAX_DISPLAY_NAME_LENGTH + 32)));
         viewer.teleportTo(target.getX() + 2.0D, target.getY(), target.getZ());
 
-        try {
-            var decision = MinecraftNoeticRuntime.startObservation(
-                    server,
-                    viewer.getUUID(),
-                    target.getUUID(),
-                    NoeticObservationKind.NAMESCRY,
-                    20,
-                    false);
-            helper.assertTrue(decision.allowed(),
-                    "already-loaded same-dimension NPC must pass bounded Namescry admission: " + decision.code());
-            helper.assertTrue(MinecraftNoeticRuntime.activeObservations(server) == 1,
-                    "successful observation must create exactly one server-owned session");
+GameTestEntityIndexGate.whenIndexed(helper, () -> {
+            try {
+                var decision = MinecraftNoeticRuntime.startObservation(
+                        server,
+                        viewer.getUUID(),
+                        target.getUUID(),
+                        NoeticObservationKind.NAMESCRY,
+                        20,
+                        false);
+                helper.assertTrue(decision.allowed(),
+                        "already-loaded same-dimension NPC must pass bounded Namescry admission: " + decision.code());
+                helper.assertTrue(MinecraftNoeticRuntime.activeObservations(server) == 1,
+                        "successful observation must create exactly one server-owned session");
 
-            var snapshot = MinecraftNoeticRuntime.observationSnapshot(server, viewer.getUUID()).orElse(null);
-            helper.assertTrue(snapshot != null, "live observation must expose its sanitized perception snapshot");
-            if (snapshot != null) {
-                helper.assertTrue(snapshot.targetId().equals(target.getUUID()),
-                        "snapshot identity must remain the admitted loaded target");
-                helper.assertTrue("minecraft:cow".equals(snapshot.entityTypeId()),
-                        "snapshot may expose only the whitelisted entity type id");
-                helper.assertTrue(snapshot.displayName().length() <= NoeticSafetyCeilings.MAX_DISPLAY_NAME_LENGTH,
-                        "snapshot display name must remain inside its hard privacy/size bound");
-                helper.assertTrue(snapshot.activeEffectIds().size() <= NoeticSafetyCeilings.MAX_EFFECT_IDS,
-                        "snapshot effect metadata must remain bounded");
-                helper.assertTrue(snapshot.mainHandItemId() != null && !snapshot.mainHandItemId().isBlank(),
-                        "snapshot may expose the whitelisted main-hand item id only");
+                var snapshot = MinecraftNoeticRuntime.observationSnapshot(server, viewer.getUUID()).orElse(null);
+                helper.assertTrue(snapshot != null, "live observation must expose its sanitized perception snapshot");
+                if (snapshot != null) {
+                    helper.assertTrue(snapshot.targetId().equals(target.getUUID()),
+                            "snapshot identity must remain the admitted loaded target");
+                    helper.assertTrue("minecraft:cow".equals(snapshot.entityTypeId()),
+                            "snapshot may expose only the whitelisted entity type id");
+                    helper.assertTrue(snapshot.displayName().length() <= NoeticSafetyCeilings.MAX_DISPLAY_NAME_LENGTH,
+                            "snapshot display name must remain inside its hard privacy/size bound");
+                    helper.assertTrue(snapshot.activeEffectIds().size() <= NoeticSafetyCeilings.MAX_EFFECT_IDS,
+                            "snapshot effect metadata must remain bounded");
+                    helper.assertTrue(snapshot.mainHandItemId() != null && !snapshot.mainHandItemId().isBlank(),
+                            "snapshot may expose the whitelisted main-hand item id only");
+                }
+            } finally {
+                MinecraftNoeticRuntime.clearEntity(server, viewer.getUUID());
+                MinecraftNoeticRuntime.clearEntity(server, target.getUUID());
             }
-        } finally {
-            MinecraftNoeticRuntime.clearEntity(server, viewer.getUUID());
-            MinecraftNoeticRuntime.clearEntity(server, target.getUUID());
-        }
 
-        helper.assertTrue(MinecraftNoeticRuntime.activeStateCount(server) == 0,
-                "explicit cleanup must leave no active Noetic observation/astral/gaze/sanctuary state");
-        helper.succeed();
+            helper.assertTrue(MinecraftNoeticRuntime.activeStateCount(server) == 0,
+                    "explicit cleanup must leave no active Noetic observation/astral/gaze/sanctuary state");
+            helper.succeed();
+        }, target);
     }
 
     @SuppressWarnings("removal")

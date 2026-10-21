@@ -101,22 +101,24 @@ public final class NoeticPactSanctuaryGameTests {
         FamiliarOwnershipRegistry ownership = ownershipFor(owner.getUUID(), familiar.getUUID());
         MinecraftPactSanctuaryRuntime runtime = new MinecraftPactSanctuaryRuntime(ownership);
 
-        ArcanaDecision activation = runtime.activate(
-                server,
-                owner.getUUID(),
-                familiar.getUUID(),
-                new PactSanctuarySpec(3, 200, 1),
-                Set.of(member.getUUID()));
+GameTestEntityIndexGate.whenIndexed(helper, () -> {
+            ArcanaDecision activation = runtime.activate(
+                    server,
+                    owner.getUUID(),
+                    familiar.getUUID(),
+                    new PactSanctuarySpec(3, 200, 1),
+                    Set.of(member.getUUID()));
 
-        helper.assertTrue(activation.allowed(), "owned familiar must activate the sanctuary for the Breeze exclusion test");
-        helper.assertTrue(!runtime.blocksTargetChange(server, breeze, member),
-                "trial encounter Breeze must remain fail-closed and Sanctuary must not veto its proposed target");
-        int suppressed = runtime.tick(server);
-        helper.assertTrue(suppressed == 0,
-                "trial encounter Breeze must remain fail-closed and must not be pacified by Pact Sanctuary");
+            helper.assertTrue(activation.allowed(), "owned familiar must activate the sanctuary for the Breeze exclusion test");
+            helper.assertTrue(!runtime.blocksTargetChange(server, breeze, member),
+                    "trial encounter Breeze must remain fail-closed and Sanctuary must not veto its proposed target");
+            int suppressed = runtime.tick(server);
+            helper.assertTrue(suppressed == 0,
+                    "trial encounter Breeze must remain fail-closed and must not be pacified by Pact Sanctuary");
 
-        runtime.clearEntity(server, familiar.getUUID());
-        helper.succeed();
+            runtime.clearEntity(server, familiar.getUUID());
+            helper.succeed();
+        }, owner, familiar, member, breeze);
     }
 
     @GameTest(template = "foundation_empty", timeoutTicks = 100)
