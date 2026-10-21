@@ -100,6 +100,24 @@ def middle_guard(declared:list[tuple[str,str,list[str]]])->dict:
         "boundary":"Actor roles, other branches, PvP, gameplay and hook mutability NOT proved",
     }
 
+def certify_exact_native_middle_109(proof:dict)->None:
+    """Fail hard on any drift of the physically confirmed Somake 1.0.9 guard."""
+    expected={
+        "status":"PROVED_NATIVE_NONNULL_AND_ALLIED_REJECTS",
+        "instruction_count":41,
+        "null_test_operand_local":1,
+        "allied_receiver_local":2,
+        "allied_argument_local":1,
+        "ally_call":"LivingEntity.isAlliedTo(Entity):boolean",
+        "skip_false_return_branches":["ifnull","ifeq"],
+        "shared_continuation_index":19,
+        "rejection_value":False,
+        "logic":"if reference is non-null AND receiver.isAlliedTo(argument) is true, return false",
+        "boundary":"Actor roles, other branches, PvP, gameplay and hook mutability NOT proved",
+    }
+    if not isinstance(proof,dict) or any(proof.get(key)!=value for key,value in expected.items()):
+        raise GateError("Somake 1.0.9 middle conditional branch operand/decision fingerprint drift")
+
 def inspect(jar:Path)->dict:
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("wrong Somake 1.0.9 filename/size")
@@ -121,6 +139,7 @@ def inspect(jar:Path)->dict:
     early=native_isvalidtarget_early_guards(declared)
     certify_exact_native_target_cfg_109(edges,early)
     result=middle_guard(declared)
+    certify_exact_native_middle_109(result)
     return {
         "sha1":sha,"version":"1.0.9","mod_id":"somakespells",
         "previous_exact_cfg":"PASS_6_BRANCH_EDGES_AND_3_EARLY_REJECTIONS",
