@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from somake_109_blood_cut_refs import discover_member
+from somake_109_blood_cut_refs import discover_member, EFFECT_SUFFIX, EFFECT_PREFIX
 from somake_109_cast_refs import GateError, parse_javap
 
 GOOD = "com/somake/somakespells/spells/blood/BloodCutSpell.class"
@@ -14,6 +14,16 @@ GOOD = "com/somake/somakespells/spells/blood/BloodCutSpell.class"
 class BloodCutEvidenceTests(unittest.TestCase):
     def test_unambiguous_candidate(self):
         self.assertEqual(GOOD, discover_member([GOOD, "other/Other.class"]))
+
+    def test_exact_effect_class_candidate(self):
+        effect = "com/somake/somakespells/effect/blood/BloodCutEffect.class"
+        self.assertEqual(effect, discover_member([effect], suffix=EFFECT_SUFFIX, prefix=EFFECT_PREFIX))
+
+    def test_ambiguous_effect_class_fails(self):
+        effect = "com/somake/somakespells/effect/blood/BloodCutEffect.class"
+        other = "com/somake/somakespells/effect/blood/alt/BloodCutEffect.class"
+        with self.assertRaises(GateError):
+            discover_member([effect, other], suffix=EFFECT_SUFFIX, prefix=EFFECT_PREFIX)
 
     def test_missing_candidate_fails(self):
         with self.assertRaises(GateError):
