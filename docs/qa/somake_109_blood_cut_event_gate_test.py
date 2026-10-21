@@ -35,6 +35,16 @@ class AnnotationScopeTests(unittest.TestCase):
             self.assertNotIn('EventBusSubscriber',proof['method_annotations'])
             self.assertNotIn('SubscribeEvent',proof['class_annotations'])
 
+    def test_exact_registration_certificate_rejects_missing_annotations(self):
+        from somake_109_blood_cut_event_gate import certify_registration_annotations
+        exact = {"class_annotations": ["net.neoforged.fml.common.EventBusSubscriber"],
+                 "method_annotations": ["net.neoforged.bus.api.SubscribeEvent"]}
+        self.assertTrue(certify_registration_annotations(exact))
+        with self.assertRaises(ValueError):
+            certify_registration_annotations(dict(exact, class_annotations=[]))
+        with self.assertRaises(ValueError):
+            certify_registration_annotations(dict(exact, method_annotations=[]))
+
     def test_malformed_or_missing_method_fails_closed(self):
         with self.assertRaises(ValueError):
             annotation_scopes('public class Empty {}')
