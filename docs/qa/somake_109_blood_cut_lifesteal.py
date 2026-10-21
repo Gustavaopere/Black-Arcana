@@ -56,7 +56,7 @@ def survey(rows: list[tuple[int,str,str,str]]) -> dict:
         "setter_typed_float_argument":True,
         "return_opcode":rows[-1][1],
         "immediate_argument_producer_opcode":prev,
-        "float_numeric_liter​als":numbers[:15],
+        "float_numeric_literals":numbers[:15],
         "boundary":"Numbers and immediate opcodes are static callsite evidence, not the source's effective float operand or a healing result.",
     }
 
