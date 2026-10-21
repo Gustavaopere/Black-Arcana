@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Synthetic branch-dependent numeric JVM return tests with no provider code."""
 import unittest
-from somake_109_blood_cut_modifier_flow import symbolic_modifier
+from somake_109_blood_cut_modifier_flow import symbolic_modifier, certify_native_modifier_formula
 from somake_109_perk_method_probe import GateError
 
 def fixture():
@@ -57,6 +57,22 @@ class SymbolicTests(unittest.TestCase):
         right=next(x for x in result if x["guard"]=="arg1 != null")
         self.assertIn("entity_power_multiplier",str(right))
         self.assertNotIn("entity_power_multiplier",str(left))
+
+    def test_exact_native_float_expression_certificate(self):
+        result=symbolic_modifier(valid())
+        cert=certify_native_modifier_formula(result)
+        self.assertEqual("SHA_EXACT_TWO_ROUTE_FLOAT_EXPRESSION",cert["verified"])
+        self.assertEqual(0.1,cert["float_coefficient"])
+
+    def test_coefficient_mutation_rejected_by_exact_certificate(self):
+        rows=valid(); rows[15]=(15,"ldc","#10","float 0.2f")
+        result=symbolic_modifier(rows)
+        with self.assertRaises(GateError):certify_native_modifier_formula(result)
+
+    def test_branch_return_mutation_rejected_by_exact_certificate(self):
+        rows=valid();rows[2]=(2,"fconst_2","","")
+        result=symbolic_modifier(rows)
+        with self.assertRaises(GateError):certify_native_modifier_formula(result)
 
     def test_unknown_opcode_rejected(self):
         rows=valid();rows[9]=(9,"unknownop","","")
