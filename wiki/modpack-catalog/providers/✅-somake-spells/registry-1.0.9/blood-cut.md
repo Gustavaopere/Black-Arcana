@@ -40,3 +40,10 @@ Do not infer display name, school, level, rarity, mana cost, cooldown, damage, d
 Iron's owns host casting/resource/cooldown settlement. Somake owns this spell identity and its provider progression. Black Arcana catalogs and may observe supported provider state; it does not recreate either runtime.
 
 Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-MAP.md`, `../SPELL-CATALOG-1.0.9.md`.
+
+
+## Auditoria técnica em andamento — Blood Cut (21/10/2026)
+
+A [nova matriz de prova](blood-cut-technical-gate.md) propõe verificar a FQCN concreta, descritores de métodos e símbolos de efeito no JAR Somake 1.0.9 SHA-1 exato, por um workflow Java 21 com testes sintéticos negativos. **A existência de uma classe candidata `BloodCutSpell` e os seus métodos ainda não estão certificados por esta nova execução**; a identidade de registry `somakespells:blood_cut` permanece comprovada no catálogo físico anterior.
+
+Os eixos de targeting (self/entidade/área), raycast/LOS, raio, hitbox, tamanho/velocidade de projétil, dano/tipo, status, duração, escalonamento, custos, cooldown, caps e identidade de hit/proc continuam **NÃO VERIFICADOS nesta ficha**. Nenhuma API de modificação por jogador foi homologada: ⛔ `FAIL_CLOSED`. Reavaliar a ficha com as evidências extraídas pelo CI antes de publicar qualquer fórmula.
