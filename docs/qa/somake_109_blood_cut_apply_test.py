@@ -103,6 +103,15 @@ class FinalStackHandoffTests(unittest.TestCase):
         rows=final_fixture();rows[4]=(12,"fconst_1","","")
         with self.assertRaises(GateError):certify_final_apply_stack(rows)
 
+    def test_guard_may_branch_directly_to_terminal_return(self):
+        rows=final_fixture();rows[1]=(3,"ifeq","36","")
+        result=certify_final_apply_stack(rows)
+        self.assertEqual("EXACT_TYPED_APPLY_HANDOFF",result["assurance"])
+
+    def test_guard_must_not_enter_float_argument_construction(self):
+        rows=final_fixture();rows[1]=(3,"ifeq","12","")
+        with self.assertRaises(GateError):certify_final_apply_stack(rows)
+
     def test_return_value_must_be_discarded(self):
         rows=final_fixture();rows[11]=(33,"nop","","")
         with self.assertRaises(GateError):certify_final_apply_stack(rows)
