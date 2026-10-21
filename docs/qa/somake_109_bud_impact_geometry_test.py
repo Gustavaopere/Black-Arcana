@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Original synthetic shape tests for SHA-exact Somake bud impact scanner."""
 import unittest
-from somake_109_bud_impact_geometry import impact_scout, category, prove_impact_box_and_query
+from somake_109_perk_method_probe import GateError
+from somake_109_bud_impact_geometry import impact_scout, category, prove_impact_box_and_query, certify_exact_impact_geometry_109
 
 D="(Lnet/minecraft/server/level/ServerLevel;)V"
 def specimen():
@@ -89,6 +90,32 @@ class ExactImpactGeometryTests(unittest.TestCase):
         self.assertEqual("NOT_PROVED",prove_impact_box_and_query(d)["status"])
     def test_ambiguous_method_fails_closed(self):
         self.assertEqual("NOT_PROVED",prove_impact_box_and_query(synthetic_geometry()*2)["status"])
+
+
+class PublisherGeometryFingerprintTests(unittest.TestCase):
+    def test_physical_snapshot_and_drift_rejections(self):
+        actual=prove_impact_box_and_query(synthetic_geometry())
+        certify_exact_impact_geometry_109(actual)
+        for change in (
+            {"status":"NOT_PROVED"},{"impact_position_to_local2":False},
+            {"inflate_double_xyz":["1.75","1.75","1.75"]},
+            {"query_aabb_loaded_local":6},{"query_descriptor_mode":"three_args"},
+            {"query_entity_class":"Entity"},{"aabb_constructor_index":19},
+            {"boundary":"per-player perk available"}
+        ):
+            with self.subTest(change=change):
+                with self.assertRaises(GateError):
+                    certify_exact_impact_geometry_109(dict(actual,**change))
+        with self.assertRaises(GateError):
+            certify_exact_impact_geometry_109(None)
+    def test_changed_impact_position_origin_is_visible_and_rejected(self):
+        d=synthetic_geometry()
+        d[0][2][1]="1: invokevirtual #2 // Method getOtherPosition:()Lnet/minecraft/world/phys/Vec3;"
+        observed=prove_impact_box_and_query(d)
+        self.assertEqual("PROVED_BUD_INFLATED_BOX_CONSUMED_BY_LIVING_ENTITY_QUERY",observed["status"])
+        self.assertFalse(observed["impact_position_to_local2"])
+        with self.assertRaises(GateError):
+            certify_exact_impact_geometry_109(observed)
 
 if __name__=="__main__":
     unittest.main()
