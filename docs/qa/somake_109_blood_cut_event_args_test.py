@@ -3,7 +3,7 @@
 import unittest
 
 from somake_109_perk_method_probe import GateError
-from somake_109_blood_cut_event_args import examine_event_callsite, certify_native_damage_expression, certify_native_source_actor, certify_effect_holder_receiver
+from somake_109_blood_cut_event_args import examine_event_callsite, certify_native_damage_expression, certify_native_source_actor, certify_effect_holder_receiver, certify_early_post_damage_exclusion
 
 AMP="Method net/minecraft/world/effect/MobEffectInstance.getAmplifier:()I"
 SOURCE="Method net/minecraft/world/damagesource/DamageSource.getEntity:()Lnet/minecraft/world/entity/Entity;"
@@ -172,6 +172,32 @@ class EffectOwnerTests(unittest.TestCase):
     def test_unprotected_effect_instance_fails(self):
         rows=holder_fixture();rows[5]=(9,"nop","","")
         with self.assertRaises(GateError):certify_effect_holder_receiver(rows)
+
+
+
+def early_exclusion_fixture():
+    return [(i,"nop","","") for i in range(10)] + [
+      (10,"aload_0","",""),
+      (11,"invokevirtual","","Method net/neoforged/neoforge/event/entity/living/LivingDamageEvent$Post.getSource:()Lnet/minecraft/world/damagesource/DamageSource;"),
+      (12,"instanceof","#45","class io/redspace/ironsspellbooks/damage/SpellDamageSource"),
+      (13,"ifeq","15",""),
+      (14,"return","",""),
+      (15,"nop","",""),
+    ]
+
+class EventEarlyTypeGuardTests(unittest.TestCase):
+    def test_if_instanceof_true_returns_before_handler(self):
+        v=certify_early_post_damage_exclusion(early_exclusion_fixture())
+        self.assertEqual("EXACT_EARLY_INSTANCEOF_RETURN_BRANCH",v["assurance"])
+        self.assertEqual("io/redspace/ironsspellbooks/damage/SpellDamageSource",v["excluded_class_internal_name"])
+
+    def test_changed_branch_target_rejected(self):
+        rows=early_exclusion_fixture();rows[13]=(13,"ifeq","14","")
+        with self.assertRaises(GateError):certify_early_post_damage_exclusion(rows)
+
+    def test_missing_source_getter_rejected(self):
+        rows=early_exclusion_fixture();rows[11]=(11,"invokevirtual","","Method other.getEntity:()Ljava/lang/Object;")
+        with self.assertRaises(GateError):certify_early_post_damage_exclusion(rows)
 
 
 if __name__=="__main__":
