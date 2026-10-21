@@ -18,7 +18,7 @@ import subprocess
 import zipfile
 
 JAR_NAME = "monstersspellbooks-0.0.16.3.jar"
-MOD_ID = "monstersspellbooks"
+MOD_ID = "monsterspellbooks"
 SHA1 = "b3aa89fd081bf4bfaf8d0f4380bcdc393c66ab0e"
 REGISTER = "net.redreaper.monsterspellbooks.init.ModSpellRegistry"
 REGISTRY_BINARY = "net/redreaper/monsterspellbooks/init/ModSpellRegistry"
@@ -89,7 +89,7 @@ def spell_id(disassembly: str) -> str:
         nsop,nscomment=code[n-2]
         pathop,pathcomment=code[n-1]
         storeop,storecomment=code[n+1]
-        if not ((nsop in ("ldc","ldc_w") and nscomment=="String monstersspellbooks") or
+        if not ((nsop in ("ldc","ldc_w") and nscomment=="String monsterspellbooks") or
                 (nsop=="getstatic" and "MonstersSpellbooks.MOD_ID:" in nscomment)):
             raise AuditError("spell resource constructor uses unexpected namespace")
         if (pathop not in ("ldc","ldc_w") or not pathcomment.startswith("String ")
