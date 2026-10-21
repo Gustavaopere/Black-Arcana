@@ -3,7 +3,7 @@
 import unittest
 
 from somake_109_perk_method_probe import GateError
-from somake_109_blood_cut_event_args import examine_event_callsite
+from somake_109_blood_cut_event_args import examine_event_callsite, certify_native_damage_expression
 
 AMP="Method net/minecraft/world/effect/MobEffectInstance.getAmplifier:()I"
 SOURCE="Method net/minecraft/world/damagesource/DamageSource.getEntity:()Lnet/minecraft/world/entity/Entity;"
@@ -50,6 +50,43 @@ class EventArgumentTests(unittest.TestCase):
     def test_unordered_instruction_offsets_fails_closed(self):
         rows=example();rows[6]=(5,"checkcast","#12","class net/minecraft/world/entity/LivingEntity")
         with self.assertRaises(GateError):examine_event_callsite(rows)
+
+
+NEW_DAMAGE="Method net/neoforged/neoforge/event/entity/living/LivingDamageEvent$Post.getNewDamage:()F"
+
+def native_float_handoff():
+    return [
+        (0,"aload_0","",""),
+        (1,"invokevirtual","",NEW_DAMAGE),
+        (4,"aload_2","",""),
+        (5,"invokevirtual","",AMP),
+        (8,"aload_1","",""),
+        (9,"invokestatic","",MOD),
+        (12,"fmul","",""),
+        (13,"fstore_3","",""),
+        (14,"return","","")
+    ]
+
+
+class FloatDamageStackTests(unittest.TestCase):
+    def test_exact_new_damage_times_amplifier_modifier(self):
+        result=certify_native_damage_expression(native_float_handoff())
+        self.assertEqual("DIRECT_TYPED_FLOAT_HANDOFF",result["assurance"])
+        self.assertEqual("event.getNewDamage * getDamageModifier(effect.getAmplifier,local_1)",result["return_expression"])
+        self.assertEqual("fstore_3",result["result_store_opcode"])
+
+    def test_wrong_float_operator_rejected(self):
+        rows=native_float_handoff();rows[6]=(12,"fadd","","")
+        with self.assertRaises(GateError):certify_native_damage_expression(rows)
+
+    def test_wrong_amplifier_load_rejected(self):
+        rows=native_float_handoff();rows[2]=(4,"aload_0","","")
+        with self.assertRaises(GateError):certify_native_damage_expression(rows)
+
+    def test_inserted_cast_transform_rejected(self):
+        rows=native_float_handoff();rows.insert(6,(11,"fneg","",""))
+        with self.assertRaises(GateError):certify_native_damage_expression(rows)
+
 
 if __name__=="__main__":
     unittest.main()
