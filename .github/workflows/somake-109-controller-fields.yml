@@ -1,0 +1,47 @@
+name: Somake 1.0.9 controller field assignment (Java 21)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/somake-109-controller-fields.yml'
+      - 'docs/qa/somake_109_controller_fields.py'
+      - 'docs/qa/somake_109_controller_fields_test.py'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  controller_assignments:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic clean-room test
+        run: python3 docs/qa/somake_109_controller_fields_test.py -v
+      - name: Download exact publisher JAR and verify SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/somake-controller-fields
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/somake-spells-irons-spells-addon-1461634/8867079/somake-spells-irons-spells-addon-1461634-8867079.jar' \
+            --output build/somake-controller-fields/somakespells-1.0.9-1.21.1.jar
+          echo '171841ac9f802be9309ecc166c1d972ac6d404c0  build/somake-controller-fields/somakespells-1.0.9-1.21.1.jar' | sha1sum --check
+      - name: Observe bounded compiled field assignment metadata
+        run: |
+          python3 docs/qa/somake_109_controller_fields.py \
+            --jar build/somake-controller-fields/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-controller-fields/metadata.json
+      - name: Upload only derived evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: somake-controller-field-metadata
+          path: build/somake-controller-fields/metadata.json
+          if-no-files-found: ignore
+          retention-days: 14
