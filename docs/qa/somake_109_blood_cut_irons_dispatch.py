@@ -66,6 +66,10 @@ def survey_overload_family(base_methods,child_methods):
     }
 
 
+def certify_virtual_lifesteal_bridge(base_methods,child_methods):
+    raise GateError("exact one-to-two Entity virtual lifesteal bridge unproven")
+
+
 def javap(jar,cls):
     q=subprocess.run(["javap","-p","-s","-c","-classpath",str(jar.resolve()),cls],
          capture_output=True,text=True,timeout=50,check=False)
