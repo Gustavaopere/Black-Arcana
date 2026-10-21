@@ -49,6 +49,17 @@ def survey(rows: list[tuple[int,str,str,str]]) -> dict:
             if m:
                 numbers.append({"kind":"float","index":index,"value":float(m.group(1))})
     prev=rows[setter_i-1][1]
+    strict_float=None
+    if len(rows)==7:
+        # Strict native-release fingerprint. The ldc directly before the setter
+        # leaves a float literal on top of the JVM operand stack.
+        if (source[0]!=3 or setter_i!=5 or prev!="ldc"
+            or any(op.startswith(("if","goto")) for _,op,_,_ in rows)):
+            raise GateError("native Blood Cut lifesteal operand topology drift")
+        match=re.fullmatch(r"float 0\.15f",rows[setter_i-1][3])
+        if not match:
+            raise GateError("native Blood Cut 0.15f setter operand drift")
+        strict_float=0.15
     return {
         "instruction_count":len(rows),
         "base_source_call_index":source[0],
@@ -56,6 +67,8 @@ def survey(rows: list[tuple[int,str,str,str]]) -> dict:
         "setter_typed_float_argument":True,
         "return_opcode":rows[-1][1],
         "immediate_argument_producer_opcode":prev,
+        "certified_lifesteal_float_argument":strict_float,
+        "literal_adjacent_to_setter":strict_float is not None,
         "float_numeric_literals":numbers[:15],
         "boundary":"Numbers and immediate opcodes are static callsite evidence, not the source's effective float operand or a healing result.",
     }
@@ -78,6 +91,8 @@ def inspect(jar:Path)->dict:
     if not descriptor.endswith("SpellDamageSource;"):
         raise GateError("native damage source return descriptor changed")
     data=survey(rows)
+    if data["certified_lifesteal_float_argument"]!=0.15:
+        raise GateError("getDamageSource native exact 0.15f argument gate not certified")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=SHA1:
         raise GateError("provider mutated during inspection")
     return {
@@ -85,7 +100,7 @@ def inspect(jar:Path)->dict:
         "provider":"somakespells","version":"1.0.9","sha1":SHA1,
         "spell_id":"somakespells:blood_cut","spell_class":SPELL_CLASS,
         "get_damage_source_descriptor":descriptor,"setter":data,
-        "scope":"Static setter and numeric census. Effective percentage/heal and accessor hook remain unproven."
+        "scope":"Native 0.15f setter float argument certified via adjacent ldc, not actual healing outcome or per-caster mutator hook."
     }
 
 def main():
