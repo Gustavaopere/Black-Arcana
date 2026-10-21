@@ -1,0 +1,47 @@
+name: Somake 1.0.9 Funeral Bloom spell controller cast handoff (Java 21)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/somake-109-funeral-spell-handoff.yml'
+      - 'docs/qa/somake_109_funeral_spell_handoff.py'
+      - 'docs/qa/somake_109_funeral_spell_handoff_test.py'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-FUNERAL-BLOOM-RADIUS-CONSUMERS-1.0.9.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  spell_handoff:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Original synthetic handoff negative tests
+        run: python3 docs/qa/somake_109_funeral_spell_handoff_test.py -v
+      - name: Verify exact Somake publisher
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/somake-funeral-spell
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/somake-spells-irons-spells-addon-1461634/8867079/somake-spells-irons-spells-addon-1461634-8867079.jar' \
+            --output build/somake-funeral-spell/somakespells-1.0.9-1.21.1.jar
+          echo '171841ac9f802be9309ecc166c1d972ac6d404c0  build/somake-funeral-spell/somakespells-1.0.9-1.21.1.jar' | sha1sum --check
+      - name: Reprove controller and survey spell-to-controller handoff
+        run: |
+          python3 docs/qa/somake_109_funeral_spell_handoff.py \
+            --jar build/somake-funeral-spell/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-funeral-spell/evidence.json
+      - name: Publish derived metadata only
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: somake-funeral-spell-handoff
+          path: build/somake-funeral-spell/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
