@@ -94,7 +94,7 @@ O parâmetro nominal é `0.15f`; **não** se pode afirmar que Blood Cut cure 15%
 
 ## Causalidade do evento Post, entidade e amplificador (PR #861, 21/10/2026)
 
-O [gate Java21 #39598535901](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39598535901), com **72 testes sintéticos** e SHA-1 Somake 1.0.9 confirmado, provou no classfile: `event.getSource().getEntity()` → guarda `LivingEntity` → `local_1`; `local_1.getEffect(BLOOD_CUT)` → `local_2`; `local_2.getAmplifier()` → `getDamageModifier(int,LivingEntity)` juntamente com `local_1`. `event.getNewDamage()` multiplica o resultado por `fmul` e armazena `fstore_3`.
+O [gate Java21 #39599959888](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39599959888), com **73 testes sintéticos** e SHA-1 Somake 1.0.9 confirmado, provou no classfile: `event.getSource().getEntity()` → guarda `LivingEntity` → `local_1`; `local_1.getEffect(BLOOD_CUT)` → `local_2`; `local_2.getAmplifier()` → `getDamageModifier(int,LivingEntity)` juntamente com `local_1`. `event.getNewDamage()` multiplica o resultado por `fmul` e armazena `fstore_3`.
 
 Também há um gate de exclusão: **`event.getSource() instanceof SpellDamageSource` resulta em retorno imediato**, antes do dano secundário. Isso não comprova imunidade a todas as formas de recursão ou dano efetivo. O argumento `LivingEntity` representa a entidade de origem do dano, **não necessariamente o caster original**.
 
