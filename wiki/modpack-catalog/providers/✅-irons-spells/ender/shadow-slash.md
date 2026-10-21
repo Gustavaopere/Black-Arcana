@@ -35,3 +35,15 @@ Já cobre dash ofensivo + slash arcano + sinergia com arma + deflexão de projé
 ## Fonte / evidência
 
 Catálogo oficial atual: `https://iron.wiki/spells/` — consulta em 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`ShadowSlashSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/ShadowSlashSpell.java), fixado em `e4056af90302d37eb1739f5ff05020b020e6e252` (versão 1.21.1-3.16.3).
+- **ID declarado:** `irons_spellbooks:shadow_slash` (se NÃO EXTRAÍDO, consultar registry).
+- **Config na classe:** minRarity `COMMON`, maxLevel `5`, cooldown segundos `15`, cast `INSTANT`.
+- **Campos Java:** `baseManaCost`=`30`; `manaCostPerLevel`=`15`; `baseSpellPower`=`5`; `spellPowerPerLevel`=`1`; `castTime`=`0`.
+- **Métodos-chave:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `onClientCast()`, `getCastStartSound()`, `onCast()`, `getDamage()`, `getDamageText()`, `getCastStartAnimation()`.
+- **Fórmulas numéricas de retorno direto:** `getDamage = getSpellPower(spellLevel, entity) + Utils.getWeaponDamage(entity)`. Não são fórmulas completas de efeitos condicionais.
+- **Pistas de efeito e targeting no source:** `MobEffectInstance`, `DamageSources`, `addEffect`.
+
+**Para o Codex:** seguir `onCast` e métodos auxiliares até as classes que realmente aplicam dano/efeito. Campos extraídos documentam defaults, não a configuração efetiva no servidor. `getSpellPower` consulta atributos e escola nativos; eventos genéricos não demonstram modificabilidade de raio, quantidade ou alvo. Requer adapter/contrato real, cap, causalidade e fail-closed. Iron's mantém cast/custo/cooldown; RPG Skill Tree, perks/Mastery/gates; Black Arcana, o runtime mágico próprio. ⚠️ Auditoria estática sem testes físicos. [Especificação](../TECHNICAL-PERK-MAP.md).

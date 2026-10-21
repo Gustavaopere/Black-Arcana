@@ -38,3 +38,15 @@ O inventário Ender do jogador continua sendo a authority. Black Arcana não dev
 ## Fonte / evidência
 
 Catálogo oficial atual: `https://iron.wiki/spells/` — consulta em 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`SummonEnderChestSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/SummonEnderChestSpell.java), fixado em `e4056af90302d37eb1739f5ff05020b020e6e252` (versão 1.21.1-3.16.3).
+- **ID declarado:** `irons_spellbooks:summon_ender_chest` (se NÃO EXTRAÍDO, consultar registry).
+- **Config na classe:** minRarity `RARE`, maxLevel `1`, cooldown segundos `5`, cast `INSTANT`.
+- **Campos Java:** `baseManaCost`=`25`; `manaCostPerLevel`=`1`; `baseSpellPower`=`1`; `spellPowerPerLevel`=`1`; `castTime`=`0`.
+- **Métodos-chave:** `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `onCast()`, `getCastStartAnimation()`.
+- **Fórmulas numéricas de retorno direto:** não extraídas; rastrear corpo de métodos e entidades auxiliares. Não são fórmulas completas de efeitos condicionais.
+- **Pistas de efeito e targeting no source:** nenhuma das pistas-padrão extraída.
+
+**Para o Codex:** seguir `onCast` e métodos auxiliares até as classes que realmente aplicam dano/efeito. Campos extraídos documentam defaults, não a configuração efetiva no servidor. `getSpellPower` consulta atributos e escola nativos; eventos genéricos não demonstram modificabilidade de raio, quantidade ou alvo. Requer adapter/contrato real, cap, causalidade e fail-closed. Iron's mantém cast/custo/cooldown; RPG Skill Tree, perks/Mastery/gates; Black Arcana, o runtime mágico próprio. ⚠️ Auditoria estática sem testes físicos. [Especificação](../TECHNICAL-PERK-MAP.md).

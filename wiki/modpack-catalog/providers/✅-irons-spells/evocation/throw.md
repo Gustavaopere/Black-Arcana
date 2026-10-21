@@ -31,3 +31,15 @@ Já cobre conversão de item empunhado em ataque arremessado com contribuição 
 ## Fonte / evidência
 
 Catálogo oficial atual: `https://iron.wiki/spells/` — consulta em 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe de referência:** [`ThrowSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/evocation/ThrowSpell.java) (`e4056af90302d37eb1739f5ff05020b020e6e252`, 3.16.3).
+- **ID fonte:** `irons_spellbooks:throw` (não inferir quando não extraído).
+- **Config:** raridade `COMMON`, maxLevel `5`, cooldown s `8`, cast `LONG`.
+- **Campos Java:** `baseManaCost`=`10`; `manaCostPerLevel`=`5`; `baseSpellPower`=`1`; `spellPowerPerLevel`=`1`; `castTime`=`5`.
+- **Métodos:** `getUniqueInfo()`, `getEffectiveCastTime()`, `getCastStartAnimation()`, `getCastFinishAnimation()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastFinishSound()`, `onCast()`, `getDamage()`, `getDamageText()`.
+- **Fórmulas de retorno simples:** `getDamage = getSpellPower(spellLevel, entity) + Utils.getWeaponDamage(entity)`.
+- **Pistas técnicas:** `addFreshEntity`.
+
+**Para Codex:** seguir implementação e entidades auxiliares antes de gerar perks sobre alvo, status, duração, raio ou projéteis. Custo e spell power são provider-native com configs/atributos, não literais injetáveis em eventos. Sem hook comprovado manter ⚠️ condicionado/fail-closed e limites de custo/cap/deduplicação. Iron's: cast/custos. RPG Skill Tree: perks/Mastery/gates. Black Arcana: runtime próprio. Fonte estática, QA físico pendente. [Contrato geral](../TECHNICAL-PERK-MAP.md).

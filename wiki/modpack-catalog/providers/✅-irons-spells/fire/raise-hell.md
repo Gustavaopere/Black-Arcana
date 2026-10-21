@@ -37,3 +37,15 @@ Já cobre shockwave/erupção melee-fire de grande raio com multi-cast e weapon 
 - Changelog oficial: `https://iron.wiki/changelog/`
 - Auditoria Fire 3.16.3 canônica: `wiki/providers/irons-spellbooks/FIRE-AUDIT.md`.
 - Consulta: 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`RaiseHellSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/fire/RaiseHellSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:raise_hell` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `LEGENDARY`; maxLevel `5`; cooldown `25` segundos; cast `LONG`.
+- **Campos Java:** `baseManaCost`=`90`; `manaCostPerLevel`=`45`; `baseSpellPower`=`15`; `spellPowerPerLevel`=`0`; `castTime`=`16`.
+- **Métodos no código:** `getUniqueInfo()`, `getEffectiveCastTime()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `getRecastCount()`, `onCast()`, `getDamage()`, `getRadius()`, `getDamageText()`, `getCastStartAnimation()`, `getCastFinishAnimation()`.
+- **Fórmulas numéricas com retorno direto:** `getRecastCount = spellLevel`; `getDamage = getSpellPower(spellLevel, entity) + Utils.getWeaponDamage(entity)`; `getRadius = 8`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `addFreshEntity`.
+
+**Contrato de perks:** escola `fire` não certifica que todo dano/incêndio seja fire damage; verificar fonte de dano, duração de burning e entidades de projétil. Separar atributo de spell power nativo de mutações de área/contagem/efeito, que exigem hook específico, caps e world safety. Sem contrato comprovado: ⚠️ condicionado/fail-closed. RPG Skill Tree gerencia perks, Mastery e gates; Iron's mantém cast, mana e efeitos nativos; Black Arcana mantém seu runtime e WorldEffectPolicy para efeitos próprios. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
