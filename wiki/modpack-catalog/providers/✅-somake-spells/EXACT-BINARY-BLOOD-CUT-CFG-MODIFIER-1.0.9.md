@@ -6,7 +6,7 @@
 
 - Provider: Somake Spells, mod ID `somakespells`, release `1.0.9`, `somakespells-1.0.9-1.21.1.jar`, CurseForge File `8867079`.
 - SHA-1 exato instalado/publicador: `171841ac9f802be9309ecc166c1d972ac6d404c0`.
-- [GitHub Actions Java 21 #39552478074](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39552478074): **SUCCESS**, JAR validado por `sha1sum`; **38 testes sintéticos** no conjunto (7+9+5+10+7).
+- [GitHub Actions Java 21 #39553030589](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39553030589): **SUCCESS**, JAR validado por `sha1sum`; **41 testes sintéticos** no conjunto (7+9+5+10+10).
 - Scripts clean-room: [CFG](../../../../docs/qa/somake_109_blood_cut_cfg.py), [testes CFG](../../../../docs/qa/somake_109_blood_cut_cfg_test.py), [dataflow float](../../../../docs/qa/somake_109_blood_cut_modifier_flow.py), [testes do dataflow](../../../../docs/qa/somake_109_blood_cut_modifier_flow_test.py).
 - Classe compilada: `com.somake.somakespells.effect.blood.BloodCutEffect`. Nenhuma fonte upstream, bytecode bruto, JAR ou asset proprietário é exportado.
 
