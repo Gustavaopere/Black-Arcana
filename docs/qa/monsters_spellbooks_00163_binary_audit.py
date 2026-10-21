@@ -13,6 +13,7 @@ import json
 from pathlib import Path
 import re
 import stat
+import tomllib
 import subprocess
 import zipfile
 
@@ -114,6 +115,20 @@ def run_javap(jar:Path,name:str)->str:
         raise AuditError("javap cannot inspect required published class "+name)
     return res.stdout
 
+def require_neoforge_mod_id(meta: bytes) -> None:
+    """Parse a bounded, publisher-supplied descriptor; reject spoofed comment tokens."""
+    if not 0 < len(meta) <= 256_000:
+        raise AuditError("invalid or oversized NeoForge mod descriptor")
+    try:
+        descriptor = tomllib.loads(meta.decode("utf-8-sig"))
+    except (UnicodeError, tomllib.TOMLDecodeError) as exc:
+        raise AuditError("unreadable or invalid NeoForge TOML descriptor") from exc
+    mods = descriptor.get("mods")
+    if (descriptor.get("modLoader") != "javafml"
+            or not isinstance(mods, list) or len(mods) != 1
+            or not isinstance(mods[0], dict) or mods[0].get("modId") != MOD_ID):
+        raise AuditError("wrong exact publisher mod ID")
+
 def audit(jar:Path, source:str)->dict:
     expected=expected_inventory(source)
     if jar.name!=JAR_NAME or jar.is_symlink() or not jar.is_file():
@@ -132,8 +147,7 @@ def audit(jar:Path, source:str)->dict:
         if REGISTER.replace(".","/")+".class" not in paths:raise AuditError("published registry class not found")
         try:meta=z.read("META-INF/neoforge.mods.toml")
         except KeyError as exc:raise AuditError("NeoForge mod descriptor absent") from exc
-        if len(meta)>256_000 or not re.search(rb'\bmodId\s*=\s*["\x27]monstersspellbooks["\x27]',meta):
-            raise AuditError("wrong exact publisher mod ID")
+        require_neoforge_mod_id(meta)
     compiled=registry_pairs(run_javap(jar.resolve(),REGISTER))
     mismatched={}
     records=[]
