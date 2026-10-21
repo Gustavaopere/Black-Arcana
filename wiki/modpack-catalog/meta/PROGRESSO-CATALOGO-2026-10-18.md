@@ -1,6 +1,13 @@
 # Black Arcana — acompanhamento do catálogo de magias
 
 
+
+## Somake — Blood Cut 1.0.9: argumentos do dano secundário (PR #862, 21/10/2026)
+
+[GitHub Actions #39604864087](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39604864087) **SUCCESS**, SHA-1 exato `171841ac9f802be9309ecc166c1d972ac6d404c0`, **86 testes sintéticos**: `DamageSources.applyDamage` recebe `event.getEntity()` (target), `local_3` (float calculado) e `BloodCutSpell.getDamageSource(local_1)` (fonte), descartando o resultado booleano. O setter de lifesteal `0.15f` pertence à **sobrecarga de dois argumentos**, ao passo que o handler invoca a **sobrecarga de um argumento**: vínculo não demonstrado. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md).
+
+**Barras estáveis:** global **—%** (piso semântico ≥1.856; universo aberto), Somake registry **83/83 = 100%**, método estático **8/83 = 9,64%**, recorte downstream aprofundado anterior **5/83 = 6,02%**; campanhas independentes de providers exatos **35/39 = 89,74%** no checkpoint próprio. **+0 magias, +0 adapters, +0 hooks de perk**; Stage 06.05 🟡, Stage 09 físico PENDING.
+
 ## Somake Blood Cut — vínculo causal nativo do evento de dano (21/10/2026; PR #861)
 
 [Java 21 #39599959888](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39599959888): SHA-1 físico/publisher `171841ac9f802be9309ecc166c1d972ac6d404c0`, **73 testes sintéticos**. O handler `onLivingDamage(LivingDamageEvent.Post)` obteve `LivingEntity` da entidade da fonte de dano, consultou nela `BLOOD_CUT`, leu amplificador e aplicou a fórmula intermediária `getNewDamage × getDamageModifier(amplifier, sourceEntity)` em float. Há `return` nativo se `event.getSource() instanceof SpellDamageSource`, mas isso **não** elimina todas as rotas de proc recursivo. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-CAUSAL-EVENT-1.0.9.md). Dano final, receiver do applyDamage, lifesteal realmente curado e QA no modpack PENDING.

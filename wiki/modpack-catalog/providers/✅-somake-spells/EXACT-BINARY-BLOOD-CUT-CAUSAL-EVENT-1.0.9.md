@@ -57,3 +57,7 @@ Essa condição ajuda a limitar proc-chains de dano mágico do Iron's, mas **nã
 ## Cobertura
 
 Sem incremento de raízes semânticas ou novos adapters. Somake permanece **83/83 IDs registrados**, **8/83 fichas no recorte de método estático** e **5/83 no recorte downstream anterior** (métricas independentes). Global técnico **—%** por denominador aberto, piso **≥1.856**. Stage 06.05 🟡, Stage 09 físico pendente.
+
+## Suplemento de argumentos do dano secundário — PR #862
+
+A [auditoria Java 21 #39604864087](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39604864087) certificou os três argumentos do callsite: `event.getEntity()`, `local_3` e `BloodCutSpell.getDamageSource(local_1)`. O descritor de source usado aqui é **`getDamageSource(Entity)`**, ao passo que o literal `0.15f` documentado anteriormente apareceu em **`getDamageSource(Entity,Entity)`**. O vínculo entre sobrecargas e healing permanece ⚠️ não provado. Ver [dossiê específico](EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md). O `boolean` devolvido por `applyDamage` é descartado e não é teste de hit confirmado.

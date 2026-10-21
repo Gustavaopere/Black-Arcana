@@ -44,3 +44,7 @@ Complementa o [dossiê de CFG e `getDamageModifier`](EXACT-BINARY-BLOOD-CUT-CFG-
 ## Progresso
 
 **+0** novas identidades semânticas, **+0** adapters, **+0** hooks de perk. Mantêm-se os recortes anteriores: Somake **83/83 IDs** registrados, **8/83** fichas com auditoria estática aprofundada no recorte documentado, **5/83** na campanha downstream anterior. Catálogo global técnico **—%** (denominador aberto; piso **≥1.856** objetos). Stage 06.05 🟡 e Stage 09 físico pendente.
+
+## Correlação com dano secundário (atualização de 21/10/2026; PR #862)
+
+A [auditoria do callsite #39604864087](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39604864087) revelou **sobrecarga diferente** no handler `onLivingDamage`: este chama `BloodCutSpell.getDamageSource(Entity)` com **um** argumento, enquanto o setter `setLifestealPercent(0.15f)` auditado neste dossiê pertence a `getDamageSource(Entity,Entity)` com **dois** argumentos. Não foi demonstrado encadeamento/dispatch entre os métodos. **Não associar o `0.15f` à fonte efetiva do dano secundário sem prova específica do host.** [Novo dossiê de argumentos](EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md).

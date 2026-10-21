@@ -161,3 +161,7 @@ A [auditoria Java 21 #39594615862](https://github.com/Gustavaopere/Black-Arcana/
 ## Blood Cut 1.0.9 — prova causal de evento Post (21/10/2026)
 
 A [auditoria física Java21 #39599959888](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39599959888) provou a entidade `LivingEntity` de `DamageSource.getEntity` como receptor do efeito `BLOOD_CUT`, fonte do amplificador e parâmetro de `getDamageModifier`. O retorno multiplica `event.getNewDamage()`, e fontes `SpellDamageSource` são excluídas antes desse cálculo. **73 testes sintéticos**; o resultado final de dano, nested events, perks mutadoras e gameplay continuam ⚠️/⛔. [Dossiê causal](EXACT-BINARY-BLOOD-CUT-CAUSAL-EVENT-1.0.9.md).
+
+## Blood Cut 1.0.9 — receiver do applyDamage e sobrecargas (21/10/2026, PR #862)
+
+A [prova exata Java 21 #39604864087](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39604864087), com 86 testes sintéticos, identifica o alvo `event.getEntity()`, float `local_3` e origem `BloodCutSpell.getDamageSource(local_1)` na chamada `DamageSources.applyDamage`. O método retorna booleano descartado. **A sobrecarga de 1 argumento da fonte usada nesse handler não é a mesma sobrecarga de 2 argumentos que contém `setLifestealPercent(0.15f)`.** Healing host e contrato de perk continuam condicionados/bloqueados. [Dossiê completo](EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md).
