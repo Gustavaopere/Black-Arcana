@@ -157,6 +157,11 @@ def certify_native_source_actor(rows):
     }
 
 
+def certify_effect_holder_receiver(rows):
+    """Unproven until effect instance to source entity link is certified."""
+    raise GateError("native Blood Cut effect holder provenance not implemented")
+
+
 def inspect(jar:Path) -> dict:
     jar=Path(jar)
     if jar.name!=FILENAME or jar.is_symlink() or not jar.is_file():
