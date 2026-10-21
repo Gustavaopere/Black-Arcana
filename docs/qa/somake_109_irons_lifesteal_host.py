@@ -157,16 +157,31 @@ def inspect(jar:Path):
     if len(inspect_names)>MAX_CANDIDATES+2:
         raise GateError("symbol proof not bounded")
     results=[probe_class(jar,cls) for cls in inspect_names]
+    hosts=[row for survey in results if survey["class"]==APPLY
+           for row in survey["methods"] if row["method"]=="postHitEffects"
+           and row["descriptor"]=="(Lnet/neoforged/neoforge/event/entity/living/LivingDamageEvent$Post;)V"]
+    if len(hosts)!=1 or hosts[0].get("certified_host_lifesteal_heal_stack",{}).get("assurance")!="HOST_POSTHIT_TYPED_HEAL_STACK":
+        raise GateError("required native Iron's post-hit lifesteal stack not certified")
+    owner=[row for survey in results if survey["class"]==OWNER for row in survey["methods"]]
+    expected={
+       "setLifestealPercent":"(F)Lio/redspace/ironsspellbooks/damage/SpellDamageSource;",
+       "getLifestealPercent":"()F",
+       "hasPostHitEffects":"()Z"
+    }
+    for name,descriptor in expected.items():
+        if sum(row["method"]==name and row["descriptor"]==descriptor for row in owner)!=1:
+            raise GateError("native SpellDamageSource lifesteal field API changed")
     if hashlib.sha256(jar.read_bytes()).hexdigest()!=digest:
         raise GateError("Iron's runtime mutated during inspection")
     return {
-       "status":"PASS_SHA_EXACT_IRONS_3163_RUNTIME_LIFESTEAL_SYMBOL_SCOUT",
+       "status":"PASS_SHA_EXACT_IRONS_3163_POSTHIT_SOURCE_ENTITY_HEAL_STACK",
        "version":"1.21.1-3.16.3",
        "runtime_sha256":digest,
        "lifesteal_marked_class_count":len(candidates),
        "lifesteal_marked_classes":candidates,
        "runtime_class_count":len(entries),
        "method_symbol_surveys":results,
+       "certified_host_lifesteal_heal_stack":hosts[0]["certified_host_lifesteal_heal_stack"],
        "scope":"Runtime JAR static discovery on publisher file 8680204; SHA256 verified against pinned CurseForge file 8680204. No inference of actual healed life or perk mutator."
     }
 
@@ -236,5 +251,6 @@ def main():
     print("IRONS_3163_LIFESTEAL_SCOUT",report["status"],report["runtime_sha256"])
     print("IRONS_3163_LIFESTEAL_CLASSES",report["lifesteal_marked_classes"])
     print("IRONS_3163_LIFESTEAL_METHODS",json.dumps(report["method_symbol_surveys"],sort_keys=True))
+    print("IRONS_3163_HOST_HEAL_PROOF",json.dumps(report["certified_host_lifesteal_heal_stack"],sort_keys=True))
 if __name__=="__main__":
     main()
