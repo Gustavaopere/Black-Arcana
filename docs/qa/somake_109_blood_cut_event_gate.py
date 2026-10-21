@@ -41,6 +41,17 @@ def annotation_scopes(verbose: str, method: str = 'onLivingDamage') -> dict:
         'class_annotations': sorted(set(ANNOT.findall(class_content)))[:20],
     }
 
+def certify_registration_annotations(metadata: dict) -> bool:
+    """Fail closed on missing native registration declaration annotations."""
+    if not isinstance(metadata, dict):
+        raise ValueError("missing scoped class/method annotations")
+    class_marker = "net.neoforged.fml.common.EventBusSubscriber"
+    method_marker = "net.neoforged.bus.api.SubscribeEvent"
+    if (class_marker not in metadata.get("class_annotations", ())
+            or method_marker not in metadata.get("method_annotations", ())):
+        raise ValueError("Blood Cut native class/method registration annotation drift")
+    return True
+
 
 def event_callsite_survey(rows: list[tuple[int,str,str,str]]) -> dict:
     """Report sparse member/guard coordinates, never a disassembled method."""
@@ -100,6 +111,7 @@ def inspect(jar) -> dict:
         return p.stdout
     verbose=javap('-v','-p','-s')
     ann=annotation_scopes(verbose)
+    certify_registration_annotations(ann)
     parsed=sections(javap('-p','-s','-c'))
     EXPECT={
       'onLivingDamage':'(Lnet/neoforged/neoforge/event/entity/living/LivingDamageEvent$Post;)V',
