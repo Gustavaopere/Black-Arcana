@@ -20,14 +20,16 @@ from somake_109_perk_method_probe import FILENAME, SHA1
 TARGET_ID = "somakespells:blood_cut"
 CLASS_SUFFIX = "/BloodCutSpell.class"
 PREFIX = "com/somake/somakespells/spells/"
+EFFECT_SUFFIX = "/BloodCutEffect.class"
+EFFECT_PREFIX = "com/somake/somakespells/effect/blood/"
 
 
-def discover_member(names: list[str]) -> str:
+def discover_member(names: list[str], *, suffix: str = CLASS_SUFFIX, prefix: str = PREFIX) -> str:
     if len(names) != len(set(names)):
         raise GateError("duplicate ZIP member")
     matches = [
         n for n in names
-        if n.startswith(PREFIX) and n.endswith(CLASS_SUFFIX)
+        if n.startswith(prefix) and n.endswith(suffix)
         and re.fullmatch(r"[A-Za-z0-9_/$.-]+", n)
         and ".." not in n
     ]
@@ -48,6 +50,7 @@ def inspect(jar: Path) -> dict:
     with zipfile.ZipFile(jar) as archive:
         names = archive.namelist()
         member = discover_member(names)
+        effect_member = discover_member(names, suffix=EFFECT_SUFFIX, prefix=EFFECT_PREFIX)
         mods_toml = archive.read("META-INF/neoforge.mods.toml")
         if len(mods_toml) > 250_000 or not re.search(
             rb"\bmodId\s*=\s*['\"]somakespells['\"]", mods_toml
@@ -61,6 +64,14 @@ def inspect(jar: Path) -> dict:
     if process.returncode:
         raise GateError("javap could not inspect exact class")
     methods = parse_javap(process.stdout, fqcn.rsplit(".", 1)[-1])
+    effect_fqcn = effect_member.removesuffix(".class").replace("/", ".")
+    effect_process = subprocess.run(
+        ["javap", "-p", "-s", "-c", "-classpath", str(jar.resolve()), effect_fqcn],
+        capture_output=True, text=True, timeout=35, check=False
+    )
+    if effect_process.returncode:
+        raise GateError("javap could not inspect the Blood Cut effect class")
+    effect_methods = parse_javap(effect_process.stdout, effect_fqcn.rsplit(".", 1)[-1])
     # These facts are local to a class. No registry relation or runtime result
     # is inferred from a name-match. Only non-body method/member references.
     if hashlib.sha1(jar.read_bytes()).hexdigest() != digest:
@@ -72,6 +83,8 @@ def inspect(jar: Path) -> dict:
         "sha1": digest,
         "class_candidate_verified_in_jar": fqcn,
         "methods": methods,
+        "effect_class": effect_fqcn,
+        "effect_methods": effect_methods,
         "limits": [
             "Registry identity is sourced independently from the 83-ID exact registry audit.",
             "Declared method, bytecode symbol and branch counts do not establish runtime targeting, damage, duration, LOS or casting reachability.",
@@ -93,10 +106,14 @@ def main() -> None:
           result["class_candidate_verified_in_jar"],
           result["methods"]["declared_methods"],
           result["methods"]["focused_methods"])
-    for method in result["methods"]["methods"]:
-        print("SOMAKE_BLOOD_CUT_METHOD", method["method"], method["descriptor"],
-              "branches", method["branches"], "members",
-              json.dumps(method["members"], ensure_ascii=False))
+    for kind, row in (("SPELL", result["methods"]), ("EFFECT", result["effect_methods"])):
+        print("SOMAKE_BLOOD_CUT_CLASS", kind,
+              result["class_candidate_verified_in_jar"] if kind == "SPELL" else result["effect_class"],
+              row["declared_methods"], row["focused_methods"])
+        for method in row["methods"]:
+            print("SOMAKE_BLOOD_CUT_METHOD", kind, method["method"], method["descriptor"],
+                  "branches", method["branches"], "members",
+                  json.dumps(method["members"], ensure_ascii=False))
 
 
 if __name__ == "__main__":
