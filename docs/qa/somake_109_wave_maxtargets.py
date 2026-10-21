@@ -152,6 +152,88 @@ def certify_exact_wave_list_cap_109(proof):
     if not isinstance(proof,dict) or any(proof.get(k)!=v for k,v in expected.items()):
         raise GateError("Somake 1.0.9 candidate list maxTargets truncation fingerprint drift")
 
+
+def prove_wave_loop_spawn_sites(declared):
+    """Certify a single spawn *attempt* and UUID-set insertion on the normal loop path.
+
+    Does not certify successful addFreshEntity, reference equality, exception
+    behavior, concurrent list mutation or runtime-loaded player effects.
+    """
+    bodies=[b for n,d,b in declared if n=="launchWave" and d==DESC]
+    if len(bodies)!=1:return {"status":"NOT_PROVED","reason":"ambiguous_wave"}
+    rows=opcode_rows(bodies[0])
+    def fail(reason):return {"status":"NOT_PROVED","reason":reason}
+    if len(rows)!=196:return fail("method_shape_drift")
+    positions={pc:i for i,(pc,_,_,_) in enumerate(rows)}
+    def dest(i):
+        v=rows[i][2].split(" ",1)[0]
+        return positions.get(int(v)) if v.isdecimal() else None
+    def slot(i,load=True):
+        _,op,arg,_=rows[i]
+        action="aload" if load else "astore"
+        if op==action and arg.isdecimal():return int(arg)
+        if op.startswith(action+"_") and op[len(action)+1:].isdecimal():
+            return int(op[len(action)+1:])
+        return None
+    def icall(i,name):
+        return rows[i][1]=="invokeinterface" and rows[i][3] in (
+            "InterfaceMethod "+name,"Method "+name,
+        )
+    if not (icall(57,"java/util/Iterator.hasNext:()Z") and rows[58][1]=="ifeq"
+            and dest(58)==166 and icall(60,"java/util/Iterator.next:()Ljava/lang/Object;")
+            and rows[165][1]=="goto" and dest(165)==56):
+        return fail("iterator_loop_cfg_not_exact")
+    receiver=slot(56)
+    if receiver is None or slot(59)!=receiver:
+        return fail("loop_iterator_receiver_not_same_local")
+    if slot(55,load=False)!=receiver:
+        return fail("iterator_result_not_stored_as_loop_receiver")
+    if rows[93][1]!="invokespecial" or not rows[93][3].startswith(
+            'Method com/somake/somakespells/entity/FuneralBloomBudEntity."<init>":'):
+        return fail("exact_bud_constructor_missing")
+    if not (rows[156][1]=="invokevirtual" and
+            "addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z" in rows[156][3]
+            and rows[157][1]=="pop"):
+        return fail("spawn_attempt_boolean_return_not_ignored_as_expected")
+    field_names={
+        "Field activeTargetIds:Ljava/util/Set;",
+        "Field com/somake/somakespells/entity/FuneralBloomControllerEntity.activeTargetIds:Ljava/util/Set;",
+    }
+    uuid_names={
+        "Method net/minecraft/world/entity/LivingEntity.getUUID:()Ljava/util/UUID;",
+        "Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;",
+    }
+    if not (rows[159][1]=="getfield" and rows[159][3] in field_names
+            and rows[161][1]=="invokevirtual" and rows[161][3] in uuid_names
+            and icall(162,"java/util/Set.add:(Ljava/lang/Object;)Z")
+            and rows[163][1]=="pop" and rows[164][1]=="iinc"):
+        return fail("uuid_field_add_and_iteration_step_not_exact")
+    if any(rows[i][1].startswith(("if","goto","jsr")) or
+           rows[i][1] in ("return","ireturn","athrow","tableswitch","lookupswitch",
+                          "wide","ret","jsr_w") for i in range(59,165)):
+        return fail("loop_body_contains_possible_bypass_or_early_exit")
+    ctor=[i for i,(_,op,_,c) in enumerate(rows) if op=="invokespecial" and
+          c.startswith('Method com/somake/somakespells/entity/FuneralBloomBudEntity."<init>":')]
+    spawn=[i for i,(_,op,_,c) in enumerate(rows) if op.startswith("invoke") and
+           "addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z" in c]
+    if ctor!=[93] or spawn!=[156]:return fail("unexpected_parallel_ctor_or_spawn_sites")
+    for i,(_,op,arg,_) in enumerate(rows):
+        if not (op.startswith("if") or op.startswith("goto")):continue
+        d=dest(i)
+        if d is None:return fail("unresolved_branch")
+        if 59<=d<=165 and not 59<=i<=165:
+            return fail("outside_jump_enters_iteration_body")
+    return {
+        "status":"PROVED_ONE_BUD_SPAWN_ATTEMPT_AND_UUID_SET_ADD_PER_NORMAL_ITERATION",
+        "loop_receiver_slot":receiver,"loop_head_index":56,
+        "has_next_index":57,"exit_branch_index":58,"exit_index":166,
+        "next_index":60,"bud_constructor_index":93,
+        "spawn_call_index":156,"spawn_boolean_result_discarded":True,
+        "active_uuid_set_add_index":162,"uuid_add_result_discarded":True,
+        "loop_step_index":164,"back_edge_index":165,
+        "boundary":"Normal bytecode path only; not successful bud spawn, UUID object identity, runtime QA or perk hook",
+    }
+
 def inspect(jar):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("wrong Somake file")
@@ -175,10 +257,14 @@ def inspect(jar):
     proof=prove_wave_list_cap(declarations)
     print('SOMAKE_WAVE_CAP_PROBE',json.dumps(proof,sort_keys=True))
     certify_exact_wave_list_cap_109(proof)
+    loop=prove_wave_loop_spawn_sites(declarations)
+    print('SOMAKE_WAVE_LOOP_PROBE',json.dumps(loop,sort_keys=True))
+    if loop.get('status')!='PROVED_ONE_BUD_SPAWN_ATTEMPT_AND_UUID_SET_ADD_PER_NORMAL_ITERATION':
+        raise GateError('Somake wave loop spawn/UUID proof not certified')
     if evidence["status"]!="OBSERVED_WAVE_BRANCH_AND_MAXTARGETS_CALLSITES_ONLY":
         raise GateError("wave structure changed")
     return {"version":"1.0.9","mod_id":"somakespells","sha1":sha,
-            "wave":evidence,"candidate_cap":proof,"limit":"read-only clean-room observation; cap and gameplay NOT proved"}
+            "wave":evidence,"candidate_cap":proof,"loop_normal_path":loop,"limit":"read-only clean-room observation; cap and gameplay NOT proved"}
 
 def main():
     a=argparse.ArgumentParser()
