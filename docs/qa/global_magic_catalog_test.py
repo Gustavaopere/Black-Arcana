@@ -203,7 +203,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertIn("**+0 novas identidades**", cards)
         self.assertIn("**NÃO é um build pin exato**", cards)
         self.assertIn("`aero` = **0 registros**", cards)
-        self.assertIn("fichas source-observed / ⚠️ registry físico", self.index)
+        self.assertIn("98/98 IDs/classes no JAR SHA-exato", self.index)
         readme = (provider / "README.md").read_text(encoding="utf-8")
         self.assertIn("SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md", readme)
 
