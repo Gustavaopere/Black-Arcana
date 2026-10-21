@@ -1,5 +1,12 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
+## Somake 1.0.9 — filtros efetivos do bloco de dano e cura da bud (21/10/2026, PR #851)
+
+**Barras sem aumento artificial de identidade:** universo global **—%** (piso conservador **≥1.856** objetos semânticos; denominador final aberto), Somake **83/83 IDs = 100%**, recorte de fichas downstream **5/83 = 6,02%**, subcampanha fixa de providers exatos **35/39 = 89,74%** no último checkpoint. A prova acrescenta profundidade técnica a `somakespells:funeral_bloom`, **+0** novos feitiços e **+0** adapters. Hooks de perks mutadoras homologados: **0**, percentual indefinido sem denominador.
+
+A auditoria física Java 21 [#39531339901](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39531339901), com JAR publisher Somake 1.0.9 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, passou **22 regressões sintéticas**. No método nativo `FuneralBloomBudEntity.impact` foi provado que `DamageSources.applyDamage:Z` governa os callsites seguintes de `MobEffects.WITHER`, `addEffect` e `push`; resultado falso salta todo esse bloco. A cura é uma segunda sequência delimitada: slot JVM 4 não nulo **e** inteiro slot JVM 6 positivo, seguidos por `SpellHealEvent → eventBus.post → heal(slot4,float slot7)`. Os retornos de `addEffect` e `post` são descartados. **Gameplay, resultados efetivos, identidade de ator, valor numérico, sucessos de spawn/hit, repetição de proc e hooks continuam não homologados.** Stage 06.05 🟡; Stage 09 QA físico PENDING; perks externas de dano/cura/targeting **⛔ FAIL_CLOSED**. [Ficha detalhada](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+
 ## Somake 1.0.9 — AABB independente de Funeral Bloom Bud (21/10/2026, PR #850)
 
 **Barra geral:** `—%`, denominador universal aberto, piso histórico conservador **≥1.856** objetos semânticos. **Barra Somake — identidades:** `83/83 = 100%`; fichas com auditoria downstream na campanha: `5/83 = 6,02%`; hooks mutadores homologados: **0** (taxa sem denominador). Subcampanha física fixa de providers: `35/39 = 89,74%` no último checkpoint com denominador fechado, não uma taxa de cobertura de todos os mods.
