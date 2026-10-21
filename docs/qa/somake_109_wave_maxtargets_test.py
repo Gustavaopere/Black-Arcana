@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Synthetic original wave-cardinality scanner regressions."""
 import unittest
-from somake_109_wave_maxtargets import wave_cardinality_scout, prove_wave_list_cap, prove_wave_loop_spawn_sites
+from somake_109_perk_method_probe import GateError
+from somake_109_wave_maxtargets import wave_cardinality_scout, prove_wave_list_cap, prove_wave_loop_spawn_sites, certify_exact_wave_list_cap_109, certify_exact_wave_loop_109
 D="(Lnet/minecraft/server/level/ServerLevel;)V"
 def sample():
     x=[f"{i}: nop" for i in range(196)]
@@ -125,6 +126,39 @@ class WaveNormalPathLoopTests(unittest.TestCase):
     def test_wrong_loop_exit_fails(self):
         d=loop_fixture();d[0][2][58]="58: ifeq 160"
         self.assertEqual("NOT_PROVED",prove_wave_loop_spawn_sites(d)["status"])
+
+
+class ExactPublisherReleaseGateTests(unittest.TestCase):
+    def test_physical_candidate_slice_snapshot(self):
+        proof=prove_wave_list_cap(cap_fixture())
+        certify_exact_wave_list_cap_109(proof)
+        for delta in (
+            {"status":"NOT_PROVED"},{"list_local":2},{"conditional_index":43},
+            {"truncation_condition":"size_smaller_than_maxTargets"},
+            {"slice_start_literal":1},{"slice_upper_source":"list_size"},
+            {"iterator_call_index":53},{"boundary":"all_perks_approved"},
+        ):
+            with self.subTest(delta=delta):
+                with self.assertRaises(GateError):
+                    certify_exact_wave_list_cap_109(dict(proof,**delta))
+    def test_physical_loop_normal_path_snapshot(self):
+        proof=prove_wave_loop_spawn_sites(loop_fixture())
+        # Fixture defaults to different synthetic iterator local; pin release value explicitly.
+        proof=dict(proof,loop_receiver_slot=6)
+        certify_exact_wave_loop_109(proof)
+        for delta in (
+            {"status":"NOT_PROVED"},{"loop_receiver_slot":5},
+            {"bud_constructor_index":92},{"spawn_call_index":157},
+            {"spawn_boolean_result_discarded":False},
+            {"active_uuid_set_add_index":163},
+            {"back_edge_index":164},
+            {"boundary":"spawn guaranteed"},
+        ):
+            with self.subTest(delta=delta):
+                with self.assertRaises(GateError):
+                    certify_exact_wave_loop_109(dict(proof,**delta))
+        with self.assertRaises(GateError):
+            certify_exact_wave_loop_109(None)
 
 if __name__=="__main__":
     unittest.main()
