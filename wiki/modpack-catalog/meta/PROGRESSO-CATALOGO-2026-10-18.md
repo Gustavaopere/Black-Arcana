@@ -1,3 +1,11 @@
+# Black Arcana — progresso da catalogação técnica
+
+## Somake Blood Cut — anotação de evento e risco de segundo dano (21/10/2026; PR #858)
+
+[Java21 #39549751471](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39549751471) **SUCCESS** no Somake 1.0.9 físico/publisher SHA-1 171841ac9f802be9309ecc166c1d972ac6d404c0, **20 testes sintéticos**: classe BloodCutEffect com EventBusSubscriber e método onLivingDamage com SubscribeEvent em RuntimeVisibleAnnotations; **103 instruções/5 desvios** no handler Post e **19 instruções/2 desvios** no modificador. Há referências a getNewDamage e DamageSources.applyDamage no mesmo método, sem prova de predicados, despacho runtime, taxa de dano/recursão nem hooks mutadores. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md) e [ficha individual](../providers/✅-somake-spells/registry-1.0.9/blood-cut.md).
+
+**Barras conservadoras:** global **—%** (piso **≥1.856** raízes semânticas; denominador aberto); Somake **83/83 = 100% IDs**, recorte de método estático **8/83 = 9,64%**, downstream aprofundado **5/83 = 6,02%**; campanha fixa dos providers exatos **35/39 = 89,74%** no último checkpoint correspondente. **+0 magias, +0 adapters, nenhum hook externo de perk aprovado**; Stage 06.05 🟡 / Stage 09 físico PENDING.
+
 ## Somake Blood Cut — evidência de dano secundário e scaling incompleto (21/10/2026; PR #857)
 
 [Java21 #39546058075](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39546058075) passou **16 testes sintéticos** com o JAR Somake 1.0.9 SHA-1 exato `171841ac9f802be9309ecc166c1d972ac6d404c0`. Foram provadas as FQCN `BloodCutSpell` (7 métodos) e `BloodCutEffect` (2 métodos), `CastType.INSTANT`, `onCast` → `ModMobEffects.BLOOD_CUT` / `LivingEntity.addEffect`, `getDamageSource` → `setLifestealPercent`, e `onLivingDamage(LivingDamageEvent.Post)` → referências a `getNewDamage`, `getDamageModifier` e `DamageSources.applyDamage`. O handler possui **cinco branches** e o getter de modificador possui **dois**, não reconciliados causalmente; wiring do evento, dano real, caps, alvo, tempo e qualquer hook de perk permanecem ⚠️/⛔. [Ficha](../providers/✅-somake-spells/registry-1.0.9/blood-cut.md) e [dossiê](../providers/✅-somake-spells/registry-1.0.9/blood-cut-technical-gate.md).
