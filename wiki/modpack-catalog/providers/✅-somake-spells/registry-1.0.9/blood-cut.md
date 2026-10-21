@@ -52,7 +52,7 @@ Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-M
 | Efeito downstream | `com.somake.somakespells.effect.blood.BloodCutEffect` contém `onLivingDamage(LivingDamageEvent.Post)` com **cinco branches** |
 | Causalidade / dano | `onLivingDamage` referencia `getNewDamage`, `getSource`, `getEntity`, `MobEffectInstance.getAmplifier`, `getDamageModifier`, `LivingEntity.invulnerableTime` e `DamageSources.applyDamage`; o registro do listener e os gates condicionais permanecem pendentes |
 | Escalonamento | `BloodCutEffect.getDamageModifier(int,LivingEntity)` referencia `ModSpells.BLOOD_CUT` e `BloodCutSpell.getEntityPowerMultiplier` (**dois branches**); **fórmula e limites NÃO verificados** |
-| Lifesteal | `getDamageSource` referencia `SpellDamageSource.setLifestealPercent(float)`; taxa, origem, condições e cura resultante NÃO verificadas |
+| Lifesteal | **0.15f nominal certificado** na fonte secundária; host `DamageSources.postHitEffects` chama `sourceEntity.heal(rate × event.getNewDamage())` quando elegível; cura efetiva, caps, QA modpack e hooks mutadores ⚠️/⛔ |
 | Targeting / geometria | Alvo real, distância, LOS, área, hitbox, projetil, raio, velocidade e limites NÃO verificados. `SELF_CAST_ANIMATION` é apenas um marcador de animação |
 | Recursos / tempo | Mana, cooldown, duração do efeito, ticks, config host e gates Survival NÃO verificados |
 | Mutabilidade por perk | ⛔ `FAIL_CLOSED`: nenhuma API/hook mutador por jogador foi certificada; não criar segundo pipeline de dano, cura ou custo |
@@ -104,7 +104,7 @@ A fórmula numérica certificada para o valor intermediário é `getNewDamage() 
 
 [Java 21 #39604864087](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39604864087) **SUCCESS**, SHA-1 publisher Somake 1.0.9, **86 testes sintéticos**. No final de `BloodCutEffect.onLivingDamage`, o `applyDamage(Entity,float,DamageSource):boolean` recebe **`event.getEntity()` como alvo**, **`local_3` como float de dano solicitado** e **`BloodCutSpell.getDamageSource(local_1)` como source**. `local_1` é a entidade associada à fonte do dano original, comprovada no PR #861. A chamada de dano tem índice 100; o booleano é descartado, portanto não certifica sucesso do dano.
 
-**Distinção de sobrecarga essencial:** o handler usa `getDamageSource(Entity)` (1 arg), enquanto o setter nominal de lifesteal `0.15f` foi observado na sobrecarga `getDamageSource(Entity,Entity)` (2 args). Delegação entre elas e cura real **não estão provadas**; ⚠️ condicionado e perks ⛔ FAIL_CLOSED. [Dossiê de aplicação do dano](../EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md).
+**Distinção de sobrecarga essencial:** o handler usa `getDamageSource(Entity)` (1 arg), enquanto o setter nominal de lifesteal `0.15f` foi observado na sobrecarga `getDamageSource(Entity,Entity)` (2 args). Delegação **posteriormente comprovada no PR #863**; cura realmente entregue ainda não provada; ⚠️ condicionado e perks ⛔ FAIL_CLOSED. [Dossiê de aplicação do dano](../EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md).
 
 ## Contrato host de lifesteal — despacho virtual da fonte de dano (21/10/2026, PR #863)
 
