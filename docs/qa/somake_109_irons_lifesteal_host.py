@@ -1,9 +1,158 @@
 #!/usr/bin/env python3
-"""Exact Iron's 3.16.3 API: bounded clean-room lifesteal host-symbol probe.
+"""Read-only exact Iron's 3.16.3 addon-API lifesteal symbol discovery.
 
-No JAR/classfile/method bodies exported; exact artifact SHA required.
+Clean-room: derived class/method identities and symbolic JVM references only;
+no binary, source, method body, javap dump, or upstream assets are persisted.
+The API artifact is not a proof of provider-loaded gameplay.
 """
+from __future__ import annotations
+import argparse
+import hashlib
+import json
+import re
+import subprocess
+import zipfile
+from pathlib import Path
 from somake_109_perk_method_probe import GateError
+from somake_109_radius_irons_contract import (
+    IRON_API_FILENAME, IRON_API_SHA256, validate_irons_api, sections, opcode_rows
+)
+
+MAX_ARCHIVE_CLASSES=18000
+MAX_SCAN_BYTES=35_000_000
+MAX_CLASS_BYTES=320_000
+MAX_CANDIDATES=30
+MAX_JAVAP_BYTES=1_500_000
+OWNER="io.redspace.ironsspellbooks.damage.SpellDamageSource"
+APPLY="io.redspace.ironsspellbooks.damage.DamageSources"
+
 
 def find_lifesteal_class_names(entries):
-    raise GateError("host lifesteal class discovery has not yet been implemented")
+    """Discover marker owners without interpreting JVM method execution."""
+    seen=set()
+    candidates=[]
+    count=0
+    total=0
+    for name,contents in entries:
+        count+=1
+        if count>MAX_ARCHIVE_CLASSES:
+            raise GateError("too many class members to inspect safely")
+        if not isinstance(name,str) or not isinstance(contents,bytes):
+            raise GateError("invalid class entry")
+        if (not name.endswith(".class") or len(name)>300
+                or ".." in name or not re.fullmatch(r"[A-Za-z0-9_/$.-]+",name)):
+            raise GateError("unsafe or ambiguous binary class member")
+        if name in seen:
+            raise GateError("duplicate class member")
+        seen.add(name)
+        total+=len(contents)
+        if len(contents)>MAX_CLASS_BYTES or total>MAX_SCAN_BYTES:
+            raise GateError("unbounded API class scan")
+        lower=contents.lower()
+        if b"lifesteal" in lower or b"life_steal" in lower:
+            candidates.append(name[:-6].replace("/","."))
+            if len(candidates)>MAX_CANDIDATES:
+                raise GateError("lifesteal class set exceeds audit budget")
+    if not candidates:
+        raise GateError("no exact lifesteal bytecode markers; cannot infer absence from API")
+    return sorted(candidates)
+
+
+def get_class_members(jar:Path):
+    with zipfile.ZipFile(jar) as archive:
+        items=archive.infolist()
+        if len(items)>30000 or len({x.filename for x in items})!=len(items):
+            raise GateError("invalid API ZIP membership")
+        selected=[x for x in items if x.filename.endswith(".class")]
+        if not 1<=len(selected)<=MAX_ARCHIVE_CLASSES:
+            raise GateError("unexpected API class count")
+        if sum(x.file_size for x in selected)>MAX_SCAN_BYTES:
+            raise GateError("unbounded API uncompressed classes")
+        entries=[]
+        for info in selected:
+            if info.file_size>MAX_CLASS_BYTES:
+                raise GateError("oversized classfile")
+            entries.append((info.filename,archive.read(info)))
+    return entries
+
+
+def probe_class(jar:Path,cls:str):
+    result=subprocess.run(["javap","-p","-s","-c","-classpath",str(jar.resolve()),cls],
+       capture_output=True,text=True,timeout=40,check=False)
+    if result.returncode or not 100<len(result.stdout)<MAX_JAVAP_BYTES:
+        raise GateError("exact API javap failed for "+cls)
+    all_methods=sections(result.stdout)
+    matches=[]
+    for name,desc,body in all_methods:
+        if len(matches)>35:
+            raise GateError("too many referenced methods")
+        rows=opcode_rows(body)
+        symbol_hits=[]
+        context=[]
+        for i,(_,op,_,comment) in enumerate(rows):
+            if not (op.startswith("invoke") or op in ("getfield","getstatic","putfield","putstatic")):
+                continue
+            if not comment:
+                continue
+            if "lifesteal" in comment.lower() or "life_steal" in comment.lower():
+                symbol_hits.append({"instruction_index":i,"opcode":op,
+                                    "reference":comment[:220]})
+            elif any(x in comment.lower() for x in
+                     ("livingentity.heal:",".heal:","sethealth:","hasposthiteffects:",
+                      "damagesources.applydamage:","getentity:")):
+                context.append({"instruction_index":i,"opcode":op,
+                                "reference":comment[:190]})
+        if symbol_hits or "lifesteal" in name.lower():
+            matches.append({"method":name,"descriptor":desc,"instruction_count":len(rows),
+                            "lifesteal_symbol_calls":symbol_hits[:20],
+                            "related_method_calls":context[:14],
+                            "limitation":"Symbol references and method identity only; no call-stack/branch/damage/cure proof."})
+    if not matches and cls!=APPLY:
+        raise GateError("binary contains marker but no method-level lifesteal references: "+cls)
+    return {"class":cls,"methods":matches[:35],
+            "method_count":len(all_methods)}
+
+
+def inspect(jar:Path):
+    jar=Path(jar)
+    if jar.is_symlink() or not jar.is_file() or jar.name!=IRON_API_FILENAME:
+        raise GateError("wrong official API artifact")
+    digest=validate_irons_api(jar)
+    if digest!=IRON_API_SHA256:
+        raise GateError("official Iron's 3.16.3 API SHA256 mismatch")
+    entries=get_class_members(jar)
+    candidates=find_lifesteal_class_names(entries)
+    available={name[:-6].replace("/",".") for name,_ in entries}
+    if OWNER not in available or APPLY not in available:
+        raise GateError("expected Iron's API classes absent")
+    inspect_names=sorted(set(candidates)|{OWNER,APPLY})
+    if len(inspect_names)>MAX_CANDIDATES+2:
+        raise GateError("symbol proof not bounded")
+    results=[probe_class(jar,cls) for cls in inspect_names]
+    if hashlib.sha256(jar.read_bytes()).hexdigest()!=IRON_API_SHA256:
+        raise GateError("Iron's API mutated during inspection")
+    return {
+       "status":"PASS_SHA_EXACT_IRONS_3163_API_LIFESTEAL_SYMBOL_SCOUT",
+       "version":"1.21.1-3.16.3",
+       "api_sha256":digest,
+       "lifesteal_marked_class_count":len(candidates),
+       "lifesteal_marked_classes":candidates,
+       "api_class_count":len(entries),
+       "method_symbol_surveys":results,
+       "scope":"The official addon-facing API may omit runtime event subscribers or damage settlement; no inference of absence, actual heal or per-caster mutator is permitted."
+    }
+
+
+def main():
+    p=argparse.ArgumentParser()
+    p.add_argument("--irons-api",type=Path,required=True)
+    p.add_argument("--output",type=Path,required=True)
+    a=p.parse_args()
+    report=inspect(a.irons_api)
+    a.output.parent.mkdir(parents=True,exist_ok=True)
+    a.output.write_text(json.dumps(report,ensure_ascii=False,indent=2,sort_keys=True)+"\n")
+    print("IRONS_3163_LIFESTEAL_SCOUT",report["status"],report["api_sha256"])
+    print("IRONS_3163_LIFESTEAL_CLASSES",report["lifesteal_marked_classes"])
+    print("IRONS_3163_LIFESTEAL_METHODS",json.dumps(report["method_symbol_surveys"],sort_keys=True))
+if __name__=="__main__":
+    main()
