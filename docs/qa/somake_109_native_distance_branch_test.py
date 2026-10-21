@@ -18,12 +18,13 @@ def fixture():
     put(24,"aload_0")
     put(25,"invokevirtual #3", "Method net/minecraft/world/entity/Entity.getZ:()D")
     put(26,"invokevirtual #4", DIST)
-    put(27,"aload_0")
-    put(28,"invokevirtual #5", RADIUS)
-    put(29,"f2d")
-    put(30,"dup2")
-    put(31,"dmul")
-    put(32,"dcmpg")
+    put(29,"aload_0")
+    put(30,"invokevirtual #5", RADIUS)
+    put(31,"aload_0")
+    put(32,"invokevirtual #6", RADIUS)
+    put(33,"fmul")
+    put(34,"f2d")
+    put(35,"dcmpg")
     put(36,"ifgt 39")
     put(37,"iconst_1")
     put(38,"ireturn")
@@ -37,7 +38,7 @@ class FinalDistanceTest(unittest.TestCase):
         self.assertEqual("PROVED_FINAL_IFGT_NUMERIC_COMPARISON",r["status"],r)
         self.assertEqual("cmp(distSq(slot2,x(slot0),y(slot0),z(slot0)),(R*R)) > 0",
                          r["derived_rejection_condition"])
-        self.assertEqual(["x","y","z","distance","radius"],r["call_categories"])
+        self.assertEqual(["x","y","z","distance","radius","radius"],r["call_categories"])
         self.assertEqual(39,r["false_return_index"])
     def test_unknown_call_never_certifies_formula(self):
         d=fixture()
@@ -54,11 +55,11 @@ class FinalDistanceTest(unittest.TestCase):
         self.assertEqual("NOT_PROVED",arithmetic_window(d)["status"])
     def test_unmodeled_math_is_never_promoted(self):
         d=fixture()
-        d[0][2][31]="31: invokestatic #8 // Method com/example/Math.multiply:(DD)D"
+        d[0][2][33]="33: invokestatic #8 // Method com/example/Math.multiply:(FF)F"
         self.assertEqual("NOT_PROVED",arithmetic_window(d)["status"])
     def test_wrong_receiver_kept_visible_for_release_gate(self):
         d=fixture()
-        d[0][2][27]="27: aload_1"
+        d[0][2][29]="29: aload_1"
         self.assertEqual("NOT_PROVED",arithmetic_window(d)["status"])
     def test_ambiguous_native_member_rejected(self):
         d=fixture()
