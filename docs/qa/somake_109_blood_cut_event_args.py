@@ -112,7 +112,7 @@ def certify_native_damage_expression(rows):
         "effect_amplifier_read_index":mod_i-2,
         "result_store_opcode":"fstore_3",
         "return_expression":"event.getNewDamage * getDamageModifier(effect.getAmplifier,local_1)",
-        "limits":"The load from local_1 is proven but its producer, branch predicates, delivery of secondary damage, and recursion safeguards are not yet certified."
+        "limits":"This local_1 load has its source established by the independent source-actor gate; this expression alone does not prove final damage, all branch predicates or complete recursion safety."
     }
 
 
@@ -254,7 +254,7 @@ def inspect(jar:Path) -> dict:
         raise GateError("Blood Cut native event CFG changed")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=SHA1:
         raise GateError("JAR mutated during read")
-    return {"status":"PASS_SHA_EXACT_BLOOD_CUT_TYPED_EVENT_CALLSITE_ORDER_ONLY",
+    return {"status":"PASS_SHA_EXACT_BLOOD_CUT_SOURCE_EFFECT_FLOAT_AND_SPELL_SOURCE_EXCLUSION",
             "provider":"somakespells","version":"1.0.9","sha1":SHA1,
             "event":"BloodCutEffect.onLivingDamage(LivingDamageEvent.Post)",
             "callsite_evidence":result,
@@ -262,7 +262,7 @@ def inspect(jar:Path) -> dict:
             "source_actor_provenance":source_actor,
             "effect_holder_provenance":effect_holder,
             "early_type_exclusion":early_guard,
-            "limits":"No producer-consumer typed stack proof yet; no gameplay, host settlement, recursion or perk hook verified."}
+            "limits":"Source LivingEntity, Blood Cut effect owner, amplifier, typed float product and SpellDamageSource exclusion proven statically; no live event dispatch, final damage, full recursion closure or per-player perk hook verified."}
 
 
 def main():
