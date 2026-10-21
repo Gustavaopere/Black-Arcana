@@ -31,7 +31,7 @@ class MonstersSpellbooks00163AuditTest(unittest.TestCase):
        0: aload_0
        1: invokespecial #1 // Method x."<init>":()V
        3: aload_0
-       4: ldc #2 // String monstersspellbooks
+       4: ldc #2 // String monsterspellbooks
        6: ldc #3 // String anticoagulation
        8: invokestatic #4 // Method net/minecraft/resources/ResourceLocation.fromNamespaceAndPath:(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;
       11: putfield #5 // Field spellId:Lnet/minecraft/resources/ResourceLocation;
@@ -44,27 +44,27 @@ class MonstersSpellbooks00163AuditTest(unittest.TestCase):
 }"""
         self.assertEqual("anticoagulation",audit.spell_id(disasm))
         with self.assertRaises(audit.AuditError):
-            audit.spell_id(disasm.replace("String monstersspellbooks","String othermod"))
+            audit.spell_id(disasm.replace("String monsterspellbooks","String othermod"))
 
     def test_compiled_resource_getter_not_just_any_constant(self):
         disasm="""public class Example {
   public ResourceLocation getSpellResource();
     Code:
-       0: ldc #2 // String monstersspellbooks
+       0: ldc #2 // String monsterspellbooks
        2: areturn
 }"""
         with self.assertRaises(audit.AuditError):
             audit.spell_id(disasm)
 
     def test_exact_neoforge_mod_id_uses_real_toml_not_comment_scan(self):
-        valid = b'modLoader = "javafml"\n[[mods]]\nmodId = "monstersspellbooks"\n'
+        valid = b'modLoader = "javafml"\n[[mods]]\nmodId = "monsterspellbooks"\n'
         self.assertIsNone(audit.require_neoforge_mod_id(valid))
         for bad in (
             b'modLoader = "javafml"\n[[mods]]\nmodId = "othermod"\n',
-            b'modLoader = "javafml"\n# modId = "monstersspellbooks"\n[[mods]]\nmodId = "othermod"\n',
+            b'modLoader = "javafml"\n# modId = "monsterspellbooks"\n[[mods]]\nmodId = "othermod"\n',
             b'modLoader = "javafml"\n[[mods]]\n',
-            b'modLoader = "other"\n[[mods]]\nmodId = "monstersspellbooks"\n',
-            b'modLoader = "javafml"\n[[mods]]\nmodId = "monstersspellbooks"\n[[mods]]\nmodId = "othermod"\n',
+            b'modLoader = "other"\n[[mods]]\nmodId = "monsterspellbooks"\n',
+            b'modLoader = "javafml"\n[[mods]]\nmodId = "monsterspellbooks"\n[[mods]]\nmodId = "othermod"\n',
             b'not a toml document = true\n',
             b''
         ):
