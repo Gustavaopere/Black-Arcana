@@ -27,6 +27,10 @@ The previous exact physical SHA-1 `b0ad94c1504709662bee2d08700375ccecbb5ec7`, Fi
 
 See [`CURRENT-1.0.9-REVALIDATION-CHECKLIST.md`](CURRENT-1.0.9-REVALIDATION-CHECKLIST.md) and [`PHYSICAL-1.0.9-FINGERPRINT-CHECKPOINT.md`](PHYSICAL-1.0.9-FINGERPRINT-CHECKPOINT.md).
 
+## Blood Cut 1.0.9 — evento de dano registrado no classfile (21/10/2026)
+
+[Auditoria Java21 #39550061369](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39550061369) identifica **EventBusSubscriber** na classe BloodCutEffect e **SubscribeEvent** em onLivingDamage(LivingDamageEvent.Post). O método tem 103 instruções, cinco desvios e chama simbolicamente DamageSources.applyDamage. A fórmula getDamageModifier e condições contra recursão não foram certificadas; o runtime real ainda requer QA. A evidência integral está em [EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md](EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md) e na [ficha individual](registry-1.0.9/blood-cut.md). Nenhum novo spell, perk mutadora ou adapter foi integrado.
+
 ## Historical Phase 2BF exact-artifact reconciliation — 1.0.8-fix
 
 Phase 2AI correctly stopped at the publisher evidence ceiling. Phase 2BF supersedes only that technical ceiling by materializing the exact CurseForge/Curse Maven File ID `8417850` and requiring SHA-1 equality with the physical modlist: `b0ad94c1504709662bee2d08700375ccecbb5ec7`.
@@ -143,3 +147,29 @@ RPG Skill Tree may provide progression/mastery/perks only through a real contrac
 - Somake Aqua focus/acquisition/reachability — `UNVERIFIED / CONDITIONAL`; Traveloptics is currently installed, while its publisher baseline has no active Aqua spell IDs and its exact-current `7b74816e...` registry delta remains unverified. Aqua coexistence/authority therefore stays `CURRENT CONDITIONAL / FAIL-CLOSED`.
 
 The ARR artifact was inspected only to retain factual hash/metadata, resource/registry identities, class/member signatures and narrow control-flow/config predicates needed for catalog interoperability. No implementation body, source reconstruction, asset, model, sound or upstream prose is copied/adapted or treated as reusable material.
+
+
+## Blood Cut 1.0.9 — CFG normal e fórmula derivada do bytecode (21/10/2026)
+
+[Auditoria Java21 #39553030589](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39553030589), SHA1 físico/publicador validado e **41 testes sintéticos**: handler `onLivingDamage` possui 2 caminhos normais para a chamada a `applyDamage` e 3 caminhos de saída sem a chamada. O getter `getDamageModifier(int,LivingEntity)` retorna `((float)(a+1) * (e != null ? getEntityPowerMultiplier(e) : 1.0f)) * 0.1f` (duas multiplicações float; retorno estático, não dano real). [Prova de CFG e float](EXACT-BINARY-BLOOD-CUT-CFG-MODIFIER-1.0.9.md). Os gates de perks, evento vivo, config, Survival e deduplicação de Mastery seguem ⚠️/⛔.
+
+
+## Blood Cut — literal de lifesteal (21/10/2026, PR #860)
+
+A [auditoria Java 21 #39594615862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39594615862) no Somake 1.0.9 físico validou 51 testes sintéticos e provou `ldc 0.15f` diretamente antes do setter `SpellDamageSource.setLifestealPercent(float)` no método `getDamageSource` de sete instruções. Esse valor é um **argumento de setter**, não prova de 15% de cura efetiva. [Dossiê SHA-exato](EXACT-BINARY-BLOOD-CUT-LIFESTEAL-1.0.9.md). Nenhum adapter/perk mutadora autorizado.
+
+## Blood Cut 1.0.9 — prova causal de evento Post (21/10/2026)
+
+A [auditoria física Java21 #39599959888](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39599959888) provou a entidade `LivingEntity` de `DamageSource.getEntity` como receptor do efeito `BLOOD_CUT`, fonte do amplificador e parâmetro de `getDamageModifier`. O retorno multiplica `event.getNewDamage()`, e fontes `SpellDamageSource` são excluídas antes desse cálculo. **73 testes sintéticos**; o resultado final de dano, nested events, perks mutadoras e gameplay continuam ⚠️/⛔. [Dossiê causal](EXACT-BINARY-BLOOD-CUT-CAUSAL-EVENT-1.0.9.md).
+
+## Blood Cut 1.0.9 — receiver do applyDamage e sobrecargas (21/10/2026, PR #862)
+
+A [prova exata Java 21 #39604864087](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39604864087), com 86 testes sintéticos, identifica o alvo `event.getEntity()`, float `local_3` e origem `BloodCutSpell.getDamageSource(local_1)` na chamada `DamageSources.applyDamage`. O método retorna booleano descartado. **A sobrecarga de 1 argumento da fonte usada nesse handler não é a mesma sobrecarga de 2 argumentos que contém `setLifestealPercent(0.15f)`.** Healing host e contrato de perk continuam condicionados/bloqueados. [Dossiê completo](EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md).
+
+## Blood Cut — fonte secundária e lifesteal `0.15f` (21/10/2026)
+
+[Auditoria Java 21 #39613550972](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39613550972): **97 testes sintéticos**, Somake 1.0.9 e Iron's API 3.16.3 hash-pinned. O método de um `Entity` herdado do Iron's chama virtualmente `getDamageSource(e,e)`, com o mesmo `Entity` nas duas posições. A override do Somake chama `super` e executa `setLifestealPercent(0.15f)`. **O vínculo compilado entre as sobrecargas está agora certificado**; cura efetiva e perks mutadoras continuam ⚠️/⛔. [Dossiê](EXACT-BINARY-BLOOD-CUT-IRONS-VIRTUAL-LIFESTEAL-1.0.9.md).
+
+## Blood Cut — processamento de cura no Iron's (21/10/2026; PR #864)
+
+[Java21 #39620547789](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39620547789) aprova **107 testes sintéticos** e demonstra no runtime oficial Iron's 3.16.3 SHA-256 `13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73` a chamada condicionada `LivingEntity.heal(getLifestealPercent() × event.getNewDamage())` na entidade de origem da fonte de dano, não na vítima. A conexão com `BloodCutSpell.setLifestealPercent(0.15f)` está atestada estaticamente. **Gameplay real, caps e política de perks continuam pendentes/bloqueados.** [Dossiê](EXACT-BINARY-BLOOD-CUT-IRONS-3163-POSTHIT-HEAL-1.0.9.md).

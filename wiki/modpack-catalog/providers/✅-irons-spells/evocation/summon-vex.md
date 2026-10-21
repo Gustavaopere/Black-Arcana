@@ -34,3 +34,15 @@ Já cobre summons voadores de proteção/combate. Black Arcana não deve recriar
 - Spellbook oficial atual: `https://iron.wiki/spellbooks/`
 - Página 1.19 usada somente para detectar divergência histórica: `https://iron.wiki/1_19/spells/`
 - Consulta: 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe de referência:** [`SummonVexSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/evocation/SummonVexSpell.java) (`e4056af90302d37eb1739f5ff05020b020e6e252`, 3.16.3).
+- **ID fonte:** `irons_spellbooks:summon_vex` (não inferir quando não extraído).
+- **Config:** raridade `RARE`, maxLevel `5`, cooldown s `150`, cast `LONG`.
+- **Campos Java:** `baseManaCost`=`50`; `manaCostPerLevel`=`10`; `baseSpellPower`=`1`; `spellPowerPerLevel`=`0`; `castTime`=`20`.
+- **Métodos:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `getRecastCount()`, `onRecastFinished()`, `getEmptyCastData()`, `getSummonCount()`, `onCast()`.
+- **Fórmulas de retorno simples:** `getRecastCount = 2`; `getSummonCount = spellLevel + 2`.
+- **Pistas técnicas:** `SpellSummonEvent`, `SummonManager`, `addFreshEntity`.
+
+**Para Codex:** seguir implementação e entidades auxiliares antes de gerar perks sobre alvo, status, duração, raio ou projéteis. Custo e spell power são provider-native com configs/atributos, não literais injetáveis em eventos. Sem hook comprovado manter ⚠️ condicionado/fail-closed e limites de custo/cap/deduplicação. Iron's: cast/custos. RPG Skill Tree: perks/Mastery/gates. Black Arcana: runtime próprio. Fonte estática, QA físico pendente. [Contrato geral](../TECHNICAL-PERK-MAP.md).

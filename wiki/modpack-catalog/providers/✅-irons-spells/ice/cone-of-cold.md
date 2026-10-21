@@ -78,3 +78,15 @@ Já cobre cone contínuo Ice com dano + freeze. Não duplicar channel, freeze ou
 - Catálogo oficial atual: `https://iron.wiki/spells/` — consulta 2026-09-06.
 - Source 3.16.3: `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`, `ConeOfColdSpell.java`.
 - Pinagem: `gradle.properties` no mesmo commit.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`ConeOfColdSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ice/ConeOfColdSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:cone_of_cold` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `COMMON`; maxLevel `10`; cooldown `12` segundos; cast `CONTINUOUS`.
+- **Campos Java:** `baseManaCost`=`5`; `manaCostPerLevel`=`1`; `baseSpellPower`=`0`; `spellPowerPerLevel`=`1`; `castTime`=`100`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `onCast()`, `getDamageSource()`, `getDamage()`.
+- **Fórmulas numéricas com retorno direto:** `getDamage = 1 + getSpellPower(spellLevel, caster) * .75f`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `SpellDamageSource`, `addFreshEntity`.
+
+**Contrato de perks:** a escola `ice` não garante, sozinha, um damage type de gelo/frost nem status de freeze. Identificar classe que aplica efeitos, limites de duração/slow e colisão antes de propor modificadores. Atributo nativo de Iron's não é hook universal de raio/ângulo/quantidade. Exigir adapter comprovado, proteção contra duplicação e caps; caso contrário ⚠️ condicionado/fail-closed. Iron's mantém cast/efeitos/mana; RPG Skill Tree possui perks/Mastery/gates; Black Arcana mantém runtime próprio. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).

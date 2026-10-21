@@ -58,3 +58,15 @@ Já cobre voo/asas Holy temporários. Uma futura mobilidade Celestial/Divine pre
 - Changelog oficial: `https://iron.wiki/changelog/`
 - Source audit canônico: `wiki/modpack-catalog/providers/irons-spells/audits/source-3.16.3/spells/holy/angel-wing.md`
 - Consulta: 2026-09-06.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`AngelWingsSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/holy/AngelWingsSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:angel_wing` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `LEGENDARY`; maxLevel `5`; cooldown `120` segundos; cast `INSTANT`.
+- **Campos Java:** `baseManaCost`=`80`; `manaCostPerLevel`=`20`; `baseSpellPower`=`10`; `spellPowerPerLevel`=`10`; `castTime`=`0`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getEffectDuration()`, `getDefaultConfig()`, `getSpellResource()`, `onCast()`.
+- **Fórmulas numéricas com retorno direto:** `getEffectDuration = (int) getSpellPower(spellLevel, entity) * 20`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `MobEffectInstance`, `addEffect`, `MobEffectRegistry`.
+
+**Contrato de perks:** escola `holy` não prova dano, cura ou imunidade universais. Inspecionar fonte de dano/cura e estado persistente do efeito nativo antes de modificar duração, alcance e alvo. Atributo provider-native e patch em entidade/efeito são integrações diferentes; requerem evento/hook real, caps e prevenção de duplicidade. Sem hook: ⚠️ condicionado/fail-closed. Iron's é autoridade do cast e mana; RPG Skill Tree, perks/Mastery/gates; Black Arcana, seu runtime mágico. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).

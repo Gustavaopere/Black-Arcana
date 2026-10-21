@@ -1,0 +1,149 @@
+name: Somake 1.0.9 Blood Cut static references (Java 21)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/somake-109-blood-cut-refs.yml'
+      - 'docs/qa/somake_109_blood_cut_refs.py'
+      - 'docs/qa/somake_109_blood_cut_refs_test.py'
+      - 'docs/qa/somake_109_blood_cut_event_gate.py'
+      - 'docs/qa/somake_109_blood_cut_event_gate_test.py'
+      - 'docs/qa/somake_109_blood_cut_cfg.py'
+      - 'docs/qa/somake_109_blood_cut_cfg_test.py'
+      - 'docs/qa/somake_109_blood_cut_modifier_flow.py'
+      - 'docs/qa/somake_109_blood_cut_modifier_flow_test.py'
+      - 'docs/qa/somake_109_blood_cut_lifesteal.py'
+      - 'docs/qa/somake_109_blood_cut_lifesteal_test.py'
+      - 'docs/qa/somake_109_blood_cut_event_args.py'
+      - 'docs/qa/somake_109_blood_cut_event_args_test.py'
+      - 'docs/qa/somake_109_blood_cut_apply.py'
+      - 'docs/qa/somake_109_blood_cut_apply_test.py'
+      - 'docs/qa/somake_109_blood_cut_irons_dispatch.py'
+      - 'docs/qa/somake_109_blood_cut_irons_dispatch_test.py'
+      - 'docs/qa/somake_109_irons_lifesteal_host.py'
+      - 'docs/qa/somake_109_irons_lifesteal_host_test.py'
+      - 'docs/qa/somake_109_cast_refs.py'
+      - 'docs/qa/somake_109_perk_method_probe.py'
+      - 'docs/qa/somake_109_radius_irons_contract.py'
+      - 'docs/qa/somake_109_funeral_bud_probe.py'
+      - 'docs/qa/somake_109_numeric_fingerprint.py'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/registry-1.0.9/blood-cut.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/registry-1.0.9/blood-cut-technical-gate.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-CFG-MODIFIER-1.0.9.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-LIFESTEAL-1.0.9.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-CAUSAL-EVENT-1.0.9.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-IRONS-VIRTUAL-LIFESTEAL-1.0.9.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-IRONS-3163-POSTHIT-HEAL-1.0.9.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/README.md'
+      - 'wiki/modpack-catalog/meta/PROGRESSO-CATALOGO-2026-10-18.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static_blood_cut:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic clean-room regression gates
+        run: |
+          python3 docs/qa/somake_109_cast_refs_test.py -v
+          python3 docs/qa/somake_109_blood_cut_refs_test.py -v
+          python3 docs/qa/somake_109_blood_cut_event_gate_test.py -v
+          python3 docs/qa/somake_109_blood_cut_cfg_test.py -v
+          python3 docs/qa/somake_109_blood_cut_modifier_flow_test.py -v
+          python3 docs/qa/somake_109_blood_cut_lifesteal_test.py -v
+          python3 docs/qa/somake_109_blood_cut_event_args_test.py -v
+          python3 docs/qa/somake_109_blood_cut_apply_test.py -v
+          python3 docs/qa/somake_109_blood_cut_irons_dispatch_test.py -v
+          python3 docs/qa/somake_109_irons_lifesteal_host_test.py -v
+      - name: Download and verify exact publisher/pack artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/somake-blood-cut
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/somake-spells-irons-spells-addon-1461634/8867079/somake-spells-irons-spells-addon-1461634-8867079.jar' \
+            --output build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar
+          echo '171841ac9f802be9309ecc166c1d972ac6d404c0  build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar' | sha1sum --check
+      - name: Discover exact compiled Blood Cut method signatures and callsites
+        run: |
+          python3 docs/qa/somake_109_blood_cut_refs.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/evidence.json
+      - name: Inspect Blood Cut Post-damage annotation and branch metadata
+        run: |
+          python3 docs/qa/somake_109_blood_cut_event_gate.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-event-evidence.json
+      - name: Prove bounded normal JVM CFG and modifier operand fingerprints
+        run: |
+          python3 docs/qa/somake_109_blood_cut_cfg.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-cfg-evidence.json
+      - name: Prove nullable entity symbolic float return dataflow
+        run: |
+          python3 docs/qa/somake_109_blood_cut_modifier_flow.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-float-dataflow.json
+      - name: Prove Blood Cut lifesteal source and setter callsite
+        run: |
+          python3 docs/qa/somake_109_blood_cut_lifesteal.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-lifesteal.json
+      - name: Verify typed Post-damage callsite ordering and bounded operand context
+        run: |
+          python3 docs/qa/somake_109_blood_cut_event_args.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-event-argument-callsites.json
+      - name: Survey bounded native applyDamage callsite
+        run: |
+          python3 docs/qa/somake_109_blood_cut_apply.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-apply-survey.json
+      - name: Download and hash-check Iron's 3.16.3 official addon API
+        run: |
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://code.redspace.io/releases/io/redspace/irons_spellbooks/1.21.1-3.16.3/irons_spellbooks-1.21.1-3.16.3-api.jar' \
+            --output build/somake-blood-cut/irons_spellbooks-1.21.1-3.16.3-api.jar
+          echo '69e81104a9fd31a402d9c89ab09c2a6b2fd6d2ab98db5a37bb159517363ee9ad  build/somake-blood-cut/irons_spellbooks-1.21.1-3.16.3-api.jar' | sha256sum --check
+      - name: Verify SHA-exact Blood Cut vs Iron's API damage source overloads
+        run: |
+          python3 docs/qa/somake_109_blood_cut_irons_dispatch.py \
+            --somake build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --irons-api build/somake-blood-cut/irons_spellbooks-1.21.1-3.16.3-api.jar \
+            --output build/somake-blood-cut/blood-cut-irons-dispatch.json
+      - name: Download Iron's official 1.21.1-3.16.3 runtime JAR (CurseForge File 8680204)
+        run: |
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 240 \
+            'https://cursemaven.com/curse/maven/irons-spells-n-spellbooks-855414/8680204/irons-spells-n-spellbooks-855414-8680204.jar' \
+            --output build/somake-blood-cut/irons_spellbooks-1.21.1-3.16.3.jar
+          echo '13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73  build/somake-blood-cut/irons_spellbooks-1.21.1-3.16.3.jar' | sha256sum --check
+      - name: Probe Iron's 3.16.3 runtime lifesteal symbols (not yet a gameplay test)
+        run: |
+          python3 docs/qa/somake_109_irons_lifesteal_host.py \
+            --irons-runtime build/somake-blood-cut/irons_spellbooks-1.21.1-3.16.3.jar \
+            --output build/somake-blood-cut/irons-3163-lifesteal-host-symbols.json
+      - name: Export only bounded derived evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: somake-109-blood-cut-static
+          path: |
+            build/somake-blood-cut/evidence.json
+            build/somake-blood-cut/blood-cut-event-evidence.json
+            build/somake-blood-cut/blood-cut-cfg-evidence.json
+            build/somake-blood-cut/blood-cut-float-dataflow.json
+            build/somake-blood-cut/blood-cut-lifesteal.json
+            build/somake-blood-cut/blood-cut-event-argument-callsites.json
+            build/somake-blood-cut/blood-cut-apply-survey.json
+            build/somake-blood-cut/blood-cut-irons-dispatch.json
+            build/somake-blood-cut/irons-3163-lifesteal-host-symbols.json
+          if-no-files-found: ignore
+          retention-days: 14

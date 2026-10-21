@@ -40,3 +40,57 @@ Do not infer display name, school, level, rarity, mana cost, cooldown, damage, d
 Iron's owns host casting/resource/cooldown settlement. Somake owns this spell identity and its provider progression. Black Arcana catalogs and may observe supported provider state; it does not recreate either runtime.
 
 Sources: `../EXACT-1.0.9-REGISTRY-AUDIT.md`, `../EXACT-1.0.9-REGISTRATION-GATE-MAP.md`, `../SPELL-CATALOG-1.0.9.md`.
+
+**Gate deste spell — `CONSTANT_FALSE`:** a auditoria do método `allowCrafting()` do provider encontrou retorno constante `false`. **Não tratar como indisponível para casting**; rastrear outras rotas de aquisição separadamente. Não atribuir a uma perk externa um mecanismo de desbloqueio de crafting não provado.
+
+## Dossiê técnico para perks — gate de aquisição (18/10/2026)
+
+**Escopo da prova:** presença do ID na registry e classificação do override `allowCrafting()` no JAR físico 1.0.9. Não é prova de execução de cast, atributos, alvo ou integrabilidade em produção. A linha física está fixada pelo SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` (CurseForge File `8867079`). A árvore de código fonte público exato para o release não foi localizada.
+
+| Dimensão para perk | Fato verificável / limite |
+|---|---|
+| Registrar | `com.somake.somakespells.registries.ModSpells`, ID deste documento no `DeferredRegister<AbstractSpell>` |
+| Classe/método de seleção ou efeito | **Classe de aquisição verificada:** `com.somake.somakespells.spells.blood.FragmentedRequiemSpell#allowCrafting():boolean` (`()Z`). Métodos de cast, dano, targeting e implementação downstream **NÃO VERIFICADOS** |
+| Admissão de casting | `isEnabled()` **não é sobrescrito** pela classe no provider; Iron's host, config e datapack efetivos **NÃO VERIFICADOS** |
+| Targeting e LOS | Tipo de alvo, distância de aquisição, alcance do efeito e linha de visão **NÃO VERIFICADOS** |
+| Geometria | Raio/ângulo/altura da área, hitbox, velocidade/quantidade de projéteis e multiplicidade de alvos **NÃO VERIFICADOS** |
+| Dano/cura | Damage source, tipo/elemento, fórmulas, status, buffs/debuffs, knockback e eventuais procs **NÃO VERIFICADOS** |
+| Tempo e recursos | Tempo de cast, cooldown, custos, duração/ticks, scaling e caps **NÃO VERIFICADOS** |
+| Causalidade | Cast → efeito secundário → acertos/procs e identidade para deduplicação **NÃO VERIFICADOS**; não atribuir Mastery por evento sem correlação |
+| Mutabilidade por perk | **⛔ FAIL_CLOSED** para alterar disponibilidade, geometria, dano, custos ou cast: nenhum hook/adapter mutador foi demonstrado nesta ficha |
+| Autoridades | Somake: identidade/gate específico; Iron's: host de casting/custos/cooldowns; RPG Skill Tree: progressão por boundary comprovado; Black Arcana: somente runtime mágico próprio e observação permitida |
+
+**Separar fatos:** `allowCrafting()` decide uma superfície de *craftability* e não comprova proibição de cast nem ausência de loot, comando, equipamento, transferência ou qualquer via especial de obtenção. Um possível gate de perk não pode simplesmente reabrir essa rota sem contrato verificável do host/provider. O code default `enableSpellLockSystem=false` não representa a configuração COMMON implantada.
+
+**Testes pendentes:** comparar os métodos de admissão e as classes de efeito do JAR exato com a config/Datapack do perfil real; medir parâmetros com unidades; inspecionar API/eventos do host 3.16.3; validar fallback, aquisição em Survival, mudança de perk/equipamento, servidor/cliente, deduplicação e ausência de dupla cobrança. Nenhum destes testes é declarado PASS nesta atualização.
+
+**Provas imutáveis:** [auditoria 1.0.9](https://github.com/Gustavaopere/Black-Arcana/blob/511ec03f0da62ebfc1722825def50354594976c3/wiki/modpack-catalog/providers/%E2%9C%85-somake-spells/EXACT-1.0.9-REGISTRY-AUDIT.md) e [gate map](https://github.com/Gustavaopere/Black-Arcana/blob/511ec03f0da62ebfc1722825def50354594976c3/wiki/modpack-catalog/providers/%E2%9C%85-somake-spells/EXACT-1.0.9-REGISTRATION-GATE-MAP.md).
+
+## Prova compilada exata de allowCrafting — 18/10/2026
+
+- Classe do publisher SHA-exato: `com.somake.somakespells.spells.blood.FragmentedRequiemSpell`.
+- Método: `public boolean allowCrafting()` / JVM `()Z`.
+- Classificação: `CONSTANT_FALSE`.
+- Compilado: instruções de `allowCrafting()` com **retorno `false` constante**, zero branches e zero referências a campos/métodos no próprio override; isso não exclui obtenção por outras rotas.
+- Evidência independente: [GitHub Actions #39186593493](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39186593493), Java21, 7/7 testes sintéticos e 7/7 classes auditadas; [matriz consolidada](../EXACT-BINARY-CRAFTING-METHOD-SEAMS-1.0.9.md).
+- **Mutabilidade por perk:** ⛔ nenhum hook/callback por jogador comprovado; `allowCrafting` não informa dano, geometria, mana, castability ou loot ativo.
+
+## Cast e efeito — referências compiladas exatas (18/10/2026)
+
+**Fonte física:** Somake 1.0.9 SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`; [Java21 #39192999780](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39192999780), `PASS_STATIC_METHOD_REFERENCES_ONLY`, [matriz de sete classes](../EXACT-BINARY-CAST-CALLSITES-1.0.9.md).
+
+- getCastType references Iron's CastType.LONG.
+- onCast links getTargetCenter, getSwordDamage and spawnSwordCircle. spawnSwordCircle references construction of FragmentedSwordRainEntity and ServerLevel.addFreshEntity; getTargetCenter also references FragmentedSwordRainEntity.findSpawnPoint.
+- getSwordDamage references getSpellPower, and getSwordCount references Mth.clamp. The exact damage formula, sword count thresholds, impact lifecycle, LOS and per-entity owner/deduplication have not been established by this call-reference audit.
+
+**Limite de perks:** apenas assinaturas e referências simbólicas do JAR exato foram certificadas para FragmentedSwordRainEntity. Config ativa, fórmula numérica, tipo/alcance de alvo, colisão, duração efetiva, reentrância, dano/cura aplicado e hook mutador por jogador continuam **⚠️/⛔ NÃO HOMOLOGADOS**. Não transferir casting, custos ou efeitos do provider ao RPG Skill Tree; evitar callbacks de dano repetidos.
+
+## Entidade downstream — auditoria JVM exata (19/10/2026)
+
+**Fonte:** JAR Somake 1.0.9 com SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, [auditoria Java 21 #39195233005](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39195233005). Classe: `com.somake.somakespells.entity.FragmentedSwordRainEntity`. Evidência `PASS_STATIC_ENTITY_REFERENCE_DISCOVERY` — sem execução do efeito em jogo.
+
+- `FragmentedSwordRainEntity#updateServerStage(LivingEntity)` referencia `applyDamage(LivingEntity,Set)`, que consulta candidatos com `Level.getEntitiesOfClass(Class,AABB,Predicate)`.
+- `applyDamage` referencia `FragmentedRequiemSpell.getDamageSource(Entity,Entity)` e `LivingEntity.hurt(DamageSource,float)`. **Não foi encontrada nesta rotina a referência ao helper `DamageSources.applyDamage`**, portanto um hook exclusivo desse helper não deve ser presumido.
+- Há `tick`, `findSpawnPoint`, `getGroundY/setGroundY` e `spawnImpactBlood`. Fórmula de dano, janela de impacto, seleção final por vítima, número de espadas e descarte efetivo seguem sem dataflow/QA de runtime.
+
+**Boundary de perks:** ⚠️ métodos/refs comprovados, mas fórmulas, caps, ordem de settlement, config efetiva, alvos e multiplayer pendentes; ⛔ `FAIL_CLOSED` para alterações de dano/área/duração/alvo sem API por jogador real. [Matriz das cinco entidades](../EXACT-BINARY-ENTITY-CALLSITES-1.0.9.md).

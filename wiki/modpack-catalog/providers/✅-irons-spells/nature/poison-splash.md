@@ -40,3 +40,15 @@ Friendly-fire, PvP, bosses, summons, radius exato e lifecycle da cloud: `NÃO VE
 
 - `https://iron.wiki/spells/` — consulta 2026-09-06.
 - `PoisonSplashSpell.java` — source 3.16.3.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`PoisonSplashSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/nature/PoisonSplashSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:poison_splash`; o ID pode divergir do título de exibição.
+- **Config:** minRarity `UNCOMMON`; maxLevel `10`; cooldown `20` segundos; cast `LONG`.
+- **Campos Java:** `baseManaCost`=`40`; `manaCostPerLevel`=`10`; `baseSpellPower`=`8`; `spellPowerPerLevel`=`1`; `castTime`=`15`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `checkPreCastConditions()`, `onCast()`, `getDamage()`, `getDuration()`.
+- **Fórmulas numéricas com retorno direto:** `getDamage = this.getSpellPower(spellLevel, entity)`; `getDuration = 100 + spellLevel * 40`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `RaycastBuilder`, `TargetEntityCastData`, `addFreshEntity`.
+
+**Contrato de perks:** escola `nature` não implica toxicidade, dano ácido, status ou transformação automática. Verificar aplicação real por helper, entidade, efeito ou damage source. Separar atributo nativo de mudar geometria/status/quantidade; exigir contrato real, caps, segurança e dedup; sem hook ⚠️ condicionado/fail-closed. Iron's controla cast/efeitos/mana; RPG Skill Tree perks/Mastery/gates; Black Arcana seu runtime mágico. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).

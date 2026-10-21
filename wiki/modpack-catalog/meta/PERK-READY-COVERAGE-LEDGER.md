@@ -6,7 +6,7 @@
 - Arquivos `.md` em providers: **2899**.
 - **Isto não significa 2899 feitiços**: inclui índices, metadados, auditorias, arquivos de suporte, guias e objetos com classificação condicional.
 - A meta é que **cada ficha real de objeto mágico** contenha o dossiê definido em [PERK-READY-TECHNICAL-STANDARD.md](PERK-READY-TECHNICAL-STANDARD.md); arquivos agregados ficam como índices ou provas.
-- O Iron's base possui 110 fichas anotadas em [PR #795 (draft)](https://github.com/Gustavaopere/Black-Arcana/pull/795), **fora da main de referência**; não contam como conteúdo fundido.
+- O Iron's base possui **110/110 fichas com anotações técnicas source-pinned integradas** pelo [PR #795](https://github.com/Gustavaopere/Black-Arcana/pull/795) em `main@c8ff878c8aab96bd546e4beb4d62ea08e94c5f94`. Isso **não** homologa 110 auditorias causais completas, hooks de perks, adapters ou QA provider-real. Os **2899** arquivos e **165** diretórios acima continuam sendo medidas históricas da baseline de 13/10, não uma nova contagem de magia.
 - O Apprentice's Codex 0.9.7.1 possui 83 fichas de spells previamente source-catalogadas. Nesta branch, as **83/83 fichas receberam localizadores exatos** de classe/registro; seis tiveram rastreio causal específico (Higanbana, Blood Brand, Mist Form, Arcane Blast, Thermal Process, Echo Cast). É localização source-pinned, não prova de hooks ou runtime.
 - Este inventário **não** modifica o estado de catalogação semântica vigente (mínimos 1857 global / 1855 escopo) nem a campanha de prova binária 25/39.
 

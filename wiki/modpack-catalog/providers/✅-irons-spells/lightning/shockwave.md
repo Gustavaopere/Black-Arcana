@@ -55,3 +55,15 @@ Libera uma explosão elétrica radial em torno do caster, atingindo criaturas ex
 
 - `https://iron.wiki/spells/` — consulta 2026-09-06.
 - Source 3.16.3: `ShockwaveSpell.java` em `e4056af90302d37eb1739f5ff05020b020e6e252`.
+
+## Parâmetros de implementação para perks — source auditado
+
+- **Classe/commit:** [`ShockwaveSpell.java`](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/lightning/ShockwaveSpell.java) (source fixo 1.21.1-3.16.3).
+- **ID de spell lido na classe:** `irons_spellbooks:shockwave` (NÃO EXTRAÍDO implica revisar registry).
+- **Config:** minRarity `COMMON`; maxLevel `8`; cooldown `30` segundos; cast `LONG`.
+- **Campos Java:** `baseManaCost`=`70`; `manaCostPerLevel`=`5`; `baseSpellPower`=`8`; `spellPowerPerLevel`=`1`; `castTime`=`16`.
+- **Métodos no código:** `getUniqueInfo()`, `getCastType()`, `getDefaultConfig()`, `getSpellResource()`, `getCastStartSound()`, `getCastFinishSound()`, `onCast()`, `getRadius()`, `getDamage()`, `getCastStartAnimation()`, `getCastFinishAnimation()`.
+- **Fórmulas numéricas com retorno direto:** `getRadius = 8 + spellLevel`; `getDamage = 4 + (getSpellPower(spellLevel, caster) * .75f)`. Não são fórmulas completas de efeitos indiretos.
+- **Pistas de execução (verificar semântica):** `DamageSources`, `LightningBolt`.
+
+**Contrato de perks:** escola `lightning` não prova, sozinha, dano elétrico, arcos em cadeia ou stun. Conferir classe de descarga/targeting, i-frames, limites de saltos, duração e efeitos de bloco. Atributo nativo ≠ hook para raio, count ou chain. Exigir contrato de provider, cap e anti-proc-recursivo; caso contrário ⚠️ condicionado/fail-closed. Iron's controla cast/mana/efeitos, RPG Skill Tree perks/Mastery/gates, Black Arcana runtime mágico próprio. QA real pendente. [Mapa global](../TECHNICAL-PERK-MAP.md).
