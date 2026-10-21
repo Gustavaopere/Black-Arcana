@@ -899,14 +899,17 @@ class MagicPendencyStatusTest(unittest.TestCase):
         self.assertIn("aceitação física pendente", self.status)
         self.assertIn("Stage 06.05 não promovida", self.status)
 
-    def test_39_non_binary_exact_provider_rows_are_explicit(self):
+    def test_39_provider_roster_has_exact_monsters_and_historical_zero_checkpoint(self):
         section = self.binary.split("|---|---|---:|---|---|", 1)[1].split(
             "\n## Requisitos mínimos", 1
         )[0]
         rows = re.findall(r"^\| \[[^\]]+\]\([^)]+\) \|", section, re.MULTILINE)
         self.assertEqual(39, len(rows))
         self.assertIn("0/39", self.binary)
-        self.assertIn("não executado neste lote", self.binary)
+        self.assertIn("| [Monsters & Spellbooks]", section)
+        self.assertIn("| 0.0.16.3 | 98 | COUNTED_EXACT |", section)
+        self.assertIn("38/39", self.binary)
+        self.assertIn("1/39", self.binary)
 
     def test_conditional_routes_point_to_current_green_folders(self):
         self.assertNotIn("../providers/⚠️-", self.conditional)
