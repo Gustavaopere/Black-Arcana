@@ -81,6 +81,11 @@ def prove_wave_list_cap(declared):
     rows=opcode_rows(matches[0])
     def fail(reason):return {"status":"NOT_PROVED","reason":reason}
     if len(rows)!=196:return fail("not_exact_196_instruction_release")
+    def load_slot(i):
+        _,op,arg,_=rows[i]
+        if re.fullmatch(r"aload_[0-9]+",op):return int(op.split("_")[1])
+        if op=="aload" and arg.isdecimal():return int(arg)
+        return None
     def isload(i,slot):
         _,op,arg,_=rows[i]
         return op==f"aload_{slot}" or (op=="aload" and arg==str(slot))
@@ -95,7 +100,10 @@ def prove_wave_list_cap(declared):
     if not (isload(40,2) and call(41,"invokeinterface","java/util/List.size:()I")
             and isload(42,0) and rows[43][1]=="getfield" and rows[43][3] in FIELD
             and rows[44][1]=="if_icmple"):
-        return fail("size_and_cap_conditional_operands_not_exact")
+        return {"status":"NOT_PROVED","reason":"size_and_cap_conditional_operands_not_exact",
+                "observed_operand_slots":{str(i):load_slot(i) for i in (40,42,45,47,53)},
+                "size_method_category":kind(rows[41][3]),"first_field_matches":rows[43][3] in FIELD,
+                "branch_opcode":rows[44][1]}
     positions={pc:i for i,(pc,_,_,_) in enumerate(rows)}
     target=rows[44][2].split(" ",1)[0]
     if not target.isdecimal() or positions.get(int(target))!=51:
