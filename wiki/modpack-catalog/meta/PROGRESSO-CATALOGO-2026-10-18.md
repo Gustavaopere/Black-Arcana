@@ -1,5 +1,12 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
+## Somake — `maxTargets` ligado ao corte de lista e iteração normal de buds (20/10/2026; PR #849)
+
+**Barras inalteradas:** geral —% (piso global conservador **≥1.856** objetos semânticos, denominador total ainda aberto), Somake 1.0.9 **83/83 IDs = 100%**, aprofundamento downstream nesta campanha **5/83 = 6,02%**, `0` hooks mutadores aprovados (taxa indefinida sem universo de perks). Subcampanha fixa de registro exato em providers: **35/39 = 89,74%** no checkpoint documentado, sem equivalência à completude universal.
+
+[GitHub Actions #39527264831](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39527264831) certificou que `launchWave` aplica `List.subList(0,maxTargets)` ao slot local JVM 4 quando a lista de candidatos excede o campo `maxTargets`, e obtém o iterador desse mesmo slot após o branch. [#39527484911](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39527484911) verificou no JAR SHA-exato a estrutura do loop: uma tentativa de `addFreshEntity` e uma `activeTargetIds.add(UUID)` por iteração normal, descartando ambos os retornos booleanos. **Não** é prova de spawn bem-sucedido, cap de entidades persistidas, identidade do UUID, configuração do field, QA real ou API de perks. Nenhuma nova magia, adapter ou Stage; ⛔ `FAIL_CLOSED` para modificadores externos. Stage 06.05 🟡, Stage 09 físico PENDING. [Ficha individual](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+
 ## Somake 1.0.9 — prova de distância XZ e limiar R² no filtro (PR #848)
 
 **Barra geral:** `—%`, universo final ainda sem denominador, mínimo conservador **≥1.856** objetos semânticos, histórico 1.857 em reconciliação. **Barra Somake — identidades:** `83/83 = 100%`. **Downstream por ficha:** `5/83 = 6,02%` no recorte da campanha. **Hooks mutadores homologados:** `0`; percentual das demandas permanece `—%`, pois denominador não foi fechado. **Providers binários exatos da subcampanha fixa:** `35/39 = 89,74%`, sem promoção adicional.
