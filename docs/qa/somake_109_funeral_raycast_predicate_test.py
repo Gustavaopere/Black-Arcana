@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Synthetic clean-room lambda inspector regressions."""
 import unittest
-from somake_109_funeral_raycast_predicate import survey,certify_constant_false_predicate,bootstrap_scout
+from somake_109_perk_method_probe import GateError
+from somake_109_funeral_raycast_predicate import survey,certify_constant_false_predicate,bootstrap_scout,certify_exact_raycast_lambda_link_109
 from somake_109_funeral_spell_handoff import SPELL_ONCAST_DESC
 PRED="(Lnet/minecraft/world/entity/Entity;)Z"
 def fixture():
@@ -67,5 +68,34 @@ class FalsePredicateGateTests(unittest.TestCase):
         self.assertEqual("OBSERVED_BOOTSTRAP_METHOD_REFERENCES",p["status"])
         self.assertTrue(p["bootstrap_entries"][0]["funeral_lambda_handle"])
         self.assertIn("no proof of raycastForEntity",p["boundary"])
+
+def bootstrap_fixture():
+    return bootstrap_scout("\nBootstrapMethods:\n"
+        "  0: #15 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/Object;)V\n"
+        "    Method arguments:\n"
+        "      #33 REF_invokeStatic com/somake/somakespells/spells/blood/FuneralBloomSpell.lambda$onCast$0:(Lnet/minecraft/world/entity/Entity;)Z\n"
+        "\nInnerClasses:\n")
+class BootstrapLinkProofTests(unittest.TestCase):
+    def test_single_static_false_predicate_bootstrap_link(self):
+        f=certify_constant_false_predicate(constant_fixture())
+        proof=certify_exact_raycast_lambda_link_109(f,bootstrap_fixture())
+        self.assertEqual("PROVED_SHA_EXACT_ONCAST_RAYCAST_PREDICATE_ALWAYS_FALSE",proof["status"])
+        self.assertIs(proof["predicate_boolean_result"],False)
+        self.assertIn("not certified",proof["boundary"])
+    def test_wrong_bootstrap_lambda_handle_fails_closed(self):
+        b=bootstrap_fixture();b["bootstrap_entries"][0]["funeral_lambda_handle"]=False
+        with self.assertRaises(GateError):
+            certify_exact_raycast_lambda_link_109(certify_constant_false_predicate(constant_fixture()),b)
+    def test_second_bootstrap_entry_fails_closed(self):
+        b=bootstrap_fixture();b["bootstrap_entries"].append(dict(b["bootstrap_entries"][0],index=1))
+        with self.assertRaises(GateError):
+            certify_exact_raycast_lambda_link_109(certify_constant_false_predicate(constant_fixture()),b)
+    def test_predicate_truth_change_disallows_gate(self):
+        f=certify_constant_false_predicate(constant_fixture())
+        with self.assertRaises(GateError):
+            certify_exact_raycast_lambda_link_109(dict(f,lambda_boolean_result=True),bootstrap_fixture())
+    def test_unproven_is_not_certified(self):
+        with self.assertRaises(GateError):
+            certify_exact_raycast_lambda_link_109(None,bootstrap_fixture())
 if __name__=="__main__":
     unittest.main()
