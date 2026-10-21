@@ -20,6 +20,8 @@ on:
       - 'docs/qa/somake_109_blood_cut_apply_test.py'
       - 'docs/qa/somake_109_blood_cut_irons_dispatch.py'
       - 'docs/qa/somake_109_blood_cut_irons_dispatch_test.py'
+      - 'docs/qa/somake_109_irons_lifesteal_host.py'
+      - 'docs/qa/somake_109_irons_lifesteal_host_test.py'
       - 'docs/qa/somake_109_cast_refs.py'
       - 'docs/qa/somake_109_perk_method_probe.py'
       - 'docs/qa/somake_109_radius_irons_contract.py'
@@ -59,6 +61,7 @@ jobs:
           python3 docs/qa/somake_109_blood_cut_event_args_test.py -v
           python3 docs/qa/somake_109_blood_cut_apply_test.py -v
           python3 docs/qa/somake_109_blood_cut_irons_dispatch_test.py -v
+          python3 docs/qa/somake_109_irons_lifesteal_host_test.py -v
       - name: Download and verify exact publisher/pack artifact
         shell: bash
         run: |
