@@ -13,11 +13,13 @@ def fixture():
     put(19,"aload_2")
     put(20,"aload_0")
     put(21,"invokevirtual #1", "Method net/minecraft/world/entity/Entity.getX:()D")
-    put(22,"aload_0")
+    put(22,"aload_2")
     put(23,"invokevirtual #2", "Method net/minecraft/world/entity/Entity.getY:()D")
     put(24,"aload_0")
     put(25,"invokevirtual #3", "Method net/minecraft/world/entity/Entity.getZ:()D")
     put(26,"invokevirtual #4", DIST)
+    put(27,"dstore_3")
+    put(28,"dload_3")
     put(29,"aload_0")
     put(30,"invokevirtual #5", RADIUS)
     put(31,"aload_0")
@@ -36,7 +38,7 @@ class FinalDistanceTest(unittest.TestCase):
     def test_synthetic_sq_distance_to_radius_rejection(self):
         r=arithmetic_window(fixture())
         self.assertEqual("PROVED_FINAL_IFGT_NUMERIC_COMPARISON",r["status"],r)
-        self.assertEqual("cmp(distSq(slot2,x(slot0),y(slot0),z(slot0)),(R*R)) > 0",
+        self.assertEqual("cmp(distSq(slot2,x(slot0),y(slot2),z(slot0)),(R*R)) > 0",
                          r["derived_rejection_condition"])
         self.assertEqual(["x","y","z","distance","radius","radius"],r["call_categories"])
         self.assertEqual(39,r["false_return_index"])
@@ -45,6 +47,20 @@ class FinalDistanceTest(unittest.TestCase):
         rows=d[0][2]
         rows[26]=rows[26].replace("LivingEntity.distanceToSqr","other.Entity.distanceToSqr")
         self.assertEqual("NOT_PROVED",arithmetic_window(d)["status"])
+    def test_saved_distance_double_slot_must_be_defined(self):
+        d=fixture()
+        d[0][2][27]="27: nop"
+        self.assertEqual("NOT_PROVED",arithmetic_window(d)["status"])
+    def test_saved_double_local_must_not_be_reassigned(self):
+        d=fixture()
+        d[0][2][28]="28: dstore_3"
+        self.assertEqual("NOT_PROVED",arithmetic_window(d)["status"])
+    def test_wrong_height_reference_changes_expression(self):
+        d=fixture()
+        d[0][2][22]="22: aload_0"
+        actual=arithmetic_window(d)
+        self.assertEqual("PROVED_FINAL_IFGT_NUMERIC_COMPARISON",actual["status"])
+        self.assertIn("y(slot0)",actual["derived_rejection_condition"])
     def test_branch_to_true_is_rejected(self):
         d=fixture()
         d[0][2][36]="36: ifgt 37"
