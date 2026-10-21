@@ -1,4 +1,8 @@
-# Black Arcana — progresso de catalogação, cohort 2026-10-18
+## Somake Blood Cut — evidência de dano secundário e scaling incompleto (21/10/2026; PR #857)
+
+[Java21 #39546058075](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39546058075) passou **16 testes sintéticos** com o JAR Somake 1.0.9 SHA-1 exato `171841ac9f802be9309ecc166c1d972ac6d404c0`. Foram provadas as FQCN `BloodCutSpell` (7 métodos) e `BloodCutEffect` (2 métodos), `CastType.INSTANT`, `onCast` → `ModMobEffects.BLOOD_CUT` / `LivingEntity.addEffect`, `getDamageSource` → `setLifestealPercent`, e `onLivingDamage(LivingDamageEvent.Post)` → referências a `getNewDamage`, `getDamageModifier` e `DamageSources.applyDamage`. O handler possui **cinco branches** e o getter de modificador possui **dois**, não reconciliados causalmente; wiring do evento, dano real, caps, alvo, tempo e qualquer hook de perk permanecem ⚠️/⛔. [Ficha](../providers/✅-somake-spells/registry-1.0.9/blood-cut.md) e [dossiê](../providers/✅-somake-spells/registry-1.0.9/blood-cut-technical-gate.md).
+
+**Barras:** universo global **—%** (piso conservador **≥1.856**, denominador aberto); Somake **83/83 IDs registrados = 100%**; agora **8/83 = 9,64%** com inspeção de método estático no recorte (7 anteriores + Blood Cut), enquanto o recorte aprofundado downstream anterior mantém **5/83 = 6,02%** sem promoção por esta prova parcial. Campanha de providers físicos exatos **35/39 = 89,74%** em checkpoint próprio. **+0 magias, +0 adapters**, mutações externas ⛔. Stage 06.05 🟡 e Stage 09 QA físico pendente.
 
 ## Somake 1.0.9 — `onCast` raycast Predicate e linkage JVM exato (21/10/2026, PR #856)
 
