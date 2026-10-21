@@ -116,3 +116,18 @@ O [workflow Java 21 #39507349822](https://github.com/Gustavaopere/Black-Arcana/a
 **TDD / clean-room:** RED inicial do inventário de CFG [#39510087699](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39510087699); GREEN de mapeamento dos seis destinos [#39510203524](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39510203524) (**56 testes**); mismatch físico dos slots diagnosticado em [#39510662483](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39510662483); RED discriminante para slot real em [#39510757065](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39510757065); GREEN da prova dos três guardas [#39510823945](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39510823945) (**60 testes**). O gate estrito rejeitou mutações de fingerprint em [RED #39510995945](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39510995945) e passou em [GREEN #39511081176](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39511081176) (**61 testes**). Nenhum JAR, body, classfile, opcode dump ou assets do provider foi comitado.
 
 **Limites:** não foi certificado o fluxo concreto dos operandos dos três últimos branches (`ifnull`, `ifeq`, `ifgt`), nem as relações exatas de `isAlliedTo` e `distanceToSqr` e o cálculo de alcance, ou qual slot corresponde a owner/caster/candidato no gameplay. `maxTargets` continua apenas com duas leituras coocorrentes, não um cap comprovado; spawn/cardinalidade de buds, AABB e dano/cura de `bud.impact`, QA físico e hooks mutadores seguem condicionados. **⛔ FAIL_CLOSED**. Esta auditoria aprofunda a identidade preexistente `somakespells:funeral_bloom`, não incrementa a contagem de magias.
+
+## Guardas intermediárias nativas — referência nula e aliança (20/10/2026; PR #847)
+
+**Novo probe físico independente:** [workflow #39521070264](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39521070264), Somake 1.0.9 File 8867079 com SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, Java 21 `SUCCESS`. A análise reaplica `certify_exact_native_target_cfg_109` antes de interpretar a janela. O novo `certify_exact_native_middle_109` exige explicitamente os slots 1/2/1, branch de referência nula, chamada tipada `LivingEntity.isAlliedTo(Entity):boolean`, os destinos compartilhados e retorno falso, rejeitando mudanças de slot mesmo quando a estrutura dos opcodes permanece semelhante.
+
+**Fatos derivados do classfile**, sem exportar bytecode nem código de terceiros:
+
+1. A referência consultada por `ifnull` é a do **slot 1**; referência nula pula diretamente a rejeição local.
+2. A chamada `isAlliedTo` usa **receptor slot 2** e **argumento slot 1**, retornando booleano.
+3. O `ifeq` salta para a continuação quando o booleano é falso. Quando verdadeiro, o retorno do método é diretamente `false`.
+4. A continuação comum é a instrução estrutural **19** do método de **41** instruções. A passagem por esse ponto não comprova aceitação; o `ifgt` posterior permanece sem regra numérica certificada.
+
+A causalidade local corresponde a `slot1 != null && slot2.isAlliedTo(slot1) ⇒ rejeição`. **Ainda não está certificado** se slot 1 significa owner/caster ou se slot 2 significa candidato no contexto de jogo; `ifgt` / `distanceToSqr`, `maxTargets`, criação efetiva das buds, PvP/claims e hooks por jogador permanecem `NOT_PROVED`. Contrato de perk: **⛔ FAIL_CLOSED**. Somake 83/83 identidades; 5/83 fichas com downstream desta campanha, inalteradas.
+
+[Scanner middle guards](../../../docs/qa/somake_109_native_filter_middle.py) · [testes](../../../docs/qa/somake_109_native_filter_middle_test.py) · [ficha](registry-1.0.9/funeral-bloom.md).
