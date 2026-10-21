@@ -67,7 +67,42 @@ def survey_overload_family(base_methods,child_methods):
 
 
 def certify_virtual_lifesteal_bridge(base_methods,child_methods):
-    raise GateError("exact one-to-two Entity virtual lifesteal bridge unproven")
+    """Strict native JVM five-op parent dispatch and seven-op Somake override."""
+    parent=[r[2] for r in base_methods if r[0]=="getDamageSource" and r[1]==ONE]
+    child=[r[2] for r in child_methods if r[0]=="getDamageSource" and r[1]==TWO]
+    if len(parent)!=1 or len(child)!=1:
+        raise GateError("missing or ambiguous source overload pair")
+    base=parent[0];over=child[0]
+    if [op for _,op,_,_ in base]!=["aload_0","aload_1","aconst_null",
+                                    "invokevirtual","areturn"]:
+        raise GateError("parent one-arg virtual forwarding opcode drift")
+    if [op for _,op,_,_ in over]!=["aload_0","aload_1","aload_2",
+                                    "invokespecial","ldc","invokevirtual","areturn"]:
+        raise GateError("Blood Cut two-arg source/setter opcode drift")
+    if ("getDamageSource:"+TWO not in base[3][3] or
+            "getDamageSource:"+TWO not in over[3][3] or
+            "AbstractSpell" not in over[3][3]):
+        raise GateError("parent virtual and child super dispatch descriptor mismatch")
+    if not re.fullmatch(r"float 0\.15f",over[4][3]):
+        raise GateError("Blood Cut direct 0.15f setter operand drift")
+    if ("SpellDamageSource.setLifestealPercent:(F)" not in over[5][3]
+            or not over[5][3].startswith("Method ")):
+        raise GateError("native setter method descriptor changed")
+    return {
+        "assurance":"SHA_EXACT_VIRTUAL_DISPATCH_WITH_015F_SETTER",
+        "base_dispatch_opcode":"invokevirtual",
+        "base_receiver_operand":"aload_0",
+        "default_second_entity_operand":"aconst_null",
+        "base_virtual_call_descriptor":TWO,
+        "child_super_call_opcode":"invokespecial",
+        "child_super_call_descriptor":TWO,
+        "lifesteal_setter_argument":0.15,
+        "setter_argument_type":"float",
+        "setter_invocation_opcode":"invokevirtual",
+        "child_return_opcode":"areturn",
+        "interpretation":"On a BloodCutSpell receiver, the inherited 1-Entity method invokes the 2-Entity override with a null second Entity; that override passes 0.15f to the SpellDamageSource lifesteal setter.",
+        "limits":"Compiled virtual dispatch + nominal setter parameter only. Actual damage, heal percent of applied damage, caps, player owner and runtime execution are not certified."
+    }
 
 
 def javap(jar,cls):
@@ -91,18 +126,20 @@ def inspect(somake,irons):
     parent=[(name,desc,opcode_rows(body)) for name,desc,body in sections(raw_parent) if name=="getDamageSource"]
     child=[(name,desc,opcode_rows(body)) for name,desc,body in sections(raw_child) if name=="getDamageSource"]
     result=survey_overload_family(parent,child)
+    bridge=certify_virtual_lifesteal_bridge(parent,child)
     # Ensure the physical class's ancestry mentions the actual host class.
     header=" ".join(raw_child.splitlines()[:8])
     if "extends io.redspace.ironsspellbooks.api.spells.AbstractSpell" not in header:
         raise GateError("Somake spell superclass differs from host")
     if hashlib.sha1(somake.read_bytes()).hexdigest()!=SHA1 or hashlib.sha256(irons.read_bytes()).hexdigest()!=digest:
         raise GateError("binary modified during analysis")
-    return {"status":"PASS_SHA_EXACT_SOMAKE_IRONS_OVERLOAD_DECLARATIONS",
+    return {"status":"PASS_SHA_EXACT_SOMAKE_IRONS_VIRTUAL_LIFESTEAL_BRIDGE",
         "somake_sha1":SHA1,"irons_api_sha256":digest,
         "somake_version":"1.0.9","irons_version":"1.21.1-3.16.3",
         "base_class":IRON_CLASS,"child_class":CHILD,
         "class_ancestry":"direct AbstractSpell superclass proven",
         "overloads":result,
+        "native_virtual_dispatch_and_setter":bridge,
         "limit":"No physical gameplay, applied healing or per-caster mutator certified."}
 
 
@@ -117,5 +154,6 @@ def main():
     a.output.write_text(json.dumps(data,indent=2,sort_keys=True)+"\n")
     print("BLOOD_CUT_OVERLOAD",data["status"],data["somake_sha1"],data["irons_api_sha256"])
     print("BLOOD_CUT_OVERLOAD_METHODS",json.dumps(data["overloads"],sort_keys=True))
+    print("BLOOD_CUT_VIRTUAL_LIFESTEAL",json.dumps(data["native_virtual_dispatch_and_setter"],sort_keys=True))
 if __name__=="__main__":
     main()
