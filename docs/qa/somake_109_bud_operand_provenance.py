@@ -129,6 +129,16 @@ def operand_contract(declared):
         and op(14,"aconst_null") and local(15,"astore",4)
     )
     if not owner:return fail("owner_to_nullable_living_local4_not_exact")
+    # A bypassing jump into the conditional increment would invalidate its
+    # provenance even when the immediate instructions still look correct.
+    for i,(_,branch_op,operand,_) in enumerate(rows):
+        if not branch_op.startswith(("if","goto","jsr")):continue
+        dest=operand.split(" ",1)[0] if operand else ""
+        target=pcs.get(int(dest)) if dest.isdecimal() else None
+        if target is None:return fail("non_numeric_or_missing_branch_target")
+        if target==144:return fail("alternate_ingress_into_preexisting_wither_counter")
+    if not local(101,"aload",8):
+        return fail("preexisting_wither_receiver_not_same_victim")
     counter=(
         op(26,"iconst_0") and local(27,"istore",6)
         and field(102,"WITHER") and member(103,"hasEffect","(Lnet/minecraft/core/Holder;)Z")
