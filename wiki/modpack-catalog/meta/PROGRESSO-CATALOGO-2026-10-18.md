@@ -2,6 +2,13 @@
 
 
 
+
+## Somake Blood Cut — Iron's 3.16.3 virtual lifesteal (PR #863, 21/10/2026)
+
+[Java 21 #39613550972](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39613550972) SUCCESS, **97 testes sintéticos**, SHA-1 Somake `171841ac9f802be9309ecc166c1d972ac6d404c0` e SHA-256 Iron's API `69e81104a9fd31a402d9c89ab09c2a6b2fd6d2ab98db5a37bb159517363ee9ad` conferidos. O host `AbstractSpell.getDamageSource(e)` envia `(e,e)` à sobrecarga virtual de dois argumentos; a implementação `BloodCutSpell.getDamageSource(e,e)` executa `super` e `SpellDamageSource.setLifestealPercent(0.15f)`. O caminho compilado do hit secundário está, portanto, ligado ao setter nominal; **cure/heal efetivo, capped settlement, caster/perk hook e QA provider-loaded seguem pendentes**. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-IRONS-VIRTUAL-LIFESTEAL-1.0.9.md).
+
+**Barras de cobertura preservadas:** global **—%** (denominador ainda aberto, piso semântico ≥1.856); Somake **83/83 IDs = 100%** de registry, **8/83 = 9,64%** do recorte estático de métodos, **5/83 = 6,02%** no recorte downstream aprofundado anterior. +0 identidades, +0 adapters, +0 hooks mutadores. Stage 06.05 🟡; Stage 09 físico PENDING.
+
 ## Somake — Blood Cut 1.0.9: argumentos do dano secundário (PR #862, 21/10/2026)
 
 [GitHub Actions #39604864087](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39604864087) **SUCCESS**, SHA-1 exato `171841ac9f802be9309ecc166c1d972ac6d404c0`, **86 testes sintéticos**: `DamageSources.applyDamage` recebe `event.getEntity()` (target), `local_3` (float calculado) e `BloodCutSpell.getDamageSource(local_1)` (fonte), descartando o resultado booleano. O setter de lifesteal `0.15f` pertence à **sobrecarga de dois argumentos**, ao passo que o handler invoca a **sobrecarga de um argumento**: vínculo não demonstrado. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md).
