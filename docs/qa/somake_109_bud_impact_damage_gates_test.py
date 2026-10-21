@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Original synthetic regression tests for Somake 1.0.9 bud damage path."""
 import unittest
-from somake_109_bud_impact_damage_gates import impact_damage_branch_scout, certify_damage_success_effect_path, certify_exact_damage_effect_gate_109
+from somake_109_bud_impact_damage_gates import impact_damage_branch_scout, certify_damage_success_effect_path, certify_exact_damage_effect_gate_109, certify_heal_guard_and_event_path, certify_exact_heal_event_gate_109
 from somake_109_perk_method_probe import GateError
 D="(Lnet/minecraft/server/level/ServerLevel;)V"
 def fixture():
@@ -89,6 +89,55 @@ class DamageBooleanCausalTests(unittest.TestCase):
                     certify_exact_damage_effect_gate_109(dict(p,**delta))
         with self.assertRaises(GateError):
             certify_exact_damage_effect_gate_109(None)
+
+
+def healing_fixture():
+    rows=gated_fixture()[0][2]
+    rows[146]="146: aload 4"
+    rows[147]="147: ifnull 173"
+    rows[148]="148: iload 6"
+    rows[149]="149: ifle 173"
+    rows[168]="168: invokeinterface #10, 2 // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;"
+    rows[169]="169: pop"
+    rows[170]="170: aload 4"
+    rows[171]="171: fload 7"
+    return [("impact",D,rows)]
+
+class HealingGuardsTests(unittest.TestCase):
+    def test_nonnull_and_positive_counter_guard_post_then_heal(self):
+        p=certify_heal_guard_and_event_path(healing_fixture())
+        self.assertEqual("PROVED_BUD_HEAL_GUARDED_EVENT_POST_THEN_HEAL_CALL",p["status"],p)
+        self.assertEqual((4,6,7),(p["nullable_receiver_slot"],p["positive_integer_slot"],p["heal_amount_float_slot"]))
+        self.assertEqual([167,168,172],[p["event_constructor_index"],p["event_post_index"],p["heal_call_index"]])
+        self.assertTrue(p["event_post_return_discarded"])
+        certify_exact_heal_event_gate_109(p)
+    def test_heal_nonnull_operand_changed_fails(self):
+        p=healing_fixture();p[0][2][146]="146: aload 3"
+        self.assertEqual("NOT_PROVED",certify_heal_guard_and_event_path(p)["status"])
+    def test_positive_counter_changed_fails(self):
+        p=healing_fixture();p[0][2][148]="148: iload 7"
+        self.assertEqual("NOT_PROVED",certify_heal_guard_and_event_path(p)["status"])
+    def test_event_return_not_dropped_fails(self):
+        p=healing_fixture();p[0][2][169]="169: nop"
+        self.assertEqual("NOT_PROVED",certify_heal_guard_and_event_path(p)["status"])
+    def test_heal_amount_and_target_mismatch_fails(self):
+        p=healing_fixture();p[0][2][171]="171: fload 8"
+        self.assertEqual("NOT_PROVED",certify_heal_guard_and_event_path(p)["status"])
+    def test_external_jump_into_heal_block_fails(self):
+        p=healing_fixture();p[0][2][80]="80: goto 165"
+        self.assertEqual("NOT_PROVED",certify_heal_guard_and_event_path(p)["status"])
+    def test_guard_drift_or_inverted_conditional_fails(self):
+        p=healing_fixture();p[0][2][149]="149: ifgt 173"
+        self.assertEqual("NOT_PROVED",certify_heal_guard_and_event_path(p)["status"])
+    def test_release_gate_rejects_perk_claim_and_changed_provenance(self):
+        p=certify_heal_guard_and_event_path(healing_fixture())
+        for change in ({"heal_receiver_slot":3},{"event_post_return_discarded":False},
+                       {"boundary":"approved_second_heal_on_event"},{"status":"NOT_PROVED"}):
+            with self.subTest(change=change):
+                with self.assertRaises(GateError):
+                    certify_exact_heal_event_gate_109(dict(p,**change))
+        with self.assertRaises(GateError):
+            certify_exact_heal_event_gate_109(None)
 
 if __name__=="__main__":
     unittest.main()
