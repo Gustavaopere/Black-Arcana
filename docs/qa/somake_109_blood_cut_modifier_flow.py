@@ -62,6 +62,8 @@ def symbolic_modifier(rows):
             values.append((op,left,right))
         elif op=="i2f":
             values.append(("i2f",pop()))
+        elif op=="nop":
+            pass
         elif op=="getstatic":
             if "ModSpells.BLOOD_CUT:" not in comment:
                 raise GateError("unrecognized static owner")
