@@ -62,6 +62,11 @@ def original_synthetic_contract():
     c[22]="22: dup"
     for i,slot in {23:1,24:3,25:0,26:2,52:8,53:8,54:7,56:1,57:8}.items():
         c[i]=f"{i}: aload_{slot}" if slot<4 else f"{i}: aload {slot}"
+    for first,last in ((25,26),(29,30),(32,33),(35,36),(38,39),(41,42),(45,46),(48,49)):
+        c[first]=f"{first}: aload_0"
+        c[last]=f"{last}: iload_2"
+    c[27]="27: aload_3"
+    c[43]="43: aload_3"
     calls={28:("getRadius",GETTERS["getRadius"]),31:("getDuration",GETTERS["getDuration"]),
            34:("getWaveInterval",GETTERS["getWaveInterval"]),
            37:("getTelegraphTicks",GETTERS["getTelegraphTicks"]),
@@ -104,6 +109,16 @@ class ExactCompiledCastGateTests(unittest.TestCase):
         f=original_synthetic_contract()
         for n,d,rows in f:
             if n=="onCast":rows[47]="47: nop"
+        self.assertEqual("NOT_PROVED",certify_spell_cast_getters_109(f)["status"])
+    def test_wrong_cast_actor_getter_input_fails(self):
+        f=original_synthetic_contract()
+        for n,d,rows in f:
+            if n=="onCast":rows[43]="43: aload_4"
+        self.assertEqual("NOT_PROVED",certify_spell_cast_getters_109(f)["status"])
+    def test_wrong_cast_level_getter_input_fails(self):
+        f=original_synthetic_contract()
+        for n,d,rows in f:
+            if n=="onCast":rows[46]="46: iload_4"
         self.assertEqual("NOT_PROVED",certify_spell_cast_getters_109(f)["status"])
     def test_cast_spawn_boolean_drift_fails(self):
         f=original_synthetic_contract()
