@@ -6,7 +6,7 @@
 
 - Registry: `somakespells:blood_cut`; JAR `somakespells-1.0.9-1.21.1.jar`; CurseForge File `8867079`; SHA-1 físico `171841ac9f802be9309ecc166c1d972ac6d404c0`.
 - Método: `com.somake.somakespells.effect.blood.BloodCutEffect.onLivingDamage(LivingDamageEvent.Post):void`.
-- [Java 21 #39598535901](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39598535901): **SUCCESS**, SHA-1 conferido e **72 testes sintéticos** na bateria conjunta (7 + 9 + 5 + 10 + 10 + 10 + 21). Registros RED/GREEN dos gates de proveniência: #39596479022, #39597115056, #39597543277 e #39597988594 (falhas esperadas antes dos implementos), com execuções GREEN subsequentes.
+- [Java 21 #39599959888](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39599959888): **SUCCESS**, SHA-1 conferido e **73 testes sintéticos** na bateria conjunta (7 + 9 + 5 + 10 + 10 + 10 + 22). Registros RED/GREEN dos gates de proveniência: #39596479022, #39597115056, #39597543277 e #39597988594 (falhas esperadas antes dos implementos), com execuções GREEN subsequentes.
 - Verificador [`somake_109_blood_cut_event_args.py`](../../../../docs/qa/somake_109_blood_cut_event_args.py), [testes](../../../../docs/qa/somake_109_blood_cut_event_args_test.py) e [workflow Java 21](../../../../.github/workflows/somake-109-blood-cut-refs.yml). **Nenhum JAR, classfile ou corpo de método foi versionado.** Saída apenas de identidades, índices e relações JVM derivadas.
 
 ## Cadeia de proveniência comprovada
