@@ -162,7 +162,7 @@ O [workflow físico Java21 #39529183029](https://github.com/Gustavaopere/Black-A
 
 **Boundary:** ⛔ nenhuma perk de raio/dano/cura/target/hitbox liberada; nenhum contrato de modificação por jogador foi encontrado; arquivo de catálogo e scanner não alteram provider, casting ou runtime Black Arcana. Stage 06.05 🟡 / Stage 09 QA físico pendente. Somake 83/83 identidades, 5/83 fichas downstream nesta campanha, +0 identidades. [Verificador](../../../docs/qa/somake_109_bud_impact_geometry.py) · [ficha](registry-1.0.9/funeral-bloom.md).
 
-## Guardas nativos de dano/Wither/empurrão e cura — PR #851 (21/10/2026)
+## Guardas nativos de dano/Wither/empurrão e cura — PR #851 (20/10/2026)
 
 **JAR SHA-exato:** Somake Spells 1.0.9, CurseForge File **8867079**, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`. O [run Java21 #39531339901](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39531339901) passou com **22 testes**, após reaplicar `certify_exact_impact_geometry_109` para a AABB da bud da PR #850.
 
