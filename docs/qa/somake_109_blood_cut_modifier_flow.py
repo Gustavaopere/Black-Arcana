@@ -29,26 +29,32 @@ def symbolic_modifier(rows):
     if branches != ["ifnonnull","goto"]:
         raise GateError("modifier requires one nonnull guard and one unconditional skip")
     finished=[]
-    pending=[(0,tuple(),tuple())]
+    pending=[(0,tuple(),tuple(),tuple())]
     visited=set()
     while pending:
         if len(pending)>16 or len(visited)>100:
             raise GateError("symbolic state budget exceeded")
-        i,stack,constraints=pending.pop()
-        if (i,stack,constraints) in visited:
+        i,stack,constraints,stored=pending.pop()
+        if (i,stack,constraints,stored) in visited:
             raise GateError("symbolic cycle or duplicate state")
-        visited.add((i,stack,constraints))
+        visited.add((i,stack,constraints,stored))
         if not 0<=i<len(rows):raise GateError("instruction falls outside method")
         pc,op,arg,comment=rows[i]
         values=list(stack)
+        local_values=dict(stored)
         def pop():
             if not values:raise GateError("JVM operand stack underflow")
             return values.pop()
-        def go(nextindex):pending.append((nextindex,tuple(values),constraints))
+        def go(nextindex):pending.append((nextindex,tuple(values),constraints,tuple(sorted(local_values.items()))))
         if re.fullmatch(r"[aifd]load_[0-3]",op):
-            values.append(("arg",op.split("_")[-1]))
+            slot=op.split("_")[-1]
+            values.append(local_values.get(slot,("arg",slot)))
         elif op in ("aload","iload","fload","dload") and re.fullmatch(r"\d+",arg):
-            values.append(("arg",arg))
+            values.append(local_values.get(arg,("arg",arg)))
+        elif re.fullmatch(r"[aifd]store_[0-3]",op):
+            local_values[op.split("_")[-1]]=pop()
+        elif op in ("astore","istore","fstore","dstore") and re.fullmatch(r"\d+",arg):
+            local_values[arg]=pop()
         elif re.fullmatch(r"iconst_[0-5]",op) or re.fullmatch(r"fconst_[0-2]",op):
             values.append(("literal",op.rsplit("_",1)[-1]))
         elif op in ("bipush","sipush") and re.fullmatch(r"-?\d+",arg):
@@ -93,8 +99,9 @@ def symbolic_modifier(rows):
             if not re.fullmatch(r"\d+",arg) or int(arg) not in index:
                 raise GateError("invalid conditional target")
             if index[int(arg)] <= i:raise GateError("unsupported backward edge")
-            pending.append((index[int(arg)],tuple(values),constraints+("arg1 != null",)))
-            pending.append((i+1,tuple(values),constraints+("arg1 == null",)))
+            frozen=tuple(sorted(local_values.items()))
+            pending.append((index[int(arg)],tuple(values),constraints+("arg1 != null",),frozen))
+            pending.append((i+1,tuple(values),constraints+("arg1 == null",),frozen))
             continue
         elif op=="goto":
             if not re.fullmatch(r"\d+",arg) or int(arg) not in index:
