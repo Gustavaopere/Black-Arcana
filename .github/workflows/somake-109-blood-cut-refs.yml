@@ -14,6 +14,8 @@ on:
       - 'docs/qa/somake_109_blood_cut_modifier_flow_test.py'
       - 'docs/qa/somake_109_blood_cut_lifesteal.py'
       - 'docs/qa/somake_109_blood_cut_lifesteal_test.py'
+      - 'docs/qa/somake_109_blood_cut_event_args.py'
+      - 'docs/qa/somake_109_blood_cut_event_args_test.py'
       - 'docs/qa/somake_109_cast_refs.py'
       - 'docs/qa/somake_109_perk_method_probe.py'
       - 'docs/qa/somake_109_radius_irons_contract.py'
@@ -24,6 +26,7 @@ on:
       - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-CFG-MODIFIER-1.0.9.md'
       - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-LIFESTEAL-1.0.9.md'
       - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-CAUSAL-EVENT-1.0.9.md'
       - 'wiki/modpack-catalog/providers/✅-somake-spells/README.md'
       - 'wiki/modpack-catalog/meta/PROGRESSO-CATALOGO-2026-10-18.md'
   workflow_dispatch:
@@ -47,6 +50,7 @@ jobs:
           python3 docs/qa/somake_109_blood_cut_cfg_test.py -v
           python3 docs/qa/somake_109_blood_cut_modifier_flow_test.py -v
           python3 docs/qa/somake_109_blood_cut_lifesteal_test.py -v
+          python3 docs/qa/somake_109_blood_cut_event_args_test.py -v
       - name: Download and verify exact publisher/pack artifact
         shell: bash
         run: |
@@ -81,6 +85,11 @@ jobs:
           python3 docs/qa/somake_109_blood_cut_lifesteal.py \
             --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
             --output build/somake-blood-cut/blood-cut-lifesteal.json
+      - name: Verify typed Post-damage callsite ordering and bounded operand context
+        run: |
+          python3 docs/qa/somake_109_blood_cut_event_args.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/blood-cut-event-argument-callsites.json
       - name: Export only bounded derived evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -92,5 +101,6 @@ jobs:
             build/somake-blood-cut/blood-cut-cfg-evidence.json
             build/somake-blood-cut/blood-cut-float-dataflow.json
             build/somake-blood-cut/blood-cut-lifesteal.json
+            build/somake-blood-cut/blood-cut-event-argument-callsites.json
           if-no-files-found: ignore
           retention-days: 14

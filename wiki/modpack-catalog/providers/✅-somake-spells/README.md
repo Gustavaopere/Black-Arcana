@@ -157,3 +157,7 @@ The ARR artifact was inspected only to retain factual hash/metadata, resource/re
 ## Blood Cut — literal de lifesteal (21/10/2026, PR #860)
 
 A [auditoria Java 21 #39594615862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39594615862) no Somake 1.0.9 físico validou 51 testes sintéticos e provou `ldc 0.15f` diretamente antes do setter `SpellDamageSource.setLifestealPercent(float)` no método `getDamageSource` de sete instruções. Esse valor é um **argumento de setter**, não prova de 15% de cura efetiva. [Dossiê SHA-exato](EXACT-BINARY-BLOOD-CUT-LIFESTEAL-1.0.9.md). Nenhum adapter/perk mutadora autorizado.
+
+## Blood Cut 1.0.9 — prova causal de evento Post (21/10/2026)
+
+A [auditoria física Java21 #39599959888](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39599959888) provou a entidade `LivingEntity` de `DamageSource.getEntity` como receptor do efeito `BLOOD_CUT`, fonte do amplificador e parâmetro de `getDamageModifier`. O retorno multiplica `event.getNewDamage()`, e fontes `SpellDamageSource` são excluídas antes desse cálculo. **73 testes sintéticos**; o resultado final de dano, nested events, perks mutadoras e gameplay continuam ⚠️/⛔. [Dossiê causal](EXACT-BINARY-BLOOD-CUT-CAUSAL-EVENT-1.0.9.md).

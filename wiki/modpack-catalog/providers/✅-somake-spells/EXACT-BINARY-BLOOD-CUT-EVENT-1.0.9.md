@@ -46,3 +46,7 @@ A [prova Java21 #39553030589](https://github.com/Gustavaopere/Black-Arcana/actio
 `((float)(a + 1) * (e != null ? BloodCutSpell.getEntityPowerMultiplier(e) : 1.0f)) * 0.1f`.
 
 Esse valor é **o retorno do getter**, não o dano aplicado. Os parâmetros ainda exigem vínculo causal com os argumentos concretos de `onLivingDamage`, e os predicados dos guards não foram homologados. Ver [dossiê de CFG/float](EXACT-BINARY-BLOOD-CUT-CFG-MODIFIER-1.0.9.md). Sem hook, adapter, Stage promotion ou QA provider-loaded.
+
+## Complemento causal exato — handler Post (PR #861)
+
+O [novo gate Java21 #39599959888](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39599959888), com 73 testes sintéticos, provou a cadeia `DamageSource.getEntity` → `LivingEntity` → efeito `BLOOD_CUT` → amplificador → `getDamageModifier` → multiplicação por `getNewDamage`, além de `return` quando a origem do evento é `SpellDamageSource`. Isto melhora a avaliação de filtros de proc, mas não valida o destinatário/resultado final de `DamageSources.applyDamage` nem a interpretação do lifesteal. [Auditoria consolidada](EXACT-BINARY-BLOOD-CUT-CAUSAL-EVENT-1.0.9.md).

@@ -1,5 +1,12 @@
 # Black Arcana — acompanhamento do catálogo de magias
 
+
+## Somake Blood Cut — vínculo causal nativo do evento de dano (21/10/2026; PR #861)
+
+[Java 21 #39599959888](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39599959888): SHA-1 físico/publisher `171841ac9f802be9309ecc166c1d972ac6d404c0`, **73 testes sintéticos**. O handler `onLivingDamage(LivingDamageEvent.Post)` obteve `LivingEntity` da entidade da fonte de dano, consultou nela `BLOOD_CUT`, leu amplificador e aplicou a fórmula intermediária `getNewDamage × getDamageModifier(amplifier, sourceEntity)` em float. Há `return` nativo se `event.getSource() instanceof SpellDamageSource`, mas isso **não** elimina todas as rotas de proc recursivo. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-CAUSAL-EVENT-1.0.9.md). Dano final, receiver do applyDamage, lifesteal realmente curado e QA no modpack PENDING.
+
+**Barras conservadoras:** global **—%** (piso semântico ≥1.856, denominador aberto); Somake registry **83/83 = 100%**, recorte método estático **8/83 = 9,64%**, recorte downstream aprofundado anterior **5/83 = 6,02%**; campanha de providers exatos **35/39 = 89,74%** no checkpoint próprio. **+0 magias, +0 adapters, +0 hooks por jogador**; Stage 06.05 🟡 / Stage 09 físico pendente.
+
 ## Somake 1.0.9 — Blood Cut: parâmetro literal de lifesteal (21/10/2026, PR #860)
 
 [GitHub Actions #39594615862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39594615862) **SUCCESS**, **51 testes sintéticos** e SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`: comprovado `BloodCutSpell.getDamageSource` → fonte-base Iron's → `ldc 0.15f` → `SpellDamageSource.setLifestealPercent(float)` → `areturn`. O float **é argumento compilado do setter**; não é evidência de healing efetivo em jogo. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-LIFESTEAL-1.0.9.md).
