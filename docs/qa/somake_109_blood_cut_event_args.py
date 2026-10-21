@@ -204,6 +204,32 @@ def certify_effect_holder_receiver(rows):
     }
 
 
+def certify_early_post_damage_exclusion(rows):
+    """Report only the type gate and branch direction of a bounded early check."""
+    if len(rows)<16:
+        raise GateError("early Post-event guard not inspectable")
+    part=rows[10:16]
+    if [op for _,op,_,_ in part[:5]]!=[
+        "aload_0","invokevirtual","instanceof","ifeq","return"]:
+        raise GateError("native early event type guard changed")
+    if "getSource:" not in part[1][3]:
+        raise GateError("guarded early event source getter missing")
+    matched=re.search(r"\bclass\s+([A-Za-z0-9_/$.]+)",part[2][3])
+    if not matched:
+        raise GateError("missing typed instanceof class token")
+    t=part[3][2].strip()
+    if not re.fullmatch(r"\d+",t) or int(t)!=part[5][0]:
+        raise GateError("unexpected early exclusion fallthrough target")
+    return {
+      "assurance":"EXACT_EARLY_INSTANCEOF_RETURN_BRANCH",
+      "guarded_getter":"event.getSource()",
+      "excluded_class_internal_name":matched.group(1),
+      "on_instanceof_true":"return before Blood Cut modifier and secondary damage",
+      "on_instanceof_false":"continue at next native Post-event block",
+      "boundary":"This source-type exclusion is proved only as compiled branch logic; it does not prove all recursion modes, event routing or actual damage."
+    }
+
+
 def inspect(jar:Path) -> dict:
     jar=Path(jar)
     if jar.name!=FILENAME or jar.is_symlink() or not jar.is_file():
@@ -223,6 +249,7 @@ def inspect(jar:Path) -> dict:
     direct_float=certify_native_damage_expression(found[0])
     source_actor=certify_native_source_actor(found[0])
     effect_holder=certify_effect_holder_receiver(found[0])
+    early_guard=certify_early_post_damage_exclusion(found[0])
     if len(found[0])!=103 or graph["syntactic_paths_to_apply"]!=2 or graph["syntactic_paths_without_apply"]!=3:
         raise GateError("Blood Cut native event CFG changed")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=SHA1:
@@ -234,6 +261,7 @@ def inspect(jar:Path) -> dict:
             "direct_float_stack_handoff":direct_float,
             "source_actor_provenance":source_actor,
             "effect_holder_provenance":effect_holder,
+            "early_type_exclusion":early_guard,
             "limits":"No producer-consumer typed stack proof yet; no gameplay, host settlement, recursion or perk hook verified."}
 
 
@@ -250,6 +278,7 @@ def main():
     print("BLOOD_CUT_FLOAT_HANDOFF",json.dumps(evidence["direct_float_stack_handoff"],sort_keys=True))
     print("BLOOD_CUT_SOURCE_ACTOR",json.dumps(evidence["source_actor_provenance"],sort_keys=True))
     print("BLOOD_CUT_EFFECT_OWNER",json.dumps(evidence["effect_holder_provenance"],sort_keys=True))
+    print("BLOOD_CUT_EARLY_EXCLUSION",json.dumps(evidence["early_type_exclusion"],sort_keys=True))
 
 
 if __name__=="__main__":
