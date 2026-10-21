@@ -152,3 +152,8 @@ The ARR artifact was inspected only to retain factual hash/metadata, resource/re
 ## Blood Cut 1.0.9 — CFG normal e fórmula derivada do bytecode (21/10/2026)
 
 [Auditoria Java21 #39553030589](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39553030589), SHA1 físico/publicador validado e **41 testes sintéticos**: handler `onLivingDamage` possui 2 caminhos normais para a chamada a `applyDamage` e 3 caminhos de saída sem a chamada. O getter `getDamageModifier(int,LivingEntity)` retorna `((float)(a+1) * (e != null ? getEntityPowerMultiplier(e) : 1.0f)) * 0.1f` (duas multiplicações float; retorno estático, não dano real). [Prova de CFG e float](EXACT-BINARY-BLOOD-CUT-CFG-MODIFIER-1.0.9.md). Os gates de perks, evento vivo, config, Survival e deduplicação de Mastery seguem ⚠️/⛔.
+
+
+## Blood Cut — literal de lifesteal (21/10/2026, PR #860)
+
+A [auditoria Java 21 #39594615862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39594615862) no Somake 1.0.9 físico validou 51 testes sintéticos e provou `ldc 0.15f` diretamente antes do setter `SpellDamageSource.setLifestealPercent(float)` no método `getDamageSource` de sete instruções. Esse valor é um **argumento de setter**, não prova de 15% de cura efetiva. [Dossiê SHA-exato](EXACT-BINARY-BLOOD-CUT-LIFESTEAL-1.0.9.md). Nenhum adapter/perk mutadora autorizado.
