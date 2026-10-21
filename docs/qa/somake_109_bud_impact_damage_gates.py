@@ -71,6 +71,78 @@ def impact_damage_branch_scout(declared):
     observed["status"]="OBSERVED_DAMAGE_RETURN_GATE_AND_EFFECT_CALL_SITES"
     return observed
 
+
+def certify_damage_success_effect_path(declared):
+    """Prove native boolean result gates Wither call and push *attempts*.
+
+    Never equate applyDamage(true), addEffect or push invocation with damage
+    amount, successful status, applied knockback or modpack gameplay.
+    """
+    members=[b for n,d,b in declared if n=="impact" and d==DESC]
+    if len(members)!=1:return {"status":"NOT_PROVED","reason":"ambiguous_impact"}
+    rows=opcode_rows(members[0])
+    def fail(reason):return {"status":"NOT_PROVED","reason":reason}
+    if len(rows)!=279:return fail("instruction_count_drift")
+    if call_indices(rows,"DamageSources.applyDamage:")!=[118] or not (
+        rows[118][1]=="invokestatic" and rows[118][3].endswith(")Z")
+        and rows[119][1]=="ifeq" and branch_target(rows,119)==145
+    ):return fail("boolean_damage_call_to_false_skip_not_proved")
+    if call_indices(rows,".addEffect:")!=[132] or call_indices(rows,".push:")!=[138]:
+        return fail("effect_or_push_call_count_drift")
+    if not (rows[123][1]=="getstatic"
+        and re.search(r"Field net/minecraft/world/effect/MobEffects\.WITHER:",rows[123][3])
+        and rows[131][1]=="invokespecial"
+        and 'MobEffectInstance."<init>":' in rows[131][3]
+        and rows[132][1]=="invokevirtual"
+        and rows[133][1]=="pop"
+        and rows[138][1]=="invokevirtual"):
+        return fail("wither_instance_and_effect_invocation_chain_unproven")
+    if any(rows[i][1].startswith(("if","goto","jsr")) or
+           rows[i][1] in ("tableswitch","lookupswitch","ret","wide","jsr_w",
+                          "return","ireturn","athrow") for i in range(120,139)):
+        return fail("bypass_inside_damage_success_effect_block")
+    positions={pc:i for i,(pc,_,_,_) in enumerate(rows)}
+    if len(positions)!=279:return fail("ambiguous_jvm_offsets")
+    for i,(_,op,arg,_) in enumerate(rows):
+        if not op.startswith(("if","goto","jsr")):continue
+        target=arg.split(" ",1)[0] if arg else ""
+        dest=positions.get(int(target)) if target.isdecimal() else None
+        if dest is None:return fail("unrecognized_branch_target")
+        if 120<=dest<=138 and not 120<=i<=138:
+            return fail("external_control_enters_effect_without_damage_success")
+    if not (rows[143][1]=="ifeq" and branch_target(rows,143)==145 and
+            rows[144][1]=="iinc" and rows[145][1]=="goto"
+            and branch_target(rows,145)==34):
+        return fail("post_effect_loop_branch_unproven")
+    return {
+        "status":"PROVED_WAVE_BUD_DAMAGE_TRUE_PATH_REACHES_WITHER_AND_PUSH_CALLS",
+        "instruction_count":279,
+        "damage_call_index":118,"damage_return_type":"boolean",
+        "damage_false_branch_index":119,"damage_false_branch_target_index":145,
+        "wither_field_index":123,"effect_constructor_index":131,
+        "add_effect_index":132,"add_effect_return_discarded":True,
+        "push_index":138,"post_effect_branch_index":143,
+        "post_effect_skip_index":145,"loop_back_index":34,
+        "effect_region_has_external_ingress":False,
+        "boundary":"Conditional callsites only; neither damage amount, effect success, push magnitude, target roles, hit dedup nor perk API proved",
+    }
+
+def certify_exact_damage_effect_gate_109(proof):
+    expected={
+        "status":"PROVED_WAVE_BUD_DAMAGE_TRUE_PATH_REACHES_WITHER_AND_PUSH_CALLS",
+        "instruction_count":279,
+        "damage_call_index":118,"damage_return_type":"boolean",
+        "damage_false_branch_index":119,"damage_false_branch_target_index":145,
+        "wither_field_index":123,"effect_constructor_index":131,
+        "add_effect_index":132,"add_effect_return_discarded":True,
+        "push_index":138,"post_effect_branch_index":143,
+        "post_effect_skip_index":145,"loop_back_index":34,
+        "effect_region_has_external_ingress":False,
+        "boundary":"Conditional callsites only; neither damage amount, effect success, push magnitude, target roles, hit dedup nor perk API proved",
+    }
+    if not isinstance(proof,dict) or any(proof.get(k)!=v for k,v in expected.items()):
+        raise GateError("Somake 1.0.9 bud damage-result/Wither/push CFG fingerprint drift")
+
 def inspect(jar):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("invalid Somake publisher file")
@@ -92,10 +164,14 @@ def inspect(jar):
     proof=impact_damage_branch_scout(d)
     if proof["status"]!="OBSERVED_DAMAGE_RETURN_GATE_AND_EFFECT_CALL_SITES":
         raise GateError("Somake native impact damage gate changed")
+    gated=certify_damage_success_effect_path(d)
+    print("SOMAKE_BUD_DAMAGE_EFFECT_GATE_PROOF",json.dumps(gated,sort_keys=True))
+    certify_exact_damage_effect_gate_109(gated)
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:
         raise GateError("JAR changed during inspection")
     return {"status":"SHA_EXACT_BUD_DAMAGE_BRANCH_SCOUT","sha1":digest,
             "version":"1.0.9","mod_id":"somakespells","damage_flow":proof,
+            "damage_effect_gate":gated,
             "limits":"Static call/branch topology only; provider-loaded behavior and perk hooks unproven"}
 
 def main():
@@ -108,5 +184,6 @@ def main():
     x.output.write_text(json.dumps(v,sort_keys=True,indent=2)+"\n")
     print("SOMAKE_BUD_DAMAGE_BRANCH_SCOUT",json.dumps(v["damage_flow"],sort_keys=True))
     print("SOMAKE_BUD_DAMAGE_BRANCH_SHA",v["sha1"])
+    print("SOMAKE_BUD_DAMAGE_EFFECT_GATE", "PASS_SHA_EXACT_BOOLEAN_DAMAGE_WITHER_AND_PUSH")
 if __name__=="__main__":
     main()
