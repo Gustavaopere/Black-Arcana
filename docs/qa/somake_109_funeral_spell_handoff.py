@@ -159,8 +159,7 @@ def certify_spell_cast_getters_109(methods):
             return fail("getter_call_order_or_signature_drift_"+name)
     if not (meaning(8,cast[8]).get("number")=="32.0"
             and meaning(14,cast[14]).get("call")=="raycastForEntity"
-            and meaning(19,cast[19]).get("call")=="groundPosition"
-            and meaning(86,cast[86]).get("call") if len(cast)>86 else True):
+            and meaning(19,cast[19]).get("call")=="groundPosition"):
         # the caster raycast is a separate concern; never infer entity acquisition.
         return fail("target_raycast_source_drift")
     getter_details=[]
