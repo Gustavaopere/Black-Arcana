@@ -93,6 +93,10 @@ def main() -> None:
           result["class_candidate_verified_in_jar"],
           result["methods"]["declared_methods"],
           result["methods"]["focused_methods"])
+    for method in result["methods"]["methods"]:
+        print("SOMAKE_BLOOD_CUT_METHOD", method["method"], method["descriptor"],
+              "branches", method["branches"], "members",
+              json.dumps(method["members"], ensure_ascii=False))
 
 
 if __name__ == "__main__":
