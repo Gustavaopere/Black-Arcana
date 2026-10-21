@@ -126,6 +126,8 @@ def inspect(somake,irons):
     parent=[(name,desc,opcode_rows(body)) for name,desc,body in sections(raw_parent) if name=="getDamageSource"]
     child=[(name,desc,opcode_rows(body)) for name,desc,body in sections(raw_child) if name=="getDamageSource"]
     result=survey_overload_family(parent,child)
+    print("BLOOD_CUT_BASE_OPCODE_FINGERPRINT", [op for _,op,_,_ in parent[0][2]])
+    print("BLOOD_CUT_CHILD_OPCODE_FINGERPRINT", [op for _,op,_,_ in child[0][2]])
     bridge=certify_virtual_lifesteal_bridge(parent,child)
     # Ensure the physical class's ancestry mentions the actual host class.
     header=" ".join(raw_child.splitlines()[:8])
