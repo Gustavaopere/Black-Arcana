@@ -169,6 +169,11 @@ def inspect(jar:Path):
        "scope":"Runtime JAR static discovery on publisher file 8680204; SHA256 verified against pinned CurseForge file 8680204. No inference of actual healed life or perk mutator."
     }
 
+def certify_post_hit_lifesteal(rows):
+    """Fail closed until host healer and float operands are proven."""
+    raise GateError("host post-hit lifesteal JVM stack provenance not certified")
+
+
 
 def main():
     p=argparse.ArgumentParser()
