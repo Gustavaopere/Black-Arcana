@@ -71,7 +71,7 @@ No método onLivingDamage há **103 instruções**, **5 desvios** (ifeq, ifeq, i
 
 ## CFG compilado e retorno float exato — 21/10/2026 (PR #859)
 
-A [auditoria Java21 #39552478074](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39552478074) confirmou o mesmo SHA-1 físico **171841ac9f802be9309ecc166c1d972ac6d404c0**, com **38 testes sintéticos**, e inspecionou o fluxo de métodos do JAR 1.0.9.
+A [auditoria Java21 #39553030589](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39553030589) confirmou o mesmo SHA-1 físico **171841ac9f802be9309ecc166c1d972ac6d404c0**, com **41 testes sintéticos**, e inspecionou o fluxo de métodos do JAR 1.0.9.
 
 - **onLivingDamage(LivingDamageEvent.Post)**: grafo normal de **103 instruções / 5 desvios**, com **2 caminhos sintáticos** que alcançam o único callsite de `DamageSources.applyDamage` e **3 que não alcançam**. Não são 5 eventos nem probabilidades, e o grafo não resolve filtros/recursão.
 - **BloodCutEffect.getDamageModifier(int a, LivingEntity e):float** — duas rotas até `freturn`, certificadas por pilha JVM:
