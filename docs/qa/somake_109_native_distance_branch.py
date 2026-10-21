@@ -37,6 +37,9 @@ def not_proved(reason, **extra):
 def method_kind(symbol):
     for kind,pattern in METHODS.items():
         if pattern.fullmatch(symbol):return kind
+    # javap may abbreviate the owner on inherited Entity accessors.
+    if symbol in ("Method getX:()D","Method getY:()D","Method getZ:()D"):
+        return symbol[10].lower()
     return None
 
 def arithmetic_window(declared):
@@ -64,13 +67,14 @@ def arithmetic_window(declared):
         "call_categories":kind_list,
         "call_positions":[{"instruction_index":i,"category":k if k else "unmodeled"}
                           for i,k in kinds],
+        "opcode_histogram":dict(sorted(Counter(op for _,op,_,_ in window).items())),
         "math_opcode_histogram":dict(sorted(Counter(op for _,op,_,_ in window
              if op in ("dadd","dsub","dmul","ddiv","fadd","fsub","fmul","fdiv",
                        "f2d","d2f","dcmpg","dcmpl","fcmpl","fcmpg","dup2")).items())),
         "boundary":"No actual player roles, targeting/perk API, world-space hitbox or gameplay accepted",
     }
-    if kind_list.count("distance")!=1 or kind_list.count("radius")!=1:
-        return not_proved("unique_distance_and_radius_calls_not_found",**facts)
+    if kind_list.count("distance")!=1 or kind_list.count("radius")!=2:
+        return not_proved("distance_or_double_radius_calls_not_found",**facts)
     # A deliberately small type-checked JVM symbolic evaluator rejects unknown opcodes,
     # underflow, receiver confusion, and unsupported method descriptors (FAIL_CLOSED).
     stack=[]
