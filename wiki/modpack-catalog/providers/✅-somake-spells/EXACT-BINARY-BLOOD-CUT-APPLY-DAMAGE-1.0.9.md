@@ -55,7 +55,7 @@ O [dossiê de lifesteal anterior](EXACT-BINARY-BLOOD-CUT-LIFESTEAL-1.0.9.md) com
 
 **A ligação foi demonstrada posteriormente, no PR #863.** A [auditoria física do Iron's 3.16.3 #39613550972](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39613550972) prova que o método herdado de um argumento chama a sobrecarga de dois argumentos via `invokevirtual`, repassando a mesma entidade duas vezes; o `BloodCutSpell` a sobrescreve e passa `0.15f` ao setter. Isto **certifica o parâmetro nominal da fonte do hit secundário**, mas não uma cura aplicada de 15%.
 
-O fato seguro atualizado é: **o dano secundário usa a sobrecarga herdada de um argumento, que despacha virtualmente para a override do Somake com dois argumentos e `setLifestealPercent(0.15f)`**. A cura real e a taxa efetiva continuam desconhecidas. [Dossiê de despacho virtual](EXACT-BINARY-BLOOD-CUT-IRONS-VIRTUAL-LIFESTEAL-1.0.9.md).
+O fato seguro atualizado é: **o dano secundário usa a sobrecarga herdada de um argumento, que despacha virtualmente para a override do Somake com dois argumentos e `setLifestealPercent(0.15f)`**. A [auditoria runtime do Iron's](EXACT-BINARY-BLOOD-CUT-IRONS-3163-POSTHIT-HEAL-1.0.9.md) confirmou posteriormente o pedido de cura `getLifestealPercent() × event.getNewDamage()` na entidade da fonte do dano, condicionado a guardas. **A cura real e a taxa de HP efetivamente restaurada continuam desconhecidas.** [Despacho virtual](EXACT-BINARY-BLOOD-CUT-IRONS-VIRTUAL-LIFESTEAL-1.0.9.md).
 
 ## Implicações para perks de RPG Skill Tree
 

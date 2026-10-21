@@ -3,6 +3,12 @@
 
 
 
+## Somake 1.0.9 × Iron's 3.16.3 — processamento do lifesteal (PR #864, 21/10/2026)
+
+[Java21 #39620547789](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39620547789) **SUCCESS**, **107 testes sintéticos**, JAR Somake SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, API Iron's SHA-256 `69e81104a9fd31a402d9c89ab09c2a6b2fd6d2ab98db5a37bb159517363ee9ad` e runtime oficial [CurseForge File 8680204](https://www.curseforge.com/minecraft/mc-mods/irons-spells-n-spellbooks/files/8680204) SHA-256 `13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73`. A cadeia JVM nativa certifica `getLifestealPercent()>0.0f`, `event.getNewDamage()` e o beneficiário `event.getSource().getEntity() as LivingEntity`, resultando na chamada **`heal(rate × event.getNewDamage())`**, com rate nominal `0.15f` para Blood Cut. **O despacho do evento e HP real restaurado ainda não foram observados.** [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-IRONS-3163-POSTHIT-HEAL-1.0.9.md).
+
+**Barras de progresso sem inflação:** global **—%** (universo aberto, piso ≥1.856 objetos); Somake registry **83/83 = 100%**, recorte técnico estático **8/83 = 9,64%**, downstream aprofundado anterior **5/83 = 6,02%**; campanha independente de providers exatos **35/39 = 89,74%** no checkpoint anterior. +0 IDs, +0 adapters, +0 hooks de perks. Stage 06.05 🟡 e Stage 09 físico PENDING.
+
 ## Somake Blood Cut — Iron's 3.16.3 virtual lifesteal (PR #863, 21/10/2026)
 
 [Java 21 #39613550972](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39613550972) SUCCESS, **97 testes sintéticos**, SHA-1 Somake `171841ac9f802be9309ecc166c1d972ac6d404c0` e SHA-256 Iron's API `69e81104a9fd31a402d9c89ab09c2a6b2fd6d2ab98db5a37bb159517363ee9ad` conferidos. O host `AbstractSpell.getDamageSource(e)` envia `(e,e)` à sobrecarga virtual de dois argumentos; a implementação `BloodCutSpell.getDamageSource(e,e)` executa `super` e `SpellDamageSource.setLifestealPercent(0.15f)`. O caminho compilado do hit secundário está, portanto, ligado ao setter nominal; **cure/heal efetivo, capped settlement, caster/perk hook e QA provider-loaded seguem pendentes**. [Dossiê](../providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-IRONS-VIRTUAL-LIFESTEAL-1.0.9.md).

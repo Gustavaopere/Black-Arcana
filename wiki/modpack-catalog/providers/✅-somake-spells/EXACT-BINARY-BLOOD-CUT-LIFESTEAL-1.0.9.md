@@ -50,3 +50,7 @@ Complementa o [dossiê de CFG e `getDamageModifier`](EXACT-BINARY-BLOOD-CUT-CFG-
 A [auditoria do callsite #39604864087](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39604864087) revelou **sobrecarga diferente** no handler `onLivingDamage`: este chama `BloodCutSpell.getDamageSource(Entity)` com **um** argumento, enquanto o setter `setLifestealPercent(0.15f)` auditado neste dossiê pertence a `getDamageSource(Entity,Entity)` com **dois** argumentos. O [gate host/override #39613550972](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39613550972) **agora certifica** o encaminhamento virtual entre essas sobrecargas, com a mesma entidade nos dois argumentos, e a entrega de `0.15f` ao setter do source secundário. **Isso não equivale a provar cura efetiva de 15%.** [Novo dossiê de argumentos](EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md).
 
 Mais detalhes em [despacho virtual SHA-exato](EXACT-BINARY-BLOOD-CUT-IRONS-VIRTUAL-LIFESTEAL-1.0.9.md).
+
+## Prova adicional do host de dano (21/10/2026, PR #864)
+
+O [runtime exato do Iron's 3.16.3](EXACT-BINARY-BLOOD-CUT-IRONS-3163-POSTHIT-HEAL-1.0.9.md) contém `DamageSources.postHitEffects(LivingDamageEvent.Post)`, que lê `getLifestealPercent()` e usa `rate × event.getNewDamage()` no `LivingEntity.heal(float)` do ator retornado por `event.getSource().getEntity()`, se for LivingEntity e a taxa for positiva. Isso vincula a cadeia do setter `0.15f` do Blood Cut a um **pedido compilado de cura**, mas não verifica a quantidade de HP efetivamente restaurada ou o dispatch do evento em servidor real.

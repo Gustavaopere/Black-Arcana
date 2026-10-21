@@ -169,3 +169,7 @@ A [prova exata Java 21 #39604864087](https://github.com/Gustavaopere/Black-Arcan
 ## Blood Cut — fonte secundária e lifesteal `0.15f` (21/10/2026)
 
 [Auditoria Java 21 #39613550972](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39613550972): **97 testes sintéticos**, Somake 1.0.9 e Iron's API 3.16.3 hash-pinned. O método de um `Entity` herdado do Iron's chama virtualmente `getDamageSource(e,e)`, com o mesmo `Entity` nas duas posições. A override do Somake chama `super` e executa `setLifestealPercent(0.15f)`. **O vínculo compilado entre as sobrecargas está agora certificado**; cura efetiva e perks mutadoras continuam ⚠️/⛔. [Dossiê](EXACT-BINARY-BLOOD-CUT-IRONS-VIRTUAL-LIFESTEAL-1.0.9.md).
+
+## Blood Cut — processamento de cura no Iron's (21/10/2026; PR #864)
+
+[Java21 #39620547789](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39620547789) aprova **107 testes sintéticos** e demonstra no runtime oficial Iron's 3.16.3 SHA-256 `13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73` a chamada condicionada `LivingEntity.heal(getLifestealPercent() × event.getNewDamage())` na entidade de origem da fonte de dano, não na vítima. A conexão com `BloodCutSpell.setLifestealPercent(0.15f)` está atestada estaticamente. **Gameplay real, caps e política de perks continuam pendentes/bloqueados.** [Dossiê](EXACT-BINARY-BLOOD-CUT-IRONS-3163-POSTHIT-HEAL-1.0.9.md).
