@@ -85,6 +85,86 @@ def impact_scout(declared):
        "boundary":"Observed shapes only. Box operand values, query identity, damage/heal branches, procs and hooks not proved",
     }
 
+
+def prove_impact_box_and_query(declared):
+    """Prove exact impact-position AABB operand dataflow, not damage reachability."""
+    names=[b for n,d,b in declared if n=="impact" and d==DESC]
+    if len(names)!=1:return {"status":"NOT_PROVED","reason":"impact_method_ambiguous"}
+    rows=opcode_rows(names[0])
+    if len(rows)!=279:return {"status":"NOT_PROVED","reason":"impact_release_instruction_drift"}
+    def fail(reason,**details):return {"status":"NOT_PROVED","reason":reason,**details}
+    def local(i,kind,slot):
+        _,op,arg,_=rows[i]
+        return op==kind+"_"+str(slot) or (op==kind and arg==str(slot))
+    def literal(i,value):
+        _,op,_,comment=rows[i]
+        m=re.fullmatch(r"double ([-+]?\d+(?:\.\d+)?)(?:d)?",comment)
+        return op=="ldc2_w" and m is not None and float(m.group(1))==value
+    exact_ctor='Method net/minecraft/world/phys/AABB."<init>":(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)V'
+    exact_inflate="Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;"
+    new_box=rows[16][1]=="new" and rows[16][3]=="class net/minecraft/world/phys/AABB"
+    input_shape=(new_box and rows[17][1]=="dup" and local(18,"aload",2)
+                 and local(19,"aload",2) and rows[20][1]=="invokespecial"
+                 and rows[20][3]==exact_ctor)
+    if not input_shape:
+        return fail("AABB_constructor_or_impact_vec3_operands_mismatch",
+                    new_box=new_box,slot2_arguments=local(18,"aload",2) and local(19,"aload",2),
+                    constructor_symbol_matches=rows[20][3]==exact_ctor)
+    if not (literal(21,1.75) and literal(22,1.35) and literal(23,1.75)
+            and rows[24][1]=="invokevirtual" and rows[24][3]==exact_inflate
+            and local(25,"astore",5)):
+        return fail("AABB_expansion_literals_or_result_local_not_proved")
+    exact_query=(
+        "Method net/minecraft/server/level/ServerLevel.getEntitiesOfClass:"
+        "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+    )
+    alt_query=(
+        "Method net/minecraft/server/level/ServerLevel.getEntitiesOfClass:"
+        "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;"
+    )
+    query_symbol=rows[31][3]
+    if not (local(28,"aload",1) and rows[29][1] in ("ldc","ldc_w")
+            and rows[29][3]=="class net/minecraft/world/entity/LivingEntity"
+            and local(30,"aload",5) and rows[31][1]=="invokevirtual"
+            and query_symbol in (exact_query,alt_query)):
+        return fail("inflated_AABB_local5_not_query_input",
+                    server_argument_slot=local(28,"aload",1),
+                    entity_class_is_living=rows[29][3]=="class net/minecraft/world/entity/LivingEntity",
+                    aabb_argument_slot=local(30,"aload",5),
+                    query_symbol_variant="two_args" if query_symbol==exact_query else
+                    ("three_args" if query_symbol==alt_query else "unknown"))
+    for i,(_,op,operand,_) in enumerate(rows):
+        if 16<=i<=31:continue
+        if op.startswith(("if","goto","jsr")):
+            target=operand.split(" ",1)[0] if operand else ""
+            if not target.isdecimal():return fail("unrecognized_branch_target")
+            pcs={pc:j for j,(pc,_,_,_) in enumerate(rows)}
+            t=pcs.get(int(target))
+            if t is None:return fail("branch_target_missing")
+            if 16<t<=31:return fail("external_branch_inside_box_dataflow")
+        elif op in ("tableswitch","lookupswitch","ret","wide","jsr_w"):
+            return fail("unsupported_control_flow")
+    origin=(local(0,"aload",0) and rows[1][1]=="invokevirtual"
+            and rows[1][3] in (
+                "Method getImpactPosition:()Lnet/minecraft/world/phys/Vec3;",
+                "Method com/somake/somakespells/entity/FuneralBloomBudEntity.getImpactPosition:()Lnet/minecraft/world/phys/Vec3;",
+            )
+            and local(2,"astore",2))
+    return {
+        "status":"PROVED_BUD_INFLATED_BOX_CONSUMED_BY_LIVING_ENTITY_QUERY",
+        "impact_method_instruction_count":279,
+        "impact_position_to_local2":origin,
+        "aabb_constructor_operands":["local2_Vec3","local2_Vec3"],
+        "inflate_double_xyz":["1.75","1.35","1.75"],
+        "inflated_aabb_stored_local":5,
+        "query_aabb_loaded_local":5,
+        "query_entity_class":"LivingEntity",
+        "query_descriptor_mode":"two_args" if query_symbol==exact_query else "three_args",
+        "aabb_constructor_index":20,"inflate_index":24,
+        "query_index":31,
+        "boundary":"Geometry and query argument only. Per-target eligibility, actual impact damage, healing, status, targeting perks NOT proved.",
+    }
+
 def inspect(jar):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("Somake publisher filename/size invalid")
@@ -104,10 +184,14 @@ def inspect(jar):
     x=impact_scout(sections(j.stdout))
     if x.get("status")!="OBSERVED_BUD_IMPACT_TOPOLOGY_ONLY":
         raise GateError("impact topology unproved:"+x.get("reason","unknown"))
+    geo=prove_impact_box_and_query(sections(j.stdout))
+    print("SOMAKE_BUD_GEOMETRY_PROOF",json.dumps(geo,sort_keys=True))
+    if geo.get("status")!="PROVED_BUD_INFLATED_BOX_CONSUMED_BY_LIVING_ENTITY_QUERY":
+        raise GateError("impact AABB geometry remains NOT_PROVED")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=sha:
         raise GateError("source artifact changed during inspection")
     return {"status":"SHA_EXACT_BUD_IMPACT_SCOUT","mod_id":"somakespells",
-            "version":"1.0.9","sha1":sha,"impact":x,
+            "version":"1.0.9","sha1":sha,"impact":x,"geometry":geo,
             "limitations":"static topology only, no gameplay or provider per-player setter"}
 
 def main():
