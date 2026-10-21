@@ -367,7 +367,7 @@ Resultado: uma **única identidade** `somakespells:funeral_bloom`, ainda condici
 
 **Seguimento prioritário:** reconstruir, por CFG e operandos tipados, os filtros dentro do laço de `impact` e a condição da chamada `DamageSources.applyDamage` antes de associar Wither, empurrão ou `SpellHealEvent` a um evento causal único. Provar owner/alvo, PvP/claims, dano efetivo, cura e idempotência; por enquanto `NOT_PROVED`. Nenhuma nova identidade mágica, adapter ou mudança de runtime; Stage 06.05 🟡 e Stage 09 QA físico pendente. [Scanner](../../../../docs/qa/somake_109_bud_impact_geometry.py) · [Testes](../../../../docs/qa/somake_109_bud_impact_geometry_test.py).
 
-## Efeitos de bud.impact — gate de dano/Wither/empurrão e evento de cura (21/10/2026; PR #851)
+## Efeitos de bud.impact — gate de dano/Wither/empurrão e evento de cura (20/10/2026; PR #851)
 
 **Autoridade física:** `somakespells-1.0.9-1.21.1.jar`, CurseForge File **8867079**, `somakespells`, SHA-1 **`171841ac9f802be9309ecc166c1d972ac6d404c0`**, Minecraft 1.21.1 / NeoForge / Java 21. Auditoria binária [#39531339901](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39531339901) do método exato `FuneralBloomBudEntity.impact(ServerLevel)` com **279 instruções** e **22 testes sintéticos**: `PASS_SHA_EXACT_BOOLEAN_DAMAGE_WITHER_AND_PUSH` e `PASS_SHA_EXACT_NONNULL_POSITIVE_COUNTER_POST_THEN_HEAL`. As versões de gates abaixo serão reexecutadas no HEAD final antes do merge.
 
