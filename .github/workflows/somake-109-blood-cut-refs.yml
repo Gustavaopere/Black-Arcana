@@ -1,0 +1,50 @@
+name: Somake 1.0.9 Blood Cut static references (Java 21)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/somake-109-blood-cut-refs.yml'
+      - 'docs/qa/somake_109_blood_cut_refs.py'
+      - 'docs/qa/somake_109_blood_cut_refs_test.py'
+      - 'docs/qa/somake_109_cast_refs.py'
+      - 'docs/qa/somake_109_perk_method_probe.py'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/registry-1.0.9/blood-cut.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static_blood_cut:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic clean-room regression gates
+        run: |
+          python3 docs/qa/somake_109_cast_refs_test.py -v
+          python3 docs/qa/somake_109_blood_cut_refs_test.py -v
+      - name: Download and verify exact publisher/pack artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/somake-blood-cut
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/somake-spells-irons-spells-addon-1461634/8867079/somake-spells-irons-spells-addon-1461634-8867079.jar' \
+            --output build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar
+          echo '171841ac9f802be9309ecc166c1d972ac6d404c0  build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar' | sha1sum --check
+      - name: Discover exact compiled Blood Cut method signatures and callsites
+        run: |
+          python3 docs/qa/somake_109_blood_cut_refs.py \
+            --jar build/somake-blood-cut/somakespells-1.0.9-1.21.1.jar \
+            --output build/somake-blood-cut/evidence.json
+      - name: Export only bounded derived evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: somake-109-blood-cut-static
+          path: build/somake-blood-cut/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
