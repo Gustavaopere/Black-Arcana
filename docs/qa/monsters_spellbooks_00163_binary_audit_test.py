@@ -56,6 +56,23 @@ class MonstersSpellbooks00163AuditTest(unittest.TestCase):
         with self.assertRaises(audit.AuditError):
             audit.spell_id(disasm)
 
+    def test_exact_neoforge_mod_id_uses_real_toml_not_comment_scan(self):
+        valid = b'modLoader = "javafml"\n[[mods]]\nmodId = "monstersspellbooks"\n'
+        self.assertIsNone(audit.require_neoforge_mod_id(valid))
+        for bad in (
+            b'modLoader = "javafml"\n[[mods]]\nmodId = "othermod"\n',
+            b'modLoader = "javafml"\n# modId = "monstersspellbooks"\n[[mods]]\nmodId = "othermod"\n',
+            b'modLoader = "javafml"\n[[mods]]\n',
+            b'modLoader = "other"\n[[mods]]\nmodId = "monstersspellbooks"\n',
+            b'modLoader = "javafml"\n[[mods]]\nmodId = "monstersspellbooks"\n[[mods]]\nmodId = "othermod"\n',
+            b'not a toml document = true\n',
+            b''
+        ):
+            with self.subTest(candidate=bad[:80]), self.assertRaises(audit.AuditError):
+                audit.require_neoforge_mod_id(bad)
+        with self.assertRaises(audit.AuditError):
+            audit.require_neoforge_mod_id(b'x' * 256_001)
+
     def test_wrong_publisher_path_fails_before_introspection(self):
         with self.assertRaises(audit.AuditError):
             audit.audit(Path("/tmp/untrusted-spellbook.jar"),audit.INVENTORY.read_text(encoding="utf8"))
