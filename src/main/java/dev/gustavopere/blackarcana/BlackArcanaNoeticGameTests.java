@@ -29,7 +29,7 @@ public final class BlackArcanaNoeticGameTests {
         target.setCustomName(Component.literal("N".repeat(NoeticSafetyCeilings.MAX_DISPLAY_NAME_LENGTH + 32)));
         viewer.teleportTo(target.getX() + 2.0D, target.getY(), target.getZ());
 
-GameTestEntityIndexGate.whenIndexed(helper, () -> {
+        GameTestEntityIndexGate.whenIndexed(helper, () -> {
             try {
                 var decision = MinecraftNoeticRuntime.startObservation(
                         server,

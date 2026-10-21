@@ -101,7 +101,7 @@ public final class NoeticPactSanctuaryGameTests {
         FamiliarOwnershipRegistry ownership = ownershipFor(owner.getUUID(), familiar.getUUID());
         MinecraftPactSanctuaryRuntime runtime = new MinecraftPactSanctuaryRuntime(ownership);
 
-GameTestEntityIndexGate.whenIndexed(helper, () -> {
+        GameTestEntityIndexGate.whenIndexed(helper, () -> {
             ArcanaDecision activation = runtime.activate(
                     server,
                     owner.getUUID(),
