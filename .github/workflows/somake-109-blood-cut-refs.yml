@@ -29,6 +29,7 @@ on:
       - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-LIFESTEAL-1.0.9.md'
       - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-EVENT-1.0.9.md'
       - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-CAUSAL-EVENT-1.0.9.md'
+      - 'wiki/modpack-catalog/providers/✅-somake-spells/EXACT-BINARY-BLOOD-CUT-APPLY-DAMAGE-1.0.9.md'
       - 'wiki/modpack-catalog/providers/✅-somake-spells/README.md'
       - 'wiki/modpack-catalog/meta/PROGRESSO-CATALOGO-2026-10-18.md'
   workflow_dispatch:
