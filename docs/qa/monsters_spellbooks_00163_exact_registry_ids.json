@@ -1,0 +1,606 @@
+{
+  "schema": "black_arcana_monsters_spellbooks_00163_static_ids_v1",
+  "release": "0.0.16.3",
+  "jar": "monstersspellbooks-0.0.16.3.jar",
+  "neoforge_mod_id": "monsterspellbooks",
+  "sha1": "b3aa89fd081bf4bfaf8d0f4380bcdc393c66ab0e",
+  "sha256": "28f582fab08a4f81cbc5be03550353656d91d707e67981ed38fe88d932ae169a",
+  "publisher_proof_run_id": 39670154524,
+  "source_inventory_version": "RedReaper28/Monsters-Spellbooks-1.21.1@1ab9b72af2ea44c3c8b816e665d06531ea44ddc2",
+  "evidence_class": "PHYSICAL_SHA1_MATCHED_COMPILED_STATIC_REGISTRY_AND_98_SPELL_RESOURCES_NOT_RUNTIME",
+  "static_identities": 98,
+  "semantic_count_delta": 0,
+  "loaded_registry_verified": false,
+  "gameplay_verified": false,
+  "perk_hook_verified": false,
+  "registered_spell_identities": [
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.blood.AnticoagulationSpell",
+      "field": "ANTICOAGULATION",
+      "root": "anticoagulation",
+      "source_family": "blood"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.blood.BloodPierceSpell",
+      "field": "BLOOD_PIERCE",
+      "root": "blood_pierce",
+      "source_family": "blood"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.blood.BloodThornSpell",
+      "field": "BLOOD_THORN",
+      "root": "blood_thorn",
+      "source_family": "blood"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.blood.HysteriaSpell",
+      "field": "HYSTERIA",
+      "root": "hysteria",
+      "source_family": "blood"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.blood.SanguiniteEviscerationSpell",
+      "field": "SANGUINITE_EVISCERATION",
+      "root": "sanguinite_evisceration",
+      "source_family": "blood"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.CorruptedBeaconRaySpell",
+      "field": "CORRUPTED_BEACON_RAY",
+      "root": "corrupted_beacon_ray",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.CrushingPresenceSpell",
+      "field": "CRUSHING_PRESENCE",
+      "root": "crushing_presence",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.CrushSpell",
+      "field": "CRUSH",
+      "root": "crush",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.DragonChargeSpell",
+      "field": "DRAGON_CHARGE",
+      "root": "dragon_charge",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.EndersentSmashSpell",
+      "field": "ENDERSENT_SMASH",
+      "root": "endersent_smash",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.EndersentFormSpell",
+      "field": "ENDERSENT_FORM",
+      "root": "endersent_form",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.FirmamentSplitterSpell",
+      "field": "FIRMAMENT_SPLITTER",
+      "root": "firmament_splitter",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.GravityWellSpell",
+      "field": "GRAVITY_WELL",
+      "root": "gravity_well",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.SpaceBreakerSpell",
+      "field": "SPACE_BREAKER",
+      "root": "space_breaker",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.SpaceRuptureSpell",
+      "field": "SPACE_RUPTURE",
+      "root": "space_rupture",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.UnstableTeleportSpell",
+      "field": "UNSTABLE_TELEPORT",
+      "root": "unstable_teleport",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ender.VoidArrowsSpell",
+      "field": "VOID_ARROWS",
+      "root": "void_arrows",
+      "source_family": "ender"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.evocation.EnchantersBoostSpell",
+      "field": "ENCHANTERS_BOOST",
+      "root": "enchanters_boost",
+      "source_family": "evocation"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.evocation.EnchantersProtectionSpell",
+      "field": "ENCHANTERS_PROTECTION",
+      "root": "enchanters_protection",
+      "source_family": "evocation"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.evocation.SpellOfUndyingSpell",
+      "field": "SPELL_OF_UNDYING",
+      "root": "spell_of_undying",
+      "source_family": "evocation"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.fire.BrimstoneBuzzsawSpell",
+      "field": "BRIMSTONE_BUZZSAW",
+      "root": "brimstone_buzzsaw",
+      "source_family": "fire"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.fire.BrimstoneRainSpell",
+      "field": "BRIMSTONE_RAIN",
+      "root": "brimstone_rain",
+      "source_family": "fire"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.fire.BrimstoneWrathSpell",
+      "field": "BRIMSTONE_WRATH",
+      "root": "brimstone_wrath",
+      "source_family": "fire"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.fire.CauterizingTouchSpell",
+      "field": "CAUTERIZING_TOUCH",
+      "root": "cauterizing_touch",
+      "source_family": "fire"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.fire.FrenziedBurstSpell",
+      "field": "FRENZIED_BURST",
+      "root": "frenzied_burst",
+      "source_family": "fire"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.fire.FrenziedStormSpell",
+      "field": "FRENZIED_STORM",
+      "root": "frenzied_storm",
+      "source_family": "fire"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.fire.FrenzySurgeSpell",
+      "field": "FRENZY_SURGE",
+      "root": "frenzy_surge",
+      "source_family": "fire"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.fire.NapalmOrbSpell",
+      "field": "NAPALM_ORB",
+      "root": "napalm_orb",
+      "source_family": "fire"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.fire.OverheatSpell",
+      "field": "OVERHEAT",
+      "root": "overheat",
+      "source_family": "fire"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.fire.WrathSpell",
+      "field": "WRATH",
+      "root": "wrath",
+      "source_family": "fire"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.holy.DivineInterventionSpell",
+      "field": "DIVINE_INTERVENTION",
+      "root": "divine_intervention",
+      "source_family": "holy"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.holy.HallowSlashSpell",
+      "field": "HALLOW_SLASH",
+      "root": "hallow_slash",
+      "source_family": "holy"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.holy.PaladinThrowSpell",
+      "field": "PALADIN_THROW",
+      "root": "paladin_throw",
+      "source_family": "holy"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.holy.SummonAegisPatrolSpell",
+      "field": "SUMMON_AEGIS_PATROL",
+      "root": "summon_aegis_patrol",
+      "source_family": "holy"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.hydro.BubbleSpraySpell",
+      "field": "BUBBLE_SPRAY",
+      "root": "bubble_spray",
+      "source_family": "hydro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.hydro.EffervescenceBubbleSpell",
+      "field": "EFFERVESCENCE_BUBBLE",
+      "root": "effervescence_bubble",
+      "source_family": "hydro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.hydro.GlowInkReleaseSpell",
+      "field": "GLOW_INK_RELEASE",
+      "root": "glow_ink_release",
+      "source_family": "hydro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.hydro.InkBombSpell",
+      "field": "INK_BOMB",
+      "root": "ink_bomb",
+      "source_family": "hydro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.hydro.RazorbladeTyphoonSpell",
+      "field": "RAZORBLADE_TYPHOON",
+      "root": "razor_typhoon",
+      "source_family": "hydro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.hydro.RiptideDashSpell",
+      "field": "RIPTIDE_DASH",
+      "root": "riptide_dash",
+      "source_family": "hydro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.hydro.SummonPrismarineSquadSpell",
+      "field": "SUMMON_PRISMARINE_SQUAD",
+      "root": "summon_prismarine_squad",
+      "source_family": "hydro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.hydro.WaterTridentSpell",
+      "field": "WATER_TRIDENT",
+      "root": "water_trident",
+      "source_family": "hydro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ice.BlizzardAspectSpell",
+      "field": "BLIZZARD_ASPECT",
+      "root": "blizzard_aspect",
+      "source_family": "ice"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ice.FrostBreathSpell",
+      "field": "FROST_BREATH",
+      "root": "frost_breath",
+      "source_family": "ice"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ice.FrostCoatingSpell",
+      "field": "FROST_COATING",
+      "root": "frost_coating",
+      "source_family": "ice"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ice.FrostedSnowboltSpell",
+      "field": "FROSTED_SNOWBOLT",
+      "root": "frosted_snowbolt",
+      "source_family": "ice"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ice.IceArsenalSpell",
+      "field": "ICE_ARSENAL",
+      "root": "ice_arsenal",
+      "source_family": "ice"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ice.OrbitalSnowballSpell",
+      "field": "ORBITAL_SNOWBALL",
+      "root": "orbital_snowball",
+      "source_family": "ice"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ice.SummonIceHydraSpell",
+      "field": "SUMMON_ICE_HYDRA",
+      "root": "summon_ice_hydra",
+      "source_family": "ice"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.ice.TundraTerrainSpell",
+      "field": "TUNDRA_TERRAIN",
+      "root": "tundra_terrain",
+      "source_family": "ice"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.PrimordialFlashSpell",
+      "field": "PRIMORDIAL_FLASH",
+      "root": "ancient_flash",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.DischargeSpell",
+      "field": "DISCHARGE",
+      "root": "discharge",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.RaijinJudgementSpell",
+      "field": "RAIJIN_JUDGEMENT",
+      "root": "raijin_judgement",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.RedstoneBoltSpell",
+      "field": "REDSTONE_BOLT",
+      "root": "redstone_bolt",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.RedstoneMinesSpell",
+      "field": "REDSTONE_MINES",
+      "root": "redstone_mines",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.GuardiansNeutralizerSpell",
+      "field": "GUARDIANS_NEUTRALIZER",
+      "root": "guardians_neutralizer",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.RedstoneChainSpell",
+      "field": "REDSTONE_CHAIN",
+      "root": "redstone_chain",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.RedstoneLasersSpell",
+      "field": "REDSTONE_LASERS",
+      "root": "redstone_lasers",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.RaigoSpell",
+      "field": "RAIGO",
+      "root": "raigo",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.StaticCleaveSpell",
+      "field": "STATIC_CLEAVE",
+      "root": "static_cleave",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.ThunderStepSpell",
+      "field": "THUNDER_STEP",
+      "root": "thunder_step",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.ThunderstormWaveSpell",
+      "field": "THUNDERSTORM_WAVE",
+      "root": "thunderstorm_wave",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.VoltaicMultishotSpell",
+      "field": "VOLTAIC_MULTISHOT",
+      "root": "voltaic_multishot",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.lightning.ZapSpell",
+      "field": "ZAP",
+      "root": "zap",
+      "source_family": "lightning"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.nature.BlastFungusSpell",
+      "field": "BLAST_FUNGUS",
+      "root": "blast_fungus",
+      "source_family": "nature"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.nature.InfectionSlashSpell",
+      "field": "INFECTION_SLASH",
+      "root": "infection_slash",
+      "source_family": "nature"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.nature.LifeCrystalSpell",
+      "field": "LEAF_CRYSTAL",
+      "root": "leaf_crystal",
+      "source_family": "nature"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.nature.PoisonQuillSpell",
+      "field": "POISON_QUILL",
+      "root": "poison_quill",
+      "source_family": "nature"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.nature.SpiderFangsSpell",
+      "field": "SPIDER_FANGS",
+      "root": "spider_fangs",
+      "source_family": "nature"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.nature.SummonPoisonVinesSpell",
+      "field": "SUMMON_POISON_VINE",
+      "root": "summon_poison_vines",
+      "source_family": "nature"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.nature.VitalBlastSpell",
+      "field": "VITAL_BLAST",
+      "root": "vital_blast",
+      "source_family": "nature"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.ReaperAspectSpell",
+      "field": "REAPER_ASPECT",
+      "root": "reaper_aspect",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.BansheeScreamSpell",
+      "field": "BANSHEE_SCREAM",
+      "root": "banshee_scream",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.BoneDaggerSpell",
+      "field": "BONE_DAGGER",
+      "root": "bone_dagger",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.SummonDeathKnightSpell",
+      "field": "SUMMON_DEATH_KNIGHT",
+      "root": "summon_death_knight",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.FallCurseSpell",
+      "field": "FALL_CURSE",
+      "root": "fall_curse",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.GraveyardFissureSpell",
+      "field": "GRAVEYARD_FISSURE",
+      "root": "graveyard_fissure",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.LichdomSpell",
+      "field": "LICHDOM",
+      "root": "lichdom",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.LifeDrainSpell",
+      "field": "LIFE_DRAIN",
+      "root": "life_drain",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.PutrescenceMassSpell",
+      "field": "PUTRESCENCE_MASS",
+      "root": "putrescence_mass",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.RancorCallSpell",
+      "field": "RANCORCALL",
+      "root": "rancorcall",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.SoulCastingFieldSpell",
+      "field": "SOUL_CASTING_FIELD",
+      "root": "soul_casting_field",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.SoulChainSpell",
+      "field": "SOUL_CHAIN",
+      "root": "soul_chain",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.SoulFireBoltSpell",
+      "field": "SOUL_FIREBOLT",
+      "root": "soul_firebolt",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.SoulFireTeleportSpell",
+      "field": "SOUL_FIRE_TELEPORT",
+      "root": "soul_fire_teleport",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.SoulFormSpell",
+      "field": "SOUL_FORM",
+      "root": "soul_form",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.SoulScorchSpell",
+      "field": "SOUL_SCORCH",
+      "root": "soul_scorch",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.SpectralBlastSpell",
+      "field": "SPECTRAL_BLAST",
+      "root": "spectral_blast",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.SpiritStrikeSpell",
+      "field": "SPIRIT_STRIKE",
+      "root": "spirit_strike",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.StrayGraspSpell",
+      "field": "STRAY_GRASP",
+      "root": "stray_grasp",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.SummonSoulWizardSpell",
+      "field": "SUMMON_SOUL_WIZARD",
+      "root": "summon_soul_wizard",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.TormentArrowSpell",
+      "field": "TORMENT_ARROW",
+      "root": "torment_arrow",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.VileSlashSpell",
+      "field": "VILE_SLASH",
+      "root": "vile_slash",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.SummonWitherArmy",
+      "field": "SUMMON_WITHER_ARMY",
+      "root": "summon_wither_warrior",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.WitherBombSpell",
+      "field": "WITHER_BOMB",
+      "root": "wither_bomb",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.necro.WitherNovaSpell",
+      "field": "WITHER_NOVA",
+      "root": "wither_nova",
+      "source_family": "necro"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.technomancy.SpinbladeSpell",
+      "field": "SPINBLADE",
+      "root": "spinblade",
+      "source_family": "technomancy"
+    },
+    {
+      "clazz": "net.redreaper.monsterspellbooks.spells.technomancy.SummonDwarvenDronesSpell",
+      "field": "SUMMON_DWARVEN_DRONES",
+      "root": "summon_dwarven_drones",
+      "source_family": "technomancy"
+    }
+  ]
+}
