@@ -25,10 +25,9 @@ public final class RiftBladesGameTests {
         var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(4, 2, 1));
         MinecraftServer server = helper.getLevel().getServer();
 
-        // The embedded GameTest harness may expose a newly spawned entity object before the
-        // ServerLevel UUID index used by the production runtime sees it. Settle one server tick so
-        // this test measures Rift Blades admission/settlement rather than fixture registration order.
-        helper.runAtTickTime(1L, () -> {
+        // The GameTest fixture can precede ServerLevel UUID registration. Wait only for
+        // exact endpoint index visibility; the gameplay assertions still execute once.
+        GameTestEntityIndexGate.whenIndexed(helper, () -> {
             helper.assertTrue(helper.getLevel().getEntity(caster.getUUID()) == caster,
                 "caster fixture must be visible through the server-level UUID index before Rift Blades lookup");
             helper.assertTrue(helper.getLevel().getEntity(target.getUUID()) == target,
@@ -75,7 +74,7 @@ public final class RiftBladesGameTests {
             } catch (Exception reflectionFailure) {
                 helper.fail("Rift Blades marked-strike fixture invocation failed: " + reflectionFailure);
             }
-        });
+        }, caster, target);
     }
 
     @GameTest(template = "foundation_empty", timeoutTicks = 80)
@@ -84,9 +83,9 @@ public final class RiftBladesGameTests {
         var target = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(4, 2, 1));
         MinecraftServer server = helper.getLevel().getServer();
 
-        // The runtime resolves both endpoints through ServerLevel.getEntity(UUID). Give the GameTest
-        // fixture one tick to enter that index before exercising damage plus optional displacement.
-        helper.runAtTickTime(1L, () -> {
+        // Both endpoints must be visible in ServerLevel.getEntity(UUID) before executing
+        // damage settlement and optional displacement. Readiness is bounded to 20 ticks.
+        GameTestEntityIndexGate.whenIndexed(helper, () -> {
             helper.assertTrue(helper.getLevel().getEntity(caster.getUUID()) == caster,
                 "caster fixture must be visible through the server-level UUID index before Rift Blades lookup");
             helper.assertTrue(helper.getLevel().getEntity(target.getUUID()) == target,
@@ -129,7 +128,7 @@ public final class RiftBladesGameTests {
             } catch (Exception reflectionFailure) {
                 helper.fail("Rift Blades blocked-landing fixture invocation failed: " + reflectionFailure);
             }
-        });
+        }, caster, target);
     }
 
     private static Object resolveMarkedStrike(
