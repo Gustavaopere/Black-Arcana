@@ -54,7 +54,7 @@ SETTER="Method io/redspace/ironsspellbooks/damage/SpellDamageSource.setLifesteal
 def bridge_fixture():
     parent=[("getDamageSource",ONE,[
        (0,"aload_0","",""),(1,"aload_1","",""),
-       (2,"aconst_null","",""),(3,"invokevirtual","",SOURCE_CALL),
+       (2,"aload_1","",""),(3,"invokevirtual","",SOURCE_CALL),
        (6,"areturn","","")])]
     child=[("getDamageSource",TWO,[
        (0,"aload_0","",""),(1,"aload_1","",""),(2,"aload_2","",""),
@@ -69,7 +69,7 @@ class NativeVirtualBridgeTests(unittest.TestCase):
         base,child=bridge_fixture()
         proof=certify_virtual_lifesteal_bridge(base,child)
         self.assertEqual("SHA_EXACT_VIRTUAL_DISPATCH_WITH_015F_SETTER",proof["assurance"])
-        self.assertEqual("aconst_null",proof["default_second_entity_operand"])
+        self.assertEqual("aload_1",proof["forwarded_second_entity_operand"])
         self.assertEqual(0.15,proof["lifesteal_setter_argument"])
         self.assertEqual("invokevirtual",proof["base_dispatch_opcode"])
 
@@ -78,9 +78,9 @@ class NativeVirtualBridgeTests(unittest.TestCase):
         base[0][2][3]=(3,"invokespecial","",SOURCE_CALL)
         with self.assertRaises(GateError):certify_virtual_lifesteal_bridge(base,child)
 
-    def test_non_null_second_entity_argument_rejected(self):
+    def test_second_entity_argument_mutation_rejected(self):
         base,child=bridge_fixture()
-        base[0][2][2]=(2,"aload_2","","")
+        base[0][2][2]=(2,"aconst_null","","")
         with self.assertRaises(GateError):certify_virtual_lifesteal_bridge(base,child)
 
     def test_setter_float_mutation_rejected(self):
