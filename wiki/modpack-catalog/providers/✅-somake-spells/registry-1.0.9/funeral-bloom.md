@@ -308,3 +308,23 @@ Resultado: uma **única identidade** `somakespells:funeral_bloom`, ainda condici
 **Regra local comprovada:** se o objeto do slot JVM **1** não é nulo **e** `slot2.isAlliedTo(slot1)` é verdadeiro, `isValidTarget` retorna `false`. O ramo `slot1==null` e o ramo `!isAlliedTo` apenas seguem adiante, **não** constituem aceitação do alvo. O gate preserva os três primeiros rejeitadores anteriores (`slot2.isAlive`, `!slot2.isSpectator`, objetos distintos) e a identificação estrutural dos seis branches. **Resta o sexto branch numérico `ifgt`, a análise de distância, os papéis de capturas, `maxTargets` e o impacto independente da bud.**
 
 **Integração:** este método é interno ao Somake; observá-lo não fornece `setter` de targeting, raio ou filtro por jogador. `FAIL_CLOSED` para perks mutadoras e Mastery duplicada. Iron's mantém casting/custos do host; Somake mantém efeitos; RPG Skill Tree opera progressão por contrato; Black Arcana preserva seu runtime próprio. Nenhuma identidade adicional, adapter, testes de gameplay, Stage ou estado físico do modpack é promovido por esta prova.
+
+## `isValidTarget`: condição numérica de distância, eixo vertical e raio ao quadrado (PR #848)
+
+**Prova binária do JAR instalado na baseline:** Somake Spells `somakespells-1.0.9-1.21.1.jar` / File `8867079` / SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`. A auditoria compilada [#39523827891](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39523827891) terminou com `SUCCESS` e **12 testes sintéticos aprovados**. Esta prova corrige a hipótese de apenas um getter de raio: o JAR chama `getRadius()` **duas vezes** antes de `fmul`, `f2d` e `dcmpg`. O verificador pós-prova é [`somake_109_native_distance_branch.py`](../../../../docs/qa/somake_109_native_distance_branch.py); a exigência do gate de regressão adicionado na PR #848 depende de CI do HEAD final.
+
+**Proveniência concreta de operandos, comprovada por interpretação tipada e fluxo no slot JVM 3:**
+
+| Eixo / parâmetro | Proveniência certificada | Implicação delimitada |
+|---|---|---|
+| Receptor da chamada `distanceToSqr(DDD)D` | `LivingEntity` no **slot JVM 2** | Nenhum papel caster/owner/candidato foi atribuído sem prova das capturas |
+| Coordenada X passada ao método | `getX()` da **controller, slot JVM 0** | Componente horizontal na posição da controller |
+| Coordenada Y passada ao método | `getY()` da **própria entidade no slot JVM 2** | A comparação de distância fornecida ao método **não inclui diferença vertical** entre a entidade e a controller, assumida a semântica padrão de `distanceToSqr` |
+| Coordenada Z passada ao método | `getZ()` da **controller, slot JVM 0** | Componente horizontal na posição da controller |
+| Retorno de `distanceToSqr` | Armazenado em `dstore_3` e recuperado com `dload_3` | Ligação do `double` calculado à comparação foi certificada, não apenas coocorrência |
+| Limiar da comparação | `controller.getRadius()` × `controller.getRadius()` em `float` (`fmul`), convertido para `double` (`f2d`) | **Raio ao quadrado calculado em precisão float32**, não multiplicação em double |
+| `dcmpg` → `ifgt` | Se resultado da comparação é positivo, desvia até constante `false` | Para valores finitos: rejeita quando a distância quadrática descrita excede `(double)((float)R * (float)R)` |
+
+**Expressão auditada:** `cmp(distanceToSqr(slot2, controllerX, slot2Y, controllerZ), f2d(fmul(R,R))) > 0 ⇒ isValidTarget=false`. `dcmpg` tem comportamento próprio para NaN (resultado `+1`), motivo para não substituir o gate JVM por uma simples desigualdade numérica sem considerar valores não finitos. A formulação acima não certifica o caminho de aceitação de todos os alvos, a geometria da AABB de `launchWave`, o alcance do cast, a AABB independente da bud nem `maxTargets`.
+
+**Perks e limites de integração:** o eixo de distância **dos filtros de wave** está agora comprovado no método exato. Não há contrato mutador público `per-player` homologado para mudar o raio, critérios de seleção ou tipo de alvo. Implementações de perks devem preservar o runtime Somake/Iron's, o limite do provider, PvP/claims e deduplicação; nenhuma perk ou callback foi ativada por essa descoberta. `FAIL_CLOSED` até validação de hooks, geometria end-to-end, casos de NaN/config, cliente/servidor, Survival e multiplayer. Stage 06.05 🟡; Stage 09 QA físico PENDING. **+0 novas identidades; 83/83 Somake IDs, 5/83 fichas downstream no recorte.**
