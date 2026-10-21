@@ -66,6 +66,29 @@ def spell_scout(methods):
             "methods":result,
             "boundary":"Spell-side typed callsite survey only; no per-level values, caster identity, damage settlement, player perk API or physical game proof certified"}
 
+
+GETTERS={
+ "getRadius":"(ILnet/minecraft/world/entity/LivingEntity;)F",
+ "getDuration":"(I)I",
+ "getWaveInterval":"(I)I",
+ "getTelegraphTicks":"(I)I",
+ "getMaxTargets":"(I)I",
+ "getImpactDamage":"(ILnet/minecraft/world/entity/LivingEntity;)F",
+ "getWitherDuration":"(I)I",
+ "getWitherAmplifier":"(I)I",
+}
+def getter_scout(methods):
+    evidence=[]
+    for name,desc in GETTERS.items():
+        found=[opcode_rows(body) for n,d,body in methods if n==name and d==desc]
+        if len(found)!=1:return {"status":"NOT_PROVED","reason":"missing_ambiguous_getter","method":name}
+        rows=found[0]
+        if not 1<=len(rows)<=110:return {"status":"NOT_PROVED","reason":"getter_instruction_budget","method":name,"count":len(rows)}
+        evidence.append({"getter":name,"descriptor":desc,"instruction_count":len(rows),
+                         "typed_ops":[meaning(i,row) for i,row in enumerate(rows)]})
+    return {"status":"OBSERVED_8_EXACT_GETTER_BODIES_TYPED_ONLY","getters":evidence,
+            "boundary":"Getter numeric operand survey; effective stats, cast-side caster provenance, downstream gameplay and per-player hook not proved"}
+
 def inspect(jar):
     if jar.is_symlink() or not jar.is_file() or jar.name!=FILENAME or not 100<jar.stat().st_size<20_000_000:
         raise GateError("Somake JAR invalid filename/type")
@@ -90,12 +113,17 @@ def inspect(jar):
     controller=disasm(CONTROLLER);bud=disasm(BUD)
     certify_exact_controller_lifecycle_109(prove_controller_field_lifecycle(controller))
     certify_exact_wither_handoff_109(certify_wither_constructor_handoff(bud,controller))
-    result=spell_scout(disasm(spell))
+    spell_methods=disasm(spell)
+    result=spell_scout(spell_methods)
+    getter_result=getter_scout(spell_methods)
+    print("SOMAKE_FUNERAL_GETTER_SCOUT",json.dumps(getter_result,sort_keys=True))
+    if getter_result["status"]!="OBSERVED_8_EXACT_GETTER_BODIES_TYPED_ONLY":
+        raise GateError("native getter corpus ambiguous")
     if result["status"]!="OBSERVED_CONTROLLER_CAST_HANDBACK_OPERANDS_ONLY":
         raise GateError("spell controller handoff remains not proved:"+result.get("reason","unknown"))
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=digest:raise GateError("publisher artifact changed")
     return {"mod_id":"somakespells","version":"1.0.9","sha1":digest,
-            "spell_compiled_class":spell,"spell_constructor_scout":result}
+            "spell_compiled_class":spell,"spell_constructor_scout":result,"native_getter_scout":getter_result}
 def main():
     a=argparse.ArgumentParser()
     a.add_argument("--jar",type=Path,required=True)
