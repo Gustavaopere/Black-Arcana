@@ -1,0 +1,68 @@
+name: Werewolves 2.0.3.3 exact-JAR action registry evidence
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/werewolves-2033-binary-audit.yml'
+      - 'docs/qa/werewolves_binary_audit.py'
+      - 'docs/qa/werewolves_binary_audit_test.py'
+      - 'docs/qa/werewolves-2033-exact-registry-pending.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/werewolves-2033-binary-audit.yml'
+      - 'docs/qa/werewolves_binary_audit.py'
+      - 'docs/qa/werewolves_binary_audit_test.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  werewolves_action_registry:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Validate Java21 compiled synthetic regression fixture
+        run: python3 docs/qa/werewolves_binary_audit_test.py -v
+
+      - name: Obtain installed-release publisher JAR and compare physical SHA-1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/werewolves-2033
+          JAR='build/werewolves-2033/Werewolves-1.21-2.0.3.3.jar'
+          # CurseForge file 7814024 returned HTTP 403 in first CI attempt.
+          # Exact same publisher release is on Modrinth version zkd687ts;
+          # only the frozen modlist SHA-1 can authorize this fallback file.
+          curl --fail --show-error --silent --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://cdn.modrinth.com/data/3ElBohKg/versions/zkd687ts/Werewolves-1.21-2.0.3.3.jar' \
+            --output "$JAR"
+          echo "12a400d50c6e2afdcd96caf73cb80d37877147c8  $JAR" | sha1sum --check --status
+          test "$(stat -c %s "$JAR")" -gt 500000
+
+      - name: Audit compiled ModActions nine provider-native action callsites
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/werewolves_binary_audit.py \
+            --jar 'build/werewolves-2033/Werewolves-1.21-2.0.3.3.jar' \
+            --output build/werewolves-2033/registry.json
+
+      - name: Archive JSON evidence only, never JAR/compiled class
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: werewolves-2033-registry-${{ github.sha }}
+          path: build/werewolves-2033/registry.json
+          retention-days: 14
+          if-no-files-found: ignore
