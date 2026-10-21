@@ -1,5 +1,12 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
+## Somake 1.0.9 — prova de distância XZ e limiar R² no filtro (PR #848)
+
+**Barra geral:** `—%`, universo final ainda sem denominador, mínimo conservador **≥1.856** objetos semânticos, histórico 1.857 em reconciliação. **Barra Somake — identidades:** `83/83 = 100%`. **Downstream por ficha:** `5/83 = 6,02%` no recorte da campanha. **Hooks mutadores homologados:** `0`; percentual das demandas permanece `—%`, pois denominador não foi fechado. **Providers binários exatos da subcampanha fixa:** `35/39 = 89,74%`, sem promoção adicional.
+
+[Workflow Java 21 #39523827891](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39523827891) `SUCCESS`, **12 testes** e SHA do publisher igual: o método `FuneralBloomControllerEntity.isValidTarget(LivingEntity,LivingEntity)` agora tem prova física do seu branch numérico final. `slot2.distanceToSqr(controller.getX(),slot2.getY(),controller.getZ())` é guardado no slot local double 3; o limiar usa duas leituras `controller.getRadius()`, `fmul` float32, `f2d`, `dcmpg` e `ifgt` para rejeição `false`. Para valores finitos, rejeita distâncias quadráticas XZ superiores ao raio ao quadrado. A aceitação final, os papéis de caster/owner/candidato, o impacto separado da bud, o efetivo `maxTargets`, o contrato de perk e QA provider-loaded não são automaticamente promovidos. **⛔ FAIL_CLOSED** para modificadores de targeting/range até boundary segura; Stage 06.05 🟡, Stage 09 PENDING. [Ficha individual](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+
 ## Continuação Somake: dois branches intermediários provados (20/10/2026; PR #847)
 
 **Barras de cobertura inalteradas:** universo global **—%** (denominador final aberto, piso conservador **≥1.856** ações/objetos semânticos); Somake 1.0.9 **83/83 (100%)** identidades físicas; auditoria downstream **5/83 (6,02%)** fichas nesta campanha; **0** hooks de mutação por jogador homologados (percentual sem denominador). Subcampanha binária do recorte fixo: **35/39 (89,74%)** no último checkpoint integrado, sem equiparar esse número à completude de todos os mods.
