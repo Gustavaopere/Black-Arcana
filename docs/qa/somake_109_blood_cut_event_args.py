@@ -117,6 +117,11 @@ def certify_native_damage_expression(rows):
 
 
 
+def certify_native_source_actor(rows):
+    """Fail closed until source-entity to local_1 typed producer is proven."""
+    raise GateError("native damage source actor provenance not yet implemented")
+
+
 def inspect(jar:Path) -> dict:
     jar=Path(jar)
     if jar.name!=FILENAME or jar.is_symlink() or not jar.is_file():
