@@ -116,6 +116,10 @@ def probe_class(jar:Path,cls:str):
                       for i,(_,op,_,c) in enumerate(rows)
                       if op.startswith("invoke") and c][:32],
                   "opcode_kinds_24_to_42":[op for _,op,_,_ in rows[24:43]],
+                  "bounded_local_slot_facts":[{
+                      "index":i,"opcode":rows[i][1],"local_operand":rows[i][2][:16]
+                   } for i in (14,17,18,21,22,23,25,26,27,28,33,34,36)
+                   if i<len(rows)],
                   "conditional_opcode_indices":[{"index":i,"opcode":op,
                                                   "target_program_counter":arg}
                       for i,(_,op,arg,_) in enumerate(rows)
