@@ -38,6 +38,26 @@ class SymbolicTests(unittest.TestCase):
         self.assertIn("0.1",str(nonnull))
         self.assertIn("iadd",str(null))
 
+    def test_float_local_merge_tracks_each_guard(self):
+        rows=[
+            (0,"aload_1","",""),(1,"ifnonnull","5",""),
+            (2,"fconst_1","",""),(3,"fstore_2","",""),(4,"goto","10",""),
+            (5,"getstatic","","Field com/somake/somakespells/registries/ModSpells.BLOOD_CUT:Lnet/neoforged/neoforge/registries/DeferredHolder;"),
+            (6,"invokevirtual","","Method net/neoforged/neoforge/registries/DeferredHolder.get:()Ljava/lang/Object;"),
+            (7,"aload_1","",""),
+            (8,"invokevirtual","","Method com/somake/somakespells/spells/blood/BloodCutSpell.getEntityPowerMultiplier:(Lnet/minecraft/world/entity/LivingEntity;)F"),
+            (9,"fstore_2","",""),(10,"fload_2","",""),
+            (11,"iload_0","",""),(12,"iconst_1","",""),(13,"iadd","",""),
+            (14,"i2f","",""),(15,"fmul","",""),
+            (16,"ldc","#10","float 0.1f"),(17,"fmul","",""),(18,"freturn","","")
+        ]
+        result=symbolic_modifier(rows)
+        self.assertEqual(2,len(result))
+        left=next(x for x in result if x["guard"]=="arg1 == null")
+        right=next(x for x in result if x["guard"]=="arg1 != null")
+        self.assertIn("entity_power_multiplier",str(right))
+        self.assertNotIn("entity_power_multiplier",str(left))
+
     def test_unknown_opcode_rejected(self):
         rows=valid();rows[9]=(9,"unknownop","","")
         with self.assertRaises(GateError):symbolic_modifier(rows)
