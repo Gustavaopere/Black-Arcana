@@ -1,5 +1,7 @@
 # Modpack Magic Catalog — Phase 2
 
+**Acompanhamento corrente:** [progresso geral e barras por provider](meta/PROGRESSO-CATALOGO-ATUAL.md). O painel distingue fichas individuais, identidade, causalidade source e QA; o universo total continua aberto.
+
 **Atualização binária 2026-10-13:** [Reliquified Ars Nouveau 0.8.1](providers/✅-reliquified-ars-nouveau/EXACT-BINARY-RELIC-ABILITIES-0.8.1.md) registra **19/19 itens e IDs primários de `AbilityTemplate.builder` exatos** ([Java21 #38461801129](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38461801129)); campanha **25/39 exatos / 14/39 pendentes**, +0 raízes, mínimos **1857 global / 1855 escopo**. Runtime/Survival ⚠️.
 
 

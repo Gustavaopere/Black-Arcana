@@ -1,5 +1,7 @@
 # Black Arcana — Catálogo Global de Magia e Feitiços
 
+**Checkpoint corrente de acompanhamento — 21/10/2026:** [painel geral e por provider](../../wiki/modpack-catalog/meta/PROGRESSO-CATALOGO-ATUAL.md). Mínimos registrados ≥1.856 global / ≥1.854 estrito, campanha de identidade 38/39; denominador técnico universal aberto. Os números antigos abaixo permanecem fotografias históricas. A autoridade semântica atual é o ledger vinculado no painel.
+
 Última sincronização: 2026-10-06
 
 Este arquivo é o índice operacional global de catalogação do projeto. A árvore detalhada canônica é `wiki/modpack-catalog/providers/`; o ledger semântico reconstruível é `wiki/modpack-catalog/meta/SEMANTIC-MAGIC-COVERAGE.md`; e a cobertura técnica de componentes é `wiki/modpack-catalog/meta/CATALOG-COVERAGE-CURRENT.md`.

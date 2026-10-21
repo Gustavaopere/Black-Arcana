@@ -1,5 +1,7 @@
 # Black Arcana — acompanhamento do catálogo de magias
 
+**Painel corrente:** [PROGRESSO-CATALOGO-ATUAL.md](PROGRESSO-CATALOGO-ATUAL.md). Os blocos datados abaixo são histórico; referências a PR #825 draft foram superadas pelo merge e checkpoint pós-#825.
+
 ## Iron's Spells 3.16.3 — source-pinned integrado (PR #795; 21/10/2026)
 
 **Integração documental comprovada:** [PR #795](https://github.com/Gustavaopere/Black-Arcana/pull/795) merged por squash em `Black-Arcana/main@c8ff878c8aab96bd546e4beb4d62ea08e94c5f94`, depois de reconciliar a branch com `main@35c6f872a717fe964acc75f5e27353792ea55115`. O diff final contém **111 arquivos** apenas em `providers/✅-irons-spells/`: **110 fichas individuais** enriquecidas com parâmetros, classes, métodos e links de código-fonte, mais `TECHNICAL-PERK-MAP.md`. Todas as 111 mudanças referenciam o commit upstream existente `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`, e os caminhos Java dos links foram confrontados com a árvore desse commit.
