@@ -447,3 +447,32 @@ Para valores inteiros não negativos normais do contador, a fórmula do argument
 **Decisão de arquitetura:** o conjunto `activeTargetIds` é **armazenado na controller**, consultado no predicado da wave e podado pela rotina `pruneTargets`. Esta auditoria identificou gravação NBT dos três parâmetros acima, mas **não homologou persistência do conjunto de UUIDs**. Não presumir que o filtro evite sobreposição de vítimas entre controllers, jogadores ou ciclos de mundo. Para perks de procs/target cap, correlacionar explicitamente cast/controller/bud/vítima em um contrato real antes de ativação; sem contrato, **⛔ FAIL_CLOSED**.
 
 **Pendências:** origem dos argumentos numéricos antes do construtor da controller (spell-level/getters/caster), integração segura com progresso, semântica completa de `pruneTargets`, dedup inter-controller, owner/claims/PvP, reload físico, effects em Survival/multiplayer e QA provider-loaded. Nenhuma nova magia/adaptador/runtime. Somake 83/83 IDs, fichas downstream 5/83; Stage 06.05 🟡, Stage 09 físico PENDING. [Scanner](../../../../docs/qa/somake_109_controller_fields.py) · [Testes](../../../../docs/qa/somake_109_controller_fields_test.py).
+
+## OnCast → controller — oito parâmetros e fórmulas nativas (21/10/2026; PR #855)
+
+**Proveniência física:** JAR Somake Spells `somakespells-1.0.9-1.21.1.jar`, CurseForge File **8867079**, mod ID `somakespells`, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`. Classe publicada `com.somake.somakespells.spells.blood.FuneralBloomSpell`, método `onCast(Level,int,LivingEntity,CastSource,MagicData):void` com 81 instruções compiladas. [GitHub Actions Java21 #39541775847](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39541775847) concluiu com **14 testes sintéticos aprovados**. Os gates da controller (#854) e da bud (#853) são reexecutados antes do novo scanner. Revalidar no HEAD documental final antes de merge.
+
+| Propriedade destinada à `FuneralBloomControllerEntity` | Getter provider-native, expressão conforme JVM | Fronteira de implementação |
+|---|---|---|
+| Raio de aquisição | `getRadius(level,caster)` usa `clamp_f32(9.5f + level*0.82f + max_f32(0,schoolPower-1f)*0.65f,10f,15f)`; `schoolPower` vem de `getSchoolType().getPowerFor(caster)`, com valor local 1f quando o argumento de caster é nulo | O `level` entra **sem clamp prévio neste getter**; 10–15 é limite do valor nominal de raio, não da AABB posterior de impacto da bud |
+| Duração da controller | `getDuration(level)=240 + 20*(clamp_int(level,1,5)-1)` ticks | Duração nominal, não ciclo de vida observado durante gameplay |
+| Intervalo de wave | `getWaveInterval(level)=18-clamp_int(level,1,5)` ticks | Não mede spawn ou intervalo real sob lag |
+| Telegraph | `getTelegraphTicks(level)=max_int(9,13-trunc_div_int(level,2))` ticks | Divisão inteira com sinal, `level` **não é clampado neste getter** |
+| Teto de candidatos | `getMaxTargets(level)=4+clamp_int(level,1,5)` | O campo da controller reaplica `Math.max(1,·)`; a PR #849 provou corte de lista, não spawns efetivados |
+| Dano de impacto nominal | `getImpactDamage(level,caster)=1.5f+0.75f*getSpellPower(level,caster)` | Float do provider, não dano final após armadura/resistência, nem hook alterável por jogador |
+| Wither — duração | `getWitherDuration(level)=60+12*clamp_int(level,1,5)` ticks | Controller e bud aplicam `max(30,·)` em seus respectivos construtores; não confirma status aceito |
+| Wither — amplificador | `getWitherAmplifier(level)=1` se `level>=5`, caso contrário `0` | Não equivaler a magnitude de dano/efeito no servidor; no construtor aplica-se `max(0,·)` |
+
+**Valores exatos dos getters inteiros para níveis 1 a 5 (não resultados de gameplay):**
+
+| Nível | Duração | Intervalo wave | Telegraph | `maxTargets` | Wither duração | Wither amplificador |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 240 | 17 | 13 | 5 | 72 | 0 |
+| 2 | 260 | 16 | 12 | 6 | 84 | 0 |
+| 3 | 280 | 15 | 12 | 7 | 96 | 0 |
+| 4 | 300 | 14 | 11 | 8 | 108 | 0 |
+| 5 | 320 | 13 | 11 | 9 | 120 | 1 |
+
+**Handoff de casting provado:** `onCast` invoca esses oito getters na ordem da tabela, usando `level` do slot JVM **2** e `caster` do slot **3** nos dois getters com entidade. O método faz um raycast com distância literal **32.0d**, converte a posição atingida com `groundPosition`, invoca uma única vez o construtor especializado `FuneralBloomControllerEntity(Level,LivingEntity,float,int,int,int,int,float,int,int)` (índice estrutural 51), define `setPos` e executa **uma tentativa** `Level.addFreshEntity`, descartando seu retorno booleano. O `Predicate` dinâmico do raycast, linha de visão final e seleção efetiva de alvo ainda não foram validados. O valor de raio governa a controller, **não** `AABB.inflate(1.75,1.35,1.75)` da bud já comprovado.
+
+**Contrato de perks:** todos os parâmetros continuam sob autoridade Somake/Iron's. Não existe setter, evento ou adapter per-player homologado a partir da mera existência desses getters; invocar novamente `onCast` ou adicionar dano, Wither ou cura por fora causaria possível double-processing. ⛔ **FAIL_CLOSED** para mutadores. +0 magias e +0 adapters; Stage 06.05 🟡 / Stage 09 físico PENDING. [Verificador](../../../../docs/qa/somake_109_funeral_spell_handoff.py) · [Testes](../../../../docs/qa/somake_109_funeral_spell_handoff_test.py).

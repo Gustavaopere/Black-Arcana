@@ -203,3 +203,22 @@ O [workflow físico Java21 #39529183029](https://github.com/Gustavaopere/Black-A
 **Filtro e poda intra-controller:** o corpo `lambda$launchWave$0` consulta `isValidTarget(arg1,arg2)`, depois `arg2.getUUID()` e `this.activeTargetIds.contains(UUID)`; uma UUID já presente torna o candidato inelegível nesse predicado. Na mesma instância, `pruneTargets` constrói uma coleção de UUIDs obtidos por `getTargetUuid()` e chama `this.activeTargetIds.retainAll(coleção)`. O caminho normal de `launchWave` também chama `activeTargetIds.add(candidateUUID)` depois de tentar `ServerLevel.addFreshEntity` e descarta os dois retornos, como certificado na PR #849.
 
 **Limitações:** o inventário de campos NBT certificados cobre **impactDamage, witherDuration, witherAmplifier**, não uma serialização comprovada de `activeTargetIds`. Regras de dedup entre controllers, reconstrução após reload, sucesso de spawn, execução da poda e ownership efetivo precisam de testes adicionais. `FAIL_CLOSED` para perks mutadoras, nenhuma nova fonte de dano, mana ou Mastery. Stage 06.05 🟡; Stage 09 QA físico ainda pendente. [Verificador](../../../docs/qa/somake_109_controller_fields.py) · [Ficha](registry-1.0.9/funeral-bloom.md).
+
+## Spell `onCast` → controller: fórmulas nativas SHA-exatas (21/10/2026; PR #855)
+
+**Publisher:** Somake Spells 1.0.9, CurseForge File 8867079, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`. Classe física `com.somake.somakespells.spells.blood.FuneralBloomSpell`. [Auditoria Java21 #39541775847](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39541775847) concluiu com **14 testes** e certificou 81 instruções no método `onCast`, oito getters na sequência que alimenta o construtor de `FuneralBloomControllerEntity` no índice 51, e cast level/caster como slots JVM 2 e 3 nos getters que os consomem.
+
+| Getter | Expressão ou decisão JVM de retorno |
+|---|---|
+| `getRadius(I,LivingEntity):F` | `Mth.clamp(9.5f+level*0.82f+Math.max(0f,(caster!=null ? getSchoolType().getPowerFor(caster) : 1f)-1f)*0.65f,10f,15f)`, aritmética `float` conforme JVM |
+| `getDuration(I):I` | `240+20*(Mth.clamp(level,1,5)-1)` |
+| `getWaveInterval(I):I` | `18-Mth.clamp(level,1,5)` |
+| `getTelegraphTicks(I):I` | `Math.max(9,13-level/2)` com divisão inteira |
+| `getMaxTargets(I):I` | `4+Mth.clamp(level,1,5)` |
+| `getImpactDamage(I,LivingEntity):F` | `1.5f+0.75f*getSpellPower(level,caster)` |
+| `getWitherDuration(I):I` | `60+12*Mth.clamp(level,1,5)` |
+| `getWitherAmplifier(I):I` | `level>=5 ? 1 : 0` |
+
+Os saltos de `getRadius` quando caster é nulo e de `getWitherAmplifier` foram resolvidos pelo CFG compilado. Os getters de raio e telegraph **não** limitam o próprio argumento level a 1–5, diferentemente das expressões que invocam `Mth.clamp`. O `onCast` não contém branch explícito no método auditado; a semântica do `invokedynamic Predicate` do raycast de **32.0d** permanece **não certificada**. Após `groundPosition`, a controller recebe `setPos` e uma tentativa de `addFreshEntity` cujo retorno é descartado.
+
+**Handoff encadeado já comprovado:** `FuneralBloomSpell getters → FuneralBloomControllerEntity constructor (maxTargets>=1, witherDuration>=30, witherAmplifier>=0) → launchWave: FuneralBloomBudEntity constructor (witherDuration>=30, amplifier>=0) → bud.impact: consulta AABB própria e efeitos condicionais`. Esta cadeia une os argumentos até as chamadas provider-native, mas não prova dano efetivo, número de entidades persistidas, evento de cura cancelável, dedup inter-controller, hook mutador ou QA real. Black Arcana preserva seu runtime; RPG Skill Tree fica apenas na progressão contratual; Somake/Iron's mantêm casting e efeitos. **⛔ FAIL_CLOSED**. Stage 06.05 🟡, Stage09 físico PENDING. [Verificador](../../../docs/qa/somake_109_funeral_spell_handoff.py) · [Ficha](registry-1.0.9/funeral-bloom.md).
