@@ -4,6 +4,7 @@ import dev.gustavopere.blackarcana.content.noetic.AstralProjectionEntity;
 import dev.gustavopere.blackarcana.content.noetic.FamiliarOwnershipProvider;
 import dev.gustavopere.blackarcana.content.noetic.NoeticObservationKind;
 import dev.gustavopere.blackarcana.content.noetic.NoeticSafetyCeilings;
+import dev.gustavopere.blackarcana.integration.neoforge.GameTestEntityIndexGate;
 import dev.gustavopere.blackarcana.integration.neoforge.MinecraftNoeticRuntime;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;

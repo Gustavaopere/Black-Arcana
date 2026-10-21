@@ -12,13 +12,13 @@ import java.util.Objects;
  * object identity before executing an existing behavioral assertion; never relax runtime
  * admission, skip a failed gameplay assertion or turn fixture registration into a PASS.
  */
-final class GameTestEntityIndexGate {
+public final class GameTestEntityIndexGate {
     private static final long FIRST_PROBE_TICK = 1L;
     private static final long LAST_PROBE_TICK = 20L;
 
     private GameTestEntityIndexGate() { }
 
-    static void whenIndexed(GameTestHelper helper, Runnable assertions, Entity... requiredEntities) {
+    public static void whenIndexed(GameTestHelper helper, Runnable assertions, Entity... requiredEntities) {
         Objects.requireNonNull(helper, "helper");
         Objects.requireNonNull(assertions, "assertions");
         Objects.requireNonNull(requiredEntities, "requiredEntities");
