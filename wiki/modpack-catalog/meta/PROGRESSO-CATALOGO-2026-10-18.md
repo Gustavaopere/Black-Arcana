@@ -1,5 +1,14 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
+## Somake — `FuneralBloomSpell.onCast` e oito getters nativos (21/10/2026; PR #855)
+
+**Barra global:** **—%** (denominador universal ainda aberto; piso documentado **≥1.856** objetos semânticos). **Barra Somake:** **83/83 = 100%** para identidades registradas; **5/83 = 6,02%** para aprofundamento downstream por ficha; campanha fixa anterior de providers com release exato **35/39 = 89,74%** no checkpoint próprio. Esta auditoria adiciona **+0 magias, +0 adapters**, hooks mutadores homologados **0**, taxa de perks sem denominador.
+
+O [workflow Java21 #39541775847](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39541775847) verificou o JAR oficial Somake 1.0.9 File 8867079, SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0`, com **14 testes**, e ligou `FuneralBloomSpell.onCast(Level,int,LivingEntity,CastSource,MagicData)` à construção nativa de `FuneralBloomControllerEntity` por oito getters: raio, duração, intervalo de waves, telegraph, maxTargets, dano de impacto, Wither duração e Wither amplificador. Certificadas as expressões JVM, incluindo `getImpactDamage=1.5f+0.75f*getSpellPower(level,caster)`, `getWitherDuration=60+12*clamp(level,1,5)`, `getWitherAmplifier=(level>=5?1:0)`, raio nominal clampado 10–15 e raycast com distância literal 32. Não confundir raycast/radius/controller com hitbox de impacto da bud ou resultados reais. O constructor/controller/NBT e wave/bud possuem gates prévios das PRs #849–#854.
+
+**Fronteira:** nenhuma API mutadora por jogador comprovada. Preservar o provider como autoridade de dano, status, cura e casting; ⛔ `FAIL_CLOSED` para perks externas; Stage 06.05 🟡 e Stage 09 QA físico PENDING. [Ficha](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+
 ## Somake — campos da controller e deduplicação de UUID por instância (21/10/2026; PR #854)
 
 **Barra global:** —% porque o denominador universal permanece aberto; piso conservador **≥1.856** objetos semânticos. **Barra Somake:** **83/83 IDs = 100%**; aprofundamento downstream em **5/83 fichas = 6,02%**; subcampanha fixa de providers com JAR exato **35/39 = 89,74%** no checkpoint documentado. +0 magias, +0 adapters e nenhum hook mutador homologado.
