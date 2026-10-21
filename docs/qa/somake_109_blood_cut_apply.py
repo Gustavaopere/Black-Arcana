@@ -68,6 +68,13 @@ def survey_application(rows):
     }
 
 
+
+def certify_final_apply_stack(rows):
+    """Fail closed before exact typed target/amount/source argument proof."""
+    raise GateError("final applyDamage target/amount/source stack gate not yet implemented")
+
+
+
 def inspect(jar:Path)->dict:
     jar=Path(jar)
     if jar.name!=FILENAME or not jar.is_file() or jar.is_symlink():
