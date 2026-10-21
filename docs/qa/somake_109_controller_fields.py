@@ -154,7 +154,7 @@ def prove_controller_field_lifecycle(methods):
             and f(save,38,"getfield","witherAmplifier","I")
             and call(save,39,"putInt","(Ljava/lang/String;I)V")):
         return fail("NBT_store_field_mapping_drift")
-    if not (local(prune,35,"aload",4)
+    if not (local(prune,34,"aload",2) and local(prune,35,"aload",4)
             and call(prune,36,"getTargetUuid","()Ljava/util/UUID;")
             and call(prune,37,"add","(Ljava/lang/Object;)Z")
             and local(prune,40,"aload",0)
