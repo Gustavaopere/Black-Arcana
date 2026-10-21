@@ -24,7 +24,7 @@ from somake_109_bud_impact_damage_gates import (
     certify_heal_guard_and_event_path, certify_exact_heal_event_gate_109,
 )
 
-RANGES=((32,62),(89,120),(120,144),(144,173))
+RANGES=((0,32),(32,62),(62,89),(89,120),(120,144),(144,173))
 MAX_BODY=1_400_000
 
 def classify_comment(op,comment):
