@@ -81,7 +81,7 @@ def lifecycle_fixture():
         39:"invokevirtual #14 // Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V",
     })
     prune=put(rows(46),{
-        35:"aload 4",
+        34:"aload_2",35:"aload 4",
         36:"invokevirtual #16 // Method com/somake/somakespells/entity/FuneralBloomBudEntity.getTargetUuid:()Ljava/util/UUID;",
         37:"invokeinterface #17, 2 // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z",
         40:"aload_0",41:"getfield #5 // Field activeTargetIds:Ljava/util/Set;",
