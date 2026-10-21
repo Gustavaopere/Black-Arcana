@@ -28,6 +28,10 @@ O [painel corrente](../../wiki/modpack-catalog/meta/PROGRESSO-CATALOGO-ATUAL.md)
 
 Não foram criados testes que apenas espelham a formatação das fichas. As verificações de cobertura procuram falhas reais de contagem, caminhos, identidade, recurso extra e falsa promoção de evidência.
 
+## Cruzamento do runtime sibling
+
+Lidos o bootstrap, gate de versão, callbacks e testes existentes em RPG `main@ed5b65b`: `EpicFightProgressionHooks.register`, `onSkillConsume`/`EpicFightStaminaPolicy.adjustedCost`, `onSuccessfulDodge`, `onDealDamageAuthority` e `onDealDamage`. O [dossiê de contratos existentes](../../wiki/modpack-catalog/providers/✅-epic-fight/skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md) está vinculado às 43 fichas. Ele distingue mutadores de custo STAMINA já implementados de novos campos sem hook comprovado. Código/testes sibling foram lidos, não reexecutados; nenhum runtime foi modificado.
+
 ## Limites e continuidade
 
 Java local disponível: **17**. Os testes Java/NeoForge completos são executados pelo CI Java **21**, sem declarar build local inexistente. Esta rodada não realizou sessão de cliente, jogador conectado, consumo em gameplay, dano final, configuração implantada, PvP/claims ou integração do RPG/Enshrouded. O CI não resolve essas pendências por inferência.

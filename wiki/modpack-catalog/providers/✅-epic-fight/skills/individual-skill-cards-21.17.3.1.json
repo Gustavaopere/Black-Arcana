@@ -23,8 +23,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/Skill.java",
       "implementation_source_sha256": "7cae664bdc3f07ca5e25b3fc27ca4d8de234538a6490a6486f979da3ab65b3af",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:combo_attacks",
@@ -35,8 +36,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/common/ComboAttacks.java",
       "implementation_source_sha256": "3967d5b7c75477f792c2aa603241c00733eb111bd14a061e6134692ab902ca07",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:roll",
@@ -47,8 +49,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/dodge/DodgeSkill.java",
       "implementation_source_sha256": "73a32a7de7708e418181cf0ae34e77f1e030fd0e48e285848ae3fa5bf36e0427",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:step",
@@ -59,8 +62,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/dodge/DodgeSkill.java",
       "implementation_source_sha256": "73a32a7de7708e418181cf0ae34e77f1e030fd0e48e285848ae3fa5bf36e0427",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:knockdown_wakeup",
@@ -71,8 +75,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/dodge/KnockdownWakeupSkill.java",
       "implementation_source_sha256": "97521eece37c7ad933d74e0f3d43feeddac23e101b01386280bdad80621f4749",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:guard",
@@ -83,8 +88,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/guard/GuardSkill.java",
       "implementation_source_sha256": "f3340f0c76bc5afa599cb05917520efcffd7eded1ac9cbbc2e439c60c76242be",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:impact_guard",
@@ -95,8 +101,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/guard/ImpactGuardSkill.java",
       "implementation_source_sha256": "ca415b8fb47bfbbbd8e2613cd84abc888f1d8587970eacf8c857c8b0eea415a7",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:parrying",
@@ -107,8 +114,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/guard/ParryingSkill.java",
       "implementation_source_sha256": "9ee554a5e1f21a910862b5e956542227a0579553ccacd6cf55eb227c72321f73",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:adaptive_skin",
@@ -119,8 +127,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/AdaptiveSkinSkill.java",
       "implementation_source_sha256": "3401193e3824a3f5c87cf2be411c117bad4d53711049788cf465373998992a78",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:adrenaline_fiend",
@@ -131,8 +140,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/AdrenalineFiendSkill.java",
       "implementation_source_sha256": "2541c5d73307687b8404ed25573cd57520a0207e06c440b755fba9e4addb7e77",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:berserker",
@@ -143,8 +153,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/BerserkerSkill.java",
       "implementation_source_sha256": "c9fe60ca0f74510d0af68d2cf0cc75d131da8720a1833c1818b8fffca0634d25",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:bonebreaker",
@@ -155,8 +166,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/BonebreakerSkill.java",
       "implementation_source_sha256": "648df1baddc7aad85e9976ead7a0023a78c56de1abab01e37a526cb0a7c3b94c",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:catharsis",
@@ -167,8 +179,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/CatharsisSkill.java",
       "implementation_source_sha256": "6963c776fdbf4b35282f3b1a79fc11a9c354c1c8e42d4d1b9002612d8a2e8012",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:death_harvest",
@@ -179,8 +192,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/DeathHarvestSkill.java",
       "implementation_source_sha256": "a6bb3124011ef38765290e356cc356ed8a8cf2359b50487101ae9e399f76bdfd",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:emergency_escape",
@@ -191,8 +205,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/EmergencyEscapeSkill.java",
       "implementation_source_sha256": "5f08fcde03b6a86cccb54e5be0843c61fe599898ce17b36dedbf0fecd87d0c70",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:endurance",
@@ -203,8 +218,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/EnduranceSkill.java",
       "implementation_source_sha256": "a92b5bb4f8474658e13948bcd10930223f70731b654bee452bbb56c7b5262eb2",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:forbidden_strength",
@@ -215,8 +231,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/ForbiddenStrengthSkill.java",
       "implementation_source_sha256": "19a702e1cc13b7599c7610007f24a43377a151183fab7bb3a48c7f44537f3303",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:hypervitality",
@@ -227,8 +244,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/HyperVitalitySkill.java",
       "implementation_source_sha256": "1f1be9d7acd21f6afaec0a1d4e7d3648f4c64b233859637664b7c0625e6a3a32",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:stamina_pillager",
@@ -239,8 +257,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/StaminaPillagerSkill.java",
       "implementation_source_sha256": "b4536c8a5747788d364a33fe8c3eb11e172c70eda4493cbf9d075bfa3869491b",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:swordmaster",
@@ -251,8 +270,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/SwordmasterSkill.java",
       "implementation_source_sha256": "652445572bdd8f60263b7a1dff3a61975bd1c9bedc0483e2e617f74b036ca462",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:technician",
@@ -263,8 +283,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/TechnicianSkill.java",
       "implementation_source_sha256": "b83b6d77acf92a5bde07308fa636652d502f461ad6799b633109c9410ec1c69e",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:vengeance",
@@ -275,8 +296,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/passive/VengeanceSkill.java",
       "implementation_source_sha256": "982be08aeb93a077ac4d64e8ed6dde18c118324a4c8107489da1dc9ca4bda7c1",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:meteor_slam",
@@ -287,8 +309,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/identity/MeteorSlamSkill.java",
       "implementation_source_sha256": "178b32b015a9f03f6d041b59230a1bbfee599d5501bccf110f432b1bec6686d2",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:revelation",
@@ -299,8 +322,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/identity/RevelationSkill.java",
       "implementation_source_sha256": "b2c78a85cbf338382533ae0bcdb04a35a8a9067721f6737ffbed847996e3a7dc",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:demolition_leap",
@@ -311,8 +335,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/mover/DemolitionLeapSkill.java",
       "implementation_source_sha256": "9889a00bd56e483200ed160f352a3348ea79b559cdeaaef792bc4abcde2953f3",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:phantom_ascent",
@@ -323,8 +348,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/mover/PhantomAscentSkill.java",
       "implementation_source_sha256": "81d405203dddaff836bf7a7c99f069adc33979353e5f8424a12f6530ddf224d5",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:sweeping_edge",
@@ -335,8 +361,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/SimpleWeaponInnateSkill.java",
       "implementation_source_sha256": "826444780df44b825a20d552009c2f47447f04486d9bda37157d49a02a8df04b",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:dancing_edge",
@@ -347,8 +374,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/SimpleWeaponInnateSkill.java",
       "implementation_source_sha256": "826444780df44b825a20d552009c2f47447f04486d9bda37157d49a02a8df04b",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:the_guillotine",
@@ -359,8 +387,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/GuillotineAxeSkill.java",
       "implementation_source_sha256": "17486aa95857c0afa06c188f631164e9cf6adde3708f838464578eb81f369b07",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:grasping_spire",
@@ -371,8 +400,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/GraspingSpireSkill.java",
       "implementation_source_sha256": "3b5fbe91ba64281e6303896dc25380bc06e6f7bad3d282317f1f2196d2b13aeb",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:heartpiercer",
@@ -383,8 +413,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/SimpleWeaponInnateSkill.java",
       "implementation_source_sha256": "826444780df44b825a20d552009c2f47447f04486d9bda37157d49a02a8df04b",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:steel_whirlwind",
@@ -395,8 +426,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/SteelWhirlwindSkill.java",
       "implementation_source_sha256": "7990d6c869a07693c3be13f01e302f9e97d723d3f6691f6448d0d80d9d9799a1",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:battojutsu",
@@ -407,8 +439,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/BattojutsuSkill.java",
       "implementation_source_sha256": "dd090f9cd1ee0e12f35a6e9c21a414e361b71c39f1fd500b6345a9b32dd7dc5a",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:rushing_tempo",
@@ -419,8 +452,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/RushingTempoSkill.java",
       "implementation_source_sha256": "0958d1dbdc9760bc8bc84dfdd5ad56ada31d4d830d329601d75969c35bde4994",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:relentless_combo",
@@ -431,8 +465,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/SimpleWeaponInnateSkill.java",
       "implementation_source_sha256": "826444780df44b825a20d552009c2f47447f04486d9bda37157d49a02a8df04b",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:sharp_stab",
@@ -443,8 +478,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/SimpleWeaponInnateSkill.java",
       "implementation_source_sha256": "826444780df44b825a20d552009c2f47447f04486d9bda37157d49a02a8df04b",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:liechtenauer",
@@ -455,8 +491,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/LiechtenauerSkill.java",
       "implementation_source_sha256": "e9fc991beac65c47cae1ae4f10e74375ef18af80d00c7c14607af7fd7524b908",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:eviscerate",
@@ -467,8 +504,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/EviscerateSkill.java",
       "implementation_source_sha256": "eb59130ef8c4c95f5738d7b7447a9e4b80220d20efb332ab039deb898c50f2cd",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:blade_rush",
@@ -479,8 +517,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/BladeRushSkill.java",
       "implementation_source_sha256": "e74f7f8035e116ebce064463b2c563af10dc8083d78c32d1977af5066d75c2c3",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:wrathful_lighting",
@@ -491,8 +530,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/WrathfulLightingSkill.java",
       "implementation_source_sha256": "e35b302ed03bf2be3921e6ffb6b84fadf44fc16535eee796280d2c63dd4b9cf0",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:tsunami",
@@ -503,8 +543,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/ConditionalWeaponInnateSkill.java",
       "implementation_source_sha256": "5c7b0e5afc80d53b61368d04a1c3eccdb580d7e68e09efafa3a7901aac4dadd2",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:everlasting_allegiance",
@@ -515,8 +556,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weaponinnate/EverlastingAllegiance.java",
       "implementation_source_sha256": "5b52878a682e65643c0fa31c2098e645e70a1c7ee9686b5434991fb07ed8be11",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     },
     {
       "id": "epicfight:battojutsu_passive",
@@ -527,8 +569,9 @@
       "implementation_source": "src/main/java/yesman/epicfight/skill/weapon_passive/BattojutsuPassive.java",
       "implementation_source_sha256": "18e98b85ff0d9f4f1d6a4d6cd06a524571c788efcf7d858b0ab1f1fae3692b7f",
       "source_causality": "SOURCE_ADJACENT",
-      "external_perk_mutation": "NOT_HOMOLOGATED",
-      "gameplay_qa": "PENDING"
+      "external_perk_mutation": "NEW_OR_GENERAL_MUTATORS_NOT_HOMOLOGATED_BY_THIS_CARD",
+      "gameplay_qa": "PENDING",
+      "existing_sibling_contract": "skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md"
     }
   ],
   "packaged_only_resources": [

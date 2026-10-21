@@ -38,6 +38,8 @@
 
 **Análise detalhada:** [dossiê causal de origem](../technical/CORE-SENTINEL-COMBO-WAKEUP-21.17.3-SOURCE-ADJACENT.md). A existência de classe/método/evento ou configuração não autoriza automaticamente escrita por perk.
 
+**Contratos existentes no sibling:** [RPG Skill Tree `main@ed5b65b`](../RPG-SIBLING-BOUNDARIES-ed5b65b.md) já contém modificação de custo via `CONSUME_SKILL`/`setAmount` quando o recurso do evento é `STAMINA`, além de observadores de dodge e damage para progressão. Pendências desta ficha referem-se a novos mutadores/validação por campo e não negam esse runtime já presente. Não duplicar desconto, débito ou Mastery.
+
 ### Matriz de campos para integração
 
 | Eixo | Valor, consumidor e limite conhecido | Viabilidade atual |

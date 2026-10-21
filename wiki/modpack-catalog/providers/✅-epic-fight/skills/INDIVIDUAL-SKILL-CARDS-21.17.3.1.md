@@ -58,6 +58,10 @@
 
 O ZIP contém **43 JSONs de parâmetros**, dos quais 42 pertencem aos IDs core auditados. O adicional [`air_slash.json`](packaged-only/air-slash.md), `consumption=2.0`, não demonstra uma skill vinculada; `empty` continua sentinela sem JSON. Não criar um 44º ID core ou nova magia a partir dessa diferença.
 
+## Contratos já implementados no sibling
+
+O [dossiê da main RPG](RPG-SIBLING-BOUNDARIES-ed5b65b.md) vincula bootstrap de versão exata, mutação de custo STAMINA antes do consumer e observação de dodge/damage para progressão canônica. Ausência de homologação de novos campos nesta campanha não significa ausência desses adapters já presentes.
+
 ## Limites e continuação
 
 - Cobertura acima mede fichas por ID; não mede completude de métodos/consumidores, hooks mutadores, QA de combate, addons ou modpack inteiro.

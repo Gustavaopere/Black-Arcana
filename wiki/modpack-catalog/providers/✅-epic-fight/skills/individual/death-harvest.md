@@ -31,6 +31,8 @@
 
 **Análise detalhada:** [dossiê causal de origem](../technical/DEATH-HARVEST-21.17.3-SOURCE-ADJACENT.md). A existência de classe/método/evento ou configuração não autoriza automaticamente escrita por perk.
 
+**Contratos existentes no sibling:** [RPG Skill Tree `main@ed5b65b`](../RPG-SIBLING-BOUNDARIES-ed5b65b.md) já contém modificação de custo via `CONSUME_SKILL`/`setAmount` quando o recurso do evento é `STAMINA`, além de observadores de dodge e damage para progressão. Pendências desta ficha referem-se a novos mutadores/validação por campo e não negam esse runtime já presente. Não duplicar desconto, débito ou Mastery.
+
 ### Matriz de campos para integração
 
 | Eixo | Valor, consumidor e limite conhecido | Viabilidade atual |
@@ -40,7 +42,7 @@
 | Alvo / área / máximo de alvos | Orb→owner, distância de coleta <0.75 bloco na fonte; dimensões NÃO VERIFICADAS. Seleção, dano e colisão são eixos distintos. | `SEM_HOOK_SEGURO` para single→AOE/retarget externo. |
 | Projétil / hitbox / escala / velocidade | Orb de recurso: parâmetros de coleta/lifecycle no pipeline; dimensões e escala NÃO VERIFICADAS. | `SEM_HOOK_SEGURO` para aumentar hitbox/escala externa. |
 | Tempo / duração / cast / cooldown | Condição adjacente tickCount>40 para crédito/descarte; não duração de spell. | `CONFIG_NATIVE` apenas para campos JSON existentes; mutação per-player não homologada. |
-| Custos / recursos / refunds | Recurso e ordem de consumo descritos no pipeline; consumption isolado não identifica stamina/mana/segundos. | `CONTRATO_CONDICIONAL`; respeitar CONSUME_SKILL/cancelamento/consumer. |
+| Custos / recursos / refunds | Recurso e ordem de consumo descritos no pipeline; consumption isolado não identifica stamina/mana/segundos. | [`HOOK_VERIFICADO` no código sibling](../RPG-SIBLING-BOUNDARIES-ed5b65b.md) somente para evento com `Resource.STAMINA`; demais recursos e composição final condicionados. Respeitar cancelamento/consumer. |
 | Status / summons / mundo | Efeitos e estados descritos no pipeline/dossiê; alcance de bloco, claims/PvP e rollback efetivos NÃO VERIFICADOS. | Sem replay externo de efeito; proteção do provider e WorldEffectPolicy do Black Arcana preservadas. |
 | Scaling / caps / causalidade | Coeficientes/stacks/limites acima pertencem aos consumidores documentados; VFX, fase, proc ou callback não criam novo root. | `SEM_HOOK_SEGURO` para award/alteração sem correlação e deduplicação. |
 
