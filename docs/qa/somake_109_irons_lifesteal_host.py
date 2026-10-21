@@ -22,7 +22,7 @@ MAX_CLASS_BYTES=500_000
 MAX_CANDIDATES=100
 MAX_JAVAP_BYTES=1_500_000
 RUNTIME_FILENAME="irons_spellbooks-1.21.1-3.16.3.jar"
-RUNTIME_SHA256=None # replace with official CurseForge 8680204 digest after scan
+RUNTIME_SHA256="13d644474ddba4f8478b4ce68294687fd509c994b3f344a224142b102dbe6f73" # official CurseForge File 8680204, Java 21 run 39619044180
 OWNER="io.redspace.ironsspellbooks.damage.SpellDamageSource"
 APPLY="io.redspace.ironsspellbooks.damage.DamageSources"
 
@@ -142,14 +142,14 @@ def inspect(jar:Path):
     if hashlib.sha256(jar.read_bytes()).hexdigest()!=digest:
         raise GateError("Iron's runtime mutated during inspection")
     return {
-       "status":"PROVISIONAL_OFFICIAL_IRONS_3163_RUNTIME_LIFESTEAL_SYMBOL_SCOUT",
+       "status":"PASS_SHA_EXACT_IRONS_3163_RUNTIME_LIFESTEAL_SYMBOL_SCOUT",
        "version":"1.21.1-3.16.3",
        "runtime_sha256":digest,
        "lifesteal_marked_class_count":len(candidates),
        "lifesteal_marked_classes":candidates,
        "runtime_class_count":len(entries),
        "method_symbol_surveys":results,
-       "scope":"Runtime JAR static discovery on publisher file 8680204; until independently pinned, SHA is provisional. No inference of actual healed life or perk mutator."
+       "scope":"Runtime JAR static discovery on publisher file 8680204; SHA256 verified against pinned CurseForge file 8680204. No inference of actual healed life or perk mutator."
     }
 
 
