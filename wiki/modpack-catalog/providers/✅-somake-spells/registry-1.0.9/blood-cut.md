@@ -84,3 +84,10 @@ return ((float)(a + 1) * factor) * 0.1f
 Preservar exatamente as duas multiplicações `float` na ordem compilada; `a` e `e` são argumentos do getter, **a proveniência a partir do evento permanece por comprovar**. O retorno não equivale a dano final ou permissão para modificá-lo via RPG Skill Tree. A função `getEntityPowerMultiplier`, os filtros de `onLivingDamage`, as configurações efetivas, dano secundário e Survival continuam condicionados. **⛔ FAIL_CLOSED para mutações de perk.**
 
 [Dossiê detalhado de CFG e retorno numérico](../EXACT-BINARY-BLOOD-CUT-CFG-MODIFIER-1.0.9.md). Nenhuma raiz adicional ou adapter foi implementado.
+
+
+## Parâmetro `lifesteal` do damage source — prova física em 21/10/2026 (PR #860)
+
+[Auditoria Java 21 #39594615862](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39594615862) **SUCCESS**, SHA-1 físico Somake 1.0.9 conferido, **51 testes sintéticos**. O método compilado `BloodCutSpell.getDamageSource(Entity,Entity):SpellDamageSource` contém sete instruções: chamada à fonte-base do Iron's (índice 3), `ldc` carregando **`0.15f`** (índice 4), `SpellDamageSource.setLifestealPercent(float)` (índice 5), seguido de `areturn` (índice 6). A adjacência certifica o **parâmetro literal passado ao setter**.
+
+O parâmetro nominal é `0.15f`; **não** se pode afirmar que Blood Cut cure 15% do dano sem examinar o tratamento efetivo do setter e do dano secundário pelo host. Hooks por caster, dano aplicado, alvo da cura, caps e QA real continuam ⚠️/⛔. [Dossiê de lifesteal e limites](../EXACT-BINARY-BLOOD-CUT-LIFESTEAL-1.0.9.md).
