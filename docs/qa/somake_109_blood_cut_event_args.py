@@ -67,14 +67,53 @@ def examine_event_callsite(rows: list[tuple[int,str,str,str]]) -> dict:
         "event_damage_read_indices":[i for i,_ in new_damage],
         "preceding_modifier_opcode_kinds":prior,
         "following_modifier_opcode_kinds":after,
+        "entry_opcode_kinds":[r[1] for r in rows[:15]],
+        "slot1_store_instruction_indices":[i for i,(_,op,arg,_) in enumerate(rows) if op=="astore_1" or (op=="astore" and arg.strip()=="1")],
         "limitations":"Call ordering and local opcode mnemonics are not typed stack provenance; no claim of amplifier/entity mapping, event guard truth, or applied damage."
     }
 
 
 
 def certify_native_damage_expression(rows):
-    """Fail closed until exact typed JVM float stack handoff is certified."""
-    raise GateError("native damage expression stack gate not yet implemented")
+    """Certify one uninterrupted eight-op typed stack segment, not game damage."""
+    sites=[i for i,(_,op,_,c) in enumerate(rows)
+           if op.startswith("invoke") and "getDamageModifier:" in c]
+    if len(sites)!=1:
+        raise GateError("missing/ambiguous Blood Cut modifier call")
+    mod_i=sites[0]
+    if mod_i<5 or mod_i+2>=len(rows):
+        raise GateError("not enough instructions around native modifier")
+    segment=rows[mod_i-5:mod_i+3]
+    opcodes=[op for _,op,_,_ in segment]
+    expected=["aload_0","invokevirtual","aload_2","invokevirtual",
+              "aload_1","invokestatic","fmul","fstore_3"]
+    if opcodes!=expected:
+        raise GateError("native event × modifier JVM float stack sequence drift")
+    get_new=segment[1][3]
+    get_amp=segment[3][3]
+    get_mod=segment[5][3]
+    if (NEW_DAMAGE_MEMBER not in get_new or "getNewDamage:()F" not in get_new
+            or "MobEffectInstance.getAmplifier:()I" not in get_amp
+            or "getDamageModifier:"+MODIFIER_DESC not in get_mod):
+        raise GateError("typed event/modifier operand call changed")
+    inside={pc for pc,_,_,_ in segment[1:]}
+    # No non-fallthrough branch may jump into the middle of this expression.
+    for i,(_,op,arg,_) in enumerate(rows):
+        if not op.startswith(("if","goto")):
+            continue
+        if not re.fullmatch(r"\d+",arg.strip()):
+            raise GateError("unsupported branch argument")
+        if int(arg.strip()) in inside:
+            raise GateError("branch into native float operand sequence")
+    return {
+        "assurance":"DIRECT_TYPED_FLOAT_HANDOFF",
+        "modifier_call_index":mod_i,
+        "source_damage_read_index":mod_i-4,
+        "effect_amplifier_read_index":mod_i-2,
+        "result_store_opcode":"fstore_3",
+        "return_expression":"event.getNewDamage * getDamageModifier(effect.getAmplifier,local_1)",
+        "limits":"The load from local_1 is proven but its producer, branch predicates, delivery of secondary damage, and recursion safeguards are not yet certified."
+    }
 
 
 
@@ -94,6 +133,7 @@ def inspect(jar:Path) -> dict:
         raise GateError("Blood Cut typed Post handler missing/ambiguous")
     graph=graph_paths(found[0],expected_branches=5)
     result=examine_event_callsite(found[0])
+    direct_float=certify_native_damage_expression(found[0])
     if len(found[0])!=103 or graph["syntactic_paths_to_apply"]!=2 or graph["syntactic_paths_without_apply"]!=3:
         raise GateError("Blood Cut native event CFG changed")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=SHA1:
@@ -102,6 +142,7 @@ def inspect(jar:Path) -> dict:
             "provider":"somakespells","version":"1.0.9","sha1":SHA1,
             "event":"BloodCutEffect.onLivingDamage(LivingDamageEvent.Post)",
             "callsite_evidence":result,
+            "direct_float_stack_handoff":direct_float,
             "limits":"No producer-consumer typed stack proof yet; no gameplay, host settlement, recursion or perk hook verified."}
 
 
@@ -115,6 +156,7 @@ def main():
     args.output.write_text(json.dumps(evidence,ensure_ascii=False,indent=2,sort_keys=True)+"\n")
     print("BLOOD_CUT_EVENT_CALLSITES",evidence["status"],evidence["sha1"])
     print("BLOOD_CUT_ARG_PROXIMITY",json.dumps(evidence["callsite_evidence"],sort_keys=True))
+    print("BLOOD_CUT_FLOAT_HANDOFF",json.dumps(evidence["direct_float_stack_handoff"],sort_keys=True))
 
 
 if __name__=="__main__":
