@@ -1,5 +1,12 @@
 # Black Arcana — progresso de catalogação, cohort 2026-10-18
 
+## Somake 1.0.9 — parâmetros nativos de Wither, push e cura da bud (20/10/2026, PR #852)
+
+**Cobertura global:** `—%` — denominador aberto; piso conservador **≥1.856** objetos semânticos catalogáveis, não equivalentes a todas as habilidades implementadas. **Identidades Somake:** `83/83 = 100%` dos IDs físicos registrados; **auditoria downstream:** `5/83 = 6,02%` fichas neste recorte. **Subcampanha de providers com release exato:** `35/39 = 89,74%` no checkpoint fechado. **Hooks mutadores aprovados:** zero, sem denominador conhecido.
+
+A [auditoria física Java 21 #39533416067](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39533416067) confrontou Somake 1.0.9 File 8867079 ao SHA-1 `171841ac9f802be9309ecc166c1d972ac6d404c0` e passou **14 testes sintéticos**. O novo gate exige a prova exata de `bud.getOwner()` tipado como `LivingEntity` ou nulo (slot4), `slot8.hasEffect(WITHER)` **anterior** ao dano, contador slot6 que cresce apenas quando `applyDamage` retorna verdadeiro e Wither já existia, fields `witherDuration`/`witherAmplifier`, vetor `push(0,0.34,0)` e fórmula de argumento de cura `min_f32(3.75f,1.25f*(float)slot6)`. Nada disso equivale a prova de dano/HP efetivos, jogador owner, aceitação dos status ou API de perks. +0 magias, +0 adapters; **⛔ FAIL_CLOSED** para modificação externa. Stage 06.05 🟡, Stage 09 QA real ainda PENDING. [Ficha detalhada](../providers/✅-somake-spells/registry-1.0.9/funeral-bloom.md).
+
+
 ## Somake 1.0.9 — filtros efetivos do bloco de dano e cura da bud (20/10/2026, PR #851)
 
 **Barras sem aumento artificial de identidade:** universo global **—%** (piso conservador **≥1.856** objetos semânticos; denominador final aberto), Somake **83/83 IDs = 100%**, recorte de fichas downstream **5/83 = 6,02%**, subcampanha fixa de providers exatos **35/39 = 89,74%** no último checkpoint. A prova acrescenta profundidade técnica a `somakespells:funeral_bloom`, **+0** novos feitiços e **+0** adapters. Hooks de perks mutadoras homologados: **0**, percentual indefinido sem denominador.
