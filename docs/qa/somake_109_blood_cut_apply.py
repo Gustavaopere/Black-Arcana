@@ -70,8 +70,52 @@ def survey_application(rows):
 
 
 def certify_final_apply_stack(rows):
-    """Fail closed before exact typed target/amount/source argument proof."""
-    raise GateError("final applyDamage target/amount/source stack gate not yet implemented")
+    """Strict typed straight-line JVM stack provenance for final damage invocation.
+
+    Scope: 11 terminal instructions, plus the previous float local store.
+    This does not prove live host settlement, invulnerability, actual healing,
+    or dispatch from 1-arg to 2-arg getDamageSource overload.
+    """
+    if len(rows)<13:
+        raise GateError("missing terminal JVM handoff cohort")
+    terminal=rows[-11:]
+    expected=["aload_0","invokevirtual","fload_3","getstatic","invokevirtual",
+              "checkcast","aload_1","invokevirtual","invokestatic","pop","return"]
+    if [op for _,op,_,_ in terminal]!=expected:
+        raise GateError("Blood Cut final applyDamage operand stack fingerprint drift")
+    if ("LivingDamageEvent$Post.getEntity:()Lnet/minecraft/world/entity/LivingEntity;" not in terminal[1][3]
+        or "ModSpells.BLOOD_CUT:" not in terminal[3][3]
+        or "DeferredHolder.get:()Ljava/lang/Object;" not in terminal[4][3]
+        or "class com/somake/somakespells/spells/blood/BloodCutSpell" not in terminal[5][3]
+        or "BloodCutSpell.getDamageSource:(Lnet/minecraft/world/entity/Entity;)Lio/redspace/ironsspellbooks/damage/SpellDamageSource;" not in terminal[7][3]
+        or APPLY+"(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/damagesource/DamageSource;)Z" not in terminal[8][3]):
+        raise GateError("Blood Cut exact typed operand producer/consumer descriptor drift")
+    start=len(rows)-11
+    float_stores=[j for j,(_,o,arg,_) in enumerate(rows[:start])
+                  if o=="fstore_3" or (o=="fstore" and arg.strip()=="3")]
+    if len(float_stores)!=1:
+        raise GateError("missing or ambiguous upstream float value in local_3")
+    # Reject unexpected branches into the middle of the straight-line call tail.
+    interiors={x[0] for x in terminal[1:]}
+    for _,op,arg,_ in rows:
+        if not op.startswith(("if","goto")):
+            continue
+        if not re.fullmatch(r"\d+",arg.strip()):
+            raise GateError("unsupported JVM branch target")
+        if int(arg.strip()) in interiors:
+            raise GateError("branch into final applyDamage argument stack")
+    return {
+        "assurance":"EXACT_TYPED_APPLY_HANDOFF",
+        "target_argument":"event.getEntity()",
+        "float_amount_argument":"local_3",
+        "float_amount_store_instruction_index":float_stores[0],
+        "source_argument":"BloodCutSpell.getDamageSource(local_1)",
+        "source_factory_overload":"ONE_ENTITY_ARGUMENT",
+        "source_factory_descriptor":"(Entity) -> SpellDamageSource",
+        "native_apply_signature":"(Entity,float,DamageSource) -> boolean",
+        "return_boolean":"discarded by pop",
+        "limits":"This one-Entity factory overload is not the two-Entity overload audited for a 0.15f lifesteal setter. The host dispatch relation and effective healing are unresolved."
+    }
 
 
 
@@ -92,14 +136,16 @@ def inspect(jar:Path)->dict:
         raise GateError("missing/ambiguous Blood Cut Post method")
     graph=graph_paths(matches[0],expected_branches=5)
     report=survey_application(matches[0])
+    source_stack=certify_final_apply_stack(matches[0])
     if graph["secondary_apply_damage_index"]!=report["apply_damage_instruction_index"]:
         raise GateError("CFG/applyDamage evidence incoherent")
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=SHA1:
         raise GateError("JAR changed during inspection")
-    return {"status":"PASS_SHA_EXACT_BLOOD_CUT_APPLY_DAMAGE_CALLSITE_SCOUT",
+    return {"status":"PASS_SHA_EXACT_BLOOD_CUT_APPLY_DAMAGE_TYPED_ARGUMENT_STACK",
             "sha1":SHA1,"provider":"somakespells","version":"1.0.9",
             "method":"BloodCutEffect.onLivingDamage(LivingDamageEvent.Post)",
             "apply_callsite":report,
+            "final_argument_stack":source_stack,
             "limit":"Scout does not demonstrate call argument origins or healing. No mutating integration allowed."}
 
 
@@ -113,6 +159,7 @@ def main():
     args.output.write_text(json.dumps(result,sort_keys=True,indent=2)+"\n")
     print("BLOOD_CUT_APPLY_SCOUT",result["status"],result["sha1"])
     print("BLOOD_CUT_APPLY_WINDOW",json.dumps(result["apply_callsite"],sort_keys=True))
+    print("BLOOD_CUT_APPLY_ARGUMENTS",json.dumps(result["final_argument_stack"],sort_keys=True))
 
 
 if __name__=="__main__":
