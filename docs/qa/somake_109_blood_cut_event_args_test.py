@@ -191,6 +191,13 @@ class EventEarlyTypeGuardTests(unittest.TestCase):
         self.assertEqual("EXACT_EARLY_INSTANCEOF_RETURN_BRANCH",v["assurance"])
         self.assertEqual("io/redspace/ironsspellbooks/damage/SpellDamageSource",v["excluded_class_internal_name"])
 
+    def test_changed_excluded_class_must_fail_closed(self):
+        rows=early_exclusion_fixture()
+        rows[12]=(12,"instanceof","#45",
+                  "class net/minecraft/world/damagesource/DamageSource")
+        with self.assertRaises(GateError):
+            certify_early_post_damage_exclusion(rows)
+
     def test_changed_branch_target_rejected(self):
         rows=early_exclusion_fixture();rows[13]=(13,"ifeq","14","")
         with self.assertRaises(GateError):certify_early_post_damage_exclusion(rows)
