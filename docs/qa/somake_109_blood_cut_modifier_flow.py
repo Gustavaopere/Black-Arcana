@@ -125,6 +125,26 @@ def symbolic_modifier(rows):
     return sorted(finished,key=lambda x:x["guard"])
 
 
+def certify_native_modifier_formula(result):
+    """Native exact-release expression gate: reject drift in operation ordering."""
+    base=("i2f",("iadd",("arg","0"),("literal","1")))
+    coeff=("literal_float","0.1")
+    expected={
+        "arg1 != null":("fmul",("fmul",base,("entity_power_multiplier",("arg","1"))),coeff),
+        "arg1 == null":("fmul",("fmul",base,("literal","1")),coeff),
+    }
+    if (not isinstance(result,list) or len(result)!=2
+            or {x.get("guard"):x.get("expression") for x in result}!=expected):
+        raise GateError("Blood Cut 1.0.9 exact modifier expression drift")
+    return {
+        "verified":"SHA_EXACT_TWO_ROUTE_FLOAT_EXPRESSION",
+        "operation_order":"iadd -> i2f -> fmul(power_or_1f) -> fmul(0.1f) -> freturn",
+        "nullable_entity_fallback":1.0,
+        "float_coefficient":0.1,
+        "source_level":"compiled JVM typed stack flow, not live damage",
+    }
+
+
 def inspect(jar:Path):
     import hashlib, subprocess
     from somake_109_blood_cut_cfg import MODIFIER
@@ -137,11 +157,13 @@ def inspect(jar:Path):
     matches=[opcode_rows(body) for n,d,body in sections(p.stdout) if n==MODIFIER and d==MODIFIER_DESCRIPTOR]
     if len(matches)!=1:raise GateError("modifier exact signature missing")
     results=symbolic_modifier(matches[0])
+    strict=certify_native_modifier_formula(results)
     if hashlib.sha1(jar.read_bytes()).hexdigest()!=SHA1:raise GateError("JAR hash drift")
     return {"status":"PASS_SHA_EXACT_BLOOD_CUT_BOUNDED_FLOAT_DATAFLOW",
         "provider":"somakespells","version":"1.0.9","sha1":SHA1,
         "method":"BloodCutEffect.getDamageModifier(int,LivingEntity):float",
         "return_paths":results,
+        "strict_native_formula":strict,
         "boundary":"Derived expressions at JVM freturn; not applied damage, effective host config, recursion protection, or modifiable hooks."}
 
 
