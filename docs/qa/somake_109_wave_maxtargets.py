@@ -97,7 +97,7 @@ def prove_wave_list_cap(declared):
             "InterfaceMethod "+member,
             "Method "+member,
         )
-    if not (isload(40,2) and call(41,"invokeinterface","java/util/List.size:()I")
+    if not (isload(40,4) and call(41,"invokeinterface","java/util/List.size:()I")
             and isload(42,0) and rows[43][1]=="getfield" and rows[43][3] in FIELD
             and rows[44][1]=="if_icmple"):
         return {"status":"NOT_PROVED","reason":"size_and_cap_conditional_operands_not_exact",
@@ -108,12 +108,12 @@ def prove_wave_list_cap(declared):
     target=rows[44][2].split(" ",1)[0]
     if not target.isdecimal() or positions.get(int(target))!=51:
         return fail("oversize_branch_skip_not_the_list_join")
-    if not (isload(45,2) and rows[46][1]=="iconst_0" and isload(47,0)
+    if not (isload(45,4) and rows[46][1]=="iconst_0" and isload(47,0)
             and rows[48][1]=="getfield" and rows[48][3] in FIELD
             and call(49,"invokeinterface","java/util/List.subList:(II)Ljava/util/List;")
-            and isstore(50,2)):
+            and isstore(50,4)):
         return fail("maxTargets_not_upper_bound_of_sublist_or_stored_result")
-    if not isload(53,2) or not call(54,"invokeinterface","java/util/List.iterator:()Ljava/util/Iterator;"):
+    if not isload(53,4) or not call(54,"invokeinterface","java/util/List.iterator:()Ljava/util/Iterator;"):
         return fail("iterator_not_proved_to_consume_bounded_slot")
     for i,(_,op,arg,_) in enumerate(rows):
         if i==44:continue
@@ -128,7 +128,7 @@ def prove_wave_list_cap(declared):
     return {
         "status":"PROVED_WAVE_CANDIDATE_LIST_TRUNCATION",
         "method":"launchWave","instruction_count":196,
-        "list_local":2,"size_call_index":41,
+        "list_local":4,"size_call_index":41,
         "first_cap_field_index":43,"conditional_index":44,
         "truncation_condition":"list_size_greater_than_maxTargets",
         "branch_skip_index":51,"slice_start_literal":0,"slice_upper_source":"maxTargets_field",
