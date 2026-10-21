@@ -207,6 +207,43 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         readme = (provider / "README.md").read_text(encoding="utf-8")
         self.assertIn("SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md", readme)
 
+    def test_monsters_spellbooks_98_exact_compiled_ids_in_individual_cards(self):
+        provider = PROVIDERS / "✅-monsters-spellbooks"
+        proof = json.loads((ROOT / "docs/qa/monsters_spellbooks_00163_exact_registry_ids.json").read_text(encoding="utf-8"))
+        self.assertEqual("black_arcana_monsters_spellbooks_00163_static_ids_v1", proof["schema"])
+        self.assertEqual("b3aa89fd081bf4bfaf8d0f4380bcdc393c66ab0e", proof["sha1"])
+        self.assertEqual("monsterspellbooks", proof["neoforge_mod_id"])
+        self.assertEqual(98, proof["static_identities"])
+        self.assertEqual(0, proof["semantic_count_delta"])
+        self.assertIs(proof["loaded_registry_verified"], False)
+        self.assertIs(proof["gameplay_verified"], False)
+        self.assertIs(proof["perk_hook_verified"], False)
+        rows = proof["registered_spell_identities"]
+        self.assertEqual(98, len(rows))
+        by_field = {entry["field"]: entry for entry in rows}
+        self.assertEqual(98, len(by_field))
+        self.assertEqual(98, len({entry["root"] for entry in rows}))
+        self.assertEqual({
+            "PRIMORDIAL_FLASH": "ancient_flash",
+            "RAZORBLADE_TYPHOON": "razor_typhoon",
+            "SUMMON_POISON_VINE": "summon_poison_vines",
+            "SUMMON_WITHER_ARMY": "summon_wither_warrior",
+        }, {entry["field"]: entry["root"] for entry in rows
+            if entry["field"].lower() != entry["root"]})
+        cards = (provider / "SPELL-CARDS-RELEASE-INTERVAL-0.0.16.3.md").read_text(encoding="utf-8")
+        headings = list(re.finditer(r"^### (\\d{2}) — `([A-Z_]+)`$", cards, re.MULTILINE))
+        self.assertEqual(98, len(headings))
+        for idx, heading in enumerate(headings):
+            field = heading.group(2)
+            entry = by_field[field]
+            end = headings[idx + 1].start() if idx + 1 < 98 else cards.index("## Exclusões e limites finais")
+            page = cards[heading.end():end]
+            self.assertIn("**Registry ID físico 0.0.16.3:** `monsterspellbooks:" + entry["root"] + "`", page)
+            self.assertIn("**Classe compilada SHA-exata 0.0.16.3:** `" + entry["clazz"] + "`", page)
+            self.assertIn("COUNTED_EXACT", page)
+            self.assertIn("**Custos, cooldown", page)
+            self.assertIn("`NÃO VERIFICADO`", page)
+
     def test_bloodlines_29_action_cards_keep_source_contract_and_exclusion(self):
         provider = PROVIDERS / "✅-bloodlines"
         source = (provider / "ACTION-CATALOG.md").read_text(encoding="utf-8")
