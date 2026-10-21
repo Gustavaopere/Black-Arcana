@@ -27,6 +27,22 @@ def valid():
     rows[18]=(18,"freturn","","")
     return rows
 
+def exact_operand_order_fixture():
+    """Cast factor ordering independent of native implementation details."""
+    return [
+      (0,"iload_0","",""),(1,"iconst_1","",""),(2,"iadd","",""),
+      (3,"i2f","",""),(4,"aload_1","",""),(5,"ifnonnull","9",""),
+      (6,"fconst_1","",""),(7,"goto","14",""),(8,"nop","",""),
+      (9,"getstatic","","Field com/somake/somakespells/registries/ModSpells.BLOOD_CUT:Lnet/neoforged/neoforge/registries/DeferredHolder;"),
+      (10,"invokevirtual","","Method net/neoforged/neoforge/registries/DeferredHolder.get:()Ljava/lang/Object;"),
+      (11,"checkcast","17","class com/somake/somakespells/spells/blood/BloodCutSpell"),
+      (12,"aload_1","",""),
+      (13,"invokevirtual","","Method com/somake/somakespells/spells/blood/BloodCutSpell.getEntityPowerMultiplier:(Lnet/minecraft/world/entity/LivingEntity;)F"),
+      (14,"fmul","",""),(15,"ldc","#10","float 0.1f"),
+      (16,"fmul","",""),(17,"nop","",""),(18,"freturn","","")
+    ]
+
+
 class SymbolicTests(unittest.TestCase):
     def test_two_nullable_paths_and_float_expression(self):
         result=symbolic_modifier(valid())
@@ -59,18 +75,18 @@ class SymbolicTests(unittest.TestCase):
         self.assertNotIn("entity_power_multiplier",str(left))
 
     def test_exact_native_float_expression_certificate(self):
-        result=symbolic_modifier(valid())
+        result=symbolic_modifier(exact_operand_order_fixture())
         cert=certify_native_modifier_formula(result)
         self.assertEqual("SHA_EXACT_TWO_ROUTE_FLOAT_EXPRESSION",cert["verified"])
         self.assertEqual(0.1,cert["float_coefficient"])
 
     def test_coefficient_mutation_rejected_by_exact_certificate(self):
-        rows=valid(); rows[15]=(15,"ldc","#10","float 0.2f")
+        rows=exact_operand_order_fixture(); rows[15]=(15,"ldc","#10","float 0.2f")
         result=symbolic_modifier(rows)
         with self.assertRaises(GateError):certify_native_modifier_formula(result)
 
     def test_branch_return_mutation_rejected_by_exact_certificate(self):
-        rows=valid();rows[2]=(2,"fconst_2","","")
+        rows=exact_operand_order_fixture();rows[6]=(6,"fconst_2","","")
         result=symbolic_modifier(rows)
         with self.assertRaises(GateError):certify_native_modifier_formula(result)
 
