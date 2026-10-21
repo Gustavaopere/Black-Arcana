@@ -86,11 +86,11 @@ class WaveCapOperandTests(unittest.TestCase):
 
 def loop_fixture():
     row=cap_fixture()[0][2]
-    row[55]="55: astore 5"
-    row[56]="56: aload 5"
+    row[55]="55: astore 6"
+    row[56]="56: aload 6"
     row[57]="57: invokeinterface #1, 1 // InterfaceMethod java/util/Iterator.hasNext:()Z"
     row[58]="58: ifeq 166"
-    row[59]="59: aload 5"
+    row[59]="59: aload 6"
     row[60]="60: invokeinterface #2, 1 // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;"
     row[93]='93: invokespecial #3 // Method com/somake/somakespells/entity/FuneralBloomBudEntity."<init>":()V'
     row[156]="156: invokevirtual #4 // Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
@@ -143,8 +143,6 @@ class ExactPublisherReleaseGateTests(unittest.TestCase):
                     certify_exact_wave_list_cap_109(dict(proof,**delta))
     def test_physical_loop_normal_path_snapshot(self):
         proof=prove_wave_loop_spawn_sites(loop_fixture())
-        # Fixture defaults to different synthetic iterator local; pin release value explicitly.
-        proof=dict(proof,loop_receiver_slot=6)
         certify_exact_wave_loop_109(proof)
         for delta in (
             {"status":"NOT_PROVED"},{"loop_receiver_slot":5},
