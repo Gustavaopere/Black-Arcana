@@ -5,10 +5,18 @@ State: **🟡 independent Java21 JAR audit in progress; do not promote `COUNTED_
 ## Authority
 
 - Physical sibling modlist: `neoforge-rpg-skilltree@9e6436edb0049a8dcc4e47165db0f6850e5efa68`, position **#406**.
-- File `monstersspellbooks-0.0.16.3.jar`; mod ID `monstersspellbooks`; SHA-1 `b3aa89fd081bf4bfaf8d0f4380bcdc393c66ab0e`.
+- File `monstersspellbooks-0.0.16.3.jar` (**filename, 18-character stem**); observed compiled NeoForge mod ID **`monsterspellbooks` (17 characters)**; SHA-1 `b3aa89fd081bf4bfaf8d0f4380bcdc393c66ab0e`. The sibling modlist currently calls the mod ID `monstersspellbooks` (18 chars), which does **not** match the exact published descriptor. This requires a separate physical-modlist correction; the binary identity itself is SHA-matched.
 - Official [CurseForge project 1428928, file 8788560](https://www.curseforge.com/minecraft/mc-mods/monsters-spellbooks-iss/files/8788560), NeoForge 1.21.1, 2026-09-01. The workflow verifies publisher bytes equal the physical SHA-1 before inspecting any class.
 - Contemporaneous public source `RedReaper28/Monsters-Spellbooks-1.21.1@1ab9b72af2ea44c3c8b816e665d06531ea44ddc2` shows **98** `ModSpellRegistry` statements, but `gradle.properties` still reports **0.0.14**, **not exact 0.0.16.3**. This checkpoint is comparative source evidence only, not an exact release-build authority.
 - Full expected `SOURCE_CONSTANT → source class` and family table: [SPELL-CATALOG.md](../wiki/modpack-catalog/providers/✅-monsters-spellbooks/SPELL-CATALOG.md). All 98 semantic roots are **already counted** under `COUNTED_RELEASE_BOUNDED`.
+
+## Observed descriptor drift — exact SHA, 21/10/2026
+
+- [CI #39666865333](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39666865333) passed all six synthetic fixtures, but the direct ForgeCDN request returned HTTP 403 before real bytes could be audited.
+- [CI #39667350696](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39667350696) obtained the official CurseForge File 8788560 via public CurseMaven mirror after 403 and **passed the frozen modlist SHA-1**; a false-negative textual NeoForge mod-ID predicate blocked progress.
+- [CI #39667742292](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39667742292) printed only bounded parsed NeoForge metadata: `modLoader=javafml`, exactly one `[[mods]]` entry, `modId=monsterspellbooks` (17 chars). Its SHA-gated bytecode workflow continued to fail closed while the verifier mistakenly expected `monstersspellbooks` (18 chars).
+- **Distinct identifiers must not be conflated:** the published filename and Java package contain `monstersspellbooks` (18-character stem), while the compiled NeoForge `modId` is `monsterspellbooks` (17). Source `gradle.properties` at `RedReaper28/Monsters-Spellbooks-1.21.1@1ab9b72af2ea44c3c8b816e665d06531ea44ddc2` independently uses the 17-character `mod_id`, although this public source declares the older 0.0.14.
+- The checker now parses TOML structure and tests invalid/duplicate/spoofed identifiers. **98/98 compiled spell class/ID proof is not yet PASS**; retain `COUNTED_RELEASE_BOUNDED`, **37/39**, +0 magic roots and no perk hook or client gameplay claims.
 
 ## What the independent SHA-gated auditor is required to prove
 
