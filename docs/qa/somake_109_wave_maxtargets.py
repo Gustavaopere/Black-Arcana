@@ -165,6 +165,7 @@ def inspect(jar):
                                       wave_max_targets_surface(wave[0]))
     evidence=wave_cardinality_scout(declarations)
     proof=prove_wave_list_cap(declarations)
+    print('SOMAKE_WAVE_CAP_PROBE',json.dumps(proof,sort_keys=True))
     certify_exact_wave_list_cap_109(proof)
     if evidence["status"]!="OBSERVED_WAVE_BRANCH_AND_MAXTARGETS_CALLSITES_ONLY":
         raise GateError("wave structure changed")
