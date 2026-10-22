@@ -1,5 +1,7 @@
 # Weapons of Miracles 2.0.178 — individual action-card materialization checkpoint
 
+**Atualização 21/10/2026:** as 13 fichas abaixo receberam seções técnicas e juntam-se a 51 novas fichas de outros IDs no [índice completo de 64 skills](skills/INDIVIDUAL-SKILL-CARDS-2.0.178.md). Este arquivo preserva a fotografia histórica da materialização; números globais históricos não são o progresso atual.
+
 Status: `13/13 ROOTS INDIVIDUALLY MATERIALIZED / 12 COUNTED_EXACT + 1 CONDITIONAL / NO NUMERATOR DELTA`
 
 ## Authority

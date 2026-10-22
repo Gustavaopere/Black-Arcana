@@ -1,6 +1,6 @@
 {
   "date": "2026-10-21",
-  "black_arcana_base": "bab5cd14d02edcab76af0a0f5839860548c435b9",
+  "black_arcana_base": "75f54b37ea329c482b43f1fa058ff5723c661f00",
   "rpg_modlist_sha": "ed5b65b890767b406ce41127bcb793775263c7bd",
   "enshrouded_sha": "a41dbb51aacb94b7b5db6517f1514b0b7aee3e83",
   "global_technical_total": null,
@@ -1273,11 +1273,12 @@
     },
     {
       "provider_directory": "✅-weapons-of-miracles",
-      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
-      "completed": null,
-      "total": null,
-      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
-      "runtime_acceptance": "NOT_INFERRED"
+      "scope": "fichas por ID com parâmetros/localizadores binários; downstream e mutadores parciais",
+      "completed": 64,
+      "total": 64,
+      "evidence": "../providers/✅-weapons-of-miracles/skills/INDIVIDUAL-SKILL-CARDS-2.0.178.md",
+      "runtime_acceptance": "PENDING",
+      "technical_acceptance": "PARTIAL"
     },
     {
       "provider_directory": "✅-werewolves",

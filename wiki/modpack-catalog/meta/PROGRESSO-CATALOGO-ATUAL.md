@@ -1,6 +1,6 @@
 # Progresso atual — magias, feitiços, habilidades e superfícies para perks
 
-**Checkpoint: 21/10/2026.** Base Black Arcana `bab5cd14d02edcab76af0a0f5839860548c435b9`; modlist RPG Skill Tree `ed5b65b890767b406ce41127bcb793775263c7bd`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
+**Checkpoint: 21/10/2026.** Base Black Arcana `75f54b37ea329c482b43f1fa058ff5723c661f00`; modlist RPG Skill Tree `ed5b65b890767b406ce41127bcb793775263c7bd`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
 
 ## Barra geral — todo o conteúdo aplicável
 
@@ -175,7 +175,7 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 | [✅-vampirism](../providers/✅-vampirism/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-vampirism-integrations](../providers/✅-vampirism-integrations/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-waystones](../providers/✅-waystones/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
-| [✅-weapons-of-miracles](../providers/✅-weapons-of-miracles/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
+| [✅-weapons-of-miracles](../providers/✅-weapons-of-miracles/README.md) | **64/64** — [fichas por ID com parâmetros/localizadores binários; downstream parcial](../providers/✅-weapons-of-miracles/skills/INDIVIDUAL-SKILL-CARDS-2.0.178.md) | ![64 de 64 IDs com ficha dedicada, downstream e QA parciais](progress/complete.svg) | ⚠️ 58 JSONs + 6 ausências; 370 descritores/915 refs; mutadores e gameplay PENDING |
 | [✅-werewolves](../providers/✅-werewolves/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-winds-spellbooks](../providers/✅-winds-spellbooks/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-woodwalkers-spellbooks](../providers/✅-woodwalkers-spellbooks/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
@@ -183,16 +183,18 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 | [✅-yungs-better-end-island](../providers/✅-yungs-better-end-island/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-yungs-better-witch-huts](../providers/✅-yungs-better-witch-huts/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 
-## Trabalho desta continuação
+## Trabalho das continuações recentes
 
 **Epic Fight core:** 43 caminhos de ficha dedicados, com 40 fichas novas e três ações mágicas existentes enriquecidas; 42 habilidades jogáveis e uma sentinela. Cada ficha inclui descrição original, ID exato, artifact/hash, parâmetros lidos do JAR, localizadores de classe/método, pipeline e matriz de dano/tipo, alcance, alvo/área, projétil/hitbox, tempo, custo e causalidade. As anotações source-adjacent 21.17.3 não foram convertidas em equivalência global de métodos com 21.17.3.1. [Índice por habilidade](../providers/✅-epic-fight/skills/INDIVIDUAL-SKILL-CARDS-21.17.3.1.md).
+
+**Weapons of Miracles 2.0.178:** 64/64 fichas dedicadas, 51 novas e 13 ações mágicas enriquecidas; 58 JSONs exatos + seis IDs sem arquivo próprio. O verificador confere vínculo de registro via BootstrapMethods, classes, recursos de builder, descritores e referências selecionadas. Cada ficha mantém a matriz de campos e a pendência downstream/QA; +0 no mínimo mágico. [Índice dos 64 IDs](../providers/✅-weapons-of-miracles/skills/INDIVIDUAL-SKILL-CARDS-2.0.178.md).
 
 **Hierarquia preservada:** Black Arcana controla seu runtime mágico; RPG Skill Tree fornece progressão/atributos/Mastery/perks/gates por contrato; Enshrouded controla seu Shroud/exposure. Providers externos continuam donos de seus efeitos, recursos e settlement. Sem hook real, ⛔ fail-closed para mudança por perk de alvo, DamageType, alcance, colisão ou tempo. `CONFIG_NATIVE` não implica setter por jogador.
 
 ## Próximas lacunas objetivas
 
 1. Quantificar, por objeto real e por campo, os providers marcados `—/—`; separar índices, guias, auditorias e sistemas de fichas de habilidade. Não preencher percentuais por contagem de Markdown.
-2. Continuar conteúdo não mágico integrável e addons de combate fora dos 43 IDs core. O catálogo de magia e o universo técnico têm denominadores distintos.
+2. Continuar conteúdo não mágico integrável e addons de combate além dos 43 IDs core e das 64 fichas WOM, com conferência por parâmetro/callback. O catálogo de magia e o universo técnico têm denominadores distintos.
 3. Conferir os consumidores downstream: raio visual versus colisão, seleção versus alcance de dano, modifiers versus HP final, preflight versus settlement e causa versus proc. Registrar assinatura/fase de hook realmente mutável.
 4. Completar identificação física de Aeromancy quando houver hash independente do JAR instalado; manter condição até essa evidência existir.
 5. Validar player conectado, equip/unequip, recursos, sincronização, reload/restart, PvP/claims e coexistência no modpack. Stage 06.05 🟡 / Stage 09 físico PENDING; documentação/CI não transformam pendências em PASS.

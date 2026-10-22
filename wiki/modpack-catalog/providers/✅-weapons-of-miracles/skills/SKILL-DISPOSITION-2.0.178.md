@@ -1,5 +1,7 @@
 # Weapons of Miracles 2.0.178 — exact skill disposition
 
+**Continuação técnica:** [64/64 fichas por ID](INDIVIDUAL-SKILL-CARDS-2.0.178.md), incluindo os 51 EXCLUDED da métrica mágica. Parâmetros e localizadores binários documentados; downstream e QA parciais.
+
 Status: `64/64 EXACT-CURRENT SKILL IDS DISPOSITIONED`
 
 The exact physical/publisher-matched `WOMSkills` registrar contains **64 unique skill IDs**. This table classifies every ID against the Black Arcana semantic-magic rule.

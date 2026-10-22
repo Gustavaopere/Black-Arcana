@@ -1,5 +1,7 @@
 # Modpack Magic Catalog — Phase 2
 
+**Continuação técnica 21/10/2026 — Weapons of Miracles 2.0.178:** [64/64 fichas por ID](providers/✅-weapons-of-miracles/skills/INDIVIDUAL-SKILL-CARDS-2.0.178.md), 51 novas + 13 enriquecidas; 58 JSONs exatos e seis ausências, classes/recursos/descritores/referências compiladas conferidos. A barra mede fichas individuais, com downstream/mutadores/QA parciais. +0 no numerador mágico; Nova permanece condicional.
+
 **Acompanhamento corrente:** [progresso geral e barras por provider](meta/PROGRESSO-CATALOGO-ATUAL.md). O painel distingue fichas individuais, identidade, causalidade source e QA; o universo total continua aberto.
 
 **Atualização binária 2026-10-13:** [Reliquified Ars Nouveau 0.8.1](providers/✅-reliquified-ars-nouveau/EXACT-BINARY-RELIC-ABILITIES-0.8.1.md) registra **19/19 itens e IDs primários de `AbilityTemplate.builder` exatos** ([Java21 #38461801129](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38461801129)); campanha **25/39 exatos / 14/39 pendentes**, +0 raízes, mínimos **1857 global / 1855 escopo**. Runtime/Survival ⚠️.

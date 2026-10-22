@@ -1,5 +1,7 @@
 # Weapons of Miracles 2.0.178 — exact artifact audit
 
+**Continuação técnica 21/10/2026:** [64 fichas individuais e localizadores binários](skills/INDIVIDUAL-SKILL-CARDS-2.0.178.md), com [prova/limites de parâmetros, consumidores e contratos](skills/EXACT-TECHNICAL-BOUNDARIES-2.0.178.md). Identidade e classificação deste audit permanecem preservadas.
+
 Status: `EXACT PHYSICAL=PUBLISHER / 64-SKILL REGISTRY CLOSED / OWNER-ACQUISITION SURFACES BOUNDED`
 
 ## Physical/publisher identity
