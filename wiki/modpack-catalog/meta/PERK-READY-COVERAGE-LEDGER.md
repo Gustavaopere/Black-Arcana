@@ -175,7 +175,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-vampirism` | 8 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-vampirism-integrations` | 4 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-waystones` | 9 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-weapons-of-miracles` | 18 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-weapons-of-miracles` | 18 | ✅ [64/64 fichas individuais por ID](../providers/✅-weapons-of-miracles/skills/INDIVIDUAL-SKILL-CARDS-2.0.178.md) (51 novas + 13 enriquecidas; 58 JSONs e seis ausências); ✅ JAR hash-exato, 64 vínculos ID→bootstrap/supplier/holder, 64 recursos de builder, 370 descritores/915 referências e dez casos de operandos delimitados; ⚠️ downstream, montantes negativos/ordem de listeners, atributos de player e gameplay PENDING; [contrato RPG genérico já existente](../providers/✅-epic-fight/skills/RPG-SIBLING-BOUNDARIES-ed5b65b.md) preservado, ⛔ novos mutadores sem hook; sem delta mágico (12 strict + 1 Nova condicional). [Provas e limites](../providers/✅-weapons-of-miracles/skills/EXACT-TECHNICAL-BOUNDARIES-2.0.178.md) |
 | `✅-werewolves` | 8 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-winds-spellbooks` | 11 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-woodwalkers-spellbooks` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |

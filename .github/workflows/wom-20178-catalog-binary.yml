@@ -1,0 +1,65 @@
+name: WOM 2.0.178 catalog - exact static references
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/wom-20178-catalog-binary.yml'
+      - 'docs/qa/wom_20178_catalog_binary.py'
+      - 'docs/qa/catalog-wom-technical-2026-10-21.md'
+      - 'wiki/modpack-catalog/providers/✅-weapons-of-miracles/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/wom-20178-catalog-binary.yml'
+      - 'docs/qa/wom_20178_catalog_binary.py'
+      - 'docs/qa/catalog-wom-technical-2026-10-21.md'
+      - 'wiki/modpack-catalog/providers/✅-weapons-of-miracles/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact_static_catalog:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Java 21 for javap (mods are not executed)
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Test parser rejection and reference boundaries
+        run: python3 docs/qa/wom_20178_catalog_binary.py --self-test
+      - name: Download exact publisher artifacts for bounded inspection
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/catalog-wom-20178
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-all-errors --connect-timeout 20 --max-time 240 \
+            'https://cursemaven.com/curse/maven/weapons-of-miracles-918614/8829395/weapons-of-miracles-918614-8829395.jar' \
+            --output build/catalog-wom-20178/wom.jar
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-all-errors --connect-timeout 20 --max-time 240 \
+            'https://cursemaven.com/curse/maven/epic-fight-mod-405076/8175609/epic-fight-mod-405076-8175609.jar' \
+            --output build/catalog-wom-20178/epic.jar
+          echo 'b507eb376778cfd1cbecec2841c38891b26a7349  build/catalog-wom-20178/wom.jar' | sha1sum --check
+          echo '0c36ba17bc812c65f5e37f9227d8b6a5185aac70b82a88d1bf52ee13103592cc  build/catalog-wom-20178/wom.jar' | sha256sum --check
+          echo 'fb199b7bbea2fc402da28ab586e73f47e32f8fc0  build/catalog-wom-20178/epic.jar' | sha1sum --check
+          echo '8b882554cf10086398340fbdc741819ee72a801a3adce516c7f4768326a39526  build/catalog-wom-20178/epic.jar' | sha256sum --check
+      - name: Verify 64 cards, typed registry links, parameters and selected consumers
+        run: |
+          python3 docs/qa/wom_20178_catalog_binary.py \
+            --jar build/catalog-wom-20178/wom.jar \
+            --epic-jar build/catalog-wom-20178/epic.jar \
+            --output build/catalog-wom-20178/evidence.json
+      - name: Upload factual report only (no JAR or disassembly)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wom-20178-static-catalog-${{ github.sha }}
+          path: build/catalog-wom-20178/evidence.json
+          if-no-files-found: warn

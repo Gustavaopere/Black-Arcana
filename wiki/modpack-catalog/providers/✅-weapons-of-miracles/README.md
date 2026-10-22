@@ -1,5 +1,7 @@
 # Weapons of Miracles — 2.0.178
 
+**Technical continuation 21/10/2026:** [64/64 dedicated skill cards](skills/INDIVIDUAL-SKILL-CARDS-2.0.178.md), including 51 martial/passive/mover/technological/support cards and 13 enriched supernatural cards. Exact packaged parameters, JVM locators and selected consumers are documented per ID. **Downstream/mutators/gameplay remain partial**, and the semantic count stays 12 exact + 1 conditional. [Evidence and contract boundaries](skills/EXACT-TECHNICAL-BOUNDARIES-2.0.178.md).
+
 Status: `✅ CATALOGED / EXACT PHYSICAL=PUBLISHER ARTIFACT / 64-SKILL REGISTRY FULLY DISPOSITIONED / 13 SUPERNATURAL ACTION ROOTS / 12 COUNTED_EXACT + 1 CONDITIONAL / RUNTIME QA SEPARATE`
 
 ## Current physical identity
