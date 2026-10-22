@@ -141,7 +141,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-northstar-redux` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-not-enough-glyphs` | 49 | ✅ 40/40 fichas source-located (39 source-enabled condicionais + Momentum disabled); ⚠️ config SERVER/bytecode/QA; ⛔ RPG perk adapter |
 | `✅-ozymandias-sundries` | 6 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-paladin-spells` | 9 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-paladin-spells` | 9 | [5/5 fichas com matriz e consumidores source-pinned reauditados](../providers/✅-paladin-spells/PERK-BOUNDARIES-1.1.1.md); contagem 9 preserva a fotografia histórica de documentos, não identidades. Hooks/runtime PENDING |
 | `✅-photon` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-pickable-orbs` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-portable-hole` | 5 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
