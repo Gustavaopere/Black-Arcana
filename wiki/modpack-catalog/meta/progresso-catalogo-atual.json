@@ -1,6 +1,6 @@
 {
   "date": "2026-10-22",
-  "black_arcana_base": "01c42361d4c9a6fd581745b33ffdb84b4464406c",
+  "black_arcana_base": "4dce7a11d88aab9b18d45c7a80d78c956b64bc4e",
   "rpg_modlist_sha": "ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc",
   "enshrouded_sha": "a41dbb51aacb94b7b5db6517f1514b0b7aee3e83",
   "global_technical_total": null,
@@ -1306,10 +1306,10 @@
     },
     {
       "provider_directory": "✅-ypsilons-fundamentalism",
-      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
-      "completed": null,
-      "total": null,
-      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "scope": "fichas individuais das 13 categorias/passivas Principles; os 15 spells ficam fora deste recorte",
+      "completed": 13,
+      "total": 13,
+      "evidence": "../providers/✅-ypsilons-fundamentalism/principles/README.md",
       "runtime_acceptance": "NOT_INFERRED"
     },
     {

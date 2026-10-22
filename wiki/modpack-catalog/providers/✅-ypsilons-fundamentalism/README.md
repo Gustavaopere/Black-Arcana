@@ -43,3 +43,7 @@ Este provider não é somente um pacote de spells. Ele analisa o `SpellRegistry`
 ## Definição de COMPLETO
 
 `15/15` significa que todos os registrations ativos da release exata possuem ficha e que todo campo obrigatório está sustentado por source ou explicitamente marcado `NÃO VERIFICADO`. Não significa que todos os bugs upstream, compatibilidades 3.16.2→3.16.3 ou testes multiplayer estejam validados.
+
+## Principles — fichas técnicas individuais (22/10/2026)
+
+Os [13 sistemas/passivas agora têm ficha individual](principles/README.md), além das 15 magias já catalogadas. O recorte mede **13/13 fichas de categorias enum**, sem somar 13 spells, sem fechar todos os parâmetros técnicos do provider e sem PASS físico. A [visão agregada](PRINCIPLES.md) foi corrigida para os consumidores reais de range, recast, cooldown, efeitos, custos e XP. Nenhuma nova perk, adapter ou alteração runtime.

@@ -1,6 +1,6 @@
 # Progresso atual — magias, feitiços, habilidades e superfícies para perks
 
-**Checkpoint: 22/10/2026.** Base Black Arcana `01c42361d4c9a6fd581745b33ffdb84b4464406c`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
+**Checkpoint: 22/10/2026.** Base Black Arcana `4dce7a11d88aab9b18d45c7a80d78c956b64bc4e`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
 
 ## Barra geral — todo o conteúdo aplicável
 
@@ -179,7 +179,7 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 | [✅-werewolves](../providers/✅-werewolves/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-winds-spellbooks](../providers/✅-winds-spellbooks/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-woodwalkers-spellbooks](../providers/✅-woodwalkers-spellbooks/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
-| [✅-ypsilons-fundamentalism](../providers/✅-ypsilons-fundamentalism/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
+| [✅-ypsilons-fundamentalism](../providers/✅-ypsilons-fundamentalism/README.md) | **13/13** — [fichas de categorias/passivas Principles; 15 spells fora deste recorte](../providers/✅-ypsilons-fundamentalism/principles/README.md) | ![13 de 13 Principles com ficha individual source-pinned](progress/complete.svg) | ⚠️ consumidores source auditados; mixins/host 3.16.3/config/QA PENDING; +0 magias |
 | [✅-yungs-better-end-island](../providers/✅-yungs-better-end-island/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-yungs-better-witch-huts](../providers/✅-yungs-better-witch-huts/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 
@@ -190,6 +190,8 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 **Weapons of Miracles 2.0.178:** 64/64 fichas dedicadas, 51 novas e 13 ações mágicas enriquecidas; 58 JSONs exatos + seis IDs sem arquivo próprio. O verificador confere vínculo de registro via BootstrapMethods, classes, recursos de builder, descritores e referências selecionadas. Cada ficha mantém a matriz de campos e a pendência downstream/QA; +0 no mínimo mágico. [Índice dos 64 IDs](../providers/✅-weapons-of-miracles/skills/INDIVIDUAL-SKILL-CARDS-2.0.178.md).
 
 **Paladin Spells 1.1.1:** 5/5 fichas reauditadas por campo; corrigida ausência indevida do consumidor Bedrock Skin, detalhada a busca +64 de Sworn Protector e os contratos reais RPG/Enshrouded. Source-causal documental, sem promoção de mutadores ou QA. [Boundaries](../providers/✅-paladin-spells/PERK-BOUNDARIES-1.1.1.md).
+
+**Ypsilon’s Fundamentalism 1.1.7.1:** 13/13 fichas das categorias/passivas Principles com matrizes, fórmulas, filtros e consumidores source-pinned. Perceptio/Locus, recasts, precisão, área, XP e owner de cura/efeitos foram reexaminados; as 15 magias não integram esse recorte e não há novas identidades mágicas. [Índice dos Principles](../providers/✅-ypsilons-fundamentalism/principles/README.md).
 
 **Hierarquia preservada:** Black Arcana controla seu runtime mágico; RPG Skill Tree fornece progressão/atributos/Mastery/perks/gates por contrato; Enshrouded controla seu Shroud/exposure. Providers externos continuam donos de seus efeitos, recursos e settlement. Sem hook real, ⛔ fail-closed para mudança por perk de alvo, DamageType, alcance, colisão ou tempo. `CONFIG_NATIVE` não implica setter por jogador.
 

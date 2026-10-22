@@ -32,7 +32,7 @@ Source authority: `ypsilonM/FundamentalPrinciples-1.21.1@a9b8f8222fb2a800edece8c
 
 Summons detectados com recast não recebem também `hasRecasts`, evitando dupla categoria nesse caso.
 
-`PrinciplesLevelsAttachment` é o ledger persistente 0–20. XP necessário para cada próximo nível: `floor(20 + 20 × 1.3^level)`. A seleção de spells e os unlocks usam esse ledger server-side.
+`PrinciplesLevelsAttachment` é o ledger persistente 0–20. XP do nível atual n para o destino n+1: `(int)(20 + 20 × 1.3^(n+1))`; primeiro threshold=46, pois addExperience chama getExpForLevel(currentLevel+1). A seleção de spells e os unlocks usam esse ledger server-side.
 
 ## Gates confirmados
 
@@ -63,3 +63,7 @@ Summons detectados com recast não recebem também `hasRecasts`, evitando dupla 
 ## Fail-closed
 
 Qualquer bridge que não consiga provar caster, owner, target, Principle category, cast source ou provider lifecycle deve se abster. Não inferir sucesso por partículas/HUD.
+
+## Reauditoria dos 13 Principles — 22/10/2026
+
+[Fichas individuais e boundaries source](principles/README.md) aprofundam os 13 sistemas, **+0 spells**. Pontos críticos: Perceptio troca a base por 8+D/5 antes do bônus; Locus só atua com bbInflation positivo e pode compor depois; Vitale exige getRecastCount(1,player)==2; Repetitio só adiciona em totalRecasts>2; Pertinacia usa nível do receptor ServerPlayer/MagicMobEffect; Expansio modifica uma vez antes do clamp e exclui EchoingStrikeEntity; Potentia pode normalizar direção apenas no ramo accuracy<1; Certum tem guards distintos entre preflight/evento; Remedium não substitui healAmount do evento no ramo de insuficiência. Cada ficha preserva defaults/config/QA separados. Nenhum desses achados constitui prova de bug no modpack, API externa suportada ou integração homologada.
