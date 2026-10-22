@@ -179,7 +179,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-werewolves` | 8 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-winds-spellbooks` | 11 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-woodwalkers-spellbooks` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-ypsilons-fundamentalism` | 26 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-ypsilons-fundamentalism` | 26 | [13/13 categorias/passivas Principles com ficha source-causal](../providers/✅-ypsilons-fundamentalism/principles/README.md); 15 spells fora deste recorte. Mixins/host/config/QA PENDING; +0 magias |
 | `✅-yungs-better-end-island` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-yungs-better-witch-huts` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `README.md` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
