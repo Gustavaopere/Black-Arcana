@@ -1,0 +1,1331 @@
+{
+  "date": "2026-10-21",
+  "black_arcana_base": "bab5cd14d02edcab76af0a0f5839860548c435b9",
+  "rpg_modlist_sha": "ed5b65b890767b406ce41127bcb793775263c7bd",
+  "enshrouded_sha": "a41dbb51aacb94b7b5db6517f1514b0b7aee3e83",
+  "global_technical_total": null,
+  "global_technical_complete": null,
+  "semantic_floor_global": 1856,
+  "semantic_floor_in_scope": 1854,
+  "provider_registry_campaign": {
+    "completed": 38,
+    "total": 39,
+    "conditioned_provider": "Aeromancy Additions 1.2.8"
+  },
+  "provider_directories": 164,
+  "metrics_must_not_be_summed": true,
+  "providers": [
+    {
+      "provider_directory": "✅-a-good-place",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-aces-spell-utils",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-acolyte",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-aeromancy-additions",
+      "scope": "fichas source-pinned; hash físico instalado incompleto",
+      "completed": 10,
+      "total": 10,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-alexs-caves-continued",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-alexs-mobs-continued",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-alshanex-familiars",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-apokinetics",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-apotheosis",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-apotheotic-creation",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-apothic-attributes",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-apothic-compat",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-apothic-compats",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-apothic-enchanting",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-apothic-spawners",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-apprentice-codex",
+      "scope": "fichas com dossiês causais documentais",
+      "completed": 83,
+      "total": 83,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-additions",
+      "scope": "objetos com dossiê source-causal (3 glyphs + 2 rituais)",
+      "completed": 5,
+      "total": 5,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-controle",
+      "scope": "glyphs com dossiês source-causais",
+      "completed": 9,
+      "total": 9,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-creo",
+      "scope": "sistemas Create↔Ars documentados; não spells",
+      "completed": 7,
+      "total": 7,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-elemancy",
+      "scope": "famílias de equipamentos documentadas; não spells",
+      "completed": 7,
+      "total": 7,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-elemental",
+      "scope": "objetos core com dossiês source-located",
+      "completed": 47,
+      "total": 47,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-hex",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-morph",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-n-spells",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-nouveau",
+      "scope": "objetos core source-located (85 glyph parts + 24 rituais)",
+      "completed": 109,
+      "total": 109,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-polymorphia",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-sable",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-sophisticated-compat",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-technica",
+      "scope": "objetos com fichas source-pinned",
+      "completed": 11,
+      "total": 11,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-two-way-portals",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ars-zero",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-arsdelight",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-artifacts",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-asterism-arcanum",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-backported-spellbooks",
+      "scope": "fichas source-pinned; métodos binários específicos têm prova separada",
+      "completed": 6,
+      "total": 6,
+      "evidence": "PERK-COVERAGE-BASELINE-2026-10-15.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-betterend",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-betternether",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-bloodlines",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-born-in-chaos",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-bosses-of-mass-destruction",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-bosses-rise",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-cataclysm",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-cataclysm-spellbooks",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-cold-sweat",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-companions",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-corail-tombstone",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-chromatic-return",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-cold-sweat",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-deep-dark",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-dragons-plus",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-dreams-n-desires",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-enchantable-machinery",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-enchantment-industry",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-enchantment-industry-plus",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-ender-transmission",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-fantasizing-again",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-mechanical-companion",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-mechanical-spawner",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-mobile-packages",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-more-automation",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-more-features",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-teleporters-remastered",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-create-wizardry",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-creating-space",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-crystal-chronicles",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-deeper-and-darker",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-deeper-and-darker-spellbooks",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-dimensional-sable",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-dis-enchanting-table",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-discerning-the-eldritch",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-dragon-care",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-dreamless-spells",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-dungeons-delight",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-dynamic-rpg-resource-bars",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-efiscompat",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-eidolon-repraised",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-emf-compat-iron-spells",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-enchantment-descriptions",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-enders-spells-and-stuff-requiem",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-epic-fight",
+      "scope": "fichas por ID core (42 jogáveis + 1 sentinela)",
+      "completed": 43,
+      "total": 43,
+      "evidence": "../providers/✅-epic-fight/skills/INDIVIDUAL-SKILL-CARDS-21.17.3.1.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-familiarslib",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-fantasy-armor",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-farmers-spell",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-fires-ender-expansion",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-gaze",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-goety",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-goety-cataclysm",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-goety-iron",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-grapplemod-skybound",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-gtbcs-geomancy-plus",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-gtbcs-spelllib",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-hazen-n-stuff",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-hazentouvelib",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-hexalia",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ice-and-fire-ce",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ice-and-fire-dread-land",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ignis-soulfires",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ignis-soulfires-spellbooks",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-immersive-portal-irons-spells-addon",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-immersive-portals-true-immersion",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-integrated-villages",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-irons-apothic",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-irons-gems-n-jewelry",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-irons-lib",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-irons-spellbooks-kubejs",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-irons-spells",
+      "scope": "fichas e dossiês source-causais de spells ativos",
+      "completed": 110,
+      "total": 110,
+      "evidence": "CHECKPOINT-POS-PR825-2026-10-21.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-irons-spells-recolor",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ironsable",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ironsable-x-winds-spellbooks",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-iss-magic-from-the-east",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-kubejs-ars-nouveau",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-legendary-monsters",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-legendary-spellbooks",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-leyline-spellbooks",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-malum",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-mobstein",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-monsters-spellbooks",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-more-relics",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-mowzies-cataclysm",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-mowzies-mobs",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-northstar-redux",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-not-enough-glyphs",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ozymandias-sundries",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-paladin-spells",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-photon",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-pickable-orbs",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-portable-hole",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-protection-pixel",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-pufferfishs-attributes",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-pufferfishs-skills",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-pufferfishs-unofficial-additions",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-relics",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-reliquified-ars-nouveau",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-reliquified-artifacts",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-reliquified-irons-spells-n-spellbooks",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-reliquified-l-enders-cataclysm",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-reliquified-lenders-cataclysm-new-relics-fix",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-runiclib",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-shadowsz",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-simply-more",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-simply-swords",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-simply-swords-cataclysm",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-sky-aesthetics",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-snow-real-magic",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-somake-spells",
+      "scope": "fichas no recorte limitado de inspeção estática de métodos",
+      "completed": 8,
+      "total": 83,
+      "evidence": "CHECKPOINT-POS-PR825-2026-10-21.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-soul-fire-d",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-spell-actionbar",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-spell-codex-specs",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-starbunclemania",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-toxony",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-traveloptics",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-tunes-n-tomes",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-vampire-spells-addon",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-vampiric-ageing",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-vampirism",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-vampirism-integrations",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-waystones",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-weapons-of-miracles",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-werewolves",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-winds-spellbooks",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-woodwalkers-spellbooks",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-ypsilons-fundamentalism",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-yungs-better-end-island",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    },
+    {
+      "provider_directory": "✅-yungs-better-witch-huts",
+      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
+      "completed": null,
+      "total": null,
+      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "runtime_acceptance": "NOT_INFERRED"
+    }
+  ]
+}

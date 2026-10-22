@@ -1,5 +1,7 @@
 # Epic Fight — 21.17.3.1
 
+**Fichas individuais (21/10/2026):** [43/43 IDs core em caminhos dedicados](skills/INDIVIDUAL-SKILL-CARDS-21.17.3.1.md), incluindo 42 skills jogáveis e uma sentinela. Parâmetros do JAR exato separados da causalidade source-adjacent; hooks/QA continuam condicionados. [Progresso geral e por mod](../../meta/PROGRESSO-CATALOGO-ATUAL.md).
+
 ## Cinemática binária do retorno de Everlasting Allegiance — 18/10/2026
 
 ✅ [Java21 #39103337112](https://github.com/Gustavaopere/Black-Arcana/actions/runs/39103337112) **SUCCESS**, JAR publisher exato SHA-1/SHA-256, novo verificador de sequência de movimento **8/8 autotestes**, `PASS_EXACT_TRIDENT_RETURN_KINEMATICS_BOUNDED` e JSON artefato **12127228567**. [Dossiê de movimento do tridente](EXACT-TRIDENT-RETURN-KINEMATICS-21.17.3.1.md): `t=max(tickCount-returnTick-10,0)`; deslocamento solicitado `min(t²*0.0005+abs(t*0.05), min(10, distância aos olhos do proprietário))` na direção normalizada; `setDeltaMovement(0,0,0)` e `setPos`. **O teto de 10 é por execução do movimento, não limite de alcance, e o offset 10 não é cooldown nem duração garantida.** Sem player/anim real, hook de perks, medição de dano/colisão ou adapter autorizado; +0 spells.
