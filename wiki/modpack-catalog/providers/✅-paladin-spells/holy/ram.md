@@ -77,7 +77,7 @@ Paladin branch `1.21@31f64ccdb39d062b21cc25d434cb62d6463b486e`, `RamSpell`.
 
 ### Pipeline e consumidores downstream
 
-onCast calcula impulso/dano, escreve ImpulseCastData, marca hurtMarked e percorre alvos da AABB uma vez, hurt seguido de knockback. Não há guard explícito level.isClientSide nem super.onCast no override; lado efetivo depende da invocação do host. onClientCast(Level,int,LivingEntity,ICastData) consome o impulso e chama super.onClientCast. RamDirectionOverrideCastData escolhe yRot(±90) se presente; a unidade desse literal segue a API Vec3 e não deve ser rotulada graus sem validação. Não deduzir hit confirmado da seleção de alvo nem emitir Mastery para cada knockback.
+onCast calcula impulso/dano, escreve ImpulseCastData, marca hurtMarked e percorre alvos da AABB uma vez, hurt seguido de knockback. Não há guard explícito level.isClientSide nem super.onCast no override; no ingresso jogador, AbstractSpell#castSpell invoca este override server-side e publica SpellOnCastEvent antes do efeito, conforme [ordem causal](../PERK-BOUNDARIES-1.1.1.md#evento-de-cast-callbacks-e-mastery-no-host-3163); outros ingressos continuam condicionados. onClientCast(Level,int,LivingEntity,ICastData) consome o impulso e chama super.onClientCast. RamDirectionOverrideCastData escolhe yRot(±90) se presente; a unidade desse literal segue a API Vec3 e não deve ser rotulada graus sem validação. Não deduzir hit confirmado da seleção de alvo nem emitir Mastery para cada knockback.
 
 [ImpulseCastData](https://github.com/Kaufko/Paladin-Spells/blob/31f64ccdb39d062b21cc25d434cb62d6463b486e/src/main/java/eu/kaufko/paladin_spells/capabilities/magic/ImpulseCastData.java#L8).
 

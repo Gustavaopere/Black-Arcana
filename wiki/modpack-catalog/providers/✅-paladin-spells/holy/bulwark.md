@@ -71,7 +71,7 @@ Black Arcana must not duplicate an armor multiplier to “fix” it silently; a 
 
 ### Pipeline e consumidores downstream
 
-onCast retorna no cliente; no servidor calcula P e D e adiciona BULWARK_EFFECT. Não aparece chamada super.onCast no override auditado; estudar o lifecycle do host antes de contar callbacks ou custos por suposição. O efeito só declara o modifier de armor 0.0; não há settlement de dano específico em BulwarkEffect. Aplicação/renovação do MobEffect e configuração efetiva continuam provider-owned.
+onCast retorna no cliente; no servidor calcula P e D e adiciona BULWARK_EFFECT. Não aparece chamada super.onCast no override auditado; no ingresso jogador auditado, evento de cast, débito e cooldown acontecem fora de super.onCast, conforme [ordem causal do host](../PERK-BOUNDARIES-1.1.1.md#evento-de-cast-callbacks-e-mastery-no-host-3163). Não contar esse evento pré-efeito como dano entregue. O efeito só declara o modifier de armor 0.0; não há settlement de dano específico em BulwarkEffect. Aplicação/renovação do MobEffect e configuração efetiva continuam provider-owned.
 
 [BulwarkEffect#constructor](https://github.com/Kaufko/Paladin-Spells/blob/31f64ccdb39d062b21cc25d434cb62d6463b486e/src/main/java/eu/kaufko/paladin_spells/effects/BulwarkEffect.java#L14).
 
