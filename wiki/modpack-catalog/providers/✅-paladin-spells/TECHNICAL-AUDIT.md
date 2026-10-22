@@ -56,11 +56,11 @@ However, the current spell's `onCast` applies effect and persistent redirect/ran
 ### Bedrock Skin
 
 - server cast writes `bedrock_skin_reduction` persistent float;
-- repository search finds that key only in spell/effect declarations, not a damage handler;
+- correção 22/10/2026: `BedrockSkinEvent#onLivingDamage(LivingDamageEvent.Pre)` lê `BedrockSkinEffect.DAMAGE_REDUCTION_KEY` e altera `newDamage*(1-reduction)`; o consumidor existe neste mesmo pin;
 - effect independently declares +10 Armor ADD_VALUE and the spell uses amplifier `level-1`;
 - `BedrockSkinEntity` roots horizontal movement by mounting the caster onto an invulnerable anchor that only moves vertically and discards after duration/dismount.
 
-The immobilization contract is source-confirmed; percentage mitigation settlement is not.
+Imobilização e consumidor de mitigação são source-confirmados. Registro/ordem de eventos, resultado de dano e lifecycle no JAR real ainda requerem QA. Ver [reauditoria por campo](PERK-BOUNDARIES-1.1.1.md).
 
 ### Ram
 

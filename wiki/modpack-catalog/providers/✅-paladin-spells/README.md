@@ -1,6 +1,6 @@
 # Paladin Spells — Iron's Spells Addon
 
-**Atualização binária 2026-10-12:** ✅ **5/5** identidades de spells `COUNTED_EXACT` **apenas no registro estático**, comprovadas no JAR oficial `8661566`, SHA-1 idêntico à modlist física `e4c6f4fa70989f0b9f1819e46e29f68d414ccbaf` e [workflow #38308575364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38308575364). [Dossiê binário](EXACT-BINARY-SPELLS-1.1.1.md). Promoção **proposta** na campanha original: **5/39** providers com registro exato, **34/39** pendentes, **+0** magias novas; mínimos **1851 global / 1849 escopo** inalterados. O status source-pinned abaixo reflete a auditoria anterior, não mede o novo registro. ⚠️ Inscrição real do pack, os quatro blockers funcionais, config, aquisição, Survival e dedicated-server continuam sem PASS físico.
+**Atualização binária 2026-10-12:** ✅ **5/5** identidades de spells `COUNTED_EXACT` **apenas no registro estático**, comprovadas no JAR oficial `8661566`, SHA-1 idêntico à modlist física `e4c6f4fa70989f0b9f1819e46e29f68d414ccbaf` e [workflow #38308575364](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38308575364). [Dossiê binário](EXACT-BINARY-SPELLS-1.1.1.md). Promoção **proposta** na campanha original: **5/39** providers com registro exato, **34/39** pendentes, **+0** magias novas; mínimos **1851 global / 1849 escopo** inalterados. O status source-pinned abaixo reflete a auditoria anterior, não mede o novo registro. ⚠️ Inscrição real do pack, os achados funcionais e gates de integração, config, aquisição, Survival e dedicated-server continuam sem PASS físico.
 
 Status: `INSTALLED 1.1.1 / SOURCE-PINNED / 5/5 SPELLS CATALOGED / UPSTREAM QA BLOCKERS EXPLICIT`
 
@@ -58,7 +58,12 @@ Black Arcana Divine/Celestial/Order/Binding content cannot claim these signature
 
 - **Bulwark:** spell calculates a large amplifier, but `BulwarkEffect` declares the Armor `ADD_MULTIPLIED_TOTAL` modifier with amount `0.0`; no compensating handler was found in the audited branch.
 - **Sworn Protector:** `onCast` writes effect/range/redirect data only under `level.isClientSide`, while the damage-redirection event is server-side. This is an apparent authority mismatch in source.
-- **Bedrock Skin:** the spell writes `bedrock_skin_reduction`; repository search found no consumer of that key. Rooting and the effect's Armor modifier are separately source-confirmed.
+- **Bedrock Skin:** correção 22/10/2026: `BedrockSkinEvent#onLivingDamage(LivingDamageEvent.Pre)` lê `BedrockSkinEffect.DAMAGE_REDUCTION_KEY` e aplica `newDamage*(1-reduction)`. Consumidor source-confirmado; ordem de listeners e resultado físico permanecem QA. Ver [boundaries reauditados](PERK-BOUNDARIES-1.1.1.md).
 - **Ram:** its hit scan targets every alive `LivingEntity` except the caster in the swept AABB; no ally/friendly-fire filter appears in the spell class.
 
 These are static source findings, not claims that the installed gameplay is broken. Live-JAR/GameTest confirmation remains required.
+
+
+## Reauditoria técnica 22/10/2026
+
+**5/5 fichas** com matriz por campo e localizadores permanentes: [boundaries e contratos dos três projetos](PERK-BOUNDARIES-1.1.1.md). Recorte documental source-causal, sem nova perk ou aceite físico. Bedrock Skin tem consumidor de mitigação confirmado no mesmo source pin; Sworn Protector mantém bloqueio de ativação server e a busca AABB +64 limita a interpretação do range 36–90.

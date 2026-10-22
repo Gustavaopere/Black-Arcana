@@ -1,6 +1,6 @@
 # Progresso atual — magias, feitiços, habilidades e superfícies para perks
 
-**Checkpoint: 21/10/2026.** Base Black Arcana `75f54b37ea329c482b43f1fa058ff5723c661f00`; modlist RPG Skill Tree `ed5b65b890767b406ce41127bcb793775263c7bd`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
+**Checkpoint: 22/10/2026.** Base Black Arcana `01c42361d4c9a6fd581745b33ffdb84b4464406c`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
 
 ## Barra geral — todo o conteúdo aplicável
 
@@ -141,7 +141,7 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 | [✅-northstar-redux](../providers/✅-northstar-redux/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-not-enough-glyphs](../providers/✅-not-enough-glyphs/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-ozymandias-sundries](../providers/✅-ozymandias-sundries/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
-| [✅-paladin-spells](../providers/✅-paladin-spells/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
+| [✅-paladin-spells](../providers/✅-paladin-spells/README.md) | **5/5** — [fichas com matriz por campo e consumidores source-pinned reauditados](../providers/✅-paladin-spells/PERK-BOUNDARIES-1.1.1.md) | ![5 de 5 fichas reauditadas documentalmente](progress/complete.svg) | ⚠️ Bedrock consumidor confirmado; Sworn server/área condicionados; hooks e QA PENDING |
 | [✅-photon](../providers/✅-photon/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-pickable-orbs](../providers/✅-pickable-orbs/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-portable-hole](../providers/✅-portable-hole/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
@@ -188,6 +188,8 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 **Epic Fight core:** 43 caminhos de ficha dedicados, com 40 fichas novas e três ações mágicas existentes enriquecidas; 42 habilidades jogáveis e uma sentinela. Cada ficha inclui descrição original, ID exato, artifact/hash, parâmetros lidos do JAR, localizadores de classe/método, pipeline e matriz de dano/tipo, alcance, alvo/área, projétil/hitbox, tempo, custo e causalidade. As anotações source-adjacent 21.17.3 não foram convertidas em equivalência global de métodos com 21.17.3.1. [Índice por habilidade](../providers/✅-epic-fight/skills/INDIVIDUAL-SKILL-CARDS-21.17.3.1.md).
 
 **Weapons of Miracles 2.0.178:** 64/64 fichas dedicadas, 51 novas e 13 ações mágicas enriquecidas; 58 JSONs exatos + seis IDs sem arquivo próprio. O verificador confere vínculo de registro via BootstrapMethods, classes, recursos de builder, descritores e referências selecionadas. Cada ficha mantém a matriz de campos e a pendência downstream/QA; +0 no mínimo mágico. [Índice dos 64 IDs](../providers/✅-weapons-of-miracles/skills/INDIVIDUAL-SKILL-CARDS-2.0.178.md).
+
+**Paladin Spells 1.1.1:** 5/5 fichas reauditadas por campo; corrigida ausência indevida do consumidor Bedrock Skin, detalhada a busca +64 de Sworn Protector e os contratos reais RPG/Enshrouded. Source-causal documental, sem promoção de mutadores ou QA. [Boundaries](../providers/✅-paladin-spells/PERK-BOUNDARIES-1.1.1.md).
 
 **Hierarquia preservada:** Black Arcana controla seu runtime mágico; RPG Skill Tree fornece progressão/atributos/Mastery/perks/gates por contrato; Enshrouded controla seu Shroud/exposure. Providers externos continuam donos de seus efeitos, recursos e settlement. Sem hook real, ⛔ fail-closed para mudança por perk de alvo, DamageType, alcance, colisão ou tempo. `CONFIG_NATIVE` não implica setter por jogador.
 
