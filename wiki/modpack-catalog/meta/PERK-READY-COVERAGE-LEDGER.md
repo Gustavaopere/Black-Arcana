@@ -159,7 +159,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-shadowsz` | 16 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-simply-more` | 28 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-simply-swords` | 71 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-simply-swords-cataclysm` | 9 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-simply-swords-cataclysm` | 9 | [4/4 fichas de habilidades com parâmetros e consumidores source-causais](../providers/✅-simply-swords-cataclysm/IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md); config STARTUP/host/ativação/mutadores/QA PENDING; +0 strict |
 | `✅-sky-aesthetics` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-snow-real-magic` | 1 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-somake-spells` | 178 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |

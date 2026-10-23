@@ -1,27 +1,73 @@
 # Mecha Pulse
 
-- Provider: **Simply Swords: Cataclysm** (`simplycataclysm`)
-- Physical line: `1.0.2+1.21.1+neoforge`
-- Material owner: **Witherite**
-- Classificação: **supernatural weapon ability / charge-state combat proc**
-- Source surface: `WitheriteSwordItem`
-- State: `SOURCE-PINNED IDENTITY / DEPLOYED STARTUP CONDITIONAL`
+**Reauditoria documental — 23/10/2026.** `technical_perk_dossier: 1`; identidade `SOURCE_PINNED`; lógica `SOURCE_PARAMETERS / SOURCE_CAUSALITY`; ativação/config e integração `CONDITIONAL`; QA físico `PENDING`. Reenriquecimento de uma das quatro ações existentes, **+0 identidades**.
 
-## Identidade semântica
+## Identidade e proveniência
 
-Raiz provider-owned de combate que usa uma state machine de charge → threshold → resolução → cooldown. Shockwave, stun, dano adicional, `pulse_charge` e `pulse_cooldown` são fases/efeitos da mesma habilidade e adicionam +0 identidades.
+| Campo | Evidência e limite |
+|---|---|
+| Provider / objeto | Simply Swords: Cataclysm, `mod_id=simplycataclysm`; habilidade sobrenatural passiva de combate, família **Witherite**. **Mecha Pulse é nome de habilidade, sem registry de spell/ação demonstrado**; não inventar `simplycataclysm:mecha_pulse`. |
+| Item / estados reais | Quinze itens `simplycataclysm:witherite_*`, todos `WitheriteSwordItem`, do longsword ao halberd no [registry][items]. Estados auxiliares registrados `simplycataclysm:pulse_charge` e `simplycataclysm:pulse_cooldown` ([effects][effects]); stun externo `ModEffect.EFFECTSTUN` é registrado como `cataclysm:stun` no source Cataclysm3.33 consultado ([registry][cat-stun-registry]). Entrega no JAR continua condicionada. Esses filhos não são outras ações. |
+| Artefato físico histórico | #501, `simplycataclysm-1.0.2+1.21.1+neoforge.jar`, SHA-1 `a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469`, Minecraft1.21.1/NeoForge; [publicação7391959](https://www.curseforge.com/minecraft/mc-mods/simply-swords-cataclysm/files/7391959). [Inventário source](../SOURCE-1.0.2-ABILITY-INVENTORY.md) e [README](../README.md) preservam a autoridade física; fingerprint não prova byte-equivalência ao source. |
+| Source / localizadores | Oficial `Cephelo/SimplyCataclysmMod@a81158e53b2d215ff534fa59732edd08cfd1d4f4`; pacote `dev.cephelo.simplycataclysm`; `event.LivingHurtHandler#onLivingHurt`, `item.WitheriteSwordItem#modifyDamageDealt/chargeStunPulse`, `effects.ModEffects#StunPulseChargeEffect/StunPulseCooldownEffect`, `SCConfig`. [Release/build][build]. |
+| Versões / licença | Source declara NeoForge21.1.197, Simply Swords1.61.3 e Cataclysm2.39; snapshot físico usa Simply Swords1.70.2/Cataclysm3.33. Source release-correlacionado, compatibilidade/resultado do JAR não homologados. Metadata **All Rights Reserved**: resumo e referências; nenhuma implementação, descrição extensa ou arte importada. [Boundaries comuns](../IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md). |
+| Descrição upstream | [Localização oficial][description], parafraseada: golpes acumulam carga e, ao alcançar o limiar, liberam stun/dano no alvo. “Shockwave” no texto/VFX não demonstra área de dano. |
 
-## Reachability
+## Ingresso e cadeia causal
 
-A progressão normal da ação depende do valor efetivo de `mechaPulseChargeChance` no STARTUP config implantado.
+1. **Aquisição:** usar item Witherite registrado; não há skillbook, aprendizado, level de skill ou keybind próprio. Exemplo source: [receita shaped do longsword][recipe], com `cataclysm:witherite_ingot` e tag `c:wood_sticks`. Receita/material presentes no source não provam obtenção Survival nem datapacks implantados. O constructor acrescenta modificadores STARTUP de material ao dano/speed do arquétipo e fornece Fire Resistant/Unbreakable ao **item**, não imunidade ao portador ([constructor][constructor]).
+2. **Ingresso de dano:** [`LivingHurtHandler#onLivingHurt(LivingDamageEvent.Pre)`][ingress] toma `D0=ev.getOriginalDamage()`. Exige `D0!=0`, ausência das tags IS_PROJECTILE/IS_FIRE/IS_EXPLOSION, msgId exatamente `player` ou `mob`, directEntity igual a causingEntity e causando `LivingEntity`. Lê **main hand no momento do evento**, não um snapshot da arma original, e só chama item que implementa `IMeleeDamageCallback`. Não há filtro adicional local de equipe/PvP/claim, distância, LOS ou caster Player. O fluxo normal de dano do host continua authority; subscriber/helpers não possuem uma guarda server própria sobre toda a rotina.
+3. **Ordem:** [`WitheriteSwordItem#modifyDamageDealt`][callback] executa primeiro [Mecha Smite](mecha-smite.md), depois `chargeStunPulse`, e retorna `D0+extraPulse`. O handler faz `ev.setNewDamage(retorno)`. No host NeoForge21.1.250, Pre ocorre **após armor/potion e antes de absorption**, enquanto `getOriginalDamage` remete ao argumento original de `hurt`. Repor `D0+E` pode recolocar reduções anteriores, inclusive com E0, e sobrescrever valores de outros listeners; não interpretar o bônus como simples soma ao dano já mitigado. [Contrato do host](../IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md). Prioridade/ordem, reduções posteriores e dano terminal precisam QA. Não há segundo `hurt`, DamageSource próprio nem cast paralelo da onda.
+4. **Cooldown:** se atacante já tem PULSE_COOLDOWN, retorna bônus0 antes de consultar carga/RNG. Isso não impede o Smite, já executado. Sem cooldown, calcula candidato `i = oldCharge==null ? 0 : min(T,oldAmplifier+1)` e `reachedMax=(i>=T && oldAmplifier==i−1)` **antes** do RNG ([state machine][pulse]).
+5. **Sorteio e transição:** se `Math.random()<=p`, tenta aplicar PULSE_CHARGE por `Q` ticks com amplificador `i`. Não testa o retorno de `addEffect`. Se o candidato cruzou `T−1→T`, remove carga, tenta cooldown `C` ticks/amp0 e stun no **target do evento** por `S` ticks/amp0; retorna `E` extraDamage. A decisão não confirma instalação dos efeitos, stun entregue ou HP perdido. Falsas tentativas/recusas e falhas em etapas posteriores podem deixar efeitos parciais, sem rollback local.
+6. **Saída:** `catch(Throwable)` registra erro e retorna0 para a parcela Pulse; não desfaz Smite nem os estados já alterados. Lifecycle de efeitos/expiração/sync pertence ao provider/host. PULSE_COOLDOWN sobrescreve `fillEffectCures` vazio, sem cura por leite nesse mecanismo; isso não prova resistência a `/effect clear`, remoção por API ou todo sistema de dispel ([lifecycle dos efeitos][effect-lifecycle]).
 
-- `0` => sem progressão normal de charge;
-- valor não-zero => candidato ativo, sujeito ao restante da validação provider-native.
+**Limites da progressão:** amplificador0 representa a primeira carga. Com defaults `T=9`, começando sem efeito e com todas as aplicações efetivas, são **10 sorteios bem-sucedidos antes de a carga expirar**, não nove; falhas de RNG não renovam duração. `T=0` com ausência de carga faz o segundo operando de `reachedMax` desreferenciar null, dentro do try/catch, antes do sorteio; documenta caminho source, não crash/bug reproduzido no JAR. Carga preexistente no limiar não satisfaz a transição `old==i−1`; pode ficar saturada até expirar. Somente presença do efeito no atacante controla o estado: troca entre armas Witherite compartilha carga/cooldown, sem vínculo ao ItemStack.
 
-O default do source não substitui o valor implantado.
+**Stun downstream source-correlacionado:** Cataclysm3.33 `lender544/new1.20.1@fe6d06e79d98fcbf22fbd8aee153c65a1d9eb3cd` ([versão][cat-version]) dá `MOVEMENT_SPEED −0.5 ADD_VALUE`, não −50% nem prova de imobilidade absoluta ([EffectStun][cat-stun]). Handlers cancelam ataques/interações/uso/quebra/colocação e zeram componenteY de jump nos caminhos inspecionados ([ações][cat-actions], [interações][cat-interactions], [right-click item][cat-right-click]); mixin retorna `canAttack=false`. Player com Unbreakable Skull equipado e fora do cooldown pode recusar `addEffect`, adquirindo cooldown **900ticks=45s** ([mixin][cat-mixin], [manifest][cat-manifest]). Além disso, `LivingDamageEvent.Post` remove stun se `health após dano <= event.newDamage`: o próprio golpe que pediu stun em Pre pode removê-lo em Post ([remoção][cat-remove]). Esses sources demonstram consumidores/condições, não aplicação de mixins ou efeito duradouro no JAR físico.
 
-## Evidence boundary
+## Matriz de parâmetros e alteração por perks
 
-A identidade, owner, state-machine class e gate estão fechados. Thresholds, dano, stun, cooldown e probabilidades efetivas não são inferidos.
+Todos os valores abaixo são **defaults source**, não configuração implantada. [Config][config] é registrada como **STARTUP** ([bootstrap][startup]); alteração global nativa não é setter por jogador.
 
-Source: `../SOURCE-1.0.2-ABILITY-INVENTORY.md`.
+| Eixo | Valor / consumidor / fase | Boundary e estado | QA necessário |
+|---|---|---|---|
+| Trigger / chance | `mechaPulseChargeChance=0.75`, intervalo config `0..1`; comparação `Math.random()<=p` em `chargeStunPulse`, no ingresso de dano. [Config][config], [consumer][pulse]. | **CONFIG_NATIVE** global; RNG privado, **⛔ SEM_HOOK_SEGURO** para chance por perk. Como RNG admite0, `p=0` não possui early-return que prove supressão absoluta, apesar do comentário “disable”. | Config efetiva, RNG de borda0/1, hit repetido/sweep/mobs, uma resolução por evento. |
+| Carga / limiar | `mechaPulseStunThreshold=9`, `T∈0..Integer.MAX_VALUE`; `i` e transição acima; amp0 primeiro estágio. [Config][config], [pulse][pulse]. | **CONFIG_NATIVE**. `oldAmplifier+1` é int sem proteção de overflow; não presumir carga ilimitada segura. Estado por entidade atacante, sem contador adicional do RPG. | T0/T1/default9/extremos, efeitos externos acima de T, addEffect recusado/mesclado, expiração/troca de arma. |
+| Dano / tipo | `mechaPulseStunDamage=4.0 health points`, config `0..Double.MAX_VALUE`; usa `.floatValue()` e soma ao `D0` no **mesmo** evento. Source/tags permanecem do golpe original; a reposição do original em Pre pode descartar mitigação anterior, não é soma sobre dano atual. [Callback][callback], [config][config], [handler][ingress]. | **CONFIG_NATIVE** para E global; setter de `LivingDamageEvent.Pre` altera dano geral, não é mutador isolado da parcela Pulse. **CONTRATO_CONDICIONAL** para bridge de dano; conversão de DamageType **⛔ SEM_HOOK_SEGURO**. Double máximo não garante float finito. | Resistências/absorção/cancelamentos downstream, ordem de listeners, E0/extremo, identificação causal do proc sem segundo dano. |
+| Alcance / targeting / área | Um target `LivingEntity` já escolhido pelo dano original; sem raycast/AABB/busca de vizinhos, raio, cap de área ou seleção independente. [Handler][ingress], [stun/onda][pulse]. | Alcance/LOS dependem do ataque que originou o evento. Single→AOE/retarget **⛔ SEM_HOOK_SEGURO**; “shockwave” é partícula/som e efeito no target existente. | Ataques com sweep e múltiplos eventos, allies/PvP/claims, main hand alterada durante listeners. |
+| Projétil / colisão / visual | Projétil, hitbox, speed, aceleração, pierce, lifetime: **N/A** neste proc. Um VFX EM_PULSE no target em `Y+eyeHeight−1.25`; carga usa3 partículas Angry Villager. [VFX][pulse]. | Visual não tem colisão/raio de dano demonstrado. **⛔ SEM_HOOK_SEGURO** para resize/projétil; sem spawn de entidade ou explosão real nesse método. | Sincronização/visibilidade, distinguir VFX de dano a entidades próximas. |
+| Tempo / cooldown / charge | `mechaPulseEffectDuration=140 ticks=7s`; `mechaPulseCooldown=800 ticks=40s`; ambos `0..Integer.MAX_VALUE`. Sem cast time/canal/recast; execução síncrona por evento. [Config][config], [pulse][pulse]. | **CONFIG_NATIVE**; efeito cooldown é authority nativa. **⛔ SEM_HOOK_SEGURO** para scheduler/perk independente; não adicionar relógio paralelo. | Duração0, refresh, efeito recusado, leite/dispel, morte/relog/restart e competição com outros appliers. |
+| Stun / estados | `mechaPulseStunDuration=200 ticks=10s`, faixa `0..Integer.MAX_VALUE`; solicita `ModEffect.EFFECTSTUN` amp0 no target, sem verificar retorno. [Config][config], [pulse][pulse]. | **CONFIG_NATIVE** para duração solicitada. Consumidores/recusa/remoção do source3.33 acima auditados; entrega e aplicação dos mixins **CONDITIONAL**. Sem identificação de source/caster na instância criada. | Cataclysm3.33, Skull/900ticks, remoção Post no próprio golpe, bosses/imunes, efeito prévio, duração0, input/AI/teleport e aplicação efetiva. |
+| Custos / summons / mundo | Sem mana, stamina, HP, item/fuel consumido, reserva/refund, summons ou mutação de blocos próprios demonstrados. Super `SwordItem` e ataque original continuam seus contratos. [Callback][callback], [constructor][constructor]. | **N/A** para recurso/cast paralelo; charges são status, não mana. **⛔ fail-closed** para clonar procs/entidades/segunda cobrança. | Durabilidade/Unbreakable, cooldown de ataque nativo, coexistência RPG/Epic Fight se presente. |
+
+## Causalidade, concepção e pendências
+
+A raiz é o proc Witherite do golpe; charge, onda, stun, cooldown e bônus são fases, não novas identidades. Smite e Pulse podem resolver no mesmo evento, mas pertencem a duas das quatro ações já inventariadas. O método não emite ID/token de cast/proc, nem distingue arma responsável por um efeito antigo. Dedup por atacante+tick não é suficiente para sweep/múltiplos targets; evento de dano não prova efeito/HP entregue. Mastery/perks devem preservar execução, estados e dano provider-native, com RPG como dono apenas da própria progressão. Black Arcana não replica onda, stun ou cooldown; Enshrouded não ganha conversão de tipo pela temática.
+
+Assinatura ocupada: carga por golpes em um atacante, transição de amplificador, resolução com stun e dano em alvo único, seguida de cooldown. Uma magia original exigiria causalidade própria; VFX em área não autoriza reapresentar isto como explosão/AOE nem importar assets.
+
+`PENDING`: fingerprint atual e config STARTUP efetiva; equivalência source/JAR; hooks/ordem de eventos do host; Cataclysm stun entregue; casos de borda da matriz; Survival, servidor/cliente, multiplayer, logout/restart e coexistência. **Nenhum adapter/perk/runtime novo e nenhum Stage promovido.**
+
+[build]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/gradle.properties#L8-L54
+[items]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/ModItems.java#L197-L227
+[effects]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/effects/ModEffects.java#L26-L33
+[description]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/resources/assets/simplycataclysm/lang/en_us.json#L94-L95
+[recipe]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/resources/data/simplycataclysm/recipe/witherite_longsword.json#L1-L19
+[constructor]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/WitheriteSwordItem.java#L27-L48
+[ingress]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/event/LivingHurtHandler.java#L13-L33
+[callback]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/WitheriteSwordItem.java#L35-L40
+[pulse]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/WitheriteSwordItem.java#L50-L102
+[config]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/SCConfig.java#L158-L183
+[effect-lifecycle]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/effects/ModEffects.java#L77-L93
+[startup]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/SimplyCataclysm.java#L38-L45
+
+[cat-version]: https://github.com/lender544/new1.20.1/blob/fe6d06e79d98fcbf22fbd8aee153c65a1d9eb3cd/gradle.properties#L40-L44
+[cat-stun-registry]: https://github.com/lender544/new1.20.1/blob/fe6d06e79d98fcbf22fbd8aee153c65a1d9eb3cd/src/main/java/com/github/L_Ender/cataclysm/init/ModEffect.java#L20
+[cat-stun]: https://github.com/lender544/new1.20.1/blob/fe6d06e79d98fcbf22fbd8aee153c65a1d9eb3cd/src/main/java/com/github/L_Ender/cataclysm/effects/EffectStun.java#L15-L26
+[cat-actions]: https://github.com/lender544/new1.20.1/blob/fe6d06e79d98fcbf22fbd8aee153c65a1d9eb3cd/src/main/java/com/github/L_Ender/cataclysm/event/ServerEventHandler.java#L76-L149
+[cat-interactions]: https://github.com/lender544/new1.20.1/blob/fe6d06e79d98fcbf22fbd8aee153c65a1d9eb3cd/src/main/java/com/github/L_Ender/cataclysm/event/ServerEventHandler.java#L166-L222
+[cat-right-click]: https://github.com/lender544/new1.20.1/blob/fe6d06e79d98fcbf22fbd8aee153c65a1d9eb3cd/src/main/java/com/github/L_Ender/cataclysm/event/ServerEventHandler.java#L448-L451
+[cat-mixin]: https://github.com/lender544/new1.20.1/blob/fe6d06e79d98fcbf22fbd8aee153c65a1d9eb3cd/src/main/java/com/github/L_Ender/cataclysm/mixin/LivingEntityMixin.java#L38-L74
+[cat-manifest]: https://github.com/lender544/new1.20.1/blob/fe6d06e79d98fcbf22fbd8aee153c65a1d9eb3cd/src/main/resources/cataclysm.mixins.json#L10
+[cat-remove]: https://github.com/lender544/new1.20.1/blob/fe6d06e79d98fcbf22fbd8aee153c65a1d9eb3cd/src/main/java/com/github/L_Ender/cataclysm/event/ServerEventHandler.java#L238-L242
