@@ -47,3 +47,10 @@ Este provider não é somente um pacote de spells. Ele analisa o `SpellRegistry`
 ## Principles — fichas técnicas individuais (22/10/2026)
 
 Os [13 sistemas/passivas agora têm ficha individual](principles/README.md), além das 15 magias já catalogadas. O recorte mede **13/13 fichas de categorias enum**, sem somar 13 spells, sem fechar todos os parâmetros técnicos do provider e sem PASS físico. A [visão agregada](PRINCIPLES.md) foi corrigida para os consumidores reais de range, recast, cooldown, efeitos, custos e XP. Nenhuma nova perk, adapter ou alteração runtime.
+
+
+## Spells — reauditoria de parâmetros e consumidores (22/10/2026)
+
+As [15/15 fichas de spells](SPELL-PERK-BOUNDARIES-1.1.7.1.md) agora têm matrizes por campo, símbolos/permalinks, defaults/fórmulas/unidades e cadeia downstream, incluindo targeting, dano/type, geometria/projétil, tempo, custos, recasts e limites de integração. Os [13/13 Principles](principles/README.md) permanecem outro recorte documental: nenhum deles é contado como novo spell. Os demais sistemas e o QA do provider continuam com seus gates próprios.
+
+Os parâmetros source-pinned não demonstram que toda variável seja alterável por perk. O dossiê comum distingue setters de nível/custo/dano, eventos somente observacionais, dimensões versus raio/visual e a herança Ace’s do domínio. A build Black Arcana usa NeoForge 21.1.248; o snapshot físico RPG pinado registra 21.1.250. Deltas de versão, config implantada, métodos efetivamente carregados e Survival/modpack continuam **PENDING**; +0 magias e nenhum adapter/perk/runtime novo.

@@ -1,36 +1,77 @@
 # Frozen Chains
 
-**✅ Revalidação SHA-exata 2026-10-13:** spell ID estático `ypfundamentals:chains` confirmado no JAR físico/publicador 1.1.7.1 (`a2855c253202a8fcc2925fcf5b1bf86d64fbe4da`), escola default Ice, [Java21 #38436717443](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38436717443) SUCCESS. `COUNTED_EXACT` somente registry e classe, +0 novas raízes. [Dossiê](../EXACT-BINARY-SPELLS-1.1.7.1.md). Progressão, mana/config, multiplayer e Survival ⚠️.
+**Revisão documental: 22/10/2026.** `technical_perk_dossier: 1`; `source_status: SOURCE_PINNED`; fidelidade `SOURCE_CAUSALITY` restrita aos pins abaixo. Catálogo ✅; runtime/perks ⚠️ condicionados. **+0 identidades mágicas.**
 
+| Identidade e evidência | Valor / limite da prova |
+|---|---|
+| Provider / host / tipo | Ypsilon's Fundamentalism (Fundamental Principles); `mod_id=ypfundamentals`; host Iron's Spells 'n Spellbooks; `spell`, escola default Ice. |
+| ID real / classe | `ypfundamentals:chains`; `com.ypsi.fundamentalism.spells.ice.ChainsSpell`; registro singleton via `ModSpells#registerSpell(AbstractSpell)` ([Registry]). Nome de exibição separado do ID. |
+| Artefato físico histórico | Minecraft 1.21.1 / NeoForge; `ypfundamentals-1.1.7.1.jar`, SHA-1 `a2855c253202a8fcc2925fcf5b1bf86d64fbe4da`; [publicação CurseForge 8558503](https://www.curseforge.com/minecraft/mc-mods/fundamental-principles/files/8558503). [Auditoria histórica](../EXACT-BINARY-SPELLS-1.1.7.1.md) e [Java21 SUCCESS](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38436717443): `COUNTED_EXACT` só identidade/registry/classe/escola, sem prova de métodos ou gameplay. SHA-256: NÃO VERIFICADO. |
+| Source consultado | Ypsilon `a9b8f8222fb2a800edece8c1568984bd2a764fc2`, metadados 1.1.7.1 / MIT ([Metadados]); dependência declarada Iron's **3.16.2** ([Versão]). Herança consultada separadamente em Iron's **3.16.3** `e4056af90302d37eb1739f5ff05020b020e6e252`. Não se afirma equivalência binária/source nem compatibilidade operacional 3.16.2→3.16.3. |
+| Descrição oficial / resumo original | [Guia e nome no recurso de idioma][Guia]: invoca correntes que imobilizam um inimigo e aplicam fraqueza, lentidão e bloqueio de casting. Nenhum asset ou implementação foi copiado. |
 
-- ID: `ypfundamentals:chains`
-- classe: `ChainsSpell`
-- escola: Ice
-- rarity: Uncommon
-- níveis: 1–5
-- cast: LONG, 200 ticks / 10 s
-- mana: 65 / 80 / 95 / 110 / 125
-- cooldown: 45 s
-- target: entity, helper range 50
-- duração: 14 / 18 / 22 / 26 / 30 s
-- dano: nenhum dano direto na spell class
+Os números seguintes são **defaults/fórmulas do source**, não config implantada. `n` é o nível resolvido pelo host; as listas usam nível nominal e multiplicadores neutros = 1. Gates, categorias ASM/Principles e valores efetivos exigem QA no pack. [Contrato comum de custos, eventos e compatibilidade](../SPELL-PERK-BOUNDARIES-1.1.7.1.md).
 
-## Efeito
+## Matriz por campo
 
-Respeita `CANT_ROOT`. Cria `ChainsEntity`, monta o alvo nela e aplica Chained, Slowness IV e Weakness VI. `ChainedEffect` cancela casts de players/magic entities em cada tick, cancela início de uso de item e cancela `EntityTeleportEvent`.
+Frozen Chains é o nome de exibição; ID real é **`ypfundamentals:chains`**, não `frozen_chains`. Entidade `ypfundamentals:chains` e efeito `ypfundamentals:chained` são resultados da spell, sem novas raízes.
 
-## Obtenção/aprendizado
+| Campo | Default / fórmula / unidade | Declarante, fase e boundary real | Mutabilidade / limite / teste |
+|---|---|---|---|
+| Nível / raridade / escola | 1–5; Uncommon; Ice. Spell power base/incremento 0, sem uso para dano/duração. | `ChainsSpell` construtor/config/resource [Spell]. | `NATIVE/CONFIG_NATIVE` nível/escola/config; power não amplia duração nesta implementação; Q1. |
+| Mana | `65+15(n−1)` = 65 / 80 / 95 / 110 / 125; host aplica mana multiplier e `int`. | Construtor [Spell] + `getManaCost` [Host valores]; server paga antes de `onCast` [Host cast]. | `NATIVE` config; `CONDITIONAL` `SpellOnCastEvent#setManaCost(int)` [Evento cast]. Nenhum refund local por alvo perdido/imune/falha de mount; Q2. |
+| Cast / cooldown / recast | LONG; override `getCastTime(int)` retorna **200 ticks** = 10 s; tempo efetivo herdado ainda usa cast_time_reduction. Cooldown default 45 s = 900 ticks após host; recast 0. | `getCastTime/getCastType` [Spell] [Host valores] [Host cooldown]. | `NATIVE` cast/cooldown por atributos host; não altera a base200 usada pela duração. Q2/Q3. |
+| Duração | **`200+80n` ticks** = 280/360/440/520/600 ticks = **14/18/22/26/30 s**. Usa `getCastTime(n)`, não o tempo efetivo reduzido; parâmetro caster não é usado. | `ChainsSpell#getDuration(int,LivingEntity)` [Spell]; valor copiado para entidade e três efeitos [Execução]. | `SEM_HOOK_SEGURO` para duração independente/por perk; nível no evento é `CONDITIONAL` e muda custo/efeitos juntos. Q3. |
+| Aquisição / LOS / alcance | Um living target via `preCastTargetHelper(...,50,0.35f)`: ray dos olhos pelo look até **50 blocks**, blocks=true e target AABB inflate0.35. Seleciona primeiro hit; host pode resolver passageiro de PreventDismount ou parent multipart. | `checkPreCastConditions` [Execução]; [Target helper] [Raycast]. Sem filtro específico de aliado/PvP/claim nesta chamada; filtro host default `Utils#canHitWithRaycast` [Ray filtro]. | `SEM_HOOK_SEGURO` para mais alcance/multi-target/AOE; nenhum range config demonstrado. Q4. |
+| Alvo ao concluir / imunidade | Lê `TargetEntityCastData` e resolve UUID no **ServerLevel atual**; exige target não nulo e sem tag **`irons_spellbooks:cant_root`** [Tag root]. Não revalida distância/LOS/vida na spell após os 10 s; alvo pode ter se movido. | `ChainsSpell#onCast` [Execução]; `TargetEntityCastData#getTarget(ServerLevel)` [Target data]. | `SEM_HOOK_SEGURO` para retarget/protection. Tag é gate do efeito, após cobrança; Q4/Q5. |
+| Efeitos / dano | Aplica Chained amplificador0, Slowness amplificador3 (**IV**), Weakness amplificador5 (**VI**), mesma duração, ambient=false/visible=true. Sem dano direto, DoT, cura, congelamento numérico ou DamageType aplicado. | `onCast` [Execução]; `ModEffects#CHAINED_EFFECT` registra harmful [Efeito registry]. | Efeitos `SEM_HOOK_SEGURO` para mudança coordenada; dano/type `N/A`; não inferir ice damage da escola. Q5. |
+| Spawn / montagem / rollback | Cria uma `ChainsEntity(owner=caster)`, seta duração, **aplica efeitos antes do spawn/mount**, seta target/posição, tenta `addFreshEntity`, `stopRiding`, `startRiding(chain,true)`. Booleans ignorados; nenhuma transação/rollback. | [Execução]. | `SEM_HOOK_SEGURO` para prometer atomicidade ou refund. Falha da montagem pode deixar efeitos ativos; Q5. |
+| Dimensão / colisão / visual | Registry **1×1 blocks**; override `getDefaultDimensions` com passageiro usa **width=passageiro.bbWidth×1.25, height=0.75**, fixed. `getScale` retorna target.scale (ou1); AABB final exige validação de escala host. Entidade retorna false para colisão/pickable/pushable; posição do passageiro é a da entidade. Renderer escala width/0.6 e height×0.8, separado do volume. | [Entidade registry]; `getScale/getDefaultDimensions/positionRider` [Entidade] [Comportamento]; [Render]. | `SEM_HOOK_SEGURO` para resize/área. Sem projétil, velocidade/pierce/spread `N/A`; Q3/Q5. |
+| Anti-cast / item / teleport | Chained tenta cancelar IMagicEntity cast e ServerPlayer cast a **cada tick**; cancela `LivingEntityUseItemEvent.Start` e `EntityTeleportEvent` se o living possui Chained. Não prova captura de todo teleport de addons. `MagicUnclearableEffect#fillEffectCures` não preenche curas padrão. | `ChainedEffect#applyEffectTick/shouldApplyEffectTickThisTick/cancelUse/cancelTeleport` [Efeito]; [Curas]. Gates/cancelamento adicional a cada5ticks em [Principles]. | `SEM_HOOK_SEGURO` para estender/suprimir bloqueio sem coordenação de efeito+entity. Cura/leite e teleports diretos exigem QA; Q5/Q6. |
+| Lifecycle / anti-magic | Server remove se `tickCount>duration`, target morto, ou sem passageiro por **>20 ticks**. `removeRoot` ejeta e descarta; **não remove Chained/Slowness/Weakness**. Anti-magic chama removeRoot; dano BYPASSES_INVULNERABILITY também; outros danos retornam false. | `ChainsEntity#tick/removeRoot/onAntiMagic/hurt` [Entidade] [Cleanup] [Comportamento]. | `SEM_HOOK_SEGURO` para “limpeza integral” por anti-magic. Efeitos têm relógio próprio; Q6. |
+| Owner / save / mount | Owner UUID, Age e Duration salvos; target field não é salvo. `getOwner` resolve UUID no server. `PreventDismount` default proíbe saída e evento host cancela desmontagem quando mount/entidade não removidos. `teleportWithTarget` existe, mas `tick` não o chama. | [Persistência] [Entidade] [Mount host]. Sem AI/cap local de chains ativas; não é summon combatente. | `CONDITIONAL` para ownership/observação; `SEM_HOOK_SEGURO` para criar mount/estado paralelo. Q6. |
+| Mundo / AOE | Sem block mutation, explosão ou área de seleção: um alvo, uma entity, três efeitos. | [Execução]. | `N/A` mundo destrutivo; target único→AOE = ⛔ `SEM_HOOK_SEGURO`; Q4/Q5. |
 
-A spell não desabilita o pipeline padrão de loot/crafting do Iron's. Fonte/weight/receita concreta da release: **NÃO VERIFICADO**.
+## Pipeline, obtenção e autoria
 
-## Authority / dedup
+Admissão host (mana/cooldown/aprendizado/eventos [Host gates]) → ray com UUID salvo → LONG → evento de cast/mana → resolver UUID e `CANT_ROOT` → preparar chain → três efeitos → spawn/mount → super/som → cooldown [Host cast] [Execução]. A seleção é anterior ao cast longo; immunity/target inválido na resolução não desfaz o custo. Categorias ASM/Principles podem cancelar casting e registrar fadiga/XP; configuração/categorias implantadas são **NÃO VERIFICADAS** [Principles]. A classe não impede o pipeline herdado de loot/crafting/aprendizado; receita, chance e fonte Survival: **NÃO VERIFICADAS** [Host obtenção].
 
-Authority de imobilização/cancelamento = `ChainsEntity` + `ChainedEffect`. Não adicionar root, anti-cast ou anti-teleport paralelo.
+Cast, entity-mount e efeitos temporários são uma única cadeia causal. Anti-cast, bloqueio de item e cancelamento de teleport são consequências do efeito, sem novos casts/dano/mastery/cobrança. Iron's/Ypsilon mantêm casting, mana, mount e efeitos/Principles; RPG Skill Tree mantém progressão/gates; Black Arcana seu runtime/WorldEffectPolicy. A assinatura ocupada é **root em mount de gelo + fraqueza/lentidão/silêncio temporários**. Nenhuma perk, adapter ou runtime foi implementada.
 
-## QA
+## QA e pendências explícitas
 
-PvP, bosses além de `CANT_ROOT`, interação com teleport de outros addons e cleanup por unload: runtime QA.
+- **Q1:** ID/alias histórico e source/links auditados; equivalência dos métodos binários, config implantada e compatibilidade 3.16.2→3.16.3: **PENDING**.
+- **Q2:** mana/cast/cooldown, interrupção do LONG, alvo perdido/imune e falha de spawn; comprovar ausência de refund local sem inventar segunda transação. **PENDING**.
+- **Q3:** duração nominal 200+80n versus cast efetivo reduzido; sincronização dos 3 efeitos/entidade, AABB 1×1 versus default ajustado/scale, VFX. **PENDING**.
+- **Q4:** 50 blocks/LOS/aim assist, multipart/PreventDismount, aliados/PvP/claims, alvo movendo/mudando de dimensão durante cast e tag CANT_ROOT. **PENDING**.
+- **Q5:** mount já ocupado, startRiding/addFreshEntity recusados e efeitos sem rollback; item/cast bloqueados, bosses/efeitos imunes, ausência de dano e limites de proteção. **PENDING**.
+- **Q6:** expiração>duration, >20 ticks sem passageiro, anti-magic, bypass invulnerability, morte, desmontagem, curas/teleport de addons, logout/reload/unload com target não salvo e efeitos remanescentes. GameTest, cliente/dedicado, multiplayer e Survival: **PENDING**.
 
-## Fonte
-
-Pin `a9b8f822...`; `ChainsSpell.java`, `ChainedEffect.java`.
+[Versão]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/gradle.properties#L11-L16
+[Metadados]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/gradle.properties#L30-L36
+[Registry]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/ModSpells.java#L29-L58
+[Guia]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/resources/assets/ypfundamentals/lang/en_us.json#L51-L66
+[Spell]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/ice/ChainsSpell.java#L33-L77
+[Execução]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/ice/ChainsSpell.java#L90-L126
+[Entidade]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/chains/ChainsEntity.java#L46-L171
+[Cleanup]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/chains/ChainsEntity.java#L185-L246
+[Persistência]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/chains/ChainsEntity.java#L185-L238
+[Comportamento]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/chains/ChainsEntity.java#L244-L294
+[Entidade registry]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/ModEntities.java#L61-L65
+[Efeito registry]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/effect/ModEffects.java#L97-L99
+[Efeito]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/effect/custom/ChainedEffect.java#L21-L57
+[Curas]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/effect/MagicUnclearableEffect.java#L12-L20
+[Render]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/chains/ChainsRenderer.java#L19-L27
+[Target helper]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L665-L711
+[Raycast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/RaycastBuilder.java#L48-L122
+[Ray filtro]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L459-L462
+[Target data]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/TargetEntityCastData.java#L12-L39
+[Mount host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/player/ServerPlayerEvents.java#L534-L543
+[Host valores]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L160-L257
+[Host cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L346
+[Host gates]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L373-L401
+[Host obtenção]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L594-L612
+[Host cooldown]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/MagicManager.java#L94-L122
+[Evento cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellOnCastEvent.java#L20-L74
+[Principles]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/event/ModEvents.java#L516-L645
+[Tag root]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/util/ModTags.java#L49

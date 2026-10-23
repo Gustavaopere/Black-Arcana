@@ -1,43 +1,124 @@
 # Saeptum
 
-**✅ Revalidação SHA-exata 2026-10-13:** spell ID estático `ypfundamentals:saeptum` confirmado no JAR físico/publicador 1.1.7.1 (`a2855c253202a8fcc2925fcf5b1bf86d64fbe4da`), escola default Fundamentalism, [Java21 #38436717443](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38436717443) SUCCESS. `COUNTED_EXACT` somente registry e classe, +0 novas raízes. [Dossiê](../EXACT-BINARY-SPELLS-1.1.7.1.md). Progressão, mana/config, multiplayer e Survival ⚠️.
+**Dossiê técnico documental — 22/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; integração `CONDITIONAL`; QA físico `PENDING`. **+0 magias**: entidade, sure-hit, barreira, clash e estados são filhos deste cast.
 
+## Identidade e proveniência
 
-- ID: `ypfundamentals:saeptum`
-- escola registrada: Fundamentalism; domain escolhe a escola elemental dominante do caster quando Player
-- rarity: Legendary
-- nível: 1
-- cast: LONG, 80 ticks / 4 s
-- mana: 600
-- cooldown: 300 s
-- loot/crafting: desabilitados
-- `requiresLearning=true`
+| Campo | Evidência e limite |
+|---|---|
+| Provider / objeto | Ypsilon's Fundamentalism / Fundamental Principles; `mod_id=ypfundamentals`; spell Iron's `ypfundamentals:saeptum`, display **Saeptum**, escola default `ypfundamentals:fundamentalism`. Entidade filha `ypfundamentals:domain`; bloco `ypfundamentals:domain_block`. |
+| Artefato físico histórico | Minecraft 1.21.1 / NeoForge; `ypfundamentals-1.1.7.1.jar`; SHA-1 `a2855c253202a8fcc2925fcf5b1bf86d64fbe4da`; [publicação 8558503](https://www.curseforge.com/minecraft/mc-mods/fundamental-principles/files/8558503). [Java21 de 13/10/2026](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38436717443) SUCCESS prova registry/classe, sem provar lifecycle. [Dossiê binário](../EXACT-BINARY-SPELLS-1.1.7.1.md). |
+| Source Ypsilon | `ypsilonM/FundamentalPrinciples-1.21.1@a9b8f8222fb2a800edece8c1568984bd2a764fc2`; `com.ypsi.fundamentalism.spells.fundamentalism.SaeptumSpell`, `com.ypsi.fundamentalism.entity.spells.domain.DomainEntity`; [registry][registry], [spell/defaults][spell], [entity constructor][domain-init]. |
+| Host | Addon compila com Iron's **3.16.2**, pack usa **3.16.3**. Host consultado: `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`; [casting/custos][host-cast]. Não inferir equivalência binária; [boundaries comuns](../SPELL-PERK-BOUNDARIES-1.1.7.1.md). |
+| Dependência de domínio | Build Ypsilon declara Ace's Spell Utils **1.2.6.1-1.21.1**. Source oficial `AceTheEldritchKing/Aces_Spell_Utils@0f6110925de4c4c0422095d9ee9ca8ce4009e438` declara essa versão, mas compila com Iron's 3.11.0. Seu `AbstractDomainEntity.java` tem blob `1c830383020f373cc7304703a9fbeb307b70eede`, idêntico ao source Ace's 1.2.7.2 `a0b2f4c2fcfa938c8e47239279c77c2ef82647ac`. A herança abaixo é source auditado; identidade do blob não prova igualdade dos JARs ou QA do pack. [Versão Ace's][ace-version], [build Ypsilon][build]. |
+| Descrição oficial | [Guia upstream][guide], parafraseado: cria barreira sólida que encerra entidades e causa dano. Consulta/referências, sem copiar implementação, texto extenso ou assets; esta ficha não concede licença de redistribuição. |
 
-## Unlock
+## Ingresso e execução do cast
 
-Requer simultaneamente:
-- Concentratio >=12
-- Locus >=10
-- Perceptio >=12
-- Apparitio >=10
+1. **Aprendizado/seleção:** [`PrinciplesLevelsAttachment#setLevel(Player,String,int)`][learn] limita Principles a `0..20`; depois de uma alteração aprende Saeptum quando **Concentratio≥12, Locus≥10, Perceptio≥12, Apparitio≥10** simultaneamente. [`ModEvents#spellSelectionManager`][selection] oferece nível 1 em `domain_slot` com os mesmos limites. Esses trechos não testam diretamente `PRINCIPLES_SYSTEM`. `requiresLearning=true`, loot/crafting desabilitados, rarity Legendary e máximo default 1. No ingresso `ServerPlayer` que passa por `attemptInitiateCast`, scroll/comando ainda consulta aprendizado. O [comando do host][command] tem caminhos distintos: `IMagicEntity` usa `initiateCastSpell`; outro `LivingEntity` não-player chama diretamente `checkPreCastConditions→onCast→onServerCastComplete`, sem `canBeCastedBy`, gate de aprendizado, mana ou espera LONG desse wrapper. Não aplicar o contrato transacional de jogador a esses ingressos.
+2. **Admissão no servidor:** método de precondição específico não é sobrescrito; herda `true`, além das verificações de aprendizado/mana/cooldown/casting/`SpellPreCastEvent` do host. Não há seleção por raycast nem teste local de terreno, claim, dimensão ou limite de domínios ativos. Burnout/Chained e demais gates globais do addon continuam aplicáveis: [boundary comum](../SPELL-PERK-BOUNDARIES-1.1.7.1.md).
+3. **Tempo/custo:** `LONG`, `getCastTime(L)=80 ticks=4 s` base, independente de L. Host aplica `round(80×(2−softCap(CAST_TIME_REDUCTION)))`; no settlement publica `SpellOnCastEvent`, debita mana do caster conforme origem e só então chama `onCast`. Custo default **600 mana**; cooldown **300 s=6000 ticks** antes de modificadores. Nenhum recast próprio (`getRecastCount=0` herdado). [Host][host-cast]; [tempo/recast][host-time].
+4. **Spawn:** [`SaeptumSpell#onCast`][spawn] escolhe cor/escola, calcula refinement, cria **1 `DomainEntity`**, posiciona em `caster.position−(0,bbHeight/2,0)`, chama `setOwner(caster)`, `addFreshEntity` e `super.onCast`. Com dimensão registrada de `1×1 blocks`, o deslocamento inicial é `−0.5 block Y`; não usar o raio20 como hitbox. O retorno de `addFreshEntity` não é examinado nesse método: falha de spawn não tem refund local demonstrado.
 
-O próprio attachment aprende o spell e o SpellSelectionEvent adiciona `domain_slot`.
+## Escola, power, refinement e dano
 
-## Domain contract
+[`Util#getElementalSchool(Player)` / `getElementalColor(Player)`][school] percorrem **todas as escolas registradas**, não um subconjunto fixo de elementos. Comparam `school.getPowerFor(player)` arredondado a `0.001`, tolerância `<0.001`: máximo único positivo escolhe escola/cor; empate ou máximo≤0 retorna Fundamentalism/cor `0x30ABFF`. Não-player recebe esse fallback. Escola do domínio pode diferir da escola default do spell/custo/evento.
 
-`DomainEntity` estende `AbstractDomainEntity` do Ace's Spell Utils. Source pin:
-- radius 20;
-- duração interna inicial 60 s;
-- refinement deriva do spell power dominante + Principles;
-- prende living entities na área com `TRAPPED_EFFECT` durante construção;
-- constrói uma barreira esférica, registra blocos originais e restaura no cleanup;
-- registra posições originais e retorna entidades ao destruir o domínio;
-- possui domain clashes/refinement;
-- adiciona region ticket provider-native durante ativação;
-- aplica Burnout ao owner por 160 s no destroy path mostrado.
+Defina `P=SPELL_POWER(caster)×schoolType.getPowerFor(caster)` pelo [`Util#getAdaptativeSpellPower`][refinement]. Esse helper **não** multiplica `SpellConfigParameter.POWER_MULTIPLIER` nem os campos de power base/nível de `AbstractSpell` (ambos zero no constructor Saeptum). Para Player, com níveis `C=Concentratio`, `Lo=Locus`, `Pe=Perceptio`, `A=Apparitio`:
 
-Dano periódico/sure-hit e todos os edge cases do domain completo: **NÃO VERIFICADO** nesta ficha até auditoria integral da entity/runtime.
+- `helper=P×(0.65C+0.25Lo+0.25Pe+0.30A)/20`;
+- `R=trunc_int(P×helper)=trunc_int(P²×(0.65C+0.25Lo+0.25Pe+0.30A)/20)`;
+- não-player: `helper=1`, portanto `R=trunc_int(P)`;
+- dano-base tentado por alvo e passagem elegível: **`8×R health points`**, com aritmética inteira antes da conversão para float. [Helper][refinement], [`SaeptumSpell#refinementLevel`][refinement-call], [`DomainEntity#handleSureHit`][sure-hit].
 
-## Authority / dedup
+O crescimento no ramo Player é **quadrático em P**, com truncamento inteiro, não bônus linear de Principles. Exemplo puramente algébrico: `P=1` nos quatro gates mínimos produz `R=0`; a ficha não presume que P efetivo seja 1. Sem cap/floor local para R; setters herdados também não validam faixa. Refinement zero precisa QA de dano e razões de clash, que usam double e podem produzir infinito/NaN.
 
-Não force-load, não construa barrier, não teleporte/restore e não implemente clash em paralelo. O lifecycle do `DomainEntity`/Ace's Spell Utils é authority.
+**DamageSource real:** `new DamageSource(holder(schoolType.getDamageType()), target, owner)` — entidade direta é o **próprio alvo**, causador é owner. Fallback usa `ypfundamentals:fundamentalism_magic` ([school registry][school-registry], [DamageType][damage-type]). Não é `SpellDamageSource`. Assim [`DamageSources#applyDamage` do Iron's][damage-host] segue `target.hurt(source,8R)` e **não** o ramo que publica `SpellDamageEvent`, multiplica resistências mágicas do host e verifica seu friendly fire. Isso não prova dano final, bypass universal de resistência ou imunidade: tags/datapack, Minecraft e outros listeners continuam na resolução. Conversão de tipo por `SpellDamageEvent` está **⛔ SEM_HOOK_SEGURO** para este domínio. Tags/resistências/config efetiva ainda exigem JAR/datapack e QA.
+
+## Lifecycle, geometria e mundo
+
+| Etapa / localizador | Comportamento source e boundary |
+|---|---|
+| Constructor [`DomainEntity`][domain-init] | Raio `r=20 blocks`, `open=false`, spawn animation `40 ticks=2 s`, duração privada `1200 ticks=60 s`; radius/refinement são dados sincronizados herdados. Entidade tem AABB registrada `1×1 blocks`, tracking128; não há projétil ou summon com AI. [Registry da entidade][entity-registry]. |
+| Ativação [`DomainEntity#onActivation`][activation] / [base tick][ace-tick] | Base chama `onActivation` em `tickCount==1`. Override Ypsilon registra `spawnTime` e chama **`addRegionTicket(FORCED,chunkPos,20,chunkPos,true)`** na dimensão atual, com `forceTicks=true` e ChunkPos calculada por `ASUtils`. O argumento20 não é prova de alcance efetivo em chunks ou ticket level20; conversão do host não auditada aqui. Override não chama `super.onActivation`; não somar ticket base como segundo ticket do cast. |
+| Captura inicial [ativação][activation] | Busca todas as entidades no AABB **centrado no owner, ±20 em X/Y/Z**; para cada `LivingEntity`, aplica `TRAPPED` por `200 ticks=10 s`, amplificador0, oculta; guarda referência/posição. Não há filtro local `isAlive`, equipe, owner ou distância esférica: inclui o próprio owner e cantos do cubo. Sem cap local de alvos. |
+| Clash [ativação][activation] | Busca domínios em AABB centrado no domínio ±`2r=40`, exige `distance<40`, outro clashable e owners diferentes (ou algum null). Razão `R_outro/R_este≥factor` destrói este; razão inversa destrói outro; senão liga listas de clash. `factor` default **1.5**, config Ace's sem `defineInRange`; valor efetivo pendente. [Config][ace-config]. Mesmo owner não sofre clash; não há cap local por owner. |
+| Convergência [ativação][activation] | Move domínio mais recente ao mais antigo; no mesmo spawnTime usa entity ID como desempate. Pode mesclar listas/maps de posições; sem dedup da lista `affectedEntities`. Chamadas `subtract/add` em `semiFinalPos` não atribuem o retorno de Vec3: ajuste Y comentado pelo fluxo não se efetiva por essas duas chamadas. QA obrigatório de concorrência/mesmo tick. |
+| Construção [`generateBuildTasks/getHorizontalDisk/getHorizontalRing`][build-tasks], [`tick`][domain-tick] | Uma tarefa inteira por tick após `tickCount>1` enquanto building; sem budget por bloco. Grid esférico raio20: discos `x²+y²+z²≤r²`; casca nas camadas `r−1≤dist≤r+0.2`; piso em Y0 usa anéis com `floor(sqrt(x²+z²))`. Primeiro grava **BlockState** por posição; depois põe AIR ou DOMAIN_BLOCK com flags3. Não grava NBT de block entities nem passa por política de proteção Black Arcana. |
+| Reposição durante obra [`tick`][domain-tick] | Zera movimento dos capturados; por bloco alterado consulta coluna `1×31×1 blocks` (`Y−15..Y+16`), living/alive. Se capturado, limita distância XZ a `r−2=18`, move a `domainY+1`, zera movimento. Isso é distinto da esfera de sure-hit e não demonstra safe teleport collision/claim. |
+| Estados [tick][domain-tick], [`TrappedEffect`][trapped], [`SpatialDisruption`][spatial] | Após obra, a cada `%20==0` remove TRAPPED dos capturados e renova `SPATIAL_DISRUPTION` por `60 ticks=3 s`, amplificador0, oculto. Trapped zera speed/movimento e cancela início de uso de item/teleport. Seu `onShockSpell` só lê `event.isCanceled()`: **não cancela** spell por essa chamada. SpatialDisruption cancela casts Apparitio/Evasion e eventos de teleport. |
+| Transporte / sure-hit [`handleTransportation`][transport], [base tick][ace-tick], [sure-hit][sure-hit] | Override bloqueia transporte enquanto building. Base permite quando fechado, ainda não transported, sem clash, `tickCount>40`, não removido; método base apenas marca transported, **não cria dimensão**. Depois base chama `targetSureHit` a cada tick se `!clashing && (open \|\| transported)`. Override Ypsilon busca AABB do domínio ±r e exige `distance<r` mais `canTarget`; `handleSureHit` exige living/owner e servidor `%20==0`. Logo dano fica suspenso em clash e depende da conclusão da obra/transporte; não somar 60 hits fixos. |
+| Filtro herdado [`canTarget`][ace-target] | Exclui entidade do domínio/owner. Para todo `TamableAnimal`, compara dono com o próprio dono, então `shareOwner=true` inclusive null/null: exclui todos esses animais. Para Projectile compara `proj.owner` com a própria entidade projétil. Sem filtro explícito de equipe/PvP; LivingEntity final elimina projéteis. Não assumir proteção ampla de aliados. |
+| Expiração / morte / clash [tick Ypsilon][domain-tick], [base][ace-tick], [`handleDomainClash`][destroy] | A cada `%5==0`, destrói se `gameTime−spawnTime>1200` (strict `>`, não exatamente 1200). Base destrói se owner living morto. Em clash, callback Ypsilon verifica a cada10ticks `owner.health<maxHealth/2` e destrói. Base incrementa tempo de clash; não tem expiração própria. |
+| Destruição / restauração [`destroyDomain/clearBarrierBlocks/teleportToOriginalPlaces`][destroy] | Sem clash e com buildTasks não vazia: repõe BlockStates com flags3, move entidades às posições salvas, limpa maps e toca vidro. Em clash: transfere mapas/listas/tarefas para o mais antigo apenas se ele também for DomainEntity. Depois aplica **Burnout3200ticks=160s**, amplificador0, ao owner living; chama base `destroyDomain` que descarta/limpa referências de clash. Não há restauração garantida em todo caminho (discard direto, restart, unload, outro tipo de domínio). |
+| Tickets / owner / persistência [base destroy][ace-destroy], [owner][ace-owner], [NBT][ace-nbt] | Owner vive em **map estático Entity→Entity**, não UUID persistido. Base destroy não remove ownerMap nem ticket; no lifecycle examinado não há `removeRegionTicket` correspondente. Ypsilon não serializa `originalBlocks`, posições/lista/tarefas, building, `schoolType` nem duração privada; NBT base salva parte dos flags/números, sem owner. Constructor padrão de load não configura schoolType. Não prometer rollback após restart/unload nem cleanup completo de tickets. |
+
+O [tick herdado][ace-tick] não tem guarda server em todo o método: callbacks/consultas de clash podem ser alcançados nas duas sides. Escrita de blocos, captura/teleport/estados do owner e dano no código Ypsilon usam as guardas server indicadas; não tratar qualquer callback de tick cliente como um segundo settlement. O bloco da barreira tem strength−1, explosionResistance3600000, luz15; renderer do bloco é invisível e BlockEntity sincroniza/persiste **cor**. Isso não persiste snapshots do domínio nem recupera NBT de containers. [Bloco][barrier], [BlockEntity][barrier-be]. Cor da entidade é SynchedEntityData; culling AABB inflado por r é somente render, não hitbox. [Visual/culling][visual].
+
+## Matriz de alteração para perks
+
+Todos os números são defaults/fórmulas source, não valores efetivos do servidor. **NATIVE** é atributo/config nativo; **CONDITIONAL** é superfície cujo contrato de integração ainda falta; **⛔ SEM_HOOK_SEGURO** fecha alterações sem boundary demonstrado.
+
+| Eixo | Valor / classe e fase | Boundary, mutabilidade e limite | QA necessário |
+|---|---|---|---|
+| Dano / escola / tipo | Servidor, `8R` por passagem elegível; `SaeptumSpell#refinementLevel`, `DomainEntity#handleSureHit`. [Fórmula][refinement-call], [settlement][sure-hit]. | `SPELL_POWER` e power da escola: **NATIVE**, mudam R e podem mudar escola dominante; não são knobs exclusivos de dano. `POWER_MULTIPLIER` genérico não entra no helper. Sem `SpellDamageEvent`; troca de tipo **⛔ SEM_HOOK_SEGURO**. | Powers/empates/truncamento/zero; DamageType disponível, tags, resistências, PvP/equipe e causador direto estranho. |
+| Range / targeting | Spawn em self; captura cubo ±20 do owner; sure-hit esfera estrita r20 do domínio, `canTarget` herdado. [Ativação][activation], [sure-hit][sure-hit]. | Sem evento local para substituir resolver. Target único→área já é domínio e não autoriza expandi-lo; **⛔ SEM_HOOK_SEGURO** para retarget/filtros independentes. | Borda20/cantos/altura, owner/aliados/tamables, domínio deslocado por clash. |
+| Área / budget | Grid e efeito compartilham r20, mas usam centros/filtros distintos; sem cap de alvos/blocos por tarefa. [Tasks][build-tasks]. | `AbstractDomainEntity#setRadius(int)` é setter público sem validação, não contrato de expansão seguro; **CONDITIONAL** para auditoria de API, **⛔ fail-closed** para perk de área. Mudar após geração desalinhará snapshot/tarefas. | Terreno/containers/claims/build limits, custo aproximado cúbico, múltiplos domains; proteção e rollback. |
+| Projétil / entidade / hitbox / visual | 1 entidade domain, AABB1×1, tracking128; raio20 é cálculo de área. Projétil, velocidade, aceleração, pierce: **N/A**. [Registry][entity-registry], [visual][visual]. | Spawn é provider-owned; renderer/culling não mudam dano/colisão. Resize/hitbox **⛔ SEM_HOOK_SEGURO**. | Sync/culling e dimensão real da entidade; não confundir barreira com modelo visual. |
+| Cast / duração / periodicidade | LONG80ticks; duração privada1200ticks, teste estrito a cada5; dano gate20ticks após transporte e sem clash; estados60/200/3200ticks. [Spell][spell], [tick][domain-tick], [base][ace-tick]. | `CAST_TIME_REDUCTION` **NATIVE**; duração privada/scheduler/refinamento por tick **⛔ SEM_HOOK_SEGURO** para knob isolado. `setSpawnAnimTime(int)` público não prova lifecycle seguro. | Obra demorada, primeira/última passagem, morte, clash e interrupção do cast. |
+| Mana / cooldown / recast | `int(600×MANA_MULTIPLIER)` por cast; default300s cooldown; nenhum recast próprio. [Host][host-cast]. | Config e atributos **NATIVE**; `SpellOnCastEvent#setManaCost(int)` pré-débito e `SpellCooldownAddedEvent.Pre#setEffectiveCooldown(int)` pré-inserção são **HOOK_VERIFICADO**, integração **CONDITIONAL**. Admissão já ocorreu antes do evento de mana. | Origem/Creative/listeners, sem duplicar cobrança por sure-hit/construção. Diminuir cooldown não impõe cap de domínios. |
+| Summons / ownership | Domain é efeito filho, sem AI; owner set no spawn e map estático Ace's. [Spawn][spawn], [owner][ace-owner]. | **⛔ SEM_HOOK_SEGURO** para duplicação/reownership como summon. Sem cap local; setter não equivale a migração persistente. | Relog/restart/death/dimensão e domínios simultâneos do mesmo owner. |
+| Mundo / estados / rollback | AIR/barreira/teleport/snapshot de BlockState/ticket/Burnout; lifecycle acima. [Tick][domain-tick], [destroy][destroy]. | Ypsilon/Ace's são authority. **⛔ SEM_HOOK_SEGURO** para segunda barreira, ticket, restauração ou teleport Black Arcana. WorldEffectPolicy/proteções não verificadas neste provider. | Restart/unload/discard, block entities, duplicações/drops, transfer entre clashes e ticket residual. |
+
+## Autoria, deduplicação e concepção
+
+Iron's possui cast/mana/cooldown; Ypsilon/Ace's possuem domínio, owner, obra, dano e cleanup. RPG Skill Tree pode possuir progressão própria somente por contrato validado; Black Arcana não deve manter barreira, force-load, dano ou rollback em paralelo. Dedup deve distinguir cast do pai, UUID/instância do domínio, passagem de sure-hit e target. `DamageSource` não contém spell ID/token de cast e o directEntity é o alvo; owner+escola não identifica inequivocamente Saeptum. Múltiplos domínios do mesmo owner e merge de listas impedem dedup ingênua por caster. Animação, block updates, TRAPPED, SpatialDisruption e damage não são novas identidades nem procs de cast independentes.
+
+Assinatura ocupada: domínio fechado com barreira física, captura/movimento, negação de fuga, dano periódico de escola adaptativa e clash por refinement. Uma magia original com outra política de mundo precisa de identidade/lifecycle próprios, sem reutilizar automaticamente API, snapshots ou assets desse provider.
+
+## Verificação e pendências
+
+| Dimensão | Estado |
+|---|---|
+| JAR histórico | `COUNTED_EXACT` para registry/classe; não aceite físico do domínio. |
+| Source | Fórmulas, geometrias e lifecycle local/herdado auditados nos pins; compatibilidade binária ainda `CONDITIONAL`. |
+| Config / dependências / proteção | `PENDING`: JARs exatos Iron's/Ace's, config efetiva, tags/datapacks, claims e ordenação de listeners. |
+| Servidor dedicado / cliente / Survival | `PENDING`: gates nos quatro Principles, unlock/sync; obra/dano/clash multiowner e mesmo owner; equipe/PvP/tamables; zero refinement; containers e block NBT; unload/restart/discard/morte; restauração/teleport, duração/tickets e Burnout. |
+| Perks / runtime | Nenhum adapter/perk/runtime implementado; mudança de área/tipo/hitbox e lifecycle **⛔ fail-closed** até contrato seguro e QA. |
+
+[registry]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/ModSpells.java#L69-L73
+[spell]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/fundamentalism/SaeptumSpell.java#L25-L56
+[spawn]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/fundamentalism/SaeptumSpell.java#L59-L99
+[refinement-call]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/fundamentalism/SaeptumSpell.java#L118-L121
+[learn]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/attachments/customAtt/PrinciplesLevelsAttachment.java#L88-L151
+[selection]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/event/ModEvents.java#L244-L249
+[school]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/util/Util.java#L53-L108
+[refinement]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/util/Util.java#L253-L281
+[school-registry]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/YpsSchoolRegistry.java#L29-L45
+[damage-type]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/attributes/YpsDamageTypes.java#L16-L24
+[domain-init]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/domain/DomainEntity.java#L43-L84
+[activation]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/domain/DomainEntity.java#L87-L231
+[build-tasks]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/domain/DomainEntity.java#L233-L299
+[transport]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/domain/DomainEntity.java#L301-L305
+[destroy]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/domain/DomainEntity.java#L314-L409
+[domain-tick]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/domain/DomainEntity.java#L411-L517
+[sure-hit]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/domain/DomainEntity.java#L519-L542
+[visual]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/spells/domain/DomainEntity.java#L546-L578
+[entity-registry]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/entity/ModEntities.java#L109-L115
+[trapped]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/effect/custom/TrappedEffect.java#L23-L54
+[spatial]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/effect/custom/SpatialDisruption.java#L25-L56
+[barrier]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/block/YpsBlocks.java#L20-L25
+[barrier-be]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/block/custom/DomainBlockEntity.java#L36-L68
+[build]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/gradle.properties#L14-L25
+[guide]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/resources/assets/ypfundamentals/lang/en_us.json#L80
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L160-L401
+[host-time]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L230-L257
+[command]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/command/CastCommand.java#L50-L71
+[damage-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[ace-version]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/0f6110925de4c4c0422095d9ee9ca8ce4009e438/gradle.properties#L21-L28
+[ace-tick]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/0f6110925de4c4c0422095d9ee9ca8ce4009e438/src/main/java/net/acetheeldritchking/aces_spell_utils/entity/spells/AbstractDomainEntity.java#L149-L183
+[ace-target]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/0f6110925de4c4c0422095d9ee9ca8ce4009e438/src/main/java/net/acetheeldritchking/aces_spell_utils/entity/spells/AbstractDomainEntity.java#L138-L146
+[ace-destroy]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/0f6110925de4c4c0422095d9ee9ca8ce4009e438/src/main/java/net/acetheeldritchking/aces_spell_utils/entity/spells/AbstractDomainEntity.java#L93-L110
+[ace-owner]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/0f6110925de4c4c0422095d9ee9ca8ce4009e438/src/main/java/net/acetheeldritchking/aces_spell_utils/entity/spells/AbstractDomainEntity.java#L208-L258
+[ace-nbt]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/0f6110925de4c4c0422095d9ee9ca8ce4009e438/src/main/java/net/acetheeldritchking/aces_spell_utils/entity/spells/AbstractDomainEntity.java#L294-L344
+[ace-config]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/0f6110925de4c4c0422095d9ee9ca8ce4009e438/src/main/java/net/acetheeldritchking/aces_spell_utils/utils/AcesSpellUtilsConfig.java#L18-L21
