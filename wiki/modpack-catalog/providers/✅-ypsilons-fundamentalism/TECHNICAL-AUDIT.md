@@ -67,3 +67,12 @@ Qualquer bridge que não consiga provar caster, owner, target, Principle categor
 ## Reauditoria dos 13 Principles — 22/10/2026
 
 [Fichas individuais e boundaries source](principles/README.md) aprofundam os 13 sistemas, **+0 spells**. Pontos críticos: Perceptio troca a base por 8+D/5 antes do bônus; Locus só atua com bbInflation positivo e pode compor depois; Vitale exige getRecastCount(1,player)==2; Repetitio só adiciona em totalRecasts>2; Pertinacia usa nível do receptor ServerPlayer/MagicMobEffect; Expansio modifica uma vez antes do clamp e exclui EchoingStrikeEntity; Potentia pode normalizar direção apenas no ramo accuracy<1; Certum tem guards distintos entre preflight/evento; Remedium não substitui healAmount do evento no ramo de insuficiência. Cada ficha preserva defaults/config/QA separados. Nenhum desses achados constitui prova de bug no modpack, API externa suportada ou integração homologada.
+
+
+## Reauditoria das 15 spells — 22/10/2026
+
+[Índice e boundaries de implementação](SPELL-PERK-BOUNDARIES-1.1.7.1.md): 15/15 fichas com parâmetros por eixo e consumidores source-causais. Pontos úteis às perks incluem hitbox dinâmica de Pull/Sol versus raio de efeito, Laceration com dano da arma, marcas Thorn anteriores ao resultado do dano, cura LawOfRegression fora de um evento mutador, refinement quadrático de Saeptum e orientação Taunt enviada uma vez. Os roteiros de QA ficam em cada ficha.
+
+A herança `AbstractDomainEntity` tem o mesmo blob nos sources oficiais Ace’s 1.2.6.1 e 1.2.7.2; isso fecha somente a leitura desse arquivo, sem promover equivalência de JAR, ownership persistente, recuperação de barreiras, liberação de tickets ou compatibilidade com Iron’s 3.16.3. A chamada de ticket contém argumento `20` e `forceTicks=true`; não rotular o argumento como ticket level 20 nem presumir alcance efetivo nesta auditoria. A ficha Saeptum separa base e overrides.
+
+O quadro histórico de IDs e os achados anteriores permanecem delimitados por prova. Não houve execução física de Ypsilon nem nova integração/runtime neste lote; build/dev NeoForge 21.1.248 e snapshot físico 21.1.250 são fatos distintos. O [painel atual](../../meta/PROGRESSO-CATALOGO-ATUAL.md) mede spells e Principles separadamente e mantém o denominador técnico global aberto.

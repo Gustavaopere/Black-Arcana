@@ -1,26 +1,73 @@
 # Taunt
 
-**✅ Revalidação SHA-exata 2026-10-13:** spell ID estático `ypfundamentals:taunt` confirmado no JAR físico/publicador 1.1.7.1 (`a2855c253202a8fcc2925fcf5b1bf86d64fbe4da`), escola default Evocation, [Java21 #38436717443](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38436717443) SUCCESS. `COUNTED_EXACT` somente registry e classe, +0 novas raízes. [Dossiê](../EXACT-BINARY-SPELLS-1.1.7.1.md). Progressão, mana/config, multiplayer e Survival ⚠️.
+**Dossiê técnico documental — 22/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; host `CONDITIONAL`; QA físico `PENDING`. **+0 magias**: mudança de target, packet, som e partículas são resultados desta identidade. Não confundir com [Taunt do Paladin](../../✅-paladin-spells/holy/taunt.md).
 
+## Identidade e proveniência
 
-- ID: `ypfundamentals:taunt`
-- escola: Evocation
-- rarity: Epic
-- níveis: 1–4
-- cast: LONG, 3 / 2.5 / 2 / 1.5 s
-- mana: 50 / 55 / 60 / 65
-- cooldown: 20 s
-- target range: 24
-- dano: nenhum
+| Campo | Evidência e limite |
+|---|---|
+| Provider / objeto | Ypsilon's Fundamentalism / Fundamental Principles; `mod_id=ypfundamentals`; spell Iron's `ypfundamentals:taunt`, display **Taunt**; escola default `irons_spellbooks:evocation`; rarity Epic; níveis default `1..4`. |
+| Artefato físico histórico | Minecraft 1.21.1 / NeoForge; `ypfundamentals-1.1.7.1.jar`; SHA-1 `a2855c253202a8fcc2925fcf5b1bf86d64fbe4da`; [publicação 8558503](https://www.curseforge.com/minecraft/mc-mods/fundamental-principles/files/8558503). [Auditoria Java21 de 13/10/2026](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38436717443) SUCCESS prova registry/classe, não execução; [dossiê binário](../EXACT-BINARY-SPELLS-1.1.7.1.md). |
+| Source da lógica | `ypsilonM/FundamentalPrinciples-1.21.1@a9b8f8222fb2a800edece8c1568984bd2a764fc2`; `com.ypsi.fundamentalism.spells.evocation.TauntSpell`; [registro `ModSpells#TAUNT`][registry], [ID/defaults/constructor][defaults]. Helper próprio `com.ypsi.fundamentalism.network.packets.LookAtEntityPacket`. |
+| Host / versão | Source do addon declara Iron's **3.16.2**, pack usa **3.16.3**. Host consultado: `iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`; não prova equivalência binária dos dois hosts. Ver [boundaries comuns](../SPELL-PERK-BOUNDARIES-1.1.7.1.md). |
+| Descrição oficial | [Guia upstream][guide], parafraseado: atrai a atenção de um inimigo e faz outro jogador virar o olhar ao caster. Consulta/referências apenas; sem copiar código, texto extenso ou assets, sem concessão de licença de redistribuição. |
 
-## Efeito
+## Ingresso, alvo e sequência causal
 
-Se target é `Mob`, server-side executa `mob.setTarget(caster)`. Se target é `ServerPlayer`, envia `LookAtEntityPacket` para fazê-lo olhar para o caster e toca roar; não converte player em AI target.
+1. **Obtenção:** Taunt não sobrescreve `allowLooting`, `allowCrafting` ou `requiresLearning`. Regras vêm da escola/config/host; [métodos herdados][acquisition]. Não há gate de unlock por Principles próprio nesta classe. Fonte concreta de loot/receita/Survival e configurações implantadas: **NÃO VERIFICADO**. Gates globais de Ypsilon, como Burnout/Chained, continuam aplicáveis: [boundary comum](../SPELL-PERK-BOUNDARIES-1.1.7.1.md).
+2. **Admissão no servidor:** host valida casting, mana/cooldown/aprendizado conforme origem e publica `SpellPreCastEvent`. Antes da canalização, [`TauntSpell#checkPreCastConditions(Level,int,LivingEntity,MagicData)`][targeting] chama `Utils.preCastTargetHelper(...,24,0.35f)`. O [helper Iron's 3.16.3][target-helper] usa raycast com bloqueio por blocos, raio de assistência de AABB `0.35 block`, exige LivingEntity (ou passageiros `PreventDismount`/parent de PartEntity) e guarda seu UUID em `TargetEntityCastData`. Falha de aquisição nega o cast. O predicado adicional desta chamada é `x→true`: não comprova filtro de hostilidade/equipe/PvP.
+3. **Geometria de aquisição:** [`RaycastBuilder#range/build/performRaycast`][raycast] parte dos olhos e projeta direção do olhar por **24 blocks base**, trunca em colisão de bloco, consulta candidatos e escolhe a interseção mais próxima. Filtro default `canHitWithRaycast`: pickable, alive e não spectator. O comprimento do raio não equivale à distância máxima ao centro do alvo; AABB/assistência podem intersectar antes. [Filtro][ray-filter]. Sem área, cone ou cap múltiplo: um UUID é armazenado. **Mixin do próprio addon muda o alcance antes da execução:** para `ServerPlayer`, [`RaycastBuilderMixin#adjustRaycastRange`][range-mixin] usa `R0=8+24/5+int(Pe×addRange)` se Perceptio/global ativos, senão `R0=24`; como a inflação é positiva, Locus/global ativos produzem `R=R0×clamp(baseRange+addRangeLocus×Lo,0,10)`. Com defaults `1.5`, `0.40`, `0.02`, ambas ativas: `R=(12.8+int(1.5Pe))×clamp(0.40+0.02Lo,0,10) blocks`; Pe/Lo0→5.12 e20→34.24. Flags/config/aplicação do mixin no host3.16.3 são `CONDITIONAL`; ver [Perceptio](../principles/perceptio.md) e [Locus](../principles/locus.md). Reexecutar o mesmo builder pode recalcular sobre o end alterado; não aplicar passivas uma segunda vez em adapter.
+4. **Canalização/custos:** `LONG`; base `T(L)=60−10×(L−1) ticks`: níveis1/2/3/4 → **60/50/40/30 ticks = 3/2.5/2/1.5 s**. Host aplica `round(T×(2−softCap(CAST_TIME_REDUCTION)))`. Ao terminar, publica `SpellOnCastEvent`, debita mana resolvida conforme origem e entrega L resolvido ao `onCast`. [Spell][targeting], [host tempo][host-time], [host settlement][host-cast]. L alterado somente no evento de settlement não encurta retroativamente a canalização já feita.
+5. **Resolução do alvo:** [`TargetEntityCastData#getTarget(ServerLevel)`][target-data] consulta UUID na dimensão atual. [`TauntSpell#onCast`][effect] não refaz distância/LOS/raycast nem revalida equipe/vida. Alvo ausente/outra dimensão → sem branch de efeito; custo/cooldown já pertencem ao fluxo do host. LivingEntity que não é Mob nem ServerPlayer também não recebe branch próprio. Não promover aquisição bem-sucedida a efeito garantido.
+6. **Mob:** chama uma vez `mob.setTarget(caster)`, depois VFX. Sem duração fixa, buff, loop de aggro ou garantia de que AI manterá o target. **ServerPlayer:** chama `LookAtEntityPacket.sendToPlayer(target,caster)`, toca RAVAGER_ROAR na posição do alvo (`SoundSource.PLAYERS`, volume1/pitch0.8), depois VFX. Após qualquer ramo chama `super.onCast` do host. [Efeito][effect].
+7. **Saída/sync:** [`LookAtEntityPacket#sendToPlayer`][packet-send] calcula direção dos olhos do alvo ao centro da AABB **atual** do caster, resolve yaw/pitch e envia payload `ypfundamentals:look_at_entity(casterId,yRot,xRot)`. Registro é `playToClient` em [`ModNetwork#register`][network]. Handler enfileira uma aplicação de rotação no `LocalPlayer`: yaw/pitch atual e anterior, cabeça/corpo. **Não consulta `casterId`, não mantém tracking e não trava continuamente a câmera.** [Codec/handler][packet-handler]. Ausência de LocalPlayer faz handler não aplicar rotação. Aceite visual/input/sync precisa cliente real.
 
-## Obtenção
+## Parâmetros e superfícies para perks
 
-Pipeline padrão permitido; fonte concreta: **NÃO VERIFICADO**.
+Defaults abaixo não substituem config efetiva. `M=MANA_MULTIPLIER`, `L` é nível do contexto indicado. **NATIVE / CONFIG_NATIVE** descreve atributo/config suportado; **HOOK_VERIFICADO** prova método/evento e fase; integração permanece **CONDITIONAL** até adapter/QA. Alterações sem seam real ficam **⛔ SEM_HOOK_SEGURO**.
 
-## Authority / dedup
+| Eixo | Valor / fórmula e origem | Fase / boundary e mutabilidade | Limite / QA |
+|---|---|---|---|
+| Dano / tipo / cura | Nenhuma chamada damage/heal no efeito. DamageType, crit, DOT, knockback e resistência: **N/A**. `baseSpellPower=6`, `spellPowerPerLevel=1` são campos declarados, mas não lidos pelo efeito. [Defaults][defaults], [onCast][effect]. | Servidor, alteração de target/rotação. **⛔ SEM_HOOK_SEGURO** para adicionar dano ou converter tipo como se fosse parâmetro existente. | `SPELL_POWER`, escola e `POWER_MULTIPLIER` não alteram diretamente o Taunt terminal. Testar que não cria on-hit fictício. |
+| Alcance / LOS | Raio de aquisição24blocks **base**, colide com blocos; `bbInflation=0.35block`. Fórmula condicional Perceptio→Locus acima; settlement não rechecado. [`checkPreCastConditions`][targeting], [raycast][raycast], [mixin][range-mixin]. | Servidor antes de canalização; passivas/config **NATIVE**, aplicação **CONDITIONAL**. Mixin privado não é API pública de range por perk; **⛔ SEM_HOOK_SEGURO** para extensão independente. | Revalidar flags/níveis0/20, obstáculos, AABBs, partida do alvo, movimento e builder reutilizado. Não contornar chunks/proteções com busca paralela. |
+| Targeting / filtros | 1 UUID LivingEntity capturado; resolução por UUID no ServerLevel; terminal Mob/ServerPlayer. [Helper][target-helper], [data][target-data], [efeito][effect]. | Servidor; `TargetEntityCastData` acessível não fornece contrato para retarget seguro por perk. **CONDITIONAL** para auditoria de integração; target único→área **⛔ SEM_HOOK_SEGURO**. | Equipe/PvP/aliados, boss/part/passenger, alvo não elegível no terminal, unload/morte/dimensão. |
+| Área / quantidade | Um alvo, sem enumeração de área. Partículas não causam efeito em vizinhos. [OnCast/particles][effect]. | Servidor; raio de assistência e raio visual são distintos. **⛔ SEM_HOOK_SEGURO** para AOE. | Sem multiplicar `setTarget`/packet em outros alvos. |
+| Projétil / hitbox / visual | Projétil, spawn, velocidade, aceleração, lifetime, pierce e hitbox própria: **N/A**. Oito emissões de ANGRY_VILLAGER em anel visual `1.5blocks`, Y+1.5; não é área de taunt. [`angryParticles`][effect]. | Servidor envia partículas; alvo player recebe orientação cliente. Render/hitbox resize **⛔ SEM_HOOK_SEGURO**; packet não é projétil. | Cliente real: VFX, som e rotação única; não interpretar casterId como target dinâmico. |
+| Cast / duração / interrupção | LONG `60−10(L−1) ticks`; efetivo por `CAST_TIME_REDUCTION`. Duração de aggro/camera-lock/status: **N/A**, não há estado temporizado próprio. [Spell][targeting], [host][host-time]. | Atributo de tempo **NATIVE**; alterar nível no ingresso pode afetar tempo/custo em conjunto. `SpellOnCastEvent#setSpellLevel` ocorre tarde para tempo. | Não extrapolar fórmula acima do máximo default4 (poderia gerar tempo não positivo). QA cancelamento e perda de alvo. |
+| Mana / owner | `int((50+5×(L−1))×M)`; `M=1`: **50/55/60/65mana**. [Constructor][defaults], [host][host-cast]. | Mana do caster em `MagicData`; config global **CONFIG_NATIVE**; `SpellOnCastEvent#setManaCost(int)` **HOOK_VERIFICADO**, pré-débito mas após admissão. | Sem segunda cobrança/refund local comprovado por alvo perdido. Origem/Creative/listeners e custo da pré-validação precisam QA. |
+| Cooldown / recast | Default20s=400ticks; atributos/config antes de `SpellCooldownAddedEvent.Pre`; `getRecastCount=0` herdado. [Defaults][defaults], [host cooldown][cooldown]. | `COOLDOWN_REDUCTION`/config **NATIVE**; `Pre#setEffectiveCooldown(int)` **HOOK_VERIFICADO** pré-inserção; integração **CONDITIONAL**. | Cancelar evento de cooldown não desfaz target/packet já enviados. Nenhum recast/aggro loop adicional. |
+| Summons / estados / mundo | Summons, buffs/debuffs registrados, mutação de blocos, teleport, persistência/rollback: **N/A**. Mob recebe target e player orientação pontual. [Efeito][effect], [packet][packet-handler]. | AI provider/Minecraft possui target após `setTarget`; cliente recebe yaw/pitch. **⛔ SEM_HOOK_SEGURO** para lock contínuo ou duração de aggro não existente. | AI pode retarget; testar equipe/PvP/input, som e cliente ausente. |
 
-Não manter aggro loop paralelo. O `setTarget` provider-native e o packet player-facing são o settlement do cast. PvP/input acceptance visual deve ser validado em cliente real.
+## Autoria, deduplicação e concepção
+
+Iron's possui intenção, dados de alvo, custo/canalização/cooldown; Ypsilon possui `setTarget`, payload e VFX. Não manter loop Black Arcana/RPG Skill Tree para reforçar aggro/rotação, nem enviar outro packet como segundo settlement. O cast do pai, mudança de target, som, partículas e aplicação cliente são a mesma ação causal, sem on-hit/on-kill/damage próprio. Payload tem ID inteiro de entidade e dois ângulos, sem token de cast, duração ou UUID persistente. Não usar receipt do packet como confirmação server-side de alvo atingido nem gerar mastery nos dois lados.
+
+Assinatura ocupada: provocação singular de Mob e redirecionamento pontual do olhar de outro jogador. AOE de provocação ou efeito com duração garantida exige identidade/targeting/lifecycle próprios; nenhuma perk, adapter ou magia nova foi implementada.
+
+## Verificação e pendências
+
+| Dimensão | Estado |
+|---|---|
+| Registry/classe no JAR histórico | `COUNTED_EXACT`; revalidação13/10 não prova payload/runtime. |
+| Source lógico | Defaults, helper/raycast, UUID, settlement e packet auditados nos pins; sem dano, sem lock contínuo. |
+| Config/obtenção/compatibilidade | `CONDITIONAL`: host3.16.2→3.16.3, config/loot/receitas e gates globais; validar bytecode exato. |
+| Servidor dedicado / cliente / Survival | `PENDING`: LOS/alcance/assistência, alvo movendo/morto/unloaded/em outra dimensão, Mob/ServerPlayer/outro LivingEntity, equipe/PvP/AI, sincronização de yaw/pitch e input após packet, som/VFX, interrupção/mana/cooldown. |
+| Capacidade de implementação | Hooks genéricos de custo/tempo/cooldown documentados, nenhum adapter/perk. Range, AOE, dano/type, hitbox e lock contínuo **⛔ fail-closed**. |
+
+[registry]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/ModSpells.java#L57-L60
+[defaults]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/evocation/TauntSpell.java#L24-L41
+[targeting]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/evocation/TauntSpell.java#L43-L55
+[effect]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/spells/evocation/TauntSpell.java#L68-L101
+[guide]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/resources/assets/ypfundamentals/lang/en_us.json#L76
+[packet-handler]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/network/packets/LookAtEntityPacket.java#L18-L51
+[packet-send]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/network/packets/LookAtEntityPacket.java#L53-L68
+[network]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/network/ModNetwork.java#L55-L60
+[acquisition]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L594-L631
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L160-L401
+[host-time]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L230-L257
+[target-helper]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L665-L710
+[raycast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/RaycastBuilder.java#L20-L124
+[ray-filter]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L459-L461
+[range-mixin]: https://github.com/ypsilonM/FundamentalPrinciples-1.21.1/blob/a9b8f8222fb2a800edece8c1568984bd2a764fc2/src/main/java/com/ypsi/fundamentalism/mixins/principlesMixins/RaycastBuilderMixin.java#L27-L53
+[target-data]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/TargetEntityCastData.java#L12-L40
+[cooldown]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/MagicManager.java#L94-L122
