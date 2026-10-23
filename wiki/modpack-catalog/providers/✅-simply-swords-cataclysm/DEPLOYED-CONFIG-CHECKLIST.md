@@ -21,12 +21,12 @@ Capture the effective NeoForge STARTUP config state corresponding to the exact s
 
 | Ability | Required effective evidence | Activation classification |
 |---|---|---|
-| Accursed Rage | `accursedRageChance` | zero => disabled; non-zero => active candidate |
-| Blazing Brand | `blazingBrandChance` | zero => disabled; non-zero => active candidate |
-| Mecha Pulse | `mechaPulseChargeChance` | zero => no normal charge progression; non-zero => active candidate |
-| Mecha Smite | `mechaSmiteHarmfulEffectsChance`, `mechaSmiteFireDuration`, `mechaSmiteWitherDuration`, `mechaSmiteRegenChance`, `mechaSmiteRegenUsesPercentage`, `mechaSmiteRegenPercentage`, `mechaSmiteRegenThreshold` | harmful branch requires non-zero chance plus at least one non-zero harmful duration; regenerative branch is classified independently from chance + selected threshold mode/value |
+| Accursed Rage | `accursedRageChance` | Positive chance is a candidate for stacking; zero alone is not strict exclusion because code uses RNG <= chance. Existing Rage and max-amplifier0 have separate paths. |
+| Blazing Brand | `blazingBrandChance` | Positive chance is a candidate; zero is intended disable in comments, but RNG exactly0 satisfies the comparison. Brand application and lifesteal have distinct results. |
+| Mecha Pulse | `mechaPulseChargeChance` | Positive chance is a candidate for charge; inspect cooldown, existing charge and threshold. Chance0 is not an explicit guard; threshold0 with absent charge can throw before RNG. |
+| Mecha Smite | `mechaSmiteHarmfulEffectsChance`, `mechaSmiteFireDuration`, `mechaSmiteWitherDuration`, `mechaSmiteRegenChance`, `mechaSmiteRegenUsesPercentage`, `mechaSmiteRegenPercentage`, `mechaSmiteRegenThreshold` | Harmful branch requires a satisfied inclusive chance check and at least one duration >0; regeneration is independent and uses strict health < selected threshold. Chance0 alone does not demonstrate disabled. |
 
-Also retain the exact source-config context for other durations/amplifiers/cooldowns as runtime/balance evidence. `mechaSmiteFireDuration` and `mechaSmiteWitherDuration` are catalog gates because the provider explicitly documents zero as disabling those harmful effects; they do not create extra semantic identities.
+These ten values are minimum triage evidence, not a full activation proof. Retain the other effective durations/amplifiers/cooldowns and relevant pre-existing effects. `mechaSmiteFireDuration` and `mechaSmiteWitherDuration` have explicit >0 guards; their zero cases differ from the inclusive RNG checks. They do not create extra semantic identities. See the [23/10/2026 causal audit](IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md) and individual matrices before classifying an action as disabled.
 
 ## Accepted evidence
 
@@ -42,7 +42,7 @@ The repository read-only collector now has a bounded route for this provider:
 python docs/qa/provider-catalog-deployed-evidence-collector.py "/path/to/modpack-instance"
 ```
 
-It reads only `config/simplycataclysm-startup.toml`, retains only the ten closure keys above, and fingerprints the exact physical JAR. A missing/incomplete key stays fail-closed; the collector never substitutes source defaults.
+It reads only `config/simplycataclysm-startup.toml`, retains only the ten keys above, and fingerprints the exact physical JAR. A missing/incomplete key stays fail-closed; the collector never substitutes source defaults. Its bounded extraction is not a proof of all runtime branches; no collector output was obtained in this reaudited batch.
 
 Current archived instance logs confirm that NeoForge loaded and watched `config/simplycataclysm-startup.toml`; those logs do **not** expose the values and therefore do not close this checklist by themselves.
 
@@ -55,10 +55,10 @@ Do not use:
 
 ## Promotion rule
 
-Once effective values are known:
+Once effective values are known and the relevant state/branch conditions have been reviewed:
 
-- active identities may enter the strict numerator;
+- identities whose activation is actually established may enter the strict numerator under the catalog contract; positive chance alone does not establish activation;
 - disabled identities remain provider inventory but not strict current-pack actions;
-- provider can leave ⚠️ only when all four are classified and no other catalog blocker remains.
+- activation/config closure requires all four to be classified without relying on source defaults or a chance0 label alone. The ✅ directory denotes semantic inventory completeness, separately from this gate.
 
 Runtime combat QA remains separate from semantic/config closure.

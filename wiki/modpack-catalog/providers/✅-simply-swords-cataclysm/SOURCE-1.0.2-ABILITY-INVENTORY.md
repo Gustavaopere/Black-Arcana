@@ -97,3 +97,7 @@ Only factual source structure, identifiers, release/version correlation, config 
 - deployed active subset: **open**;
 - strict contribution: **+0**;
 - provider remains: **⚠️**.
+
+## Reauditoria causal posterior — 23/10/2026
+
+O checkpoint acima é histórico. O [dossiê de implementação](IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md) mantém as quatro raízes e +0 strict, mas separa a intenção dos comentários de config da condição executada `RNG <= chance`: zero não é exclusão lógica estrita demonstrada. Cap/threshold0, estado prévio e resolução dos hosts também importam. Nenhum default, log de load ou novo source pin fecha a configuração implantada ou prova equivalência ao JAR.

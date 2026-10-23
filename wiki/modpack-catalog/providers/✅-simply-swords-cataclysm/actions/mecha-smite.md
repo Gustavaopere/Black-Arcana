@@ -1,36 +1,60 @@
 # Mecha Smite
 
-- Provider: **Simply Swords: Cataclysm** (`simplycataclysm`)
-- Physical line: `1.0.2+1.21.1+neoforge`
-- Material owner: **Witherite**
-- Classificação: **supernatural weapon ability / hit-triggered multi-branch proc**
-- Source surface: `WitheriteSwordItem`
-- State: `SOURCE-PINNED IDENTITY / DEPLOYED STARTUP CONDITIONAL`
+**Reauditoria documental — 23/10/2026.** `technical_perk_dossier: 1`; identidade `SOURCE_PINNED`; lógica `SOURCE_PARAMETERS / SOURCE_CAUSALITY`; ativação/config e integração `CONDITIONAL`; QA físico `PENDING`. Reenriquecimento de uma das quatro ações existentes, **+0 identidades**.
 
-## Identidade semântica
+## Identidade e proveniência
 
-Raiz provider-owned única com branches harmful e regenerative. Wither, fire e self-regeneration são resultados internos de Mecha Smite; não são três ações independentes.
+| Campo | Evidência e limite |
+|---|---|
+| Provider / objeto | Simply Swords: Cataclysm, `mod_id=simplycataclysm`; habilidade sobrenatural passiva de combate da família **Witherite**. Mecha Smite é nome de habilidade; **nenhum registry de spell/ação próprio demonstrado**. Não inventar `simplycataclysm:mecha_smite`. |
+| Hosts / filhos | Quinze itens `simplycataclysm:witherite_*`, implementados por `WitheriteSwordItem` ([registry][items]). Solicita vanilla `MobEffects.WITHER` no target, fogo por `igniteForTicks` e `MobEffects.REGENERATION` no atacante; são três ramos/efeitos da raiz, sem mais três ações. [Consumer][smite]. |
+| Artefato físico histórico | #501, `simplycataclysm-1.0.2+1.21.1+neoforge.jar`, SHA-1 `a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469`, Minecraft1.21.1/NeoForge; [publicação7391959](https://www.curseforge.com/minecraft/mc-mods/simply-swords-cataclysm/files/7391959). [Inventário](../SOURCE-1.0.2-ABILITY-INVENTORY.md) / [README](../README.md). Identificação física histórica não é QA nem igualdade byte a byte com source. |
+| Source / símbolos | Oficial `Cephelo/SimplyCataclysmMod@a81158e53b2d215ff534fa59732edd08cfd1d4f4`; `dev.cephelo.simplycataclysm.event.LivingHurtHandler#onLivingHurt`, `item.WitheriteSwordItem#modifyDamageDealt/applyMechaEffects`, `SCConfig`. [Release/build][build]. |
+| Versões / licença | Source compila contra NeoForge21.1.197, Simply Swords1.61.3 e Cataclysm2.39; snapshot físico registra Simply Swords1.70.2/Cataclysm3.33. Compatibilidade/eventos/efeitos efetivos permanecem condicionados. Metadata **All Rights Reserved**: consulta/resumo/permalinks; nenhuma implementação, descrição extensa ou arte importada. [Boundaries comuns](../IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md). |
+| Descrição upstream | [Localização oficial][description], parafraseada: aplica fogo/Wither a inimigos e pode regenerar quem ataca sob um limite de vida. “Metade da vida” descreve o default, não um limiar fixo. |
 
-A ficha preserva uma identidade causal mesmo quando uma branch específica estiver desabilitada pelo STARTUP config.
+## Ingresso e cadeia causal
 
-## Reachability
+1. **Aquisição/ativação:** ataque com item Witherite main hand, sem skillbook, magia/keybind, cast time ou canal. [Registry][items]; [receita source do longsword][recipe] é shaped com `cataclysm:witherite_ingot` e `c:wood_sticks`. Obtenção Survival/dados efetivamente carregados continuam pendentes. O constructor aplica stats do arquétipo+modificadores STARTUP e Fire Resistant/Unbreakable ao item ([constructor][constructor]); não são imunidade nem custo exclusivo do proc.
+2. **Admissão de dano:** [`LivingHurtHandler#onLivingHurt(LivingDamageEvent.Pre)`][ingress] exige dano original diferente de0, source sem IS_PROJECTILE/IS_FIRE/IS_EXPLOSION, msgId `player` ou `mob`, directEntity igual a causingEntity e causador LivingEntity. Toma item main hand atual, exige `IMeleeDamageCallback` e invoca callback. Não seleciona alvo novo nem valida localmente distância/LOS/equipe/PvP/claim. A rotina não restringe attacker a Player; regras do dano original/host continuam authority.
+3. **Ordem:** [`WitheriteSwordItem#modifyDamageDealt`][callback] chama `applyMechaEffects(victim,attacker)` **antes** de [Mecha Pulse](mecha-pulse.md); depois devolve `D0+extraPulse` ao handler. Smite não adiciona parcela instantânea ao número desse evento. No host NeoForge21.1.250, Pre vem **após armor/potion e antes de absorption**, mas o handler usa `getOriginalDamage` (argumento original de `hurt`), não `getNewDamage`. Ao escrever original+extraPulse pode recolocar mitigação anterior e sobrescrever alterações de outros listeners, **inclusive quando Pulse retorna0**. [Contrato do host](../IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md). Status/ignição podem existir mesmo que listeners posteriores reduzam o golpe. Aplicação terminal/HP perdido não são confirmados por esse callback.
+4. **Ramo nocivo:** dentro de try/catch, se target existe e `Math.random()<=pH`, tenta Wither apenas se `witherDuration>0`, depois fogo apenas se `fireSeconds>0`, e som se habilitado. Wither recebe duração em ticks e amplificador configurado, sem sourceEntity/owner no constructor usado. Fogo chama `igniteForTicks(fireSeconds*20)`, multiplicação **int**. Retornos dos efeitos não são examinados.
+5. **Ramo restaurativo:** usa **outro** sorteio `Math.random()<=pR` e condição estrita `attacker.health<limiar`. O limiar é `maxHealth*percentage` no modo percentual, ou inteiro de health points no modo absoluto. Tenta Regeneration no atacante com duração/amplificador configurados, mesmo se o sorteio nocivo falhou; não depende de Pulse/charge/cooldown ou quantidade do dano. Uma exceção anterior dentro do mesmo try pode impedir esse ramo; não o chamar de execução garantida.
+6. **Saída:** `catch(Throwable)` registra erro e não desfaz efeitos/fogo já aplicados. Smite tem void return e não declara sucesso de efeito/cura. O caller continua para Pulse após retorno normal/captura. Não há ciclo/scheduler próprio, cooldown próprio de Smite, custo de mana/stamina nem segundo `hurt/heal` instantâneo; Wither/fogo/Regeneration são resolvidos depois pelo host, com imunidades/listeners/mundo pertinentes.
 
-A classificação implantada exige os valores efetivos:
+Não confundir **pedido de Regeneration** com cura imediata, lifesteal ou recompensa proporcional ao dano. O source deste addon não determina nesta ficha o HP entregue nem a cadência final vanilla sob todos os amplificadores/modpack. Aplicações usam `new MobEffectInstance` sem caster/tag de cast; não presumir owner de mortes por DoT ou causalidade persistente de Mastery a partir desses estados.
 
-- `mechaSmiteHarmfulEffectsChance`;
-- `mechaSmiteFireDuration`;
-- `mechaSmiteWitherDuration`;
-- `mechaSmiteRegenChance`;
-- `mechaSmiteRegenUsesPercentage`;
-- `mechaSmiteRegenPercentage`;
-- `mechaSmiteRegenThreshold`.
+## Matriz de parâmetros e alteração por perks
 
-A branch harmful requer chance não-zero e pelo menos uma duração harmful não-zero. A branch regenerative é classificada separadamente pela chance e pelo modo/valor de threshold selecionado. A identidade só pode ser promovida ao strict quando o estado implantado tornar ao menos uma causalidade provider-native efetivamente alcançável.
+Defaults da [config source][config] são **STARTUP** ([registro][startup]), globais. Captura implantada e efeitos entregues são fatos separados; não existe setter per-player comprovado nos helpers privados.
 
-Defaults do source não substituem esses valores.
+| Eixo | Valor / consumidor / fase | Boundary e estado | QA necessário |
+|---|---|---|---|
+| Chance / gates | `mechaSmiteHarmfulEffectsChance=1.0`, faixa `0..1`; `mechaSmiteRegenChance=0.5`, faixa `0..Double.MAX_VALUE`; cada ramo usa sorteio próprio `Math.random()<=chance`. [Config][config], [consumer][smite]. | **CONFIG_NATIVE** global; >1 no regen torna o teste probabilístico sempre verdadeiro, sem dispensar HPthreshold. Comparação inclui0, logo chance0 não tem early-return que prove desativação absoluta apesar do comentário. Chance por perk **⛔ SEM_HOOK_SEGURO**. | Defaults/config efetiva; chance0/1/>1, RNG de borda, independência dos ramos, exceção anterior interrompendo regen. |
+| Dano / tipo / DoT | Sem dano instantâneo adicional por Smite; Wither/fogo são estados posteriores. Source original do golpe é preservado e filtrado para player/mob sem tags projectile/fire/explosion. [Handler][ingress], [consumer][smite]. | **CONTRATO_CONDICIONAL** para dano/atribuição downstream vanilla; número/tipo final **NÃO VERIFICADO** no JAR alvo. `setNewDamage` do ingresso altera o golpe e pode repor dano anterior à mitigação, mesmo sem bônus; não é fórmula isolada dos DoTs já pedidos. Conversão elemental **⛔ SEM_HOOK_SEGURO**. | Wither/fire immunity, undead/bosses, dificuldade/dimensão/resistências/listeners, dano0/cancelado downstream e autoria de kills. |
+| Wither | `mechaSmiteWitherDuration=100 ticks=5s`, `mechaSmiteWitherAmplifier=1` (WitherII solicitado); ambos `0..Integer.MAX_VALUE`; só tenta quando duração>0. [Config][config], [consumer][smite]. | **CONFIG_NATIVE** para duração/amp solicitados; API por perk **⛔ SEM_HOOK_SEGURO**. `addEffect` não confirmado; merge/recusa/host podem alterar resultado. Não inventar cadência/totalHP por multiplicar duração. | Duração0/100/extremos, efeito prévio mais forte/longo, imunidade, scheduler e sync vanilla. |
+| Fogo | `mechaSmiteFireDuration=5 segundos`, faixa `0..Integer.MAX_VALUE`, `igniteForTicks(config*20)` → default100ticks. Só chama se segundos>0. [Config][config], [consumer][smite]. | **CONFIG_NATIVE**; multiplicação int não tem cap contra overflow, valor grande não garante duração positiva/segura. Ignition por perk **⛔ SEM_HOOK_SEGURO**. Sem efeito de explosão/incêndio de blocos neste método. | Unidade segundos vs ticks, valor0, overflow, fireImmune/água/chuva e preservação de fogo prévio. |
+| Regeneração / cura | `mechaSmiteRegenDuration=100ticks=5s`, `mechaSmiteRegenAmplifier=1` (RegenerationII solicitado); ambos `0..Integer.MAX_VALUE`. Destino é o atacante, não target. [Config][config], [consumer][smite]. | **CONFIG_NATIVE** para estado; não chama heal direto e não mede HP curado. Troca de recipient/quantia por perk **⛔ SEM_HOOK_SEGURO**; entrega vanilla **CONDITIONAL**. | Efeito recusado/mesclado, fullHP após ingresso, dano/cura simultâneos, duração0, amplificadores extremos e HP real por tick. |
+| Limiar de vida | `mechaSmiteRegenUsesPercentage=true`; `mechaSmiteRegenPercentage=0.5`, faixa `0..Double.MAX_VALUE`; alternativo `mechaSmiteRegenThreshold=10 health points`, faixa `0..Integer.MAX_VALUE`. Condição estrita `<`. [Config][config], [consumer][smite]. | **CONFIG_NATIVE**; percentual não é limitado a1. Mudar atributo maxHealth também muda limiar no modo percentual (**NATIVE_ATTRIBUTE** indireto, não knob exclusivo do proc). | Igualdade em50%/10HP, modos distintos, maxHealth alterado pelo RPG, thresholds0/>1 e condições externas de vida. |
+| Alcance / targeting / área | Nocivo: target do evento original; restaurativo: self. Sem raycast/LOS/AABB/raio/seleção de vizinhos ou retarget. [Handler][ingress], [consumer][smite]. | Alcance pertence ao golpe de origem. **⛔ SEM_HOOK_SEGURO** para target→AOE, ally filter ou cura em terceiros; nenhum cap de área necessário porque não há loop de área. | Sweeps/múltiplos eventos por ataque, main hand trocada, allies/PvP/claims e mobs wielding Witherite. |
+| Projétil / hitbox / tempo | Projétil/dimensões/speed/accel/pierce/lifetime: **N/A**. Sem cast/channel/recast/cooldown de Smite; pedido síncrono por evento, efeitos temporizados pelo host. [Callback][callback], [consumer][smite]. | VFX/som de item não redimensionam colisão. Cooldown de Pulse não bloqueia Smite. **⛔ SEM_HOOK_SEGURO** para relógio/clone/projétil de perk. | Repetição rápida, rede/servidor, reentrada/eventos derivados, diferença entre duração de estado e intervalo de ataque. |
+| Custos / summons / mundo | Mana/stamina/HP/fuel, transação/refund de Smite: **N/A**; não cria entidade/summon, blocos, ticket ou rollback. Ataque e superSwordItem preservam seus contratos. [Constructor][constructor], [consumer][smite]. | Provider/vanilla possuem status/DoT/regen. **⛔ fail-closed** para segundo dano, cura, recurso ou aplicação paralela. | ItemUnbreakable, cooldown de ataque nativo, RPG/Epic Fight/Enshrouded e demais listeners. |
 
-## Evidence boundary
+## Causalidade, concepção e pendências
 
-A identidade única e a topologia de gates estão fechadas. Fórmulas, amplificadores, duração efetiva, chance e thresholds implantados permanecem não verificados até coleta autoritativa.
+O golpe qualificado pode pedir Wither/fogo, pedir Regeneration e também carregar/disparar Pulse. O addon não oferece token estável por proc, nem associa o MobEffectInstance a uma arma/cast ID. Estado visual, fogo ativo ou regen no atacante não provam que esse ataque aplicou/entregou a instância atual. Contabilização de progresso exige contrato causal real; Black Arcana não reaplica efeitos ou cura, RPG mantém somente a própria progressão contratada e Enshrouded continua dono de seus sistemas.
 
-Source: `../SOURCE-1.0.2-ABILITY-INVENTORY.md`.
+Assinatura ocupada: melee Witherite com chance de debuffs no alvo e restauração condicional do atacante sob limite de vida, sem cast separado. Criar outra magia só por tema/ícone/partícula duplicaria essa assinatura; novo comportamento precisa de regra própria e QA, sem importação de assets.
+
+`PENDING`: config STARTUP efetiva/fingerprint atual; equivalência source/JAR; versão/ordem do evento; resolução vanilla de efeitos/fogo; casos de borda da matriz; Survival, servidor/cliente, multiplayer, persistência/relog/restart e coexistência. **Nenhuma perk/adapter/runtime implementado e nenhum Stage promovido.**
+
+[build]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/gradle.properties#L8-L54
+[items]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/ModItems.java#L197-L227
+[description]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/resources/assets/simplycataclysm/lang/en_us.json#L96-L97
+[recipe]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/resources/data/simplycataclysm/recipe/witherite_longsword.json#L1-L19
+[constructor]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/WitheriteSwordItem.java#L27-L48
+[ingress]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/event/LivingHurtHandler.java#L13-L33
+[callback]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/WitheriteSwordItem.java#L35-L40
+[smite]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/WitheriteSwordItem.java#L105-L123
+[config]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/SCConfig.java#L187-L228
+[startup]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/SimplyCataclysm.java#L38-L45

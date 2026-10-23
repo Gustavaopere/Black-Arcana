@@ -1,29 +1,66 @@
 # Blazing Brand
 
-- Provider: **Simply Swords: Cataclysm** (`simplycataclysm`)
-- Physical line: `1.0.2+1.21.1+neoforge`
-- Material owner: **Ignitium**
-- Classificação: **supernatural weapon ability / hit-triggered**
-- Source surface: `IgnitiumSwordItem`
-- State: `SOURCE-PINNED IDENTITY / DEPLOYED STARTUP CONDITIONAL`
+**Dossiê documental — 23/10/2026.** `technical_perk_dossier: 1`; identidade `SOURCE_PINNED / RELEASE_BOUNDED`; lógica `SOURCE_CAUSALITY`; integração `CONTRATO_CONDICIONAL`; configuração implantada e QA físico `PENDING`. **+0 identidades**: brand, redução defensiva e cura pertencem à mesma habilidade.
 
-## Identidade semântica
+## Identidade, versão e localizadores
 
-Raiz provider-owned de combate associada à família Ignitium. O source pin exato fecha uma única identidade Blazing Brand; stacking de brand, redução defensiva e lifesteal pertencem ao mesmo fluxo causal e não são contados como ações separadas.
+- Provider **Simply Swords: Cataclysm**; `mod_id=simplycataclysm`; taxonomia `supernatural weapon ability / hit-triggered`; família **Ignitium**. “Blazing Brand” é nome de trait, **não registry de spell**. Efeito real `simplycataclysm:blazing_brand`; exemplo de item `simplycataclysm:ignitium_longsword`. [Efeito][effect-registry], [15 registros Ignitium][items]. O nome/ícone de Cataclysm reaproveitados não tornam o efeito customizado `cataclysm:blazing_brand`.
+- Físico histórico: Minecraft 1.21.1/NeoForge, linha **#501**, `simplycataclysm-1.0.2+1.21.1+neoforge.jar`, SHA-1 **`a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469`**; [CurseForge 7391959](https://www.curseforge.com/minecraft/mc-mods/simply-swords-cataclysm/files/7391959). [Inventário e limite source↔JAR](../SOURCE-1.0.2-ABILITY-INVENTORY.md).
+- Source oficial **`Cephelo/SimplyCataclysmMod@a81158e53b2d215ff534fa59732edd08cfd1d4f4`**, versão declarada exata, licença **All Rights Reserved**. Consulta/paráfrases/permalinks, sem importar implementação ou assets. Source declara NeoForge 21.1.197, Simply Swords 1.61.3 e Cataclysm 2.39; pack registra Simply Swords 1.70.2 e Cataclysm 3.33. [Versão/dependências][versions]. Igualdade de métodos carregados e compatibilidade não demonstradas.
+- Classe **`dev.cephelo.simplycataclysm.item.IgnitiumSwordItem`**: constructor, `hurtEnemy(ItemStack,LivingEntity,LivingEntity)`, `calculateBlazingBrand`, `stackBlazingBrand`; efeito **`ModEffects.BlazingBrandCustomEffect`**. [Execução][item], [atributos do efeito][effect]. Descrição oficial para jogador [tooltip][description], parafraseada: golpes podem marcar o alvo, reduzir sua defesa e curar o atacante.
 
-Status effects, partículas, sons e settlement de dano/cura são consequências downstream da mesma raiz.
+## Ingresso e causalidade
 
-## Reachability
+O ingresso é o callback **`IgnitiumSwordItem#hurtEnemy`** recebido do combate com item; não há keybind/cast próprio. A rotina toca som do helper somente fora do cliente, mas chama `calculateBlazingBrand` **fora dessa guarda** e depois `super.hurtEnemy`. Não concluir por isso execução duplicada no JAR: a frequência/sides reais do caller e a compatibilidade com Epic Fight precisam QA. Aquisição Survival/receitas efetivas e substituições de item **NÃO VERIFICADAS** nesta ficha. [Callback][item], [boundaries comuns](../IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md).
 
-A ativação atual depende do valor efetivo de `blazingBrandChance` no STARTUP config implantado.
+Fluxo local: attacker/victim não-null → RNG da marca → calcula factor → lê marca **do alvo** → calcula amplificador candidato `i` → solicita `target.addEffect(...)` → RNG separado de cura, quando factor>0 → `attacker.heal(factor×(i+1))` → partículas/som. O retorno de `addEffect` é ignorado; não há teste de dano causado, HP perdido, alvo vivo, equipe, PvP ou proteção nesse fluxo. A cura usa **i candidato**, inclusive se o efeito foi recusado ou o estado final conserva outro amplificador; não representa uma porcentagem do dano do golpe. `stackBlazingBrand` captura `Throwable`, registra texto da exceção e não desfaz alterações já feitas. [Pipeline][brand].
 
-- `0` => trait desabilitado;
-- valor não-zero => candidato ativo, sujeito ao restante da validação provider-native.
+## Parâmetros e matriz para perks
 
-O default do source não substitui o valor implantado.
+`a` = amplificador prévio no alvo; `i` = candidato desta chamada; `M` = máximo configurado; `s` = ATTACK_SPEED resolvido do Player. Valores abaixo são **defaults/ranges de source**, não config efetiva. Config é **STARTUP**, global, registrada em `SimplyCataclysm` ([registro][startup]); não equivale a setter por jogador.
 
-## Evidence boundary
+| Eixo | Valor/fórmula, unidade e origem | Fase, mutabilidade e limite | QA |
+|---|---|---|---|
+| Chance da marca | `Math.random() <= blazingBrandChance`; default 0.75, range 0..1. [Config][config], [gate][brand-gate]. | Callback do item; **CONFIG_NATIVE** global. O comentário “0 desabilita” não é guarda explícita: comparação inclusiva permite o caso RNG=0. Não substituir por `<` na descrição nem declarar exclusão estrita sem teste. | Q1/Q2 |
+| Stacks/amplificador | Sem efeito: `i=0`; com efeito: `i=min(M,a+1)`; `blazingBrandMaxAmplifier` default 4, range 0..Integer.MAX_VALUE. Nível apresentado normalmente `i+1`; cap 4 solicita amp 0..4, **cinco níveis**. [Config][config], [stack][brand]. | Estado no alvo, compartilhado entre atacantes; **CONFIG_NATIVE**. Cap limita candidato solicitado, não garante clamp de efeito externo prévio mais forte. Não há setter local público para perk. | Q2/Q5 |
+| Duração/refresh | `blazingBrandDuration` default 240ticks=12s, range 0..Integer.MAX_VALUE; cada proc solicita nova MobEffectInstance com i. [Config][config], [aplicação][brand]. | Merge/refresh/expiração e persistência pertencem ao sistema de efeitos Minecraft/NeoForge; resultado efetivo **CONTRATO_CONDICIONAL**. Não há DoT customizado: o efeito não implementa dano periódico. | Q2/Q5 |
+| Defesa/atributos | Templates ARMOR e ARMOR_TOUGHNESS com montante `−cfg`, operação **ADD_MULTIPLIED_TOTAL**; `blazingBrandArmorMultiplier` e `blazingBrandArmorToughnessMultiplier` default 0.2, range 0..1. IDs `simplycataclysm:blazing_brand_armor` e `:blazing_brand_armor_toughness`. [Config][config], [constructor][effect]. | Valores capturados no constructor do efeito; **CONFIG_NATIVE** com restart. O patch oficial MobEffect do userdev NeoForge 21.1.250 multiplica o template constante por `(amplificador efetivo+1)`: montante `−cfg×(a_efetivo+1)`; [artefato e prova do host](../IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md). Composição com outros modifiers/clamps e valor final da defesa continuam condicionados ao host/QA. Não é redução plana de 0.2 armor nem controle per-player demonstrado. | Q2/Q4 |
+| Cura/factor | `lifestealMultiplier` default 1.25, range 0..Double.MAX_VALUE, convertido float. Para Player e factor>0: `factor=multiplier/clamp(s,0.5,2)`; para outro LivingEntity: multiplier sem divisão. `heal=factor×(i+1)` health points tentados. [Config][config], [factor][brand-gate], [heal][brand]. | ATTACK_SPEED é atributo nativo efetivamente consultado, mas muda combate além da cura; **CONFIG_NATIVE/NATIVE_ATTRIBUTE**. Com multiplier 1.25, factor Player 0.625..2.5 e, em i=4, pedido 3.125..12.5HP; não comprova HP entregue. Sem cap local final. | Q3/Q4 |
+| Chance da cura | Exige proc de marca, factor>0 e outro `Math.random() <= blazingBrandLifestealChance`; default 1.0, range 0..1. [Config][config], [heal][brand]. | RNG independente dentro do ramo da marca; não condicionado ao sucesso de addEffect ou ao dano. multiplier 0 impede o ramo por guarda>0; chance 0 não tem a mesma guarda estrita. **CONFIG_NATIVE**, alteração per-hit **SEM_HOOK_SEGURO** local. | Q1/Q3 |
+| Dano/tipo/crítico | A habilidade não chama hurt nem cria DamageSource; dano-base/crit/resistência do golpe pertencem ao combate/caller. Nenhuma cura percentual por dano. [Callback][item], [brand][brand]. | Troca de DamageType e bônus de dano do trait: **N/A** neste cálculo. Evento de dano não prova mutador desta cura/stack. **⛔ SEM_HOOK_SEGURO** para converter o fluxo em outro elemento. | Q3/Q4 |
+| Target/alcance/LOS/área | Exatamente attacker/victim entregues ao callback; marca no victim, cura no attacker. Sem resolver próprio/raycast/range numérico, cone, raio, cap de área ou filtro de equipe. [Callback][item], [gate][brand-gate]. | Alcance e validação do golpe são do caller/item/framework; valor efetivo **NÃO VERIFICADO**. Single→AoE/retarget **⛔ SEM_HOOK_SEGURO**; partículas não definem área de efeito. | Q1/Q4 |
+| Projétil/entidades/mundo | **N/A** projétil, hitbox própria, velocidade, pierce, summon, teleport e mutação de blocos. Partículas no atacante/alvo são VFX. [Pipeline][brand]. | Nenhum spawn/rollback provider nesta ação; não transformar o efeito customizado em entidade ou nova magia. | Q4 |
+| Tempo/custos/recast | Sem cast/channel/wind-up, mana, charge ou cooldown próprios comprovados. Um ingresso por callback, sujeito ao caller; não há recurso extra cobrado pela marca/cura. Constructor configura unbreakable/fireResistant; execução ainda chama super.hurtEnemy. [Constructor/callback][item]. | Não prova remoção de custos do ataque pai nem dispensa política de stamina do framework. Recorrência/ataque veloz pertencem ao combate; cooldown por perk **⛔ SEM_HOOK_SEGURO** local. | Q1/Q3 |
+| Stats do item | `attackDamage + IGNITIUM_DAMAGE`, `attackSpeed + IGNITIUM_SPEED` em SwordItem.createAttributes; modifiers default 0, ranges −10000..10000, capturados na construção. [Constructor][item], [config material][material]. | **CONFIG_NATIVE** global/restart; stats-base dependem do arquétipo registrado, não há um speed único de toda a família. ATTACK_SPEED efetivo alimenta a fórmula de cura acima. | Q3/Q4 |
 
-A existência da identidade, owner e gate são source-pinned. Chance efetiva, fórmulas, stacks, valores defensivos, dano e lifesteal não são inferidos nesta ficha.
+## Integração, autoria e limites
 
-Source: `../SOURCE-1.0.2-ABILITY-INVENTORY.md`.
+`calculateBlazingBrand`/`stackBlazingBrand` são **private static**, sem evento próprio de pré-cálculo nem setter de chance/stack/factor por atacante. Usar config global ou observar um evento de combate não demonstra mutabilidade isolada da habilidade; setters genéricos de atributos/efeitos também não criam identidade causal. O host NeoForge 21.1.250 tem **HOOK_VERIFICADO genérico** `LivingHealEvent#setAmount(float)` e cancelamento em `LivingEntity#heal`, anterior à alteração de HP; o [arquivo de evento][host-heal] é idêntico ao do sources.jar oficial verificado no [dossiê comum](../IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md). Isso permite alterar o pedido de cura, mas a integração específica permanece **CONTRATO_CONDICIONAL**: o evento não traz arma, proc ou atacante original, e não muda o cálculo já feito de i/factor. `MobEffectEvent.Applicable#setResult` pode negar a marca; o retorno de addEffect é ignorado, então negar a marca não elimina por si a cura. Não tratar `MobEffectEvent.Added` como veto ou resultado final do merge. [Contrato comum](../IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md).
+
+O provider é dono da marca e do pedido de cura; Minecraft/NeoForge possuem atributos, efeitos e heal. Simply Swords possui seu framework/helper; Cataclysm fornece materiais/ícone original. RPG Skill Tree mantém progressão/perks somente por contrato; Black Arcana e Enshrouded não devem repetir marca/cura/dano para simular mudança ausente. Não há cast token/owner gravado na MobEffectInstance: correlacionar ataque/callback/atacante/alvo/ramo; o estado compartilhado do alvo não identifica quem criou cada stack. Som/partícula não prova efeito aplicado ou HP recuperado. Marca, efeito e cura continuam uma identidade.
+
+Assinatura ocupada: proc melee que acumula debuff defensivo no alvo e concede cura por amplificador candidato, ajustada pela attack speed do Player. Outro visual/nome não cria nova habilidade; design original precisa regra causal própria, sem reutilizar implementação/assets.
+
+## Verificação e pendências
+
+Source/linhas/fórmulas locais auditados; equivalência com classfiles, config STARTUP efetiva, ordem do caller, sides, multiplayer/Survival e coexistência **PENDING**. Não há aceite físico nem nova perk/adapter.
+
+- **Q1:** fingerprint/config real; RNG 0/1, callback server/client, número de invocações por ataque, combate vanilla/Epic Fight e elegibilidade de armas.
+- **Q2:** alvo sem marca/amp 0/cap 4/cap 0, estado externo acima do cap, duração0/refresh/expiração, immune/refused addEffect; confirmar defesa e estado realmente aplicado.
+- **Q3:** attackerPlayer versus mob; speeds abaixo0.5/em0.5/em2/acima2; multiplier/chance 0; cura no cap e sem dano/sem aplicação de brand; listeners de heal, vida máxima e valores extremos float/int.
+- **Q4:** aliados/PvP/proteções/alcance do caller, itens com arquétipos distintos, buffs que alteram atributos, alvo morto/removido e número de heals por golpe.
+- **Q5:** múltiplos atacantes no mesmo alvo, relog/restart, remoção de efeito, transferência de arma; nenhum ownership individual presumido do status.
+
+[versions]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/gradle.properties#L8-L54
+[startup]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/SimplyCataclysm.java#L38-L46
+[items]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/ModItems.java#L166-L195
+[item]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/IgnitiumSwordItem.java#L25-L40
+[brand-gate]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/IgnitiumSwordItem.java#L42-L53
+[brand]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/IgnitiumSwordItem.java#L55-L84
+[effect-registry]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/effects/ModEffects.java#L22-L33
+[effect]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/effects/ModEffects.java#L46-L75
+[config]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/SCConfig.java#L125-L154
+[material]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/SCConfig.java#L86-L92
+[description]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/resources/assets/simplycataclysm/lang/en_us.json#L92-L93
+
+[host-heal]: https://github.com/neoforged/NeoForge/blob/e0e7ab5d273fdc034f23fee7bf91c61ae39d3019/src/main/java/net/neoforged/neoforge/event/entity/living/LivingHealEvent.java#L13-L43

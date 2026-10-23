@@ -1,29 +1,67 @@
 # Accursed Rage
 
-- Provider: **Simply Swords: Cataclysm** (`simplycataclysm`)
-- Physical line: `1.0.2+1.21.1+neoforge`
-- Material owner: **Cursium**
-- Classificação: **supernatural weapon ability / hit-triggered**
-- Source surface: `CursiumSwordItem`
-- State: `SOURCE-PINNED IDENTITY / DEPLOYED STARTUP CONDITIONAL`
+**Dossiê documental — 23/10/2026.** `technical_perk_dossier: 1`; identidade `SOURCE_PINNED / RELEASE_BOUNDED`; lógica `SOURCE_CAUSALITY`; integração `CONTRATO_CONDICIONAL`; configuração implantada e QA físico `PENDING`. **+0 identidades**: rage, stacks, bônus de dano e VFX são partes da mesma habilidade.
 
-## Identidade semântica
+## Identidade, versão e localizadores
 
-Raiz provider-owned de combate associada à família Cursium. O source pin fecha Accursed Rage como uma única habilidade; o estado de rage e o bônus de dano são partes da mesma causalidade, não identidades adicionais.
+- Provider **Simply Swords: Cataclysm**, `mod_id=simplycataclysm`; taxonomia `supernatural weapon ability / hit-triggered`; família **Cursium**. “Accursed Rage” é nome de trait, sem registry próprio de spell; estado real **`simplycataclysm:accursed_rage`**, MobEffect BENEFICIAL. Exemplo de item `simplycataclysm:cursium_longsword`. [Estado][effect], [15 registros Cursium][items].
+- Físico histórico: Minecraft 1.21.1/NeoForge, linha **#501**, JAR **`simplycataclysm-1.0.2+1.21.1+neoforge.jar`**, SHA-1 **`a2aa0f82ae3a9be2f43a4d47b3cb2201dd4e1469`**; [CurseForge 7391959](https://www.curseforge.com/minecraft/mc-mods/simply-swords-cataclysm/files/7391959). [Inventário e limite source↔JAR](../SOURCE-1.0.2-ABILITY-INVENTORY.md).
+- Source oficial **`Cephelo/SimplyCataclysmMod@a81158e53b2d215ff534fa59732edd08cfd1d4f4`**, versão declarada exata, licença **All Rights Reserved**; só consulta/paráfrase/referências, sem importar implementação/assets. Source declara NeoForge 21.1.197, Simply Swords 1.61.3 e Cataclysm 2.39; pack registra Simply Swords 1.70.2 e Cataclysm 3.33. [Versões][versions]. Identidade de release não prova equivalência binária ou integração do pack.
+- Implementação **`dev.cephelo.simplycataclysm.item.CursiumSwordItem`**: `modifyDamageDealt`, `calculateRage`; ingresso **`event.LivingHurtHandler#onLivingHurt(LivingDamageEvent.Pre)`**, interface **`IMeleeDamageCallback`**. [Callback][callback], [handler][handler], [interface][interface]. Descrição para jogador [tooltip][description], parafraseada: golpes podem acumular rage no usuário; armas Cursium causam bônus conforme seu amplificador.
 
-O efeito `accursed_rage` é machinery de estado e adiciona +0 ao denominador.
+## Pipeline causal e filtros
 
-## Reachability
+1. `LivingHurtHandler` lê **`ev.getOriginalDamage()`**, target e DamageSource. Exige damage **diferente de 0**, sem tags **IS_PROJECTILE, IS_FIRE, IS_EXPLOSION**, `source.getMsgId()` igual a **player ou mob**, directEntity==causingEntity e causingEntity LivingEntity. Lê **mainhand atual**, exige stack não vazia e item implementando IMeleeDamageCallback; então chama `modifyDamageDealt` e faz **`ev.setNewDamage(retorno)`**. Não identifica especificamente um evento Iron’s ou uma escola. Não há filtro local de equipe, PvP, claims ou gate de Mastery. Listener não declara priority; ordem/composição com outros mods **PENDING**. O source oficial NeoForge 21.1.250 coloca Pre **depois de armor/potion e antes de absorption** e define originalDamage como o argumento inicial de hurt; ver artefato/checksum no [dossiê comum](../IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md). Assim este handler pode recolocar o valor anterior às reduções, inclusive com bônus 0; isso não se limita a sobrescrever outros listeners. Não é prova de dano final ou bypass universal no pack. [Handler][handler].
+2. Cursium calcula rage no **attacker**, soma bônus ao baseDamage recebido e retorna, mantendo o DamageSource original. `hurtEnemy` desta classe apenas toca helper de som no servidor e delega super; o proc de rage está no evento, não nesse callback de durabilidade. [Callbacks][callback].
+3. Calcula candidato `i` a partir de estado prévio → calcula reachedMax **antes do RNG** → pode produzir partículas de alvo pelo candidato → RNG pode solicitar novo efeito no attacker → relê **efeito realmente presente** → retorna `(amplifier+1)×extraDamage`; sem estado ou ao capturar exceção retorna0. O bônus de estado prévio continua mesmo se o RNG desta vez falhar. A aplicação de estado antecede o settlement final de dano e não depende de perda de HP confirmada. [Cálculo][rage].
 
-A ativação atual depende do valor efetivo de `accursedRageChance` no STARTUP config implantado.
+O efeito **AccursedMarkEffect** não aplica bônus de atributo nem tick de dano: seu corpo apenas chama o constructor MobEffect. Dano extra só é produzido pela consulta da arma Cursium no caminho acima. Não criar outro hurt/child-hit para aplicar o bônus que já integra `setNewDamage`. [Efeito][effect].
 
-- `0` => trait desabilitado;
-- valor não-zero => candidato ativo, sujeito ao restante da validação provider-native.
+## Parâmetros e matriz para perks
 
-O default do source não substitui o valor implantado.
+`a` = amplificador prévio no attacker; `i` = candidato desta chamada; `a_final` = amplificador relido depois do RNG/aplicação; `M` = máximo configurado. Config **STARTUP** global ([registro][startup]); defaults não demonstram o arquivo implantado.
 
-## Evidence boundary
+| Eixo | Valor/fórmula, unidade e origem | Fase, mutabilidade e limite | QA |
+|---|---|---|---|
+| Chance | `Math.random() <= accursedRageChance`; default 0.5, range 0..1. [Config][config], [cálculo][rage]. | Evento de dano/callback; **CONFIG_NATIVE**. Comentário “0 desabilita” não substitui a comparação inclusiva; RNG=0 não é excluído por guarda>0. Mudança per-player **SEM_HOOK_SEGURO** local. | Q1/Q2 |
+| Stacks/cap | Sem efeito `i=0`; com efeito `i=min(M,a+1)`; `accursedRageMaxAmplifier` default 4, range 0..Integer.MAX_VALUE; normal amp 0..4 = cinco níveis. [Config][config], [candidato][rage]. | Estado no atacante, não na ItemStack; **CONFIG_NATIVE**. Cap restringe candidato novo, não garante clamp do estado externo efetivo relido. Troca entre armas Cursium pode conservar o mesmo buff. | Q2/Q5 |
+| Duração/refresh | `accursedRageDuration` default 110ticks=5.5s, range 0..Integer.MAX_VALUE; cada sucesso solicita MobEffectInstance(duration,i). [Config][config], [aplicação][rage]. | Sistema de efeitos resolve merge/refresh/expiração; efetivo **CONTRATO_CONDICIONAL**. Falha RNG não renova; estado anterior pode continuar contribuindo. Não há scheduler/DOT próprio. | Q2/Q5 |
+| Bônus de dano | `bonus=(a_final+1)×accursedRageExtraDamage` quando há efeito; caso contrário0. Coeficiente default 1.0HP/nível, range 0..Double.MAX_VALUE, convertido float. Normal1/2/3/4/5HP em amps0..4. `return=baseDamage+bonus`. [Config][config], [retorno][rage]. | Usa estado **relido**, não i candidato, e não multiplica o dano original. **CONFIG_NATIVE**; nenhum cap/floor local adicional no produto float ou baseDamage. Config extrema pode exceder float finito; exige clamp do adapter se houver contrato. | Q2/Q3 |
+| DamageSource/tipo/crit | Source do golpe recebido; MsgId player/mob e tags negativas são filtros, não novo registro de DamageType. Sem hurt adicional, conversão elemental, cálculo local de crítico ou resistência. [Handler][handler], [callback][callback]. | `LivingDamageEvent.Pre#setNewDamage` é mutação real de montante nesse caminho source; sua fase/ordem com outros listeners e valor final exigem host/QA. Troca de tipo por esta interface **⛔ SEM_HOOK_SEGURO**. | Q3/Q4 |
+| Composição do dano | Handler parte de **getOriginalDamage**, depois sobrescreve newDamage; não parte de getNewDamage. [Handler][handler]. | No contrato NeoForge 21.1.250, substitui montante já reduzido por armor/potion por original+bônus, mesmo bônus 0; também pode desconsiderar newDamage de listener anterior. Absorption vem depois. Não afirmar stacking aditivo seguro entre perks/mods. Callback público existente não é evento de pré-cálculo de rage nem token causal. **CONTRATO_CONDICIONAL** para adapter. | Q3/Q4 |
+| Target/range/LOS/área | Target já recebido do evento; buff no attacker e bônus ao mesmo golpe. Sem seleção/raycast, alcance numérico, área própria ou cap de alvos. [Handler][handler], [rage][rage]. | Alcance/filtros do ataque pertencem ao caller/framework, efetivos **NÃO VERIFICADOS**. AOE/retarget **⛔ SEM_HOOK_SEGURO**; um golpe em vários alvos pode produzir múltiplos eventos sem cap por swing no código local. | Q1/Q4 |
+| Custo/tempo/cooldown/recast | Sem mana, cast/channel, charge separado ou cooldown próprio; duração do buff acima. Nada cobra recurso extra nesta rotina. Constructor unbreakable/fireResistant; `hurtEnemy` chama super. [Callback][callback]. | Não remove custos/intervalo/stamina do ataque pai. Frequência é por evento elegível, não “uma vez por clique” garantida. | Q1/Q4 |
+| Stats do item | `attackDamage+CURSIUM_DAMAGE`, `attackSpeed+CURSIUM_SPEED`; defaults0, ranges −10000..10000, definidos na construção. [Constructor][callback], [config material][material]. | **CONFIG_NATIVE** global/restart. Stats-base variam com arquétipo registrado. Não são coeficiente exclusivo do rage nem mudam seu cap/tipo. | Q3/Q4 |
+| Projétil/summons/mundo | **N/A** projétil, AABB própria, velocidade/pierce, summon, teleport, alteração de blocos ou rollback. Efeito BENEFICIAL e VFX são estados downstream. [Efeito][effect], [rage][rage]. | Não contar estado/partículas como outra ação. Sem atribuição a owner além de attacker atual; persistência do efeito é do host. | Q5 |
 
-A identidade e seu gate estão fechados. Chance efetiva, amplificadores, duração e fórmula de dano permanecem fora desta ficha enquanto não houver evidência específica.
+**Limite importante de cap 0:** com `M=0` e nenhum efeito prévio, i0 satisfaz `i>=M`, então `oldEffect.getAmplifier()` em reachedMax desreferencia null **antes do RNG**. O catch captura, loga e retorna bônus 0, sem aplicar novo rage nesse caminho. Com defaults M=4 há short-circuit e o primeiro stack pode ser solicitado normalmente. É consequência do source inspecionado, **não bug reproduzido no JAR**; não descrever cap 0 como simplesmente “um nível disponível”. `oldAmplifier+1`, amplificadores externos e Integer.MAX_VALUE também exigem QA de overflow. [Linhas 53–55/catch][rage].
 
-Source: `../SOURCE-1.0.2-ABILITY-INVENTORY.md`.
+## Perks, autoria e deduplicação
+
+`modifyDamageDealt(float,DamageSource,LivingEntity,LivingEntity)` é público pela interface e retorna montante; `calculateRage` é **private static** e lê config global/estado diretamente. Não há evento próprio para substituir chance, cap, destinatário ou duração por jogador antes da execução. Invocar novamente o callback repetiria RNG, status e efeitos; **não é adapter seguro** para obter só o bônus. Uma perk genérica em evento de dano precisa ordenar-se com o listener que usa originalDamage; observar esse evento não permite suprimir retroativamente o stack já aplicado. [Interface][interface], [contrato comum](../IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md).
+
+Provider possui proc/bônus e Minecraft/NeoForge possuem dano e estado. Simply Swords conserva seu framework; Cataclysm fornece materiais/partículas. RPG Skill Tree mantém progressão/perks somente por boundary real; Black Arcana e Enshrouded não devem aplicar segundo golpe ou segundo stack. O buff não grava arma/owner/token de ataque; dedup deve correlacionar evento, atacante, alvo, source e instância do golpe. Dano/cast/mastery confirmados não podem ser inferidos por partículas ou por presença do buff.
+
+Assinatura ocupada: buff temporário acumulável no atacante que aumenta montante de golpes Cursium por amplificador efetivo. Um nome/visual novo não cria identidade independente; outra magia original precisa regra causal própria, sem reutilizar código/assets.
+
+## Verificação e pendências
+
+Source/linhas/fórmulas locais auditados; equivalência com classfiles, config STARTUP efetiva, host/damage pipeline, efeitos, cliente/dedicado, Survival/multiplayer e modpack **PENDING**. Nenhuma perk/adapter implementada.
+
+- **Q1:** fingerprint/config; tags, MsgId, direct/causing, mainhand/offhand, arma trocada antes do dano, mobs e combate vanilla/Epic Fight; contagem de callbacks em sweep/multitarget.
+- **Q2:** RNG 0/1, cap 4/cap 0 com e sem estado, falha RNG com buff ativo, duration 0, efeito recusado/externo acima do cap, último tick/refresh e overflow de amp.
+- **Q3:** bonus 1..5HP esperado com default, dano original0/negativo, coeficiente 0/extremo, críticos/armor/resistências e distinção montante solicitado/HP perdido.
+- **Q4:** listeners antes/depois que alteram newDamage, proteção/equipes/PvP/cancelamento do ataque em fases distintas; comprovar ausência de dano/proc/XP duplicados.
+- **Q5:** status compartilhado entre armas/itens no mesmo atacante, troca de item, logout/restart, milk/removal, simultaneidade e duração efetiva; buff não comprova autoria por arma.
+
+[versions]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/gradle.properties#L8-L54
+[startup]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/SimplyCataclysm.java#L38-L46
+[items]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/ModItems.java#L134-L163
+[callback]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/CursiumSwordItem.java#L24-L44
+[rage]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/item/CursiumSwordItem.java#L46-L90
+[effect]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/effects/ModEffects.java#L26-L44
+[handler]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/event/LivingHurtHandler.java#L13-L34
+[interface]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/event/IMeleeDamageCallback.java#L6-L10
+[config]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/SCConfig.java#L104-L121
+[material]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/java/dev/cephelo/simplycataclysm/SCConfig.java#L78-L84
+[description]: https://github.com/Cephelo/SimplyCataclysmMod/blob/a81158e53b2d215ff534fa59732edd08cfd1d4f4/src/main/resources/assets/simplycataclysm/lang/en_us.json#L90-L91

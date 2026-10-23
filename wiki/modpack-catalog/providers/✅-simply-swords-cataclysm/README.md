@@ -6,7 +6,7 @@ Status: `✅ CATALOGED / PHYSICAL IDENTITY CLOSED / COMPLETE 4-ACTION OBJECT CAT
 
 ## Current physical authority
 
-- sibling checkpoint: `neoforge-rpg-skilltree@9f24bf2f02a02f4a0ad067ed2c43b4eeb8a8b532`;
+- sibling snapshot consulted: `neoforge-rpg-skilltree@ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`;
 - physical row: `#501`;
 - JAR: `simplycataclysm-1.0.2+1.21.1+neoforge.jar`;
 - mod id: `simplycataclysm`;
@@ -137,3 +137,11 @@ Even after config closure, assembled runtime QA remains separate for:
 Inventory: **4 provider-owned supernatural weapon abilities**.
 
 Strict global delta: **+0** until deployed STARTUP config proves current activation.
+
+## Parâmetros e boundaries para perks — 23/10/2026
+
+[4/4 fichas individuais reauditadas](IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md), com defaults/fórmulas/unidades, source pinado, consumers downstream, targeting/dano/status/tempo/custos e limites de alteração por campo. O recorte documental não promove ativação, strict ou QA. Source 1.0.2 correlacionado à release não equivale a prova do JAR físico.
+
+Achados: Blazing Brand cura pelo stack candidato e velocidade de ataque, não pelo dano entregue; Rage/Pulse usam `getOriginalDamage` no evento pós-mitigação; Mecha Pulse afeta o alvo único, não uma área; Smite tem ramos harmful/regen independentes. Chances usam `RNG <= chance` sem guard geral `chance>0`, e cap/threshold0 têm caminho null específico: o comentário de disable por chance0 não demonstra exclusão lógica estrita. O checklist implantado foi delimitado a evidência mínima, sem promoção automática.
+
+As fichas rastreiam os sources dos hosts e distinguem setters reais do evento, configuração global STARTUP e ausência de hook por jogador. Estado/status e recursos pertencem ao provider/host; nenhum runtime, adapter, perk, dano/cura ou cleanup paralelo foi implementado. O [painel atual](../../meta/PROGRESSO-CATALOGO-ATUAL.md) mantém barra geral indeterminada e barras por provider; +0 strict.

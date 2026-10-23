@@ -1,6 +1,6 @@
 {
-  "date": "2026-10-22",
-  "black_arcana_base": "97fb85b4d0dad0edc5b6673bbb94b803b894bb5c",
+  "date": "2026-10-23",
+  "black_arcana_base": "8514ff044d8e96285ff20d00c5e820e4aed837eb",
   "rpg_modlist_sha": "ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc",
   "enshrouded_sha": "a41dbb51aacb94b7b5db6517f1514b0b7aee3e83",
   "global_technical_total": null,
@@ -1145,10 +1145,10 @@
     },
     {
       "provider_directory": "✅-simply-swords-cataclysm",
-      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
-      "completed": null,
-      "total": null,
-      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "scope": "fichas das 4 habilidades de combate com parâmetros e consumidores source-causais; config/host/QA condicionados",
+      "completed": 4,
+      "total": 4,
+      "evidence": "../providers/✅-simply-swords-cataclysm/IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md",
       "runtime_acceptance": "NOT_INFERRED"
     },
     {

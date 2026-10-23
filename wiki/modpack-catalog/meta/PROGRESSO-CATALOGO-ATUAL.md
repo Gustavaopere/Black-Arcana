@@ -1,6 +1,6 @@
 # Progresso atual — magias, feitiços, habilidades e superfícies para perks
 
-**Checkpoint: 22/10/2026.** Base Black Arcana `97fb85b4d0dad0edc5b6673bbb94b803b894bb5c`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
+**Checkpoint: 23/10/2026.** Base Black Arcana `8514ff044d8e96285ff20d00c5e820e4aed837eb`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
 
 ## Barra geral — todo o conteúdo aplicável
 
@@ -159,7 +159,7 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 | [✅-shadowsz](../providers/✅-shadowsz/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-simply-more](../providers/✅-simply-more/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-simply-swords](../providers/✅-simply-swords/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
-| [✅-simply-swords-cataclysm](../providers/✅-simply-swords-cataclysm/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
+| [✅-simply-swords-cataclysm](../providers/✅-simply-swords-cataclysm/README.md) | **4/4** — [fichas de habilidades com parâmetros e consumidores source-causais](../providers/✅-simply-swords-cataclysm/IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md) | ![4 de 4 fichas de habilidades auditadas no source](progress/complete.svg) | ⚠️ dano/status/config/host auditados no source; ativação implantada/mutadores/QA PENDING; +0 strict |
 | [✅-sky-aesthetics](../providers/✅-sky-aesthetics/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-snow-real-magic](../providers/✅-snow-real-magic/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-somake-spells](../providers/✅-somake-spells/README.md) | **8/83** — [fichas no recorte limitado de inspeção estática de métodos](CHECKPOINT-POS-PR825-2026-10-21.md) | ![8 de 83 no recorte indicado](progress/somake-methods.svg) | 🟡 recorte de métodos parcial; downstream/QA pendentes |
@@ -194,6 +194,8 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 **Ypsilon’s Fundamentalism 1.1.7.1:** 13/13 fichas das categorias/passivas Principles com matrizes, fórmulas, filtros e consumidores source-pinned. Perceptio/Locus, recasts, precisão, área, XP e owner de cura/efeitos foram reexaminados; as 15 magias não integram esse recorte e não há novas identidades mágicas. [Índice dos Principles](../providers/✅-ypsilons-fundamentalism/principles/README.md).
 
 **Ypsilon — 15 spells:** reauditoria das fichas com pipeline, parâmetros e consumidores downstream. Identificados valores/limites de dano da arma, targeting, hitbox dinâmica, cura, recasts, marcas e herança de domínio; a identidade de um arquivo Ace’s foi reconciliada entre source 1.2.6.1 e 1.2.7.2. [Dossiê comum e índice](../providers/✅-ypsilons-fundamentalism/SPELL-PERK-BOUNDARIES-1.1.7.1.md). Os 13 Principles continuam outra métrica, sem somar spells novos ou homologar QA.
+
+**Simply Swords: Cataclysm 1.0.2:** 4/4 fichas de combate com fórmulas de stack/cura/dano, efeitos downstream e limites por eixo. A onda Mecha Pulse usa alvo único; o handler reescreve dano original no evento posterior à mitigação; chance0 e cap0 têm caminhos específicos. [Dossiê comum](../providers/✅-simply-swords-cataclysm/IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md). Documentação não fecha config/ativação/QA nem altera o strict global.
 
 **Hierarquia preservada:** Black Arcana controla seu runtime mágico; RPG Skill Tree fornece progressão/atributos/Mastery/perks/gates por contrato; Enshrouded controla seu Shroud/exposure. Providers externos continuam donos de seus efeitos, recursos e settlement. Sem hook real, ⛔ fail-closed para mudança por perk de alvo, DamageType, alcance, colisão ou tempo. `CONFIG_NATIVE` não implica setter por jogador.
 

@@ -2,7 +2,7 @@
 
 Este índice materializa em fichas individuais as **4 identidades semânticas** fechadas pelo source pin exato da linha `1.0.2+1.21.1+neoforge`.
 
-O provider permanece **⚠️ parcial/condicionado**. O denominador está fechado em quatro, mas o subconjunto ativo no pack atual depende dos valores efetivos do `ModConfig.Type.STARTUP` em `config/simplycataclysm-startup.toml`. Portanto estas fichas não alteram o strict global.
+O inventário semântico está completo em quatro; ativação/config e QA permanecem **condicionados**. O subconjunto ativo no pack depende dos valores efetivos do `ModConfig.Type.STARTUP` em `config/simplycataclysm-startup.toml` e dos caminhos reais de estado/RNG. Estas fichas não alteram o strict global.
 
 ## Habilidades sobrenaturais — 4
 
@@ -33,3 +33,7 @@ Até o arquivo implantado ser capturado contra o SHA-1 físico esperado, a contr
 Checkpoint de materialização: [INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
 
 Fontes canônicas: [SOURCE-1.0.2-ABILITY-INVENTORY.md](SOURCE-1.0.2-ABILITY-INVENTORY.md) e [DEPLOYED-CONFIG-CHECKLIST.md](DEPLOYED-CONFIG-CHECKLIST.md).
+
+## Reauditoria técnica — 23/10/2026
+
+As quatro fichas agora incluem matrizes de parâmetros e causalidade, com [boundary comum e versões de host](IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md). 4/4 mede documentação; config/host/runtime continuam PENDING. Os comparadores de chance são inclusivos (`<=`), cap/threshold0 podem lançar exceção capturada com efeito ausente, e efeitos pré-existentes alteram a reachability; chance0 isolada não comprova disable estrito. As ondas/partículas de Pulse não demonstram área de dano.
