@@ -1,6 +1,6 @@
 {
   "date": "2026-10-23",
-  "black_arcana_base": "8514ff044d8e96285ff20d00c5e820e4aed837eb",
+  "black_arcana_base": "a93890ed70561176ace0859f76f4e6b63170ff0f",
   "rpg_modlist_sha": "ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc",
   "enshrouded_sha": "a41dbb51aacb94b7b5db6517f1514b0b7aee3e83",
   "global_technical_total": null,
@@ -281,10 +281,10 @@
     },
     {
       "provider_directory": "✅-asterism-arcanum",
-      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
-      "completed": null,
-      "total": null,
-      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "scope": "fichas dos 11 spells com parâmetros e consumidores source-causais; 10 normais + Gateway conditional fora strict",
+      "completed": 11,
+      "total": 11,
+      "evidence": "../providers/✅-asterism-arcanum/SPELL-PERK-BOUNDARIES-0.1.0.md",
       "runtime_acceptance": "NOT_INFERRED"
     },
     {
