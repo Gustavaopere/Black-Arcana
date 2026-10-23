@@ -1,43 +1,80 @@
 # Summon Lunar Moth
 
-- ID: `asterismarcanum:summon_lunar_moths`
-- nome player-facing: Summon Lunar Moth
-- escola: Astral
-- rarity: Rare
-- nível: 1
-- cast: LONG, 30 ticks / 1.5 s base
-- mana: 150
-- cooldown: 150 s
-- neutral spell power: 20
-- summon count: 1
-- duração: 10 minutos
-- recast count: 2
+**Dossiê documental — 23/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; integração `CONTRATO_CONDICIONAL`; config/JAR funcional/QA físico `PENDING`. **+0 identidades**: summon, montaria, ataque e Levitation são filhos da mesma raiz.
 
-## Efeito
+## Identidade e proveniência
 
-Apesar do ID plural e de comentários antigos sobre swarm, a implementação 0.1.0 cria **um único `SummonedLunarMothEntity`** quando não existe recast ativo para a spell.
+Provider Asterism Arcanum (`mod_id=asterismarcanum`); spell real **`asterismarcanum:summon_lunar_moths`**, nome para jogador **Summon Lunar Moth**, escola default `asterismarcanum:astral`. O plural do ID não muda `getSummonCount=1`. Classe `com.birdie.asterismarcanum.spells.SummonLunarMothsSpell`; entidade `entity.mobs.summoned_lunar_moth.SummonedLunarMothEntity`, registry `asterismarcanum:summoned_lunar_moth`, implementa IMagicSummon. [Spell][spell], [spell registry][spell-registry], [entidade registry][registry], [entidade][moth].
 
-O summon passa por `SpellSummonEvent`, `SummonManager.initSummon`, `SummonedEntitiesCastData` e `RecastInstance` de Iron's.
+JAR histórico #56 `asterismarcanum-1.21.1-0.1.0.jar`, SHA-1 `4a25ba80116168ddcc812f71467c0598127e774a`; [publisher8157080](https://www.curseforge.com/minecraft/mc-mods/asterism-arcanum/files/8157080). Identidade/registry [binários](../EXACT-0.1.0-BINARY-REGISTRY-AUDIT.md) não provam equivalência de todos os métodos. Source oficial `BirdieVibes/Asterism-Arcanum@f1738c7813a85d31a6da10e6c9f2dbce18d2b583`, versão1.21.1-0.1.0/NeoForge21.1.215/Iron’s3.15.6; host consultado Iron’s3.16.3 `e4056af90302d37eb1739f5ff05020b020e6e252`. Mana Rend foi rastreado no source Ace’s1.2.7.2 `a0b2f4c2fcfa938c8e47239279c77c2ef82647ac`, sem equiparar JARs do conjunto. [Versões][versions], [contrato comum](../SPELL-PERK-BOUNDARIES-0.1.0.md).
 
-### Entidade summon
+Polyform Shield: consulta factual/paráfrases/permalinks, sem importar implementação/assets. A [descrição oficial][description], parafraseada, apresenta uma mariposa ampliada capaz de carregar o jogador em voo. Loot/crafting seguem escola/config Iron’s; aquisição Survival efetiva não é inferida de defaults.
 
-- 15 Max Health;
-- 24 Follow Range;
-- 2 base Attack Damage;
-- 15% Mana Rend;
-- Flying Speed 1.3;
-- segue/copia targets do owner;
-- aplica Levitation por 40 ticks ao atacar;
-- pode ser montada pelo summoner e usada para voo.
+## Pipeline, ownership e saída
 
-## Obtenção
+1. **Ingresso:** LONG, Rare, nível default1. Cast time30ticks base; host resolve modificadores e gates/custo/eventos. A spell não sobrescreve precondição/solver seguro de spawn nem possui recurso paralelo. [Defaults][spell], [host de cast][host-cast].
+2. **Spawn somente sem recast ativo:** cria SummonedEntitiesCastData, duração12000ticks e **uma** Moth. Constructor chama setSummoner→SummonManager.setOwner **antes** do evento; desloca ao eyePosition+(randomX,1,randomZ), com cada random em[−2,2), chama finalizeSpawn em ServerLevel e publica SpellSummonEvent. Pega criatura devolvida, chama addFreshEntity (boolean ignorado), initSummon e addRecast. Falha parcial não tem rollback/refund local demonstrado. [Cast][cast], [constructor][moth], [host owner/init][owner], [random][random].
+3. **Mutador tipado:** SpellSummonEvent#setCreature existe antes do spawn, sem API de cancelamento/count/duração. O publisher hash-matched, inspecionado com javap, contém em onCast getCreature no offset122 → **CHECKCAST SummonedLunarMothEntity em125** → addFreshEntity133 com retorno descartado → initSummon144. Prova binária limitada a essa sequência/tipo, sem equiparar o método inteiro ao source. Replacement arbitrária de LivingEntity pode falhar antes do spawn; objeto substituto precisa tipo compatível, level/owner válidos e tratamento da criatura original já registrada no manager. [Evento][summon-event], [cast source][cast].
+4. **Recast:** declara2 casts totais; constructor RecastInstance guarda remaining=2−1. Primeiro cast cria summon/recast; cast posterior com recast ativo **não cria outra Moth**. O wrapper decrementa e encerra com USED_ALL_RECASTS. onRecastFinished chama SummonManager.recastFinishedHelper: manual/uso total tenta unsummon das UUIDs na dimensão atual do jogador; TIMEOUT é resolvido pelo manager, com exceção de cooldown do Greater Conjurer’s Talisman; COUNTERSPELL reintroduz recast conforme host. [Spell/recast][recast], [instância][recast-instance], [player recasts][player-recasts], [helper][finish].
+5. **Lifecycle:** initSummon registra owner/duração/UUID no cast data. Manager verifica expiração em ServerTick.Post a cada20ticks e usa deadline<tick; não garante despawn no exato tick12000. onUnSummon server produz partículas e descarta; onRemovedHelper limpa relações quando RemovalReason.shouldDestroy, com casos distintos para unload. Death executa helper próprio antes do super. Manager possui save/restore de summons offline, sem homologação de restart do pack neste lote. [Timer][timer], [remoção][cleanup], [IMagicSummon][summon-interface], [save host][manager-save].
 
-Fonte concreta: Astral Scroll do Astromancer; crafting conforme config do Iron's.
+## Matriz de parâmetros para perks
 
-## Authority e dedup
+Valores são defaults/fórmulas source, não config implantada. `n` é nível entregue ao consumidor; P é spell power resolvido, mas count, duração e stats abaixo não são calculados de P pela spell.
 
-Authority = Iron's SummonManager + entidade. Não criar segundo owner map, segundo timer, segundo summon por recast ou recompensa de XP da criatura.
+| Eixo | Valor, consumidor e fase | Mutabilidade e limite | QA |
+|---|---|---|---|
+| Mana / cast / cooldown | `int(150×MANA_MULTIPLIER)`; LONG30ticks=1.5s base; cooldown150s=3000ticks antes de modifiers. BaseSpellPower20/perLevel10 não escala o corpo do summon neste cast. [Spell][spell], [host][host-cast]. | Config/atributos host **NATIVE**; eventos de custo/nível/cooldown são genéricos **HOOK_VERIFICADO** no wrapper, integração **CONDITIONAL**. Sem segunda mana para AI/ataque/montaria. | Q1/Q2 |
+| Quantidade / duração / recast | count1; duration12000ticks=600s=10min; totalRecasts2 com1 restante após inicial; sem novo spawn com recast ativo. [Count/recast][recast], [cast][cast]. | Constantes locais, sem setter per-player demonstrado. `SummonManager.setDuration` é público e acrescenta expiration, não contrato de extensão/substituição segura por si; **CONTRATO_CONDICIONAL**, não segundo timer. Count/duração por perk **⛔ SEM_HOOK_SEGURO** sem lifecycle completo. | Q2/Q5 |
+| Spawn / proteção / seleção | Self-summon; eyePosition+(X,1,Z), X/Z[−2,2). Sem ray/LOS/terreno/chunk/claims check local. finalizeSpawn precede evento/spawn. [Cast][cast], [random][random]. | Não é target de ataque; posicionamento seguro/novo grupo de summons **⛔ SEM_HOOK_SEGURO** por simples offset ou count. Return de addFreshEntity ignorado não confirma spawn. | Q1/Q2 |
+| Replacement / API | SpellSummonEvent#setCreature antes de addFreshEntity, mas owner da original já registrado; CHECKCAST Moth125 no JAR. [Evento][summon-event], [owner][owner]. | **HOOK_VERIFICADO** mutador de criatura; apenas Moth/subtipo compatível, nonnull, level/owner/cleanup contratados. Não muta count/tempo/power por definição nem autoriza entidade arbitrária. | Q2/Q5 |
+| Geometria / projétil | Entidade registry2×2blocks, tracking64. Não é projétil: velocidade balística/accel/pierce/spread/explosão **N/A**. [Registry][registry]. | Hitbox efetiva pode receber atributos/host; escala visual não prova resize seguro por perk. **⛔ SEM_HOOK_SEGURO** para redimensionamento sem AI/mount/collision/sync auditados. | Q3/Q4 |
+| Stats / power nativo | MAX_HEALTH15HP, FOLLOW_RANGE24blocks, MOVEMENT_SPEED1, ATTACK_DAMAGE2, MANA_REND0.15 e FLYING_SPEED1.3 em createAttributes, registrado por CommonSetup. [Stats/ataque][attack], [registro][attributes]. | Atributos são **NATIVE_ATTRIBUTE**, não setters específicos de spell nem garantia de dano2 entregue. Power genérico/Astral não está multiplicando esses números no constructor/cast. | Q1/Q3 |
+| AI / targeting / alcance | MeleeAttackGoal speed1 exige isTimeToAttack, LOS e `distance² < moth.width² + target.width`; follow owner speed1, start24/stop2, teleport50 no constructor do goal. Targets via owner-hurt/copy/hurt-by; super adiciona goals base. [AI][ai], [follow host][follow]. | FOLLOW_RANGE24 não é raio de AOE nem fórmula exata de melee. Max targets por ataque1 recebido no método; seleção final/goals host **CONDITIONAL**. Filtros de equipe/proteção não são universais. | Q3/Q4 |
+| Ataque / tipo / procs | doHurtTarget chama primeiro super; somente se true pede Levitation40ticks, amp0 no LivingEntity, sourceMoth; depois Utils.doMeleeAttack tenta outro dano. Segundo source é SpellDamageSource da spell, directMoth/causerSummoner. [Ataque][attack], [helper][melee]. | Duas tentativas source, **não duas perdas de HP garantidas**: iFrames/resistência/listeners/success são distintos. Segundo helper lê ATTACK_DAMAGE/ATTACK_KNOCKBACK, aplica enchantments e DamageSources.applyDamage. SpellDamageEvent cobre seu ramo, não o primeiro golpe por analogia. Tipo/two-hit redesign **⛔ SEM_HOOK_SEGURO**. | Q3/Q4 |
+| Mana Rend downstream | Ace consulta causingEntity LivingEntity, directnonnull e whitelist opcional; exige atributos/poder positivos. Multiplica amount por `1 + rend×(victim.MAX_MANA−victim.baseMAX_MANA)/1000`. [Ace][mana-rend]. | 0.15 **não é bônus plano15% nem mana drain**. Primeira source herdada tende a usar Moth; segunda atribui causando ao summoner e pode consultar rend do owner. Config/whitelist/host e source reais **CONDITIONAL**. | Q3/Q4 |
+| Montaria / voo | Somente interação do summoner sem veículo já ocupado chama startRiding server; retorno de startRiding ignorado. RiddenSpeed=`FLYING_SPEED×0.25` (default escalar0.325, não velocidade universal blocks/s). Strafe×0.5, movimento aquático×0.3, recuo×0.25; forward>0 usa lookAngle.y para componente vertical. Dismount pedido em(X,Y,Z+3); attachment height/2+0.6. [Montaria][ride]. | Atributo de voo **NATIVE**, afeta mobilidade além de combate. Sem solver de dismount seguro nessa implementação; range/voo/resize per-player **CONDITIONAL**, não contornar world safety. | Q4/Q5 |
+| Aliados / dano recebido | isAlliedTo combina super e isAlliedHelper; hurt usa shouldIgnoreDamage. Host IMagicSummon consulta config CAN_ATTACK_OWN_SUMMONS/friendly-fire e contém comparação otherOwner.isAlliedTo(otherOwner) em ramos de summons/tamables. [Moth][moth], [host][summon-interface]. | Não prometer proteção correta de todos aliados/PvP/owners só pela interface; guardas e tags de source importam. Sem shield/HP/cleanup paralelo BA. | Q3/Q5 |
+| Persistência / ownership / recursos | Manager mapeia UUID owner/summon, serializa offline com summon_duration_remaining; cast data retém setUUID e maxHealthPool. Moth tem campo local summonerUUID salvo via OwnerHelper, mas setSummoner usa manager sem atribuir esse campo. [Owner][owner], [NBT][nbt], [cast data][summon-data], [save host][manager-save]. | Serializer local não prova recuperação da associação; host é authority. Logout/dimensão/unload/restart **PENDING**. Cura direta, blocks/tickets/rollback e mana extra: **N/A** neste corpo; não adicionar segunda autoridade. | Q5 |
 
-## QA
+## Autoria, concepção e QA
 
-Duração/recast, mount/dismount, owner logout/death, allied targeting, chunk unload e cleanup.
+Iron’s/Asterism/Ace são donos dos consumidores descritos. RPG mantém a própria progressão por contrato; Black Arcana não cria summon/timer/ataque/Levitation ou cobrança adicional. XP da entidade é0 no constructor; eventos de cast pré-efeito, ataque e efeito não são novos casts. Dedup precisa distinguir cast inicial, UUID efetiva após evento, owner original/atual, golpe herdado/helper e target; nome do mob ou estado Levitation não prova autoria de um kill.
+
+Assinatura ocupada: uma montaria voadora aliada com AI de suporte melee e Levitation, duração/recast nativos. Novo nome/VFX ou mais moths não cria design original completo; outra magia exige lifecycle e causalidade próprios, sem importar código/assets.
+
+- **Q1:** JAR/config/hosts efetivos, Survival, atributos e finalização/spawn; não inferir sucesso do evento ou addFreshEntity ignorado.
+- **Q2:** primeiro cast/recast/timeout/counterspell, talisman, troca tipada/null/subtipo no evento, original já registrada, falha parcial e cobrança/cooldown.
+- **Q3:** dois ataques versus HP real, iFrames, resistências, ATTACK_KNOCKBACK/outros atributos exigidos pelo helper, enchantments, Mana Rend com owner/moth distintos, alvo sem mana, allies/PvP/summons.
+- **Q4:** geometria/LOS/reach, voo/água/obstáculo, speed/scale alterados, mount/dismount inseguro, cliente/multiplayer e controle por summoner.
+- **Q5:** morte/logout/restart/unload/transfer de dimensão, expiração strict/poll20, UUID/cast data/owner, remoção e coexistência. **QA físico PENDING**, sem novo adapter/perk/runtime ou promoção de Stage.
+
+[spell]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/SummonLunarMothsSpell.java#L34-L68
+[recast]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/SummonLunarMothsSpell.java#L68-L89
+[cast]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/SummonLunarMothsSpell.java#L92-L110
+[moth]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/mobs/summoned_lunar_moth/SummonedLunarMothEntity.java#L39-L83
+[ai]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/mobs/summoned_lunar_moth/SummonedLunarMothEntity.java#L52-L73
+[attack]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/mobs/summoned_lunar_moth/SummonedLunarMothEntity.java#L85-L113
+[ride]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/mobs/summoned_lunar_moth/SummonedLunarMothEntity.java#L117-L196
+[cleanup]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/mobs/summoned_lunar_moth/SummonedLunarMothEntity.java#L200-L219
+[nbt]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/mobs/summoned_lunar_moth/SummonedLunarMothEntity.java#L262-L272
+[registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASAREntityRegistry.java#L112-L120
+[attributes]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/events/CommonSetup.java#L20-L25
+[versions]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/gradle.properties#L9-L24
+[description]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/assets/asterismarcanum/lang/en_us.json#L46-L47
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L160-L338
+[summon-event]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellSummonEvent.java#L7-L27
+[owner]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L63-L107
+[finish]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L142-L162
+[timer]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L294-L320
+[manager-save]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L236-L260
+[recast-instance]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/RecastInstance.java#L27-L36
+[player-recasts]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/PlayerRecasts.java#L46-L60
+[summon-data]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonedEntitiesCastData.java#L18-L49
+[summon-interface]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/mobs/IMagicSummon.java#L22-L86
+[melee]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L475-L498
+[random]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L500-L502
+[mana-rend]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L228-L265
+
+[spell-registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARSpellRegistry.java#L48-L51
+[follow]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/mobs/goals/GenericFollowOwnerGoal.java#L31-L115

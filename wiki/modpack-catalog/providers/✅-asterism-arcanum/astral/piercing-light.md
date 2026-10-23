@@ -1,30 +1,70 @@
 # Piercing Light
 
-- ID: `asterismarcanum:piercing_light`
-- escola: Astral
-- rarity: Rare
-- níveis: 1–10
-- cast: INSTANT
-- mana: 25 / 30 / 35 / 40 / 45 / 50 / 55 / 60 / 65 / 70
-- cooldown: 20 s
-- neutral spell power: 1 em todos os níveis
-- neutral projectile damage: 1.5
-- projectiles por cast: `(4 + level) × spellPower × 3` = 15 / 18 / 21 / 24 / 27 / 30 / 33 / 36 / 39 / 42 em neutral
+**Dossiê documental — 23/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT` para registry/classe, lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; integração `CONDITIONAL`; config efetiva/QA físico `PENDING`. **+0 identidades**, sem perk/adapter/runtime novo.
 
-## Efeito
+- Provider **Asterism Arcanum**, `mod_id=asterismarcanum`; spell Iron's **`asterismarcanum:piercing_light`**, escola default **`asterismarcanum:astral`** ([escola][school]). Registro [ASARSpellRegistry][registry]. Entidades, VFX e impactos são filhos deste cast, não magias extras.
+- Artefato histórico #56: Minecraft1.21.1/NeoForge, **`asterismarcanum-1.21.1-0.1.0.jar`**, SHA-1 **`4a25ba80116168ddcc812f71467c0598127e774a`**, [publisher8157080](https://www.curseforge.com/minecraft/mc-mods/asterism-arcanum/files/8157080). [Prova binária de identidade](../EXACT-0.1.0-BINARY-REGISTRY-AUDIT.md); não comprova equivalência dos corpos de método nem QA.
+- Source oficial **`BirdieVibes/Asterism-Arcanum@f1738c7813a85d31a6da10e6c9f2dbce18d2b583`**, versão declarada `1.21.1-0.1.0`, licença **Polyform Shield**; consulta/paráfrase/referências, sem importar implementação/assets. Build usa Iron's **3.15.6**; pack registra **3.16.3** ([versões][versions]). Host examinado separadamente: **`iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`**. Compatibilidade/JAR/mixins ainda condicionados.
 
-Dispara uma rajada radial em três faixas de velocidade. Para cada índice calculado a spell cria três `PiercingLightProjectile`; cada projectile carrega damage próprio e aplica Astral spell damage em hit.
+`L` = nível entregue ao consumidor; `P=getSpellPower(L,caster)` no source host = base linear×SPELL_POWER×poder da escola×POWER_MULTIPLIER ([host][host-power]). “Neutro” assume multiplicadores1; defaults não substituem config implantada. Poder/resistência Astral são [atributos nativos][attributes], sem demonstrar adapter RPG nem setter por jogador para cada eixo.
 
-A classe do projectile não define um segundo damage source nem um ledger paralelo; impacto passa pelo projectile provider-native.
+## Declarante, ingresso e cadeia do efeito
 
-## Obtenção
+Classes `com.birdie.asterismarcanum.spells.PiercingLightSpell`, `entity.spells.piercing_light.PiercingLightProjectile` e renderer correspondente. Paráfrase do [guia oficial][guide]: lança fragmentos luminosos ao redor do caster, ferindo criaturas próximas. É uma rajada de projéteis, não dano instantâneo a todo alvo de uma esfera.
 
-Fonte concreta: Astral Scroll do Astromancer; crafting conforme config do Iron's.
+Sem precondição específica de alvo sobrescrita: ingresso/admissão/mana/cooldown pertencem ao host ([preflight][host-preflight], [ordem][host-cast]). `onCast` não-null calcula C/dano uma vez e, para cada i<C, cria **três entidades** na mesma posição com velocidades distintas, dano e render scale0.2; retorna por super. Não examina retorno de addFreshEntity nem oferece refund local por falha de spawn. [Cast][cast].
 
-## Authority e dedup
+Cada projectile guarda owner, e no impacto chama `super.onHitEntity` → `DamageSources.applyDamage(target,storedDamage,PIERCING_LIGHT.getDamageSource(this,owner))`; `onHit` depois chama `discardHelper`. Portanto dano, outcome e consumo de impacto têm fases distintas. O helper pode publicar SpellDamageEvent, aplicar resistência e friendly-fire **no ramo LivingEntity+SpellDamageSource**, sem confirmar HP entregue ([impacto][projectile-hit], [helper][host-damage]). O ID usado é sempre Piercing Light mesmo quando a classe é criada como filha de Star Swarm; isso não cria pagamento/cast extra, e a atribuição da causa pai requer contrato.
 
-Cada projectile é uma unidade causal. Um perk que reage a spell-hit deve deduplicar por projectile/hit e nunca multiplicar novamente pela contagem nominal do cast.
+## Matriz de parâmetros e alteração por perks
 
-## Anti-abuso/QA
+| Eixo | Valor/default/fórmula e fonte | Fase, superfície e limite | QA |
+|---|---|---|---|
+| Nível/cast/custo | Rare, L1–10; INSTANT,0ticks; mana `int((25+5(L−1))×MANA_MULTIPLIER)`, neutro25..70 passo5; cooldown20s=400ticks base. [Defaults][defaults], [host][host-values]. | **CONFIG_NATIVE**; uma cobrança do cast pai, não por agulha ou impacto. Sem recast próprio, base0. | Config/origem/creative, falha de spawn e nenhuma liquidação paralela. |
+| Power/dano | Base1 e incremento0: P neutro1 em todos L. `D=1+P/2`, neutro1.5HP por projectile. [Defaults][defaults], [fórmulas][formula]. | Poder genérico/Astral/POWER_MULTIPLIER são **NATIVE** e alteram dano e contagem juntos. `setDamage(float)` herdado existe para instância, mas não prova seam de spawn/adapter por jogador. | P fracionário/extremo e dano entregue após helper/listeners. |
+| Contagem/cap | `C=int((4+L)×P)`; loop i0..C−1,3 spawns por i. Com C>0, N=3C; neutro15/18/21/24/27/30/33/36/39/42 entidades. C<=0 executa0 iterações, apesar de `360f/C` já calculado. [Cast][cast], [fórmula][formula]. | Truncamento antes de ×3; não há teto de entidades/budget local. Tooltip multiplica C×3, não comprova spawn bem-sucedido. Contagem por perk **⛔ SEM_HOOK_SEGURO** isolado; L/P são knobs correlacionados. | C0/negativo/fracionário, contagem real/tooltip, caps e desempenho com power alto. |
+| Origem/dispersão | Centro caster.position+(0,eyeHeight/3,0); offset=normalize(0,U,0.55)×(caster.bbWidth+1.5), rotacionado Y em `360/C×i` graus, U=Math.random(). Três agulhas compartilham offset. Motion=normalize(center−spawn)×fator negativo, indo para fora. [Cast][cast]. | Sem alvo/raycast/LOS de admissão ou cone de mira próprio; alcance real resulta da trajetória/colisão. Dano em área emerge das entidades, não consulta de AoE. Single→AOE/retarget **⛔ SEM_HOOK_SEGURO**. | Caster widths, teto/parede próximos, espaço apertado, distribuição vertical e inimigos entre faixas. |
+| Velocidade/gravidade | getSpeed2.5; host shoot **escala o vetor sem normalizá-lo**. Fatores−0.05/−0.15/−0.25 produzem módulos iniciais **0.125/0.375/0.625 blocks/tick**. [Spawn][cast], [speed][projectile-speed], [shoot][host-projectile-motion]. O constructor usado `(Level,LivingEntity)` não chama o constructor EntityType que seta noGravity. | Spell não seta noGravity; travel herdado subtrai0.05 do Y por tick se flagfalse ([constructors][projectile-state], [travel][host-projectile-hit], [gravity][host-projectile-gravity]). Não declarar voo retilíneo sem gravidade por causa do constructor de factory/load. Velocidade/flag por perk **CONDITIONAL**, sem evento de spawn demonstrado. | Client/server constructor, flag efetiva, trajetória, reload e coexistência com buffs de projectile. |
+| Hitbox versus render | EntityType `asterismarcanum:piercing_light`, AABB nominal0.5×0.5blocks, tracking64. setScale0.2 sincroniza DATA_SCALE; renderer usa pose.scale; **não altera getDimensions/AABB**. [Registry][entity-registry], [estado][projectile-state], [renderer][render]. | `setScale(float)` público server-side é knob visual, **não resize de colisão**. Broadphase host expande movimento+inflate0.1 e testa interseção com target inflation0.3 ([hit test][host-projectile-hit]). Resize real **⛔ SEM_HOOK_SEGURO**. | Modelo/collision separados, alvos grandes/multipart, obstáculos e efeitos de visual scale. |
+| Filtros/impacto/tipo | Host canHitEntity exclui owner e aliados nas duas direções, além do superProjectile. Fonte default Astral Magic; directEntity=agulha, causingEntity=owner, spellID=Piercing Light. [Host filtro][host-projectile-motion], [hit][projectile-hit], [fonte][host-damage-source], [escola][school]. | SpellDamageEvent é mutador de amount no helper antes de resistência/hurt, integração **CONDITIONAL**. Não garante mudança de tipo, equipe/claims ou causalidade do pai Swarm. Tags efetivas **NÃO VERIFICADAS**. | PvP/equipe/summons, owner ausente, não-LivingEntity, resistências/proteções e eventos cancelados. |
+| Pierce/lifetime/saída | Defaults herdados pierce0/ricochet0; primeiro impacto de entidade chama consumeEntityImpact→pierceOrDiscard e descarta mesmo se dano recusado; bloco chama discard. Max age herdado descarta quando tickCount>300, não exatamente300. [Callbacks][projectile-hit], [impact helper][host-projectile-impact], [defaults][host-projectile-state], [tick][host-projectile-motion]. | Anti-magic descarta; hit ledger do ray é por tick, não cast token global. Limite de distância próprio **N/A**; não converter lifespan em alcance garantido. | Bloco+entidade no mesmo tick, dano0/cancelado, antiMagic, ticking range e nenhuma duplicação de impactos. |
+| Persistência/áudio/mundo | Addon salva zRot e Scale; host salva Damage/Age/Pierce/Ricochet/homing. `soundTimestamp` é static e compara tickCount da entidade, apenas áudio. Sem summon, status, DoT, teleport, explosão ou mutação de bloco. [Addon][projectile-state], [host][host-projectile-state], [som][projectile-hit]. | Salvar campos não prova ownership/restart do conjunto; dimensões/escala devem ser conferidas nas sides. N/A custos/cleanup secundários. Som suprimido não prova dano ausente. | Relog/restart/unload, owner/sync, muitos projéteis com mesma idade, sem novos procs por VFX. |
 
-A quantidade de entidades cresce até 42 em neutral lvl10. Validar performance, friendly fire e interaction com modifiers que alteram spell power/level.
+## Contratos e pendências
+
+Eventos de custo/nível e SpellDamageEvent permitem somente as alterações source-confirmadas no caminho do host; não expõem contagem/geometry como knobs independentes. `setDamage/setPierceLevel/setHomingTarget` públicos herdados são superfícies de instância, sem provar boundary estável para localizar o projectile certo antes do primeiro efeito. Métodos de impacto/ricochet do host incluem API marcada UnstableApi. [Setters][host-projectile-setters], [boundaries comuns](../SPELL-PERK-BOUNDARIES-0.1.0.md). Não implementar cast paralelo para produzir agulhas adicionais sem contrato de custo/owner/budget.
+
+Iron's/Asterism possuem cast, mana, cooldown e lifecycle; RPG mantém progressão/perks por contrato real; Black Arcana/Enshrouded não repetem spawn/dano/cleanup. Dedup deve distinguir cast pai, UUID de cada agulha, impacto e alvo; SpellDamageSource de uma agulha não diferencia por si cast Piercing de filho Swarm. Cada fragmento é consequência, não nova identidade mágica.
+
+Obtenção source: [loot Astromancer][loot] sorteia escola Astral, quality0.25..0.85; config/crafting/Survival efetivos condicionados. Assinatura ocupada: explosão radial de fragmentos de baixo dano com três velocidades e contagem escalada por nível/power. Mudança de VFX/nome não é magia nova.
+
+**PENDING:** equivalência de métodos ao JAR, config real, gravidade/sync, budget/proteções, servidor/cliente/Survival/multiplayer, ownership e todos os casos da matriz. Sem perk/adapter/Stage novo.
+
+[versions]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/gradle.properties#L9-L24
+[school]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARSchoolRegistry.java#L42-L51
+[attributes]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARAttributeRegistry.java#L19-L49
+[loot]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/data/asterismarcanum/loot_table/entities/astromancer.json#L34-L54
+[host-values]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L160-L174
+[host-power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L211-L241
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L333
+[host-preflight]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L373-L402
+[host-damage-source]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/SpellDamageSource.java#L24-L51
+[host-damage]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L65
+[host-projectile-motion]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L78-L115
+[host-projectile-hit]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L153-L213
+[host-projectile-gravity]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L280-L299
+[host-projectile-state]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L310-L367
+[host-projectile-impact]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L370-L407
+[host-projectile-setters]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L445-L519
+[registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARSpellRegistry.java#L58-L61
+[guide]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/assets/asterismarcanum/lang/en_us.json#L50-L51
+[defaults]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/PiercingLightSpell.java#L29-L62
+[cast]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/PiercingLightSpell.java#L75-L119
+[formula]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/PiercingLightSpell.java#L123-L129
+[projectile-state]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/piercing_light/PiercingLightProjectile.java#L24-L76
+[projectile-hit]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/piercing_light/PiercingLightProjectile.java#L80-L98
+[projectile-speed]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/piercing_light/PiercingLightProjectile.java#L117-L124
+[entity-registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASAREntityRegistry.java#L54-L58
+[render]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/piercing_light/PiercingLightRenderer.java#L27-L47
+
+**Estado dimensional:** `ServerEvents#otherAstralFloating` pode ligar noGravity ao inserir uma entidade não-player no Astral Sea, com tag e reversão ao entrar fora; por isso os valores de constructor/gravity desta ficha não prometem a mesma trajetória em todas as dimensões. [Consumidor pinado](https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/events/ServerEvents.java#L28-L38). Config/JAR/ordenação e trajetória efetiva continuam PENDING.

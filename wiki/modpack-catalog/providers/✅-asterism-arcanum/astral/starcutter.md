@@ -1,34 +1,71 @@
 # Starcutter
 
-- ID: `asterismarcanum:starcutter`
-- escola: Astral
-- rarity: Uncommon
-- níveis: 1–8
-- cast: INSTANT
-- mana: 20 / 25 / 30 / 35 / 40 / 45 / 50 / 55
-- cooldown: 13 s
-- neutral spell power: 1–8
-- neutral damage: 2 / 4 / 6 / 8 / 10 / 12 / 14 / 16
-- spell-computed radius: 6.5 / 9 / 11.5 / 14 / 16.5 / 19 / 21.5 / 24
+**Dossiê documental — 23/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT` para registro/classe do artefato histórico; lógica `SOURCE_PARAMETERS / SOURCE_CAUSALITY`; integração `CONDITIONAL`; config implantada e QA físico `PENDING`. **+0 identidades mágicas.**
 
-## Efeito
+Físico histórico #56: Minecraft1.21.1/NeoForge, `asterismarcanum-1.21.1-0.1.0.jar`, SHA-1 `4a25ba80116168ddcc812f71467c0598127e774a`; [publisher8157080](https://www.curseforge.com/minecraft/mc-mods/asterism-arcanum/files/8157080), [prova de registry](../EXACT-0.1.0-BINARY-REGISTRY-AUDIT.md). Source oficial `BirdieVibes/Asterism-Arcanum@f1738c7813a85d31a6da10e6c9f2dbce18d2b583` declara a mesma versão, mas **não prova equivalência dos corpos source↔JAR**. Build usa Iron’s3.15.6; host consultado separadamente Iron’s3.16.3 `e4056af90302d37eb1739f5ff05020b020e6e252`. [Versões][build]. Polyform Shield: consulta factual/paráfrases/referências, sem importar implementação ou assets. [Contratos comuns](../SPELL-PERK-BOUNDARIES-0.1.0.md).
 
-Raycasta um ponto e cria uma `StarcutterEntity`. Após ~30 ticks a entidade executa uma explosão Astral com line-of-sight e falloff por distância.
+## Identidade e execução
 
-## Divergência de radius
+Provider **Asterism Arcanum**, `mod_id=asterismarcanum`; spell **`asterismarcanum:starcutter`**, escola Astral, Uncommon, níveis default1..8. Classe `com.birdie.asterismarcanum.spells.StarcutterSpell`; filho `entity.spells.starcutter.StarcutterEntity`, EntityType **`asterismarcanum:starcutter_entity`**. Não confundir classe, path da entidade e ID da spell. [Registry][registry], [defaults][spell], [entity registry][entity-registry]. [Descrição oficial][guide], parafraseada: coloca uma pequena esfera e atinge a região com cortes mágicos após breve espera.
 
-A spell passa o radius calculado acima para a entidade. Entretanto `StarcutterEntity.setRadius()` executa `Math.min(pRadius, 1)`. Em condições normais o entity radius torna-se 1; o settlement usa `explosionRadius = entityRadius * 10`.
+No wrapper jogador, host verifica/cobra/casta; Asterism não sobrescreve precondição. `onCast` calcula raio pedidoR e raycast com alcance1.5R/blocks=true, usa HitResult.location como centro, cria uma entidade owner=caster, chama setRadius(R), setDamage(D), moveTo(center) e addFreshEntity sem testar o retorno. Não exige alvo LivingEntity nem clique em bloco válido; hit de entidade/bloco/miss fornecem uma posição. [Spawn][spell-cast], [raycast][host-ray]. Não há additionalCastData que ligue esse efeito ao cleanup imediato do INSTANT: a entidade termina pelo seu próprio tick.
 
-A leitura estática, portanto, indica raio efetivo próximo de 10 independentemente do scaling calculado pela spell. O raycast ainda usa o radius calculado para determinar alcance de colocação.
+`P=n×SPELL_POWER×AstralPower×POWER_MULTIPLIER`; **D=2P**, **R=n+4+1.5P**. Neutro n1..8: D2..16, R6.5..24 e alcance de seleção9.75..36blocks. O consumer **setRadius** escreve apenas `min(R,1)`, no servidor: a entidade usa r1 em condições normais, apesar do R calculado maior. O efeito terminal usa **B=10r** como raio do teste radial, não R. Aumentar power pode ampliar seleção e dano sem ampliar a área terminal já limitada. [Fórmulas][formula], [raio efetivo][dimensions].
 
-## Obtenção
+## Matriz de parâmetros e alteração para perks
 
-Fonte concreta: Astral Scroll do Astromancer; crafting conforme config do Iron's.
+Defaults/fórmulas source, sem confundir com configuração efetiva ou HP entregue.
 
-## Authority e dedup
+| Eixo | Valor / consumer / fase | Mutabilidade, limite e QA |
+|---|---|---|
+| Nível / dano | BasePower1/perLevel1; D=2P snapshot no onCast. No terminal, tentativa por alvo=`D×(1−distance²/B²)`, com distance da posição do alvo ao centro do boundingBox. [Spell][formula], [terminal][terminal]. | Power/config **NATIVE** no snapshot; SpellDamageEvent#setAmount **HOOK_VERIFICADO** genérico antes de resist/hurt nesse ramo living, adapter **CONDITIONAL**. Não promete HP nem total por cast; Q1/Q4. |
+| Escola / tipo / resistência | Helper com `STARCUTTER.get().getDamageSource(entity,owner)`: Astral/`asterismarcanum:astral_magic`; helper living publica evento, multiplica resistência e verifica friendly fire. [Terminal][terminal], [host][host-damage], [tipo][damage-type], [JSON][damage-data]. | Tags/armor/iFrames/mitigação/HP são resolução host. Não é vanillaExplosion nem ignição; conversão de DamageType **⛔ SEM_HOOK_SEGURO**; Q4. |
+| Range de seleção | Alcance1.5R com R=n+4+1.5P; olhos+look normalizado, bloco COLLIDER/Fluid.NONE, default bbInflation0 e nearest entity quando encontrada. Ray aceita entidades pickable/alive/!spectator pelo filtro do host, não política geral de aliados. [Cast][spell-cast], [ray][host-ray], [defaults][host-builder], [builder][host-builder-run], [filtro][host-ray-filter]. | **NATIVE** indireto via power/nível; alcance e área terminal são distintos. Retarget/proteção/claims não demonstrados; **⛔ SEM_HOOK_SEGURO** para resolver alternativo; Q2/Q3. |
+| Área / cap / budget | Entidade r=min(R,1), B=10r. Consulta AABB própria inflate(B), exige distance²<B², `canHitEntity` herdado e LOS até centro do alvo. Sem cap numérico local de targets; borda estrita. [Raio][dimensions], [terminal][terminal]. | Sem floor no setter; update radius<0.1 descarta. AABB, esfera/falloff e ponto do ray são geometrias distintas. Perk de área isolada **⛔ SEM_HOOK_SEGURO**; não compensar clamp com outra explosão; Q2/Q3/Q4. |
+| LOS / owner / equipe | OrigemLOS é ray de entity.position até position+2Y; endpoint=target boundingBox.center, checkShields=true. Não há policy allied local além do filtro herdado/caminho helper. [Terminal][terminal], [host LOS][host-los], [host FF][host-resist]. | Seleção no cast não prova autorização do dano posterior. Claims/mobs/party/PvP e owner perdido **CONDITIONAL**; Q3/Q4. |
+| Entidade / hitbox / movimento | Registry nominal1×1/tracking64; getDimensions usa **0.8r×0.8r**, r default1. Raio é SynchedEntityData e refreshDimensions preserva posição; o callback depende de atualização efetiva do dado. A fórmula getDimensions não comprova sozinha a AABB efetiva0.8 após clamp→default1; sync/construção precisam QA. Nenhum shoot/travel local: efeito colocado, não míssil balístico. [Registry][entity-registry], [dimensions][dimensions]. | Render/raio/hitbox não são intercambiáveis. Speed/acceleration/pierce/homing **N/A** neste consumer; setters públicos radius/damage não demonstram seam estável de perk/atualização causal. Q2/Q3. |
+| Tempo / expiração | WarmupFX tick2, duração privada30ticks; terminal em **tickCount>duration**, 31º tick nominal (≈1.55s) no servidor; discard após loop. Não é exatamente30 nem detonação no cast. [Fields][entity], [tick][tick]. | Sem setter público de duração/scheduler. Modificar cast speed não prova modificar timer da entidade; **⛔ SEM_HOOK_SEGURO** para duração isolada; Q2/Q5. |
+| Mana / cooldown / recast | INSTANT0; `int((20+5(n−1))×MANA_MULTIPLIER)` por cast (neutro20..55), cooldown13s=260ticks antes de modifiers; sem recast próprio. [Defaults][spell], [host][host-values]. | Config/eventos cast/cooldown **NATIVE/HOOK_VERIFICADO**, integração **CONDITIONAL**. Sem outra cobrança por alvo/FX/terminal. Q1/Q2. |
+| Anti-magic | `onAntiMagic` seta tickCount30; próximo tick pode executar terminal, não cancela dano por si. Somente com tag `astral_echo_entity` e owner chama owner.setPos(position), caso de [Astral Echo](astral-echo.md), não aplicado pelo onCast Starcutter. [Anti][anti]. | Não prometer anti-magic=discard neutro. Sem retorno ao caster nessa spell normal; hook de teleporte inicial Echo não cobre setPos. **⛔ SEM_HOOK_SEGURO** para substituir lifecycle; Q4/Q5. |
+| Persistência / sync | NBT local salva **Radius/Age/Duration**, não damage. Load lê radius só se `getInt(Radius)>0` antes de ler float; objeto novo tem damage default1. Damage snapshot não é SynchedEntityData. [Fields][entity], [NBT][nbt]. | Não prometer D preservado ou r fracionário restaurado; restore de owner/flags e source↔JAR **CONDITIONAL**. Campo/serializer presente não prova retorno idêntico pós-restart; Q5. |
+| Mundo / cura / summons | Terminal manual de dano/FX/som; não chama Explosion nem destrói blocos/cria fogo; também não executa heal, summon AI, ticket ou rollback. Sete partículas de corte não são sete impactos. [Tick][tick]. | **N/A** para essas fases. Não adicionar dano/blocos/entidade paralelos por tema de “explosão”; Q4/Q5. |
 
-Authority = delayed `StarcutterEntity`. Não aumentar AoE externamente para tentar reconciliar tooltip/source e não aplicar dano de explosão uma segunda vez.
+## Causalidade, concepção e QA
 
-## QA obrigatório
+Cast→entidade colocada com D/r snapshots→timer server→área/filtros/falloff→helper→dano→discard. A mesma classe é usada como sombra de Echo com damage0/tag, e o helper terminal ainda usa SpellID STARCUTTER; ID do dano não identifica sozinho o cast pai. Usar caster, UUID/instância, tag/parentcast, fase e target; não premiar XP, cobrar mana ou aplicar dano uma segunda vez. RPG mantém progressão contratada; Asterism/Iron’s os efeitos/recursos, Black Arcana seu runtime e Enshrouded seus próprios sistemas.
 
-Medir raio lvl1/lvl8, LOS, reload/chunk lifecycle e anti-magic.
+Fonte concreta: [Astral Scroll do Astromancer][loot]; config/loot/crafting efetivos ainda condicionais. Assinatura ocupada: ponto selecionado, esfera breve e dano radial atrasado com LOS/falloff; mudar nome/VFX não cria outra magia. Nenhuma integração implementada ou asset copiado.
+
+**QA PENDING:** Q1 fingerprint/source↔JAR/config/atributos/níveis; Q2 seleção versus r/dimensões/tempo/custo, raio1..8 e mudanças de power; Q3 paredes/shields/altura/aliados/PvP/claims/chunks; Q4 helper/HP/falloff/zero-damageEcho/anti-magic e ticks/listeners; Q5 owner logout/morte, múltiplas entidades, save/load damage/Radius/Age, restart/dimensão, cliente/dedicado/multiplayer e coexistência. Nenhuma perk/adapter/runtime nem Stage promovido.
+
+[build]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/gradle.properties#L9-L24
+[registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARSpellRegistry.java#L18-L82
+[school]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARSchoolRegistry.java#L42-L52
+[attributes]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARAttributeRegistry.java#L19-L49
+[damage-type]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARDamageTypes.java#L19-L29
+[damage-data]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/data/asterismarcanum/damage_type/astral_magic.json#L1-L5
+[host-values]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L160-L257
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L305-L346
+[host-tick]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/MagicManager.java#L27-L81
+[host-complete]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L412-L424
+[host-data]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/magic/MagicData.java#L107-L143
+[cast-data]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/EntityCastData.java#L8-L28
+[host-damage]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[host-resist]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L134-L173
+[host-los]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L274-L291
+[loot]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/data/asterismarcanum/loot_table/entities/astromancer.json#L1
+[spell]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/StarcutterSpell.java#L24-L60
+[spell-cast]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/StarcutterSpell.java#L69-L83
+[formula]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/StarcutterSpell.java#L85-L91
+[entity-registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASAREntityRegistry.java#L102-L108
+[guide]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/assets/asterismarcanum/lang/en_us.json#L34-L35
+[entity]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/starcutter/StarcutterEntity.java#L26-L42
+[anti]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/starcutter/StarcutterEntity.java#L45-L61
+[tick]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/starcutter/StarcutterEntity.java#L65-L124
+[terminal]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/starcutter/StarcutterEntity.java#L108-L123
+[dimensions]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/starcutter/StarcutterEntity.java#L133-L162
+[nbt]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/starcutter/StarcutterEntity.java#L165-L181
+[host-ray]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L320-L351
+[host-builder]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/RaycastBuilder.java#L25-L27
+[host-builder-run]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/RaycastBuilder.java#L92-L122
+[host-ray-filter]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L459-L462

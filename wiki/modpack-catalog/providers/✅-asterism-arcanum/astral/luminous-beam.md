@@ -1,30 +1,70 @@
 # Luminous Beam
 
-- ID: `asterismarcanum:luminous_beam`
-- escola: Astral
-- rarity: Common
-- níveis: 1–10
-- cast: CONTINUOUS
-- cast base: 100 ticks / 5 s
-- mana: 3–12 por nível base do cast (`3 + level - 1`, antes das regras de continuous do Iron's)
-- cooldown: 12 s
-- neutral spell power: 1–10
-- neutral damage por settlement: 1.75–8.5 (`1 + 0.75×spellPower`)
+**Dossiê documental — 23/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT` para registro/classe do artefato histórico; lógica `SOURCE_PARAMETERS / SOURCE_CAUSALITY`; integração `CONDITIONAL`; config implantada e QA físico `PENDING`. **+0 identidades mágicas.**
 
-## Efeito
+Físico histórico #56: Minecraft 1.21.1/NeoForge, `asterismarcanum-1.21.1-0.1.0.jar`, SHA-1 `4a25ba80116168ddcc812f71467c0598127e774a`; [publicação8157080](https://www.curseforge.com/minecraft/mc-mods/asterism-arcanum/files/8157080), [prova de registry](../EXACT-0.1.0-BINARY-REGISTRY-AUDIT.md). Source oficial `BirdieVibes/Asterism-Arcanum@f1738c7813a85d31a6da10e6c9f2dbce18d2b583` declara a mesma release, mas **não prova equivalência dos corpos source↔JAR**. Build usa Iron’s3.15.6; host consultado separadamente: Iron’s3.16.3 `e4056af90302d37eb1739f5ff05020b020e6e252` ([versões][build]). Polyform Shield: consulta factual, paráfrases e referências, sem importar implementação/assets. [Contratos comuns](../SPELL-PERK-BOUNDARIES-0.1.0.md).
 
-No primeiro tick cria **uma única** `LuminousBeamProjectile` e a guarda em `EntityCastData`. Durante o cast, o provider reativa o damage settlement da mesma entidade em vez de criar um novo beam a cada tick.
+## Identidade e execução
 
-A beam acompanha eye position/rotation do owner, possui 18 collision parts e corta o comprimento na colisão com blocos. `LuminousBeamProjectile.onHitEntity` aplica Astral spell damage.
+Provider **Asterism Arcanum**, `mod_id=asterismarcanum`; spell real **`asterismarcanum:luminous_beam`**, escola default Astral, Common, níveis1–10. Classe `com.birdie.asterismarcanum.spells.LuminousBeamSpell`; entidade `entity.spells.luminous_beam.LuminousBeamProjectile`, base `AbstractBeamProjectile` e 18 `BeamPart`. Spell e EntityType têm o mesmo path em registries diferentes, sem duas magias. [Registry][registry], [spell][spell], [entity registry][entity-registry]. A [descrição oficial][guide], parafraseada, anuncia um feixe frontal de luz mantido com mana contínua.
 
-## Obtenção
+O host faz admissão/casting/mana/cooldown; a spell não sobrescreve precondição ou impõe raycast/target salvo. No **primeiro settlement onCast** cria uma entidade, owner=caster, posição inicial `caster.position+(0,eyeHeight×0.7,0)`, damage snapshot `D`, chama addFreshEntity e guarda em EntityCastData. Nos settlements seguintes, se isCasting/ID/castData/tipo conferem, só chama `setDealDamageActive(true)` na mesma entidade; **não recalcula damage nem cria outra beam**. Não testa isRemoved nem retorno de addFreshEntity. [Spawn/rearm][spell-cast]. O addon não sobrescreve onServerCastTick; onCast de CONTINUOUS é chamado pelo host a cada intervalo10 de remaining ticks, não a cada tick de entidade ([relógio][host-tick]).
 
-Fonte concreta: Astral Scroll do Astromancer; crafting conforme config do Iron's.
+`P=n×spell_power×astral_spell_power×POWER_MULTIPLIER` neste constructor, pelo retorno resolvido `getSpellPower`; `D=1+0.75P` health points tentados por alvo/passagem. Neutro, n1..10: P1..10, D1.75..8.5. Atributos Astral e resistência estão ligados à escola ([atributos][attributes], [escola][school]); outros mixins/listeners do pack podem alterar valores, sem equivalência operacional presumida.
 
-## Authority e dedup
+## Matriz de parâmetros e alteração para perks
 
-A entidade persistente é authority. É proibido transformar cada cast tick em novo projectile/beam ou reaplicar dano por observer.
+Defaults source, sem substituir config efetiva. **NATIVE** não significa knob isolado por jogador; evento genérico não confirma alteração segura de cada eixo.
 
-## QA
+| Eixo | Valor/default, consumer e fase | Mutabilidade, limite e QA |
+|---|---|---|
+| Dano / nível | `D=1+0.75P`; basePower1, perLevel1, n1..10. `LuminousBeamSpell#getDamage/onCast` guarda D somente no spawn; `LuminousBeamProjectile#onHitEntity` usa esse campo. [Spell][spell], [terminal][impact]. | **NATIVE_ATTRIBUTE/CONFIG_NATIVE** de power no snapshot; não atualiza D em rearm. `SpellDamageEvent#setAmount` pré-resist/hurt é **HOOK_VERIFICADO** genérico nesse ramo living, adapter **CONDITIONAL**; Q1/Q4. |
+| Tipo / resist / knockback | `LUMINOUS_BEAM.get().getDamageSource(beam,owner)` → escola Astral, `asterismarcanum:astral_magic`; DamageSources aplica resistência e friendly fire. Base implementa **NoKnockbackProjectile**, interpretada pelo helper para ignorar próximo knockback. [Impacto][impact], [tipo][damage-type], [dados][damage-data], [host][host-damage]. | D não é HP entregue. Tags/datapacks efetivos, iFrames, armor e listeners precisam QA. Troca de DamageType = **⛔ SEM_HOOK_SEGURO**; não inferir Lightning por visual. Q4. |
+| Mana / cooldown / recast | Custo por settlement `int((3+(n−1))×MANA_MULTIPLIER)`, neutro3..12; cooldown default12s=240ticks; sem recast próprio (base0). [Spell][spell], [host valores][host-values], [settlement][host-cast]. | **CONFIG_NATIVE** e eventos cast/cooldown do [contrato comum](../SPELL-PERK-BOUNDARIES-0.1.0.md), **CONDITIONAL** para integração. Não é custo único de100ticks nem cobrança por colisão/alvo. Q1/Q2. |
+| Cast / periodicidade | CONTINUOUS, base100ticks=5s; host efetivo `round(100×CAST_TIME_REDUCTION)` neste tipo. A cada intervalo10 do casting, onCast rearma; entitytick consome flag uma vez e zera após consultar todos os alvos. [Host][host-values], [host tick][host-tick], [flag][beam-tick]. | **NATIVE_ATTRIBUTE** afeta duração do canal; ordem mundo/manager limita primeira/última passagem, sem garantir10 hits nem HP total. Cadência/flag por perk **⛔ SEM_HOOK_SEGURO** sem contrato; Q2/Q4. |
+| Geometria de colisão / targeting | Parent EntityType1×1; **18 parts1×1**, centros `owner.eye−(0,1,0)+look×(1+i)`, i0..17. Escala local2 e width1 produzem distâncias1..18; partes guardam dimensions próprias. Consultas AABB de cada parte, dedup em Set de Entity por passagem. [Base][beam-parts], [part][part], [posição/filtro][beam-tick]. | Não é cone largo nem um único ray; cantos de caixas/altura diferem do VFX. Sem cap numérico de alvos por passagem além das consultas. Range/parts/resize/single→AOE **⛔ SEM_HOOK_SEGURO**. Q3/Q4. |
+| LOS / filtros / aliados | Exclui owner, exige LivingEntity e `Utils.hasLineOfSight(level,beam,target,true)`. Não há filtro explícito allied no predicate, mas settlement living testa friendly fire host. LOS usa olhos do beam→centro target e ClipContext.COLLIDER/Fluid.NONE. [Filtro][beam-tick], [LOS][host-los], [friendly fire][host-resist]. | Proteção de claims e políticas adicionais **NÃO VERIFICADAS**; seleção não garante dano autorizado. Não chamar todo alvo em AABB de atingido. Q3/Q4. |
+| Visual vs comprimento | `getBeamBlockCollision` usa RaycastBuilder range18, blocks=true, inflation0.15; cache visual usa `(int)distance+1`, fallback17+1. Isso roda na geração client e render; **não trunca a lista18parts**. Renderer largura≈0.8..1.133 é visual. [Cache][visual], [renderer][render]. | Parede/Shield podem alterar LOS e visual por rotas distintas. Não usar comprimento render como raio de dano ou setter de hitbox. Q3. |
+| Movimento / projétil / mundo | NoPhysics=true, blocksBuilding=false; parent acompanha owner a cada tick, sem shoot/velocidade/gravidade balística próprios. Não move blocos nem invoca AI. [Base][beam-parts], [tick][beam-tick]. | Velocidade/pierce/ricochet/explosão **N/A** para este parent multipart; não herda AbstractMagicProjectile. Q3/Q5. |
+| Cleanup / lifetime | Normal finish/cancel: `AbstractSpell#onServerCastComplete→MagicData#resetCastingState→resetAdditionalCastData→EntityCastData#reset→discard`. Base tem failsafe `++age>400`, não400ticks como duração normal. [Complete][host-complete], [data][host-data], [castdata][cast-data], [tick][beam-tick]. | Cleanup **provider/host-owned**, sem duplicar reset. Sem check local cast/ownerAlive no tick; failsafe é fallback para caminho órfão, não promise20s de canal. Q2/Q5. |
+| Persistência / sync / anti-magic | shouldBeSaved=false; NBT define Damage, mas age/flag não são gravados e entitydata da base é vazia. Owner vem de Projectile. Não implementa AntiMagicSusceptible próprio; não herda o callback de AbstractMagicProjectile. [Base][beam-save], [NBT][beam-nbt]. | Não prometer reload da beam, sincronização per-player de damage, reação anti-magic ou cleanup de toda rota externa. APIs públicas setDamage/rearm não são eventos suportados de perk. Q5. |
+| AI | shouldAIStopCasting retorna `distanceToSqr(target)>120`, isto é além de sqrt120≈10.95blocks; diferente de18parts. [Spell][spell-cast]. | É condição AI, não cap de colisão nem filtro do jogador. Casts de mobs/comandos não assumem wrapper de mana jogador; Q1/Q5. |
 
-O collision filter exclui owner e exige LOS, mas não possui allied filter explícito antes de `DamageSources.applyDamage`. Validar party/PvP/summons e taxa real de damage ticks.
+## Causalidade e limites
+
+Pipeline: cast settlement→spawn/rearm mesma beam→tick posiciona parts→set dedup→`onHitEntity`→SpellDamageEvent→resist/friendly fire/hurt. Partes não são18 casts e cada tick não é novo pagamento/XP. Partículas/som ou presença em Set não provam HP perdido. A identidade causal deve distinguir pai, instância de beam, passagem e alvo, sem dedup global só por caster/owner. Iron’s/Asterism são donos dos recursos/efeitos; RPG mantém sua progressão contratada, Black Arcana seu runtime e Enshrouded seus próprios sistemas.
+
+Fonte concreta do inventário: Astral Scroll na [loot table Astromancer][loot]; crafting/config/aprendizado implantados continuam condicionados. Assinatura ocupada: canal de feixe frontal multipart orientado pelo caster, dano em passagens rearmadas; variar VFX/nome não cria outra identidade. Nenhuma perk/adapter foi implementada.
+
+**QA PENDING:** Q1 identidade/config/source↔JAR e versão do host; Q2 mana/canal/interrupção/finish/cancel e cleanup; Q3 offsets18parts/parede/visual/shield/altura/rotação; Q4 múltiplos alvos/ally/PvP/resist/HP/flag e ordem de ticks; Q5 owner perdido/morto, entidade removida mas castData presente, mob/comando, unload/restart/anti-magic, cliente/dedicado/multiplayer e coexistência. Nenhum Stage promovido.
+
+[build]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/gradle.properties#L9-L24
+[registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARSpellRegistry.java#L33-L66
+[school]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARSchoolRegistry.java#L42-L52
+[attributes]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARAttributeRegistry.java#L19-L49
+[damage-type]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARDamageTypes.java#L19-L29
+[damage-data]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/data/asterismarcanum/damage_type/astral_magic.json#L1-L5
+[host-values]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L160-L257
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L305-L346
+[host-tick]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/MagicManager.java#L27-L81
+[host-complete]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L412-L424
+[host-data]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/magic/MagicData.java#L107-L143
+[cast-data]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/EntityCastData.java#L8-L28
+[host-damage]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[host-resist]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L134-L173
+[host-damage-event]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellDamageEvent.java#L24-L50
+[host-los]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L274-L291
+[loot]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/data/asterismarcanum/loot_table/entities/astromancer.json
+[spell]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/LuminousBeamSpell.java#L28-L59
+[spell-cast]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/LuminousBeamSpell.java#L77-L100
+[entity-registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASAREntityRegistry.java#L39-L44
+[guide]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/assets/asterismarcanum/lang/en_us.json#L44-L45
+[beam-parts]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/AbstractBeamProjectile.java#L25-L64
+[beam-tick]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/AbstractBeamProjectile.java#L119-L184
+[part]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/BeamPart.java#L17-L51
+[beam-save]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/AbstractBeamProjectile.java#L73-L104
+[impact]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/luminous_beam/LuminousBeamProjectile.java#L119-L125
+[visual]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/luminous_beam/LuminousBeamProjectile.java#L46-L111
+[render]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/luminous_beam/LuminousBeamRenderer.java#L34-L74
+
+[beam-nbt]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/AbstractBeamProjectile.java#L187-L197

@@ -1,35 +1,74 @@
 # Starfire
 
-- ID: `asterismarcanum:starfire`
-- escola: Astral
-- rarity: Common
-- níveis: 1–10
-- cast: INSTANT
-- mana: 6 / 8 / 10 / 12 / 14 / 16 / 18 / 20 / 22 / 24
-- cooldown: 0.3 s nominal
-- neutral spell power: 7 / 9 / 11 / 13 / 15 / 17 / 19 / 21 / 23 / 25
-- neutral damage: 2.1 / 2.7 / 3.3 / 3.9 / 4.5 / 5.1 / 5.7 / 6.3 / 6.9 / 7.5
+**Dossiê documental — 23/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT` para registry/classe, lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; integração `CONDITIONAL`; config efetiva/QA físico `PENDING`. **+0 identidades**, sem perk/adapter/runtime novo.
 
-## Efeito
+- Provider **Asterism Arcanum**, `mod_id=asterismarcanum`; spell Iron's **`asterismarcanum:starfire`**, escola default **`asterismarcanum:astral`** ([escola][school]). Registro [ASARSpellRegistry][registry]. Entidades, VFX e impactos são filhos deste cast, não magias extras.
+- Artefato histórico #56: Minecraft1.21.1/NeoForge, **`asterismarcanum-1.21.1-0.1.0.jar`**, SHA-1 **`4a25ba80116168ddcc812f71467c0598127e774a`**, [publisher8157080](https://www.curseforge.com/minecraft/mc-mods/asterism-arcanum/files/8157080). [Prova binária de identidade](../EXACT-0.1.0-BINARY-REGISTRY-AUDIT.md); não comprova equivalência dos corpos de método nem QA.
+- Source oficial **`BirdieVibes/Asterism-Arcanum@f1738c7813a85d31a6da10e6c9f2dbce18d2b583`**, versão declarada `1.21.1-0.1.0`, licença **Polyform Shield**; consulta/paráfrase/referências, sem importar implementação/assets. Build usa Iron's **3.15.6**; pack registra **3.16.3** ([versões][versions]). Host examinado separadamente: **`iron431/irons-spells-n-spellbooks@e4056af90302d37eb1739f5ff05020b020e6e252`**. Compatibilidade/JAR/mixins ainda condicionados.
 
-Dispara `StarfireProjectile` sem gravidade, speed 2.5, pierce level 2 e ricochet habilitado. Em hit aplica Astral spell damage e então executa o pipeline próprio de pierce/ricochet.
+`L` = nível entregue ao consumidor; `P=getSpellPower(L,caster)` no source host = base linear×SPELL_POWER×poder da escola×POWER_MULTIPLIER ([host][host-power]). “Neutro” assume multiplicadores1; defaults não substituem config implantada. Poder/resistência Astral são [atributos nativos][attributes], sem demonstrar adapter RPG nem setter por jogador para cada eixo.
 
-## QA de targeting
+## Declarante, ingresso e pipeline
 
-O filtro de candidatos ao ricochet contém a condição:
+Classes `com.birdie.asterismarcanum.spells.StarfireSpell` e `entity.spells.starfire.StarfireProjectile`. Paráfrase do [guia oficial][guide]: lança um pequeno fragmento celeste na direção em que o caster olha.
 
-`(owner == null || !Utils.shouldHealEntity(owner, entity)) || entity.getClass() == hit.getClass()`.
+Sem precondição de alvo específica sobrescrita: admissão, mana/cooldown e fonte do ingresso pertencem ao host ([preflight][host-preflight], [casting][host-cast]). `onCast` cria **1 projectile**, posiciona perto dos olhos, usa lookAngle em shoot, salva dano, desliga gravidade e chama addFreshEntity/super sem verificar sucesso do spawn. [Cast][cast].
 
-A segunda parte pode admitir entidade da mesma classe mesmo quando a primeira a trataria como friendly. Não assumir friendly-fire safety até runtime QA.
+O constructor com shooter delega ao constructor EntityType, que configura noGravity=true, pierce2 e setCanRicochet(true), depois define owner. Em impacto de entidade: super → DamageSources.applyDamage com spell Starfire → **pierceOrDiscard** → se canRicochet, **doRicochet customizado**. O retorno do dano é ignorado; consumo/redirecionamento não exige perda de HP confirmada. [Constructor/ricochet][projectile-ricochet], [impacto][projectile-hit], [helper][host-damage].
 
-## Obtenção
+## Matriz de parâmetros e alteração por perks
 
-Fonte concreta: Astral Scroll do Astromancer; crafting conforme config do Iron's.
+| Eixo | Valor/default/fórmula e origem | Fase, superfície e limite | QA |
+|---|---|---|---|
+| Nível/cast/custos | Common, L1–10; INSTANT,0ticks; mana `int((6+2(L−1))×MANA_MULTIPLIER)`, neutro6..24 passo2; cooldown nominal0.3s→6ticks no getSpellCooldown do host antes de reduções. [Defaults][defaults], [host][host-values]. | **CONFIG_NATIVE**; um cast/settlement, não pagamento por ricochet. Sem recast próprio ou recurso de fogo adicional, base0. | Config/subsegundo/latência/castsource/creative, failedspawn e nenhum segundo custo por hit. |
+| Power/dano | Base7, incremento2 → P neutro7/9/11/13/15/17/19/21/23/25; `D=0.3P` =2.1/2.7/3.3/3.9/4.5/5.1/5.7/6.3/6.9/7.5HP tentados por impacto. [Defaults][defaults], [fórmula][formula]. | Poder genérico/Astral/POWER_MULTIPLIER **NATIVE**; dano é snapshot no spawn. `setDamage(float)` herdado é público, mas localizar/alterar a instância certa antes do impacto exige adapter **CONDITIONAL**. | Power fracionário/extremo, troca de atributos depois do cast e dano final. |
+| Tipo/owner | SpellDamageSource de STARFIRE, directEntity=projectile, causingEntity=owner; escola default Astral→`asterismarcanum:astral_magic`. Usa DamageSources.applyDamage. [Impacto][projectile-hit], [fonte][host-damage-source], [escola][school], [JSON][damage-type]. | SpellDamageEvent#setAmount/cancel muta só ramo LivingEntity+SpellDamageSource do helper; vem antes de school resist/friendly-fire/hurt ([helper][host-damage]). Tags/HP final não inferidos do nome. Conversão de tipo **⛔ SEM_HOOK_SEGURO**. | PvP/resistências/imunidades, owner ausente, alvo nãoLiving, listener cancelado e autoria de kill. |
+| Spawn/aim/velocidade | Posição=caster.position+0.2×normalize(look), com Y acrescido de eyeHeight−metade da altura do projectile. Shoot(lookAngle)×getSpeed2.5, sem spread, uma entidade; noGravity=true no constructor e no cast. [Cast][cast], [constructor][projectile-ricochet], [speed][projectile-speed], [shoot][host-projectile-motion]. | Módulo inicial2.5blocks/tick para look unitário; host shoot não normaliza vetores externos. Sem hard range independente; aceleração customizada **N/A**. Alterar velocidade/aim por perk **CONDITIONAL**, sem seam de spawn demonstrado. | Paredes na origem, eyeHeight/hitbox do caster, trajetória/sides e vetores alterados por outros mods. |
+| Hitbox/render | EntityType `asterismarcanum:starfire`, nominal0.5×0.5blocks, tracking64. Renderer usa pose.scale(0.35,0.35,0.35); não há getDimensions customizado. [Registry][entity-registry], [render][render]. | Broadphase host expande AABB pelo movimento+inflate0.1, interseção target inflation0.3. Escala visual não muda colisão ([hit detection][host-projectile-hit]). Resize por perk **⛔ SEM_HOOK_SEGURO**. | VFX versus hitbox, alvos pequenos/grandes/multipart, overlap e parede. |
+| Filtros do hit | CanHitEntity herdado aplica superProjectile e exclui owner/aliados em ambas as direções. Ray clip COLLIDER/Fluid.NONE, hits ordenados por distância, dedup de entidade somente dentro daquele tick. [Host][host-projectile-motion], [colisão][host-projectile-hit]. | Não há lista persistente de alvos já atingidos; ricochet candidate não equivale a alvo elegível de dano. Claims/safePvP efetivos **NÃO VERIFICADOS**. | Mesmo alvo em ticks diferentes, shields, equipes, owner e listener de ProjectileImpactEvent. |
+| Pierce/continuação | Pierce inicial2; cada callback de hit chama pierceOrDiscard:2→1→0→discard na chamada seguinte. Não garante três vítimas únicas ou três danos bem-sucedidos. [Constructor][projectile-ricochet], [callback][projectile-hit], [host][host-projectile-impact]. | Consumo ocorre mesmo dano recusado/cancelado; depois do discard o código filho ainda pode chamar ricochet sem testar isRemoved. setPierceLevel público/UnstableApi não prova política segura por perk. | Terceiro impacto, vários targets no mesmo tick, repetição no mesmo target, helperfalse e shields. |
+| Ricochet/seleção | AABB própria inflate3, expandTowards(delta×12); exclui hit atual; exige `(owner==null \|\| !shouldHealEntity(owner,candidate)) \|\| candidate.class==hit.class`, dot(normalized direction)>0.6 e LOS. Sem teste local alive/canBeHitByProjectile ou LivingEntity. [Custom ricochet][projectile-ricochet], [heal filter][host-heal-filter], [LOS][host-los]. | Inicialmente delta×12 estende30blocks no heading; não é esfera de raio30. Lista não ordenada por proximidade, índice entityId%size; reorienta para centro do candidato mantendo módulo da velocidade. Retarget por perk **⛔ SEM_HOOK_SEGURO** local. | Forward cone/boundingvolume, ordem dos candidatos, nãoLiving/morto, barreiras e shieldLOS false. |
+| Ricochet/flags e aliados | Host deprecated setCanRicochet(true) grava ricochetLevel−1; canRicochet exige type fora de CANT_RICOCHET e level!=0. O override custom não consome cargas de ricochet. [Host flag][host-ricochet-flag], [gate][host-projectile-setters], [custom][projectile-ricochet]. | Mesmo-classe pode readmitir friendly/owner no **retarget**, mas canHitEntity/helper posteriores ainda podem rejeitar colisão/dano. Não afirmar segurança universal nem bypass garantido. Lifetime/pierce ainda limitam a entidade. | Dois players, summons/mobs da mesma classe, tag CANT_RICOCHET, mudanças de equipe e ausência de alvo. |
+| Bloco/lifetime/saída | Host descarta quando tickCount>300, antiMagic ou fora do entity ticking range. Filho não chama discardHelper nem sobrescreve onHitBlock; onHit herdado gera VFX/som, sem discard explícito de bloco na cadeia inspecionada. [Tick][host-projectile-motion], [base hit][host-projectile-gravity], [antiMagic/save][host-projectile-state]. | Clip encurta o ray para testar entidades, mas travel move pelo delta completo. Não prometer que parede descarte/pare o projétil; comportamento no JAR exige QA. Max flight time não é alcance garantido. | Colisões em paredes finas/espessas, entidade+bloco no mesmo tick, antiMagic, descarte e persistência. |
+| Estado/summons/mundo | Sem DoT/fogo, status, heal, summon, AoE de explosão, blocos ou teleport demonstrados. Nome Starfire não chama ignite. Dano/idade/pierce/ricochet/homing têm save herdado. [Impacto][projectile-hit], [hostsave][host-projectile-state]. | Cada ricochet mantém a mesma entidade/owner/dano, não é cast novo. Ownership/restart/sync do conjunto **CONDITIONAL**, sem cleanup paralelo. | Reload/unload, owner removido, rastreamento, partícula sem hit e dedup por UUID/impacto/alvo. |
 
-## Authority e dedup
+## Integração, concepção e pendências
 
-Projectile é authority de piercing/ricochet. Cada hit legítimo pode gerar provenance individual; não duplicar ricochet nem damage.
+`doRicochet(HitResult)` é override público que o filho chama diretamente; não confundir com o método deprecated do host que apenas avisa, nem com tryRedirectFromEntityRicochet, que tem outro filtro/consumo. O setter booleano deprecated habilita flag, sem conceder contrato estável de perk. [Host][host-ricochet-flag], [filho][projectile-ricochet]. Setters de dano/pierce/homing/ricochet existem como estado da instância, sem evento de spawn ou identidade causal pré-impacto demonstrados para um adapter. Custos/nível/cooldown e damage amount seguem apenas os boundaries reais do [dossiê comum](../SPELL-PERK-BOUNDARIES-0.1.0.md).
 
-## QA
+Iron's/Asterism possuem cast, mana/cooldown, movimento, pierce e dano; RPG mantém progressão/perks por contrato, Black Arcana não replica impacto/retarget e Enshrouded conserva seu runtime. Para dedup, distinguir cast pai, UUID, callback de impacto e alvo, inclusive hit recusado e retarget sem dano. Partícula/ricochet não prova nova magia, pagamento ou recompensa.
 
-Party com dois players, summons da mesma classe, mobs da mesma classe, piercing múltiplo e cooldown sub-segundo no servidor dedicado.
+Obtenção source: [loot Astromancer][loot] sorteia scroll Astral, quality0.25..0.85; config/habilitação/crafting e Survival efetivos continuam condicionados. Assinatura ocupada: projétil Astral barato de trajetória redirecionada, pierce finito e dano por impacto; mudar elemento/visual/nome não cria outra regra causal.
+
+**PENDING:** equivalência destes métodos ao JAR, host/config/datapack efetivos, consumo/colisão/retarget reais, cliente/servidor, Survival/multiplayer/PvP/claims, reload/restart e todos os casos da matriz. Nenhuma perk, adapter ou Stage novo.
+
+[versions]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/gradle.properties#L9-L24
+[school]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARSchoolRegistry.java#L42-L51
+[attributes]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARAttributeRegistry.java#L19-L49
+[damage-type]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/data/asterismarcanum/damage_type/astral_magic.json#L1-L5
+[loot]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/data/asterismarcanum/loot_table/entities/astromancer.json#L34-L54
+[host-values]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L160-L174
+[host-power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L211-L241
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L333
+[host-preflight]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L373-L402
+[host-damage-source]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/SpellDamageSource.java#L24-L51
+[host-damage]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L65
+[host-projectile-motion]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L78-L115
+[host-projectile-hit]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L153-L213
+[host-projectile-gravity]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L280-L299
+[host-projectile-state]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L310-L367
+[host-projectile-impact]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L370-L407
+[host-projectile-setters]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L445-L519
+[host-ricochet-flag]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L555-L573
+[host-heal-filter]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L532-L557
+[host-los]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L274-L287
+[registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARSpellRegistry.java#L20-L21
+[guide]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/assets/asterismarcanum/lang/en_us.json#L30-L31
+[defaults]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/StarfireSpell.java#L29-L63
+[cast]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/StarfireSpell.java#L76-L90
+[formula]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/StarfireSpell.java#L93-L99
+[projectile-ricochet]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/starfire/StarfireProjectile.java#L25-L61
+[projectile-hit]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/starfire/StarfireProjectile.java#L80-L91
+[projectile-speed]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/starfire/StarfireProjectile.java#L114-L121
+[entity-registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASAREntityRegistry.java#L32-L37
+[render]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/starfire/StarfireRenderer.java#L31-L45

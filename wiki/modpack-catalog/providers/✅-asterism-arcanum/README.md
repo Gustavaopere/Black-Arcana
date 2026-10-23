@@ -8,7 +8,7 @@ Status: `✅ CATALOGED / EXACT PHYSICAL=PUBLISHER 0.1.0 ARTIFACT / COMPLETE 11-I
 
 Current sibling authority:
 
-`neoforge-rpg-skilltree@e038568764f0c021f1b83320db2fb0e92a933b71`
+`neoforge-rpg-skilltree@ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`
 
 Certified physical row:
 
@@ -150,3 +150,11 @@ Exact catalog identity does not establish assembled-pack runtime PASS for:
 The ten normal Asterism spell identities are now **COUNTED_EXACT**. The only catalog-level unresolved action identity is the exact registered but publisher-marked creative-only/unfinished **Astral Gateway**, whose effective deployed survival state remains unavailable.
 
 Strict contribution: **10**. Current delta: **+0**.
+
+## Reauditoria de parâmetros e consumidores — 23/10/2026
+
+[11/11 fichas source-causais](SPELL-PERK-BOUNDARIES-0.1.0.md) com defaults/fórmulas/unidades, classes/métodos e consumidores downstream por eixo: targeting, alcance, dano/type, área/hitbox, tempo/custos, procs, estados, summon, movimento e persistência. O recorte documental inclui dez spells normais e Gateway conditional; não promove onze identidades Survival nem onze perks implementáveis.
+
+Publisher 8157080 foi medido novamente: 987245 bytes, SHA-1 `4a25ba80116168ddcc812f71467c0598127e774a`, SHA-256 `191422cf3096a79e158d3262b52ea98fb1abc745847d4eb356548a5a5f58eebc`. O perfil instalado original não está nesta sessão; medição publisher correlacionada ao fingerprint físico histórico não comprova equivalência de todos os corpos de métodos com o source pin.
+
+As fichas distinguem dano direto Brightburst do helper, tipo de dano PiercingLight dos filhos Swarm, cleanup host de Beam/Gate, janela de contador Tether e buff Barbs, curas/ataques do summon e caminhos distintos de teleporte. O dossiê comum registra atributos Astral e setters/eventos reais, com limites para target→área, tipo e resize. Config implantada, Survival, multiplayer/cliente e QA do conjunto permanecem PENDING; nenhum adapter, perk, runtime ou Stage alterado. +0 strict. [Painel e barras atuais](../../meta/PROGRESSO-CATALOGO-ATUAL.md).

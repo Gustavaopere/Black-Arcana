@@ -1,34 +1,76 @@
 # Star Swarm
 
-- ID: `asterismarcanum:star_swarm`
-- escola: Astral
-- rarity: Common
-- níveis: 1–10
-- cast: CONTINUOUS
-- cast base: 100 ticks / 5 s
-- mana: 3–12 por nível base (`3 + level - 1`, antes das regras de continuous do Iron's)
-- cooldown: 12 s
-- neutral spell power: 1–10
-- neutral contact damage configurado na gate: 1.75–8.5
+**Dossiê documental — 23/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT` para registro/classe do artefato histórico; lógica `SOURCE_PARAMETERS / SOURCE_CAUSALITY`; integração `CONDITIONAL`; config implantada e QA físico `PENDING`. **+0 identidades mágicas.**
 
-## Efeito
+Físico histórico #56: Minecraft1.21.1/NeoForge, `asterismarcanum-1.21.1-0.1.0.jar`, SHA-1 `4a25ba80116168ddcc812f71467c0598127e774a`; [publisher8157080](https://www.curseforge.com/minecraft/mc-mods/asterism-arcanum/files/8157080), [prova de registry](../EXACT-0.1.0-BINARY-REGISTRY-AUDIT.md). Source oficial `BirdieVibes/Asterism-Arcanum@f1738c7813a85d31a6da10e6c9f2dbce18d2b583` declara a mesma versão, mas **não prova equivalência dos corpos source↔JAR**. Build usa Iron’s3.15.6; host consultado separadamente Iron’s3.16.3 `e4056af90302d37eb1739f5ff05020b020e6e252`. [Versões][build]. Polyform Shield: consulta factual/paráfrases/referências, sem importar implementação ou assets. [Contratos comuns](../SPELL-PERK-BOUNDARIES-0.1.0.md).
 
-Cria uma única `StarSwarmProjectile`/gate e a mantém via `EntityCastData`. A base `AbstractGateProjectile` possui cinco sub-entidades ao redor do caster.
+## Identidade e pipeline causal
 
-Em ticks divisíveis por 12 ou 20, **cada uma das 5 partes dispara 3 `PiercingLightProjectile`**, ou 15 projectiles por volley elegível. Esse projectile spam é o principal settlement ofensivo continuado.
+Provider **Asterism Arcanum**, `mod_id=asterismarcanum`; spell **`asterismarcanum:star_swarm`**, escola Astral, Common, níveis default1..10. Classe `com.birdie.asterismarcanum.spells.StarSwarmSpell`; parent `entity.spells.star_swarm.StarSwarmProjectile`/`AbstractGateProjectile`, EntityType `asterismarcanum:star_swarm`; cinco `GatePart` e filhos `PiercingLightProjectile`. São consumers da mesma raiz, sem novas magias por parte/volley/projétil. [Registry][registry], [spell][spell], [tipos][entity-registry]. [Descrição oficial][guide], parafraseada: cria luzes que acompanham a orientação do caster para atacar.
 
-## Quirk de collision damage
+Host admite/cobra/canaliza; não há precondição/target salvo local. Primeiro **onCast settlement** cria uma gate, owner=caster, posição `caster.position+(0,eyeHeight×0.7,0)`, damage snapshot `D`; ignora retorno de addFreshEntity e guarda EntityCastData. Próximos onCast, se casting/ID/dado/tipo conferem, chamam `setDealDamageActive`, que nessa base escreve **false**. Não recalculam D nem criam outra gate, e não testam isRemoved. [Spawn/reuse][spell-cast], [flag][gate-flag]. Esses calls seguem o relógio CONTINUOUS do host, não cada onServerCastTick ([host][host-tick]).
 
-`setDealDamageActive()` da classe base define `dealDamageActive=false`, apesar do nome. Assim, após o primeiro collision pass, os server cast ticks não reativam o contact damage da gate; os volleys de Piercing Light continuam funcionando independentemente.
+Entitytick posiciona cinco parts em arco orientado pelo caster, solicita volleys nos ticks divisíveis por12 **ou**20 e separadamente faz contact damage no servidor se a flag estiver ativa. A flag começa true e fica false após a consulta; os onCast seguintes não a rearmam. Não garantir um contact hit inicial: ordem do primeiro tick versus outro settlement pode suprimi-lo. Os volleys não dependem dessa flag. Spawn dos filhos fica **fora** da guarda `!isClientSide`; isso é condição source a testar nas duas sides, não prova de duplicação no JAR. [Base/tick][gate-tick], [emissão][emit].
 
-## Obtenção
+`P=n×SPELL_POWER×AstralPower×POWER_MULTIPLIER`; `D=1+0.75P`, neutro1.75..8.5 health points. O mesmo D snapshot é atribuído a cada filho, sem consultar power/level novamente. Contact usa SpellDamageSource **STAR_SWARM**; filho resolve **PIERCING_LIGHT**. Partículas, hits e IDs de dano não substituem a causa pai Swarm. [Fórmula][spell-cast], [contato][impact], [filho][child-hit].
 
-Fonte concreta: Astral Scroll do Astromancer; crafting conforme config do Iron's.
+## Matriz de parâmetros e alteração para perks
 
-## Authority e dedup
+Defaults/fórmulas source não são configuração implantada. `NATIVE` não significa alteração isolada por jogador.
 
-Authority = uma gate persistente + projectiles emitidos. Não criar gate por tick e não adicionar tick damage externo para “corrigir” o flag.
+| Eixo | Valor/consumer/fase | Mutabilidade, limites e QA |
+|---|---|---|
+| Dano / nível / snapshot | BasePower1/perLevel1; `D=1+0.75P`, guardado no spawn e copiado para filhos; sem refresh no reuse. [Spell][spell], [emit][emit]. | **NATIVE_ATTRIBUTE/CONFIG_NATIVE** antes do snapshot. SpellDamageEvent#setAmount é **HOOK_VERIFICADO** genérico no helper living; adapter **CONDITIONAL**. Não multiplicar D por número de filhos para prometer HP total; Q1/Q4. |
+| Tipo / resistência / knockback | Contato STAR_SWARM, filhos PIERCING_LIGHT, ambos escola default Astral/`asterismarcanum:astral_magic`; helper aplica evento, resist e friendly-fire. Parent implementa NoKnockbackProjectile, filho não. [Contatos][impact], [filho][child-hit], [host][host-damage], [tipo][damage-type]. | Tags/config/armor/iFrames e HP final **CONDITIONAL**; tipo não é setter de escola por perk. **⛔ SEM_HOOK_SEGURO** para conversão elemental e knockback isolado; Q4. |
+| Mana / cooldown / recast | `int((3+(n−1))×MANA_MULTIPLIER)` por settlement; neutro3..12. Cooldown12s=240ticks, recast próprio0 herdado. [Defaults][spell], [host][host-values]. | Config/eventos nível/custo/cooldown do [contrato comum](../SPELL-PERK-BOUNDARIES-0.1.0.md) **NATIVE/HOOK_VERIFICADO**, integração **CONDITIONAL**. Não cobrar por filho/volley/target; Q1/Q2. |
+| Canal / tempo / AI | CONTINUOUS100ticks base, efetivo `round(100×CAST_TIME_REDUCTION)`; onCast nos intervalos10 restantes do host. AI para se distance²>120 (≈10.95blocks), não cap de alcance dos filhos. [Spell][spell-cast], [host][host-values], [tick][host-tick]. | Atributo de duração **NATIVE**, não knob independente de cadence. Ordem/final settlement pode criar/destruir entidade sem mesma janela de ticks; Q2/Q5. |
+| Geometria / partes | Parent nominal1×1, cinco parts1×1. Offset local em plano de raio2: `θ=0.8i`, i0..4; `(2cosθ,2sinθ)` rotacionados por yaw/pitch, centro ownerEye−1Y. Part size é próprio. [Base][gate-init], [posicionamento][gate-tick], [part][part]. | Contato usa AABBs das parts e dedup Set por passagem, não cone/esfera de dano. Sem cap numérico de targets por consulta. Range/resize/área **⛔ SEM_HOOK_SEGURO**; Q3/Q4. |
+| Filtros / LOS | Contato exclui owner, exige LivingEntity e LOS(parent,target,true); sem filtro allied explícito na seleção, com friendly-fire no helper. Filhos usam filtro herdado de projétil (owner/alianças nas duas direções). [Gate][gate-filter], [host][host-projectile], [resist][host-resist]. | Não prova claims/PvP de todos os listeners. Seleção não confirma HP. Retarget/seleção segura por perk **⛔ SEM_HOOK_SEGURO**; Q3/Q4. |
+| Volley / orçamento | Cada tick elegível `tickCount%12==0` **OU** `%20==0`:5×3=15 pedidos. Para entidade mantida com owner nos ticks1..N: `15×(⌊N/12⌋+⌊N/20⌋−⌊N/60⌋)`. N400 órfão dá705; **não é budget de um cast normal**. [Loop][gate-tick]. | União evita duplicar o múltiplo60. N depende de cleanup/ordem/canal; spawn pode falhar, sem cap global de filhos vivos. Não confundir pedidos/entidades/impactos/HP. Constantes de emissão **⛔ SEM_HOOK_SEGURO**; Q2/Q5. |
+| Spawn / trajetória dos filhos | Origem=part+(randX−1..1,randY−1..1,randZ0..1); segundo setPos sobrescreve primeiro, final origem+childHeight/2Y. DamageD, scale0.6, shoot(owner.look) com speed2.5; chamada getSpeed solta não altera nada. [Emit][emit], [child][child-constructor], [host shoot][host-projectile]. | Scale sincronizada não resize de AABB: EntityType filho0.5×0.5. Constructor caster não passa pelo factory que seta noGravity; host aplica gravidade0.05 se flag false. `ServerEvents#otherAstralFloating` pode ligar noGravity/tag para não-player ao entrar no Astral Sea e desligar ao entrar fora com a tag; dimensão/evento alteram essa condição ([join][global-gravity]). Sem homing ativado/ricochet/pierce extra pelo gate. Mutação por perk **⛔ SEM_HOOK_SEGURO**; Q3/Q5. |
+| Hit / lifetime dos filhos | Host intersecta segmento da trajetória, inflation0.3, default pierce0/ricochet0. Filho chama helper de dano e discardHelper; impacto/anti-magic/expiry>300ticks têm lifecycle próprio. [Child][child-hit], [host][host-projectile], [expiry/save][host-expiry]. | Cleanup da gate não demonstra descarte dos filhos já emitidos. Não garantir um HP hit por filho (shields/imunidades/eventos/iFrames). APIs de projectile não equivalem a seam causal do Swarm; Q4/Q5. |
+| Cleanup / parent lifetime | Finish/cancel→AbstractSpell#onServerCastComplete→MagicData reset→EntityCastData#reset→discard. Failsafe `++age>400` (401º tick nominal) não dá400ticks de cast normal. [Complete][host-complete], [dados][host-data], [reset][cast-data], [gate][gate-tick]. | Failsafe não retorna imediatamente após discard; nenhum volley é programado em401 pelo OR. Não há guarda local de owner alive/casting; cleanup pertence ao host, sem timer BA paralelo; Q2/Q5. |
+| Persistência / sync / anti-magic | Parent shouldBeSaved=false, NBT Damage apenas; age/flag não gravados, entitydata da base vazia. Não implementa AntiMagicSusceptible local. [Init][gate-save], [NBT][gate-nbt]. | Não prometer parent restaurável, rearm/snapshot sync ou reação anti-magic igual à dos filhos. ⛔ fail-closed para reownership/duplicação; Q5. |
+| Cura / summons / mundo | Sem heal, AI de summon, blocos/ticket/rollback; cinco parts não são summons pagáveis. [Tick][gate-tick]. | **N/A** para essas fases. Stamina/recursos do ingresso mantêm seus donos; não criar segundo custo ou cast; Q1/Q5. |
 
-## Anti-abuso/QA
+## Causalidade, concepção e QA
 
-Validar quantidade de entities, cleanup em cast cancel, allied collisions, servidor dedicado e interaction com cast-time modifiers.
+Asterism/Iron’s possuem gate, mana/canal, filhos, dano e cleanup. RPG mantém progressão/perks por contrato; Black Arcana não rearma flag para “corrigir” o provider nem cria outra chuva de projéteis. Dedup precisa separar cast pai, gate UUID, tick/volley, child UUID, alvo e SpellID usado pelo helper. Piercing Light filho é consequência do Swarm, não novo cast pago/recompensado. A assinatura existente é canal que mantém cinco emissores orientados pelo caster; mudar VFX/nome não cria outra habilidade.
+
+Fonte concreta do inventário: [Astral Scroll do Astromancer][loot]; configuração/acesso/crafting implantados continuam pendentes. **Q1:** versão/JAR/config/gates e valores power; **Q2:** mana, duração efetiva, final settlement/interrupção/cleanup versus failsafe; **Q3:** arco/offset/rotação/spawn, gravity/escala/colisão; **Q4:** aliados/PvP/LOS/resist/HP e atribuição dos dois IDs; **Q5:** source das duas sides, owner perdido/morto, casts concorrentes, orçamento de filhos, unload/restart/anti-magic, servidor/cliente/multiplayer e coexistência. **Tudo físico PENDING; nenhum adapter/perk/runtime/Stage promovido.**
+
+[build]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/gradle.properties#L9-L24
+[registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARSpellRegistry.java#L18-L82
+[school]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARSchoolRegistry.java#L42-L52
+[attributes]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARAttributeRegistry.java#L19-L49
+[damage-type]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASARDamageTypes.java#L19-L29
+[damage-data]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/data/asterismarcanum/damage_type/astral_magic.json#L1-L5
+[host-values]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L160-L257
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L305-L346
+[host-tick]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/MagicManager.java#L27-L81
+[host-complete]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L412-L424
+[host-data]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/magic/MagicData.java#L107-L143
+[cast-data]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/EntityCastData.java#L8-L28
+[host-damage]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[host-resist]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L134-L173
+[host-los]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L274-L291
+[loot]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/data/asterismarcanum/loot_table/entities/astromancer.json#L1
+[spell]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/StarSwarmSpell.java#L28-L59
+[spell-cast]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/spells/StarSwarmSpell.java#L77-L100
+[entity-registry]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/registries/ASAREntityRegistry.java#L46-L58
+[guide]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/resources/assets/asterismarcanum/lang/en_us.json#L40-L41
+[gate-init]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/AbstractGateProjectile.java#L27-L52
+[emit]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/AbstractGateProjectile.java#L95-L110
+[gate-tick]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/AbstractGateProjectile.java#L114-L177
+[gate-flag]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/AbstractGateProjectile.java#L179-L182
+[gate-filter]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/AbstractGateProjectile.java#L184-L192
+[gate-save]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/AbstractGateProjectile.java#L61-L92
+[part]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/GatePart.java#L17-L51
+[impact]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/star_swarm/StarSwarmProjectile.java#L13-L30
+[child-constructor]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/piercing_light/PiercingLightProjectile.java#L24-L52
+[child-hit]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/piercing_light/PiercingLightProjectile.java#L79-L89
+[host-projectile]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L74-L213
+[host-expiry]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L282-L405
+[gate-nbt]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/entity/spells/AbstractGateProjectile.java#L195-L205
+
+[global-gravity]: https://github.com/BirdieVibes/Asterism-Arcanum/blob/f1738c7813a85d31a6da10e6c9f2dbce18d2b583/src/main/java/com/birdie/asterismarcanum/events/ServerEvents.java#L28-L38

@@ -40,7 +40,7 @@ No Iron's 3.16.3 do pack:
 
 A spell exibe `spellPower + 1` como hits dodged, mas inicializa `CelestialTetherEntity` com `spellLevel + 1`. A entidade só destrói quando o contador fica `< 0`, após decrementar em cada hit cancelado.
 
-Resultado estático aparente: o número real de hits absorvidos tende a ser `spellLevel + 2`, não o valor do tooltip. Dano sem `source.entity` também não entra no handler de cancelamento.
+O contador sugere `spellLevel + 2` apenas em sequência nominal com tick de entidade entre eventos. Como a remoção só ocorre no tick após contador<0, vários eventos antes desse tick podem ultrapassar esse número; não é um cap rígido demonstrado. Dano sem `source.entity` também não entra no handler de cancelamento.
 
 Não criar shield paralelo; validar com GameTest níveis 1 e 8.
 
@@ -50,7 +50,7 @@ Silvery Barbs aplica Luck II por 20 ticks e `silvery_barbs_tag`. O handler cance
 
 Logo, pela leitura estática, pode cancelar vários hits dentro de ~1 segundo, não apenas um. Quando o tag permanece mas Luck acabou, o próximo damage event remove o tag sem cancelar.
 
-Também há `public static float radius`, mutado por cast/tooltip, estado global da singleton spell. QA multiplayer obrigatório.
+Também há `public static float radius`, mutado pelo cast; getUniqueInfo/getRadius apenas leem no pin auditado, estado global da singleton spell. QA multiplayer obrigatório.
 
 ## QA-04 — Starcutter radius clamp
 
@@ -78,7 +78,7 @@ Black Arcana não deve adicionar um segundo tick de gate damage para “corrigir
 
 ## QA-07 — Luminous Beam friendly-fire
 
-Luminous Beam cria uma única entidade persistente por cast e reativa seu damage settlement em server cast ticks. O beam collision filter exclui owner e exige LOS, mas não contém filtro allied explícito antes de `DamageSources.applyDamage`.
+Luminous Beam cria uma única entidade persistente por cast e reativa seu damage settlement em chamadas subsequentes de onCast no canal (settlement do host, não cada onServerCastTick). O beam collision filter exclui owner e exige LOS, mas não contém filtro allied explícito antes de `DamageSources.applyDamage`.
 
 Validar party/PvP e summons; não inferir imunidade de aliados.
 
@@ -86,7 +86,7 @@ Validar party/PvP e summons; não inferir imunidade de aliados.
 
 Apesar do ID plural `summon_lunar_moths`, `getSummonCount()` retorna 1 e a implementação cria um único `SummonedLunarMothEntity` por janela de recast. Duração: 10 minutos.
 
-A entidade usa `SummonManager`, replica target do owner, possui 15 HP, 2 base attack damage, 15% Mana Rend, aplica Levitation por 40 ticks ao atacar e pode ser montada pelo summoner.
+A entidade usa `SummonManager`, replica target do owner, possui 15 HP, 2 base attack damage, atributo Mana Rend 0.15, aplica Levitation por 40 ticks ao atacar e pode ser montada pelo summoner. Mana Rend não é bônus plano de 15% nem mana drain: o consumidor Ace’s depende dos atributos/config do atacante e mana máxima do alvo. A ficha reaudita também super.doHurtTarget seguido por outra tentativa Utils.doMeleeAttack; não prometer um único golpe nem duas perdas de HP.
 
 Authority = Iron's `SummonManager` + entidade summon. Não criar segundo timer/owner registry.
 
@@ -115,3 +115,16 @@ Authority = Iron's `SummonManager` + entidade summon. Não criar segundo timer/o
 6. Nunca criar ownership/timer paralelo para Lunar Moth.
 7. Gateway permanece non-survival até QA comprovar gate efetivo.
 8. Integrações devem carregar causal provenance por spell ID/owner quando premiarem XP/perks.
+
+## Reauditoria dos 11 spells — 23/10/2026
+
+[Índice e contratos comuns](SPELL-PERK-BOUNDARIES-0.1.0.md), com matrizes por ficha. Source3.15.6-target e host3.16.3 são provas distintas da identidade binária; Gateway continua conditional e fora das dez identidades strict. A releitura corrige frequência/cleanup, geometria e atribuição, sem implementar correções upstream.
+
+- Brightburst chama target.hurt diretamente e o push não depende do retorno; SpellDamageEvent do helper não cobre esse caminho por analogia.
+- Echo cria sombra com damage0 antes do teleporte; veto inicial não desfaz automaticamente a sombra. Anti-magic usa setPos direto e NBT da entidade não grava damage.
+- Gateway itera targets mas muda dimensão do caster; consultas/loops não implementam transporte de grupo. Na entrada, XRot é passado aos dois campos de rotação; destino64 e respawn de saída não são retorno a uma âncora salva.
+- Beam/Gate são descartados no reset normal de EntityCastData do host; failsafe/budget órfãos são outro caso. Clipping visual do Beam não muda por si parts de colisão.
+- Constructors de PiercingLight usados no cast/filhos diferem do constructor factory/load quanto a noGravity; escala sincronizada não prova resize. Starfire precisa de QA específico de ricochet/pierce/bloco.
+- Moth é singular, mas possui cadeia herdada+helper de ataque, efeito Levitation e Mana Rend dependente do consumidor; mutador SpellSummonEvent requer tipo compatível/ownership/cleanup, não replacement arbitrário.
+
+Nenhum dado deste lote confirma JAR funcional/Survival/modpack, config implantada, proteção/multiplayer ou persistência. +0 strict, sem perk/runtime/adapter novo; QA e Stages permanecem com seus gates.

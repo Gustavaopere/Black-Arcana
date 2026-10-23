@@ -1,6 +1,6 @@
 # Progresso atual — magias, feitiços, habilidades e superfícies para perks
 
-**Checkpoint: 23/10/2026.** Base Black Arcana `8514ff044d8e96285ff20d00c5e820e4aed837eb`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
+**Checkpoint: 23/10/2026.** Base Black Arcana `a93890ed70561176ace0859f76f4e6b63170ff0f`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
 
 ## Barra geral — todo o conteúdo aplicável
 
@@ -51,7 +51,7 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 | [✅-ars-zero](../providers/✅-ars-zero/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-arsdelight](../providers/✅-arsdelight/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-artifacts](../providers/✅-artifacts/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
-| [✅-asterism-arcanum](../providers/✅-asterism-arcanum/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
+| [✅-asterism-arcanum](../providers/✅-asterism-arcanum/README.md) | **11/11** — [fichas source-causais: 10 normais + Gateway conditional](../providers/✅-asterism-arcanum/SPELL-PERK-BOUNDARIES-0.1.0.md) | ![11 de 11 fichas auditadas; Gateway fora do strict](progress/complete.svg) | ⚠️ parâmetros/consumidores auditados; mutadores/config/JAR/runtime PENDING; +0 strict |
 | [✅-backported-spellbooks](../providers/✅-backported-spellbooks/README.md) | **6/6** — [fichas source-pinned; métodos binários específicos têm prova separada](PERK-COVERAGE-BASELINE-2026-10-15.md) | ![6 de 6 no recorte indicado](progress/complete.svg) | ⚠️ recorte documental fechado; métodos/hooks/QA restantes condicionados |
 | [✅-betterend](../providers/✅-betterend/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-betternether](../providers/✅-betternether/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
@@ -196,6 +196,8 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 **Ypsilon — 15 spells:** reauditoria das fichas com pipeline, parâmetros e consumidores downstream. Identificados valores/limites de dano da arma, targeting, hitbox dinâmica, cura, recasts, marcas e herança de domínio; a identidade de um arquivo Ace’s foi reconciliada entre source 1.2.6.1 e 1.2.7.2. [Dossiê comum e índice](../providers/✅-ypsilons-fundamentalism/SPELL-PERK-BOUNDARIES-1.1.7.1.md). Os 13 Principles continuam outra métrica, sem somar spells novos ou homologar QA.
 
 **Simply Swords: Cataclysm 1.0.2:** 4/4 fichas de combate com fórmulas de stack/cura/dano, efeitos downstream e limites por eixo. A onda Mecha Pulse usa alvo único; o handler reescreve dano original no evento posterior à mitigação; chance0 e cap0 têm caminhos específicos. [Dossiê comum](../providers/✅-simply-swords-cataclysm/IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md). Documentação não fecha config/ativação/QA nem altera o strict global.
+
+**Asterism Arcanum 0.1.0:** 11/11 fichas com fórmulas, geometria, targeting, procs, summon/teleport, cleanup e limites por eixo. Distinguidos dano direto versus helper, tipo de dano dos filhos, retorno Echo, loop Gateway, a janela do contador de hits e fases de buff/recast; publisher hash reconfirmado sem equiparar métodos source/JAR. [Dossiê comum](../providers/✅-asterism-arcanum/SPELL-PERK-BOUNDARIES-0.1.0.md). Dez spells normais e Gateway conditional permanecem separados; +0 identidades/strict e QA pendente.
 
 **Hierarquia preservada:** Black Arcana controla seu runtime mágico; RPG Skill Tree fornece progressão/atributos/Mastery/perks/gates por contrato; Enshrouded controla seu Shroud/exposure. Providers externos continuam donos de seus efeitos, recursos e settlement. Sem hook real, ⛔ fail-closed para mudança por perk de alvo, DamageType, alcance, colisão ou tempo. `CONFIG_NATIVE` não implica setter por jogador.
 
