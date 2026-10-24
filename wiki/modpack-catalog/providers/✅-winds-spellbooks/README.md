@@ -1,5 +1,11 @@
 # Wind's Spellbooks — catálogo canônico
 
+## Chamadores diretos JVM para getters selecionados — 24/10/2026
+
+**✅ 9/9** getters escalares já selecionados tiveram seus chamadores diretos identificados **dentro das classes dos próprios spells** na versão 1.0.5 (SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`), incluindo 6/7 classes: [auditoria de arestas](../../../../docs/qa/winds-105-getter-consumer-evidence.md) e [workflow binário #40130495377](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40130495377). Isso complementa **7/7 fichas de magias**, não cria nove magias nem mede todos os getters possíveis.
+
+**Distinção relevante para perks:** `getRecastCount` de Aeropic e os dois percentuais de Tailwind são invocados diretamente por `getUniqueInfo`, mas não pelo `onCast` da classe examinada. Outros efeitos/classes/host podem consumi-los: não declarar cosmético nem sem efeito gameplay. Cinco outros getters do conjunto são chamados diretamente por `onCast`; `getJumpStrength` de Wind Jump também por `getJumpHeight`. Todos os fluxos getter → setter, duração efetiva, raio real e mutations de perks **continuam `NOT_PROVEN` / `SEM_HOOK_SEGURO`**. A co-presença de chamada e setter no mesmo método não comprova argumento nem destinatário.
+
 ## Getters escalares com AST aritmética exata — 24/10/2026
 
 **9/9 getters selecionados** com pilha JVM integral interpretada: quatro do [PR #882](../../../../docs/qa/winds-105-spell-parameter-gate.md) e cinco da [auditoria de mobilidade](../../../../docs/qa/winds-105-mobility-getters-gate.md), ver CI [#40126898432](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40126898432). Esta contagem corresponde exclusivamente aos **nove métodos de retorno escalar selecionados**; não implica 9/9 spells, que são **7/7** identidades, nem prova de completude de todas as fórmulas do provider.
