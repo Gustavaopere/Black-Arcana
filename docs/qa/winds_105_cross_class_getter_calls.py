@@ -116,7 +116,9 @@ def summarize(disassemblies: dict[str, str], universe: list[str]) -> dict:
                 if row["caller_class"] == class_name and row["callee_spell"] == spell
                 and row["callee_getter"] == getter
             ]
-            if sorted(method_names) != sorted(required_names):
+            # PR #884 stores a SET of calling methods; multiple invoke instructions
+            # inside the same method must not be mistaken for method-roster drift.
+            if sorted(set(method_names)) != sorted(required_names):
                 raise AuditError(f"prior SHA-exact spell caller drift: {spell}.{getter}")
     raw.sort(key=lambda x:(x["callee_spell"],x["callee_getter"],x["caller_class"],
                            x["caller_declaration"],x["invoke_opcode"]))
