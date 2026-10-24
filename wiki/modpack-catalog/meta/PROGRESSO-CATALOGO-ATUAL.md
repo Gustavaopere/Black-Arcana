@@ -1,6 +1,6 @@
 # Progresso atual — magias, feitiços, habilidades e superfícies para perks
 
-**Checkpoint: 23/10/2026.** Base Black Arcana `a93890ed70561176ace0859f76f4e6b63170ff0f`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
+**Checkpoint: 24/10/2026.** Base Black Arcana `de3ed3ddbc696597bae5e6dd993e04dbef99aa05`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
 
 ## Barra geral — todo o conteúdo aplicável
 
@@ -101,7 +101,7 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 | [✅-familiarslib](../providers/✅-familiarslib/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-fantasy-armor](../providers/✅-fantasy-armor/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-farmers-spell](../providers/✅-farmers-spell/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
-| [✅-fires-ender-expansion](../providers/✅-fires-ender-expansion/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
+| [✅-fires-ender-expansion](../providers/✅-fires-ender-expansion/README.md) | **11/11** — [fichas source-causais por parâmetro e consumidor](../providers/✅-fires-ender-expansion/SPELL-PERK-BOUNDARIES-2.4.1.md) | ![11 de 11 fichas de spells auditadas no source](progress/complete.svg) | ⚠️ config/hosts/mutadores/Survival/QA PENDING; +0 strict |
 | [✅-gaze](../providers/✅-gaze/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-goety](../providers/✅-goety/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-goety-cataclysm](../providers/✅-goety-cataclysm/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
@@ -198,6 +198,8 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 **Simply Swords: Cataclysm 1.0.2:** 4/4 fichas de combate com fórmulas de stack/cura/dano, efeitos downstream e limites por eixo. A onda Mecha Pulse usa alvo único; o handler reescreve dano original no evento posterior à mitigação; chance0 e cap0 têm caminhos específicos. [Dossiê comum](../providers/✅-simply-swords-cataclysm/IMPLEMENTATION-PERK-BOUNDARIES-1.0.2.md). Documentação não fecha config/ativação/QA nem altera o strict global.
 
 **Asterism Arcanum 0.1.0:** 11/11 fichas com fórmulas, geometria, targeting, procs, summon/teleport, cleanup e limites por eixo. Distinguidos dano direto versus helper, tipo de dano dos filhos, retorno Echo, loop Gateway, a janela do contador de hits e fases de buff/recast; publisher hash reconfirmado sem equiparar métodos source/JAR. [Dossiê comum](../providers/✅-asterism-arcanum/SPELL-PERK-BOUNDARIES-0.1.0.md). Dez spells normais e Gateway conditional permanecem separados; +0 identidades/strict e QA pendente.
+
+**Fire’s Ender Expansion 2.4.1:** 11/11 fichas com matrizes de dano/tipo, alvo/área, projéteis, tempos, custos/recasts e consumidores downstream. Separados callbacks de pagamento/tiro, fonte de dano plain/helper, efeitos da remoção, clocks herdados/locais e domínios/mapas de transporte. [Dossiê comum](../providers/✅-fires-ender-expansion/SPELL-PERK-BOUNDARIES-2.4.1.md). Identidade binária não foi estendida a todos os corpos source/JAR; +0 strict e aceite físico pendente.
 
 **Hierarquia preservada:** Black Arcana controla seu runtime mágico; RPG Skill Tree fornece progressão/atributos/Mastery/perks/gates por contrato; Enshrouded controla seu Shroud/exposure. Providers externos continuam donos de seus efeitos, recursos e settlement. Sem hook real, ⛔ fail-closed para mudança por perk de alvo, DamageType, alcance, colisão ou tempo. `CONFIG_NATIVE` não implica setter por jogador.
 

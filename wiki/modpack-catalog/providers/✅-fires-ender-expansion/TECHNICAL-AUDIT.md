@@ -40,7 +40,7 @@ Esse commit declara Minecraft `1.21.1`, `mod_version=2.4.1` e dependência de Ir
 - `minecraft:the_end` → Slow Falling, 200 ticks base, amplifier 0;
 - `irons_spellbooks:pocket_dimension` → Saturation, 2 ticks base, amplifier 0.
 
-A duração final é `baseDuration × (spellPower / 10)`.
+A duração final em ticks é `(int)((spellPower / 10) × baseDuration)`, com truncamento ao converter para int.
 
 ## QA findings
 
@@ -75,3 +75,16 @@ Nenhuma integração deve reproduzir, substituir ou normalizar esses mechanics e
 ## Status
 
 **CATÁLOGO DOCUMENTAL 11/11 COMPLETO — RUNTIME QA PENDENTE.**
+
+## Reauditoria source-causal dos 11 spells — 24/10/2026
+
+[Índice e boundaries comuns](SPELL-PERK-BOUNDARIES-2.4.1.md), com matriz individual por ficha. Versão declarada e identidade binária não demonstram equivalência de todos os corpos de método ou execução montada. Config SERVER do provider e config/datapack de spells são camadas distintas, não setters por jogador.
+
+- Arcane Slice altera dano conforme mana somente no ramo ServerPlayer do target; partículas não representam hits extras. Aspect usa incoming-event antes de HP e delega bullet à implementação vanilla. Adaptation tem cache/reload global com estados antigos/parciais possíveis.
+- Canais distinguem settlement de mana e onServerCastTick; nível alterado no evento de settlement não demonstra mutar o valor guardado que gera volleys. Anchored é aplicado por eventos e mixins além da classe de efeito.
+- Stride tem anúncio manual de teleporte cujo retorno é ignorado, seguido pelo helper, e observa remoção antes do resultado final; não prometer retorno em toda expiração natural. Cage tem radius fixo e duração local separada da herdada, tracking condicionado pelo resultado canceled do helper.
+- Binary não executa slam/AOE comentado. Fury inclui arma uma vez; Airborne e Earthquake têm consumidores/fases próprios. Na composição host lida, Earthquake duration 20 fica abaixo de reapplicationDelay 25, sem checkHits normal agendado; callback de dano0/status não é efeito garantido desse cast.
+- Gate testa emissão antes de descarte, então delay 21 ainda pode disparar e delays ≥22 podem ser perdidos no ciclo normal source; contagem de portais não garante todas as armas/hits.
+- Crystal tem limits locais maiores que o expiry herdado no source 3.16.3; contatos/ledger, quebra/anti-magic e sweep são fases separadas. Infinite Void separa raio local/herdado, domínio/clash, dimensão/efeitos/manager, plain source e mapas de retorno.
+
+Todos são achados source-causais sujeitos a deltas de build3.15.6/host3.16.3 e Ace’s 1.2.6.1/1.2.7.2; não são bugs reproduzidos no modpack nem correções implementadas. Mínimos/campanha permanecem no painel, +0 strict; runtime/Survival/config/cliente/multiplayer/claims/persistência PENDING, sem promoção de Stage.

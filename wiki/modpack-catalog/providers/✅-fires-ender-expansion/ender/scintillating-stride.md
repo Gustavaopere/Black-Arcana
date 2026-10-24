@@ -1,40 +1,75 @@
 # Scintillating Stride
 
-**✅ Identidade física exata 2026-10-13:** `firesenderexpansion:scintillating_stride` → `ScintillatingStrideSpell`, inscrito sem branch no JAR 2.4.1 SHA-1 `da87a4a0c926dd75236766584cddbae69c6aeff7`; [Java 21 #38434192044](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38434192044) SUCCESS, [dossiê](../EXACT-BINARY-SPELLS-2.4.1.md). Estado de registry `COUNTED_EXACT` **somente estático**; já contabilizado, **+0**. Mana/config/runtime de Iron's, teleport, domain e Survival ⚠️. Evidência anterior derivada de fonte abaixo mantém seu caráter histórico.
+**Dossiê documental — 24/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT` estática; lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; integração, JAR funcional e Survival **PENDING**. **+0 identidades**; não implementa perk ou bridge.
 
+## Identidade e proveniência
 
-- ID: `firesenderexpansion:scintillating_stride`
-- School: `irons_spellbooks:ender`
-- Levels: 1–10
-- Min rarity: Common
-- Cast: Instant
-- Mana neutral: 20 / 22 / 24 / 26 / 28 / 30 / 32 / 34 / 36 / 38
-- Spell power neutral: 1–10
-- Blast damage neutral: 5.5–10.0
-- Dash force neutral: 1.02–1.20
-- Radius: `clamp(spellPower/10, 1, 3)`; neutral levels remain radius 1, bonus spell power can increase it
-- Recast/effect window: 100 ticks (5 s)
-- Recast count: 2
-- Cooldown: 10 s
+Fire's Ender Expansion (`mod_id=firesenderexpansion`), spell **`firesenderexpansion:scintillating_stride`**, classe `net.fireofpower.firesenderexpansion.spells.ScintillatingStrideSpell`, host Iron's; escola default `irons_spellbooks:ender`, Common, níveis1–10. [Registry][registry], [defaults][spell]. Resumo da [descrição oficial][guide]: impulso inicial, outra ativação para explosão local e tentativa de retorno. `firesenderexpansion:striding_effect` e ImpulseCastData são estados derivados, sem segunda identidade.
 
-## Contract
+Ledger físico #281, MC1.21.1/NeoForge: `firesenderexpansion-2.4.1.jar`, SHA-1 `da87a4a0c926dd75236766584cddbae69c6aeff7`; publisher [8167304](https://www.curseforge.com/minecraft/mc-mods/fires-ender-expansion/files/8167304). [Registry binário exato](../EXACT-BINARY-SPELLS-2.4.1.md), [Java21 SUCCESS](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38434192044); não prova execução. Fingerprint publisher coincide com ledger, sem nova medição do perfil instalado.
 
-The first activation opens the recast window, pushes the caster forward/up and applies `striding_effect`. The effect records the caster's exact position and dimension.
+[Contrato comum](../SPELL-PERK-BOUNDARIES-2.4.1.md): source oficial `FireOfPower/firesenderexpansion-1.21.1@5e4067e8112316f55c9f249530ba1917a7bf6643`, build Iron's3.15.6/Neo21.1.215; host consultado Iron's3.16.3 `e4056af90302d37eb1739f5ff05020b020e6e252`, pack Neo21.1.250. [Versões/licença][versions]: **All Rights Reserved**, fatos/formulas/referências sem importar implementação/assets. Corpos source↔JAR e config implantada não foram equiparados.
 
-On successful recast finish, the provider performs a local Ender damage blast around the caster, then removes Striding. Effect removal posts `SpellTeleportEvent` and uses Iron's `Utils.handleSpellTeleport` to return the entity to its recorded origin, then zeroes movement. If the caster changed dimension, the effect refuses the return and emits a failure message.
+## Aquisição, execução e retorno
 
-## QA finding — blast eligibility
+Sem gate/override local de crafting/loot: segue elegibilidade Iron's; distribuição Survival, enabled e config/datapacks reais **NÃO VERIFICADOS**. Wrapper jogador verifica recursos/cooldown/condições antes de SpellPreCastEvent; SpellOnCastEvent/débito antecedem onCast. INSTANT0ticks, cooldown default10s=200ticks. [Spell][spell], [host][host-cast].
 
-The provider-side loop calls `DamageSources.applyDamage` for living entities in the inflated caster bounding box without an explicit self/allied filter in `ScintillatingStrideSpell`. Runtime behavior under Iron's 3.16.3 must be tested before a bridge assumes self/friendly immunity.
+1. Sem recast ativo, cria `RecastInstance` count2, TTL100ticks=5s; count2 é **total incluindo cast inicial**, portanto1 recast remanescente no host inspecionado. Seta hasImpulse; calcula `v=(normalize(look×(3,1,3))+(0,.25,0))×F`. Se Striding ainda ausente, guarda ImpulseCastData e **substitui** movimento do servidor pelo vetor (lerp com1). Em seguida aplica Striding100ticks, amp1, sem partículas/ícone. Com recast ativo, não repete esse bloco. [Execução][cast], [constructor recast][recast-instance].
+2. Cliente `onClientCast` recebe ImpulseCastData e **soma** o vetor ao movimento local, diferente da substituição server; sincronização precisa QA. Efeito adicionado chama recordPosition: servidor grava posição exata/dimensão/look atuais no Map UUID estático; não é range de teleporte configurado. [Cliente][client], [estado][effect].
+3. Host segundo cast ativo não debita mana novamente; decrementa recast, remove seu registro e chama onRecastFinished. `isSuccess()` significa somente USED_ALL_RECASTS no host3.16.3; TIMEOUT/COUNTERSPELL/DEATH/COMMAND/USER_CANCEL não entram no ramo da explosão. Super callback adiciona cooldown do host antes do ramo de sucesso do provider; não é um segundo cooldown BA. [Settlement][host-cast], [callback][recast-callback], [recasts][recasts], [resultado][recast-result].
+4. Em sucesso, calcula poder atual com nível guardado do recast; consulta **AABB do caster inflada R em XYZ**, chama helper de dano para toda LivingEntity da lista, sem filtro local self/aliado/LOS/distância esférica/cap. Retorno do dano é ignorado. Só depois, se caster tem Striding, tenta removeEffect. A explosão usa a posição **antes do retorno**. [Conclusão][finish].
+5. `StridingEffect#onEffectCleared` assina **MobEffectEvent.Remove**, não Expired: havendo origem e mesma dimensão, posta manualmente SpellTeleportEvent com coordenadas **atuais**, ignora resultado/coords, e chama `Utils.handleSpellTeleport(...,origem)`, que posta **outro evento** e consome suas coordenadas/cancelamento. Retorno helper significa canceled; provider o ignora. Depois zera movimento/hurtMarked **apenas ServerPlayer**, mesmo quando cancelado. Dimensão divergente: mensagem, sem retorno interdimensional. [Remoção][effect], [helper][teleport].
+6. Remove é tentativa cancelável antes da remoção efetiva; movimento pode ocorrer antes de outro listener negar a remoção. Não há assinatura local de Expired, delete do Map, serialização ou cleanup por morte/logout. Origem/look ficam no Map e podem ser substituídos em nova adição; look é armazenado, mas não restaurado nesse retorno. Não prometer retorno automático ao timeout/expiração nem exatamente uma tentativa por efeito. [Estado][effect], [Remove cancelável][remove-event], [post antes da remoção][remove-order], [Expired distinto][expired-event]. NeoForge consultado é source auxiliar pinado, sem equivalência à distribuição instalada comprovada.
 
-## Dedup / authority
+`P=(1+1×(L−1))×SPELL_POWER×schoolPower×POWER_MULTIPLIER`, neutro1…10. `D=5+.5P`health points, `F=1+.02P` multiplicador de movimento, `R=clamp(P/10,1,3)`blocks. Mana inicial `(int)((20+2×(L−1))×MANA_MULTIPLIER)`, neutro20…38. Neutro: D5.5…10, F1.02…1.20, R1 em todos os níveis default. [Fórmulas][formulas], [host][host-cast].
 
-Dash impulse, recorded-position ledger, return teleport and blast are one provider-native sequence. Do not add a parallel return marker or a second explosion.
+## Matriz de parâmetros para perks
 
-## Acquisition
+| Eixo | Valor / consumidor / fase | Boundary, limite e estado | QA |
+|---|---|---|---|
+| Dano / tipo / crítico / cura | Dano `5+.5P` por LivingEntity na conclusão bem-sucedida; direct/attacker=caster via getDamageSource(caster). Tipo default escolar `irons_spellbooks:ender_magic`; sem crítico/DoT/cura local. [Fórmula][formulas], [finish][finish], [tipo][school], [source][damage-source]. | Power/config **NATIVE_ATTRIBUTE / CONFIG_NATIVE**. `SpellDamageEvent#setAmount(float)`/cancel **HOOK_VERIFICADO** antes de resist/friendly-fire/hurt, somente helper+SpellDamageSource. Amount não é HP final; retorno ignorado não autoriza premiar hit. Tipo/conversão **⛔ SEM_HOOK_SEGURO**. [Helper][host-damage]. | Q1/Q3 |
+| Alcance / dash / retorno | Self no ingresso; vetor v depende do look/F, não distância garantida. Origem é posição no onEffectAdded; retorno mesma dimensão sem cap de distância, raycast, body-fit/loaded-chunk/claim local. [Cast][cast], [efeito][effect]. | F privado, sem setter; poder muda F/D/R juntos. Segundo `SpellTeleportEvent` é boundary mutável/cancelável pré-teleporte; primeiro post ignorado é observação sem controle efetivo do helper. **HOOK_VERIFICADO / CONTRATO_CONDICIONAL** para destino seguro. | Q2/Q4 |
+| Targeting / LOS / filtros | AABB caster.inflate(R), toda LivingEntity, sem filtros self/aliado/PvP/LOS no loop. Host helper verifica friendly-fire depois do evento; não excluir self por suposição. [Finish][finish], [helper][host-damage]. | Sem hook local para seleção/multi→single, ordenação ou cap. **⛔ SEM_HOOK_SEGURO** para substituir resolver. Não duplicar explosão para aplicar perk. | Q3 |
+| Área / dimensões / budget | R clamp1…3blocks; consulta aumenta largura/altura do caster em2R, não esfera de raioR nem AABB fixa2R. Blastwave é VFX. Sem teto de entidades no loop. [Fórmula][formulas], [finish][finish]. | Clamp é cap de R, não count/dano/força. Power afeta nativamente R; getRadius privado não oferece setter. Single→AOE externo/shape/budget **⛔ SEM_HOOK_SEGURO**. | Q1/Q3 |
+| Projétil / summon / hitbox | **N/A**: sem projétil/summon de AI/explosivo físico, velocidade/pierce/lifetime próprios. ImpulseCastData move caster; partículas não colidem. [Execução][cast], [cliente][client]. | Não interpretar blastwave como entidade redimensionável. AABB do caster vem do runtime MC; resize **⛔ SEM_HOOK_SEGURO**. | Q2/Q3 |
+| Cast / cooldown / recast / duração | INSTANT0; cooldown10s; janela100ticks e efeito100ticks amp1;2 casts totais/1 remanescente. Host TTL e efeito são relógios separados. [Defaults][spell], [count][formulas], [cast][cast], [recast][recast-instance]. | Mana/power/cooldown config nativas, não TTL/count por jogador. `SpellCooldownAddedEvent.Pre#setEffectiveCooldown(int)`/cancel **HOOK_VERIFICADO** pré-cooldown. [Evento][cooldown]. Ficar sem recast não prova retorno/remoção do efeito. | Q1/Q4 |
+| Mana / refund / níveis | Inicial20+2(L−1), multiplier/truncamento; recast ativo não cobra novamente no host jogador. Nenhum refund específico por teleport cancelado/mudança de dimensão. [Host][host-cast]. | `SpellOnCastEvent#setManaCost(int)`/`setSpellLevel(int)` **HOOK_VERIFICADO** pré-débito/onCast; desconto não contorna gate inicial, level não recalcula mana. Level de conclusão vem do RecastInstance, não evento posterior. Sem segunda mana. | Q1/Q4 |
+| Movimento / sincronização | Servidor substitui delta; cliente soma. hasImpulse e ImpulseCastData; retorno zera delta só em ServerPlayer. Sem resistência de knockback local na fórmula. [Cast][cast], [cliente][client], [efeito][effect]. | Sem evento provider mutador do vetor pré-resolução identificado. `recordPosition(LivingEntity)` é executor público de gravação, não setter de força/validador de destino/perk segura. **CONTRATO_CONDICIONAL** para qualquer adapter de movimento. | Q2/Q4 |
+| Estados / mundo / persistência | Map UUID privado estático: Vec3 posição, ResourceKey dimensão e look. Sem delete/save/cleanup local. Não altera blocos; teleporte pode colidir/falhar/ser cancelado. [Efeito][effect]. | Não criar segunda âncora BA/Enshrouded para compensar lacunas. Remove cancelável e posts duplicados não provam saída efetiva. **CONTRATO_CONDICIONAL**, expiração/restart/logout/morte pendentes. | Q4/Q5 |
 
-Default Iron's spell eligibility; exact loot/crafting distribution: **NÃO VERIFICADO**.
+## Ownership, deduplicação e concepção
 
-## Source
+Provider/Iron's possuem impulso, recast, efeito, mapa, explosão, mana e retorno. RPG progression/Mastery usa lane nativo `irons:ender`; evento de cast não prova hit ou chegada. Dedup por caster/cast/recast/fase/tentativa: os2 SpellTeleportEvent da remoção não são2 teleportes nem2 recompensas. Primeiro post pode disparar observadores/efeitos colaterais sem governar destino; nenhum reward de sucesso deve derivar só de um post pré-teleporte. BA mantém casting/custos/persistência próprios; Enshrouded mantém Shroud/classificação próprios. [Boundary dos três projetos](../SPELL-PERK-BOUNDARIES-2.4.1.md).
 
-`ScintillatingStrideSpell.java`, `StridingEffect.java` @ pin `5e4067e...`.
+Assinatura ocupada: impulso self, janela de recast e explosão na posição de saída antes da tentativa de retorno. Alterar nome/partículas não cria magia original; uma nova proposta deve definir geometria, destino seguro, transação e cleanup próprios, sem reparar o provider com uma execução paralela.
+
+## Verificação pendente
+
+- **Q1:** config/atributos efetivos, recast total2, custo único/level guardado, cooldown após sucesso/timeout/cancel e Survival real; clamps/power extremo.
+- **Q2:** dedicado/cliente, delta substituído versus somado, lag/montaria/colisão/queda, look vertical, posição gravada e sincronização.
+- **Q3:** caster/aliados/PvP/protegidos, canto/altura da AABB versus esfera visual, LOS ausente, damage cancel/zero/resist/hurt, count budget/procs/provenance.
+- **Q4:**2 posts e ordem dos listeners, coord/cancel mutados no primeiro e segundo, Anchored/Cage, remoção cancelada/refresh/tentativa repetida, zero de velocidade mesmo com teleporte cancelado, timeout versus Remove versus Expired.
+- **Q5:** dimensão mudada/origem ausente, chunks/claim/worldborder/body-fit, logout/morte/restart/map stale, cleanup de recast/efeito e progresso somente após resultado verificável. **PHYSICAL_QA/PERK_RUNTIME/SURVIVAL=PENDING**; nenhum Stage aprovado.
+
+[registry]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/registries/SpellRegistries.java#L13-L34
+[versions]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/gradle.properties#L15-L50
+[guide]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/resources/assets/firesenderexpansion/lang/en_us.json#L73-L75
+[spell]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/spells/ScintillatingStrideSpell.java#L34-L74
+[formulas]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/spells/ScintillatingStrideSpell.java#L83-L102
+[cast]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/spells/ScintillatingStrideSpell.java#L111-L126
+[finish]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/spells/ScintillatingStrideSpell.java#L130-L148
+[client]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/spells/ScintillatingStrideSpell.java#L152-L163
+[recast-callback]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L335-L347
+[remove-event]: https://github.com/neoforged/NeoForge/blob/e0e7ab5d273fdc034f23fee7bf91c61ae39d3019/src/main/java/net/neoforged/neoforge/event/entity/living/MobEffectEvent.java#L38-L43
+[remove-order]: https://github.com/neoforged/NeoForge/blob/e0e7ab5d273fdc034f23fee7bf91c61ae39d3019/patches/net/minecraft/world/entity/LivingEntity.java.patch#L147-L151
+[expired-event]: https://github.com/neoforged/NeoForge/blob/e0e7ab5d273fdc034f23fee7bf91c61ae39d3019/src/main/java/net/neoforged/neoforge/event/entity/living/MobEffectEvent.java#L207-L216
+[effect]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/effects/StridingEffect.java#L26-L84
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L330
+[host-damage]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[school]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/registry/SchoolRegistry.java#L99-L106
+[damage-source]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/SpellDamageSource.java#L24-L51
+[teleport]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L167-L174
+[recast-instance]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/RecastInstance.java#L27-L35
+[recasts]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/PlayerRecasts.java#L117-L174
+[recast-result]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/RecastResult.java#L3-L16
+[cooldown]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellCooldownAddedEvent.java#L9-L55
