@@ -53,3 +53,13 @@ Runtime registry + ASM do pack; release oficial 1.0.5.
 | `onCast(Level, int, LivingEntity, CastSource, MagicData)` | Lê `Level.isClientSide:Z`, `Vec3.{x,y,z}`; desvios `if_acmpeq`, `ifeq` | O branch real de execução servidor/cliente e o alvo exigem reconstrução. |
 
 O construtor ainda apresenta escritas de `baseManaCost`, `manaCostPerLevel`, `baseSpellPower`, `spellPowerPerLevel`, `castTime` e `defaultConfig`; seus valores não são inferidos desses nomes. Mesmo com os campos e operadores, **não há fluxo de operandos/guardas homologado, fórmula numérica aprovada, hook mutador seguro, nem QA provider-native**. Manter `NÃO VERIFICADO` e `SEM_HOOK_SEGURO` para integração de perks; denominadores e identidade 7/7 sem alteração.
+
+## Fórmulas escalares adicionais verificadas — 24/10/2026
+
+**🟡 Evidência binária de getters, sem QA de gameplay.** [Execução JVM exata #40126898432](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40126898432), artefato `wind-spellbooks-105-methods/mobility-getters.json`, verificado no JAR SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`. Os getters foram integralmente interpretados por parser conservador; `level` é o parâmetro inteiro no slot JVM 1. Fórmulas reproduzidas em notação matemática explicativa, **não** código do provider.
+
+| Getter | Expressão compilada do retorno | Observação de tipo e operandos | Ainda NÃO VERIFICADO |
+|---|---|---|---|
+| `getDistance(int, LivingEntity)` | `10.0f + ((float)level * 2.0f)` | Expressão `float` formada por `fadd`/`fmul`/`i2f`. | Não comprova distância efetiva de dash/teleporte, distância de target, collision, cancelamentos ou limites de servidor. |
+
+A expressão compilada isolada não autoriza perk mutadora nem alteração em `onCast`. **⛔ SEM_HOOK_SEGURO** até confirmar chamador, geometrias e host; nenhuma alteração de mana, cooldown, efeitos, poderes, duração, entidades ou configuração foi implementada. Wind's/Iron's permanecem autoridades provider-native; Black Arcana possui seu runtime, RPG Skill Tree apenas progressão/perks por boundary real.

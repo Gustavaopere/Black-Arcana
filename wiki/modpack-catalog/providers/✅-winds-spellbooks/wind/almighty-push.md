@@ -61,3 +61,13 @@ O construtor ainda apresenta escritas de `baseManaCost`, `manaCostPerLevel`, `ba
 - **Limite de interpretação:** O método retorna esse inteiro; não há comprovação da unidade, de conversão para ticks nem do consumo real pela entidade.
 - **Escopo da promoção:** esta evidência atualiza exclusivamente o getter acima; as advertências anteriores continuam válidas para alcance, targeting, dano, impulso, efeitos, custo, cooldown e integração.
 - **Perk mutadora:** ⛔ `SEM_HOOK_SEGURO`, até demonstrar consumidor, lifecycle, bounds e contrato host/provider com QA em runtime; Black Arcana não duplica efeitos e RPG Skill Tree não assume autoridade de casting.
+
+## Fórmulas escalares adicionais verificadas — 24/10/2026
+
+**🟡 Evidência binária de getters, sem QA de gameplay.** [Execução JVM exata #40126898432](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40126898432), artefato `wind-spellbooks-105-methods/mobility-getters.json`, verificado no JAR SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`. Os getters foram integralmente interpretados por parser conservador; `level` é o parâmetro inteiro no slot JVM 1. Fórmulas reproduzidas em notação matemática explicativa, **não** código do provider.
+
+| Getter | Expressão compilada do retorno | Observação de tipo e operandos | Ainda NÃO VERIFICADO |
+|---|---|---|---|
+| `getRange(int, LivingEntity)` | `3.0f + ((float)level * 0.5f)` | Expressão de retorno `float`, com `fadd`/`fmul`/`i2f`; a conversão de `level` e a ordem dos operandos são verificadas. | Não confirma range final do raycast, hitbox, line of sight, unidades ou intervenções do provider/host. |
+
+A expressão compilada isolada não autoriza perk mutadora nem alteração em `onCast`. **⛔ SEM_HOOK_SEGURO** até confirmar chamador, geometrias e host; nenhuma alteração de mana, cooldown, efeitos, poderes, duração, entidades ou configuração foi implementada. Wind's/Iron's permanecem autoridades provider-native; Black Arcana possui seu runtime, RPG Skill Tree apenas progressão/perks por boundary real.
