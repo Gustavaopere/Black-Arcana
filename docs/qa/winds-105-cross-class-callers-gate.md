@@ -24,7 +24,7 @@
 
 ## Critérios de aceite
 
-- Dez testes sintéticos positivos/negativos abrangem descritor exato, owner totalmente qualificado, shorthand de classe própria, chamada incorreta, reflexão não contada, universo incompleto e drift dos nove getters.
+- Onze testes sintéticos positivos/negativos abrangem descritor exato, owner totalmente qualificado, shorthand de classe própria, chamada incorreta, reflexão não contada, universo incompleto e drift dos nove getters.
 - Workflow Wind do GitHub Actions valida o SHA físico e o scanner, grava `cross-class-getter-calls.json` e publica exclusivamente metadados clean-room.
 - Somente depois do CI com JAR exato e inspeção do JSON é permitido atualizar as fichas individuais e registrar a contagem de classes e chamadas diretas. Não usar números supostos.
 - CI Black Arcana (`verify`, `stage05_qa_companion_smoke`) e Wind precisam de `SUCCESS` no HEAD final; conferir 0 commits behind e diff antes de merge.
