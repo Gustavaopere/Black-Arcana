@@ -26,6 +26,9 @@ on:
       - 'docs/qa/winds_105_effect_boundaries_test.py'
       - 'docs/qa/winds_105_effect_contract.py'
       - 'docs/qa/winds_105_effect_contract_test.py'
+      - 'docs/qa/winds_105_effect_registry_dispatch.py'
+      - 'docs/qa/winds_105_effect_registry_dispatch_test.py'
+      - 'docs/qa/winds-105-registry-dispatch-gate.md'
       - 'docs/qa/winds-105-effect-boundary-evidence.md'
       - 'docs/qa/winds-105-cross-class-callers-gate.md'
       - 'docs/qa/winds-105-getter-consumer-evidence.md'
@@ -54,6 +57,9 @@ on:
       - 'docs/qa/winds_105_effect_boundaries_test.py'
       - 'docs/qa/winds_105_effect_contract.py'
       - 'docs/qa/winds_105_effect_contract_test.py'
+      - 'docs/qa/winds_105_effect_registry_dispatch.py'
+      - 'docs/qa/winds_105_effect_registry_dispatch_test.py'
+      - 'docs/qa/winds-105-registry-dispatch-gate.md'
       - 'docs/qa/winds-105-effect-boundary-evidence.md'
       - 'docs/qa/winds-105-cross-class-callers-gate.md'
       - 'docs/qa/winds-105-getter-consumer-evidence.md'
@@ -92,6 +98,8 @@ jobs:
         run: python3 docs/qa/winds_105_effect_boundaries_test.py -v
       - name: Synthetic pinned Aeropic/Tailwind effect symbol regression tests
         run: python3 docs/qa/winds_105_effect_contract_test.py -v
+      - name: Synthetic registry and inherited-recast signature contract tests
+        run: python3 docs/qa/winds_105_effect_registry_dispatch_test.py -v
       - name: Download exact published Wind's Spellbooks 1.0.5 and verify frozen physical SHA-1
         shell: bash
         run: |
@@ -151,6 +159,13 @@ jobs:
             --output build/winds-105/effect-boundaries.json
       - name: Verify pinned Aeropic/Tailwind native effect symbol boundaries
         run: python3 docs/qa/winds_105_effect_contract.py --json build/winds-105/effect-boundaries.json
+      - name: Audit exact-JAR Aeropic virtual recast signatures and Wind registry candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_effect_registry_dispatch.py \
+            --jar build/winds-105/wind_spellbooks-1.0.5.jar \
+            --output build/winds-105/effect-registry-dispatch.json
       - name: Publish clean-room JSON only (never redistribute provider JAR)
         if: always()
         uses: actions/upload-artifact@v7
@@ -163,5 +178,6 @@ jobs:
             build/winds-105/getter-consumer-edges.json
             build/winds-105/cross-class-getter-calls.json
             build/winds-105/effect-boundaries.json
+            build/winds-105/effect-registry-dispatch.json
           retention-days: 14
           if-no-files-found: ignore
