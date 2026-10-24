@@ -29,4 +29,8 @@ Além da contiguidade, o índice no atributo `BootstrapMethods` precisa apontar 
 
 ## Validações exigidas
 
-Dez testes sintéticos de prova positiva/fail-closed, execução do JAR SHA-exato em Java 21 e revisão do artifact JSON `bootstrap-registry-trace.json`. Atualizar as duas fichas somente com evidência verificada. Concluir CI especializado e Black Arcana CI (`verify` + `stage05_qa_companion_smoke`) no HEAD final; verificar `main`, diff e branch antes de merge.
+Doze testes sintéticos de prova positiva/fail-closed, execução do JAR SHA-exato em Java 21 e revisão do artifact JSON `bootstrap-registry-trace.json`. Atualizar as duas fichas somente com evidência verificada. Concluir CI especializado e Black Arcana CI (`verify` + `stage05_qa_companion_smoke`) no HEAD final; verificar `main`, diff e branch antes de merge.
+
+### Critério de leitura da tabela de bootstrap
+
+Em classes Java com lambda `Supplier`, o *bootstrap method handle* aponta para `java/lang/invoke/LambdaMetafactory.metafactory`. **O alvo da lambda deve ser resolvido a partir dos argumentos `Method arguments` desse bootstrap**, em um `REF_invokeStatic` único que referencia o método `lambda$static$N` da própria classe `ModMobEffectRegistry`. O parser não usa o método `metafactory` como factory de efeito; qualquer ausência, ambiguidade ou classe incorreta é `FAIL_CLOSED`.
