@@ -63,6 +63,22 @@ class CrossClassCallTests(unittest.TestCase):
         self.assertEqual(1,got["out_of_declaring_spell_invokes"])
         self.assertEqual(1,got["selected_getters"]["tailwind"]["getPercentJump"]["calls_outside_declaring_spell_class"])
 
+    def test_repeated_invokes_in_one_method_preserve_count_not_caller_roster(self):
+        d=sample()
+        owner=binary.BASE+"WindJumpSpell"
+        token="invokevirtual #12 // Method getFloatDuration:"
+        # Duplicate an existing invoke inside its own method, not the method declaration.
+        d[owner]=d[owner].replace(token,token,1)
+        lines=d[owner].splitlines()
+        i=next(i for i,line in enumerate(lines) if token in line)
+        extra=lines[i].replace("       0:", "       49:").replace("       1:", "       49:")
+        lines.insert(i+1,extra)
+        d[owner]="\n".join(lines)
+        out=cross.summarize(d,sorted(d))
+        calls=out["selected_getters"]["wind_jump"]["getFloatDuration"]["direct_calls"]
+        self.assertEqual(3,len(calls))
+        self.assertEqual(0,out["out_of_declaring_spell_invokes"])
+
     def test_missing_known_caller_is_fail_closed(self):
         d=sample()
         key=binary.BASE+"AeropicSpell"
