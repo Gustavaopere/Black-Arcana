@@ -107,3 +107,9 @@ Os getters `getPercentJump` e `getPercentAirSpeed` continuam com **zero chamadas
 - O fluxo registry → supplier → classe concreta e os operandos que definem intensidade/duração do modifier não foram comprovados. Assim, os sinais anteriores de `JUMP_STRENGTH`, movimento e fallDistance permanecem **simbólicos** e não configuram novo ponto mutador seguro.
 
 **⛔ SEM_HOOK_SEGURO:** não criar segundo `AttributeModifier`, recast ou listener de queda. O cast e os efeitos continuam provider-native; RPG Skill Tree permanece apenas provider de atributos/perks por contrato.
+
+## Ligação compilada do registro `TAILWIND` — 24/10/2026
+
+**✅ `PROVEN_BOUNDED_JVM_STACK_AND_BOOTSTRAP` no JAR oficial 1.0.5; runtime ⚠️ não testado.** A execução [Wind CI #40143051496](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40143051496) confirmou em `ModMobEffectRegistry.<clinit>` a cadeia exata: entrada literal `tailwind` → site `invokedynamic #1` para `Supplier` → method-handle `lambda$static$1` por `LambdaMetafactory` → chamada `DeferredRegister.register(String, Supplier)` → armazenamento no holder `TAILWIND`. A factory compilada `lambda$static$1` contém a criação de `TailwindEffect`.
+
+A associação estática do holder à factory já tem prova; o registro em execução e a intensidade dos modificadores de `JUMP_STRENGTH`, movimento e `fallDistance` **não** foram validados. Os getters percentuais também não foram ligados por fluxo de operandos à aplicação do efeito. `runtime_instance_registration = NOT_TESTED`, `safe_mutating_hook = NOT_PROVEN`: **⛔ SEM_HOOK_SEGURO** para perks que alterem velocidade/salto/queda. Preservar efeitos provider-native.
