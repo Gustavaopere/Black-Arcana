@@ -1,5 +1,12 @@
 # Wind's Spellbooks — catálogo canônico
 
+## Verificação de consumidores compilados — 24/10/2026
+
+**7/7 fichas** agora incluem assinaturas e arestas de chamadas obtidas por `javap` Java 21 sobre o JAR 1.0.5 com SHA-1 físico/publicador idêntico. [CI exato #40118955224](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40118955224): inspeção das sete classes e testes sintéticos `SUCCESS`. Os métodos incluem superfícies de `getDamage`, `getRadius`, `getRange`, `getRecastCount`, entidades e projectiles conforme a classe, **sem atribuir valores, alvos, fórmula ou hooks a partir do nome**. Consulte as sete fichas em `wind/`.
+
+**Percentuais não somáveis:** identidade binária **7/7**; fichas com consumidores simbólicos **7/7**; fórmulas completas, parâmetros configurados, hook mutador, client/Survival e settled gameplay **⚠️/⛔ não certificados**. **+0 magias**, Stage 06.05 🟡 e Stage 09 ⚠️. Usar os resultados como insumo para futura análise de operandos e contrato provider-native; não instalar adapter com base em `javap` isolado.
+
+
 ## Estado
 
 - Mod ID: `wind_spellbooks`
