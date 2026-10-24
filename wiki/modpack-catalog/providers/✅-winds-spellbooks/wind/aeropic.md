@@ -97,3 +97,14 @@ A ausência de chamadas entre classes é relativa somente a `invoke*` explícito
 **Distinção crítica:** o efeito chama simbolicamente **`io.redspace.ironsspellbooks.api.spells.AbstractSpell.getRecastCount`**, e não `AeropicSpell.getRecastCount` pelo nome da classe concreta. Logo, o inventário anterior de **zero chamadas entre classes diretamente qualificadas ao getter Aeropic** continua válido, mas não exclui dispatch virtual ao override. Para validar a fórmula `max(0, level - 1)` no recast real é necessário analisar receiver concreto e host Iron's 3.16.3; não atribuir comportamento dinâmico apenas pelo símbolo.
 
 **⛔ Integração de perks:** preservar `PlayerRecasts` e seu lifecycle provider-native; não criar segundo contador, NBT duplicado ou manipulador de recast. Stage 06.05 🟡 e Stage 09 físico pendente.
+
+## Compatibilidade compilada com `AbstractSpell.getRecastCount` — 24/10/2026
+
+**✅ Assinatura e hierarquia declaradas no JAR exato; ⚠️ dispatch dinâmico não provado.** [CI Wind #40139355055](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40139355055), artefato `effect-registry-dispatch.json`, SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`.
+
+- `AeropicSpell` declara diretamente `extends io.redspace.ironsspellbooks.api.spells.AbstractSpell` no cabeçalho JVM.
+- O override `getRecastCount(int, LivingEntity)` declara exatamente o descritor `(ILnet/minecraft/world/entity/LivingEntity;)I`; o `AeropicEffect` chama simbolicamente `AbstractSpell.getRecastCount` com o mesmo descritor.
+- `AeropicEffect` declara `extends MagicMobEffect implements ISyncedMobEffect` no seu cabeçalho compilado.
+- O registry `ModMobEffectRegistry` tem o texto de registro `aeropic`, o campo `ACROBATICS`, **dois** suppliers `invokedynamic` totais, e um factory method `lambda$static$0` que contém `new AeropicEffect` e sua chamada de construtor. **Não foi traçado o BootstrapMethods ou a pilha que liga o campo `ACROBATICS` à instância.**
+
+**Limite de interoperabilidade:** ABI igual e herança de `AbstractSpell` tornam o override estruturalmente compatível, mas não demonstram qual objeto está no receiver, o dispatch efetivo, a quantidade de recasts, o cleanup ou o stacking. `runtime_dispatch_to_spell_override = NOT_PROVEN` e `registration_field_to_instance_binding = NOT_PROVEN`. **⛔ SEM_HOOK_SEGURO**; não duplicar `PlayerRecasts` nem a persistência.
