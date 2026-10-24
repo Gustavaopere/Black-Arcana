@@ -57,3 +57,9 @@ Execução [Wind CI #40124346655](https://github.com/Gustavaopere/Black-Arcana/a
 | Wind Jump | `getFloatDuration` | `100 * level` |
 
 **4/4 não representa 4 magias completas nem 4 hooks homologados.** Getter escalar não prova unidade, limites válidos, config, janela de recast, aplicação a entidade, `onCast`, nem persistência. A barra Wind's de fichas simbólicas 7/7 permanece separada; o denominador global continua —%. O exercício é exclusivamente clean-room de interoperabilidade.
+
+### Prevenção de regressão da evidência
+
+`docs/qa/winds_105_formula_contract.py` contém uma referência independente para **as quatro ASTs exatas** comprovadas no JAR SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`. No CI, o gate compara o JSON produzido pelo scanner contra essa referência: SHA, mod ID, versão, roster, `EXACT_STRAIGHT_LINE_EXPRESSION` e todos os operandos/operadores devem corresponder. Um getter `UNRESOLVED`, constante alterada, árvore reordenada ou quarto getter ausente torna o check `FAIL_CLOSED`, em vez de permanecer verde silenciosamente.
+
+Sete testes sintéticos independentes cobrem aceitação e rejeição desses casos. O gate valida **conservação de evidência documental**, não que a implementação do provider seja alterável ou que fórmulas devam ser replicadas em Black Arcana. Nenhuma API mutadora é ativada.
