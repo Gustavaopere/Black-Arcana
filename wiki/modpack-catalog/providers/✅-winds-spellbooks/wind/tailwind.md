@@ -82,3 +82,17 @@ A expressão compilada isolada não autoriza perk mutadora nem alteração em `o
 `getPercentAirSpeed`: **1** instrução; `getPercentJump`: **1**; ambas no próprio `TailwindSpell`, nenhuma chamada direta por outras classes do namespace do Wind's. Na classe do spell, as chamadas diretas observadas são de `getUniqueInfo`. Isso **não** permite classificar os bônus como cosméticos nem exclui consumo pelo código do efeito/host.
 
 A ausência de chamadas entre classes é relativa somente a `invoke*` explícitos no JAR Wind's 1.0.5; não inspeciona dependências host Iron's/IronSable, reflexão, dispatch virtual, effects indiretos, Mixins, calls via eventos nem fluxo JVM até os setters. **⛔ `SEM_HOOK_SEGURO`** para perks que modifiquem esses valores. Nenhum Stage ou contagem de spells foi alterado.
+
+## Superfícies nativas do efeito no JAR exato — 24/10/2026
+
+**✅ Evidência simbólica verificada; ⚠️ efeitos e valores runtime ainda não homologados.** [Workflow Wind #40136512061](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40136512061), artefato `effect-boundaries.json`, SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`. A classe `net.raptorzizi.wind_spellbooks.effect.TailwindEffect` está presente no JAR 1.0.5. A presença de classe e nome de método por si só não prova o registro/instanciação nem o resultado do jogo.
+
+| Método da classe compilada | Evidência estrutural | Questões ainda abertas |
+|---|---|---|
+| `applyEffectTick(LivingEntity, int)` | Invoca `LivingEntity.getDeltaMovement`, `setDeltaMovement(DDD)` e `onGround`; lê `Player.xxa` e `Player.zza`; escreve `LivingEntity.fallDistance` | Fórmula/vetor/valor de fallDistance, guards, efetividade do tick e interactions físicas. |
+| `onEffectStarted(LivingEntity, int)` | Lê `Attributes.JUMP_STRENGTH` e `AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL`; invoca `AttributeInstance.addTransientModifier` e `removeModifier` | Valor do modifier, ordem/condições e vínculo com `getPercentJump`. |
+| `onEffectRemoved(LivingEntity, int)` | Lê `Attributes.JUMP_STRENGTH` e `Attributes.MOVEMENT_SPEED`; invoca `removeModifier` | O método não demonstra onde o bônus de velocidade foi adicionado nem a política de cleanup. |
+
+Os getters `getPercentJump` e `getPercentAirSpeed` continuam com **zero chamadas JVM diretas fora da classe TailwindSpell neste JAR**, mas isso **não** os classifica como cosméticos: `TailwindEffect` tem superfícies de movimento/atributos independentes. A chamada a `setDeltaMovement` não autoriza alterações no vetor; a chamada a `addTransientModifier` não estabelece o valor de porcentagem aplicado. O campo de registry `TAILWIND` é referenciado por `TailwindSpell.onCast`, sem factory/instance binding comprovado nesta etapa.
+
+**⛔ Integração de perks:** sem hook mutador provider-native e sem contrato de stacking/efeito; não adicionar listener duplicado de queda/velocidade. Iron's/Wind's preservam a autoridade de casting/efeitos, Black Arcana seu próprio runtime, RPG Skill Tree apenas progressão.

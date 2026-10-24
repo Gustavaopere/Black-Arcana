@@ -22,6 +22,11 @@ on:
       - 'docs/qa/winds_105_cross_class_getter_calls_test.py'
       - 'docs/qa/winds_105_cross_class_contract.py'
       - 'docs/qa/winds_105_cross_class_contract_test.py'
+      - 'docs/qa/winds_105_effect_boundaries.py'
+      - 'docs/qa/winds_105_effect_boundaries_test.py'
+      - 'docs/qa/winds_105_effect_contract.py'
+      - 'docs/qa/winds_105_effect_contract_test.py'
+      - 'docs/qa/winds-105-effect-boundary-evidence.md'
       - 'docs/qa/winds-105-cross-class-callers-gate.md'
       - 'docs/qa/winds-105-getter-consumer-evidence.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/**'
@@ -45,6 +50,11 @@ on:
       - 'docs/qa/winds_105_cross_class_getter_calls_test.py'
       - 'docs/qa/winds_105_cross_class_contract.py'
       - 'docs/qa/winds_105_cross_class_contract_test.py'
+      - 'docs/qa/winds_105_effect_boundaries.py'
+      - 'docs/qa/winds_105_effect_boundaries_test.py'
+      - 'docs/qa/winds_105_effect_contract.py'
+      - 'docs/qa/winds_105_effect_contract_test.py'
+      - 'docs/qa/winds-105-effect-boundary-evidence.md'
       - 'docs/qa/winds-105-cross-class-callers-gate.md'
       - 'docs/qa/winds-105-getter-consumer-evidence.md'
   workflow_dispatch:
@@ -78,6 +88,10 @@ jobs:
         run: python3 docs/qa/winds_105_cross_class_getter_calls_test.py -v
       - name: Synthetic pinned cross-class direct invoke regression tests
         run: python3 docs/qa/winds_105_cross_class_contract_test.py -v
+      - name: Synthetic Wind effect registry provenance and fail-closed tests
+        run: python3 docs/qa/winds_105_effect_boundaries_test.py -v
+      - name: Synthetic pinned Aeropic/Tailwind effect symbol regression tests
+        run: python3 docs/qa/winds_105_effect_contract_test.py -v
       - name: Download exact published Wind's Spellbooks 1.0.5 and verify frozen physical SHA-1
         shell: bash
         run: |
@@ -128,6 +142,15 @@ jobs:
             --output build/winds-105/cross-class-getter-calls.json
       - name: Pin exact 64-class 16-invoke cross-class evidence without gameplay claims
         run: python3 docs/qa/winds_105_cross_class_contract.py --json build/winds-105/cross-class-getter-calls.json
+      - name: Inventory Wind's effect/registry method surfaces in exact JAR
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_effect_boundaries.py \
+            --jar build/winds-105/wind_spellbooks-1.0.5.jar \
+            --output build/winds-105/effect-boundaries.json
+      - name: Verify pinned Aeropic/Tailwind native effect symbol boundaries
+        run: python3 docs/qa/winds_105_effect_contract.py --json build/winds-105/effect-boundaries.json
       - name: Publish clean-room JSON only (never redistribute provider JAR)
         if: always()
         uses: actions/upload-artifact@v7
@@ -139,5 +162,6 @@ jobs:
             build/winds-105/mobility-getters.json
             build/winds-105/getter-consumer-edges.json
             build/winds-105/cross-class-getter-calls.json
+            build/winds-105/effect-boundaries.json
           retention-days: 14
           if-no-files-found: ignore
