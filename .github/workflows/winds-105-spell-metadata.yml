@@ -32,6 +32,8 @@ on:
       - 'docs/qa/winds_105_registry_dispatch_contract_test.py'
       - 'docs/qa/winds_105_bootstrap_registry_trace.py'
       - 'docs/qa/winds_105_bootstrap_registry_trace_test.py'
+      - 'docs/qa/winds_105_bootstrap_registry_contract.py'
+      - 'docs/qa/winds_105_bootstrap_registry_contract_test.py'
       - 'docs/qa/winds-105-bootstrap-registry-gate.md'
       - 'docs/qa/winds-105-registry-dispatch-gate.md'
       - 'docs/qa/winds-105-effect-boundary-evidence.md'
@@ -68,6 +70,8 @@ on:
       - 'docs/qa/winds_105_registry_dispatch_contract_test.py'
       - 'docs/qa/winds_105_bootstrap_registry_trace.py'
       - 'docs/qa/winds_105_bootstrap_registry_trace_test.py'
+      - 'docs/qa/winds_105_bootstrap_registry_contract.py'
+      - 'docs/qa/winds_105_bootstrap_registry_contract_test.py'
       - 'docs/qa/winds-105-bootstrap-registry-gate.md'
       - 'docs/qa/winds-105-registry-dispatch-gate.md'
       - 'docs/qa/winds-105-effect-boundary-evidence.md'
@@ -114,6 +118,8 @@ jobs:
         run: python3 docs/qa/winds_105_registry_dispatch_contract_test.py -v
       - name: Synthetic fail-closed registry bootstrap and supplier tracing tests
         run: python3 docs/qa/winds_105_bootstrap_registry_trace_test.py -v
+      - name: Synthetic exact-JAR two-supplier holder-binding contract tests
+        run: python3 docs/qa/winds_105_bootstrap_registry_contract_test.py -v
       - name: Download exact published Wind's Spellbooks 1.0.5 and verify frozen physical SHA-1
         shell: bash
         run: |
@@ -189,6 +195,8 @@ jobs:
           python3 docs/qa/winds_105_bootstrap_registry_trace.py \
             --jar build/winds-105/wind_spellbooks-1.0.5.jar \
             --output build/winds-105/bootstrap-registry-trace.json
+      - name: Verify frozen two-effect bootstrap-to-DeferredHolder bindings
+        run: python3 docs/qa/winds_105_bootstrap_registry_contract.py --json build/winds-105/bootstrap-registry-trace.json
       - name: Publish clean-room JSON only (never redistribute provider JAR)
         if: always()
         uses: actions/upload-artifact@v7
