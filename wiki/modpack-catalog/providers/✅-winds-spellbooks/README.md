@@ -106,3 +106,13 @@ IronSable registra seus próprios `maelstrom`, `tempests_grasp` e `downburst` e 
 A prova binária de registro não autoriza inventar mana, cooldown, dano, range, recast count, friendly-fire, PvP ou APIs para esses spells. Integrações futuras devem usar IDs/runtime hooks comprovados e manter o provider como authority do efeito.
 
 Ver [TECHNICAL-AUDIT.md](TECHNICAL-AUDIT.md).
+
+## Hierarquia/registry exatos de Aeropic e Tailwind — 24/10/2026
+
+Na execução [Wind #40139355055](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40139355055), cinco classes escolhidas foram inspecionadas em suas assinaturas e referências JVM dentro das **64 classes** do JAR 1.0.5 SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`.
+
+`AeropicSpell` e `TailwindSpell` declaram **`extends AbstractSpell`**; `AeropicEffect` e `TailwindEffect` declaram **`extends MagicMobEffect implements ISyncedMobEffect`**. A ABI `AeropicSpell.getRecastCount(int, LivingEntity)` corresponde ao descritor que `AeropicEffect` referencia em `AbstractSpell`, mas **receiver e despacho virtual não foram provados**.
+
+`ModMobEffectRegistry.static {}` contém strings `aeropic`/`tailwind`, fields `ACROBATICS`/`TAILWIND`, dois sites `invokedynamic` e chamada a `DeferredRegister.register(String, Supplier)`. Os métodos auxiliares `lambda$static$0` e `lambda$static$1` contêm construções de `AeropicEffect` e `TailwindEffect`, respectivamente. **Não é prova causal ainda de qual supplier alimenta cada campo**: falta inspeção da tabela `BootstrapMethods` e rastreio da pilha.
+
+Gate detalhado: [auditoria de registry e dispatch](../../../../docs/qa/winds-105-registry-dispatch-gate.md). Nenhum spell novo, nenhum hook homologado, nenhuma alteração de Stages ou de runtime; **7/7** identidades, **9/9** getters selecionados.
