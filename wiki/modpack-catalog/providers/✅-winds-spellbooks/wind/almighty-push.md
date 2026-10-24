@@ -84,3 +84,11 @@ A expressão compilada isolada não autoriza perk mutadora nem alteração em `o
 **Sinks/efeitos independentes no mesmo método:** `onCast` contém `AlmightyPushEntity.setLifetime`, `setRadius` e escritas em `strength`/`amplifier`; ainda não há rastreamento de operandos que prove qual retorno alimenta qual argumento ou campo.
 
 **Estado causal:** `SAME_METHOD_ONLY_NOT_GETTER_TO_SINK_DATAFLOW`. A presença do getter e de um setter no mesmo `onCast` **não** prova que o retorno chega àquele setter, nem seus guards/configuração/beneficiário. **⛔ `SEM_HOOK_SEGURO` para perks mutadoras**; não reproduzir efeitos provider-native nem alterar autoridades de Iron's/Wind's/Black Arcana/RPG Skill Tree. Stage 06.05 e Stage 09 sem promoção.
+
+## Auditoria de chamadas entre classes do provider — 24/10/2026
+
+**⚠️ Resultado estrutural, não efeito comprovado.** [Workflow de JAR exato #40135302517](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40135302517), `cross-class-getter-calls.json`, SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`: **64/64 classes** do namespace Wind's inspecionadas, **16 chamadas diretas** aos nove getters selecionados, **0 referências diretas a esses getters originadas em outras classes do próprio provider**.
+
+`getDuration`: **2** instruções diretas; `getRange`: **2**; todas em `AlmightyPushSpell`, nenhuma em outras classes do namespace do Wind's. O destino do valor em `setLifetime`, `setRadius` ou campos não foi rastreado.
+
+A ausência de chamadas entre classes é relativa somente a `invoke*` explícitos no JAR Wind's 1.0.5; não inspeciona dependências host Iron's/IronSable, reflexão, dispatch virtual, effects indiretos, Mixins, calls via eventos nem fluxo JVM até os setters. **⛔ `SEM_HOOK_SEGURO`** para perks que modifiquem esses valores. Nenhum Stage ou contagem de spells foi alterado.
