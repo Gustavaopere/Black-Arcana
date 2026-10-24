@@ -24,10 +24,16 @@ def fixture():
         32: return
 }
 BootstrapMethods:
-  0: #24 REF_invokeStatic net/raptorzizi/wind_spellbooks/registries/ModMobEffectRegistry.lambda$static$0:()Lnet/minecraft/world/effect/MobEffect;
+  0: #24 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
     Method arguments:
-  1: #25 REF_invokeStatic net/raptorzizi/wind_spellbooks/registries/ModMobEffectRegistry.lambda$static$1:()Lnet/raptorzizi/wind_spellbooks/effect/TailwindEffect;
+      #70 ()Ljava/lang/Object;
+      #71 REF_invokeStatic net/raptorzizi/wind_spellbooks/registries/ModMobEffectRegistry.lambda$static$0:()Lnet/minecraft/world/effect/MobEffect;
+      #72 ()Lnet/minecraft/world/effect/MobEffect;
+  1: #24 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
     Method arguments:
+      #70 ()Ljava/lang/Object;
+      #73 REF_invokeStatic net/raptorzizi/wind_spellbooks/registries/ModMobEffectRegistry.lambda$static$1:()Lnet/raptorzizi/wind_spellbooks/effect/TailwindEffect;
+      #74 ()Lnet/raptorzizi/wind_spellbooks/effect/TailwindEffect;
 InnerClasses:
 """
 
@@ -95,6 +101,20 @@ class BootstrapRegistryTest(unittest.TestCase):
         txt=fixture().replace("InvokeDynamic #1:get:()Ljava/util/function/Supplier;",
                               "InvokeDynamic #1:call:()Ljava/util/function/Runnable;")
         with self.assertRaisesRegex(trace.TraceError,"recognized Supplier"):
+            trace.trace(txt,factories())
+
+    def test_missing_factory_method_handle_argument_fails(self):
+        txt=fixture().replace(
+            "REF_invokeStatic net/raptorzizi/wind_spellbooks/registries/ModMobEffectRegistry.lambda$static$0:",
+            "REF_invokeStatic other/Untrusted.unknown:")
+        with self.assertRaisesRegex(trace.TraceError,"absent Supplier"):
+            trace.trace(txt,factories())
+
+    def test_non_metafactory_handle_rejected(self):
+        txt=fixture().replace(
+            "REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:",
+            "REF_invokeStatic other/Unknown.boot:",1)
+        with self.assertRaisesRegex(trace.TraceError,"unrecognized bootstrap"):
             trace.trace(txt,factories())
 
     def test_symbol_count_distinct_bootstraps(self):
