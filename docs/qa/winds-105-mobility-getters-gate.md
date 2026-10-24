@@ -24,3 +24,21 @@ Continuam **⛔ SEM_HOOK_SEGURO** as perks mutadoras que ainda não têm API/sur
 - Regressões sintéticas com ausência de método, corpo com branch/chamada desconhecida, pilha inconsistente e arquivo/classe extra.
 - CI exato do JAR da versão 1.0.5, seguido de revisão do artefato JSON, sem redistribuição do JAR, bytecode ou código do provider.
 - Reconciliar a branch com a última `main` antes de merge, reexecutar CI do HEAD final, verificar os jobs do workflow específico e CI geral; distinguir premerge de postmerge.
+
+## Resultado binário exato da campanha — 24/10/2026
+
+[Workflow #40126898432](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40126898432) concluiu `SUCCESS` no JAR oficial, verificou SHA-1 e executou os sete testes sintéticos; o JSON `mobility-getters.json` no artefato da execução foi inspecionado diretamente. O recorte dos cinco métodos retornou **5/5** com AST completa; não existem cinco novos spells.
+
+| Provider spell | Getter compilado | Expressão aritmética estrutural (com ordem dos floats) |
+|---|---|---|
+| Almighty Push | `getRange` | `3.0f + ((float)level * 0.5f)` |
+| Iron Slash | `getDistance` | `10.0f + ((float)level * 2.0f)` |
+| Tailwind | `getPercentAirSpeed` | `((float)level * 0.15f) * 100.0f` |
+| Tailwind | `getPercentJump` | `(0.5f + (0.3f * (float)(level - 1))) * 100.0f` |
+| Wind Jump | `getJumpStrength` | `(float)(0.2d + ((double)level * 0.05d))` |
+
+Os resultados foram acrescentados às quatro fichas individuais. A **barra 5/5 é somente a população de getters adicionais alvo deste PR**, não progresso total de provider nem evidência de aplicação real. A execução **não** demonstra tipo de alvo, direção, hitbox, dano, PvP, configuração ou hook seguro.
+
+## Gate de regressão binária
+
+O arquivo `docs/qa/winds_105_mobility_contract.py` compara SHA-1, provider, release, roster exato, estado e os cinco ASTs completos sem tolerar drift ou troca de operandos. Oito testes sintéticos de mutação verificam aceita/rejeita; o workflow reaproveita o JSON resultante da inspeção física e executa o contrato antes de publicar o artefato. Alteração no JAR, constantes ou operação passa a falhar em CI, sem reclassificar automaticamente perks.
