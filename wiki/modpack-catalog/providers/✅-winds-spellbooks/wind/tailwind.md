@@ -96,3 +96,14 @@ A ausência de chamadas entre classes é relativa somente a `invoke*` explícito
 Os getters `getPercentJump` e `getPercentAirSpeed` continuam com **zero chamadas JVM diretas fora da classe TailwindSpell neste JAR**, mas isso **não** os classifica como cosméticos: `TailwindEffect` tem superfícies de movimento/atributos independentes. A chamada a `setDeltaMovement` não autoriza alterações no vetor; a chamada a `addTransientModifier` não estabelece o valor de porcentagem aplicado. O campo de registry `TAILWIND` é referenciado por `TailwindSpell.onCast`, sem factory/instance binding comprovado nesta etapa.
 
 **⛔ Integração de perks:** sem hook mutador provider-native e sem contrato de stacking/efeito; não adicionar listener duplicado de queda/velocidade. Iron's/Wind's preservam a autoridade de casting/efeitos, Black Arcana seu próprio runtime, RPG Skill Tree apenas progressão.
+
+## Registry compilado e hierarquia do efeito — 24/10/2026
+
+**✅ Evidência estática, sem prova de factory-binding/runtime.** [CI Wind #40139355055](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40139355055), artefato `effect-registry-dispatch.json`, Wind's 1.0.5 SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`.
+
+- `TailwindSpell` declara `extends AbstractSpell`; `TailwindEffect` declara `extends MagicMobEffect implements ISyncedMobEffect`.
+- A classe `ModMobEffectRegistry` contém a string `tailwind`, campo `TAILWIND` (DeferredHolder), uso de `DeferredRegister.register(String, Supplier)` e dois sites `invokedynamic` na inicialização estática.
+- O método auxiliar compilado `lambda$static$1` contém `new TailwindEffect` e a invocação do construtor `(MobEffectCategory, int)`. Isso é evidência da existência do **candidato** de factory, não de qual supplier bootstrap está conectado à entrada `TAILWIND`.
+- O fluxo registry → supplier → classe concreta e os operandos que definem intensidade/duração do modifier não foram comprovados. Assim, os sinais anteriores de `JUMP_STRENGTH`, movimento e fallDistance permanecem **simbólicos** e não configuram novo ponto mutador seguro.
+
+**⛔ SEM_HOOK_SEGURO:** não criar segundo `AttributeModifier`, recast ou listener de queda. O cast e os efeitos continuam provider-native; RPG Skill Tree permanece apenas provider de atributos/perks por contrato.
