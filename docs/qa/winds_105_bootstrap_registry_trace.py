@@ -25,6 +25,7 @@ TARGETS = {
 }
 INSTR = re.compile(r"^\s*(\d+):\s+([a-z][\w]*)\b(.*)$")
 BOOT_ENTRY = re.compile(r"^\s*(\d+):\s+#\d+\s+(REF_invokeStatic)\s+(\S+)")
+BOOT_ARGUMENT = re.compile(r"^\s+#\d+\s+REF_invokeStatic\s+(\S+)")
 BOOT_SITE = re.compile(r"InvokeDynamic\s+#(\d+):get:\(\)Ljava/util/function/Supplier;")
 STRING = re.compile(r"^String\s+(\S+)$")
 FIELD = re.compile(r"^Field\s+(\S+)$")
@@ -67,25 +68,44 @@ def method_instr(text: str) -> list[tuple[int, str, str]]:
     return instructions
 
 def bootstrap_invokers(text: str) -> dict[int,str]:
+    """Resolve javap BootstrapMethods *method arguments*, not metafactory handle.
+
+    The top-level bootstrap handle is LambdaMetafactory.metafactory. The
+    implementation target of the Supplier is a REF_invokeStatic argument.
+    """
     start=text.find("\nBootstrapMethods:\n")
     if start<0:
         raise TraceError("no BootstrapMethods attribute")
     tail=text[start+len("\nBootstrapMethods:\n"):].splitlines()
     entries={}
+    current=None
     for line in tail:
         if line and not line.startswith(" ") and line.endswith(":"):
             break
         match=BOOT_ENTRY.match(line)
         if match:
-            idx, kind, target=match.groups()
-            if int(idx) in entries:
+            index,kind,metafactory=match.groups()
+            current=int(index)
+            if current in entries:
                 raise TraceError("duplicate bootstrap index")
-            if kind!="REF_invokeStatic":
-                raise TraceError("unexpected bootstrap handle kind")
-            entries[int(idx)]=target
+            if (kind!="REF_invokeStatic"
+                or not metafactory.startswith("java/lang/invoke/LambdaMetafactory.metafactory:")):
+                raise TraceError("unrecognized bootstrap metafactory")
+            entries[current]=[]
+            continue
+        argument=BOOT_ARGUMENT.match(line)
+        if argument and current is not None:
+            target=argument.group(1)
+            if target.startswith(OWNER+".lambda$static$"):
+                entries[current].append(target)
     if not entries or len(entries)>128:
         raise TraceError("missing or unbounded bootstrap handles")
-    return entries
+    targets={}
+    for index,candidates in entries.items():
+        if len(candidates)!=1:
+            raise TraceError("ambiguous or absent Supplier method-handle argument")
+        targets[index]=candidates[0]
+    return targets
 
 def trace(text: str, factory_methods: dict[str,dict]) -> dict:
     instructions=method_instr(text)
