@@ -108,3 +108,9 @@ A ausência de chamadas entre classes é relativa somente a `invoke*` explícito
 - O registry `ModMobEffectRegistry` tem o texto de registro `aeropic`, o campo `ACROBATICS`, **dois** suppliers `invokedynamic` totais, e um factory method `lambda$static$0` que contém `new AeropicEffect` e sua chamada de construtor. **Não foi traçado o BootstrapMethods ou a pilha que liga o campo `ACROBATICS` à instância.**
 
 **Limite de interoperabilidade:** ABI igual e herança de `AbstractSpell` tornam o override estruturalmente compatível, mas não demonstram qual objeto está no receiver, o dispatch efetivo, a quantidade de recasts, o cleanup ou o stacking. `runtime_dispatch_to_spell_override = NOT_PROVEN` e `registration_field_to_instance_binding = NOT_PROVEN`. **⛔ SEM_HOOK_SEGURO**; não duplicar `PlayerRecasts` nem a persistência.
+
+## Ligação compilada do registro `ACROBATICS` — 24/10/2026
+
+**✅ `PROVEN_BOUNDED_JVM_STACK_AND_BOOTSTRAP` no JAR oficial 1.0.5; runtime ⚠️ não testado.** A execução [Wind CI #40143051496](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40143051496) confirmou em `ModMobEffectRegistry.<clinit>` a cadeia exata: entrada literal `aeropic` → site `invokedynamic #0` para `Supplier` → method-handle `lambda$static$0` por `LambdaMetafactory` → chamada `DeferredRegister.register(String, Supplier)` → armazenamento no holder `ACROBATICS`. A factory compilada `lambda$static$0` contém a criação de `AeropicEffect`.
+
+Essa prova substitui exclusivamente a pendência de associação **estática** entre holder e candidato de efeito descrita nos dossiês anteriores. **Não demonstra** a execução do registry em cliente/servidor, o override despachado de `AbstractSpell.getRecastCount`, contagem/recarga efetiva, NBT ou lifecycle. `runtime_instance_registration = NOT_TESTED`; `safe_mutating_hook = NOT_PROVEN`, portanto **⛔ SEM_HOOK_SEGURO** para perks de recast. Não criar segundo `PlayerRecasts` nem segundo pipeline mágico.
