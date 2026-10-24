@@ -14,7 +14,7 @@ Status: `INSTALLED 1.4.4-1.21 / COUNTED_EXACT 22/22 STATIC REGISTRY / RUNTIME QA
 - **Upstream `gradle.properties`:** `mod_version=1.4.4-1.21`
 - **Casting authority:** Iron's Spells 'n Spellbooks
 
-# Cobertura: **22/22 — DOCUMENTATION COMPLETE**
+## Cobertura de fichas existentes: **22/22**
 
 A antiga página pública dizia “15 spells” e enumerava 14. O registry exato 1.4.4 resolve a discrepância: são **22 registrations reais**.
 
@@ -91,6 +91,14 @@ Black Arcana não deve duplicar esses contracts por rename/VFX.
 - Zealous Harbinger: primeira posição `z+i` é imediatamente sobrescrita por `z-i` em cada projectile.
 - Guardian's Gaze: block-particle `else if` está aninhado sob `ENTITY`, portanto é inalcançável.
 - Crystalline Carver: `isFinalCast` é campo mutável na instância do spell registrada; possível shared-state entre casters exige GameTest/runtime QA.
-- Otherworldly Presence: anti-cast é source-confirmed; a alegação pública de neutralizar damage ainda requer localização/QA do settlement atual.
+- Otherworldly Presence: anti-cast e veto de incoming foram localizados no source; `ServerEvents#livingIncomingDamageEvent` cancela se vítima ou causingEntity Living têm Metaphysical. Aceite no pack continua PENDING.
 
 Esses itens são observações de source 1.4.4, não correções runtime deste chat.
+
+## Reauditoria de parâmetros e perks — 24/10/2026
+
+[22 fichas e contratos comuns](SPELL-PERK-BOUNDARIES-1.4.4-1.21.md) agora rastreiam parâmetros até consumers, com dano/tipo, alvo/área, projéteis/hitbox, tempos/custos/recasts, summons, estados e persistência. **22/22 é somente este recorte documental**, sem encerrar todos os itens/Curios/sistemas do provider. +0 identidades/+0 strict; configs/hosts, Mastery Ritual, hooks integrados, Survival e QA permanecem PENDING.
+
+Publisher CF8816497 revalidado nesta sessão: 22098930 bytes, SHA-1 `cf35c225aced23b705d1e0fd1bc5c62d96540e0c`, SHA-256 `77e53df3fe020572626593ca9f6b955abce1dd4b49697084c2226019dcf2ef14`. Não é nova leitura do perfil original nem prova integral de método/source. As contagens 1857/1855 e campanha22/39 do cabeçalho datado13/10 são históricas; o [painel atual](../../meta/PROGRESSO-CATALOGO-ATUAL.md) preserva mínimos1856/1854, campanha38/39 e universo global aberto.
+
+A normalização da escola Ritual custom no RPG produz um token com `/`, rejeitado pelo validador de lanes consultado; reprodução isolada do método consta no dossiê comum, sem afirmar crash em jogo ou corrigir runtime neste lote.

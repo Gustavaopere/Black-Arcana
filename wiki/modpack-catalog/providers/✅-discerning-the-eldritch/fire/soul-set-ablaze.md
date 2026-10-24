@@ -1,38 +1,86 @@
 # Soul Set Ablaze
 
-**Registro binário físico (2026-10-13):** ✅ `COUNTED_EXACT` — `discerning_the_eldritch:soul_set_ablaze`, classe `net.acetheeldritchking.discerning_the_eldritch.spells.fire.SoulSetAblazeSpell`, escola padrão `SchoolRegistry.FIRE_RESOURCE` ([Java 21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207), [dossiê](../EXACT-BINARY-SPELLS-1.4.4-1.21.md)). Custos/efeitos e Survival ⚠️; +0.
+**Dossiê documental — 24/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; integração `CONTRATO_CONDICIONAL`; QA físico `PENDING`. **+0 identidades/+0 strict**: efeitos, entidades e fases derivados não são novas spells.
 
-- **ID:** `discerning_the_eldritch:soul_set_ablaze`
-- **School:** Fire
-- **Level:** 1
-- **Rarity:** Legendary
-- **Cast:** Long, 60 ticks / 3 s base
-- **Mana:** 150
-- **Spell power neutral:** 40
-- **Cooldown:** 210 s
-- **AoE radius:** 12
-- **Base damage:** `1.3*spellPower + weaponDamage` = neutral `52 + weaponDamage`
-- **SpellDamageSource lifesteal:** 25%
+## Identidade e proveniência
 
-## Acquisition gates
+Provider **Discerning The Eldritch**, `mod_id=discerning_the_eldritch`, JAR físico histórico **`discerning_the_eldritch-1.4.4-1.21.jar`**, SHA-1 `cf35c225aced23b705d1e0fd1bc5c62d96540e0c`; [publisher CF8816497](https://www.curseforge.com/minecraft/mc-mods/discerning-the-eldritch/files/8816497), [prova estática de identidade](../EXACT-BINARY-SPELLS-1.4.4-1.21.md). Source oficial `AceTheEldritchKing/Discerning_The_Eldritch@7bbd81f902c65a4452f47656ebd948cae8cd5833`. Build Iron’s 3.16.2/NeoForge 21.1.244/Azure 3.1.0 versus pack Iron’s 3.16.3/NeoForge 21.1.250/Azure 3.1.11; Ace 1.2.7.2 coincide na versão declarada, sem prova de ABI. Host lido Iron’s `e4056af90302d37eb1739f5ff05020b020e6e252`. Versão declarada não equipara métodos source↔JAR. Sinais MIT/PolyForm Shield conflitantes: fatos/paráfrases/permalinks, sem importar implementação/assets. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md).
 
-`canBeCraftedBy=false`, `allowCrafting=false`, `allowLooting=false`.
+Spell **`discerning_the_eldritch:soul_set_ablaze`**, escola default `irons_spellbooks:fire`, Legendary, nível default **1**; declarante `net.acetheeldritchking.discerning_the_eldritch.spells.fire.SoulSetAblazeSpell`, consumer filho `entity.spells.soul_eruption.SoulEruptionAoe`. [Defaults][spell]. [Guia oficial][guide], parafraseado: carga seguida de erupção Soul Fire que pode consumir50 almas para dobrar dano.
 
-## Contract
+Crafting/player crafting/loot false. SoulFireScytheItem instala esta spell e SoulSlice no nível1; receita smithing decrepit_scythe+soul_ember+timeless_slurry é **lead source**, não prova de ingredientes acessíveis/cast/Survival PASS. [Gates][gates], [Scythe][scythe], [receita][recipe].
 
-Creates provider `SoulEruptionAoe` at ground-resolved point in front of caster.
+## Fórmulas, custo e spawn
 
-If main-hand `SOUL_FIRE_STACKS >= 50`:
+`P=(40+1(L−1))×SPELL_POWER×FIRE_SPELL_POWER×POWER_MULTIPLIER`, `W=Utils#getWeaponDamage(caster)` e **`D=1.3P+W` HP**; com ≥50 SOUL_FIRE_STACKS no mainhand, grava **2D** e escreve stacks−50 **antes** de addFreshEntity. Neutro L1: P40, mana150, D52+W ou104+2W. W é o helper do ATTACK_DAMAGE/Sharpness, não apenas atributo nominal do item. Esse dano é snapshot no spawn; não é recálculo por vítima. [OnCast/fórmula][cast], [arma][weapon], [power][host-power].
 
-- AoE damage becomes **2×** the computed damage;
-- exactly 50 stacks are consumed.
+- LONG60ticks/3s base; sem override getEffectiveCastTime local, logo host aplica `round(60×(2−softCap(CAST_TIME_REDUCTION)))`. Cooldown default210s=4200ticks; mana `int((150+20(L−1))×MANA_MULTIPLIER)`. Sem recast local. Wrapper jogador admite/paga antes de onCast, sujeito à origem/creative. [Defaults][spell], [host][host-cast], [tempo][host-power].
+- `SoulSetAblazeSpell#onCast`: radius literal12, ray de bloco olho→forward multiplicado por(2.7,0,2.7), ajusta posição ao chão via helper com argumento5. Não é seleção remota de target. Cria1 SoulEruptionAoe(level,12), owner=caster, damage=D/2D, moveTo e tenta spawn, sem examinar boolean. Sem refund/reposição de50 stacks local quando spawn falha. Slash/blastwave são VFX separados. [Spawn][cast].
+- Componente Souls é provider-native persistent/network; default Scythe0 versus codec POSITIVE_INT; kill handler incrementa1 pelo causingLiving segurando Scythe, sem exigir esta spell. Ordem/cap/salvamento e concorrência com callbacks pedem QA, sem ledger paralelo. [Componente][stacks], [kill][kill], [init][scythe].
 
-Otherwise the normal computed damage is used. SoulEruptionAoe owns hit cadence/effect settlement; tooltip references a Scorched Soul effect, but the exact entity-side application remains authority of that AoE and is not duplicated in this sheet.
+## Erupção: área, lifecycle e settlement reais
 
-## Dedup
+| Etapa / consumer | Valor e limite causal |
+|---|---|
+| Constructor / dimensões [ctor][wave-ctor], [dimensões][wave-end], [registry][entity] | Registro4×.8blocks não é tamanho final: override getDimensions retorna **2r×3**, r vem do setter host clamp0..32; r12 dá24×3. O overload usado chama super diretamente e setRadius; **não passa** pelo outro constructor DTE que escreve reapplicationDelay25/setCircular. Tick próprio não depende desses dois parâmetros. |
+| Query / anel [tick][wave] | No servidor, consulta Living em AABB atual inflado(0,5,0), envelope nominal **24×13×24** para r12. Usa distância²3D da posição da vítima à entidade: anel `[waveTime²,(waveTime+1)²]`, canHitEntity herdado e ground-context. Ground testa colisão da AABB da vítima deslocadaY−.9999. Não é cilindro de dano uniforme ou esfera pura; AABB/interseção de entidades também limita candidatos. |
+| Filtros / budgets [host][aoe-hit], [ground][wave-end] | AoeEntity rejeita owner/aliado do owner e delega ao predicate Projectile; sem LOS/max-target/ordenação adicional local. Não há ledger de vítimas na onda; limites inclusivos de anéis podem repetir tentativa em bordas ou com movimento. DamageSource static abaixo pode ter outro owner que o usado no filtro desta instância. |
+| Timer da onda [tick][wave] | waveAnimTime começa−1; condição post-increment `waveAnimTime++<r` permite, para r12, corpos com valores0..12, anéis até outeredge13 **dentro da query**; próxima chamada descarta. São13 corpos nominais, não “12s”/duration600. Override não chama super.tick; duration/reapplicationDelay/parent aging não podem ser transplantados. Não inferir tickCount congelado sem fechar tick externo. |
+| Fonte / dano [applyEffect][terminal], [SoulSlice][slice-source] | Static `DAMAGE_SOURCE` é inicializada uma única vez via **SOUL_SLICE.getDamageSource(firstOwner)**, embora a spell pai seja SoulSetAblaze. Fonte é SpellDamageSource Fire da SoulSlice, lifesteal.10/fireTicks0, com direct/causing do primeiro owner, não a erupção atual. Demais instâncias reutilizam a mesma referência/autoria; não prometer crédito correto por caster. |
+| Hurt direto e efeitos [terminal][terminal], [host procs][helper] | applyEffect chama ignoreNextKnockback e **target.hurt(DAMAGE_SOURCE,getDamage())**, sem DamageSources.applyDamage. Portanto não publica SpellDamageEvent nem aplica resistência/friendly daquele helper neste ponto; **não é fonte plain** e ainda pode acionar listeners host SpellDamageSource, eventos NeoForge/tags/procs. Depois tenta SoulFire argumento25 e ScorchedSoul500ticks/amp0 **sem condicionar ao hurt=true**. Na API consultada Prometheus1.2.5, argumento25 pede **25 segundos**; resultado no pack continua pendente. [Prova de API][prometheus]. |
+| Dano declarado versus usado [pai][parent-source], [filho][terminal] | Override do pai declara lifesteal.25; esse override **não é chamado pelo executor da onda observado**, que seleciona SoulSlice. A assinatura real não é “25% lifesteal garantido”. Listener host Post pode curar a entidade autora da fonte static em .10×newDamage; resultado/ordem continuam condicionais. |
+| Scorched Soul [effect][scorched] | LivingDamageEvent.Pre: se causing attacker tem weaponItem SoulFireScythe, vítima tem efeito e (source FireMagic **ou vítima já onFire**), escreve **originalDamage×1.5**. Não usa current/newDamage já modificado; ordem com outros listeners importa. Amp não escala esse cálculo; tick do efeito só emite VFX. Não é 50% universal/segundo hurt. |
+| Solo / apresentação [wave][wave], [helpers][tremor] | Tremor e state SOUL_FIRE são passados a helpers que emitem **FallingBlockParticleOption**; nos consumers lidos não há setBlock/destroyBlock. Não descrever como fogo permanente no terreno. Checagens de chão e partículas têm budgets diferentes dos alvos de dano; sons/partículas não são novos casts. |
+| Saída / save [end][wave-end] | shouldBeSaved=false; waveAnimTime/DAMAGE_SOURCE não têm persistência por cast nesta classe. Owner/radius são herdados, mas source static é de processo, sem cleanup local demonstrado. Unload/restart/multiworld/owner morto exigem QA; sem garantia de retomada. |
 
-This already fills the high-cost Soul Fire spender / large 12-radius eruption / 25% lifesteal signature. Black Arcana Infernal/Soul Fire content must compare against this before adding another stack-consuming ground nova.
+## Matriz de parâmetros para perks
 
-## Source
+| Eixo | Valor / consumer / fase | Boundary real e limite | QA |
+|---|---|---|---|
+| Dano / power / recurso | Snapshot1.3P+W, ×2 com débito50 antes do spawn. [Cast][cast]. | SPELL_POWER/FIRE_SPELL_POWER **NATIVE_ATTRIBUTE**, POWER_MULTIPLIER **CONFIG_NATIVE**; setDamage(float) herdado real por instância, terceiro pré-spawn **NÃO VERIFICADO**. SpellDamageEvent não intercepta automaticamente o hurt direto da onda; adapter **CONDITIONAL**. | Q1/Q2 |
+| Tipo / lifesteal / autoria | Fonte static SoulSlice Fire/.10, não pai.25. [Terminal][terminal], [source][slice-source]. | Conversão DamageType/autoria/percentual por perk **⛔ SEM_HOOK_SEGURO** sem seam anterior à inicialização/settlement; não trocar static global por jogador nem gerar hurt/cura paralelos. | Q2/Q3 |
+| Range / área / targeting | Ray horizontal2.7/ground5, radius12→box24×3/query24×13×24/anel3D. [Cast][cast], [wave][wave]. | AoeEntity#setRadius server clamp0..32/setDamage são superfícies por instância, não hook universal de spawn. Range isolado/retarget/AOE/resize **CONTRATO_CONDICIONAL / ⛔ fail-closed** até adapter e budgets. | Q2/Q4 |
+| Projétil / speed / count |1 área Projectile/noPhysics, imóvel no fluxo local; onda cresce por contador. [Ctor][wave-ctor], [host][aoe-state]. | Speed/acceleration/spread/pierce de projétil viajante **N/A**; dimensão de registro/VFX não é consumer de dano. Duplicar count **⛔ SEM_HOOK_SEGURO**. | Q2/Q4 |
+| Tempo / cooldown / duração | Cast60 base host-scaled, cooldown210s; timers de onda próprios, não duration600/25tick cadence. [Defaults][spell], [wave][wave]. | CTR/cooldown nativos/config; cooldownPre **HOOK_VERIFICADO** genérico no [contrato comum](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md). Wave speed/lifetime independente **⛔ SEM_HOOK_SEGURO** neste override. | Q1/Q4 |
+| Mana / Souls / falhas | Mana150 antes de config;50componente mainhand debitados pré-spawn, sem reserve/refund local. [Cast][cast], [stacks][stacks]. | Mana event setter pré-débito **HOOK_VERIFICADO** genérico, integração **CONDITIONAL**; Souls não são segundo mana pool RPG. Transação de item/cap/desconto **⛔ SEM_HOOK_SEGURO** sem contrato próprio. | Q1/Q3 |
+| Estados / mundo / summons | SoulFire pede25s na API consultada1.2.5, Scorched500/amp0, multiplicador Pre condicionado; solo VFX; sem summon AI. [Effect][scorched], [tremor][tremor]. | Config/amp/tempo de status por perk **⛔ SEM_HOOK_SEGURO** sem seam pré-aplicação. Summon/capAI **N/A**. Claims/WorldEffectPolicy não provados por afinidade Fire. | Q3/Q4 |
+| Persistência / dedup | Entidade não salva; static firstOwner compartilhado, sem ledger de vítimas. [Terminal][terminal], [end][wave-end]. | Token de cast/perk e cleanup seguros **CONTRATO_CONDICIONAL**. Onda/anel/status/kill não são novos casts/Mastery; não manter outra área ou loop. | Q2/Q4 |
 
-`SoulSetAblazeSpell.java`, DTE 1.4.4 branch.
+## Ownership, concepção e pendências
+
+A [API Prometheus consultada 1.2.5][prometheus], `it.crystalnest.prometheus.api.FireManager#setOnFire(Entity,float,ResourceLocation)`, linhas943–965 do sources.jar, nomeia o argumento em segundos e delega a `Entity::igniteForSeconds`. Sources.jar1016902bytes, SHA-256 `436aaa809e4162ca813e6c5bf7cce4a7ed1209ddb43b65ffcd9b3bf89006cb2a`. Isso fecha a unidade **nessa API consultada**, sem equiparar o built DTE1.1.2, o JAR físico ou a duração final em runtime.
+
+DTE/Iron’s/Prometheus possuem recurso/onda/fogo/status/procs; RPG progressão, BA runtime/world safety e Enshrouded classificação/Shroud. Assinatura ocupada: grande erupção anular com arma, souls50 e status que amplifica futuros danos elegíveis; source atual separa pai e fonte terminal. Uma nova magia com autoria por instância e budget transacional exige desenho original, sem clonar ou “consertar” upstream por segunda execução.
+
+- **Q1:** config/origens/Survival/ingredientes, mana/time/CTR/cooldown, snapshot power/W e cast recusado.
+- **Q2:** raio/altura/anel13/query, ground/LOS/aliados/PvP, target móvel/borda/repetição, primeiroOwner e dois casters/mundos, zero/cancel/resist/procs/kill credit.
+- **Q3:** stack49/50/extremos/0codec, spawnfalse semrefund, callback/arma trocada, fire API/unidades/resistência, Scorched ordem/originalDamage/lifesteal .10 versus .25.
+- **Q4:** dedicado/cliente/sync, budgets/partículas/chunks, owner morte/logout/unload/restart, source static e persistência não salva, dedup. **Todos físicos PENDING**, sem adapter/perk/runtime novo.
+
+[versions]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/gradle.properties#L11-L48
+[host-power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L160-L257
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L333
+[helper]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L119
+[weapon]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L787-L802
+[source-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/SpellDamageSource.java#L24-L71
+[spell]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/fire/SoulSetAblazeSpell.java#L37-L78
+[gates]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/fire/SoulSetAblazeSpell.java#L80-L93
+[guide]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/assets/discerning_the_eldritch/lang/en_us.json#L212-L213
+[cast]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/fire/SoulSetAblazeSpell.java#L116-L154
+[parent-source]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/fire/SoulSetAblazeSpell.java#L147-L154
+[wave-ctor]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/soul_eruption/SoulEruptionAoe.java#L36-L49
+[wave]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/soul_eruption/SoulEruptionAoe.java#L64-L157
+[terminal]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/soul_eruption/SoulEruptionAoe.java#L51-L62
+[wave-end]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/soul_eruption/SoulEruptionAoe.java#L169-L187
+[entity]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTEEntityRegistry.java#L257-L263
+[slice-source]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/fire/SoulSliceSpell.java#L171-L178
+[scorched]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/effects/ScorchedSoulPotionEffect.java#L18-L65
+[stacks]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTEDataComponentRegistry.java#L13-L21
+[kill]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/events/ServerEvents.java#L405-L415
+[scythe]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/items/weapons/SoulFireScytheItem.java#L36-L49
+[recipe]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/data/discerning_the_eldritch/recipe/smithing/soul_fire_scythe.json#L1-L16
+[aoe-hit]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L114-L150
+[aoe-state]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L216-L286
+[tremor]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L869-L884
+
+[prometheus]: https://maven.crystalnest.it/it/crystalnest/prometheus-neoforge/1.21-1.2.5/prometheus-neoforge-1.21-1.2.5-sources.jar

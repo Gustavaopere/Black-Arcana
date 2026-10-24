@@ -1,6 +1,6 @@
 # Progresso atual — magias, feitiços, habilidades e superfícies para perks
 
-**Checkpoint: 24/10/2026.** Base Black Arcana `de3ed3ddbc696597bae5e6dd993e04dbef99aa05`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
+**Checkpoint: 24/10/2026.** Base Black Arcana `0c347bfa534259773bcb59b50e3ceb0010e9d7e4`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
 
 ## Barra geral — todo o conteúdo aplicável
 
@@ -87,7 +87,7 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 | [✅-deeper-and-darker-spellbooks](../providers/✅-deeper-and-darker-spellbooks/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-dimensional-sable](../providers/✅-dimensional-sable/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-dis-enchanting-table](../providers/✅-dis-enchanting-table/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
-| [✅-discerning-the-eldritch](../providers/✅-discerning-the-eldritch/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
+| [✅-discerning-the-eldritch](../providers/✅-discerning-the-eldritch/README.md) | **22/22** — [fichas source-causais por parâmetro e consumidor](../providers/✅-discerning-the-eldritch/SPELL-PERK-BOUNDARIES-1.4.4-1.21.md) | ![22 de 22 fichas de spells auditadas no source](progress/complete.svg) | ⚠️ hosts/config/mutadores/Mastery Ritual/Survival/QA PENDING; +0 strict |
 | [✅-dragon-care](../providers/✅-dragon-care/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-dreamless-spells](../providers/✅-dreamless-spells/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-dungeons-delight](../providers/✅-dungeons-delight/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
@@ -200,6 +200,8 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 **Asterism Arcanum 0.1.0:** 11/11 fichas com fórmulas, geometria, targeting, procs, summon/teleport, cleanup e limites por eixo. Distinguidos dano direto versus helper, tipo de dano dos filhos, retorno Echo, loop Gateway, a janela do contador de hits e fases de buff/recast; publisher hash reconfirmado sem equiparar métodos source/JAR. [Dossiê comum](../providers/✅-asterism-arcanum/SPELL-PERK-BOUNDARIES-0.1.0.md). Dez spells normais e Gateway conditional permanecem separados; +0 identidades/strict e QA pendente.
 
 **Fire’s Ender Expansion 2.4.1:** 11/11 fichas com matrizes de dano/tipo, alvo/área, projéteis, tempos, custos/recasts e consumidores downstream. Separados callbacks de pagamento/tiro, fonte de dano plain/helper, efeitos da remoção, clocks herdados/locais e domínios/mapas de transporte. [Dossiê comum](../providers/✅-fires-ender-expansion/SPELL-PERK-BOUNDARIES-2.4.1.md). Identidade binária não foi estendida a todos os corpos source/JAR; +0 strict e aceite físico pendente.
+
+**Discerning The Eldritch 1.4.4-1.21:** 22/22 fichas com fórmulas, unidades, targeting, dano/tipo, geometria, tempo, custo/recast, summons e consumidores derivados. Separados evento de cura observer, veto Metaphysical, fontes plain/helper/hurt direto, estado compartilhado e hooks por fase; contrato Mastery da escola Ritual custom mantém pendência de token incompatível no RPG consultado. [Dossiê comum](../providers/✅-discerning-the-eldritch/SPELL-PERK-BOUNDARIES-1.4.4-1.21.md). +0 identidades/strict, sem aceite físico inferido.
 
 **Hierarquia preservada:** Black Arcana controla seu runtime mágico; RPG Skill Tree fornece progressão/atributos/Mastery/perks/gates por contrato; Enshrouded controla seu Shroud/exposure. Providers externos continuam donos de seus efeitos, recursos e settlement. Sem hook real, ⛔ fail-closed para mudança por perk de alvo, DamageType, alcance, colisão ou tempo. `CONFIG_NATIVE` não implica setter por jogador.
 

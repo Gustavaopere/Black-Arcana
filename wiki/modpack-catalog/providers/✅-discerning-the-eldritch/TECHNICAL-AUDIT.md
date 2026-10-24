@@ -50,7 +50,7 @@ Dentro do loop, cada projectile recebe `setPos(... z+i)` e imediatamente `setPos
 
 ### Otherworldly Presence
 
-Spell class confirma teleport + `METAPHYSICAL` por 10 s; server event confirma anti-cast. A descrição pública também afirma impedir causar/receber dano, mas esse settlement específico não foi localizado no conjunto de handlers auditado nesta passagem e permanece `NÃO VERIFICADO` no detalhe.
+Spell class confirma tentativa de teleport + `METAPHYSICAL` por200ticks; server event confirma anti-cast. A reauditoria de24/10 localizou `ServerEvents#livingIncomingDamageEvent` (linhas419–441 no pin): cancela incoming se vítima ou causingEntity Living têm Metaphysical. O veto não demonstra todo resultado no pack nem desfaz efeitos anteriores; QA físico permanece PENDING.
 
 ## Acquisition policy
 
@@ -74,3 +74,11 @@ Provider-native first. Uma integração Black Arcana pode observar events/effect
 - conceder stack/XP por tentativa cancelada;
 - reaplicar Frostbite/Insanity/Soul Fire em ledger paralelo;
 - contornar acquisition/cast-source gates de Ritual.
+
+## Reauditoria causal — 24/10/2026
+
+[Contratos e índice das22 fichas](SPELL-PERK-BOUNDARIES-1.4.4-1.21.md): fórmulas/defaults/unidades associados a classe#método e consumers downstream, com fases, ownership, dedup e limites por eixo. Identidade binária é preservada sem promover causalidade source a equivalência integral de métodos/JAR ou aceite físico. Config DTEServerConfig é COMMON, apesar do nome; dependências efetivas e sinais de licença divergentes estão registrados no dossiê comum.
+
+Achados: SpellHealEvent é observer; Mend tem três rotas de cura; Insanity pode avançar no mesmo handler após veto Silence; Rift possui filtro com corpo não protegido pelo if observado; Esoteric Edge tenta dano duas vezes em Living; SoulEruption/RitualBurn preservam fonte estática do primeiro owner; Carver usa estado singleton e CastType no tempo efetivo; summons têm limites de replacement e clocks nativos; Ritual custom tem contrato de token Mastery incompatível no RPG consultado. São evidências localizadas, não correções ou bugs reproduzidos no pack. Pistas de aquisição não são Survival aprovado.
+
+O cabeçalho13/10 com1857/1855 e22/39 é histórico; o painel atual mantém1856/1854 e38/39. +0 identidades/strict, sem Stage/runtime/adapter novo; QA físico e integração por perk continuam condicionados.

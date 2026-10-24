@@ -1,35 +1,98 @@
 # Rift Walker
 
-**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `discerning_the_eldritch:rift_walker`, classe `net.acetheeldritchking.discerning_the_eldritch.spells.eldritch.RiftWalkerSpell`, `SchoolRegistry.ELDRITCH_RESOURCE`; [Java21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207) e [dossiê SHA-exato](../EXACT-BINARY-SPELLS-1.4.4-1.21.md). Parâmetros source-pinned; runtime/Survival ⚠️; +0.
+**Dossiê documental — 24/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`, lógica `SOURCE_PINNED / SOURCE_CAUSALITY`, integração `CONTRATO_CONDICIONAL`, QA físico `PENDING`. **+0 identidades/+0 strict**: os rifts de origem/destino, invisibilidade e recasts pertencem à mesma spell.
 
-- **ID:** `discerning_the_eldritch:rift_walker`
-- **School:** Eldritch
-- **Levels:** 1–5
-- **Rarity:** Legendary
-- **Cast:** Instant
-- **Mana neutral:** 35–75
-- **Spell power neutral:** 12–32
-- **Cooldown:** 12 s
-- **Rift radius:** 3
-- **Rift damage:** `0.15 * getSpellPower`
-- **True invisibility:** 60 ticks / 3 s
+## Identidade, descrição e ingresso
 
-## Contract
+Provider Discerning The Eldritch (`mod_id=discerning_the_eldritch`), spell **`discerning_the_eldritch:rift_walker`**, escola default `irons_spellbooks:eldritch`. Declarante `net.acetheeldritchking.discerning_the_eldritch.spells.eldritch.RiftWalkerSpell`; consumer ofensivo `entity.spells.rift_walker.UnstableRiftEntity#tick`, tipo registrado `discerning_the_eldritch:unstable_rift`. [Registry][registry], [entidade][entity-registry].
 
-`onServerPreCast` creates an `UnstableRiftEntity` at the caster **before** teleport. `onCast` resolves a teleport target, teleports, resets fall distance, applies Iron's `TRUE_INVISIBILITY` for 60 ticks, then creates a second unstable rift at the destination.
+JAR físico histórico **`discerning_the_eldritch-1.4.4-1.21.jar`**, SHA-1 `cf35c225aced23b705d1e0fd1bc5c62d96540e0c`, publisher [CurseForge8816497](https://www.curseforge.com/minecraft/mc-mods/discerning-the-eldritch/files/8816497), 22098930 bytes segundo a [prova binária anterior](../EXACT-BINARY-SPELLS-1.4.4-1.21.md). Source oficial `AceTheEldritchKing/Discerning_The_Eldritch@7bbd81f902c65a4452f47656ebd948cae8cd5833`, versão declarada1.4.4-1.21. Build Iron’s3.16.2/NeoForge21.1.244/Azure3.1.0/Ace1.2.7.2; pack registrado Iron’s3.16.3/NeoForge21.1.250/Azure3.1.11/Ace1.2.7.2. Host consultado Iron’s3.16.3 `e4056af90302d37eb1739f5ff05020b020e6e252`. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md). Não se equiparam todos os métodos source/JAR nem a composição de hosts. Metadata MIT versus template PolyForm Shield permanece conflito de sinais de licença; somente fatos/paráfrases/permalinks, sem importar implementação/assets.
 
-If raycast hits a LivingEntity, the spell attempts positions around that target and faces the caster toward it after teleport; otherwise it uses Iron's teleport-location helper.
+[Guia oficial][guide], parafraseado: teleporte que deixa rifts instáveis com explosão atrasada. Chegada efetiva e filtros de explosão precisam seguir o código, não essa intenção. Sem overrides locais de crafting/loot/learning: Eldritch default exige aprendizado e allowLooting=false; crafting depende de aprendizado/config. No wrapper host, SCROLL é recusado se getRecastCount>0, inclusive no default1. Curios habilitam recasts e atributos; não provam aquisição da spell ou Survival PASS. [Escola][school], [gates][gates], [aquisição][acquisition], [count][count].
 
-Recast window = 100 ticks. Default recast count is 1; `RIFT_RIPPER_EMBLEM` or `KINGS_EFFIGY` raises it to 3.
+## Power, distância e defaults
 
-Distance = `softCapFormula(entityPowerMultiplier) * (base-level spellPower / 2)`.
+`L`=nível da fase correspondente, `C=POWER_MULTIPLIER`, `S=SPELL_POWER`, `E=schoolPower`, `B=12+5(L−1)`. Dano inicial armazenado por rift **`D=0.15×B×S×E×C` HP**. Distância **`R=0.5×B×C×softCap(S×E×C)` blocks**, pois `getSpellPower(L,null)` inclui C e `getEntityPowerMultiplier` também o inclui. `softCap(x)=x` para x≤1.5, senão `2−0.25/(x−1)`; não reduzir silenciosamente C a uma única ocorrência. Acima de1.5 o fator tende a2, mas não há cap absoluto de R independente de B/C. [Fórmulas][formula], [host power][power], [soft-cap][teleport-helper].
 
-## Dedup / authority
+| L default | Mana neutra | P neutro | R com fatores1 | D por rift antes de falloff |
+|---|---|---|---|---|
+|1|35|12|6blocks|1.8HP|
+|2|45|17|8.5blocks|2.55HP|
+|3|55|22|11blocks|3.3HP|
+|4|65|27|13.5blocks|4.05HP|
+|5|75|32|16blocks|4.8HP|
 
-The identity is **teleport with origin+destination delayed rifts + temporary true invisibility + item-gated recasts**. Do not replace it with a generic teleport observer or create extra rifts in a bridge.
+Defaults: Legendary, níveis1–5, **INSTANT0ticks**, cooldown12s, radius local3blocks, rift delay literal20ticks, True Invisibility60ticks/amp0. Valores neutros não são config implantada, nem dano/teleporte finais. [Spell][spell], [tick][rift-tick], [onCast][execution].
 
-UnstableRift hit timing/lifetime/friendly-fire are entity-native / `NÃO VERIFICADO` here.
+## Pipeline causal, recasts e falhas
 
-## Source
+1. Wrapper Iron’s faz admissão/aprendizado/mana/cooldown/SpellPreCastEvent; só depois inicia cast e chama `#onServerPreCast`. Esse método cria **rift de origem já no pre-cast servidor**, owner=caster, D no nível inicial e radius3, centrado no AABB do caster. Solicita addFreshEntity sem testar retorno. Fase ocorre **antes de SpellOnCastEvent e do débito**; alterar nível no evento posterior não reconfigura esse filho existente. [Origem][precast], [host][cast].
+2. OnCast cria RecastInstance se não houver ativo: **total1cast** default, ou **total3casts (inicial+2)** com Rift Ripper Emblem **ou** King’s Effigy; equipar ambos não soma. Janela100ticks é renovada nos recasts ativos pelo host. Constructor guarda remaining=total−1. No wrapper, mana só no cast inicial quando a origem a consome; recast ativo não cobra novamente. [Count][count], [onCast][execution], [recast][recast-instance], [host][cast], [recasts][recasts].
+3. Default total1 gera remaining0: `PlayerRecasts#addRecast` ainda guarda a entrada, mas `hasRecastForSpell` a considera inativa. O wrapper pode adicionar cooldown imediatamente; `#tick` pode removê-la depois do timeout e chamar onRecastFinished padrão, que adiciona cooldown. Não descrever isso como100ticks de recast utilizável nem prometer uma única callback de cooldown sem QA da composição. [Add/ativo][recast-active], [timeout][recasts], [cooldown final][cast].
+4. `#onCast` faz cast explícito de additionalCastData para **`TeleportSpell.TeleportData` do Iron’s**, não para `RiftWalkerSpell.TeleportData` declarado ao fim do arquivo. Se há objeto com target não-null, usa esse destino. Se não há objeto, faz raycastForEntity com R: alvo Living→até8 candidatos1.5blocks ao redor em passos45°, testando somente se o bloco acima é ar; pede teleport para dest+(0,1,0) e vira a visão ao alvo. Nenhum candidato livre é obrigatório após8tentativas. Sem Living, chama `TeleportSpell.findTeleportLocation`. [Execução][execution], [tipo interno][local-data], [solver host][solver].
+5. `Utils.handleSpellTeleport` publica SpellTeleportEvent cancelável/mutável e retorna **canceled**; DTE ignora o retorno. Assim resetFallDistance, som, setInvisible(true), pedido de TRUE_INVISIBILITY60 e **rift posterior na posição real atual** seguem mesmo se teleporte foi vetado. O som usa `dest`, que pode diferir do destino modificado pelo evento; não usar som como confirmação de chegada. Se TeleportData não-null tiver target null, não entra no fallback e alcança dest.x com dest null antes dos efeitos seguintes: caminho source exige QA, não exceção reproduzida. [Execução][execution], [helper][teleport-helper], [evento][teleport-event].
+6. TRUE_INVISIBILITY é host-owned: ao ser adicionado tenta limpar aggro em mobs próximos; incoming causado por Living com o effect remove-o. A chamada addEffect ignora retorno. Duração60 não promete3s completos de invisibilidade contra dano, nem confirma invis=false/cleanup final após setInvisible direto. [Efeito][invisibility], [execução][execution].
 
-`RiftWalkerSpell.java`, branch `1.21@7bbd81f...`.
+## Rifts: área ativa e settlement
+
+`UnstableRiftEntity` herda AoeEntity, seta owner/radius/D e circular. `#tick` **não chama super.tick** e `#applyEffect` é vazio; polling/reapplicationDelay/duration herdados não são o executor ofensivo normal. Não inferir tickCount congelado: idade pode avançar no ticker externo. Campo local `delay=20` é distinto do DATA_DELAY/getDelay/setDelay herdado. No tickCount==20, servidor executa a explosão; tickCount>20 solicita discard. Tracking existe só se `setTracking` for chamado; o cast normal deixa chamada comentada, portanto os rifts não seguem caster por esse caminho. [Constructor][rift-entity], [tick][rift-tick], [AoE host][aoe-tick].
+
+Com radius3 e dimensões sobrescritas **6×6blocks**, a query é boundingBox.inflate3, envelope **12×12×12blocks**, sem cap de alvos local. A linha do `if(dist²<r² && canHitEntity && LOS)` termina em **ponto-e-vírgula**: o bloco de dano seguinte é executado para **cada Entity da query**, sem esses guardas. O amount pedido é **`D×clamp(1.4−dist²/r²,0,1)`**, inclusive tentativa0 fora do falloff. Não apresentar esfera de radius3/LOS/owner como filtros ativos desse if; a geometria da query e o falloff são distintos. O helper ainda pode vetar friendly fire para Living. [Explosão][rift-tick], [dimensões][rift-dimensions], [radius refresh/cap][aoe-radius], [helper][damage-helper].
+
+Fonte é SpellDamageSource Rift Walker, direta=rift, causador=owner, default `irons_spellbooks:eldritch_magic`; helper Living passa por SpellDamageEvent/resist/friendly/hurt. Não há explosão vanilla ou mutação de bloco local; Blastwave/partículas não são outra fonte. `NoKnockbackProjectile` é interface herdada de AoeEntity e o helper consome essa condição no ramo Living. Não há ledger por alvo/tentativa entre rifts: origem e destino podem tentar o mesmo alvo separadamente. [Fonte][damage-source], [helper][damage-helper], [AoE][aoe-tick].
+
+## Matriz de alteração para perks
+
+| Eixo | Valor / consumer / fase | Boundary real e limite para perks | QA |
+|---|---|---|---|
+| Dano / escala / crit | D=.15P por rift, falloff clamp1.4−dist²/r² na explosão; sem crítico local. Origem é snapshot pré-evento, posterior usa onCast. [Fórmula][formula], [precast][precast], [tick][rift-tick]. | Power **NATIVE_ATTRIBUTE**, C **CONFIG_NATIVE**; SpellDamageEvent#setAmount/cancel real pré-resist/hurt para Living. **HOOK_VERIFICADO**, adapter **CONDITIONAL** para fase/filho/zeroamount e dedup. | Q1/Q3 |
+| Tipo / owner / hit | SpellDamageSource direta=rift, causador=caster; default eldritch_magic; dois rifts não compartilham ledger. [Fonte][damage-source], [escola][school], [tick][rift-tick]. | Amount não é setter de tipo; conversão **⛔ SEM_HOOK_SEGURO**. Preservar causalidade e não gerar segundo dano ao ver VFX. | Q3 |
+| Alcance / destino / targeting | R=.5BC×softCap(SEC), host TeleportData ou fallback ray/8candidatos/solver. [Execução][execution], [fórmula][formula], [solver][solver]. | SpellTeleportEvent coords/veto **HOOK_VERIFICADO** no helper, mas veto não cancela benefícios/novo rift. Range getter privado; extensão/retarget **CONTRATO_CONDICIONAL**, sem validar colisão/chunks/claims por analogia. | Q2/Q4 |
+| Área / radius / targets | r3, dimensões2r×2r, query bbox.inflate(r); if com semicolon não aplica filtros pretendidos. [Tick][rift-tick], [dimensões][rift-dimensions]. | AoeEntity#setRadius server clamp0..32/refreshDimensions é API real por instância; não callback terceiro pré-spawn. Altera caixa+falloff+VFX correlacionados. Single→AOE/filtro/targetcap **⛔ SEM_HOOK_SEGURO** sem resolver seguro. | Q2/Q3 |
+| Projétil / geometria / movimento | Rift é área estática, não missile ofensivo; registry1×1/tracking64 é sobrescrito pelo getDimensions2r×2r. setTracking público, não usado no cast. [Registro][entity-registry], [entity][rift-entity], [dimensões][rift-dimensions]. | Speed/spread/pierce ofensivos **N/A**. Tracking/resize/count por perk sem seam de criação **⛔ fail-closed**; não mover origem/destino por observer de teleporte. | Q2/Q4 |
+| Tempo / cooldown / duração | INSTANT0, cooldown12s=240ticks; delay local20, discard seidade>20; invis60 e janela recast100 são relógios distintos. [Spell][spell], [tick][rift-tick], [execução][execution]. | Cooldown config/evento Pre do [contrato comum](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md); setDelay herdado não controla finaldelay20 local. Duração/cadência da área **⛔ SEM_HOOK_SEGURO** nesse override. | Q1/Q4 |
+| Mana / casts / charges | `int((35+10(L−1))×MANA_MULTIPLIER)`; total1/3cast, janela100; default entrada remaining0 tem lifecycle próprio. [Count][count], [host][power], [recasts][recasts]. | Mana **CONFIG_NATIVE**; SpellOnCastEvent setters reais pré-onCast não atualizam rift de origem. Sem setter independente de count/janela; curio é condição nativa, não perk comprovada. | Q1/Q4 |
+| Estados / mundo | TRUE_INVISIBILITY60/amp0, setInvisible/resetFallDistance, teleporte; sem bloco/fuel/summon próprio. [Execução][execution], [efeito][invisibility]. | Veto do helper não é transação de cast inteira; não dar refund/segundo teleporte/segunda invisibilidade por BA. Status/duração independente **⛔ SEM_HOOK_SEGURO**. | Q2/Q4 |
+| Persistência / cleanup | Host Aoe salva Age/Radius/Damage/Duration/Delay/owner via pai; local tracking não tem save/load; delay20local diverge de getDelay. [NBT][aoe-nbt], [entity][rift-entity]. | Save parcial não prova retry seguro/owner sync/recast retomado/cleanup. **CONTRATO_CONDICIONAL**; nenhum ledger paralelo de rifts/retornos. Summon AI/cap **N/A**. | Q4/Q5 |
+
+## Autoria, concepção e pendências
+
+DTE/Iron’s possuem intenção, cast/recast/mana, teleporte, rifts e invisibilidade; RPG Skill Tree possui Mastery/perks/gates, BA seu runtime/world safety e Enshrouded seu Shroud/classificação. Dedup exige cast pai/fase pre-cast ou onCast/UUID rift/tick20/alvo/resultado. Anúncio de cast, tentativa0, evento de teleporte vetado e segundo rift não são automaticamente sucesso/novo cast. Assinatura ocupada: deslocamento com áreas atrasadas em duas fases e recasts por curio; uma nova magia original precisa contrato próprio seguro, sem copiar source/assets.
+
+- **Q1:** aprendizado/config/CastSource/SCROLL/Survival; L1–5 e C nos dois termos de R, C/power entre pre-cast e onCast, mana/cooldown e count1 versus3.
+- **Q2:** destinationdatanull/targetnull/tipo incompatível,8candidatos obstruídos/cantos/altura/dimensão/chunk/claims/aliados/PvP, veto/coords alteradas e rift na posição real versus som.
+- **Q3:** query12³/falloff/esfera pretendida não aplicada, owner/aliados/zeroamount e Entity não Living; evento/resistência/hurt, rifts sobrepostos e dedup de procs/XP.
+- **Q4:** idade externa/tick20/exactness/discard>20, setDelay versus finaldelay, tracking, invis negada/removida no incoming, entry remaining0/timeout/cooldowncallback, spawn recusado e interrupção após rift de origem.
+- **Q5:** dedicado/cliente/Survival/multiplayer, sync/NBT/recast/owner/unload/logout/morte/restart e budgets. **Todos PENDING**; sem adapter/perk/runtime novo ou Stage promovido.
+
+[versions]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/gradle.properties#L11-L25
+[power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L241
+[cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L347
+[school]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/registry/SchoolRegistry.java#L138-L148
+[acquisition]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L594-L630
+[damage-source]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L560-L565
+[damage-helper]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[damage-event]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellDamageEvent.java#L24-L51
+[registry]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/SpellRegistries.java#L63-L64
+[guide]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/assets/discerning_the_eldritch/lang/en_us.json#L188-L189
+[spell]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/RiftWalkerSpell.java#L40-L80
+[count]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/RiftWalkerSpell.java#L93-L102
+[precast]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/RiftWalkerSpell.java#L104-L111
+[execution]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/RiftWalkerSpell.java#L113-L174
+[formula]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/RiftWalkerSpell.java#L176-L184
+[local-data]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/RiftWalkerSpell.java#L186-L206
+[entity-registry]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTEEntityRegistry.java#L137-L142
+[rift-entity]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/rift_walker/UnstableRiftEntity.java#L28-L52
+[rift-tick]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/rift_walker/UnstableRiftEntity.java#L54-L113
+[rift-dimensions]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/rift_walker/UnstableRiftEntity.java#L115-L133
+[teleport-helper]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L167-L184
+[teleport-event]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellTeleportEvent.java#L7-L18
+[solver]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/TeleportSpell.java#L109-L131
+[gates]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L373-L393
+[recast-instance]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/RecastInstance.java#L27-L35
+[recast-active]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/PlayerRecasts.java#L46-L88
+[recasts]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/PlayerRecasts.java#L117-L212
+[invisibility]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/effect/TrueInvisibilityEffect.java#L16-L45
+[aoe-tick]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L21-L150
+[aoe-radius]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L216-L269
+[aoe-nbt]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L289-L328

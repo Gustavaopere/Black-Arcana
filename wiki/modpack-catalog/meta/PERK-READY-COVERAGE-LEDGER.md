@@ -87,7 +87,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-deeper-and-darker-spellbooks` | 8 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-dimensional-sable` | 3 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-dis-enchanting-table` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-discerning-the-eldritch` | 32 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-discerning-the-eldritch` | 32 | **22/22 fichas documentais** com parâmetros/consumidores e [contratos condicionais](../providers/✅-discerning-the-eldritch/SPELL-PERK-BOUNDARIES-1.4.4-1.21.md); hosts/config/Mastery Ritual/Survival/QA PENDING; +0 strict |
 | `✅-dragon-care` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-dreamless-spells` | 10 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-dungeons-delight` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
