@@ -21,3 +21,11 @@
 ## Infraestrutura reutilizável futura
 
 - [minecraft-mod-factory](https://github.com/Gustavaopere/minecraft-mod-factory) permanece candidata para padronizar validadores/esquemas de evidência. É infraestrutura compartilhada, **não** runtime de casting, provider instalado, nova dependência ou fonte de verdade das spells específicas. Sem migração/cópia nesta tranche.
+
+## Ampliação do inventário de dependências — 24/10/2026
+
+O scanner acrescenta, **em cada método já inventariado**, `read_fields` (`getfield`/`getstatic`), `written_fields` (`putfield`/`putstatic`), `numeric_opcodes` (aritmética/conversões explícitas) e `branch_opcodes` (`if*`/`switch`). Cada conjunto contém apenas símbolos ou nomes de instruções; **não** reconstrói fluxo de pilha, argumentos, beneficiário, escala, guardas ou fórmula.
+
+Exemplo de inferência **proibida**: observar `getfield radius:F` e `fadd` no mesmo método e declarar uma fórmula para o raio. A causalidade desses operandos permanece `NÃO VERIFICADA`. Não há novo hook homologado, nova identidade mágica, alteração do runtime ou mudança na barra 7/7; integrações seguem `SEM_HOOK_SEGURO` até QA e contrato provider-native.
+
+Os testes sintéticos verificam a separação por método, acesso de leitura/escrita e comentários ausentes; o workflow existente testa separadamente o JAR oficial exato (SHA-1 congelado) e publica apenas o JSON clean-room. **Somente a execução final do CI pode promover esta inspeção para evidência binária executada.**

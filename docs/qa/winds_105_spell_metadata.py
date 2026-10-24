@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Clean-room, SHA-exact method/operand *inventory* for Wind's Spellbooks 1.0.5.
 
-Records symbolic consumers and literal candidates, not copied code, runtime outcomes,
+Records method-level symbols, field accesses, numeric/control opcodes and literals; not copied code, runtime outcomes,
 perks, numerical formulas, or evidence of config/Survival behavior.
 """
 from __future__ import annotations
@@ -30,6 +30,18 @@ HEADER = re.compile(r"^  (?:public|protected|private) .+\([^;]*\);$")
 OPCODE = re.compile(r"^\s*\d+:\s+([a-z][\w]*)\b(?:[^\n]*?)(?:\s+//\s+(.*))?$")
 CALL = re.compile(r"^(?:InterfaceMethod|Method)\s+([^\s]+)")
 CONSTANT = re.compile(r"^(?:Float|Double|int|long)\s+(.+)$")
+FIELD = re.compile(r"^Field\s+(\S+)$")
+NUMERIC_OPS = frozenset("""
+    iadd ladd fadd dadd isub lsub fsub dsub imul lmul fmul dmul
+    idiv ldiv fdiv ddiv irem lrem frem drem ineg lneg fneg dneg
+    iinc i2l i2f i2d l2i l2f l2d f2i f2l f2d d2i d2l d2f
+""".split())
+CONTROL_OPS = frozenset({"tableswitch", "lookupswitch"})
+
+def _empty_method() -> dict:
+    return {"invoked_symbols": set(), "literal_operands": set(),
+            "read_fields": set(), "written_fields": set(),
+            "numeric_opcodes": set(), "branch_opcodes": set()}
 
 class AuditError(ValueError):
     pass
@@ -43,11 +55,11 @@ def summarize_disassembly(disassembly: str) -> dict:
             current = line.strip()
             if current in sections:
                 raise AuditError("ambiguous duplicate method declaration")
-            sections[current] = {"invoked_symbols": set(), "literal_operands": set()}
+            sections[current] = _empty_method()
             continue
         if line.startswith("  static {};"):
             current = "<clinit>"
-            sections.setdefault(current, {"invoked_symbols": set(), "literal_operands": set()})
+            sections.setdefault(current, _empty_method())
             continue
         if not current:
             continue
@@ -60,6 +72,15 @@ def summarize_disassembly(disassembly: str) -> dict:
             ref = CALL.match(comment)
             if ref:
                 sections[current]["invoked_symbols"].add(ref.group(1))
+        if op in {"getfield", "getstatic", "putfield", "putstatic"}:
+            field = FIELD.match(comment)
+            if field:
+                key = "read_fields" if op.startswith("get") else "written_fields"
+                sections[current][key].add(field.group(1))
+        if op in NUMERIC_OPS:
+            sections[current]["numeric_opcodes"].add(op)
+        if op.startswith("if") or op in CONTROL_OPS:
+            sections[current]["branch_opcodes"].add(op)
         if op.startswith(("ldc", "iconst_", "fconst_", "dconst_", "lconst_", "bipush", "sipush")):
             literal = CONSTANT.match(comment)
             if literal:
@@ -108,10 +129,10 @@ def audit(jar: Path) -> dict:
     if jar.stat().st_size != st.st_size or hashlib.sha1(jar.read_bytes()).hexdigest() != observed:
         raise AuditError("JAR modified during audit")
     return {
-        "result": "PASS", "evidence_class": "SHA1_EXACT_JAVAP_METHOD_AND_LITERAL_INVENTORY_NOT_CAUSAL_PROOF",
+        "result": "PASS", "evidence_class": "SHA1_EXACT_JAVAP_METHOD_FIELD_OPCODE_INVENTORY_NOT_CAUSAL_PROOF",
         "jar": JAR_NAME, "sha1": observed, "provider": "wind_spellbooks", "class_count": len(results),
         "spells": results,
-        "limits": ["method signatures and literal candidates only", "no formula/argument attribution",
+        "limits": ["method-level symbols, literal candidates and opcode families only", "no operand stack tracking or formula/argument attribution",
                    "no host registry, config, combat, targeting or gameplay validation",
                    "no approved RPG Skill Tree adapter or Black Arcana mutation"],
     }
