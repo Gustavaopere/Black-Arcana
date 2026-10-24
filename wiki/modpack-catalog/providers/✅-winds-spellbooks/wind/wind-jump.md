@@ -53,3 +53,13 @@ Release 1.0.5 (CurseForge file 8485822) + logs runtime do pack/ASM FundamentalPr
 | `onClientCast(Level, int, LivingEntity, ICastData)` | Lê `ImpulseCastData.{hasImpulse,x,y,z}` e escreve `LivingEntity.hasImpulse`; desvio `ifeq` | Não transferir autoridade ao cliente nem inferir equivalência entre client e server. |
 
 O construtor ainda apresenta escritas de `baseManaCost`, `manaCostPerLevel`, `baseSpellPower`, `spellPowerPerLevel`, `castTime` e `defaultConfig`; seus valores não são inferidos desses nomes. Mesmo com os campos e operadores, **não há fluxo de operandos/guardas homologado, fórmula numérica aprovada, hook mutador seguro, nem QA provider-native**. Manter `NÃO VERIFICADO` e `SEM_HOOK_SEGURO` para integração de perks; denominadores e identidade 7/7 sem alteração.
+
+## Getter escalar com proveniência de operandos — 24/10/2026
+
+**🟡 Expressão aritmética compilada verificada, sem homologação de gameplay.** A inspeção do JAR exato `wind_spellbooks-1.0.5.jar` (SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`) reconstruiu a pilha JVM integral do método selecionado, mediante gramática estrita e sem opcodes desconhecidos. Fonte: [CI específico #40124346655](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40124346655), artefato `wind-spellbooks-105-methods/scalar-getters.json`.
+
+- **Método:** `getFloatDuration(int, LivingEntity)`.
+- **Expressão observável:** `100 * level`, onde `level` é o primeiro parâmetro `int` (local JVM 1), e as operações seguem semântica de inteiros da JVM.
+- **Limite de interpretação:** Apesar do nome do método, a assinatura retorna int; a escala e o uso da duração pelo efeito SLOW_FALLING ainda não foram auditados.
+- **Escopo da promoção:** esta evidência atualiza exclusivamente o getter acima; as advertências anteriores continuam válidas para alcance, targeting, dano, impulso, efeitos, custo, cooldown e integração.
+- **Perk mutadora:** ⛔ `SEM_HOOK_SEGURO`, até demonstrar consumidor, lifecycle, bounds e contrato host/provider com QA em runtime; Black Arcana não duplica efeitos e RPG Skill Tree não assume autoridade de casting.
