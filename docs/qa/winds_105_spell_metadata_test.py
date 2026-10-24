@@ -33,6 +33,37 @@ class WindMetadataTests(unittest.TestCase):
         self.assertIn('foo/Bar.getRange:()F', row['invoked_symbols'])
         self.assertEqual(['1', '2.5'], row['literal_operands'])
         self.assertNotIn('foo/Bar.getRange:()F', result['public demo.WindJumpSpell();']['invoked_symbols'])
+    def test_field_read_write_and_numeric_control_are_method_scoped(self):
+        disassembly = SAMPLE.replace(
+            '       9: return',
+            """       9: getfield #5 // Field demo/WindJumpSpell.radius:F
+      12: getstatic #6 // Field demo/SpellConfig.DEFAULT_RADIUS:F
+      15: fadd
+      16: ifge 23
+      19: putfield #7 // Field demo/WindJumpSpell.lastRadius:F
+      22: return
+      23: return""")
+        result = audit.summarize_disassembly(disassembly)
+        row = result['public void onCast();']
+        self.assertEqual(
+            ['demo/SpellConfig.DEFAULT_RADIUS:F', 'demo/WindJumpSpell.radius:F'],
+            row['read_fields'])
+        self.assertEqual(['demo/WindJumpSpell.lastRadius:F'], row['written_fields'])
+        self.assertEqual(['fadd'], row['numeric_opcodes'])
+        self.assertEqual(['ifge'], row['branch_opcodes'])
+        for key in ('read_fields', 'written_fields', 'numeric_opcodes', 'branch_opcodes'):
+            self.assertEqual([], result['public demo.WindJumpSpell();'][key])
+        # A field access and fadd prove only structural presence, not a radius formula.
+        self.assertNotIn('formula', row)
+
+    def test_no_unjustified_field_from_comment_free_opcodes(self):
+        disassembly = SAMPLE.replace(
+            '       9: return',
+            '       9: getfield #99\\n      12: putstatic #98\\n      15: return')
+        row = audit.summarize_disassembly(disassembly)['public void onCast();']
+        self.assertEqual([], row['read_fields'])
+        self.assertEqual([], row['written_fields'])
+
     def test_missing_method_fails_closed(self):
         with self.assertRaises(audit.AuditError):
             audit.summarize_disassembly('public class NotJava;')
