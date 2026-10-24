@@ -1,6 +1,6 @@
 # Wind's Spellbooks 1.0.5 — mapa de chamadas diretas aos nove getters
 
-**Data:** 24/10/2026 · **Estado:** 🟡 gate de evidência, aguardando CI exato desta branch.  
+**Data:** 24/10/2026 · **Estado:** ✅ gate binário 9/9 arestas diretas selecionadas aprovado em CI; ⚠️ fluxo de operandos e hooks continuam pendentes.  
 **Provider:** `wind_spellbooks` · JAR físico `wind_spellbooks-1.0.5.jar` · SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`.  
 **Baseline:** Black Arcana `main@2a507d16cf3b5b5ce38dabc610203442c8bf1e00` (PR #883 integrado).  
 **Fonte:** extração clean-room de invocações JVM por método, reutilizando `docs/qa/winds_105_spell_metadata.py`; **nenhum código/bytecode do provider é reproduzido**.
@@ -41,3 +41,9 @@ Estes símbolos foram inventariados **no mesmo método** que eventuais chamadas 
 - Próximo recorte: rastrear argumentos de chamadas e fluxos JVM de `onCast`/entidades/efeitos com guards e fronteiras host, sem copiar implementação externa. Também auditar os consumidores externos das duas percentagens de Tailwind e a lógica de recasts de Aeropic.
 - **Sem QA provider-native, cliente real ou compatibilidade IronSable comprovados.** `SEM_HOOK_SEGURO` para perks que alterem essas superfícies; o RPG Skill Tree não possui casting, Wind's/Iron's permanecem authorities do spell e Black Arcana somente do próprio runtime.
 - **Nenhuma contagem nova:** 7/7 fichas Wind's, 9/9 getters selecionados, campanha binária 38/39, global —%/≥1.856; Stage 06.05 🟡, Stage 09 físico pendente.
+
+## Prova executada no JAR oficial
+
+[Workflow #40130495377](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40130495377) concluiu `SUCCESS`; `getter-consumer-edges.json` foi baixado e revisado. Resultado `PASS_SHA_EXACT_DIRECT_CALL_EDGE_INVENTORY`, **9/9 getters selecionados em 6/7 classes de spells**, SHA-1 físico `8744886899bc245ae147a44baa2b183689cec7da`. A sétima classe (Wind Blade) continua no inventário 7/7, mas não pertence à população destes getters; nenhum novo feitiço foi criado. Todos os sinks co-presentes previstos foram encontrados. O scanner e os nove testes sintéticos passaram.
+
+**Advertência de método científico:** esse `SUCCESS` significa somente arestas explícitas de chamada e coexistência de símbolos em métodos binários. `effective_consumer_argument_flow: NOT_PROVEN` para **9/9**; não é aprovação de alteração de raio, recarga, duração, alvo ou impulso por perks. Os consumidores de classes externas, condições, stack dos sinks e QA de cliente/Survival permanecem abertos.
