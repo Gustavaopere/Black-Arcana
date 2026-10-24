@@ -12,6 +12,8 @@ on:
       - 'docs/qa/winds_105_getter_formulas_test.py'
       - 'docs/qa/winds_105_formula_contract.py'
       - 'docs/qa/winds_105_formula_contract_test.py'
+      - 'docs/qa/winds_105_mobility_getters.py'
+      - 'docs/qa/winds_105_mobility_getters_test.py'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/**'
   push:
     branches: [main]
@@ -23,6 +25,8 @@ on:
       - 'docs/qa/winds_105_getter_formulas_test.py'
       - 'docs/qa/winds_105_formula_contract.py'
       - 'docs/qa/winds_105_formula_contract_test.py'
+      - 'docs/qa/winds_105_mobility_getters.py'
+      - 'docs/qa/winds_105_mobility_getters_test.py'
   workflow_dispatch:
 
 permissions:
@@ -44,6 +48,8 @@ jobs:
         run: python3 docs/qa/winds_105_getter_formulas_test.py -v
       - name: Synthetic pinned-formula drift tests
         run: python3 docs/qa/winds_105_formula_contract_test.py -v
+      - name: Synthetic fail-closed mobility getter tests
+        run: python3 docs/qa/winds_105_mobility_getters_test.py -v
       - name: Download exact published Wind's Spellbooks 1.0.5 and verify frozen physical SHA-1
         shell: bash
         run: |
@@ -69,6 +75,13 @@ jobs:
             --output build/winds-105/scalar-getters.json
       - name: Verify four SHA-exact reference ASTs (fail-closed on any mismatch)
         run: python3 docs/qa/winds_105_formula_contract.py --json build/winds-105/scalar-getters.json
+      - name: Audit five more pure float getters on exact JAR
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_mobility_getters.py \
+            --jar build/winds-105/wind_spellbooks-1.0.5.jar \
+            --output build/winds-105/mobility-getters.json
       - name: Publish clean-room JSON only (never redistribute provider JAR)
         if: always()
         uses: actions/upload-artifact@v7
@@ -77,5 +90,6 @@ jobs:
           path: |
             build/winds-105/spell-methods.json
             build/winds-105/scalar-getters.json
+            build/winds-105/mobility-getters.json
           retention-days: 14
           if-no-files-found: ignore
