@@ -83,3 +83,17 @@ O construtor ainda apresenta escritas de `baseManaCost`, `manaCostPerLevel`, `ba
 `getRecastCount`: **1** instrução `invoke*` no JAR; 0 a partir de outras classes do namespace do Wind's. A chamada observada permanece em `getUniqueInfo`; host/recasts e gameplay não foram comprovados.
 
 A ausência de chamadas entre classes é relativa somente a `invoke*` explícitos no JAR Wind's 1.0.5; não inspeciona dependências host Iron's/IronSable, reflexão, dispatch virtual, effects indiretos, Mixins, calls via eventos nem fluxo JVM até os setters. **⛔ `SEM_HOOK_SEGURO`** para perks que modifiquem esses valores. Nenhum Stage ou contagem de spells foi alterado.
+
+## Superfícies nativas de recast do efeito — 24/10/2026
+
+**✅ Metadados simbólicos confirmados, ⚠️ execução/valores pendentes.** [Workflow Wind #40136512061](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40136512061), artefato `effect-boundaries.json` do JAR `wind_spellbooks-1.0.5.jar`, SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`. A classe `net.raptorzizi.wind_spellbooks.effect.AeropicEffect` foi localizada no binário instalado; vinculação de registry e dispatch de runtime não decorrem somente do nome.
+
+| Método compilado | Símbolos observados | Limites |
+|---|---|---|
+| `applyEffectTick(LivingEntity, int)` | `AbstractSpell.getRecastCount`, `PlayerRecasts.addRecast`, `hasRecastForSpell`, `RecastInstance.<init>`, `DamageSources.applyDamage`; escritas em `LivingEntity.fallDistance`, `Entity.invulnerableTime` | Não comprova contagem máxima, consumo, janela, alvo, dano e condições de aplicação. |
+| `onEffectAdded(LivingEntity, int)` | `AbstractSpell.getRecastCount`, `ServerPlayer.getPersistentData`, `CompoundTag.putInt`/`remove` | Persistência/recast referenciados; valores, nomes das chaves NBT e regras exatas não provados. |
+| `onEffectRemoved(LivingEntity, int)` | `PlayerRecasts.decrementRecastCount`, `hasRecastForSpell`, `CompoundTag.remove`, `LivingEntityAccessor.setLivingEntityFlagInvoker` | Não comprova ordem de cleanup, bloqueio anti-replay ou ausência de dupla atualização. |
+
+**Distinção crítica:** o efeito chama simbolicamente **`io.redspace.ironsspellbooks.api.spells.AbstractSpell.getRecastCount`**, e não `AeropicSpell.getRecastCount` pelo nome da classe concreta. Logo, o inventário anterior de **zero chamadas entre classes diretamente qualificadas ao getter Aeropic** continua válido, mas não exclui dispatch virtual ao override. Para validar a fórmula `max(0, level - 1)` no recast real é necessário analisar receiver concreto e host Iron's 3.16.3; não atribuir comportamento dinâmico apenas pelo símbolo.
+
+**⛔ Integração de perks:** preservar `PlayerRecasts` e seu lifecycle provider-native; não criar segundo contador, NBT duplicado ou manipulador de recast. Stage 06.05 🟡 e Stage 09 físico pendente.
