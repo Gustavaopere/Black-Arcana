@@ -63,3 +63,15 @@ O construtor ainda apresenta escritas de `baseManaCost`, `manaCostPerLevel`, `ba
 - **Limite de interpretação:** O retorno é uma contagem inteira calculada por este método; janela, consumo, recast extra e configuração externa não foram inspecionados.
 - **Escopo da promoção:** esta evidência atualiza exclusivamente o getter acima; as advertências anteriores continuam válidas para alcance, targeting, dano, impulso, efeitos, custo, cooldown e integração.
 - **Perk mutadora:** ⛔ `SEM_HOOK_SEGURO`, até demonstrar consumidor, lifecycle, bounds e contrato host/provider com QA em runtime; Black Arcana não duplica efeitos e RPG Skill Tree não assume autoridade de casting.
+
+## Arestas de chamadas diretas e sinks co-presentes — 24/10/2026
+
+**⚠️ Evidência restrita:** [CI exato #40130495377](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40130495377), artefato `getter-consumer-edges.json` com estado `PASS_SHA_EXACT_DIRECT_CALL_EDGE_INVENTORY` e SHA-1 oficial `8744886899bc245ae147a44baa2b183689cec7da`. O inventário examina chamadas diretas nos métodos desta classe de spell; não rastreia todas as classes do provider.
+
+| Getter com expressão compilada já documentada | Chamador(es) diretos nesta classe | Invocação direta de `onCast` |
+|---|---|---|
+| `getRecastCount(int, LivingEntity)` | `getUniqueInfo` | **não observado** |
+
+**Sinks/efeitos independentes no mesmo método:** `onCast` contém chamadas de teleporte/alteração do movimento e leitura do efeito `ACROBATICS`; não contém invocação direta de `getRecastCount` nesta classe. Isso NÃO exclui controle de recast no host ou em outra classe.
+
+**Estado causal:** `SAME_METHOD_ONLY_NOT_GETTER_TO_SINK_DATAFLOW`. A presença do getter e de um setter no mesmo `onCast` **não** prova que o retorno chega àquele setter, nem seus guards/configuração/beneficiário. **⛔ `SEM_HOOK_SEGURO` para perks mutadoras**; não reproduzir efeitos provider-native nem alterar autoridades de Iron's/Wind's/Black Arcana/RPG Skill Tree. Stage 06.05 e Stage 09 sem promoção.
