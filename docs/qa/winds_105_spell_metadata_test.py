@@ -59,7 +59,7 @@ class WindMetadataTests(unittest.TestCase):
     def test_no_unjustified_field_from_comment_free_opcodes(self):
         disassembly = SAMPLE.replace(
             '       9: return',
-            '       9: getfield #99\\n      12: putstatic #98\\n      15: return')
+            '       9: getfield #99\n      12: putstatic #98\n      15: return')
         row = audit.summarize_disassembly(disassembly)['public void onCast();']
         self.assertEqual([], row['read_fields'])
         self.assertEqual([], row['written_fields'])
