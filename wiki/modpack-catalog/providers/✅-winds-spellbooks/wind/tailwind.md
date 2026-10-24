@@ -50,3 +50,14 @@ Runtime registry + ASM do pack; release 1.0.5; changelog 1.0.1.
 | `onCast(Level, int, LivingEntity, CastSource, MagicData)` | Lê `ModMobEffectRegistry.TAILWIND`; `f2i`, `fmul`, `isub` | Duração, amplificador e stacking não determinados. |
 
 O construtor ainda apresenta escritas de `baseManaCost`, `manaCostPerLevel`, `baseSpellPower`, `spellPowerPerLevel`, `castTime` e `defaultConfig`; seus valores não são inferidos desses nomes. Mesmo com os campos e operadores, **não há fluxo de operandos/guardas homologado, fórmula numérica aprovada, hook mutador seguro, nem QA provider-native**. Manter `NÃO VERIFICADO` e `SEM_HOOK_SEGURO` para integração de perks; denominadores e identidade 7/7 sem alteração.
+
+## Fórmulas escalares adicionais verificadas — 24/10/2026
+
+**🟡 Evidência binária de getters, sem QA de gameplay.** [Execução JVM exata #40126898432](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40126898432), artefato `wind-spellbooks-105-methods/mobility-getters.json`, verificado no JAR SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`. Os getters foram integralmente interpretados por parser conservador; `level` é o parâmetro inteiro no slot JVM 1. Fórmulas reproduzidas em notação matemática explicativa, **não** código do provider.
+
+| Getter | Expressão compilada do retorno | Observação de tipo e operandos | Ainda NÃO VERIFICADO |
+|---|---|---|---|
+| `getPercentAirSpeed(int)` | `(((float)level * 0.15f) * 100.0f)` | Dois `fmul`, com conversão explícita `i2f`; manter ordem dos cálculos para respeitar arredondamento de `float`. | Nome do método não prova se a porcentagem é aditiva, multiplicativa, exibida na UI ou aplicada no movimento. |
+| `getPercentJump(int)` | `((0.5f + (0.3f * ((float)(level - 1)))) * 100.0f)` | Subtração `isub` antes de `i2f`, seguida por `fmul`/`fadd`/`fmul`. | Não determina impulso real de salto, efeito de equipamentos, parâmetros de configuração ou stacking. |
+
+A expressão compilada isolada não autoriza perk mutadora nem alteração em `onCast`. **⛔ SEM_HOOK_SEGURO** até confirmar chamador, geometrias e host; nenhuma alteração de mana, cooldown, efeitos, poderes, duração, entidades ou configuração foi implementada. Wind's/Iron's permanecem autoridades provider-native; Black Arcana possui seu runtime, RPG Skill Tree apenas progressão/perks por boundary real.
