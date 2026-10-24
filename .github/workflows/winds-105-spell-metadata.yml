@@ -8,12 +8,21 @@ on:
       - 'docs/qa/winds_105_spell_metadata.py'
       - 'docs/qa/winds_105_spell_metadata_test.py'
       - 'docs/qa/winds-105-spell-parameter-gate.md'
+      - 'docs/qa/winds_105_getter_formulas.py'
+      - 'docs/qa/winds_105_getter_formulas_test.py'
+      - 'docs/qa/winds_105_formula_contract.py'
+      - 'docs/qa/winds_105_formula_contract_test.py'
+      - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/**'
   push:
     branches: [main]
     paths:
       - '.github/workflows/winds-105-spell-metadata.yml'
       - 'docs/qa/winds_105_spell_metadata.py'
       - 'docs/qa/winds_105_spell_metadata_test.py'
+      - 'docs/qa/winds_105_getter_formulas.py'
+      - 'docs/qa/winds_105_getter_formulas_test.py'
+      - 'docs/qa/winds_105_formula_contract.py'
+      - 'docs/qa/winds_105_formula_contract_test.py'
   workflow_dispatch:
 
 permissions:
@@ -31,6 +40,10 @@ jobs:
           java-version: '21'
       - name: Synthetic fail-closed metadata tests
         run: python3 docs/qa/winds_105_spell_metadata_test.py -v
+      - name: Synthetic fail-closed scalar dataflow tests
+        run: python3 docs/qa/winds_105_getter_formulas_test.py -v
+      - name: Synthetic pinned-formula drift tests
+        run: python3 docs/qa/winds_105_formula_contract_test.py -v
       - name: Download exact published Wind's Spellbooks 1.0.5 and verify frozen physical SHA-1
         shell: bash
         run: |
@@ -47,11 +60,22 @@ jobs:
           python3 docs/qa/winds_105_spell_metadata.py \
             --jar build/winds-105/wind_spellbooks-1.0.5.jar \
             --output build/winds-105/spell-methods.json
+      - name: Audit four scalar getters with strict symbolic JVM stack
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_getter_formulas.py \
+            --jar build/winds-105/wind_spellbooks-1.0.5.jar \
+            --output build/winds-105/scalar-getters.json
+      - name: Verify four SHA-exact reference ASTs (fail-closed on any mismatch)
+        run: python3 docs/qa/winds_105_formula_contract.py --json build/winds-105/scalar-getters.json
       - name: Publish clean-room JSON only (never redistribute provider JAR)
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: wind-spellbooks-105-methods
-          path: build/winds-105/spell-methods.json
+          path: |
+            build/winds-105/spell-methods.json
+            build/winds-105/scalar-getters.json
           retention-days: 14
           if-no-files-found: ignore
