@@ -14,6 +14,8 @@ on:
       - 'docs/qa/winds_105_formula_contract_test.py'
       - 'docs/qa/winds_105_mobility_getters.py'
       - 'docs/qa/winds_105_mobility_getters_test.py'
+      - 'docs/qa/winds_105_mobility_contract.py'
+      - 'docs/qa/winds_105_mobility_contract_test.py'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/**'
   push:
     branches: [main]
@@ -27,6 +29,8 @@ on:
       - 'docs/qa/winds_105_formula_contract_test.py'
       - 'docs/qa/winds_105_mobility_getters.py'
       - 'docs/qa/winds_105_mobility_getters_test.py'
+      - 'docs/qa/winds_105_mobility_contract.py'
+      - 'docs/qa/winds_105_mobility_contract_test.py'
   workflow_dispatch:
 
 permissions:
@@ -50,6 +54,8 @@ jobs:
         run: python3 docs/qa/winds_105_formula_contract_test.py -v
       - name: Synthetic fail-closed mobility getter tests
         run: python3 docs/qa/winds_105_mobility_getters_test.py -v
+      - name: Synthetic pinned mobility AST drift tests
+        run: python3 docs/qa/winds_105_mobility_contract_test.py -v
       - name: Download exact published Wind's Spellbooks 1.0.5 and verify frozen physical SHA-1
         shell: bash
         run: |
@@ -82,6 +88,8 @@ jobs:
           python3 docs/qa/winds_105_mobility_getters.py \
             --jar build/winds-105/wind_spellbooks-1.0.5.jar \
             --output build/winds-105/mobility-getters.json
+      - name: Verify five SHA-pinned pure float ASTs fail-closed
+        run: python3 docs/qa/winds_105_mobility_contract.py --json build/winds-105/mobility-getters.json
       - name: Publish clean-room JSON only (never redistribute provider JAR)
         if: always()
         uses: actions/upload-artifact@v7
