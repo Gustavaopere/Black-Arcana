@@ -29,3 +29,31 @@ O scanner acrescenta, **em cada método já inventariado**, `read_fields` (`getf
 Exemplo de inferência **proibida**: observar `getfield radius:F` e `fadd` no mesmo método e declarar uma fórmula para o raio. A causalidade desses operandos permanece `NÃO VERIFICADA`. Não há novo hook homologado, nova identidade mágica, alteração do runtime ou mudança na barra 7/7; integrações seguem `SEM_HOOK_SEGURO` até QA e contrato provider-native.
 
 Os testes sintéticos verificam a separação por método, acesso de leitura/escrita e comentários ausentes; o workflow existente testa separadamente o JAR oficial exato (SHA-1 congelado) e publica apenas o JSON clean-room. **Somente a execução final do CI pode promover esta inspeção para evidência binária executada.**
+
+## Próxima prova: análise da pilha para getters escalares — 24/10/2026
+
+**Estado: ✅ expressão de quatro getters exatos confirmada pelo CI #40124346655, sem validação de gameplay ou hook mutador.** Quatro métodos selecionados, sem alterar o inventário 7/7:
+
+- Aeropic `getRecastCount(int, LivingEntity)` — recasts.
+- Almighty Push `getDuration(int)` — retorno inteiro com nome de duração.
+- Tornado `getDuration(int)` — retorno inteiro com nome de duração.
+- Wind Jump `getFloatDuration(int, LivingEntity)` — retorno inteiro com nome de duração.
+
+O arquivo `docs/qa/winds_105_getter_formulas.py` revalida o JAR no SHA-1 físico fixado pelo scanner anterior e lê somente símbolos da classe correspondente. Interpreta, de forma conservadora, carregamentos locais, constantes numéricas, casts, aritmética escalar, `java/lang/Math.max(II)I` e retorno do método. Os demais opcodes, efeitos colaterais, branches e chamadas desconhecidas retornam `UNRESOLVED`. A saída é **AST aritmética**, não decompilação/cópia da implementação.
+
+Uma expressão exata de getter não comprova escala efetiva no jogo: ainda faltam unidade dos parâmetros, condições de invocação, amplificadores, configuração, bounds upstream/downstream, target, network e lifecycle. Em particular, `getRecastCount` não comprova a janela/recast consumido; `getDuration` não comprova ticks sem verificação do consumidor. Nenhum contrato mutador para perks está autorizado. O efeito provider-native permanece único, sob autoridade Iron's/Wind's e com Black Arcana responsável pelo próprio runtime.
+
+**Gates:** testes sintéticos de fail-closed, scanner no JAR físico, inspeção da saída JSON sem inferir resultados para getters `UNRESOLVED`, CI geral no HEAD final, revisão de branch/main e PR. Stages 06.05 e 09 inalterados; mínimo global ≥1.856, campanha binária 38/39, barra global —%, sete fichas Wind's já identificadas 7/7.
+
+### Resultado do JAR oficial, sem interpolação
+
+Execução [Wind CI #40124346655](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40124346655) em `wind_spellbooks-1.0.5.jar`, SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`, publicou `scalar-getters.json`. A inspeção desse JSON confirmou **4/4 métodos selecionados com `EXACT_STRAIGHT_LINE_EXPRESSION`**, nenhum `UNRESOLVED` neste recorte.
+
+| Spell | Getter | AST aritmética da JVM (nível = 1º parâmetro `int`) |
+|---|---|---|
+| Aeropic | `getRecastCount` | `Math.max(0, level - 1)` |
+| Almighty Push | `getDuration` | `25 + (level * 3)` |
+| Tornado | `getDuration` | `15 * (5 + (level * 2))` |
+| Wind Jump | `getFloatDuration` | `100 * level` |
+
+**4/4 não representa 4 magias completas nem 4 hooks homologados.** Getter escalar não prova unidade, limites válidos, config, janela de recast, aplicação a entidade, `onCast`, nem persistência. A barra Wind's de fichas simbólicas 7/7 permanece separada; o denominador global continua —%. O exercício é exclusivamente clean-room de interoperabilidade.
