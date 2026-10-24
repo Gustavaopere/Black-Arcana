@@ -1,6 +1,6 @@
 # Wind's Spellbooks 1.0.5 — BootstrapMethods e supplier→registry→holder
 
-**Data:** 24/10/2026 · **Estado:** 🟡 aguardando resultado no JAR exato deste PR. Nenhum hook mutador autorizado.
+**Data:** 24/10/2026 · **Estado:** ✅ associação compilada de duas entradas de registry comprovada; ⚠️ execução runtime e callbacks/hook continuam pendentes.
 
 ## Recorte físico e autoridade
 
@@ -34,3 +34,20 @@ Doze testes sintéticos de prova positiva/fail-closed, execução do JAR SHA-exa
 ### Critério de leitura da tabela de bootstrap
 
 Em classes Java com lambda `Supplier`, o *bootstrap method handle* aponta para `java/lang/invoke/LambdaMetafactory.metafactory`. **O alvo da lambda deve ser resolvido a partir dos argumentos `Method arguments` desse bootstrap**, em um `REF_invokeStatic` único que referencia o método `lambda$static$N` da própria classe `ModMobEffectRegistry`. O parser não usa o método `metafactory` como factory de efeito; qualquer ausência, ambiguidade ou classe incorreta é `FAIL_CLOSED`.
+
+## Resultado binário confirmado e limites — 24/10/2026
+
+Fonte: [Wind CI #40143051496](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40143051496), `SUCCESS`; `bootstrap-registry-trace.json` extraído e inspecionado do artefato `wind-spellbooks-105-methods`, SHA-1 do JAR `8744886899bc245ae147a44baa2b183689cec7da`. A validação confirmou **2/2** arestas estritas:
+
+| Campo `DeferredHolder` | Key literal | Site `invokedynamic` | Alvo `REF_invokeStatic` do `BootstrapMethods` | Construção compilada da factory | Estado |
+|---|---|---:|---|---|---|
+| `ACROBATICS` | `aeropic` | `#0` | `lambda$static$0` | `new AeropicEffect` | ✅ ligação compilada |
+| `TAILWIND` | `tailwind` | `#1` | `lambda$static$1` | `new TailwindEffect` | ✅ ligação compilada |
+
+Cada cadeia compreende o `getstatic` do `DeferredRegister`, `ldc` da key, `invokedynamic Supplier`, a chamada `DeferredRegister.register(String, Supplier)` e o `putstatic` do holder, em sequência válida. O alvo lambda foi extraído de **`Method arguments` de `LambdaMetafactory.metafactory`**, não confundido com o próprio method handle de bootstrap. Os métodos auxiliares `lambda$static$0` e `$1` já tinham construtores de efeito confirmados no inventário anterior, revalidado pelo scanner.
+
+**Mudança de classificação documental:** a associação **compilada** `registry→supplier→factory→holder` que era `NOT_PROVEN` no PR #888 passa para `PROVEN_BOUNDED_JVM_STACK_AND_BOOTSTRAP` nesta versão exata. Isso não significa `runtime_instance_registration` nem `client_gameplay_effect` executados: permanecem `NOT_TESTED`. `safe_mutating_hook` segue `NOT_PROVEN`. Nenhuma prova de despacho virtual Aeropic, progressão, magnitude de salto ou queda.
+
+### Contract de imutabilidade documental
+
+`winds_105_bootstrap_registry_contract.py` compara os dois campos, keys, sites, factory owner/target, JAR SHA-1 e escopo exato do resultado. Dez testes sintéticos de mutação rejeitam mudanças ou promoção indevida de runtime e hooks; o workflow verifica esse contrato **contra o artefato extraído do JAR** antes de publicar JSON. O scanner de BootstrapMethods tem doze testes de pilha/atribuição e fail-closed.
