@@ -40,3 +40,16 @@ Release 1.0.5 (CurseForge file 8485822) + logs runtime do pack/ASM FundamentalPr
 - **Estado por campo:** alcance/geometria/dano/tipo/projétil/duração/targeting/cooldown/mana/execução efetiva ficam **NÃO VERIFICADOS** onde as arestas acima não determinarem operandos, guardas, fórmula e beneficiário. Nomes como `setRadius` ou `setDamage` provam apenas chamada simbólica, **não** o valor ou aplicabilidade de perk.
 - **Boundary:** provider mantém efeitos/entidades próprias; Iron's mantém cast/mana/cooldown; Black Arcana não injeta segundo efeito nem delega autoridade de runtime ao RPG Skill Tree. Gate de mutação: **⛔ SEM_HOOK_SEGURO** até prova de contrato e QA provider-native.
 - **Próxima inspeção:** reconstruir operandos/guards em chamadas relevantes usando bytecode exato, verificar host Iron's 3.16.3 e confirmar em client/servidor. `Stage 06.05` 🟡 e `Stage 09` ⚠️.
+
+## Dependências compiladas adicionais — 24/10/2026
+
+**Fonte:** [workflow de inventário exato #40120464325](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40120464325) (`SUCCESS`) e artefato JSON `wind-spellbooks-105-methods`; SHA-1 físico do provider `8744886899bc245ae147a44baa2b183689cec7da`. Dados extraídos de referências `javap` da classe acima, **não** de execução de gameplay.
+
+| Método / região JVM | Evidência observada | Limite de atribuição |
+|---|---|---|
+| `getJumpHeight(int, LivingEntity)` / `getJumpStrength(int, LivingEntity)` | `fmul` / `dadd`, `dmul`, `d2f`, `i2d` | Não determina velocidade, altura ou vetor efetivo. |
+| `getFloatDuration(int, LivingEntity)` | `imul` | Unidades/ticks e escala não reconstruídos. |
+| `onCast(Level, int, LivingEntity, CastSource, MagicData)` | Escreve `GustCollider.{amplifier,range,strength}` e `LivingEntity.hasImpulse`; lê `MobEffects.SLOW_FALLING`, `Vec3.{x,y,z}` | É evidência de escrita em campos do collider, não de valor/range aplicado. |
+| `onClientCast(Level, int, LivingEntity, ICastData)` | Lê `ImpulseCastData.{hasImpulse,x,y,z}` e escreve `LivingEntity.hasImpulse`; desvio `ifeq` | Não transferir autoridade ao cliente nem inferir equivalência entre client e server. |
+
+O construtor ainda apresenta escritas de `baseManaCost`, `manaCostPerLevel`, `baseSpellPower`, `spellPowerPerLevel`, `castTime` e `defaultConfig`; seus valores não são inferidos desses nomes. Mesmo com os campos e operadores, **não há fluxo de operandos/guardas homologado, fórmula numérica aprovada, hook mutador seguro, nem QA provider-native**. Manter `NÃO VERIFICADO` e `SEM_HOOK_SEGURO` para integração de perks; denominadores e identidade 7/7 sem alteração.
