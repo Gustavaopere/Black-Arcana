@@ -116,3 +116,12 @@ Na execução [Wind #40139355055](https://github.com/Gustavaopere/Black-Arcana/a
 `ModMobEffectRegistry.static {}` contém strings `aeropic`/`tailwind`, fields `ACROBATICS`/`TAILWIND`, dois sites `invokedynamic` e chamada a `DeferredRegister.register(String, Supplier)`. Os métodos auxiliares `lambda$static$0` e `lambda$static$1` contêm construções de `AeropicEffect` e `TailwindEffect`, respectivamente. **Não é prova causal ainda de qual supplier alimenta cada campo**: falta inspeção da tabela `BootstrapMethods` e rastreio da pilha.
 
 Gate detalhado: [auditoria de registry e dispatch](../../../../docs/qa/winds-105-registry-dispatch-gate.md). Nenhum spell novo, nenhum hook homologado, nenhuma alteração de Stages ou de runtime; **7/7** identidades, **9/9** getters selecionados.
+
+## Associação compilada dos efeitos `ACROBATICS` e `TAILWIND` — 24/10/2026
+
+Nova prova binária [Wind CI #40143051496](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40143051496) (JAR Wind's 1.0.5 SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`): os dois `DeferredHolder` foram associados a `Supplier` específicos por análise conservadora de `ModMobEffectRegistry.<clinit>` + `BootstrapMethods`.
+
+- `ACROBATICS`: chave `aeropic` → site `#0` → factory `lambda$static$0` → classe `AeropicEffect`.
+- `TAILWIND`: chave `tailwind` → site `#1` → factory `lambda$static$1` → classe `TailwindEffect`.
+
+**✅ Ligação compilada**, antes marcada `NOT_PROVEN` nas notas antigas. **⚠️ Instanciação em runtime, cliente/modpack físico e magnitudes seguem `NOT_TESTED`**; `AbstractSpell.getRecastCount` não teve despacho dinâmico certificado e hooks mutadores continuam **⛔ `SEM_HOOK_SEGURO`**. Ver [gate com evidência exata](../../../../docs/qa/winds-105-bootstrap-registry-gate.md). O total de magias Wind's permanece **7/7**, sem nova habilidade ou avanço de Stage.
