@@ -2,7 +2,7 @@
 
 ## Getters escalares com AST aritmética exata — 24/10/2026
 
-**9/9 getters selecionados** com pilha JVM integral interpretada: quatro do [PR #882](../../../..//docs/qa/winds-105-spell-parameter-gate.md) e cinco da [auditoria de mobilidade](../../../../docs/qa/winds-105-mobility-getters-gate.md), ver CI [#40126898432](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40126898432). Esta contagem corresponde exclusivamente aos **nove métodos de retorno escalar selecionados**; não implica 9/9 spells, que são **7/7** identidades, nem prova de completude de todas as fórmulas do provider.
+**9/9 getters selecionados** com pilha JVM integral interpretada: quatro do [PR #882](../../../../docs/qa/winds-105-spell-parameter-gate.md) e cinco da [auditoria de mobilidade](../../../../docs/qa/winds-105-mobility-getters-gate.md), ver CI [#40126898432](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40126898432). Esta contagem corresponde exclusivamente aos **nove métodos de retorno escalar selecionados**; não implica 9/9 spells, que são **7/7** identidades, nem prova de completude de todas as fórmulas do provider.
 
 Novos métodos do recorte: Almighty Push `getRange`, Iron Slash `getDistance`, Tailwind `getPercentAirSpeed`/`getPercentJump` e Wind Jump `getJumpStrength`. Cada fórmula, unidades não provadas e limites ficam nas fichas `wind/*.md`. O scanner verifica o JAR 1.0.5 por SHA-1 exato; [contrato de regressão](../../../../docs/qa/winds-105-mobility-getters-gate.md) rejeita divergência de constantes, fluxo numérico e identidade binária.
 
