@@ -101,7 +101,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 | `✅-familiarslib` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-fantasy-armor` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-farmers-spell` | 12 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
-| `✅-fires-ender-expansion` | 15 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-fires-ender-expansion` | 15 | [11/11 fichas com parâmetros e consumidores source-causais](../providers/✅-fires-ender-expansion/SPELL-PERK-BOUNDARIES-2.4.1.md); config/hosts/mutadores/Survival/QA PENDING; +0 strict |
 | `✅-gaze` | 34 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-goety` | 375 | ⚠️ 2 Focuses com boundary técnico e bloqueio explícito; código exato pendente |
 | `✅-goety-cataclysm` | 60 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |

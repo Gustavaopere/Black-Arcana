@@ -1,34 +1,78 @@
 # Displacement Cage
 
-**✅ Identidade física exata 2026-10-13:** `firesenderexpansion:displacement_cage` → `DisplacementCageSpell`, inscrito sem branch no JAR 2.4.1 SHA-1 `da87a4a0c926dd75236766584cddbae69c6aeff7`; [Java 21 #38434192044](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38434192044) SUCCESS, [dossiê](../EXACT-BINARY-SPELLS-2.4.1.md). Estado de registry `COUNTED_EXACT` **somente estático**; já contabilizado, **+0**. Mana/config/runtime de Iron's, teleport, domain e Survival ⚠️. Evidência anterior derivada de fonte abaixo mantém seu caráter histórico.
+**Dossiê documental — 24/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT` estática; lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; integração, JAR funcional e Survival **PENDING**. **+0 identidades**. A ficha documenta parâmetros e limites, sem habilitar perk.
 
+## Identidade e proveniência
 
-- ID: `firesenderexpansion:displacement_cage`
-- School: `irons_spellbooks:ender`
-- Levels: 1–10
-- Min rarity: Common
-- Cast: Long, 20 ticks (1 s)
-- Mana neutral: 40 / 50 / 60 / 70 / 80 / 90 / 100 / 110 / 120 / 130
-- Spell power neutral: 10 / 13 / 16 / 19 / 22 / 25 / 28 / 31 / 34 / 37
-- Radius: 6
-- Duration neutral: 35 / 49 / 63 / 77 / 91 / 105 / 119 / 133 / 147 / 161 ticks = 1.75–8.05 s
-- Target acquisition: target or raycast up to 32 blocks
-- Cooldown: 40 s
+Fire's Ender Expansion (`mod_id=firesenderexpansion`), spell **`firesenderexpansion:displacement_cage`**, classe `net.fireofpower.firesenderexpansion.spells.DisplacementCageSpell`, host Iron's; escola default `irons_spellbooks:ender`, Common, níveis1–10. [Registry][registry], [defaults][spell]. Resumo da [descrição oficial][guide]: área que tenta deslocar para dentro entidades que atravessam seu limite. Filhos: `firesenderexpansion:teleport_area`/`TeleportAoe` e marker TargetedAreaEntity; não são novas spells/summons semânticos.
 
-## Contract
+Ledger físico #281, MC1.21.1/NeoForge: `firesenderexpansion-2.4.1.jar`, SHA-1 `da87a4a0c926dd75236766584cddbae69c6aeff7`; publisher [8167304](https://www.curseforge.com/minecraft/mc-mods/fires-ender-expansion/files/8167304). [Registry binário exato](../EXACT-BINARY-SPELLS-2.4.1.md), [Java21 SUCCESS](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38434192044). Fingerprint publisher coincide com ledger; perfil instalado não foi remedido. Registry estático não prova runtime.
 
-Creates `TeleportAoe` + visual target area. The AoE tracks eligible living entities that enter the radius, excluding owner, friendly-fire relations and creative/spectator players. When a tracked target crosses beyond radius 6, the provider computes an interior destination and calls Iron's canonical `Utils.handleSpellTeleport(DISPLACEMENT_CAGE, target, destination)`.
+[Contrato comum](../SPELL-PERK-BOUNDARIES-2.4.1.md): source oficial `FireOfPower/firesenderexpansion-1.21.1@5e4067e8112316f55c9f249530ba1917a7bf6643`, build Iron's3.15.6/Neo21.1.215; host consultado Iron's3.16.3 `e4056af90302d37eb1739f5ff05020b020e6e252`, pack Neo21.1.250. [Versões/licença][versions]: **All Rights Reserved**, fatos/formulas e referências sem importar implementação/assets. Não há equivalência integral de métodos source↔JAR nem config implantada comprovada.
 
-The provider also listens for external `EntityTeleportEvent` near cages and removes the teleported entity from cage tracking, so the cage itself is not implemented as a universal teleport cancel. `displacement_cage_immune` is part of the provider's eligibility path. Anti-magic clears the tracked ledger and discards the AoE.
+## Aquisição, seleção e execução
 
-## Dedup / authority
+Sem gate/override local de crafting/loot; elegibilidade Iron's não fecha distribuição Survival, enabled ou datapacks/config reais (**NÃO VERIFICADOS**). LONG20ticks default=1s; cooldown40s=800ticks. Host calcula tempo `round(20×(2−softCap(CAST_TIME_REDUCTION)))`; custo/config/cooldown/gates seguem Iron's. [Spell][spell], [host][host-cast].
 
-This is boundary enforcement through the Iron's teleport pipeline, not movement-root. Do not add velocity clamps or a second teleport-back handler.
+1. `checkPreCastConditions` chama helper range32blocks/aimAssist.15/sem mensagem de falha, **ignora resultado e retorna true**. No host inspecionado, helper usa ray com colisão de blocos e guarda TargetEntityCastData quando resolve LivingEntity; não é requisito ter alvo. [Precondição][pre], [helper][target-helper].
+2. `onCast` usa posição **atual** do target resolvido no ServerLevel; sem target, raycast32 com blocks/.15 e moveToRelativeGroundLevel(maxSteps6). Target pode mover entre pre-cast e onCast:32 é alcance de seleção, não garantia do centro final. Ground helper testa caixa.5×.5×.5 e busca limitada, não valida body-fit de cada vítima. [Cast][cast], [ray][ray], [ground][ground].
+3. Cria TeleportAoe, owner=caster, circular, chama setRadius(6), setDuration(D), seta centro e addFreshEntity; cria TargetedAreaEntity radius6/duraçãoD, owner=aoe/fade. Marker é visual, não segunda gaiola. [Spawn][cast].
+4. A cada tick, override consulta LivingEntity em **AABB centro±6XYZ**, inclui inicialmente quem tem distância horizontal<6, não owner/friendly-fire e não ServerPlayer criativo/espectador. Sem LOS/cap local; sem isClientSide guard no override antes de super.tick. Spawn/authority server não torna esse bloco exclusivamente server. [Coleta][tick].
+5. Para tracked com distância horizontal>6, consulta tag immune e calcula destino pelo vetor **3D** centro−target normalizado, com X/Z multiplicados por5.94 e componenteY zerada, depois restaura Y atual do target. Portanto distância horizontal de destino é **≤5.94**, só na borda se ΔY=0. Arredonda coordenadas para BlockPos e sobe1 por vez enquanto bloco não está vazio, sem budget/build-height/loaded-chunk/body-fit local. [Escape][escape].
+6. `if(!Utils.handleSpellTeleport(...)) remove(tracked)`: helper retorna **canceled**, não sucesso de chegada. Post não cancelado remove tracking; cancelado conserva nesse ramo, sujeito aos demais listeners. Remoção no for sem corrigir i pode pular o próximo tracked nessa passagem. `allowFreeTeleportation` LOWEST remove entidade de cages retornadas pela consulta AABB±6 ao redor dela (interseção das AABBs, não distância dos centros); sem teste local de isCanceled, mas entrega de evento já cancelado depende do bus/default da assinatura. Não é tether que garante repetição por alvo. [Escape/evento][escape], [listener][listener], [helper][teleport].
+7. Custom tick limpa ledger/discard se `tickCount>D`; AntiMagic também limpa/discard; `applyEffect` é vazio. Chama super.tick ao final, cujo duration herdado é outro campo, default600 no host3.16.3. [Saída][cleanup], [host tick][aoe-tick].
 
-## Acquisition
+`P=(10+3×(L−1))×SPELL_POWER×schoolPower×POWER_MULTIPLIER`, neutro10/13/16/19/22/25/28/31/34/37. `D=5L+3×(int)P`ticks, truncando P **antes** de multiplicar; neutro35/49/63/77/91/105/119/133/147/161ticks=1.75…8.05s. Mana `(int)((40+10×(L−1))×MANA_MULTIPLIER)`, neutro40…130. [Fórmulas][formulas], [host][host-cast].
 
-Default Iron's spell eligibility; exact loot/crafting distribution: **NÃO VERIFICADO**.
+## Matriz de parâmetros para perks
 
-## Source
+| Eixo | Valor / consumidor / fase | Boundary, limite e estado | QA |
+|---|---|---|---|
+| Dano / tipo / cura / DoT | **N/A**: applyEffect vazio, sem hurt/helper de dano/cura/crítico/status próprio. `DamageSources.isFriendlyFireBetween` é filtro, não dano. [Tick][tick], [applyEffect][cleanup]. | Escola Ender não cria evento de dano nesta spell. `setDamage(float)` herdado não tem consumidor ativo demonstrado aqui. Conversão elemental/dano adicional **⛔ SEM_HOOK_SEGURO**; não simular via explosão paralela. | Q1/Q3 |
+| Alcance / centro / LOS | Seleção32/.15 com blocks; target atual ou fallback ray+ground6. Sem LOS local para tracking/escape; não revalida32 contra alvo que se moveu. [Pre][pre], [cast][cast], [host helper][target-helper]. | Range privado/literal, sem mutador pré-resolução localizado. **⛔ SEM_HOOK_SEGURO** para alcance/centro/target→grupo; SpellPreCastEvent é veto de ingresso, não setter. | Q2/Q3 |
+| Área / filtros / altura | Coleta cubo±6 com teste horizontal<6; tracked continuam considerados fora da coleta, inclusive deslocamento vertical. Owner/friendly excluídos inicialmente; criativo/espectador só no ramo ServerPlayer. Borda==6 nem adquire nem dispara escape. [Tick][tick], [escape][escape]. | `TeleportAoe#getRadius()` retorna6literal **mesmo após setRadius herdado**. Setter host clamp0…32 não muda raio lido/escape. Sem setter de geometria/LOS/count: **⛔ SEM_HOOK_SEGURO**. | Q2/Q3 |
+| Entidade / AABB / visual | Registro base12×.8blocks/tracking64. Host3.16.3 `AoeEntity#getDimensions` devolve `2×getRadius` por1.2: efetivo12×1.2 nesse contrato, distinto da coleta12×12×12 e marker circular. Sem projétil voador, speed/pierce **N/A**. [Registro][entity], [host dimensões][aoe-state]. | Não chamar radius visual ou registro base de hitbox real sem herança. Entidade de área sem AI: summon caps/custos **N/A**. Resize/novo volume **⛔ SEM_HOOK_SEGURO**, host build diferente exige QA. | Q2/Q4 |
+| Tempo / cooldown / recast | LONG20ticks, cooldown40s default; recast0 herdado. D conforme fórmula; expire custom `tickCount>D`, verificação antes de super.tick. [Spell][spell], [fórmula][formulas], [cleanup][cleanup]. | Config cooldown/atributo CastTimeReduction nativos; `SpellCooldownAddedEvent.Pre#setEffectiveCooldown(int)`/cancel **HOOK_VERIFICADO** pré-cooldown. [Evento][cooldown]. Sem cadência configurável: custom tracking ocorre todo tick. | Q1/Q4 |
+| Duração / cap herdado | `TeleportAoe#setDuration(int)` grava syncDURATION; não seta protected duration herdado. Host Aoe.tick usa campo600+delay, não getDuration; durações ampliadas podem ser cortadas pela expiração herdada. [Setter][duration], [host tick][aoe-tick], [default][aoe-default]. | Setter sync **HOOK_VERIFICADO** de instância; adapter/spawn/owner e dois relógios **CONTRATO_CONDICIONAL**. P não tem cap local explícito. Não prometer duração arbitrária por perk. | Q1/Q4 |
+| Mana / failure / refund | Inicial40+10(L−1), multiplicador/truncamento; débito do jogador antes onCast. Sem refund específico por cancel/falha de teleporte; cap/segurança não dependem de custo por alvo. [Host][host-cast]. | `SpellOnCastEvent#setManaCost(int)`/`setSpellLevel(int)` **HOOK_VERIFICADO** antes do débito/onCast; desconto não supera gate inicial, level não recalcula custo. Provider possui mana; nenhuma cobrança por bounce. | Q1/Q4 |
+| Escape / destino / proteção | Destino oposto horizontal≤5.94, Y da vítima; sobe até encontrar1bloco vazio. Helper publica SpellTeleportEvent e consome targetXYZ mutáveis; retorno=canceled, sem validação de chegada. [Escape][escape], [helper][teleport]. | `SpellTeleportEvent`/EntityTeleportEvent cancel+`setTargetX/Y/Z(double)` **HOOK_VERIFICADO** pré-teleporte; claims/chunks/body-fit/budget do adapter **CONTRATO_CONDICIONAL**. Hook não altera cálculo da gaiola nem comprova sucesso. | Q3/Q5 |
+| Imunidade / estado / budget | Tag `firesenderexpansion:displacement_cage_immune`, default inclui `#c:bosses`, replacefalse; testada **na fuga, não primeira aquisição**. Lista privada tracked sem cap local; query/teleport/list removal por tick. [Tag][tag], [escape][escape]. | Datapack tag é superfície nativa global de tipos, não atributo/perk individual. Sem API pública de ledger/cap/ordem; **⛔ SEM_HOOK_SEGURO** para ampliar budget/contornar imunidade. | Q3/Q4 |
+| Mundo / cleanup / persistência | Sem destruição de blocos; teleporte altera posição. Expire/AntiMagic limpam ledger. Sem NBT override para customDURATION/lista; parent salva duration próprio e age, não estes dados. [Cleanup][cleanup], [setter][duration], [host save][aoe-state]. | Reload não promete reconstruir tracking/tempo/owner com mesmo resultado. `setDuration` não corrige persistência parent. **CONTRATO_CONDICIONAL**; não criar ledger/teleporte de reparo paralelo BA. | Q4/Q5 |
 
-`DisplacementCageSpell.java`, `TeleportAoe.java` and provider tags @ pin `5e4067e...`.
+## Ownership, deduplicação e concepção
+
+Provider/Iron's possuem entidade de área, marker, tracking, mana e teleporte. RPG mantém progression/Mastery no lane `irons:ender`; evento de cast precede criação e não prova captura/escape/chegada. Dedup por caster/cast/cage/alvo/tentativa/fase, sem novo cast/custo/recompensa por readquisição ou callback de teleporte. AntiMagic/cancel/remoção do tracking são saídas do mesmo efeito; não adicionar root/velocity clamp ou segundo handler de retorno. BA mantém WorldEffectPolicy/estado próprios; Enshrouded mantém seu Shroud/classificação, sem bridge automática por tema Ender. [Contrato comum](../SPELL-PERK-BOUNDARIES-2.4.1.md).
+
+Assinatura ocupada: área estacionária que acompanha entradas e tenta deslocamento interior após fuga horizontal, com ledger removível por teleporte. Não é prisão de dimensão, root universal ou dano AOE; uma magia original exige destino, proteção, cleanup e orçamento próprios.
+
+## Verificação pendente
+
+- **Q1:** config/atributos/nível/rounding/mana/cooldown, níveis extras e D>600; enabled e aquisição Survival reais.
+- **Q2:** dedicado/cliente, override sem guardserver, filtros ServerPlayer, centro em alvo móvel versus ray/ground, base12×.8 versus efetivo12×1.2, raio setter inoperante e marker sync.
+- **Q3:** borda==6/cantos/alturas, ΔY no normalize3D, imunes inicialmente tracked, aliados/PvP/owner ausente, sem LOS, múltiplas cages e budgets de query/alvos/loop de subida; claims/body-fit/chunks/worldborder/build-height.
+- **Q4:** lista removida durante for/pulo de próximo, captura/readquisição, expiração custom versus parent600, AntiMagic, unload/reload/customDURATION não salvo, logout/morte/dimensão da vítima e marker cleanup.
+- **Q5:** SpellTeleportEvent targetXYZ/cancel, retorno bool≠chegada, LOWEST/default receiveCanceled/ordem do bus, Anchored/Stride/comando/teleporte externo e callbacks/provenance. **PHYSICAL_QA/PERK_RUNTIME/SURVIVAL=PENDING**; nenhum Stage aprovado.
+
+[registry]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/registries/SpellRegistries.java#L13-L34
+[versions]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/gradle.properties#L15-L50
+[guide]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/resources/assets/firesenderexpansion/lang/en_us.json#L50-L51
+[spell]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/spells/DisplacementCageSpell.java#L26-L54
+[pre]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/spells/DisplacementCageSpell.java#L68-L70
+[cast]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/spells/DisplacementCageSpell.java#L74-L103
+[formulas]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/spells/DisplacementCageSpell.java#L106-L111
+[tick]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/entities/spells/TeleportAoe.java#L60-L72
+[escape]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/entities/spells/TeleportAoe.java#L74-L93
+[listener]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/entities/spells/TeleportAoe.java#L105-L111
+[cleanup]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/entities/spells/TeleportAoe.java#L95-L140
+[duration]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/entities/spells/TeleportAoe.java#L143-L160
+[entity]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/java/net/fireofpower/firesenderexpansion/registries/EntityRegistry.java#L88-L92
+[tag]: https://github.com/FireOfPower/firesenderexpansion-1.21.1/blob/5e4067e8112316f55c9f249530ba1917a7bf6643/src/main/resources/data/firesenderexpansion/tags/entity_type/displacement_cage_immune.json#L1-L6
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L330
+[target-helper]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L674-L710
+[ray]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L331-L339
+[ground]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L638-L653
+[teleport]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L167-L174
+[aoe-default]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L21-L31
+[aoe-tick]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L94-L134
+[aoe-state]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L234-L327
+[cooldown]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellCooldownAddedEvent.java#L9-L55

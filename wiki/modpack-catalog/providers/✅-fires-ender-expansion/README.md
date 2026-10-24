@@ -7,7 +7,7 @@
 
 - Mod ID: `firesenderexpansion`
 - JAR instalado: `firesenderexpansion-2.4.1.jar`
-- Runtime alvo: NeoForge 1.21.1
+- Runtime alvo: Minecraft 1.21.1 / NeoForge 21.1.250 registrado
 - Provider base: Iron's Spells 'n Spellbooks
 - Escola dos 11 registros ativos: `irons_spellbooks:ender`
 - Catálogo: **11/11 spells ativos documentados**
@@ -54,3 +54,11 @@ Esses contracts pertencem ao provider. Bridges do Black Arcana não devem recria
 - `InfiniteVoidEffect` possui fallback para Overworld `(0,100,0)` se a posição original não estiver registrada corretamente; é uma failure mode que deve ser testada.
 
 Ver [TECHNICAL-AUDIT.md](TECHNICAL-AUDIT.md).
+
+## Reauditoria de parâmetros e consumidores — 24/10/2026
+
+[11/11 fichas source-causais](SPELL-PERK-BOUNDARIES-2.4.1.md) com fórmulas/defaults/unidades, localizadores de código, pipeline, limites por eixo, ownership e QA pendente. Este recorte é documental: não homologa onze perks ou rotas Survival nem todos os conteúdos de itens/curios do provider. Os números do checkpoint binário de 13/10 acima são históricos; os mínimos globais e a campanha corrente são mantidos pelo [painel atual](../../meta/PROGRESSO-CATALOGO-ATUAL.md).
+
+A releitura distingue mana da vítima versus dano entregue; proc Shulker pré-HP; cache de adaptação dimensional; tiro e pagamento de canais; efeitos de remoção e teleporte; relógios de entidades herdados/locais; delays de portal; callbacks de dano0 e as fontes plain de Nova Burn/Void. Campos públicos/setters/config não foram apresentados como hooks per-player homologados.
+
+Source FEE 2.4.1 usa Iron’s 3.15.6/Ace’s 1.2.6.1, contra pack3.16.3/1.2.7.2; equivalência de métodos/hosts/JARs e config implantada continuam condicionais. As fichas preservam efeitos, mundo, ownership e cleanup nos providers; sem adapter, perk, runtime ou alteração de dependência. +0 identidades/+0 strict, nenhum Stage promovido.

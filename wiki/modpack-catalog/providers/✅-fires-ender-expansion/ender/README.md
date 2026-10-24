@@ -17,3 +17,7 @@ Todos os spells ativos do provider 2.4.1 usam `irons_spellbooks:ender`.
 | [Scintillating Stride](scintillating-stride.md) | dash + return teleport + blast |
 
 Source pin de todo o diretório: `5e4067e8112316f55c9f249530ba1917a7bf6643`.
+
+## Parâmetros e consumers — 24/10/2026
+
+As onze fichas deste índice foram aprofundadas por eixo e consumer downstream; [contratos comuns, versões e limites](../SPELL-PERK-BOUNDARIES-2.4.1.md). 11/11 mede documentação, com +0 identidades/strict. Config efetiva, compatibilidade source/JAR/hosts, aquisição Survival, proteção, multiplayer e QA físico continuam pendentes.
