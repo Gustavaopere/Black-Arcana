@@ -1,5 +1,15 @@
 # Wind's Spellbooks — catálogo canônico
 
+## Evidência estrutural dos efeitos nativos — 24/10/2026
+
+[Wind CI #40136512061](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40136512061) inspecionou as 64 classes da versão `wind_spellbooks-1.0.5.jar` (SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`) e reportou **9 classes candidatas** por nome/referência de registry (não nove novos spells). Dentre elas, foram localizadas classes compiladas `net.raptorzizi.wind_spellbooks.effect.TailwindEffect` e `...AeropicEffect`.
+
+**TailwindEffect:** métodos `applyEffectTick` (movimento/delta e escrita em `fallDistance`), `onEffectStarted` (atributo `JUMP_STRENGTH` e operação `ADD_MULTIPLIED_TOTAL`), `onEffectRemoved` (referências a `JUMP_STRENGTH` e `MOVEMENT_SPEED`, `removeModifier`). **AeropicEffect:** métodos `applyEffectTick`, `onEffectAdded`, `onEffectRemoved` referenciam `AbstractSpell.getRecastCount`, componentes de `PlayerRecasts` e cleanup, além de símbolos de dano/queda.
+
+**Ponto crítico de interoperabilidade:** o `AeropicEffect` referencia a assinatura de **classe-base** `AbstractSpell.getRecastCount`, não diretamente `AeropicSpell.getRecastCount`, o que explica a limitação da busca de `invoke*` específica do PR #886. Isso ainda não comprova dispatch efetivo ou argumento aplicado. Os getters de percentual do Tailwind continuam sem chamadas qualificadas externas nesta release, mas há lógica de movimento/atributo no efeito; **não** classificá-los como puramente visuais.
+
+Consulte os dossiês [Tailwind](wind/tailwind.md), [Aeropic](wind/aeropic.md) e [gate de evidência](../../../../docs/qa/winds-105-effect-boundary-evidence.md). Nenhuma fórmula de modificador, regra de recast, retorno do cast ou hook mutador é homologada. **7/7 spells** e **9/9 getters selecionados** sem incremento; `Stage 06.05` 🟡 e QA físico do Stage 09 pendente.
+
 ## Scanner de consumidores entre 64 classes — 24/10/2026
 
 **✅ Evidência binária exata:** [Wind CI #40135302517](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40135302517), JAR `wind_spellbooks-1.0.5.jar` com SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`. A análise examinou **64 classes** no namespace do próprio provider e encontrou **16 instruções `invoke*` diretas** relativas aos nove getters escalares previamente selecionados. **Zero das 16** tem origem em outra classe Wind's; as 16 estão nas classes declarantes.
