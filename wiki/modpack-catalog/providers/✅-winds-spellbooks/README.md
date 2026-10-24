@@ -1,5 +1,11 @@
 # Wind's Spellbooks — catálogo canônico
 
+## Scanner de consumidores entre 64 classes — 24/10/2026
+
+**✅ Evidência binária exata:** [Wind CI #40135302517](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40135302517), JAR `wind_spellbooks-1.0.5.jar` com SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`. A análise examinou **64 classes** no namespace do próprio provider e encontrou **16 instruções `invoke*` diretas** relativas aos nove getters escalares previamente selecionados. **Zero das 16** tem origem em outra classe Wind's; as 16 estão nas classes declarantes.
+
+**⚠️ Restrição importante:** isso não torna Tailwind nem Aeropic puramente visuais, não certifica caminhos herdados, classes de host Iron's/IronSable, eventos, calls indiretas/reflexão/Mixin, nem fluxo `getter → argumento do setter → gameplay`. Ver [gate técnico com escopo explícito](../../../../docs/qa/winds-105-cross-class-callers-gate.md). Estado de perks mutadoras **⛔ `SEM_HOOK_SEGURO`**; 7/7 magias documentadas, nove getters selecionados, zero novas identidades e Stages inalterados.
+
 ## Chamadores diretos JVM para getters selecionados — 24/10/2026
 
 **✅ 9/9** getters escalares já selecionados tiveram seus chamadores diretos identificados **dentro das classes dos próprios spells** na versão 1.0.5 (SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`), incluindo 6/7 classes: [auditoria de arestas](../../../../docs/qa/winds-105-getter-consumer-evidence.md) e [workflow binário #40130495377](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40130495377). Isso complementa **7/7 fichas de magias**, não cria nove magias nem mede todos os getters possíveis.

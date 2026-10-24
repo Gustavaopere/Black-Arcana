@@ -18,6 +18,11 @@ on:
       - 'docs/qa/winds_105_mobility_contract_test.py'
       - 'docs/qa/winds_105_getter_consumer_edges.py'
       - 'docs/qa/winds_105_getter_consumer_edges_test.py'
+      - 'docs/qa/winds_105_cross_class_getter_calls.py'
+      - 'docs/qa/winds_105_cross_class_getter_calls_test.py'
+      - 'docs/qa/winds_105_cross_class_contract.py'
+      - 'docs/qa/winds_105_cross_class_contract_test.py'
+      - 'docs/qa/winds-105-cross-class-callers-gate.md'
       - 'docs/qa/winds-105-getter-consumer-evidence.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/**'
   push:
@@ -36,6 +41,11 @@ on:
       - 'docs/qa/winds_105_mobility_contract_test.py'
       - 'docs/qa/winds_105_getter_consumer_edges.py'
       - 'docs/qa/winds_105_getter_consumer_edges_test.py'
+      - 'docs/qa/winds_105_cross_class_getter_calls.py'
+      - 'docs/qa/winds_105_cross_class_getter_calls_test.py'
+      - 'docs/qa/winds_105_cross_class_contract.py'
+      - 'docs/qa/winds_105_cross_class_contract_test.py'
+      - 'docs/qa/winds-105-cross-class-callers-gate.md'
       - 'docs/qa/winds-105-getter-consumer-evidence.md'
   workflow_dispatch:
 
@@ -64,6 +74,10 @@ jobs:
         run: python3 docs/qa/winds_105_mobility_contract_test.py -v
       - name: Synthetic direct-getter consumer edge regression tests
         run: python3 docs/qa/winds_105_getter_consumer_edges_test.py -v
+      - name: Synthetic exact-JAR cross-class callsite attribution tests
+        run: python3 docs/qa/winds_105_cross_class_getter_calls_test.py -v
+      - name: Synthetic pinned cross-class direct invoke regression tests
+        run: python3 docs/qa/winds_105_cross_class_contract_test.py -v
       - name: Download exact published Wind's Spellbooks 1.0.5 and verify frozen physical SHA-1
         shell: bash
         run: |
@@ -105,6 +119,15 @@ jobs:
           python3 docs/qa/winds_105_getter_consumer_edges.py \
             --jar build/winds-105/wind_spellbooks-1.0.5.jar \
             --output build/winds-105/getter-consumer-edges.json
+      - name: Scan cross-class direct getter invoke sites across exact Wind provider package
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_cross_class_getter_calls.py \
+            --jar build/winds-105/wind_spellbooks-1.0.5.jar \
+            --output build/winds-105/cross-class-getter-calls.json
+      - name: Pin exact 64-class 16-invoke cross-class evidence without gameplay claims
+        run: python3 docs/qa/winds_105_cross_class_contract.py --json build/winds-105/cross-class-getter-calls.json
       - name: Publish clean-room JSON only (never redistribute provider JAR)
         if: always()
         uses: actions/upload-artifact@v7
@@ -115,5 +138,6 @@ jobs:
             build/winds-105/scalar-getters.json
             build/winds-105/mobility-getters.json
             build/winds-105/getter-consumer-edges.json
+            build/winds-105/cross-class-getter-calls.json
           retention-days: 14
           if-no-files-found: ignore
