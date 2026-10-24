@@ -1,48 +1,86 @@
 # Libra's Judgement
 
-**Prova física de registry (2026-10-13):** ✅ `COUNTED_EXACT` — `discerning_the_eldritch:libras_judgement` / `net.acetheeldritchking.discerning_the_eldritch.spells.ritual.LibrasJudgementSpell`, escola `DTESchoolRegistry.RITUAL_RESOURCE` ([Java 21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207); [dossiê](../EXACT-BINARY-SPELLS-1.4.4-1.21.md)). É feitiço/ritual provider-native, **não** `RitualEngine` Black Arcana; cast/loot/source gates e Survival ⚠️; +0.
+**Dossiê documental — 24/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; integração `CONTRATO_CONDICIONAL`; QA físico `PENDING`. **+0 identidades/+0 strict**: efeitos/entidades/impactos derivados não são novas spells.
 
-- **ID:** `discerning_the_eldritch:libras_judgement`
-- **School:** Ritual
-- **Level:** 1
-- **Rarity:** Legendary
-- **Cast:** Long, 20 ticks
-- **Mana:** 100
-- **Spell power neutral:** 35
-- **Cooldown:** 45 s
-- **Target range:** 32 blocks
-- **Complexity:** complex, not super-complex
+## Identidade e proveniência
 
-## Deterministic HP judgement
+Provider Discerning The Eldritch, `mod_id=discerning_the_eldritch`, spell **`discerning_the_eldritch:libras_judgement`**, classe `net.acetheeldritchking.discerning_the_eldritch.spells.ritual.LibrasJudgementSpell`. Escola default **`discerning_the_eldritch:ritual`**, tipo de dano escolar **`discerning_the_eldritch:ritual_magic`**, atributos nativos `ritual_spell_power`/`ritual_magic_resist`. É spell Iron's/DTE, não RitualEngine Black Arcana. [Registry][registry], [escola][school], [atributos][attributes].
 
-The spell branches by current target health percentage.
+Pack MC 1.21.1: JAR histórico **`discerning_the_eldritch-1.4.4-1.21.jar`**, SHA-1 `cf35c225aced23b705d1e0fd1bc5c62d96540e0c`, [publisher 8816497](https://www.curseforge.com/minecraft/mc-mods/discerning-the-eldritch/files/8816497), [prova binária histórica de identidade](../EXACT-BINARY-SPELLS-1.4.4-1.21.md). Source oficial `7bbd81f902c65a4452f47656ebd948cae8cd5833`, declaração 1.4.4-1.21; build Iron's 3.16.2/Neo 21.1.244/Azure 3.1.0/Ace 1.2.7.2 versus pack Iron's 3.16.3/Neo 21.1.250/Azure 3.1.11/Ace 1.2.7.2. Host consultado `e4056af90302d37eb1739f5ff05020b020e6e252`. Versão/registro não provam equivalência integral dos métodos/JAR/hosts. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md). Sinais de licença conflitantes MIT/PolyForm Shield descritos ali; somente fatos/paráfrases/permalinks, sem importar código/assets.
 
-### Target at >=50% max HP
+[Guia oficial][guide], parafraseado: o HP atual da vítima decide entre queda da Mourning Star e um campo de chamas. A comparação do código inclui exatamente 50% no ramo do projétil; não é escolha aleatória.
 
-Spawns a `MourningStarProjectile` 10 blocks above target center and shoots downward.
+## Ingresso, escala e seleção da execução
 
-Damage = `1.1*spellPower + weaponDamage` → neutral **38.5 + weaponDamage**.
+Legendary, max default 1, LONG 20 ticks base, cooldown default 45 s=900 ticks. `P=(35+2(L−1))×SPELL_POWER×ritualPower×POWER_MULTIPLIER`; dano inicial do projétil **`D=1.1P+W` health points**, W=Utils.getWeaponDamage(caster). L1/fatores 1: P 35, D 38.5+W, mana 100; mana geral `int((100+15(L−1))×MANA_MULTIPLIER)`. LONG host aplica `round(20×(2−softCap(CAST_TIME_REDUCTION)))`. Power não escala os valores literais 0.5/1.5 dos burn fields ou threshold 50 desta classe. [Defaults][spell], [dano][damage], [power][power], [arma][weapon].
 
-### Target below 50% max HP
+Complex=true/super=false: crafting/loot genérico=false; SPELLBOOK rejeitado pela base, SWORD não por esse ramo. MourningStarMaceAwakened instala LibraL 1; receita source MourningStar base+1000 mB liquid_malice, base no city pool 0.05. Item COOLDOWN 15 s refere passiva, não 45 s desta spell. Leads source não são config/obtenção Survival homologadas. [Base][ritual], [preset][preset], [recipe][recipe], [city][city].
 
-Applies `ACCURSED_EFFECT` for 15 s and creates circular `RitualBurnAoE`:
+1. **Alvo/admissão:** preCastTargetHelper 32 blocks/.15 inflation; onCast requer TargetEntityCastData e target não-null no ServerLevel. Wrapper jogador anuncia evento/debita antes do efeito; target desaparecido não demonstra refund. Lê **percent=100 ×currentHealth/maxHealth no onCast**, sem sorteio: ≥50 cria projétil; <50 aplica curse/field. Não executar ambos nem reavaliar HP após hit. Se divisão produzir NaN, nenhum comparador é true; domínio físico normal/atributos continuam QA. [Alvo/branches][branches], [host][cast-host].
+2. **Ramo≥50:** center=target.position+(0,eyeHeight/2,0), spawn=center+Y 10, motion=(center−spawn).normalized. Cria 1 MourningStarProjectile(owner=caster), shoot para baixo, snapshot D e solicita spawn. Registry 3.5 × 3.5 blocks/tracking 64; getSpeed 0.9, então movimento inicial nominalY−0.9 blocks/tick. Constructor Level+shooter não liga noGravity; outro factoryconstructor liga, logo flags de factory não provam comportamento do caminho usado. Host com gravity ativa aplica 0.05 blocks/tick² e expiry>300; sem homing configurado. [Spawn][branches], [constructor/speed][projectile], [tipo][entity], [host][projectile-host].
+3. **Ramo<50:** tenta Accursed 300 ticks/15 s amp 0 na vítima e cria RitualBurnAoE(owner=caster) na posição da vítima com duration 100 ticks/5 s, **damage 1.5 HP por aplicação**, radius 3,circular. Returns de effect/spawn não são lidos. Não usa D/P/W para esse damage field. [Branch][branches].
 
-- duration: 100 ticks / 5 s;
-- damage field: 1.5;
-- radius: 3.
+## Terminais do projétil, campos e estado
 
-`AccursedPotionEffect` modifies:
+| Consumer / fase | Valor e limite causal |
+|---|---|
+| MourningStarProjectile#onHitEntity servidor [impact][impact] | Tenta helperD com fonte Libra/Ritual, direta=projétil/causador=owner/iFrames 0. Em Living tenta Accursed 100 ticks (5 s), em Player disableShield, zera target.invulnerableTime e descarta, **sem guardar esses side effects pelo retorno do dano**. iFrames 0 host não é prova de dano aceito. |
+| MourningStarProjectile#onHit [impact][impact] | Após super, chama createAoEField(hit.location): servidor cria burn 100 ticks/r 3/**damage 0.5 HP** no solo relativo com busca 4. Também cria EarthquakeAoe circularr 10/duration 20/D 0/slownessAmp 0/owner=projétil e solicita spawn sem guarda server própria nesse trecho; depois discard. Não anunciar que cada callback/cliente vira campo de dano confirmado nem que 20 ticks garantem slow. |
+| Earthquake herdado [earthquake][earthquake], [Aoe tick][aoi-host] | ReapplicationDelay 25 e lifecycle duration 20: no caminho nominal consultado descarta antes do primeiro poll 25, logo não garante seu applyEffect/slow/push. Ainda tem apresentação/tremor do host. Alterar duração pode ativar efeitos antes inalcançáveis. |
+| RitualBurnAoE#applyEffect [burn][burn] | Primeiro uso com staticDAMAGE_SOURCE==null grava **Libra.getDamageSource(firstOwner)**; overload 1 arg torna direta e causador esse primeiroowner, não o field. Demais campos/owners reutilizam a fonte static, sem reset por instância demonstrado. Tipo continua **SpellDamageSource**, embora armazenado em variável DamageSource; não é fonte plain. Chama ignoreNextKnockback, **hurt direto**, depois tenta MalignantBurn 100 ticks/amp 0 independentemente de hurttrue. |
+| Caminho de dano [helper][damage-host], [listeners][damage-effects] | Projétil Living+SpellDamageSource passa por SpellDamageEvent/helper/resist/friendly. Burn **pula esse helper/SpellDamageEvent/resistência escolar aplicada ali**, mas SpellDamageSource/iFrames ainda pode atingir listeners host/NeoForge/tags. Não inferir imunidade a todos eventos/procs ou fonte plain pelo executor direto. Como a fonte direta é firstOwner e pode ser Living, predicados de directEntityLiving como o de [Ravenous](ravenous-revenant.md) podem ser alcançados por esse caminho; testar correlação entre casts e owner static. |
+| Geometria/polls burn [Aoe][aoi-host], [dims/defaults][aoi-dimensions] | getDimensions herdado 2 r× 1.2→**6 × 1.2 blocks**, não registry 1 × 1. QueryLiving sobreAABB, filtroowner/aliado+predicate+ground context; circular usa distância 3D estrita<3, sem LOS adicional local. Delay 0/reapplication 10/duration 100; polls nominais 10..100, no máximo 10 antes de discard>100 nesse fluxo se idade avança normalmente, não 10 hits garantidos por alvo. Sem ledger de hitúnico: novas tentativas a cada poll. |
+| Statuses [Accursed][accursed], [MalignantBurn][malignant] | Accursed amp 0: SPELL_RESIST−.15 ADD_MULTIPLIED_BASE, ARMOR−5 ADD_VALUE, ATTACK_DAMAGE−.25 ADD_MULTIPLIED_BASE. MalignantBurn amp 0: SPELL_RESIST−.55 ADD_MULTIPLIED_BASE, **sem DOT próprio**; damage periódico vem do field.hurt. Merge/refusal/imunidade/categoria/tags continuam host-owned. |
+| Persistence [projectile][projectile-state], [fields][aoi-save] | Host salva D/Age/owner/homing etc; field salvaDamage/Duration/reapplication/radius/delay/circular. A variável **staticfirstOwner não é salva nesse NBT** nem recuperada como autoria por cast. Reload/restart/dimensões diferentes, callback repetido e owner nulo exigem QA; nenhum token de cast completo é fornecido aqui. |
 
-- Spell Resist: **-15% ADD_MULTIPLIED_BASE**;
-- Armor: **-5 ADD_VALUE**;
-- Attack Damage: **-25% ADD_MULTIPLIED_BASE**.
+## Matriz de alteração por perks
 
-## Authority / dedup
+| Eixo | Valor / consumidor / fase | Boundary real / limite | QA |
+|---|---|---|---|
+| Power/dano | D=1.1 P+W só projétil; fields 0.5/1.5 literais por aplicação. [Damage][damage], [branches][branches], [impact][impact]. | SPELL_POWER/ritual_spell_power **NATIVE_ATTRIBUTE**, POWER_MULTIPLIER **CONFIG_NATIVE**. SpellDamageEvent amount/cancel **HOOK_VERIFICADO** só caminho helperLiving; não é hook garantido do hurt direto Burn. Adapter **CONDITIONAL**, sem segundo dano para compensar. |Q1/Q3|
+| Tipo/autoria/iFrames | ritual_magic/Libra/iFrames 0; burnstaticfirstOwner direto ecausador. [School][school], [fonte][damage], [burn][burn]. | Eventos amount não alteram DamageType ou refazem autoria static. Conversão/ownership por perk **⛔ SEM_HOOK_SEGURO**; não escrever variável global para simular efeito por jogador. |Q3/Q4|
+| Alvo/range/threshold | Helper 32/.15, branchHP 50 no cast; queda acima do target ou field na sua posição. [Branches][branches]. | Sem setter local de range/threshold/selector. Retarget ou executarambos **⛔ SEM_HOOK_SEGURO**; não transpor Teleport/claims policy para esse helper. |Q2|
+| Área/count |1 projétil ou 1 field inicial; impacto cria burn+Earthquake. Burnr 3/6 × 1.2/circular 3D, quake 10. [Branches][branches], [impact][impact], [host][aoi-host]. | Aoe#setRadius é público com clamp 0..32; não prova callback terceiro pré-spawn nem segurança de ampliar budget. Resize/target→AOE **CONTRATO_CONDICIONAL / ⛔ fail-closed**. |Q2/Q4|
+| Projétil |3.5 × 3.5, inicial 0.9 para baixo, sem homing local, expiry host>300; gravity depende do caminho/flag. [Projectile][projectile], [tipo][entity], [base][projectile-host]. | SetDamage por instância é real, getSpeed não é setter; lifecycle/resize/speed/retarget **⛔ SEM_HOOK_SEGURO** sem seam completo pré-spawn/sync. |Q2/Q4|
+| Tempos/cooldown | LONG 20 base/45 sdefault; curse 300 cast ou 100 hit; burn 100 ticks/poll 10;quake 20/poll 25. [Spell][spell], [branches][branches], [impact][impact], [host][aoi-host]. | Config/atributos cast/cooldown **CONFIG_NATIVE/NATIVE_ATTRIBUTE**, cooldownPre no [comum](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md). Duração/poll/status são relógios separados; alterarquake pode ativar dano/status. |Q1/Q3|
+| Mana/recast | int((100+15(L−1))×config),sem recast local; custo do wrapper precede branch. [Power][power], [cast][cast-host]. | Event mana/level **HOOK_VERIFICADO** nesse wrapper, integração **CONDITIONAL**; nível não recalcula custo nem escala fields constantes. Sem segunda mana por burn/poll/quake. |Q1/Q4|
+| Estados/mundo/summons | Accursed/MalignantBurn,shielddisable/iFramesreset; quake tremor host; filhos semAI/summon slots. [Impact][impact], [effects][accursed], [burn][burn], [quake][earthquake]. | SummonAI **N/A**. Sem hook verificado de alteração dos sideeffects/status/claims/worldsafety; respeitar ownerprovider e budgets, **CONDITIONAL**. |Q3/Q4|
+| Persistência/dedup | Cast→branch→UUIDprojétil/field→poll/impact→vítima→HP, staticfirstOwner é risco deatribuição. [Burn][burn], [save][aoi-save]. | Não assumir dedup por school/source static; não creditar cada poll como cast. Mastery Ritual continua **PENDING** no [comum](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md). |Q4/Q5|
 
-This is not random judgement: the 50% threshold deterministically selects execution mode. Do not run both branches or evaluate HP after the provider has already settled selection.
+Assinatura ocupada: julgamento determinístico por limiar de HP com queda de arma ou field periódico. Uma proposta original com threshold configurável, owner por instância e transação de efeitos precisa contrato próprio; não é extensão aceita da variável static.
 
-Damage source override uses iFrames 0; projectile/AoE hit cadence remains provider-native.
+- **Q1:** config/origem/armaAwakened/fluido/loot, L/P/W/atributos/custo/cast/cooldown 45 versus passiva 15.
+- **Q2:** range 32/alvo desaparecido/chunks,HP 49.99/50/50.01/maxHPexótico, colisão/gravity/caminhofactory,parede/teto/cantos/groundcontext,owner/aliados/PvP/claims e spawn recusado.
+- **Q3:** veto/dano 0/resistência/iFrames, sideeffects apesarhurtfalse, statusmerge, counts/polls/groundcontext,20<25 quake, directhurtSpellDamageSource e listenersderivados.
+- **Q4:** firstOwner A→B e múltiplasdimensões,owner removido/restart,staticnãoNBT,callback duplicado/clientes,antiMagic/unload e orçamento decampos/polls.
+- **Q5:** dedicado/cliente/multiplayer/Survival/sync/persistência e Mastery Ritual. **Todos PENDING**; sem runtime/adapter/Stage novo.
 
-## Source
-
-`LibrasJudgementSpell.java`, `AccursedPotionEffect.java`, DTE 1.4.4 branch.
+[accursed]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/effects/AccursedPotionEffect.java#L13-L46
+[aoi-dimensions]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L216-L300
+[aoi-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L21-L149
+[aoi-save]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L284-L327
+[attributes]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTEAttributeRegistry.java#L19-L23
+[branches]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/ritual/LibrasJudgementSpell.java#L88-L155
+[burn]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/ritual_burn/RitualBurnAoE.java#L20-L40
+[cast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L305-L347
+[city]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/data/discerning_the_eldritch/loot_table/chests/city_items.json#L21-L70
+[damage]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/ritual/LibrasJudgementSpell.java#L158-L188
+[damage-effects]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L91-L131
+[damage-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[earthquake]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/EarthquakeAoe.java#L31-L99
+[entity]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTEEntityRegistry.java#L265-L278
+[guide]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/assets/discerning_the_eldritch/lang/en_us.json#L215-L216
+[impact]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/mourning_star/MourningStarProjectile.java#L72-L130
+[malignant]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/effects/MalignantBurnEffect.java#L9-L13
+[power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L257
+[preset]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/items/weapons/MourningStarMaceAwakenedItem.java#L22-L32
+[projectile]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/mourning_star/MourningStarProjectile.java#L31-L64
+[projectile-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L46-L115
+[projectile-state]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L301-L359
+[recipe]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/data/discerning_the_eldritch/recipe/alchemist_cauldron/alchemize_mourning_star_mace.json#L1-L14
+[registry]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/SpellRegistries.java#L170-L187
+[ritual]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/ritual/AbstractRitualSpell.java#L12-L59
+[school]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTESchoolRegistry.java#L30-L40
+[spell]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/ritual/LibrasJudgementSpell.java#L35-L90
+[versions]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/gradle.properties#L11-L27
+[weapon]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L787-L801

@@ -1,39 +1,71 @@
 # Ravenous Revenant
 
-**Prova física de registry (2026-10-13):** ✅ `COUNTED_EXACT` — `discerning_the_eldritch:ravenous_revenant` / `net.acetheeldritchking.discerning_the_eldritch.spells.ritual.RavenousRevenantSpell`, escola `DTESchoolRegistry.RITUAL_RESOURCE` ([Java 21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207); [dossiê](../EXACT-BINARY-SPELLS-1.4.4-1.21.md)). É feitiço/ritual provider-native, **não** `RitualEngine` Black Arcana; cast/loot/source gates e Survival ⚠️; +0.
+**Dossiê documental — 24/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; integração `CONTRATO_CONDICIONAL`; QA físico `PENDING`. **+0 identidades/+0 strict**: efeitos/entidades/impactos derivados não são novas spells.
 
-- **ID:** `discerning_the_eldritch:ravenous_revenant`
-- **School:** Ritual
-- **Level:** 1
-- **Rarity:** Legendary
-- **Cast:** Long, 20 ticks
-- **Mana:** 100
-- **Spell power neutral:** 35
-- **Cooldown:** 35 s
-- **Radius:** 15 blocks
-- **Duration neutral:** 35 s
-- **Complexity:** complex, not super-complex
+## Identidade e proveniência
 
-## Contract
+Provider Discerning The Eldritch, `mod_id=discerning_the_eldritch`, spell **`discerning_the_eldritch:ravenous_revenant`**, classe `net.acetheeldritchking.discerning_the_eldritch.spells.ritual.RavenousRevenantSpell`. Escola default **`discerning_the_eldritch:ritual`**, tipo de dano escolar **`discerning_the_eldritch:ritual_magic`**, atributos nativos `ritual_spell_power`/`ritual_magic_resist`. É spell Iron's/DTE, não RitualEngine Black Arcana. [Registry][registry], [escola][school], [atributos][attributes].
 
-Applies `PREY_POTION_EFFECT` to every nearby LivingEntity except caster in a 15-block inflated box and applies `PREDATOR_POTION_EFFECT` to the caster for `20*spellPower` ticks.
+Pack MC 1.21.1: JAR histórico **`discerning_the_eldritch-1.4.4-1.21.jar`**, SHA-1 `cf35c225aced23b705d1e0fd1bc5c62d96540e0c`, [publisher 8816497](https://www.curseforge.com/minecraft/mc-mods/discerning-the-eldritch/files/8816497), [prova binária histórica de identidade](../EXACT-BINARY-SPELLS-1.4.4-1.21.md). Source oficial `7bbd81f902c65a4452f47656ebd948cae8cd5833`, declaração 1.4.4-1.21; build Iron's 3.16.2/Neo 21.1.244/Azure 3.1.0/Ace 1.2.7.2 versus pack Iron's 3.16.3/Neo 21.1.250/Azure 3.1.11/Ace 1.2.7.2. Host consultado `e4056af90302d37eb1739f5ff05020b020e6e252`. Versão/registro não provam equivalência integral dos métodos/JAR/hosts. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md). Sinais de licença conflitantes MIT/PolyForm Shield descritos ali; somente fatos/paráfrases/permalinks, sem importar código/assets.
 
-`PredatorPotionEffect` listens to `LivingDamageEvent.Pre`. When the **direct source entity is a LivingEntity with Predator**, it spawns `RavenousJawEntity` at the victim with damage **20**.
+[Guia oficial][guide], parafraseado: um rugido marca entidades próximas como presas e permite uma mordida derivada. O guia descreve vínculo com Prey; o executor ativo abaixo não exige Prey no ramo que efetivamente cria a jaw.
 
-## Upstream static bug / intended Prey bonus
+## Ingresso, escala e marcação
 
-The next branch is:
+Legendary, max default 1, LONG 20 ticks base, cooldown default 35 s=700 ticks. `P=(35+2(L−1))×SPELL_POWER×ritualPower×POWER_MULTIPLIER`; duração pedida de ambos efeitos **`T=int(20P)` ticks**, amp 0. L1/fatores 1: P 35/T 700 ticks=35 s e mana 100; mana geral `int((100+15(L−1))×MANA_MULTIPLIER)`. Tempo efetivo LONG aplica `round(20×(2−softCap(CAST_TIME_REDUCTION)))`. P aumenta **duração**, não os 20 HP constantes da jaw. [Defaults][spell], [consumer][marking], [host][power].
 
-`else if (attacker has Predator && victim has Prey)`
+Complex=true/super=false: sem crafting/loot genérico, base rejeita SPELLBOOK mas não SWORD por essa condição; canBeInterrupted=false não elimina toda remoção/cancelamento possível. DevourerAwakened instala RavenousL 1; receita usa Devourer base+1000 mB liquid_malice, base em city_items tem poolchance 0.05. COOLDOWN 15 s da passiva no item não substitui 35 s da spell. Leads source, não Survival/config efetiva comprovados. [Gates][ritual], [preset][preset], [receita][recipe], [loot][city].
 
-but it follows an `if (attacker has Predator)`. Therefore it is logically unreachable whenever Predator is true. It also creates the 25-damage jaw without `addFreshEntity`.
+1. **Cast:** wrapper de jogador anuncia SpellOnCastEvent/debita conforme origem antes de onCast. Spell não seleciona alvo singular/preCastTargetHelper; consulta **LivingEntity sobrepostas à caixa do caster.inflate(15)**, exclui só o próprio caster, tenta PreyT/amp 0 e depois PredatorT/amp 0 em self. Não filtra distância esférica, LOS, time/aliados/PvP ou máximo de vítimas nessa marcação. Retornos de addEffect são ignorados. Blastwave radius 15/shake 20 ticks são apresentação, não ticks de dano. [OnCast][marking], [host][cast-host].
+2. **Proc:** PredatorPotionEffect#summonJawsEvent observa **LivingDamageEvent.Pre**. Só entra se **source.getDirectEntity() é LivingEntity com Predator**; não basta causing caster de projétil não-Living. Cria 1 RavenousJawEntity(owner=esse Living,target=vítima), posiciona na vítima, copia yaw, damage 20 e solicita spawn. Não verifica Prey, amount>0, confirmação de HP final, origem de skill, cooldown/ICD ou resultado de spawn nesse ramo; nenhum cap agregado local de jaws. [Listener][predator].
+3. **Ramo inalcançável:** o else-if exige novamente Predator+Prey após if(Predator). Portanto não seleciona o bônus 25 quando Predator é true; além disso ali a jaw não é adicionada ao level. Não anunciar 25 HP ou Prey como gate obrigatório do proc ativo. PreyPotionEffect isolado só declara categoria harmful, sem executor/tick próprio. [Ramos][predator], [Prey][prey].
+4. **Jaw e geometria:** registry 2 × 2/tracking 64; herda AoeEntity cuja dimensão **2 r× 1.2 blocks**, radius default 2/circularfalse, torna a dimensão nominal 4 × 1.2 no consumer herdado. `getInflation=(2.5,2.5,2.5)` amplia a query para envelope 9 × 6.2 × 9 nominal; não é esfera/raio 2.5. CheckHits ainda filtra owner/aliados/predicate herdado e ground context (onGround ou targetY−jawY<0.5), e applyEffect só aceita **target==this.target**, não todos na caixa. Verificar AABB efetiva após construção/sync. [Tipo][entity], [jaw][jaw], [herança][aoi-host], [dimensão/defaults][aoi-dimensions].
+5. **Timeline:** override tick não chama super.tick: segue posição do alvo enquanto tickCount<10, som em 10, checkHits servidor **somente em 15**, descarta em>45. Esses clocks nominais são do override, não duration 600/reapplication 10 da base. Não inferir que idade congela por ausência de super; incremento externo e primeiro/último tick precisam QA. [Tick/timers][jaw-tick].
+6. **Terminal:** na vítima exata, tenta helper 20 HP com fonte Ravenous/Ritual, direta=jaw, causador=owner, iFrames 0. Só se helper=true **e owner Living** adiciona velocidadeY+0.5 blocks/tick, hurtMarked e Accursed 1200 ticks (60 s)/amp 0; esse status altera resist/armor/attack, sem DOT próprio. A fonte direta jaw é Projectile, logo não satisfaz sozinha directEntityLiving do proc Predator; terceiros podem criar fontes/eventos extras. [Effect][jaw], [fonte da spell][marking], [helper][damage-host], [Accursed][accursed].
+7. **Estado/saída:** target é referência Java local, sem save/sync próprio demonstrado no subclass; NBT Aoe herda owner/Age/Damage/radius/duration mas não esse alvo nem token do proc. Após load, a referência não é reconstituída por esta classe; persistência/cleanup efetivos requerem QA. Falha de dano não é compensada com outra jaw, e benefício de marcação não prova mordida executada. [Jaw][jaw], [save host][aoi-save].
 
-Consequently the source-confirmed effective first branch is Predator → jaw 20, while the intended Predator+Prey bonus of 25 is a **QA/fix blocker**, not a mechanic Black Arcana should assume works.
+## Matriz de alteração por perks
 
-## Dedup
+| Eixo | Valor / consumer / fase | Boundary, limite e estado | QA |
+|---|---|---|---|
+| Duração/power/nível | T=int(20 P),L1/P 35→700 ticks,Prey+Predator amp 0. [Marking][marking], [power][power]. | SPELL_POWER/ritual_spell_power **NATIVE_ATTRIBUTE**, POWER_MULTIPLIER **CONFIG_NATIVE**; level event host existe, não setter isolado de duração/proc. Adapter **CONTRATO_CONDICIONAL**. |Q1/Q3|
+| Dano/tipo/iFrames | Jaw 20 HP literal, tipo ritual_magic/Ravenous, iFrames 0. [Listener][predator], [terminal][jaw], [school][school]. | SpellDamageEvent#setAmount/cancel real no helper Living antes de resistência/hurt; filtrar filho e fase, não creditar simples incoming. Amount não converte tipo: **⛔ SEM_HOOK_SEGURO** para DamageType ou usar P como bônus já existente da jaw. |Q3|
+| Targeting/área/range | Marcação AABBcaster.inflate 15,sem LOS/radial; jaw query ampliada e vítima específica/ground context. [Cast][marking], [jaw][jaw], [host][aoi-host]. | Sem config/setter local de raio da marcação ou resolver por perk. Resize/single→AOE/retarget **⛔ SEM_HOOK_SEGURO** até contrato pré-settlement. |Q2|
+| Trigger/cadência/budget |1 spawn por Pre elegível; directLiving+Predator; sem ICD/cap local. Prey não é necessário no ramo ativo. [Listener][predator]. | Evento é anúncio anterior ao HP, não sucesso. Alterar chance/ICD/exigir Prey seria novo contrato; **⛔ SEM_HOOK_SEGURO** para interceptar a criação nativa sem duplicar. |Q3/Q4|
+| Filho/geometry/lifetime | Jaw é AoeEntity,sem tiro/trajectory/pierce; alvofollow<10,check 15,discard>45,dimensão herdada. [Jaw][jaw], [tick][jaw-tick]. | Aoe#setRadius tem clamp 0..32 e setDamage/duration públicos, mas este override não consome todos os relógios herdados; setters não provam callback pré-spawn. **CONDITIONAL**; projétil lançado/speed/spread **N/A**. |Q2/Q4|
+| Buff/debuff/knockback | Prey/PredatorT; jawaceita→Y+0.5/Accursed 1200 amp 0,modifiers−.15 resist/−5 armor/−.25 attack. [Jaw][jaw], [effect][accursed]. | Nenhum setter por perk destes literais identificado. Effect apply/merge e listeners são authority nativa; **⛔ SEM_HOOK_SEGURO** para status/time sem adapter. |Q3|
+| Cast/cooldown/mana | LONG 20 base/35 sdefault, mana int((100+15(L−1))×config); sem recast local. [Spell][spell], [host][power], [wrapper][cast-host]. | Config/atributos **CONFIG_NATIVE/NATIVE_ATTRIBUTE** e eventos de mana/cooldown no [comum](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md) **HOOK_VERIFICADO**, integração **CONDITIONAL**. Não há segunda mana por jaw local. |Q1|
+| Summons/mundo | Jaw é efeito filho sem AI/slots/summon timer. Sem block mutation/teleport/crafting em onCast. [Marking][marking], [jaw][jaw]. | SummonAI/cap **N/A**; orçamento de entidades e protections continuam **PENDING**, não criar ledger RPG de Prey/Predator/jaws. |Q2/Q4|
+| Persistência/dedup | Cast→buff→dano originalPre→UUIDjaw→vítima/tick 15→resultado; target field não serializado. [Listener][predator], [tick][jaw-tick], [save][aoi-save]. | Mastery Ritual/causal correlation **PENDING** no [comum](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md); sem prêmio por cada Pre, VFX ou tentativa recusada. |Q4/Q5|
 
-Do not implement a second jaw proc merely to compensate in this documentation branch. Any compat fix must be explicit, tested and coordinated with runtime work.
+Assinatura ocupada: marcação coletiva mais auto-buff reativo que produz mordida na vítima de dano direto. Uma versão com Prey obrigatório, ICD/charges e owner-token persistente é lacuna de concepção, não comportamento nativo aceito.
 
-## Source
+- **Q1:** configs/origens/armaAwakened/loot/fluido,cast 20/cooldown 35 versuspassiva 15, atributos/rounding/duração e recusas de effect.
+- **Q2:** cantosAABB 15,LOS/aliados/PvP/claims, altura/ground context/AABB jaw, alvo sai antes 15/descarrega/morre e spawn rejeitado.
+- **Q3:** amount 0/cancel/mitigação/listenerorder, direct versus causingEntity, vítima sem Prey, proc 20 versus ramo 25 inativo, accepted=true versus HPfinal, status/Ypush só no gate.
+- **Q4:** tempestade de ataques/recursão/entidades simultâneas,check 15/cleanup>45, target não persistido, morte/logout/restart/dimensão/sync.
+- **Q5:** dedicado/cliente/Survival/multiplayer e Mastery Ritual sem recompensa duplicada. **Todos PENDING**; sem correção/adapter/runtime novo.
 
-`RavenousRevenantSpell.java`, `PredatorPotionEffect.java`, `PreyPotionEffect.java`.
+[accursed]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/effects/AccursedPotionEffect.java#L13-L46
+[aoi-dimensions]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L216-L300
+[aoi-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L21-L149
+[aoi-save]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L284-L327
+[attributes]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTEAttributeRegistry.java#L19-L23
+[cast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L305-L347
+[city]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/data/discerning_the_eldritch/loot_table/chests/city_items.json#L21-L70
+[damage-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[entity]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTEEntityRegistry.java#L241-L247
+[guide]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/assets/discerning_the_eldritch/lang/en_us.json#L206-L207
+[jaw]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/ravenous_jaw/RavenousJawEntity.java#L27-L67
+[jaw-tick]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/ravenous_jaw/RavenousJawEntity.java#L77-L115
+[marking]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/ritual/RavenousRevenantSpell.java#L103-L132
+[power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L257
+[predator]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/effects/PredatorPotionEffect.java#L13-L47
+[preset]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/items/weapons/DevourerAxeAwakenedItem.java#L25-L35
+[prey]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/effects/PreyPotionEffect.java#L6-L10
+[recipe]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/data/discerning_the_eldritch/recipe/alchemist_cauldron/alchemize_devourer_axe.json#L1-L14
+[registry]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/SpellRegistries.java#L170-L187
+[ritual]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/ritual/AbstractRitualSpell.java#L12-L59
+[school]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTESchoolRegistry.java#L30-L40
+[spell]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/ritual/RavenousRevenantSpell.java#L32-L80
+[versions]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/gradle.properties#L11-L27

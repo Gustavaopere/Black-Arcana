@@ -1,50 +1,102 @@
 # Conjure: Gaoler
 
-**Prova física de registry (2026-10-13):** ✅ `COUNTED_EXACT`, `discerning_the_eldritch:conjure_gaoler` / `net.acetheeldritchking.discerning_the_eldritch.spells.eldritch.ConjureGaolerSpell`, escola padrão `SchoolRegistry.ELDRITCH_RESOURCE` ([Java21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207), [dossiê](../EXACT-BINARY-SPELLS-1.4.4-1.21.md)). Custos/efeitos/Survival efetivos ⚠️; +0 identidades.
+**Dossiê documental — 24/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; integração `CONTRATO_CONDICIONAL`; QA físico `PENDING`. **+0 identidades/+0 strict**: Gaoler, quake e seus ataques não são novas spells-raiz.
 
-- **ID:** `discerning_the_eldritch:conjure_gaoler`
-- **School:** Eldritch
-- **Level:** 1
-- **Rarity:** Legendary
-- **Cast:** Long, 100 ticks / 5 s
-- **Mana:** 500
-- **Spell power neutral:** 25
-- **Cooldown:** 600 s
-- **Summon lifetime:** 60 s
-- **Neutral Gaoler damage:** 112.5
-- **Neutral Gaoler HP:** 512.5
+## Identidade, descrição e ingresso
 
-## Acquisition/cast gates
+Spell **`discerning_the_eldritch:conjure_gaoler`**, escola default `irons_spellbooks:eldritch`; declarante `net.acetheeldritchking.discerning_the_eldritch.spells.eldritch.ConjureGaolerSpell`; consumer principal `entity.mobs.gaoler.GaolerEntity`. [Registry][registry], [spell][spell].
 
-- `canBeCraftedBy=false`;
-- `allowCrafting=false`;
-- `allowLooting=false`;
-- `requiresLearning=false`;
-- cast is uninterruptible.
+Provider **Discerning The Eldritch**, `mod_id=discerning_the_eldritch`; Minecraft 1.21.1 / NeoForge no pack. JAR histórico `discerning_the_eldritch-1.4.4-1.21.jar`, SHA-1 `cf35c225aced23b705d1e0fd1bc5c62d96540e0c`, publisher [CurseForge 8816497](https://www.curseforge.com/minecraft/mc-mods/discerning-the-eldritch/files/8816497), 22098930 bytes. [Prova histórica de identidade](../EXACT-BINARY-SPELLS-1.4.4-1.21.md), sem equiparar todos os métodos ou configs ao source.
 
-Concrete source that grants access outside normal scroll crafting/loot: `NÃO VERIFICADO` in this pass.
+Source oficial `AceTheEldritchKing/Discerning_The_Eldritch@7bbd81f902c65a4452f47656ebd948cae8cd5833`, versão declarada 1.4.4-1.21. Build Iron’s 3.16.2 / NeoForge 21.1.244 / Azure 3.1.0 / Ace’s 1.2.7.2; pack Iron’s 3.16.3 / NeoForge 21.1.250 / Azure 3.1.11 / Ace’s 1.2.7.2. Host consultado Iron’s `e4056af90302d37eb1739f5ff05020b020e6e252`. `mod_license=MIT` versus TEMPLATE_LICENSE PolyForm Shield são sinais conflitantes: fatos/paráfrases/permalinks, sem importar implementação/assets. [Versão][versions], [contratos e proveniência comuns](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md). Config implantada, equivalência de métodos/JAR e compatibilidade física permanecem **PENDING**.
 
-## Contract
+[Guia oficial][guide], parafraseado: conjura o Gaoler, criatura ancestral ligada ao Warden. Legendary, default L1; `canBeCraftedBy/allowCrafting/allowLooting=false`, `requiresLearning=false`, `canBeInterrupted=false`. Isso é gate do contrato de cast, não imunidade a morte/logout/remoção ou qualquer cancelamento externo. Lead de aquisição: Amulet of Hidden Treasure (`amulet_of_sculk_treasure`) instala Gaoler L1 via PresetImbueCurio; modifier de Ancient City aponta city_items, cujo pool do amuleto tem chance source0.15. Item preset não fecha keybind/CastSource nem garante loot/Survival na config montada. [Gates][gates], [preset][amulet], [modifier][city-modifier], [loot][city-loot].
 
-Pre-cast applies Darkness to LivingEntities in 15-block radius for the cast duration, Darkness to caster, `PORTENT_EFFECT` to caster for 100 ticks, and a grayscale shader to ServerPlayer.
+## Pipeline causal, stats e lifecycle
 
-Spawn point is ~6 blocks behind the caster. Stats:
+`L`=nível recebido, `P=(25+1×(L−1))×SPELL_POWER×ELDRITCH_SPELL_POWER×POWER_MULTIPLIER`. No default L1/fatores1: mana500, P25, **AttackDamage112.5** e **MAX_HEALTH512.5**. São stats gravados no spawn, não HP perdido por golpe. `#getGaolerDamage=4.5P`; `#getGaolerHealth=20.5P`. Nenhum clamp extra nesta classe; default max1 não é cap universal do evento de nível. [Defaults][spell], [stats][stats], [host][host-formulas].
 
-- attack = `4.5 * spellPower`;
-- max health = `20.5 * spellPower`.
+1. LONG, tempo base100ticks=5s, efetivo `round(100×(2−softCap(CAST_TIME_REDUCTION)))`; mana `int((500+100×(L−1))×MANA_MULTIPLIER)`; cooldown default600s=12000ticks antes de modifiers. Host jogador anuncia SpellOnCastEvent antes de débito/onCast; recast já ativo evita débito nesse wrapper. [Defaults][spell], [host][host-formulas], [ordem][host-cast].
+2. `#onServerPreCast` consulta LivingEntity na **AABB do caster.inflate(15)**, sem teste esférico/LOS/friendly/max-target local, e solicita Darkness com duração `getCastTime(L)`=100ticks, amp1. Também solicita no próprio caster, mais Portent100ticks/amp1; ao ServerPlayer manda shader grayscale. Efeitos/overlay são pré-settlement; durations não acompanham automaticamente a redução do cast efetivo. Boolean de addEffect é ignorado. [Pré-cast][precast].
+3. `#onCast` resolve `flatDir=normalize(look.x,0,look.z)` e posição `caster.position−6×flatDir`; sem chão/espaço livre/ray/claims. Olhar vertical pode degenerar o offset; não é sempre seis blocos úteis. Timer literal1200ticks=60s. Com **King’s Effigy equipado** e sem recast ativo, pede um Gaoler e registra RecastInstance de2casts totais/1200ticks. Com Effigy e recast já ativo não pede outro. Sem Effigy pede um Gaoler a cada execução desse ramo, sem criar recast local. [Cast][cast], [count][count].
+4. `#spawnGaoler` cria `GaolerEntity(level,caster,true)`, que só delega ao tipo e ativa rise animation; owner não é associado pelo parâmetro do constructor. Grava posição/look, AttackDamage4.5P, MAX_HEALTH20.5P e health=max **antes** do SpellSummonEvent. Usa o resultado do evento para addFreshEntity e initSummon; retorno de spawn é ignorado. Replacement não recebe automaticamente os stats/posição que foram escritos no original. [Spawn][spawn], [constructor][entity-constructor], [manager][manager-init].
+5. No ramo `isFeral`, chama **removeSummon(gaoler original)**, não removeSummon(result). Esse boolean é argumento local do helper, **não flag de AI gravada na entidade**. Sem replacement, desfaz owner/mapas; a remoção de castData é solicitada só quando o UUID é localizado em recast ativo, que este ramo feral não registra. Não garante limpar o castData local. removeSummon não apaga expiration queue: timer de1200 continua agendado no host consultado. Com replacement por outro Gaoler, o resultado pode continuar associado, enquanto o original já não é a criatura inserida. Não descrever setter de replacement como preservando feral automaticamente. [Spawn][spawn], [manager][manager-init], [expiração][manager-expiry].
+6. `#onRecastFinished`: primeiro executa recastFinishedHelper; só chama super/cooldown se helper=true **e Effigy ainda equipado naquele momento**. Trocar Curio entre ingresso/cast/callback pode alterar contrato. Helper manual despawna UUIDs no level atual; timeout deixa expiração ao manager, com talisman/counterspell próprios. A spell remove shader em onCast(ServerPlayer), sem outro caminho de remoção local demonstrado no seu override; falha/interrupção anterior exige QA. [Callback][callback], [cast][cast], [helper][manager-finish].
 
-The Gaoler is posted through `SpellSummonEvent` then initialized by `SummonManager`.
+## Consumer Gaoler e consequências
 
-### King's Effigy branch
+| Superfície | Valor, consumer e limite |
+|---|---|
+| Entidade / atributos | Tipo **3.5×5blocks**. Factory base HP350/AttackDamage25.5 é sobrescrita pelo spell; permanecem armor15, toughness4, knockback1, follow range45blocks, interaction6.5, movement attribute0.25, stepHeight1.5. [Tipo][entity-type], [factory][entity-goals], [wiring][attributes-setup]. Não confundir interaction range ou follow range com raio ofensivo universal. |
+| Melee / AI / tipo | Goals de owner-hurt/copy/follow e NearestAttackableTargetGoal de Mob coexistem; ataque animado e Sonic Boom Iron’s. `#doHurtTarget` chama Utils.doMeleeAttack com spell.getDamageSource(this,getSummoner), default **irons_spellbooks:eldritch_magic**, sem fórmula adicional P no helper. Damage/enchantments/friendly/resist/hurt determinam HP real. [Goals][entity-goals], [melee][entity-melee], [host][melee-helper], [escola][eldritch-school]. Feral pode ter owner null; não atribuir automaticamente ao caster. |
+| Rise / guarda | `riseAnimationTime` começa130, `tick` decrementa **duas vezes** por passagem; durante rise é immobile e hurt retorna false, e o override não chama super.tick nesse ramo. Logo130 não é duração130ticks garantida nem timer do summon. Sync usa boolean de rise; countdown local não é serializado nos overrides NBT observados. [Constructor][entity-constructor], [rise/hurt][entity-rise], [save][entity-save]. |
+| Quake de rise | Primeiro tick servidor com riseTime==130 cria EarthquakeAoe com owner=Gaoler, circular/radius5/duration130/D1/slownessAmp0. Método chama-se spawnVisualEarthquake, mas configura **dano não zero**. Host reapplicationDelay25 e ground/friendly filters; se callback aplica e hurt=true, tenta slow120ticks e pushY+0.5. São consequências condicionais, não nova cobrança/cast. [Rise][entity-rise], [Earthquake][earthquake], [lifecycle][aoe-host]. |
+| Slam / outra área | `GaolerAnimatedWarlockAttackGoal#handleAttackLogic` chama super e, no hitframe slam_1, consulta **a classe do alvo atual** em bbox.inflate3.5 para handleDamaging; não é filtro universal de Living em esfera. Também cria quake radius8/duration10/D1. Este filho dura menos que reapplicationDelay25 e não garante callback no lifecycle host normal. Filtros finais/range do handleDamaging herdado continuam contrato do goal, não dano garantido em toda query. [Goal][slam-goal], [host][aoe-host]. |
+| Darkness passiva / VFX | `customServerAiStep`, tickCount%120==0, chama applyDarknessAround radius25: helper de players Darkness260amp0/argumento200 e também Living na bbox.inflate25 com Darkness200amp1. Sem exclusão local de owner/aliado no segundo loop. Config gaolerWalkingScreenshake governa apresentação, não dano ou hitbox. [Escuridão][entity-darkness], [cadência/VFX][entity-ai]. |
+| Remoção / persistência | IMagicSummon tem antiMagic→onUnSummon; Gaoler despawna servidor. Manager rastreia UUID/owner/duração e save/reload de summons geridos. Não estender esse save ao ramo feral já desacoplado. Campo summonerUUID salvo localmente não substitui mapa autoritativo do manager. Rise/save/relog/chunks/feral exige QA. [UnSummon][entity-melee], [interface][summon-interface], [manager save][manager-persist], [reload][manager-reload], [NBT][entity-save]. |
 
-With King's Effigy equipped, the Gaoler behaves as a managed summon/recast and `getRecastCount=2`. Without it, the Gaoler is spawned with `isFeral=true` and immediately removed from `SummonManager` after initialization — i.e. the provider intentionally releases it from standard summon ownership.
+## Matriz de alteração para perks
 
-## Dedup / safety
+| Eixo | Valor / fase / consumer | Boundary real, limite e estado | QA |
+|---|---|---|---|
+| Power / HP / ataque | P, HP20.5P e AttackDamage4.5P gravados em spawnGaoler antes do evento. [Stats][stats], [spawn][spawn]. | SPELL_POWER/ELDRITCH_SPELL_POWER **NATIVE_ATTRIBUTE**, POWER_MULTIPLIER **CONFIG_NATIVE**; HP e ataque variam juntos. Candidate pode receber modifiers no evento, mas stats finais/replacement/AI requerem **CONTRATO_CONDICIONAL**. | Q1/Q3 |
+| Dano / tipo / knockback | Melee lê AttackDamage, enchantments e helper; incoming com direct/causing IMagicSummon resolve owner: veta vítima=owner e, para owner Living, multiplica amount por SUMMON_DAMAGE. Sem owner no ramo feral não há essa escala por caster. Quake/Sonic Boom têm fonte própria. [Melee][melee-helper], [consumer][summon-damage], [quake][earthquake]. | SUMMON_DAMAGE **NATIVE_ATTRIBUTE** no caminho elegível; SpellDamageEvent amount/cancel **HOOK_VERIFICADO** só no helper+Living+SpellDamageSource, não governa quake hurt direto por analogia. Conversão de tipo **⛔ SEM_HOOK_SEGURO**; ataque não é hit confirmado. | Q3/Q4 |
+| Mana / cast / cooldown | Mana500 default, LONG100 base, cooldown600s, pre-effects100. [Spell][spell], [host][host-formulas]. | Config mana/cooldown e atributo tempo nativos; SpellOnCastEvent#setManaCost/setSpellLevel e cooldown Pre host sob contrato comum. Nível novo não recalcula custo antigo; tempos de effect/shader/rise são separados. | Q1/Q2 |
+| Count / recast / duração | Um pedido por ramo, Effigy2total/1200ticks; feral sem recast local, expiração continua na heap se não removida por outra via. [Cast][cast], [manager][manager-init]. | Curio é gate nativo, não perk genérica. Manager#setDuration adiciona entrada, não substitui deadline anterior. **⛔ SEM_HOOK_SEGURO** para count/duração/feral por perk sem fechar ownership/recast/caps; não prometer novo cap global. | Q2/Q4 |
+| Range / target / área | Spawn−6flatDir; pre-effects bbox.inflate15; darkness bbox25; slam query3.5. [Cast][cast], [pre][precast], [AI][slam-goal]. | Constantes/filtros distintos, sem setter/resolver comum identificado. **⛔ SEM_HOOK_SEGURO** para retarget, alcance, raio e AOE; preservar PvP/claims/chunks. | Q2/Q3 |
+| Summon replacement / owner | SpellSummonEvent pré-spawn com candidate Gaoler. [Evento][summon-event], [spawn][spawn]. | setCreature **HOOK_VERIFICADO**, não cancelável; publisher getCreature121 → **CHECKCAST GaolerEntity124**. LivingEntity arbitrária é inválida; feral remove o original, não replacement. Adapter **CONTRATO_CONDICIONAL** com tipagem/owner/cleanup íntegros. | Q2/Q4 |
+| Hitbox / speed / projétil | Gaoler3.5×5, movimento atributo0.25; raiz sem projétil. [Tipo][entity-type], [atributos][entity-goals]. | Projétil/pierce/spread da raiz **N/A**; resize/AI/speed e projéteis filhos **⛔ SEM_HOOK_SEGURO** por analogia. VFX não é geometria. | Q3/Q5 |
+| Estados / mundo / persistência | Darkness/Portent/shader/rise, quakes/AI e manager; sem mutação de bloco pelo cast observado. [Pre][precast], [rise][entity-rise]. | Efeitos e lifecycle provider-owned; sem segundo status, summon ledger ou cleanup BA. Claims, save/restart, overlay de falha e budgets **PENDING**. | Q4/Q5 |
 
-A Black Arcana summon bridge must preserve the managed-vs-feral branch; silently taming the no-Effigy Gaoler changes spell identity. Do not duplicate Darkness, shader, summon event, entity stats or lifecycle.
+CHECKCAST foi inspecionado de forma estreita com JDK21 javap no publisher de fingerprint acima; não demonstra equivalência integral source/JAR nem runtime do pack.
 
-AI target rules and whether feral Gaoler can attack the caster are entity-native; public documentation says this risk exists, but final AI internals are `NÃO VERIFICADO` here.
+## Autoria, concepção e QA
 
-## Source
+Correlacionar caster→cast/recast→candidate/event result→UUID Gaoler→owner/feral→ataque/filhos→vítima/fase. Uma observação pré-cast, shader ou entidade criada não confirma efeito ou Mastery por si. RPG Skill Tree possui progressão, Black Arcana seu casting/world safety, Enshrouded os próprios sistemas; DTE/Iron’s/Ace’s possuem os efeitos, AI e recursos.
 
-`ConjureGaolerSpell.java`, branch `1.21@7bbd81f...`.
+Assinatura ocupada: grande criatura com emergência, ameaça/controle dependente de Curio e término gerido por timer. Uma invocação original com contrato explícito de vínculo e dispensa é concepção independente, não setter disponível aqui.
+
+- **Q1:** fingerprint/config/atributos, L1 e extrapolação, tempo100 versus effect100, mana/cooldown/CastSource; gates de aquisição.
+- **Q2:** Effigy equipado/removido entre fases, recast/counterspell/timeout/talisman, spawn negado/replacement compatível/novo objeto, flatDir vertical e colisão/chunks.
+- **Q3:** HP/ataque reais, dano/tipo por melee/SonicBoom/quake, friendly/PvP/claims, AI/feral/owner null, caixas/ground filters.
+- **Q4:** expiração1200+poll, remoção original versus resultado, rise double-decrement e quakes10/130, cancelamento pré-spawn, morte/logout/dimensão e shader órfão.
+- **Q5:** loot amuleto e ingresso real, dedicado/cliente/multiplayer/budgets, persistência de gerido versus feral, sync/restart e dedupe. **Todos PENDING**, sem perk/adapter/runtime novo.
+
+[versions]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/gradle.properties#L10-L25
+[host-formulas]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L257
+[host-cast]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L305-L347
+[eldritch-school]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/registry/SchoolRegistry.java#L138-L148
+[summon-event]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellSummonEvent.java#L7-L39
+[manager-init]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L63-L135
+[manager-finish]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L142-L179
+[manager-expiry]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L294-L320
+[manager-persist]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L239-L290
+[manager-reload]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L330-L377
+[melee-helper]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L475-L497
+[summon-interface]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/mobs/IMagicSummon.java#L22-L85
+[attributes-setup]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/events/CommonSetup.java#L25-L37
+[registry]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/SpellRegistries.java#L50-L53
+[spell]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/ConjureGaolerSpell.java#L41-L80
+[gates]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/ConjureGaolerSpell.java#L83-L115
+[count]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/ConjureGaolerSpell.java#L118-L129
+[callback]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/ConjureGaolerSpell.java#L131-L141
+[precast]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/ConjureGaolerSpell.java#L143-L161
+[cast]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/ConjureGaolerSpell.java#L163-L199
+[spawn]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/ConjureGaolerSpell.java#L201-L220
+[stats]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/eldritch/ConjureGaolerSpell.java#L233-L240
+[guide]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/assets/discerning_the_eldritch/lang/en_us.json#L170-L171
+[amulet]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/items/curios/AmuletOfSculkTreasureCurio.java#L11-L15
+[city-modifier]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/data/discerning_the_eldritch/loot_modifiers/ancient_city_additions.json#L1-L10
+[city-loot]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/data/discerning_the_eldritch/loot_table/chests/city_items.json#L1-L20
+[entity-type]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTEEntityRegistry.java#L105-L112
+[entity-constructor]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/mobs/gaoler/GaolerEntity.java#L67-L87
+[entity-goals]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/mobs/gaoler/GaolerEntity.java#L132-L180
+[entity-melee]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/mobs/gaoler/GaolerEntity.java#L200-L235
+[entity-rise]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/mobs/gaoler/GaolerEntity.java#L412-L473
+[entity-save]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/mobs/gaoler/GaolerEntity.java#L486-L497
+[entity-darkness]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/mobs/gaoler/GaolerEntity.java#L248-L255
+[entity-ai]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/mobs/gaoler/GaolerEntity.java#L387-L408
+[slam-goal]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/mobs/goals/GaolerAnimatedWarlockAttackGoal.java#L28-L79
+[earthquake]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/EarthquakeAoe.java#L31-L63
+[aoe-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L94-L149
+[summon-damage]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L114-L130

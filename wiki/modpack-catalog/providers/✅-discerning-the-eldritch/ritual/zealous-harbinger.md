@@ -1,33 +1,73 @@
-# Zealous Harbinger
+# Zealous Harbinger / Zealous Executioner
 
-**Prova física de registry (2026-10-13):** ✅ `COUNTED_EXACT` — `discerning_the_eldritch:zealous_harbinger` / `net.acetheeldritchking.discerning_the_eldritch.spells.ritual.ZealousHarbingerSpell`, escola `DTESchoolRegistry.RITUAL_RESOURCE` ([Java 21 #38455449207](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38455449207); [dossiê](../EXACT-BINARY-SPELLS-1.4.4-1.21.md)). É feitiço/ritual provider-native, **não** `RitualEngine` Black Arcana; cast/loot/source gates e Survival ⚠️; +0.
+**Dossiê documental — 24/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `SOURCE_PINNED / SOURCE_CAUSALITY`; integração `CONTRATO_CONDICIONAL`; QA físico `PENDING`. **+0 identidades/+0 strict**: efeitos/entidades/impactos derivados não são novas spells.
 
-- **ID:** `discerning_the_eldritch:zealous_harbinger`
-- **School:** Ritual
-- **Level:** 1
-- **Rarity:** Legendary
-- **Cast:** Long, 20 ticks
-- **Mana:** 100
-- **Spell power neutral:** 25
-- **Cooldown:** 35 s
-- **Target range:** 16 blocks
-- **Damage each projectile:** `0.45*power + weaponDamage` = neutral `11.25 + weaponDamage`
-- **Complexity:** complex, not super-complex
+## Identidade e proveniência
 
-## Cast-source gate
+Provider Discerning The Eldritch, `mod_id=discerning_the_eldritch`, spell **`discerning_the_eldritch:zealous_harbinger`**, classe `net.acetheeldritchking.discerning_the_eldritch.spells.ritual.ZealousHarbingerSpell`. Escola default **`discerning_the_eldritch:ritual`**, tipo de dano escolar **`discerning_the_eldritch:ritual_magic`**, atributos nativos `ritual_spell_power`/`ritual_magic_resist`. É spell Iron's/DTE, não RitualEngine Black Arcana. [Registry][registry], [escola][school], [atributos][attributes].
 
-No crafting/normal loot. `AbstractRitualSpell` rejects SPELLBOOK for complex non-super rituals; its super-complex SPELLBOOK/SWORD gate does not apply, so SWORD is not rejected by that base condition.
+Pack MC 1.21.1: JAR histórico **`discerning_the_eldritch-1.4.4-1.21.jar`**, SHA-1 `cf35c225aced23b705d1e0fd1bc5c62d96540e0c`, [publisher 8816497](https://www.curseforge.com/minecraft/mc-mods/discerning-the-eldritch/files/8816497), [prova binária histórica de identidade](../EXACT-BINARY-SPELLS-1.4.4-1.21.md). Source oficial `7bbd81f902c65a4452f47656ebd948cae8cd5833`, declaração 1.4.4-1.21; build Iron's 3.16.2/Neo 21.1.244/Azure 3.1.0/Ace 1.2.7.2 versus pack Iron's 3.16.3/Neo 21.1.250/Azure 3.1.11/Ace 1.2.7.2. Host consultado `e4056af90302d37eb1739f5ff05020b020e6e252`. Versão/registro não provam equivalência integral dos métodos/JAR/hosts. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md). Sinais de licença conflitantes MIT/PolyForm Shield descritos ali; somente fatos/paráfrases/permalinks, sem importar código/assets.
 
-## Contract
+[Guia oficial][guide], parafraseado: seis ecos da Cataclysm perseguem a vítima e podem afligi-la com uma maldição. Nome de exibição upstream **Zealous Executioner**; o ID real continua zealous_harbinger.
 
-With valid target data, loops 6 times creating `CataclysmBladeBigProjectile`, assigns damage, target homing and zero-iFrame spell damage behavior.
+## Ingresso e parâmetros
 
-## Static source quirk
+Legendary, max default 1, LONG 20 ticks base, cooldown default 35 s=700 ticks. `P=(25+2(L−1))×SPELL_POWER×ritualPower×POWER_MULTIPLIER`; `D=0.45P+W`, W=Utils.getWeaponDamage(caster), snapshot uma vez por projétil no loop. Em L1/fatores 1: P 25, componente 11.25 HP+W, mana 100. Mana geral `int((100+15(L−1))×MANA_MULTIPLIER)`; o nível máximo configurado não é clamp dentro do helper de dano. Tempo efetivo host LONG é `round(20×(2−softCap(CAST_TIME_REDUCTION)))`, não obrigatoriamente 20 em runtime. [Defaults][spell], [dano/spawn][spawn], [power][power], [arma][weapon], [host][cast-host].
 
-Inside each loop the projectile position is first assigned `z + i` and immediately overwritten by `z - i`. The apparent symmetric pair is not produced by these two calls. Runtime visuals should be tested before documentation claims bilateral spawning.
+Complex=true/super=false: crafting/loot genérico=false; base rejeita SPELLBOOK, mas não SWORD por essa condição. `CataclysmBladeAwakenedItem` instala ZealousL 1; receita source transforma Cataclysm base com 1000 mB liquid_malice em awakened. City pool de Cataclysm tem 0.05. São leads por item/receita, não disponibilidade ou sucesso Survival comprovados. O COOLDOWN 15 s estático do item refere passiva própria; não substituir o cooldown default 35 s desta spell. [Gates][ritual], [preset][preset], [receita][recipe], [base no loot][city].
 
-The projectile is still provider authority for homing/path/hit behavior.
+## Pipeline de alvo, volley e impacto
 
-## Source
+1. **Admissão:** `checkPreCastConditions` usa preCastTargetHelper com range **15+L blocks** e rayInflation 0.15; em L1=16. Host resolve TargetEntityCastData e o onCast só cria filhos se o target ainda é não-null no ServerLevel. Sem alvo resolvido, ainda chega a super.onCast; isso não prova refund após débito do wrapper jogador. Veto pre-cast/custo/SpellOnCastEvent antecedem efeito conforme [comum](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md). [Alvo/spawn][spawn], [wrapper][cast-host].
+2. **Origem:** constrói flatDir=normalize(look.x,1.55,look.z), spawnPos=caster.position+2 ×flatDir. Para i 0..5 cria 1 CataclysmBladeBigProjectile(owner=caster). SetPos z+i é imediatamente sobrescrito por **z−i**; são 6 solicitações, não 12 nem formação bilateral. Shoot usa **forward do alvo**, acrescido Y 0.05 e normalizado× 0.5, não vetor caster→alvo. Grava D e homingTarget=alvo; addFreshEntity não é conferido. [Loop][spawn].
+3. **Movimento:** overload shoot perturba direção por vetor aleatório normalizado de magnitude 0.4, preserva módulo 0.5 e delega ao host multiplicando getSpeed 1.3: inicial nominal **0.65 blocks/tick**. O constructor usado Level+shooter só grava owner; o setNoGravity=true está no outro constructor EntityType+Level, e noGravity do onCast está comentado. Não transplantar a flag do caminho factory/load; com flagfalse host aplica gravidade 0.05 blocks/tick². Homing entity strength 0.22, predição centro+delta e perda de target quando passou dele seguem host. [Constructor/shoot][blade], [speed][impact], [homing][homing], [host][projectile-host].
+4. **Colisão e lifespan:** AABB registrada 2 × 2 blocks, tracking 64; raycast host/interseção 0.3, owner/aliados excluídos. BigProjectile tick chama super e descarta em tickCount≥60 (3 s nominais), antes do expiry host>300. `onHitBlock` vazio não descarta sozinho; host ainda realiza clip e chama onHit, portanto não demonstrar travessia segura de bloco nem colisão desligada. [Tipo][entity], [tick][blade], [hit][projectile-hit], [callbacks][impact].
+5. **Settlement:** servidor onHitEntity tenta D com helper+SpellDamageSource Zealous, direta=blade, causador=owner, Ritual/iFrames 0. Depois em Living tenta Accursed 100 ticks/amp 0 sem consultar dano aceito; zera target.invulnerableTime mesmo com hurtfalse. `if(hitsPerTick++<2) discard` começa 0/reset após super.tick: a primeira chamada normal já pede discard, **não** implementa “até 2 hits” como permissão garantida. Não há ledger persistente de vítimas próprio. [Impacto][impact], [helper][damage-host], [iFrames][damage-effects].
+6. **Status/saída:** Accursed amp 0 modifica SPELL_RESIST−0.15 ADD_MULTIPLIED_BASE, ARMOR−5 ADD_VALUE, ATTACK_DAMAGE−0.25 ADD_MULTIPLIED_BASE; tick do effect emite partículas, não DOT próprio. Blastwaves 1/1.5 são VFX. AntiMagic e NBT herdados salvam D/Age/homing, mas counters locais/efeitos/resultados de 6 spawns não são uma transação persistida pela spell. [Effect][accursed], [state][projectile-state].
 
-`ZealousHarbingerSpell.java`, DTE 1.4.4 branch.
+## Matriz de alteração por perks
+
+| Eixo | Valor / consumer / fase | Boundary, limite e estado | QA |
+|---|---|---|---|
+| Power/dano/weapon | D=0.45 P+W por filho, P 25 neutroL 1. [Spell][spell], [loop][spawn]. | SPELL_POWER/ritual_spell_power **NATIVE_ATTRIBUTE**, POWER_MULTIPLIER **CONFIG_NATIVE**; helper Living permite SpellDamageEvent#setAmount/cancel pré-hurt. Adapter **CONTRATO_CONDICIONAL** por spell+owner+UUID, sem multiplicar pagamento/XP 6 vezes. |Q1/Q3|
+| Tipo/iFrames/status | ritual_magic/iFrames 0; target.invulnerableTime=0 e Accursed 100 após tentativa. [Impacto][impact], [effect][accursed]. | Dano aceito não guarda os outros side effects. Não há setter do DamageType no evento amount; conversão/status-duration **⛔ SEM_HOOK_SEGURO** neste consumer. |Q3|
+| Range/alvo | preCastTargetHelper 15+L/.15; TargetEntityCastData read no onCast; homing segue entidade. [Spawn][spawn], [homing][homing]. | Setter host de homing existe por instância, não prova callback terceiro pré-spawn. Range/retarget/target→AOE **⛔ SEM_HOOK_SEGURO**; claims/corpo livre não inferidos do helper. |Q2|
+| Área/contagem | Literal 6 filhos, posiçõesz−i; sem AOE de dano local. [Loop][spawn]. | Sem config/setter local da contagem. Eventos de cast/impact observer não autorizam spawn adicional. Aumento de count/área requer adapter/caps **CONDITIONAL**. |Q2/Q4|
+| Projétil/velocidade |2 × 2, inicial 0.65, inaccuracy 0.4, homing.22, lifetime≥60 discard. [Blade][blade], [impact][impact], [tipo][entity]. | getSpeed 1.3 é getter; setDamage/setHomingTarget públicos por instância não tornam resize/speed/lifetime mutáveis com segurança. **⛔ SEM_HOOK_SEGURO** pré-spawn terceiro. |Q2/Q4|
+| Cast/cooldown | LONG 20 base com atributo host,35 s default; base não interruptível. [Spell][spell], [ritual][ritual], [host][power]. | Config cooldown/atributo **NATIVE/CONFIG_NATIVE**, cooldown Pre hook no [comum](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md); sem setter isolado de cada relógio. |Q1|
+| Mana/recasts | `int((100+15(L−1))×config)`; nenhum recast local; custo do wrapper precede volley. [Spell][spell], [host][cast-host]. | MANA_MULTIPLIER **CONFIG_NATIVE**, event mana/level **HOOK_VERIFICADO**, integração **CONDITIONAL**; não há custo por cada uma das 6 lâminas. Não aplicar segunda mana ou refund inventado por target desaparecido. |Q1/Q4|
+| Summons/mundo | Filhos projéteis sem AI/summon slots; sem block break/teleporte/heal local. [Spawn][spawn], [impact][impact]. | Summon caps/AI **N/A**; collision/claims e budget agregado permanecem **PENDING**, não WorldEffectPolicy automático. |Q2/Q4|
+| Persistência/dedup | UUID por filho+owner+cast+vítima/fase, D/Age/homing herdados. [State][projectile-state]. | Sem ledger 6 spawns transacional/sucesso global. Provider mantém impacto/cleanup; Mastery Ritual **PENDING** no [comum](../SPELL-PERK-BOUNDARIES-1.4.4-1.21.md). |Q4/Q5|
+
+Assinatura ocupada: volley de seis armas homing com dano Ritual+arma e Accursed. Reconfigurar origem/count/retarget é concepção de outra magia até que um seam seguro seja verificado.
+
+- **Q1:** config/arma awakened/origens/gates, níveis/defaults/atributos/W, custo e cooldown 35 versus passiva 15, CAST_TIME_REDUCTION.
+- **Q2:** target some/descarrega, range 16/raycast.15, posiçõesz−i, forward alvo versus homing, constructor/noGravity/velocidade, blocos/owner/aliados/PvP/claims.
+- **Q3:** hurtfalse/cancel/resistência/iFrames 0, status e invulnerableTime independentes, primeiro discard/hitsPerTick,6 tentativas versus 6 HPentregues.
+- **Q4:** spawn recusado/caps,60 ticks versus expiry 300, antiMagic/save/load/homing, cancel/death/logout/restart e impactos no mesmo tick.
+- **Q5:** Survival/dedicado/cliente/multiplayer/sync, Mastery Ritual e correlação sem creditar cada filho como cast novo. **Todos PENDING**; sem runtime/adapter novo.
+
+[accursed]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/effects/AccursedPotionEffect.java#L13-L46
+[attributes]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTEAttributeRegistry.java#L19-L23
+[blade]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/cataclysm_blade_projectile/CataclysmBladeBigProjectile.java#L33-L83
+[cast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L305-L347
+[city]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/data/discerning_the_eldritch/loot_table/chests/city_items.json#L21-L70
+[damage-effects]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L91-L131
+[damage-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[entity]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTEEntityRegistry.java#L233-L239
+[guide]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/assets/discerning_the_eldritch/lang/en_us.json#L203-L204
+[homing]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L221-L282
+[impact]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/entity/spells/cataclysm_blade_projectile/CataclysmBladeBigProjectile.java#L98-L148
+[power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L257
+[preset]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/items/weapons/CataclysmBladeAwakenedItem.java#L23-L34
+[projectile-hit]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L153-L213
+[projectile-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L46-L115
+[projectile-state]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L301-L359
+[recipe]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/resources/data/discerning_the_eldritch/recipe/alchemist_cauldron/alchemize_cataclysm_blade.json#L1-L14
+[registry]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/SpellRegistries.java#L170-L187
+[ritual]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/ritual/AbstractRitualSpell.java#L12-L59
+[school]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/registries/DTESchoolRegistry.java#L30-L40
+[spawn]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/ritual/ZealousHarbingerSpell.java#L90-L143
+[spell]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/src/main/java/net/acetheeldritchking/discerning_the_eldritch/spells/ritual/ZealousHarbingerSpell.java#L28-L92
+[versions]: https://github.com/AceTheEldritchKing/Discerning_The_Eldritch/blob/7bbd81f902c65a4452f47656ebd948cae8cd5833/gradle.properties#L11-L27
+[weapon]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L787-L801

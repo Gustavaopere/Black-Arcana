@@ -1,6 +1,6 @@
 {
   "date": "2026-10-24",
-  "black_arcana_base": "de3ed3ddbc696597bae5e6dd993e04dbef99aa05",
+  "black_arcana_base": "0c347bfa534259773bcb59b50e3ceb0010e9d7e4",
   "rpg_modlist_sha": "ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc",
   "enshrouded_sha": "a41dbb51aacb94b7b5db6517f1514b0b7aee3e83",
   "global_technical_total": null,
@@ -569,10 +569,10 @@
     },
     {
       "provider_directory": "✅-discerning-the-eldritch",
-      "scope": "Completude técnica por objeto ainda não quantificada neste painel",
-      "completed": null,
-      "total": null,
-      "evidence": "PERK-READY-COVERAGE-LEDGER.md",
+      "scope": "fichas dos 22 spells com parâmetros e consumidores source-causais; hosts, mutadores, Mastery Ritual e QA condicionados",
+      "completed": 22,
+      "total": 22,
+      "evidence": "../providers/✅-discerning-the-eldritch/SPELL-PERK-BOUNDARIES-1.4.4-1.21.md",
       "runtime_acceptance": "NOT_INFERRED"
     },
     {
