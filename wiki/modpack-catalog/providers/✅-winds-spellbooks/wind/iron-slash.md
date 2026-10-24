@@ -63,3 +63,15 @@ O construtor ainda apresenta escritas de `baseManaCost`, `manaCostPerLevel`, `ba
 | `getDistance(int, LivingEntity)` | `10.0f + ((float)level * 2.0f)` | Expressão `float` formada por `fadd`/`fmul`/`i2f`. | Não comprova distância efetiva de dash/teleporte, distância de target, collision, cancelamentos ou limites de servidor. |
 
 A expressão compilada isolada não autoriza perk mutadora nem alteração em `onCast`. **⛔ SEM_HOOK_SEGURO** até confirmar chamador, geometrias e host; nenhuma alteração de mana, cooldown, efeitos, poderes, duração, entidades ou configuração foi implementada. Wind's/Iron's permanecem autoridades provider-native; Black Arcana possui seu runtime, RPG Skill Tree apenas progressão/perks por boundary real.
+
+## Arestas de chamadas diretas e sinks co-presentes — 24/10/2026
+
+**⚠️ Evidência restrita:** [CI exato #40130495377](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40130495377), artefato `getter-consumer-edges.json` com estado `PASS_SHA_EXACT_DIRECT_CALL_EDGE_INVENTORY` e SHA-1 oficial `8744886899bc245ae147a44baa2b183689cec7da`. O inventário examina chamadas diretas nos métodos desta classe de spell; não rastreia todas as classes do provider.
+
+| Getter com expressão compilada já documentada | Chamador(es) diretos nesta classe | Invocação direta de `onCast` |
+|---|---|---|
+| `getDistance(int, LivingEntity)` | `getUniqueInfo, onCast` | **observado** |
+
+**Sinks/efeitos independentes no mesmo método:** `onCast` também invoca `TeleportSpell.findTeleportLocation` e `performDash`; o vínculo entre retorno de `getDistance`, argumentos do teleporte e deslocamento físico efetivo não foi demonstrado.
+
+**Estado causal:** `SAME_METHOD_ONLY_NOT_GETTER_TO_SINK_DATAFLOW`. A presença do getter e de um setter no mesmo `onCast` **não** prova que o retorno chega àquele setter, nem seus guards/configuração/beneficiário. **⛔ `SEM_HOOK_SEGURO` para perks mutadoras**; não reproduzir efeitos provider-native nem alterar autoridades de Iron's/Wind's/Black Arcana/RPG Skill Tree. Stage 06.05 e Stage 09 sem promoção.
