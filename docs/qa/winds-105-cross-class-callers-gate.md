@@ -1,6 +1,6 @@
 # Wind's Spellbooks 1.0.5 — arestas entre classes e consumidores dos getters
 
-**Data:** 24/10/2026 · **Estado:** 🟡 auditoria binária em andamento. Nenhuma perk implementada.
+**Data:** 24/10/2026 · **Estado:** ✅ inventário binário da versão exata verificado; ⚠️ consumidores host e causalidade de efeitos ainda não verificados. Nenhuma perk implementada.
 
 ## Fonte física e escopo
 
@@ -30,3 +30,20 @@
 - CI Black Arcana (`verify`, `stage05_qa_companion_smoke`) e Wind precisam de `SUCCESS` no HEAD final; conferir 0 commits behind e diff antes de merge.
 
 Sem novas identidades: **7/7** fichas Wind's; **9/9** getters selecionados; **38/39** campanha binária geral selecionada; mínimo ≥1.856 objetos e progresso global indeterminado. Stage 06.05 🟡 e Stage 09 pendente.
+
+## Resultado do JAR exato — 24/10/2026
+
+**Evidência de primeira ordem:** [Wind workflow #40135302517](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40135302517) `SUCCESS`, artefato `cross-class-getter-calls.json` aberto e inspecionado, SHA-1 do JAR `8744886899bc245ae147a44baa2b183689cec7da`.
+
+| Métrica do recorte fixado | Resultado |
+|---|---|
+| Classes `.class` no namespace do Wind's examinadas no JAR | **64/64** |
+| Getters previamente selecionados rastreados | **9/9** |
+| Instruções JVM `invoke*` para esses getters | **16** |
+| Chamadas diretas a partir de **outra classe do próprio provider** | **0** |
+
+Detalhe por getter: Aeropic `getRecastCount` **1**; Almighty Push `getDuration` **2**, `getRange` **2**; Iron Slash `getDistance` **2**; Tailwind `getPercentAirSpeed` **1**, `getPercentJump` **1**; Tornado `getDuration` **2**; Wind Jump `getFloatDuration` **3**, `getJumpStrength` **2**. O `getFloatDuration` tem três instruções para apenas dois métodos chamadores distintos — a auditoria anterior contava **métodos**, enquanto esta conta **instruções**; esses denominadores não são intercambiáveis.
+
+**Leitura técnica:** na população binária delimitada, os nove getters não são invocados diretamente de outras classes do próprio JAR. Não inferir que os efeitos não os utilizam indiretamente, nem que os getters correspondem às variáveis aplicadas. O valor `0` **não cobre** o host Iron's, IronSable, bytecode externo, classes herdadas, reflection, virtual dispatch dinâmico, Mixins ou consumo via outra API. Os valores de Tailwind e Aeropic exigem inspeção do implementation path próprio dos efeitos/host para certificação.
+
+**Regressão acrescentada:** `docs/qa/winds_105_cross_class_contract.py` fixa SHA, release, 64 classes, 16 chamadas diretas, 9 getters e zero referências fora da classe declarante para este JAR exato. Oito fixtures de mutação rejeitam drifts de owner, descritor, contagem ou alegação indevida de fluxo causal. Esse contrato é um **gate de evidência binária congelada**, não gate de comportamento gameplay. Nenhum hook implementado e Stages inalterados.
