@@ -1,8 +1,8 @@
 # Wind's Spellbooks 1.0.5 — mapa de chamadas diretas aos nove getters
 
-**Data:** 24/10/2026 · **Estado:** ✅ gate binário 9/9 arestas diretas selecionadas aprovado em CI; ⚠️ fluxo de operandos e hooks continuam pendentes.  
-**Provider:** `wind_spellbooks` · JAR físico `wind_spellbooks-1.0.5.jar` · SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`.  
-**Baseline:** Black Arcana `main@2a507d16cf3b5b5ce38dabc610203442c8bf1e00` (PR #883 integrado).  
+**Data:** 24/10/2026 · **Estado:** ✅ gate binário 9/9 arestas diretas selecionadas aprovado em CI; ⚠️ fluxo de operandos e hooks continuam pendentes.
+**Provider:** `wind_spellbooks` · JAR físico `wind_spellbooks-1.0.5.jar` · SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`.
+**Baseline:** Black Arcana `main@2a507d16cf3b5b5ce38dabc610203442c8bf1e00` (PR #883 integrado).
 **Fonte:** extração clean-room de invocações JVM por método, reutilizando `docs/qa/winds_105_spell_metadata.py`; **nenhum código/bytecode do provider é reproduzido**.
 
 ## Chamadas diretas em classes dos próprios spells
