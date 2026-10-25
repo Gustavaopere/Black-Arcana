@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 23/138.**
-**Barra do recorte documental:** `███░░░░░░░░░░░░░░░░░ 16.7%`
+**Homologadas para perks (somente fichas detectadas): 28/138.**
+**Barra do recorte documental:** `████░░░░░░░░░░░░░░░░ 20.3%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -47,20 +47,20 @@
 | ⚠️ | Dispel | [glyphs/effects/dispel.md](glyphs/effects/dispel.md) |
 | ⚠️ | Evaporate | [glyphs/effects/evaporate.md](glyphs/effects/evaporate.md) |
 | ⚠️ | Exchange | [glyphs/effects/exchange.md](glyphs/effects/exchange.md) |
-| ⚠️ | Explosion | [glyphs/effects/explosion.md](glyphs/effects/explosion.md) |
+| ✅ | Explosion | [glyphs/effects/explosion.md](glyphs/effects/explosion.md) |
 | ⚠️ | Fangs | [glyphs/effects/fangs.md](glyphs/effects/fangs.md) |
 | ⚠️ | Fell | [glyphs/effects/fell.md](glyphs/effects/fell.md) |
 | ⚠️ | Firework | [glyphs/effects/firework.md](glyphs/effects/firework.md) |
 | ⚠️ | Flare | [glyphs/effects/flare.md](glyphs/effects/flare.md) |
-| ⚠️ | Freeze | [glyphs/effects/freeze.md](glyphs/effects/freeze.md) |
+| ✅ | Freeze | [glyphs/effects/freeze.md](glyphs/effects/freeze.md) |
 | ✅ | Glide | [glyphs/effects/glide.md](glyphs/effects/glide.md) |
 | ⚠️ | Gravity | [glyphs/effects/gravity.md](glyphs/effects/gravity.md) |
 | ⚠️ | Grow | [glyphs/effects/grow.md](glyphs/effects/grow.md) |
-| ⚠️ | Harm | [glyphs/effects/harm.md](glyphs/effects/harm.md) |
+| ✅ | Harm | [glyphs/effects/harm.md](glyphs/effects/harm.md) |
 | ⚠️ | Harvest | [glyphs/effects/harvest.md](glyphs/effects/harvest.md) |
 | ✅ | Heal | [glyphs/effects/heal.md](glyphs/effects/heal.md) |
 | ⚠️ | Hex | [glyphs/effects/hex.md](glyphs/effects/hex.md) |
-| ⚠️ | Ignite | [glyphs/effects/ignite.md](glyphs/effects/ignite.md) |
+| ✅ | Ignite | [glyphs/effects/ignite.md](glyphs/effects/ignite.md) |
 | ⚠️ | Infuse | [glyphs/effects/infuse.md](glyphs/effects/infuse.md) |
 | ⚠️ | Intangible | [glyphs/effects/intangible.md](glyphs/effects/intangible.md) |
 | ⚠️ | Interact | [glyphs/effects/interact.md](glyphs/effects/interact.md) |
@@ -69,7 +69,7 @@
 | ✅ | Knockback | [glyphs/effects/knockback.md](glyphs/effects/knockback.md) |
 | ⚠️ | Launch | [glyphs/effects/launch.md](glyphs/effects/launch.md) |
 | ⚠️ | Leap | [glyphs/effects/leap.md](glyphs/effects/leap.md) |
-| ⚠️ | Lightning | [glyphs/effects/lightning.md](glyphs/effects/lightning.md) |
+| ✅ | Lightning | [glyphs/effects/lightning.md](glyphs/effects/lightning.md) |
 | ⚠️ | Linger | [glyphs/effects/linger.md](glyphs/effects/linger.md) |
 | ⚠️ | Name | [glyphs/effects/name.md](glyphs/effects/name.md) |
 | ⚠️ | Orbit | [glyphs/effects/orbit.md](glyphs/effects/orbit.md) |

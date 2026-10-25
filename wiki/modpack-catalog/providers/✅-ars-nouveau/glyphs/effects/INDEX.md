@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 5/67.**
-**Barra do recorte documental:** `█░░░░░░░░░░░░░░░░░░░ 7.5%`
+**Homologadas para perks (somente fichas detectadas): 10/67.**
+**Barra do recorte documental:** `██░░░░░░░░░░░░░░░░░░ 14.9%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -28,20 +28,20 @@
 | ⚠️ | Dispel | [ficha/dispel.md](dispel.md) |
 | ⚠️ | Evaporate | [ficha/evaporate.md](evaporate.md) |
 | ⚠️ | Exchange | [ficha/exchange.md](exchange.md) |
-| ⚠️ | Explosion | [ficha/explosion.md](explosion.md) |
+| ✅ | Explosion | [ficha/explosion.md](explosion.md) |
 | ⚠️ | Fangs | [ficha/fangs.md](fangs.md) |
 | ⚠️ | Fell | [ficha/fell.md](fell.md) |
 | ⚠️ | Firework | [ficha/firework.md](firework.md) |
 | ⚠️ | Flare | [ficha/flare.md](flare.md) |
-| ⚠️ | Freeze | [ficha/freeze.md](freeze.md) |
+| ✅ | Freeze | [ficha/freeze.md](freeze.md) |
 | ✅ | Glide | [ficha/glide.md](glide.md) |
 | ⚠️ | Gravity | [ficha/gravity.md](gravity.md) |
 | ⚠️ | Grow | [ficha/grow.md](grow.md) |
-| ⚠️ | Harm | [ficha/harm.md](harm.md) |
+| ✅ | Harm | [ficha/harm.md](harm.md) |
 | ⚠️ | Harvest | [ficha/harvest.md](harvest.md) |
 | ✅ | Heal | [ficha/heal.md](heal.md) |
 | ⚠️ | Hex | [ficha/hex.md](hex.md) |
-| ⚠️ | Ignite | [ficha/ignite.md](ignite.md) |
+| ✅ | Ignite | [ficha/ignite.md](ignite.md) |
 | ⚠️ | Infuse | [ficha/infuse.md](infuse.md) |
 | ⚠️ | Intangible | [ficha/intangible.md](intangible.md) |
 | ⚠️ | Interact | [ficha/interact.md](interact.md) |
@@ -50,7 +50,7 @@
 | ✅ | Knockback | [ficha/knockback.md](knockback.md) |
 | ⚠️ | Launch | [ficha/launch.md](launch.md) |
 | ⚠️ | Leap | [ficha/leap.md](leap.md) |
-| ⚠️ | Lightning | [ficha/lightning.md](lightning.md) |
+| ✅ | Lightning | [ficha/lightning.md](lightning.md) |
 | ⚠️ | Linger | [ficha/linger.md](linger.md) |
 | ⚠️ | Name | [ficha/name.md](name.md) |
 | ⚠️ | Orbit | [ficha/orbit.md](orbit.md) |

@@ -944,6 +944,211 @@
           "reason": "JAR SHA-exato apenas para ID/classe, métodos source-pinned, config e gameplay NOT_TESTED claramente separados."
         }
       }
+    },
+    "✅-ars-nouveau/glyphs/effects/harm.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Escopo estático source-pinned apenas do Effect harm e seus consumidores descritos; não comprova hook seguro, equivalência integral classfile/source, settlement no pack ou proteção real.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Source revision e IDs/class compile SHA-exatos; evidência binária não reivindica semântica em runtime."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/harm.md",
+          "reason": "Ramos de entrada e consumidores downstream da execução source-pinned classificados para este glyph."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/harm.md",
+          "reason": "Parâmetros configurados, fórmulas e caps de augments específicos, incluindo condicionamentos no downstream."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/harm.md",
+          "reason": "Target, geometry, AoE, projectile, DamageType e duração próprios ou N/A explicitados por ramo causal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Tier/recipe/XP e starter source-default documentados; mana e custo efetivo destacados individualmente."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/harm.md",
+          "reason": "Boundary de autoridade do Ars e bloqueio da mutação por RPG/Black Arcana documentados com fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/harm.md",
+          "reason": "ID/classe SHA-exatos e métodos source-pinned separados; QA físico/config/end-to-end pendente."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/explosion.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Escopo estático source-pinned apenas do Effect explosion e seus consumidores descritos; não comprova hook seguro, equivalência integral classfile/source, settlement no pack ou proteção real.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Source revision e IDs/class compile SHA-exatos; evidência binária não reivindica semântica em runtime."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/explosion.md",
+          "reason": "Ramos de entrada e consumidores downstream da execução source-pinned classificados para este glyph."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/explosion.md",
+          "reason": "Parâmetros configurados, fórmulas e caps de augments específicos, incluindo condicionamentos no downstream."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/explosion.md",
+          "reason": "Target, geometry, AoE, projectile, DamageType e duração próprios ou N/A explicitados por ramo causal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Tier/recipe/XP e starter source-default documentados; mana e custo efetivo destacados individualmente."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/explosion.md",
+          "reason": "Boundary de autoridade do Ars e bloqueio da mutação por RPG/Black Arcana documentados com fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/explosion.md",
+          "reason": "ID/classe SHA-exatos e métodos source-pinned separados; QA físico/config/end-to-end pendente."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/lightning.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Escopo estático source-pinned apenas do Effect lightning e seus consumidores descritos; não comprova hook seguro, equivalência integral classfile/source, settlement no pack ou proteção real.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Source revision e IDs/class compile SHA-exatos; evidência binária não reivindica semântica em runtime."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/lightning.md",
+          "reason": "Ramos de entrada e consumidores downstream da execução source-pinned classificados para este glyph."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/lightning.md",
+          "reason": "Parâmetros configurados, fórmulas e caps de augments específicos, incluindo condicionamentos no downstream."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/lightning.md",
+          "reason": "Target, geometry, AoE, projectile, DamageType e duração próprios ou N/A explicitados por ramo causal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Tier/recipe/XP e starter source-default documentados; mana e custo efetivo destacados individualmente."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/lightning.md",
+          "reason": "Boundary de autoridade do Ars e bloqueio da mutação por RPG/Black Arcana documentados com fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/lightning.md",
+          "reason": "ID/classe SHA-exatos e métodos source-pinned separados; QA físico/config/end-to-end pendente."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/freeze.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Escopo estático source-pinned apenas do Effect freeze e seus consumidores descritos; não comprova hook seguro, equivalência integral classfile/source, settlement no pack ou proteção real.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Source revision e IDs/class compile SHA-exatos; evidência binária não reivindica semântica em runtime."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/freeze.md",
+          "reason": "Ramos de entrada e consumidores downstream da execução source-pinned classificados para este glyph."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/freeze.md",
+          "reason": "Parâmetros configurados, fórmulas e caps de augments específicos, incluindo condicionamentos no downstream."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/freeze.md",
+          "reason": "Target, geometry, AoE, projectile, DamageType e duração próprios ou N/A explicitados por ramo causal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Tier/recipe/XP e starter source-default documentados; mana e custo efetivo destacados individualmente."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/freeze.md",
+          "reason": "Boundary de autoridade do Ars e bloqueio da mutação por RPG/Black Arcana documentados com fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/freeze.md",
+          "reason": "ID/classe SHA-exatos e métodos source-pinned separados; QA físico/config/end-to-end pendente."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/ignite.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Escopo estático source-pinned apenas do Effect ignite e seus consumidores descritos; não comprova hook seguro, equivalência integral classfile/source, settlement no pack ou proteção real.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Source revision e IDs/class compile SHA-exatos; evidência binária não reivindica semântica em runtime."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/ignite.md",
+          "reason": "Ramos de entrada e consumidores downstream da execução source-pinned classificados para este glyph."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/ignite.md",
+          "reason": "Parâmetros configurados, fórmulas e caps de augments específicos, incluindo condicionamentos no downstream."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/ignite.md",
+          "reason": "Target, geometry, AoE, projectile, DamageType e duração próprios ou N/A explicitados por ramo causal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Tier/recipe/XP e starter source-default documentados; mana e custo efetivo destacados individualmente."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/ignite.md",
+          "reason": "Boundary de autoridade do Ars e bloqueio da mutação por RPG/Black Arcana documentados com fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/ignite.md",
+          "reason": "ID/classe SHA-exatos e métodos source-pinned separados; QA físico/config/end-to-end pendente."
+        }
+      }
     }
   },
   "providers": {},
