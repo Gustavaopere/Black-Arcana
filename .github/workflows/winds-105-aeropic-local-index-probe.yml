@@ -7,6 +7,8 @@ on:
       - '.github/workflows/winds-105-aeropic-local-index-probe.yml'
       - 'docs/qa/winds_105_aeropic_local_indices.py'
       - 'docs/qa/winds_105_aeropic_local_indices_test.py'
+      - 'docs/qa/winds_105_aeropic_local_indices_contract.py'
+      - 'docs/qa/winds_105_aeropic_local_indices_contract_test.py'
       - 'docs/qa/winds-105-aeropic-local-index-probe-gate.md'
   push:
     branches: [main]
@@ -14,6 +16,8 @@ on:
       - '.github/workflows/winds-105-aeropic-local-index-probe.yml'
       - 'docs/qa/winds_105_aeropic_local_indices.py'
       - 'docs/qa/winds_105_aeropic_local_indices_test.py'
+      - 'docs/qa/winds_105_aeropic_local_indices_contract.py'
+      - 'docs/qa/winds_105_aeropic_local_indices_contract_test.py'
       - 'docs/qa/winds-105-aeropic-local-index-probe-gate.md'
   workflow_dispatch:
 
@@ -32,6 +36,8 @@ jobs:
           java-version: '21'
       - name: Synthetic local-index and non-runtime safety regressions
         run: python3 docs/qa/winds_105_aeropic_local_indices_test.py -v
+      - name: Synthetic exact-JAR result contract drift tests
+        run: python3 docs/qa/winds_105_aeropic_local_indices_contract_test.py -v
       - name: Obtain SHA-verified published Wind 1.0.5 binary
         shell: bash
         run: |
@@ -50,6 +56,8 @@ jobs:
           python3 docs/qa/winds_105_aeropic_local_indices.py \
             --jar build/winds-105/wind_spellbooks-1.0.5.jar \
             --output build/winds-105/aeropic-local-indices.json
+      - name: Enforce reviewed exact-JAR positive and negative proof contract
+        run: python3 docs/qa/winds_105_aeropic_local_indices_contract.py --json build/winds-105/aeropic-local-indices.json
       - name: Upload only symbolic clean-room report
         if: always()
         uses: actions/upload-artifact@v7
