@@ -38,6 +38,8 @@ jobs:
           java-version: '21'
       - name: Synthetic normal CFG and false-positive regression cases
         run: python3 docs/qa/winds_105_aeropic_recast_cfg_test.py -v
+      - name: Frozen binary evidence mutation regressions
+        run: python3 docs/qa/winds_105_aeropic_recast_cfg_contract_test.py -v
       - name: Obtain original Wind 1.0.5 published binary
         shell: bash
         run: |
@@ -56,6 +58,8 @@ jobs:
           python3 docs/qa/winds_105_aeropic_recast_cfg.py \
             --jar build/winds-105/wind_spellbooks-1.0.5.jar \
             --output build/winds-105/aeropic-recast-cfg.json
+      - name: Validate reviewed exact-JAR CFG result without runtime promotion
+        run: python3 docs/qa/winds_105_aeropic_recast_cfg_contract.py --json build/winds-105/aeropic-recast-cfg.json
       - name: Upload only non-disassembly clean-room JSON evidence
         if: always()
         uses: actions/upload-artifact@v7
