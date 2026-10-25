@@ -348,7 +348,7 @@ class ArsRitualStaticTests(unittest.TestCase):
 
     def test_overgrowth_bonemeal_bounded_and_animal_mode(self):
         page = (PROVIDER / "rituals/overgrowth.md").read_text(encoding="utf8")
-        for token in ("gameTime()%200==0", "11×3×11 = 363",
+        for token in ("getGameTime()%200==0", "11×3×11 = 363",
                       "rand.nextInt(25)", "ANFakePlayer",
                       "AgeableMob", "OVERGROWTH_BLACKLIST", "ageUp(500,true)",
                       "AABB", "didWorkOnce", "getSourceCost()=500",
