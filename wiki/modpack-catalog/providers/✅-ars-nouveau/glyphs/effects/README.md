@@ -1,5 +1,7 @@
 # Ars Nouveau 5.13.1 — Effects
 
+**[Segundo lote de 5 Effects: Harm, Explosion, Lightning, Freeze e Ignite](../../EFFECT-STATIC-DAMAGE-WORLD-FIVE-5.13.1.md)** — contratos estáticos para planejamento de perks, sem aprovação de hooks/runtime. Os efeitos disponíveis continuam 67/67 no inventário, e o número de certificados passa a 10/67.
+
 **[Primeiro lote de Effects 5/67 com contrato estático para perks](../../EFFECT-STATIC-FIRST-FIVE-5.13.1.md)**. A família total tem 67 efeitos source-catalogados, mas só os itens registrados no manifesto recebem ✅ estático. QA físico e integrações por perks continuam condicionados.
 
 Status: `67/67 SOURCE-PINNED / INDIVIDUAL PAGES COMPLETE / ACQUISITION 67/67 COMPLETE / RUNTIME+CONFIG QA PENDING`
