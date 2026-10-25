@@ -187,3 +187,9 @@ Ars core already exposes Heal, Hex, Wither, Ignite, Flare, Gravity, summons, det
 ## Fichas técnicas para Codex e perks
 
 A campanha transversal ampliou a leitura de código para **85/85 Glyph Parts** (5 Forms, 67 Effects, 13 Augments) e **24/24 rituais**, incluindo executores `ANExplosion`, `LightningEntity`, `RuneTile`, `SpellUtil`, `IPotionEffect` e `SpellStats`. [Matriz de implementação para Codex](PERK-ENGINEERING-MATRIX-5.13.1.md) e [padrão universal](../../meta/PERK-READY-TECHNICAL-STANDARD.md). O núcleo Ars está **completo em dossiês source-located de objetos individuais** (109/109), mas os eventos, efeitos derivados, JAR físico, addons e o adapter RPG ainda requerem testes e QA; não se afirma implementado. Foram localizados eventos públicos concretos de spell/effect/cost/dispel: [contratos source-pinned](VERIFIED-EVENT-SURFACES-5.13.1.md). Hooks existem para certos passos, mas nenhum adapter RPG passou testes reais. Essa documentação não cria outro SpellResolver, não autoriza mutação externa e não representa QA do modpack.
+
+## Certificação estática dos augments — 25/10/2026
+
+Os [13 augments](glyphs/augments/INDEX.md) têm os sete campos técnicos revisados no [manifesto de certificações](../../meta/PERK-READY-CERTIFICATIONS.json), seguindo o critério usado em Amplify na PR #897. O [contrato comum](AUGMENT-STATIC-CERTIFICATION-5.13.1.md) distingue operadores, contagem da receita, consumidores, custos, caps e a API pública SpellModifierEvent da integração de perk ainda não validada.
+
+O recorte passa a **13/13 augments**, **13/85 glyphs** e **13/138 fichas Ars detectadas**; são **13/2075 fichas estáticas globais**, sem certificar integralmente nenhum dos **164 providers**. A contagem histórica de109objetos source-localizados mede outra dimensão e não concede automaticamente estes certificados. Hook de perk permanece NOT_VERIFIED e QA físico NOT_TESTED; nenhum runtime, Stage ou dependência foi alterado.

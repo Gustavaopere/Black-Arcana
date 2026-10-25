@@ -2,27 +2,27 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 1/85.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 1.2%`
+**Homologadas para perks (somente fichas detectadas): 13/85.**
+**Barra do recorte documental:** `███░░░░░░░░░░░░░░░░░ 15.3%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
 
 | Estado | Objeto / habilidade identificada | Ficha |
 |---|---|---|
-| ⚠️ | Accelerate | [augments/accelerate.md](augments/accelerate.md) |
+| ✅ | Accelerate | [augments/accelerate.md](augments/accelerate.md) |
 | ✅ | Amplify | [augments/amplify.md](augments/amplify.md) |
-| ⚠️ | Aoe | [augments/aoe.md](augments/aoe.md) |
-| ⚠️ | Dampen | [augments/dampen.md](augments/dampen.md) |
-| ⚠️ | Decelerate | [augments/decelerate.md](augments/decelerate.md) |
-| ⚠️ | Extend Time | [augments/extend-time.md](augments/extend-time.md) |
-| ⚠️ | Extract | [augments/extract.md](augments/extract.md) |
-| ⚠️ | Fortune | [augments/fortune.md](augments/fortune.md) |
-| ⚠️ | Pierce | [augments/pierce.md](augments/pierce.md) |
-| ⚠️ | Randomize | [augments/randomize.md](augments/randomize.md) |
-| ⚠️ | Reduce Time | [augments/reduce-time.md](augments/reduce-time.md) |
-| ⚠️ | Sensitive | [augments/sensitive.md](augments/sensitive.md) |
-| ⚠️ | Split | [augments/split.md](augments/split.md) |
+| ✅ | Aoe | [augments/aoe.md](augments/aoe.md) |
+| ✅ | Dampen | [augments/dampen.md](augments/dampen.md) |
+| ✅ | Decelerate | [augments/decelerate.md](augments/decelerate.md) |
+| ✅ | Extend Time | [augments/extend-time.md](augments/extend-time.md) |
+| ✅ | Extract | [augments/extract.md](augments/extract.md) |
+| ✅ | Fortune | [augments/fortune.md](augments/fortune.md) |
+| ✅ | Pierce | [augments/pierce.md](augments/pierce.md) |
+| ✅ | Randomize | [augments/randomize.md](augments/randomize.md) |
+| ✅ | Reduce Time | [augments/reduce-time.md](augments/reduce-time.md) |
+| ✅ | Sensitive | [augments/sensitive.md](augments/sensitive.md) |
+| ✅ | Split | [augments/split.md](augments/split.md) |
 | ⚠️ | Access Ender Inventory | [effects/access-ender-inventory.md](effects/access-ender-inventory.md) |
 | ⚠️ | Animate Block | [effects/animate-block.md](effects/animate-block.md) |
 | ⚠️ | Blink | [effects/blink.md](effects/blink.md) |

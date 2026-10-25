@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 1/138.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.7%`
+**Homologadas para perks (somente fichas detectadas): 13/138.**
+**Barra do recorte documental:** `█░░░░░░░░░░░░░░░░░░░ 9.4%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -16,19 +16,19 @@
 | ⚠️ | Starbuncle | [familiars/starbuncle.md](familiars/starbuncle.md) |
 | ⚠️ | Whirlisprig | [familiars/whirlisprig.md](familiars/whirlisprig.md) |
 | ⚠️ | Wixie | [familiars/wixie.md](familiars/wixie.md) |
-| ⚠️ | Accelerate | [glyphs/augments/accelerate.md](glyphs/augments/accelerate.md) |
+| ✅ | Accelerate | [glyphs/augments/accelerate.md](glyphs/augments/accelerate.md) |
 | ✅ | Amplify | [glyphs/augments/amplify.md](glyphs/augments/amplify.md) |
-| ⚠️ | Aoe | [glyphs/augments/aoe.md](glyphs/augments/aoe.md) |
-| ⚠️ | Dampen | [glyphs/augments/dampen.md](glyphs/augments/dampen.md) |
-| ⚠️ | Decelerate | [glyphs/augments/decelerate.md](glyphs/augments/decelerate.md) |
-| ⚠️ | Extend Time | [glyphs/augments/extend-time.md](glyphs/augments/extend-time.md) |
-| ⚠️ | Extract | [glyphs/augments/extract.md](glyphs/augments/extract.md) |
-| ⚠️ | Fortune | [glyphs/augments/fortune.md](glyphs/augments/fortune.md) |
-| ⚠️ | Pierce | [glyphs/augments/pierce.md](glyphs/augments/pierce.md) |
-| ⚠️ | Randomize | [glyphs/augments/randomize.md](glyphs/augments/randomize.md) |
-| ⚠️ | Reduce Time | [glyphs/augments/reduce-time.md](glyphs/augments/reduce-time.md) |
-| ⚠️ | Sensitive | [glyphs/augments/sensitive.md](glyphs/augments/sensitive.md) |
-| ⚠️ | Split | [glyphs/augments/split.md](glyphs/augments/split.md) |
+| ✅ | Aoe | [glyphs/augments/aoe.md](glyphs/augments/aoe.md) |
+| ✅ | Dampen | [glyphs/augments/dampen.md](glyphs/augments/dampen.md) |
+| ✅ | Decelerate | [glyphs/augments/decelerate.md](glyphs/augments/decelerate.md) |
+| ✅ | Extend Time | [glyphs/augments/extend-time.md](glyphs/augments/extend-time.md) |
+| ✅ | Extract | [glyphs/augments/extract.md](glyphs/augments/extract.md) |
+| ✅ | Fortune | [glyphs/augments/fortune.md](glyphs/augments/fortune.md) |
+| ✅ | Pierce | [glyphs/augments/pierce.md](glyphs/augments/pierce.md) |
+| ✅ | Randomize | [glyphs/augments/randomize.md](glyphs/augments/randomize.md) |
+| ✅ | Reduce Time | [glyphs/augments/reduce-time.md](glyphs/augments/reduce-time.md) |
+| ✅ | Sensitive | [glyphs/augments/sensitive.md](glyphs/augments/sensitive.md) |
+| ✅ | Split | [glyphs/augments/split.md](glyphs/augments/split.md) |
 | ⚠️ | Access Ender Inventory | [glyphs/effects/access-ender-inventory.md](glyphs/effects/access-ender-inventory.md) |
 | ⚠️ | Animate Block | [glyphs/effects/animate-block.md](glyphs/effects/animate-block.md) |
 | ⚠️ | Blink | [glyphs/effects/blink.md](glyphs/effects/blink.md) |
