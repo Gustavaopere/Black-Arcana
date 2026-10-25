@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 28/138.**
-**Barra do recorte documental:** `████░░░░░░░░░░░░░░░░ 20.3%`
+**Homologadas para perks (somente fichas detectadas): 33/138.**
+**Barra do recorte documental:** `████░░░░░░░░░░░░░░░░ 23.9%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -31,7 +31,7 @@
 | ✅ | Split | [glyphs/augments/split.md](glyphs/augments/split.md) |
 | ⚠️ | Access Ender Inventory | [glyphs/effects/access-ender-inventory.md](glyphs/effects/access-ender-inventory.md) |
 | ⚠️ | Animate Block | [glyphs/effects/animate-block.md](glyphs/effects/animate-block.md) |
-| ⚠️ | Blink | [glyphs/effects/blink.md](glyphs/effects/blink.md) |
+| ✅ | Blink | [glyphs/effects/blink.md](glyphs/effects/blink.md) |
 | ⚠️ | Bounce | [glyphs/effects/bounce.md](glyphs/effects/bounce.md) |
 | ⚠️ | Break | [glyphs/effects/break.md](glyphs/effects/break.md) |
 | ⚠️ | Bubble | [glyphs/effects/bubble.md](glyphs/effects/bubble.md) |
@@ -67,15 +67,15 @@
 | ⚠️ | Invisibility | [glyphs/effects/invisibility.md](glyphs/effects/invisibility.md) |
 | ⚠️ | Item Pickup | [glyphs/effects/item-pickup.md](glyphs/effects/item-pickup.md) |
 | ✅ | Knockback | [glyphs/effects/knockback.md](glyphs/effects/knockback.md) |
-| ⚠️ | Launch | [glyphs/effects/launch.md](glyphs/effects/launch.md) |
-| ⚠️ | Leap | [glyphs/effects/leap.md](glyphs/effects/leap.md) |
+| ✅ | Launch | [glyphs/effects/launch.md](glyphs/effects/launch.md) |
+| ✅ | Leap | [glyphs/effects/leap.md](glyphs/effects/leap.md) |
 | ✅ | Lightning | [glyphs/effects/lightning.md](glyphs/effects/lightning.md) |
 | ⚠️ | Linger | [glyphs/effects/linger.md](glyphs/effects/linger.md) |
 | ⚠️ | Name | [glyphs/effects/name.md](glyphs/effects/name.md) |
 | ⚠️ | Orbit | [glyphs/effects/orbit.md](glyphs/effects/orbit.md) |
 | ⚠️ | Place Block | [glyphs/effects/place-block.md](glyphs/effects/place-block.md) |
 | ⚠️ | Prestidigitation | [glyphs/effects/prestidigitation.md](glyphs/effects/prestidigitation.md) |
-| ⚠️ | Pull | [glyphs/effects/pull.md](glyphs/effects/pull.md) |
+| ✅ | Pull | [glyphs/effects/pull.md](glyphs/effects/pull.md) |
 | ⚠️ | Redstone Signal | [glyphs/effects/redstone-signal.md](glyphs/effects/redstone-signal.md) |
 | ⚠️ | Reset | [glyphs/effects/reset.md](glyphs/effects/reset.md) |
 | ⚠️ | Rewind | [glyphs/effects/rewind.md](glyphs/effects/rewind.md) |
@@ -84,7 +84,7 @@
 | ✅ | Sense Magic | [glyphs/effects/sense-magic.md](glyphs/effects/sense-magic.md) |
 | ✅ | Slowfall | [glyphs/effects/slowfall.md](glyphs/effects/slowfall.md) |
 | ⚠️ | Smelt | [glyphs/effects/smelt.md](glyphs/effects/smelt.md) |
-| ⚠️ | Snare | [glyphs/effects/snare.md](glyphs/effects/snare.md) |
+| ✅ | Snare | [glyphs/effects/snare.md](glyphs/effects/snare.md) |
 | ⚠️ | Summon Decoy | [glyphs/effects/summon-decoy.md](glyphs/effects/summon-decoy.md) |
 | ⚠️ | Summon Steed | [glyphs/effects/summon-steed.md](glyphs/effects/summon-steed.md) |
 | ⚠️ | Summon Undead | [glyphs/effects/summon-undead.md](glyphs/effects/summon-undead.md) |
