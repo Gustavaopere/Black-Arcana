@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 18/85.**
-**Barra do recorte documental:** `████░░░░░░░░░░░░░░░░ 21.2%`
+**Homologadas para perks (somente fichas detectadas): 23/85.**
+**Barra do recorte documental:** `█████░░░░░░░░░░░░░░░ 27.1%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -47,12 +47,12 @@
 | ⚠️ | Firework | [effects/firework.md](effects/firework.md) |
 | ⚠️ | Flare | [effects/flare.md](effects/flare.md) |
 | ⚠️ | Freeze | [effects/freeze.md](effects/freeze.md) |
-| ⚠️ | Glide | [effects/glide.md](effects/glide.md) |
+| ✅ | Glide | [effects/glide.md](effects/glide.md) |
 | ⚠️ | Gravity | [effects/gravity.md](effects/gravity.md) |
 | ⚠️ | Grow | [effects/grow.md](effects/grow.md) |
 | ⚠️ | Harm | [effects/harm.md](effects/harm.md) |
 | ⚠️ | Harvest | [effects/harvest.md](effects/harvest.md) |
-| ⚠️ | Heal | [effects/heal.md](effects/heal.md) |
+| ✅ | Heal | [effects/heal.md](effects/heal.md) |
 | ⚠️ | Hex | [effects/hex.md](effects/hex.md) |
 | ⚠️ | Ignite | [effects/ignite.md](effects/ignite.md) |
 | ⚠️ | Infuse | [effects/infuse.md](effects/infuse.md) |
@@ -60,7 +60,7 @@
 | ⚠️ | Interact | [effects/interact.md](effects/interact.md) |
 | ⚠️ | Invisibility | [effects/invisibility.md](effects/invisibility.md) |
 | ⚠️ | Item Pickup | [effects/item-pickup.md](effects/item-pickup.md) |
-| ⚠️ | Knockback | [effects/knockback.md](effects/knockback.md) |
+| ✅ | Knockback | [effects/knockback.md](effects/knockback.md) |
 | ⚠️ | Launch | [effects/launch.md](effects/launch.md) |
 | ⚠️ | Leap | [effects/leap.md](effects/leap.md) |
 | ⚠️ | Lightning | [effects/lightning.md](effects/lightning.md) |
@@ -75,8 +75,8 @@
 | ⚠️ | Rewind | [effects/rewind.md](effects/rewind.md) |
 | ⚠️ | Rotate | [effects/rotate.md](effects/rotate.md) |
 | ⚠️ | Rune | [effects/rune.md](effects/rune.md) |
-| ⚠️ | Sense Magic | [effects/sense-magic.md](effects/sense-magic.md) |
-| ⚠️ | Slowfall | [effects/slowfall.md](effects/slowfall.md) |
+| ✅ | Sense Magic | [effects/sense-magic.md](effects/sense-magic.md) |
+| ✅ | Slowfall | [effects/slowfall.md](effects/slowfall.md) |
 | ⚠️ | Smelt | [effects/smelt.md](effects/smelt.md) |
 | ⚠️ | Snare | [effects/snare.md](effects/snare.md) |
 | ⚠️ | Summon Decoy | [effects/summon-decoy.md](effects/summon-decoy.md) |

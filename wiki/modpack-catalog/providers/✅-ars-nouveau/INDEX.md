@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 18/138.**
-**Barra do recorte documental:** `██░░░░░░░░░░░░░░░░░░ 13.0%`
+**Homologadas para perks (somente fichas detectadas): 23/138.**
+**Barra do recorte documental:** `███░░░░░░░░░░░░░░░░░ 16.7%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -53,12 +53,12 @@
 | ⚠️ | Firework | [glyphs/effects/firework.md](glyphs/effects/firework.md) |
 | ⚠️ | Flare | [glyphs/effects/flare.md](glyphs/effects/flare.md) |
 | ⚠️ | Freeze | [glyphs/effects/freeze.md](glyphs/effects/freeze.md) |
-| ⚠️ | Glide | [glyphs/effects/glide.md](glyphs/effects/glide.md) |
+| ✅ | Glide | [glyphs/effects/glide.md](glyphs/effects/glide.md) |
 | ⚠️ | Gravity | [glyphs/effects/gravity.md](glyphs/effects/gravity.md) |
 | ⚠️ | Grow | [glyphs/effects/grow.md](glyphs/effects/grow.md) |
 | ⚠️ | Harm | [glyphs/effects/harm.md](glyphs/effects/harm.md) |
 | ⚠️ | Harvest | [glyphs/effects/harvest.md](glyphs/effects/harvest.md) |
-| ⚠️ | Heal | [glyphs/effects/heal.md](glyphs/effects/heal.md) |
+| ✅ | Heal | [glyphs/effects/heal.md](glyphs/effects/heal.md) |
 | ⚠️ | Hex | [glyphs/effects/hex.md](glyphs/effects/hex.md) |
 | ⚠️ | Ignite | [glyphs/effects/ignite.md](glyphs/effects/ignite.md) |
 | ⚠️ | Infuse | [glyphs/effects/infuse.md](glyphs/effects/infuse.md) |
@@ -66,7 +66,7 @@
 | ⚠️ | Interact | [glyphs/effects/interact.md](glyphs/effects/interact.md) |
 | ⚠️ | Invisibility | [glyphs/effects/invisibility.md](glyphs/effects/invisibility.md) |
 | ⚠️ | Item Pickup | [glyphs/effects/item-pickup.md](glyphs/effects/item-pickup.md) |
-| ⚠️ | Knockback | [glyphs/effects/knockback.md](glyphs/effects/knockback.md) |
+| ✅ | Knockback | [glyphs/effects/knockback.md](glyphs/effects/knockback.md) |
 | ⚠️ | Launch | [glyphs/effects/launch.md](glyphs/effects/launch.md) |
 | ⚠️ | Leap | [glyphs/effects/leap.md](glyphs/effects/leap.md) |
 | ⚠️ | Lightning | [glyphs/effects/lightning.md](glyphs/effects/lightning.md) |
@@ -81,8 +81,8 @@
 | ⚠️ | Rewind | [glyphs/effects/rewind.md](glyphs/effects/rewind.md) |
 | ⚠️ | Rotate | [glyphs/effects/rotate.md](glyphs/effects/rotate.md) |
 | ⚠️ | Rune | [glyphs/effects/rune.md](glyphs/effects/rune.md) |
-| ⚠️ | Sense Magic | [glyphs/effects/sense-magic.md](glyphs/effects/sense-magic.md) |
-| ⚠️ | Slowfall | [glyphs/effects/slowfall.md](glyphs/effects/slowfall.md) |
+| ✅ | Sense Magic | [glyphs/effects/sense-magic.md](glyphs/effects/sense-magic.md) |
+| ✅ | Slowfall | [glyphs/effects/slowfall.md](glyphs/effects/slowfall.md) |
 | ⚠️ | Smelt | [glyphs/effects/smelt.md](glyphs/effects/smelt.md) |
 | ⚠️ | Snare | [glyphs/effects/snare.md](glyphs/effects/snare.md) |
 | ⚠️ | Summon Decoy | [glyphs/effects/summon-decoy.md](glyphs/effects/summon-decoy.md) |
