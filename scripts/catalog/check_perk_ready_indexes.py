@@ -68,6 +68,11 @@ def read_ledger(path=LEDGER):
                 "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
                 "SHA_EXACT_BINARY_BEHAVIOR"}:
             raise CatalogIndexError("unknown or missing evidence grade: " + rel)
+        if (item["evidence_grade"] == "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY"
+                and (not isinstance(item.get("source_revision"), str)
+                     or not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@[0-9a-f]{40}",
+                                         item["source_revision"]))):
+            raise CatalogIndexError("missing exact pinned source revision: " + rel)
         if not isinstance(item.get("version"), str) or not item["version"].strip():
             raise CatalogIndexError("missing exact provider release: " + rel)
         if not isinstance(item.get("artifact_sha1"), str) or not re.fullmatch(
