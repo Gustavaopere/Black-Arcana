@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 10/67.**
-**Barra do recorte documental:** `██░░░░░░░░░░░░░░░░░░ 14.9%`
+**Homologadas para perks (somente fichas detectadas): 15/67.**
+**Barra do recorte documental:** `████░░░░░░░░░░░░░░░░ 22.4%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -12,7 +12,7 @@
 |---|---|---|
 | ⚠️ | Access Ender Inventory | [ficha/access-ender-inventory.md](access-ender-inventory.md) |
 | ⚠️ | Animate Block | [ficha/animate-block.md](animate-block.md) |
-| ⚠️ | Blink | [ficha/blink.md](blink.md) |
+| ✅ | Blink | [ficha/blink.md](blink.md) |
 | ⚠️ | Bounce | [ficha/bounce.md](bounce.md) |
 | ⚠️ | Break | [ficha/break.md](break.md) |
 | ⚠️ | Bubble | [ficha/bubble.md](bubble.md) |
@@ -48,15 +48,15 @@
 | ⚠️ | Invisibility | [ficha/invisibility.md](invisibility.md) |
 | ⚠️ | Item Pickup | [ficha/item-pickup.md](item-pickup.md) |
 | ✅ | Knockback | [ficha/knockback.md](knockback.md) |
-| ⚠️ | Launch | [ficha/launch.md](launch.md) |
-| ⚠️ | Leap | [ficha/leap.md](leap.md) |
+| ✅ | Launch | [ficha/launch.md](launch.md) |
+| ✅ | Leap | [ficha/leap.md](leap.md) |
 | ✅ | Lightning | [ficha/lightning.md](lightning.md) |
 | ⚠️ | Linger | [ficha/linger.md](linger.md) |
 | ⚠️ | Name | [ficha/name.md](name.md) |
 | ⚠️ | Orbit | [ficha/orbit.md](orbit.md) |
 | ⚠️ | Place Block | [ficha/place-block.md](place-block.md) |
 | ⚠️ | Prestidigitation | [ficha/prestidigitation.md](prestidigitation.md) |
-| ⚠️ | Pull | [ficha/pull.md](pull.md) |
+| ✅ | Pull | [ficha/pull.md](pull.md) |
 | ⚠️ | Redstone Signal | [ficha/redstone-signal.md](redstone-signal.md) |
 | ⚠️ | Reset | [ficha/reset.md](reset.md) |
 | ⚠️ | Rewind | [ficha/rewind.md](rewind.md) |
@@ -65,7 +65,7 @@
 | ✅ | Sense Magic | [ficha/sense-magic.md](sense-magic.md) |
 | ✅ | Slowfall | [ficha/slowfall.md](slowfall.md) |
 | ⚠️ | Smelt | [ficha/smelt.md](smelt.md) |
-| ⚠️ | Snare | [ficha/snare.md](snare.md) |
+| ✅ | Snare | [ficha/snare.md](snare.md) |
 | ⚠️ | Summon Decoy | [ficha/summon-decoy.md](summon-decoy.md) |
 | ⚠️ | Summon Steed | [ficha/summon-steed.md](summon-steed.md) |
 | ⚠️ | Summon Undead | [ficha/summon-undead.md](summon-undead.md) |

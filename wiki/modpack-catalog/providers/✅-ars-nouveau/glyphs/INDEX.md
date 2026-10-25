@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 28/85.**
-**Barra do recorte documental:** `██████░░░░░░░░░░░░░░ 32.9%`
+**Homologadas para perks (somente fichas detectadas): 33/85.**
+**Barra do recorte documental:** `███████░░░░░░░░░░░░░ 38.8%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -25,7 +25,7 @@
 | ✅ | Split | [augments/split.md](augments/split.md) |
 | ⚠️ | Access Ender Inventory | [effects/access-ender-inventory.md](effects/access-ender-inventory.md) |
 | ⚠️ | Animate Block | [effects/animate-block.md](effects/animate-block.md) |
-| ⚠️ | Blink | [effects/blink.md](effects/blink.md) |
+| ✅ | Blink | [effects/blink.md](effects/blink.md) |
 | ⚠️ | Bounce | [effects/bounce.md](effects/bounce.md) |
 | ⚠️ | Break | [effects/break.md](effects/break.md) |
 | ⚠️ | Bubble | [effects/bubble.md](effects/bubble.md) |
@@ -61,15 +61,15 @@
 | ⚠️ | Invisibility | [effects/invisibility.md](effects/invisibility.md) |
 | ⚠️ | Item Pickup | [effects/item-pickup.md](effects/item-pickup.md) |
 | ✅ | Knockback | [effects/knockback.md](effects/knockback.md) |
-| ⚠️ | Launch | [effects/launch.md](effects/launch.md) |
-| ⚠️ | Leap | [effects/leap.md](effects/leap.md) |
+| ✅ | Launch | [effects/launch.md](effects/launch.md) |
+| ✅ | Leap | [effects/leap.md](effects/leap.md) |
 | ✅ | Lightning | [effects/lightning.md](effects/lightning.md) |
 | ⚠️ | Linger | [effects/linger.md](effects/linger.md) |
 | ⚠️ | Name | [effects/name.md](effects/name.md) |
 | ⚠️ | Orbit | [effects/orbit.md](effects/orbit.md) |
 | ⚠️ | Place Block | [effects/place-block.md](effects/place-block.md) |
 | ⚠️ | Prestidigitation | [effects/prestidigitation.md](effects/prestidigitation.md) |
-| ⚠️ | Pull | [effects/pull.md](effects/pull.md) |
+| ✅ | Pull | [effects/pull.md](effects/pull.md) |
 | ⚠️ | Redstone Signal | [effects/redstone-signal.md](effects/redstone-signal.md) |
 | ⚠️ | Reset | [effects/reset.md](effects/reset.md) |
 | ⚠️ | Rewind | [effects/rewind.md](effects/rewind.md) |
@@ -78,7 +78,7 @@
 | ✅ | Sense Magic | [effects/sense-magic.md](effects/sense-magic.md) |
 | ✅ | Slowfall | [effects/slowfall.md](effects/slowfall.md) |
 | ⚠️ | Smelt | [effects/smelt.md](effects/smelt.md) |
-| ⚠️ | Snare | [effects/snare.md](effects/snare.md) |
+| ✅ | Snare | [effects/snare.md](effects/snare.md) |
 | ⚠️ | Summon Decoy | [effects/summon-decoy.md](effects/summon-decoy.md) |
 | ⚠️ | Summon Steed | [effects/summon-steed.md](effects/summon-steed.md) |
 | ⚠️ | Summon Undead | [effects/summon-undead.md](effects/summon-undead.md) |
