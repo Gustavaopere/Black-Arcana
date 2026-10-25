@@ -7,6 +7,8 @@ on:
       - '.github/workflows/winds-105-aeropic-direct-supplier-slice.yml'
       - 'docs/qa/winds_105_aeropic_supplier_receiver_slice.py'
       - 'docs/qa/winds_105_aeropic_supplier_receiver_slice_test.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_test.py'
       - 'docs/qa/winds-105-aeropic-direct-supplier-slice-gate.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/README.md'
@@ -16,6 +18,8 @@ on:
       - '.github/workflows/winds-105-aeropic-direct-supplier-slice.yml'
       - 'docs/qa/winds_105_aeropic_supplier_receiver_slice.py'
       - 'docs/qa/winds_105_aeropic_supplier_receiver_slice_test.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_test.py'
       - 'docs/qa/winds-105-aeropic-direct-supplier-slice-gate.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/README.md'
@@ -36,6 +40,8 @@ jobs:
           java-version: '21'
       - name: Prove fail-closed synthetic supplier receiver rules
         run: python3 docs/qa/winds_105_aeropic_supplier_receiver_slice_test.py -v
+      - name: Synthetic conservative basic-block stack provenance tests
+        run: python3 docs/qa/winds_105_aeropic_stack_slice_test.py -v
       - name: Obtain and SHA-verify official Wind 1.0.5 binary
         shell: bash
         run: |
@@ -54,11 +60,20 @@ jobs:
           python3 docs/qa/winds_105_aeropic_supplier_receiver_slice.py \
             --jar build/winds-105/wind_spellbooks-1.0.5.jar \
             --output build/winds-105/aeropic-direct-supplier-slice.json
+      - name: Interpret the bounded basic-block JVM receiver stack conservatively
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_aeropic_stack_slice.py \
+            --jar build/winds-105/wind_spellbooks-1.0.5.jar \
+            --output build/winds-105/aeropic-jvm-stack-slice.json
       - name: Upload only clean-room binary evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: wind-105-aeropic-direct-supplier-slice
-          path: build/winds-105/aeropic-direct-supplier-slice.json
+          path: |
+            build/winds-105/aeropic-direct-supplier-slice.json
+            build/winds-105/aeropic-jvm-stack-slice.json
           retention-days: 14
           if-no-files-found: ignore
