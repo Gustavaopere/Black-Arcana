@@ -7,6 +7,8 @@ on:
       - '.github/workflows/winds-105-aeropic-recast-operand-sites.yml'
       - 'docs/qa/winds_105_aeropic_recast_operand_sites.py'
       - 'docs/qa/winds_105_aeropic_recast_operand_sites_test.py'
+      - 'docs/qa/winds_105_aeropic_recast_operand_contract.py'
+      - 'docs/qa/winds_105_aeropic_recast_operand_contract_test.py'
       - 'docs/qa/winds-105-aeropic-recast-operand-provenance.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/README.md'
@@ -16,6 +18,8 @@ on:
       - '.github/workflows/winds-105-aeropic-recast-operand-sites.yml'
       - 'docs/qa/winds_105_aeropic_recast_operand_sites.py'
       - 'docs/qa/winds_105_aeropic_recast_operand_sites_test.py'
+      - 'docs/qa/winds_105_aeropic_recast_operand_contract.py'
+      - 'docs/qa/winds_105_aeropic_recast_operand_contract_test.py'
       - 'docs/qa/winds-105-aeropic-recast-operand-provenance.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/README.md'
@@ -36,6 +40,8 @@ jobs:
           java-version: '21'
       - name: Synthetic fail-closed Aeropic adjacency tests
         run: python3 docs/qa/winds_105_aeropic_recast_operand_sites_test.py -v
+      - name: Synthetic SHA-pinned Aeropic adjacency contract regressions
+        run: python3 docs/qa/winds_105_aeropic_recast_operand_contract_test.py -v
       - name: Download only SHA-frozen Wind's 1.0.5 publisher binary
         shell: bash
         run: |
@@ -54,6 +60,8 @@ jobs:
           python3 docs/qa/winds_105_aeropic_recast_operand_sites.py \
             --jar build/winds-105/wind_spellbooks-1.0.5.jar \
             --output build/winds-105/aeropic-operand-sites.json
+      - name: Validate pinned symbolic neighborhoods on exact Wind binary
+        run: python3 docs/qa/winds_105_aeropic_recast_operand_contract.py --json build/winds-105/aeropic-operand-sites.json
       - name: Upload only clean-room JSON
         if: always()
         uses: actions/upload-artifact@v7
