@@ -47,7 +47,9 @@ def _unique_pairs(pairs):
         found[k] = v
     return found
 
-def read_ledger(path=LEDGER):
+def read_ledger(path=None):
+    if path is None:
+        path = LEDGER
     doc = json.loads(path.read_text(encoding="utf8"), object_pairs_hook=_unique_pairs)
     if not isinstance(doc, dict) or doc.get("schema_version") != 1:
         raise CatalogIndexError("missing completion ledger schema v1")
