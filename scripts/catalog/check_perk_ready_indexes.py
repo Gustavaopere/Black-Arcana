@@ -32,6 +32,7 @@ REQUIRED_EVIDENCE = frozenset({
 })
 PER_FOLDER = re.compile(r"\*\*Homologadas para perks \(somente fichas detectadas\): (\d+)/(\d+)\.\*\*")
 GLOBAL = re.compile(r"\*\*Mods com escopo integral certificado: (\d+)/(\d+)\.\*\*")
+GLOBAL_OBJECTS = re.compile(r"\*\*Fichas com contrato técnico estático certificado: (\d+)/(\d+)\.\*\*")
 CARD_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| \[.*?\]\(([^)]+\.md)\) \|$", re.M)
 PROVIDER_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| (?:\d+|—) \| \d+ \| \[Ver fichas\]\(([^)]+)/INDEX\.md\) \|$", re.M)
 
@@ -46,7 +47,9 @@ def _unique_pairs(pairs):
         found[k] = v
     return found
 
-def read_ledger(path=LEDGER):
+def read_ledger(path=None):
+    if path is None:
+        path = LEDGER
     doc = json.loads(path.read_text(encoding="utf8"), object_pairs_hook=_unique_pairs)
     if not isinstance(doc, dict) or doc.get("schema_version") != 1:
         raise CatalogIndexError("missing completion ledger schema v1")
@@ -59,12 +62,50 @@ def read_ledger(path=LEDGER):
             raise CatalogIndexError("certificate path is not an individual card: " + rel)
         if not isinstance(item, dict) or item.get("status") != "COMPLETE_PERK_READY":
             raise CatalogIndexError("unrecognized certification state: " + rel)
+        # A ✅ covers the static catalog contract, not approval to mutate
+        # provider-native runtime. Version and exact physical artifact provenance
+        # are mandatory; source-only semantics are clearly scoped.
+        if item.get("claim_scope") != "STATIC_TECHNICAL_CATALOG_ONLY":
+            raise CatalogIndexError("certification scope must be explicit and limited: " + rel)
+        if item.get("evidence_grade") not in {
+                "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+                "SHA_EXACT_BINARY_BEHAVIOR"}:
+            raise CatalogIndexError("unknown or missing evidence grade: " + rel)
+        if (item["evidence_grade"] == "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY"
+                and (not isinstance(item.get("source_revision"), str)
+                     or not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@[0-9a-f]{40}",
+                                         item["source_revision"]))):
+            raise CatalogIndexError("missing exact pinned source revision: " + rel)
+        if not isinstance(item.get("version"), str) or not item["version"].strip():
+            raise CatalogIndexError("missing exact provider release: " + rel)
+        if not isinstance(item.get("artifact_sha1"), str) or not re.fullmatch(
+                r"[0-9a-f]{40}", item["artifact_sha1"]):
+            raise CatalogIndexError("missing SHA-1 physical release evidence: " + rel)
+        if item.get("mutating_hook") not in {"NOT_VERIFIED", "VERIFIED_CONTRACT"}:
+            raise CatalogIndexError("unsafe/ambiguous mutating-hook state: " + rel)
+        if item.get("physical_qa") not in {"NOT_TESTED", "PHYSICALLY_VERIFIED"}:
+            raise CatalogIndexError("unsafe/ambiguous physical QA state: " + rel)
         evidence = item.get("evidence")
-        if not isinstance(evidence, dict) or not REQUIRED_EVIDENCE.issubset(evidence):
+        if not isinstance(evidence, dict) or set(evidence) != REQUIRED_EVIDENCE:
             raise CatalogIndexError("missing required technical evidence: " + rel)
-        if any(not isinstance(evidence[k], str) or not evidence[k].strip()
-               for k in REQUIRED_EVIDENCE):
-            raise CatalogIndexError("empty evidence field: " + rel)
+        for field in sorted(REQUIRED_EVIDENCE):
+            proof = evidence[field]
+            if not isinstance(proof, dict) or set(proof) != {"path", "reason"}:
+                raise CatalogIndexError("evidence must have path + reason: " + rel + " " + field)
+            cited = proof["path"]
+            why = proof["reason"]
+            if not isinstance(cited, str) or not isinstance(why, str) or len(why.strip()) < 18:
+                raise CatalogIndexError("empty/weak evidence locator or rationale: " + rel + " " + field)
+            # Reject URL, absolute and parent escape; CI must be able to inspect
+            # the referenced artifact inside this very checkout.
+            parts = Path(cited).parts
+            if not cited.endswith(".md") or not parts or any(
+                    p in {"..", ".", ""} for p in parts
+                ) or Path(cited).is_absolute() or "://" in cited:
+                raise CatalogIndexError("nonlocal or unsafe evidence path: " + rel + " " + field)
+            resolved = REPO.joinpath(*parts).resolve()
+            if not resolved.is_relative_to(REPO.resolve()) or not resolved.is_file():
+                raise CatalogIndexError("missing referenced evidence file: " + rel + " " + field)
     for mod, item in doc["providers"].items():
         if not (PROVIDERS / mod).is_dir() or not isinstance(item, dict):
             raise CatalogIndexError("invalid provider certification: " + mod)
@@ -101,8 +142,9 @@ def mod_certified(mod, cards, ledger):
                 and info.get("universe_closed") is True and info.get("evidence"))
 
 def check(repo=REPO):
-    global PROVIDERS, LEDGER
-    previous_providers, previous_ledger = PROVIDERS, LEDGER
+    global REPO, PROVIDERS, LEDGER
+    previous_repo, previous_providers, previous_ledger = REPO, PROVIDERS, LEDGER
+    REPO = repo
     PROVIDERS = repo / "wiki/modpack-catalog/providers"
     LEDGER = repo / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json"
     try:
@@ -143,6 +185,11 @@ def check(repo=REPO):
             match = GLOBAL.findall(data)
             if len(match) != 1 or tuple(map(int, match[0])) != (done, len(mods)):
                 problems.append("stale global provider numerator/denominator")
+            object_pairs = GLOBAL_OBJECTS.findall(data)
+            completed_objects = sum(certified(card, ledger) for card in cards)
+            if len(object_pairs) != 1 or tuple(map(int, object_pairs[0])) != (
+                    completed_objects, len(cards)):
+                problems.append("stale global certified-object numerator/denominator")
             entries = PROVIDER_ROW.findall(data)
             if len(entries) != len(mods):
                 problems.append("provider table population drift")
@@ -158,7 +205,7 @@ def check(repo=REPO):
                 "certified_providers": sum(mod_certified(m, cards, ledger) for m in mods),
                 "expected_indexes": 1 + len(dirs), "problems": problems}
     finally:
-        PROVIDERS, LEDGER = previous_providers, previous_ledger
+        REPO, PROVIDERS, LEDGER = previous_repo, previous_providers, previous_ledger
 
 def main():
     p = argparse.ArgumentParser()

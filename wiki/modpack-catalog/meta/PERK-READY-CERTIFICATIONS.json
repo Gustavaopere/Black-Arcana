@@ -1,7 +1,49 @@
 {
   "schema_version": 1,
-  "definition": "COMPLETE_PERK_READY requires individually audited identity, behavior, parameters, targeting, costs, integration boundary and validation evidence; old ✅ directories do not certify.",
-  "objects": {},
+  "definition": "COMPLETE_PERK_READY denotes complete scoped STATIC technical catalog of one object with version, targeting applicability and bounded evidence; it NEVER certifies a mutating hook, live gameplay, installed config or provider-wide 100%.",
+  "objects": {
+    "✅-ars-nouveau/glyphs/augments/amplify.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "100% dos campos estáticos do componente AugmentAmplify; não autoriza intervenção em SpellStats, gameplay, configuração local ou transformação de buffs universais.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "A auditoria SHA-exata do JAR fixa o glyph ID; a ficha identifica o AugmentAmplify na fonte imutável."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/amplify.md",
+          "reason": "A implementação fonte fixa chama builder.addAmplification(1.0) e retorna a composição do provider."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/amplify.md",
+          "reason": "A ficha distingue a amplificação estática +1 dos caps e consumidores específicos de cada componente."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/amplify.md",
+          "reason": "Contrato de AbstractAugment não produz target ou projétil isolado; Form/Effect resolve geometria e dano."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "A fonte datagen confirma receita e tier I/27 XP; a ficha identifica mana-padrão 20 e ausência de cast próprio."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/PERK-ENGINEERING-MATRIX-5.13.1.md",
+          "reason": "Provider Ars mantém SpellStats e casting; não há contrato de mutação RPG/Black Arcana comprovado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/amplify.md",
+          "reason": "Revisão do source-pin 5.13.1 e auditoria de identidade binária; execuções reais explicitamente pendentes."
+        }
+      }
+    }
+  },
   "providers": {},
   "known_rosters": {
     "✅-winds-spellbooks": {

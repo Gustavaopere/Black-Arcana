@@ -28,3 +28,13 @@ Quando houver fichas novas, exclusões, subpastas novas ou evidência suficiente
 O workflow "Perk-ready provider index coverage" verifica os índices em PRs que alteram providers, o manifesto, o gerador ou seus testes. Se um objeto novo não aparecer ou se o numerador estiver stale, o CI rejeita o snapshot.
 
 O verificador **não infere** a completude do prefixo antigo da pasta, nem permite ✅ de objeto sem identidade, comportamento, parâmetros, targeting, custos, integração e validação explicitamente documentados. Mesmo uma pasta com todas as fichas concluídas não recebe ✅ de provider até haver fechamento fundamentado do universo de objetos; rosters pontuais de spells não bastam para fechar perks e sistemas de outros tipos.
+
+## Primeiro certificado do recorte estático — Ars Nouveau / Amplify
+
+O índice técnico de fichas pode atribuir ✅ **apenas ao contrato estático documentado** quando houver: identidade do JAR SHA-exato, revisão de source em commit imutável (ou análise binária equivalente), comportamento causal do objeto, custos e parâmetros, aplicação ou não aplicabilidade de targeting e projétil/duração, fronteira de mutabilidade provider-native e limites de validação explícitos.
+
+**Exemplo concreto:** `ars_nouveau:glyph_amplify` ([ficha](../providers/✅-ars-nouveau/glyphs/augments/amplify.md)) apresenta os sete campos, além de `NOT_VERIFIED` para hook mutador e `NOT_TESTED` para QA físico. O ✅ é **100% da documentação estática do componente**, jamais execução de perk, integração aprovada, config de jogador ou teste real. O provider Ars permanece ⚠️ porque as outras fichas e o fechamento das famílias catalogáveis ainda não estão certificados.
+
+O manifesto de cada ✅ exige `claim_scope=STATIC_TECHNICAL_CATALOG_ONLY`, `version`, `artifact_sha1`, `evidence_grade` (source-pinned + identidade binária SHA-exata ou comportamento binário SHA-exato), `mutating_hook`, `physical_qa` e referências locais **existentes** com justificativas por campo; os links externos de fonte são descritos na ficha, mas não são tratados como arquivos locais comprovados apenas por terem uma URL.
+
+**Distinção de percentuais:** o quadro geral mantém dois denominadores independentes: `mods com universo técnico integral fechado / pastas de providers` e `fichas estáticas certificadas / fichas individuais detectadas`. Nenhum dos dois é o total físico universal de tudo que a modlist contém. Um ✅ de ficha não implica ✅ do mod.

@@ -35,7 +35,7 @@ class GeneratorTests(unittest.TestCase):
         self.temp.cleanup()
 
     def render(self):
-        ledger = checker.read_ledger()
+        ledger = checker.read_ledger(checker.LEDGER)
         dirs, mods, cards = checker.inventory()
         for folder in dirs:
             (folder / "INDEX.md").write_text(
