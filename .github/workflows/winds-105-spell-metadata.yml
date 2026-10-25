@@ -36,6 +36,8 @@ on:
       - 'docs/qa/winds_105_bootstrap_registry_contract_test.py'
       - 'docs/qa/winds_105_aeropic_recast_invokes.py'
       - 'docs/qa/winds_105_aeropic_recast_invokes_test.py'
+      - 'docs/qa/winds_105_aeropic_recast_contract.py'
+      - 'docs/qa/winds_105_aeropic_recast_contract_test.py'
       - 'docs/qa/winds-105-aeropic-recast-invoke-gate.md'
       - 'docs/qa/winds-105-bootstrap-registry-gate.md'
       - 'docs/qa/winds-105-registry-dispatch-gate.md'
@@ -77,6 +79,8 @@ on:
       - 'docs/qa/winds_105_bootstrap_registry_contract_test.py'
       - 'docs/qa/winds_105_aeropic_recast_invokes.py'
       - 'docs/qa/winds_105_aeropic_recast_invokes_test.py'
+      - 'docs/qa/winds_105_aeropic_recast_contract.py'
+      - 'docs/qa/winds_105_aeropic_recast_contract_test.py'
       - 'docs/qa/winds-105-aeropic-recast-invoke-gate.md'
       - 'docs/qa/winds-105-bootstrap-registry-gate.md'
       - 'docs/qa/winds-105-registry-dispatch-gate.md'
@@ -128,6 +132,8 @@ jobs:
         run: python3 docs/qa/winds_105_bootstrap_registry_contract_test.py -v
       - name: Synthetic Aeropic recast opcode and dispatch non-promotion tests
         run: python3 docs/qa/winds_105_aeropic_recast_invokes_test.py -v
+      - name: Synthetic SHA-frozen Aeropic invokevirtual callsite contract tests
+        run: python3 docs/qa/winds_105_aeropic_recast_contract_test.py -v
       - name: Download exact published Wind's Spellbooks 1.0.5 and verify frozen physical SHA-1
         shell: bash
         run: |
@@ -212,6 +218,8 @@ jobs:
           python3 docs/qa/winds_105_aeropic_recast_invokes.py \
             --jar build/winds-105/wind_spellbooks-1.0.5.jar \
             --output build/winds-105/aeropic-recast-invokes.json
+      - name: Verify two SHA-exact Aeropic recast invokevirtual facts without receiver claims
+        run: python3 docs/qa/winds_105_aeropic_recast_contract.py --json build/winds-105/aeropic-recast-invokes.json
       - name: Publish clean-room JSON only (never redistribute provider JAR)
         if: always()
         uses: actions/upload-artifact@v7
