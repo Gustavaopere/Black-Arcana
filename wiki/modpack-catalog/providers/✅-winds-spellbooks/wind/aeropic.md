@@ -173,3 +173,14 @@ Gate: [auditoria do receptor](../../../../docs/qa/winds-105-aeropic-direct-suppl
 - **Integração:** ⛔ SEM_HOOK_SEGURO. Nenhum contador paralelo nem mutação de perks autorizada; autoridade de recasts e casting segue provider-native. Stage 06.05 🟡 e QA físico Stage 09 pendente.
 
 [Gate e contrato de regressão](../../../../../docs/qa/winds-105-aeropic-local-index-probe-gate.md). Nenhuma magia nova foi contada.
+
+
+## Grafo de fluxo normal do recast — 25/10/2026
+
+**JAR 1.0.5 / SHA-1 8744886899bc245ae147a44baa2b183689cec7da:** [workflow CFG #40159609661](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40159609661) SUCCESS, 15 testes sintéticos aprovados. A auditoria inspecionou os offsets apenas localmente e publicou contagens, não disassembly.
+
+- **AeropicEffect.applyEffectTick:** 288 instruções JVM, 20 branches if/goto, cinco junções em caminhos normais até getRecastCount, 222 instruções em caminhos normais de entrada até o callsite e três leituras do campo ACROBATICS_SPELL. **Uma das três leituras domina a chamada** no CFG normal, mas ainda não há prova de que seu retorno alimente a operand stack do receiver. Estado da origem do receiver: NOT_PROVEN_BY_CFG_TOPOLOGY; dispatch em gameplay, argumentos, valor retornado e PlayerRecasts NÃO COMPROVADOS.
+- **AeropicEffect.onEffectAdded:** 43 instruções, dois branches, nenhuma junção antes do callsite, 34 instruções nos caminhos relevantes e uma leitura de ACROBATICS_SPELL, que domina o callsite. Esta topologia complementa, sem substituir, a prova compilada de receiver via índices locais realizada no PR #894.
+- Ambos os métodos tiveram 100% das instruções alcançáveis pela entrada no CFG normal do parser. Não havia switch, salto inválido ou tabela de exceção bloqueando essa análise específica. **Não equivale a validação de execução em cliente/servidor**, nem comprova API de perk mutadora.
+
+**Boundary:** ⛔ SEM_HOOK_SEGURO. Não criar outros recast counters, efeitos paralelos ou mutação de NBT/PlayerRecasts. [Gate e resultado exatos](../../../../../docs/qa/winds-105-aeropic-recast-cfg-gate.md). Nenhuma nova magia, fórmula causal, valor ou Stage homologado.
