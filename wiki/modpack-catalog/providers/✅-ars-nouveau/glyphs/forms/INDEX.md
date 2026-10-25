@@ -2,19 +2,19 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/5.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Homologadas para perks (somente fichas detectadas): 5/5.**
+**Barra do recorte documental:** `████████████████████ 100.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
 
 | Estado | Objeto / habilidade identificada | Ficha |
 |---|---|---|
-| ⚠️ | Pantomime | [ficha/pantomime.md](pantomime.md) |
-| ⚠️ | Projectile | [ficha/projectile.md](projectile.md) |
-| ⚠️ | Self | [ficha/self.md](self.md) |
-| ⚠️ | Touch | [ficha/touch.md](touch.md) |
-| ⚠️ | Underfoot | [ficha/underfoot.md](underfoot.md) |
+| ✅ | Pantomime | [ficha/pantomime.md](pantomime.md) |
+| ✅ | Projectile | [ficha/projectile.md](projectile.md) |
+| ✅ | Self | [ficha/self.md](self.md) |
+| ✅ | Touch | [ficha/touch.md](touch.md) |
+| ✅ | Underfoot | [ficha/underfoot.md](underfoot.md) |
 
 ## Critério do ✅
 

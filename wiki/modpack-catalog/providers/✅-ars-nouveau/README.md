@@ -1,5 +1,7 @@
 # Ars Nouveau — Core Compositional Spell Provider
 
+**[Certificação técnica estática das 5 Forms](FORM-STATIC-CERTIFICATION-5.13.1.md)** — documenta comportamento source-pinned; não homologa execução de perks ou QA de modpack.
+
 Status: `CORE SPELL MODEL VERIFIED; BASE GLYPH INVENTORY NORMALIZED FROM CURRENT 1.21.1 GUIDE; ADDON PROVIDERS CATALOGED SEPARATELY`
 
 - Current JAR: `ars_nouveau-1.21.1-5.13.1.jar`

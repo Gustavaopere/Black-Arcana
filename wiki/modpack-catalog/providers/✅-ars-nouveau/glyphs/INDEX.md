@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 13/85.**
-**Barra do recorte documental:** `███░░░░░░░░░░░░░░░░░ 15.3%`
+**Homologadas para perks (somente fichas detectadas): 18/85.**
+**Barra do recorte documental:** `████░░░░░░░░░░░░░░░░ 21.2%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
