@@ -70,6 +70,12 @@ class HostAbiTests(unittest.TestCase):
         self.assertEqual(3,len(host.declarations(signatures("player_recasts"),"player_recasts")))
     def test_host_recast_instance_ctor(self):
         self.assertIn("<init>",host.declarations(signatures("recast_instance"),"recast_instance"))
+    def test_bare_constructor_name_equivalent(self):
+        cls=host.NEEDED["recast_instance"]
+        text=signatures("recast_instance").replace(
+            "public "+cls+"(", "public RecastInstance(")
+        self.assertIn("<init>",host.declarations(text,"recast_instance"))
+
     def test_static_recast_getter_rejected(self):
         s=signatures("abstract_spell").replace("public int getRecastCount","public static int getRecastCount")
         with self.assertRaises(host.EvidenceError):host.declarations(s,"abstract_spell")
