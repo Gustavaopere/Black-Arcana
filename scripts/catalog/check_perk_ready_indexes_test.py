@@ -40,6 +40,7 @@ class IndexTests(unittest.TestCase):
             "([navigation](spells/INDEX.md))\n", encoding="utf8")
         (self.mods / "INDEX.md").write_text(
             "**Mods com escopo integral certificado: 0/1.**\n"
+            "**Fichas com contrato técnico estático certificado: 0/1.**\n"
             "| ⚠️ | Example | 1 | 0 | [Ver fichas](✅-example/INDEX.md) |\n", encoding="utf8")
 
     def test_valid_snapshot_with_warning(self):
@@ -155,6 +156,22 @@ class IndexTests(unittest.TestCase):
         cert["evidence_grade"] = "GAMEPLAY_CERTIFIED_BY_SOURCE"
         self.install_certificate(cert)
         with self.assertRaisesRegex(c.CatalogIndexError, "evidence grade"):
+            c.check(self.root)
+
+    def test_stale_global_object_number_rejected(self):
+        path = self.mods / "INDEX.md"
+        content = path.read_text(encoding="utf8")
+        path.write_text(
+            content.replace("estático certificado: 0/1.", "estático certificado: 1/1."),
+            encoding="utf8",
+        )
+        self.assertTrue(any("certified-object" in x for x in c.check(self.root)["problems"]))
+
+    def test_source_certificate_requires_pinned_revision(self):
+        cert = self.full_synthetic_certificate()
+        cert["source_revision"] = "HEAD"
+        self.install_certificate(cert)
+        with self.assertRaisesRegex(c.CatalogIndexError, "source revision"):
             c.check(self.root)
 
     def test_provider_closed_requires_evidence(self):
