@@ -207,7 +207,7 @@ class ArsRitualStaticTests(unittest.TestCase):
     def test_binding_familiar_holder_collision_cannot_be_assumed_unique(self):
         binding = (PROVIDER / "rituals/binding.md").read_text(encoding="utf8")
         for token in ("getGameTime()%20==0", "getProgress()>=3",
-                      "FamiliarRegistry.getFamiliarHolderMap()", "sem `break`",
+                      "FamiliarRegistry.getFamiliarHolderMap()", "Não há `break`",
                       "getOutputItem()", "8 blocos", "DISCARDED",
                       "0 Source", "mutating_hook=NOT_VERIFIED"):
             self.assertIn(token, binding)
