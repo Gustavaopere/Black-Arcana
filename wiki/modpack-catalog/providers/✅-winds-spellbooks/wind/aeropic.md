@@ -161,3 +161,15 @@ A auditoria registra até **24 instruções anteriores e 12 posteriores** por ch
 **Ausência de prova não equivale a ausência de execução.** ABI do host publicada e símbolos do Wind seguem verificados, mas receiver concreto, dispatch do override e consumo do retorno no `PlayerRecasts` permanecem `NOT_PROVEN`. Nova investigação precisa modelar CFG/stack com junções e confirmar a instância do Supplier. **⛔ SEM_HOOK_SEGURO**; não adicionar contador, alterar NBT nem duplicar o pipeline de recast.
 
 Gate: [auditoria do receptor](../../../../docs/qa/winds-105-aeropic-direct-supplier-slice-gate.md). Nenhum novo spell, valor ou estágio homologado.
+
+
+## Proveniência compilada do receiver via índices locais JVM — 25/10/2026
+
+**Evidência estática adicional:** [Wind CI #40157583131](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40157583131), SUCCESS no JAR oficial 1.0.5 (SHA-1 8744886899bc245ae147a44baa2b183689cec7da), 12 testes sintéticos aprovados. O novo auditor interpreta índices explícitos de variáveis locais javap, preservando a análise conservadora de pilha e o resultado histórico negativo do PR #893.
+
+- **AeropicEffect.onEffectAdded:** 18 instruções load/store, das quais seis trazem índices explícitos na forma não compacta. Resultado do recorte: COMPILED_SUPPLIER_GET_CAST_RECEIVER. No trecho compilado analisado, o resultado de ModSpellRegistry.ACROBATICS_SPELL via Supplier.get, após checkcast AbstractSpell e stores/loads locais, chega como receptor JVM de AbstractSpell.getRecastCount.
+- **AeropicEffect.applyEffectTick:** 111 instruções load/store, sendo 77 de índices explícitos. Resultado NOT_PROVEN; FAIL_CLOSED_control flow or return in candidate stack slice. O fluxo de controle impede prova por bloco linear.
+- **Limite causal:** a prova de onEffectAdded não determina a classe concreta devolvida pelo Supplier, dispatch do override em execução, consumo da contagem em NBT/PlayerRecasts, duração, custo, janela de recast ou comportamento real. Não presume comportamento a partir do owner da chamada.
+- **Integração:** ⛔ SEM_HOOK_SEGURO. Nenhum contador paralelo nem mutação de perks autorizada; autoridade de recasts e casting segue provider-native. Stage 06.05 🟡 e QA físico Stage 09 pendente.
+
+[Gate e contrato de regressão](../../../../docs/qa/winds-105-aeropic-local-index-probe-gate.md). Nenhuma magia nova foi contada.
