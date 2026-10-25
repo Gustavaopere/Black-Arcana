@@ -6,7 +6,7 @@ Versionamento: `ars_nouveau-1.21.1-5.13.1.jar` SHA-1 `02782d071ee5fab3b5c4b8ced6
 
 | Ritual | Evidência estática de ritmo/alvo/custo | Boundary |
 |---|---|---|
-| [Sunrise](rituals/sunrise.md) | Overworld: dayTime+=100 fora da janela 1000..11999; incrementProgress acelera dentro dela; conclusão progress>=18 em gate gameTime%20==0; Source getter herdado 0 | Relógio global/sync Ars, não cast novo por pacote |
+| [Sunrise](rituals/sunrise.md) | Overworld: dayTime+=100 fora da janela 1000..11999; incrementProgress acelera dentro dela; conclusão progress>=18 em gate gameTime%20==0; Source getter herdado 0 | Relógio global e `ClientboundSetTimePacket` de sync Ars, não cast novo por pacote |
 | [Moonfall](rituals/moonfall.md) | Overworld: dayTime+=100 até night threshold 13000; acelerador de progress no else, gate >=18; Source getter herdado 0 | Não assumir duração fixa nem autoridade de dimensão local |
 | [Fertility](rituals/fertility.md) | AABB inflada 5; trabalho a cada 200 ticks, cap >=20 animais antes da blacklist; Source cost 500 solicitado após mudança | Não cobrar Source nem Mastery por animal |
 | [Flight](rituals/flight.md) | RangeEffectRitual: ServerPlayer <=60 via BlockUtil, buff 1200 ticks; Source cost 200 por refresh aceito; onJumpEvent condicional | Não duplicar voo, refresh e packets |
