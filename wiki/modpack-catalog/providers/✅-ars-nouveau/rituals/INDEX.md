@@ -2,16 +2,16 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 10/24.**
-**Barra do recorte documental:** `████████░░░░░░░░░░░░ 41.7%`
+**Homologadas para perks (somente fichas detectadas): 12/24.**
+**Barra do recorte documental:** `██████████░░░░░░░░░░ 50.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
 
 | Estado | Objeto / habilidade identificada | Ficha |
 |---|---|---|
-| ⚠️ | Awakening | [ficha/awakening.md](awakening.md) |
-| ⚠️ | Binding | [ficha/binding.md](binding.md) |
+| ✅ | Awakening | [ficha/awakening.md](awakening.md) |
+| ✅ | Binding | [ficha/binding.md](binding.md) |
 | ⚠️ | Burrowing | [ficha/burrowing.md](burrowing.md) |
 | ⚠️ | Challenge | [ficha/challenge.md](challenge.md) |
 | ⚠️ | Cloudshaping | [ficha/cloudshaping.md](cloudshaping.md) |

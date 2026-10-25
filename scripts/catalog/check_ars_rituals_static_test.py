@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed, static-only Ars 5.13.1 first-five ritual evidence regression.
+"""Fail-closed, static-only Ars 5.13.1 source-pinned ritual evidence regression.
 
 No client, runtime, Source transaction, classfile method equality, or external
 perk bridge is exercised. The exact binary ID checks are a separate CI job.
@@ -39,6 +39,12 @@ CASES = {
                     ("JAR_WHITELIST", "JAR_BLACKLIST", "MobJarTile", "UNLOADED_TO_CHUNK")),
     "harvest": ("ritual_harvest", "RitualHarvest",
                  ("InventoryManager.insertStack", "MAGE_BLOOM_CROP", "HARVEST_STEMS", "200")),
+    "binding": ("ritual_binding", "RitualBinding",
+                ("FamiliarRegistry", "RemovalReason.DISCARDED", "getOutputItem()",
+                 "AABB", "AbstractRitual.getSourceCost()")),
+    "awakening": ("ritual_awakening", "RitualAwakening",
+                  ("BOOKWYRM_CHARM", "WritableBookItem", "withinManhattan",
+                   "DFSBlockstates", "BUDDING_AMETHYST")),
 }
 
 
@@ -53,9 +59,9 @@ class ArsRitualStaticTests(unittest.TestCase):
         cls.dossier = (PROVIDER / "RITUAL-STATIC-FIRST-FIVE-5.13.1.md").read_text(
             encoding="utf-8")
 
-    def test_ten_unique_binary_pinned_ritual_identities(self):
-        self.assertEqual(10, len(CASES))
-        self.assertEqual(10, len({item[0] for item in CASES.values()}))
+    def test_twelve_unique_binary_pinned_ritual_identities(self):
+        self.assertEqual(12, len(CASES))
+        self.assertEqual(12, len({item[0] for item in CASES.values()}))
         for slug, (ritual_id, classname, facts) in CASES.items():
             with self.subTest(slug=slug):
                 body = (PROVIDER / "rituals" / (slug + ".md")).read_text(
@@ -96,8 +102,8 @@ class ArsRitualStaticTests(unittest.TestCase):
         objs = self.json["objects"]
         ritual_count = sum(key.startswith("✅-ars-nouveau/rituals/") for key in objs)
         ars_count = sum(key.startswith("✅-ars-nouveau/") for key in objs)
-        self.assertGreaterEqual(ritual_count, 10)
-        self.assertGreaterEqual(ars_count, 63)
+        self.assertGreaterEqual(ritual_count, 12)
+        self.assertGreaterEqual(ars_count, 65)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ritual_count}/24.", self.index)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ars_count}/138.", self.ars)
         self.assertIn(f"Fichas com contrato técnico estático certificado: {len(objs)}/2075.", self.top)
@@ -196,6 +202,36 @@ class ArsRitualStaticTests(unittest.TestCase):
         self.assertIn(
             "| ✅ | Harvest | [rituals/harvest.md](rituals/harvest.md) |",
             self.ars)
+
+
+    def test_binding_familiar_holder_collision_cannot_be_assumed_unique(self):
+        binding = (PROVIDER / "rituals/binding.md").read_text(encoding="utf8")
+        for token in ("getGameTime()%20==0", "getProgress()>=3",
+                      "FamiliarRegistry.getFamiliarHolderMap()", "Não há `break`",
+                      "getOutputItem()", "8 blocos", "DISCARDED",
+                      "0 Source", "mutating_hook=NOT_VERIFIED"):
+            self.assertIn(token, binding)
+        self.assertIn("não equivale a ritual grátis", binding.lower())
+
+    def test_awakening_modes_world_mutation_and_book_consumption_are_separate(self):
+        awakening = (PROVIDER / "rituals/awakening.md").read_text(encoding="utf8")
+        for token in ("WritableBookItem", "getProgress()>5",
+                      "BOOKWYRM_CHARM", "numBookwyrms", "350", ">=50",
+                      "Blazing", "Flourishing", "Vexing", "Cascading",
+                      "ANFakePlayer", "BUDDING_AMETHYST",
+                      "getSourceCost()=0", "destroyRespectsClaim",
+                      "mutating_hook=NOT_VERIFIED"):
+            self.assertIn(token, awakening)
+        self.assertIn("não equivale", awakening)
+
+    def test_third_ritual_dossier_retains_source_and_fail_closed_claims(self):
+        dossier = (PROVIDER / "RITUAL-STATIC-THIRD-TWO-5.13.1.md").read_text(
+            encoding="utf8")
+        for token in ("12/24", SOURCE, SHA1, "Binding", "Awakening",
+                      "FamiliarRegistry", "BOOKWYRM_CHARM", "getSourceCost()=0",
+                      "NOT_VERIFIED", "NOT_TESTED", "WorldEffectPolicy",
+                      "Stage 06.05", "Stage 09"):
+            self.assertIn(token, dossier)
 
 
 if __name__ == "__main__":

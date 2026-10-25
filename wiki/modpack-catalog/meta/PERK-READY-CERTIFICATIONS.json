@@ -2584,6 +2584,88 @@
           "reason": "Source SHA pin and exact JAR ID identity with physical runtime, method bytecode and config unverified."
         }
       }
+    },
+    "✅-ars-nouveau/rituals/binding.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Binding seleciona Entity em AABB.inflate(5) a cada 20 game ticks, com progresso>=3; itera todos os familiar holders sem break, gerando output por correspondência, e herda Source getter 0; não há hook de alteração/QA físico.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher JAR SHA-exato identifica a classe RitualBinding associada ao ID ars_nouveau:ritual_binding, com proveniência de release 5.13.1."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/binding.md",
+          "reason": "Ficha revisa fluxo de tick, progress, ramos causais, efeitos e side da classe RitualBinding, referenciando implementação upstream fixada."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/binding.md",
+          "reason": "Unidades, limites de tick/alcance/quantidades e lógica de progressão próprios de RitualBinding foram discriminados com condicionais de execução."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/binding.md",
+          "reason": "Geometria, entidades/blocos admitidos e ausência de projetil/dano de spell autônomo constam no contrato de RitualBinding."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/binding.md",
+          "reason": "A ficha distingue getSourceCost herdado 0 de custos de ingredientes e settlement do brazier ainda sem QA de RitualBinding."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-THIRD-TWO-5.13.1.md",
+          "reason": "Dossiê identifica authority Ars, vedação de drops/spawns duplicados, dependência de hook mutador e boundary RPG/Black Arcana sem extrapolação."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/binding.md",
+          "reason": "Prova de class-to-ID binária e análise da fonte estática têm escopos separados; mutating hook e gameplay físico explicitamente não testados."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/awakening.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Awakening escolhe modo Bookwyrm por WritableBookItem, ou percorre withinManhattan/DFS de Archwood e Budding Amethyst; helpers de mundo não provam admissão de claims, herda Source getter 0; sem mutação externa segura/QA físico.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher JAR SHA-exato identifica a classe RitualAwakening associada ao ID ars_nouveau:ritual_awakening, com proveniência de release 5.13.1."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/awakening.md",
+          "reason": "Ficha revisa fluxo de tick, progress, ramos causais, efeitos e side da classe RitualAwakening, referenciando implementação upstream fixada."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/awakening.md",
+          "reason": "Unidades, limites de tick/alcance/quantidades e lógica de progressão próprios de RitualAwakening foram discriminados com condicionais de execução."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/awakening.md",
+          "reason": "Geometria, entidades/blocos admitidos e ausência de projetil/dano de spell autônomo constam no contrato de RitualAwakening."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/awakening.md",
+          "reason": "A ficha distingue getSourceCost herdado 0 de custos de ingredientes e settlement do brazier ainda sem QA de RitualAwakening."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-THIRD-TWO-5.13.1.md",
+          "reason": "Dossiê identifica authority Ars, vedação de drops/spawns duplicados, dependência de hook mutador e boundary RPG/Black Arcana sem extrapolação."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/awakening.md",
+          "reason": "Prova de class-to-ID binária e análise da fonte estática têm escopos separados; mutating hook e gameplay físico explicitamente não testados."
+        }
+      }
     }
   },
   "providers": {},
