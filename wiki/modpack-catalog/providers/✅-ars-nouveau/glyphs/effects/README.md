@@ -1,5 +1,7 @@
 # Ars Nouveau 5.13.1 — Effects
 
+**[Quarto lote de Effects: Invisibility, Wither, Hex, Bounce e Dispel](../../EFFECT-STATIC-STATUS-DISPEL-FIVE-5.13.1.md)** — contratos estáticos para perks com caveats para efeitos downstream e o evento público de veto de Dispel. Após este lote, 20/67 Effects são estáticos certificados; hooks mutadores e QA físico seguem pendentes.
+
 **[Terceiro lote estático de Effects: Blink, Leap, Launch, Pull e Snare](../../EFFECT-STATIC-MOBILITY-CONTROL-FIVE-5.13.1.md)** — cinco novos contratos de planejamento de perks, sem hooks ou QA físico. O contador estrito de Effects passa a 15/67; os 67/67 inventariados anteriormente continuam inalterados.
 
 **[Segundo lote de 5 Effects: Harm, Explosion, Lightning, Freeze e Ignite](../../EFFECT-STATIC-DAMAGE-WORLD-FIVE-5.13.1.md)** — contratos estáticos para planejamento de perks, sem aprovação de hooks/runtime. Os efeitos disponíveis continuam 67/67 no inventário, e o número de certificados passa a 10/67.
