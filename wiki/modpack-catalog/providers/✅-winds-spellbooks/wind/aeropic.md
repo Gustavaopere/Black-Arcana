@@ -125,3 +125,13 @@ Essa prova substitui exclusivamente a pendência de associação **estática** e
 | `void onEffectAdded(LivingEntity, int)` | `invokevirtual AbstractSpell.getRecastCount:(ILivingEntity)I` | Não há prova do receiver concreto nem de quem consome o retorno |
 
 A classe `AeropicSpell` declara override ABI-compatível, mas **o `invokevirtual` não prova** que `AeropicSpell` seja a classe real do receptor nem que o override execute. O host Iron's 3.16.3 ainda requer inspeção exata; `runtime_override_dispatch`, `dynamic_receiver_type` e `return_value_consumer` permanecem `NOT_PROVEN`, sem teste físico. **⛔ `SEM_HOOK_SEGURO`** para perks que afetem recasts; preservar `PlayerRecasts` como autoridade.
+
+## Verificação da ABI do host Iron’s Spellbooks 3.16.3 — 24/10/2026
+
+**✅ Compatibilidade dos descritores no JAR publicado pelo Modrinth; ⚠️ equivalência com o JAR local não demonstrada.** [CI host #40146984360](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40146984360), artifact `host-recast-abi.json`, arquivo oficial `irons_spellbooks-1.21.1-3.16.3.jar`, SHA-1 `e8832385c01db56b9fcb19c48fcedc76a3a70d92` e SHA-512 congelado no [gate técnico](../../../../docs/qa/irons-3163-aeropic-recast-host-gate.md).
+
+Declarações compiladas **5/5** correspondem aos símbolos observados no Wind's 1.0.5: `AbstractSpell.getRecastCount(int, LivingEntity): int`; `PlayerRecasts.addRecast(RecastInstance, MagicData): boolean`, `hasRecastForSpell(String): boolean`, `decrementRecastCount(String): void`; e o construtor de `RecastInstance(String, int, int, int, CastSource, ICastDataSerializable)`. `MagicData` está presente no JAR host. Métodos e assinaturas foram confrontados via `javap -s -p` após validação SHA-1/SHA-512, sem executar o mod.
+
+**Limite de evidência:** o registro Modrinth contém **13.890.045 bytes**, mas outra listagem de download informa **13.890.046 bytes**. A modlist confirma nome/versão, **não** checksum do JAR efetivamente instalado; não equiparar as duas distribuições sem hash do arquivo físico.
+
+Mesmo com ABI compatível, não foi comprovado que o receiver de `AeropicEffect.invokevirtual AbstractSpell.getRecastCount` é `AeropicSpell`, nem que seu override, a fórmula `max(0, level-1)` ou o retorno influenciam recasts em execução. **⛔ `SEM_HOOK_SEGURO`**: não duplicar `PlayerRecasts`, não mutar o ciclo de recast e não promover Stage/QA físico.
