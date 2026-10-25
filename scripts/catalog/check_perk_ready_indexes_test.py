@@ -85,6 +85,7 @@ class IndexTests(unittest.TestCase):
             "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
             "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
             "version": "test-1.0",
+            "source_revision": "example/provider@" + ("b" * 40),
             "artifact_sha1": "a" * 40,
             "mutating_hook": "NOT_VERIFIED",
             "physical_qa": "NOT_TESTED",
