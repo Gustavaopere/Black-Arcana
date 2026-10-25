@@ -330,7 +330,7 @@ class ArsRitualStaticTests(unittest.TestCase):
                       "PlaceBlockFeature(3,0.04", "ItemTags.SAND",
                       "targetPositions", "WorldEffectPolicy"):
             self.assertIn(token, page)
-        self.assertIn("não inspecionar", page)
+        self.assertIn("sem inspecionar", page)
         self.assertIn("mutating_hook=NOT_VERIFIED", page)
         self.assertIn("physical_qa=NOT_TESTED", page)
 
