@@ -39,3 +39,5 @@ Rituais do Ars Nouveau ficam separados dos glyphs porque possuem preparação, r
 - Efeitos destrutivos ou de biome/world conversion observados no Ars não transferem autoridade para Black Arcana nem enfraquecem `WorldEffectPolicy`.
 - Alterações globais de tempo/clima, teleporte, spawn denial, familiar binding e automation continuam provider-owned e não devem ser double-processed.
 - Diferenças entre descrição provider-native e path executável ficam explicitamente marcadas como `RUNTIME QA`, nunca corrigidas por inferência.
+
+**[Cinco rituais com contrato estático certificado](../RITUAL-STATIC-FIRST-FIVE-5.13.1.md):** Sunrise, Moonfall, Fertility, Flight e Scrying; hooks mutadores/QA físico pendentes.

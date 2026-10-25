@@ -2174,6 +2174,211 @@
           "reason": "Revisão de source pinado e identidade binária SHA-exata com limites explícitos: mutating_hook=NOT_VERIFIED, physical_qa=NOT_TESTED; sem equivalência integral de métodos ou gameplay."
         }
       }
+    },
+    "✅-ars-nouveau/rituals/sunrise.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Static contract only of ritual sunrise; Source/world time, dimension, entity admission, persistent NBT and refresh are Ars-owned. No cross-project perk mutator or real modpack QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact publisher JAR SHA and ritual class/ResourceLocation registry mapping audited; methods are only source-pinned."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/sunrise.md",
+          "reason": "Individual ritual tick phases, start/settlement paths, players/world operations and side/conditions reviewed."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/sunrise.md",
+          "reason": "Time/progress, radius/AABB, caps, Source and status duration/refresh formula documented with limitations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/sunrise.md",
+          "reason": "Overworld clock or ritual-local eligible entities/players, damaging/non-damaging applicability, duration and area established."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/sunrise.md",
+          "reason": "Source getter override or AbstractRitual inherited zero, item consumption, cooldown N/A and actual execution cost unknowns differentiated."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/sunrise.md",
+          "reason": "Ars retains ritual execution, Source and data ownership; no modpack bridge or cross-system mutation hook demonstrated."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/sunrise.md",
+          "reason": "Source fixed to SHA and registry class tied to exact JAR SHA; method bytecode/config/physical QA unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/moonfall.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Static contract only of ritual moonfall; Source/world time, dimension, entity admission, persistent NBT and refresh are Ars-owned. No cross-project perk mutator or real modpack QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact publisher JAR SHA and ritual class/ResourceLocation registry mapping audited; methods are only source-pinned."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/moonfall.md",
+          "reason": "Individual ritual tick phases, start/settlement paths, players/world operations and side/conditions reviewed."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/moonfall.md",
+          "reason": "Time/progress, radius/AABB, caps, Source and status duration/refresh formula documented with limitations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/moonfall.md",
+          "reason": "Overworld clock or ritual-local eligible entities/players, damaging/non-damaging applicability, duration and area established."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/moonfall.md",
+          "reason": "Source getter override or AbstractRitual inherited zero, item consumption, cooldown N/A and actual execution cost unknowns differentiated."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/moonfall.md",
+          "reason": "Ars retains ritual execution, Source and data ownership; no modpack bridge or cross-system mutation hook demonstrated."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/moonfall.md",
+          "reason": "Source fixed to SHA and registry class tied to exact JAR SHA; method bytecode/config/physical QA unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/fertility.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Static contract only of ritual fertility; Source/world time, dimension, entity admission, persistent NBT and refresh are Ars-owned. No cross-project perk mutator or real modpack QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact publisher JAR SHA and ritual class/ResourceLocation registry mapping audited; methods are only source-pinned."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/fertility.md",
+          "reason": "Individual ritual tick phases, start/settlement paths, players/world operations and side/conditions reviewed."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/fertility.md",
+          "reason": "Time/progress, radius/AABB, caps, Source and status duration/refresh formula documented with limitations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/fertility.md",
+          "reason": "Overworld clock or ritual-local eligible entities/players, damaging/non-damaging applicability, duration and area established."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/fertility.md",
+          "reason": "Source getter override or AbstractRitual inherited zero, item consumption, cooldown N/A and actual execution cost unknowns differentiated."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/fertility.md",
+          "reason": "Ars retains ritual execution, Source and data ownership; no modpack bridge or cross-system mutation hook demonstrated."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/fertility.md",
+          "reason": "Source fixed to SHA and registry class tied to exact JAR SHA; method bytecode/config/physical QA unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/flight.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Static contract only of ritual flight; Source/world time, dimension, entity admission, persistent NBT and refresh are Ars-owned. No cross-project perk mutator or real modpack QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact publisher JAR SHA and ritual class/ResourceLocation registry mapping audited; methods are only source-pinned."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/flight.md",
+          "reason": "Individual ritual tick phases, start/settlement paths, players/world operations and side/conditions reviewed."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/flight.md",
+          "reason": "Time/progress, radius/AABB, caps, Source and status duration/refresh formula documented with limitations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/flight.md",
+          "reason": "Overworld clock or ritual-local eligible entities/players, damaging/non-damaging applicability, duration and area established."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/flight.md",
+          "reason": "Source getter override or AbstractRitual inherited zero, item consumption, cooldown N/A and actual execution cost unknowns differentiated."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/flight.md",
+          "reason": "Ars retains ritual execution, Source and data ownership; no modpack bridge or cross-system mutation hook demonstrated."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/flight.md",
+          "reason": "Source fixed to SHA and registry class tied to exact JAR SHA; method bytecode/config/physical QA unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/scrying.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Static contract only of ritual scrying; Source/world time, dimension, entity admission, persistent NBT and refresh are Ars-owned. No cross-project perk mutator or real modpack QA.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact publisher JAR SHA and ritual class/ResourceLocation registry mapping audited; methods are only source-pinned."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/scrying.md",
+          "reason": "Individual ritual tick phases, start/settlement paths, players/world operations and side/conditions reviewed."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/scrying.md",
+          "reason": "Time/progress, radius/AABB, caps, Source and status duration/refresh formula documented with limitations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/scrying.md",
+          "reason": "Overworld clock or ritual-local eligible entities/players, damaging/non-damaging applicability, duration and area established."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/scrying.md",
+          "reason": "Source getter override or AbstractRitual inherited zero, item consumption, cooldown N/A and actual execution cost unknowns differentiated."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/scrying.md",
+          "reason": "Ars retains ritual execution, Source and data ownership; no modpack bridge or cross-system mutation hook demonstrated."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/scrying.md",
+          "reason": "Source fixed to SHA and registry class tied to exact JAR SHA; method bytecode/config/physical QA unverified."
+        }
+      }
     }
   },
   "providers": {},
