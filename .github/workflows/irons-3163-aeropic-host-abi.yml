@@ -7,6 +7,8 @@ on:
       - '.github/workflows/irons-3163-aeropic-host-abi.yml'
       - 'docs/qa/irons_3163_aeropic_host_abi.py'
       - 'docs/qa/irons_3163_aeropic_host_abi_test.py'
+      - 'docs/qa/irons_3163_aeropic_host_contract.py'
+      - 'docs/qa/irons_3163_aeropic_host_contract_test.py'
       - 'docs/qa/irons-3163-aeropic-recast-host-gate.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/README.md'
@@ -16,6 +18,8 @@ on:
       - '.github/workflows/irons-3163-aeropic-host-abi.yml'
       - 'docs/qa/irons_3163_aeropic_host_abi.py'
       - 'docs/qa/irons_3163_aeropic_host_abi_test.py'
+      - 'docs/qa/irons_3163_aeropic_host_contract.py'
+      - 'docs/qa/irons_3163_aeropic_host_contract_test.py'
       - 'docs/qa/irons-3163-aeropic-recast-host-gate.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/README.md'
@@ -36,6 +40,8 @@ jobs:
           java-version: '21'
       - name: Fail-closed metadata and JVM ABI synthetic regression tests
         run: python3 docs/qa/irons_3163_aeropic_host_abi_test.py -v
+      - name: Synthetic SHA-frozen host release and Aeropic ABI contract tests
+        run: python3 docs/qa/irons_3163_aeropic_host_contract_test.py -v
       - name: Fetch official exact Modrinth publisher release metadata (not mirror)
         shell: bash
         run: |
@@ -63,6 +69,8 @@ jobs:
             --jar build/irons-3163/irons_spellbooks-1.21.1-3.16.3.jar \
             --publisher-json build/irons-3163/publisher-version.json \
             --output build/irons-3163/host-recast-abi.json
+      - name: Verify publisher SHA512 and five immutable host JVM signatures
+        run: python3 docs/qa/irons_3163_aeropic_host_contract.py --json build/irons-3163/host-recast-abi.json
       - name: Upload structured clean-room evidence only (never JAR/publisher dump)
         if: always()
         uses: actions/upload-artifact@v7
