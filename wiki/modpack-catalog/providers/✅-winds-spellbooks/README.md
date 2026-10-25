@@ -137,3 +137,9 @@ Na auditoria [Wind CI #40144903731](https://github.com/Gustavaopere/Black-Arcana
 Na execução [host ABI CI #40146984360](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40146984360), a distribuição oficial Modrinth `irons_spellbooks-1.21.1-3.16.3.jar` (SHA-1 `e8832385c01db56b9fcb19c48fcedc76a3a70d92`, SHA-512 no [gate](../../../../docs/qa/irons-3163-aeropic-recast-host-gate.md)) confirmou **5/5 descritores JVM de recast** referenciados pelo `AeropicEffect` do Wind's 1.0.5, incluindo `AbstractSpell.getRecastCount` e chamadas `PlayerRecasts`/`RecastInstance`.
 
 **⚠️ Distinção de identidade:** o artefato oficial auditado mede 13.890.045 bytes; outra listagem pública da mesma release informa 13.890.046. Não certificar coincidência com o JAR **instalado** sem o checksum do arquivo físico. ABI publicada ✅, receiver/dispatch e runtime ⚠️ `NOT_PROVEN`, perks mutadoras ⛔ `SEM_HOOK_SEGURO`. Não altera o número 7/7 de magias catalogadas, hooks ou Stages.
+
+## Aeropic: contexto do receptor e consumidor de recast — 24/10/2026
+
+Nova auditoria [Wind #40153009971](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40153009971) (SHA-1 Wind's 1.0.5 congelado) encontrou os símbolos compilados `ModSpellRegistry.ACROBATICS_SPELL`, `Supplier.get()` e `AbstractSpell` próximos ao `invokevirtual getRecastCount` de `onEffectAdded`. Em `applyEffectTick`, encontrou referências a `MagicData.getPlayerRecasts` e `hasRecastForSpell` antes, e `RecastInstance.<init>`/`PlayerRecasts.addRecast` depois da chamada. Isso **não prova** origem do receptor ou consumo do retorno.
+
+O [gate de operandos](../../../../docs/qa/winds-105-aeropic-recast-operand-provenance.md) e a [ficha Aeropic](wind/aeropic.md) preservam `NOT_TRACED`/`SEM_HOOK_SEGURO`. Apenas a vizinhança de símbolos foi fixada por regressão no JAR exato, sem novos spells, hooks, mudanças de Stages ou aceitação física.

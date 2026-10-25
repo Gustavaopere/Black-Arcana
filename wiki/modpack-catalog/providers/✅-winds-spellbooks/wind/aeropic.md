@@ -135,3 +135,16 @@ Declarações compiladas **5/5** correspondem aos símbolos observados no Wind's
 **Limite de evidência:** o registro Modrinth contém **13.890.045 bytes**, mas outra listagem de download informa **13.890.046 bytes**. A modlist confirma nome/versão, **não** checksum do JAR efetivamente instalado; não equiparar as duas distribuições sem hash do arquivo físico.
 
 Mesmo com ABI compatível, não foi comprovado que o receiver de `AeropicEffect.invokevirtual AbstractSpell.getRecastCount` é `AeropicSpell`, nem que seu override, a fórmula `max(0, level-1)` ou o retorno influenciam recasts em execução. **⛔ `SEM_HOOK_SEGURO`**: não duplicar `PlayerRecasts`, não mutar o ciclo de recast e não promover Stage/QA físico.
+
+## Vizinhanças compiladas das duas chamadas de recast — 24/10/2026
+
+**✅ Referências JVM adjacentes confirmadas, ⚠️ fluxo de pilha/receiver ainda `NOT_TRACED`.** Fonte: [CI Wind Aeropic #40153009971](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40153009971), artefato `aeropic-operand-sites.json`, JAR Wind's 1.0.5 SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`.
+
+| Callsite `invokevirtual AbstractSpell.getRecastCount` | Referências binárias observadas na vizinhança | Interpretação limitada |
+|---|---|---|
+| `AeropicEffect.onEffectAdded` | `ModSpellRegistry.ACROBATICS_SPELL` (campo `Supplier`), `Supplier.get`, símbolo de classe `AbstractSpell` e `CompoundTag.putInt` | Há indícios estruturais para rastrear o **receiver** e a persistência; referência na janela não prova que o objeto do supplier seja efetivamente o receptor nem que o resultado entre no NBT. |
+| `AeropicEffect.applyEffectTick` | Antes: `MagicData.getPlayerRecasts`, `PlayerRecasts.hasRecastForSpell`, `AbstractSpell.getSpellId`; depois: `RecastInstance.<init>`, `PlayerRecasts.addRecast` | Há indícios estruturais para rastrear o **consumo do recast**; a co-presença não comprova transferência de valor, ordem causal, quantidade de recasts ou execução. |
+
+A auditoria registra até **24 instruções anteriores e 12 posteriores** por chamada (somente símbolos e contagens, não o bytecode). O `onEffectAdded` apresentou 24 antes/9 depois. **Nenhum contrato de mutação** decorre desse contexto: `receiver_concrete_type = NOT_TRACED`, `getRecastCount_return_consumer = NOT_TRACED`, `safe_mutating_hook = NOT_PROVEN`. O Iron's 3.16.3 foi auditado por ABI publicada no PR #891, não por identidade física do JAR local ou despacho dinâmico.
+
+**⛔ SEM_HOOK_SEGURO.** Próxima evidência: análise real de pilha JVM, incluindo branches, `checkcast`, argumentos e `Supplier.get`, sem criar ledger paralelo a `PlayerRecasts`.
