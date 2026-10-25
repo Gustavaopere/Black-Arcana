@@ -148,3 +148,16 @@ Mesmo com ABI compatível, não foi comprovado que o receiver de `AeropicEffect.
 A auditoria registra até **24 instruções anteriores e 12 posteriores** por chamada (somente símbolos e contagens, não o bytecode). O `onEffectAdded` apresentou 24 antes/9 depois. **Nenhum contrato de mutação** decorre desse contexto: `receiver_concrete_type = NOT_TRACED`, `getRecastCount_return_consumer = NOT_TRACED`, `safe_mutating_hook = NOT_PROVEN`. O Iron's 3.16.3 foi auditado por ABI publicada no PR #891, não por identidade física do JAR local ou despacho dinâmico.
 
 **⛔ SEM_HOOK_SEGURO.** Próxima evidência: análise real de pilha JVM, incluindo branches, `checkcast`, argumentos e `Supplier.get`, sem criar ledger paralelo a `PlayerRecasts`.
+
+## Receptor de `getRecastCount`: duas análises fail-closed — 24/10/2026
+
+**⚠️ Origem do receptor ainda `NOT_PROVEN` no JAR Wind's 1.0.5.** [Wind CI #40156532292](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40156532292), evidências `aeropic-direct-supplier-slice.json` e `aeropic-jvm-stack-slice.json`, SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`.
+
+| Método | Regra direta | Modelo de pilha restrito |
+|---|---|---|
+| `onEffectAdded` | Sequência contígua de cinco instruções ausente. | Não demonstrou que o receiver provenha do resultado convertido de `ACROBATICS_SPELL/Supplier.get`. |
+| `applyEffectTick` | Sequência contígua de cinco instruções ausente. | Controle de fluxo/retorno impede a prova em bloco único. |
+
+**Ausência de prova não equivale a ausência de execução.** ABI do host publicada e símbolos do Wind seguem verificados, mas receiver concreto, dispatch do override e consumo do retorno no `PlayerRecasts` permanecem `NOT_PROVEN`. Nova investigação precisa modelar CFG/stack com junções e confirmar a instância do Supplier. **⛔ SEM_HOOK_SEGURO**; não adicionar contador, alterar NBT nem duplicar o pipeline de recast.
+
+Gate: [auditoria do receptor](../../../../docs/qa/winds-105-aeropic-direct-supplier-slice-gate.md). Nenhum novo spell, valor ou estágio homologado.

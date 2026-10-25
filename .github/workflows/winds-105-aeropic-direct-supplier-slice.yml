@@ -1,0 +1,92 @@
+name: Wind 1.0.5 Aeropic conservative supplier receiver slice
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/winds-105-aeropic-direct-supplier-slice.yml'
+      - 'docs/qa/winds_105_aeropic_supplier_receiver_slice.py'
+      - 'docs/qa/winds_105_aeropic_supplier_receiver_slice_test.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_test.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_contract.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_contract_test.py'
+      - 'docs/qa/winds-105-aeropic-direct-supplier-slice-gate.md'
+      - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
+      - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/README.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/winds-105-aeropic-direct-supplier-slice.yml'
+      - 'docs/qa/winds_105_aeropic_supplier_receiver_slice.py'
+      - 'docs/qa/winds_105_aeropic_supplier_receiver_slice_test.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_test.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_contract.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_contract_test.py'
+      - 'docs/qa/winds-105-aeropic-direct-supplier-slice-gate.md'
+      - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
+      - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact_receiver_slice:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Prove fail-closed synthetic supplier receiver rules
+        run: python3 docs/qa/winds_105_aeropic_supplier_receiver_slice_test.py -v
+      - name: Synthetic conservative basic-block stack provenance tests
+        run: python3 docs/qa/winds_105_aeropic_stack_slice_test.py -v
+      - name: Synthetic pinned negative recast receiver proof contract tests
+        run: python3 docs/qa/winds_105_aeropic_stack_slice_contract_test.py -v
+      - name: Obtain and SHA-verify official Wind 1.0.5 binary
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/winds-105
+          JAR=build/winds-105/wind_spellbooks-1.0.5.jar
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://mediafilez.forgecdn.net/files/8485/822/wind_spellbooks-1.0.5.jar' \
+            --output "$JAR"
+          echo "8744886899bc245ae147a44baa2b183689cec7da  $JAR" | sha1sum --check
+      - name: Analyze only strict straight-line Supplier receiver path
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_aeropic_supplier_receiver_slice.py \
+            --jar build/winds-105/wind_spellbooks-1.0.5.jar \
+            --output build/winds-105/aeropic-direct-supplier-slice.json
+      - name: Interpret the bounded basic-block JVM receiver stack conservatively
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_aeropic_stack_slice.py \
+            --jar build/winds-105/wind_spellbooks-1.0.5.jar \
+            --output build/winds-105/aeropic-jvm-stack-slice.json
+      - name: Verify frozen exact-JAR negative receiver results against independent contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_aeropic_stack_slice_contract.py \
+            --stack-json build/winds-105/aeropic-jvm-stack-slice.json \
+            --direct-json build/winds-105/aeropic-direct-supplier-slice.json
+      - name: Upload only clean-room binary evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: wind-105-aeropic-direct-supplier-slice
+          path: |
+            build/winds-105/aeropic-direct-supplier-slice.json
+            build/winds-105/aeropic-jvm-stack-slice.json
+          retention-days: 14
+          if-no-files-found: ignore
