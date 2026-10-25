@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 23/85.**
-**Barra do recorte documental:** `█████░░░░░░░░░░░░░░░ 27.1%`
+**Homologadas para perks (somente fichas detectadas): 28/85.**
+**Barra do recorte documental:** `██████░░░░░░░░░░░░░░ 32.9%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -41,20 +41,20 @@
 | ⚠️ | Dispel | [effects/dispel.md](effects/dispel.md) |
 | ⚠️ | Evaporate | [effects/evaporate.md](effects/evaporate.md) |
 | ⚠️ | Exchange | [effects/exchange.md](effects/exchange.md) |
-| ⚠️ | Explosion | [effects/explosion.md](effects/explosion.md) |
+| ✅ | Explosion | [effects/explosion.md](effects/explosion.md) |
 | ⚠️ | Fangs | [effects/fangs.md](effects/fangs.md) |
 | ⚠️ | Fell | [effects/fell.md](effects/fell.md) |
 | ⚠️ | Firework | [effects/firework.md](effects/firework.md) |
 | ⚠️ | Flare | [effects/flare.md](effects/flare.md) |
-| ⚠️ | Freeze | [effects/freeze.md](effects/freeze.md) |
+| ✅ | Freeze | [effects/freeze.md](effects/freeze.md) |
 | ✅ | Glide | [effects/glide.md](effects/glide.md) |
 | ⚠️ | Gravity | [effects/gravity.md](effects/gravity.md) |
 | ⚠️ | Grow | [effects/grow.md](effects/grow.md) |
-| ⚠️ | Harm | [effects/harm.md](effects/harm.md) |
+| ✅ | Harm | [effects/harm.md](effects/harm.md) |
 | ⚠️ | Harvest | [effects/harvest.md](effects/harvest.md) |
 | ✅ | Heal | [effects/heal.md](effects/heal.md) |
 | ⚠️ | Hex | [effects/hex.md](effects/hex.md) |
-| ⚠️ | Ignite | [effects/ignite.md](effects/ignite.md) |
+| ✅ | Ignite | [effects/ignite.md](effects/ignite.md) |
 | ⚠️ | Infuse | [effects/infuse.md](effects/infuse.md) |
 | ⚠️ | Intangible | [effects/intangible.md](effects/intangible.md) |
 | ⚠️ | Interact | [effects/interact.md](effects/interact.md) |
@@ -63,7 +63,7 @@
 | ✅ | Knockback | [effects/knockback.md](effects/knockback.md) |
 | ⚠️ | Launch | [effects/launch.md](effects/launch.md) |
 | ⚠️ | Leap | [effects/leap.md](effects/leap.md) |
-| ⚠️ | Lightning | [effects/lightning.md](effects/lightning.md) |
+| ✅ | Lightning | [effects/lightning.md](effects/lightning.md) |
 | ⚠️ | Linger | [effects/linger.md](effects/linger.md) |
 | ⚠️ | Name | [effects/name.md](effects/name.md) |
 | ⚠️ | Orbit | [effects/orbit.md](effects/orbit.md) |
