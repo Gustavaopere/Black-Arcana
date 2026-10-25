@@ -90,11 +90,11 @@
 | ⚠️ | Wind Shear | [effects/wind-shear.md](effects/wind-shear.md) |
 | ⚠️ | Wither | [effects/wither.md](effects/wither.md) |
 | ⚠️ | Wololo | [effects/wololo.md](effects/wololo.md) |
-| ⚠️ | Pantomime | [forms/pantomime.md](forms/pantomime.md) |
-| ⚠️ | Projectile | [forms/projectile.md](forms/projectile.md) |
-| ⚠️ | Self | [forms/self.md](forms/self.md) |
-| ⚠️ | Touch | [forms/touch.md](forms/touch.md) |
-| ⚠️ | Underfoot | [forms/underfoot.md](forms/underfoot.md) |
+| ✅ | Pantomime | [forms/pantomime.md](forms/pantomime.md) |
+| ✅ | Projectile | [forms/projectile.md](forms/projectile.md) |
+| ✅ | Self | [forms/self.md](forms/self.md) |
+| ✅ | Touch | [forms/touch.md](forms/touch.md) |
+| ✅ | Underfoot | [forms/underfoot.md](forms/underfoot.md) |
 
 ## Subpastas
 
