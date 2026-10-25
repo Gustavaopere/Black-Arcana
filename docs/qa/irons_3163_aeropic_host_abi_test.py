@@ -88,8 +88,15 @@ class HostAbiTests(unittest.TestCase):
     def test_missing_method_rejected(self):
         s=signatures("player_recasts").replace("decrementRecastCount","anotherMethod")
         with self.assertRaises(host.EvidenceError):host.declarations(s,"player_recasts")
-    def test_ambiguous_overload_rejected(self):
+    def test_unrelated_overload_does_not_replace_exact_descriptor(self):
         s=signatures("abstract_spell").replace("}","  public int getRecastCount(int);\n    descriptor: (I)I\n}")
+        got=host.declarations(s,"abstract_spell")
+        self.assertEqual("(ILnet/minecraft/world/entity/LivingEntity;)I",
+                         got["getRecastCount"]["descriptor"])
+    def test_duplicate_exact_descriptor_rejected(self):
+        s=signatures("abstract_spell")
+        part="  public int getRecastCount(int, net.minecraft.world.entity.LivingEntity);\n    descriptor: (ILnet/minecraft/world/entity/LivingEntity;)I"
+        s=s.replace("}",part+"\n}")
         with self.assertRaises(host.EvidenceError):host.declarations(s,"abstract_spell")
 
 if __name__=="__main__":
