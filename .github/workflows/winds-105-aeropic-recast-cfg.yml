@@ -1,0 +1,66 @@
+name: Wind 1.0.5 Aeropic recast normal-CFG topology
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/winds-105-aeropic-recast-cfg.yml'
+      - 'docs/qa/winds_105_aeropic_recast_cfg.py'
+      - 'docs/qa/winds_105_aeropic_recast_cfg_test.py'
+      - 'docs/qa/winds_105_aeropic_recast_cfg_contract.py'
+      - 'docs/qa/winds_105_aeropic_recast_cfg_contract_test.py'
+      - 'docs/qa/winds-105-aeropic-recast-cfg-gate.md'
+      - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/winds-105-aeropic-recast-cfg.yml'
+      - 'docs/qa/winds_105_aeropic_recast_cfg.py'
+      - 'docs/qa/winds_105_aeropic_recast_cfg_test.py'
+      - 'docs/qa/winds_105_aeropic_recast_cfg_contract.py'
+      - 'docs/qa/winds_105_aeropic_recast_cfg_contract_test.py'
+      - 'docs/qa/winds-105-aeropic-recast-cfg-gate.md'
+      - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cfg_evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic normal CFG and false-positive regression cases
+        run: python3 docs/qa/winds_105_aeropic_recast_cfg_test.py -v
+      - name: Obtain original Wind 1.0.5 published binary
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/winds-105
+          JAR=build/winds-105/wind_spellbooks-1.0.5.jar
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://mediafilez.forgecdn.net/files/8485/822/wind_spellbooks-1.0.5.jar' \
+            --output "$JAR"
+          echo "8744886899bc245ae147a44baa2b183689cec7da  $JAR" | sha1sum --check
+      - name: Classify exact JAR normal control-flow topology
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_aeropic_recast_cfg.py \
+            --jar build/winds-105/wind_spellbooks-1.0.5.jar \
+            --output build/winds-105/aeropic-recast-cfg.json
+      - name: Upload only non-disassembly clean-room JSON evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: wind-105-aeropic-recast-cfg
+          path: build/winds-105/aeropic-recast-cfg.json
+          retention-days: 14
+          if-no-files-found: ignore
