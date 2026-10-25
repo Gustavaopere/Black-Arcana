@@ -79,19 +79,82 @@ class IndexTests(unittest.TestCase):
         (self.sub / "TECHNICAL-MATRIX.md").write_text("# Evidence\n", encoding="utf8")
         self.assertEqual([], c.check(self.root)["problems"])
 
+    def full_synthetic_certificate(self):
+        return {
+            "status": "COMPLETE_PERK_READY",
+            "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+            "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+            "version": "test-1.0",
+            "artifact_sha1": "a" * 40,
+            "mutating_hook": "NOT_VERIFIED",
+            "physical_qa": "NOT_TESTED",
+            "evidence": {
+                key: {
+                    "path": "wiki/modpack-catalog/providers/✅-example/spells/fire-bolt.md",
+                    "reason": "Synthetic reviewed static contract; no runtime claim"
+                } for key in c.REQUIRED_EVIDENCE
+            },
+        }
+
+    def install_certificate(self, cert):
+        self.ledger["objects"] = {"✅-example/spells/fire-bolt.md": cert}
+        self.save_manifest()
+
     def test_unproved_certificate_rejected(self):
         self.ledger["objects"] = {"✅-example/spells/fire-bolt.md": {"status": "COMPLETE_PERK_READY"}}
         self.save_manifest()
-        with self.assertRaisesRegex(c.CatalogIndexError, "missing required"):
+        with self.assertRaisesRegex(c.CatalogIndexError, "scope"):
             c.check(self.root)
 
     def test_verified_card_requires_snapshot_update(self):
-        self.ledger["objects"] = {"✅-example/spells/fire-bolt.md": {
-            "status": "COMPLETE_PERK_READY",
-            "evidence": {k: "reviewed evidence link" for k in c.REQUIRED_EVIDENCE},
-        }}
-        self.save_manifest()
+        self.install_certificate(self.full_synthetic_certificate())
         self.assertTrue(any("stale completion" in x for x in c.check(self.root)["problems"]))
+
+    def test_certificate_rejects_missing_local_evidence(self):
+        cert = self.full_synthetic_certificate()
+        cert["evidence"]["identity"]["path"] = (
+            "wiki/modpack-catalog/providers/✅-example/missing-file.md"
+        )
+        self.install_certificate(cert)
+        with self.assertRaisesRegex(c.CatalogIndexError, "missing referenced evidence"):
+            c.check(self.root)
+
+    def test_certificate_rejects_url_instead_of_repo_evidence(self):
+        cert = self.full_synthetic_certificate()
+        cert["evidence"]["identity"]["path"] = "https://example.org/fake.md"
+        self.install_certificate(cert)
+        with self.assertRaisesRegex(c.CatalogIndexError, "nonlocal or unsafe"):
+            c.check(self.root)
+
+    def test_certificate_rejects_path_traversal(self):
+        cert = self.full_synthetic_certificate()
+        cert["evidence"]["validation"]["path"] = (
+            "wiki/modpack-catalog/providers/../../../outside.md"
+        )
+        self.install_certificate(cert)
+        with self.assertRaisesRegex(c.CatalogIndexError, "nonlocal or unsafe"):
+            c.check(self.root)
+
+    def test_certificate_rejects_unpinned_artifact(self):
+        cert = self.full_synthetic_certificate()
+        cert["artifact_sha1"] = "NOT_VERIFIED"
+        self.install_certificate(cert)
+        with self.assertRaisesRegex(c.CatalogIndexError, "SHA-1"):
+            c.check(self.root)
+
+    def test_certificate_rejects_claim_of_untested_hook(self):
+        cert = self.full_synthetic_certificate()
+        cert["mutating_hook"] = "READY"
+        self.install_certificate(cert)
+        with self.assertRaisesRegex(c.CatalogIndexError, "mutating-hook"):
+            c.check(self.root)
+
+    def test_certificate_rejects_unqualified_grade(self):
+        cert = self.full_synthetic_certificate()
+        cert["evidence_grade"] = "GAMEPLAY_CERTIFIED_BY_SOURCE"
+        self.install_certificate(cert)
+        with self.assertRaisesRegex(c.CatalogIndexError, "evidence grade"):
+            c.check(self.root)
 
     def test_provider_closed_requires_evidence(self):
         self.ledger["providers"] = {"✅-example": {"universe_closed": True}}
