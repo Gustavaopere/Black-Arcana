@@ -119,7 +119,7 @@ class StaticContractTests(unittest.TestCase):
     def test_damage_world_dossier_keeps_dynamic_consumers_outside_simple_spell(self):
         page = (ARS / "EFFECT-STATIC-DAMAGE-WORLD-FIVE-5.13.1.md").read_text(
             encoding="utf-8")
-        for term in ("10/67", "28/2075", SOURCE, SHA1, "Poison em vez de dano",
+        for term in ("10/67", "28/2.075", SOURCE, SHA1, "Poison em vez de dano",
                      "ANExplosion", "LightningEntity", "ShapersFocus",
                      "NOT_VERIFIED", "NOT_TESTED"):
             self.assertIn(term, page)
