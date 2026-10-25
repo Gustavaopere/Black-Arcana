@@ -122,8 +122,15 @@ class StaticContractTests(unittest.TestCase):
                     self.assertIn("| ✅ | " + label + " |", page)
 
     def test_counter_without_provider_wide_promotion(self):
-        self.assertIn("Homologadas para perks (somente fichas detectadas): 35/67.",
-                      self.index)
+        effect_count = sum(
+            key.startswith("✅-ars-nouveau/glyphs/effects/")
+            for key in self.cert
+        )
+        self.assertGreaterEqual(effect_count, 35)
+        self.assertIn(
+            f"Homologadas para perks (somente fichas detectadas): {effect_count}/67.",
+            self.index,
+        )
         # Other Ars families can gain independent certifications without
         # changing the number of Effect cards reviewed by this test suite.
         self.assertIn(

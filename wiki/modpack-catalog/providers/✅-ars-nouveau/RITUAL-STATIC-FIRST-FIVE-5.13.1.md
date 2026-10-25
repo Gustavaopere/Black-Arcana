@@ -14,4 +14,6 @@ Versionamento: `ars_nouveau-1.21.1-5.13.1.jar` SHA-1 `02782d071ee5fab3b5c4b8ced6
 
 **Auditoria de custos:** os três rituais sem override de `getSourceCost()` herdam `AbstractRitual.getSourceCost()=0`. **Não equivale a ritual grátis**; setup, catalisadores, custos de itens, consumidores do brasier e condições de disponibilidade não são fechados por esses getters. `RitualFlight` usa `RangeEffectRitual/RangeRitual` e `setNeedsSource(true)` somente após refresh aceito. `RitualBreed` solicita Source após trabalho; não por entidade.
 
+**Gates formais:** `claim_scope=STATIC_TECHNICAL_CATALOG_ONLY`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`. Nenhum teste de integração executável ou QA físico foi efetuado; o estágio Black Arcana **06.05** continua condicionado à aceitação física e o Stage 09 não é promovido.
+
 **Causalidade para perks:** spans de tempo, AABB, Source, buffs, persistência, estado de ritual e pacotes são contratos diferentes. Não trocar seleção, duração ou world time via eventos de spells/glyphs do Ars sem demonstração de API real. QA físico, modpack, side e mods concorrentes seguem pendentes; estágios do Black Arcana permanecem independentes.

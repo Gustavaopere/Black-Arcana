@@ -81,16 +81,17 @@ class ArsRitualStaticTests(unittest.TestCase):
                     self.assertGreater(len(proof["reason"]), 24)
 
     def test_numerators_and_parent_statuses(self):
-        self.assertIn("Homologadas para perks (somente fichas detectadas): 5/24.",
-                      self.index)
-        self.assertIn("Homologadas para perks (somente fichas detectadas): 58/138.",
-                      self.ars)
-        self.assertIn("Fichas com contrato técnico estático certificado: 58/2075.",
-                      self.top)
-        self.assertIn("Mods com escopo integral certificado: 0/164.",
-                      self.top)
-        self.assertEqual(58, len(self.json["objects"]))
-        self.assertEqual({}, self.json["providers"])
+        # Check true independent counters against manifest; adding Effects in
+        # another PR must never invalidate already proven Rituals.
+        objs = self.json["objects"]
+        ritual_count = sum(key.startswith("✅-ars-nouveau/rituals/") for key in objs)
+        ars_count = sum(key.startswith("✅-ars-nouveau/") for key in objs)
+        self.assertGreaterEqual(ritual_count, 5)
+        self.assertGreaterEqual(ars_count, 58)
+        self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ritual_count}/24.", self.index)
+        self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ars_count}/138.", self.ars)
+        self.assertIn(f"Fichas com contrato técnico estático certificado: {len(objs)}/2075.", self.top)
+        self.assertIn(f"Mods com escopo integral certificado: {len(self.json['providers'])}/164.", self.top)
         for slug in CASES:
             label = slug.capitalize()
             for page in (self.index, self.ars):
