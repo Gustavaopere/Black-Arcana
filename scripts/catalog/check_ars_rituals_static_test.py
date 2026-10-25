@@ -29,6 +29,16 @@ CASES = {
     "scrying": ("ritual_scrying", "RitualScrying",
                 ("TagScryer", "SingleBlockScryer", "an_scryer",
                  "6000", "18000", "setFinished()")),
+    "gravity": ("ritual_gravity", "RitualGravity",
+                ("GRAVITY_EFFECT", "RangeEffectRitual", "renewThreshold", "1200")),
+    "restoration": ("ritual_restoration", "RitualHealing",
+                    ("ZombieVillager.startConverting", "ANFakePlayer", "playerAttack", "10.0f")),
+    "warping": ("ritual_warping", "RitualWarp",
+                 ("canTeleportWithDim", "teleportTo", "WarpScroll", "progress>=3")),
+    "containment": ("ritual_containment", "RitualMobCapture",
+                    ("JAR_WHITELIST", "JAR_BLACKLIST", "MobJarTile", "UNLOADED_TO_CHUNK")),
+    "harvest": ("ritual_harvest", "RitualHarvest",
+                 ("InventoryManager.insertStack", "MAGE_BLOOM_CROP", "HARVEST_STEMS", "200")),
 }
 
 
@@ -43,9 +53,9 @@ class ArsRitualStaticTests(unittest.TestCase):
         cls.dossier = (PROVIDER / "RITUAL-STATIC-FIRST-FIVE-5.13.1.md").read_text(
             encoding="utf-8")
 
-    def test_five_unique_binary_pinned_ritual_identities(self):
-        self.assertEqual(5, len(CASES))
-        self.assertEqual(5, len({item[0] for item in CASES.values()}))
+    def test_ten_unique_binary_pinned_ritual_identities(self):
+        self.assertEqual(10, len(CASES))
+        self.assertEqual(10, len({item[0] for item in CASES.values()}))
         for slug, (ritual_id, classname, facts) in CASES.items():
             with self.subTest(slug=slug):
                 body = (PROVIDER / "rituals" / (slug + ".md")).read_text(
@@ -86,16 +96,27 @@ class ArsRitualStaticTests(unittest.TestCase):
         objs = self.json["objects"]
         ritual_count = sum(key.startswith("✅-ars-nouveau/rituals/") for key in objs)
         ars_count = sum(key.startswith("✅-ars-nouveau/") for key in objs)
-        self.assertGreaterEqual(ritual_count, 5)
-        self.assertGreaterEqual(ars_count, 58)
+        self.assertGreaterEqual(ritual_count, 10)
+        self.assertGreaterEqual(ars_count, 63)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ritual_count}/24.", self.index)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ars_count}/138.", self.ars)
         self.assertIn(f"Fichas com contrato técnico estático certificado: {len(objs)}/2075.", self.top)
         self.assertIn(f"Mods com escopo integral certificado: {len(self.json['providers'])}/164.", self.top)
         for slug in CASES:
             label = slug.capitalize()
-            for page in (self.index, self.ars):
-                self.assertIn("| ✅ | " + label + " |", page)
+            # Same display name may exist in Glyphs/Effects and in Rituals.
+            row_index = next(
+                line for line in self.index.splitlines()
+                if line.startswith("| ✅ | " + label + " | ")
+                and line.endswith("](" + slug + ".md) |")
+            )
+            row_root = next(
+                line for line in self.ars.splitlines()
+                if line.startswith("| ✅ | " + label + " | ")
+                and line.endswith("](rituals/" + slug + ".md) |")
+            )
+            self.assertIn(slug + ".md", row_index)
+            self.assertIn("rituals/" + slug + ".md", row_root)
 
     def test_local_ritual_execution_is_not_spell_cooldown_or_mana(self):
         for slug in CASES:
@@ -107,7 +128,7 @@ class ArsRitualStaticTests(unittest.TestCase):
             self.assertIn("não", body.lower())
 
     def test_inherited_source_zero_does_not_mean_free_activation(self):
-        for slug in ("sunrise", "moonfall", "scrying"):
+        for slug in ("sunrise", "moonfall", "scrying", "warping"):
             card = (PROVIDER / "rituals" / (slug + ".md")).read_text(
                 encoding="utf-8")
             self.assertIn("AbstractRitual.getSourceCost()", card)
@@ -135,6 +156,46 @@ class ArsRitualStaticTests(unittest.TestCase):
                       "Source", "ClientboundSetTimePacket", "6000",
                       "18000", "0/164", "06.05"):
             self.assertIn(token, self.dossier)
+
+
+    def test_second_five_rituals_have_distinct_spatial_and_settlement_gates(self):
+        page = (PROVIDER / "RITUAL-STATIC-SECOND-FIVE-5.13.1.md").read_text(
+            encoding="utf-8")
+        for term in ("10/24", "63/2075", SOURCE, SHA1, "RitualGravity",
+                     "Gravity", "Restoration", "Warping", "Containment",
+                     "Harvest", "WorldEffectPolicy", "NOT_VERIFIED", "NOT_TESTED",
+                     "Stage 06.05"):
+            self.assertIn(term, page)
+
+    def test_source_world_capture_and_storage_hazards_are_fail_closed(self):
+        required = {
+            "gravity": ("renewInterval", "renewThreshold", "não inferir",
+                        "RangeEffectRitual", "200 Source"),
+            "restoration": ("didWorkOnce", "ANFakePlayer", "10.0f",
+                            "setNeedsSource(true)"),
+            "warping": ("canTeleportWithDim", "teleportTo(double,double,double)",
+                        "getConsumedItems().get(0)", "BlockPos"),
+            "containment": ("343", "AABB", "JAR_WHITELIST",
+                            "UNLOADED_TO_CHUNK", "setNeedsSource(true)"),
+            "harvest": ("243", "Y+2", "MAGE_BLOOM_CROP",
+                        "InventoryManager.insertStack", "destroyRespectsClaim"),
+        }
+        for slug, facts in required.items():
+            with self.subTest(ritual=slug):
+                card = (PROVIDER / "rituals" / (slug + ".md")).read_text(
+                    encoding="utf-8")
+                for token in facts:
+                    self.assertIn(token, card)
+                self.assertIn("mutating_hook=NOT_VERIFIED", card)
+                self.assertIn("physical_qa=NOT_TESTED", card)
+
+    def test_same_named_effect_is_not_certified_by_ritual(self):
+        self.assertIn(
+            "| ⚠️ | Harvest | [glyphs/effects/harvest.md](glyphs/effects/harvest.md) |",
+            self.ars)
+        self.assertIn(
+            "| ✅ | Harvest | [rituals/harvest.md](rituals/harvest.md) |",
+            self.ars)
 
 
 if __name__ == "__main__":
