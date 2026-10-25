@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 63/138.**
-**Barra do recorte documental:** `█████████░░░░░░░░░░░ 45.7%`
+**Homologadas para perks (somente fichas detectadas): 65/138.**
+**Barra do recorte documental:** `█████████░░░░░░░░░░░ 47.1%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -121,8 +121,8 @@
 | ⚠️ | Warding | [perks/warding.md](perks/warding.md) |
 | ⚠️ | Whirlisprig | [perks/whirlisprig.md](perks/whirlisprig.md) |
 | ⚠️ | Wixie | [perks/wixie.md](perks/wixie.md) |
-| ⚠️ | Awakening | [rituals/awakening.md](rituals/awakening.md) |
-| ⚠️ | Binding | [rituals/binding.md](rituals/binding.md) |
+| ✅ | Awakening | [rituals/awakening.md](rituals/awakening.md) |
+| ✅ | Binding | [rituals/binding.md](rituals/binding.md) |
 | ⚠️ | Burrowing | [rituals/burrowing.md](rituals/burrowing.md) |
 | ⚠️ | Challenge | [rituals/challenge.md](rituals/challenge.md) |
 | ⚠️ | Cloudshaping | [rituals/cloudshaping.md](rituals/cloudshaping.md) |
