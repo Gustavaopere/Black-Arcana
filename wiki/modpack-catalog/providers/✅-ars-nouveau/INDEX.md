@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 53/138.**
-**Barra do recorte documental:** `███████░░░░░░░░░░░░░ 38.4%`
+**Homologadas para perks (somente fichas detectadas): 58/138.**
+**Barra do recorte documental:** `████████░░░░░░░░░░░░ 42.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -130,20 +130,20 @@
 | ⚠️ | Conjure Island Plains | [rituals/conjure-island-plains.md](rituals/conjure-island-plains.md) |
 | ⚠️ | Containment | [rituals/containment.md](rituals/containment.md) |
 | ⚠️ | Disintegration | [rituals/disintegration.md](rituals/disintegration.md) |
-| ⚠️ | Fertility | [rituals/fertility.md](rituals/fertility.md) |
-| ⚠️ | Flight | [rituals/flight.md](rituals/flight.md) |
+| ✅ | Fertility | [rituals/fertility.md](rituals/fertility.md) |
+| ✅ | Flight | [rituals/flight.md](rituals/flight.md) |
 | ⚠️ | Flowering | [rituals/flowering.md](rituals/flowering.md) |
 | ⚠️ | Forestation | [rituals/forestation.md](rituals/forestation.md) |
 | ⚠️ | Gravity | [rituals/gravity.md](rituals/gravity.md) |
 | ⚠️ | Harvest | [rituals/harvest.md](rituals/harvest.md) |
-| ⚠️ | Moonfall | [rituals/moonfall.md](rituals/moonfall.md) |
+| ✅ | Moonfall | [rituals/moonfall.md](rituals/moonfall.md) |
 | ⚠️ | Overgrowth | [rituals/overgrowth.md](rituals/overgrowth.md) |
 | ⚠️ | Restoration | [rituals/restoration.md](rituals/restoration.md) |
 | ⚠️ | Sanctuary | [rituals/sanctuary.md](rituals/sanctuary.md) |
-| ⚠️ | Scrying | [rituals/scrying.md](rituals/scrying.md) |
+| ✅ | Scrying | [rituals/scrying.md](rituals/scrying.md) |
 | ⚠️ | Summon Animals | [rituals/summon-animals.md](rituals/summon-animals.md) |
 | ⚠️ | Summon Wilden | [rituals/summon-wilden.md](rituals/summon-wilden.md) |
-| ⚠️ | Sunrise | [rituals/sunrise.md](rituals/sunrise.md) |
+| ✅ | Sunrise | [rituals/sunrise.md](rituals/sunrise.md) |
 | ⚠️ | Warping | [rituals/warping.md](rituals/warping.md) |
 | ⚠️ | Perk Slot Providers | [systems/perk-slot-providers.md](systems/perk-slot-providers.md) |
 | ⚠️ | Player Mana | [systems/player-mana.md](systems/player-mana.md) |
