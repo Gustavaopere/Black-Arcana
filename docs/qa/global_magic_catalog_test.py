@@ -24,6 +24,12 @@ LINK_PATTERN = re.compile(
 )
 
 
+def catalog_card_markdowns(folder: Path, recursive: bool = False):
+    """Exclude navigation INDEX.md, never alter counts of actual object cards."""
+    pages = folder.rglob("*.md") if recursive else folder.glob("*.md")
+    return (page for page in pages if page.name != "INDEX.md")
+
+
 class GlobalMagicCatalogTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -137,7 +143,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertEqual(14, len(rows))
         self.assertEqual([str(i) for i in range(1, 15)], [row[0] for row in rows])
         self.assertEqual(14, len({row[3] for row in rows}))
-        all_pages = sorted((provider / "spells").glob("*.md"))
+        all_pages = sorted(catalog_card_markdowns((provider / "spells")))
         self.assertEqual(14, len(all_pages), "one page per exact provider spell")
 
         index = (provider / "SPELL-CARDS-1.0.3.md").read_text(encoding="utf-8")
@@ -259,7 +265,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         groups = {"Noble": 5, "Zealot": 4, "Ectotherm": 3,
                   "Bloodknight": 5, "Gravebound": 12}
         index = (provider / "ACTION-CARDS-3.0.9.md").read_text(encoding="utf-8")
-        pages = sorted((provider / "actions").glob("*.md"))
+        pages = sorted(catalog_card_markdowns((provider / "actions")))
         self.assertEqual(29, len(pages))
         checked = {key: 0 for key in groups}
         counted = 0
@@ -382,7 +388,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         for name, count in expected_crafts.items():
             self.assertEqual(count, sum(1 for r in records if r[3] == name))
         cards_root = provider / "rituals" / "cards"
-        pages = sorted(cards_root.rglob("*.md"))
+        pages = sorted(catalog_card_markdowns(cards_root, recursive=True))
         self.assertEqual(238, len(pages))
         index = (provider / "RITUAL-CARDS-3.1.4.md").read_text(
             encoding="utf-8"
@@ -433,7 +439,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         holders = re.findall(r"`([A-Z_]+_FOCUS)`", source)
         self.assertEqual(28, len(holders))
         self.assertEqual(28, len(set(holders)))
-        card_files = sorted((provider / "focuses").glob("*.md"))
+        card_files = sorted(catalog_card_markdowns((provider / "focuses")))
         self.assertEqual(28, len(card_files))
         index = (provider / "FOCUS-CARDS-1.21.1-1.8.2.md").read_text(
             encoding="utf-8"
@@ -509,7 +515,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         index = (provider / "RITUAL-CARDS-1.21.1-1.8.2.md").read_text(
             encoding="utf-8"
         )
-        pages = sorted((provider / "rituals").glob("*.md"))
+        pages = sorted(catalog_card_markdowns((provider / "rituals")))
         self.assertEqual(24, len(pages))
         for i, (number, path, typ, result, outcome, _) in enumerate(non, 1):
             slug = path.removeprefix("data/goety_cataclysm/recipe/")
@@ -654,7 +660,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         holders = re.findall(r"^- `([A-Z_]+_FOCUS)`$", section, re.MULTILINE)
         self.assertEqual(["FIERY_FOCUS", "TARNISHED_FOCUS"], holders)
         index = (provider / "FOCUS-CARDS-3.1.md").read_text(encoding="utf-8")
-        pages = sorted((provider / "focuses").glob("*.md"))
+        pages = sorted(catalog_card_markdowns((provider / "focuses")))
         self.assertEqual(2, len(pages))
         for ordinal, field in enumerate(holders, 1):
             filename = field.lower().replace("_", "-") + ".md"
@@ -733,7 +739,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         index = (provider / "RITUAL-CARDS-3.1.md").read_text(
             encoding="utf-8"
         )
-        pages = sorted((provider / "rituals").glob("*.md"))
+        pages = sorted(catalog_card_markdowns((provider / "rituals")))
         self.assertEqual(12, len(pages))
         for ordinal, (_, path, typ, result_ids, dest, _) in enumerate(exact, 1):
             slug = path.split("/")[-1][:-5]
@@ -790,7 +796,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         index = (provider / "GLYPH-CARDS-2.0.2.md").read_text(
             encoding="utf-8"
         )
-        pages = sorted((provider / "glyphs").glob("*.md"))
+        pages = sorted(catalog_card_markdowns((provider / "glyphs")))
         self.assertEqual(18, len(pages))
         for ordinal, (name, evidence, role, bound) in enumerate(capabilities, 1):
             slug = re.sub(r"^-|-$", "", re.sub(r"[^a-z0-9]+", "-", name.lower()))
@@ -849,7 +855,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             self.assertIn(cls, text)
             self.assertIn("COUNTED_EXACT", text)
             self.assertIn("NÃO VERIFICADO", text)
-        self.assertEqual(18, len(list((provider / "glyphs").glob("*.md"))))
+        self.assertEqual(18, len(list(catalog_card_markdowns((provider / "glyphs")))))
         matrix = (ROOT / "wiki/modpack-catalog/meta" /
                   "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
         arszero = next(x for x in matrix.splitlines() if x.startswith("| [Ars Zero]"))
@@ -948,7 +954,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         for card in (folder / "ice", folder / "fire", folder / "blood",
                      folder / "holy", folder / "ender", folder / "evocation",
                      folder / "fundamentalism"):
-            valid = list(card.glob("*.md"))
+            valid = list(catalog_card_markdowns(card))
             for path in valid:
                 if path.name == "README.md":
                     continue
@@ -990,13 +996,13 @@ class GlobalMagicCatalogTest(unittest.TestCase):
                       "17/39 exact / 22/39 pending",
                       "1857 global / 1855 escopo"):
             self.assertIn(token, note)
-        for card in sorted((folder / "ender").glob("*.md")):
+        for card in sorted(catalog_card_markdowns((folder / "ender"))):
             if card.name == "README.md":
                 continue
             s = card.read_text(encoding="utf-8")
             self.assertIn("COUNTED_EXACT", s)
             self.assertIn(dossier_name, s)
-        self.assertEqual(11, len(list((folder / "ender").glob("*.md"))) - 1)
+        self.assertEqual(11, len(list(catalog_card_markdowns((folder / "ender")))) - 1)
         matrix = (ROOT / "wiki/modpack-catalog/meta" /
                   "REVALIDACAO-BINARIA-39-PROVIDERS-2026-10-08.md").read_text(encoding="utf-8")
         row = next(x for x in matrix.splitlines() if x.startswith("| [Fire's Ender Expansion]"))
@@ -1130,7 +1136,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertEqual(12, len(registered))
         self.assertEqual(39, len(names))
         self.assertEqual(39, len(set(names)))
-        glyph_pages = sorted((provider / "glyphs").glob("*.md"))
+        glyph_pages = sorted(catalog_card_markdowns((provider / "glyphs")))
         self.assertEqual(39, len(glyph_pages))
         for ordinal, name in enumerate(names, 1):
             slug = re.sub(r"(^-|-$)", "", re.sub(r"[^a-z0-9]+", "-", name.lower()))
@@ -1157,7 +1163,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         )
         self.assertEqual(8, len(ritual_ids))
         self.assertEqual(8, len(set(ritual_ids)))
-        ritual_pages = sorted((provider / "rituals" / "cards").glob("*.md"))
+        ritual_pages = sorted(catalog_card_markdowns((provider / "rituals" / "cards")))
         self.assertEqual(8, len(ritual_pages))
         for ordinal, ident in enumerate(ritual_ids, 1):
             slug = ident.split(":")[1]
@@ -1183,7 +1189,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         registry = (provider / "REGISTRIES.md").read_text(encoding="utf-8")
         readme = (provider / "README.md").read_text(encoding="utf-8")
         index = (provider / "GLYPH-CARDS-5.0.4b.md").read_text(encoding="utf-8")
-        pages = sorted((provider / "glyphs").glob("*.md"))
+        pages = sorted(catalog_card_markdowns((provider / "glyphs")))
         self.assertEqual(1, len(pages))
         card = (provider / "glyphs" / "soul-shatter.md").read_text(encoding="utf-8")
         self.assertIn("`ars_hex:glyph_soul_shatter`", source)
@@ -1236,7 +1242,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
             ("Habilidade", "abilities", abilities, 39),
             ("Sinergia", "synergies", synergies, 2),
         ):
-            pages = sorted((provider / kind).rglob("*.md"))
+            pages = sorted(catalog_card_markdowns((provider / kind), recursive=True))
             self.assertEqual(expected, len(pages))
             for num, (owner, ident) in enumerate([(o, i) for _, o, i in rows], 1):
                 path = provider / kind / owner / (ident + ".md")
@@ -1279,8 +1285,8 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         self.assertEqual(29, len({x[0] for x in rituals + infusions}))
         ritual_index = (provider / "NATURES-RITUAL-CARDS-1.3.7.md").read_text(encoding="utf-8")
         infusion_index = (provider / "CELESTIAL-INFUSION-CARDS-1.3.7.md").read_text(encoding="utf-8")
-        self.assertEqual(23, len(list((provider / "rituals" / "cards").glob("*.md"))))
-        self.assertEqual(6, len(list((provider / "infusions" / "cards").glob("*.md"))))
+        self.assertEqual(23, len(list(catalog_card_markdowns((provider / "rituals" / "cards")))))
+        self.assertEqual(6, len(list(catalog_card_markdowns((provider / "infusions" / "cards")))))
         for number, (raw, center, offerings, result, timing, soul) in enumerate(rituals, 1):
             recipe_id = raw.strip("`")
             filename = recipe_id.split(":")[1] + ".md"
@@ -1346,7 +1352,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         index = (provider / "INFUSION-RITUAL-CARDS-21.0.34.md").read_text(
             encoding="utf-8"
         )
-        cards = sorted((provider / "rituals" / "cards").glob("*.md"))
+        cards = sorted(catalog_card_markdowns((provider / "rituals" / "cards")))
         self.assertEqual(48, len(cards), "must have one card per exact recipe")
         self.assertNotIn("betterend:eternal_portal", [r[1] for r in rows])
         for number, rid, output in rows:
@@ -1398,7 +1404,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         index = (provider / "ABILITY-CARDS-1.7.7-REL0128.md").read_text(
             encoding="utf-8"
         )
-        pages = sorted((provider / "abilities").rglob("*.md"))
+        pages = sorted(catalog_card_markdowns((provider / "abilities"), recursive=True))
         self.assertEqual(61, len(pages), "one card per owner+ability")
         for ordinal, (owner, ability, route) in enumerate(pairs, 1):
             card = provider / "abilities" / owner / (ability + ".md")
@@ -1455,7 +1461,7 @@ class GlobalMagicCatalogTest(unittest.TestCase):
         index = (provider / "ABILITY-CARDS-1.0.8.md").read_text(
             encoding="utf-8"
         )
-        pages = sorted((provider / "abilities").rglob("*.md"))
+        pages = sorted(catalog_card_markdowns((provider / "abilities"), recursive=True))
         self.assertEqual(52, len(pages), "one page per owner+root")
         for ordinal, owner, ability, klass in records:
             slug = owner.split(":", 1)[1]

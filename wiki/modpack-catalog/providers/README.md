@@ -1,5 +1,7 @@
 # Provider Catalog — organização canônica
 
+**Painel novo de progresso técnico para perks:** [Índice geral 100% por provider](INDEX.md). Cada mod e cada subpasta contém seu próprio `INDEX.md` com fichas individuais identificadas, estado de comprovação e barra do recorte. Os prefixos `✅-` históricos não significam que todos os parâmetros de perks estejam homologados.
+
 Esta pasta é o inventário integral das capacidades mágicas do modpack e é a **única árvore canônica de providers**:
 
 `wiki/modpack-catalog/providers/`
