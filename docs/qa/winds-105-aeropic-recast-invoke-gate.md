@@ -1,6 +1,6 @@
 # Wind's Spellbooks 1.0.5 — opcode e owner de `AeropicEffect.getRecastCount`
 
-**Data:** 24/10/2026 · **Estado:** 🟡 JAR exato aguardando prova CI nesta branch. Sem hook homologado.
+**Data:** 24/10/2026 · **Estado:** ✅ inventário de opcodes no JAR exato aprovado; ⚠️ receptor, despacho e runtime continuam não verificados.
 
 ## Fonte e contrato
 
@@ -23,3 +23,16 @@ Critérios de `FAIL_CLOSED`: JAR inválido, método ausente ou sobrecarregado, i
 - CI específico e Black Arcana CI (`verify` + `stage05_qa_companion_smoke`) no HEAD final e comparação SHA/diff com `main` imediatamente antes de merge.
 - Runtime do Black Arcana preservado; Wind's/Iron's mantêm casting, efeitos e recasts; RPG Skill Tree fornece progressão por contratos existentes, não autoridade mágica. **⛔ SEM_HOOK_SEGURO** para perks de recast.
 - Stages preservados: 06.05 🟡, 09 físico pendente. Catálogo Wind's 7/7 spells, 9/9 getters selecionados, 64 classes compiladas; campanha binária 38/39; global mínimo ≥1.856, percentual indeterminado.
+
+## Resultado confirmado no JAR físico — 24/10/2026
+
+Fonte: [Wind CI #40144903731](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40144903731) `SUCCESS`, `aeropic-recast-invokes.json` baixado e inspecionado, SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`. O recorte encontrou **duas instruções `invokevirtual` com owner constante `AbstractSpell` e descritor `(ILnet/minecraft/world/entity/LivingEntity;)I`**, ambas dentro de `AeropicEffect`.
+
+| Chamador compilado | Retorno declarado | Opcode/owner | Chamadas relacionadas co-presentes | Certeza |
+|---|---|---|---|---|
+| `applyEffectTick(LivingEntity,int)` | `boolean` | `invokevirtual AbstractSpell.getRecastCount` | `PlayerRecasts.addRecast`, `hasRecastForSpell`, `RecastInstance.<init>` | Arestas de invocação e co-presença do método comprovadas, **não** fluxo de valores |
+| `onEffectAdded(LivingEntity,int)` | `void` | `invokevirtual AbstractSpell.getRecastCount` | Nenhuma referência `PlayerRecasts`/`RecastInstance` dentro desse recorte restrito | Owner/opcode exatos, sem prova de receptor/resultado |
+
+**Distinção de rigor:** `invokevirtual` é opcode de despacho dinâmico em potencial, mas a instrução não determina a classe concreta do receiver ou qual override é executado. A compatibilidade binária já comprovada de `AeropicSpell.getRecastCount` com a assinatura de `AbstractSpell` não prova que o objeto empilhado é um `AeropicSpell`. O retorno de `getRecastCount` não foi rastreado até um argumento de `PlayerRecasts` ou qualquer setter. Não qualificar recast efetivo, dano, cooldown ou perk pelo opcode.
+
+`docs/qa/winds_105_aeropic_recast_contract.py` congela 2/2 chamadas, ABI, métodos, opcode `invokevirtual`, símbolos relacionados, SHA do JAR e estado `NOT_PROVEN` para dispatch, receiver, consumer e mutações. **Dez testes de mutação** rejeitam owner/opcode/descriptor errados e promoções falsas. O host Iron's 3.16.3 não foi binariamente auditado nesta entrega.
