@@ -1,0 +1,27 @@
+# Ars Nouveau 5.13.1 — quinto lote Rituals: feature placement, growth e disintegration
+
+**Quatro contratos estáticos de ritual:** Flowering, Forestation, Overgrowth e Disintegration. Escopo: fichas individuais, seven-field ledger, índices e regressão de salvaguardas. Não criar rituais novos nem instalar adapters.
+
+**Proveniência:** upstream `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`; artefato publisher `ars_nouveau-1.21.1-5.13.1.jar`, SHA-1 `02782d071ee5fab3b5c4b8ced67b7e1748277dfd`. Manifesto [85 glyph IDs e 24 ritual IDs](EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md) comprova **identidade classe↔ID**; sem verificação de método binário nem QA modpack. `STATIC_TECHNICAL_CATALOG_ONLY`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+
+| Ficha | Classes upstream e comportamento executável | Perigos que bloqueiam perks mutadoras |
+|---|---|---|
+| [Flowering](rituals/flowering.md) | `FloweringRitual` + `FeaturePlacementRitual`, `PlaceBlockFeature`, `BonemealFeature`: 16 flores comuns vs sand-tag cactus/dead bush; raio base `checkRadius=7` e +gem count | `PlaceBlockFeature` retorna true após tentativa de `BlockItem.place` sem inspecionar retorno; alteração de bloco não é necessariamente comprovada. Scheduler do pai tenta várias posições no mesmo tick até um retorno true. |
+| [Forestation](rituals/forestation.md) | `ForestationRitual` → árvores Oak/Birch; com Brown Mushroom Taiga/Podzol, Glow Berries Jungle/Cocoa; features e offsets diferentes | `RandomTreeFeature` recebe `chance`, mas seu `onPlace` **não lê o campo**. Não vender modificador percentual como taxa real de árvores. `BigTreeFeature` usa chance, mas sucesso pode significar somente mudas; `ConvertBlockFeature` e `CocoaFeature` possuem gates de world safety diferentes. |
+| [Overgrowth](rituals/overgrowth.md) | `RitualOvergrowth`: `gameTime%200==0`, cultivo em cubo 11×3×11 com chance 1/25, ou Bone Block → `AgeableMob.ageUp(500,true)` na AABB inflate 5; Source getter500 | `didWorkOnce` condiciona `setNeedsSource(true)` uma vez por ciclo, não por planta ou criatura; posições deslocadas podem gerar tentativas repetidas, ausência de claim preflight direto no ritual. |
+| [Disintegration](rituals/disintegration.md) | `RitualDisintegration`: `gameTime%60==0`, AABB inflate5, MONSTER ou whitelist, blacklist e players excluídos; `remove(DISCARDED)`; conversão de experiência em gemas; Source getter300 | Remoção não é kill/dano. Gemas só se `shouldDropExperience` e XP positiva; `didWorkOnce` só então marca `setNeedsSource(true)`; descrição de cobrança por monstro diverge do método. Agrupamento XP `12` e arredondamento em `3` pode afastar contagem de gemas de conversão exata. |
+
+## Superfícies comuns de implementação
+
+- [`FeaturePlacementRitual.java`](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/api/ritual/FeaturePlacementRitual.java): no servidor, o `while(true)` avança posições e features até sucesso ou conclusão; após sucesso retorna sem incrementar `positionIndex`, mas `featureMap` impede proximidade do alvo registrado para o mesmo feature name. O custo por tick não tem orçamento rígido independente de `checkRadius`. Subpastas do ritual contêm `IPlaceableFeature` e consumidores de `BlockItem.place`, bonemeal, setBlock, setBlockAndUpdate e sapling advance: **não há hook universal de world mutation demonstrado**.
+- `FeaturePlacementRitual.write` persiste `featureIndex`, `positionIndex` e `checkRadius`. `read` chama `setup`, que reconstrói featureMap e embaralha posições. **Não** salva mapas de espaçamento, targetPositions nem RNG. Não inferir reprodução das posições após save/restart; item inputs continuam no contexto herdado.
+- `AbstractRitual.getSourceCost()=0` herdado em Flowering e Forestation: **não equivale a ativação grátis**; ingredientes e startup do brazier permanecem Ars. Overgrowth/Disintegration declaram 500/300 Source e pedem settlement por `setNeedsSource` condicionado, não por cada bloco/mob.
+- `RitualDisintegration` usa `Entity.RemovalReason.DISCARDED`: eventos de morte, dano e combate não devem ser inventados para RPG Skill Tree/Arcane Danger. Em Overgrowth os retornos do vanilla bonemeal e `ageUp` não são Mastery por tick.
+
+## Authority, teste e status
+
+Ars Nouveau retém registry, resolver, Source, ritual, manipulação de mundo, geração de gemas e lifecycle. Black Arcana permanece autoridade exclusivamente de seus próprios casts, rituals, hazards, world safety e persistência; `WorldEffectPolicy` **não é interceptação automática** dos caminhos Ars. RPG Skill Tree é provider/sibling de progressão/atributos/Mastery/perks/gates somente mediante contrato de integração comprovado.
+
+**PENDENTE de validação física:** origem e valor de XP das gemas; callback efetivo de `BlockItem.place`; proteção de claims e loot; `RandomTreeFeature` chance não consumida vs descrições; NBT/posição após restart; modded trees/bonemeal; blacklist/whitelist; custo real de Source; side e multiplayer; desempenho com muitas Source Gems. `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. `Stage 06.05` e `Stage 09` não promovidos. Os GameTests do próprio Black Arcana não validam os métodos Ars 5.13.1 em execução real.
+
+**Contadores previstos após CI e merge:** Rituals **20/24**, Ars Nouveau **73/138**, global **73/2075**, providers com escopo fechado **0/164**. Estes são contadores de *fichas candidatas já identificadas* e não do universo completo de integrações do modpack.
