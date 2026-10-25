@@ -45,6 +45,18 @@ CASES = {
     "awakening": ("ritual_awakening", "RitualAwakening",
                   ("BOOKWYRM_CHARM", "WritableBookItem", "withinManhattan",
                    "DFSBlockstates", "BUDDING_AMETHYST")),
+    "burrowing": ("ritual_burrowing", "RitualDig",
+                  ("EntityRitualProjectile", "destroyRespectsClaim",
+                   "playerDestroy", "getContext().progress", "Source")),
+    "cloudshaping": ("ritual_cloudshaping", "RitualCloudshaper",
+                     ("setWeatherParameters", "RAIN_DELAY", "RAIN_DURATION",
+                      "THUNDER_DURATION", "server.overworld()")),
+    "challenge": ("ritual_challenge", "RitualPillagerRaid",
+                  ("createOrExtendRaid", "Tags.Items.GEMS_EMERALD",
+                   "didConsumeItem(Items.EMERALD)", "raid.numGroups=7")),
+    "sanctuary": ("ritual_sanctuary", "DenySpawnRitual",
+                  ("FinalizeSpawnEvent", "VillageSiegeEvent",
+                   "RitualEventQueue", "takeSourceNow()", "radius*radius")),
 }
 
 
@@ -59,9 +71,9 @@ class ArsRitualStaticTests(unittest.TestCase):
         cls.dossier = (PROVIDER / "RITUAL-STATIC-FIRST-FIVE-5.13.1.md").read_text(
             encoding="utf-8")
 
-    def test_twelve_unique_binary_pinned_ritual_identities(self):
-        self.assertEqual(12, len(CASES))
-        self.assertEqual(12, len({item[0] for item in CASES.values()}))
+    def test_sixteen_unique_binary_pinned_ritual_identities(self):
+        self.assertEqual(16, len(CASES))
+        self.assertEqual(16, len({item[0] for item in CASES.values()}))
         for slug, (ritual_id, classname, facts) in CASES.items():
             with self.subTest(slug=slug):
                 body = (PROVIDER / "rituals" / (slug + ".md")).read_text(
@@ -102,8 +114,8 @@ class ArsRitualStaticTests(unittest.TestCase):
         objs = self.json["objects"]
         ritual_count = sum(key.startswith("✅-ars-nouveau/rituals/") for key in objs)
         ars_count = sum(key.startswith("✅-ars-nouveau/") for key in objs)
-        self.assertGreaterEqual(ritual_count, 12)
-        self.assertGreaterEqual(ars_count, 65)
+        self.assertGreaterEqual(ritual_count, 16)
+        self.assertGreaterEqual(ars_count, 69)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ritual_count}/24.", self.index)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ars_count}/138.", self.ars)
         self.assertIn(f"Fichas com contrato técnico estático certificado: {len(objs)}/2075.", self.top)
@@ -232,6 +244,69 @@ class ArsRitualStaticTests(unittest.TestCase):
                       "NOT_VERIFIED", "NOT_TESTED", "WorldEffectPolicy",
                       "Stage 06.05", "Stage 09"):
             self.assertIn(token, dossier)
+
+
+    def test_burrowing_mining_is_four_positions_not_projectile_damage(self):
+        text = (PROVIDER / "rituals/burrowing.md").read_text(encoding="utf8")
+        for term in ("gameTime%20==0", "south().south()", "south().east()",
+                     "south().west()", "destroyRespectsClaim",
+                     "playerDestroy", "destroyBlockSafely",
+                     "BreakEvent", "onEnd()", "EntityRitualProjectile",
+                     "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED"):
+            self.assertIn(term, text)
+        self.assertIn("não é conferido", text)
+        self.assertIn("não equivale a ritual grátis", text)
+
+    def test_cloudshaping_weather_targets_overworld_not_local_area(self):
+        text = (PROVIDER / "rituals/cloudshaping.md").read_text(encoding="utf8")
+        for term in ("RitualCloudshaper", "server.overworld()",
+                     "setWeatherParameters", "RAIN_DELAY",
+                     "RAIN_DURATION", "THUNDER_DURATION",
+                     "12000,180000", "12000,24000", "3600,15600",
+                     "if", "Gunpowder", "Lapis Block", "NOT_TESTED"):
+            self.assertIn(term, text)
+        self.assertIn("não equivale a ritual grátis", text)
+
+    def test_challenge_emerald_tag_does_not_imply_exact_item_reward(self):
+        text = (PROVIDER / "rituals/challenge.md").read_text(encoding="utf8")
+        for term in ("Tags.Items.GEMS_EMERALD",
+                     "didConsumeItem(Items.EMERALD)", "Difficulty.HARD",
+                     "raid.numGroups=7", "players.get(0)",
+                     "createOrExtendRaid", "getProgress()>=18",
+                     "Raid != null", "mutating_hook=NOT_VERIFIED"):
+            self.assertIn(term, text)
+        self.assertIn("não equivale a ritual grátis", text)
+
+    def test_sanctuary_event_routing_is_not_generic_mutating_hook(self):
+        text = (PROVIDER / "rituals/sanctuary.md").read_text(encoding="utf8")
+        for term in ("FinalizeSpawnEvent", "VillageSiegeEvent",
+                     "RangeRitual", "RitualEventQueue", "MobSpawnType.NATURAL",
+                     "DENY_SPAWN_RITUAL_WHITELIST",
+                     "DENY_SPAWN_RITUAL_BLACKLIST", "radius*radius",
+                     "ROTTEN_FLESH", "radius=32", "getSourceCost()=500",
+                     "gameTime%1200==0", "takeSourceNow()", "NBT",
+                     "mutating_hook=NOT_VERIFIED"):
+            self.assertIn(term, text)
+        self.assertIn("primeiro limpa o flag", text)
+        self.assertIn("não", text.lower())
+
+    def test_fourth_ritual_dossier_covers_causality_and_fail_closed(self):
+        text = (PROVIDER / "RITUAL-STATIC-FOURTH-FOUR-5.13.1.md").read_text(
+            encoding="utf8")
+        for term in ("16/24", "69/138", "69/2075", SOURCE, SHA1,
+                     "RitualDig", "RitualCloudshaper", "RitualPillagerRaid",
+                     "DenySpawnRitual", "WorldEffectPolicy", "GameTest",
+                     "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED",
+                     "Stage 06.05", "Stage 09", "0/164"):
+            self.assertIn(term, text)
+
+    def test_ritual_only_status_does_not_promote_same_named_effects(self):
+        self.assertIn("| ✅ | Burrowing | [rituals/burrowing.md]", self.ars)
+        self.assertIn("| ✅ | Cloudshaping | [rituals/cloudshaping.md]", self.ars)
+        self.assertIn("| ✅ | Challenge | [rituals/challenge.md]", self.ars)
+        self.assertIn("| ✅ | Sanctuary | [rituals/sanctuary.md]", self.ars)
+        for slug in ("burrowing", "cloudshaping", "challenge", "sanctuary"):
+            self.assertIn(f"| ✅ | {slug.capitalize()} |", self.index)
 
 
 if __name__ == "__main__":

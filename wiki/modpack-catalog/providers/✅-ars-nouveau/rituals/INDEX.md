@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 12/24.**
-**Barra do recorte documental:** `██████████░░░░░░░░░░ 50.0%`
+**Homologadas para perks (somente fichas detectadas): 16/24.**
+**Barra do recorte documental:** `█████████████░░░░░░░ 66.7%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -12,9 +12,9 @@
 |---|---|---|
 | ✅ | Awakening | [ficha/awakening.md](awakening.md) |
 | ✅ | Binding | [ficha/binding.md](binding.md) |
-| ⚠️ | Burrowing | [ficha/burrowing.md](burrowing.md) |
-| ⚠️ | Challenge | [ficha/challenge.md](challenge.md) |
-| ⚠️ | Cloudshaping | [ficha/cloudshaping.md](cloudshaping.md) |
+| ✅ | Burrowing | [ficha/burrowing.md](burrowing.md) |
+| ✅ | Challenge | [ficha/challenge.md](challenge.md) |
+| ✅ | Cloudshaping | [ficha/cloudshaping.md](cloudshaping.md) |
 | ⚠️ | Conjure Island Desert | [ficha/conjure-island-desert.md](conjure-island-desert.md) |
 | ⚠️ | Conjure Island Plains | [ficha/conjure-island-plains.md](conjure-island-plains.md) |
 | ✅ | Containment | [ficha/containment.md](containment.md) |
@@ -28,7 +28,7 @@
 | ✅ | Moonfall | [ficha/moonfall.md](moonfall.md) |
 | ⚠️ | Overgrowth | [ficha/overgrowth.md](overgrowth.md) |
 | ✅ | Restoration | [ficha/restoration.md](restoration.md) |
-| ⚠️ | Sanctuary | [ficha/sanctuary.md](sanctuary.md) |
+| ✅ | Sanctuary | [ficha/sanctuary.md](sanctuary.md) |
 | ✅ | Scrying | [ficha/scrying.md](scrying.md) |
 | ⚠️ | Summon Animals | [ficha/summon-animals.md](summon-animals.md) |
 | ⚠️ | Summon Wilden | [ficha/summon-wilden.md](summon-wilden.md) |
