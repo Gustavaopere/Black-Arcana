@@ -1,5 +1,7 @@
 # Ars Nouveau 5.13.1 — Effects
 
+**[Primeiro lote de Effects 5/67 com contrato estático para perks](../../EFFECT-STATIC-FIRST-FIVE-5.13.1.md)**. A família total tem 67 efeitos source-catalogados, mas só os itens registrados no manifesto recebem ✅ estático. QA físico e integrações por perks continuam condicionados.
+
 Status: `67/67 SOURCE-PINNED / INDIVIDUAL PAGES COMPLETE / ACQUISITION 67/67 COMPLETE / RUNTIME+CONFIG QA PENDING`
 
 Exact source pin: `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`.
