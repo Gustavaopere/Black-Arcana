@@ -1354,6 +1354,211 @@
           "reason": "Fonte imutável e classe/ID do JAR publisher distinguidos; físico, multiplayer, QA cliente/servidor não testados."
         }
       }
+    },
+    "✅-ars-nouveau/glyphs/effects/invisibility.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Only static source-pinned contract of Ars invisibility, differentiating glyph callback and downstream effects/events; Dispel cancellation source is not a proven installed RPG adapter.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "SHA-exact registry identity and class for Ars publisher release; does not assert compiled methods parity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/invisibility.md",
+          "reason": "Inspected exact pinned glyph callback and conditional branches; consumer outcomes explicitly separated."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/invisibility.md",
+          "reason": "Defaults, helper timing, caps, potion compatibility, event payload or N/A are source-scoped and annotated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/invisibility.md",
+          "reason": "Living entity, block, targeting geometry, damage and duration provenance or N/A are distinguished."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Source-datagen tier, recipe, learning XP and starter status; actual mana costs conditional on composition."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/invisibility.md",
+          "reason": "Ars-native authority with documented event/consumer limits and fail-closed RPG/Black Arcana perk boundary."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/invisibility.md",
+          "reason": "Pinned source plus SHA-exact binary identity only; runtime effect consumers and installed QA unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/wither.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Only static source-pinned contract of Ars wither, differentiating glyph callback and downstream effects/events; Dispel cancellation source is not a proven installed RPG adapter.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "SHA-exact registry identity and class for Ars publisher release; does not assert compiled methods parity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/wither.md",
+          "reason": "Inspected exact pinned glyph callback and conditional branches; consumer outcomes explicitly separated."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/wither.md",
+          "reason": "Defaults, helper timing, caps, potion compatibility, event payload or N/A are source-scoped and annotated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/wither.md",
+          "reason": "Living entity, block, targeting geometry, damage and duration provenance or N/A are distinguished."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Source-datagen tier, recipe, learning XP and starter status; actual mana costs conditional on composition."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/wither.md",
+          "reason": "Ars-native authority with documented event/consumer limits and fail-closed RPG/Black Arcana perk boundary."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/wither.md",
+          "reason": "Pinned source plus SHA-exact binary identity only; runtime effect consumers and installed QA unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/hex.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Only static source-pinned contract of Ars hex, differentiating glyph callback and downstream effects/events; Dispel cancellation source is not a proven installed RPG adapter.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "SHA-exact registry identity and class for Ars publisher release; does not assert compiled methods parity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/hex.md",
+          "reason": "Inspected exact pinned glyph callback and conditional branches; consumer outcomes explicitly separated."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/hex.md",
+          "reason": "Defaults, helper timing, caps, potion compatibility, event payload or N/A are source-scoped and annotated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/hex.md",
+          "reason": "Living entity, block, targeting geometry, damage and duration provenance or N/A are distinguished."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Source-datagen tier, recipe, learning XP and starter status; actual mana costs conditional on composition."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/hex.md",
+          "reason": "Ars-native authority with documented event/consumer limits and fail-closed RPG/Black Arcana perk boundary."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/hex.md",
+          "reason": "Pinned source plus SHA-exact binary identity only; runtime effect consumers and installed QA unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/bounce.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Only static source-pinned contract of Ars bounce, differentiating glyph callback and downstream effects/events; Dispel cancellation source is not a proven installed RPG adapter.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "SHA-exact registry identity and class for Ars publisher release; does not assert compiled methods parity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/bounce.md",
+          "reason": "Inspected exact pinned glyph callback and conditional branches; consumer outcomes explicitly separated."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/bounce.md",
+          "reason": "Defaults, helper timing, caps, potion compatibility, event payload or N/A are source-scoped and annotated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/bounce.md",
+          "reason": "Living entity, block, targeting geometry, damage and duration provenance or N/A are distinguished."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Source-datagen tier, recipe, learning XP and starter status; actual mana costs conditional on composition."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/bounce.md",
+          "reason": "Ars-native authority with documented event/consumer limits and fail-closed RPG/Black Arcana perk boundary."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/bounce.md",
+          "reason": "Pinned source plus SHA-exact binary identity only; runtime effect consumers and installed QA unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/dispel.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Only static source-pinned contract of Ars dispel, differentiating glyph callback and downstream effects/events; Dispel cancellation source is not a proven installed RPG adapter.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "SHA-exact registry identity and class for Ars publisher release; does not assert compiled methods parity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/dispel.md",
+          "reason": "Inspected exact pinned glyph callback and conditional branches; consumer outcomes explicitly separated."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/dispel.md",
+          "reason": "Defaults, helper timing, caps, potion compatibility, event payload or N/A are source-scoped and annotated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/dispel.md",
+          "reason": "Living entity, block, targeting geometry, damage and duration provenance or N/A are distinguished."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Source-datagen tier, recipe, learning XP and starter status; actual mana costs conditional on composition."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/dispel.md",
+          "reason": "Ars-native authority with documented event/consumer limits and fail-closed RPG/Black Arcana perk boundary."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/dispel.md",
+          "reason": "Pinned source plus SHA-exact binary identity only; runtime effect consumers and installed QA unverified."
+        }
+      }
     }
   },
   "providers": {},
