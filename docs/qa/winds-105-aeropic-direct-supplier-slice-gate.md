@@ -1,6 +1,6 @@
 # Aeropic — prova conservadora do produtor de receiver JVM
 
-**Estado:** 🟡 aguardando análise do JAR congelado Wind's 1.0.5. **Não implementa integração, cast nem perks.**
+**Estado:** ✅ duas análises sintáticas concluídas no JAR oficial 1.0.5; ⚠️ origem do receiver permanece `NOT_PROVEN`. **Não implementa integração, cast nem perks.**
 
 ## Contexto verificado
 
@@ -35,3 +35,18 @@ O intérprete acompanha apenas operações JVM suportadas, descritores integrais
 Somente a presença desse token na posição **receiver efetiva** do `invokevirtual AbstractSpell.getRecastCount` permite declarar `COMPILED_SUPPLIER_GET_CAST_RECEIVER` **no bytecode compilado**. Nem mesmo tal resultado resolveria o tipo concreto devolvido pelo `Supplier`, dispatch em jogo, chamada do override ou destino do retorno. Todo campo relacionado a PlayerRecasts e hooks permanece `NOT_PROVEN`.
 
 Há **12 testes sintéticos adicionais** para fontes válidas, chamadas intermediárias, classes/tipos incorretos, saltos, opcodes desconhecidos e não promoção de runtime. O workflow inclui o JSON `aeropic-jvm-stack-slice.json` no mesmo artefato, sem publicar bytecode ou offsets.
+
+## Evidência binária auditada — PR #893
+
+O [CI focal #40156532292](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40156532292) concluiu com `SUCCESS` e o artifact `aeropic-direct-supplier-slice.json` e `aeropic-jvm-stack-slice.json` foram baixados e inspecionados, obtidos do JAR publisher Wind's 1.0.5 SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`.
+
+| Método | Regra estrita de cinco produtores | Interpretação de até 72 instruções do bloco | Conclusão aceita |
+|---|---|---|---|
+| `applyEffectTick` | `NO_MATCHING_UNBRANCHED_FIVE_INSTRUCTION_PRODUCER` | `FAIL_CLOSED_control flow or return in candidate stack slice` | `compiled_receiver_source: NOT_PROVEN` |
+| `onEffectAdded` | `NO_MATCHING_UNBRANCHED_FIVE_INSTRUCTION_PRODUCER` | `RECEIVER_NOT_FROM_CHECKED_SUPPLIER_RESULT` | `compiled_receiver_source: NOT_PROVEN` |
+
+Esses são resultados **negativos para os dois critérios restritos**, não prova de que o jogo nunca use `AeropicSpell` como receptor. `onEffectAdded` ainda contém os símbolos `ACROBATICS_SPELL`/`Supplier.get`/`checkcast`, mas a análise não estabeleceu sua contribuição ao operando da chamada. Em `applyEffectTick`, um caminho não linear impediu classificar qualquer origem de receiver sem implementar um algoritmo CFG/stack mais abrangente.
+
+O contrato independente `docs/qa/winds_105_aeropic_stack_slice_contract.py` congela ambos os resultados sobre o SHA do JAR, os owners/descriptors, as razões de não prova, e todos os bloqueios de runtime e hooks. **11 testes sintéticos de mutação** rejeitam qualquer promoção silenciosa de receiver, override, `PlayerRecasts`, perk e identidade. Workflows precisam passar no JSON real do release exato.
+
+**Próximo gate:** inspeção formal de fluxo de controle com pontos de junção e operand stack ou rastreamento do supplier até o concreto, sob uma auditoria separada e evidências da versão instalada. Até lá: ⛔ SEM_HOOK_SEGURO; nenhum avanço de Stage/QA físico.
