@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "definition": "COMPLETE_PERK_READY requires individually audited identity, behavior, parameters, targeting, costs, integration boundary and validation evidence; old ✅ directories do not certify.",
+  "objects": {},
+  "providers": {},
+  "known_rosters": {
+    "✅-winds-spellbooks": {
+      "scope": "spells registrados no JAR 1.0.5",
+      "total": 7,
+      "source": "EXACT-BINARY-SPELLS-1.0.5.md"
+    },
+    "✅-iss-magic-from-the-east": {
+      "scope": "spells registrados no JAR 1.1.5",
+      "total": 22,
+      "source": "EXACT-BINARY-SPELLS-1.1.5.md"
+    }
+  }
+}
