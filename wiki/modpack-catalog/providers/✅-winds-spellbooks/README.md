@@ -125,3 +125,9 @@ Nova prova binária [Wind CI #40143051496](https://github.com/Gustavaopere/Black
 - `TAILWIND`: chave `tailwind` → site `#1` → factory `lambda$static$1` → classe `TailwindEffect`.
 
 **✅ Ligação compilada**, antes marcada `NOT_PROVEN` nas notas antigas. **⚠️ Instanciação em runtime, cliente/modpack físico e magnitudes seguem `NOT_TESTED`**; `AbstractSpell.getRecastCount` não teve despacho dinâmico certificado e hooks mutadores continuam **⛔ `SEM_HOOK_SEGURO`**. Ver [gate com evidência exata](../../../../docs/qa/winds-105-bootstrap-registry-gate.md). O total de magias Wind's permanece **7/7**, sem nova habilidade ou avanço de Stage.
+
+## Opcodes exatos de recast do Aeropic — 24/10/2026
+
+Na auditoria [Wind CI #40144903731](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40144903731), o `AeropicEffect` da release 1.0.5 tem **duas** invocações explícitas `invokevirtual` do owner simbólico `AbstractSpell.getRecastCount(int, LivingEntity)`: uma em `applyEffectTick`, outra em `onEffectAdded`. O primeiro método possui chamadas de `PlayerRecasts` e `RecastInstance`, mas sem prova de fluxo de operandos ou execução.
+
+**ABI de herança ✅; opcode estático ✅; receptor/override dinamicamente escolhido ⚠️ não provados.** A ficha [Aeropic](wind/aeropic.md) e o [gate de QA](../../../../docs/qa/winds-105-aeropic-recast-invoke-gate.md) preservam `SEM_HOOK_SEGURO`. Não houve novas magias, novos perks ou alteração de estágio.
