@@ -131,3 +131,9 @@ Nova prova binária [Wind CI #40143051496](https://github.com/Gustavaopere/Black
 Na auditoria [Wind CI #40144903731](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40144903731), o `AeropicEffect` da release 1.0.5 tem **duas** invocações explícitas `invokevirtual` do owner simbólico `AbstractSpell.getRecastCount(int, LivingEntity)`: uma em `applyEffectTick`, outra em `onEffectAdded`. O primeiro método possui chamadas de `PlayerRecasts` e `RecastInstance`, mas sem prova de fluxo de operandos ou execução.
 
 **ABI de herança ✅; opcode estático ✅; receptor/override dinamicamente escolhido ⚠️ não provados.** A ficha [Aeropic](wind/aeropic.md) e o [gate de QA](../../../../docs/qa/winds-105-aeropic-recast-invoke-gate.md) preservam `SEM_HOOK_SEGURO`. Não houve novas magias, novos perks ou alteração de estágio.
+
+## Host Iron’s 3.16.3 — ABI publicada compatível com Aeropic — 24/10/2026
+
+Na execução [host ABI CI #40146984360](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40146984360), a distribuição oficial Modrinth `irons_spellbooks-1.21.1-3.16.3.jar` (SHA-1 `e8832385c01db56b9fcb19c48fcedc76a3a70d92`, SHA-512 no [gate](../../../../docs/qa/irons-3163-aeropic-recast-host-gate.md)) confirmou **5/5 descritores JVM de recast** referenciados pelo `AeropicEffect` do Wind's 1.0.5, incluindo `AbstractSpell.getRecastCount` e chamadas `PlayerRecasts`/`RecastInstance`.
+
+**⚠️ Distinção de identidade:** o artefato oficial auditado mede 13.890.045 bytes; outra listagem pública da mesma release informa 13.890.046. Não certificar coincidência com o JAR **instalado** sem o checksum do arquivo físico. ABI publicada ✅, receiver/dispatch e runtime ⚠️ `NOT_PROVEN`, perks mutadoras ⛔ `SEM_HOOK_SEGURO`. Não altera o número 7/7 de magias catalogadas, hooks ou Stages.
