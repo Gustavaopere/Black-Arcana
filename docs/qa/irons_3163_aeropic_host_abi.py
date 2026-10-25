@@ -106,8 +106,10 @@ def verify_jar(jar: Path, identity: dict) -> dict:
     return observed
 
 def declarations(javap: str, class_short: str) -> dict[str,dict]:
-    """Extract JVM ABI descriptors; reject ambiguous selected overloads."""
+    """Select by *full* JVM descriptor; unrelated overloads are not ABI drift."""
     output={}
+    required=METHODS.get(class_short,set())
+    names={method for method,_ in required}
     lines=javap.splitlines()
     for idx,line in enumerate(lines):
         if not DECL.match(line):
@@ -115,7 +117,7 @@ def declarations(javap: str, class_short: str) -> dict[str,dict]:
         name=line.strip().split("(",1)[0].rsplit(" ",1)[-1]
         if name in {NEEDED[class_short].rsplit(".",1)[-1], NEEDED[class_short]}:
             name="<init>"
-        if name not in {n for n,_ in METHODS.get(class_short,set())}:
+        if name not in names:
             continue
         if idx+1>=len(lines):
             raise EvidenceError("truncated javap declaration")
@@ -123,15 +125,17 @@ def declarations(javap: str, class_short: str) -> dict[str,dict]:
         if dm is None:
             raise EvidenceError("missing declaration descriptor")
         descriptor=dm.group(1)
+        if (name,descriptor) not in required:
+            # A real host may have other overloads; never count one as a match.
+            continue
         if name in output:
-            raise EvidenceError("ambiguous overload in selected host ABI "+name)
+            raise EvidenceError("duplicate exact JVM method descriptor: "+name)
         output[name]={
             "declaration":line.strip(),
             "descriptor":descriptor,
-            "is_static": bool(re.search(r"\bstatic\b",line)),
-            "is_abstract": bool(re.search(r"\babstract\b",line)),
+            "is_static":bool(re.search(r"\bstatic\b",line)),
+            "is_abstract":bool(re.search(r"\babstract\b",line)),
         }
-    required=METHODS.get(class_short, set())
     for method,signature in required:
         row=output.get(method)
         if row is None or row["descriptor"]!=signature:
