@@ -115,9 +115,14 @@ def _run(start:list[dict], method:str) -> dict:
             family=kind[1]
             key=_local_id(op)
             if kind[0]=="load":
-                stack.append(locals_map.get((family[0],key),UNKNOWN))
+                # Unsuffixed javap local indices were deliberately not parsed.
+                # Never alias two different locals through an invented key.
+                stack.append(locals_map.get((family[0],key),UNKNOWN)
+                             if key!="UNSPECIFIED_INDEX" else UNKNOWN)
             else:
-                locals_map[(family[0],key)]=pop()
+                value=pop()
+                if key!="UNSPECIFIED_INDEX":
+                    locals_map[(family[0],key)]=value
         elif op in {"iconst_m1","aconst_null","fconst_0","fconst_1","fconst_2",
                      "lconst_0","lconst_1","dconst_0","dconst_1","bipush","sipush",
                      "ldc","ldc_w","ldc2_w"} or op.startswith("iconst_"):
