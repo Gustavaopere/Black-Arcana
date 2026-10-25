@@ -22,7 +22,7 @@ PROJECT_ID = "s4OWxYQQ"
 VERSION_ID = "slKLosTb"
 OFFICIAL_URL = ("https://cdn.modrinth.com/data/s4OWxYQQ/versions/slKLosTb/"
                 + HOST_NAME)
-EXPECTED_BYTES = 13_890_046  # cross-checked publisher release file listing
+EXPECTED_BYTES = 13_890_045  # exact publisher metadata for Modrinth release slKLosTb
 NEEDED = {
     "abstract_spell": "io.redspace.ironsspellbooks.api.spells.AbstractSpell",
     "player_recasts": "io.redspace.ironsspellbooks.capabilities.magic.PlayerRecasts",
