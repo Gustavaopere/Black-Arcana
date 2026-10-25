@@ -6,7 +6,7 @@
 
 - Fonte primária da presença: modlist atual em `Gustavaopere/neoforge-rpg-skilltree`, posição **342**, `irons_spellbooks-1.21.1-3.16.3.jar`, Minecraft 1.21.1/NeoForge, Java 21. Wind's `wind_spellbooks-1.0.5.jar` está na posição 571 e possui SHA-1 `8744886899bc245ae147a44baa2b183689cec7da` previamente congelado.
 - Distribuição identificada em página de lançamento do autor: Modrinth projeto `s4OWxYQQ`, versão `slKLosTb`, nome de JAR idêntico ao registrado na modlist. Seu metadata JSON **precisa** confirmar projeto, versão, game_version, loader, URL do publisher e tamanho e fornecer SHA-1/SHA-512 completos. O JAR baixado é aceito apenas se seu hash SHA-512 e SHA-1 coincidirem com o metadata oficial.
-- Também conferir tamanho exato **13.890.046 bytes** antes de abrir o ZIP. Essa dimensão é um gate separado do hash publicado; não substitui o digest.
+- Também conferir tamanho exato **13.890.045 bytes** da distribuição **Modrinth slKLosTb**, medido nos metadados oficiais antes de abrir o ZIP. Essa dimensão é um gate separado do hash publicado; não substitui o digest. **Discrepância de origem:** outra listagem da release informa 13.890.046 bytes. Não equiparar distribuição Modrinth, distribuição CurseForge e JAR fisicamente instalado apenas pelo nome; a identidade binária do arquivo local continua condicionada à obtenção de seu próprio SHA.
 - Clean-room: não copiar/descompilar implementação ou recursos nem redistribuir o JAR. Publicar apenas JSON de declarações JVM, descritores e proveniência de hashes.
 
 ## ABI específica verificada pelo workflow
