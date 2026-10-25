@@ -173,6 +173,8 @@ def classify(rows:list[dict], name:str) -> dict:
     if len(indices)!=1:
         raise SliceError("wrong target recast call population "+name)
     end=indices[0]
+    if rows[end]["opcode"]!="invokevirtual":
+        raise SliceError("recast invocation opcode drift")
     sources=[i for i,row in enumerate(rows[:end]) if row["opcode"]=="getstatic"
              and row.get("symbol")==FIELD]
     reason="NO_MATCHING_SUPPLIER_FIELD_WITHIN_BOUNDED_BASIC_BLOCK"
