@@ -61,7 +61,7 @@ class ArsRitualStaticTests(unittest.TestCase):
 
     def test_twelve_unique_binary_pinned_ritual_identities(self):
         self.assertEqual(12, len(CASES))
-        self.assertEqual(10, len({item[0] for item in CASES.values()}))
+        self.assertEqual(12, len({item[0] for item in CASES.values()}))
         for slug, (ritual_id, classname, facts) in CASES.items():
             with self.subTest(slug=slug):
                 body = (PROVIDER / "rituals" / (slug + ".md")).read_text(
