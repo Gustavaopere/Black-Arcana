@@ -57,6 +57,19 @@ CASES = {
     "sanctuary": ("ritual_sanctuary", "DenySpawnRitual",
                   ("FinalizeSpawnEvent", "VillageSiegeEvent",
                    "RitualEventQueue", "takeSourceNow()", "radius*radius")),
+    "flowering": ("ritual_flowering", "FloweringRitual",
+                   ("FeaturePlacementRitual", "PlaceBlockFeature", "BonemealFeature",
+                    "ItemTags.SAND", "SOURCE_GEM_TAG")),
+    "forestation": ("ritual_forestation", "ForestationRitual",
+                     ("RandomTreeFeature", "BigTreeFeature", "ConvertBlockFeature",
+                      "CocoaFeature", "chance")),
+    "overgrowth": ("ritual_overgrowth", "RitualOvergrowth",
+                    ("AgeableMob", "rand.nextInt(25)", "363", "ageUp(500,true)",
+                     "setNeedsSource(true)")),
+    "disintegration": ("ritual_disintegration", "RitualDisintegration",
+                        ("RemovalReason.DISCARDED", "shouldDropExperience",
+                         "numGreater=exp/12", "numLesser=expRemaining/3",
+                         "setNeedsSource(true)")),
 }
 
 
@@ -71,9 +84,9 @@ class ArsRitualStaticTests(unittest.TestCase):
         cls.dossier = (PROVIDER / "RITUAL-STATIC-FIRST-FIVE-5.13.1.md").read_text(
             encoding="utf-8")
 
-    def test_sixteen_unique_binary_pinned_ritual_identities(self):
-        self.assertEqual(16, len(CASES))
-        self.assertEqual(16, len({item[0] for item in CASES.values()}))
+    def test_twenty_unique_binary_pinned_ritual_identities(self):
+        self.assertEqual(20, len(CASES))
+        self.assertEqual(20, len({item[0] for item in CASES.values()}))
         for slug, (ritual_id, classname, facts) in CASES.items():
             with self.subTest(slug=slug):
                 body = (PROVIDER / "rituals" / (slug + ".md")).read_text(
@@ -114,8 +127,8 @@ class ArsRitualStaticTests(unittest.TestCase):
         objs = self.json["objects"]
         ritual_count = sum(key.startswith("✅-ars-nouveau/rituals/") for key in objs)
         ars_count = sum(key.startswith("✅-ars-nouveau/") for key in objs)
-        self.assertGreaterEqual(ritual_count, 16)
-        self.assertGreaterEqual(ars_count, 69)
+        self.assertGreaterEqual(ritual_count, 20)
+        self.assertGreaterEqual(ars_count, 73)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ritual_count}/24.", self.index)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ars_count}/138.", self.ars)
         self.assertIn(f"Fichas com contrato técnico estático certificado: {len(objs)}/2075.", self.top)
@@ -307,6 +320,73 @@ class ArsRitualStaticTests(unittest.TestCase):
         self.assertIn("| ✅ | Sanctuary | [rituals/sanctuary.md]", self.ars)
         for slug in ("burrowing", "cloudshaping", "challenge", "sanctuary"):
             self.assertIn(f"| ✅ | {slug.capitalize()} |", self.index)
+
+
+    def test_flowering_placement_callback_is_not_actual_block_commit(self):
+        page = (PROVIDER / "rituals/flowering.md").read_text(encoding="utf8")
+        for token in ("checkRadius=7", "SOURCE_GEM_TAG", "Collections.shuffle",
+                      "positionIndex", "featureMap", "onPlace", "BlockItem.place",
+                      "PlaceBlockFeature(1.5, 0.8", "BonemealFeature(5,0.8)",
+                      "PlaceBlockFeature(3,0.04", "ItemTags.SAND",
+                      "targetPositions", "WorldEffectPolicy"):
+            self.assertIn(token, page)
+        self.assertIn("não inspecionar", page)
+        self.assertIn("mutating_hook=NOT_VERIFIED", page)
+        self.assertIn("physical_qa=NOT_TESTED", page)
+
+    def test_forestation_randomtree_chance_is_not_consumed(self):
+        page = (PROVIDER / "rituals/forestation.md").read_text(encoding="utf8")
+        for token in ("RandomTreeFeature", "chance", "não consulta",
+                      "BigTreeFeature", "ConvertBlockFeature", "CocoaFeature",
+                      "Items.BROWN_MUSHROOM", "Items.GLOW_BERRIES",
+                      "checkRadius=7", "featureMap", "setBlockAndUpdate",
+                      "SOURCE_GEM_TAG", "WorldEffectPolicy"):
+            self.assertIn(token, page)
+        self.assertIn("não usa sua chance", page)
+        self.assertIn("mutating_hook=NOT_VERIFIED", page)
+        self.assertIn("physical_qa=NOT_TESTED", page)
+
+    def test_overgrowth_bonemeal_bounded_and_animal_mode(self):
+        page = (PROVIDER / "rituals/overgrowth.md").read_text(encoding="utf8")
+        for token in ("gameTime()%200==0", "11×3×11 = 363",
+                      "rand.nextInt(25)", "ANFakePlayer",
+                      "AgeableMob", "OVERGROWTH_BLACKLIST", "ageUp(500,true)",
+                      "AABB", "didWorkOnce", "getSourceCost()=500",
+                      "setNeedsSource(true)", "WorldEffectPolicy"):
+            self.assertIn(token, page)
+        self.assertIn("mutating_hook=NOT_VERIFIED", page)
+        self.assertIn("physical_qa=NOT_TESTED", page)
+
+    def test_disintegration_removed_mobs_do_not_imply_death_or_source_per_mob(self):
+        page = (PROVIDER / "rituals/disintegration.md").read_text(
+            encoding="utf8")
+        for token in ("gameTime()%60==0", "MobCategory.MONSTER", "AABB",
+                      "DISINTEGRATION_WHITELIST", "DISINTEGRATION_BLACKLIST",
+                      "RemovalReason.DISCARDED", "shouldDropExperience",
+                      "getExperienceReward", "numGreater=exp/12",
+                      "numLesser=expRemaining/3", "didWorkOnce",
+                      "getSourceCost()=300", "setNeedsSource(true)"):
+            self.assertIn(token, page)
+        self.assertIn("mutating_hook=NOT_VERIFIED", page)
+        self.assertIn("physical_qa=NOT_TESTED", page)
+
+    def test_fifth_dossier_limits_world_mutation_and_provider_live_claims(self):
+        page = (PROVIDER / "RITUAL-STATIC-FIFTH-FOUR-5.13.1.md").read_text(
+            encoding="utf8")
+        for token in ("20/24", "73/138", "73/2075", "0/164",
+                      SOURCE, SHA1, "FeaturePlacementRitual", "RandomTreeFeature",
+                      "chance", "didWorkOnce", "RemovalReason.DISCARDED",
+                      "WorldEffectPolicy", "Stage 06.05", "Stage 09",
+                      "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED"):
+            self.assertIn(token, page)
+
+    def test_new_four_only_certify_their_own_ritual_paths(self):
+        for slug in ("flowering", "forestation", "overgrowth", "disintegration"):
+            name = slug.capitalize()
+            self.assertIn(f"| ✅ | {name} | [rituals/{slug}.md]", self.ars)
+            self.assertIn(f"| ✅ | {name} | [ficha/{slug}.md]", self.index)
+        # The same-named Harvest glyph remains unrelated to its ritual.
+        self.assertIn("| ⚠️ | Harvest | [glyphs/effects/harvest.md]", self.ars)
 
 
 if __name__ == "__main__":
