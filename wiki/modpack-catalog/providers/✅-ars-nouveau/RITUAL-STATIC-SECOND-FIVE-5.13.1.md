@@ -6,7 +6,7 @@ Source `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157` e JAR p
 
 | Ritual | Contrato causal source-pinned | Bloqueio de perk |
 |---|---|---|
-| [Gravity](rituals/gravity.md) | `GRAVITY_EFFECT`, 1200 ticks, range60, Source getter 200; renewInterval20/renewThreshold200 apenas declarados, não provar agendamento com os campos | ⛔ hook de refresh/gravity não comprovado |
+| [Gravity](rituals/gravity.md) | `RitualGravity`: `GRAVITY_EFFECT`, 1200 ticks, range60, Source getter 200; renewInterval20/renewThreshold200 apenas declarados, não provar agendamento com os campos | ⛔ hook de refresh/gravity não comprovado |
 | [Restoration](rituals/restoration.md) | AABB5/100 ticks, zombie villager converts, inverted sofre playerAttack fake-player de 10, outro alvo ferido recebe heal 10; Source getter200 por trabalho observado | ⛔ não duplicar heal/dano/conversão |
 | [Warping](rituals/warping.md) | Consome WarpScroll válido e compatível, em progress>=3 teleporta entidades na AABB5 via `teleportTo(x,y,z)`; Source getter herdado 0, não é ritual sem ingredientes | ⛔ cross-dim e safety não validados |
 | [Containment](rituals/containment.md) | 60 ticks: jars em cubo 7³, entidades AABB inflate5 por jar; whitelist tem prioridade, serializa 1 entidade por jar/execução, Source getter500 após sucesso | ⛔ não duplicar NBT ou Mastery |
