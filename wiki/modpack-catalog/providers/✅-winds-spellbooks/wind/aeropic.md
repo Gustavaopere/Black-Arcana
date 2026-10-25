@@ -114,3 +114,14 @@ A ausência de chamadas entre classes é relativa somente a `invoke*` explícito
 **✅ `PROVEN_BOUNDED_JVM_STACK_AND_BOOTSTRAP` no JAR oficial 1.0.5; runtime ⚠️ não testado.** A execução [Wind CI #40143051496](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40143051496) confirmou em `ModMobEffectRegistry.<clinit>` a cadeia exata: entrada literal `aeropic` → site `invokedynamic #0` para `Supplier` → method-handle `lambda$static$0` por `LambdaMetafactory` → chamada `DeferredRegister.register(String, Supplier)` → armazenamento no holder `ACROBATICS`. A factory compilada `lambda$static$0` contém a criação de `AeropicEffect`.
 
 Essa prova substitui exclusivamente a pendência de associação **estática** entre holder e candidato de efeito descrita nos dossiês anteriores. **Não demonstra** a execução do registry em cliente/servidor, o override despachado de `AbstractSpell.getRecastCount`, contagem/recarga efetiva, NBT ou lifecycle. `runtime_instance_registration = NOT_TESTED`; `safe_mutating_hook = NOT_PROVEN`, portanto **⛔ SEM_HOOK_SEGURO** para perks de recast. Não criar segundo `PlayerRecasts` nem segundo pipeline mágico.
+
+## Chamadas `invokevirtual` de recast na classe de efeito — 24/10/2026
+
+**✅ Dois callsites compilados verificados**, [Wind CI #40144903731](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40144903731) (`aeropic-recast-invokes.json`, JAR `wind_spellbooks-1.0.5.jar`, SHA-1 `8744886899bc245ae147a44baa2b183689cec7da`):
+
+| Método no `AeropicEffect` | Opcode e owner JVM | Observações delimitadas |
+|---|---|---|
+| `boolean applyEffectTick(LivingEntity, int)` | `invokevirtual AbstractSpell.getRecastCount:(ILivingEntity)I` | No mesmo método aparecem `PlayerRecasts.addRecast`, `hasRecastForSpell` e `RecastInstance.<init>`; os valores trafegados **não** foram rastreados |
+| `void onEffectAdded(LivingEntity, int)` | `invokevirtual AbstractSpell.getRecastCount:(ILivingEntity)I` | Não há prova do receiver concreto nem de quem consome o retorno |
+
+A classe `AeropicSpell` declara override ABI-compatível, mas **o `invokevirtual` não prova** que `AeropicSpell` seja a classe real do receptor nem que o override execute. O host Iron's 3.16.3 ainda requer inspeção exata; `runtime_override_dispatch`, `dynamic_receiver_type` e `return_value_consumer` permanecem `NOT_PROVEN`, sem teste físico. **⛔ `SEM_HOOK_SEGURO`** para perks que afetem recasts; preservar `PlayerRecasts` como autoridade.

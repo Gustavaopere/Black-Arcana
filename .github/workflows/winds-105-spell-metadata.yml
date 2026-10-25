@@ -34,6 +34,11 @@ on:
       - 'docs/qa/winds_105_bootstrap_registry_trace_test.py'
       - 'docs/qa/winds_105_bootstrap_registry_contract.py'
       - 'docs/qa/winds_105_bootstrap_registry_contract_test.py'
+      - 'docs/qa/winds_105_aeropic_recast_invokes.py'
+      - 'docs/qa/winds_105_aeropic_recast_invokes_test.py'
+      - 'docs/qa/winds_105_aeropic_recast_contract.py'
+      - 'docs/qa/winds_105_aeropic_recast_contract_test.py'
+      - 'docs/qa/winds-105-aeropic-recast-invoke-gate.md'
       - 'docs/qa/winds-105-bootstrap-registry-gate.md'
       - 'docs/qa/winds-105-registry-dispatch-gate.md'
       - 'docs/qa/winds-105-effect-boundary-evidence.md'
@@ -72,6 +77,11 @@ on:
       - 'docs/qa/winds_105_bootstrap_registry_trace_test.py'
       - 'docs/qa/winds_105_bootstrap_registry_contract.py'
       - 'docs/qa/winds_105_bootstrap_registry_contract_test.py'
+      - 'docs/qa/winds_105_aeropic_recast_invokes.py'
+      - 'docs/qa/winds_105_aeropic_recast_invokes_test.py'
+      - 'docs/qa/winds_105_aeropic_recast_contract.py'
+      - 'docs/qa/winds_105_aeropic_recast_contract_test.py'
+      - 'docs/qa/winds-105-aeropic-recast-invoke-gate.md'
       - 'docs/qa/winds-105-bootstrap-registry-gate.md'
       - 'docs/qa/winds-105-registry-dispatch-gate.md'
       - 'docs/qa/winds-105-effect-boundary-evidence.md'
@@ -120,6 +130,10 @@ jobs:
         run: python3 docs/qa/winds_105_bootstrap_registry_trace_test.py -v
       - name: Synthetic exact-JAR two-supplier holder-binding contract tests
         run: python3 docs/qa/winds_105_bootstrap_registry_contract_test.py -v
+      - name: Synthetic Aeropic recast opcode and dispatch non-promotion tests
+        run: python3 docs/qa/winds_105_aeropic_recast_invokes_test.py -v
+      - name: Synthetic SHA-frozen Aeropic invokevirtual callsite contract tests
+        run: python3 docs/qa/winds_105_aeropic_recast_contract_test.py -v
       - name: Download exact published Wind's Spellbooks 1.0.5 and verify frozen physical SHA-1
         shell: bash
         run: |
@@ -197,6 +211,15 @@ jobs:
             --output build/winds-105/bootstrap-registry-trace.json
       - name: Verify frozen two-effect bootstrap-to-DeferredHolder bindings
         run: python3 docs/qa/winds_105_bootstrap_registry_contract.py --json build/winds-105/bootstrap-registry-trace.json
+      - name: Audit exact JVM invocation owner and opcode at two Aeropic effect recast sites
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_aeropic_recast_invokes.py \
+            --jar build/winds-105/wind_spellbooks-1.0.5.jar \
+            --output build/winds-105/aeropic-recast-invokes.json
+      - name: Verify two SHA-exact Aeropic recast invokevirtual facts without receiver claims
+        run: python3 docs/qa/winds_105_aeropic_recast_contract.py --json build/winds-105/aeropic-recast-invokes.json
       - name: Publish clean-room JSON only (never redistribute provider JAR)
         if: always()
         uses: actions/upload-artifact@v7
@@ -211,5 +234,6 @@ jobs:
             build/winds-105/effect-boundaries.json
             build/winds-105/effect-registry-dispatch.json
             build/winds-105/bootstrap-registry-trace.json
+            build/winds-105/aeropic-recast-invokes.json
           retention-days: 14
           if-no-files-found: ignore
