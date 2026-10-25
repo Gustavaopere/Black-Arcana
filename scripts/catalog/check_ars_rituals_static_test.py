@@ -360,7 +360,7 @@ class ArsRitualStaticTests(unittest.TestCase):
     def test_disintegration_removed_mobs_do_not_imply_death_or_source_per_mob(self):
         page = (PROVIDER / "rituals/disintegration.md").read_text(
             encoding="utf8")
-        for token in ("gameTime()%60==0", "MobCategory.MONSTER", "AABB",
+        for token in ("getGameTime()%60==0", "MobCategory.MONSTER", "AABB",
                       "DISINTEGRATION_WHITELIST", "DISINTEGRATION_BLACKLIST",
                       "RemovalReason.DISCARDED", "shouldDropExperience",
                       "getExperienceReward", "numGreater=exp/12",
