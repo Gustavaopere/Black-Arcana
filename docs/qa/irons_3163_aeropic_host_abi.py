@@ -113,7 +113,7 @@ def declarations(javap: str, class_short: str) -> dict[str,dict]:
         if not DECL.match(line):
             continue
         name=line.strip().split("(",1)[0].rsplit(" ",1)[-1]
-        if name==NEEDED[class_short].rsplit(".",1)[-1]:
+        if name in {NEEDED[class_short].rsplit(".",1)[-1], NEEDED[class_short]}:
             name="<init>"
         if name not in {n for n,_ in METHODS.get(class_short,set())}:
             continue
