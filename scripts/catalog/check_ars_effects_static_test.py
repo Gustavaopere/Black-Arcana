@@ -122,12 +122,12 @@ class StaticContractTests(unittest.TestCase):
                     self.assertIn("| ✅ | " + label + " |", page)
 
     def test_counter_without_provider_wide_promotion(self):
-        self.assertIn("Homologadas para perks (somente fichas detectadas): 20/67.",
+        self.assertIn("Homologadas para perks (somente fichas detectadas): 35/67.",
                       self.index)
-        self.assertIn("Fichas com contrato técnico estático certificado: 38/2075.",
+        self.assertIn("Fichas com contrato técnico estático certificado: 53/2075.",
                       self.root_index)
         self.assertIn("Mods com escopo integral certificado: 0/164.", self.root_index)
-        self.assertEqual(38, len(self.cert))
+        self.assertEqual(53, len(self.cert))
 
     def test_dossier_avoids_unproved_runtime_claims(self):
         page = GATE.read_text(encoding="utf-8")
