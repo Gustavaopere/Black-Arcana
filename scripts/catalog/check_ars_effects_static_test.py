@@ -124,10 +124,14 @@ class StaticContractTests(unittest.TestCase):
     def test_counter_without_provider_wide_promotion(self):
         self.assertIn("Homologadas para perks (somente fichas detectadas): 35/67.",
                       self.index)
-        self.assertIn("Fichas com contrato técnico estático certificado: 53/2075.",
-                      self.root_index)
+        # Other Ars families can gain independent certifications without
+        # changing the number of Effect cards reviewed by this test suite.
+        self.assertIn(
+            f"Fichas com contrato técnico estático certificado: {len(self.cert)}/2075.",
+            self.root_index,
+        )
         self.assertIn("Mods com escopo integral certificado: 0/164.", self.root_index)
-        self.assertEqual(53, len(self.cert))
+        self.assertGreaterEqual(len(self.cert), 53)
 
     def test_dossier_avoids_unproved_runtime_claims(self):
         page = GATE.read_text(encoding="utf-8")
