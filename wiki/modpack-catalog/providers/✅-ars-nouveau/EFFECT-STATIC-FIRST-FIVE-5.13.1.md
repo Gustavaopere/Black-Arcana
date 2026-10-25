@@ -6,7 +6,7 @@
 
 | Effect | Contrato causal e divergência relevante para perks | Estado runtime |
 |---|---|---|
-| [Heal](glyphs/effects/heal.md) | alvo Player recebe exhaustion 2.5 no ramo cura; dano invertido via `IDamageEffect#attemptDamage`; base 3+3×amp default | ⛔ hook não verificado |
+| [Heal](glyphs/effects/heal.md) | alvo Player recebe exhaustion 2.5 no ramo cura; `isInvertedHealAndHarm` seleciona dano invertido via `IDamageEffect#attemptDamage`; base 3+3×amp default | ⛔ hook não verificado |
 | [Slowfall](glyphs/effects/slowfall.md) | `MobEffects.SLOW_FALLING`, duration helper + config base30s / increment8; status é Minecraft-owned | ⛔ hook não verificado |
 | [Glide](glyphs/effects/glide.md) | efeito Ars `GLIDE_EFFECT` ou perk **interna Ars** em `canGlide`; defaults 180/120 vs fallback 30/8 | ⛔ hook não verificado |
 | [Sense Magic](glyphs/effects/sense-magic.md) | `MAGIC_FIND_EFFECT` para entidades ou pedestal highlight; 75 blocos só na descrição, não confirmado pelos callbacks | ⛔ hook não verificado |
