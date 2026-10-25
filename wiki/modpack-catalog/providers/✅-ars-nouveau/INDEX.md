@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 69/138.**
-**Barra do recorte documental:** `██████████░░░░░░░░░░ 50.0%`
+**Homologadas para perks (somente fichas detectadas): 73/138.**
+**Barra do recorte documental:** `██████████░░░░░░░░░░ 52.9%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -129,15 +129,15 @@
 | ⚠️ | Conjure Island Desert | [rituals/conjure-island-desert.md](rituals/conjure-island-desert.md) |
 | ⚠️ | Conjure Island Plains | [rituals/conjure-island-plains.md](rituals/conjure-island-plains.md) |
 | ✅ | Containment | [rituals/containment.md](rituals/containment.md) |
-| ⚠️ | Disintegration | [rituals/disintegration.md](rituals/disintegration.md) |
+| ✅ | Disintegration | [rituals/disintegration.md](rituals/disintegration.md) |
 | ✅ | Fertility | [rituals/fertility.md](rituals/fertility.md) |
 | ✅ | Flight | [rituals/flight.md](rituals/flight.md) |
-| ⚠️ | Flowering | [rituals/flowering.md](rituals/flowering.md) |
-| ⚠️ | Forestation | [rituals/forestation.md](rituals/forestation.md) |
+| ✅ | Flowering | [rituals/flowering.md](rituals/flowering.md) |
+| ✅ | Forestation | [rituals/forestation.md](rituals/forestation.md) |
 | ✅ | Gravity | [rituals/gravity.md](rituals/gravity.md) |
 | ✅ | Harvest | [rituals/harvest.md](rituals/harvest.md) |
 | ✅ | Moonfall | [rituals/moonfall.md](rituals/moonfall.md) |
-| ⚠️ | Overgrowth | [rituals/overgrowth.md](rituals/overgrowth.md) |
+| ✅ | Overgrowth | [rituals/overgrowth.md](rituals/overgrowth.md) |
 | ✅ | Restoration | [rituals/restoration.md](rituals/restoration.md) |
 | ✅ | Sanctuary | [rituals/sanctuary.md](rituals/sanctuary.md) |
 | ✅ | Scrying | [rituals/scrying.md](rituals/scrying.md) |
