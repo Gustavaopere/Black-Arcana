@@ -15,3 +15,16 @@ Os índices são snapshots gerados a partir de arquivos Markdown identificáveis
 Atualize o manifesto e regenere os índices ao concluir cada objeto/provider; revisões de PR e CI devem impedir ✅ sem evidências, contagens negativas, itens duplicados ou resultados desatualizados.
 
 A pasta `wiki/modpack-catalog/providers/INDEX.md` é o painel global; cada mod e cada subpasta possui seu próprio `INDEX.md`. Nenhuma mudança nesta organização modifica runtime de Black Arcana, RPG Skill Tree, Enshrouded ou os providers externos.
+
+
+## Atualização contínua
+
+Quando houver fichas novas, exclusões, subpastas novas ou evidência suficiente para promover uma ficha, atualizar a fonte e o manifesto e executar:
+
+    python3 scripts/catalog/generate_perk_ready_indexes.py
+    python3 scripts/catalog/check_perk_ready_indexes.py
+    python3 scripts/catalog/generate_perk_ready_indexes.py --check
+
+O workflow "Perk-ready provider index coverage" verifica os índices em PRs que alteram providers, o manifesto, o gerador ou seus testes. Se um objeto novo não aparecer ou se o numerador estiver stale, o CI rejeita o snapshot.
+
+O verificador **não infere** a completude do prefixo antigo da pasta, nem permite ✅ de objeto sem identidade, comportamento, parâmetros, targeting, custos, integração e validação explicitamente documentados. Mesmo uma pasta com todas as fichas concluídas não recebe ✅ de provider até haver fechamento fundamentado do universo de objetos; rosters pontuais de spells não bastam para fechar perks e sistemas de outros tipos.
