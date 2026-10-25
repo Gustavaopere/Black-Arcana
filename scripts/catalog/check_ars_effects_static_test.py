@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed regressions for five Ars Nouveau 5.13.1 Effect static dossiers.
+"""Fail-closed regressions for ten Ars Nouveau 5.13.1 Effect static dossiers.
 
 No code execution, loaded provider API, runtime effect or perk behavior is
 implied by these tests; exact release binary registration remains separately
@@ -31,6 +31,16 @@ CASES = {
                     ("IPedestalMachine", "MAGIC_FIND_EFFECT", "75", "60")),
     "knockback": ("glyph_gust", "EffectKnockback",
                   ("KNOCKBACK_RESISTANCE", "EnchantedFallingBlock", "Sensitive", "Extract")),
+    "harm": ("glyph_harm", "EffectHarm",
+             ("MobEffects.POISON", "IDamageEffect.attemptDamage", "Duration Down")),
+    "explosion": ("glyph_explosion", "EffectExplosion",
+                  ("ANExplosion", "onExplosionStart", "DESTROY_WITH_DECAY", "4096")),
+    "lightning": ("glyph_lightning", "EffectLightning",
+                  ("LightningEntity", "EntityStruckByLightningEvent", "wetBonus", "EnergyStorage")),
+    "freeze": ("glyph_freeze", "EffectFreeze",
+               ("calcAOEBlocks", "Frosted Ice", "ShapersFocus", "Sensitive")),
+    "ignite": ("glyph_ignite", "EffectIgnite",
+               ("setRemainingFireTicks", "MAGIC_FIRE", "destroyRespectsClaim")),
 }
 
 
@@ -43,9 +53,9 @@ class StaticContractTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-    def test_five_distinct_effect_identities(self):
-        self.assertEqual(5, len(CASES))
-        self.assertEqual(5, len({v[0] for v in CASES.values()}))
+    def test_ten_distinct_effect_identities(self):
+        self.assertEqual(10, len(CASES))
+        self.assertEqual(10, len({v[0] for v in CASES.values()}))
         for slug, (identity, class_name, facts) in CASES.items():
             with self.subTest(effect=slug):
                 card = (ARS / "glyphs/effects" / (slug + ".md")).read_text(
@@ -71,7 +81,7 @@ class StaticContractTests(unittest.TestCase):
                 self.assertEqual("NOT_TESTED", data["physical_qa"])
                 self.assertEqual(EVIDENCE, set(data["evidence"]))
 
-    def test_five_evidence_paths_exist_in_checkout(self):
+    def test_ten_evidence_paths_exist_in_checkout(self):
         for name in CASES:
             cert = self.cert["✅-ars-nouveau/glyphs/effects/" + name + ".md"]
             for field, evidence in cert["evidence"].items():
@@ -81,7 +91,7 @@ class StaticContractTests(unittest.TestCase):
                     self.assertGreater(len(evidence["reason"]), 18)
                     self.assertTrue((REPO / evidence["path"]).is_file())
 
-    def test_all_parent_indexes_use_green_only_for_the_five(self):
+    def test_all_parent_indexes_use_green_only_for_the_ten(self):
         nested = [ARS / "glyphs/effects/INDEX.md",
                   ARS / "glyphs/INDEX.md", ARS / "INDEX.md"]
         for parent in nested:
@@ -92,18 +102,46 @@ class StaticContractTests(unittest.TestCase):
                     self.assertIn("| ✅ | " + label + " |", page)
 
     def test_counter_without_provider_wide_promotion(self):
-        self.assertIn("Homologadas para perks (somente fichas detectadas): 5/67.",
+        self.assertIn("Homologadas para perks (somente fichas detectadas): 10/67.",
                       self.index)
-        self.assertIn("Fichas com contrato técnico estático certificado: 23/2075.",
+        self.assertIn("Fichas com contrato técnico estático certificado: 28/2075.",
                       self.root_index)
         self.assertIn("Mods com escopo integral certificado: 0/164.", self.root_index)
-        self.assertEqual(23, len(self.cert))
+        self.assertEqual(28, len(self.cert))
 
     def test_dossier_avoids_unproved_runtime_claims(self):
         page = GATE.read_text(encoding="utf-8")
         for token in ("5/67", SOURCE, SHA1, "NOT_VERIFIED", "NOT_TESTED",
                       "isInvertedHealAndHarm", "canGlide", "75"):
             self.assertIn(token, page)
+
+
+    def test_damage_world_dossier_keeps_dynamic_consumers_outside_simple_spell(self):
+        page = (ARS / "EFFECT-STATIC-DAMAGE-WORLD-FIVE-5.13.1.md").read_text(
+            encoding="utf-8")
+        for term in ("10/67", "28/2075", SOURCE, SHA1, "Poison em vez de dano",
+                     "ANExplosion", "LightningEntity", "ShapersFocus",
+                     "NOT_VERIFIED", "NOT_TESTED"):
+            self.assertIn(term, page)
+        # Static catalog never certifies gameplay, real QA, or provider-wide completion.
+        self.assertNotIn("✅ 164/164", page)
+
+    def test_damage_world_cards_keep_runtime_fail_closed_and_separate_paths(self):
+        examples = {
+            "harm": ("em vez de", "SpellDamageEvent.Pre"),
+            "explosion": ("DESTROY_WITH_DECAY", "onExplosionDetonate"),
+            "lightning": ("hitEntities", "restaurar", "SHOCKED_EFFECT"),
+            "freeze": ("seis direções", "MOVEMENT_SLOWDOWN"),
+            "ignite": ("destroyRespectsClaim", "setRemainingFireTicks"),
+        }
+        for slug, facts in examples.items():
+            with self.subTest(effect=slug):
+                card = (ARS / "glyphs/effects" / (slug + ".md")).read_text(
+                    encoding="utf-8")
+                for fact in facts:
+                    self.assertIn(fact, card)
+                self.assertIn("mutating_hook=NOT_VERIFIED", card)
+                self.assertIn("physical_qa=NOT_TESTED", card)
 
 
 if __name__ == "__main__":
