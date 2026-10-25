@@ -25,3 +25,13 @@ Um padrão adjacente `iconst_1, iadd` após o invoke, se encontrado, só comprov
 - CI focal + Black Arcana CI (`verify` e companion QA) no SHA final. Revalidar `main`, diff e trabalho simultâneo de outros PRs antes de merge.
 - Zero mudanças em Java, runtime, `PlayerRecasts`, atributos, hooks, configs, balanceamento ou Stages.
 - **⛔ `SEM_HOOK_SEGURO`** até contrato provider-native e QA físico. Stage 06.05 🟡; Stage 09 real-client pendente. Catálogo Wind's 7/7 spells, 9/9 getters selecionados, identidade binária geral 38/39, global ≥1.856 objetos e denominador desconhecido.
+
+## Segundo gate: pilha simbólica restrita a bloco
+
+Quando a sequência exata de cinco instruções não existe (resultado **`NOT_PROVEN`** no CI #40156210481), `docs/qa/winds_105_aeropic_stack_slice.py` faz uma tentativa adicional **sem presumir resultado positivo**: localiza a última leitura de `ModSpellRegistry.ACROBATICS_SPELL` anterior a cada invocação e modela no máximo 72 instruções dentro de um bloco sem desvio/entrada alternativa.
+
+O intérprete acompanha apenas operações JVM suportadas, descritores integrais de chamadas e transferência de um token simbólico `ACROBATICS_SPELL_SUPPLIER_GET_RESULT` por `checkcast AbstractSpell`; diferencia chamadas intermediárias, duplicação simples e loads/stores de índices explícitos. Falha fechada para opcodes desconhecidos, fluxo de controle não linear, saltos para o interior do segmento, valores de locais genéricos sem índice e contagens inesperadas de chamadas.
+
+Somente a presença desse token na posição **receiver efetiva** do `invokevirtual AbstractSpell.getRecastCount` permite declarar `COMPILED_SUPPLIER_GET_CAST_RECEIVER` **no bytecode compilado**. Nem mesmo tal resultado resolveria o tipo concreto devolvido pelo `Supplier`, dispatch em jogo, chamada do override ou destino do retorno. Todo campo relacionado a PlayerRecasts e hooks permanece `NOT_PROVEN`.
+
+Há **12 testes sintéticos adicionais** para fontes válidas, chamadas intermediárias, classes/tipos incorretos, saltos, opcodes desconhecidos e não promoção de runtime. O workflow inclui o JSON `aeropic-jvm-stack-slice.json` no mesmo artefato, sem publicar bytecode ou offsets.
