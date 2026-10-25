@@ -47,3 +47,19 @@ Pantomime is an Ars-owned line-of-sight targeting form. Its existence is a stron
 - **Augments e controle:** Amplify, Dampen, Sensitive, Dampen max 1 por default. Dampen prevalece sobre Amplify no ternário quando ambos presentes; Sensitive fornece apresentação de highlight, não aumenta distância nessa fórmula. Mana declarada 5, config efetiva Ars.
 - **Perk segura:** distinguir potência/alcance do glyph e modificação externa de `SpellStats`; range baixo ou negativo por combinações fora do default requer análise de admissão. Hook externo não verificado.
 - **Mutação externa:** ⛔ nenhum hook de escrita de `SpellStats` por RPG Skill Tree comprovado; a presença do método Java **não** valida bridge. Source auditado; config real, testes físicos/Survival e integração continuam ⚠️ condicionados.
+
+## Certificação técnica estática — Forms 5.13.1
+
+**✅ 100% dos campos relevantes ao contrato estático desta Form; ⛔ hook de mutação de perk NÃO VALIDADO; ⚠️ gameplay/servidor/config do pack NÃO TESTADOS.**
+
+| Eixo de perk | Contrato auditado / limite |
+|---|---|
+| Identidade e versão | `ars_nouveau:glyph_pantomime`, classe `MethodPantomime`, versão Ars Nouveau 5.13.1; [fonte upstream em commit imutável](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/method/MethodPantomime.java) e [registry compilado exato](../../EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md). |
+| Comportamento e beneficiário | Todos os overloads invocam getTarget e findPosition. Calcula BlockHitResult sintético por eye position, view vector e rotação vertical, ignorando o alvo externo original. Não há raycast comum de colisão neste método. |
+| Parâmetros, caps, geometria e compatibilidade | offset=-1 se count(Dampen)>0; senão count(Amplify). A distância é (2+offset) se viewXRot<45°, caso contrário (3+offset). Compatíveis Amplify, Dampen, Sensitive; cap default de Dampen=1. Sensitive aparece como apresentação de highlight, não no cálculo de distância. |
+| Alvo, dano e duração | Targeting é definido pela Form conforme os overloads anteriores. Tipo/quantidade de dano e duração de efeitos posteriores não pertencem à Form (N/A como scalar próprio). Projétil só existe como entidade própria na Form Projectile. |
+| Custos, cast e aquisição | Mana-default 5, tier I, starter default não; receita `#c:glass_blocks` ×8, XP datagen default 27. [Aquisição 85/85](../../ACQUISITION.md). Mana real e cooldown/settlement dependem de provider/config do cast composto; não há custo autônomo por efeito resultante. |
+| Boundary de integração | `SpellResolver`, targets, validação de form, custo e entidades são provider-owned Ars Nouveau. RPG Skill Tree só oferece perks/progressão por interface demonstrada, sem refazer resolver. Black Arcana controla exclusivamente seu runtime, world policy e regras de cast. Um `SpellModifierEvent` público não prova que modificar esta Form ou seu targeting seja seguro ou aceito. |
+| Validação e limites | `PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY`: source `112920ff774831f204031da75b4c4e73d3765157`; JAR `ars_nouveau-1.21.1-5.13.1.jar` SHA-1 `02782d071ee5fab3b5c4b8ced67b7e1748277dfd`. ID/class do JAR comprovados; **não** comprovada equivalência completa de bytecode de métodos, configuração implantada, QA de multiplayer ou hook mutador. |
+
+**Gates não promovidos:** `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; não alterar quantidade de magias, estágio de runtime ou sistema de casting por esta ficha. Mudança da versão ou da receita/defaults exige nova auditoria.

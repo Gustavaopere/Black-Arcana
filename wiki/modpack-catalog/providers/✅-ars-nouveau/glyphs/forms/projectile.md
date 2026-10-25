@@ -55,3 +55,19 @@ This page records source facts, not proof that the installed 612-mod pack preser
 - **Limites:** `getCompatibleAugments` permite Pierce, Split, Accelerate, Decelerate e Sensitive. Quantidade/velocidade são dados do `SpellStats` provider-native; nenhuma API de reescrita por RPG perk foi comprovada.
 
 **Estado:** prova estática de parâmetros por leitura de código; habilidade de mutação por hook externo não verificada. Ars controla composição, execução, mana/Source e configurações; RPG Skill Tree controla perks/Mastery/gates; Black Arcana é autoridade somente de seu runtime próprio. [Padrão universal](../../../../meta/PERK-READY-TECHNICAL-STANDARD.md).
+
+## Certificação técnica estática — Forms 5.13.1
+
+**✅ 100% dos campos relevantes ao contrato estático desta Form; ⛔ hook de mutação de perk NÃO VALIDADO; ⚠️ gameplay/servidor/config do pack NÃO TESTADOS.**
+
+| Eixo de perk | Contrato auditado / limite |
+|---|---|
+| Identidade e versão | `ars_nouveau:glyph_projectile`, classe `MethodProjectile`, versão Ars Nouveau 5.13.1; [fonte upstream em commit imutável](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/spell/method/MethodProjectile.java) e [registry compilado exato](../../EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md). |
+| Comportamento e beneficiário | onCast, onCastOnEntity e onCastOnBlock(UseOnContext) criam EntityProjectileSpell pelo caminho shooter. onCastOnBlock(BlockHitResult,LivingEntity,...) utiliza overload com BlockPos, posição e movimento próprios. Cada entidade compartilha o SpellResolver dos efeitos posteriores, sem representar cast adicional. |
+| Parâmetros, caps, geometria e compatibilidade | No caminho shooter, n=1+count(Split), velocidade max(0.1,0.75+accMultiplier/2), yaw alternado em 10° e inaccuracy 0.8. No caminho BlockPos n=1+Split com deltaMovement (0,-0.1,0), não a mesma velocidade. TTL configurável default 60 s; não é range em blocos. Compatíveis Pierce, Split, Accelerate, Decelerate e Sensitive. |
+| Alvo, dano e duração | Targeting é definido pela Form conforme os overloads anteriores. Tipo/quantidade de dano e duração de efeitos posteriores não pertencem à Form (N/A como scalar próprio). Projétil só existe como entidade própria na Form Projectile. |
+| Custos, cast e aquisição | Mana-default 10, tier I, starter default sim; receita `minecraft:fletching_table` + `minecraft:arrow`, XP datagen default 27. [Aquisição 85/85](../../ACQUISITION.md). Mana real e cooldown/settlement dependem de provider/config do cast composto; não há custo autônomo por efeito resultante. |
+| Boundary de integração | `SpellResolver`, targets, validação de form, custo e entidades são provider-owned Ars Nouveau. RPG Skill Tree só oferece perks/progressão por interface demonstrada, sem refazer resolver. Black Arcana controla exclusivamente seu runtime, world policy e regras de cast. Um `SpellModifierEvent` público não prova que modificar esta Form ou seu targeting seja seguro ou aceito. |
+| Validação e limites | `PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY`: source `112920ff774831f204031da75b4c4e73d3765157`; JAR `ars_nouveau-1.21.1-5.13.1.jar` SHA-1 `02782d071ee5fab3b5c4b8ced67b7e1748277dfd`. ID/class do JAR comprovados; **não** comprovada equivalência completa de bytecode de métodos, configuração implantada, QA de multiplayer ou hook mutador. |
+
+**Gates não promovidos:** `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; não alterar quantidade de magias, estágio de runtime ou sistema de casting por esta ficha. Mudança da versão ou da receita/defaults exige nova auditoria.

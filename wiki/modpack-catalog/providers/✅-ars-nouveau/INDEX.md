@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 13/138.**
-**Barra do recorte documental:** `█░░░░░░░░░░░░░░░░░░░ 9.4%`
+**Homologadas para perks (somente fichas detectadas): 18/138.**
+**Barra do recorte documental:** `██░░░░░░░░░░░░░░░░░░ 13.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -96,11 +96,11 @@
 | ⚠️ | Wind Shear | [glyphs/effects/wind-shear.md](glyphs/effects/wind-shear.md) |
 | ⚠️ | Wither | [glyphs/effects/wither.md](glyphs/effects/wither.md) |
 | ⚠️ | Wololo | [glyphs/effects/wololo.md](glyphs/effects/wololo.md) |
-| ⚠️ | Pantomime | [glyphs/forms/pantomime.md](glyphs/forms/pantomime.md) |
-| ⚠️ | Projectile | [glyphs/forms/projectile.md](glyphs/forms/projectile.md) |
-| ⚠️ | Self | [glyphs/forms/self.md](glyphs/forms/self.md) |
-| ⚠️ | Touch | [glyphs/forms/touch.md](glyphs/forms/touch.md) |
-| ⚠️ | Underfoot | [glyphs/forms/underfoot.md](glyphs/forms/underfoot.md) |
+| ✅ | Pantomime | [glyphs/forms/pantomime.md](glyphs/forms/pantomime.md) |
+| ✅ | Projectile | [glyphs/forms/projectile.md](glyphs/forms/projectile.md) |
+| ✅ | Self | [glyphs/forms/self.md](glyphs/forms/self.md) |
+| ✅ | Touch | [glyphs/forms/touch.md](glyphs/forms/touch.md) |
+| ✅ | Underfoot | [glyphs/forms/underfoot.md](glyphs/forms/underfoot.md) |
 | ⚠️ | Amethyst Golem | [perks/amethyst-golem.md](perks/amethyst-golem.md) |
 | ⚠️ | Blank Thread | [perks/blank-thread.md](perks/blank-thread.md) |
 | ⚠️ | Chilling | [perks/chilling.md](perks/chilling.md) |
