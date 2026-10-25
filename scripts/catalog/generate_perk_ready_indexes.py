@@ -139,7 +139,7 @@ def main() -> int:
               f"{result['candidate_cards']} candidate cards, "
               f"{len(result['problems'])} errors")
         return int(bool(result["problems"]))
-    ledger = qa.read_ledger()
+    ledger = qa.read_ledger(qa.LEDGER)
     dirs, mods, cards = qa.inventory()
     changed = 0
     for folder in dirs:
