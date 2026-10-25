@@ -67,7 +67,7 @@ def validate_publisher_metadata(record: dict) -> dict:
         raise EvidenceError("not exactly one exact installed host filename")
     file=matches[0]
     if file.get("url")!=OFFICIAL_URL or file.get("size")!=EXPECTED_BYTES:
-        raise EvidenceError("host publisher URL or exact size mismatch")
+        raise EvidenceError("host publisher URL or exact size mismatch: published URL="+str(file.get("url"))+"; size="+str(file.get("size"))+"; expected="+OFFICIAL_URL+" / "+str(EXPECTED_BYTES))
     hashes=file.get("hashes")
     if (not isinstance(hashes, dict)
         or not HEX_SHA1.fullmatch(str(hashes.get("sha1", "")))
