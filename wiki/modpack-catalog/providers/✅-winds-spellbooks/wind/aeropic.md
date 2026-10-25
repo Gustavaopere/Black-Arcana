@@ -172,4 +172,4 @@ Gate: [auditoria do receptor](../../../../docs/qa/winds-105-aeropic-direct-suppl
 - **Limite causal:** a prova de onEffectAdded não determina a classe concreta devolvida pelo Supplier, dispatch do override em execução, consumo da contagem em NBT/PlayerRecasts, duração, custo, janela de recast ou comportamento real. Não presume comportamento a partir do owner da chamada.
 - **Integração:** ⛔ SEM_HOOK_SEGURO. Nenhum contador paralelo nem mutação de perks autorizada; autoridade de recasts e casting segue provider-native. Stage 06.05 🟡 e QA físico Stage 09 pendente.
 
-[Gate e contrato de regressão](../../../../docs/qa/winds-105-aeropic-local-index-probe-gate.md). Nenhuma magia nova foi contada.
+[Gate e contrato de regressão](../../../../../docs/qa/winds-105-aeropic-local-index-probe-gate.md). Nenhuma magia nova foi contada.
