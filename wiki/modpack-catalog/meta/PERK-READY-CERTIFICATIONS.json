@@ -739,6 +739,211 @@
           "reason": "Release/hash/pin distintos, escopo só estático e QA cliente/servidor/runtime explicitamente NÃO TESTADOS."
         }
       }
+    },
+    "✅-ars-nouveau/glyphs/effects/slowfall.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Somente ficha técnica estática do Effect slowfall e seus ramos documentados; nenhuma aprovação de gameplay, config, mutation API, pagamento, target, dano efetivo ou perk executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Registro exato de glyph ID/classe do publisher 5.13.1 SHA-1 fixo, distinguindo identidade binária da semântica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/slowfall.md",
+          "reason": "Ramos e operadores de execução descritos por método e classe no source fixo do provider."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/slowfall.md",
+          "reason": "Defaults, fórmula ou condições e suas fontes de variabilidade identificados sem universalizar os consumidores."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/slowfall.md",
+          "reason": "Alvo ou bloco, delivery, alcance, tipo de dano, projétil e duração foram classificados por aplicabilidade com limites."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Recipe datagen, XP default e tier presentes no roster fonte, com default mana e config na ficha individual."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/slowfall.md",
+          "reason": "Autoridade Ars e boundaries RPG/Black Arcana explicitadas, eventos públicos não são tratados como hooks seguros."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/slowfall.md",
+          "reason": "JAR SHA-exato apenas para ID/classe, métodos source-pinned, config e gameplay NOT_TESTED claramente separados."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/heal.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Somente ficha técnica estática do Effect heal e seus ramos documentados; nenhuma aprovação de gameplay, config, mutation API, pagamento, target, dano efetivo ou perk executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Registro exato de glyph ID/classe do publisher 5.13.1 SHA-1 fixo, distinguindo identidade binária da semântica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/heal.md",
+          "reason": "Ramos e operadores de execução descritos por método e classe no source fixo do provider."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/heal.md",
+          "reason": "Defaults, fórmula ou condições e suas fontes de variabilidade identificados sem universalizar os consumidores."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/heal.md",
+          "reason": "Alvo ou bloco, delivery, alcance, tipo de dano, projétil e duração foram classificados por aplicabilidade com limites."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Recipe datagen, XP default e tier presentes no roster fonte, com default mana e config na ficha individual."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/heal.md",
+          "reason": "Autoridade Ars e boundaries RPG/Black Arcana explicitadas, eventos públicos não são tratados como hooks seguros."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/heal.md",
+          "reason": "JAR SHA-exato apenas para ID/classe, métodos source-pinned, config e gameplay NOT_TESTED claramente separados."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/glide.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Somente ficha técnica estática do Effect glide e seus ramos documentados; nenhuma aprovação de gameplay, config, mutation API, pagamento, target, dano efetivo ou perk executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Registro exato de glyph ID/classe do publisher 5.13.1 SHA-1 fixo, distinguindo identidade binária da semântica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/glide.md",
+          "reason": "Ramos e operadores de execução descritos por método e classe no source fixo do provider."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/glide.md",
+          "reason": "Defaults, fórmula ou condições e suas fontes de variabilidade identificados sem universalizar os consumidores."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/glide.md",
+          "reason": "Alvo ou bloco, delivery, alcance, tipo de dano, projétil e duração foram classificados por aplicabilidade com limites."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Recipe datagen, XP default e tier presentes no roster fonte, com default mana e config na ficha individual."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/glide.md",
+          "reason": "Autoridade Ars e boundaries RPG/Black Arcana explicitadas, eventos públicos não são tratados como hooks seguros."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/glide.md",
+          "reason": "JAR SHA-exato apenas para ID/classe, métodos source-pinned, config e gameplay NOT_TESTED claramente separados."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/sense-magic.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Somente ficha técnica estática do Effect sense-magic e seus ramos documentados; nenhuma aprovação de gameplay, config, mutation API, pagamento, target, dano efetivo ou perk executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Registro exato de glyph ID/classe do publisher 5.13.1 SHA-1 fixo, distinguindo identidade binária da semântica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/sense-magic.md",
+          "reason": "Ramos e operadores de execução descritos por método e classe no source fixo do provider."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/sense-magic.md",
+          "reason": "Defaults, fórmula ou condições e suas fontes de variabilidade identificados sem universalizar os consumidores."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/sense-magic.md",
+          "reason": "Alvo ou bloco, delivery, alcance, tipo de dano, projétil e duração foram classificados por aplicabilidade com limites."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Recipe datagen, XP default e tier presentes no roster fonte, com default mana e config na ficha individual."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/sense-magic.md",
+          "reason": "Autoridade Ars e boundaries RPG/Black Arcana explicitadas, eventos públicos não são tratados como hooks seguros."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/sense-magic.md",
+          "reason": "JAR SHA-exato apenas para ID/classe, métodos source-pinned, config e gameplay NOT_TESTED claramente separados."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/knockback.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Somente ficha técnica estática do Effect knockback e seus ramos documentados; nenhuma aprovação de gameplay, config, mutation API, pagamento, target, dano efetivo ou perk executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Registro exato de glyph ID/classe do publisher 5.13.1 SHA-1 fixo, distinguindo identidade binária da semântica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/knockback.md",
+          "reason": "Ramos e operadores de execução descritos por método e classe no source fixo do provider."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/knockback.md",
+          "reason": "Defaults, fórmula ou condições e suas fontes de variabilidade identificados sem universalizar os consumidores."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/knockback.md",
+          "reason": "Alvo ou bloco, delivery, alcance, tipo de dano, projétil e duração foram classificados por aplicabilidade com limites."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Recipe datagen, XP default e tier presentes no roster fonte, com default mana e config na ficha individual."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/knockback.md",
+          "reason": "Autoridade Ars e boundaries RPG/Black Arcana explicitadas, eventos públicos não são tratados como hooks seguros."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/knockback.md",
+          "reason": "JAR SHA-exato apenas para ID/classe, métodos source-pinned, config e gameplay NOT_TESTED claramente separados."
+        }
+      }
     }
   },
   "providers": {},

@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/67.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Homologadas para perks (somente fichas detectadas): 5/67.**
+**Barra do recorte documental:** `█░░░░░░░░░░░░░░░░░░░ 7.5%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -34,12 +34,12 @@
 | ⚠️ | Firework | [ficha/firework.md](firework.md) |
 | ⚠️ | Flare | [ficha/flare.md](flare.md) |
 | ⚠️ | Freeze | [ficha/freeze.md](freeze.md) |
-| ⚠️ | Glide | [ficha/glide.md](glide.md) |
+| ✅ | Glide | [ficha/glide.md](glide.md) |
 | ⚠️ | Gravity | [ficha/gravity.md](gravity.md) |
 | ⚠️ | Grow | [ficha/grow.md](grow.md) |
 | ⚠️ | Harm | [ficha/harm.md](harm.md) |
 | ⚠️ | Harvest | [ficha/harvest.md](harvest.md) |
-| ⚠️ | Heal | [ficha/heal.md](heal.md) |
+| ✅ | Heal | [ficha/heal.md](heal.md) |
 | ⚠️ | Hex | [ficha/hex.md](hex.md) |
 | ⚠️ | Ignite | [ficha/ignite.md](ignite.md) |
 | ⚠️ | Infuse | [ficha/infuse.md](infuse.md) |
@@ -47,7 +47,7 @@
 | ⚠️ | Interact | [ficha/interact.md](interact.md) |
 | ⚠️ | Invisibility | [ficha/invisibility.md](invisibility.md) |
 | ⚠️ | Item Pickup | [ficha/item-pickup.md](item-pickup.md) |
-| ⚠️ | Knockback | [ficha/knockback.md](knockback.md) |
+| ✅ | Knockback | [ficha/knockback.md](knockback.md) |
 | ⚠️ | Launch | [ficha/launch.md](launch.md) |
 | ⚠️ | Leap | [ficha/leap.md](leap.md) |
 | ⚠️ | Lightning | [ficha/lightning.md](lightning.md) |
@@ -62,8 +62,8 @@
 | ⚠️ | Rewind | [ficha/rewind.md](rewind.md) |
 | ⚠️ | Rotate | [ficha/rotate.md](rotate.md) |
 | ⚠️ | Rune | [ficha/rune.md](rune.md) |
-| ⚠️ | Sense Magic | [ficha/sense-magic.md](sense-magic.md) |
-| ⚠️ | Slowfall | [ficha/slowfall.md](slowfall.md) |
+| ✅ | Sense Magic | [ficha/sense-magic.md](sense-magic.md) |
+| ✅ | Slowfall | [ficha/slowfall.md](slowfall.md) |
 | ⚠️ | Smelt | [ficha/smelt.md](smelt.md) |
 | ⚠️ | Snare | [ficha/snare.md](snare.md) |
 | ⚠️ | Summon Decoy | [ficha/summon-decoy.md](summon-decoy.md) |
