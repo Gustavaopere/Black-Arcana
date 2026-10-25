@@ -9,6 +9,8 @@ on:
       - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATION-RULES.md'
       - 'scripts/catalog/check_perk_ready_indexes.py'
       - 'scripts/catalog/check_perk_ready_indexes_test.py'
+      - 'scripts/catalog/generate_perk_ready_indexes.py'
+      - 'scripts/catalog/generate_perk_ready_indexes_test.py'
       - '.github/workflows/perk-ready-provider-indexes.yml'
   push:
     branches: [main]
@@ -18,6 +20,8 @@ on:
       - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATION-RULES.md'
       - 'scripts/catalog/check_perk_ready_indexes.py'
       - 'scripts/catalog/check_perk_ready_indexes_test.py'
+      - 'scripts/catalog/generate_perk_ready_indexes.py'
+      - 'scripts/catalog/generate_perk_ready_indexes_test.py'
       - '.github/workflows/perk-ready-provider-indexes.yml'
   workflow_dispatch:
 
@@ -32,5 +36,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Synthetic index integrity and false-green tests
         run: python3 scripts/catalog/check_perk_ready_indexes_test.py -v
+      - name: Synthetic update/regenerate nested index tests
+        run: python3 scripts/catalog/generate_perk_ready_indexes_test.py -v
       - name: Verify every mod and subfolder index, item link and completion numerator
         run: python3 scripts/catalog/check_perk_ready_indexes.py
+      - name: Verify index generator read-only check mode
+        run: python3 scripts/catalog/generate_perk_ready_indexes.py --check
