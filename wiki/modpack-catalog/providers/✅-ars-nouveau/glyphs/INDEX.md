@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/85.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Homologadas para perks (somente fichas detectadas): 1/85.**
+**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 1.2%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -11,7 +11,7 @@
 | Estado | Objeto / habilidade identificada | Ficha |
 |---|---|---|
 | ⚠️ | Accelerate | [augments/accelerate.md](augments/accelerate.md) |
-| ⚠️ | Amplify | [augments/amplify.md](augments/amplify.md) |
+| ✅ | Amplify | [augments/amplify.md](augments/amplify.md) |
 | ⚠️ | Aoe | [augments/aoe.md](augments/aoe.md) |
 | ⚠️ | Dampen | [augments/dampen.md](augments/dampen.md) |
 | ⚠️ | Decelerate | [augments/decelerate.md](augments/decelerate.md) |

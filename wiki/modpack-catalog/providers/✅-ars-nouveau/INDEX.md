@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/138.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Homologadas para perks (somente fichas detectadas): 1/138.**
+**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.7%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -17,7 +17,7 @@
 | ⚠️ | Whirlisprig | [familiars/whirlisprig.md](familiars/whirlisprig.md) |
 | ⚠️ | Wixie | [familiars/wixie.md](familiars/wixie.md) |
 | ⚠️ | Accelerate | [glyphs/augments/accelerate.md](glyphs/augments/accelerate.md) |
-| ⚠️ | Amplify | [glyphs/augments/amplify.md](glyphs/augments/amplify.md) |
+| ✅ | Amplify | [glyphs/augments/amplify.md](glyphs/augments/amplify.md) |
 | ⚠️ | Aoe | [glyphs/augments/aoe.md](glyphs/augments/aoe.md) |
 | ⚠️ | Dampen | [glyphs/augments/dampen.md](glyphs/augments/dampen.md) |
 | ⚠️ | Decelerate | [glyphs/augments/decelerate.md](glyphs/augments/decelerate.md) |
