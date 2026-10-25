@@ -9,6 +9,8 @@ on:
       - 'docs/qa/winds_105_aeropic_supplier_receiver_slice_test.py'
       - 'docs/qa/winds_105_aeropic_stack_slice.py'
       - 'docs/qa/winds_105_aeropic_stack_slice_test.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_contract.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_contract_test.py'
       - 'docs/qa/winds-105-aeropic-direct-supplier-slice-gate.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/README.md'
@@ -20,6 +22,8 @@ on:
       - 'docs/qa/winds_105_aeropic_supplier_receiver_slice_test.py'
       - 'docs/qa/winds_105_aeropic_stack_slice.py'
       - 'docs/qa/winds_105_aeropic_stack_slice_test.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_contract.py'
+      - 'docs/qa/winds_105_aeropic_stack_slice_contract_test.py'
       - 'docs/qa/winds-105-aeropic-direct-supplier-slice-gate.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/wind/aeropic.md'
       - 'wiki/modpack-catalog/providers/✅-winds-spellbooks/README.md'
@@ -42,6 +46,8 @@ jobs:
         run: python3 docs/qa/winds_105_aeropic_supplier_receiver_slice_test.py -v
       - name: Synthetic conservative basic-block stack provenance tests
         run: python3 docs/qa/winds_105_aeropic_stack_slice_test.py -v
+      - name: Synthetic pinned negative recast receiver proof contract tests
+        run: python3 docs/qa/winds_105_aeropic_stack_slice_contract_test.py -v
       - name: Obtain and SHA-verify official Wind 1.0.5 binary
         shell: bash
         run: |
@@ -67,6 +73,13 @@ jobs:
           python3 docs/qa/winds_105_aeropic_stack_slice.py \
             --jar build/winds-105/wind_spellbooks-1.0.5.jar \
             --output build/winds-105/aeropic-jvm-stack-slice.json
+      - name: Verify frozen exact-JAR negative receiver results against independent contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_aeropic_stack_slice_contract.py \
+            --stack-json build/winds-105/aeropic-jvm-stack-slice.json \
+            --direct-json build/winds-105/aeropic-direct-supplier-slice.json
       - name: Upload only clean-room binary evidence
         if: always()
         uses: actions/upload-artifact@v7
