@@ -32,6 +32,7 @@ REQUIRED_EVIDENCE = frozenset({
 })
 PER_FOLDER = re.compile(r"\*\*Homologadas para perks \(somente fichas detectadas\): (\d+)/(\d+)\.\*\*")
 GLOBAL = re.compile(r"\*\*Mods com escopo integral certificado: (\d+)/(\d+)\.\*\*")
+GLOBAL_OBJECTS = re.compile(r"\*\*Fichas com contrato técnico estático certificado: (\d+)/(\d+)\.\*\*")
 CARD_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| \[.*?\]\(([^)]+\.md)\) \|$", re.M)
 PROVIDER_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| (?:\d+|—) \| \d+ \| \[Ver fichas\]\(([^)]+)/INDEX\.md\) \|$", re.M)
 
@@ -182,6 +183,11 @@ def check(repo=REPO):
             match = GLOBAL.findall(data)
             if len(match) != 1 or tuple(map(int, match[0])) != (done, len(mods)):
                 problems.append("stale global provider numerator/denominator")
+            object_pairs = GLOBAL_OBJECTS.findall(data)
+            completed_objects = sum(certified(card, ledger) for card in cards)
+            if len(object_pairs) != 1 or tuple(map(int, object_pairs[0])) != (
+                    completed_objects, len(cards)):
+                problems.append("stale global certified-object numerator/denominator")
             entries = PROVIDER_ROW.findall(data)
             if len(entries) != len(mods):
                 problems.append("provider table population drift")
