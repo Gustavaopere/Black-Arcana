@@ -32,8 +32,8 @@ REQUIRED_EVIDENCE = frozenset({
 })
 PER_FOLDER = re.compile(r"\*\*Homologadas para perks \(somente fichas detectadas\): (\d+)/(\d+)\.\*\*")
 GLOBAL = re.compile(r"\*\*Mods com escopo integral certificado: (\d+)/(\d+)\.\*\*")
-CARD_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| \[.*?\]\(([^)]+\.md)\) \|$")
-PROVIDER_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| (?:\d+|—) \| \d+ \| \[Ver fichas\]\(([^)]+)/INDEX\.md\) \|$")
+CARD_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| \[.*?\]\(([^)]+\.md)\) \|$", re.M)
+PROVIDER_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| (?:\d+|—) \| \d+ \| \[Ver fichas\]\(([^)]+)/INDEX\.md\) \|$", re.M)
 
 class CatalogIndexError(ValueError):
     pass
