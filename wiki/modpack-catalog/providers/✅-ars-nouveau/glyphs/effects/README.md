@@ -1,5 +1,7 @@
 # Ars Nouveau 5.13.1 — Effects
 
+**[Terceiro lote estático de Effects: Blink, Leap, Launch, Pull e Snare](../../EFFECT-STATIC-MOBILITY-CONTROL-FIVE-5.13.1.md)** — cinco novos contratos de planejamento de perks, sem hooks ou QA físico. O contador estrito de Effects passa a 15/67; os 67/67 inventariados anteriormente continuam inalterados.
+
 **[Segundo lote de 5 Effects: Harm, Explosion, Lightning, Freeze e Ignite](../../EFFECT-STATIC-DAMAGE-WORLD-FIVE-5.13.1.md)** — contratos estáticos para planejamento de perks, sem aprovação de hooks/runtime. Os efeitos disponíveis continuam 67/67 no inventário, e o número de certificados passa a 10/67.
 
 **[Primeiro lote de Effects 5/67 com contrato estático para perks](../../EFFECT-STATIC-FIRST-FIVE-5.13.1.md)**. A família total tem 67 efeitos source-catalogados, mas só os itens registrados no manifesto recebem ✅ estático. QA físico e integrações por perks continuam condicionados.
