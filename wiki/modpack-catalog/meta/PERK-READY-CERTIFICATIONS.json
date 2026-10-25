@@ -2830,6 +2830,170 @@
           "reason": "É explicitada a distinção entre ID/classe no binário, semântica no source fixo e ausência de teste gameplay e hook mutador validado."
         }
       }
+    },
+    "✅-ars-nouveau/rituals/flowering.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "FeaturePlacementRitual with flowers or sand-driven cactus/dead bush, 7+gem radius; PlaceBlockFeature success is not proof of block placed, target positions and featureMap not persisted.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Static JAR registry audit establishes ars_nouveau:ritual_flowering associated with FloweringRitual; source revision is pinned separately from method binary identity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/flowering.md",
+          "reason": "Provider FloweringRitual tick, branch outcomes and downstream feature/removal behavior documented from the exact immutable upstream source revision."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/flowering.md",
+          "reason": "All consumed parameters, counters, source declarations, bounded or unbounded loops, spacing, geometry and probabilities classified by actual downstream receiver."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/flowering.md",
+          "reason": "Entity or BlockPos selectors, world effect boundaries, non-applicability of damage/projectiles and conditional side effects are separated in FloweringRitual."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/flowering.md",
+          "reason": "The contract separates declared Source getter from actual item inputs, eligibility for Source requests and the unverified Brazier settlement and runtime config."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-FIFTH-FOUR-5.13.1.md",
+          "reason": "Dossier documents Ars-native ownership, Black Arcana WorldEffectPolicy limitations, RPG sibling progression, deduplication risks and fail-closed mutation boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/flowering.md",
+          "reason": "Provenance separates static source semantics, publisher JAR ID identity, unknown method equivalence, no mutating hook and lack of provider-native physical QA."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/forestation.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Tree/taiga/jungle feature handlers differ; RandomTreeFeature chance argument unused by onPlace, world placement has multiple admission paths, save/restart reconstruction of positions.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Static JAR registry audit establishes ars_nouveau:ritual_forestation associated with ForestationRitual; source revision is pinned separately from method binary identity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/forestation.md",
+          "reason": "Provider ForestationRitual tick, branch outcomes and downstream feature/removal behavior documented from the exact immutable upstream source revision."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/forestation.md",
+          "reason": "All consumed parameters, counters, source declarations, bounded or unbounded loops, spacing, geometry and probabilities classified by actual downstream receiver."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/forestation.md",
+          "reason": "Entity or BlockPos selectors, world effect boundaries, non-applicability of damage/projectiles and conditional side effects are separated in ForestationRitual."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/forestation.md",
+          "reason": "The contract separates declared Source getter from actual item inputs, eligibility for Source requests and the unverified Brazier settlement and runtime config."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-FIFTH-FOUR-5.13.1.md",
+          "reason": "Dossier documents Ars-native ownership, Black Arcana WorldEffectPolicy limitations, RPG sibling progression, deduplication risks and fail-closed mutation boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/forestation.md",
+          "reason": "Provenance separates static source semantics, publisher JAR ID identity, unknown method equivalence, no mutating hook and lack of provider-native physical QA."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/overgrowth.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "200 game tick crop/animal modes, crop cuboid 363 positions or AgeableMob AABB, Source requested once only after eligible growth within cycle.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Static JAR registry audit establishes ars_nouveau:ritual_overgrowth associated with RitualOvergrowth; source revision is pinned separately from method binary identity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/overgrowth.md",
+          "reason": "Provider RitualOvergrowth tick, branch outcomes and downstream feature/removal behavior documented from the exact immutable upstream source revision."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/overgrowth.md",
+          "reason": "All consumed parameters, counters, source declarations, bounded or unbounded loops, spacing, geometry and probabilities classified by actual downstream receiver."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/overgrowth.md",
+          "reason": "Entity or BlockPos selectors, world effect boundaries, non-applicability of damage/projectiles and conditional side effects are separated in RitualOvergrowth."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/overgrowth.md",
+          "reason": "The contract separates declared Source getter from actual item inputs, eligibility for Source requests and the unverified Brazier settlement and runtime config."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-FIFTH-FOUR-5.13.1.md",
+          "reason": "Dossier documents Ars-native ownership, Black Arcana WorldEffectPolicy limitations, RPG sibling progression, deduplication risks and fail-closed mutation boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/overgrowth.md",
+          "reason": "Provenance separates static source semantics, publisher JAR ID identity, unknown method equivalence, no mutating hook and lack of provider-native physical QA."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/disintegration.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "60 tick monster/whitelist selection, remove(DISCARDED) not death; gems require positive XP, Source requested once only in that branch; XP tiers 12 and 3 rounded.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Static JAR registry audit establishes ars_nouveau:ritual_disintegration associated with RitualDisintegration; source revision is pinned separately from method binary identity."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/disintegration.md",
+          "reason": "Provider RitualDisintegration tick, branch outcomes and downstream feature/removal behavior documented from the exact immutable upstream source revision."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/disintegration.md",
+          "reason": "All consumed parameters, counters, source declarations, bounded or unbounded loops, spacing, geometry and probabilities classified by actual downstream receiver."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/disintegration.md",
+          "reason": "Entity or BlockPos selectors, world effect boundaries, non-applicability of damage/projectiles and conditional side effects are separated in RitualDisintegration."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/disintegration.md",
+          "reason": "The contract separates declared Source getter from actual item inputs, eligibility for Source requests and the unverified Brazier settlement and runtime config."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-FIFTH-FOUR-5.13.1.md",
+          "reason": "Dossier documents Ars-native ownership, Black Arcana WorldEffectPolicy limitations, RPG sibling progression, deduplication risks and fail-closed mutation boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/disintegration.md",
+          "reason": "Provenance separates static source semantics, publisher JAR ID identity, unknown method equivalence, no mutating hook and lack of provider-native physical QA."
+        }
+      }
     }
   },
   "providers": {},
