@@ -2666,6 +2666,170 @@
           "reason": "Prova de class-to-ID binária e análise da fonte estática têm escopos separados; mutating hook e gameplay físico explicitamente não testados."
         }
       }
+    },
+    "✅-ars-nouveau/rituals/burrowing.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Quatro offsets em camadas de mineração; preflight de claim e segundo BreakEvent separados; progress avança sem confirmação de quebra, EntityRitualProjectile não é causador da mineração.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Auditoria do publisher físico Ars Nouveau 5.13.1 estabelece o ID ars_nouveau:ritual_burrowing ligado à classe RitualDig, sem provar corpo do método."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/burrowing.md",
+          "reason": "Contrato do RitualDig revisa os ramos efetivos da implementação e descreve lifecycle, outcomes, causadores e estados do provider sem dupla execução."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/burrowing.md",
+          "reason": "Valores, escalas, cadências, thresholds, parâmetros geométricos e limites condicionais do RitualDig são documentados sem extrapolar configs de runtime."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/burrowing.md",
+          "reason": "Identificam-se os alvos e caminhos de seleção do RitualDig, inclusive a inaplicabilidade de dano/projétil ou risco de persistência indevida."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/burrowing.md",
+          "reason": "Ficha separa getter Source do custo real de ingredientes e transações no RitualBrazierTile, expondo incertezas de falha e retries."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-FOURTH-FOUR-5.13.1.md",
+          "reason": "Dossiê registra a autoridade Ars/vanilla, fronteira independente do Black Arcana e requisitos de hook seguro, deduplicação e progressão RPG."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/burrowing.md",
+          "reason": "É explicitada a distinção entre ID/classe no binário, semântica no source fixo e ausência de teste gameplay e hook mutador validado."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/cloudshaping.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Clima global Overworld; RNG e três intervalos meteorológicos separados, modificação unitária normal Gunpowder/Lapis Block, Source zero herdado sem prova de custos totais.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Auditoria do publisher físico Ars Nouveau 5.13.1 estabelece o ID ars_nouveau:ritual_cloudshaping ligado à classe RitualCloudshaper, sem provar corpo do método."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/cloudshaping.md",
+          "reason": "Contrato do RitualCloudshaper revisa os ramos efetivos da implementação e descreve lifecycle, outcomes, causadores e estados do provider sem dupla execução."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/cloudshaping.md",
+          "reason": "Valores, escalas, cadências, thresholds, parâmetros geométricos e limites condicionais do RitualCloudshaper são documentados sem extrapolar configs de runtime."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/cloudshaping.md",
+          "reason": "Identificam-se os alvos e caminhos de seleção do RitualCloudshaper, inclusive a inaplicabilidade de dano/projétil ou risco de persistência indevida."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/cloudshaping.md",
+          "reason": "Ficha separa getter Source do custo real de ingredientes e transações no RitualBrazierTile, expondo incertezas de falha e retries."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-FOURTH-FOUR-5.13.1.md",
+          "reason": "Dossiê registra a autoridade Ars/vanilla, fronteira independente do Black Arcana e requisitos de hook seguro, deduplicação e progressão RPG."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/cloudshaping.md",
+          "reason": "É explicitada a distinção entre ID/classe no binário, semântica no source fixo e ausência de teste gameplay e hook mutador validado."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/challenge.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Raid manager vanilla decide sucesso após progresso >=18 e player AABB; item aceito por emerald tag difere do gatilho Items.EMERALD para numGroups=7.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Auditoria do publisher físico Ars Nouveau 5.13.1 estabelece o ID ars_nouveau:ritual_challenge ligado à classe RitualPillagerRaid, sem provar corpo do método."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/challenge.md",
+          "reason": "Contrato do RitualPillagerRaid revisa os ramos efetivos da implementação e descreve lifecycle, outcomes, causadores e estados do provider sem dupla execução."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/challenge.md",
+          "reason": "Valores, escalas, cadências, thresholds, parâmetros geométricos e limites condicionais do RitualPillagerRaid são documentados sem extrapolar configs de runtime."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/challenge.md",
+          "reason": "Identificam-se os alvos e caminhos de seleção do RitualPillagerRaid, inclusive a inaplicabilidade de dano/projétil ou risco de persistência indevida."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/challenge.md",
+          "reason": "Ficha separa getter Source do custo real de ingredientes e transações no RitualBrazierTile, expondo incertezas de falha e retries."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-FOURTH-FOUR-5.13.1.md",
+          "reason": "Dossiê registra a autoridade Ars/vanilla, fronteira independente do Black Arcana e requisitos de hook seguro, deduplicação e progressão RPG."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/challenge.md",
+          "reason": "É explicitada a distinção entre ID/classe no binário, semântica no source fixo e ausência de teste gameplay e hook mutador validado."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/sanctuary.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Interceptação via FinalizeSpawnEvent e VillageSiegeEvent, RangeRitual/RitualEventQueue; radius/consumed items/NBT e batched Source settlement não são mutáveis sem contrato real.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Auditoria do publisher físico Ars Nouveau 5.13.1 estabelece o ID ars_nouveau:ritual_sanctuary ligado à classe DenySpawnRitual, sem provar corpo do método."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/sanctuary.md",
+          "reason": "Contrato do DenySpawnRitual revisa os ramos efetivos da implementação e descreve lifecycle, outcomes, causadores e estados do provider sem dupla execução."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/sanctuary.md",
+          "reason": "Valores, escalas, cadências, thresholds, parâmetros geométricos e limites condicionais do DenySpawnRitual são documentados sem extrapolar configs de runtime."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/sanctuary.md",
+          "reason": "Identificam-se os alvos e caminhos de seleção do DenySpawnRitual, inclusive a inaplicabilidade de dano/projétil ou risco de persistência indevida."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/sanctuary.md",
+          "reason": "Ficha separa getter Source do custo real de ingredientes e transações no RitualBrazierTile, expondo incertezas de falha e retries."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-FOURTH-FOUR-5.13.1.md",
+          "reason": "Dossiê registra a autoridade Ars/vanilla, fronteira independente do Black Arcana e requisitos de hook seguro, deduplicação e progressão RPG."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/sanctuary.md",
+          "reason": "É explicitada a distinção entre ID/classe no binário, semântica no source fixo e ausência de teste gameplay e hook mutador validado."
+        }
+      }
     }
   },
   "providers": {},
