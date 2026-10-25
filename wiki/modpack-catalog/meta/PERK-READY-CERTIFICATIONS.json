@@ -1149,6 +1149,211 @@
           "reason": "ID/classe SHA-exatos e métodos source-pinned separados; QA físico/config/end-to-end pendente."
         }
       }
+    },
+    "✅-ars-nouveau/glyphs/effects/blink.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Certifica exclusivamente o contrato técnico estático de blink com diferenças de seleção, vetores e condicionamentos; não valida runtime atual, jogador, perk mutadora, config ou proteção física.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Identidade de ResourceLocation e classe no publisher JAR fixado com SHA-1, sem equivalência integral de métodos."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/blink.md",
+          "reason": "Dossiê individual examina métodos específicos, ramos de execução e aplicação/consumidores downstream."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/blink.md",
+          "reason": "Fórmulas, config defaults, caps e bifurcações dos augments estão separados para efeitos de movimentação."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/blink.md",
+          "reason": "Recebedores block/entity, alcance/volume, mudança de vetor e ausência de dano/projétil onde aplicável estão classificados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Aquisição XP/recipe/tier da versão exata; mana-default e ausência de custo próprio por outcome na ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/blink.md",
+          "reason": "Ars conserva SpellResolver/casting/settlement e eventuais permissões; RPG/Black Arcana não dispõem de seam mutador comprovado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/blink.md",
+          "reason": "Fonte imutável e classe/ID do JAR publisher distinguidos; físico, multiplayer, QA cliente/servidor não testados."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/leap.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Certifica exclusivamente o contrato técnico estático de leap com diferenças de seleção, vetores e condicionamentos; não valida runtime atual, jogador, perk mutadora, config ou proteção física.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Identidade de ResourceLocation e classe no publisher JAR fixado com SHA-1, sem equivalência integral de métodos."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/leap.md",
+          "reason": "Dossiê individual examina métodos específicos, ramos de execução e aplicação/consumidores downstream."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/leap.md",
+          "reason": "Fórmulas, config defaults, caps e bifurcações dos augments estão separados para efeitos de movimentação."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/leap.md",
+          "reason": "Recebedores block/entity, alcance/volume, mudança de vetor e ausência de dano/projétil onde aplicável estão classificados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Aquisição XP/recipe/tier da versão exata; mana-default e ausência de custo próprio por outcome na ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/leap.md",
+          "reason": "Ars conserva SpellResolver/casting/settlement e eventuais permissões; RPG/Black Arcana não dispõem de seam mutador comprovado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/leap.md",
+          "reason": "Fonte imutável e classe/ID do JAR publisher distinguidos; físico, multiplayer, QA cliente/servidor não testados."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/launch.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Certifica exclusivamente o contrato técnico estático de launch com diferenças de seleção, vetores e condicionamentos; não valida runtime atual, jogador, perk mutadora, config ou proteção física.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Identidade de ResourceLocation e classe no publisher JAR fixado com SHA-1, sem equivalência integral de métodos."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/launch.md",
+          "reason": "Dossiê individual examina métodos específicos, ramos de execução e aplicação/consumidores downstream."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/launch.md",
+          "reason": "Fórmulas, config defaults, caps e bifurcações dos augments estão separados para efeitos de movimentação."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/launch.md",
+          "reason": "Recebedores block/entity, alcance/volume, mudança de vetor e ausência de dano/projétil onde aplicável estão classificados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Aquisição XP/recipe/tier da versão exata; mana-default e ausência de custo próprio por outcome na ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/launch.md",
+          "reason": "Ars conserva SpellResolver/casting/settlement e eventuais permissões; RPG/Black Arcana não dispõem de seam mutador comprovado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/launch.md",
+          "reason": "Fonte imutável e classe/ID do JAR publisher distinguidos; físico, multiplayer, QA cliente/servidor não testados."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/pull.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Certifica exclusivamente o contrato técnico estático de pull com diferenças de seleção, vetores e condicionamentos; não valida runtime atual, jogador, perk mutadora, config ou proteção física.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Identidade de ResourceLocation e classe no publisher JAR fixado com SHA-1, sem equivalência integral de métodos."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/pull.md",
+          "reason": "Dossiê individual examina métodos específicos, ramos de execução e aplicação/consumidores downstream."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/pull.md",
+          "reason": "Fórmulas, config defaults, caps e bifurcações dos augments estão separados para efeitos de movimentação."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/pull.md",
+          "reason": "Recebedores block/entity, alcance/volume, mudança de vetor e ausência de dano/projétil onde aplicável estão classificados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Aquisição XP/recipe/tier da versão exata; mana-default e ausência de custo próprio por outcome na ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/pull.md",
+          "reason": "Ars conserva SpellResolver/casting/settlement e eventuais permissões; RPG/Black Arcana não dispõem de seam mutador comprovado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/pull.md",
+          "reason": "Fonte imutável e classe/ID do JAR publisher distinguidos; físico, multiplayer, QA cliente/servidor não testados."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/snare.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Certifica exclusivamente o contrato técnico estático de snare com diferenças de seleção, vetores e condicionamentos; não valida runtime atual, jogador, perk mutadora, config ou proteção física.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Identidade de ResourceLocation e classe no publisher JAR fixado com SHA-1, sem equivalência integral de métodos."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/snare.md",
+          "reason": "Dossiê individual examina métodos específicos, ramos de execução e aplicação/consumidores downstream."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/snare.md",
+          "reason": "Fórmulas, config defaults, caps e bifurcações dos augments estão separados para efeitos de movimentação."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/snare.md",
+          "reason": "Recebedores block/entity, alcance/volume, mudança de vetor e ausência de dano/projétil onde aplicável estão classificados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Aquisição XP/recipe/tier da versão exata; mana-default e ausência de custo próprio por outcome na ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/snare.md",
+          "reason": "Ars conserva SpellResolver/casting/settlement e eventuais permissões; RPG/Black Arcana não dispõem de seam mutador comprovado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/snare.md",
+          "reason": "Fonte imutável e classe/ID do JAR publisher distinguidos; físico, multiplayer, QA cliente/servidor não testados."
+        }
+      }
     }
   },
   "providers": {},
