@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed regressions for ten Ars Nouveau 5.13.1 Effect static dossiers.
+"""Fail-closed regressions for fifteen Ars Nouveau 5.13.1 Effect static dossiers.
 
 No code execution, loaded provider API, runtime effect or perk behavior is
 implied by these tests; exact release binary registration remains separately
@@ -41,6 +41,16 @@ CASES = {
                ("calcAOEBlocks", "Frosted Ice", "ShapersFocus", "Sensitive")),
     "ignite": ("glyph_ignite", "EffectIgnite",
                ("setRemainingFireTicks", "MAGIC_FIRE", "destroyRespectsClaim")),
+    "blink": ("glyph_blink", "EffectBlink",
+              ("TELEPORTING_NOT_SUPPORTED", "blinkForward", "getForward", "WarpScrollData")),
+    "leap": ("glyph_leap", "EffectLeap",
+             ("force_ground", "setDeltaMovement", "RotatingTurretTile", "Sensitive")),
+    "launch": ("glyph_launch", "EffectLaunch",
+               ("setDeltaMovement", "0,48", "ShapersFocus", "Sensitive")),
+    "pull": ("glyph_pull", "EffectPull",
+             ("ParticleUtil.inRange", "shooter.position", "canBlockBeHarvested", "Sensitive")),
+    "snare": ("glyph_snare", "EffectSnare",
+              ("groundBlock(true)", "SNARE_EFFECT", "IPotionEffect", "setDeltaMovement(0,0,0)")),
 }
 
 
@@ -53,9 +63,9 @@ class StaticContractTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-    def test_ten_distinct_effect_identities(self):
-        self.assertEqual(10, len(CASES))
-        self.assertEqual(10, len({v[0] for v in CASES.values()}))
+    def test_fifteen_distinct_effect_identities(self):
+        self.assertEqual(15, len(CASES))
+        self.assertEqual(15, len({v[0] for v in CASES.values()}))
         for slug, (identity, class_name, facts) in CASES.items():
             with self.subTest(effect=slug):
                 card = (ARS / "glyphs/effects" / (slug + ".md")).read_text(
@@ -81,7 +91,7 @@ class StaticContractTests(unittest.TestCase):
                 self.assertEqual("NOT_TESTED", data["physical_qa"])
                 self.assertEqual(EVIDENCE, set(data["evidence"]))
 
-    def test_ten_evidence_paths_exist_in_checkout(self):
+    def test_fifteen_evidence_paths_exist_in_checkout(self):
         for name in CASES:
             cert = self.cert["✅-ars-nouveau/glyphs/effects/" + name + ".md"]
             for field, evidence in cert["evidence"].items():
@@ -91,7 +101,7 @@ class StaticContractTests(unittest.TestCase):
                     self.assertGreater(len(evidence["reason"]), 18)
                     self.assertTrue((REPO / evidence["path"]).is_file())
 
-    def test_all_parent_indexes_use_green_only_for_the_ten(self):
+    def test_all_parent_indexes_use_green_only_for_the_fifteen(self):
         nested = [ARS / "glyphs/effects/INDEX.md",
                   ARS / "glyphs/INDEX.md", ARS / "INDEX.md"]
         for parent in nested:
@@ -102,12 +112,12 @@ class StaticContractTests(unittest.TestCase):
                     self.assertIn("| ✅ | " + label + " |", page)
 
     def test_counter_without_provider_wide_promotion(self):
-        self.assertIn("Homologadas para perks (somente fichas detectadas): 10/67.",
+        self.assertIn("Homologadas para perks (somente fichas detectadas): 15/67.",
                       self.index)
-        self.assertIn("Fichas com contrato técnico estático certificado: 28/2075.",
+        self.assertIn("Fichas com contrato técnico estático certificado: 33/2075.",
                       self.root_index)
         self.assertIn("Mods com escopo integral certificado: 0/164.", self.root_index)
-        self.assertEqual(28, len(self.cert))
+        self.assertEqual(33, len(self.cert))
 
     def test_dossier_avoids_unproved_runtime_claims(self):
         page = GATE.read_text(encoding="utf-8")
@@ -142,6 +152,35 @@ class StaticContractTests(unittest.TestCase):
                     self.assertIn(fact, card)
                 self.assertIn("mutating_hook=NOT_VERIFIED", card)
                 self.assertIn("physical_qa=NOT_TESTED", card)
+
+
+    def test_mobility_dossier_keeps_separate_vector_and_teleport_paths(self):
+        page = (ARS / "EFFECT-STATIC-MOBILITY-CONTROL-FIVE-5.13.1.md").read_text(
+            encoding="utf-8")
+        for token in ("15/67", "33/2.075", SOURCE, SHA1, "Blink",
+                      "Leap", "Launch", "Pull", "Snare",
+                      "substitui", "soma", "NOT_VERIFIED", "NOT_TESTED"):
+            self.assertIn(token, page)
+        self.assertNotIn("✅ 164/164", page)
+
+    def test_mobility_cards_distinguish_mutation_and_applicability(self):
+        examples = {
+            "blink": ("getForward", "scroll", "canOcclude", "teleportTo"),
+            "leap": ("force_ground", "max(0", "RotatingTurretTile", "setDeltaMovement"),
+            "launch": ("0,48", "0,8", "setDeltaMovement", "Sensitive"),
+            "pull": ("0,05", "shooter.position", "normal da face", "canBlockBeHarvested"),
+            "snare": ("groundBlock(true)", "SNARE_EFFECT", "IPotionEffect",
+                      "EntityHitResult"),
+        }
+        for slug, facts in examples.items():
+            with self.subTest(effect=slug):
+                card = (ARS / "glyphs/effects" / (slug + ".md")).read_text(
+                    encoding="utf-8")
+                for fact in facts:
+                    self.assertIn(fact, card)
+                self.assertIn("mutating_hook", card)
+                self.assertIn("NOT_VERIFIED", card)
+                self.assertIn("NOT_TESTED", card)
 
 
 if __name__ == "__main__":
