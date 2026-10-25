@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 65/138.**
-**Barra do recorte documental:** `█████████░░░░░░░░░░░ 47.1%`
+**Homologadas para perks (somente fichas detectadas): 69/138.**
+**Barra do recorte documental:** `██████████░░░░░░░░░░ 50.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -123,9 +123,9 @@
 | ⚠️ | Wixie | [perks/wixie.md](perks/wixie.md) |
 | ✅ | Awakening | [rituals/awakening.md](rituals/awakening.md) |
 | ✅ | Binding | [rituals/binding.md](rituals/binding.md) |
-| ⚠️ | Burrowing | [rituals/burrowing.md](rituals/burrowing.md) |
-| ⚠️ | Challenge | [rituals/challenge.md](rituals/challenge.md) |
-| ⚠️ | Cloudshaping | [rituals/cloudshaping.md](rituals/cloudshaping.md) |
+| ✅ | Burrowing | [rituals/burrowing.md](rituals/burrowing.md) |
+| ✅ | Challenge | [rituals/challenge.md](rituals/challenge.md) |
+| ✅ | Cloudshaping | [rituals/cloudshaping.md](rituals/cloudshaping.md) |
 | ⚠️ | Conjure Island Desert | [rituals/conjure-island-desert.md](rituals/conjure-island-desert.md) |
 | ⚠️ | Conjure Island Plains | [rituals/conjure-island-plains.md](rituals/conjure-island-plains.md) |
 | ✅ | Containment | [rituals/containment.md](rituals/containment.md) |
@@ -139,7 +139,7 @@
 | ✅ | Moonfall | [rituals/moonfall.md](rituals/moonfall.md) |
 | ⚠️ | Overgrowth | [rituals/overgrowth.md](rituals/overgrowth.md) |
 | ✅ | Restoration | [rituals/restoration.md](rituals/restoration.md) |
-| ⚠️ | Sanctuary | [rituals/sanctuary.md](rituals/sanctuary.md) |
+| ✅ | Sanctuary | [rituals/sanctuary.md](rituals/sanctuary.md) |
 | ✅ | Scrying | [rituals/scrying.md](rituals/scrying.md) |
 | ⚠️ | Summon Animals | [rituals/summon-animals.md](rituals/summon-animals.md) |
 | ⚠️ | Summon Wilden | [rituals/summon-wilden.md](rituals/summon-wilden.md) |
