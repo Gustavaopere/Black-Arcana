@@ -143,3 +143,9 @@ Na execução [host ABI CI #40146984360](https://github.com/Gustavaopere/Black-A
 Nova auditoria [Wind #40153009971](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40153009971) (SHA-1 Wind's 1.0.5 congelado) encontrou os símbolos compilados `ModSpellRegistry.ACROBATICS_SPELL`, `Supplier.get()` e `AbstractSpell` próximos ao `invokevirtual getRecastCount` de `onEffectAdded`. Em `applyEffectTick`, encontrou referências a `MagicData.getPlayerRecasts` e `hasRecastForSpell` antes, e `RecastInstance.<init>`/`PlayerRecasts.addRecast` depois da chamada. Isso **não prova** origem do receptor ou consumo do retorno.
 
 O [gate de operandos](../../../../docs/qa/winds-105-aeropic-recast-operand-provenance.md) e a [ficha Aeropic](wind/aeropic.md) preservam `NOT_TRACED`/`SEM_HOOK_SEGURO`. Apenas a vizinhança de símbolos foi fixada por regressão no JAR exato, sem novos spells, hooks, mudanças de Stages ou aceitação física.
+
+## Aeropic — limite da prova do receptor JVM — 24/10/2026
+
+A [auditoria Wind #40156532292](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40156532292) examinou duas chamadas `AbstractSpell.getRecastCount` no JAR 1.0.5. A sequência de cinco produtores não corresponde a nenhum dos dois métodos; o modelo de bloco único foi bloqueado por fluxo de controle em `applyEffectTick` e não estabeleceu ligação do Supplier ao receiver em `onEffectAdded`. **Não se comprovou o receptor; isso não refuta a existência de recasts em gameplay.**
+
+Estado: origem, despacho e destino do retorno ⚠️ `NOT_PROVEN`; perks mutadoras ⛔ `SEM_HOOK_SEGURO`. [Evidência e limitações](../../../../docs/qa/winds-105-aeropic-direct-supplier-slice-gate.md). Cobertura Wind's 7/7 e Stages inalterados.
