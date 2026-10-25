@@ -2379,6 +2379,211 @@
           "reason": "Source fixed to SHA and registry class tied to exact JAR SHA; method bytecode/config/physical QA unverified."
         }
       }
+    },
+    "✅-ars-nouveau/rituals/gravity.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Ritual gravity static source and exact JAR identity only; consumer side effects, runtime config, Source settlement, hooks mutadores, protections and pack QA explicitly unverified.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "JAR publisher 5.13.1 SHA-exact class-to-ID registry identity; no method parity claimed."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/gravity.md",
+          "reason": "Typed ritual entrypoint and lifecycle with conditional downstream operations and event/side documented."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/gravity.md",
+          "reason": "Config-independent known constants, source costs, ranges/ticks, caps and fallback limits separated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/gravity.md",
+          "reason": "Entity/block/crop/ritual range, AABB/cube geometry, status and damage applicability explicitly classified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/gravity.md",
+          "reason": "Source getter, requests and item/admission ownership documented without claiming actual resource debit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/gravity.md",
+          "reason": "Fail-closed boundary across provider Ars ritual, Black Arcana world policy and RPG perks."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/gravity.md",
+          "reason": "Source SHA pin and exact JAR ID identity with physical runtime, method bytecode and config unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/restoration.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Ritual restoration static source and exact JAR identity only; consumer side effects, runtime config, Source settlement, hooks mutadores, protections and pack QA explicitly unverified.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "JAR publisher 5.13.1 SHA-exact class-to-ID registry identity; no method parity claimed."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/restoration.md",
+          "reason": "Typed ritual entrypoint and lifecycle with conditional downstream operations and event/side documented."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/restoration.md",
+          "reason": "Config-independent known constants, source costs, ranges/ticks, caps and fallback limits separated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/restoration.md",
+          "reason": "Entity/block/crop/ritual range, AABB/cube geometry, status and damage applicability explicitly classified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/restoration.md",
+          "reason": "Source getter, requests and item/admission ownership documented without claiming actual resource debit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/restoration.md",
+          "reason": "Fail-closed boundary across provider Ars ritual, Black Arcana world policy and RPG perks."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/restoration.md",
+          "reason": "Source SHA pin and exact JAR ID identity with physical runtime, method bytecode and config unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/warping.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Ritual warping static source and exact JAR identity only; consumer side effects, runtime config, Source settlement, hooks mutadores, protections and pack QA explicitly unverified.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "JAR publisher 5.13.1 SHA-exact class-to-ID registry identity; no method parity claimed."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/warping.md",
+          "reason": "Typed ritual entrypoint and lifecycle with conditional downstream operations and event/side documented."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/warping.md",
+          "reason": "Config-independent known constants, source costs, ranges/ticks, caps and fallback limits separated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/warping.md",
+          "reason": "Entity/block/crop/ritual range, AABB/cube geometry, status and damage applicability explicitly classified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/warping.md",
+          "reason": "Source getter, requests and item/admission ownership documented without claiming actual resource debit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/warping.md",
+          "reason": "Fail-closed boundary across provider Ars ritual, Black Arcana world policy and RPG perks."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/warping.md",
+          "reason": "Source SHA pin and exact JAR ID identity with physical runtime, method bytecode and config unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/containment.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Ritual containment static source and exact JAR identity only; consumer side effects, runtime config, Source settlement, hooks mutadores, protections and pack QA explicitly unverified.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "JAR publisher 5.13.1 SHA-exact class-to-ID registry identity; no method parity claimed."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/containment.md",
+          "reason": "Typed ritual entrypoint and lifecycle with conditional downstream operations and event/side documented."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/containment.md",
+          "reason": "Config-independent known constants, source costs, ranges/ticks, caps and fallback limits separated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/containment.md",
+          "reason": "Entity/block/crop/ritual range, AABB/cube geometry, status and damage applicability explicitly classified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/containment.md",
+          "reason": "Source getter, requests and item/admission ownership documented without claiming actual resource debit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/containment.md",
+          "reason": "Fail-closed boundary across provider Ars ritual, Black Arcana world policy and RPG perks."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/containment.md",
+          "reason": "Source SHA pin and exact JAR ID identity with physical runtime, method bytecode and config unverified."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/harvest.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Ritual harvest static source and exact JAR identity only; consumer side effects, runtime config, Source settlement, hooks mutadores, protections and pack QA explicitly unverified.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "JAR publisher 5.13.1 SHA-exact class-to-ID registry identity; no method parity claimed."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/harvest.md",
+          "reason": "Typed ritual entrypoint and lifecycle with conditional downstream operations and event/side documented."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/harvest.md",
+          "reason": "Config-independent known constants, source costs, ranges/ticks, caps and fallback limits separated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/harvest.md",
+          "reason": "Entity/block/crop/ritual range, AABB/cube geometry, status and damage applicability explicitly classified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/harvest.md",
+          "reason": "Source getter, requests and item/admission ownership documented without claiming actual resource debit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/harvest.md",
+          "reason": "Fail-closed boundary across provider Ars ritual, Black Arcana world policy and RPG perks."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/harvest.md",
+          "reason": "Source SHA pin and exact JAR ID identity with physical runtime, method bytecode and config unverified."
+        }
+      }
     }
   },
   "providers": {},
