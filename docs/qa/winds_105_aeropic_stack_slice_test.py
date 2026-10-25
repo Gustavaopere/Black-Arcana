@@ -58,7 +58,9 @@ class StackSliceTests(unittest.TestCase):
     def test_branch_inside_candidate_block_rejected(self):
         branch="     19: ifnull 27\n"
         doc=classified(example(extra=branch))
-        self.assertTrue(doc["onEffectAdded"]["non_proof_reason"].startswith("FAIL_CLOSED_"))
+        self.assertIn(doc["onEffectAdded"]["non_proof_reason"],
+                      {"EXTERNAL_CONTROL_FLOW_ENTRY_OR_UNRESOLVED_SWITCH",
+                       "FAIL_CLOSED_control flow or return in candidate stack slice"})
     def test_unsupported_stack_instruction_blocks_proof(self):
         doc=classified(example(extra="     22: dup_x1\n"))
         self.assertIn("unsupported",doc["onEffectAdded"]["non_proof_reason"])
