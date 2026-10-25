@@ -41,3 +41,5 @@ Rituais do Ars Nouveau ficam separados dos glyphs porque possuem preparação, r
 - Diferenças entre descrição provider-native e path executável ficam explicitamente marcadas como `RUNTIME QA`, nunca corrigidas por inferência.
 
 **[Cinco rituais com contrato estático certificado](../RITUAL-STATIC-FIRST-FIVE-5.13.1.md):** Sunrise, Moonfall, Fertility, Flight e Scrying; hooks mutadores/QA físico pendentes.
+
+**[Segundo lote: Gravity, Restoration, Warping, Containment e Harvest](../RITUAL-STATIC-SECOND-FIVE-5.13.1.md)** — contratos técnicos estáticos; 10/24 rituais no total, hooks mutadores e QA físico não verificados.
