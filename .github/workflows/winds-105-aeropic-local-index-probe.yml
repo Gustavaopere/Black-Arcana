@@ -1,0 +1,68 @@
+name: Wind 1.0.5 Aeropic explicit local-index probe
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/winds-105-aeropic-local-index-probe.yml'
+      - 'docs/qa/winds_105_aeropic_local_indices.py'
+      - 'docs/qa/winds_105_aeropic_local_indices_test.py'
+      - 'docs/qa/winds_105_aeropic_local_indices_contract.py'
+      - 'docs/qa/winds_105_aeropic_local_indices_contract_test.py'
+      - 'docs/qa/winds-105-aeropic-local-index-probe-gate.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/winds-105-aeropic-local-index-probe.yml'
+      - 'docs/qa/winds_105_aeropic_local_indices.py'
+      - 'docs/qa/winds_105_aeropic_local_indices_test.py'
+      - 'docs/qa/winds_105_aeropic_local_indices_contract.py'
+      - 'docs/qa/winds_105_aeropic_local_indices_contract_test.py'
+      - 'docs/qa/winds-105-aeropic-local-index-probe-gate.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  local_index_probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic local-index and non-runtime safety regressions
+        run: python3 docs/qa/winds_105_aeropic_local_indices_test.py -v
+      - name: Synthetic exact-JAR result contract drift tests
+        run: python3 docs/qa/winds_105_aeropic_local_indices_contract_test.py -v
+      - name: Obtain SHA-verified published Wind 1.0.5 binary
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/winds-105
+          JAR=build/winds-105/wind_spellbooks-1.0.5.jar
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://mediafilez.forgecdn.net/files/8485/822/wind_spellbooks-1.0.5.jar' \
+            --output "$JAR"
+          echo "8744886899bc245ae147a44baa2b183689cec7da  $JAR" | sha1sum --check
+      - name: Probe actual javap local operand indices
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 docs/qa/winds_105_aeropic_local_indices.py \
+            --jar build/winds-105/wind_spellbooks-1.0.5.jar \
+            --output build/winds-105/aeropic-local-indices.json
+      - name: Enforce reviewed exact-JAR positive and negative proof contract
+        run: python3 docs/qa/winds_105_aeropic_local_indices_contract.py --json build/winds-105/aeropic-local-indices.json
+      - name: Upload only symbolic clean-room report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: wind-105-aeropic-local-index-probe
+          path: build/winds-105/aeropic-local-indices.json
+          retention-days: 14
+          if-no-files-found: ignore

@@ -1,3 +1,7 @@
+## Aeropic — compilação do receiver de recast (25/10/2026)
+
+A [auditoria JVM local-index #40157583131](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40157583131) demonstrou, no JAR Wind's 1.0.5 SHA-1 oficial, a origem do receptor compilado de AbstractSpell.getRecastCount em onEffectAdded: retorno de ModSpellRegistry.ACROBATICS_SPELL via Supplier.get e checkcast AbstractSpell, seguido de variáveis locais. Em applyEffectTick a origem permanece NOT_PROVEN devido a desvios de controle. **Não comprovados:** classe concreta do Supplier, dispatch do override em runtime, valor de recast encaminhado, gameplay físico e hook de perk. Ver [ficha Aeropic](wind/aeropic.md) e [gate de prova](../../../../docs/qa/winds-105-aeropic-local-index-probe-gate.md). **7/7 magias**, sem novos objetos ou promoção de Stage; ⛔ SEM_HOOK_SEGURO.
+
 # Wind's Spellbooks — catálogo canônico
 
 ## Evidência estrutural dos efeitos nativos — 24/10/2026
