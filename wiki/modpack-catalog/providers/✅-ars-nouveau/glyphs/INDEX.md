@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 38/85.**
-**Barra do recorte documental:** `████████░░░░░░░░░░░░ 44.7%`
+**Homologadas para perks (somente fichas detectadas): 53/85.**
+**Barra do recorte documental:** `████████████░░░░░░░░ 62.4%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -29,26 +29,26 @@
 | ✅ | Bounce | [effects/bounce.md](effects/bounce.md) |
 | ⚠️ | Break | [effects/break.md](effects/break.md) |
 | ⚠️ | Bubble | [effects/bubble.md](effects/bubble.md) |
-| ⚠️ | Burst | [effects/burst.md](effects/burst.md) |
-| ⚠️ | Cold Snap | [effects/cold-snap.md](effects/cold-snap.md) |
+| ✅ | Burst | [effects/burst.md](effects/burst.md) |
+| ✅ | Cold Snap | [effects/cold-snap.md](effects/cold-snap.md) |
 | ⚠️ | Conjure Mageblock | [effects/conjure-mageblock.md](effects/conjure-mageblock.md) |
 | ⚠️ | Conjure Magelight | [effects/conjure-magelight.md](effects/conjure-magelight.md) |
 | ⚠️ | Conjure Water | [effects/conjure-water.md](effects/conjure-water.md) |
 | ⚠️ | Craft | [effects/craft.md](effects/craft.md) |
 | ⚠️ | Crush | [effects/crush.md](effects/crush.md) |
 | ⚠️ | Cut | [effects/cut.md](effects/cut.md) |
-| ⚠️ | Delay | [effects/delay.md](effects/delay.md) |
+| ✅ | Delay | [effects/delay.md](effects/delay.md) |
 | ✅ | Dispel | [effects/dispel.md](effects/dispel.md) |
 | ⚠️ | Evaporate | [effects/evaporate.md](effects/evaporate.md) |
 | ⚠️ | Exchange | [effects/exchange.md](effects/exchange.md) |
 | ✅ | Explosion | [effects/explosion.md](effects/explosion.md) |
-| ⚠️ | Fangs | [effects/fangs.md](effects/fangs.md) |
+| ✅ | Fangs | [effects/fangs.md](effects/fangs.md) |
 | ⚠️ | Fell | [effects/fell.md](effects/fell.md) |
-| ⚠️ | Firework | [effects/firework.md](effects/firework.md) |
-| ⚠️ | Flare | [effects/flare.md](effects/flare.md) |
+| ✅ | Firework | [effects/firework.md](effects/firework.md) |
+| ✅ | Flare | [effects/flare.md](effects/flare.md) |
 | ✅ | Freeze | [effects/freeze.md](effects/freeze.md) |
 | ✅ | Glide | [effects/glide.md](effects/glide.md) |
-| ⚠️ | Gravity | [effects/gravity.md](effects/gravity.md) |
+| ✅ | Gravity | [effects/gravity.md](effects/gravity.md) |
 | ⚠️ | Grow | [effects/grow.md](effects/grow.md) |
 | ✅ | Harm | [effects/harm.md](effects/harm.md) |
 | ⚠️ | Harvest | [effects/harvest.md](effects/harvest.md) |
@@ -64,17 +64,17 @@
 | ✅ | Launch | [effects/launch.md](effects/launch.md) |
 | ✅ | Leap | [effects/leap.md](effects/leap.md) |
 | ✅ | Lightning | [effects/lightning.md](effects/lightning.md) |
-| ⚠️ | Linger | [effects/linger.md](effects/linger.md) |
+| ✅ | Linger | [effects/linger.md](effects/linger.md) |
 | ⚠️ | Name | [effects/name.md](effects/name.md) |
-| ⚠️ | Orbit | [effects/orbit.md](effects/orbit.md) |
+| ✅ | Orbit | [effects/orbit.md](effects/orbit.md) |
 | ⚠️ | Place Block | [effects/place-block.md](effects/place-block.md) |
 | ⚠️ | Prestidigitation | [effects/prestidigitation.md](effects/prestidigitation.md) |
 | ✅ | Pull | [effects/pull.md](effects/pull.md) |
 | ⚠️ | Redstone Signal | [effects/redstone-signal.md](effects/redstone-signal.md) |
-| ⚠️ | Reset | [effects/reset.md](effects/reset.md) |
-| ⚠️ | Rewind | [effects/rewind.md](effects/rewind.md) |
+| ✅ | Reset | [effects/reset.md](effects/reset.md) |
+| ✅ | Rewind | [effects/rewind.md](effects/rewind.md) |
 | ⚠️ | Rotate | [effects/rotate.md](effects/rotate.md) |
-| ⚠️ | Rune | [effects/rune.md](effects/rune.md) |
+| ✅ | Rune | [effects/rune.md](effects/rune.md) |
 | ✅ | Sense Magic | [effects/sense-magic.md](effects/sense-magic.md) |
 | ✅ | Slowfall | [effects/slowfall.md](effects/slowfall.md) |
 | ⚠️ | Smelt | [effects/smelt.md](effects/smelt.md) |
@@ -85,9 +85,9 @@
 | ⚠️ | Summon Vex | [effects/summon-vex.md](effects/summon-vex.md) |
 | ⚠️ | Summon Wolves | [effects/summon-wolves.md](effects/summon-wolves.md) |
 | ⚠️ | Toss | [effects/toss.md](effects/toss.md) |
-| ⚠️ | Wall | [effects/wall.md](effects/wall.md) |
-| ⚠️ | Wind Burst | [effects/wind-burst.md](effects/wind-burst.md) |
-| ⚠️ | Wind Shear | [effects/wind-shear.md](effects/wind-shear.md) |
+| ✅ | Wall | [effects/wall.md](effects/wall.md) |
+| ✅ | Wind Burst | [effects/wind-burst.md](effects/wind-burst.md) |
+| ✅ | Wind Shear | [effects/wind-shear.md](effects/wind-shear.md) |
 | ✅ | Wither | [effects/wither.md](effects/wither.md) |
 | ⚠️ | Wololo | [effects/wololo.md](effects/wololo.md) |
 | ✅ | Pantomime | [forms/pantomime.md](forms/pantomime.md) |

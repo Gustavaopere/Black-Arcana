@@ -1,5 +1,7 @@
 # Ars Nouveau — Core Compositional Spell Provider
 
+**[Quinze Effects de dano, tempo e propagação: auditoria estática](EFFECT-STATIC-CONTROL-FIELDS-FIFTEEN-5.13.1.md)** — amplia o recorte para 35/67 Effects e 53/138 fichas Ars; hooks de perks e QA físico continuam pendentes. Consulte as [barras do provider](INDEX.md) e do [catálogo global](../INDEX.md).
+
 **[Certificação técnica estática das 5 Forms](FORM-STATIC-CERTIFICATION-5.13.1.md)** — documenta comportamento source-pinned; não homologa execução de perks ou QA de modpack.
 
 Status: `CORE SPELL MODEL VERIFIED; BASE GLYPH INVENTORY NORMALIZED FROM CURRENT 1.21.1 GUIDE; ADDON PROVIDERS CATALOGED SEPARATELY`
