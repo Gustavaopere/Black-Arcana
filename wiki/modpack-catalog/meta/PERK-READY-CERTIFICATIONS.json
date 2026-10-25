@@ -42,6 +42,498 @@
           "reason": "Revisão do source-pin 5.13.1 e auditoria de identidade binária; execuções reais explicitamente pendentes."
         }
       }
+    },
+    "✅-ars-nouveau/glyphs/augments/accelerate.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentAccelerate: addAccelerationModifier(+1.0f); velocidade é resolvida pela Form; o caminho normal e o overload de bloco diferem. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_accelerate; a ficha liga a identidade à classe AugmentAccelerate no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/accelerate.md",
+          "reason": "A revisão da classe e dos consumidores documenta addAccelerationModifier(+1.0f), distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/accelerate.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: velocidade é resolvida pela Form; o caminho normal e o overload de bloco diferem; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/accelerate.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentAccelerate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/accelerate.md",
+          "reason": "Mana-padrão 10, tier 2 e receita de aprendizagem 55 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/accelerate.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/augments/aoe.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentAOE: addAOE(+1.0); a área depende do receptor e da grade/forma; não é raio universal. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_aoe; a ficha liga a identidade à classe AugmentAOE no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/aoe.md",
+          "reason": "A revisão da classe e dos consumidores documenta addAOE(+1.0), distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/aoe.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: a área depende do receptor e da grade/forma; não é raio universal; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/aoe.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentAOE."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/aoe.md",
+          "reason": "Mana-padrão 35, tier 2 e receita de aprendizagem 55 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/aoe.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/augments/dampen.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentDampen: addAmplification(-1.0); a potência e efeitos dependem do receptor; custo zero do glyph não torna o cast gratuito. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_dampen; a ficha liga a identidade à classe AugmentDampen no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/dampen.md",
+          "reason": "A revisão da classe e dos consumidores documenta addAmplification(-1.0), distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/dampen.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: a potência e efeitos dependem do receptor; custo zero do glyph não torna o cast gratuito; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/dampen.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentDampen."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/dampen.md",
+          "reason": "Mana-padrão 0, tier 2 e receita de aprendizagem 55 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/dampen.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/augments/decelerate.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentDecelerate: addAccelerationModifier(-0.5f); o piso de velocidade pertence ao consumidor; não define duração própria. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_decelerate; a ficha liga a identidade à classe AugmentDecelerate no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/decelerate.md",
+          "reason": "A revisão da classe e dos consumidores documenta addAccelerationModifier(-0.5f), distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/decelerate.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: o piso de velocidade pertence ao consumidor; não define duração própria; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/decelerate.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentDecelerate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/decelerate.md",
+          "reason": "Mana-padrão 5, tier 2 e receita de aprendizagem 55 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/decelerate.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/augments/extend-time.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentExtendTime: addDurationModifier(+1.0); duração depende do consumidor, e presença pode selecionar Poison em Harm. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_extend_time; a ficha liga a identidade à classe AugmentExtendTime no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/extend-time.md",
+          "reason": "A revisão da classe e dos consumidores documenta addDurationModifier(+1.0), distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/extend-time.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: duração depende do consumidor, e presença pode selecionar Poison em Harm; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/extend-time.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentExtendTime."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/extend-time.md",
+          "reason": "Mana-padrão 10, tier 2 e receita de aprendizagem 55 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/extend-time.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/augments/extract.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentExtract: consumidores leem contagem/presença sem override de applyModifiers; loot, targeting e proteção são resolvidos pelo Effect; incompatibilidade textual não é veto provado. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_extract; a ficha liga a identidade à classe AugmentExtract no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/extract.md",
+          "reason": "A revisão da classe e dos consumidores documenta consumidores leem contagem/presença sem override de applyModifiers, distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/extract.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: loot, targeting e proteção são resolvidos pelo Effect; incompatibilidade textual não é veto provado; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/extract.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentExtract."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/extract.md",
+          "reason": "Mana-padrão 30, tier 2 e receita de aprendizagem 55 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/extract.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/augments/fortune.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentFortune: consumidores leem contagem/presença sem override de applyModifiers; Fortune/Looting e seus filtros pertencem ao executor; não garante drops universais. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_fortune; a ficha liga a identidade à classe AugmentFortune no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/fortune.md",
+          "reason": "A revisão da classe e dos consumidores documenta consumidores leem contagem/presença sem override de applyModifiers, distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/fortune.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: Fortune/Looting e seus filtros pertencem ao executor; não garante drops universais; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/fortune.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentFortune."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/fortune.md",
+          "reason": "Mana-padrão 80, tier 2 e receita de aprendizagem 55 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/fortune.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/augments/pierce.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentPierce: consumidores leem contagem ou receita sem override de applyModifiers; profundidade de blocos e pierce do projétil usam consumidores diferentes. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_pierce; a ficha liga a identidade à classe AugmentPierce no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/pierce.md",
+          "reason": "A revisão da classe e dos consumidores documenta consumidores leem contagem ou receita sem override de applyModifiers, distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/pierce.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: profundidade de blocos e pierce do projétil usam consumidores diferentes; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/pierce.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentPierce."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/pierce.md",
+          "reason": "Mana-padrão 40, tier 2 e receita de aprendizagem 55 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/pierce.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/augments/randomize.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentRandomize: overload contextual chama builder.randomize(); flag e contagem alimentam RNG/seleção específicos do consumidor. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_randomize; a ficha liga a identidade à classe AugmentRandomize no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/randomize.md",
+          "reason": "A revisão da classe e dos consumidores documenta overload contextual chama builder.randomize(), distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/randomize.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: flag e contagem alimentam RNG/seleção específicos do consumidor; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/randomize.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentRandomize."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/randomize.md",
+          "reason": "Mana-padrão 0, tier 1 e receita de aprendizagem 27 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/randomize.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/augments/reduce-time.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentDurationDown: addDurationModifier(-1.0); mantém glyph_duration_down; não impõe redução universal de ticks ou cooldown. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_duration_down; a ficha liga a identidade à classe AugmentDurationDown no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/reduce-time.md",
+          "reason": "A revisão da classe e dos consumidores documenta addDurationModifier(-1.0), distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/reduce-time.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: mantém glyph_duration_down; não impõe redução universal de ticks ou cooldown; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/reduce-time.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentDurationDown."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/reduce-time.md",
+          "reason": "Mana-padrão 15, tier 2 e receita de aprendizagem 55 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/reduce-time.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/augments/sensitive.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentSensitive: builder.setSensitive(); boolean e contagem modificam ray/fake-player/efeitos conforme o receptor. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_sensitive; a ficha liga a identidade à classe AugmentSensitive no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/sensitive.md",
+          "reason": "A revisão da classe e dos consumidores documenta builder.setSensitive(), distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/sensitive.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: boolean e contagem modificam ray/fake-player/efeitos conforme o receptor; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/sensitive.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentSensitive."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/sensitive.md",
+          "reason": "Mana-padrão 10, tier 1 e receita de aprendizagem 27 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/sensitive.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/augments/split.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de AugmentSplit: consumidores leem contagem/presença sem override de applyModifiers; quantidade e delivery pertencem à Form/Effect; clones não são novos casts. API pública não é adapter RPG/Black Arcana validado, nem QA do pack.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "O roster compilado SHA-exato inclui ars_nouveau:glyph_split; a ficha liga a identidade à classe AugmentSplit no source fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/split.md",
+          "reason": "A revisão da classe e dos consumidores documenta consumidores leem contagem/presença sem override de applyModifiers, distinguindo operador, presença/contagem e comportamento do receptor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/split.md",
+          "reason": "Valores, unidades, fórmulas e limites estão classificados por consumidor: quantidade e delivery pertencem à Form/Effect; clones não são novos casts; config implantada não é inferida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/split.md",
+          "reason": "Augment composicional sem alvo/delivery autônomos; a ficha identifica o que pertence à Form/Effect e os consumidores concretos de AugmentSplit."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/split.md",
+          "reason": "Mana-padrão 20, tier 3 e receita de aprendizagem 160 XP são fixados no source, separados de custo efetivo/config e sem cast autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/AUGMENT-STATIC-CERTIFICATION-5.13.1.md",
+          "reason": "SpellModifierEvent e suas fases são reais, mas autoridade Ars, caps, custos, deduplicação e adapter RPG/Black Arcana permanecem não validados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/augments/split.md",
+          "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
+        }
+      }
     }
   },
   "providers": {},
