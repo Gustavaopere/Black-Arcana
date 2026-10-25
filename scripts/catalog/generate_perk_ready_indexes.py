@@ -96,11 +96,13 @@ def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
 
 def global_index(mods: list[Path], cards: list[Path], ledger: dict) -> str:
     done = sum(qa.mod_certified(mod, cards, ledger) for mod in mods)
+    object_done = sum(qa.certified(card, ledger) for card in cards)
     rows = [
         "# Índice geral — certificação 100% para perks", "",
         "> Os prefixos ✅ antigos significam inventário histórico, não 100% técnico "
         "para perks.", "",
         f"**Mods com escopo integral certificado: {done}/{len(mods)}.**",
+        f"**Fichas com contrato técnico estático certificado: {object_done}/{len(cards)}.**",
         f"**Progresso global confirmado:** {TICK}{bar(done, len(mods))}{TICK}",
         "**Escopo:** pastas atuais de providers; a modlist pode conter outros "
         "mods/sistemas ainda não representados. Objetos ausentes do catálogo "
