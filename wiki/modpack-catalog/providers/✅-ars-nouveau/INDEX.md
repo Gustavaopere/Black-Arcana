@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 33/138.**
-**Barra do recorte documental:** `████░░░░░░░░░░░░░░░░ 23.9%`
+**Homologadas para perks (somente fichas detectadas): 38/138.**
+**Barra do recorte documental:** `█████░░░░░░░░░░░░░░░ 27.5%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -32,7 +32,7 @@
 | ⚠️ | Access Ender Inventory | [glyphs/effects/access-ender-inventory.md](glyphs/effects/access-ender-inventory.md) |
 | ⚠️ | Animate Block | [glyphs/effects/animate-block.md](glyphs/effects/animate-block.md) |
 | ✅ | Blink | [glyphs/effects/blink.md](glyphs/effects/blink.md) |
-| ⚠️ | Bounce | [glyphs/effects/bounce.md](glyphs/effects/bounce.md) |
+| ✅ | Bounce | [glyphs/effects/bounce.md](glyphs/effects/bounce.md) |
 | ⚠️ | Break | [glyphs/effects/break.md](glyphs/effects/break.md) |
 | ⚠️ | Bubble | [glyphs/effects/bubble.md](glyphs/effects/bubble.md) |
 | ⚠️ | Burst | [glyphs/effects/burst.md](glyphs/effects/burst.md) |
@@ -44,7 +44,7 @@
 | ⚠️ | Crush | [glyphs/effects/crush.md](glyphs/effects/crush.md) |
 | ⚠️ | Cut | [glyphs/effects/cut.md](glyphs/effects/cut.md) |
 | ⚠️ | Delay | [glyphs/effects/delay.md](glyphs/effects/delay.md) |
-| ⚠️ | Dispel | [glyphs/effects/dispel.md](glyphs/effects/dispel.md) |
+| ✅ | Dispel | [glyphs/effects/dispel.md](glyphs/effects/dispel.md) |
 | ⚠️ | Evaporate | [glyphs/effects/evaporate.md](glyphs/effects/evaporate.md) |
 | ⚠️ | Exchange | [glyphs/effects/exchange.md](glyphs/effects/exchange.md) |
 | ✅ | Explosion | [glyphs/effects/explosion.md](glyphs/effects/explosion.md) |
@@ -59,12 +59,12 @@
 | ✅ | Harm | [glyphs/effects/harm.md](glyphs/effects/harm.md) |
 | ⚠️ | Harvest | [glyphs/effects/harvest.md](glyphs/effects/harvest.md) |
 | ✅ | Heal | [glyphs/effects/heal.md](glyphs/effects/heal.md) |
-| ⚠️ | Hex | [glyphs/effects/hex.md](glyphs/effects/hex.md) |
+| ✅ | Hex | [glyphs/effects/hex.md](glyphs/effects/hex.md) |
 | ✅ | Ignite | [glyphs/effects/ignite.md](glyphs/effects/ignite.md) |
 | ⚠️ | Infuse | [glyphs/effects/infuse.md](glyphs/effects/infuse.md) |
 | ⚠️ | Intangible | [glyphs/effects/intangible.md](glyphs/effects/intangible.md) |
 | ⚠️ | Interact | [glyphs/effects/interact.md](glyphs/effects/interact.md) |
-| ⚠️ | Invisibility | [glyphs/effects/invisibility.md](glyphs/effects/invisibility.md) |
+| ✅ | Invisibility | [glyphs/effects/invisibility.md](glyphs/effects/invisibility.md) |
 | ⚠️ | Item Pickup | [glyphs/effects/item-pickup.md](glyphs/effects/item-pickup.md) |
 | ✅ | Knockback | [glyphs/effects/knockback.md](glyphs/effects/knockback.md) |
 | ✅ | Launch | [glyphs/effects/launch.md](glyphs/effects/launch.md) |
@@ -94,7 +94,7 @@
 | ⚠️ | Wall | [glyphs/effects/wall.md](glyphs/effects/wall.md) |
 | ⚠️ | Wind Burst | [glyphs/effects/wind-burst.md](glyphs/effects/wind-burst.md) |
 | ⚠️ | Wind Shear | [glyphs/effects/wind-shear.md](glyphs/effects/wind-shear.md) |
-| ⚠️ | Wither | [glyphs/effects/wither.md](glyphs/effects/wither.md) |
+| ✅ | Wither | [glyphs/effects/wither.md](glyphs/effects/wither.md) |
 | ⚠️ | Wololo | [glyphs/effects/wololo.md](glyphs/effects/wololo.md) |
 | ✅ | Pantomime | [glyphs/forms/pantomime.md](glyphs/forms/pantomime.md) |
 | ✅ | Projectile | [glyphs/forms/projectile.md](glyphs/forms/projectile.md) |
