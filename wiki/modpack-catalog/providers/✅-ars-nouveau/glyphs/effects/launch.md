@@ -38,7 +38,7 @@ Status: `SOURCE-PINNED 5.13.1 / SEMANTICS+ACQUISITION AUDITED / RUNTIME+CONFIG Q
 
 ## Auditoria de contrato estático — mobilidade e controle (25/10/2026)
 
-**✅ Contrato técnico source-pinned completo desta ficha; ⛔ hook mutador de perks `NOT_VERIFIED`; ⚠️ QA físico `NOT_TESTED`.** A marca ✅ aqui é de documentação estática, não de comportamento comprovado no cliente ou integração executável.
+**✅ Contrato técnico source-pinned completo desta ficha; ⛔ `mutating_hook=NOT_VERIFIED`; ⚠️ `physical_qa=NOT_TESTED`.** A marca ✅ aqui é de documentação estática, não de comportamento comprovado no cliente ou integração executável.
 
 | Campo necessário à perk | Comportamento real no source fixo e condicionamentos |
 |---|---|
