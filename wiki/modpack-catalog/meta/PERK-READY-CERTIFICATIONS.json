@@ -534,6 +534,211 @@
           "reason": "Contrato estático revisado em commit imutável com identidade binária SHA-exata; integração mutadora NOT_VERIFIED e QA físico NOT_TESTED explícitos."
         }
       }
+    },
+    "✅-ars-nouveau/glyphs/forms/self.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Apenas a ficha técnica estática da Form self (delivery/targeting/cost source default); não aprova perk externa, alteração de target, config live ou o provider inteiro.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Registro binário SHA-exato de glyph/class + classe no source imutável citada na ficha individual."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/self.md",
+          "reason": "Overloads, seleção do destinatário e resolver revisados na classe exata e discriminados na ficha."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/self.md",
+          "reason": "Critérios de alcance/geometry/compatibilidade/caps separados do consumo pelos Effects e da config real."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/self.md",
+          "reason": "Targeting e aplicabilidade de dano/projétil/duração mapeados por Form, sem inferência universal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Tier/default mana/recipe/XP e starter status documentados na linha fixa do provider."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/self.md",
+          "reason": "Autoridade do resolver Ars e ausência de hook mutador seguro com RPG/Black Arcana marcadas fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/self.md",
+          "reason": "Release/hash/pin distintos, escopo só estático e QA cliente/servidor/runtime explicitamente NÃO TESTADOS."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/forms/touch.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Apenas a ficha técnica estática da Form touch (delivery/targeting/cost source default); não aprova perk externa, alteração de target, config live ou o provider inteiro.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Registro binário SHA-exato de glyph/class + classe no source imutável citada na ficha individual."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/touch.md",
+          "reason": "Overloads, seleção do destinatário e resolver revisados na classe exata e discriminados na ficha."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/touch.md",
+          "reason": "Critérios de alcance/geometry/compatibilidade/caps separados do consumo pelos Effects e da config real."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/touch.md",
+          "reason": "Targeting e aplicabilidade de dano/projétil/duração mapeados por Form, sem inferência universal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Tier/default mana/recipe/XP e starter status documentados na linha fixa do provider."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/touch.md",
+          "reason": "Autoridade do resolver Ars e ausência de hook mutador seguro com RPG/Black Arcana marcadas fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/touch.md",
+          "reason": "Release/hash/pin distintos, escopo só estático e QA cliente/servidor/runtime explicitamente NÃO TESTADOS."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/forms/underfoot.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Apenas a ficha técnica estática da Form underfoot (delivery/targeting/cost source default); não aprova perk externa, alteração de target, config live ou o provider inteiro.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Registro binário SHA-exato de glyph/class + classe no source imutável citada na ficha individual."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/underfoot.md",
+          "reason": "Overloads, seleção do destinatário e resolver revisados na classe exata e discriminados na ficha."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/underfoot.md",
+          "reason": "Critérios de alcance/geometry/compatibilidade/caps separados do consumo pelos Effects e da config real."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/underfoot.md",
+          "reason": "Targeting e aplicabilidade de dano/projétil/duração mapeados por Form, sem inferência universal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Tier/default mana/recipe/XP e starter status documentados na linha fixa do provider."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/underfoot.md",
+          "reason": "Autoridade do resolver Ars e ausência de hook mutador seguro com RPG/Black Arcana marcadas fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/underfoot.md",
+          "reason": "Release/hash/pin distintos, escopo só estático e QA cliente/servidor/runtime explicitamente NÃO TESTADOS."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/forms/pantomime.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Apenas a ficha técnica estática da Form pantomime (delivery/targeting/cost source default); não aprova perk externa, alteração de target, config live ou o provider inteiro.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Registro binário SHA-exato de glyph/class + classe no source imutável citada na ficha individual."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/pantomime.md",
+          "reason": "Overloads, seleção do destinatário e resolver revisados na classe exata e discriminados na ficha."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/pantomime.md",
+          "reason": "Critérios de alcance/geometry/compatibilidade/caps separados do consumo pelos Effects e da config real."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/pantomime.md",
+          "reason": "Targeting e aplicabilidade de dano/projétil/duração mapeados por Form, sem inferência universal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Tier/default mana/recipe/XP e starter status documentados na linha fixa do provider."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/pantomime.md",
+          "reason": "Autoridade do resolver Ars e ausência de hook mutador seguro com RPG/Black Arcana marcadas fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/pantomime.md",
+          "reason": "Release/hash/pin distintos, escopo só estático e QA cliente/servidor/runtime explicitamente NÃO TESTADOS."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/forms/projectile.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Apenas a ficha técnica estática da Form projectile (delivery/targeting/cost source default); não aprova perk externa, alteração de target, config live ou o provider inteiro.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Registro binário SHA-exato de glyph/class + classe no source imutável citada na ficha individual."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/projectile.md",
+          "reason": "Overloads, seleção do destinatário e resolver revisados na classe exata e discriminados na ficha."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/projectile.md",
+          "reason": "Critérios de alcance/geometry/compatibilidade/caps separados do consumo pelos Effects e da config real."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/projectile.md",
+          "reason": "Targeting e aplicabilidade de dano/projétil/duração mapeados por Form, sem inferência universal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/ACQUISITION.md",
+          "reason": "Tier/default mana/recipe/XP e starter status documentados na linha fixa do provider."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/projectile.md",
+          "reason": "Autoridade do resolver Ars e ausência de hook mutador seguro com RPG/Black Arcana marcadas fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/forms/projectile.md",
+          "reason": "Release/hash/pin distintos, escopo só estático e QA cliente/servidor/runtime explicitamente NÃO TESTADOS."
+        }
+      }
     }
   },
   "providers": {},
