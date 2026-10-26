@@ -2,11 +2,11 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 69/85.**
-**Barra do recorte documental:** `████████████████░░░░ 81.2%`
+**Homologadas para perks (somente fichas detectadas): 85/85.**
+**Barra do recorte documental:** `████████████████████ 100.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
+**Estado desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
 
 | Estado | Objeto / habilidade identificada | Ficha |
 |---|---|---|
@@ -23,12 +23,12 @@
 | ✅ | Reduce Time | [augments/reduce-time.md](augments/reduce-time.md) |
 | ✅ | Sensitive | [augments/sensitive.md](augments/sensitive.md) |
 | ✅ | Split | [augments/split.md](augments/split.md) |
-| ⚠️ | Access Ender Inventory | [effects/access-ender-inventory.md](effects/access-ender-inventory.md) |
-| ⚠️ | Animate Block | [effects/animate-block.md](effects/animate-block.md) |
+| ✅ | Access Ender Inventory | [effects/access-ender-inventory.md](effects/access-ender-inventory.md) |
+| ✅ | Animate Block | [effects/animate-block.md](effects/animate-block.md) |
 | ✅ | Blink | [effects/blink.md](effects/blink.md) |
 | ✅ | Bounce | [effects/bounce.md](effects/bounce.md) |
 | ✅ | Break | [effects/break.md](effects/break.md) |
-| ⚠️ | Bubble | [effects/bubble.md](effects/bubble.md) |
+| ✅ | Bubble | [effects/bubble.md](effects/bubble.md) |
 | ✅ | Burst | [effects/burst.md](effects/burst.md) |
 | ✅ | Cold Snap | [effects/cold-snap.md](effects/cold-snap.md) |
 | ✅ | Conjure Mageblock | [effects/conjure-mageblock.md](effects/conjure-mageblock.md) |
@@ -55,20 +55,20 @@
 | ✅ | Heal | [effects/heal.md](effects/heal.md) |
 | ✅ | Hex | [effects/hex.md](effects/hex.md) |
 | ✅ | Ignite | [effects/ignite.md](effects/ignite.md) |
-| ⚠️ | Infuse | [effects/infuse.md](effects/infuse.md) |
-| ⚠️ | Intangible | [effects/intangible.md](effects/intangible.md) |
-| ⚠️ | Interact | [effects/interact.md](effects/interact.md) |
+| ✅ | Infuse | [effects/infuse.md](effects/infuse.md) |
+| ✅ | Intangible | [effects/intangible.md](effects/intangible.md) |
+| ✅ | Interact | [effects/interact.md](effects/interact.md) |
 | ✅ | Invisibility | [effects/invisibility.md](effects/invisibility.md) |
-| ⚠️ | Item Pickup | [effects/item-pickup.md](effects/item-pickup.md) |
+| ✅ | Item Pickup | [effects/item-pickup.md](effects/item-pickup.md) |
 | ✅ | Knockback | [effects/knockback.md](effects/knockback.md) |
 | ✅ | Launch | [effects/launch.md](effects/launch.md) |
 | ✅ | Leap | [effects/leap.md](effects/leap.md) |
 | ✅ | Lightning | [effects/lightning.md](effects/lightning.md) |
 | ✅ | Linger | [effects/linger.md](effects/linger.md) |
-| ⚠️ | Name | [effects/name.md](effects/name.md) |
+| ✅ | Name | [effects/name.md](effects/name.md) |
 | ✅ | Orbit | [effects/orbit.md](effects/orbit.md) |
 | ✅ | Place Block | [effects/place-block.md](effects/place-block.md) |
-| ⚠️ | Prestidigitation | [effects/prestidigitation.md](effects/prestidigitation.md) |
+| ✅ | Prestidigitation | [effects/prestidigitation.md](effects/prestidigitation.md) |
 | ✅ | Pull | [effects/pull.md](effects/pull.md) |
 | ✅ | Redstone Signal | [effects/redstone-signal.md](effects/redstone-signal.md) |
 | ✅ | Reset | [effects/reset.md](effects/reset.md) |
@@ -79,17 +79,17 @@
 | ✅ | Slowfall | [effects/slowfall.md](effects/slowfall.md) |
 | ✅ | Smelt | [effects/smelt.md](effects/smelt.md) |
 | ✅ | Snare | [effects/snare.md](effects/snare.md) |
-| ⚠️ | Summon Decoy | [effects/summon-decoy.md](effects/summon-decoy.md) |
-| ⚠️ | Summon Steed | [effects/summon-steed.md](effects/summon-steed.md) |
-| ⚠️ | Summon Undead | [effects/summon-undead.md](effects/summon-undead.md) |
-| ⚠️ | Summon Vex | [effects/summon-vex.md](effects/summon-vex.md) |
-| ⚠️ | Summon Wolves | [effects/summon-wolves.md](effects/summon-wolves.md) |
-| ⚠️ | Toss | [effects/toss.md](effects/toss.md) |
+| ✅ | Summon Decoy | [effects/summon-decoy.md](effects/summon-decoy.md) |
+| ✅ | Summon Steed | [effects/summon-steed.md](effects/summon-steed.md) |
+| ✅ | Summon Undead | [effects/summon-undead.md](effects/summon-undead.md) |
+| ✅ | Summon Vex | [effects/summon-vex.md](effects/summon-vex.md) |
+| ✅ | Summon Wolves | [effects/summon-wolves.md](effects/summon-wolves.md) |
+| ✅ | Toss | [effects/toss.md](effects/toss.md) |
 | ✅ | Wall | [effects/wall.md](effects/wall.md) |
 | ✅ | Wind Burst | [effects/wind-burst.md](effects/wind-burst.md) |
 | ✅ | Wind Shear | [effects/wind-shear.md](effects/wind-shear.md) |
 | ✅ | Wither | [effects/wither.md](effects/wither.md) |
-| ⚠️ | Wololo | [effects/wololo.md](effects/wololo.md) |
+| ✅ | Wololo | [effects/wololo.md](effects/wololo.md) |
 | ✅ | Pantomime | [forms/pantomime.md](forms/pantomime.md) |
 | ✅ | Projectile | [forms/projectile.md](forms/projectile.md) |
 | ✅ | Self | [forms/self.md](forms/self.md) |

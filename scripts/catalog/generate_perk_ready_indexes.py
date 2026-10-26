@@ -54,6 +54,12 @@ def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
              "**Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; "
              "universo integral ainda depende de validação."), ""
         ]
+    elif group and complete == len(group):
+        rows += [
+            "**Estado desta subpasta:** ✅ contratos técnicos estáticos de todas as "
+            "fichas detectadas certificados; recorte documental, sem homologação "
+            "de hooks mutadores, QA físico ou universo integral do provider.", ""
+        ]
     else:
         rows += [
             "**Estado desta subpasta:** ⚠️ validação técnica individual pendente; "
@@ -103,6 +109,7 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict) -> str:
         "para perks.", "",
         f"**Mods com escopo integral certificado: {done}/{len(mods)}.**",
         f"**Fichas com contrato técnico estático certificado: {object_done}/{len(cards)}.**",
+        f"**Barra das fichas estáticas observadas:** {TICK}{bar(object_done, len(cards))}{TICK}",
         f"**Progresso global confirmado:** {TICK}{bar(done, len(mods))}{TICK}",
         "**Escopo:** pastas atuais de providers; a modlist pode conter outros "
         "mods/sistemas ainda não representados. Objetos ausentes do catálogo "
@@ -123,8 +130,9 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict) -> str:
         "⛔ bloqueado por contrato. Ausência de ficha detectada não prova que "
         "não exista conteúdo.", "",
         "**Atenção:** as fichas candidatas são um recorte documental, NÃO o "
-        "universo total de feitiços e sistemas. O percentual global considera "
-        "providers com escopo certificado, não quantidade de documentos criados.", ""
+        "universo total de feitiços e sistemas. A barra de fichas estáticas observadas "
+        "usa certificados/fichas detectadas. A barra Progresso global confirmado "
+        "usa providers com escopo integral certificado.", ""
     ]
     return "\n".join(rows)
 

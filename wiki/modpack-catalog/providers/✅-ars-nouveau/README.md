@@ -1,5 +1,7 @@
 # Ars Nouveau — Core Compositional Spell Provider
 
+**[Fechamento documental dos 85 glyphs: dezesseis Effects finais](EFFECT-STATIC-REMAINING-SIXTEEN-5.13.1.md)** — 67/67 Effects, 85/85 glyphs e 24/24 rituais com contratos estáticos certificados; 109/138 fichas Ars detectadas. Restam familiares, perks e sistemas. Hooks mutadores e QA físico permanecem pendentes; o provider integral continua sem certificação. [Barras atuais](INDEX.md).
+
 **[Quinze Effects de dano, tempo e propagação: auditoria estática](EFFECT-STATIC-CONTROL-FIELDS-FIFTEEN-5.13.1.md)** — amplia o recorte para 35/67 Effects e 53/138 fichas Ars; hooks de perks e QA físico continuam pendentes. Consulte as [barras do provider](INDEX.md) e do [catálogo global](../INDEX.md).
 
 **[Certificação técnica estática das 5 Forms](FORM-STATIC-CERTIFICATION-5.13.1.md)** — documenta comportamento source-pinned; não homologa execução de perks ou QA de modpack.
