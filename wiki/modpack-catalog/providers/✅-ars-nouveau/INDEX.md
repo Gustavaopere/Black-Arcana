@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 77/138.**
-**Barra do recorte documental:** `███████████░░░░░░░░░ 55.8%`
+**Homologadas para perks (somente fichas detectadas): 81/138.**
+**Barra do recorte documental:** `███████████░░░░░░░░░ 58.7%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -33,19 +33,19 @@
 | ⚠️ | Animate Block | [glyphs/effects/animate-block.md](glyphs/effects/animate-block.md) |
 | ✅ | Blink | [glyphs/effects/blink.md](glyphs/effects/blink.md) |
 | ✅ | Bounce | [glyphs/effects/bounce.md](glyphs/effects/bounce.md) |
-| ⚠️ | Break | [glyphs/effects/break.md](glyphs/effects/break.md) |
+| ✅ | Break | [glyphs/effects/break.md](glyphs/effects/break.md) |
 | ⚠️ | Bubble | [glyphs/effects/bubble.md](glyphs/effects/bubble.md) |
 | ✅ | Burst | [glyphs/effects/burst.md](glyphs/effects/burst.md) |
 | ✅ | Cold Snap | [glyphs/effects/cold-snap.md](glyphs/effects/cold-snap.md) |
 | ⚠️ | Conjure Mageblock | [glyphs/effects/conjure-mageblock.md](glyphs/effects/conjure-mageblock.md) |
 | ⚠️ | Conjure Magelight | [glyphs/effects/conjure-magelight.md](glyphs/effects/conjure-magelight.md) |
-| ⚠️ | Conjure Water | [glyphs/effects/conjure-water.md](glyphs/effects/conjure-water.md) |
+| ✅ | Conjure Water | [glyphs/effects/conjure-water.md](glyphs/effects/conjure-water.md) |
 | ⚠️ | Craft | [glyphs/effects/craft.md](glyphs/effects/craft.md) |
 | ⚠️ | Crush | [glyphs/effects/crush.md](glyphs/effects/crush.md) |
 | ⚠️ | Cut | [glyphs/effects/cut.md](glyphs/effects/cut.md) |
 | ✅ | Delay | [glyphs/effects/delay.md](glyphs/effects/delay.md) |
 | ✅ | Dispel | [glyphs/effects/dispel.md](glyphs/effects/dispel.md) |
-| ⚠️ | Evaporate | [glyphs/effects/evaporate.md](glyphs/effects/evaporate.md) |
+| ✅ | Evaporate | [glyphs/effects/evaporate.md](glyphs/effects/evaporate.md) |
 | ⚠️ | Exchange | [glyphs/effects/exchange.md](glyphs/effects/exchange.md) |
 | ✅ | Explosion | [glyphs/effects/explosion.md](glyphs/effects/explosion.md) |
 | ✅ | Fangs | [glyphs/effects/fangs.md](glyphs/effects/fangs.md) |
@@ -73,7 +73,7 @@
 | ✅ | Linger | [glyphs/effects/linger.md](glyphs/effects/linger.md) |
 | ⚠️ | Name | [glyphs/effects/name.md](glyphs/effects/name.md) |
 | ✅ | Orbit | [glyphs/effects/orbit.md](glyphs/effects/orbit.md) |
-| ⚠️ | Place Block | [glyphs/effects/place-block.md](glyphs/effects/place-block.md) |
+| ✅ | Place Block | [glyphs/effects/place-block.md](glyphs/effects/place-block.md) |
 | ⚠️ | Prestidigitation | [glyphs/effects/prestidigitation.md](glyphs/effects/prestidigitation.md) |
 | ✅ | Pull | [glyphs/effects/pull.md](glyphs/effects/pull.md) |
 | ⚠️ | Redstone Signal | [glyphs/effects/redstone-signal.md](glyphs/effects/redstone-signal.md) |
