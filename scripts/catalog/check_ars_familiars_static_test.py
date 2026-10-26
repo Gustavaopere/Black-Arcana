@@ -103,7 +103,7 @@ class FamiliarStaticCatalogTest(unittest.TestCase):
             encoding="utf-8")
         self.assertIn("ENTITY_FAMILIAR_BOOKWYRM", content)
         self.assertIn("FAMILIAR_AMETHYST_GOLEM", content)
-        self.assertIn("não está verificado", content)
+        self.assertIn("NÃO está verificado", content)
         self.assertIn("Falhar fechado", content)
 
     def test_drygmy_double_dispatch_is_not_certified_plus_four(self):
