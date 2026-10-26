@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 39/67.**
-**Barra do recorte documental:** `███████████░░░░░░░░░ 58.2%`
+**Homologadas para perks (somente fichas detectadas): 43/67.**
+**Barra do recorte documental:** `████████████░░░░░░░░ 64.2%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -21,13 +21,13 @@
 | ⚠️ | Conjure Mageblock | [ficha/conjure-mageblock.md](conjure-mageblock.md) |
 | ⚠️ | Conjure Magelight | [ficha/conjure-magelight.md](conjure-magelight.md) |
 | ✅ | Conjure Water | [ficha/conjure-water.md](conjure-water.md) |
-| ⚠️ | Craft | [ficha/craft.md](craft.md) |
-| ⚠️ | Crush | [ficha/crush.md](crush.md) |
+| ✅ | Craft | [ficha/craft.md](craft.md) |
+| ✅ | Crush | [ficha/crush.md](crush.md) |
 | ⚠️ | Cut | [ficha/cut.md](cut.md) |
 | ✅ | Delay | [ficha/delay.md](delay.md) |
 | ✅ | Dispel | [ficha/dispel.md](dispel.md) |
 | ✅ | Evaporate | [ficha/evaporate.md](evaporate.md) |
-| ⚠️ | Exchange | [ficha/exchange.md](exchange.md) |
+| ✅ | Exchange | [ficha/exchange.md](exchange.md) |
 | ✅ | Explosion | [ficha/explosion.md](explosion.md) |
 | ✅ | Fangs | [ficha/fangs.md](fangs.md) |
 | ⚠️ | Fell | [ficha/fell.md](fell.md) |
@@ -64,7 +64,7 @@
 | ✅ | Rune | [ficha/rune.md](rune.md) |
 | ✅ | Sense Magic | [ficha/sense-magic.md](sense-magic.md) |
 | ✅ | Slowfall | [ficha/slowfall.md](slowfall.md) |
-| ⚠️ | Smelt | [ficha/smelt.md](smelt.md) |
+| ✅ | Smelt | [ficha/smelt.md](smelt.md) |
 | ✅ | Snare | [ficha/snare.md](snare.md) |
 | ⚠️ | Summon Decoy | [ficha/summon-decoy.md](summon-decoy.md) |
 | ⚠️ | Summon Steed | [ficha/summon-steed.md](summon-steed.md) |
