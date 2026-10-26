@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed regressions for 24 Ars Nouveau 5.13.1 Effect static dossiers.
+"""Fail-closed regressions for 28 Ars Nouveau 5.13.1 Effect static dossiers.
 
 No code execution, loaded provider API, runtime effect or perk behavior is
 implied by these tests; exact release binary registration remains separately
@@ -74,6 +74,18 @@ CASES = {
     "evaporate": ("glyph_evaporate", "EffectEvaporate",
                   ("SimpleWaterloggedBlock", "LiquidBlock", "Direction.values()",
                    "WATERLOGGED", "ShapersFocus")),
+    "exchange": ("glyph_exchange", "EffectExchange",
+                  ("EventHooks.onEnderTeleport", "firstBlock",
+                   "replaceAndReturnOrDrop", "BlockUtil.breakExtraBlock", "stack.shrink(1)")),
+    "crush": ("glyph_crush", "EffectCrush",
+               ("DamageTypesRegistry.CRUSH", "CrushRecipe",
+                "maxItemCrush", "skip_block_place", "getRolledOutputs")),
+    "smelt": ("glyph_smelt", "EffectSmelt",
+               ("destroyBlockSafely", "SMOKING", "BLASTING",
+                "maxItemSmelt", "addFreshEntity")),
+    "craft": ("glyph_craft", "EffectCraft",
+               ("CustomWorkbench", "CraftingMenu", "stillValid(Player)",
+                "SimpleMenuProvider", "isNotFakePlayer")),
 }
 
 
@@ -86,9 +98,9 @@ class StaticContractTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-    def test_twenty_four_distinct_effect_identities(self):
-        self.assertEqual(24, len(CASES))
-        self.assertEqual(24, len({v[0] for v in CASES.values()}))
+    def test_twenty_eight_distinct_effect_identities(self):
+        self.assertEqual(28, len(CASES))
+        self.assertEqual(28, len({v[0] for v in CASES.values()}))
         for slug, (identity, class_name, facts) in CASES.items():
             with self.subTest(effect=slug):
                 card = (ARS / "glyphs/effects" / (slug + ".md")).read_text(
@@ -114,7 +126,7 @@ class StaticContractTests(unittest.TestCase):
                 self.assertEqual("NOT_TESTED", data["physical_qa"])
                 self.assertEqual(EVIDENCE, set(data["evidence"]))
 
-    def test_twenty_four_evidence_paths_exist_in_checkout(self):
+    def test_twenty_eight_evidence_paths_exist_in_checkout(self):
         for name in CASES:
             cert = self.cert["✅-ars-nouveau/glyphs/effects/" + name + ".md"]
             for field, evidence in cert["evidence"].items():
@@ -124,7 +136,7 @@ class StaticContractTests(unittest.TestCase):
                     self.assertGreater(len(evidence["reason"]), 18)
                     self.assertTrue((REPO / evidence["path"]).is_file())
 
-    def test_all_parent_indexes_use_green_only_for_the_twenty_four(self):
+    def test_all_parent_indexes_use_green_only_for_the_twenty_eight(self):
         nested = [ARS / "glyphs/effects/INDEX.md",
                   ARS / "glyphs/INDEX.md", ARS / "INDEX.md"]
         for parent in nested:
@@ -333,12 +345,103 @@ class StaticContractTests(unittest.TestCase):
                           (ARS / "glyphs/INDEX.md").read_text(encoding="utf8"))
             self.assertIn(f"| ✅ | {name} | [glyphs/effects/{slug}.md]",
                           (ARS / "INDEX.md").read_text(encoding="utf8"))
-        self.assertIn("39/67.", self.index)
-        self.assertIn("57/85.", (ARS / "glyphs/INDEX.md").read_text(
+        # Preserve exact index/ledger parity as other, later batches certify Effects.
+        effect_count = sum(key.startswith("✅-ars-nouveau/glyphs/effects/")
+                           for key in self.cert)
+        glyph_count = sum(key.startswith("✅-ars-nouveau/glyphs/")
+                          for key in self.cert)
+        ars_count = sum(key.startswith("✅-ars-nouveau/")
+                        for key in self.cert)
+        self.assertIn(f"{effect_count}/67.", self.index)
+        self.assertIn(
+            f"{glyph_count}/85.",
+            (ARS / "glyphs/INDEX.md").read_text(encoding="utf8"))
+        self.assertIn(
+            f"{ars_count}/138.",
+            (ARS / "INDEX.md").read_text(encoding="utf8"))
+        self.assertIn(f"{len(self.cert)}/2075.", self.root_index)
+
+
+    def test_exchange_teleport_pair_is_independent_and_block_settlement_unchecked(self):
+        text = (ARS / "glyphs/effects/exchange.md").read_text(encoding="utf8")
+        for token in ("EventHooks.onEnderTeleport", "TELEPORTING_NOT_SUPPORTED",
+                      "FakePlayer", "origLoc", "não há rollback",
+                      "SpellUtil.calcAOEBlocks", "origState",
+                      "InventoryManager.extractItem", "extractRandomItem",
+                      "firstBlock", "getStateForPlacement", "SILK_TOUCH",
+                      "BlockUtil.breakExtraBlock", "world.setBlock",
+                      "BlockItemAccessor", "stack.shrink(1)",
+                      "ExtractedStack.replaceAndReturnOrDrop",
+                      "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED",
+                      "physical_qa=NOT_TESTED"):
+            self.assertIn(token, text)
+        self.assertIn("sem conferir seu boolean", text)
+
+    def test_crush_recipe_rolls_and_damage_not_per_rolled_output(self):
+        text = (ARS / "glyphs/effects/crush.md").read_text(encoding="utf8")
+        for token in ("DamageTypesRegistry.CRUSH", "IDamageEffect",
+                      "DAMAGE.get()*3.0", "AMP_VALUE.get()",
+                      "maxItemCrush", "getRolledOutputs(world.random)",
+                      "skip_block_place", "random.nextInt(maxRange)+1",
+                      "RecipeRegistry.CRUSH_TYPE", "setBlockAndUpdate",
+                      "addFreshEntity", "stack.shrink(1)",
+                      "destroyRespectsClaim", "canBlockBeHarvested",
+                      "ShapersFocus.tryPropagateBlockSpell",
+                      "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED",
+                      "physical_qa=NOT_TESTED"):
+            self.assertIn(token, text)
+        self.assertIn("Nenhum retorno", text)
+
+    def test_smelt_second_break_event_and_output_without_checked_destroy(self):
+        text = (ARS / "glyphs/effects/smelt.md").read_text(encoding="utf8")
+        for token in ("getDefaultManaCost()=100", "maxItemSmelt",
+                      "RecipeType.SMELTING", "canBlockBeHarvested",
+                      "destroyRespectsClaim", "destroyBlockSafely",
+                      "BlockEvent.BreakEvent", "setBlockAndUpdate",
+                      "addFreshEntity", "safelyUpdateState",
+                      "SMOKING", "BLASTING", "AugmentDampen",
+                      "AugmentAmplify", "WorldEffectPolicy",
+                      "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED"):
+            self.assertIn(token, text)
+        self.assertIn("não verifica o boolean de retorno", text)
+        self.assertIn("não é exploit comprovado", text)
+
+    def test_craft_ui_is_not_recipe_or_item_transaction(self):
+        text = (ARS / "glyphs/effects/craft.md").read_text(encoding="utf8")
+        for token in ("shooter instanceof Player", "isNotFakePlayer",
+                      "playerEntity.openMenu", "SimpleMenuProvider",
+                      "CustomWorkbench extends CraftingMenu",
+                      "ContainerLevelAccess.create", "stillValid(Player)",
+                      "true", "augmentSetOf()", "getDefaultManaCost()=50",
+                      "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED",
+                      "physical_qa=NOT_TESTED"):
+            self.assertIn(token, text)
+        self.assertIn("não comprova craft", text)
+
+    def test_processing_dossier_static_scope_and_85_certifications(self):
+        text = (ARS / "EFFECT-STATIC-PROCESSING-EXCHANGE-FOUR-5.13.1.md"
+                ).read_text(encoding="utf8")
+        for token in ("43/67", "61/85", "85/138", "85/2075",
+                      "0/164", SOURCE, SHA1, "EffectExchange", "EffectCrush",
+                      "EffectSmelt", "EffectCraft", "destroyBlockSafely",
+                      "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED",
+                      "physical_qa=NOT_TESTED", "06.05", "09"):
+            self.assertIn(token, text)
+
+    def test_processing_index_numbers_are_not_full_provider_certification(self):
+        self.assertIn("43/67.", self.index)
+        self.assertIn("61/85.", (ARS / "glyphs/INDEX.md").read_text(
             encoding="utf8"))
-        self.assertIn("81/138.", (ARS / "INDEX.md").read_text(
-            encoding="utf8"))
-        self.assertIn("81/2075.", self.root_index)
+        self.assertIn("85/138.", (ARS / "INDEX.md").read_text(encoding="utf8"))
+        self.assertIn("85/2075.", self.root_index)
+        self.assertIn("0/164.", self.root_index)
+        for slug in ("exchange", "crush", "smelt", "craft"):
+            name = slug.replace("-", " ").title()
+            self.assertIn(f"| ✅ | {name} |", self.index)
+            self.assertIn(f"| ✅ | {name} | [effects/{slug}.md]",
+                          (ARS / "glyphs/INDEX.md").read_text(encoding="utf8"))
+            self.assertIn(f"| ✅ | {name} | [glyphs/effects/{slug}.md]",
+                          (ARS / "INDEX.md").read_text(encoding="utf8"))
 
 
 if __name__ == "__main__":
