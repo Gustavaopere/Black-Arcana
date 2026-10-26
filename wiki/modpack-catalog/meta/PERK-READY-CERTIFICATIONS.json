@@ -3158,6 +3158,170 @@
           "reason": "Source versus publisher-JAR identity and required real modpack QA are explicit, including recipe type mismatch, world mutation callbacks and fail-closed hooks."
         }
       }
+    },
+    "✅-ars-nouveau/glyphs/effects/break.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Server block hit: AOE width/height/depth, mining fatigue and harvest level, Fortune/Silk tool, preflight BreakEvent then CommonHooks.fireBlockBreak, confirmed break before ShapersFocus.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Published JAR exact class-to-ID audit binds ars_nouveau:glyph_break and EffectBreak; method bytecode equivalence is not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/break.md",
+          "reason": "Exact upstream EffectBreak executable branches, conditional mutation, success criteria and downstream helpers are explicitly documented."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/break.md",
+          "reason": "Source-pinned AOE/Pierce geometry, augment compatibility, mana defaults, harvest/orientation/status constants and potential work multiplication are separated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/break.md",
+          "reason": "BlockHitResult and EntityHitResult branches, world position translation, hit faces, AOE candidates and mutation destination protections reviewed."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/break.md",
+          "reason": "Default Ars mana, inventory extractions, claim/loot semantics and separate output settlements distinguished from unverified actual loaded config."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-WORLD-MUTATION-FOUR-5.13.1.md",
+          "reason": "Black Arcana WorldEffectPolicy versus Ars-owned resolver, inventories, AOE and casting are separated; RPG progress-only sibling guarded by real API requirements."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/break.md",
+          "reason": "Provenance notes 5.13.1 exact publisher ID, pinned source method semantics, no verified mutating hook and no provider physical gameplay QA."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/place-block.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "AOE/Pierce and sensitive fake player direction; world bounds checked before adjacent offset; EntityPlaceEvent before InventoryManager extraction, BlockItem.place and ExtractedStack.returnOrDrop.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Published JAR exact class-to-ID audit binds ars_nouveau:glyph_place_block and EffectPlaceBlock; method bytecode equivalence is not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/place-block.md",
+          "reason": "Exact upstream EffectPlaceBlock executable branches, conditional mutation, success criteria and downstream helpers are explicitly documented."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/place-block.md",
+          "reason": "Source-pinned AOE/Pierce geometry, augment compatibility, mana defaults, harvest/orientation/status constants and potential work multiplication are separated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/place-block.md",
+          "reason": "BlockHitResult and EntityHitResult branches, world position translation, hit faces, AOE candidates and mutation destination protections reviewed."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/place-block.md",
+          "reason": "Default Ars mana, inventory extractions, claim/loot semantics and separate output settlements distinguished from unverified actual loaded config."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-WORLD-MUTATION-FOUR-5.13.1.md",
+          "reason": "Black Arcana WorldEffectPolicy versus Ars-owned resolver, inventories, AOE and casting are separated; RPG progress-only sibling guarded by real API requirements."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/place-block.md",
+          "reason": "Provenance notes 5.13.1 exact publisher ID, pinned source method semantics, no verified mutating hook and no provider physical gameplay QA."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/conjure-water.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Entity clearFire/Soaked/feet-water separate; ultraWarm block guard, origin-only claim/world bounds before adjacent water placement; callback result unchecked, configured potion20s versus null fallback30s.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Published JAR exact class-to-ID audit binds ars_nouveau:glyph_conjure_water and EffectConjureWater; method bytecode equivalence is not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-water.md",
+          "reason": "Exact upstream EffectConjureWater executable branches, conditional mutation, success criteria and downstream helpers are explicitly documented."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-water.md",
+          "reason": "Source-pinned AOE/Pierce geometry, augment compatibility, mana defaults, harvest/orientation/status constants and potential work multiplication are separated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-water.md",
+          "reason": "BlockHitResult and EntityHitResult branches, world position translation, hit faces, AOE candidates and mutation destination protections reviewed."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-water.md",
+          "reason": "Default Ars mana, inventory extractions, claim/loot semantics and separate output settlements distinguished from unverified actual loaded config."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-WORLD-MUTATION-FOUR-5.13.1.md",
+          "reason": "Black Arcana WorldEffectPolicy versus Ars-owned resolver, inventories, AOE and casting are separated; RPG progress-only sibling guarded by real API requirements."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-water.md",
+          "reason": "Provenance notes 5.13.1 exact publisher ID, pinned source method semantics, no verified mutating hook and no provider physical gameplay QA."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/evaporate.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "One center plus six adjacent positions for each AOE candidate, LiquidBlock to AIR or WATERLOGGED false; setBlock return unchecked and no direct claim preflight in class.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Published JAR exact class-to-ID audit binds ars_nouveau:glyph_evaporate and EffectEvaporate; method bytecode equivalence is not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/evaporate.md",
+          "reason": "Exact upstream EffectEvaporate executable branches, conditional mutation, success criteria and downstream helpers are explicitly documented."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/evaporate.md",
+          "reason": "Source-pinned AOE/Pierce geometry, augment compatibility, mana defaults, harvest/orientation/status constants and potential work multiplication are separated."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/evaporate.md",
+          "reason": "BlockHitResult and EntityHitResult branches, world position translation, hit faces, AOE candidates and mutation destination protections reviewed."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/evaporate.md",
+          "reason": "Default Ars mana, inventory extractions, claim/loot semantics and separate output settlements distinguished from unverified actual loaded config."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-WORLD-MUTATION-FOUR-5.13.1.md",
+          "reason": "Black Arcana WorldEffectPolicy versus Ars-owned resolver, inventories, AOE and casting are separated; RPG progress-only sibling guarded by real API requirements."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/evaporate.md",
+          "reason": "Provenance notes 5.13.1 exact publisher ID, pinned source method semantics, no verified mutating hook and no provider physical gameplay QA."
+        }
+      }
     }
   },
   "providers": {},
