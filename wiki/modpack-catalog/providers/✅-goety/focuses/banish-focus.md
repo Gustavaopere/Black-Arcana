@@ -57,3 +57,11 @@ Goety é a autoridade de Soul Energy, Focus/Staff casting, custos, recipe execut
 **Integração:** perímetro/validação de destino, imobilidade de boss, tier de banish, range e cooldown são **candidatos conceituais**, não pontos de alteração liberados. Qualquer bridge que repita a operação, force `randomTeleport` ou ignore cancelamentos é **⛔ FAIL-CLOSED**. Black Arcana não assume autoridade sobre o teleporte Goety; RPG Skill Tree não pode contabilizar tentativa como sucesso garantido.
 
 **Pendências:** classfiles, overloads de target, rota EnderTeleport, provider hooks e permissões da instalação física 3.1.4, config efetiva e dedicated-server/survival QA. A identidade está `COUNTED_EXACT`; a certificação técnica permanece ⚠️. Nenhuma entrada no manifesto das sete evidências ou nos índices é alterada.
+
+## Adendo de ABI exata do JAR 3.1.4 — 26/10/2026
+
+**Nova evidência, distinta do estudo da fonte 3.1.1 acima:** no JAR `goety-3.1.4.jar` com SHA-1 `a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7`, o [probe de assinaturas e relações de chamadas](../EXACT-3.1.4-ABI-AND-SYMBOLIC-CALL-AUDIT-20261026.md) confirmou os símbolos abaixo (`GitHub Actions run 40344481668`, `success`; artifact `12659699310`).
+
+`BanishSpell.conditionsMet` referencia `EventHooks.onEnderTeleport`, enquanto `BanishSpell.touchResult` referencia `LivingEntity.randomTeleport`, `stopRiding` e `SpellStat.getRange`. **A divergência entre o alvo pré-validado e o alvo realmente tocado permanece hipótese da fonte 3.1.1, não um bug demonstrado do 3.1.4.**
+
+**Interpretação estrita:** `EXACT_ABI_CALL_REFERENCES_VERIFIED` cobre apenas classe/método/field e referências estáticas apontadas; **não** confirma ramos executados, fórmulas, balanceamento, configs, eventos efetivos, hooks seguros ou testes físicos. A análise `SOURCE_ADJACENT_311` permanece uma fonte separada; `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` continuam válidos. Goety mantém autoridade, sem homologação de perks e sem incremento dos contadores globais.
