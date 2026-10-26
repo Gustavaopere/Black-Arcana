@@ -1,0 +1,139 @@
+name: Goety 3.1.4 Target and Soul Structural Audit (temporary)
+
+on:
+  push:
+    branches:
+      - audit/goety-314-banish-soul-structure-20261026
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify artifact and inspect narrow structural facts
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 300 \
+            'https://www.cursemaven.com/curse/maven/goety-586095/8689429/goety-586095-8689429.jar' -o goety.jar
+          echo 'a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7  goety.jar' | sha1sum -c -
+          mkdir -p audit
+          python3 - <<'PY'
+          from pathlib import Path
+          import collections, hashlib, re, subprocess, zipfile
+          EXPECTED = 'a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7'
+          JAR = Path('goety.jar')
+          assert hashlib.sha1(JAR.read_bytes()).hexdigest() == EXPECTED
+          CLASSES = {
+            'Banish': 'com.Polarice3.Goety.common.magic.spells.void_spells.BanishSpell',
+            'TouchSpell': 'com.Polarice3.Goety.common.magic.TouchSpell',
+            'ITouchSpell': 'com.Polarice3.Goety.api.magic.ITouchSpell',
+            'DarkWand': 'com.Polarice3.Goety.common.items.magic.DarkWand',
+            'SEHelper': 'com.Polarice3.Goety.utils.SEHelper',
+            'MagicFocus': 'com.Polarice3.Goety.common.items.magic.MagicFocus',
+            'Telekinesis': 'com.Polarice3.Goety.common.magic.spells.TelekinesisSpell',
+            'Factory': 'com.Polarice3.Goety.common.events.spell.GoetyEventFactory',
+            'ISpell': 'com.Polarice3.Goety.api.magic.ISpell',
+          }
+          METHODS = {
+            'Banish': {'conditionsMet','touchResult'},
+            'DarkWand': {'interactLivingEntity','canCastTouch','SoulUse','MagicResults','onUseTick','releaseUsing'},
+            'SEHelper': {'decreaseSouls','increaseSouls','soulDiscount','getSoulsAmount'},
+            'MagicFocus': {'getSpell','MagicFocus'},
+            'Telekinesis': {'findVictim','startSpell','stopSpell','SpellResult'},
+            'Factory': {'onStartSpell','onCastingSpell','onCastSpell','onStopSpell','onSoulEnergyLoss'},
+          }
+          SIGNIFICANT = re.compile(r'entityResult|onEnderTeleport|randomTeleport|stopRiding|touchResult|canCastTouch|targetConditions|conditionsMet|soulDiscount|SoulUse|decreaseSouls|getSoulsAmount|onSoulEnergyLoss|SpellResult|addCooldown|getSpell|victim|onStartSpell|onCastingSpell|onCastSpell|onStopSpell|findVictim|setSpell|setOwner|onHit',re.I)
+          parsed = {}
+          with zipfile.ZipFile(JAR) as z:
+            for alias, cls in CLASSES.items():
+              assert cls.replace('.','/')+'.class' in z.namelist(), cls
+              result = subprocess.run(['javap','-p','-c','-classpath',str(JAR),cls],capture_output=True,text=True,check=True).stdout
+              current='<init>'
+              methods=collections.defaultdict(list)
+              for line in result.splitlines():
+                s=line.strip()
+                if s.endswith(';') and '(' in s and not re.match(r'^\d+:',s) and not s.startswith(('descriptor:','//','Code:')):
+                  m=re.search(r'([\w$<>]+)\([^)]*\)(?:\s+throws .*)?;$',s)
+                  if m:
+                    current=m.group(1)
+                    methods.setdefault(current,[])
+                m=re.match(r'^\s*(\d+):\s+([a-z][a-z0-9_]*)\b(.*)$',line)
+                if not m:continue
+                pos,op,rest=m.group(1),m.group(2),m.group(3)
+                comment=rest.partition('//')[2].strip()
+                if op.startswith('invoke') and comment.startswith(('Method ','InterfaceMethod ')):
+                  ref=comment.split(' ',1)[1].split(':',1)[0].replace('"','')
+                  if '.' in ref:
+                    owner,meth=ref.rsplit('.',1)
+                    owner=owner.replace('/','.')
+                  else:
+                    owner,meth=cls,ref
+                  if SIGNIFICANT.search(meth):
+                    methods[current].append(('CALL',owner,meth))
+                if op in ('getfield','putfield','getstatic','putstatic') and comment.startswith('Field '):
+                  ref=comment.split(' ',1)[1].split(':',1)[0]
+                  if '.' in ref:
+                    owner,field=ref.rsplit('.',1)
+                    owner=owner.replace('/','.')
+                  else:
+                    owner,field=cls,ref
+                  if SIGNIFICANT.search(field):
+                    methods[current].append((op.upper(),owner,field))
+              parsed[alias]=methods
+          lines=[
+            'GOETY 3.1.4 SHA-EXACT TARGET/RESOURCE STRUCTURE AUDIT',
+            'sha1=a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7',
+            'source=CurseMaven 586095/8689429',
+            'scope=selected class availability and method-scoped symbolic call/field access sites',
+            'disclaimer=static symbolic references only; no bodies, operands, branches, values or source reconstruction retained',
+          ]
+          for alias, method_names in METHODS.items():
+            assert alias in parsed
+            for method in sorted(method_names):
+              data=parsed[alias].get(method,None)
+              assert data is not None, f'MISSING_METHOD {alias}.{method}'
+              lines.append(f'METHOD={alias}.{method} PRESENT=true')
+              for kind,owner,member in data:
+                lines.append(f'  {kind}={owner}.{member}')
+              lines.append(f'  SYMBOLS={len(data)}')
+          def has(alias,method,member,kind=None):
+            return any(e[2]==member and (kind is None or e[0]==kind) for e in parsed[alias].get(method,[]))
+          checks={
+            'banish_precheck_raycast':has('Banish','conditionsMet','entityResult'),
+            'banish_precheck_teleport_event':has('Banish','conditionsMet','onEnderTeleport'),
+            'banish_effect_random_teleport':has('Banish','touchResult','randomTeleport'),
+            'darkwand_touch_target_to_effect':has('DarkWand','interactLivingEntity','touchResult'),
+            'darkwand_target_conditions_gate':has('DarkWand','canCastTouch','targetConditions'),
+            'wand_result_getsouls':has('DarkWand','MagicResults','getSoulsAmount'),
+            'wand_result_decrease_souls':has('DarkWand','MagicResults','decreaseSouls'),
+            'sehelper_loss_event':has('SEHelper','decreaseSouls','onSoulEnergyLoss'),
+            'telekinesis_victim_access':any(e[2]=='victim' for l in parsed['Telekinesis'].values() for e in l),
+          }
+          for key,value in checks.items():
+            lines.append(f'CHECK_{key}={str(value).lower()}')
+          # Sanity: the required evidence shape must be present; otherwise fail the audit itself.
+          assert all(checks.values()), 'Required symbolic evidence not found'
+          # Explicitly test for discount invocation in SEHelper.decreaseSouls, including same-class references.
+          lines.append('OBSERVED_sehelper_decreaseSouls_calls_soulDiscount='+str(has('SEHelper','decreaseSouls','soulDiscount')).lower())
+          lines.append('OBSERVED_darkwand_soulUse_calls_soulDiscount='+str(has('DarkWand','SoulUse','soulDiscount')).lower())
+          lines.append('OBSERVED_banish_touchResult_calls_onEnderTeleport='+str(has('Banish','touchResult','onEnderTeleport')).lower())
+          lines.append('BOUNDARY=method references do not establish execution order, target identity, settlement amount or runtime outcome; no integration hooks certified')
+          Path('audit/report.txt').write_text('\n'.join(lines)+'\n',encoding='utf-8')
+          print('\n'.join(lines))
+          PY
+      - name: Publish compact evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: goety-314-target-soul-structure-report
+          path: audit/report.txt
+          if-no-files-found: error
+          retention-days: 30
