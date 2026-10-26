@@ -2,20 +2,20 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 109/138.**
-**Barra do recorte documental:** `███████████████░░░░░ 79.0%`
+**Homologadas para perks (somente fichas detectadas): 115/138.**
+**Barra do recorte documental:** `████████████████░░░░ 83.3%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
 
 | Estado | Objeto / habilidade identificada | Ficha |
 |---|---|---|
-| ⚠️ | Amethyst Golem | [familiars/amethyst-golem.md](familiars/amethyst-golem.md) |
-| ⚠️ | Bookwyrm | [familiars/bookwyrm.md](familiars/bookwyrm.md) |
-| ⚠️ | Drygmy | [familiars/drygmy.md](familiars/drygmy.md) |
-| ⚠️ | Starbuncle | [familiars/starbuncle.md](familiars/starbuncle.md) |
-| ⚠️ | Whirlisprig | [familiars/whirlisprig.md](familiars/whirlisprig.md) |
-| ⚠️ | Wixie | [familiars/wixie.md](familiars/wixie.md) |
+| ✅ | Amethyst Golem | [familiars/amethyst-golem.md](familiars/amethyst-golem.md) |
+| ✅ | Bookwyrm | [familiars/bookwyrm.md](familiars/bookwyrm.md) |
+| ✅ | Drygmy | [familiars/drygmy.md](familiars/drygmy.md) |
+| ✅ | Starbuncle | [familiars/starbuncle.md](familiars/starbuncle.md) |
+| ✅ | Whirlisprig | [familiars/whirlisprig.md](familiars/whirlisprig.md) |
+| ✅ | Wixie | [familiars/wixie.md](familiars/wixie.md) |
 | ✅ | Accelerate | [glyphs/augments/accelerate.md](glyphs/augments/accelerate.md) |
 | ✅ | Amplify | [glyphs/augments/amplify.md](glyphs/augments/amplify.md) |
 | ✅ | Aoe | [glyphs/augments/aoe.md](glyphs/augments/aoe.md) |
