@@ -3322,6 +3322,170 @@
           "reason": "Provenance notes 5.13.1 exact publisher ID, pinned source method semantics, no verified mutating hook and no provider physical gameplay QA."
         }
       }
+    },
+    "✅-ars-nouveau/glyphs/effects/exchange.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Independent onEnderTeleport checks produce potentially partial entity swap; block exchange firstBlock chosen before success, separate BreakEvent, unchecked setBlock followed by shrink/returnOrDrop.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact publisher 5.13.1 compiled registry associates ars_nouveau:glyph_exchange with EffectExchange; method equivalence remains unverified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/exchange.md",
+          "reason": "Source-pinned EffectExchange branches and downstream calls document actual success gates, partial outcomes, and absent result checks."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/exchange.md",
+          "reason": "Augments, source defaults, targeting geometry, item caps, recipe types, teleport and output parameters are distinguished from runtime config."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/exchange.md",
+          "reason": "Differentiates HitResult classes, block selection, item inventory or world entity selection, per-item caps and applicable conditional consumers."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/exchange.md",
+          "reason": "Separates Ars mana defaults and inventory transactions, loot/drops, recipe outputs, UI-only effects and unverified server-side settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-PROCESSING-EXCHANGE-FOUR-5.13.1.md",
+          "reason": "Dossier preserves Ars-native casting/inventory authority versus Black Arcana WorldEffectPolicy and RPG Skill Tree progression-only consumer boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/exchange.md",
+          "reason": "Source vs compiled ID evidence, non-atomic or unchecked results and pending provider-native physical QA block any assumed mutating perks."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/crush.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "DamageTypesRegistry.CRUSH base x3 underwater only; Sensitive per-unit cap and CrushRecipe rolled outputs; no direct block claim preflight or setBlockAndUpdate success verification.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact publisher 5.13.1 compiled registry associates ars_nouveau:glyph_crush with EffectCrush; method equivalence remains unverified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/crush.md",
+          "reason": "Source-pinned EffectCrush branches and downstream calls document actual success gates, partial outcomes, and absent result checks."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/crush.md",
+          "reason": "Augments, source defaults, targeting geometry, item caps, recipe types, teleport and output parameters are distinguished from runtime config."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/crush.md",
+          "reason": "Differentiates HitResult classes, block selection, item inventory or world entity selection, per-item caps and applicable conditional consumers."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/crush.md",
+          "reason": "Separates Ars mana defaults and inventory transactions, loot/drops, recipe outputs, UI-only effects and unverified server-side settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-PROCESSING-EXCHANGE-FOUR-5.13.1.md",
+          "reason": "Dossier preserves Ars-native casting/inventory authority versus Black Arcana WorldEffectPolicy and RPG Skill Tree progression-only consumer boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/crush.md",
+          "reason": "Source vs compiled ID evidence, non-atomic or unchecked results and pending provider-native physical QA block any assumed mutating perks."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/smelt.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "SMELTING block transform checks claim, but non-BlockItem output emitted even when destroyBlockSafely result unchecked; item SMOKING overrides BLASTING and per-unit maxItemSmelt.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact publisher 5.13.1 compiled registry associates ars_nouveau:glyph_smelt with EffectSmelt; method equivalence remains unverified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/smelt.md",
+          "reason": "Source-pinned EffectSmelt branches and downstream calls document actual success gates, partial outcomes, and absent result checks."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/smelt.md",
+          "reason": "Augments, source defaults, targeting geometry, item caps, recipe types, teleport and output parameters are distinguished from runtime config."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/smelt.md",
+          "reason": "Differentiates HitResult classes, block selection, item inventory or world entity selection, per-item caps and applicable conditional consumers."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/smelt.md",
+          "reason": "Separates Ars mana defaults and inventory transactions, loot/drops, recipe outputs, UI-only effects and unverified server-side settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-PROCESSING-EXCHANGE-FOUR-5.13.1.md",
+          "reason": "Dossier preserves Ars-native casting/inventory authority versus Black Arcana WorldEffectPolicy and RPG Skill Tree progression-only consumer boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/smelt.md",
+          "reason": "Source vs compiled ID evidence, non-atomic or unchecked results and pending provider-native physical QA block any assumed mutating perks."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/craft.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Real player only opens SimpleMenuProvider CustomWorkbench with stillValid=true; no recipe mutation or craft/ingredient completion; no augments.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact publisher 5.13.1 compiled registry associates ars_nouveau:glyph_craft with EffectCraft; method equivalence remains unverified."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/craft.md",
+          "reason": "Source-pinned EffectCraft branches and downstream calls document actual success gates, partial outcomes, and absent result checks."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/craft.md",
+          "reason": "Augments, source defaults, targeting geometry, item caps, recipe types, teleport and output parameters are distinguished from runtime config."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/craft.md",
+          "reason": "Differentiates HitResult classes, block selection, item inventory or world entity selection, per-item caps and applicable conditional consumers."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/craft.md",
+          "reason": "Separates Ars mana defaults and inventory transactions, loot/drops, recipe outputs, UI-only effects and unverified server-side settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-PROCESSING-EXCHANGE-FOUR-5.13.1.md",
+          "reason": "Dossier preserves Ars-native casting/inventory authority versus Black Arcana WorldEffectPolicy and RPG Skill Tree progression-only consumer boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/craft.md",
+          "reason": "Source vs compiled ID evidence, non-atomic or unchecked results and pending provider-native physical QA block any assumed mutating perks."
+        }
+      }
     }
   },
   "providers": {},
