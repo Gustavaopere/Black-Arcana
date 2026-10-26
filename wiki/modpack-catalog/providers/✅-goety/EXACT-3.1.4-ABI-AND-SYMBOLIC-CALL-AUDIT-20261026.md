@@ -1,7 +1,7 @@
 # Goety 3.1.4 — auditoria exata de ABI e referências simbólicas
 
-**Data da evidência:** 26/10/2026  
-**Estado:** ⚠️ `EXACT_JAR_SHA_MATCHED / ABI_SYMBOLIC_CALLS_VERIFIED / EFFECT_SEMANTICS_NOT_VERIFIED / MUTATION_NOT_CERTIFIED`  
+**Data da evidência:** 26/10/2026
+**Estado:** ⚠️ `EXACT_JAR_SHA_MATCHED / ABI_SYMBOLIC_CALLS_VERIFIED / EFFECT_SEMANTICS_NOT_VERIFIED / MUTATION_NOT_CERTIFIED`
 **Stage:** auditoria documental/provider; **não** promove Stage 06.05 nem certificação de perks.
 
 ## Artefato, execução e isolamento
