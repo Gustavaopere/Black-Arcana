@@ -345,12 +345,21 @@ class StaticContractTests(unittest.TestCase):
                           (ARS / "glyphs/INDEX.md").read_text(encoding="utf8"))
             self.assertIn(f"| ✅ | {name} | [glyphs/effects/{slug}.md]",
                           (ARS / "INDEX.md").read_text(encoding="utf8"))
-        self.assertIn("39/67.", self.index)
-        self.assertIn("57/85.", (ARS / "glyphs/INDEX.md").read_text(
-            encoding="utf8"))
-        self.assertIn("81/138.", (ARS / "INDEX.md").read_text(
-            encoding="utf8"))
-        self.assertIn("81/2075.", self.root_index)
+        # Preserve exact index/ledger parity as other, later batches certify Effects.
+        effect_count = sum(key.startswith("✅-ars-nouveau/glyphs/effects/")
+                           for key in self.cert)
+        glyph_count = sum(key.startswith("✅-ars-nouveau/glyphs/")
+                          for key in self.cert)
+        ars_count = sum(key.startswith("✅-ars-nouveau/")
+                        for key in self.cert)
+        self.assertIn(f"{effect_count}/67.", self.index)
+        self.assertIn(
+            f"{glyph_count}/85.",
+            (ARS / "glyphs/INDEX.md").read_text(encoding="utf8"))
+        self.assertIn(
+            f"{ars_count}/138.",
+            (ARS / "INDEX.md").read_text(encoding="utf8"))
+        self.assertIn(f"{len(self.cert)}/2075.", self.root_index)
 
 
     def test_exchange_teleport_pair_is_independent_and_block_settlement_unchecked(self):
