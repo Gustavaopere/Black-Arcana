@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed regressions for 32 Ars Nouveau 5.13.1 Effect static dossiers.
+"""Fail-closed regressions for 36 Ars Nouveau 5.13.1 Effect static dossiers.
 
 No code execution, loaded provider API, runtime effect or perk behavior is
 implied by these tests; exact release binary registration remains separately
@@ -98,6 +98,18 @@ CASES = {
     "harvest": ("glyph_harvest", "EffectHarvest",
                  ("processAndSpawnDrops", "HARVEST_STEMS", "CocoaBlock.AGE",
                   "NetherWartBlock.AGE", "MAGE_BLOOM_CROP")),
+    "conjure-mageblock": ("glyph_phantom_block", "EffectPhantomBlock",
+                          ("MageBlock.TEMPORARY", "MageBlockTile",
+                           "destroyRespectsClaim", "lengthModifier", "ShapersFocus")),
+    "conjure-magelight": ("glyph_light", "EffectLight",
+                          ("LIGHT_BLOCK", "T_LIGHT_BLOCK", "SconceBlock.LIGHT_LEVEL",
+                           "TempLightTile", "PacketUpdateGlowColor")),
+    "redstone-signal": ("glyph_redstone_signal", "EffectRedstone",
+                         ("RedstoneSavedData", "SIGNAL_MAP", "TemporaryTile",
+                          "EntityPlaceEvent", "signalModifier")),
+    "rotate": ("glyph_rotate", "EffectRotate",
+               ("Math.cos(angle)", "Math.sin(angle)", "Projectile",
+                "BlockStateProperties.AXIS", "ShapersFocus")),
 }
 
 
@@ -110,9 +122,9 @@ class StaticContractTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-    def test_thirty_two_distinct_effect_identities(self):
-        self.assertEqual(32, len(CASES))
-        self.assertEqual(32, len({v[0] for v in CASES.values()}))
+    def test_thirty_six_distinct_effect_identities(self):
+        self.assertEqual(36, len(CASES))
+        self.assertEqual(36, len({v[0] for v in CASES.values()}))
         for slug, (identity, class_name, facts) in CASES.items():
             with self.subTest(effect=slug):
                 card = (ARS / "glyphs/effects" / (slug + ".md")).read_text(
@@ -138,7 +150,7 @@ class StaticContractTests(unittest.TestCase):
                 self.assertEqual("NOT_TESTED", data["physical_qa"])
                 self.assertEqual(EVIDENCE, set(data["evidence"]))
 
-    def test_thirty_two_evidence_paths_exist_in_checkout(self):
+    def test_thirty_six_evidence_paths_exist_in_checkout(self):
         for name in CASES:
             cert = self.cert["✅-ars-nouveau/glyphs/effects/" + name + ".md"]
             for field, evidence in cert["evidence"].items():
@@ -148,7 +160,7 @@ class StaticContractTests(unittest.TestCase):
                     self.assertGreater(len(evidence["reason"]), 18)
                     self.assertTrue((REPO / evidence["path"]).is_file())
 
-    def test_all_parent_indexes_use_green_only_for_the_thirty_two(self):
+    def test_all_parent_indexes_use_green_only_for_the_thirty_six(self):
         nested = [ARS / "glyphs/effects/INDEX.md",
                   ARS / "glyphs/INDEX.md", ARS / "INDEX.md"]
         for parent in nested:
@@ -543,12 +555,99 @@ class StaticContractTests(unittest.TestCase):
                           (ARS / "glyphs/INDEX.md").read_text(encoding="utf8"))
             self.assertIn(f"| ✅ | {name} | [glyphs/effects/{slug}.md]",
                           (ARS / "INDEX.md").read_text(encoding="utf8"))
-        self.assertIn("47/67.", self.index)
-        self.assertIn("65/85.", (ARS / "glyphs/INDEX.md").read_text(
+        effects_done = sum(k.startswith("✅-ars-nouveau/glyphs/effects/")
+                           for k in self.cert)
+        glyphs_done = sum(k.startswith("✅-ars-nouveau/glyphs/")
+                          for k in self.cert)
+        ars_done = sum(k.startswith("✅-ars-nouveau/")
+                       for k in self.cert)
+        self.assertIn(f"{effects_done}/67.", self.index)
+        self.assertIn(f"{glyphs_done}/85.", (ARS / "glyphs/INDEX.md").read_text(
             encoding="utf8"))
-        self.assertIn("89/138.", (ARS / "INDEX.md").read_text(encoding="utf8"))
-        self.assertIn("89/2075.", self.root_index)
+        self.assertIn(f"{ars_done}/138.", (ARS / "INDEX.md").read_text(
+            encoding="utf8"))
+        self.assertIn(f"{len(self.cert)}/2075.", self.root_index)
         self.assertIn("0/164.", self.root_index)
+
+
+    def test_mageblock_tile_age_and_amplify_permanent_are_distinct(self):
+        page = (ARS / "glyphs/effects/conjure-mageblock.md").read_text(
+            encoding="utf8")
+        for term in ("glyph_phantom_block", "EffectPhantomBlock", "isInside()",
+                     "world.isInWorldBounds", "destroyRespectsClaim",
+                     "canBeReplaced", "isUnobstructed",
+                     "MageBlock.TEMPORARY", "MageBlockTile", "AugmentAmplify",
+                     "setBlockAndUpdate", "tile.lengthModifier",
+                     "tile.isPermanent", "age > (20*15+20*5*lengthModifier)",
+                     "300 ticks", "lightColor", "onDispel", "WorldEffectPolicy",
+                     "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED"):
+            self.assertIn(term, page)
+        self.assertIn("não é verificado", page)
+
+    def test_magelight_entity_glow_and_light_tile_lifetime_are_separate(self):
+        page = (ARS / "glyphs/effects/conjure-magelight.md").read_text(
+            encoding="utf8")
+        for term in ("EffectLight", "ILightable.onLight", "NIGHT_VISION",
+                     "GLOWING", "PacketUpdateGlowColor", "RainbowParticleColor",
+                     "SignBlockEntity", "destroyRespectsClaim", "GameEvent.BLOCK_CHANGE",
+                     "LIGHT_BLOCK", "T_LIGHT_BLOCK", "WATERLOGGED",
+                     "SconceBlock.LIGHT_LEVEL", "TempLightTile",
+                     "age>(20*15+20*5*lengthModifier)", "setBlockAndUpdate",
+                     "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED",
+                     "physical_qa=NOT_TESTED"):
+            self.assertIn(term, page)
+        self.assertIn("continua", page)
+
+    def test_redstone_sensitive_saveddata_and_temporary_tile_have_different_clocks(self):
+        page = (ARS / "glyphs/effects/redstone-signal.md").read_text(
+            encoding="utf8")
+        for term in ("EffectRedstone", "signalModifier=Mth.clamp",
+                     "GENERIC_INT=5", "BONUS_TIME=10", "SIGNAL_MAP.put",
+                     "destroyRespectsClaim", "BlockEvent.EntityPlaceEvent",
+                     "neighborChanged", "updateNeighborsAt",
+                     "TemporaryBlock.POWER", "tile.gameTime",
+                     "tile.tickDuration", "RedstoneSavedData.from",
+                     "an_redstone_signals", "SignalList", "isDirty()",
+                     "LevelTickEvent.Post", "signal.ticks--<=0",
+                     "TemporaryTile.tick", "gameTime+tickDuration",
+                     "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED",
+                     "physical_qa=NOT_TESTED"):
+            self.assertIn(term, page)
+        self.assertIn("não decrementa os ticks", page)
+        self.assertIn("não publica", page)
+
+    def test_rotate_projectile_degree_vs_radian_qa_and_missing_block_claim_guard(self):
+        page = (ARS / "glyphs/effects/rotate.md").read_text(
+            encoding="utf8")
+        for term in ("EffectRotate", "1+Math.abs(ampMod)",
+                     "Projectile", "projectile.setDeltaMovement",
+                     "rotateVec", "Math.cos(angle)", "Math.sin(angle)",
+                     "90", "-90", "radianos", "getAoeMultiplier",
+                     "SpellUtil.calcAOEBlocks", "BlockStateProperties.AXIS",
+                     "BlockStateProperties.FACING", "setBlockAndUpdate",
+                     "ShapersFocus.tryPropagateBlockSpell",
+                     "destroyRespectsClaim", "WorldEffectPolicy",
+                     "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED"):
+            self.assertIn(term, page)
+        self.assertIn("não prova de defeito", page)
+
+    def test_persistent_effects_four_and_global_counters_are_static_only(self):
+        page = (ARS / "EFFECT-STATIC-TEMPORARY-REDSTONE-ROTATE-FOUR-5.13.1.md"
+                ).read_text(encoding="utf8")
+        for term in ("51/67", "69/85", "93/138", "93/2075", "0/164",
+                     SOURCE, SHA1, "EffectPhantomBlock", "EffectLight",
+                     "EffectRedstone", "EffectRotate", "WorldEffectPolicy",
+                     "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED",
+                     "06.05", "09"):
+            self.assertIn(term, page)
+        for slug in ("conjure-mageblock", "conjure-magelight",
+                     "redstone-signal", "rotate"):
+            label = slug.replace("-", " ").title()
+            self.assertIn(f"| ✅ | {label} |", self.index)
+            self.assertIn(f"| ✅ | {label} | [effects/{slug}.md]",
+                          (ARS / "glyphs/INDEX.md").read_text(encoding="utf8"))
+            self.assertIn(f"| ✅ | {label} | [glyphs/effects/{slug}.md]",
+                          (ARS / "INDEX.md").read_text(encoding="utf8"))
 
 
 if __name__ == "__main__":
