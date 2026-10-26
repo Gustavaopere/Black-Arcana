@@ -2,20 +2,20 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 51/67.**
-**Barra do recorte documental:** `███████████████░░░░░ 76.1%`
+**Homologadas para perks (somente fichas detectadas): 67/67.**
+**Barra do recorte documental:** `████████████████████ 100.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
+**Estado desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
 
 | Estado | Objeto / habilidade identificada | Ficha |
 |---|---|---|
-| ⚠️ | Access Ender Inventory | [ficha/access-ender-inventory.md](access-ender-inventory.md) |
-| ⚠️ | Animate Block | [ficha/animate-block.md](animate-block.md) |
+| ✅ | Access Ender Inventory | [ficha/access-ender-inventory.md](access-ender-inventory.md) |
+| ✅ | Animate Block | [ficha/animate-block.md](animate-block.md) |
 | ✅ | Blink | [ficha/blink.md](blink.md) |
 | ✅ | Bounce | [ficha/bounce.md](bounce.md) |
 | ✅ | Break | [ficha/break.md](break.md) |
-| ⚠️ | Bubble | [ficha/bubble.md](bubble.md) |
+| ✅ | Bubble | [ficha/bubble.md](bubble.md) |
 | ✅ | Burst | [ficha/burst.md](burst.md) |
 | ✅ | Cold Snap | [ficha/cold-snap.md](cold-snap.md) |
 | ✅ | Conjure Mageblock | [ficha/conjure-mageblock.md](conjure-mageblock.md) |
@@ -42,20 +42,20 @@
 | ✅ | Heal | [ficha/heal.md](heal.md) |
 | ✅ | Hex | [ficha/hex.md](hex.md) |
 | ✅ | Ignite | [ficha/ignite.md](ignite.md) |
-| ⚠️ | Infuse | [ficha/infuse.md](infuse.md) |
-| ⚠️ | Intangible | [ficha/intangible.md](intangible.md) |
-| ⚠️ | Interact | [ficha/interact.md](interact.md) |
+| ✅ | Infuse | [ficha/infuse.md](infuse.md) |
+| ✅ | Intangible | [ficha/intangible.md](intangible.md) |
+| ✅ | Interact | [ficha/interact.md](interact.md) |
 | ✅ | Invisibility | [ficha/invisibility.md](invisibility.md) |
-| ⚠️ | Item Pickup | [ficha/item-pickup.md](item-pickup.md) |
+| ✅ | Item Pickup | [ficha/item-pickup.md](item-pickup.md) |
 | ✅ | Knockback | [ficha/knockback.md](knockback.md) |
 | ✅ | Launch | [ficha/launch.md](launch.md) |
 | ✅ | Leap | [ficha/leap.md](leap.md) |
 | ✅ | Lightning | [ficha/lightning.md](lightning.md) |
 | ✅ | Linger | [ficha/linger.md](linger.md) |
-| ⚠️ | Name | [ficha/name.md](name.md) |
+| ✅ | Name | [ficha/name.md](name.md) |
 | ✅ | Orbit | [ficha/orbit.md](orbit.md) |
 | ✅ | Place Block | [ficha/place-block.md](place-block.md) |
-| ⚠️ | Prestidigitation | [ficha/prestidigitation.md](prestidigitation.md) |
+| ✅ | Prestidigitation | [ficha/prestidigitation.md](prestidigitation.md) |
 | ✅ | Pull | [ficha/pull.md](pull.md) |
 | ✅ | Redstone Signal | [ficha/redstone-signal.md](redstone-signal.md) |
 | ✅ | Reset | [ficha/reset.md](reset.md) |
@@ -66,17 +66,17 @@
 | ✅ | Slowfall | [ficha/slowfall.md](slowfall.md) |
 | ✅ | Smelt | [ficha/smelt.md](smelt.md) |
 | ✅ | Snare | [ficha/snare.md](snare.md) |
-| ⚠️ | Summon Decoy | [ficha/summon-decoy.md](summon-decoy.md) |
-| ⚠️ | Summon Steed | [ficha/summon-steed.md](summon-steed.md) |
-| ⚠️ | Summon Undead | [ficha/summon-undead.md](summon-undead.md) |
-| ⚠️ | Summon Vex | [ficha/summon-vex.md](summon-vex.md) |
-| ⚠️ | Summon Wolves | [ficha/summon-wolves.md](summon-wolves.md) |
-| ⚠️ | Toss | [ficha/toss.md](toss.md) |
+| ✅ | Summon Decoy | [ficha/summon-decoy.md](summon-decoy.md) |
+| ✅ | Summon Steed | [ficha/summon-steed.md](summon-steed.md) |
+| ✅ | Summon Undead | [ficha/summon-undead.md](summon-undead.md) |
+| ✅ | Summon Vex | [ficha/summon-vex.md](summon-vex.md) |
+| ✅ | Summon Wolves | [ficha/summon-wolves.md](summon-wolves.md) |
+| ✅ | Toss | [ficha/toss.md](toss.md) |
 | ✅ | Wall | [ficha/wall.md](wall.md) |
 | ✅ | Wind Burst | [ficha/wind-burst.md](wind-burst.md) |
 | ✅ | Wind Shear | [ficha/wind-shear.md](wind-shear.md) |
 | ✅ | Wither | [ficha/wither.md](wither.md) |
-| ⚠️ | Wololo | [ficha/wololo.md](wololo.md) |
+| ✅ | Wololo | [ficha/wololo.md](wololo.md) |
 
 ## Critério do ✅
 

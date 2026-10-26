@@ -3814,6 +3814,662 @@
           "reason": "Static analysis and compiled registry-class provenance separated from unverified mutation hooks and missing real modpack physical QA."
         }
       }
+    },
+    "✅-ars-nouveau/glyphs/effects/access-ender-inventory.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "EntityHitResult abre menu threeRows do Ender inventory do caster real; sem augments ou leitura de inventário do alvo; retorno de openMenu ignorado. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_ender_inventory e classe EffectEnderChest; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/access-ender-inventory.md",
+          "reason": "EntityHitResult abre menu threeRows do Ender inventory do caster real; sem augments ou leitura de inventário do alvo; retorno de openMenu ignorado. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/access-ender-inventory.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Abertura de UI não comprova transferência, conteúdo ou permissões finais."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/access-ender-inventory.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/access-ender-inventory.md",
+          "reason": "Mana default 50, tier 2 e XP de receita 55 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/access-ender-inventory.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/access-ender-inventory.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/animate-block.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Conversão bloco/falling entity em summon sem sickness; T1200+1200M, ataques−400ticks; retorno e NBT divergem entre bloco e skull. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_animate_block e classe EffectAnimate; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/animate-block.md",
+          "reason": "Conversão bloco/falling entity em summon sem sickness; T1200+1200M, ataques−400ticks; retorno e NBT divergem entre bloco e skull. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/animate-block.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Spawn/substituição não formam transação atômica."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/animate-block.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/animate-block.md",
+          "reason": "Mana default 200, tier 2 e XP de receita 55 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/animate-block.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/animate-block.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/bubble.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Bolha captura por montaria; maxAge100+3M ticks e bônus5+2a+d no evento de dano existente; flags de pop divergem e captura automática tem gate distinto. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_bubble e classe EffectBubble; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/bubble.md",
+          "reason": "Bolha captura por montaria; maxAge100+3M ticks e bônus5+2a+d no evento de dano existente; flags de pop divergem e captura automática tem gate distinto. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/bubble.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. HAS_POPPED não é o plain hasPopped testado pelo dano; once-only não comprovado."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/bubble.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/bubble.md",
+          "reason": "Mana default 20, tier 1 e XP de receita 27 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/bubble.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/bubble.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/infuse.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "AOE/duração positivos selecionam splash/lingering; provider inclui Potion normal; consumo e retorno diferem por provider/fallback/jar, antes da aplicação ou spawn. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_infuse e classe EffectInfuse; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/infuse.md",
+          "reason": "AOE/duração positivos selecionam splash/lingering; provider inclui Potion normal; consumo e retorno diferem por provider/fallback/jar, antes da aplicação ou spawn. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/infuse.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Emissão/aplicação não é transação conjunta com consumo; bottle/creative diferem entre rotas."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/infuse.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/infuse.md",
+          "reason": "Mana default 30, tier 2 e XP de receita 55 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/infuse.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/infuse.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/intangible.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Grade de blocos elegíveis vira IntangibleAir; duração truncada antes de×20, restauração por tick>N e NBTstateid sem ledger universal. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_intangible e classe EffectIntangible; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/intangible.md",
+          "reason": "Grade de blocos elegíveis vira IntangibleAir; duração truncada antes de×20, restauração por tick>N e NBTstateid sem ledger universal. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/intangible.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Restore N+1ticks processados paraN≥0; chunk semtick pausa contador."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/intangible.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/intangible.md",
+          "reason": "Mana default 30, tier 3 e XP de receita 160 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/intangible.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/intangible.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/interact.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Sensitive/Dampen/Amplify são seletores de ramo; mão fake difere entre bloco/entidade; uso/buckets e inventário não formam transação idempotente comprovada. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_interact e classe EffectInteract; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/interact.md",
+          "reason": "Sensitive/Dampen/Amplify são seletores de ramo; mão fake difere entre bloco/entidade; uso/buckets e inventário não formam transação idempotente comprovada. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/interact.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Cleanup fake por ramo e restauração de Shift não têm garantia em exceção."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/interact.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/interact.md",
+          "reason": "Mana default 10, tier 1 e XP de receita 27 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/interact.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/interact.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/item-pickup.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "AABB2+AOE em cantoBlockPos; Post contémremainder, Pre vem apószerar delay; XPsomenteplayerreal semcastingTile; semcaplocaldealvos. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_pickup e classe EffectPickup; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/item-pickup.md",
+          "reason": "AABB2+AOE em cantoBlockPos; Post contémremainder, Pre vem apószerar delay; XPsomenteplayerreal semcastingTile; semcaplocaldealvos. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/item-pickup.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Post não confirma quantidade adquirida; pickup delay já foi alterado antes de veto."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/item-pickup.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/item-pickup.md",
+          "reason": "Mana default 10, tier 1 e XP de receita 27 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/item-pickup.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/item-pickup.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/name.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Nome por referência de tag/caster; efeitos em alvo e offhand distintos, persistência de Mob e caixa de bloco separados. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_name e classe EffectName; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/name.md",
+          "reason": "Nome por referência de tag/caster; efeitos em alvo e offhand distintos, persistência de Mob e caixa de bloco separados. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/name.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. ConsultaEXTRACT não consome tag; offhand pode mudar ao atingir terceiros."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/name.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/name.md",
+          "reason": "Mana default 25, tier 2 e XP de receita 55 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/name.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/name.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/prestidigitation.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Timeline de entidade/bloco/item com ciclos distintos; Amplify por presença faz bloco permanente e NBTtimeline difere de emitter vivo. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_prestidigitation e classe EffectPrestidigitation; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/prestidigitation.md",
+          "reason": "Timeline de entidade/bloco/item com ciclos distintos; Amplify por presença faz bloco permanente e NBTtimeline difere de emitter vivo. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/prestidigitation.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Pacote não aplica componente ao item e partículas não são procs."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/prestidigitation.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/prestidigitation.md",
+          "reason": "Mana default 0, tier 1 e XP de receita 27 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/prestidigitation.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/prestidigitation.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/summon-decoy.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Um dummy com TTL600+300M e atração única de Mobs em AABB41×22×41; owner ausente e expiry têm callbacks distintos, sickness1tick. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_summon_decoy e classe EffectSummonDecoy; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-decoy.md",
+          "reason": "Um dummy com TTL600+300M e atração única de Mobs em AABB41×22×41; owner ausente e expiry têm callbacks distintos, sickness1tick. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-decoy.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. setTarget na criação não é taunt persistente ou filtro apenas hostil."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-decoy.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-decoy.md",
+          "reason": "Mana default 200, tier 3 e XP de receita 160 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-decoy.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-decoy.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/summon-steed.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "AOE arredondado aumenta quantidade de cavalos; lifetime300+120M segundos, mínimo20ticks só se não positivo; sickness600ticks separado; owner e NBT locais distintos. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_summon_steed e classe EffectSummonSteed; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-steed.md",
+          "reason": "AOE arredondado aumenta quantidade de cavalos; lifetime300+120M segundos, mínimo20ticks só se não positivo; sickness600ticks separado; owner e NBT locais distintos. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-steed.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Quantidade sem clamp local; AOE negativo externo pode produzir zero cavalos e ainda sickness."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-steed.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-steed.md",
+          "reason": "Mana default 100, tier 1 e XP de receita 27 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-steed.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-steed.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/summon-undead.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "3+Split skeletons; Pierce muda loadout, amplification escolhe arma/Power; T=20*(15+10M) inicia expiração por starve20 a cada20ticks, não despawn imediato. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_summon_undead e classe EffectSummonUndead; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-undead.md",
+          "reason": "3+Split skeletons; Pierce muda loadout, amplification escolhe arma/Power; T=20*(15+10M) inicia expiração por starve20 a cada20ticks, não despawn imediato. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-undead.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Timer expirado causa dano de starvation, sem prazo final de morte garantido."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-undead.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-undead.md",
+          "reason": "Mana default 150, tier 3 e XP de receita 160 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-undead.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-undead.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/summon-vex.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Três Vex com vanilla setLimitedLife(20*(15+10M)); private limitedLifeTicks de ISummon/Dispel é outro campo sem tick local, Focus e persistência não uniformes. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_summon_vex e classe EffectSummonVex; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-vex.md",
+          "reason": "Três Vex com vanilla setLimitedLife(20*(15+10M)); private limitedLifeTicks de ISummon/Dispel é outro campo sem tick local, Focus e persistência não uniformes. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-vex.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. API ISummon TTL/Dispel modifica campo shadow sem consumo local de duração."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-vex.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-vex.md",
+          "reason": "Mana default 150, tier 3 e XP de receita 160 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-vex.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-vex.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/summon-wolves.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Dois lobos com variante do bioma, tame e alvo inicial do caster; T=20*(60+60M), sicknessT; contador server→discard e UUID customizado sem save local. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_summon_wolves e classe EffectSummonWolves; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-wolves.md",
+          "reason": "Dois lobos com variante do bioma, tame e alvo inicial do caster; T=20*(60+60M), sicknessT; contador server→discard e UUID customizado sem save local. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-wolves.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Alvo inicial e flags não são garantia de comportamento de combate final."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-wolves.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-wolves.md",
+          "reason": "Mana default 100, tier 1 e XP de receita 27 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-wolves.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/summon-wolves.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/toss.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Extractforça1; totaltrunc64*2^amp parcelado64 reduzpedido,nãorendimento; Randomizeuniformeslotsdeumhandler; destination/refund/spawnsemtransação. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:glyph_toss e classe EffectToss; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/toss.md",
+          "reason": "Extractforça1; totaltrunc64*2^amp parcelado64 reduzpedido,nãorendimento; Randomizeuniformeslotsdeumhandler; destination/refund/spawnsemtransação. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/toss.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Budget nominal não comprova quantidade transferida; extração vazia não encerra loop."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/toss.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/toss.md",
+          "reason": "Mana default 10, tier 1 e XP de receita 27 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/toss.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/toss.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/wololo.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Recoloração por ramos/componentes/receitas; IWololoable usa cor contínua e cache16 não é limite efetivo comprovado. Contrato documental estático; não comprova perk executável, config instalada ou QA de gameplay.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exato comprova ars_nouveau:wololo e classe EffectWololo; a identidade compilada não comprova equivalência integral de métodos ou execução."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/wololo.md",
+          "reason": "Recoloração por ramos/componentes/receitas; IWololoable usa cor contínua e cache16 não é limite efetivo comprovado. Callbacks e consumidores downstream foram individualmente inspecionados no source fixo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/wololo.md",
+          "reason": "Fórmulas, unidades, rounding, caps, defaults, entradas realmente consumidas e lifecycle estão separados de config efetiva e de parâmetros não aplicáveis. Dye físico precede Randomize fora do ramo IWololoable."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/wololo.md",
+          "reason": "Distingue aquisição pela Form, receptor entidade/bloco/inventário, geometria local, filtros e caminhos de ownership, mutação e persistência; ausências delimitadas ao código inspecionado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/wololo.md",
+          "reason": "Mana default 30, tier 1 e XP de receita 27 comprovados no source/datagen; ingredientes, starter e autoridade de pagamento/consumo constam da ficha."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/wololo.md",
+          "reason": "Documenta APIs existentes, objetos/valores realmente consumidos e fronteiras de autoridade/deduplicação; não homologa adapter de perks RPG/Black Arcana ou bypass de regras do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/wololo.md",
+          "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
+        }
+      }
     }
   },
   "providers": {},
