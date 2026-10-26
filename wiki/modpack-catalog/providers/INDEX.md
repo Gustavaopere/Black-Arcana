@@ -3,7 +3,7 @@
 > Os prefixos ✅ antigos significam inventário histórico, não 100% técnico para perks.
 
 **Mods com escopo integral certificado: 0/164.**
-**Fichas com contrato técnico estático certificado: 73/2075.**
+**Fichas com contrato técnico estático certificado: 77/2075.**
 **Progresso global confirmado:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Escopo:** pastas atuais de providers; a modlist pode conter outros mods/sistemas ainda não representados. Objetos ausentes do catálogo não são presumidos inexistentes.
 
@@ -33,7 +33,7 @@
 | ⚠️ | Ars Hex | 5 | 0 | [Ver fichas](✅-ars-hex/INDEX.md) |
 | ⚠️ | Ars Morph | 8 | 0 | [Ver fichas](✅-ars-morph/INDEX.md) |
 | ⚠️ | Ars N Spells | 9 | 0 | [Ver fichas](✅-ars-n-spells/INDEX.md) |
-| ⚠️ | Ars Nouveau | 138 | 73 | [Ver fichas](✅-ars-nouveau/INDEX.md) |
+| ⚠️ | Ars Nouveau | 138 | 77 | [Ver fichas](✅-ars-nouveau/INDEX.md) |
 | ⚠️ | Ars Polymorphia | — | 0 | [Ver fichas](✅-ars-polymorphia/INDEX.md) |
 | ⚠️ | Ars Sable | — | 0 | [Ver fichas](✅-ars-sable/INDEX.md) |
 | ⚠️ | Ars Sophisticated Compat | — | 0 | [Ver fichas](✅-ars-sophisticated-compat/INDEX.md) |
