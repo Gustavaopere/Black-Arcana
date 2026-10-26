@@ -174,6 +174,23 @@ class IndexTests(unittest.TestCase):
         with self.assertRaisesRegex(c.CatalogIndexError, "source revision"):
             c.check(self.root)
 
+    def test_source_only_release_provenance_grade_accepted_without_binary_claim(self):
+        cert = self.full_synthetic_certificate()
+        cert["evidence_grade"] = "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY"
+        self.install_certificate(cert)
+        result = c.check(self.root)
+        self.assertEqual(1, result["certified_cards"])
+        self.assertEqual(0, result["certified_providers"])
+        self.assertTrue(any("stale completion" in x for x in result["problems"]))
+
+    def test_source_only_release_grade_still_requires_exact_source_revision(self):
+        cert = self.full_synthetic_certificate()
+        cert["evidence_grade"] = "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY"
+        cert["source_revision"] = "main"
+        self.install_certificate(cert)
+        with self.assertRaisesRegex(c.CatalogIndexError, "source revision"):
+            c.check(self.root)
+
     def test_provider_closed_requires_evidence(self):
         self.ledger["providers"] = {"✅-example": {"universe_closed": True}}
         self.save_manifest()
