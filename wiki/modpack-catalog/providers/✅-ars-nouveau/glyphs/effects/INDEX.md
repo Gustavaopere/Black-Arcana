@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 35/67.**
-**Barra do recorte documental:** `██████████░░░░░░░░░░ 52.2%`
+**Homologadas para perks (somente fichas detectadas): 39/67.**
+**Barra do recorte documental:** `███████████░░░░░░░░░ 58.2%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -14,19 +14,19 @@
 | ⚠️ | Animate Block | [ficha/animate-block.md](animate-block.md) |
 | ✅ | Blink | [ficha/blink.md](blink.md) |
 | ✅ | Bounce | [ficha/bounce.md](bounce.md) |
-| ⚠️ | Break | [ficha/break.md](break.md) |
+| ✅ | Break | [ficha/break.md](break.md) |
 | ⚠️ | Bubble | [ficha/bubble.md](bubble.md) |
 | ✅ | Burst | [ficha/burst.md](burst.md) |
 | ✅ | Cold Snap | [ficha/cold-snap.md](cold-snap.md) |
 | ⚠️ | Conjure Mageblock | [ficha/conjure-mageblock.md](conjure-mageblock.md) |
 | ⚠️ | Conjure Magelight | [ficha/conjure-magelight.md](conjure-magelight.md) |
-| ⚠️ | Conjure Water | [ficha/conjure-water.md](conjure-water.md) |
+| ✅ | Conjure Water | [ficha/conjure-water.md](conjure-water.md) |
 | ⚠️ | Craft | [ficha/craft.md](craft.md) |
 | ⚠️ | Crush | [ficha/crush.md](crush.md) |
 | ⚠️ | Cut | [ficha/cut.md](cut.md) |
 | ✅ | Delay | [ficha/delay.md](delay.md) |
 | ✅ | Dispel | [ficha/dispel.md](dispel.md) |
-| ⚠️ | Evaporate | [ficha/evaporate.md](evaporate.md) |
+| ✅ | Evaporate | [ficha/evaporate.md](evaporate.md) |
 | ⚠️ | Exchange | [ficha/exchange.md](exchange.md) |
 | ✅ | Explosion | [ficha/explosion.md](explosion.md) |
 | ✅ | Fangs | [ficha/fangs.md](fangs.md) |
@@ -54,7 +54,7 @@
 | ✅ | Linger | [ficha/linger.md](linger.md) |
 | ⚠️ | Name | [ficha/name.md](name.md) |
 | ✅ | Orbit | [ficha/orbit.md](orbit.md) |
-| ⚠️ | Place Block | [ficha/place-block.md](place-block.md) |
+| ✅ | Place Block | [ficha/place-block.md](place-block.md) |
 | ⚠️ | Prestidigitation | [ficha/prestidigitation.md](prestidigitation.md) |
 | ✅ | Pull | [ficha/pull.md](pull.md) |
 | ⚠️ | Redstone Signal | [ficha/redstone-signal.md](redstone-signal.md) |
