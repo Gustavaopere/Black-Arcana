@@ -10,7 +10,7 @@ Status: **✅ CATALOGADO / COUNTED_EXACT** · identificador factual obtido da au
 - **Posição no inventário exato:** 36/123. Número ordinal editorial, não identificador de registry ou ordem de carregamento.
 - **Aquisição documental:** o JAR exato contém receita base de aquisição homônima para este Focus e sem condition de mod carregado; o conjunto tem 80 recipes de tipo `goety:ritual` e 43 shaped. **O tipo específico desta receita não é deduzido apenas pela lista agregada.** A execução real com recursos/progressão do modpack não foi comprovada nesta etapa.
 - **Conta semântica:** `COUNTED_EXACT`, já incluída nos 123 Focuses Goety do ledger; materializar a ficha **não acrescenta uma nova identidade**. Receitas alternativas de obtenção não criam outros spells.
-- **Escola/categoria exata, classe e método runtime, cast-time, Soul Energy, cooldown, alcance, dano, efeitos, targeting, PVP/proteção, progressão/research e numeric balance:** **NÃO VERIFICADO no JAR 3.1.4 nesta ficha**. A referência source-adjacent 3.1.1 abaixo é evidência de outra versão e não estabelece automaticamente contrato de API/efeito do JAR instalado.
+- **Escola/categoria exata, classe e método runtime, cast-time, Soul Energy, cooldown, alcance, dano, efeitos, targeting, PVP/proteção, progressão/research e numeric balance:** **NÃO VERIFICADO nesta ficha** para o JAR 3.1.4. A referência source-adjacent 3.1.1 abaixo é evidência de outra versão e não estabelece automaticamente contrato de API/efeito do JAR instalado.
 
 ## Authority e deduplicação
 
