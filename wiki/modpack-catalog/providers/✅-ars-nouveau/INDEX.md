@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 81/138.**
-**Barra do recorte documental:** `███████████░░░░░░░░░ 58.7%`
+**Homologadas para perks (somente fichas detectadas): 85/138.**
+**Barra do recorte documental:** `████████████░░░░░░░░ 61.6%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -40,13 +40,13 @@
 | ⚠️ | Conjure Mageblock | [glyphs/effects/conjure-mageblock.md](glyphs/effects/conjure-mageblock.md) |
 | ⚠️ | Conjure Magelight | [glyphs/effects/conjure-magelight.md](glyphs/effects/conjure-magelight.md) |
 | ✅ | Conjure Water | [glyphs/effects/conjure-water.md](glyphs/effects/conjure-water.md) |
-| ⚠️ | Craft | [glyphs/effects/craft.md](glyphs/effects/craft.md) |
-| ⚠️ | Crush | [glyphs/effects/crush.md](glyphs/effects/crush.md) |
+| ✅ | Craft | [glyphs/effects/craft.md](glyphs/effects/craft.md) |
+| ✅ | Crush | [glyphs/effects/crush.md](glyphs/effects/crush.md) |
 | ⚠️ | Cut | [glyphs/effects/cut.md](glyphs/effects/cut.md) |
 | ✅ | Delay | [glyphs/effects/delay.md](glyphs/effects/delay.md) |
 | ✅ | Dispel | [glyphs/effects/dispel.md](glyphs/effects/dispel.md) |
 | ✅ | Evaporate | [glyphs/effects/evaporate.md](glyphs/effects/evaporate.md) |
-| ⚠️ | Exchange | [glyphs/effects/exchange.md](glyphs/effects/exchange.md) |
+| ✅ | Exchange | [glyphs/effects/exchange.md](glyphs/effects/exchange.md) |
 | ✅ | Explosion | [glyphs/effects/explosion.md](glyphs/effects/explosion.md) |
 | ✅ | Fangs | [glyphs/effects/fangs.md](glyphs/effects/fangs.md) |
 | ⚠️ | Fell | [glyphs/effects/fell.md](glyphs/effects/fell.md) |
@@ -83,7 +83,7 @@
 | ✅ | Rune | [glyphs/effects/rune.md](glyphs/effects/rune.md) |
 | ✅ | Sense Magic | [glyphs/effects/sense-magic.md](glyphs/effects/sense-magic.md) |
 | ✅ | Slowfall | [glyphs/effects/slowfall.md](glyphs/effects/slowfall.md) |
-| ⚠️ | Smelt | [glyphs/effects/smelt.md](glyphs/effects/smelt.md) |
+| ✅ | Smelt | [glyphs/effects/smelt.md](glyphs/effects/smelt.md) |
 | ✅ | Snare | [glyphs/effects/snare.md](glyphs/effects/snare.md) |
 | ⚠️ | Summon Decoy | [glyphs/effects/summon-decoy.md](glyphs/effects/summon-decoy.md) |
 | ⚠️ | Summon Steed | [glyphs/effects/summon-steed.md](glyphs/effects/summon-steed.md) |
