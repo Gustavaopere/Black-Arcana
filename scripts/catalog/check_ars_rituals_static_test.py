@@ -70,6 +70,19 @@ CASES = {
                         ("RemovalReason.DISCARDED", "shouldDropExperience",
                          "numGreater=exp/12", "numLesser=expRemaining/3",
                          "setNeedsSource(true)")),
+    "conjure-island-desert": ("ritual_conjure_island_desert", "ConjureDesertRitual",
+                              ("ConjureBiomeRitual", "ManhattenTracker",
+                               "blocksPlaced", "RitualUtil.changeBiome", "Blocks.TERRACOTTA")),
+    "conjure-island-plains": ("ritual_conjure_island_plains", "ConjurePlainsRitual",
+                              ("FROSTAYA_POD", "isSnowy", "Blocks.GRASS_BLOCK",
+                               "Biomes.SNOWY_PLAINS", "blocksPlaced")),
+    "summon-animals": ("ritual_animal_summon", "RitualAnimalSummoning",
+                       ("WeightedMobType", "MobSpawnSettings.SpawnerData",
+                        "SummonRitualRecipe", "addFreshEntity",
+                        "MobCategory.CREATURE")),
+    "summon-wilden": ("ritual_wilden_summon", "RitualWildenSummoning",
+                      ("WILDEN_HORN", "WILDEN_WING", "WILDEN_SPIKE",
+                       "EventHooks.canEntityGrief", "605", "BlockEvent.BreakEvent")),
 }
 
 
@@ -84,9 +97,9 @@ class ArsRitualStaticTests(unittest.TestCase):
         cls.dossier = (PROVIDER / "RITUAL-STATIC-FIRST-FIVE-5.13.1.md").read_text(
             encoding="utf-8")
 
-    def test_twenty_unique_binary_pinned_ritual_identities(self):
-        self.assertEqual(20, len(CASES))
-        self.assertEqual(20, len({item[0] for item in CASES.values()}))
+    def test_twenty_four_unique_binary_pinned_ritual_identities(self):
+        self.assertEqual(24, len(CASES))
+        self.assertEqual(24, len({item[0] for item in CASES.values()}))
         for slug, (ritual_id, classname, facts) in CASES.items():
             with self.subTest(slug=slug):
                 body = (PROVIDER / "rituals" / (slug + ".md")).read_text(
@@ -127,14 +140,14 @@ class ArsRitualStaticTests(unittest.TestCase):
         objs = self.json["objects"]
         ritual_count = sum(key.startswith("✅-ars-nouveau/rituals/") for key in objs)
         ars_count = sum(key.startswith("✅-ars-nouveau/") for key in objs)
-        self.assertGreaterEqual(ritual_count, 20)
-        self.assertGreaterEqual(ars_count, 73)
+        self.assertGreaterEqual(ritual_count, 24)
+        self.assertGreaterEqual(ars_count, 77)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ritual_count}/24.", self.index)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ars_count}/138.", self.ars)
         self.assertIn(f"Fichas com contrato técnico estático certificado: {len(objs)}/2075.", self.top)
         self.assertIn(f"Mods com escopo integral certificado: {len(self.json['providers'])}/164.", self.top)
         for slug in CASES:
-            label = slug.capitalize()
+            label = slug.replace("-", " ").title()
             # Same display name may exist in Glyphs/Effects and in Rituals.
             row_index = next(
                 line for line in self.index.splitlines()
@@ -387,6 +400,77 @@ class ArsRitualStaticTests(unittest.TestCase):
             self.assertIn(f"| ✅ | {name} | [ficha/{slug}.md]", self.index)
         # The same-named Harvest glyph remains unrelated to its ritual.
         self.assertIn("| ⚠️ | Harvest | [glyphs/effects/harvest.md]", self.ars)
+
+
+    def test_island_setblock_unchecked_return_and_source_restart(self):
+        for slug in ("conjure-island-desert", "conjure-island-plains"):
+            text = (PROVIDER / "rituals" / (slug + ".md")).read_text(
+                encoding="utf8")
+            for term in ("ConjureBiomeRitual", "ManhattenTracker",
+                         "getWorld().setBlock", "RitualUtil.changeBiome",
+                         "PalettedContainer", "ChangeBiomePacket",
+                         "blocksPlaced", "setNeedsSource(true)",
+                         "getSourceCost()", "radius", "tracker",
+                         "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED",
+                         "physical_qa=NOT_TESTED"):
+                self.assertIn(term, text)
+            self.assertIn("não persiste blocksPlaced", text)
+            self.assertIn("sem conferir", text)
+
+    def test_desert_biome_materials_do_not_imply_single_block_biome_write(self):
+        text = (PROVIDER / "rituals/conjure-island-desert.md").read_text(
+            encoding="utf8")
+        for term in ("Biomes.DESERT", "Biomes.BADLANDS",
+                     "ItemTags.TERRACOTTA", "RED_SAND", "ORANGE_TERRACOTTA",
+                     "RED_TERRACOTTA", "TERRACOTTA", "Blocks.SANDSTONE",
+                     "getPos().below(3)", "blocksBeforeSourceNeeded=5"):
+            self.assertIn(term, text)
+
+    def test_plains_frostaya_changes_biome_not_generated_snow_layer(self):
+        text = (PROVIDER / "rituals/conjure-island-plains.md").read_text(
+            encoding="utf8")
+        for term in ("FROSTAYA_POD", "isSnowy", "Biomes.PLAINS",
+                     "Biomes.SNOWY_PLAINS", "Blocks.GRASS_BLOCK", "Blocks.DIRT",
+                     "getSourceCost()=50"):
+            self.assertIn(term, text)
+        self.assertIn("não gera diretamente neve", text)
+
+    def test_animal_recipe_weighted_type_mismatch_is_explicitly_blocked(self):
+        text = (PROVIDER / "rituals/summon-animals.md").read_text(
+            encoding="utf8")
+        for term in ("SummonRitualRecipe.mobs", "WeightedMobType",
+                     "MobSpawnSettings.SpawnerData", "instanceof",
+                     "bats.json", "minecraft:amethyst_shard", "MobSource",
+                     "MOB_LIST", "MobCategory.CREATURE",
+                     "ANIMAL_SUMMON_BLACKLIST", "addFreshEntity",
+                     "getSourceCost()=0"):
+            self.assertIn(term, text)
+        self.assertIn("não aciona summon/incrementProgress", text)
+        self.assertIn("não equivale a ritual grátis", text)
+
+    def test_wilden_boss_gates_605_positions_not_605_destroyed_blocks(self):
+        text = (PROVIDER / "rituals/summon-wilden.md").read_text(
+            encoding="utf8")
+        for term in ("WILDEN_HORN", "WILDEN_WING", "WILDEN_SPIKE",
+                     "gameTime%20==0", "gameTime%60==0",
+                     "getProgress()>=15", "getProgress()>=8",
+                     "EventHooks.canEntityGrief", "SpellUtil.isCorrectHarvestLevel",
+                     "BlockEvent.BreakEvent", "11×11×5 = 605",
+                     "destroyBlockSafelyWithoutSound", "WorldEffectPolicy",
+                     "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED"):
+            self.assertIn(term, text)
+        self.assertIn("não significam 605 blocos destruídos", text)
+
+    def test_final_four_source_dossier_never_promotes_full_provider_or_stage(self):
+        text = (PROVIDER / "RITUAL-STATIC-SIXTH-FOUR-5.13.1.md").read_text(
+            encoding="utf8")
+        for term in ("24/24", "77/138", "77/2075", "0/164", SOURCE, SHA1,
+                     "ConjureBiomeRitual", "WeightedMobType",
+                     "MobSpawnSettings.SpawnerData", "605", "blocksPlaced",
+                     "WorldEffectPolicy", "Stage 06.05", "Stage 09",
+                     "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED"):
+            self.assertIn(term, text)
+        self.assertIn("não certificação integral", text)
 
 
 if __name__ == "__main__":

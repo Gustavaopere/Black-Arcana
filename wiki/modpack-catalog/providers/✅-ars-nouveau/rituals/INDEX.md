@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 20/24.**
-**Barra do recorte documental:** `████████████████░░░░ 83.3%`
+**Homologadas para perks (somente fichas detectadas): 24/24.**
+**Barra do recorte documental:** `████████████████████ 100.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -15,8 +15,8 @@
 | ✅ | Burrowing | [ficha/burrowing.md](burrowing.md) |
 | ✅ | Challenge | [ficha/challenge.md](challenge.md) |
 | ✅ | Cloudshaping | [ficha/cloudshaping.md](cloudshaping.md) |
-| ⚠️ | Conjure Island Desert | [ficha/conjure-island-desert.md](conjure-island-desert.md) |
-| ⚠️ | Conjure Island Plains | [ficha/conjure-island-plains.md](conjure-island-plains.md) |
+| ✅ | Conjure Island Desert | [ficha/conjure-island-desert.md](conjure-island-desert.md) |
+| ✅ | Conjure Island Plains | [ficha/conjure-island-plains.md](conjure-island-plains.md) |
 | ✅ | Containment | [ficha/containment.md](containment.md) |
 | ✅ | Disintegration | [ficha/disintegration.md](disintegration.md) |
 | ✅ | Fertility | [ficha/fertility.md](fertility.md) |
@@ -30,8 +30,8 @@
 | ✅ | Restoration | [ficha/restoration.md](restoration.md) |
 | ✅ | Sanctuary | [ficha/sanctuary.md](sanctuary.md) |
 | ✅ | Scrying | [ficha/scrying.md](scrying.md) |
-| ⚠️ | Summon Animals | [ficha/summon-animals.md](summon-animals.md) |
-| ⚠️ | Summon Wilden | [ficha/summon-wilden.md](summon-wilden.md) |
+| ✅ | Summon Animals | [ficha/summon-animals.md](summon-animals.md) |
+| ✅ | Summon Wilden | [ficha/summon-wilden.md](summon-wilden.md) |
 | ✅ | Sunrise | [ficha/sunrise.md](sunrise.md) |
 | ✅ | Warping | [ficha/warping.md](warping.md) |
 

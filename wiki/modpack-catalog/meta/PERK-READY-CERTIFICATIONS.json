@@ -2994,6 +2994,170 @@
           "reason": "Provenance separates static source semantics, publisher JAR ID identity, unknown method equivalence, no mutating hook and lack of provider-native physical QA."
         }
       }
+    },
+    "✅-ars-nouveau/rituals/conjure-island-desert.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "ConjureBiomeRitual eligible-placement accounting, unchecked setBlock return, chunk biome edit, Source 50 per 5 counted attempts and blocksPlaced not NBT-persisted.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exact binary ID audit identifies ars_nouveau:ritual_conjure_island_desert with ConjureDesertRitual, without establishing exact bytecode method equivalence."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/conjure-island-desert.md",
+          "reason": "Source-pinned ConjureDesertRitual lifecycle, target mutations, feature/helper calls, result-unchecked branches and runtime blockers documented in full."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/conjure-island-desert.md",
+          "reason": "Version-locked 5.13.1 class and helper parameters cover temporal clock, positions, radius, inputs, weights, counts and work/cost scheduling."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/conjure-island-desert.md",
+          "reason": "Provider targeting documents BlockPos/world/chunk biome or mob registry categories and species, plus exclusions and unverified entity/block admission."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/conjure-island-desert.md",
+          "reason": "Separates declared Source getter and actual needsSource flag from tablets, inputs, settlement and missing persisted counters; no assumed cooldown or free ritual."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-SIXTH-FOUR-5.13.1.md",
+          "reason": "The sixth-ritual evidence dossier preserves Ars authority, BA world-safety scope and RPG progress-only boundaries, requiring safe mutators and deduplication."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/conjure-island-desert.md",
+          "reason": "Source versus publisher-JAR identity and required real modpack QA are explicit, including recipe type mismatch, world mutation callbacks and fail-closed hooks."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/conjure-island-plains.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Frostaya Pod selects Snowy Plains but same GRASS_BLOCK/DIRT placement; eligible attempt != successful setBlock; chunk biome edit and missing blocksPlaced NBT counter.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exact binary ID audit identifies ars_nouveau:ritual_conjure_island_plains with ConjurePlainsRitual, without establishing exact bytecode method equivalence."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/conjure-island-plains.md",
+          "reason": "Source-pinned ConjurePlainsRitual lifecycle, target mutations, feature/helper calls, result-unchecked branches and runtime blockers documented in full."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/conjure-island-plains.md",
+          "reason": "Version-locked 5.13.1 class and helper parameters cover temporal clock, positions, radius, inputs, weights, counts and work/cost scheduling."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/conjure-island-plains.md",
+          "reason": "Provider targeting documents BlockPos/world/chunk biome or mob registry categories and species, plus exclusions and unverified entity/block admission."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/conjure-island-plains.md",
+          "reason": "Separates declared Source getter and actual needsSource flag from tablets, inputs, settlement and missing persisted counters; no assumed cooldown or free ritual."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-SIXTH-FOUR-5.13.1.md",
+          "reason": "The sixth-ritual evidence dossier preserves Ars authority, BA world-safety scope and RPG progress-only boundaries, requiring safe mutators and deduplication."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/conjure-island-plains.md",
+          "reason": "Source versus publisher-JAR identity and required real modpack QA are explicit, including recipe type mismatch, world mutation callbacks and fail-closed hooks."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/summon-animals.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Biome SpawnerData permits mob branch; recipe WeightedMobType fails instanceof SpawnerData in pinned source, so data-driven count/spawn requires live QA; addFreshEntity return unchecked.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exact binary ID audit identifies ars_nouveau:ritual_animal_summon with RitualAnimalSummoning, without establishing exact bytecode method equivalence."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/summon-animals.md",
+          "reason": "Source-pinned RitualAnimalSummoning lifecycle, target mutations, feature/helper calls, result-unchecked branches and runtime blockers documented in full."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/summon-animals.md",
+          "reason": "Version-locked 5.13.1 class and helper parameters cover temporal clock, positions, radius, inputs, weights, counts and work/cost scheduling."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/summon-animals.md",
+          "reason": "Provider targeting documents BlockPos/world/chunk biome or mob registry categories and species, plus exclusions and unverified entity/block admission."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/summon-animals.md",
+          "reason": "Separates declared Source getter and actual needsSource flag from tablets, inputs, settlement and missing persisted counters; no assumed cooldown or free ritual."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-SIXTH-FOUR-5.13.1.md",
+          "reason": "The sixth-ritual evidence dossier preserves Ars authority, BA world-safety scope and RPG progress-only boundaries, requiring safe mutators and deduplication."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/summon-animals.md",
+          "reason": "Source versus publisher-JAR identity and required real modpack QA are explicit, including recipe type mismatch, world mutation callbacks and fail-closed hooks."
+        }
+      }
+    },
+    "✅-ars-nouveau/rituals/summon-wilden.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Progress clock 20 ticks versus work clock 60 ticks; Wilden Chimera mode requires Horn, Wing and Spike, up to 605 block candidates via grief/BreakEvent, destroy result unchecked.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher SHA-exact binary ID audit identifies ars_nouveau:ritual_wilden_summon with RitualWildenSummoning, without establishing exact bytecode method equivalence."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/summon-wilden.md",
+          "reason": "Source-pinned RitualWildenSummoning lifecycle, target mutations, feature/helper calls, result-unchecked branches and runtime blockers documented in full."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/summon-wilden.md",
+          "reason": "Version-locked 5.13.1 class and helper parameters cover temporal clock, positions, radius, inputs, weights, counts and work/cost scheduling."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/summon-wilden.md",
+          "reason": "Provider targeting documents BlockPos/world/chunk biome or mob registry categories and species, plus exclusions and unverified entity/block admission."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/summon-wilden.md",
+          "reason": "Separates declared Source getter and actual needsSource flag from tablets, inputs, settlement and missing persisted counters; no assumed cooldown or free ritual."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/RITUAL-STATIC-SIXTH-FOUR-5.13.1.md",
+          "reason": "The sixth-ritual evidence dossier preserves Ars authority, BA world-safety scope and RPG progress-only boundaries, requiring safe mutators and deduplication."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/rituals/summon-wilden.md",
+          "reason": "Source versus publisher-JAR identity and required real modpack QA are explicit, including recipe type mismatch, world mutation callbacks and fail-closed hooks."
+        }
+      }
     }
   },
   "providers": {},
