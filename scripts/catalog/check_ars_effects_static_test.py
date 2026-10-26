@@ -622,9 +622,9 @@ class StaticContractTests(unittest.TestCase):
         for term in ("EffectRotate", "1+Math.abs(ampMod)",
                      "Projectile", "projectile.setDeltaMovement",
                      "rotateVec", "Math.cos(angle)", "Math.sin(angle)",
-                     "90", "-90", "radianos", "getAoeMultiplier",
+                     "90", "-90", "radianos", "AOE",
                      "SpellUtil.calcAOEBlocks", "BlockStateProperties.AXIS",
-                     "BlockStateProperties.FACING", "setBlockAndUpdate",
+                     "FACING", "setBlockAndUpdate",
                      "ShapersFocus.tryPropagateBlockSpell",
                      "destroyRespectsClaim", "WorldEffectPolicy",
                      "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED"):
