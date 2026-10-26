@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 57/85.**
-**Barra do recorte documental:** `█████████████░░░░░░░ 67.1%`
+**Homologadas para perks (somente fichas detectadas): 61/85.**
+**Barra do recorte documental:** `██████████████░░░░░░ 71.8%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -34,13 +34,13 @@
 | ⚠️ | Conjure Mageblock | [effects/conjure-mageblock.md](effects/conjure-mageblock.md) |
 | ⚠️ | Conjure Magelight | [effects/conjure-magelight.md](effects/conjure-magelight.md) |
 | ✅ | Conjure Water | [effects/conjure-water.md](effects/conjure-water.md) |
-| ⚠️ | Craft | [effects/craft.md](effects/craft.md) |
-| ⚠️ | Crush | [effects/crush.md](effects/crush.md) |
+| ✅ | Craft | [effects/craft.md](effects/craft.md) |
+| ✅ | Crush | [effects/crush.md](effects/crush.md) |
 | ⚠️ | Cut | [effects/cut.md](effects/cut.md) |
 | ✅ | Delay | [effects/delay.md](effects/delay.md) |
 | ✅ | Dispel | [effects/dispel.md](effects/dispel.md) |
 | ✅ | Evaporate | [effects/evaporate.md](effects/evaporate.md) |
-| ⚠️ | Exchange | [effects/exchange.md](effects/exchange.md) |
+| ✅ | Exchange | [effects/exchange.md](effects/exchange.md) |
 | ✅ | Explosion | [effects/explosion.md](effects/explosion.md) |
 | ✅ | Fangs | [effects/fangs.md](effects/fangs.md) |
 | ⚠️ | Fell | [effects/fell.md](effects/fell.md) |
@@ -77,7 +77,7 @@
 | ✅ | Rune | [effects/rune.md](effects/rune.md) |
 | ✅ | Sense Magic | [effects/sense-magic.md](effects/sense-magic.md) |
 | ✅ | Slowfall | [effects/slowfall.md](effects/slowfall.md) |
-| ⚠️ | Smelt | [effects/smelt.md](effects/smelt.md) |
+| ✅ | Smelt | [effects/smelt.md](effects/smelt.md) |
 | ✅ | Snare | [effects/snare.md](effects/snare.md) |
 | ⚠️ | Summon Decoy | [effects/summon-decoy.md](effects/summon-decoy.md) |
 | ⚠️ | Summon Steed | [effects/summon-steed.md](effects/summon-steed.md) |
