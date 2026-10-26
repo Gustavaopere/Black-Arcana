@@ -3486,6 +3486,170 @@
           "reason": "Source vs compiled ID evidence, non-atomic or unchecked results and pending provider-native physical QA block any assumed mutating perks."
         }
       }
+    },
+    "✅-ars-nouveau/glyphs/effects/cut.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "IShearable or IDamageEffect split, dupeCheck protects simulated fake-player use but executes after onSheared drops, AOE/Pierce consumed without declared augment compatibility.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher 5.13.1 binary registry class-to-ResourceLocation audit binds EffectCut to ars_nouveau:glyph_cut; exact method semantics in binary not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/cut.md",
+          "reason": "Version-pinned EffectCut methods and downstream helper calls document admission, per-target mutation and failure gates, distinct drops and causal success limits."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/cut.md",
+          "reason": "AOE/Pierce, augments, thresholds, DFS work cap, seed/growth behavior, loot, damage and default mana or effect parameters are sourced from exact upstream."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/cut.md",
+          "reason": "EntityHitResult and BlockHitResult selections, resource tags, hit-face offsets, fake-player and world targeting dependencies are separated from success assumptions."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/cut.md",
+          "reason": "Defaults and resources are distinguished from true per-target costs; harvest loot/drop production and mutation success are non-atomic where method return is unchecked."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-VEGETATION-CUT-FELL-GROW-HARVEST-5.13.1.md",
+          "reason": "Fail-closed Ars provider ownership, Black Arcana WorldEffectPolicy boundaries and RPG Skill Tree progress/Mastery-only sibling interface are documented without inventing mutation adapters."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/cut.md",
+          "reason": "Evidence distinguishes pinned source from publisher binary class/ID, marks mutating hooks unavailable and provider-native physical acceptance untested."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/fell.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "FELLABLE DFS budget 50 + 50 per AOE, first BlockEvent/harvest preflight; Fortune/Extract spawns drops before unchecked destroyBlockSafelyWithoutSound result.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher 5.13.1 binary registry class-to-ResourceLocation audit binds EffectFell to ars_nouveau:glyph_fell; exact method semantics in binary not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/fell.md",
+          "reason": "Version-pinned EffectFell methods and downstream helper calls document admission, per-target mutation and failure gates, distinct drops and causal success limits."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/fell.md",
+          "reason": "AOE/Pierce, augments, thresholds, DFS work cap, seed/growth behavior, loot, damage and default mana or effect parameters are sourced from exact upstream."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/fell.md",
+          "reason": "EntityHitResult and BlockHitResult selections, resource tags, hit-face offsets, fake-player and world targeting dependencies are separated from success assumptions."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/fell.md",
+          "reason": "Defaults and resources are distinguished from true per-target costs; harvest loot/drop production and mutation success are non-atomic where method return is unchecked."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-VEGETATION-CUT-FELL-GROW-HARVEST-5.13.1.md",
+          "reason": "Fail-closed Ars provider ownership, Black Arcana WorldEffectPolicy boundaries and RPG Skill Tree progress/Mastery-only sibling interface are documented without inventing mutation adapters."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/fell.md",
+          "reason": "Evidence distinguishes pinned source from publisher binary class/ID, marks mutating hooks unavailable and provider-native physical acceptance untested."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/grow.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Origin-only destroyRespectsClaim and ServerLevel; BoneMealItem.applyBonemeal fallback growWaterPlant may mutate adjacent position without explicit second claim check.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher 5.13.1 binary registry class-to-ResourceLocation audit binds EffectGrow to ars_nouveau:glyph_grow; exact method semantics in binary not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/grow.md",
+          "reason": "Version-pinned EffectGrow methods and downstream helper calls document admission, per-target mutation and failure gates, distinct drops and causal success limits."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/grow.md",
+          "reason": "AOE/Pierce, augments, thresholds, DFS work cap, seed/growth behavior, loot, damage and default mana or effect parameters are sourced from exact upstream."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/grow.md",
+          "reason": "EntityHitResult and BlockHitResult selections, resource tags, hit-face offsets, fake-player and world targeting dependencies are separated from success assumptions."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/grow.md",
+          "reason": "Defaults and resources are distinguished from true per-target costs; harvest loot/drop production and mutation success are non-atomic where method return is unchecked."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-VEGETATION-CUT-FELL-GROW-HARVEST-5.13.1.md",
+          "reason": "Fail-closed Ars provider ownership, Black Arcana WorldEffectPolicy boundaries and RPG Skill Tree progress/Mastery-only sibling interface are documented without inventing mutation adapters."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/grow.md",
+          "reason": "Evidence distinguishes pinned source from publisher binary class/ID, marks mutating hooks unavailable and provider-native physical acceptance untested."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/harvest.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Mature cocoa/wart/crops/stems and AOE above-offset; drops before unverified reset/setBlock or stem destroy; no local claim preflight for direct reset paths.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Publisher 5.13.1 binary registry class-to-ResourceLocation audit binds EffectHarvest to ars_nouveau:glyph_harvest; exact method semantics in binary not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/harvest.md",
+          "reason": "Version-pinned EffectHarvest methods and downstream helper calls document admission, per-target mutation and failure gates, distinct drops and causal success limits."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/harvest.md",
+          "reason": "AOE/Pierce, augments, thresholds, DFS work cap, seed/growth behavior, loot, damage and default mana or effect parameters are sourced from exact upstream."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/harvest.md",
+          "reason": "EntityHitResult and BlockHitResult selections, resource tags, hit-face offsets, fake-player and world targeting dependencies are separated from success assumptions."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/harvest.md",
+          "reason": "Defaults and resources are distinguished from true per-target costs; harvest loot/drop production and mutation success are non-atomic where method return is unchecked."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-VEGETATION-CUT-FELL-GROW-HARVEST-5.13.1.md",
+          "reason": "Fail-closed Ars provider ownership, Black Arcana WorldEffectPolicy boundaries and RPG Skill Tree progress/Mastery-only sibling interface are documented without inventing mutation adapters."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/harvest.md",
+          "reason": "Evidence distinguishes pinned source from publisher binary class/ID, marks mutating hooks unavailable and provider-native physical acceptance untested."
+        }
+      }
     }
   },
   "providers": {},

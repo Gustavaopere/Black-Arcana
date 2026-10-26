@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 61/85.**
-**Barra do recorte documental:** `██████████████░░░░░░ 71.8%`
+**Homologadas para perks (somente fichas detectadas): 65/85.**
+**Barra do recorte documental:** `███████████████░░░░░ 76.5%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -36,22 +36,22 @@
 | ✅ | Conjure Water | [effects/conjure-water.md](effects/conjure-water.md) |
 | ✅ | Craft | [effects/craft.md](effects/craft.md) |
 | ✅ | Crush | [effects/crush.md](effects/crush.md) |
-| ⚠️ | Cut | [effects/cut.md](effects/cut.md) |
+| ✅ | Cut | [effects/cut.md](effects/cut.md) |
 | ✅ | Delay | [effects/delay.md](effects/delay.md) |
 | ✅ | Dispel | [effects/dispel.md](effects/dispel.md) |
 | ✅ | Evaporate | [effects/evaporate.md](effects/evaporate.md) |
 | ✅ | Exchange | [effects/exchange.md](effects/exchange.md) |
 | ✅ | Explosion | [effects/explosion.md](effects/explosion.md) |
 | ✅ | Fangs | [effects/fangs.md](effects/fangs.md) |
-| ⚠️ | Fell | [effects/fell.md](effects/fell.md) |
+| ✅ | Fell | [effects/fell.md](effects/fell.md) |
 | ✅ | Firework | [effects/firework.md](effects/firework.md) |
 | ✅ | Flare | [effects/flare.md](effects/flare.md) |
 | ✅ | Freeze | [effects/freeze.md](effects/freeze.md) |
 | ✅ | Glide | [effects/glide.md](effects/glide.md) |
 | ✅ | Gravity | [effects/gravity.md](effects/gravity.md) |
-| ⚠️ | Grow | [effects/grow.md](effects/grow.md) |
+| ✅ | Grow | [effects/grow.md](effects/grow.md) |
 | ✅ | Harm | [effects/harm.md](effects/harm.md) |
-| ⚠️ | Harvest | [effects/harvest.md](effects/harvest.md) |
+| ✅ | Harvest | [effects/harvest.md](effects/harvest.md) |
 | ✅ | Heal | [effects/heal.md](effects/heal.md) |
 | ✅ | Hex | [effects/hex.md](effects/hex.md) |
 | ✅ | Ignite | [effects/ignite.md](effects/ignite.md) |

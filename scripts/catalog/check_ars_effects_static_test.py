@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed regressions for 28 Ars Nouveau 5.13.1 Effect static dossiers.
+"""Fail-closed regressions for 32 Ars Nouveau 5.13.1 Effect static dossiers.
 
 No code execution, loaded provider API, runtime effect or perk behavior is
 implied by these tests; exact release binary registration remains separately
@@ -86,6 +86,18 @@ CASES = {
     "craft": ("glyph_craft", "EffectCraft",
                ("CustomWorkbench", "CraftingMenu", "stillValid(Player)",
                 "SimpleMenuProvider", "isNotFakePlayer")),
+    "cut": ("glyph_cut", "EffectCut",
+             ("IDamageEffect", "IShearable", "dupeCheck",
+              "Capabilities.ItemHandler.BLOCK", "onSheared")),
+    "fell": ("glyph_fell", "EffectFell",
+              ("BlockTagProvider.FELLABLE", "DFSBlockstates",
+               "destroyBlockSafelyWithoutSound", "getFortuneContext", "getSilkContext")),
+    "grow": ("glyph_grow", "EffectGrow",
+              ("BoneMealItem.applyBonemeal", "BoneMealItem.growWaterPlant",
+               "isFaceSturdy", "destroyRespectsClaim")),
+    "harvest": ("glyph_harvest", "EffectHarvest",
+                 ("processAndSpawnDrops", "HARVEST_STEMS", "CocoaBlock.AGE",
+                  "NetherWartBlock.AGE", "MAGE_BLOOM_CROP")),
 }
 
 
@@ -98,9 +110,9 @@ class StaticContractTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-    def test_twenty_eight_distinct_effect_identities(self):
-        self.assertEqual(28, len(CASES))
-        self.assertEqual(28, len({v[0] for v in CASES.values()}))
+    def test_thirty_two_distinct_effect_identities(self):
+        self.assertEqual(32, len(CASES))
+        self.assertEqual(32, len({v[0] for v in CASES.values()}))
         for slug, (identity, class_name, facts) in CASES.items():
             with self.subTest(effect=slug):
                 card = (ARS / "glyphs/effects" / (slug + ".md")).read_text(
@@ -126,7 +138,7 @@ class StaticContractTests(unittest.TestCase):
                 self.assertEqual("NOT_TESTED", data["physical_qa"])
                 self.assertEqual(EVIDENCE, set(data["evidence"]))
 
-    def test_twenty_eight_evidence_paths_exist_in_checkout(self):
+    def test_thirty_two_evidence_paths_exist_in_checkout(self):
         for name in CASES:
             cert = self.cert["✅-ars-nouveau/glyphs/effects/" + name + ".md"]
             for field, evidence in cert["evidence"].items():
@@ -136,7 +148,7 @@ class StaticContractTests(unittest.TestCase):
                     self.assertGreater(len(evidence["reason"]), 18)
                     self.assertTrue((REPO / evidence["path"]).is_file())
 
-    def test_all_parent_indexes_use_green_only_for_the_twenty_eight(self):
+    def test_all_parent_indexes_use_green_only_for_the_thirty_two(self):
         nested = [ARS / "glyphs/effects/INDEX.md",
                   ARS / "glyphs/INDEX.md", ARS / "INDEX.md"]
         for parent in nested:
@@ -429,11 +441,23 @@ class StaticContractTests(unittest.TestCase):
             self.assertIn(token, text)
 
     def test_processing_index_numbers_are_not_full_provider_certification(self):
-        self.assertIn("43/67.", self.index)
-        self.assertIn("61/85.", (ARS / "glyphs/INDEX.md").read_text(
+        # Historical batch numbers remain in its evidence dossier; latest indexes
+        # must match the current seven-field certificate ledger.
+        self.assertIn("43/67", (ARS /
+            "EFFECT-STATIC-PROCESSING-EXCHANGE-FOUR-5.13.1.md").read_text(
+                encoding="utf8"))
+        effects_done = sum(k.startswith("✅-ars-nouveau/glyphs/effects/")
+                           for k in self.cert)
+        glyphs_done = sum(k.startswith("✅-ars-nouveau/glyphs/")
+                          for k in self.cert)
+        ars_done = sum(k.startswith("✅-ars-nouveau/")
+                       for k in self.cert)
+        self.assertIn(f"{effects_done}/67.", self.index)
+        self.assertIn(f"{glyphs_done}/85.", (ARS / "glyphs/INDEX.md").read_text(
             encoding="utf8"))
-        self.assertIn("85/138.", (ARS / "INDEX.md").read_text(encoding="utf8"))
-        self.assertIn("85/2075.", self.root_index)
+        self.assertIn(f"{ars_done}/138.", (ARS / "INDEX.md").read_text(
+            encoding="utf8"))
+        self.assertIn(f"{len(self.cert)}/2075.", self.root_index)
         self.assertIn("0/164.", self.root_index)
         for slug in ("exchange", "crush", "smelt", "craft"):
             name = slug.replace("-", " ").title()
@@ -442,6 +466,89 @@ class StaticContractTests(unittest.TestCase):
                           (ARS / "glyphs/INDEX.md").read_text(encoding="utf8"))
             self.assertIn(f"| ✅ | {name} | [glyphs/effects/{slug}.md]",
                           (ARS / "INDEX.md").read_text(encoding="utf8"))
+
+
+    def test_cut_shear_gate_order_is_not_global_drop_protection(self):
+        text = (ARS / "glyphs/effects/cut.md").read_text(encoding="utf8")
+        for token in ("isShearable", "onSheared", "getBuffCount(AugmentAmplify)",
+                      "dupeCheck", "Capabilities.ItemHandler.BLOCK",
+                      "Container", "ANFakePlayer", "doStrip", "doShear",
+                      "Items.DIAMOND_AXE", "Items.SHEARS",
+                      "useItemOn", "useOn", "DAMAGE=1.0", "AMP_VALUE=1.0",
+                      "AOE/Pierce", "getDefaultManaCost()=0",
+                      "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED",
+                      "physical_qa=NOT_TESTED"):
+            self.assertIn(token, text)
+        self.assertIn("antes** de", text)
+        self.assertIn("não garante bloquear shear inicial", text)
+
+    def test_fell_dfs_is_budget_not_committed_drop_count(self):
+        text = (ARS / "glyphs/effects/fell.md").read_text(encoding="utf8")
+        for token in ("BlockTagProvider.FELLABLE", "DFSBlockstates",
+                      "maxBlocks=", "GENERIC_INT=50", "AOE_BONUS=50",
+                      "destroyRespectsClaim", "canBlockBeHarvested",
+                      "BlockEvent.BreakEvent", "getSilkContext",
+                      "getFortuneContext", "Extract tem precedência",
+                      "destroyBlockSafelyWithoutSound", "world.levelEvent(2001",
+                      "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED",
+                      "physical_qa=NOT_TESTED"):
+            self.assertIn(token, text)
+        self.assertIn("antes da destruição", text)
+        self.assertIn("não verifica o retorno", text)
+
+    def test_grow_adjacent_waterplant_target_claim_not_rechecked(self):
+        text = (ARS / "glyphs/effects/grow.md").read_text(encoding="utf8")
+        for token in ("SpellUtil.calcAOEBlocks", "AugmentAOE",
+                      "AugmentPierce", "new ItemStack(Items.BONE_MEAL,64)",
+                      "destroyRespectsClaim", "ServerLevel", "applyBonemeal",
+                      "BoneMealItem.growWaterPlant", "isFaceSturdy",
+                      "blockpos.relative", "world.levelEvent(1505",
+                      "getDefaultManaCost()=70", "WorldEffectPolicy",
+                      "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED"):
+            self.assertIn(token, text)
+        self.assertIn("não repete explicitamente", text)
+        self.assertIn("não confirmação universal", text)
+
+    def test_harvest_drops_not_atomic_with_cocoa_wart_crop_stem_mutation(self):
+        text = (ARS / "glyphs/effects/harvest.md").read_text(encoding="utf8")
+        for token in ("FarmBlock", "HARVEST_STEMS",
+                      "CocoaBlock.AGE==2", "NetherWartBlock.AGE==3",
+                      "crop.isMaxAge(state)", "processAndSpawnDrops",
+                      "AugmentFortune", "getFortuneContext", "i.shrink(1)",
+                      "MAGE_BLOOM_CROP", "AGE=0", "AGE=1",
+                      "setBlockAndUpdate", "destroyBlockSafely",
+                      "BlockEvent.BreakEvent", "destroyRespectsClaim",
+                      "ServerLevel", "WorldEffectPolicy",
+                      "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED"):
+            self.assertIn(token, text)
+        self.assertIn("não checa o boolean", text)
+        self.assertIn("antes do reset", text)
+
+    def test_vegetation_batch_dossier_keeps_89_global_static_only(self):
+        text = (ARS /
+            "EFFECT-STATIC-VEGETATION-CUT-FELL-GROW-HARVEST-5.13.1.md"
+            ).read_text(encoding="utf8")
+        for token in ("47/67", "65/85", "89/138", "89/2075", "0/164",
+                      SOURCE, SHA1, "EffectCut", "EffectFell",
+                      "EffectGrow", "EffectHarvest", "WorldEffectPolicy",
+                      "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED",
+                      "06.05", "09"):
+            self.assertIn(token, text)
+
+    def test_four_vegetation_effects_indexed_and_provider_not_closed(self):
+        for slug in ("cut", "fell", "grow", "harvest"):
+            name = slug.capitalize()
+            self.assertIn(f"| ✅ | {name} |", self.index)
+            self.assertIn(f"| ✅ | {name} | [effects/{slug}.md]",
+                          (ARS / "glyphs/INDEX.md").read_text(encoding="utf8"))
+            self.assertIn(f"| ✅ | {name} | [glyphs/effects/{slug}.md]",
+                          (ARS / "INDEX.md").read_text(encoding="utf8"))
+        self.assertIn("47/67.", self.index)
+        self.assertIn("65/85.", (ARS / "glyphs/INDEX.md").read_text(
+            encoding="utf8"))
+        self.assertIn("89/138.", (ARS / "INDEX.md").read_text(encoding="utf8"))
+        self.assertIn("89/2075.", self.root_index)
+        self.assertIn("0/164.", self.root_index)
 
 
 if __name__ == "__main__":

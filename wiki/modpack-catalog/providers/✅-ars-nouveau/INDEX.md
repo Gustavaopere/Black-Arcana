@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 85/138.**
-**Barra do recorte documental:** `████████████░░░░░░░░ 61.6%`
+**Homologadas para perks (somente fichas detectadas): 89/138.**
+**Barra do recorte documental:** `████████████░░░░░░░░ 64.5%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -42,22 +42,22 @@
 | ✅ | Conjure Water | [glyphs/effects/conjure-water.md](glyphs/effects/conjure-water.md) |
 | ✅ | Craft | [glyphs/effects/craft.md](glyphs/effects/craft.md) |
 | ✅ | Crush | [glyphs/effects/crush.md](glyphs/effects/crush.md) |
-| ⚠️ | Cut | [glyphs/effects/cut.md](glyphs/effects/cut.md) |
+| ✅ | Cut | [glyphs/effects/cut.md](glyphs/effects/cut.md) |
 | ✅ | Delay | [glyphs/effects/delay.md](glyphs/effects/delay.md) |
 | ✅ | Dispel | [glyphs/effects/dispel.md](glyphs/effects/dispel.md) |
 | ✅ | Evaporate | [glyphs/effects/evaporate.md](glyphs/effects/evaporate.md) |
 | ✅ | Exchange | [glyphs/effects/exchange.md](glyphs/effects/exchange.md) |
 | ✅ | Explosion | [glyphs/effects/explosion.md](glyphs/effects/explosion.md) |
 | ✅ | Fangs | [glyphs/effects/fangs.md](glyphs/effects/fangs.md) |
-| ⚠️ | Fell | [glyphs/effects/fell.md](glyphs/effects/fell.md) |
+| ✅ | Fell | [glyphs/effects/fell.md](glyphs/effects/fell.md) |
 | ✅ | Firework | [glyphs/effects/firework.md](glyphs/effects/firework.md) |
 | ✅ | Flare | [glyphs/effects/flare.md](glyphs/effects/flare.md) |
 | ✅ | Freeze | [glyphs/effects/freeze.md](glyphs/effects/freeze.md) |
 | ✅ | Glide | [glyphs/effects/glide.md](glyphs/effects/glide.md) |
 | ✅ | Gravity | [glyphs/effects/gravity.md](glyphs/effects/gravity.md) |
-| ⚠️ | Grow | [glyphs/effects/grow.md](glyphs/effects/grow.md) |
+| ✅ | Grow | [glyphs/effects/grow.md](glyphs/effects/grow.md) |
 | ✅ | Harm | [glyphs/effects/harm.md](glyphs/effects/harm.md) |
-| ⚠️ | Harvest | [glyphs/effects/harvest.md](glyphs/effects/harvest.md) |
+| ✅ | Harvest | [glyphs/effects/harvest.md](glyphs/effects/harvest.md) |
 | ✅ | Heal | [glyphs/effects/heal.md](glyphs/effects/heal.md) |
 | ✅ | Hex | [glyphs/effects/hex.md](glyphs/effects/hex.md) |
 | ✅ | Ignite | [glyphs/effects/ignite.md](glyphs/effects/ignite.md) |
