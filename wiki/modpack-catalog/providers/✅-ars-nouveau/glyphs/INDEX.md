@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 65/85.**
-**Barra do recorte documental:** `███████████████░░░░░ 76.5%`
+**Homologadas para perks (somente fichas detectadas): 69/85.**
+**Barra do recorte documental:** `████████████████░░░░ 81.2%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -31,8 +31,8 @@
 | ⚠️ | Bubble | [effects/bubble.md](effects/bubble.md) |
 | ✅ | Burst | [effects/burst.md](effects/burst.md) |
 | ✅ | Cold Snap | [effects/cold-snap.md](effects/cold-snap.md) |
-| ⚠️ | Conjure Mageblock | [effects/conjure-mageblock.md](effects/conjure-mageblock.md) |
-| ⚠️ | Conjure Magelight | [effects/conjure-magelight.md](effects/conjure-magelight.md) |
+| ✅ | Conjure Mageblock | [effects/conjure-mageblock.md](effects/conjure-mageblock.md) |
+| ✅ | Conjure Magelight | [effects/conjure-magelight.md](effects/conjure-magelight.md) |
 | ✅ | Conjure Water | [effects/conjure-water.md](effects/conjure-water.md) |
 | ✅ | Craft | [effects/craft.md](effects/craft.md) |
 | ✅ | Crush | [effects/crush.md](effects/crush.md) |
@@ -70,10 +70,10 @@
 | ✅ | Place Block | [effects/place-block.md](effects/place-block.md) |
 | ⚠️ | Prestidigitation | [effects/prestidigitation.md](effects/prestidigitation.md) |
 | ✅ | Pull | [effects/pull.md](effects/pull.md) |
-| ⚠️ | Redstone Signal | [effects/redstone-signal.md](effects/redstone-signal.md) |
+| ✅ | Redstone Signal | [effects/redstone-signal.md](effects/redstone-signal.md) |
 | ✅ | Reset | [effects/reset.md](effects/reset.md) |
 | ✅ | Rewind | [effects/rewind.md](effects/rewind.md) |
-| ⚠️ | Rotate | [effects/rotate.md](effects/rotate.md) |
+| ✅ | Rotate | [effects/rotate.md](effects/rotate.md) |
 | ✅ | Rune | [effects/rune.md](effects/rune.md) |
 | ✅ | Sense Magic | [effects/sense-magic.md](effects/sense-magic.md) |
 | ✅ | Slowfall | [effects/slowfall.md](effects/slowfall.md) |

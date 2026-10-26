@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 47/67.**
-**Barra do recorte documental:** `██████████████░░░░░░ 70.1%`
+**Homologadas para perks (somente fichas detectadas): 51/67.**
+**Barra do recorte documental:** `███████████████░░░░░ 76.1%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -18,8 +18,8 @@
 | ⚠️ | Bubble | [ficha/bubble.md](bubble.md) |
 | ✅ | Burst | [ficha/burst.md](burst.md) |
 | ✅ | Cold Snap | [ficha/cold-snap.md](cold-snap.md) |
-| ⚠️ | Conjure Mageblock | [ficha/conjure-mageblock.md](conjure-mageblock.md) |
-| ⚠️ | Conjure Magelight | [ficha/conjure-magelight.md](conjure-magelight.md) |
+| ✅ | Conjure Mageblock | [ficha/conjure-mageblock.md](conjure-mageblock.md) |
+| ✅ | Conjure Magelight | [ficha/conjure-magelight.md](conjure-magelight.md) |
 | ✅ | Conjure Water | [ficha/conjure-water.md](conjure-water.md) |
 | ✅ | Craft | [ficha/craft.md](craft.md) |
 | ✅ | Crush | [ficha/crush.md](crush.md) |
@@ -57,10 +57,10 @@
 | ✅ | Place Block | [ficha/place-block.md](place-block.md) |
 | ⚠️ | Prestidigitation | [ficha/prestidigitation.md](prestidigitation.md) |
 | ✅ | Pull | [ficha/pull.md](pull.md) |
-| ⚠️ | Redstone Signal | [ficha/redstone-signal.md](redstone-signal.md) |
+| ✅ | Redstone Signal | [ficha/redstone-signal.md](redstone-signal.md) |
 | ✅ | Reset | [ficha/reset.md](reset.md) |
 | ✅ | Rewind | [ficha/rewind.md](rewind.md) |
-| ⚠️ | Rotate | [ficha/rotate.md](rotate.md) |
+| ✅ | Rotate | [ficha/rotate.md](rotate.md) |
 | ✅ | Rune | [ficha/rune.md](rune.md) |
 | ✅ | Sense Magic | [ficha/sense-magic.md](sense-magic.md) |
 | ✅ | Slowfall | [ficha/slowfall.md](slowfall.md) |

@@ -3650,6 +3650,170 @@
           "reason": "Evidence distinguishes pinned source from publisher binary class/ID, marks mutating hooks unavailable and provider-native physical acceptance untested."
         }
       }
+    },
+    "✅-ars-nouveau/glyphs/effects/conjure-mageblock.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "MageBlockTile NBT age/permanent/modifier, Amplify permanent toggle, unchecked setBlockAndUpdate; timeout 300+100*duration game ticks.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact physical publisher 5.13.1 identity binds ars_nouveau:glyph_phantom_block to EffectPhantomBlock; method binary equivalence not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-mageblock.md",
+          "reason": "Pinned EffectPhantomBlock and downstream tile/SavedData behavior audited for modes, guard order, mutation return semantics and side effects."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-mageblock.md",
+          "reason": "Augments, mana defaults, AOE geometry, timers, NBT, power/light intensity and projectile rotation units are source-pinned; loaded config unspecified."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-mageblock.md",
+          "reason": "BlockHitResult or EntityHitResult, hit-face offset, Lightable, collision/claim position, projectile and chunk lifecycle path documented with scope exclusions."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-mageblock.md",
+          "reason": "Ars provider mana default distinct from real cast cost, persistent world mutation and in-world per-target work/time and packets."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-TEMPORARY-REDSTONE-ROTATE-FOUR-5.13.1.md",
+          "reason": "Boundary keeps Black Arcana WorldEffectPolicy authority for BA effects, preserves Ars runtime and restricts RPG Skill Tree to actual progression adapters."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-mageblock.md",
+          "reason": "Static analysis and compiled registry-class provenance separated from unverified mutation hooks and missing real modpack physical QA."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/conjure-magelight.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "LightTile/TempLightTile conditional path, entity NightVision/Glowing/network packets; light level clamp, original ILightable vs destination claims, unchecked placement.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact physical publisher 5.13.1 identity binds ars_nouveau:glyph_light to EffectLight; method binary equivalence not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-magelight.md",
+          "reason": "Pinned EffectLight and downstream tile/SavedData behavior audited for modes, guard order, mutation return semantics and side effects."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-magelight.md",
+          "reason": "Augments, mana defaults, AOE geometry, timers, NBT, power/light intensity and projectile rotation units are source-pinned; loaded config unspecified."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-magelight.md",
+          "reason": "BlockHitResult or EntityHitResult, hit-face offset, Lightable, collision/claim position, projectile and chunk lifecycle path documented with scope exclusions."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-magelight.md",
+          "reason": "Ars provider mana default distinct from real cast cost, persistent world mutation and in-world per-target work/time and packets."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-TEMPORARY-REDSTONE-ROTATE-FOUR-5.13.1.md",
+          "reason": "Boundary keeps Black Arcana WorldEffectPolicy authority for BA effects, preserves Ars runtime and restricts RPG Skill Tree to actual progression adapters."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/conjure-magelight.md",
+          "reason": "Static analysis and compiled registry-class provenance separated from unverified mutation hooks and missing real modpack physical QA."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/redstone-signal.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Sensitive SavedData signal without local claim or place event; unloaded ticks paused; standard TemporaryTile absolute game-time expiry after cancelable EntityPlaceEvent.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact physical publisher 5.13.1 identity binds ars_nouveau:glyph_redstone_signal to EffectRedstone; method binary equivalence not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/redstone-signal.md",
+          "reason": "Pinned EffectRedstone and downstream tile/SavedData behavior audited for modes, guard order, mutation return semantics and side effects."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/redstone-signal.md",
+          "reason": "Augments, mana defaults, AOE geometry, timers, NBT, power/light intensity and projectile rotation units are source-pinned; loaded config unspecified."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/redstone-signal.md",
+          "reason": "BlockHitResult or EntityHitResult, hit-face offset, Lightable, collision/claim position, projectile and chunk lifecycle path documented with scope exclusions."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/redstone-signal.md",
+          "reason": "Ars provider mana default distinct from real cast cost, persistent world mutation and in-world per-target work/time and packets."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-TEMPORARY-REDSTONE-ROTATE-FOUR-5.13.1.md",
+          "reason": "Boundary keeps Black Arcana WorldEffectPolicy authority for BA effects, preserves Ars runtime and restricts RPG Skill Tree to actual progression adapters."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/redstone-signal.md",
+          "reason": "Static analysis and compiled registry-class provenance separated from unverified mutation hooks and missing real modpack physical QA."
+        }
+      }
+    },
+    "✅-ars-nouveau/glyphs/effects/rotate.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Entity and block rotation have distinct loop limits, projectiles rotateVec uses Math.cos/sin of angle values 90/-90 without radians conversion, no local claim and unchecked setBlock.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EXACT-BINARY-GLYPH-RITUAL-IDS-5.13.1.md",
+          "reason": "Exact physical publisher 5.13.1 identity binds ars_nouveau:glyph_rotate to EffectRotate; method binary equivalence not established."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/rotate.md",
+          "reason": "Pinned EffectRotate and downstream tile/SavedData behavior audited for modes, guard order, mutation return semantics and side effects."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/rotate.md",
+          "reason": "Augments, mana defaults, AOE geometry, timers, NBT, power/light intensity and projectile rotation units are source-pinned; loaded config unspecified."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/rotate.md",
+          "reason": "BlockHitResult or EntityHitResult, hit-face offset, Lightable, collision/claim position, projectile and chunk lifecycle path documented with scope exclusions."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/rotate.md",
+          "reason": "Ars provider mana default distinct from real cast cost, persistent world mutation and in-world per-target work/time and packets."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/EFFECT-STATIC-TEMPORARY-REDSTONE-ROTATE-FOUR-5.13.1.md",
+          "reason": "Boundary keeps Black Arcana WorldEffectPolicy authority for BA effects, preserves Ars runtime and restricts RPG Skill Tree to actual progression adapters."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/glyphs/effects/rotate.md",
+          "reason": "Static analysis and compiled registry-class provenance separated from unverified mutation hooks and missing real modpack physical QA."
+        }
+      }
     }
   },
   "providers": {},

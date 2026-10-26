@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 89/138.**
-**Barra do recorte documental:** `████████████░░░░░░░░ 64.5%`
+**Homologadas para perks (somente fichas detectadas): 93/138.**
+**Barra do recorte documental:** `█████████████░░░░░░░ 67.4%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -37,8 +37,8 @@
 | ⚠️ | Bubble | [glyphs/effects/bubble.md](glyphs/effects/bubble.md) |
 | ✅ | Burst | [glyphs/effects/burst.md](glyphs/effects/burst.md) |
 | ✅ | Cold Snap | [glyphs/effects/cold-snap.md](glyphs/effects/cold-snap.md) |
-| ⚠️ | Conjure Mageblock | [glyphs/effects/conjure-mageblock.md](glyphs/effects/conjure-mageblock.md) |
-| ⚠️ | Conjure Magelight | [glyphs/effects/conjure-magelight.md](glyphs/effects/conjure-magelight.md) |
+| ✅ | Conjure Mageblock | [glyphs/effects/conjure-mageblock.md](glyphs/effects/conjure-mageblock.md) |
+| ✅ | Conjure Magelight | [glyphs/effects/conjure-magelight.md](glyphs/effects/conjure-magelight.md) |
 | ✅ | Conjure Water | [glyphs/effects/conjure-water.md](glyphs/effects/conjure-water.md) |
 | ✅ | Craft | [glyphs/effects/craft.md](glyphs/effects/craft.md) |
 | ✅ | Crush | [glyphs/effects/crush.md](glyphs/effects/crush.md) |
@@ -76,10 +76,10 @@
 | ✅ | Place Block | [glyphs/effects/place-block.md](glyphs/effects/place-block.md) |
 | ⚠️ | Prestidigitation | [glyphs/effects/prestidigitation.md](glyphs/effects/prestidigitation.md) |
 | ✅ | Pull | [glyphs/effects/pull.md](glyphs/effects/pull.md) |
-| ⚠️ | Redstone Signal | [glyphs/effects/redstone-signal.md](glyphs/effects/redstone-signal.md) |
+| ✅ | Redstone Signal | [glyphs/effects/redstone-signal.md](glyphs/effects/redstone-signal.md) |
 | ✅ | Reset | [glyphs/effects/reset.md](glyphs/effects/reset.md) |
 | ✅ | Rewind | [glyphs/effects/rewind.md](glyphs/effects/rewind.md) |
-| ⚠️ | Rotate | [glyphs/effects/rotate.md](glyphs/effects/rotate.md) |
+| ✅ | Rotate | [glyphs/effects/rotate.md](glyphs/effects/rotate.md) |
 | ✅ | Rune | [glyphs/effects/rune.md](glyphs/effects/rune.md) |
 | ✅ | Sense Magic | [glyphs/effects/sense-magic.md](glyphs/effects/sense-magic.md) |
 | ✅ | Slowfall | [glyphs/effects/slowfall.md](glyphs/effects/slowfall.md) |
