@@ -4716,6 +4716,170 @@
           "reason": "Explicit evidence_grade PINNED_SOURCE_WITH_RELEASE_SHA_ONLY avoids borrowing glyph/ritual SHA-exact identity proof for familiar classfiles, with gameplay QA NOT_TESTED and mutating hooks NOT_VERIFIED."
         }
       }
+    },
+    "✅-ars-nouveau/perks/undying.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Tier 3 isActive charge uses Player LivingDeathEvent and global SleepFinishedTimeEvent; getHolderForPerk picks last matching equipped holder without comparing slot value, anti-death causal ordering untested.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/undying.md",
+          "reason": "Source-pinned exact Ars Nouveau 5.13.1 registry ars_nouveau:thread_undying and class TotemPerk; 109-ID compiled identity audit covers glyphs and rituals, not armor threads."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/undying.md",
+          "reason": "TotemPerk and downstream PerkEvents/PerkUtil, armor or Caelus consumers document causal callback order, result ownership, and missing success/reentry proof."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/undying.md",
+          "reason": "Minimum slot, duration, heal/repair value, trigger gate, armor slot count, mana payment and potion/attribute output documented with loaded config limitations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/undying.md",
+          "reason": "Armor wearer and selected holder, caster of Ars SpellDamageEvent, conditional PlayerTick or LivingDeathEvent, equipped ItemStack and slot distinctions are source grounded."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/undying.md",
+          "reason": "Ars armor thread acquisition and native cost/charge/mana or health settlement distinguished from magical cast runtime and any Black Arcana resources."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/PERK-STATIC-LIFECYCLE-UNDYING-REPAIRING-DRAIN-GLIDING-5.13.1.md",
+          "reason": "Ars owns perk runtime, item components, mana and vanilla callbacks; Black Arcana WorldEffectPolicy only covers BA effects and RPG Skill Tree only progression via verified boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/undying.md",
+          "reason": "Source-only release evidence grade explicitly lacks familiar/perk classfile proof, mutation hook NOT_VERIFIED and physical QA NOT_TESTED, with prescribed engine/pack tests."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/repairing.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "gameTime%200 repair charges Ars mana20 per eligible item; max slot not sum; armor caller guards server but sword/shield inventoryTick do not locally gate client, and UNBREAKING onAdded/onRemoved updates all armor.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/repairing.md",
+          "reason": "Source-pinned exact Ars Nouveau 5.13.1 registry ars_nouveau:thread_repairing and class RepairingPerk; 109-ID compiled identity audit covers glyphs and rituals, not armor threads."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/repairing.md",
+          "reason": "RepairingPerk and downstream PerkEvents/PerkUtil, armor or Caelus consumers document causal callback order, result ownership, and missing success/reentry proof."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/repairing.md",
+          "reason": "Minimum slot, duration, heal/repair value, trigger gate, armor slot count, mana payment and potion/attribute output documented with loaded config limitations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/repairing.md",
+          "reason": "Armor wearer and selected holder, caster of Ars SpellDamageEvent, conditional PlayerTick or LivingDeathEvent, equipped ItemStack and slot distinctions are source grounded."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/repairing.md",
+          "reason": "Ars armor thread acquisition and native cost/charge/mana or health settlement distinguished from magical cast runtime and any Black Arcana resources."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/PERK-STATIC-LIFECYCLE-UNDYING-REPAIRING-DRAIN-GLIDING-5.13.1.md",
+          "reason": "Ars owns perk runtime, item components, mana and vanilla callbacks; Black Arcana WorldEffectPolicy only covers BA effects and RPG Skill Tree only progression via verified boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/repairing.md",
+          "reason": "Source-only release evidence grade explicitly lacks familiar/perk classfile proof, mutation hook NOT_VERIFIED and physical QA NOT_TESTED, with prescribed engine/pack tests."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/life-drain.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "SpellDamageEvent.Post calls heal per equipped perk instance while countForPerk selects max slot; potential multiplied heal requests for duplicates, real gameplay amount unverified.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/life-drain.md",
+          "reason": "Source-pinned exact Ars Nouveau 5.13.1 registry ars_nouveau:thread_life_drain and class VampiricPerk; 109-ID compiled identity audit covers glyphs and rituals, not armor threads."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/life-drain.md",
+          "reason": "VampiricPerk and downstream PerkEvents/PerkUtil, armor or Caelus consumers document causal callback order, result ownership, and missing success/reentry proof."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/life-drain.md",
+          "reason": "Minimum slot, duration, heal/repair value, trigger gate, armor slot count, mana payment and potion/attribute output documented with loaded config limitations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/life-drain.md",
+          "reason": "Armor wearer and selected holder, caster of Ars SpellDamageEvent, conditional PlayerTick or LivingDeathEvent, equipped ItemStack and slot distinctions are source grounded."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/life-drain.md",
+          "reason": "Ars armor thread acquisition and native cost/charge/mana or health settlement distinguished from magical cast runtime and any Black Arcana resources."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/PERK-STATIC-LIFECYCLE-UNDYING-REPAIRING-DRAIN-GLIDING-5.13.1.md",
+          "reason": "Ars owns perk runtime, item components, mana and vanilla callbacks; Black Arcana WorldEffectPolicy only covers BA effects and RPG Skill Tree only progression via verified boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/life-drain.md",
+          "reason": "Source-only release evidence grade explicitly lacks familiar/perk classfile proof, mutation hook NOT_VERIFIED and physical QA NOT_TESTED, with prescribed engine/pack tests."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/gliding.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Caelus modifier added on PlayerTick.Pre condition with EffectGlide.canGlide; ElytraPlayerMixin ORs original canElytraFly; cleanup in CaelusHandler not shown, native glide not Black Arcana owned.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/gliding.md",
+          "reason": "Source-pinned exact Ars Nouveau 5.13.1 registry ars_nouveau:thread_gliding and class GlidingPerk; 109-ID compiled identity audit covers glyphs and rituals, not armor threads."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/gliding.md",
+          "reason": "GlidingPerk and downstream PerkEvents/PerkUtil, armor or Caelus consumers document causal callback order, result ownership, and missing success/reentry proof."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/gliding.md",
+          "reason": "Minimum slot, duration, heal/repair value, trigger gate, armor slot count, mana payment and potion/attribute output documented with loaded config limitations."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/gliding.md",
+          "reason": "Armor wearer and selected holder, caster of Ars SpellDamageEvent, conditional PlayerTick or LivingDeathEvent, equipped ItemStack and slot distinctions are source grounded."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/gliding.md",
+          "reason": "Ars armor thread acquisition and native cost/charge/mana or health settlement distinguished from magical cast runtime and any Black Arcana resources."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/PERK-STATIC-LIFECYCLE-UNDYING-REPAIRING-DRAIN-GLIDING-5.13.1.md",
+          "reason": "Ars owns perk runtime, item components, mana and vanilla callbacks; Black Arcana WorldEffectPolicy only covers BA effects and RPG Skill Tree only progression via verified boundaries."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/gliding.md",
+          "reason": "Source-only release evidence grade explicitly lacks familiar/perk classfile proof, mutation hook NOT_VERIFIED and physical QA NOT_TESTED, with prescribed engine/pack tests."
+        }
+      }
     }
   },
   "providers": {},
