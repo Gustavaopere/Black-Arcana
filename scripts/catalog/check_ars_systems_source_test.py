@@ -68,7 +68,7 @@ class ArsSystemsSourceTest(unittest.TestCase):
         for t in ("REGEN_INTERVAL", "getResolveCost", "getExpendedCost",
                   "Math.max(0,event.currentCost)", "getCurrentMana",
                   "getMaxMana", "SpellCostCalcEvent.Pre",
-                  "SpellCostCalcEvent.Post", "sem igualdade/atomicidade",
+                  "SpellCostCalcEvent.Post", "não há igualdade/atomicidade garantida",
                   "newReserve>1", "FamiliarEvents.maxManaCalc",
                   "removeMana"):
             self.assertIn(t, page)
@@ -80,8 +80,8 @@ class ArsSystemsSourceTest(unittest.TestCase):
         for t in ("SpellTier.CREATIVE", "GlyphRegistry",
                   "iMana.getGlyphBonus()", "cap.getKnownGlyphs()",
                   "GlyphRecipeProvider.getExpFromTier", "27", "55", "160",
-                  "ANPlayerData.deserializeNBT", "null",
-                  "XP de Mastery", "addon", "server"):
+                  "deserializeNBT", "null",
+                  "Mastery RPG", "addon", "server"):
             self.assertIn(t, page)
 
     def test_armor_provider_is_not_rpg_perk_tree(self):
@@ -91,7 +91,7 @@ class ArsSystemsSourceTest(unittest.TestCase):
                   "SORCERER_*", "máximo"):
             self.assertIn(t, page)
         self.assertIn("getTier()", page)
-        self.assertIn("sem bounds check explícito", page)
+        self.assertIn("não faz bounds check explícito", page)
         self.assertIn("ADD_VALUE", page)
 
     def test_dossier_keeps_systems_uncertified_until_manifest_update(self):
