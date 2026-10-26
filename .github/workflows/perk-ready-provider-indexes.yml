@@ -13,6 +13,8 @@ on:
       - 'scripts/catalog/generate_perk_ready_indexes_test.py'
       - 'scripts/catalog/check_ars_effects_static_test.py'
       - 'scripts/catalog/check_ars_rituals_static_test.py'
+      - 'scripts/catalog/check_ars_familiars_static_test.py'
+      - 'scripts/catalog/check_ars_perks_advanced_static_test.py'
       - '.github/workflows/perk-ready-provider-indexes.yml'
   push:
     branches: [main]
@@ -26,6 +28,8 @@ on:
       - 'scripts/catalog/generate_perk_ready_indexes_test.py'
       - 'scripts/catalog/check_ars_effects_static_test.py'
       - 'scripts/catalog/check_ars_rituals_static_test.py'
+      - 'scripts/catalog/check_ars_familiars_static_test.py'
+      - 'scripts/catalog/check_ars_perks_advanced_static_test.py'
       - '.github/workflows/perk-ready-provider-indexes.yml'
   workflow_dispatch:
 
@@ -46,6 +50,10 @@ jobs:
         run: python3 scripts/catalog/check_ars_effects_static_test.py -v
       - name: Verify first five Ars Ritual static contracts and safety boundaries
         run: python3 scripts/catalog/check_ars_rituals_static_test.py -v
+      - name: Verify six Ars Familiar source-only contracts and evidence boundaries
+        run: python3 scripts/catalog/check_ars_familiars_static_test.py -v
+      - name: Verify source-only Ars armor Thread contracts and lifecycle boundaries
+        run: python3 scripts/catalog/check_ars_perks_advanced_static_test.py -v
       - name: Verify every mod and subfolder index, item link and completion numerator
         run: python3 scripts/catalog/check_perk_ready_indexes.py
       - name: Verify index generator read-only check mode
