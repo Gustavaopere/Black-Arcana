@@ -1,5 +1,7 @@
 # Goety — auditoria do pipeline de cast e Soul Energy (fonte pública 3.1.1)
 
+> **Atualização factual — 26/10/2026:** o [probe do JAR exato Goety 3.1.4](EXACT-3.1.4-ABI-AND-SYMBOLIC-CALL-AUDIT-20261026.md) confirmou **classes, assinaturas e call-sites selecionados** anteriormente marcados como não verificados. O corpo deste documento continua sendo análise semântica da fonte 3.1.1. A ausência de prova de **algoritmos, eventos efetivamente emitidos, transações e hooks seguros** permanece.
+
 **Data:** 26/10/2026 · **Estado:** ⚠️ SOURCE-ADJACENT / observação e mutação **NÃO HOMOLOGADAS** para a instalação
 
 ## 1. Autoridade, proveniência e grau de prova
@@ -50,3 +52,13 @@ Na [`GoetyEventFactory`](https://github.com/Vivideru/Goety-3/blob/6c41a04f2d7120
 Provas requeridas: (1) ABI/eventos do JAR 3.1.4 SHA-exato; (2) configuração física e overrides; (3) invocações Start/Casting/Cast/Stop e cancelamentos por timeline no servidor; (4) round-trip do `SOULCOST` em `ItemStack` e desconto por armadura; (5) gasto com foco encantado, totem e pool ativa; (6) dois casters usando Focus igual simultaneamente; (7) retry/restart/world save; (8) ausência de double-charge e de duplicate Mastery; (9) cliente e modpack reais.
 
 **Estado:** ⚠️ apenas fonte adjacente 3.1.1, sem certificação de hook e sem aprovação de integração. O documento é diagnóstico transversal, **não** objeto mágico adicional nem prova de 100% do Goety; não altera o manifesto `PERK-READY-CERTIFICATIONS.json` ou os índices automáticos.
+
+## Adendo de compatibilidade ABI no JAR físico 3.1.4 — 26/10/2026
+
+O workflow [#40344481668](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40344481668) verificou o SHA-1 `a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7`. A lista, escopo e digest da evidência estão em [EXACT-3.1.4-ABI-AND-SYMBOLIC-CALL-AUDIT-20261026.md](EXACT-3.1.4-ABI-AND-SYMBOLIC-CALL-AUDIT-20261026.md).
+
+**Confirmado estritamente como assinatura e referência simbólica de bytecode 3.1.4:** `GoetyEventFactory.onStartSpell`, `onCastingSpell`, `onCastSpell`, `onStopSpell`, `onSoulEnergyGain/Loss`; eventos concretos Start/Casting/Cast/Stop/ChangeSoulEnergy; chamadas de `DarkWand.onUseTick` para Start/Casting, de `use/finishUsingItem` para Cast, de `releaseUsing` para Stop, de `canCastTouch` para Touch; `DarkWand.MagicResults` referencia `ISpell.SpellResult`, `SEHelper.getSoulsAmount`, `decreaseSouls` e `addCooldown`; `SEHelper.decreaseSouls` referencia `GoetyEventFactory.onSoulEnergyLoss`.
+
+**Não confirmado no 3.1.4:** emissão em todos os ramos, ordem de débito/resultado, custo numérico, número de invocações por cast, permissão de cancelar sem side effects, identificador causal estável, servidor dedicado/client, exclusividade por conjurador e segurança de mutação. **Existência de `ChangeSoulEnergyEvent.Loss` não comprova que ele representa somente consumo mágico nem que é um hook de perk adequado.**
+
+O status correto deste documento passa a ser **⚠️ source 3.1.1 com adendo factual exato de ABI 3.1.4**. A certificação para perks continua **0** nesta área e os hooks mutadores permanecem **⛔ fail-closed**; nenhuma fórmula histórica deve ser promovida sem confronto binário e teste.
