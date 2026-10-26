@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 53/85.**
-**Barra do recorte documental:** `████████████░░░░░░░░ 62.4%`
+**Homologadas para perks (somente fichas detectadas): 57/85.**
+**Barra do recorte documental:** `█████████████░░░░░░░ 67.1%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -27,19 +27,19 @@
 | ⚠️ | Animate Block | [effects/animate-block.md](effects/animate-block.md) |
 | ✅ | Blink | [effects/blink.md](effects/blink.md) |
 | ✅ | Bounce | [effects/bounce.md](effects/bounce.md) |
-| ⚠️ | Break | [effects/break.md](effects/break.md) |
+| ✅ | Break | [effects/break.md](effects/break.md) |
 | ⚠️ | Bubble | [effects/bubble.md](effects/bubble.md) |
 | ✅ | Burst | [effects/burst.md](effects/burst.md) |
 | ✅ | Cold Snap | [effects/cold-snap.md](effects/cold-snap.md) |
 | ⚠️ | Conjure Mageblock | [effects/conjure-mageblock.md](effects/conjure-mageblock.md) |
 | ⚠️ | Conjure Magelight | [effects/conjure-magelight.md](effects/conjure-magelight.md) |
-| ⚠️ | Conjure Water | [effects/conjure-water.md](effects/conjure-water.md) |
+| ✅ | Conjure Water | [effects/conjure-water.md](effects/conjure-water.md) |
 | ⚠️ | Craft | [effects/craft.md](effects/craft.md) |
 | ⚠️ | Crush | [effects/crush.md](effects/crush.md) |
 | ⚠️ | Cut | [effects/cut.md](effects/cut.md) |
 | ✅ | Delay | [effects/delay.md](effects/delay.md) |
 | ✅ | Dispel | [effects/dispel.md](effects/dispel.md) |
-| ⚠️ | Evaporate | [effects/evaporate.md](effects/evaporate.md) |
+| ✅ | Evaporate | [effects/evaporate.md](effects/evaporate.md) |
 | ⚠️ | Exchange | [effects/exchange.md](effects/exchange.md) |
 | ✅ | Explosion | [effects/explosion.md](effects/explosion.md) |
 | ✅ | Fangs | [effects/fangs.md](effects/fangs.md) |
@@ -67,7 +67,7 @@
 | ✅ | Linger | [effects/linger.md](effects/linger.md) |
 | ⚠️ | Name | [effects/name.md](effects/name.md) |
 | ✅ | Orbit | [effects/orbit.md](effects/orbit.md) |
-| ⚠️ | Place Block | [effects/place-block.md](effects/place-block.md) |
+| ✅ | Place Block | [effects/place-block.md](effects/place-block.md) |
 | ⚠️ | Prestidigitation | [effects/prestidigitation.md](effects/prestidigitation.md) |
 | ✅ | Pull | [effects/pull.md](effects/pull.md) |
 | ⚠️ | Redstone Signal | [effects/redstone-signal.md](effects/redstone-signal.md) |

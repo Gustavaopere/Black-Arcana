@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed regressions for twenty Ars Nouveau 5.13.1 Effect static dossiers.
+"""Fail-closed regressions for 24 Ars Nouveau 5.13.1 Effect static dossiers.
 
 No code execution, loaded provider API, runtime effect or perk behavior is
 implied by these tests; exact release binary registration remains separately
@@ -61,6 +61,19 @@ CASES = {
                ("BOUNCE_EFFECT", "getPotionAugments", "setDeltaMovement")),
     "dispel": ("glyph_dispel", "EffectDispel",
                ("DispelEvent.Pre", "DispelEvent.Post", "IDispellable", "DISPEL_DENY", "DISPEL_ALLOW")),
+    "break": ("glyph_break", "EffectBreak",
+              ("destroyRespectsClaim", "breakExtraBlock", "CommonHooks.fireBlockBreak",
+               "getBaseHarvestLevel", "ShapersFocus")),
+    "place-block": ("glyph_place_block", "EffectPlaceBlock",
+                    ("BlockEvent.EntityPlaceEvent", "InventoryManager",
+                     "ExtractedStack.returnOrDrop", "UnbiasedDirectionalPlaceContext",
+                     "isInWorldBounds")),
+    "conjure-water": ("glyph_conjure_water", "EffectConjureWater",
+                      ("SOAKED_EFFECT", "clearFire", "destroyRespectsClaim",
+                       "setBlockAndUpdate", "POTION_TIME")),
+    "evaporate": ("glyph_evaporate", "EffectEvaporate",
+                  ("SimpleWaterloggedBlock", "LiquidBlock", "Direction.values()",
+                   "WATERLOGGED", "ShapersFocus")),
 }
 
 
@@ -73,9 +86,9 @@ class StaticContractTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-    def test_twenty_distinct_effect_identities(self):
-        self.assertEqual(20, len(CASES))
-        self.assertEqual(20, len({v[0] for v in CASES.values()}))
+    def test_twenty_four_distinct_effect_identities(self):
+        self.assertEqual(24, len(CASES))
+        self.assertEqual(24, len({v[0] for v in CASES.values()}))
         for slug, (identity, class_name, facts) in CASES.items():
             with self.subTest(effect=slug):
                 card = (ARS / "glyphs/effects" / (slug + ".md")).read_text(
@@ -101,7 +114,7 @@ class StaticContractTests(unittest.TestCase):
                 self.assertEqual("NOT_TESTED", data["physical_qa"])
                 self.assertEqual(EVIDENCE, set(data["evidence"]))
 
-    def test_twenty_evidence_paths_exist_in_checkout(self):
+    def test_twenty_four_evidence_paths_exist_in_checkout(self):
         for name in CASES:
             cert = self.cert["✅-ars-nouveau/glyphs/effects/" + name + ".md"]
             for field, evidence in cert["evidence"].items():
@@ -111,7 +124,7 @@ class StaticContractTests(unittest.TestCase):
                     self.assertGreater(len(evidence["reason"]), 18)
                     self.assertTrue((REPO / evidence["path"]).is_file())
 
-    def test_all_parent_indexes_use_green_only_for_the_twenty(self):
+    def test_all_parent_indexes_use_green_only_for_the_twenty_four(self):
         nested = [ARS / "glyphs/effects/INDEX.md",
                   ARS / "glyphs/INDEX.md", ARS / "INDEX.md"]
         for parent in nested:
@@ -238,6 +251,94 @@ class StaticContractTests(unittest.TestCase):
                     self.assertIn(term, card)
                 self.assertIn("mutating_hook=NOT_VERIFIED", card)
                 self.assertIn("physical_qa=NOT_TESTED", card)
+
+
+    def test_break_claim_preflight_is_not_cancellation_free_mutation(self):
+        page = (ARS / "glyphs/effects/break.md").read_text(encoding="utf-8")
+        for term in ("SpellUtil.calcAOEBlocks", "1+floor(AOE)",
+                     "1+ceil(AOE)", "1+Pierce", "MobEffects.DIG_SLOWDOWN",
+                     "getBaseHarvestLevel", "BREAK_WITH_PICKAXE",
+                     "AugmentFortune", "AugmentExtract", "Items.SHEARS",
+                     "BREAK_BLACKLIST", "destroyRespectsClaim",
+                     "CommonHooks.fireBlockBreak", "breakExtraBlock",
+                     "ShapersFocus.tryPropagateBlockSpell",
+                     "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED",
+                     "physical_qa=NOT_TESTED"):
+            self.assertIn(term, page)
+        self.assertIn("retornar **true**", page)
+        self.assertIn("não", page.lower())
+
+    def test_place_block_inventory_callbacks_and_bounds_after_offset(self):
+        page = (ARS / "glyphs/effects/place-block.md").read_text(
+            encoding="utf-8")
+        for term in ("BlockEvent.EntityPlaceEvent", "NeoForge.EVENT_BUS",
+                     "BlockSnapshot", "isInWorldBounds",
+                     "pos1.relative(hitDirection)", "UnbiasedDirectionalPlaceContext",
+                     "InventoryManager.extractItem", "extractRandomItem",
+                     "BlockItem.place", "ExtractedStack", "returnOrDrop",
+                     "InteractionResult.FAIL", "Sensitive",
+                     "ShapersFocus.tryPropagateBlockSpell",
+                     "WorldEffectPolicy"):
+            self.assertIn(term, page)
+        self.assertIn("antes** de mudar", page)
+        self.assertIn("mutating_hook=NOT_VERIFIED", page)
+        self.assertIn("physical_qa=NOT_TESTED", page)
+
+    def test_conjure_water_gates_adjacent_destination_separately(self):
+        page = (ARS / "glyphs/effects/conjure-water.md").read_text(
+            encoding="utf-8")
+        for term in ("SOAKED_EFFECT", "entity.clearFire()",
+                     "getDurationMultiplier()>0", "ultraWarm",
+                     "LiquidBlockContainer", "canPlaceLiquid", "placeLiquid",
+                     "destroyRespectsClaim", "world.isInWorldBounds",
+                     "pos1.relative(direction)", "setBlockAndUpdate",
+                     "Blocks.WATER", "ShapersFocus.tryPropagateBlockSpell",
+                     "addPotionConfig(builder,20)",
+                     "addExtendTimeConfig(builder,10)", "30",
+                     "WorldEffectPolicy", "mutating_hook=NOT_VERIFIED",
+                     "physical_qa=NOT_TESTED"):
+            self.assertIn(term, page)
+        self.assertIn("segundo", page)
+
+    def test_evaporate_seven_attempts_do_not_certify_seven_mutations(self):
+        page = (ARS / "glyphs/effects/evaporate.md").read_text(
+            encoding="utf-8")
+        for term in ("Direction.values()", "7 chamadas por candidato AOE",
+                     "SimpleWaterloggedBlock", "BlockStateProperties.WATERLOGGED",
+                     "LiquidBlock", "Blocks.AIR", "world.setBlock",
+                     "ShapersFocus.tryPropagateBlockSpell",
+                     "destroyRespectsClaim", "BlockEvent.BreakEvent",
+                     "world.isInWorldBounds", "WorldEffectPolicy",
+                     "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED"):
+            self.assertIn(term, page)
+        self.assertIn("não", page.lower())
+
+    def test_world_mutation_effects_dossier_preserves_provider_authority(self):
+        page = (ARS / "EFFECT-STATIC-WORLD-MUTATION-FOUR-5.13.1.md").read_text(
+            encoding="utf-8")
+        for term in ("39/67", "57/85", "81/138", "81/2075",
+                     "0/164", SOURCE, SHA1, "EffectBreak",
+                     "EffectPlaceBlock", "EffectConjureWater",
+                     "EffectEvaporate", "WorldEffectPolicy",
+                     "mutating_hook=NOT_VERIFIED", "physical_qa=NOT_TESTED",
+                     "Stage"):
+            self.assertIn(term, page)
+
+    def test_four_new_world_effects_not_confused_with_ars_rituals(self):
+        for slug in ("break", "place-block", "conjure-water", "evaporate"):
+            name = slug.replace("-", " ").title()
+            page = (ARS / "glyphs/effects/INDEX.md").read_text(encoding="utf8")
+            self.assertIn(f"| ✅ | {name} |", page)
+            self.assertIn(f"| ✅ | {name} | [effects/{slug}.md]",
+                          (ARS / "glyphs/INDEX.md").read_text(encoding="utf8"))
+            self.assertIn(f"| ✅ | {name} | [glyphs/effects/{slug}.md]",
+                          (ARS / "INDEX.md").read_text(encoding="utf8"))
+        self.assertIn("39/67.", self.index)
+        self.assertIn("57/85.", (ARS / "glyphs/INDEX.md").read_text(
+            encoding="utf8"))
+        self.assertIn("81/138.", (ARS / "INDEX.md").read_text(
+            encoding="utf8"))
+        self.assertIn("81/2075.", self.root_index)
 
 
 if __name__ == "__main__":
