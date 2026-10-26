@@ -57,3 +57,11 @@ A versão 3.1.1 encaminha o hit via `DamageSource.arrow` e a decisão de status 
 **Testes obrigatórios para 3.1.4:** classfile `PoisonDartSpell/PoisonQuill`; uma e múltiplas entidades alinhadas; friendly-fire, Mob vs jogador, Wild Robe e underwater; persistência reload, chunk unload, interceptação de damage events, `ENDERMAN`, owner offline, PvP/claims, velocidade/hitbox e custo/cooldown por cast.
 
 **Status:** ⚠️ enriquecimento source-adjacent; nenhum hook de alteração de projétil no JAR instalado foi verificado. **⛔ Fail-closed** para mutações, sem incrementar certificados ou alterar o índice 100%.
+
+## Adendo de ABI exata do JAR 3.1.4 — 26/10/2026
+
+**Nova evidência, distinta do estudo da fonte 3.1.1 acima:** no JAR `goety-3.1.4.jar` com SHA-1 `a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7`, o [probe de assinaturas e relações de chamadas](../EXACT-3.1.4-ABI-AND-SYMBOLIC-CALL-AUDIT-20261026.md) confirmou os símbolos abaixo (`GitHub Actions run 40344481668`, `success`; artifact `12659699310`).
+
+`PoisonDartSpell.SpellResult` referencia `PoisonQuill.setOwner`, `setDuration` e `setExtraDamage`. `PoisonQuill.onHitEntity(EntityHitResult)` e `onHitBlock(BlockHitResult)` estão presentes. Tipos de dano, status, pierce, flags, números e persistência continuam sem equivalência binária demonstrada.
+
+**Interpretação estrita:** `EXACT_ABI_CALL_REFERENCES_VERIFIED` cobre apenas classe/método/field e referências estáticas apontadas; **não** confirma ramos executados, fórmulas, balanceamento, configs, eventos efetivos, hooks seguros ou testes físicos. A análise `SOURCE_ADJACENT_311` permanece uma fonte separada; `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` continuam válidos. Goety mantém autoridade, sem homologação de perks e sem incremento dos contadores globais.

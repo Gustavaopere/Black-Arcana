@@ -57,3 +57,11 @@ Uma conjuração produz **uma tentativa provider-native**, potencialmente vário
 **Plano de prova obrigatório:** revisar classfile `WeakeningSpell` do Goety 3.1.4; instâncias de `SAPPED` e sua semântica; entidade aliada/owner/PVP/caster, barreira entre caster e alvo, radius muito alto, valores negativos/limites em config, stacking/refresh de potion effects; cancelar cast/débito em dedicated server e registrar efeito sem proc duplicado.
 
 **Estado:** ⚠️ documentação da fonte adjacente; perks de aumento de área, potência, duração, categorias de dano e redução de custo **⛔ não mutáveis** até contrato de integração real. Não alterar certificados/índices.
+
+## Adendo de ABI exata do JAR 3.1.4 — 26/10/2026
+
+**Nova evidência, distinta do estudo da fonte 3.1.1 acima:** no JAR `goety-3.1.4.jar` com SHA-1 `a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7`, o [probe de assinaturas e relações de chamadas](../EXACT-3.1.4-ABI-AND-SYMBOLIC-CALL-AUDIT-20261026.md) confirmou os símbolos abaixo (`GitHub Actions run 40344481668`, `success`; artifact `12659699310`).
+
+`WeakeningSpell.SpellResult` referencia `SpellStat.getDuration`, `getRadius` e possui **dois call-sites estáticos** para `LivingEntity.addEffect`. Isto não prova dois debuffs aplicados em todos os casts nem identifica seus amplificadores no JAR 3.1.4.
+
+**Interpretação estrita:** `EXACT_ABI_CALL_REFERENCES_VERIFIED` cobre apenas classe/método/field e referências estáticas apontadas; **não** confirma ramos executados, fórmulas, balanceamento, configs, eventos efetivos, hooks seguros ou testes físicos. A análise `SOURCE_ADJACENT_311` permanece uma fonte separada; `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` continuam válidos. Goety mantém autoridade, sem homologação de perks e sem incremento dos contadores globais.
