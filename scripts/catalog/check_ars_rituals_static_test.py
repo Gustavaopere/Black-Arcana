@@ -398,8 +398,21 @@ class ArsRitualStaticTests(unittest.TestCase):
             name = slug.capitalize()
             self.assertIn(f"| ✅ | {name} | [rituals/{slug}.md]", self.ars)
             self.assertIn(f"| ✅ | {name} | [ficha/{slug}.md]", self.index)
-        # The same-named Harvest glyph remains unrelated to its ritual.
-        self.assertIn("| ⚠️ | Harvest | [glyphs/effects/harvest.md]", self.ars)
+        # A same-named glyph must be certified from its own evidence.
+        # Completing ritual_harvest neither promotes nor blocks glyph_harvest.
+        self.assertIn("✅-ars-nouveau/rituals/harvest.md", self.json["objects"])
+        glyph_key = "✅-ars-nouveau/glyphs/effects/harvest.md"
+        glyph_status = "✅" if glyph_key in self.json["objects"] else "⚠️"
+        self.assertIn(
+            f"| {glyph_status} | Harvest | [glyphs/effects/harvest.md]",
+            self.ars)
+        if glyph_key in self.json["objects"]:
+            self.assertEqual(
+                "STATIC_TECHNICAL_CATALOG_ONLY",
+                self.json["objects"][glyph_key]["claim_scope"])
+            self.assertEqual(
+                "NOT_VERIFIED",
+                self.json["objects"][glyph_key]["mutating_hook"])
 
 
     def test_island_setblock_unchecked_return_and_source_restart(self):
