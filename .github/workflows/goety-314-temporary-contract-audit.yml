@@ -1,0 +1,126 @@
+name: Goety 3.1.4 Contract Surface Audit (temporary)
+
+on:
+  push:
+    branches: [audit/goety-314-contract-surface-20261026]
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Exact SHA-matched JAR and compact method surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 4 --retry-delay 3 --connect-timeout 30 --max-time 300 \
+            'https://www.cursemaven.com/curse/maven/goety-586095/8689429/goety-586095-8689429.jar' -o goety-3.1.4.jar
+          printf '%s  %s\n' 'a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7' 'goety-3.1.4.jar' | sha1sum -c -
+          mkdir -p audit
+          python3 - <<'PY'
+          import collections
+          import hashlib
+          import re
+          import subprocess
+          import zipfile
+          from pathlib import Path
+
+          JAR = Path('goety-3.1.4.jar')
+          EXPECTED = 'a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7'
+          CLASSES = [
+              'com.Polarice3.Goety.common.items.magic.MagicFocus',
+              'com.Polarice3.Goety.common.items.magic.DarkWand',
+              'com.Polarice3.Goety.api.magic.ISpell',
+              'com.Polarice3.Goety.api.magic.ITouchSpell',
+              'com.Polarice3.Goety.common.events.spell.GoetyEventFactory',
+              'com.Polarice3.Goety.common.events.spell.StartMagicEvent',
+              'com.Polarice3.Goety.common.events.spell.CastingMagicEvent',
+              'com.Polarice3.Goety.common.events.spell.CastMagicEvent',
+              'com.Polarice3.Goety.common.events.spell.StopMagicEvent',
+              'com.Polarice3.Goety.common.events.spell.ChangeSoulEnergyEvent',
+              'com.Polarice3.Goety.utils.SEHelper',
+              'com.Polarice3.Goety.common.magic.spells.TelekinesisSpell',
+              'com.Polarice3.Goety.common.magic.spells.ShockwaveSpell',
+              'com.Polarice3.Goety.common.magic.spells.WeakeningSpell',
+              'com.Polarice3.Goety.common.magic.spells.wild.PoisonDartSpell',
+              'com.Polarice3.Goety.common.entities.projectiles.PoisonQuill',
+              'com.Polarice3.Goety.common.magic.spells.void_spells.BanishSpell',
+              'com.Polarice3.Goety.common.magic.spells.void_spells.BlinkSpell',
+          ]
+          IMPORTANT = re.compile(
+              r'(victim|Soul|soul|Cast|cast|cool|Cool|tick|Tick|Use|use|Spell|spell|'
+              r'target|Target|Hit|hit|Damage|damage|Effect|effect|Range|range|'
+              r'Radius|radius|Potion|Venom|Quill|Teleport|teleport|result|Result|'
+              r'change|Change|stop|Stop|start|Start|Duration|duration|Motion|'
+              r'Owner|owner|Pierc|pierc)', re.I)
+          REF = re.compile(r'// (?:InterfaceMethod|Method) ([a-zA-Z0-9_/$]+)\.("?[^":]+"?):')
+          DECL = re.compile(r'^\s{2,}.+\([^)]*\);$')
+          with zipfile.ZipFile(JAR) as z:
+              names = set(z.namelist())
+              sha = hashlib.sha1(JAR.read_bytes()).hexdigest()
+              assert sha == EXPECTED
+              lines = [
+                  'GOETY 3.1.4 EXACT JAR ABI/CALL-REFERENCE AUDIT',
+                  f'actual_sha1={sha}',
+                  'source=CurseMaven 586095/8689429',
+                  'scope=class-presence, method-field signatures, compact symbolic calls only',
+                  'no_implementation_bodies_or_assets_retained=true',
+              ]
+              for cls in CLASSES:
+                  entry = cls.replace('.', '/') + '.class'
+                  exists = entry in names
+                  lines.extend(['', f'CLASS={cls}', f'PRESENT={str(exists).lower()}'])
+                  if not exists:
+                      continue
+                  sig = subprocess.run(['javap', '-p', '-s', '-classpath', str(JAR), cls], capture_output=True, text=True, check=True).stdout
+                  instructions = subprocess.run(['javap', '-p', '-c', '-classpath', str(JAR), cls], capture_output=True, text=True, check=True).stdout
+                  declared = []
+                  for line in sig.splitlines():
+                      s = line.strip()
+                      if ('(' in s and s.endswith(';') and IMPORTANT.search(s)) or (s.endswith(';') and 'victim' in s):
+                          declared.append(s)
+                  lines.append(f'DECLARATIONS={len(declared)}')
+                  for s in declared[:45]:
+                      lines.append(f'SIG={s}')
+                  if len(declared) > 45:
+                      lines.append(f'SIGNATURES_OMITTED={len(declared)-45}')
+                  current = '<class>'
+                  refs = collections.Counter()
+                  for line in instructions.splitlines():
+                      s = line.strip()
+                      if '(' in s and s.endswith(';') and not s[0].isdigit() and not s.startswith('//'):
+                          current = s.split('(')[0].split()[-1]
+                      match = REF.search(s)
+                      if match:
+                          owner = match.group(1).replace('/', '.')
+                          member = match.group(2).strip('"')
+                          if (owner.startswith('com.Polarice3.Goety.') or
+                              owner.startswith('net.neoforged.neoforge.event.') or
+                              owner.startswith('net.minecraft.world.entity.') or
+                              owner.startswith('net.minecraft.world.phys.')) and IMPORTANT.search(member):
+                              refs[(current,owner,member)] += 1
+                  lines.append(f'FILTERED_INVOKE_SITES={sum(refs.values())}')
+                  for (from_method,owner,member), count in sorted(refs.items())[:70]:
+                      lines.append(f'REF={from_method}->{owner}.{member} count={count}')
+                  if len(refs) > 70:
+                      lines.append(f'CALL_REFS_OMITTED={len(refs)-70}')
+              lines.append('')
+              lines.append('VERIFICATION_BOUNDARY: symbolic type/field/method references only. No casting success, runtime behavior, live config, hook safety, protocol parity or manual test is inferred.')
+              Path('audit/goety-314-abi-report.txt').write_text('\n'.join(lines)+'\n', encoding='utf-8')
+          PY
+          cat audit/goety-314-abi-report.txt
+      - name: Upload text-only ABI evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: goety-314-contract-surface-evidence
+          path: audit/goety-314-abi-report.txt
+          if-no-files-found: error
+          retention-days: 30
