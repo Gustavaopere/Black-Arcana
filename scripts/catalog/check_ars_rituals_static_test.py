@@ -235,11 +235,20 @@ class ArsRitualStaticTests(unittest.TestCase):
 
     def test_same_named_effect_is_not_certified_by_ritual(self):
         self.assertIn(
-            "| ⚠️ | Harvest | [glyphs/effects/harvest.md](glyphs/effects/harvest.md) |",
-            self.ars)
-        self.assertIn(
             "| ✅ | Harvest | [rituals/harvest.md](rituals/harvest.md) |",
             self.ars)
+        effect_key = "✅-ars-nouveau/glyphs/effects/harvest.md"
+        status = "✅" if effect_key in self.json["objects"] else "⚠️"
+        self.assertIn(
+            f"| {status} | Harvest | [glyphs/effects/harvest.md](glyphs/effects/harvest.md) |",
+            self.ars)
+        if effect_key in self.json["objects"]:
+            self.assertEqual(
+                "STATIC_TECHNICAL_CATALOG_ONLY",
+                self.json["objects"][effect_key]["claim_scope"])
+            self.assertEqual(
+                "NOT_TESTED",
+                self.json["objects"][effect_key]["physical_qa"])
 
 
     def test_binding_familiar_holder_collision_cannot_be_assumed_unique(self):
