@@ -1,0 +1,33 @@
+# Ars Nouveau 5.13.1 — Threads: Undying, Repairing, Life Drain e Gliding
+
+**Escopo:** quatro contratos de armor threads `STATIC_TECHNICAL_CATALOG_ONLY`, auditoria de consumers do upstream e limites de integração. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`; nenhuma mutação Java do Black Arcana ou Stage alterado.
+
+## Authority e precisão do binário
+
+- Modlist física sibling: `ars_nouveau-1.21.1-5.13.1.jar` SHA-1 `02782d071ee5fab3b5c4b8ced67b7e1748277dfd`. Source pinado `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`.
+- **A auditoria binária dos 109 IDs é exclusivamente de 85 glyphs e 24 rituals; NÃO inclui threads/perks.** Estas fichas usam `evidence_grade=PINNED_SOURCE_WITH_RELEASE_SHA_ONLY`, definido na PR #916. O SHA do JAR comprova versão/presença, não a equivalência dos métodos dos perks.
+- [PerkRegistry.java](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/api/registry/PerkRegistry.java) contém `perkMap`, `perkItemMap`, `itemPerkProviderMap`; [PerkUtil.java](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/api/util/PerkUtil.java) obtém as perks equipadas e seus slots; [PerkEvents.java](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/event/PerkEvents.java) despacha eventos de spell/death/equipment/sleep. ID da Thread no source não deve ser confundido com o próprio glyph nem com o nome da classe RPG.
+
+| Ficha | Contrato verificado na fonte fixa | Risco bloqueador para adaptação mutadora |
+|---|---|---|
+| [Undying](perks/undying.md), `TotemPerk` | Slot mínimo `PerkSlot.THREE`; `getInitTag` com `isActive=true`; `LivingDeathEvent` player altera health→1 e efeitos Regeneration900/Absorption100/FireResistance800, grava `isActive=false`, cancela death; `SleepFinishedTimeEvent` reativa e persiste `ARMOR_PERKS` | `getHolderForPerk` percorre cada armor stack e atualiza o holder mesmo quando não é o maior slot. Carga do último holder encontrado (dependente de ordem) e disputa entre sistemas anti-death exigem QA, inclusive rearm de todos players em level, não apenas sleepers. |
+| [Repairing](perks/repairing.md), `RepairingPerk` | A cada `gameTime%200==0`, repara até `min(damage,(int)maxSlot+BASE_ARMOR_REPAIR_RATE)`, se current mana Ars≥20, cobrando 20 e ajustando damage. Slots de armor na `AnimatedMagicArmor` têm server guard; `EnchantersSword/EnchantersShield` chamam em player inventoryTick | Sword/Shield não aplicam `!world.isClientSide` local ao chamar `attemptRepair`, e o próprio método não verifica side; client/server settlement precisa QA. `onAdded` >=3 põe `UNBREAKING` em todas armor slots; `onRemoved` remove de todas sem averiguar outro Repairing restante; não duplicar charges nem controlar mundo BA. |
+| [Life Drain](perks/life-drain.md), `VampiricPerk` | `SpellDamageEvent.Post` recebe `event.damage`; calcula `event.damage * (0.2f * PerkUtil.countForPerk(perkInstance.getPerk(),caster))` e chama `caster.heal` | `countForPerk` é o **máximo de slot**, mas `PerkEvents.postSpellDamageEvent` despacha **cada instância equipada** sem dedup em `getPerksFromLiving`. Multiplas instâncias podem solicitar heals múltiplos; o resultado efetivo depende do evento, health e hooks vanilla. Não ligar Backlash BA a SpellDamageEvent do Ars por inferência. |
+| [Gliding](perks/gliding.md), `GlidingPerk` | Tier3; `EffectGlide.canGlide` retorna Glide status `||` perk slot>0; `EventHandler.onGlideTick(PlayerTickEvent.Pre)` só chama `CaelusHandler.setFlying` quando `ArsNouveau.caelusLoaded`; `ElytraPlayerMixin` altera resultado de `ItemStack.canElytraFly` para `original||canGlide` | `CaelusHandler.setFlying` **só adiciona** modifier transiente quando ausente; neste método não há cleanup. Não presumir teardown, stamina Epic Fight, side ou fall-flying remoto. Thread é distinto do EffectGlide com custo default de mana100. |
+
+## Invariantes de grade, causality e integração
+
+1. `PerkUtil.countForPerk` percorre todas `entity.getArmorSlots()` e retorna o **máximo** de `instance.getSlot().value()`, não sua soma. `PerkUtil.getPerksFromLiving` retorna uma lista **com instâncias repetidas possíveis**. `PerkUtil.getHolderForPerk` é um mecanismo **diferente**, com escolha da última instância encontrada sem comparação com máximo. Não traduzir indiscriminadamente como nível global do jogador.
+2. `PerkEvents.equipmentChangedEvent` compara `fromInstances/toInstances`, deduz `removedPerks/addedPerks` e chama `onRemoved/onAdded`. A semântica de `UNBREAKING` e do gasto de mana com vários itens é composta com esses callbacks, não uma transação isolada.
+3. Ars mantém **authority** por mana/armor/data components, death cancellation, heal, Caelus/mixins e spell damage events. Black Arcana mantém seu casting/domains/hazards/corruption/strain e `WorldEffectPolicy` para seus próprios efeitos. RPG Skill Tree é sibling/provider de perks, Mastery e gates mediante contratos reais, sem reexecutar handlers, criar segunda mana ou somar passivos já processados.
+4. Source code expõe assinaturas e consumidores úteis para futura interoperabilidade, mas **não prova mutating hooks externos seguros** nem execução física dos mesmos métodos no JAR instalado. Não implementar bridge antes de bytecode/CI-specific test + validação de efeitos/causalidade.
+5. Nenhuma alteração de Stage 06.05/09; nenhum asset/código copiado para o Black Arcana (documentação clean-room de contratos públicos).
+
+## QA obrigatória, separada do catálogo
+
+- **Undying:** dois Totems/threads em vários slots, ordem de armor, eventos cancelados por outro mod, rearm após noite/dormir, save/load/data component.
+- **Repairing:** mana de client/server sword/shield, ticks simultâneos de múltiplos itens, configuração `BASE_ARMOR_REPAIR_RATE`, remover peça com outra Thread Repairing ativa, `UNBREAKING` de outros mods.
+- **Life Drain:** múltiplos callbacks por perk equipada, dano final positivo/zero, heals recebidos versus solicitados, eventos concorrentes e Backlash BA (não deve gerar proc chain).
+- **Gliding:** Caelus instalado e API exata, modifier reaplicado/removido, Glide effect versus slot Tier3, cliente/servidor, cross-dimension e Epic Fight stamina.
+
+**Contadores propostos, a partir das PRs #915 e #916:** perks **4/20**, Ars **119/138**, global **119/2075**, providers integrais **0/164**. Ainda faltam 16 perks e 3 systems no recorte identificável, sem concluir o universo de todas magias do modpack.
