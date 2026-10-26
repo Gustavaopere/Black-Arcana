@@ -17,7 +17,7 @@ CASES = {
              "LivingDeathEvent", "SleepFinishedTimeEvent",
              "getHolderForPerk", "ARMOR_PERKS", "isActive=false"),
  "repairing": ("RepairingPerk", "thread_repairing",
-               "BASE_ARMOR_REPAIR_RATE", "gameTime()%200",
+               "BASE_ARMOR_REPAIR_RATE", "getGameTime()%200",
                "cap.removeMana(20)", "UNBREAKING",
                "EnchantersSword", "EnchantersShield"),
  "life-drain": ("VampiricPerk", "thread_life_drain",
@@ -70,7 +70,7 @@ class FourArmorPerksTest(unittest.TestCase):
                   ).read_text(encoding="utf8")
         for token in ("PerkUtil.countForPerk", "máximo", "getHolderForPerk",
                       "última instância", "getPerksFromLiving",
-                      "por instância", "não soma"):
+                      "cada instância equipada", "não sua soma"):
             self.assertIn(token, dossier)
         life = (ARS/"perks/life-drain.md").read_text(encoding="utf8")
         self.assertIn("múltiplas tentativas de heal", life)
@@ -79,7 +79,7 @@ class FourArmorPerksTest(unittest.TestCase):
 
     def test_repair_mana_and_server_side_are_not_implied_safe(self):
         page = (ARS/"perks/repairing.md").read_text(encoding="utf8")
-        for term in ("gameTime()%200", "20 mana Ars",
+        for term in ("getGameTime()%200", "20 mana Ars",
                      "EnchantersSword.inventoryTick",
                      "EnchantersShield.inventoryTick",
                      "sem gate", "onAdded", "onRemoved",
