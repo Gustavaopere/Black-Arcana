@@ -65,3 +65,9 @@ Goety é a autoridade de Soul Energy, Focus/Staff casting, custos, recipe execut
 `BanishSpell.conditionsMet` referencia `EventHooks.onEnderTeleport`, enquanto `BanishSpell.touchResult` referencia `LivingEntity.randomTeleport`, `stopRiding` e `SpellStat.getRange`. **A divergência entre o alvo pré-validado e o alvo realmente tocado permanece hipótese da fonte 3.1.1, não um bug demonstrado do 3.1.4.**
 
 **Interpretação estrita:** `EXACT_ABI_CALL_REFERENCES_VERIFIED` cobre apenas classe/método/field e referências estáticas apontadas; **não** confirma ramos executados, fórmulas, balanceamento, configs, eventos efetivos, hooks seguros ou testes físicos. A análise `SOURCE_ADJACENT_311` permanece uma fonte separada; `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` continuam válidos. Goety mantém autoridade, sem homologação de perks e sem incremento dos contadores globais.
+
+## Adendo da auditoria estrutural exata 3.1.4 — 26/10/2026
+
+A [auditoria método-a-método do JAR com SHA verificado](../EXACT-3.1.4-TARGET-SOUL-STRUCTURAL-AUDIT-20261026.md) (run `40362689828`, PASS) confirmou que `BanishSpell.conditionsMet` referencia `entityResult` e `EventHooks.onEnderTeleport`, enquanto `BanishSpell.touchResult` referencia `LivingEntity.randomTeleport` e `stopRiding` **sem invocar diretamente `onEnderTeleport`** no mesmo método. O binário `DarkWand.interactLivingEntity` referencia `canCastTouch` e `ITouchSpell.touchResult`; `canCastTouch` referencia `ITouchSpell.targetConditions`.
+
+**A distinção é estrutural, não prova bug, exploit, falta de permissão ou alvo trocado em 3.1.4.** `randomTeleport` e outros componentes podem impor verificações próprias. Testar adversários diferentes em raycast/toque, imunidades, claims e cancelamentos antes de qualquer perk mutadora. `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · **⛔ fail-closed**.

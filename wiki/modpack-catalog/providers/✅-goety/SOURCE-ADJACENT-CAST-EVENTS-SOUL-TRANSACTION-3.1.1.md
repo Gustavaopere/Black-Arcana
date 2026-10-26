@@ -62,3 +62,9 @@ O workflow [#40344481668](https://github.com/Gustavaopere/Black-Arcana/actions/r
 **Não confirmado no 3.1.4:** emissão em todos os ramos, ordem de débito/resultado, custo numérico, número de invocações por cast, permissão de cancelar sem side effects, identificador causal estável, servidor dedicado/client, exclusividade por conjurador e segurança de mutação. **Existência de `ChangeSoulEnergyEvent.Loss` não comprova que ele representa somente consumo mágico nem que é um hook de perk adequado.**
 
 O status correto deste documento passa a ser **⚠️ source 3.1.1 com adendo factual exato de ABI 3.1.4**. A certificação para perks continua **0** nesta área e os hooks mutadores permanecem **⛔ fail-closed**; nenhuma fórmula histórica deve ser promovida sem confronto binário e teste.
+
+## Adendo posterior: chamada interna de desconto confirmada no JAR 3.1.4 (26/10/2026)
+
+O [probe exato de símbolos/field por método](EXACT-3.1.4-TARGET-SOUL-STRUCTURAL-AUDIT-20261026.md) (GitHub Actions `40362689828`, artifact `12668033309`) eliminou uma lacuna no filtro do relatório ABI precedente: no binário Goety 3.1.4, `SEHelper.decreaseSouls` **referencia `SEHelper.soulDiscount` mesmo sendo uma chamada da própria classe**. `DarkWand.SoulUse` também contém referências a `soulDiscount`; `DarkWand.MagicResults` e `canCastTouch` referenciam rotas de saldo/verificação/débito e o `SEHelper.decreaseSouls` referencia `GoetyEventFactory.onSoulEnergyLoss`.
+
+Esse arranjo **não comprova desconto duplicado incorreto**: chamadas em métodos diferentes não provam que uma mesma quantia foi descontada duas vezes, nem equivalência numérica entre as rotas. Exige-se trace real da transação, equip discount, arredondamento e cancelamento antes de qualquer perk. Goety mantém autoria e liquidação da Soul Energy; `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED`. Nenhuma certificação ou Stage é alterado.

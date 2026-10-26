@@ -57,3 +57,13 @@ As fichas `focuses/{blink,telekinesis,shockwave,banish,weakening,poison-dart}-fo
 **Sem sete provas de certificação**, o manifesto `wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json` e os índices automáticos continuam **intocados**: Goety **0/361 fichas certificadas**, global **109/2075** no último checkpoint confirmado. Estas seis fichas continuam ⚠️ condicionadas, embora tenham avançado de “apenas identidade + fonte 3.1.1” para “identidade + referência 3.1.1 + ABI/call-sites parciais do 3.1.4”.
 
 **Clean-room:** nenhum bytecode ou implementação de terceiros é incorporado ao Black Arcana; relatório limitado a símbolos/descritores e relações necessárias à interoperabilidade. Goety conserva autoridade do próprio runtime, incluindo Soul Energy, casting e entidades.
+
+## Continuidade — audit de chamadas internas e lifecycle por método (26/10/2026)
+
+A [segunda auditoria do mesmo JAR 3.1.4 SHA-exato](EXACT-3.1.4-TARGET-SOUL-STRUCTURAL-AUDIT-20261026.md), workflow temporário run `40362689828`/artifact `12668033309`, ampliou os fatos **estruturais** de três pontos prioritários. Desta vez o parser resolveu referências a métodos da **própria classe**, não capturadas integralmente pela primeira filtragem.
+
+- `BanishSpell.conditionsMet`: símbolos `entityResult` + `EventHooks.onEnderTeleport`; `touchResult`: `randomTeleport` e nenhuma **chamada direta** a `onEnderTeleport` no próprio método.
+- `TelekinesisSpell.victim`: leituras/escritas binárias em `findVictim`, escrita em `startSpell/stopSpell` e leituras em `SpellResult`.
+- `SEHelper.decreaseSouls`: referência interna a `soulDiscount` e externa a `onSoulEnergyLoss`; `DarkWand.SoulUse` referencia `soulDiscount` em pontos distintos. **Não certificar erro de débito nem isolamento entre casters apenas a partir dessas referências.**
+
+Provenience, limitações, gates de teste e matriz de evidências: [relatório detalhado](EXACT-3.1.4-TARGET-SOUL-STRUCTURAL-AUDIT-20261026.md). Nenhum hook mutador, certificação de perk ou aprovação física decorre deste adendo.
