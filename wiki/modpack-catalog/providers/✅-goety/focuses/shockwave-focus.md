@@ -57,3 +57,11 @@ Perks potenciais: potência, raio, queda de dano, cap de alvos, cooldown e custo
 **Causalidade e Mastery:** uma invocação nativa de `shockwave_focus` gera uma rotina de dano possivelmente multi-alvo, não uma conjuração por `hurt` nem por partícula. Proibir double-charge, double-proc, geração de Arcane Danger pelo dano Goety sem contrato causal e contorno de ally filters. **⛔ Mutação fail-closed; ⚠️ documentação source-adjacent somente.**
 
 **Pendência de certificação:** comparar `ShockwaveSpell`/`SpellExplosion`/`RandomUtil`/`SpellConfig` no JAR Goety **3.1.4 SHA-exato**, confirmar configuração física, caps de raio, política de dano/world effects, eventos, entidades com resistência/claims e testes em servidor real/Survival. **Não modificar índices e manifesto; não incrementar o progresso 100%.**
+
+## Adendo de ABI exata do JAR 3.1.4 — 26/10/2026
+
+**Nova evidência, distinta do estudo da fonte 3.1.1 acima:** no JAR `goety-3.1.4.jar` com SHA-1 `a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7`, o [probe de assinaturas e relações de chamadas](../EXACT-3.1.4-ABI-AND-SYMBOLIC-CALL-AUDIT-20261026.md) confirmou os símbolos abaixo (`GitHub Actions run 40344481668`, `success`; artifact `12659699310`).
+
+`ShockwaveSpell.SpellResult` referencia `MobUtil.explosionDamage`, `SpellStat.getRadius` e `WandUtil.damageMultiply`. `ShockwaveSpell.defaultStats` referencia `SpellStat.setRadius`.
+
+**Interpretação estrita:** `EXACT_ABI_CALL_REFERENCES_VERIFIED` cobre apenas classe/método/field e referências estáticas apontadas; **não** confirma ramos executados, fórmulas, balanceamento, configs, eventos efetivos, hooks seguros ou testes físicos. A análise `SOURCE_ADJACENT_311` permanece uma fonte separada; `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` continuam válidos. Goety mantém autoridade, sem homologação de perks e sem incremento dos contadores globais.
