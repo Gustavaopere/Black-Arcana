@@ -65,3 +65,9 @@ Goety é a autoridade de Soul Energy, Focus/Staff casting, custos, recipe execut
 `TelekinesisSpell` declara o campo `public Entity victim`. `findVictim` referencia `MobUtil.getSingleTarget`, `Mob.getTarget` e `SpellStat.getRange`; `stopSpell` referencia `SEHelper.addCooldown`. **Isto não demonstra compartilhamento indevido do estado `victim` nem a lógica de filtro de HP/blacklist.**
 
 **Interpretação estrita:** `EXACT_ABI_CALL_REFERENCES_VERIFIED` cobre apenas classe/método/field e referências estáticas apontadas; **não** confirma ramos executados, fórmulas, balanceamento, configs, eventos efetivos, hooks seguros ou testes físicos. A análise `SOURCE_ADJACENT_311` permanece uma fonte separada; `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` continuam válidos. Goety mantém autoridade, sem homologação de perks e sem incremento dos contadores globais.
+
+## Adendo da auditoria estrutural exata 3.1.4 — 26/10/2026
+
+A [auditoria SHA-exata de acessos a field](../EXACT-3.1.4-TARGET-SOUL-STRUCTURAL-AUDIT-20261026.md) (run `40362689828`, PASS) localizou `PUTFIELD victim` em `TelekinesisSpell.startSpell` e `stopSpell`, `GETFIELD/PUTFIELD victim` em `findVictim` e leituras de `victim` em `SpellResult`. Isso comprova **estado de alvo em instância da spell** na versão instalada, sem comprovar instâncias compartilhadas entre conjuradores, contenção, race condition ou bypass de blacklist.
+
+**Necessário:** dois casters simultâneos, troca de staff, logout, troca de dimensão, interrupções e cleanup no servidor para caracterizar ownership/lifetime. Nenhum leitor de atributo ou perk pode gravar `victim` ou criar um segundo controlador de movimento. `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · **⛔ fail-closed**.
