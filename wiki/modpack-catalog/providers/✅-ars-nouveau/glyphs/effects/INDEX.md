@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 43/67.**
-**Barra do recorte documental:** `████████████░░░░░░░░ 64.2%`
+**Homologadas para perks (somente fichas detectadas): 47/67.**
+**Barra do recorte documental:** `██████████████░░░░░░ 70.1%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
@@ -23,22 +23,22 @@
 | ✅ | Conjure Water | [ficha/conjure-water.md](conjure-water.md) |
 | ✅ | Craft | [ficha/craft.md](craft.md) |
 | ✅ | Crush | [ficha/crush.md](crush.md) |
-| ⚠️ | Cut | [ficha/cut.md](cut.md) |
+| ✅ | Cut | [ficha/cut.md](cut.md) |
 | ✅ | Delay | [ficha/delay.md](delay.md) |
 | ✅ | Dispel | [ficha/dispel.md](dispel.md) |
 | ✅ | Evaporate | [ficha/evaporate.md](evaporate.md) |
 | ✅ | Exchange | [ficha/exchange.md](exchange.md) |
 | ✅ | Explosion | [ficha/explosion.md](explosion.md) |
 | ✅ | Fangs | [ficha/fangs.md](fangs.md) |
-| ⚠️ | Fell | [ficha/fell.md](fell.md) |
+| ✅ | Fell | [ficha/fell.md](fell.md) |
 | ✅ | Firework | [ficha/firework.md](firework.md) |
 | ✅ | Flare | [ficha/flare.md](flare.md) |
 | ✅ | Freeze | [ficha/freeze.md](freeze.md) |
 | ✅ | Glide | [ficha/glide.md](glide.md) |
 | ✅ | Gravity | [ficha/gravity.md](gravity.md) |
-| ⚠️ | Grow | [ficha/grow.md](grow.md) |
+| ✅ | Grow | [ficha/grow.md](grow.md) |
 | ✅ | Harm | [ficha/harm.md](harm.md) |
-| ⚠️ | Harvest | [ficha/harvest.md](harvest.md) |
+| ✅ | Harvest | [ficha/harvest.md](harvest.md) |
 | ✅ | Heal | [ficha/heal.md](heal.md) |
 | ✅ | Hex | [ficha/hex.md](hex.md) |
 | ✅ | Ignite | [ficha/ignite.md](ignite.md) |
