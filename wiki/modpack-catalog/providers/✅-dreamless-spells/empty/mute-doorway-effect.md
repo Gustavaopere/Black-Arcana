@@ -94,3 +94,11 @@ Black Arcana não deve cancelar o mesmo cast novamente, nem aplicar um segundo s
 - comportamento em mobs caster;
 - se 0-tick no nível 1 produz qualquer janela de cancelamento;
 - interação com Counterspell e outros sistemas de cancelamento.
+
+## Atualização de ABI exata 1.1.9 — 27/10/2026
+
+A [auditoria do JAR físico dreamless_spells-1.1.9.jar](../EXACT-1.1.9-SPELL-CAST-AND-COUNTERSPELL-ABI-20261027.md) (SHA-1 `d51960bfb8af1aafa5d716ef9a48c3135f36b956`, run [#40499150605](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40499150605)) confirmou estas relações de código **sem importar corpos de método**:
+
+O classfile `MuteSpell` confirma `onCast` referenciando `getDuration`, `getAmplifier`, `DSSEffects.MUTE_EFFECT` e `LivingEntity.addEffect`; `checkPreCastConditions` referencia `DSSEffects.EMPTIED_EFFECT`. O método binário `ServerEvents.onPlayerCastEvent` referencia `DSSEffects.MUTE_EFFECT` e `SpellPreCastEvent.setCanceled`. Isso **não** demonstra que todo cast seja cancelado ou que o cast já negado tenha sido cobrado; condição de player, duração, ordem e feedback aguardam teste.
+
+**Status:** `EXACT_BINARY_METHOD_REFERENCES` (estático) · `SOURCE_ALIGNED_NUMBERS_NOT_BINARY_PROVEN` · `physical_qa=NOT_TESTED` · `mutating_hook=NOT_VERIFIED`. Nenhum registro novo, certificação de perk, custo adicional ou segundo pipeline Black Arcana. O provider permanece autoridade do efeito, e Iron's da transação de casting.
