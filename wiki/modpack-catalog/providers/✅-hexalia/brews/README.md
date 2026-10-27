@@ -15,14 +15,20 @@ Physical provider: `hexalia-neoforge-1.3.7.jar` / SHA-1 `ca90edf1664cf6d44fe7e53
 | Brew | Item ID | Consumption | Base duration | Current source status |
 |---|---|---|---:|---|
 | [Arachnid Grace](arachnid-grace.md) | `hexalia:brew_of_arachnid_grace` | MobEffect brew | 240 s | wall climb + Poison removal + water/rain Weakness source-confirmed; documented cobweb immunity runtime-unverified |
-| [Bloodlust](bloodlust.md) | `hexalia:brew_of_bloodlust` | MobEffect brew | 240 s | regeneration-effect suppression source-confirmed; advertised lifesteal/strength path not located |
+| [Bloodlust](bloodlust.md) | `hexalia:brew_of_bloodlust` | MobEffect brew | 240 s | release 1.3.7: `ATTACK_DAMAGE +3.0 ADD_VALUE` registrado; remoção de Regeneration source-confirmed; lifesteal externo não provado |
 | [Daybloom](daybloom.md) | `hexalia:brew_of_daybloom` | MobEffect brew | 240 s | 5 s sunlight pulses, heal/damage/speed formula source-confirmed |
 | [Gravebloom](gravebloom.md) | `hexalia:brew_of_gravebloom` | MobEffect brew | 90 s | player-killed Monsters trigger provider moss/plant growth around the death position |
 | [Hollow Silence](hollow-silence.md) | `hexalia:brew_of_hollow_silence` | MobEffect brew | 240 s | registered effect class is inert; advertised sound/vision behavior path not located |
 | [Homestead](homestead.md) | `hexalia:brew_of_homestead` | one-shot custom consumable | instant | interdimensional respawn-return path + 30 s Confusion source-confirmed |
-| [Siphon](siphon.md) | `hexalia:brew_of_siphon` | MobEffect brew | 240 s | item attraction/pickup + attack-speed modifier source-confirmed; advertised mining speed/exhaustion path not located |
+| [Siphon](siphon.md) | `hexalia:brew_of_siphon` | MobEffect brew | 240 s | 1.3.7 reconfirmado: pickup/attraction + `ATTACK_SPEED +0.4 ADD_VALUE`; mineração/exaustão não comprovadas |
 | [Slimewalker](slimewalker.md) | `hexalia:brew_of_slimewalker` | MobEffect brew | 240 s | fall-distance reset + grounded Slowness + bounce path source-confirmed; exact bounce trigger needs runtime QA |
-| [Spikeskin](spikeskin.md) | `hexalia:brew_of_spikeskin` | MobEffect brew | 240 s | attribute registrations/override source-confirmed; effective values + advertised damage reflection require QA |
+| [Spikeskin](spikeskin.md) | `hexalia:brew_of_spikeskin` | MobEffect brew | 240 s | release 1.3.7: `ARMOR +3.0 ADD_VALUE` e `MOVEMENT_SPEED -0.10 ADD_MULTIPLIED_TOTAL` declarados; override/effective/reflection ainda precisam de QA |
+
+## Revisão das três brews na release 1.3.7 — 27/10/2026
+
+A [auditoria do delta de Bloodlust, Spikeskin e Siphon](RELEASE-1.3.7-BLOODLUST-SPIKESKIN-SIPHON-ATTRIBUTE-DELTA-20261027.md) compara os registros de atributos, métodos de efeito e três JSONs de receitas entre os commits 1.3.6 e 1.3.7. **Bloodlust e Spikeskin deixaram de registrar valor base `0.0F` para ATTACK_DAMAGE e ARMOR, respectivamente; ambos registram `3.0F` na release 1.3.7.** Siphon permaneceu inalterado nas superfícies confrontadas. São valores declarados em *source*, não a confirmação de atributos efetivos no player ou de lifesteal/reflection. As fichas antigas mantêm fatos históricos 1.3.6 e trazem adendos de vigência 1.3.7.
+
+**Sem nova identidade/perk-ready:** catálogo de brews 9/9, provider Hexalia 0/38 e índices gerados permanecem inalterados.
 
 ## Shared BrewItem contract
 
