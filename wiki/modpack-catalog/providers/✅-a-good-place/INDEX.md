@@ -6,6 +6,8 @@
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ — não determinado`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
+**Catalogação semântica (independente da homologação de perks):** ✅ escopo encerrado: 0 feitiços, 0 rituais e 0 habilidades mágicas próprias. Apenas apresentação visual; [evidência](README.md).
+
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
 
 *Nenhuma ficha individual detectada nesta árvore pelas regras conservadoras.* Isso **não significa zero** magias/habilidades: podem existir inventários agregados, JSONs, classes ou registros ainda não desmembrados.
