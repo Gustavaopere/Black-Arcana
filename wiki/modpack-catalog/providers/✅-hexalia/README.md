@@ -87,6 +87,12 @@ A comparação release-pinned dos registros **Bloodlust / Spikeskin / Siphon** n
 
 The release also adds Gravebloom Brew, Heartseed, Cinderhew, Herb Jar and five Accessories-based magical wearables (`seafoam_talisman`, `moonward_ring`, `witchheart_cluster`, `wyrd_feather`, `green_omen`). These are cataloged as provider items/effects rather than extra semantic spell/ritual identities under the current metric. Gravebloom expands the Small Cauldron brew inventory from 8 to 9; the new accessories are passive/proc equipment; Cinderhew is a weapon/tool action path; Heartseed is a consumable taming interaction.
 
+## Individual accessory effect contracts — five independent perk candidates (27/10/2026)
+
+The five already inventoried 1.3.7 Accessories items have now been individualized as **5/5 source-pinned candidate cards**: [Seafoam Talisman](items/seafoam-talisman.md), [Moonward Ring](items/moonward-ring.md), [Witchheart Cluster](items/witchheart-cluster.md), [Wyrd Feather](items/wyrd-feather.md) and [Green Omen](items/green-omen.md). Each identifies its registry ID, slot tag, exact consumer, quantitative effects, target, acquisition provenance, source pin, bounds, costs or N/A, deduplication and QA gaps.
+
+**Conditional activation:** `Hexalia.initAccessoriesCompat` only attaches a live item-equipped lookup when the separate `accessories` mod is loaded. The five cards are additional **perk-relevant candidates**, not five spell/ritual casts. Semantic magic surface remains **29 ritual/infusion identities**, brew inventory **9**; technical `INDEX.md` denominator now **43** candidate cards, with **0** Hexalia certificates. Physical equivalence, loot behavior, event priority, damage and integration hooks remain unverified; do not grant static ✅ from source-only knowledge without updating the certification evidence ledger.
+
 ## Canonical subcatalogs
 
 ### Small Cauldron brews — 9/9
