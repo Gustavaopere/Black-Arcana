@@ -7,6 +7,7 @@ Run without flags to update all INDEX.md, then --check to verify consistency.
 """
 from __future__ import annotations
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -23,6 +24,42 @@ def bar(done: int, total: int) -> str:
     count = (20 * done // total) if total else 0
     return ("█" * count + "░" * (20 - count) +
             (f" {100 * done / total:.1f}%" if total else " — não determinado"))
+
+def alphabetical_scope(mods: list[Path], cards: list[Path]) -> dict:
+    """Verified alphabetical triage; never imply perk-ready from semantic closure."""
+    path = ROOT.parent / "meta/ALPHABETICAL-CATALOG-STATUS.json"
+    if not path.is_file():
+        return {"completed_prefix": [], "next_provider": None}
+    doc = json.loads(path.read_text(encoding="utf8"))
+    if doc.get("schema_version") != 1 or doc.get("order") != "provider_directory_name_ascending":
+        raise ValueError("invalid alphabetical catalog ledger schema")
+    entries = doc.get("completed_prefix")
+    names = [p.name for p in mods]
+    if not isinstance(entries, list) or len(entries) >= len(names):
+        raise ValueError("invalid completed alphabetical prefix")
+    if [x.get("provider") for x in entries] != names[:len(entries)]:
+        raise ValueError("alphabetical catalog entries must be a contiguous provider prefix")
+    if doc.get("next_provider") != names[len(entries)]:
+        raise ValueError("next provider is not the next alphabetical entry")
+    for item in entries:
+        mod = ROOT / item["provider"]
+        evidence = item.get("evidence")
+        if (item.get("state") != "NONMAGICAL_SCOPE_CLOSED"
+                or item.get("owned_magic_actions") != 0
+                or evidence != item["provider"] + "/README.md"
+                or any(mod in card.parents for card in cards)):
+            raise ValueError("nonmagical catalog closure has unsupported claims")
+        source = ROOT / evidence
+        if not source.is_file():
+            raise ValueError("nonmagical scope lacks a local evidence document")
+        facts = source.read_text(encoding="utf8")
+        if not all(token in facts for token in (
+                "Provider-owned spells: **0**",
+                "Provider-owned rituals/rites: **0**",
+                "Provider-owned equivalent discrete magical actions: **0**")):
+            raise ValueError("nonmagical source fails closed on missing zero-action proof")
+    return doc
+
 
 def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
                     ledger: dict) -> str:
@@ -42,6 +79,19 @@ def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
         "não equivale ao progresso total do mod.", "",
     ]
     if folder == mod:
+        alpha = alphabetical_scope(sorted(p for p in ROOT.iterdir() if p.is_dir()), cards)
+        closed = {item["provider"]: item for item in alpha["completed_prefix"]}
+        if mod.name in closed:
+            rows += [
+                "**Catalogação semântica (independente da homologação de perks):** "
+                "✅ escopo encerrado: 0 feitiços, 0 rituais e 0 habilidades mágicas "
+                "próprias. Apenas apresentação visual; [evidência](README.md).", ""
+            ]
+        elif mod.name == alpha["next_provider"]:
+            rows += [
+                "**Fila alfabética:** 🟡 próximo provider a concluir. "
+                "Não presumir 100% a partir de inventário agregado.", ""
+            ]
         known = ledger.get("known_rosters", {}).get(mod.name)
         if known:
             rows += [
@@ -101,6 +151,9 @@ def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
     return "\n".join(rows)
 
 def global_index(mods: list[Path], cards: list[Path], ledger: dict) -> str:
+    alpha = alphabetical_scope(mods, cards)
+    closed = {item["provider"] for item in alpha["completed_prefix"]}
+    next_mod = alpha["next_provider"]
     done = sum(qa.mod_certified(mod, cards, ledger) for mod in mods)
     object_done = sum(qa.certified(card, ledger) for card in cards)
     rows = [
@@ -114,6 +167,11 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict) -> str:
         "**Escopo:** pastas atuais de providers; a modlist pode conter outros "
         "mods/sistemas ainda não representados. Objetos ausentes do catálogo "
         "não são presumidos inexistentes.", "",
+        f"**Revisão alfabética do catálogo semântico:** {len(closed)}/{len(mods)} "
+        "providers com escopo explicitamente encerrado; nesta fase, "
+        f"{len(closed)} classificado(s) sem ações mágicas próprias. "
+        "Esse contador NÃO equivale a providers perk-ready.", 
+        f"**Próximo na fila alfabética:** {friendly(next_mod) if next_mod else 'Nenhum'}.", "",
         "| Estado 100% | Mod/provider | Fichas individuais candidatas | "
         "Fichas 100% certificadas | Índice |", "|---|---|---:|---:|---|",
     ]
@@ -121,7 +179,12 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict) -> str:
         selected = [p for p in cards if mod in p.parents]
         certified = sum(qa.certified(p, ledger) for p in selected)
         state = "✅" if qa.mod_certified(mod, cards, ledger) else "⚠️"
-        rows.append(f"| {state} | {friendly(mod.name)} | "
+        display = friendly(mod.name)
+        if mod.name in closed:
+            display += " — ✅ escopo semântico encerrado (0 ações mágicas)"
+        elif mod.name == next_mod:
+            display += " — 🟡 próximo na fila"
+        rows.append(f"| {state} | {display} | "
                     f"{len(selected) if selected else '—'} | {certified} | "
                     f"[Ver fichas]({mod.name}/INDEX.md) |")
     rows += [
@@ -143,6 +206,22 @@ def main() -> int:
     args = p.parse_args()
     if args.check:
         result = qa.check()
+        ledger = qa.read_ledger(qa.LEDGER)
+        dirs, mods, cards = qa.inventory()
+        # Verify the generated alphabetical ledger text as well as the numeric
+        # index contract, so catalog status cannot be silently hand-edited.
+        expected = global_index(mods, cards, ledger)
+        if (ROOT / "INDEX.md").read_text(encoding="utf8") != expected:
+            result["problems"].append("global alphabetical catalog status drift")
+        alpha = alphabetical_scope(mods, cards)
+        watched = {item["provider"] for item in alpha["completed_prefix"]}
+        if alpha["next_provider"]:
+            watched.add(alpha["next_provider"])
+        for name in watched:
+            folder = ROOT / name
+            expected_mod = directory_index(folder, dirs, cards, ledger)
+            if (folder / "INDEX.md").read_text(encoding="utf8") != expected_mod:
+                result["problems"].append("provider alphabetical catalog status drift: " + name)
         print(f"INDEX CHECK: {result['expected_indexes']} indexes, "
               f"{result['candidate_cards']} candidate cards, "
               f"{len(result['problems'])} errors")
