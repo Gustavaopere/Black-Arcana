@@ -1,6 +1,8 @@
 # Ars Nouveau 5.13.1 — systems: armor slots, player mana, spellbooks/glyph learning
 
-**Estado do lote: ⚠️ fonte auditada, NÃO certificado no manifesto.** Esta PR independente modifica apenas as três fichas de sistemas, este dossiê e testes documentais. A certificação e a atualização de `PERK-READY-CERTIFICATIONS.json`/`INDEX.md` devem ser reconciliadas **depois** das alterações paralelas de perks e familiares, evitando sobrescrever a PR #916/#917 e o trabalho do Codex com os 16 Threads.
+**Estado no checkpoint de 26/10/2026: ⚠️ fonte auditada, NÃO certificado no manifesto.**
+
+**Reconciliação de 27/10/2026:** os três sistemas agora têm sete campos de certificação source-only no [manifesto](../../meta/PERK-READY-CERTIFICATIONS.json) e no [contrato atual](PERK-SYSTEM-STATIC-REMAINING-5.13.1.md). Este documento preserva o registro anterior; os limites de hooks, identidade binária e QA físico continuam vigentes. Esta PR independente modifica apenas as três fichas de sistemas, este dossiê e testes documentais. A certificação e a atualização de `PERK-READY-CERTIFICATIONS.json`/`INDEX.md` devem ser reconciliadas **depois** das alterações paralelas de perks e familiares, evitando sobrescrever a PR #916/#917 e o trabalho do Codex com os 16 Threads.
 
 Modlist física atual do RPG Skill Tree (22/09/2026): `ars_nouveau-1.21.1-5.13.1.jar`, mod ID `ars_nouveau`, SHA-1 `02782d071ee5fab3b5c4b8ced67b7e1748277dfd`. Source pinado `baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157`. O binário previamente verificado com **109 registros = 85 glyphs + 24 rituais**, não classes de sistemas, capabilities, armor Thread, book ou helpers; **não** reivindicar equivalência de método JAR/source. `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`.
 
@@ -18,8 +20,8 @@ Modlist física atual do RPG Skill Tree (22/09/2026): `ars_nouveau-1.21.1-5.13.1
 - **Fail-closed:** dados de armor tier inválidos, `GlyphRegistry.getSpellPart(id)==null`, price Pre/Post incompatível, `newReserve>1` e capabilities ausentes exigem QA específica e teste in-game no JAR exato. Não declarar exploitable behavior, duplicação ou crash físico com base apenas no source.
 - **CI/Stages:** testes estáticos garantem integridade documental, não correspondência classfile nem side server. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`; não promover Stage 06.05/09.
 
-## Procedimento de certificação posterior (não realizado nesta PR)
+## Procedimento previsto no checkpoint de 26/10/2026 (registro histórico)
 
-Após integração e estabilização das PRs dos Threads e familiares, conferir `main`, gerar certificados de sete evidências para as três fichas e atualizar `systems/INDEX.md`, índice Ars, índice global e manifesto **em uma mesma branch sincronizada**, com `evidence_grade=PINNED_SOURCE_WITH_RELEASE_SHA_ONLY` (apenas se o validador atualizado já estiver integrado). Validar o gerador dos índices e workflows reais. Até lá: `0/3` systems homologados, independentemente de três fichas tecnicamente documentadas.
+Após integração e estabilização das PRs dos Threads e familiares, conferir `main`, gerar certificados de sete evidências para as três fichas e atualizar `systems/INDEX.md`, índice Ars, índice global e manifesto **em uma mesma branch sincronizada**, com `evidence_grade=PINNED_SOURCE_WITH_RELEASE_SHA_ONLY` (apenas se o validador atualizado já estiver integrado). Validar o gerador dos índices e workflows reais. Naquele checkpoint: `0/3` systems homologados, independentemente de três fichas tecnicamente documentadas.
 
 **Proteção contra corrida:** sem alterações em `PERK-READY-CERTIFICATIONS.json`, `scripts/catalog/generate_perk_ready_indexes.py`, `scripts/catalog/check_perk_ready_indexes.py` ou índices canônicos; eles pertencem à reconciliação concorrente do Codex.
