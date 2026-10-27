@@ -50,4 +50,3 @@ Perks ou RPG Skill Tree que usem MAX_HEALTH não devem sobrescrever/remover o me
 Confirmar MAX_HEALTH e HP atual em equip/unequip, relog, morte, respawn, reload, ausência de Accessories e interação com atributos do RPG.
 
 A evidência é **documental estática da fonte 1.3.7**, não homologação do JAR, hit/loot confirmado, evento/mixin funcional no servidor real ou `COMPLETE_PERK_READY`. [Inventário agregado prévio](RELICS-WARDS-BINDING-AND-WEARABLES.md).
-
