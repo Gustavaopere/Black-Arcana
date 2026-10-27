@@ -170,7 +170,7 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict) -> str:
         f"**Revisão alfabética do catálogo semântico:** {len(closed)}/{len(mods)} "
         "providers com escopo explicitamente encerrado; nesta fase, "
         f"{len(closed)} classificado(s) sem ações mágicas próprias. "
-        "Esse contador NÃO equivale a providers perk-ready.", 
+        "Esse contador NÃO equivale a providers perk-ready.",
         f"**Próximo na fila alfabética:** {friendly(next_mod) if next_mod else 'Nenhum'}.", "",
         "| Estado 100% | Mod/provider | Fichas individuais candidatas | "
         "Fichas 100% certificadas | Índice |", "|---|---|---:|---:|---|",
