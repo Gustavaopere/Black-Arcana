@@ -69,3 +69,9 @@ Isto corresponde a aplicar o resultado básico/tier-1 da receita encontrada; o c
 | Persistência e gates | `debuffCooldown` não é serializado explicitamente por `FamiliarWixie` nem no `FamiliarEntity.addAdditionalSaveData` inspecionado; **não presumir cooldown preservado entre unload/recreate**. Dados `ownerID/holderID/terminated/name/color/cosmetic` pertencem ao Ars. `WorldEffectPolicy` BA não intercepta `MobEffectEvent.Added` nem a IA Wixie; RPG Skill Tree só atributos/perks/Mastery por boundary real. |
 
 **QA:** bytecode dos métodos, não-owner potion, recipes modded, duração duplicada por listeners e addons, troca Poison→Regeneration, spawn/target e save/reload de cooldown, multiplayer. `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Sem Stage alterado.
+
+## Geometria e atributos de entidade no source
+
+O `EntityType.Builder` do familiar declara `.sized(0.5f,0.5f)` (largura × altura) e `.setTrackingRange(10)`. O tracking declarado não é alcance de habilidade. [Registros e dimensões](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/setup/registry/ModEntities.java#L197-L210).
+
+`FamiliarEntity.attributes()` fornece defaults `MAX_HEALTH=100`, `MOVEMENT_SPEED=0.2` e `FOLLOW_RANGE=16`; a criação dos atributos registra essa base para os seis tipos. Velocidade efetiva e distância de ação dependem dos consumidores/IA. [Base](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/entity/familiar/FamiliarEntity.java#L206-L209) · [registro de atributos](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/setup/registry/ModEntities.java#L369-L375). O [contrato compartilhado](../FAMILIAR-STATIC-SIX-5.13.1.md) distingue esses parâmetros de raios de efeito, reserva de mana e evidência binária.
