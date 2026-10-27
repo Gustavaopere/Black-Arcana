@@ -5,6 +5,8 @@ import json
 import unittest
 from pathlib import Path
 
+from check_perk_ready_indexes import inventory as catalog_inventory
+
 REPO = Path(__file__).resolve().parents[2]
 ARS = REPO / "wiki/modpack-catalog/providers/✅-ars-nouveau"
 LEDGER = REPO / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json"
@@ -106,7 +108,7 @@ class FourArmorPerksTest(unittest.TestCase):
         self.assertEqual(n,20)
         self.assertIn(f"{n}/20.",self.perks)
         self.assertIn(f"{a}/138.",self.ars)
-        self.assertIn(f"{len(self.objects)}/2075.",self.global_index)
+        self.assertIn(f"{len(self.objects)}/{len(catalog_inventory()[2])}.",self.global_index)
         self.assertIn("0/164.",self.global_index)
         for slug in CASES:
             name = slug.replace("-", " ").title()

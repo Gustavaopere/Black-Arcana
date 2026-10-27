@@ -2,13 +2,19 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/0.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ — não determinado`
+**Homologadas para perks (somente fichas detectadas): 0/5.**
+**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
 
-*Nenhuma ficha individual detectada nesta árvore pelas regras conservadoras.* Isso **não significa zero** magias/habilidades: podem existir inventários agregados, JSONs, classes ou registros ainda não desmembrados.
+| Estado | Objeto / habilidade identificada | Ficha |
+|---|---|---|
+| ⚠️ | Green Omen | [ficha/green-omen.md](green-omen.md) |
+| ⚠️ | Moonward Ring | [ficha/moonward-ring.md](moonward-ring.md) |
+| ⚠️ | Seafoam Talisman | [ficha/seafoam-talisman.md](seafoam-talisman.md) |
+| ⚠️ | Witchheart Cluster | [ficha/witchheart-cluster.md](witchheart-cluster.md) |
+| ⚠️ | Wyrd Feather | [ficha/wyrd-feather.md](wyrd-feather.md) |
 
 
 ## Critério do ✅

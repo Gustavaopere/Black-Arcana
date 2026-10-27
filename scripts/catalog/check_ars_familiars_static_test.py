@@ -10,6 +10,8 @@ import json
 import unittest
 from pathlib import Path
 
+from check_perk_ready_indexes import inventory as catalog_inventory
+
 REPO = Path(__file__).resolve().parents[2]
 ARS = REPO / "wiki/modpack-catalog/providers/✅-ars-nouveau"
 LEDGER = REPO / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json"
@@ -144,7 +146,7 @@ class FamiliarStaticCatalogTest(unittest.TestCase):
         self.assertEqual(6, fam_count)
         self.assertIn(f"{fam_count}/6.", self.directory)
         self.assertIn(f"{ars_count}/138.", self.provider)
-        self.assertIn(f"{len(self.objects)}/2075.", self.global_index)
+        self.assertIn(f"{len(self.objects)}/{len(catalog_inventory()[2])}.", self.global_index)
         self.assertNotIn("100% certificado com escopo fechado", self.provider)
         for slug in EXPECTED:
             label = slug.replace("-", " ").title()
