@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "order": "provider_directory_name_ascending",
+  "statement": "Semantic catalog classification is separate from COMPLETE_PERK_READY certification. Only consecutive providers with bounded evidence may be marked reviewed. Installed runtime QA remains separate.",
+  "completed_prefix": [
+    {
+      "provider": "✅-a-good-place",
+      "state": "NONMAGICAL_SCOPE_CLOSED",
+      "owned_magic_actions": 0,
+      "evidence": "✅-a-good-place/README.md",
+      "note": "Publisher-confirmed client-side block-placement animation only; no provider-owned spells, rituals, magical abilities or perk runtime"
+    }
+  ],
+  "next_provider": "✅-aces-spell-utils"
+}
