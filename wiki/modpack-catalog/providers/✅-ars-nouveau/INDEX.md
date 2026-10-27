@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 115/138.**
-**Barra do recorte documental:** `████████████████░░░░ 83.3%`
+**Homologadas para perks (somente fichas detectadas): 119/138.**
+**Barra do recorte documental:** `█████████████████░░░ 86.2%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -107,17 +107,17 @@
 | ⚠️ | Depths | [perks/depths.md](perks/depths.md) |
 | ⚠️ | Drygmy | [perks/drygmy.md](perks/drygmy.md) |
 | ⚠️ | Feather | [perks/feather.md](perks/feather.md) |
-| ⚠️ | Gliding | [perks/gliding.md](perks/gliding.md) |
+| ✅ | Gliding | [perks/gliding.md](perks/gliding.md) |
 | ⚠️ | Heights | [perks/heights.md](perks/heights.md) |
 | ⚠️ | High Step | [perks/high-step.md](perks/high-step.md) |
 | ⚠️ | Immolation | [perks/immolation.md](perks/immolation.md) |
 | ⚠️ | Kindling | [perks/kindling.md](perks/kindling.md) |
-| ⚠️ | Life Drain | [perks/life-drain.md](perks/life-drain.md) |
+| ✅ | Life Drain | [perks/life-drain.md](perks/life-drain.md) |
 | ⚠️ | Magic Capacity | [perks/magic-capacity.md](perks/magic-capacity.md) |
-| ⚠️ | Repairing | [perks/repairing.md](perks/repairing.md) |
+| ✅ | Repairing | [perks/repairing.md](perks/repairing.md) |
 | ⚠️ | Spell Power | [perks/spell-power.md](perks/spell-power.md) |
 | ⚠️ | Starbuncle | [perks/starbuncle.md](perks/starbuncle.md) |
-| ⚠️ | Undying | [perks/undying.md](perks/undying.md) |
+| ✅ | Undying | [perks/undying.md](perks/undying.md) |
 | ⚠️ | Warding | [perks/warding.md](perks/warding.md) |
 | ⚠️ | Whirlisprig | [perks/whirlisprig.md](perks/whirlisprig.md) |
 | ⚠️ | Wixie | [perks/wixie.md](perks/wixie.md) |
