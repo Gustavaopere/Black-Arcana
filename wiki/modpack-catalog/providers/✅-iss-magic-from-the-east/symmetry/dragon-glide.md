@@ -1,30 +1,73 @@
 # Dragon Glide
 
-**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:dragon_glide` / `net.warphan.iss_magicfromtheeast.spells.symmetry.DragonGlideSpell`, school default `MFTESchoolRegistries.SYMMETRY_RESOURCE` ([prova Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162); [dossiê](../EXACT-BINARY-SPELLS-1.1.5.md)). Os números e comportamentos descritos abaixo continuam derivados da fonte pinada, não aprovados em runtime físico/Survival. **+0 identidade adicional**.
+**Dossiê documental — 27/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`, lógica `RELEASE_BOUNDED_SOURCE / SOURCE_CAUSALITY`, integração `CONDITIONAL / CONTRATO_CONDICIONAL`, QA físico `PENDING`. **+0 identidades/+0 strict**: entidades, efeitos e impactos derivados continuam filhos desta spell.
 
-- **ID:** `iss_magicfromtheeast:dragon_glide`
-- **School:** Symmetry
-- **Levels:** 1–10
-- **Min rarity:** Common
-- **Cast:** Long, 30 ticks
-- **Mana neutral:** 34–70
-- **Spell power/damage neutral:** 2–20
-- **Cooldown:** 5 s
-- **Projectile speed:** 0.6
-- **Lifetime:** 80 ticks / 4 s
+## Identidade, proveniência e ingresso
 
-## Contract
+Provider ISS: Magic From The East, `mod_id=iss_magicfromtheeast`; spell **`iss_magicfromtheeast:dragon_glide`**, escola default **`iss_magicfromtheeast:symmetry`**. Declarante `net.warphan.iss_magicfromtheeast.spells.symmetry.DragonGlideSpell`. [Registro][registry], [escola][school].
 
-Creates `JadeLoong`, a no-gravity magic projectile moving along the caster look vector. Custom hit detection permits it to damage multiple entities while travelling; entity hit does not discard it in the audited class. On each entity hit it applies provider spell damage and requests Iron's `ignoreNextKnockback` for LivingEntity targets.
+JAR de referência MC 1.21.1/NeoForge **`iss_magicfromtheeast-1.1.5.jar`**, SHA-1 `e3552ea6b7b32b843c48bf0d857237d4b7129ab0`, 1.680.780 bytes; [publisher CF7385201](https://www.curseforge.com/minecraft/mc-mods/magic-from-the-east/files/7385201), [inventário binário histórico](../EXACT-BINARY-SPELLS-1.1.5.md). Candidato oficial de source **`WarPhan78/ISS_MagicFromTheEast-1.21.x@f2a095cbbc89f8d8428dca758140663adf54ae88`**, 27/12/2025, anterior ao upload publicado: lógica **`RELEASE_BOUNDED_SOURCE`**, sem equivalência integral demonstrada entre source e métodos do JAR. Data e versão iguais não provam essa equivalência. O candidato declara 1.1.5, NeoForge 21.1.187/Iron’s 3.14.8; o pack usa NeoForge 21.1.250/Iron’s 3.16.3. Os contratos do host abaixo vêm de Iron’s 3.16.3 `e4056af90302d37eb1739f5ff05020b020e6e252`, portanto sua combinação também exige teste. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.1.5.md). Defaults não fecham a config implantada. Metadata **All Rights Reserved**; MIT do template tem escopo limitado ao template. Só fatos, paráfrases e permalinks, sem importar implementação ou assets.
 
-## Public-vs-source boundary
+**Corroboração binária estreita:** constructor de `DragonGlideSpell` grava power base 2/por nível 2, mana base 34/por nível 4 e castTime 30; `onCast` chama `JadeLoong#shoot`, `setDamage(getSpellPower(...))` e `addFreshEntity`. São campos/calls corroborados, sem igualdade integral de colisão, lifecycle ou método. [Limites da evidência](../SPELL-PERK-BOUNDARIES-1.1.5.md).
 
-Public description mentions a chance to break magic shields. That behavior was **not located** in `DragonGlideSpell` or `JadeLoong` during this pass. It remains `NÃO VERIFICADO` until a current event/entity handler proves it.
+Esta classe não sobrescreve aquisição, aprendizado ou resolver de pre-cast. A escola usa constructor host com requiresLearning=false/allowLooting=true; crafting ainda depende da config e origem/admissão do host. Isso é elegibilidade, sem garantir scroll/rota Survival. [Spell][spell], [constructor escolar][school-constructor], [aquisição host][acquisition-host].
 
-## Dedup
+[Guia upstream][guide], parafraseado: projeta um dragão que ameaça o trajeto. A alegação pública de quebrar magic shields com chance **não foi localizada** no caminho spell/JadeLoong consultado; não converter descrição em proc confirmado.
 
-Identity = slow, persistent multi-hit jade dragon projectile, not a normal one-impact bolt. Do not duplicate path damage or force discard after first entity hit.
+## Parâmetros e pipeline
 
-## Source
+Defina `P=(2+2(L−1))×SPELL_POWER×symmetryPower×POWER_MULTIPLIER`, `L` recebido pelo onCast. Dano pedido por contato `D=P` health points, armazenado no projétil após shoot; defaults L 1–10 dão P=2–20, mana neutra 34–70. [Spell][spell], [host power][power].
 
-`DragonGlideSpell.java` + `JadeLoong.java`.
+
+Os níveis máximos acima são defaults de configuração; este `onCast` não aplica clamp local de L. As fórmulas `int(...)` usam conversão Java para inteiro (truncamento em direção a zero nos valores positivos usuais). Mudar L em evento posterior não refaz admissão, custo anterior ou estado já capturado pelo host. [AbstractSpell#getManaCost/getSpellPower/getEffectiveCastTime][power], [AbstractSpell#castSpell][cast-host].
+1. **Admissão/custo:** LONG, base 30 ticks=1.5 s; sem override de tempo efetivo, host usa `round(30×(2−softCap(CAST_TIME_REDUCTION)))`. Cooldown default 5 s=100 ticks; mana `int((34+4(L−1))×MANA_MULTIPLIER)`. Não há charges/recast local. No wrapper jogador, anúncio SpellOnCastEvent e débito precedem onCast; anúncio não comprova spawn/hit. [Defaults/cast][spell], [host][cast-host].
+2. **Constructor e spawn:** cria um JadeLoong, owner=caster; posição `caster.position+(0,eyeHeight−height/2,0)+caster.forward`, shoot(lookAngle), setDamage(P), addFreshEntity sem examinar boolean. Tipo `iss_magicfromtheeast:jade_loong`, dimensões registradas 1.5×1 blocks; spawn usa eyeHeight−0.5 antes do deslocamento forward, que inclui pitch. [Spawn][spawn], [tipo][entity], [constructor][constructor].
+3. **Pre-inicialização relevante:** o constructor `(EntityType,Level)` põe noPhysics=true e chama **super.tick antes de owner/posição/dano acima**, depois noPhysics=false/noGravity=true. Host tick não testa noPhysics antes de dispatch para handleHitDetection/travel; o override já pode ser chamado nesse estado incompleto. Não é segundo cast nem prova de dano físico nesse instante; exigir QA e não instalar adapter tardio supondo que addFreshEntity seja a primeira execução. [Constructor][constructor], [host tick][projectile-host].
+4. **Movimento/colisão:** getSpeed=0.6 blocks/tick, host shoot grava lookAngle×0.6; sem inaccuracy/homing/acceleration local. A cada tick, custom handleHitDetection faz block clip do segmento atual→atual+delta. Se não-MISS, chama onHit(block); senão consulta entidades sobrepostas à **AABB atual inflada0.25**, nominalmente 2×1.5×2 blocks. Não é swept entity ray, esfera ou teste de LOS adicional. Filtros canHitEntity herdados excluem owner/aliados, além do predicate Minecraft; sem cap/ordenação/ledger local. [Scan][collision], [host][projectile-host].
+5. **Terminal:** custom scan chama onHit diretamente, sem publicar ProjectileImpactEvent nesse trecho. onHitEntity chama super, pede ignoreNextKnockback para Living e tenta applyDamage(D, fonte da spell, direta=loong/causador=getOwner atual). Não depende de hit aceito para pedir supressão de knockback. Living+SpellDamageSource passa pelo SpellDamageEvent cancelável/amount, resistência e friendly-fire antes de hurt; demais Entity seguem ramo direto do helper. Não descarta localmente por contato de entidade; a mesma vítima pode ser tentada em ticks seguintes. [Contato][collision], [knockback][knockback], [settlement][damage-host].
+6. **Saída:** tick chama super primeiro e **só depois** descarta em tickCount>80. 80 é relógio local nominal, não 80 hits ou alcance garantido de48 blocks; o tick terminal pode executar colisão/movimento antes do descarte. Host também possui expiry>300, despawn de chunk, antiMagic e estado herdado. Bloco/shield passa por callbacks herdados; não há chance local de quebrar shield nem veto de impacto no scan custom. [Tick][lifetime], [base/state][projectile-state], [shield][shield].
+
+## Matriz para perks
+
+| Eixo | Valor, consumidor e fase | Superfície real / limite | QA |
+| --- | --- | --- | --- |
+| Nível/power/dano | L 1–10 default; onCast armazena D=P após constructor/shoot. [Spell][spell], [power][power]. | SPELL_POWER/symmetry_spell_power **NATIVE_ATTRIBUTE**, POWER_MULTIPLIER **CONFIG_NATIVE**; SpellDamageEvent#setAmount/cancel **HOOK_VERIFICADO** no helper Living, adapter por spell+loong+owner **CONDITIONAL**. | Q1/Q3 |
+| Tipo/crítico | SpellDamageSource, default symmetry_magic pela escola; sem crit/proc shield local. [Fonte][source], [tipo][source-type], [escola][school]. | Amount não é setter de DamageType; conversão/crítico próprio **⛔ SEM_HOOK_SEGURO**. Registry/datapacks efetivos e kill credit precisam QA. | Q3 |
+| Alcance/target/área | Direção de olhar, nenhum alvo adquirido; block clip e overlap2×1.5×2 nominal. [Spawn][spawn], [scan][collision]. | Sem range máximo de seleção, cap de targets ou resolver mutável local. Retarget/single→AOE/LOS por perk **⛔ SEM_HOOK_SEGURO**; lifetime×speed não é alcance homologado. | Q2 |
+| Projétil/hitbox/speed | 1 loong, 1.5×1 registrado, delta0.6, noGravity; custom scan antes de travel. [Tipo][entity], [base][projectile-host]. | setDamage/pierce/homing existem na base por instância, não hook terceiro pré-primeira execução; custom scan não consome pierce como cap de hits. Resize/speed/contagem **⛔ SEM_HOOK_SEGURO**. | Q2/Q4 |
+| Tempo/cooldown | LONG 30 com atributo;5 s default; local>80 após super, base>300. [Spell][spell], [tick][lifetime]. | Cast-time/cooldown nativos; evento cooldown no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md) não muda relógio local80. Sem setter local de lifetime. | Q1/Q4 |
+| Mana/recast | `int((34+4(L−1))×config)`, sem recast/charge local. [Power][power]. | SpellOnCastEvent#setManaCost/setSpellLevel é hook do wrapper, sem recalcular admissão/custo por mudarL nem refund por spawn recusado; adapter **CONDITIONAL**. | Q1 |
+| Estado/mundo | IgnoreNextKnockback solicitado antes do helper; sem heal/DOT/block mutation declarado aqui. [Contato][collision]. | Observer de dano não muta geometria ou status por si. Summon slots/AI **N/A**; loong é projétil, sem segunda mana/dano. | Q3 |
+| Persistência/dedup | Host salva Damage/Age e dados de homing/pierce; loong não possui ledger de vítimas local. [State][projectile-state]. | Owner/UUID/fase/tick/vítima necessários; repetição por tick não é recast/Mastery. Garantia unload/load/antiMagic/sync **PENDING**. | Q4/Q5 |
+
+Assinatura ocupada: projétil lento e persistente com overlap em caminho, tentativas repetíveis e supressão de knockback. Uma magia original de trajetória e budget definidos exige contrato próprio. RPG/BA/Enshrouded mantêm suas autoridades; Mastery da escola custom continua condicionada no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md).
+
+- **Q1:** origem/config/Survival, níveis/power/custos e anúncio versus spawn recusado; atributos de cast/cooldown.
+- **Q2:** pitch/posição/constructor antes da inicialização, paredes/escudos, alvo fino versus overlap, owner/aliados/PvP/claims, budgets de alvos/projéteis e eventos de impacto ausentes no scan.
+- **Q3:** amount/veto/resistência/friendly/iFrames, pedidos de knockback em hit falho, mesma vítima em vários ticks, atribuição pós-reflexão e shield-break não localizado.
+- **Q4:** primeiro/último tick,80/300, chunk unload/reload, save/load, antiMagic e cancelamento do cast após efeitos já criados.
+- **Q5:** dedicado/cliente/multiplayer/Survival/sync e dedup. Callback custom sem guarda server local não é prova de dano cliente aceito. **Todos PENDING**; nenhum adapter/runtime novo.
+
+[registry]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESpellRegistries.java#L24-L50
+[versions]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/gradle.properties#L11-L36
+[power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L257
+[cast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L332
+[acquisition-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L594-L634
+[school-constructor]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/SchoolType.java#L30-L44
+[school]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESchoolRegistries.java#L32-L54
+[source]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L560-L565
+[source-type]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/SpellDamageSource.java#L24-L51
+[damage-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[damage-event]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellDamageEvent.java#L24-L50
+[guide]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/resources/assets/iss_magicfromtheeast/lang/en_us.json#L18-L19
+[spell]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/DragonGlideSpell.java#L25-L81
+[spawn]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/DragonGlideSpell.java#L73-L81
+[entity]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTEEntityRegistries.java#L50-L54
+[constructor]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/dragon_glide/JadeLoong.java#L31-L43
+[lifetime]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/dragon_glide/JadeLoong.java#L80-L94
+[collision]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/dragon_glide/JadeLoong.java#L96-L125
+[projectile-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L78-L114
+[projectile-state]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L289-L359
+[shield]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L361-L368
+[knockback]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L67-L88
+[setters]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L445-L499

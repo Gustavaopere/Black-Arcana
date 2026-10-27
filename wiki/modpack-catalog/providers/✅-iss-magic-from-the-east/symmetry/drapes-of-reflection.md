@@ -1,42 +1,67 @@
 # Drapes Of Reflection
 
-**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:drapes_of_reflection` / `net.warphan.iss_magicfromtheeast.spells.symmetry.DrapesOfReflectionSpell`, school default `MFTESchoolRegistries.SYMMETRY_RESOURCE` ([prova Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162); [dossiê](../EXACT-BINARY-SPELLS-1.1.5.md)). Os números e comportamentos descritos abaixo continuam derivados da fonte pinada, não aprovados em runtime físico/Survival. **+0 identidade adicional**.
+**Dossiê documental — 27/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `RELEASE_BOUNDED_SOURCE / SOURCE_CAUSALITY`; integração `CONDITIONAL / CONTRATO_CONDICIONAL`; QA físico `PENDING`. **+0 identidades/+0 strict**: entidades, partes, buffs e callbacks são filhos desta spell.
 
-- **ID:** `iss_magicfromtheeast:drapes_of_reflection`
-- **School:** Symmetry
-- **Levels:** 1–6
-- **Min rarity:** Rare
-- **Cast:** Instant
-- **Mana neutral:** 35–65
-- **Spell power neutral:** 2–7
-- **Cooldown:** 30 s
-- **Barrier HP neutral:** `1+power` = 3–8
-- **Reflection multiplier:** 20%–70%
-- **Barrier lifetime:** 20 s
-- **Placement range:** 3
+## Identidade e proveniência
 
-## Contract
+Provider ISS: Magic From The East, `mod_id=iss_magicfromtheeast`; spell **`iss_magicfromtheeast:drapes_of_reflection`**, escola própria `iss_magicfromtheeast:symmetry`; declarante `net.warphan.iss_magicfromtheeast.spells.symmetry.DrapesOfReflectionSpell`. [Registry][registry], [escola][school].
 
-Creates `JadeDrapesEntity`, an `AbstractShieldEntity` composed of 77 shield parts (11×7) with summoner ownership.
+JAR de referência MC 1.21.1/NeoForge **`iss_magicfromtheeast-1.1.5.jar`**, SHA-1 `e3552ea6b7b32b843c48bf0d857237d4b7129ab0`, 1.680.780 bytes; [publisher CF7385201](https://www.curseforge.com/minecraft/mc-mods/magic-from-the-east/files/7385201), [inventário binário histórico](../EXACT-BINARY-SPELLS-1.1.5.md). Candidato oficial de source **`WarPhan78/ISS_MagicFromTheEast-1.21.x@f2a095cbbc89f8d8428dca758140663adf54ae88`**, 27/12/2025, anterior ao upload publicado: lógica **`RELEASE_BOUNDED_SOURCE`**, sem equivalência integral demonstrada entre source e métodos do JAR. Data e versão iguais não provam essa equivalência. O candidato declara 1.1.5, NeoForge 21.1.187/Iron’s 3.14.8; o pack usa NeoForge 21.1.250/Iron’s 3.16.3. Os contratos do host abaixo vêm de Iron’s 3.16.3 `e4056af90302d37eb1739f5ff05020b020e6e252`, portanto sua combinação também exige teste. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.1.5.md). Defaults não fecham a config implantada. Metadata **All Rights Reserved**; MIT do template tem escopo limitado ao template. Só fatos, paráfrases e permalinks, sem importar implementação ou assets.
 
-`ProjectileImpactEvent` is the reflection authority. When a projectile hits a drape ShieldPart:
+**Corroboração binária estreita:** constructor de `DrapesOfReflectionSpell` grava basePower 2/perLevel 1, `getDrapesHP` soma 1 a power e `getDrapesReflectionPercent` divide `(10+10L)` por 100. Só estes campos/calls foram corroborados aqui, sem equivalência do método completo. [Limites da evidência](../SPELL-PERK-BOUNDARIES-1.1.5.md).
 
-- event is canceled;
-- projectile velocity is reversed;
-- if it is `AbstractMagicProjectile`, owner is reassigned to the drape summoner and projectile damage becomes `oldDamage * reflectionPercent`;
-- null-owner projectiles are assigned to the summoner before reverse;
-- counterspell explicitly starts Jade Drapes unsummon/close behavior.
+[Guia oficial][guide], parafraseado: ergue drape de jade que desvia projéteis. A reflexão real depende de tipo/owner, conforme abaixo. Não há override local de aquisição; elegibilidade host não fecha scroll/Survival ou config implantada. [Aquisição][acquisition].
 
-The shield itself takes damage and closes when HP/lifetime ends.
+## Pipeline e parâmetros
 
-## Dedup / safety
+`L`=nível entregue ao onCast; `P=(2+L−1)×SPELL_POWER×symmetryPower×POWER_MULTIPLIER`. Rare, L 1–6, INSTANT, 0 ticks, mana `int((35+6(L−1))×MANA_MULTIPLIER)` (35–65 neutra), cooldown 30 s = 600 ticks antes modifiers. **HP pedido=1+P** (3–8 neutro), reflexão `f=(10+10L)/100`=0.2–0.7; f é multiplicador do damage armazenado do projétil, **não bônus aditivo de 20%–70%**. Poder não aumenta f. [Defaults/helpers][spell], [host][power].
 
-Do not create a second projectile-reflection listener. Owner rewrite matters for kill/damage provenance; integrations must observe the reflected projectile state after provider handling.
 
-## QA
+Os níveis máximos acima são defaults de configuração; este `onCast` não aplica clamp local de L. As fórmulas `int(...)` usam conversão Java para inteiro (truncamento em direção a zero nos valores positivos usuais). Mudar L em evento posterior não refaz admissão, custo anterior ou estado já capturado pelo host. [AbstractSpell#getManaCost/getSpellPower/getEffectiveCastTime][power], [AbstractSpell#castSpell][cast-host].
+1. **Spawn:** cria 1 JadeDrapesEntity(level,HP,caster,true), que grava health e owner UUID/cache próprios e flag de abertura. `Utils.raycastForEntity(...,3,true)` até 3 blocks/checkBlocks determina posição, yRot=caster.yRot; grava f e pede addFreshEntity sem ler retorno. Sem target remoto/recast local/refund. Não usa SpellSummonEvent nem SummonManager.initSummon neste caminho, embora implemente IMagicSummon. [Cast][cast], [constructor/owner][shield], [raycast do host][raycast-host].
+2. **Geometria:** parent EntityType 1×1 blocks não é a parede. Constructor cria **77 ShieldPart** (11×7), cada 0.5×0.5 blocks, espaçamento 0.5, hasCollision=true. Posições locais rotacionam por pitch/yaw e seguem parent; envelope nominal sem rotação é plano 5.5×3.5 blocks com profundidade de caixas 0.5, sem equivaler escala visual/parentAABB ao shield. Host partes são pickable e noSave; seu hurt no servidor encaminha só a primeira tentativa entre resets de hurtThisTick do parent, retorna false e não publica por si SpellDamageEvent. [Partes][parts], [registro][entity-reg], [ShieldPart host][part-host].
+3. **Reflexão:** MFTEServerEvent#drapeReflectionEvent exige EntityHitResult→ShieldPart→parent JadeDrapes, então **cancela o evento antes de checar owner**. Se owner do projétil difere do summoner, prepara reverse(delta). Só AbstractMagicProjectile recebe owner=summoner e damage=oldDamage×f; a seguir aplica reverse preparado. Projétil genérico com owner diferente conserva seu owner nessa primeira parte. Sem guarda server própria no método; apenas partículas têm side guard. Filtros/contexto de posting pertencem ao evento/host: este handler só roda se alguém publicar `ProjectileImpactEvent`; overlap de projétil com parte, isoladamente, não prova o callback. [Handler][reflection].
+4. **Caso null-owner e repetição:** depois do primeiro ramo, owner ainda null implica setOwner(summoner) e **nova reversão**. Genérico inicialmente ownerless com summoner não-null pode reverter duas vezes, terminando delta inicial; AbstractMagicProjectile ownerless normalmente fica com owner novo no primeiro ramo e não faz a segunda. Se owner já era summoner, o evento é cancelado mas não há reversão nesses ramos. Summoner null e listeners alterando estado precisam QA. Não há ledger/cap de bounces ou desconto de HP explícito por reflexão; múltiplas reflexões mágicas podem multiplicar damage armazenado repetidamente, sem trocar automaticamente spellId/escola/qualquer campo custom do projétil. [Handler][reflection].
+5. **HP e clocks:** takeDamage subtrai amount do HP se !isInvulnerableTo, sem resistência escolar própria de LivingEntity. tick reseta hurtThisTick e processa health≤0→destroy e ++age>400→onUnSummon; só no ramo ainda vivo/dentro da idade atualiza posições das partes; este marca closing e closeTick 10 decrementa até<0→discard. Opening inicia 15 e termina após contador<0; handler de reflexão não exige abertura concluída/closing=false. tick override não chama super.tick. Health 0 usa destroy→super.destroy/kill, diferente do fechamento por idade/counterspell. Não prometer lifetime exato 20 s sem considerar closing/remoção. [HP/tick][lifecycle], [base][shield-host].
+6. **Counterspell, antiMagic e persistência:** `MFTEServerEvent#counterSpellHitDrapes` força CounterSpellEvent canceled=false para JadeDrapes e chama onUnSummon; antiMagic herdada descarta diretamente. Parent serializa Health, mas classe MFTE não salva explicitamente UUID/cache/f/age/open/close e partes não se salvam. Persistência/restauração efetiva/sync desses estados continua PENDING; não assumir lifespan/owner preservados por implementar IMagicSummon. idlePredicate repete teste closing, apresentação sem prova de novo efeito. [Counterspell][counter], [base save/antiMagic][shield-host], [estado MFTE][lifecycle].
 
-`JadeDrapesEntity.idlePredicate` redundantly checks `isAnimatingClose()` twice. This is a presentation-only static quirk unless runtime demonstrates more impact.
+## Matriz para perks
 
-## Source
+| Eixo | Valor e consumidor | Superfície real, fase e limite | QA |
+| --- | --- | --- | --- |
+| Power/HP | HP=1+P snapshot, takeDamage subtrai amount. [Spell][spell], [HP][lifecycle]. | SPELL_POWER/symmetry_spell_power **NATIVE_ATTRIBUTE**, POWER_MULTIPLIER **CONFIG_NATIVE**; setHealth herdado público por instância não é hook terceiro de spawn. HP não é heal de LivingEntity. | Q1/Q3 |
+| Reflexão/dano/tipo | f=(10+10L)/100, damage armazenado só AbstractMagicProjectile×f. [Handler][reflection]. | setPercentReflectDamage público, sem clamp próprio, não evento para perk. **CONDITIONAL** por instância; mudarL não muda retroativamente f. SpellDamageEvent amount não governa owner/delta/reflection e não converte DamageType. Dano próprio, crítico, heal e DOT **N/A**: o handler modifica a instância que o atingiu. | Q2/Q3 |
+| Owner/filtros | Condições owner!=summoner, depois owner==null; sourceSpellID não reescrito pelo handler. [Handler][reflection]. | Observer de impacto não licencia segunda reflexão; reownership preservando procs/campos custom **CONDITIONAL**, não takeover genérico. Own-projectile também tem evento cancelado. | Q2/Q4 |
+| Range/targeting | Ray3/checkBlocks, posição e yaw do caster no onCast. [Cast][cast]. | Constante privada sem setter de alcance/resolver MFTE; retarget/single→AOE **⛔ SEM_HOOK_SEGURO**. LOS de hit real depende das partes/event posting. | Q2 |
+| Área/hitbox/contagem | 77 partes 0.5×0.5,11×7; parent 1×1, posições rotacionadas. [Partes][parts], [host][part-host]. | width/height arrays e createShield não são API segura de resize runtime; render scale≠hitbox. Redimensionar/multiplicar barreiras **⛔ SEM_HOOK_SEGURO** sem reconstrução/sync contratados. Parent é escudo estático; velocidade, aceleração, pierce e spread **N/A** nesse consumer, e 77 partes não são 77 projéteis. | Q2/Q4 |
+| Tempo/custo | INSTANT 0, mana 35+6(L−1), cooldown 30 s; age 400+closing 10/open 15 contadores. [Spell][spell], [tick][lifecycle]. | Mana/cooldown/nível inputs/eventos no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md); lifetime final/counters não têm setter específico observado. Sem recast/charges/custo por bounce local. | Q1/Q4 |
+| Summon/estado | Owner UUID/cache local, IMagicSummon, counterspell close versus antiMagic discard. [Owner][shield], [counter][counter]. | Sem manager/recast/AI/expiry queue de summon controlado; não adaptar como pet. CounterSpellEvent é boundary próprio, não setter de f/HP. | Q4 |
+| Mundo/persistência | Sem mutação de blocos/teleporte/heal própria; Health herdado e partes noSave. [Base][shield-host], [part-host][part-host]. | Claims/PvP/reload/owner sync/cleanup final **PENDING**; sem ledger paralelo de reflexão ou duplicação do dano original. | Q4/Q5 |
 
-`DrapesOfReflectionSpell.java`, `JadeDrapesEntity.java`, `MFTEServerEvent.drapeReflectionEvent`.
+Dedup: cast→parent UUID→part index→impacto/projétil/owner antes-depois→hit terminal posterior. Cancelamento de impacto não é hit/kill nem outro cast; RPG/BA não fazem nova reversão por observação. Mastery custom está condicionado no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md). Assinatura ocupada: barreira multipart com reownership/damage scaling seletivos; uma magia original requer contrato de bounce/owner/budget próprio.
+
+- **Q1:** L 1–6/power/config/origem/mana/cooldown/HP e spawn recusado.
+- **Q2:** tipos de projétil, owner igual/diferente/null e summoner null, duas reversões, trajetória/partes/rotations/ray 3/claims/PvP.
+- **Q3:** parentHP/part hurtThisTick, damage stored versus damage final, bounces/compounding/sourceSpell/status/kill credit.
+- **Q4:** opening/closing continuam colidindo?, first/last tick, health 0/age/counterspell/antiMagic, cliente versus servidor, sync/owner/part IDs e recursos.
+- **Q5:** dedicado/multiplayer/Survival/unload/restart/restauração e dedup/Mastery. **Todos PENDING**, nenhum runtime/adapter novo.
+
+[versions]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/gradle.properties#L11-L36
+[registry]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESpellRegistries.java#L24-L50
+[school]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESchoolRegistries.java#L32-L54
+[power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L257
+[cast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L332
+[acquisition]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L594-L612
+[guide]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/resources/assets/iss_magicfromtheeast/lang/en_us.json#L28-L29
+[spell]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/DrapesOfReflectionSpell.java#L31-L78
+[cast]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/DrapesOfReflectionSpell.java#L61-L69
+[shield]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/jade_drape/JadeDrapesEntity.java#L32-L88
+[parts]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/jade_drape/JadeDrapesEntity.java#L90-L104
+[lifecycle]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/jade_drape/JadeDrapesEntity.java#L106-L184
+[reflection]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/events/MFTEServerEvent.java#L240-L270
+[counter]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/events/MFTEServerEvent.java#L272-L279
+[entity-reg]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTEEntityRegistries.java#L100-L104
+[shield-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractShieldEntity.java#L56-L139
+[part-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/ShieldPart.java#L19-L75
+
+[raycast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L316-L354

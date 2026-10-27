@@ -1,6 +1,6 @@
 # ISS: Magic From The East 1.1.5 — 22 feitiços binários SHA-exatos
 
-**✅ `COUNTED_EXACT` para 22/22 inscrições estáticas**: 11 Symmetry e 11 Spirit; **+0 novas raízes semânticas** (inventário prévio já incluía 22). Campanha de 39 providers **20/39 exatos / 19/39 pendentes**; mínimos estritos **1857 global / 1855 escopo** inalterados. Runtime, configuração e Survival **⚠️**.
+**Checkpoint histórico de identidade (13/10/2026): ✅ `COUNTED_EXACT` para 22/22 inscrições estáticas**: 11 Symmetry e 11 Spirit; **+0 novas raízes semânticas** (inventário prévio já incluía 22). Campanha de 39 providers **20/39 exatos / 19/39 pendentes**; mínimos estritos **1857 global / 1855 escopo** inalterados. Runtime, configuração e Survival **⚠️**.
 
 ## Autoridade do JAR e evidência reproduzível
 
@@ -52,13 +52,13 @@
 
 ## Exclusões e deduplicação
 
-- `LaunchSpell` e `QigongControllingSpell` são protótipos comentados no source de referência, não surgem no inicializador ativo do JAR; a antiga escola Dune não cria um conjunto adicional.
+- `LaunchSpell` e `QigongControllingSpell` são protótipos comentados no source candidato, não surgem no inicializador ativo do JAR. Correção de 27/10/2026: **Dune está registrada como escola no JAR**, mas não há spell Dune entre as 22 inscrições. Escola sem spell não cria uma identidade adicional; ver [reconciliação da release](RELEASE-SOURCE-RECONCILIATION-1.1.5.md).
 - A descrição pública de release `Nephrite Splash` corresponde à identidade comprovada `iss_magicfromtheeast:nephrite_slash`; não contabilizar duas magias.
 - Soulburn, soul proxy, reflection, projéteis e summons são subações ou efeitos das 22 identidades, sem novas raízes por instância/efeito visual.
 
 ## Gates físicos e de integração
 
-**⚠️** A fonte compila contra Iron's 3.16.2; o modpack físico tem 3.16.3. A prova cobre somente registros/IDs/classes/escolas compilados, **não** cast no cliente/servidor, mana e cooldown efetivos, config implantada, receitas/aquisição Survival, mortes/reload, owner/team/PvP, lifecycle de summons, reflection, Soulburn e iFrame mutation. Os QA estáticos previamente anotados para Anchoring Kunai, Phantom Charge, Cloud Ride e Soul Catalyst não foram automaticamente corrigidos nem aprovados por essa prova.
+**⚠️ Correção de proveniência, 27/10/2026:** a fonte candidata `f2a095cbbc89f8d8428dca758140663adf54ae88` declara Iron's **3.14.8**; o modpack físico tem **3.16.3**. O antigo pin posterior que declarava 3.16.2 não comprova os métodos do JAR 1.1.5. Ver [contratos comuns](SPELL-PERK-BOUNDARIES-1.1.5.md). A prova cobre somente registros/IDs/classes/escolas compilados, **não** cast no cliente/servidor, mana e cooldown efetivos, config implantada, receitas/aquisição Survival, mortes/reload, owner/team/PvP, lifecycle de summons, reflection, Soulburn e iFrame mutation. Os QA estáticos previamente anotados para Anchoring Kunai, Phantom Charge, Cloud Ride e Soul Catalyst não foram automaticamente corrigidos nem aprovados por essa prova.
 
 **Autoridades:** ISS responde por escolas/efeitos/entidades/identidades; Iron's pelo casting e mana base; Black Arcana pelo seu próprio runtime de magia; RPG Skill Tree apenas por progressão, Mastery, perks e gates através de contratos reais. Deduplicação e custos provider-native são preservados; integrações sem seam comprovado permanecem fail-closed.
 

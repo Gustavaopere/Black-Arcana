@@ -1,43 +1,70 @@
 # Bagua Array Circle
 
-**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:bagua_array_circle` / `net.warphan.iss_magicfromtheeast.spells.symmetry.BaguaArrayCircleSpell`, school default `MFTESchoolRegistries.SYMMETRY_RESOURCE` ([prova Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162); [dossiê](../EXACT-BINARY-SPELLS-1.1.5.md)). Os números e comportamentos descritos abaixo continuam derivados da fonte pinada, não aprovados em runtime físico/Survival. **+0 identidade adicional**.
+**Dossiê documental — 27/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `RELEASE_BOUNDED_SOURCE / SOURCE_CAUSALITY`; integração `CONDITIONAL / CONTRATO_CONDICIONAL`; QA físico `PENDING`. **+0 identidades/+0 strict**: entidades, partes, buffs e callbacks são filhos desta spell.
 
-- **ID:** `iss_magicfromtheeast:bagua_array_circle`
-- **School:** Symmetry
-- **Levels:** 1–8
-- **Min rarity:** Uncommon
-- **Cast:** Long, 20 ticks
-- **Mana neutral:** 70–140
-- **Spell power neutral:** 1–8
-- **Cooldown:** 60 s
-- **Targeting:** helper/raycast up to 32
-- **Radius:** 5
-- **Duration:** 200 ticks / 10 s
-- **Undead damage per provider application:** `0.5*spellPower`
-- **Reversal Healing amplifier:** level−1 = 10%–80%
+## Identidade e proveniência
 
-## Actual entity contract
+Provider ISS: Magic From The East, `mod_id=iss_magicfromtheeast`; spell **`iss_magicfromtheeast:bagua_array_circle`**, escola própria `iss_magicfromtheeast:symmetry`; declarante `net.warphan.iss_magicfromtheeast.spells.symmetry.BaguaArrayCircleSpell`. [Registry][registry], [escola][school].
 
-`BaguaCircle` damages only LivingEntities that:
+JAR de referência MC 1.21.1/NeoForge **`iss_magicfromtheeast-1.1.5.jar`**, SHA-1 `e3552ea6b7b32b843c48bf0d857237d4b7129ab0`, 1.680.780 bytes; [publisher CF7385201](https://www.curseforge.com/minecraft/mc-mods/magic-from-the-east/files/7385201), [inventário binário histórico](../EXACT-BINARY-SPELLS-1.1.5.md). Candidato oficial de source **`WarPhan78/ISS_MagicFromTheEast-1.21.x@f2a095cbbc89f8d8428dca758140663adf54ae88`**, 27/12/2025, anterior ao upload publicado: lógica **`RELEASE_BOUNDED_SOURCE`**, sem equivalência integral demonstrada entre source e métodos do JAR. Data e versão iguais não provam essa equivalência. O candidato declara 1.1.5, NeoForge 21.1.187/Iron’s 3.14.8; o pack usa NeoForge 21.1.250/Iron’s 3.16.3. Os contratos do host abaixo vêm de Iron’s 3.16.3 `e4056af90302d37eb1739f5ff05020b020e6e252`, portanto sua combinação também exige teste. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.1.5.md). Defaults não fecham a config implantada. Metadata **All Rights Reserved**; MIT do template tem escopo limitado ao template. Só fatos, paráfrases e permalinks, sem importar implementação ou assets.
 
-- are not the owner; and
-- have an entity type in vanilla `UNDEAD`.
+**Corroboração binária estreita:** `BaguaArrayCircleSpell#getDamage` multiplica por 0.5; `getRadius` retorna 5 e `getDuration` 200; `checkPreCastConditions` chama o helper com 32/15 e retorna true. Esses campos/calls coincidem com o candidato; o restante do pipeline continua limitado ao source. [Limites da evidência](../SPELL-PERK-BOUNDARIES-1.1.5.md).
 
-The owner is not damaged. Instead, while inside the circle it receives `REVERSAL_HEALING` for 40 ticks at the spell amplifier.
+[Guia oficial][guide], parafraseado: cria círculo que combate mortos-vivos e concede inversão de dano ao dono. Aquisição segue elegibilidade de escola/config/aprendizado Iron’s, sem override local de crafting/loot; rota específica no Survival e config implantada **NÃO VERIFICADAS**. [Host][acquisition].
 
-`ReversalHealingEffect` hooks `LivingDamageEvent.Pre` server-side. For eligible damage it:
+## Pipeline e parâmetros
 
-1. sets incoming damage to **0**;
-2. heals the entity by `originalDamage * (amplifier+1)*0.1`.
+Defina `L`=nível entregue ao onCast, `P=L×SPELL_POWER×symmetryPower×POWER_MULTIPLIER`. Defaults Uncommon, níveis 1–8, LONG, 20 ticks = 1 s base, cooldown 60 s = 1.200 ticks antes de modifiers. Mana `int((70+10(L−1))×MANA_MULTIPLIER)` (70–140 neutra). Dano snapshot do círculo `D=0.5P` HP (0.5–4 neutro); raio 5 blocks e duração 200 ticks são constantes independentes de P. Tempo efetivo LONG no host: `round(20×(2−softCap(CAST_TIME_REDUCTION)))` ticks. [Defaults][spell], [helpers][helpers], [host power/tempo][power].
 
-Thus level 1–8 converts an eligible hit into healing equal to 10%–80% of the original damage while negating that hit. It does not trigger for damage tagged provider `BYPASS_REVERSAL_HEALING`, fall damage or bypass-invulnerability damage.
 
-The circle is `AntiMagicSusceptible` and discards on anti-magic.
+Os níveis máximos acima são defaults de configuração; este `onCast` não aplica clamp local de L. As fórmulas `int(...)` usam conversão Java para inteiro (truncamento em direção a zero nos valores positivos usuais). Mudar L em evento posterior não refaz admissão, custo anterior ou estado já capturado pelo host. [AbstractSpell#getManaCost/getSpellPower/getEffectiveCastTime][power], [AbstractSpell#castSpell][cast-host].
+1. **Aquisição de posição:** checkPreCastConditions chama `Utils.preCastTargetHelper(...,32,15f,false)` e ignora seu boolean, retornando true. No host consultado,15 é **bbInflation do ray**, não graus ou raio da área. TargetEntityCastData resolvida no onCast usa posição atual do alvo, sem revalidar localmente range/LOS depois do wind-up. Sem alvo resolvido, `Utils.raycastForEntity(...,32,true,0.15)` usa getLocation e moveToRelativeGroundLevel(...,6). [Spell][cast], [helper][target-helper], [raycast do host][raycast-host].
+2. **Snapshot/spawn:** cria 1 BaguaCircle, amplifier = L−1, owner=caster, circular=true, radius 5, duration 200 e D; solicita addFreshEntity sem verificar retorno. Cria outro TargetedAreaEntity visual com radius 5/duration 200/owner=círculo/fade, não segundo círculo de dano. Custo/evento de cast precedem esse resultado no wrapper jogador; não há refund local por spawn recusado. [Cast][cast], [visual][visual], [wrapper][cast-host].
+3. **Poll servidor:** herda AoeEntity, delay 0 e reapplicationDelay 10 ticks. Enquanto tickCount ≤ 200, consulta LivingEntity na **AABB efetiva.inflate(0,1,0)**, exige alive/pickable/não-spectator, distância 3D estrita<5 e ground context (`onGround OU targetY−circleY<0.5`). Sem LOS/ordenação/cap de alvos local. Nominalmente há polls nas idades10..200; não são 20 hits garantidos. [Círculo][circle], [scheduler/query][aoe].
+4. **Terminal:** para não-owner UNDEAD, tenta helper D com SpellDamageSource Symmetry, direta=círculo/causador=owner, e chama ignoreNextKnockback **mesmo se o dano falhou**. Não-owner não-undead não recebe esse dano. Para owner, tenta Reversal Healing40 ticks/amp L−1; não testa retorno addEffect. O override local de canHitEntity não exclui aliados; o helper ainda possui sua própria política friendly/resistência. [Consumer][circle], [helper dano][damage].
+5. **Inversão:** ReversalHealingEffect#healWhenBeingHit, no servidor em LivingDamageEvent.Pre, lê **originalDamage**, exclui tags BYPASS_REVERSAL_HEALING/IS_FALL/BYPASSES_INVULNERABILITY, escreve newDamage0 e chama heal(originalDamage×0.1×(amp+1)). Não lê newDamage modificado por listener anterior, não publica SpellHealEvent nem remove o buff após um hit. Efeito também declara KNOCKBACK_RESISTANCE+0.05 ADD_VALUE, sujeito à aplicação nativa do amplificador. Cura final/ordem de listeners/merge/resistências exigem QA. [Effect][reversal], [registro][effect-reg].
+6. **Geometria e saída:** registry10×0.5 blocks, mas Aoe#getDimensions retorna2r×1.2 e Bagua#refreshDimensions é vazio. Portanto setRadius/getDimensions/visual **não fecham a AABB efetiva** por si; a query usa a caixa realmente instalada. Parent descarta tickCount > duration + delay; antiMagic local descarta, shouldBeSaved=false. healingAmplifier não tem sync/save próprio demonstrado. O buff 40 pode permanecer após sair/remoção do círculo conforme lifecycle MobEffect. [Registro][entity-reg], [dimensões/NBT][aoe-state], [saída][circle].
 
-## Dedup
+## Matriz para perks
 
-This is much stronger/specific than a simple “healing circle”: undead-only offense + owner-only damage inversion. Never implement Reversal Healing again from health-delta observation.
+| Eixo | Valor e consumidor | Superfície real, fase e limite | QA |
+| --- | --- | --- | --- |
+| Nível/power/dano | Max default 8; D=0.5P snapshot, BaguaCircle#applyEffect por poll. [Helpers][helpers], [circle][circle]. | SPELL_POWER/symmetry_spell_power **NATIVE_ATTRIBUTE**, POWER_MULTIPLIER **CONFIG_NATIVE**; helper Living aceita SpellDamageEvent amount/cancel pré-resist/hurt. Adapter **CONDITIONAL** por spell+owner+circle, sem segundo dano. | Q1/Q3 |
+| Tipo/crítico | `iss_magicfromtheeast:symmetry_magic`, SpellDamageSource do Bagua; crítico próprio N/A. [Escola][school], [factory][source], [consumer][circle]. | Amount não é setter de DamageType; conversão elemental **⛔ SEM_HOOK_SEGURO**. Não atribuir cura invertida ao helper de dano da spell. | Q3 |
+| Range/targeting | Pré-ray 32/inflation 15; fallback 32/.15/ground6; acompanha alvo guardado até onCast. [Cast][cast], [helper][target-helper]. | Constantes privadas, sem setter/evento de resolver MFTE identificado. Bônus de range/retarget **⛔ SEM_HOOK_SEGURO**; anúncio de cast não garante destino autorizado. | Q2 |
+| Área/filtros/budget | r 5, AABB efetiva∩3Ddistância∩ground; UNDEAD não-owner versus buff owner. [Circle][circle], [AoE][aoe]. | setRadius herdado clamp0..32 é setter por instância, refresh local vazio; sem seam terceiro seguro/validação AABB. single→AOE/resize/budget **⛔ SEM_HOOK_SEGURO**. | Q2/Q4 |
+| Projétil/summon | 1 AoE que estende Projectile +1 visual, sem voo/AI/summon; speed/pierce/spread N/A. [Cast][cast], [AoE][aoe]. | Não usar setters de AbstractMagicProjectile ou SummonManager por analogia. Contagem/segunda área **⛔ SEM_HOOK_SEGURO**. | Q2/Q4 |
+| Tempo/custo | LONG 20 base; mana 70+10(L−1), cooldown 60 s, área200/poll 10, buff 40. [Spell][spell], [helpers][helpers], [AoE][aoe]. | Tempo/cooldown/mana nativos e eventos no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md); duration/reapplicationDelay herdados públicos, mas sem callback terceiro pré-spawn demonstrado. Buff40 e amp são consumidores distintos de P. | Q1/Q4 |
+| Cura/estados | OriginalDamage×0.1×L, newDamage0, owner effect amp L−1. [Reversal][reversal], [registro][effect-reg]. | Listener já executa settlement próprio; observer não licencia segunda cura/invulnerabilidade. Config deste coeficiente **NÃO VERIFICADA**; cura individual/tipo/status **CONDITIONAL** até seam pré-settlement real. | Q3/Q4 |
+| Mundo/persistência | Ground placement, sem block mutation local; shouldBeSaved=false/antiMagic discard. [Cast][cast], [circle][circle]. | Claims/chunks/remoção de buff/restart não fechados. Sem ledger/rollback BA paralelo; serialização herdada não prova persistência de amplifier. | Q2/Q5 |
 
-## Source
+Dedup: caster+spell+cast→UUID circle→poll/vítima→buff/incoming separado. Provider mantém custo, área e inversão; Mastery das escolas custom segue condicionado no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md). Assinatura ocupada: campo anti-undead que sustenta inversão de dano apenas no dono. Uma magia original com charges/target budget próprios não é perk já disponível.
 
-`BaguaArrayCircleSpell.java`, `BaguaCircle.java`, `ReversalHealingEffect.java`.
+- **Q1:** config/origem/mana/cooldown/tempo/L 1–8 e power snapshot; custo/evento modificado e spawn recusado.
+- **Q2:** target que se move durante wind-up, fallback/ground, caixa real versus radius/visual, verticalidade/PvP/aliados/claims/chunks e muitos alvos.
+- **Q3:** dano bloqueado/resistência e ignoreNextKnockback posterior; inversão após outros listeners, tags, heal caps/HP, source/kill credit e amount 0.
+- **Q4:** poll/primeiro-último tick, overlap de círculos, buff 40 após saída, amp merge, antiMagic/recast externo e setter radius/duration.
+- **Q5:** dedicado/cliente/multiplayer/Survival/sync/unload/restart e correlação sem dupla mana/XP/cura. **Todos PENDING**, sem runtime/adapter novo.
+
+[versions]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/gradle.properties#L11-L36
+[registry]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESpellRegistries.java#L24-L50
+[school]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESchoolRegistries.java#L32-L54
+[power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L257
+[cast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L332
+[acquisition]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L594-L612
+[guide]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/resources/assets/iss_magicfromtheeast/lang/en_us.json#L16-L17
+[spell]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/BaguaArrayCircleSpell.java#L42-L69
+[cast]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/BaguaArrayCircleSpell.java#L82-L119
+[helpers]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/BaguaArrayCircleSpell.java#L122-L133
+[circle]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/bagua_array/BaguaCircle.java#L33-L88
+[reversal]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/effects/ReversalHealingEffect.java#L20-L51
+[effect-reg]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTEEffectRegistries.java#L26-L30
+[entity-reg]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTEEntityRegistries.java#L45-L49
+[target-helper]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L665-L710
+[aoe]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L21-L149
+[aoe-state]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L222-L327
+[damage]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L76
+[source]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L560-L566
+[visual]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/target_area/TargetedAreaEntity.java#L68-L108
+
+[raycast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L316-L354

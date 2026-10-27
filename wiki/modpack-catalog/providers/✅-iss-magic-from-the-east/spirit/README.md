@@ -4,7 +4,9 @@ Status: `✅ 11/11 COUNTED_EXACT STATIC REGISTRY; RUNTIME/SURVIVAL ⚠️`
 
 [Dossiê físico 1.1.5](../EXACT-BINARY-SPELLS-1.1.5.md) e [Java21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162): 11 IDs/classes Spirit incondicionais e escola padrão confirmados; +0 novos.
 
-Source pin: `WarPhan78/ISS_MagicFromTheEast-1.21.x@13208302c9fdf5beb171a328558cbef07a25ba46`.
+Fonte candidata `RELEASE_BOUNDED_SOURCE` (sem equivalência integral com o JAR): `WarPhan78/ISS_MagicFromTheEast-1.21.x@f2a095cbbc89f8d8428dca758140663adf54ae88`.
+
+**Dossiês deste lote: 11/11.** `████████████████████ 100.0%` editorial; certificação estrita **0/11**. [Contratos comuns](../SPELL-PERK-BOUNDARIES-1.1.5.md) e [reconciliação](../RELEASE-SOURCE-RECONCILIATION-1.1.5.md).
 
 ## Spells ativos
 
@@ -22,7 +24,7 @@ Source pin: `WarPhan78/ISS_MagicFromTheEast-1.21.x@13208302c9fdf5beb171a328558cb
 
 ## Assinaturas mecânicas
 
-Spirit ocupa um conjunto próprio de contracts: multi-projectile Soulburn, radial Soulburn burst, linked proxy damage por ExtractedSoul, summons persistentes com lifecycle Iron's, weapon-scaled line slash, pack de kitsunes com alpha montável, samurai summon, formação híbrida Ashigaru melee/ranged, cavalry wave, teleport-triggered soul anchor e hit-triggered radial projectile split.
+Spirit ocupa um conjunto próprio de contracts: multi-projectile Soulburn, radial Soulburn burst, linked proxy damage por ExtractedSoul, summons persistentes com lifecycle Iron's, weapon-scaled line slash, pack de kitsunes sem ramo de alpha separado no cast da fonte candidata; a classe de alpha da fonte posterior não consta do JAR auditado, samurai summon, formação híbrida Ashigaru melee/ranged, cavalry wave, teleport-triggered soul anchor e hit-triggered radial projectile split.
 
 Essas identidades devem ser tratadas como provider-native first. Black Arcana não deve recriar o mesmo outcome apenas com outro nome/VFX.
 
