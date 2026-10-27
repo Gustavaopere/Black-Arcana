@@ -1,6 +1,6 @@
 # Brew of Spikeskin
 
-**VIGÊNCIA 1.3.7:** a seção histórica abaixo registra os parâmetros de 1.3.6. No release atual, o template `ARMOR` passou de `0.0F` para `3.0F`; o problema de valor efetivo de `MOVEMENT_SPEED` continua condicionado.
+**VIGÊNCIA 1.3.7:** o registro de 1.3.6 abaixo é histórico. No source da release atual, `ARMOR` passou de `0.0F` para `3.0F` e foi identificado um consumer NeoForge de retaliação. Valores efetivos de `MOVEMENT_SPEED` e runtime ainda condicionados.
 
 
 ## Estado
@@ -84,6 +84,6 @@ Hexalia owns the MobEffect and attribute mutation. Black Arcana does not reapply
 - **Mudança confirmada no registry 1.3.7:** [`ModMobEffects` L61–75](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/effect/ModMobEffects.java#L61-L75) declara `ARMOR amount=3.0F ADD_VALUE` (era `0.0F` em 1.3.6). Declara também `MOVEMENT_SPEED amount=-0.10F ADD_MULTIPLIED_TOTAL` (inalterado).
 - **Método de efeito sem mudança textual:** [`SpikeskinEffect.adjustModifierAmount`](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/effect/custom/SpikeskinEffect.java#L7-L18) retorna `3.0*(amplifier+1)` e não diferencia os dois templates registrados. Isso levanta **pendência de verificação da API/aplicação de atributos**, especialmente a direção efetiva do bônus de velocidade: não tratar `-0.10F` como resultado final confirmado.
 - **Receita:** [JSON 1.3.7](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/generated/resources/data/hexalia/recipe/brew_of_spikeskin_from_small_cauldron.json) foi comparado textualmente à versão 1.3.6 sem diferenças.
-- **Reflection:** não foi demonstrado handler de dano refletido nesta rodada. Uma perk não pode presumir reflexão, nem sintetizá-la para Hexalia. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+- **Reflection — consumer localizado no source NeoForge 1.3.7:** [`LivingEntityMixin.hexalia$applySpikeskinRetaliation` L34–49](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/neoforge/src/main/java/net/astralya/hexalia/neoforge/mixin/LivingEntityMixin.java#L34-L49) injeta em `getDamageAfterArmorAbsorb` no `TAIL`. Quando a vítima tem efeito Spikeskin e o causador é `LivingEntity`, tenta `attacker.hurt(indirectMagic(...), retornoPosArmadura*0.2F + amplifier + 1)`; há uma guarda para dano `INDIRECT_MAGIC` com entidade direta igual à vítima. A fórmula opera sobre o retorno do método pós-armadura, **não necessariamente o dano final em HP**, nem prova ausência de reentrada em todos os casos. **Não criar segunda reflexão via perk**. Mixin empacotado/aplicado no JAR e comportamento físico: `NOT_VERIFIED`/`NOT_TESTED`; hook externo mutador: fail-closed.
 
 **Cobertura:** ficha existente; +0 identidades, +0 certificações. A autoridade de efeito e atributo permanece no provider.
