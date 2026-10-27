@@ -216,7 +216,7 @@ This is provider equipment adaptation rather than spellcasting.
 
 # 1.3.7 Accessories delta — passive/proc equipment
 
-The 1.3.7 release adds five Accessories-integrated magical items. All five are provider-owned equipment effects and are **excluded from the semantic spell/ritual count** because they are passive state or proc behavior rather than discrete cast/action identities.
+The 1.3.7 release adds five Accessories-integrated magical items. Detailed, individually indexed source-boundary dossiers: [Seafoam Talisman](seafoam-talisman.md), [Moonward Ring](moonward-ring.md), [Witchheart Cluster](witchheart-cluster.md), [Wyrd Feather](wyrd-feather.md) and [Green Omen](green-omen.md). These five cards expand the **perk candidate index**, without adding any independent magical cast/ritual identities or certifying the assembled runtime. All five are provider-owned equipment effects and are **excluded from the semantic spell/ritual count** because they are passive state or proc behavior rather than discrete cast/action identities.
 
 ## Seafoam Talisman
 
