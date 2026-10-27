@@ -60,6 +60,55 @@ class GeneratorTests(unittest.TestCase):
         self.assertEqual([], result["problems"])
         self.assertEqual(2, result["candidate_cards"])
 
+    def test_alphabetical_semantic_closure_is_separate_from_perk_certification(self):
+        nonmagic = self.root / "✅-a-good-place"
+        nonmagic.mkdir()
+        (nonmagic / "README.md").write_text(
+            "Provider-owned spells: **0**\\n"
+            "Provider-owned rituals/rites: **0**\\n"
+            "Provider-owned equivalent discrete magical actions: **0**\\n",
+            encoding="utf8",
+        )
+        status = self.meta.parent / "ALPHABETICAL-CATALOG-STATUS.json"
+        status.write_text(json.dumps({
+            "schema_version": 1,
+            "order": "provider_directory_name_ascending",
+            "completed_prefix": [{
+                "provider": "✅-a-good-place",
+                "state": "NONMAGICAL_SCOPE_CLOSED",
+                "owned_magic_actions": 0,
+                "evidence": "✅-a-good-place/README.md",
+            }],
+            "next_provider": "✅-sample",
+        }), encoding="utf8")
+        self.render()
+        global_index = (self.root / "INDEX.md").read_text(encoding="utf8")
+        semantic_index = (nonmagic / "INDEX.md").read_text(encoding="utf8")
+        self.assertIn("Revisão alfabética do catálogo semântico", global_index)
+        self.assertIn("A Good Place — ✅ escopo semântico encerrado", global_index)
+        self.assertIn("0/2.", global_index)
+        self.assertIn("✅ escopo encerrado: 0 feitiços", semantic_index)
+        self.assertIn("⚠️ NÃO HOMOLOGADO como 100%", semantic_index)
+        self.assertIn("próximo provider a concluir", (
+            self.root / "✅-sample" / "INDEX.md").read_text(encoding="utf8"))
+        self.assertEqual([], checker.check(self.repo)["problems"])
+
+    def test_alphabetical_ledger_rejects_skipping_first_provider(self):
+        status = self.meta.parent / "ALPHABETICAL-CATALOG-STATUS.json"
+        status.write_text(json.dumps({
+            "schema_version": 1,
+            "order": "provider_directory_name_ascending",
+            "completed_prefix": [{
+                "provider": "✅-not-first",
+                "state": "NONMAGICAL_SCOPE_CLOSED",
+                "owned_magic_actions": 0,
+                "evidence": "✅-not-first/README.md",
+            }],
+            "next_provider": "✅-sample",
+        }), encoding="utf8")
+        with self.assertRaises(ValueError):
+            self.render()
+
     def test_legacy_green_name_never_certifies_mod(self):
         self.render()
         self.assertIn("0/1", (self.root / "INDEX.md").read_text(encoding="utf8"))
