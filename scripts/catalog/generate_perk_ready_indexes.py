@@ -35,11 +35,11 @@ def alphabetical_scope(mods: list[Path], cards: list[Path]) -> dict:
         raise ValueError("invalid alphabetical catalog ledger schema")
     entries = doc.get("completed_prefix")
     names = [p.name for p in mods]
-    if not isinstance(entries, list) or len(entries) >= len(names):
+    if not isinstance(entries, list) or len(entries) > len(names):
         raise ValueError("invalid completed alphabetical prefix")
     if [x.get("provider") for x in entries] != names[:len(entries)]:
         raise ValueError("alphabetical catalog entries must be a contiguous provider prefix")
-    if doc.get("next_provider") != names[len(entries)]:
+    if doc.get("next_provider") != (names[len(entries)] if len(entries) < len(names) else None):
         raise ValueError("next provider is not the next alphabetical entry")
     for item in entries:
         mod = ROOT / item["provider"]
