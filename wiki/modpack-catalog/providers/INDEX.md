@@ -3,8 +3,8 @@
 > Os prefixos ✅ antigos significam inventário histórico, não 100% técnico para perks.
 
 **Mods com escopo integral certificado: 0/164.**
-**Fichas com contrato técnico estático certificado: 138/2075.**
-**Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 6.7%`
+**Fichas com contrato técnico estático certificado: 138/2080.**
+**Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 6.6%`
 **Progresso global confirmado:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Escopo:** pastas atuais de providers; a modlist pode conter outros mods/sistemas ainda não representados. Objetos ausentes do catálogo não são presumidos inexistentes.
 
@@ -103,7 +103,7 @@
 | ⚠️ | Gtbcs Spelllib | — | 0 | [Ver fichas](✅-gtbcs-spelllib/INDEX.md) |
 | ⚠️ | Hazen N Stuff | 38 | 0 | [Ver fichas](✅-hazen-n-stuff/INDEX.md) |
 | ⚠️ | Hazentouvelib | — | 0 | [Ver fichas](✅-hazentouvelib/INDEX.md) |
-| ⚠️ | Hexalia | 38 | 0 | [Ver fichas](✅-hexalia/INDEX.md) |
+| ⚠️ | Hexalia | 43 | 0 | [Ver fichas](✅-hexalia/INDEX.md) |
 | ⚠️ | Ice And Fire Ce | 9 | 0 | [Ver fichas](✅-ice-and-fire-ce/INDEX.md) |
 | ⚠️ | Ice And Fire Dread Land | 1 | 0 | [Ver fichas](✅-ice-and-fire-dread-land/INDEX.md) |
 | ⚠️ | Ignis Soulfires | 8 | 0 | [Ver fichas](✅-ignis-soulfires/INDEX.md) |
