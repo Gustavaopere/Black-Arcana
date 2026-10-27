@@ -50,4 +50,3 @@ Não criar segunda rolagem ao observar dano, não interpretar `LIVING_HURT` como
 Testar melee/mob/projectile com e sem `directEntity`, tipos personalizados, ataques indiretos, PvP/teams e interação com Epic Fight/armaduras.
 
 A evidência é **documental estática da fonte 1.3.7**, não homologação do JAR, hit/loot confirmado, evento/mixin funcional no servidor real ou `COMPLETE_PERK_READY`. [Inventário agregado prévio](RELICS-WARDS-BINDING-AND-WEARABLES.md).
-
