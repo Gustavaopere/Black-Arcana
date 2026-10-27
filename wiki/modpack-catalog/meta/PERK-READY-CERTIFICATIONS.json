@@ -4470,6 +4470,252 @@
           "reason": "Source imutável com identidade binária SHA-exata revisado; integração mutadora NOT_VERIFIED, QA físico NOT_TESTED e limites de bytecode/config/runtime explícitos."
         }
       }
+    },
+    "✅-ars-nouveau/familiars/amethyst-golem.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Holder constructs FamiliarAmethystGolem with Bookwyrm EntityType, while getType() returns FAMILIAR_AMETHYST_GOLEM; event-derived owner knockback and gems provide Defence; no classfile proof.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/amethyst-golem.md",
+          "reason": "Source-pinned AmethystFamiliarHolder holder predicate and FamiliarAmethystGolem class/ModEntities construction define the source identity; the 109 compiled ID audit DOES NOT cover familiar entities."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/amethyst-golem.md",
+          "reason": "FamiliarAmethystGolem, FamiliarEvents and downstream server callbacks are source-audited for behavior branches, separate outcomes, cancellation, event duplication and fallback cases."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/amethyst-golem.md",
+          "reason": "Timing, effect amplifier, radius/area, item tags, discounts, EntityType, lifecycle/persistence and caps are specified where actually consumed by pinned 5.13.1 source."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/amethyst-golem.md",
+          "reason": "Entity holder conversion, real owner UUID resolution, item/player/target and server-only event predicates, AABB/nearby geometry and excluded targets are identified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/amethyst-golem.md",
+          "reason": "Item consumption, resource reserve, potion/XP/item remainders and discounts are separated from actual mana and mutating perk authority, with no assumed free spells."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Ars owns familiar summon, persistence, buffs, potion, loot, Source/mana and effect events; BA WorldEffectPolicy and RPG Skill Tree sibling progress remain separate, fail closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Explicit evidence_grade PINNED_SOURCE_WITH_RELEASE_SHA_ONLY avoids borrowing glyph/ritual SHA-exact identity proof for familiar classfiles, with gameplay QA NOT_TESTED and mutating hooks NOT_VERIFIED."
+        }
+      }
+    },
+    "✅-ars-nouveau/familiars/bookwyrm.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Server tick magnet scoped to owner-block 5 inflated AABB, ItemEntityPickupEvent.Pre and PlayerXpEvent.PickupXp, inventory remainder via PlayerMainInvWrapper; no binary method proof.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/bookwyrm.md",
+          "reason": "Source-pinned BookwyrmFamiliarHolder holder predicate and FamiliarBookwyrm class/ModEntities construction define the source identity; the 109 compiled ID audit DOES NOT cover familiar entities."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/bookwyrm.md",
+          "reason": "FamiliarBookwyrm, FamiliarEvents and downstream server callbacks are source-audited for behavior branches, separate outcomes, cancellation, event duplication and fallback cases."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/bookwyrm.md",
+          "reason": "Timing, effect amplifier, radius/area, item tags, discounts, EntityType, lifecycle/persistence and caps are specified where actually consumed by pinned 5.13.1 source."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/bookwyrm.md",
+          "reason": "Entity holder conversion, real owner UUID resolution, item/player/target and server-only event predicates, AABB/nearby geometry and excluded targets are identified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/bookwyrm.md",
+          "reason": "Item consumption, resource reserve, potion/XP/item remainders and discounts are separated from actual mana and mutating perk authority, with no assumed free spells."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Ars owns familiar summon, persistence, buffs, potion, loot, Source/mana and effect events; BA WorldEffectPolicy and RPG Skill Tree sibling progress remain separate, fail closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Explicit evidence_grade PINNED_SOURCE_WITH_RELEASE_SHA_ONLY avoids borrowing glyph/ritual SHA-exact identity proof for familiar classfiles, with gameplay QA NOT_TESTED and mutating hooks NOT_VERIFIED."
+        }
+      }
+    },
+    "✅-ars-nouveau/familiars/drygmy.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Earth damage modifier +2 via SpellModifierEvent but FamiliarEvents has duplicate subscriptions; Looting effect refresh, old LootingLevelEvent path commented out; runtime double call not proven.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/drygmy.md",
+          "reason": "Source-pinned DrygmyFamiliarHolder holder predicate and FamiliarDrygmy class/ModEntities construction define the source identity; the 109 compiled ID audit DOES NOT cover familiar entities."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/drygmy.md",
+          "reason": "FamiliarDrygmy, FamiliarEvents and downstream server callbacks are source-audited for behavior branches, separate outcomes, cancellation, event duplication and fallback cases."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/drygmy.md",
+          "reason": "Timing, effect amplifier, radius/area, item tags, discounts, EntityType, lifecycle/persistence and caps are specified where actually consumed by pinned 5.13.1 source."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/drygmy.md",
+          "reason": "Entity holder conversion, real owner UUID resolution, item/player/target and server-only event predicates, AABB/nearby geometry and excluded targets are identified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/drygmy.md",
+          "reason": "Item consumption, resource reserve, potion/XP/item remainders and discounts are separated from actual mana and mutating perk authority, with no assumed free spells."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Ars owns familiar summon, persistence, buffs, potion, loot, Source/mana and effect events; BA WorldEffectPolicy and RPG Skill Tree sibling progress remain separate, fail closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Explicit evidence_grade PINNED_SOURCE_WITH_RELEASE_SHA_ONLY avoids borrowing glyph/ritual SHA-exact identity proof for familiar classfiles, with gameplay QA NOT_TESTED and mutating hooks NOT_VERIFIED."
+        }
+      }
+    },
+    "✅-ars-nouveau/familiars/starbuncle.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Server tick Speed II owner+self, owner-only gold nugget 3600-tick scrying, source-pinned holder and persistent familiar data, no bytecode equivalence.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/starbuncle.md",
+          "reason": "Source-pinned StarbuncleFamiliarHolder holder predicate and FamiliarStarbuncle class/ModEntities construction define the source identity; the 109 compiled ID audit DOES NOT cover familiar entities."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/starbuncle.md",
+          "reason": "FamiliarStarbuncle, FamiliarEvents and downstream server callbacks are source-audited for behavior branches, separate outcomes, cancellation, event duplication and fallback cases."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/starbuncle.md",
+          "reason": "Timing, effect amplifier, radius/area, item tags, discounts, EntityType, lifecycle/persistence and caps are specified where actually consumed by pinned 5.13.1 source."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/starbuncle.md",
+          "reason": "Entity holder conversion, real owner UUID resolution, item/player/target and server-only event predicates, AABB/nearby geometry and excluded targets are identified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/starbuncle.md",
+          "reason": "Item consumption, resource reserve, potion/XP/item remainders and discounts are separated from actual mana and mutating perk authority, with no assumed free spells."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Ars owns familiar summon, persistence, buffs, potion, loot, Source/mana and effect events; BA WorldEffectPolicy and RPG Skill Tree sibling progress remain separate, fail closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Explicit evidence_grade PINNED_SOURCE_WITH_RELEASE_SHA_ONLY avoids borrowing glyph/ritual SHA-exact identity proof for familiar classfiles, with gameplay QA NOT_TESTED and mutating hooks NOT_VERIFIED."
+        }
+      }
+    },
+    "✅-ars-nouveau/familiars/whirlisprig.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Each Earth spell part reduces currentCost by truncated half castingCost; nutrition * saturation *0.8 extra via Finish event, no local clamp; registry constant SYLPH maps WHIRLISPRIG.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/whirlisprig.md",
+          "reason": "Source-pinned WhirlisprigFamiliarHolder holder predicate and FamiliarWhirlisprig class/ModEntities construction define the source identity; the 109 compiled ID audit DOES NOT cover familiar entities."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/whirlisprig.md",
+          "reason": "FamiliarWhirlisprig, FamiliarEvents and downstream server callbacks are source-audited for behavior branches, separate outcomes, cancellation, event duplication and fallback cases."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/whirlisprig.md",
+          "reason": "Timing, effect amplifier, radius/area, item tags, discounts, EntityType, lifecycle/persistence and caps are specified where actually consumed by pinned 5.13.1 source."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/whirlisprig.md",
+          "reason": "Entity holder conversion, real owner UUID resolution, item/player/target and server-only event predicates, AABB/nearby geometry and excluded targets are identified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/whirlisprig.md",
+          "reason": "Item consumption, resource reserve, potion/XP/item remainders and discounts are separated from actual mana and mutating perk authority, with no assumed free spells."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Ars owns familiar summon, persistence, buffs, potion, loot, Source/mana and effect events; BA WorldEffectPolicy and RPG Skill Tree sibling progress remain separate, fail closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Explicit evidence_grade PINNED_SOURCE_WITH_RELEASE_SHA_ONLY avoids borrowing glyph/ritual SHA-exact identity proof for familiar classfiles, with gameplay QA NOT_TESTED and mutating hooks NOT_VERIFIED."
+        }
+      }
+    },
+    "✅-ars-nouveau/familiars/wixie.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Potion recipes accepted Water/Awkward; duration+duration/5 via Added event, either owner-beneficial or owner-applier; debuff cooldown150 not serialized in subclass; any interacting player used in potion branch.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/wixie.md",
+          "reason": "Source-pinned WixieFamiliarHolder holder predicate and FamiliarWixie class/ModEntities construction define the source identity; the 109 compiled ID audit DOES NOT cover familiar entities."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/wixie.md",
+          "reason": "FamiliarWixie, FamiliarEvents and downstream server callbacks are source-audited for behavior branches, separate outcomes, cancellation, event duplication and fallback cases."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/wixie.md",
+          "reason": "Timing, effect amplifier, radius/area, item tags, discounts, EntityType, lifecycle/persistence and caps are specified where actually consumed by pinned 5.13.1 source."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/wixie.md",
+          "reason": "Entity holder conversion, real owner UUID resolution, item/player/target and server-only event predicates, AABB/nearby geometry and excluded targets are identified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/familiars/wixie.md",
+          "reason": "Item consumption, resource reserve, potion/XP/item remainders and discounts are separated from actual mana and mutating perk authority, with no assumed free spells."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Ars owns familiar summon, persistence, buffs, potion, loot, Source/mana and effect events; BA WorldEffectPolicy and RPG Skill Tree sibling progress remain separate, fail closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/FAMILIAR-STATIC-SIX-5.13.1.md",
+          "reason": "Explicit evidence_grade PINNED_SOURCE_WITH_RELEASE_SHA_ONLY avoids borrowing glyph/ritual SHA-exact identity proof for familiar classfiles, with gameplay QA NOT_TESTED and mutating hooks NOT_VERIFIED."
+        }
+      }
     }
   },
   "providers": {},

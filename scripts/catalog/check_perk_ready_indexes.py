@@ -67,11 +67,16 @@ def read_ledger(path=None):
         # are mandatory; source-only semantics are clearly scoped.
         if item.get("claim_scope") != "STATIC_TECHNICAL_CATALOG_ONLY":
             raise CatalogIndexError("certification scope must be explicit and limited: " + rel)
-        if item.get("evidence_grade") not in {
-                "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+        # Familiar source audits must not claim the glyph+ritual 109-ID
+        # binary identity proof. Physical JAR SHA is release provenance only.
+        source_grades = {
+            "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY",
+            "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+        }
+        if item.get("evidence_grade") not in source_grades | {
                 "SHA_EXACT_BINARY_BEHAVIOR"}:
             raise CatalogIndexError("unknown or missing evidence grade: " + rel)
-        if (item["evidence_grade"] == "PINNED_SOURCE_PLUS_SHA_EXACT_BINARY_IDENTITY"
+        if (item["evidence_grade"] in source_grades
                 and (not isinstance(item.get("source_revision"), str)
                      or not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@[0-9a-f]{40}",
                                          item["source_revision"]))):
