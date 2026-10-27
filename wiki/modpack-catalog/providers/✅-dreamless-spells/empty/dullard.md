@@ -70,3 +70,11 @@ Authority = `DSSEffects.DULLARD_EFFECT`. Não criar debuff paralelo de Spell Pow
 - medir Spell Power antes/depois para confirmar amplifier 1;
 - confirmar se nível 1 chega a adicionar o effect;
 - testar cast em player/mob target e party/friendly semantics do targeting base.
+
+## Atualização de ABI exata 1.1.9 — 27/10/2026
+
+A [auditoria do JAR físico dreamless_spells-1.1.9.jar](../EXACT-1.1.9-SPELL-CAST-AND-COUNTERSPELL-ABI-20261027.md) (SHA-1 `d51960bfb8af1aafa5d716ef9a48c3135f36b956`, run [#40499150605](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40499150605)) confirmou estas relações de código **sem importar corpos de método**:
+
+O classfile `DullardSpell` comprova `getDuration` e `getAmplifier`, invocados por `onCast` junto com `DSSEffects.DULLARD_EFFECT`, `TargetEntityCastData.getTarget` e `LivingEntity.addEffect`. `checkPreCastConditions` referencia `DSSEffects.EMPTIED_EFFECT`. Este probe não extraiu os operandos e a fórmula de duração/amplificação; o drift documentado permanece source-aligned e sujeito a QA.
+
+**Status:** `EXACT_BINARY_METHOD_REFERENCES` (estático) · `SOURCE_ALIGNED_NUMBERS_NOT_BINARY_PROVEN` · `physical_qa=NOT_TESTED` · `mutating_hook=NOT_VERIFIED`. Nenhum registro novo, certificação de perk, custo adicional ou segundo pipeline Black Arcana. O provider permanece autoridade do efeito, e Iron's da transação de casting.

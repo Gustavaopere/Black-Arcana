@@ -84,3 +84,9 @@ Ver `overlays/counterspell-empty-school.md`.
 - fabricar uma rota de Empty Rune sem decisão explícita de design.
 
 As divergências de 1.1.9 estão detalhadas em `TECHNICAL-AUDIT.md`.
+
+## Complemento técnico — ABI exata do JAR 1.1.9 (27/10/2026)
+
+A [nova auditoria do JAR físico](EXACT-1.1.9-SPELL-CAST-AND-COUNTERSPELL-ABI-20261027.md) confirmou as assinaturas e referências de chamadas de **quatro spells**, o cancelamento potencial do `SpellPreCastEvent` no `ServerEvents` e a **separação exata** entre `DSSSpells$Schools.EMPTY` (referenciado pelo mixin Counterspell) e `DSSSchoolRegistry.EMPTY` (registrador distinto). Evidência: [GitHub Actions #40499150605](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40499150605), SHA-1 físico `d51960bfb8af1aafa5d716ef9a48c3135f36b956`.
+
+**Limites:** o probe verifica apenas ABI/símbolos, sem reconstruir fórmula, branch executado ou teste de cast. Os números e problemas levantados no código release-aligned continuam condicionados à paridade exata ou QA. **⚠️ 0/5 fichas certificadas para perks**; nenhuma atualização de registry, contagem semântica, Java ou Stage.

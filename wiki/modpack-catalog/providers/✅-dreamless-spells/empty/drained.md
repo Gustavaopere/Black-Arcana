@@ -71,3 +71,11 @@ Authority = aplicação única de `DSSEffects.DRAINED_EFFECT` pelo `onCast`. Bla
 - friendly-fire/party filtering;
 - duração e Max Mana nos três níveis;
 - cast após perder `Emptied` durante os 30 ticks de cast.
+
+## Atualização de ABI exata 1.1.9 — 27/10/2026
+
+A [auditoria do JAR físico dreamless_spells-1.1.9.jar](../EXACT-1.1.9-SPELL-CAST-AND-COUNTERSPELL-ABI-20261027.md) (SHA-1 `d51960bfb8af1aafa5d716ef9a48c3135f36b956`, run [#40499150605](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40499150605)) confirmou estas relações de código **sem importar corpos de método**:
+
+O classfile `DrainedSpell` confirma `checkPreCastConditions` e `onCast` com referência a `DSSEffects.EMPTIED_EFFECT`. O `onCast` usa `TargetedTargetAreaCastData.getTarget`; o método compilado `lambda$onCast$0` referencia `DSSEffects.DRAINED_EFFECT` e `LivingEntity.addEffect`. O binário não certifica neste probe o raio final, o limite de cinco vítimas ou a duração descritos na fonte 1.1.9.
+
+**Status:** `EXACT_BINARY_METHOD_REFERENCES` (estático) · `SOURCE_ALIGNED_NUMBERS_NOT_BINARY_PROVEN` · `physical_qa=NOT_TESTED` · `mutating_hook=NOT_VERIFIED`. Nenhum registro novo, certificação de perk, custo adicional ou segundo pipeline Black Arcana. O provider permanece autoridade do efeito, e Iron's da transação de casting.
