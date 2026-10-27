@@ -50,4 +50,3 @@ Uma perk não deve invocar limpeza em outros efeitos arbitrários, nem creditar 
 Verificar sequências de aplicação/remoção de Darkness e Blindness, recasts no mesmo tick, conflito com magias externas, reload e multiplayer.
 
 A evidência é **documental estática da fonte 1.3.7**, não homologação do JAR, hit/loot confirmado, evento/mixin funcional no servidor real ou `COMPLETE_PERK_READY`. [Inventário agregado prévio](RELICS-WARDS-BINDING-AND-WEARABLES.md).
-
