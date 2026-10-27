@@ -57,3 +57,9 @@ Interação com stacks reconhecidos por `Whirlisprig.getColorFromStack` pode alt
 | Autoridade e vida | `FamiliarEntity` mantém owner/holder NBT e termina quando owner ausente em checagem a cada 20 ticks; `FamiliarEvents.maxManaCalc` inclui reserva base 0.15 no primeiro familiar qualificado. Ars controla mana e cost events; RPG Skill Tree/Black Arcana não podem reaplicar desconto/saturação ou consumir casting event outra vez sem adapter comprovado. `WorldEffectPolicy` cobre somente efeitos próprios BA. |
 
 **QA:** custo com addons e floor/zero, saturação real de foods modded, evento concorrente/cliente, color por não-owner, relog e parâmetros de mana; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`.
+
+## Geometria e atributos de entidade no source
+
+O `EntityType.Builder` do familiar declara `.sized(0.5f,0.5f)` (largura × altura) e `.setTrackingRange(10)`. O tracking declarado não é alcance de habilidade. [Registros e dimensões](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/setup/registry/ModEntities.java#L197-L210).
+
+`FamiliarEntity.attributes()` fornece defaults `MAX_HEALTH=100`, `MOVEMENT_SPEED=0.2` e `FOLLOW_RANGE=16`; a criação dos atributos registra essa base para os seis tipos. Velocidade efetiva e distância de ação dependem dos consumidores/IA. [Base](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/entity/familiar/FamiliarEntity.java#L206-L209) · [registro de atributos](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/setup/registry/ModEntities.java#L369-L375). O [contrato compartilhado](../FAMILIAR-STATIC-SIX-5.13.1.md) distingue esses parâmetros de raios de efeito, reserva de mana e evidência binária.

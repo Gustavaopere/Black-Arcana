@@ -42,3 +42,9 @@ O holder reconhece entidades `Starbuncle`. O Ritual of Binding converte uma enti
 | Integração/custo | `FamiliarEvents.maxManaCalc` acrescenta `manaReserveModifier=0.15` para primeiro familiar correspondente e retorna, sem soma por quantidade arbitrária. Não criar segundo Speed/Scrying ou Mastery por refresh. `WorldEffectPolicy` BA aplica-se apenas ao seu runtime; RPG Skill Tree fornece progressão por contrato real. |
 
 **QA:** interações multiplayer, gold-ore tags de outros mods, Scrying combinado, Speed sob unload/relog, contador de ticks, variação de cor, consumo de item e callbacks provider-native. `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Sem mudança de Stage.
+
+## Geometria e atributos de entidade no source
+
+O `EntityType.Builder` do familiar declara `.sized(0.5f,0.5f)` (largura × altura) e `.setTrackingRange(10)`. O tracking declarado não é alcance de habilidade. [Registros e dimensões](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/setup/registry/ModEntities.java#L197-L210).
+
+`FamiliarEntity.attributes()` fornece defaults `MAX_HEALTH=100`, `MOVEMENT_SPEED=0.2` e `FOLLOW_RANGE=16`; a criação dos atributos registra essa base para os seis tipos. Velocidade efetiva e distância de ação dependem dos consumidores/IA. [Base](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/common/entity/familiar/FamiliarEntity.java#L206-L209) · [registro de atributos](https://github.com/baileyholl/Ars-Nouveau/blob/112920ff774831f204031da75b4c4e73d3765157/src/main/java/com/hollingsworth/arsnouveau/setup/registry/ModEntities.java#L369-L375). O [contrato compartilhado](../FAMILIAR-STATIC-SIX-5.13.1.md) distingue esses parâmetros de raios de efeito, reserva de mana e evidência binária.
