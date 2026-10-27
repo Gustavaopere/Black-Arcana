@@ -4880,6 +4880,785 @@
           "reason": "Source-only release evidence grade explicitly lacks familiar/perk classfile proof, mutation hook NOT_VERIFIED and physical QA NOT_TESTED, with prescribed engine/pack tests."
         }
       }
+    },
+    "✅-ars-nouveau/perks/depths.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Depths usa o maior slot equipado para RNG de ar; Swim Speed+2 ADD_VALUE é gerado separadamente por slot local≥3. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/depths.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_depths e classe DepthsPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/depths.md",
+          "reason": "Depths usa o maior slot equipado para RNG de ar; Swim Speed+2 ADD_VALUE é gerado separadamente por slot local≥3. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/depths.md",
+          "reason": "m=maxslot; preservação de ar se m≥3 ou r≤0,33m; modifier Swim Speed2,0 ADD_VALUE com IDthread_depths e grupo do armor apenas local≥3. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/depths.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/depths.md",
+          "reason": "`ars_nouveau:blank_thread` como reagent; pedestais: `#minecraft:fishes`×3, `ars_nouveau:water_essence`×2, `minecraft:pufferfish`×1. Resultado 1 `thread_depths`, `sourceCost=0`, `keepNbtOfReagent=false`. Thread passivo; instalação consome uma unidade, sem mana/Source contínuo ou XP de glyph próprios verificados. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/depths.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/depths.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/feather.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Feather adiciona0,2×slot ao atributo FEATHER; o dano FALL recebido usa valor efetivo e DamageContainer, com clamp final em zero. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/feather.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_feather e classe FeatherPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/feather.md",
+          "reason": "Feather adiciona0,2×slot ao atributo FEATHER; o dano FALL recebido usa valor efetivo e DamageContainer, com clamp final em zero. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/feather.md",
+          "reason": "Modifier ADD_VALUE IDthread_feather, amount0,2s; atributo default0/range0..1; para DamageTypes.FALL, A←A−A*F e finalmax(0,A). Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/feather.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/feather.md",
+          "reason": "`ars_nouveau:blank_thread` como reagent; `#c:feathers`×4 e `ars_nouveau:abjuration_essence`×2 nos pedestais. Resultado 1 `thread_feather`, `sourceCost=0`, `keepNbtOfReagent=false`. Thread passivo; instalação consome uma unidade, sem mana/Source contínuo ou XP de glyph próprios verificados. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/feather.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/feather.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/heights.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Heights usa maxslot em dois caminhos: +0,1m no jump boost power e−10m na distância de LivingFallEvent, sem clamp Heights local. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/heights.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_heights e classe JumpHeightPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/heights.md",
+          "reason": "Heights usa maxslot em dois caminhos: +0,1m no jump boost power e−10m na distância de LivingFallEvent, sem clamp Heights local. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/heights.md",
+          "reason": "m=maxslot equipado; jumpRETURN+0,1f*m; LivingFallEvent.distance−m/0,1; altura física final não é uma dessas escalas diretas. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/heights.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/heights.md",
+          "reason": "`ars_nouveau:blank_thread` como reagent; `minecraft:spider_eye`×1, `minecraft:rabbit_hide`×3 e `ars_nouveau:air_essence`×2. Resultado 1 `thread_heights`, `sourceCost=0`, `keepNbtOfReagent=false`. Thread passivo; instalação consome uma unidade, sem mana/Source contínuo ou XP de glyph próprios verificados. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/heights.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/heights.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/high-step.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "High Step fornece STEP_HEIGHT+slotValue por ADD_VALUE e ResourceLocationthread_high_step; UUID legado declarado não é usado pelo override. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/high-step.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_high_step e classe StepHeightPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/high-step.md",
+          "reason": "High Step fornece STEP_HEIGHT+slotValue por ADD_VALUE e ResourceLocationthread_high_step; UUID legado declarado não é usado pelo override. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/high-step.md",
+          "reason": "amount s=slot.value, ADD_VALUE, IDars_nouveau:thread_high_step e EquipmentSlotGroup do armor; valor final e colisão dependem do atributo/engine vanilla. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/high-step.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/high-step.md",
+          "reason": "`ars_nouveau:blank_thread` como reagent e `ars_nouveau:air_essence`×3 nos pedestais. Resultado 1 `thread_high_step`, `sourceCost=0`, `keepNbtOfReagent=false`. Thread passivo; instalação consome uma unidade, sem mana/Source contínuo ou XP de glyph próprios verificados. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/high-step.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/high-step.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/chilling.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Por instância equipada, Pre de IDamageEffect em LivingEntity não-self elegível: frozen+1 e Freezing200*s ticks/amplifier1ou2; consumidor de tick e ColdSnap separados. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/chilling.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_chilling e classe ChillingPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/chilling.md",
+          "reason": "Por instância equipada, Pre de IDamageEffect em LivingEntity não-self elegível: frozen+1 e Freezing200*s ticks/amplifier1ou2; consumidor de tick e ColdSnap separados. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/chilling.md",
+          "reason": "s=slot da instância, duração200*s ticks, amplifier s>=3?2:1; Freezing tick min(required+3,current+3+amp), sem raio/dano próprios. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/chilling.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/chilling.md",
+          "reason": "MínimoONE; BlankThread+BlueIce+2WaterEssence+PowderSnowBucket, sourceCost0; instalação split1, sem mana/cooldown autônomos. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/chilling.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/chilling.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/kindling.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Pre de IDamageEffect define remainingFireTicks=100*s por instância elegível; setter pode encurtar fogo e não confirma hit ou dano periódico. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/kindling.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_kindling e classe IgnitePerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/kindling.md",
+          "reason": "Pre de IDamageEffect define remainingFireTicks=100*s por instância elegível; setter pode encurtar fogo e não confirma hit ou dano periódico. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/kindling.md",
+          "reason": "Slot s nativo1/2/3 produz100/200/300ticks; sem leitura do tempo anterior ou agregação max/sum no callback. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/kindling.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/kindling.md",
+          "reason": "MínimoONE; BlankThread+MagmaCream+FireEssence+FireCharge, sourceCost0, instalação split1; sem cast/mana próprio. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/kindling.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/kindling.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/immolation.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Cast troca fogo por Immolate100ticks/amplifiermaxSlot−1; consumidor IS_FIRE em SpellDamageEvent.Pre soma2*maxSlot; duração de fire spell não comprovada. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/immolation.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_immolation e classe ImmolatePerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/immolation.md",
+          "reason": "Cast troca fogo por Immolate100ticks/amplifiermaxSlot−1; consumidor IS_FIRE em SpellDamageEvent.Pre soma2*maxSlot; duração de fire spell não comprovada. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/immolation.md",
+          "reason": "L=max slot via countForPerk; buff100ticks, amplifierL−1; dano adicional2*(amp+1), sem consumo de durationMultiplier. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/immolation.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/immolation.md",
+          "reason": "MínimoONE; BlankThread+3FireEssence, sourceCost0; sem mana/cooldown próprio, evento antecede resultado/pagamento da Form. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/immolation.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/immolation.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/starbuncle.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "MOVEMENT_SPEED recebe amount0.2*slot e ADD_MULTIPLIED_TOTAL por retorno da API de atributo; ResourceLocation é id efetivo, UUID declarado não consumido. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/starbuncle.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_starbuncle e classe StarbunclePerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/starbuncle.md",
+          "reason": "MOVEMENT_SPEED recebe amount0.2*slot e ADD_MULTIPLIED_TOTAL por retorno da API de atributo; ResourceLocation é id efetivo, UUID declarado não consumido. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/starbuncle.md",
+          "reason": "Slots1/2/3 geram amount.2/.4/.6; operação multiplicativa total, slotgroup do caller; velocidade final/caps vanilla não inferidos. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/starbuncle.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/starbuncle.md",
+          "reason": "MínimoONE; BlankThread+3StarbuncleShards+3Sugar+2ManipulationEssence, sourceCost0; passiva sem mana/XP/cooldown autônomos. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/starbuncle.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/starbuncle.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/amethyst-golem.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Modificador aditivo de resistência a knockback por instância e slot; o helper Knockback multiplica a força por1−R, sem veto universal a movimento. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/amethyst-golem.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_amethyst_golem e classe KnockbackResistPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/amethyst-golem.md",
+          "reason": "Modificador aditivo de resistência a knockback por instância e slot; o helper Knockback multiplica a força por1−R, sem veto universal a movimento. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/amethyst-golem.md",
+          "reason": "S1/2/3 fornece0,15/0,30/0,45 de resistência; ID de modificador thread_amethyst_golem; gerado por instância, não pelo maior slot da armadura inteira. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/amethyst-golem.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/amethyst-golem.md",
+          "reason": "Blank Thread como reagent + **3 itens da tag `c:obsidians`**; Enchanting Apparatus sourceCost0, saída1; passivo sem custo próprio de cast ou XP de glyph; slot mínimo1 e instalação consome1 Thread. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/amethyst-golem.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/amethyst-golem.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/magic-capacity.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Multiplicador de capacidade sobre MAX_MANA por instância; ManaUtil injeta base aditiva, lê atributo, trunca e aplica evento/reserva antes do máximo utilizável. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/magic-capacity.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_magic_capacity e classe MagicCapacityPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/magic-capacity.md",
+          "reason": "Multiplicador de capacidade sobre MAX_MANA por instância; ManaUtil injeta base aditiva, lê atributo, trunca e aplica evento/reserva antes do máximo utilizável. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/magic-capacity.md",
+          "reason": "S1/2/3 fornece fator nominal1,1/1,2/1,3 a um atributo MAX_MANA com default0 e range0..10000; base configurável é somada via max_mana_mod antes da leitura. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/magic-capacity.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/magic-capacity.md",
+          "reason": "Blank Thread como reagent + **3 `ars_nouveau:sourceberry_bush` +3 `ars_nouveau:magebloom`**; Enchanting Apparatus sourceCost0, saída1; passivo sem custo próprio de cast ou XP de glyph; slot mínimo1 e instalação consome1 Thread. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/magic-capacity.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/magic-capacity.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/spell-power.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Bônus aditivo2×slot no atributo de dano Ars; helper nominal soma stats e atributo antes de Randomize/evento, enquanto Bubble e espada são consumidores/contribuintes distintos. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/spell-power.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_spellpower e classe SpellDamagePerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/spell-power.md",
+          "reason": "Bônus aditivo2×slot no atributo de dano Ars; helper nominal soma stats e atributo antes de Randomize/evento, enquanto Bubble e espada são consumidores/contribuintes distintos. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/spell-power.md",
+          "reason": "S1/2/3 gera+2/+4/+6 nominais por modificador; atributo default0 e range0..10000, ID thread_spellpower, não percentual universal nem escala de geometry. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/spell-power.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/spell-power.md",
+          "reason": "Blank Thread como reagent + **Fire Essence, Magebloom, Manipulation Essence, Water Essence, Abjuration Essence, Air Essence, Earth Essence e Conjuration Essence** (um de cada); Enchanting Apparatus sourceCost0, saída1; passivo sem custo próprio de cast ou XP de glyph; slot mínimo1 e instalação consome1 Thread. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/spell-power.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/spell-power.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/warding.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Mitigação plana2×slot via atributo WARDING; listener reduz currentDamage somente se source tem tag IS_MAGIC e clampa resultado após buffs/Defence. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/warding.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_warding e classe MagicResistPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/warding.md",
+          "reason": "Mitigação plana2×slot via atributo WARDING; listener reduz currentDamage somente se source tem tag IS_MAGIC e clampa resultado após buffs/Defence. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/warding.md",
+          "reason": "S1/2/3 fornece+2/+4/+6 deWARDING por modificador; default0/range0..1024; LivingDamageEvent.Pre usa tag NeoForge IS_MAGIC eMath.max0, não teste sódeDamageTypes.MAGIC. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/warding.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/warding.md",
+          "reason": "Blank Thread como reagent + **8 `ars_nouveau:magebloom_fiber`**; Enchanting Apparatus sourceCost0, saída1; passivo sem custo próprio de cast ou XP de glyph; slot mínimo1 e instalação consome1 Thread. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/warding.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/warding.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/blank-thread.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Entrada vazia registrada e reagent de Threads; sem modificador próprio, estado de carga ou callback de efeito. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/blank-thread.md",
+          "reason": "Registro source-pinned ars_nouveau:blank_thread e classe EmptyPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/blank-thread.md",
+          "reason": "Entrada vazia registrada e reagent de Threads; sem modificador próprio, estado de carga ou callback de efeito. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/blank-thread.md",
+          "reason": "minimumSlot ONE=1 herdado; applyAttributeModifiers default retorna objeto original; AlterationTile aceita PerkItem sem veto específico ao EmptyPerk, respeitando slots. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/blank-thread.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/blank-thread.md",
+          "reason": "Crafting shaped xxx/yyy/xxx,6magebloom_fiber+3c:nuggets/gold,resultado1; sem custo Source/player mana ou XP de glyph próprio. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/blank-thread.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/blank-thread.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/drygmy.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Modificador ADD_VALUE slotValue em DRYGMY; dois mixins de loot usam max(spellLuck,nível original)+(int)atributo. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/drygmy.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_drygmy e classe LootingPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/drygmy.md",
+          "reason": "Modificador ADD_VALUE slotValue em DRYGMY; dois mixins de loot usam max(spellLuck,nível original)+(int)atributo. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/drygmy.md",
+          "reason": "DRYGMY base0 range0..1024 syncable; modifierIDthread_drygmy; soma slotValue no item e truncamento no consumidor; sem LootingLevelEvent ativo neste Thread. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/drygmy.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/drygmy.md",
+          "reason": "EnchantingApparatus: BlankThread+3DrygmyShard+2EarthEssence+RabbitFoot,sourceCost0,keepNbtOfReagentfalse; sem débito próprio por drop. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/drygmy.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/drygmy.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/whirlisprig.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Modifier ADD_MULTIPLIED_TOTAL m(1)=.3,m(2)=.6,m(outros exceto0)=1; Finish servidor multiplica saturação inteira atual pelo atributo. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/whirlisprig.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_whirlisprig e classe SaturationPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/whirlisprig.md",
+          "reason": "Modifier ADD_MULTIPLIED_TOTAL m(1)=.3,m(2)=.6,m(outros exceto0)=1; Finish servidor multiplica saturação inteira atual pelo atributo. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/whirlisprig.md",
+          "reason": "WHIRLIESPRIG base1 range0..10000 syncable; m(0)=0; singlemodifier slots1/2/3 resulta1.3/1.6/2.0; sem clamp local na atribuição FoodData.saturationLevel. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/whirlisprig.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/whirlisprig.md",
+          "reason": "EnchantingApparatus: BlankThread+3WhirlisprigShards+2EarthEssence+GoldenApple,sourceCost0,keepNbtfalse; sem taxa por refeição no callback. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/whirlisprig.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/whirlisprig.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/perks/wixie.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "ADD_MULTIPLIED_BASE .15*slot em WIXIE; MobEffectEvent.Added servidor usa alvo em beneficial ou livingapplier em nonbeneficial e muta duration int. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/wixie.md",
+          "reason": "Registro source-pinned ars_nouveau:thread_wixie e classe PotionDurationPerk; A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/wixie.md",
+          "reason": "ADD_MULTIPLIED_BASE .15*slot em WIXIE; MobEffectEvent.Added servidor usa alvo em beneficial ou livingapplier em nonbeneficial e muta duration int. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/wixie.md",
+          "reason": "WIXIE base1 range0..1024 syncable; duration=(int)(duration*bonus) só bonus>0; target/applier ausente deatributo->0skip; sem clamp/specialcase infinito local. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/wixie.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/wixie.md",
+          "reason": "EnchantingApparatus: BlankThread+3WixieShards+2AbjurationEssence+2#c:crops/nether_wart+BlazeRod,sourceCost0,keepNbtfalse; sem taxa própria por efeito. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/wixie.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/perks/wixie.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/systems/perk-slot-providers.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Doze topologias de armor; slots ordenados decrescentemente e pareados por índice; instalação, atributos e tags têm consumidores próprios. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/perk-slot-providers.md",
+          "reason": "Sistema agregado PerkRegistry/IPerkHolder/ArmorPerkHolder; componente ars_nouveau:armor_perks, sem glyph ou registry ID único de sistema. A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/perk-slot-providers.md",
+          "reason": "Doze topologias de armor; slots ordenados decrescentemente e pareados por índice; instalação, atributos e tags têm consumidores próprios. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/perk-slot-providers.md",
+          "reason": "Valores1/2/3, tiers0/1/2; até3slots declarados; MAX_MANA+30*(tier+1),regen+(tier+1), minslotvalidado na instalação e não no pareamento. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/perk-slot-providers.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/perk-slot-providers.md",
+          "reason": "Instalação split1Thread; upgradesdeclaram2500/5000Source com ingredientes; sem custo de mana/XP de glyph autônomo. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/perk-slot-providers.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/perk-slot-providers.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/systems/player-mana.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Mana persistente com caches glyphBonus/bookTier, modificadores transitórios, eventos, reserva e fases distintas de admissão/pagamento. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/player-mana.md",
+          "reason": "Sistema agregado capability ars_nouveau:mana e attachment ars_nouveau:mana_cap; nenhum spell/registry ID único. A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/player-mana.md",
+          "reason": "Mana persistente com caches glyphBonus/bookTier, modificadores transitórios, eventos, reserva e fases distintas de admissão/pagamento. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/player-mana.md",
+          "reason": "Defaults100+15g+50t; regen5+.33g+t,intervalo5; atributo e eventos separados; reserva literalMth.clamp(0,newReserve,1),max settersemreclamp. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/player-mana.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/player-mana.md",
+          "reason": "Custo composto/descontos calculados emPre paraadmissão ePost parapagamento; débito só SUCCESS, turretbypass; sem preço autônomo do sistema. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/player-mana.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/player-mana.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
+    },
+    "✅-ars-nouveau/systems/spellbooks-glyph-learning.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "PINNED_SOURCE_WITH_RELEASE_SHA_ONLY",
+      "version": "5.13.1",
+      "artifact_sha1": "02782d071ee5fab3b5c4b8ced67b7e1748277dfd",
+      "source_revision": "baileyholl/Ars-Nouveau@112920ff774831f204031da75b4c4e73d3765157",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Livros, set conhecido, starters, tierconfigurado e caches de mana separados; learningservidor, receita/XP e validatorsGUI não são umgate universal. Catálogo técnico estático por source; SHA do JAR é proveniência, não prova binária de Thread/sistema nem integração executável.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/spellbooks-glyph-learning.md",
+          "reason": "Sistema agregado SpellBook/Glyph/GlyphRegistry/ANPlayerData/ScribesTile; quatroIDs reais de itens, sem spell/registry ID único do sistema. A identidade é de fonte; SHA do release é proveniência e não prova de classfile/registry carregado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/spellbooks-glyph-learning.md",
+          "reason": "Livros, set conhecido, starters, tierconfigurado e caches de mana separados; learningservidor, receita/XP e validatorsGUI não são umgate universal. O fluxo e os consumidores nativos são documentados no source imutável."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/spellbooks-glyph-learning.md",
+          "reason": "Tiers1/2/3/99;10spells armazenadas; XP27/55/160pordefaulttier;mesa5/20worldticks e120craftticksprocessados;gatesdeGUI/packet/cast distintos. Defaults/config, atributos, valores efetivamente consumidos e limites de evidência são separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/spellbooks-glyph-learning.md",
+          "reason": "A ficha distingue receptor, caster/proprietário, equipamento, jogador/entidade/mundo e eixos não aplicáveis; não inventa alcance, projétil ou target de cast para um componente passivo ou sistema."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/spellbooks-glyph-learning.md",
+          "reason": "UseGlyphconsome1item seunlock e nãoinfinite;Scribes cobra pontosXP/ingredientes e podeemitirrefundorbs;bookrecipesdatagen semmanafixaadicional. Recursos, aquisição, instalação e pagamentos provider-native são separados de XP/Mastery e de custos de outro runtime."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/spellbooks-glyph-learning.md",
+          "reason": "APIs, atributos, callbacks e persistência provider-native são descritos com seus consumidores; inscrição, autoridade, caps, custos e deduplicação de bridge RPG/Black Arcana permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-ars-nouveau/systems/spellbooks-glyph-learning.md",
+          "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
+        }
+      }
     }
   },
   "providers": {},

@@ -103,7 +103,7 @@ class FourArmorPerksTest(unittest.TestCase):
             self.assertIn(term,dossier)
         n=sum(k.startswith("✅-ars-nouveau/perks/") for k in self.objects)
         a=sum(k.startswith("✅-ars-nouveau/") for k in self.objects)
-        self.assertEqual(n,4)
+        self.assertEqual(n,20)
         self.assertIn(f"{n}/20.",self.perks)
         self.assertIn(f"{a}/138.",self.ars)
         self.assertIn(f"{len(self.objects)}/2075.",self.global_index)
