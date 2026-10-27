@@ -1,0 +1,34 @@
+name: Ars Nouveau 5.13.1 system source audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "wiki/modpack-catalog/providers/**/systems/**"
+      - "wiki/modpack-catalog/providers/**/SYSTEM-STATIC-SOURCE-THREE-5.13.1.md"
+      - "scripts/catalog/check_ars_systems_source_test.py"
+      - ".github/workflows/ars-5131-system-docs.yml"
+  push:
+    branches: [main]
+    paths:
+      - "wiki/modpack-catalog/providers/**/systems/**"
+      - "wiki/modpack-catalog/providers/**/SYSTEM-STATIC-SOURCE-THREE-5.13.1.md"
+      - "scripts/catalog/check_ars_systems_source_test.py"
+      - ".github/workflows/ars-5131-system-docs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source_audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit three exact-release source-based system dossiers
+        run: python3 scripts/catalog/check_ars_systems_source_test.py -v
+      - name: Guard provider index certificates and false-green claims
+        run: python3 scripts/catalog/check_perk_ready_indexes.py
+      - name: Reproduce read-only provider indexes
+        run: python3 scripts/catalog/generate_perk_ready_indexes.py --check
