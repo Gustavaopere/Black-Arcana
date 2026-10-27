@@ -50,4 +50,3 @@ Ajustar `airSupply` de outro mod ou duplicar o loop por perks pode causar satura
 Testar água/bubble, ar zerado, equip/desquip, dimensões, cliente-servidor, ticks globais 200 e coexistência com efeitos respiratórios.
 
 A evidência é **documental estática da fonte 1.3.7**, não homologação do JAR, hit/loot confirmado, evento/mixin funcional no servidor real ou `COMPLETE_PERK_READY`. [Inventário agregado prévio](RELICS-WARDS-BINDING-AND-WEARABLES.md).
-
