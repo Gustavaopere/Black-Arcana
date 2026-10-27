@@ -11,6 +11,8 @@ import json
 import unittest
 from pathlib import Path
 
+from check_perk_ready_indexes import inventory as catalog_inventory
+
 REPO = Path(__file__).resolve().parents[2]
 ARS = REPO / "wiki/modpack-catalog/providers/✅-ars-nouveau"
 MANIFEST = REPO / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json"
@@ -117,6 +119,7 @@ class StaticContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.cert = json.loads(MANIFEST.read_text(encoding="utf-8"))["objects"]
+        cls.candidate_count = len(catalog_inventory()[2])
         cls.index = (ARS / "glyphs/effects/INDEX.md").read_text(encoding="utf-8")
         cls.root_index = (REPO / "wiki/modpack-catalog/providers/INDEX.md").read_text(
             encoding="utf-8"
@@ -183,7 +186,7 @@ class StaticContractTests(unittest.TestCase):
         # Other Ars families can gain independent certifications without
         # changing the number of Effect cards reviewed by this test suite.
         self.assertIn(
-            f"Fichas com contrato técnico estático certificado: {len(self.cert)}/2075.",
+            f"Fichas com contrato técnico estático certificado: {len(self.cert)}/{self.candidate_count}.",
             self.root_index,
         )
         self.assertIn("Mods com escopo integral certificado: 0/164.", self.root_index)
@@ -383,7 +386,7 @@ class StaticContractTests(unittest.TestCase):
         self.assertIn(
             f"{ars_count}/138.",
             (ARS / "INDEX.md").read_text(encoding="utf8"))
-        self.assertIn(f"{len(self.cert)}/2075.", self.root_index)
+        self.assertIn(f"{len(self.cert)}/{self.candidate_count}.", self.root_index)
 
 
     def test_exchange_teleport_pair_is_independent_and_block_settlement_unchecked(self):
@@ -469,7 +472,7 @@ class StaticContractTests(unittest.TestCase):
             encoding="utf8"))
         self.assertIn(f"{ars_done}/138.", (ARS / "INDEX.md").read_text(
             encoding="utf8"))
-        self.assertIn(f"{len(self.cert)}/2075.", self.root_index)
+        self.assertIn(f"{len(self.cert)}/{self.candidate_count}.", self.root_index)
         self.assertIn("0/164.", self.root_index)
         for slug in ("exchange", "crush", "smelt", "craft"):
             name = slug.replace("-", " ").title()
@@ -566,7 +569,7 @@ class StaticContractTests(unittest.TestCase):
             encoding="utf8"))
         self.assertIn(f"{ars_done}/138.", (ARS / "INDEX.md").read_text(
             encoding="utf8"))
-        self.assertIn(f"{len(self.cert)}/2075.", self.root_index)
+        self.assertIn(f"{len(self.cert)}/{self.candidate_count}.", self.root_index)
         self.assertIn("0/164.", self.root_index)
 
 
