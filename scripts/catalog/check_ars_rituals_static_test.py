@@ -10,6 +10,8 @@ import json
 import unittest
 from pathlib import Path
 
+from check_perk_ready_indexes import inventory as catalog_inventory
+
 ROOT = Path(__file__).resolve().parents[2]
 PROVIDER = ROOT / "wiki/modpack-catalog/providers/✅-ars-nouveau"
 MANIFEST = ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json"
@@ -144,7 +146,7 @@ class ArsRitualStaticTests(unittest.TestCase):
         self.assertGreaterEqual(ars_count, 77)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ritual_count}/24.", self.index)
         self.assertIn(f"Homologadas para perks (somente fichas detectadas): {ars_count}/138.", self.ars)
-        self.assertIn(f"Fichas com contrato técnico estático certificado: {len(objs)}/2075.", self.top)
+        self.assertIn(f"Fichas com contrato técnico estático certificado: {len(objs)}/{len(catalog_inventory()[2])}.", self.top)
         self.assertIn(f"Mods com escopo integral certificado: {len(self.json['providers'])}/164.", self.top)
         for slug in CASES:
             label = slug.replace("-", " ").title()
