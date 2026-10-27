@@ -1,30 +1,94 @@
 # Punishing Heaven
 
-**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:punishing_heaven` / `net.warphan.iss_magicfromtheeast.spells.symmetry.PunishingHeavenSpell`, school default `MFTESchoolRegistries.SYMMETRY_RESOURCE` ([prova Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162); [dossiê](../EXACT-BINARY-SPELLS-1.1.5.md)). Os números e comportamentos descritos abaixo continuam derivados da fonte pinada, não aprovados em runtime físico/Survival. **+0 identidade adicional**.
+**Dossiê documental — 27/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT` somente para registry; lógica `RELEASE_BOUNDED_SOURCE`; integração `CONTRATO_CONDICIONAL`; QA físico `PENDING`; sem certificação estática. **+0 identidades/+0 strict**: criaturas, ataques e efeitos são filhos desta spell.
 
-- **ID:** `iss_magicfromtheeast:punishing_heaven`
-- **School:** Symmetry
-- **Levels:** 1–4
-- **Min rarity:** Epic
-- **Cast:** Long, 30 ticks
-- **Mana neutral:** 250–550
-- **Cooldown:** 320 s
-- **Summon duration:** 3 minutes
-- **Recast count:** 2
-- **Jade Executioner damage:** 12 / 16 / 20 / 24
-- **HP:** 300 / 350 / 400 / 450
-- **Armor:** 12
+## Identidade, proveniência e aquisição
 
-## Contract
+ISS: Magic From The East **1.1.5**, ID **`iss_magicfromtheeast:punishing_heaven`**, escola própria `iss_magicfromtheeast:symmetry`; declarante `net.warphan.iss_magicfromtheeast.spells.symmetry.PunishingHeavenSpell`. [Registry][registry], [classe/defaults][spell].
 
-Spawns one `JadeExecutionerEntity` at target block within 8, posts `SpellSummonEvent`, then initializes it with `SummonManager` for 3 minutes.
+JAR físico histórico #346 `iss_magicfromtheeast-1.1.5.jar`, MC 1.21.1/NeoForge, publisher [CF 7385201](https://www.curseforge.com/minecraft/mc-mods/magic-from-the-east/files/7385201), **1680780 bytes**, SHA-1 `e3552ea6b7b32b843c48bf0d857237d4b7129ab0`; [identidade binária estática](../EXACT-BINARY-SPELLS-1.1.5.md). Fonte oficial **`WarPhan78/ISS_MagicFromTheEast-1.21.x@f2a095cbbc89f8d8428dca758140663adf54ae88`**, candidata limitada à release: commit 27/12/2025 16:35:34 UTC, antes da [publicação oficial](https://www.curseforge.com/api/v1/mods/1224162/files/7385201) às 17:17:39.317 UTC. Não é prova de correspondência integral source↔JAR. O pin 13208302 é posterior e diverge; 904 é anterior a mudanças presentes no publisher. Source f2 compila com Iron’s 3.14.8/Neo 21.1.187/Gecko 4.7.5.1/Curios 9.2.2; pack tem Iron’s 3.16.3/Neo 21.1.250. Host source consultado `e4056af90302d37eb1739f5ff05020b020e6e252`. [Versões][versions], [limites comuns](../SPELL-PERK-BOUNDARIES-1.1.5.md). All Rights Reserved: fatos, paráfrases e permalinks, sem importar código/assets.
 
-The displayed summon stats are explicit level formulas and do not depend on the caster's Symmetry power in the audited methods, despite the spell also declaring its own spell-power fields.
+[Guia oficial][guide], parafraseado: invoca um Jade Executioner, guerreiro de grande porte com ataques de machado, escudo e mordida. Sem override local de loot/crafting/learning nos métodos desta spell; ingresso e elegibilidade seguem [host/config][acquisition]. Rota Survival concreta, scroll instalado, config implantada e gates efetivos **NÃO VERIFICADOS**. Raridade/maxLevel abaixo são defaults, não prova de obtenção.
 
-## Dedup
+## Parâmetros e pipeline causal
 
-This is a long-duration elite Symmetry summon, distinct from Jiangshi's three-unit squad. Black Arcana must preserve SpellSummonEvent replacement and SummonManager ownership.
+Helpers usam L/perLevel 5 e ignoram summoner/getSpellPower: **A=8+4 L HP**, **H=250+50 L HP**, **armor=6+2 L**. Níveis default 1–4: A 12–24, H 300–450, armor 8–14. BasePower 0/perLevel 5 declarados não fazem esses helpers consumirem SPELL_POWER/Symmetry power/POWER_MULTIPLIER. A é ATTACK_DAMAGE inicial, não dano final de todos os golpes. [Helpers][stats], [defaults][spell], [host][power-cost].
 
-## Source
+| Eixo | Default / consumer / unidade |
+|---|---|
+| Mana / cast / cooldown |`int((250+100(L−1))×MANA_MULTIPLIER)`, 250–550 neutra; LONG 30 ticks=1.5 s base; 320 s=6400 ticks; Epic, maxLevel 4. [Spell][spell], [host][power-cost]. |
+| Count / placement / duração |1 candidato, targetBlock Fluid.ANY/range 12 blocks; 3600 ticks=180 s=3 min solicitados; 2 casts totais. [Cast][spawn], [recast][recast-local]. |
+| Corpo / range / AI |Tipo 2.5 × 5.5 blocks, tracking 64; interactionRange 3.5, movementSpeed 0.25, followRange 24; followowner speed 1/start 16/stop 8/teleport 35, patrol 48. Range melee=interactionRange×scale, distinto do corpo/VFX/placement. [Tipo][entity-type], [mob][mob], [range][melee-range]. |
 
-`PunishingHeavenSpell.java`.
+1. Host admite/anuncia/debita antes do efeito; nível mutado em SpellOnCastEvent não recompõe admissão/custo construídos. Sem recast, cria JadeExecutioner(owner, showdown=true), define A/armor/H e HP cheio, posiciona no targetBlock e anuncia SpellSummonEvent. Spawn/initSummon usam resultado, sem condicionar ao boolean de inserção. Sem cap global/rollback/validação local de espaço livre ou claims. [Cast][spawn], [host][cast-host].
+2. Goals reagem a HurtByTarget/owner attacks/copiam target; follow/patrol/navegação mantêm comportamento provider-native. Melee normal por doHurtTarget usa Utils.doMeleeAttack e fonte Symmetry direta=Executioner/causadora=owner, com enchantments e helper. Áreas do goal usam getDamageSource(mob) de 1 arg, direta/causadora=Executioner; atribuição difere do ataque comum. Incoming host identifica IMagicSummon em ambos e procura owner para SUMMON_DAMAGE. [Entidade][mob], [hit][mob-hit], [goal][attack-goal], [melee][melee-host], [incoming][summon-damage].
+3. Goal no hitframe calcula start=eye−Y 3+forward× 1.5 e r 0.8. Um gate externo exige target primário dentro de meleeRange e LOS. **Chop:** 3 caixas completas 0.8 × 2.4 × 0.8, centros start+forward×i, i 0–2; dano 1.5 A por tentativa. **Left sweep:** uma 2.8 × 2.4 × 2.8 em start+forward× 0.5, danoA. **Right sweep:** mesmas dimensões em posição+Y 0.5+forward× 2, danoA. **Bash:** uma 1.6 × 2.4 × 1.6 em start+forward× 0.5, danoA/2. São AABBs, sem cone/círculo ou área igual ao modelo. Sem cap/ledger local por vítima; chop pode repetir tentativas em caixas sobrepostas. [Goal][attack-goal].
+4. Chop/left/bash exigem alive/pickable/LOS por entidade; **right sweep não repete esses filtros internos**, embora mantenha gate externo do target e helper de dano. Helper Living+SpellDamageSource aplica evento/resistência/friendly/hurt; não atribuir à direita o mesmo filtro geométrico dos outros golpes. Bash chama knockback 2 no **target primário**, enquanto hurtMarked é marcado na entidade iterada; não prometer knockback de todas as vítimas ou vínculo com hurt=true. [Goal][attack-goal], [helper][damage-host].
+5. **Bite** chama doHurtTarget no target; somente flag=true cura o próprio Executioner por 0.75 A HP, usando atributo, sem percentual do dano final e sem cura do caster. Combo pode ser enfileirado com probabilidade 0.75 ou target blocking nos ramos condicionados. Timings declarados: axeDown 25/hit 15, left 20/hit 10, right 25/hit 13, bash 20/hit 8, bite 15/hit 10; cooldown/AI/combo não equivalem a DPS fixo. [Goal][attack-goal], [animações][animations].
+6. Showdown inicia 40 e predecrementa até <0; o consumer local bloqueia movimento e hurt não-bypass durante showdown/shouldIgnoreDamage. Nesse estado, o ramo servidor testa `tickCount == 10` e chama **damageOnLandingImpact**: consulta AABB da criatura inflada (4.5, 4, 4.5), exclui friendly fire, exige LOS, alvo Living e distância 3D estrita <4.5 blocks; pede **Hmax/10 HP** via helper, fonte direta=Executioner/causadora=owner. É outro consumidor de MAX_HEALTH, distinto de A e da retaliação ao Counterspell; não há cap de alvos/ledger próprio nesse método. O tick local só chama `super.tick()` fora do showdown, portanto a condição observada não prova por si só impacto garantido dez ticks após o spawn: avanço do relógio e alcance real exigem QA. O raio visual/CameraShake não substitui a query. O handler `ignoreKnockBackEntityList` também cancela `LivingKnockBackEvent` para JadeExecutioner; é um veto separado da resistência base e de `isPushable`. [Handler][knockback-handler]. FireImmune, sem queda/empurrão de fluido; sem DOT/block mutation nesse caminho. Morte remove depois de deathTime≥15 no servidor; unsummon servidor remove com partículas. [Defesas][mob-defence], [tick][mob-tick], [impacto][landing-impact], [cleanup][mob].
+7. CounterSpell por caster diferente do owner cancela evento e tenta generic hurt **Hmax/10**. Isto não prova perda final de 10%: defesa/estado e hurt podem alterar/recusar. Owner não recebe esse veto local. onAntiMagic da interface pede onUnSummon; não duplicar reação ou retirar HP numa bridge. [Evento][counter-local], [interface][summon-interface], [Counterspell host][counter-host].
+
+**Prova binária estreita:**  PunishingHeavenSpell SHA-256 `15c35fed08b49b39bc1fd6b9ce2ec7fb6ebb80dbe27be905856801ae93595f6f`; onCast literal 3600/range 12, getCreature 170→CHECKCAST JadeExecutionerEntity 173→addFreshEntity 181/pop 184→initSummon 192. Helpers inspecionadosA 8+(perLevel−1)L, H 250+perLevel×L× 10, armor 6+2 L, com perLevel 5.132 fixa armor 12 e não é a fórmula do publisher. Os consumers de área/cura permanecem descritos pelo source f2 limitado à release; sem equivalência integral de métodos ou gameplay alegada.
+
+### Contrato nativo de summon e autoridade
+
+O constructor da criatura chama setOwner no original antes de SpellSummonEvent. O spell configura atributos/posição no original, obtém o resultado do evento, pede addFreshEntity e executa initSummon no resultado; o boolean de spawn não condiciona o restante. Replacement não copia automaticamente atributos/AI/equipamento, nem limpa a associação prévia do original. Os CHECKCAST binários concretos limitam o tipo substituível. O evento é superfície real; adapter RPG/BA mutador permanece **CONTRATO_CONDICIONAL**, sem aceitar LivingEntity arbitrária. [Cast][spawn], [owner/expiração][manager], [evento][summon-event].
+
+`getRecastCount=2` inclui o cast inicial: RecastInstance começa com 1 restante. Enquanto existe recast, onCast não cria novo grupo; o wrapper nativo não debita mana novamente e o término chama o callback local. O helper de summon remove os UUIDs em término manual; TIMEOUT usa a fila de expiração e COUNTERSPELL pode reinscrever recast. O item Greater Conjurer’s Talisman pode mudar a política de cooldown no timeout. A fila checa a cada 20 ticks com expiração estritamente anterior ao tick atual; duração solicitada não é promessa de remoção no exato mesmo tick. [Recast local][recast-local], [constructor][recast-host], [wrapper][cast-host], [manager][manager], [fila][manager-save].
+
+IMagicSummon herda AntiMagicSusceptible: onAntiMagic pede onUnSummon. Remoção destrutiva passa pelo onRemovedHelper, retira owner/recast/fila; unload tem tratamento próprio. SummonManager possui serialização por UUID e duração restante em logout/server-stop/reentrada; isso não certifica persistência real, migração de dados, caps, chunk unload ou recuperação de spawn falho. [Interface][summon-interface], [persistência/fila][manager-save].
+
+## Matriz de alteração por perks
+
+| Eixo | Superfície real / consumidor | Limite de integração | QA |
+|---|---|---|---|
+| Dano / HP / armor |A/H/armor porL no spawn; goal lêA; landing pede Hmax/10; melee/bite e áreas distintos. [Stats][stats], [goal][attack-goal]. |NATIVE_ATTRIBUTE por criatura, não power do caster nos helpers. MAX_HEALTH também altera landing e retaliação; mutação no evento exige preservar HP/caps. Adapter CONDITIONAL. |Q1/Q3|
+| Amount / tipo / owner |Helper publica amount/cancel para Living+SpellDamageSource; melee 2 arg/área 1 arg. [Helper][damage-host], [hit][mob-hit]. |HOOK_VERIFICADO amount/cancel; SUMMON_DAMAGE incoming nativo. ⛔ SEM_HOOK_SEGURO para converter DamageType/owner ou duplicar golpes. |Q3|
+| Targeting / range / área |Placement 12; melee 3.5 ×scale; AABBs/filtros por ramo e landing raio4.5/LOS. [Cast][spawn], [goal][attack-goal]. |Range attribute afeta gate, não caixas literais. ⛔ SEM_HOOK_SEGURO para aumentar área/maxTargets ou tratar direita como esquerda. |Q2/Q5|
+| Count / hitbox / velocidade |1 criatura, 2.5 × 5.5; AI/impulsos, sem projétil. [Tipo][entity-type], [goal][attack-goal]. |Count/resize/AI sem setter de spell seguro; N/A para projectile pierce/acceleration. Visual não define área de dano. |Q2|
+| Cura / status / knockback |Bite heal 0.75 A sóflag=true; bash age no target primário; sem DOT. [Goal][attack-goal]. |Sem hook mutador de heal local demonstrado; não tratar como lifesteal do caster nem repetir status/knockback em outro listener. |Q3|
+| Cast / mana / cooldown / timers |LONG 30, 250+100(L−1), 320 s; 3600 ticks/2 casts; showdown 40. [Spell][spell], [cast][spawn], [tick][mob-tick]. |CONFIG_NATIVE/atributos host no cast, custo/cooldown; mutarL não refaz admissão. Timer summons/recast/AI são independentes. |Q1/Q4|
+| Defesa / cleanup / mundo |CounterSpell tentaHmax/10; veto de LivingKnockBackEvent; owner/UUID/expiração/cleanup, sem blocos. [Handler][knockback-handler]. [Event][counter-local], [manager][manager-save]. |CONTRATO_CONDICIONAL; MAX_HEALTH também altera retaliação. Sem cap global/refund/rollback homologado; sem novo lifecycle paralelo. |Q4/Q5|
+
+## Deduplicação e validação pendente
+
+A autoridade de casting, recursos, grupos/UUIDs, AI, dano e cleanup é provider/host. Não recriar dano, status, heal, spawn ou despawn num listener para simular perk; escola custom/Mastery e inscrição de adapter seguem o [contrato comum](../SPELL-PERK-BOUNDARIES-1.1.5.md). Deduplicar cast pai→UUID de criatura→ataque/projétil→alvo; uma vítima, partícula ou callback não constitui outra identidade de spell.
+
+- **Q1:**  origem/scroll/Survival/config real, níveis default e modificados, custo/admissão/pagamento, recast, cooldown e interrupção.
+- **Q2:**  posição/solo/fluido/LOS/colisão/claims, query/LOS/distância do landing, count, replacement compatível/incompatível, associação original, addFreshEntity=false e ausência de refund demonstrado.
+- **Q3:**  dano direto/causador/kill credit, resistência/alliances/PvP, helper veto, atributo SUMMON_DAMAGE por consumer, iFrames, cura e efeitos recusados.
+- **Q4:**  tickCount/showdown e condição de alcance do landing, morte, antimagic/Counterspell, recast/timeout, owner ausente, chunk unload, logout/relogin/restart e duração restante.
+- **Q5:**  dedicado/cliente/multiplayer, escala/hitbox versus visual, AI/sync, limites de carga e dedup/progressão. **Todos PENDING**; sem execução física ou integração mutadora nova.
+
+[registry]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESpellRegistries.java#L24-L50
+[versions]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/gradle.properties#L11-L39
+[spell]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/PunishingHeavenSpell.java#L35-L65
+[spawn]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/PunishingHeavenSpell.java#L106-L135
+[stats]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/PunishingHeavenSpell.java#L137-L147
+[recast-local]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/PunishingHeavenSpell.java#L88-L103
+[guide]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/resources/assets/iss_magicfromtheeast/lang/en_us.json#L26-L27
+[acquisition]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L594-L612
+[power-cost]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L160-L257
+[cast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L347
+[damage-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[summon-damage]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L114-L131
+[melee-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L475-L498
+[melee-range]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/mobs/goals/WarlockAttackGoal.java#L44-L46
+[manager]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L63-L179
+[manager-save]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L239-L378
+[recast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/RecastInstance.java#L27-L35
+[summon-interface]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/mobs/IMagicSummon.java#L22-L86
+[summon-event]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellSummonEvent.java#L1-L39
+[counter-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/spells/ender/CounterspellSpell.java#L66-L96
+[mob]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/mobs/jade_executioner/JadeExecutionerEntity.java#L74-L139
+[mob-hit]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/mobs/jade_executioner/JadeExecutionerEntity.java#L222-L250
+[mob-defence]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/mobs/jade_executioner/JadeExecutionerEntity.java#L195-L232
+[mob-tick]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/mobs/jade_executioner/JadeExecutionerEntity.java#L280-L325
+[attack-goal]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/mobs/jade_executioner/JadeExecutionerAttackGoal.java#L43-L145
+[animations]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/mobs/jade_executioner/JadeExecutionerEntity.java#L52-L63
+[counter-local]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/events/MFTEServerEvent.java#L109-L119
+[entity-type]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTEEntityRegistries.java#L95-L99
+
+[landing-impact]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/mobs/jade_executioner/JadeExecutionerEntity.java#L303-L317
+
+[knockback-handler]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/events/MFTEServerEvent.java#L98-L107

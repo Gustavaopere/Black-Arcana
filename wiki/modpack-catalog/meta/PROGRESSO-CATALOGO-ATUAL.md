@@ -2,6 +2,8 @@
 
 **Checkpoint: 24/10/2026.** Base Black Arcana `0c347bfa534259773bcb59b50e3ceb0010e9d7e4`; modlist RPG Skill Tree `ffd1f1ede5bf46ce3425a5c17bc5d279d8c572dc`; Enshrouded `a41dbb51aacb94b7b5db6517f1514b0b7aee3e83`. Este painel substitui fotografias históricas para acompanhamento; não muda runtime ou estados dos Stages.
 
+**Atualização delimitada de 27/10/2026:** MFTE recebeu reconciliação de 22 dossiês. Os números globais estritos atuais estão no [índice gerado](../providers/INDEX.md): **138/2075 fichas observadas**, **0/164 providers integrais**. Os demais números e SHAs desta página pertencem ao checkpoint histórico acima; universo total segue aberto.
+
 ## Barra geral — todo o conteúdo aplicável
 
 ![Progresso geral indeterminado: universo completo ainda em auditoria](progress/indeterminate.svg)
@@ -127,7 +129,7 @@ As barras abaixo medem **somente o recorte da coluna central**. Um 100% document
 | [✅-irons-spells-recolor](../providers/✅-irons-spells-recolor/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-ironsable](../providers/✅-ironsable/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-ironsable-x-winds-spellbooks](../providers/✅-ironsable-x-winds-spellbooks/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
-| [✅-iss-magic-from-the-east](../providers/✅-iss-magic-from-the-east/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
+| [✅-iss-magic-from-the-east](../providers/✅-iss-magic-from-the-east/README.md) | **22/22** — [dossiês reconciliados por fonte candidata e prova binária delimitada](../providers/✅-iss-magic-from-the-east/RELEASE-SOURCE-RECONCILIATION-1.1.5.md), 27/10/2026 | ![22 de 22 dossiês no recorte indicado](progress/complete.svg) | ⚠️ editorial; **0/22** certificados estritos, métodos/hosts/hooks/QA condicionados |
 | [✅-kubejs-ars-nouveau](../providers/✅-kubejs-ars-nouveau/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-legendary-monsters](../providers/✅-legendary-monsters/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |
 | [✅-legendary-spellbooks](../providers/✅-legendary-spellbooks/README.md) | **—/—** — completude técnica por objeto a quantificar | ![Percentual técnico não determinado](progress/indeterminate.svg) | ⚠️ aproveitar o catálogo existente e auditar parâmetros por ficha |

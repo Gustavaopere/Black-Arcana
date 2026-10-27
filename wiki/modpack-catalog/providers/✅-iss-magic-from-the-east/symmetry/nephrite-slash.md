@@ -1,36 +1,79 @@
 # Nephrite Slash
 
-**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:nephrite_slash` / `net.warphan.iss_magicfromtheeast.spells.symmetry.NephriteSlashSpell`, school default `MFTESchoolRegistries.SYMMETRY_RESOURCE` ([prova Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162); [dossiê](../EXACT-BINARY-SPELLS-1.1.5.md)). Os números e comportamentos descritos abaixo continuam derivados da fonte pinada, não aprovados em runtime físico/Survival. **+0 identidade adicional**.
+**Dossiê documental — 27/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `RELEASE_BOUNDED_SOURCE`; integração `CONDITIONAL`; mutabilidade `CONTRATO_CONDICIONAL`; QA físico `PENDING`. **+0 identidades / +0 strict**: efeitos/projéteis filhos não são novas spells.
 
-- **ID:** `iss_magicfromtheeast:nephrite_slash`
-- **School:** Symmetry
-- **Levels:** 1–5
-- **Min rarity:** Common
-- **Cast:** Instant
-- **Mana neutral:** 40–120
-- **Spell power neutral:** 4–12
-- **Cooldown:** 20 s
-- **Primary damage:** `getSpellPower + weaponDamage`
+## Identidade, proveniência e ingresso
 
-## Contract
+ISS: Magic From The East, mod_id `iss_magicfromtheeast`, spell **`iss_magicfromtheeast:nephrite_slash`**, escola default **`iss_magicfromtheeast:symmetry`**. Classe `net.warphan.iss_magicfromtheeast.spells.symmetry.NephriteSlashSpell`. [Registro][registry], [escola/tipo][school].
 
-Performs a short forward slash sampled across four positions. Valid alive/pickable/visible entities receive provider spell damage; successful hits have invulnerability time set to 0 and trigger post-attack enchantment effects.
+JAR físico histórico #346 `iss_magicfromtheeast-1.1.5.jar`, SHA-1 `e3552ea6b7b32b843c48bf0d857237d4b7129ab0`, publisher [CF 7385201](https://www.curseforge.com/minecraft/mc-mods/magic-from-the-east/files/7385201); [22 identidades binárias](../EXACT-BINARY-SPELLS-1.1.5.md). Source oficial candidato de release `WarPhan78/ISS_MagicFromTheEast-1.21.x@f2a095cbbc89f8d8428dca758140663adf54ae88`, de 27/12/2025, anterior ao upload do publisher: **RELEASE_BOUNDED_SOURCE**, sem prova de equivalência integral de métodos com o JAR. O pin declara versão 1.1.5, MC 1.21.1, NeoForge 21.1.187 e Iron’s 3.14.8; o pack usa NeoForge 21.1.250 e Iron’s 3.16.3. O host consultado é `e4056af90302d37eb1739f5ff05020b020e6e252` (3.16.3): cada comportamento herdado abaixo é um contrato desse host, condicionado à combinação efetiva. Config implantada **NÃO VERIFICADA**. Metadata All Rights Reserved; MIT apenas do template: fatos, paráfrases e permalinks, sem importar código ou assets. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.1.5.md).
 
-Then it creates a ground-following sequence of up to **8 Nephrite crystals**:
+No JAR publisher de SHA-1 acima, inspeção estreita com `javap` (JDK 21) confirmou os defaults de power 4 + 2 por nível, mana 40 + 20 por nível, cooldown 20 s, a soma com `Utils.getWeaponDamage`, os 8 candidatos, fatores 0.3/0.75, e a sequência `AABB.setMaxY` seguida de descarte do retorno (`pop`). Também confirmou chamadas de dimensão e dano no cristal. São observações estreitas, sem equivalência integral dos métodos, de lifecycle ou da física.
 
-- delayed by crystal index;
-- progressively larger;
-- ordinary crystals use **30%** of primary damage;
-- terminal/biggest crystal uses **75%**.
+[Guia oficial][guide], parafraseado: desfere um corte frontal e faz surgir uma sequência de cristais de jade do chão. Classes não sobrescrevem aquisição/loot/crafting/learning; seguem escola/config/gates Iron’s. Rota concreta Survival e config implantada **NÃO VERIFICADAS**, sem presumir creative-only. [Host][acquisition]. No wrapper jogador, admissão/pre-cast precedem onCast; SpellOnCastEvent e débito precedem efeito, e cooldown segue o settlement. Alterar L no evento não recalcula custo ou snapshots anteriores. [Ordem][cast-host].
 
-## Public naming boundary
+## Fórmulas e pipeline causal
 
-Older public prose described a “Qigong Controlling” mechanic very similar to this slash+crystal behavior, but the current active registry has `nephrite_slash` while `QigongControllingSpell` is commented out. The canonical current name/ID is therefore **Nephrite Slash** unless current runtime language data proves a display alias.
+Os parâmetros e a ordem local abaixo pertencem ao **source limitado à release**, salvo os campos binários explicitados. `L` é o nível recebido no `onCast`; os intervalos usam os níveis default e multiplicadores neutros iguais a 1, sem impor um clamp adicional ao nível efetivo. `P` e `D` são dano solicitado em health points, antes de resistência, veto e iFrames; 20 ticks correspondem nominalmente a 1 s. Mana é inteira pelo truncamento do host. Defaults/config nativa são globais e não constituem um setter de perk por jogador.
 
-## Dedup
+`P=(4+2(L−1))×SPELL_POWER×symmetryPower×C`, `W=Utils.getWeaponDamage(caster)`, **D=P+W**. W usa ATTACK_DAMAGE efetivo, retorna 0 se não supera base/fist e considera Sharpness no helper; não é apenas o número do item. Defaults Common/L 1–5, P neutro 4–12, mana 40–120, INSTANT 0 ticks, cooldown 20 s = 400 ticks. [Spell][spell], [dano][damage], [power][power], [arma][weapon].
 
-This already owns weapon-scaled Symmetry slash + delayed crystal-line follow-up. Do not duplicate primary slash, iFrame reset or crystal damage.
+1. Direção=forward com Y zerado e normalizado; start=eye−Y 0.5+direção × 1.5. Quatro amostras em passos 1 block usam **AABB 0.5 × 2.5 × 0.5**, cada query exclui caster e pede alive/pickable/LOS(hitLocation+Y 1 → centro alvo). Não há teste local de aliança nessas caixas; o helper do host verifica friendly fire quando target é Living e a source é SpellDamageSource. Sem ledger entre caixas: entidade larga pode receber várias tentativas. `getDamage` reconsulta P/W em cada tentativa. Só helper=true zera invulnerableTime, emite partículas e chama pós-ataque de enchantment com cast explícito ServerLevel; guarda de lado não existe localmente nesse método, o ingresso normal é server-owned. [Slash][slash].
+2. Após a varredura, resolve outro snapshot D para cristais. Até 8 candidatos, index 0..7; spacing 0.75 block e delay=i. Ground helper inicial(1, 3), ajuste por candidato(8) e `clamp(i/3,0,1)`; só spawna se bloco inferior é FaceSturdy UP. Pede S=lerp(max(i/8,(distanceCovered+1)/8), 1.2, 3), acumulando horizontalDistance da direção; último/i 7 recebe S 3.6. Na direção horizontal não-zero normalizada, escalas antes do último são 1.425..2.775. Cada cristal normal armazena 0.3 D, o último 0.75 D; spawn rejeitado/terreno inválido não tem reposição/refund local. [Spawn][spawn].
+3. `NephriteCrystalEntity extends AoeEntity` tem DATA_SIZE e DATA_WAIT_TIME sincronizados, setter de size chama refreshDimensions. Tipo declarado 0.4 × 0.7 blocks, mas **getDimensions efetivo=0.3 S por 0.7 S × (positionOffset(1)+1)**; caixa muda com a fase vertical, não é raio visual. Tick local faz refresh e **não chama super.tick**: não importar automaticamente polling/duration/expiry AoeEntity. Isso não prova tickCount congelado, pois avanço de idade pode ter caller externo. [Cristal][crystal], [dimensão][crystal-state], [tipo][entity].
+4. Ao tick==delay apenas apresentação; dano nos ticks com **delay<tickCount<delay+4**, nominalmente três idades. AABB damager vem de getBoundingBox; `damager.setMaxY(...)` descarta retorno imutável, não altera a caixa usada. Query sem guarda server própria pede `canHitEntity` e ausência no ledger. No host consultado, AoeEntity exclui owner e a aliança owner→target, além do filtro pai; isto não equivale a uma regra local nova de PvP/claims. Helper=true adiciona à velocidade vertical S × 0.3 blocks/tick e marca hurtMarked; a vítima é adicionada **mesmo com dano false**. ShieldPart/AbstractShieldEntity descarta o cristal depois dessa tentativa. [Hit/timers][crystal-hit], [filtros host][aoe-filters].
+5. Clock local RISE 4/REST 40/LOWER 30: descarta quando age>delay+74; curva visual/altura é posição offset por fase, sem aplicar dano nos 40 ticks de repouso. Ledger é por cristal, não entre os 8 nem com o corte inicial. Source sem block break/fire/heal/teleporte próprios. [Curva][crystal], [hit/timers][crystal-hit].
+6. NBT local salva apenas waitTime além do parent; DATA_SIZE e victims não têm save próprio. Parent Aoe salva damage/age/radius/etc, mas não size/ledger MFTE; não prometer escala/dedup após load. `applyEffect` é vazio. [State][crystal-state], [NBT pai][aoe-nbt].
 
-## Source
+## Matriz de alteração por perks
 
-`NephriteSlashSpell.java`, registry 1.1.5.
+| Eixo | Valor / consumidor / fase | Boundary real e limite | QA |
+|---|---|---|---|
+| Dano / power / arma | Slash D=P+W reconsultado por alvo; snapshot posterior → 0.3 D/0.75 D cristais. [Slash][slash], [spawn][spawn], [damage][damage]. | **NATIVE_ATTRIBUTE**: power/symmetryPower/ATTACK_DAMAGE; **CONFIG_NATIVE** global: C. **HOOK_VERIFICADO**: [SpellDamageEvent][damage-event] amount/cancel pré-resistência/hurt para Living. Não duplicar dano de cristal como novo cast. | Q1/Q3 |
+| Tipo / procs | Symmetry → symmetry_magic; direto/causing=caster no slash, cristal/owner nos filhos. Enchantment só slash helper=true. [Slash][slash], [crystal-hit][crystal-hit], [source][source-host], [school][school]. | Tipo não é mutável pelo amount; **⛔ SEM_HOOK_SEGURO** conversão. Sem crítico/lifesteal específico adicional. | Q3 |
+| Range / targeting | Quatro boxes 0.5 × 2.5 × 0.5 e LOS, sem ledger; cristais 0.75 passos/groundFaceSturdy. [Slash][slash], [spawn][spawn]. | Constantes acopladas a posições/terreno, sem resolver público pré-settlement seguro. Range/retarget/área **⛔ SEM_HOOK_SEGURO**. | Q2/Q3 |
+| Área / alvos / caps | Crystal AABB dinâmica 0.3 S × 0.7 S(offset+1); até 8 candidatos, não 8 spawn garantidos. Ledger por cristal marca tentativa falha. [Crystal][crystal-hit], [dimensions][crystal-state]. | setCrystalSize público atualiza dimensions; callback terceiro para alterar antes do spawn não verificado. Setter de radius Aoe não governa esta geometria. Resize/budget **CONDITIONAL**, sem ledger paralelo. | Q2/Q4 |
+| Projétil / movimento | Cristais estacionários/curva de altura, não projéteis de trajetória; primary slash é consulta instantânea. [Crystal][crystal]. | Speed/spread/pierce de AbstractMagicProjectile **N/A** a este filho Aoe. Não confundir VFX slash/rotação com hitbox. | Q2 |
+| Tempo / cooldown | INSTANT 0, cooldown 20 s; wait=i, hit ages i+1..i+3, rest 40/lower 30/discard>i+74 nominal. [Spell][spell], [crystal][crystal-hit]. | Cooldown native/config/eventPre no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md); setWaitTime local por instância não é hook temporal integrado. Sem parent tick nesse override, duração Aoe não substitui relógio local. | Q1/Q4 |
+| Mana / recast | `int((40+20(L−1))×MANA_MULTIPLIER)`, sem recast local. [Spell][spell], [power][power]. | Setters mana/nível host existem no wrapper, adapter CONDITIONAL. Nenhuma mana extra por caixa/cristal, sem rollback local de spawn falho. | Q1/Q3 |
+| Estado / persistência | Size/wait sync; wait NBT, victims/size sem save local. Ledger por instância e fase. [State][crystal-state], [parent][aoe-nbt]. | Dedupe/morte/unload/restart **PENDING**; sem copiar victims ou reservar segundo estado em RPG. | Q4 |
+| Summon / mundo / status | Sem summonAI/heal/DOT/teleporte; ground check não altera blocos. Push S × 0.3 só helper=true no crystal. [Spawn][spawn], [hit][crystal-hit]. | Summon cap/AI/blockrollback **N/A**; claims/PvP/aliados e push precisam QA. Status/mundo não são liberados por observer de dano. | Q2/Q3 |
+
+Assinatura ocupada: corte weapon+Symmetry e linha de cristais atrasados com escala/ledger por instância. Dedup caster+cast+fase/slash sample+crystal UUID+vítima, preservando tentativas já incluídas. Proposta original de terreno/budget próprios exige contrato distinto.
+
+## Ownership, dedup e verificação
+
+MFTE/Iron’s mantêm spell, recursos, entidades, dano e cleanup. RPG Skill Tree mantém progressão; BA seu runtime/world policy; Enshrouded sua classificação/Shroud. A escola Symmetry custom e sua lane Mastery continuam condicionadas ao contrato de token descrito no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md); não presumir `irons:symmetry` integrado.
+
+- **Q1:** source/JAR/hosts/config, origens, nível/atributos, mana/cooldown e eventos de nível/custo antes/depois de snapshots.
+- **Q2:** hitbox versus VFX, alvos finos/grandes, blocos/LOS/aliados/owner/PvP/claims, spawn recusado, número vivo e budgets.
+- **Q3:** helper cancel/amount/resistência/iFrames, tentativas versus HP final, escudos, múltiplos callbacks e correlação de filhos/vítima.
+- **Q4:** cliente/dedicado/multiplayer, persistência/unload/relog/restart/antiMagic, timers/owner e sync, ausência de segunda mana/XP/efeito.
+
+Todos físicos **PENDING**; a ficha não implementa perk/adapter nem promove Stage.
+[versions]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/gradle.properties#L11-L36
+[registry]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESpellRegistries.java#L24-L37
+[school]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESchoolRegistries.java#L32-L44
+[types]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/damage/MFTEDamageTypes.java#L11-L17
+[power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L257
+[cast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L332
+[acquisition]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L594-L612
+[damage-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[damage-event]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellDamageEvent.java#L13-L50
+[source-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L560-L565
+[projectile]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L51-L115
+[hit-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L153-L213
+[state-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L289-L359
+[shield-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L361-L405
+[spell]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/NephriteSlashSpell.java#L34-L70
+[guide]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/resources/assets/iss_magicfromtheeast/lang/en_us.json#L32-L33
+[slash]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/NephriteSlashSpell.java#L84-L105
+[spawn]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/NephriteSlashSpell.java#L107-L145
+[damage]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/NephriteSlashSpell.java#L168-L183
+[weapon]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L787-L802
+[crystal]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/nephrite_slash/NephriteCrystalEntity.java#L33-L90
+[crystal-hit]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/nephrite_slash/NephriteCrystalEntity.java#L92-L122
+[crystal-state]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/nephrite_slash/NephriteCrystalEntity.java#L124-L147
+[entity]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTEEntityRegistries.java#L153-L157
+[aoe-filters]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L147-L150
+[aoe-nbt]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AoeEntity.java#L289-L327

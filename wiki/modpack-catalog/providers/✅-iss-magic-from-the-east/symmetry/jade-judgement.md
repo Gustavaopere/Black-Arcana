@@ -1,35 +1,78 @@
 # Jade Judgement
 
-**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:jade_judgement` / `net.warphan.iss_magicfromtheeast.spells.symmetry.JadeJudgementSpell`, school default `MFTESchoolRegistries.SYMMETRY_RESOURCE` ([prova Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162); [dossiê](../EXACT-BINARY-SPELLS-1.1.5.md)). Os números e comportamentos descritos abaixo continuam derivados da fonte pinada, não aprovados em runtime físico/Survival. **+0 identidade adicional**.
+**Dossiê documental — 27/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `RELEASE_BOUNDED_SOURCE`; integração `CONDITIONAL`; mutabilidade `CONTRATO_CONDICIONAL`; QA físico `PENDING`. **+0 identidades / +0 strict**: efeitos/projéteis filhos não são novas spells.
 
-- **ID:** `iss_magicfromtheeast:jade_judgement`
-- **School:** Symmetry
-- **Levels:** 1–6
-- **Min rarity:** Rare
-- **Cast:** Long, 40 ticks
-- **Mana neutral:** 65–140
-- **Spell power/damage neutral:** 20–40
-- **Cooldown:** 60 s
-- **Pre-target helper:** 48 blocks
-- **Fallback raycast:** 32 blocks
-- **Impact radius:** 5
+## Identidade, proveniência e ingresso
 
-## Contract
+ISS: Magic From The East, mod_id `iss_magicfromtheeast`, spell **`iss_magicfromtheeast:jade_judgement`**, escola default **`iss_magicfromtheeast:symmetry`**. Classe `net.warphan.iss_magicfromtheeast.spells.symmetry.JadeJudgementSpell`. [Registro][registry], [escola/tipo][school].
 
-Resolves target/location, raises the `JadeDao` spawn upward through free space by up to 16 blocks, and assigns airtime 35 ticks with target or 25 without target.
+JAR físico histórico #346 `iss_magicfromtheeast-1.1.5.jar`, SHA-1 `e3552ea6b7b32b843c48bf0d857237d4b7129ab0`, publisher [CF 7385201](https://www.curseforge.com/minecraft/mc-mods/magic-from-the-east/files/7385201); [22 identidades binárias](../EXACT-BINARY-SPELLS-1.1.5.md). Source oficial candidato de release `WarPhan78/ISS_MagicFromTheEast-1.21.x@f2a095cbbc89f8d8428dca758140663adf54ae88`, de 27/12/2025, anterior ao upload do publisher: **RELEASE_BOUNDED_SOURCE**, sem prova de equivalência integral de métodos com o JAR. O pin declara versão 1.1.5, MC 1.21.1, NeoForge 21.1.187 e Iron’s 3.14.8; o pack usa NeoForge 21.1.250 e Iron’s 3.16.3. O host consultado é `e4056af90302d37eb1739f5ff05020b020e6e252` (3.16.3): cada comportamento herdado abaixo é um contrato desse host, condicionado à combinação efetiva. Config implantada **NÃO VERIFICADA**. Metadata All Rights Reserved; MIT apenas do template: fatos, paráfrases e permalinks, sem importar código ou assets. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.1.5.md).
 
-During the falling phase, each valid entity can be hit once for **25%** of the Dao's damage and has invulnerability time reset to 0 after successful damage.
+No JAR publisher de SHA-1 acima, inspeção estreita com `javap` (JDK 21) confirmou LONG, cast 40, cooldown 60 s, `preCastTargetHelper(48, 0.35, false)`, o retorno local true, `Utils.raycastForEntity(32, true, 0.25)`, elevação 16, `setAirTime(25/35)`, fatores de dano 0.25 e raio 5. São campos e chamadas específicos, sem prova integral dos métodos ou QA físico.
 
-On ground impact it performs a radius-5 AoE with cubic distance falloff:
+[Guia oficial][guide], parafraseado: invoca uma grande lâmina de jade que desce e solicita dano de área ao atingir o chão. Classes não sobrescrevem aquisição/loot/crafting/learning; seguem escola/config/gates Iron’s. Rota concreta Survival e config implantada **NÃO VERIFICADAS**, sem presumir creative-only. [Host][acquisition]. No wrapper jogador, admissão/pre-cast precedem onCast; SpellOnCastEvent e débito precedem efeito, e cooldown segue o settlement. Alterar L no evento não recalcula custo ou snapshots anteriores. [Ordem][cast-host].
 
-`damage = baseDamage * (1 - (distance/radius)^3)`.
+## Fórmulas e pipeline causal
 
-Then it plays impact feedback and discards.
+Os parâmetros e a ordem local abaixo pertencem ao **source limitado à release**, salvo os campos binários explicitados. `L` é o nível recebido no `onCast`; os intervalos usam os níveis default e multiplicadores neutros iguais a 1, sem impor um clamp adicional ao nível efetivo. `P` e `D` são dano solicitado em health points, antes de resistência, veto e iFrames; 20 ticks correspondem nominalmente a 1 s. Mana é inteira pelo truncamento do host. Defaults/config nativa são globais e não constituem um setter de perk por jogador.
 
-## Dedup / authority
+`P=(20+4(L−1))×SPELL_POWER×symmetryPower×C`, C=POWER_MULTIPLIER. Defaults Rare/L 1–6, P 20–40 e mana 65–140 neutros, LONG 40 ticks = 2 s base, cooldown 60 s = 1200 ticks antes de modifiers, sem recast próprio. Tempo efetivo segue host comum com CAST_TIME_REDUCTION; a arma não entra na fórmula desta classe. [Spell][spell], [power][power].
 
-The Dao entity owns its tracking, descent, falling-contact hits and final AoE. Do not add a second impact explosion or separate falling hit listener.
+1. `checkPreCastConditions` tenta `Utils.preCastTargetHelper(..., 48, 0.35, false)` e **retorna true** independentemente de alvo. No host 3.16.3, `false` silencia apenas a mensagem de falha; a consulta continua com blocks = true e o helper pode salvar um Living em AdditionalCastData. [Helper host][target-host]. onCast usa TargetEntityCastData se existe/resolveLiving; fallback `Utils.raycastForEntity(level, caster, 32, true, 0.25f)`. Essa chamada também foi encontrada no JAR; no host 3.16.3, o overload deprecated delega internamente ao RaycastBuilder, com blocks = true e inflação de 0.25 blocks. [Overload host][ray-host]. RayENTITY usa posição da entidade e só grava target se Living; outros hits usam rayLocation−forward.normalized. O alvo salvo no pré-cast é reconsultado no onCast, sem novo limite local de distância/LOS para esse caminho; não equiparar a consulta inicial a um alcance universal de 48 blocks. [Target][target].
+2. Cria 1 JadeDao(owner, cachedTarget) e move para posição calculada elevada até 16 vezes enquanto cada próximo blockpos é Air. Não testa o corpo 0.8 × 4 por inteiro nem claims/chunks/destino livre por esse helper. Grava airTime 35 se há Living target, senão 25; D=P snapshot; ignora resultado addFreshEntity. [Spawn/raise][spawn], [tipo][entity].
+3. `JadeDao#tick` **não chama super.tick**: calcula a lógica local e ao final chama `move(MoverType.SELF, delta)`, sem pipeline padrão de ray/ProjectileImpactEvent/expiry>300 pelo caminho pai. Não inferir idade congelada. A entidade segue o cached target não removido, sem exigir vivo nesse getter. No servidor, enquanto airTime-- >0 amortece delta(0.95, 0.75, 0.95), corrige horizontalmente 0.025 se distância horizontal²>1; compara diferença de altura de 18 blocks com alvo ou faz raycast vertical de 3.5 blocks a cada 3 ticks sem alvo. Grava Y−0.005 se tooHigh, senão Y+0.01; na transição airTime 0 grava (0, 0.5, 0). Depois, cada tick subtrai 0.15 de Y. Delta é medido em blocks/tick; os incrementos são aplicados por tick e damping é adimensional. **getSpeed 0 não torna a entidade imóvel**; noGravity não substitui essas mudanças explícitas. [Entity/tick][dao-tick], [target][dao-state].
+4. Se airTime≤0 e ainda não onGround, consulta bbox.inflate 0.35 e doFallingDamage: só servidor/canHitEntity/fora de lista targets. Pede **0.25 D** com helper; só helper=true adiciona vítima ao ledger e zera invulnerableTime. Rejeição não consome a vítima e pode repetir em ticks posteriores. [Falling][dao-damage].
+5. Se onGround na fase final, `doImpactDamage` consulta bbox.inflate 5, canHitEntity e distância de origens d<5; pede **D × (1−(d/5)^3)**. Usa `canHitEntity` herdado, que exclui owner e aliança nas duas direções no host consultado; não usa o ledger de queda, não impõe LOS/cap de alvos local e pode tentar dano de novo em vítima que já aceitou 0.25 D. Impacto é AoE+VFX e discard, sem block break/explosão vanilla local. Fonte de ambos é SpellDamageSource JadeJudgement, direta=Dao/causing=owner, default symmetry_magic. [Impacto][dao-damage], [tick][dao-tick], [school][school], [settlement][damage-host].
+6. NBT chama pai e grava UUID Target, airTime só se positivo. Lista targets não é salva; normal target UUID resolve via ServerLevel, cached target removido pode ser reconsultado. Dimensões físicas 0.8 × 4 blocks, tracking 64; tamanho do modelo/VFX não é um setter dessa caixa; setters de rotação vazios e `canBeCollidedWith()` retornando true não são setters de dano/área. AntiMagic herdado descarta e parent shouldBeSaved exclui UNLOADED_TO_CHUNK, sem homologar persistência segura dos clocks/ledger. [State][dao-state], [end][dao-end], [host][state-host].
 
-## Source
+## Matriz de alteração por perks
 
-`JadeJudgementSpell.java` + `JadeDao.java`.
+| Eixo | Valor / consumidor / fase | Boundary real e limite | QA |
+|---|---|---|---|
+| Dano / scaling | P snapshot; queda 0.25 P por vítima bem-sucedida, impacto P × (1−(d/5)^3). [Spawn][spawn], [damage][dao-damage]. | **NATIVE_ATTRIBUTE**: SPELL_POWER/symmetryPower; **CONFIG_NATIVE** global: C. **HOOK_VERIFICADO**: helper Living permite [SpellDamageEvent][damage-event] amount/cancel pré-resistência/hurt. Não somar queda+AoE como HP garantido. | Q1/Q3 |
+| Tipo / crítico / status | Symmetry → symmetry_magic, direta=Dao/owner; iFrames 0 só depois de falling helper=true; crítico/status próprios N/A. [Damage][dao-damage], [school][school], [types][types]. | Amount não altera tipo. **⛔ SEM_HOOK_SEGURO** para conversão e resets de status/iFrames por perk sem consumer real. | Q3 |
+| Target / range / LOS | Helper 48/.35 pré-cast ou fallback 32/.25/blocks no cast, elevação até 16 airblocks. [Target][target], [raise][spawn]. | Nenhum setter seguro de resolver/range por jogador identificado. Evento de nível não recompõe pretarget; retarget/área **⛔ SEM_HOOK_SEGURO**. | Q1/Q2 |
+| Área / máximo de alvos | Queda bbox.inflate 0.35; impacto bbox.inflate 5∩d<5. Ledger só queda helper=true; impacto separado. [Damage][dao-damage]. | Radius 5 é literal, setExplosionRadius herdado não é consumido. Sem LOS/cap local; AOE/budget **CONTRATO_CONDICIONAL / ⛔ fail-closed**. | Q2/Q3 |
+| Projétil / trajetória | 1 Dao 0.8 × 4, noGravity, movimento manual/damping/homing/Y; getSpeed 0. [State][dao-state], [tick][dao-tick], [tipo][entity]. | setDamage/setTarget/setAirTime públicos por instância, não callback terceiro pré-spawn. Resize/movimento/speed sem contrato **⛔ SEM_HOOK_SEGURO**; não importar shoot/expiry do pai que tick não chama. | Q2/Q4 |
+| Tempo / cooldown | LONG 40 base, cooldown 60 s; airTime 35/25 e clock de descida próprio, sem timeout rígido local adicional. [Spell][spell], [spawn][spawn], [tick][dao-tick]. | Tempo de cast/cooldown config/atributos genéricos reais no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md); airTime não é cooldown/duração total. | Q1/Q4 |
+| Mana / recast | `int((65+15(L−1))×MANA_MULTIPLIER)`, sem recast local. [Spell][spell], [power][power]. | Wrapper aceita custo/nível mutáveis, adapter CONDITIONAL; sem segunda mana/charge por fase/target. | Q1/Q3 |
+| Estado / cleanup | TargetUUID e airTime>0+parentNBT; targets da queda não persistem. [State][dao-state], [parent][state-host]. | Load/relog/owner/destino/dedup PENDING; não criar ledger paralelo BA/RPG ou refund inventado por falha de spawn. | Q4 |
+| Summon / mundo / cura | Entidade filha sem AI/pet/heal/teleporte; raise consulta Air e impacto não quebram blocos. [Spawn][spawn], [damage][dao-damage]. | Summon cap/AI/world rollback N/A. Claims/PvP/loaded chunks e colisão corporal ainda precisam QA específico. | Q2/Q4 |
+
+Assinatura ocupada: lâmina aérea com correção de alvo, dano parcial em queda e AoE cúbica no chão. Dedup cast → Dao UUID → vítima → queda/impacto, sem eliminar por heurística a fase nativa nem premiar tentativa rejeitada como sucesso.
+
+## Ownership, dedup e verificação
+
+MFTE/Iron’s mantêm spell, recursos, entidades, dano e cleanup. RPG Skill Tree mantém progressão; BA seu runtime/world policy; Enshrouded sua classificação/Shroud. A escola Symmetry custom e sua lane Mastery continuam condicionadas ao contrato de token descrito no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md); não presumir `irons:symmetry` integrado.
+
+- **Q1:** source/JAR/hosts/config, origens, nível/atributos, mana/cooldown e eventos de nível/custo antes/depois de snapshots.
+- **Q2:** hitbox versus VFX, alvos finos/grandes, blocos/LOS/aliados/owner/PvP/claims, spawn recusado, número vivo e budgets.
+- **Q3:** helper cancel/amount/resistência/iFrames, tentativas versus HP final, escudos, múltiplos callbacks e correlação de filhos/vítima.
+- **Q4:** cliente/dedicado/multiplayer, persistência/unload/relog/restart/antiMagic, timers/owner e sync, ausência de segunda mana/XP/efeito.
+
+Todos físicos **PENDING**; a ficha não implementa perk/adapter nem promove Stage.
+[versions]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/gradle.properties#L11-L36
+[registry]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESpellRegistries.java#L24-L37
+[school]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESchoolRegistries.java#L32-L44
+[types]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/damage/MFTEDamageTypes.java#L11-L17
+[power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L257
+[cast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L332
+[acquisition]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L594-L612
+[damage-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[damage-event]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellDamageEvent.java#L13-L50
+[source-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L560-L565
+[projectile]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L51-L115
+[hit-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L153-L213
+[state-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L289-L359
+[shield-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L361-L405
+[spell]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/JadeJudgementSpell.java#L31-L67
+[guide]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/resources/assets/iss_magicfromtheeast/lang/en_us.json#L20-L21
+[target]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/JadeJudgementSpell.java#L79-L104
+[spawn]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/JadeJudgementSpell.java#L106-L131
+[dao-state]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/jade_judgement/JadeDao.java#L48-L111
+[dao-damage]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/jade_judgement/JadeDao.java#L123-L147
+[dao-tick]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/jade_judgement/JadeDao.java#L149-L207
+[dao-end]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/jade_judgement/JadeDao.java#L209-L237
+[entity]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTEEntityRegistries.java#L55-L59
+[target-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L669-L711
+[ray-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L327-L340

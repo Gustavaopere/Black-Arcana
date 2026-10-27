@@ -1,41 +1,64 @@
-# Cloud Ride
+# Cloud Ride / Magic Cloud
 
-**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:cloud_ride` / `net.warphan.iss_magicfromtheeast.spells.symmetry.CloudRideSpell`, school default `MFTESchoolRegistries.SYMMETRY_RESOURCE` ([prova Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162); [dossiê](../EXACT-BINARY-SPELLS-1.1.5.md)). Os números e comportamentos descritos abaixo continuam derivados da fonte pinada, não aprovados em runtime físico/Survival. **+0 identidade adicional**.
+**Dossiê documental — 27/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `RELEASE_BOUNDED_SOURCE / SOURCE_CAUSALITY`; integração `CONDITIONAL / CONTRATO_CONDICIONAL`; QA físico `PENDING`. **+0 identidades/+0 strict**: entidades, partes, buffs e callbacks são filhos desta spell.
 
-- **ID:** `iss_magicfromtheeast:cloud_ride`
-- **School:** Symmetry
-- **Levels:** 1–9
-- **Min rarity:** Uncommon
-- **Cast:** Instant
-- **Mana neutral:** 20–68
-- **Spell power neutral:** 15–95
-- **Cooldown:** 90 s
-- **Duration neutral:** 15–95 s
-- **Recast count:** 2
+## Identidade e proveniência
 
-## Contract
+Provider ISS: Magic From The East, `mod_id=iss_magicfromtheeast`; spell **`iss_magicfromtheeast:cloud_ride`**, escola própria `iss_magicfromtheeast:symmetry`; declarante `net.warphan.iss_magicfromtheeast.spells.symmetry.CloudRideSpell`. [Registry][registry], [escola][school].
 
-Spawns `SummonCloudEntity` and registers it through `SummonManager` for `spellPower*20` ticks.
+JAR de referência MC 1.21.1/NeoForge **`iss_magicfromtheeast-1.1.5.jar`**, SHA-1 `e3552ea6b7b32b843c48bf0d857237d4b7129ab0`, 1.680.780 bytes; [publisher CF7385201](https://www.curseforge.com/minecraft/mc-mods/magic-from-the-east/files/7385201), [inventário binário histórico](../EXACT-BINARY-SPELLS-1.1.5.md). Candidato oficial de source **`WarPhan78/ISS_MagicFromTheEast-1.21.x@f2a095cbbc89f8d8428dca758140663adf54ae88`**, 27/12/2025, anterior ao upload publicado: lógica **`RELEASE_BOUNDED_SOURCE`**, sem equivalência integral demonstrada entre source e métodos do JAR. Data e versão iguais não provam essa equivalência. O candidato declara 1.1.5, NeoForge 21.1.187/Iron’s 3.14.8; o pack usa NeoForge 21.1.250/Iron’s 3.16.3. Os contratos do host abaixo vêm de Iron’s 3.16.3 `e4056af90302d37eb1739f5ff05020b020e6e252`, portanto sua combinação também exige teste. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.1.5.md). Defaults não fecham a config implantada. Metadata **All Rights Reserved**; MIT do template tem escopo limitado ao template. Só fatos, paráfrases e permalinks, sem importar implementação ou assets.
 
-Only the summoner can mount it through normal interaction. While ridden:
+**Corroboração binária estreita:** `CloudRideSpell#getRecastCount` retorna 2; `onCast` chama `SummonManager.initSummon` e cria `RecastInstance`; `onRecastFinished` chama `recastFinishedHelper`. `MFTEEffectRegistries` constrói Cloud Bless como `MagicMobEffect` com `SAFE_FALL_DISTANCE +999 ADD_VALUE`. Esses campos/calls apoiam apenas os campos citados do candidato; não provam o comportamento físico ou todos os métodos. [Limites da evidência](../SPELL-PERK-BOUNDARIES-1.1.5.md).
 
-- yaw/pitch follow rider look;
-- forward input controls horizontal travel;
-- when moving forward, vertical input is derived from rider look-angle Y;
-- rider receives `CLOUD_BLESS_EFFECT` continuously;
-- cloud is immune to ordinary damage and only accepts damage tagged bypass-invulnerability;
-- cloud cannot be pushed/leashed and is not fluid-pushed.
+[Guia oficial][guide], parafraseado: invoca nuvem temporária para montar. Spell não sobrescreve aquisição; elegibilidade escola/config/aprendizado não prova scroll, item ou uso Survival no pack. [Host][acquisition].
 
-This confirms the public “look up/down to control height” behavior.
+## Pipeline e parâmetros
 
-## Static source quirk
+`L`=nível entregue ao onCast, `P=(15+10(L−1))×SPELL_POWER×symmetryPower×POWER_MULTIPLIER`, `T=(int)(20P)` ticks (conversão Java para inteiro, truncamento em direção a zero em valores finitos usuais). Defaults Uncommon/L 1–9, INSTANT, 0 ticks, mana `int((20+6(L−1))×MANA_MULTIPLIER)` (20–68 neutra), cooldown 90 s = 1.800 ticks antes modifiers. Duração neutra 15/25/35/45/55/65/75/85/95 s. Power governa T, **não a velocidade** da nuvem. Total de 2 casts, incluindo inicial e recast de saída. [Spell][spell], [host][power].
 
-The spell calls `spawn.add(forward.x, 0.25f, forward.z)` without reassigning the immutable Vec3 result. In the audited source the cloud remains initialized at `entity.position()` rather than the intended offset. Treat as QA finding, not a silent documentation fix.
 
-## Dedup
+Os níveis máximos acima são defaults de configuração; este `onCast` não aplica clamp local de L. As fórmulas `int(...)` usam conversão Java para inteiro (truncamento em direção a zero nos valores positivos usuais). Mudar L em evento posterior não refaz admissão, custo anterior ou estado já capturado pelo host. [AbstractSpell#getManaCost/getSpellPower/getEffectiveCastTime][power], [AbstractSpell#castSpell][cast-host].
+1. **Inicialização:** sem recast ativo, calcula spawn=caster.position(); chama spawn.add(forward×1.5 no X/Z,+0.25Y), mas **descarta Vec3 retornado**, mantendo posição original. Não há resolver/ray/collision-safe destino local. Cria 1 SummonCloudEntity(caster), setPos e addFreshEntity sem consumir resultado. Constructor já chama setSummoner→SummonManager.setOwner antes do spawn; depois initSummon repete owner, agenda T e adiciona UUID a SummonedEntitiesCastData. **Não publica SpellSummonEvent** neste caminho. [Cast][cast], [entidade][cloud], [manager][manager].
+2. **Recast/recursos:** cria RecastInstance(id,L,total 2,window T,castSource,castData); constructor host guarda remaining 1. Cast adicional enquanto ativo não cria nova nuvem; wrapper decrementa e chama onRecastFinished. Helper nativo faz unsummon dos UUIDs em resultados não-TIMEOUT, deixa TIMEOUT ao manager e COUNTERSPELL força recast novamente; talismã host pode suprimir cooldown no timeout. Ativo no wrapper jogador evita segunda mana. Não é reset/invocar uma segunda nuvem. [Spell][spell], [recast][recast-instance], [manager][manager], [wrapper][cast-host].
+3. **Corpo/AI:** EntityType 1×0.5 blocks, noGravity=true; atributos declarados MAX_HEALTH 5, KNOCKBACK_RESISTANCE 0, STEP_HEIGHT 1, MOVEMENT_SPEED 0.5; único goal local FloatGoal. Hurt recusa fontes sem BYPASSES_INVULNERABILITY; não é invulnerabilidade universal ou HP infinito. Não empurrável/puxável por fluidos/leash, isOnFire=false. Dano/ataque próprio/heal/DOT são N/A. [Entidade][cloud], [registro][entity-reg].
+4. **Montaria:** mobInteract só pede ride para player==getSummoner se ainda não veículo; doPlayerRide no servidor alinha rotação do player e chama startRiding sem verificar boolean. getControllingPassenger aceita primeiro passageiro Mob ou Player, logo não revalida owner em todo tick. tickRidden segue yaw/pitch do player. getRiddenInput usa strafe×0.5, backward/zeroForward×0.25; com forward>0 substitui Y por lookAngle.y. getRiddenSpeed=0.8×MOVEMENT_SPEED, escalar default **0.4**, não garantia de distância fixa por tick sob todo physics/input. positionRider adiciona+0.5 no Y do attachment. [Ride][riding].
+5. **Buff filho:** em cada tick servidor, se controlador existe e está vivo, tenta Cloud Bless 100 ticks/amp 0, sem testar addEffect. No candidato e no campo binário corroborado, `MFTEEffectRegistries#CLOUD_BLESS_EFFECT` usa `MagicMobEffect` e acrescenta **999 blocks a SAFE_FALL_DISTANCE**, operação ADD_VALUE no amplificador 0. Não há resetFallDistance nesse registro. É atributo de distância segura, sem garantia de imunidade ilimitada: duração, merge, queda acima do limite e remoção precisam QA. O buff pode restar após desmontar. [SummonCloudEntity#tick][cloud], [registro][effect-reg].
+6. **Saída/persistência:** onUnSummon servidor envia partículas e remove DISCARDED; death chama onDeathHelper; onRemovedFromLevel chama onRemovedHelper; isAlliedTo combina super+helper. Manager mantém owner maps/expiração/castData e storage próprios, sem token/ledger BA paralelo. Spawn recusado ainda pode deixar solicitação de owner/expiração/recast; não há refund local demonstrado. Classe não salva rider/input próprios nem comprova restauração segura de mount/Cloud Bless no restart. [Lifecycle][cloud], [manager][manager], [expiração/armazenamento][manager-save].
 
-Identity = timed rideable magical cloud with view-controlled vertical movement and Cloud Bless; it is not a generic flight buff.
+## Matriz para perks
 
-## Source
+| Eixo | Valor e consumidor | Superfície real, fase e limite | QA |
+| --- | --- | --- | --- |
+| Nível/power/duração | Max 9; T=int(20P) snapshot, manager+janela recast. [Spell][spell], [manager][manager]. | SPELL_POWER/symmetry_spell_power **NATIVE_ATTRIBUTE**, POWER_MULTIPLIER **CONFIG_NATIVE**, afetam T. setSpellLevel host existe, mas snapshots/custo/recursos precisam contrato; timer manager não é field de mob. | Q1/Q4 |
+| Dano/tipo/status ofensivo | Sem ataque/dano/heal/DOT próprio; hurt imunidade por tag. [Cloud][cloud]. | Dano/crit/pierce/spread/aceleração de projétil/conversão ofensiva **N/A**: esta classe é montaria PathfinderMob. Não usar SUMMON_DAMAGE como bônus de duração/speed nem aplicar hit paralelo à montaria. | Q3 |
+| Speed/movimento | 0.8×MOVEMENT_SPEED; escalar default 0.4; strafe.5/backward.25/forwardYlook. [Ride][riding], [attrs][cloud]. | MOVEMENT_SPEED é atributo real por entidade **NATIVE_ATTRIBUTE**; seam terceiro para essa instância antes de ride **NÃO VERIFICADO**. Não atribuir controle ao atributo do caster; adapter **CONDITIONAL** com sync/budget. | Q2/Q3 |
+| Range/target/área | Self summon na posição caster; offset pretendido ignorado; hitbox 1×.5, sem área/target/range de seleção. [Cast][cast], [tipo][entity-reg]. | Placement seguro/teleport/resize/count **⛔ SEM_HOOK_SEGURO**; não há evento de target ou replacement neste fluxo. Flight speed não é range fixo. | Q2 |
+| Summons/owner/cap | 1 nuvem no fluxo normal enquanto recast ativo, sem cap global próprio; owner antes/add/init. [Cast][cast], [manager][manager]. | SummonManager é API nativa de ownership/lifecycle, não licença para duplicar init/expiração. **Não há SpellSummonEvent#setCreature aqui**; replacement por esse hook não aplica por analogia. | Q2/Q4 |
+| Cast/mana/cooldown/recast | Instant, 0 ticks;mana 20+6(L−1),cooldown 90 s;total 2/window T. [Spell][spell], [wrapper][cast-host]. | Config/eventos nativos do [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md), integração **CONDITIONAL**; respeitar origens/creative/recast e cooldown helper. Sem segunda mana ou ledger de recast RPG. | Q1/Q4 |
+| Buff/mundo | Cloud Bless 100 ticks/amp 0 reaplicado ao controlador; SAFE_FALL_DISTANCE +999 ADD_VALUE. [SummonCloudEntity#tick][cloud], [registro][effect-reg]. | Buff100 constante, não tempo de vida da nuvem. Sem setter próprio de duração/status/queda; **CONDITIONAL**, não listener extra anulando qualquer queda. Sem block mutation própria. | Q3/Q4 |
+| Persistência/cleanup | Manager owner/expiry/castData+callbacks, native health 5/hurtgate. [Cloud][cloud], [manager-save][manager-save]. | Morte/unload/logout/restart/mount/Cloud Bless residual **PENDING**; preservar dono de dados e não remover ledger nativo por heurística. | Q4/Q5 |
 
-`CloudRideSpell.java` + `SummonCloudEntity.java`.
+Dedup: cast→cloudUUID→owner/recast/expiry→rider→ticks do buff. Não contar cada refresh do buff/owner event/callback como nova magia ou Mastery. Integração custom school permanece condicionada no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md). Assinatura ocupada: montaria temporal com movimento vertical pela visão e proteção de queda por aumento de SAFE_FALL_DISTANCE; não é buff de voo livre intercambiável.
+
+- **Q1:** L 1–9/config/origem/mana/cooldown/T truncado, atributo de caster versus speed da entidade e eventos modificados.
+- **Q2:** posição sem offset, interseções/chunks/claims, mount proprietário/forçado/recusado, input/rotações/passenger e velocidade real/latência.
+- **Q3:** imunidade normal versus BYPASSES_INVULNERABILITY, SAFE_FALL_DISTANCE/queda acima do limite/Cloud Bless recusado, controlador Mob/Player e outros efeitos.
+- **Q4:** total 2/used-all/timeout/counterspell/death/logout, manager owner-before-spawn/spawnfalse, expiração/cleanup, buff 100 após saída e talismã host.
+- **Q5:** dedicado/cliente/multiplayer/Survival/sync/unload/restart/dedup/Mastery. **Todos PENDING**, sem runtime/adapter novo.
+
+[versions]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/gradle.properties#L11-L36
+[registry]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESpellRegistries.java#L24-L50
+[school]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESchoolRegistries.java#L32-L54
+[power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L257
+[cast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L332
+[acquisition]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L594-L612
+[guide]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/resources/assets/iss_magicfromtheeast/lang/en_us.json#L30-L31
+[spell]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/CloudRideSpell.java#L36-L80
+[cast]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/CloudRideSpell.java#L83-L109
+[cloud]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/summoned_cloud/SummonCloudEntity.java#L26-L139
+[riding]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/summoned_cloud/SummonCloudEntity.java#L142-L207
+[entity-reg]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTEEntityRegistries.java#L105-L109
+[effect-reg]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTEEffectRegistries.java#L26-L27
+[recast-instance]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/RecastInstance.java#L27-L35
+[manager]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L79-L178
+[manager-save]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/capabilities/magic/SummonManager.java#L221-L275

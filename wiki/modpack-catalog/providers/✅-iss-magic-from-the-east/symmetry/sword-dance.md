@@ -1,35 +1,72 @@
 # Sword Dance
 
-**Registro físico confirmado (2026-10-13):** ✅ `COUNTED_EXACT` — `iss_magicfromtheeast:sword_dance` / `net.warphan.iss_magicfromtheeast.spells.symmetry.SwordDanceSpell`, school default `MFTESchoolRegistries.SYMMETRY_RESOURCE` ([prova Java 21 #38449995162](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38449995162); [dossiê](../EXACT-BINARY-SPELLS-1.1.5.md)). Os números e comportamentos descritos abaixo continuam derivados da fonte pinada, não aprovados em runtime físico/Survival. **+0 identidade adicional**.
+**Dossiê documental — 27/10/2026.** `technical_perk_dossier: 1`; identidade `COUNTED_EXACT`; lógica `RELEASE_BOUNDED_SOURCE`; integração `CONDITIONAL`; mutabilidade `CONTRATO_CONDICIONAL`; QA físico `PENDING`. **+0 identidades / +0 strict**: efeitos/projéteis filhos não são novas spells.
 
-- **ID:** `iss_magicfromtheeast:sword_dance`
-- **School:** Symmetry
-- **Levels:** 1–8
-- **Min rarity:** Uncommon
-- **Cast:** Instant
-- **Mana neutral:** 30–100
-- **Spell power neutral:** 3 at all levels before entity/config multipliers
-- **Cooldown:** 40 s
-- **Sword count:** `level+2` = 3–10
+## Identidade, proveniência e ingresso
 
-## Contract
+ISS: Magic From The East, mod_id `iss_magicfromtheeast`, spell **`iss_magicfromtheeast:sword_dance`**, escola default **`iss_magicfromtheeast:symmetry`**. Classe `net.warphan.iss_magicfromtheeast.spells.symmetry.SwordDanceSpell`. [Registro][registry], [escola/tipo][school].
 
-Spawns Jade Swords in a 360° ring around the caster, each with damage = final Symmetry spell power and wait timer 120 ticks.
+JAR físico histórico #346 `iss_magicfromtheeast-1.1.5.jar`, SHA-1 `e3552ea6b7b32b843c48bf0d857237d4b7129ab0`, publisher [CF 7385201](https://www.curseforge.com/minecraft/mc-mods/magic-from-the-east/files/7385201); [22 identidades binárias](../EXACT-BINARY-SPELLS-1.1.5.md). Source oficial candidato de release `WarPhan78/ISS_MagicFromTheEast-1.21.x@f2a095cbbc89f8d8428dca758140663adf54ae88`, de 27/12/2025, anterior ao upload do publisher: **RELEASE_BOUNDED_SOURCE**, sem prova de equivalência integral de métodos com o JAR. O pin declara versão 1.1.5, MC 1.21.1, NeoForge 21.1.187 e Iron’s 3.14.8; o pack usa NeoForge 21.1.250 e Iron’s 3.16.3. O host consultado é `e4056af90302d37eb1739f5ff05020b020e6e252` (3.16.3): cada comportamento herdado abaixo é um contrato desse host, condicionado à combinação efetiva. Config implantada **NÃO VERIFICADA**. Metadata All Rights Reserved; MIT apenas do template: fatos, paráfrases e permalinks, sem importar código ou assets. [Versões][versions], [contratos comuns](../SPELL-PERK-BOUNDARIES-1.1.5.md).
 
-`JadeSword`:
+No JAR publisher de SHA-1 acima, inspeção estreita com `javap` (JDK 21) confirmou cooldown **90 s**, teste de silêncio `i % 3 == 0`, divisão inteira `360/N`, `getSpeed()` seguido de descarte do retorno (`pop`), wait 120, `setDeltaMovement`, `L+2` e chamada de dano antes do teste recursivo de 5. O valor 40 s e silêncio por índices pares pertencem a source posterior e não são adotados. Isso não prova equivalência integral dos métodos ou QA físico.
 
-- speed 1.2;
-- briefly moves outward, then stops;
-- during its active seek window tracks `owner.getLastHurtMob()` if that target remains alive;
-- accelerates toward that target;
-- can clear target invulnerability time after tick 10;
-- breaks/discards on later impacts or timer expiration;
-- explicitly does **not** pierce shields.
+[Guia oficial][guide], parafraseado: gera espadas ao redor do caster, que após espera buscam a última vítima atacada. Classes não sobrescrevem aquisição/loot/crafting/learning; seguem escola/config/gates Iron’s. Rota concreta Survival e config implantada **NÃO VERIFICADAS**, sem presumir creative-only. [Host][acquisition]. No wrapper jogador, admissão/pre-cast precedem onCast; SpellOnCastEvent e débito precedem efeito, e cooldown segue o settlement. Alterar L no evento não recalcula custo ou snapshots anteriores. [Ordem][cast-host].
 
-## Dedup / authority
+## Fórmulas e pipeline causal
 
-Identity = delayed orbiting sword swarm that keys from the caster's last hurt mob, not generic homing missiles. The JadeSword entity owns targeting/hit cadence. Do not spawn a second swarm or reset iFrames in a parallel listener.
+Os parâmetros e a ordem local abaixo pertencem ao **source limitado à release**, salvo os campos binários explicitados. `L` é o nível recebido no `onCast`; os intervalos usam os níveis default e multiplicadores neutros iguais a 1, sem impor um clamp adicional ao nível efetivo. `P` e `D` são dano solicitado em health points, antes de resistência, veto e iFrames; 20 ticks correspondem nominalmente a 1 s. Mana é inteira pelo truncamento do host. Defaults/config nativa são globais e não constituem um setter de perk por jogador.
 
-## Source
+Defina `L`=nível recebido no onCast, `P=3×SPELL_POWER×symmetryPower×C`, `C=POWER_MULTIPLIER`, `N=L+2`. Defaults Uncommon, L 1–8: mana neutra 30–100 (`30+10(L−1)`), P neutro 3, N 3–10, cooldown 90 s = 1800 ticks antes de modifiers; INSTANT 0 ticks, sem recast local. [Defaults/spawn][spell], [host][power].
 
-`SwordDanceSpell.java` + `JadeSword.java`, source 1.1.5.
+1. `SwordDanceSpell#onCast` usa origem eye−Y 0.75 e cria N JadeSword; separação angular **integer `360/N`**, não divisão float. Vetor unitário (0, 0, 1) rotacionado 1° em X e offset × i em Y; `getSpeed()` é chamado e descartado, enquanto setDeltaMovement recebe esse vetor de módulo 1. **Não usa 1.2 como velocidade inicial**. Grava damage=P/waitTimer 120, marca silent quando `i % 3 == 0` e solicita addFreshEntity sem ler resultado. [Spawn][spell].
+2. Tipo registrado 0.3 × 0.3 blocks/tracking 64; o modelo/VFX não substitui essa caixa, noGravity=true. JadeSword tem getSpeed=1.2, mas tick chama primeiro **super.tick**: expiry>300, detecção/travel/homing host antecedem lógica local. Então zera hitPerTicks e decrementa waitTimer; ao chegar≤110 zera movimento. Na janela 100..11, se campo private owner.lastHurtMob existe/vivo, grava vetor normalizado de módulo 2 blocks/tick até o centro do alvo. Como zera antes, não é aceleração acumulada. wait 5 faz VFX, wait 0 descarta. São fases nominais, não alcance/cap de eventos garantidos. [Entity][sword], [tick][tick], [host][projectile], [tipo][entity].
+3. `JadeSword#onHitEntity` tenta helper P com SpellDamageSource (spell SwordDance, direta=espada, causing=owner) **antes** de testar `hitPerTicks++<5`. O teste pode recursar ProjectileUtil.getHitResultOnMoveVector → EventHooks.onProjectileImpact → onHit. Uma cadeia iniciada em 0 pode tentar dano 6 vezes; o contador não é ledger de vítimas nem cap global rígido por tick, inclusive por seu reset após super.tick. No host consultado, o helper atualiza `owner.lastHurtMob` antes de chamar `hurt`; dano retornando false não implica que esse input de busca permaneça igual. Em age>10 zera invulnerableTime sem condicionar ao retorno do dano. [Hit][hit], [helper][damage-host].
+4. onHit servidor descarta bloco novo ou entidade em age>10 **antes de chamar super.onHit**; descarte não bloqueia automaticamente o callback posterior observado. onHitBlock é vazio. shouldPierceShields retorna false, mas onHitEntity não chama seu pai: a branch especial ShieldPart/AbstractShieldEntity de AbstractMagicProjectile#onHitEntity não é executada por esse override. O override de dano não tem guarda de servidor local; a guarda em `onHit` envolve descarte/som e não o posterior `super.onHit`. Impact events externos continuam independentes. Não inferir shield-block só pelo getter. [Hit/lifecycle][hit], [shields][shield-host].
+5. onAntiMagic local é vazio, sobrescrevendo o descarte padrão. waitTimer/private owner/hitPerTicks não têm save/load próprio; host salva Damage/Age e dados de projétil, mas isso não restaura automaticamente esses fields ou a busca lastHurtMob. A janela de busca acessa o campo private owner sem guarda null local. Não prometer retomada homing após load. [Entity][sword], [hit][hit], [NBT host][state-host].
+
+## Matriz de alteração por perks
+
+| Eixo | Valor / consumidor / fase | Boundary real e limite | QA |
+|---|---|---|---|
+| Dano / power / tipo | P por espada, snapshot no spawn; helper por impacto. Symmetry → symmetry_magic, fonte de spell/espada/owner. [Spell][spell], [hit][hit], [escola][school], [tipo][types]. | Power/atributos **NATIVE_ATTRIBUTE**, C **CONFIG_NATIVE** global. **HOOK_VERIFICADO**: Living+SpellDamageSource aceita amount/cancel no [SpellDamageEvent][damage-event] pré-resistência/hurt; tipo não tem setter nesse evento. Conversão **⛔ SEM_HOOK_SEGURO**. | Q1/Q3 |
+| Quantidade / budget | N=L+2, 3–10 defaults, int 360/N no spawn; sem cap de N independente local. [Spell][spell]. | N acoplado ao nível recebido. Alterar L no SpellOnCastEvent afeta N sem refazer admissão ou custo já calculados; não é setter exclusivo de quantidade. Sem hook pré-spawn de contagem; duplicação de espadas **⛔ SEM_HOOK_SEGURO**. | Q1/Q2 |
+| Target / range / área | Último Living atacado/vivo do private owner durante janela; centro AABB do alvo, sem LOS/range próprio nesse trecho. Hit path/raycast do host separado. [Tick][tick], [hit host][hit-host]. | Não é seleção remota/AOE nova. Sem resolver mutável de alvo/range seguro identificado; **⛔ SEM_HOOK_SEGURO** para retarget/área. | Q2/Q3 |
+| Projétil / trajetória | Caixa 0.3 × 0.3; inicial 1 block/tick nominal, busca local 2 blocks/tick, getter 1.2 não consumido no spawn; noGravity. [Tipo][entity], [spawn][spell], [tick][tick]. | setDamage herdado/setWaitTimer público são por instância, não callback terceiro universal. Resize/speed/homing como perk **CONTRATO_CONDICIONAL / ⛔ fail-closed**. | Q2/Q4 |
+| Tempo / cooldown | INSTANT 0, cooldown 90 s, wait 120 → stop≤110 → seek 100..11 → VFX 5 → discard 0; parent expiry>300. [Spell][spell], [tick][tick]. | Cooldown config/atributos/eventoPre no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md); wait timer é relógio diferente. Sem setter por jogador desse fluxo. | Q1/Q4 |
+| Mana / recast | `int((30+10(L−1))×MANA_MULTIPLIER)`, recast local N/A. [Spell][spell], [host][power]. | SpellOnCastEvent#setManaCost/setSpellLevel são reais nesse wrapper, adapter CONDITIONAL; sem segunda cobrança por hit/espada. | Q1/Q3 |
+| iFrames / shields / eventos | Contador recursivo por instância; reset após super, iFrames 0 depois de age 10 mesmo com dano falho. false shield flag sem super.onHitEntity. [Hit][hit]. | Observer de hit não controla toda recursão/física. Sem mutador de iFrames/ledger seguro; não aplicar segundo dano em paralelo. | Q3/Q4 |
+| Estado / persistência | Sem save de waitTimer/private owner/contador; antiMagic local vazio. [Swords][sword], [host][state-host]. | Carregamento/cleanup/sync **PENDING**; não manter ledger de alvo/hits paralelo RPG. | Q4 |
+| Summon / mundo / cura | Espadas são projéteis filhos, sem AI de summon/heal/teleporte/block mutation local. [Spell][spell], [sword][sword]. | Summon cap/AI e world rollback **N/A**; atribuição e despesas continuam provider-owned. | Q2/Q4 |
+
+Assinatura ocupada: enxame atrasado de espadas que usa lastHurtMob e callbacks recursivos. Dedup cast → UUID de espada → fase/hit/vítima, sem creditar cada tentativa/partícula como novo cast. Uma magia original de aquisição/ledger próprios exige contrato próprio.
+
+## Ownership, dedup e verificação
+
+MFTE/Iron’s mantêm spell, recursos, entidades, dano e cleanup. RPG Skill Tree mantém progressão; BA seu runtime/world policy; Enshrouded sua classificação/Shroud. A escola Symmetry custom e sua lane Mastery continuam condicionadas ao contrato de token descrito no [comum](../SPELL-PERK-BOUNDARIES-1.1.5.md); não presumir `irons:symmetry` integrado.
+
+- **Q1:** source/JAR/hosts/config, origens, nível/atributos, mana/cooldown e eventos de nível/custo antes/depois de snapshots.
+- **Q2:** hitbox versus VFX, alvos finos/grandes, blocos/LOS/aliados/owner/PvP/claims, spawn recusado, número vivo e budgets.
+- **Q3:** helper cancel/amount/resistência/iFrames, tentativas versus HP final, escudos, múltiplos callbacks e correlação de filhos/vítima.
+- **Q4:** cliente/dedicado/multiplayer, persistência/unload/relog/restart/antiMagic, timers/owner e sync, ausência de segunda mana/XP/efeito.
+
+Todos físicos **PENDING**; a ficha não implementa perk/adapter nem promove Stage.
+[versions]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/gradle.properties#L11-L36
+[registry]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESpellRegistries.java#L24-L37
+[school]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTESchoolRegistries.java#L32-L44
+[types]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/damage/MFTEDamageTypes.java#L11-L17
+[power]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L148-L257
+[cast-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L263-L332
+[acquisition]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L594-L612
+[damage-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64
+[damage-event]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/events/SpellDamageEvent.java#L13-L50
+[source-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/AbstractSpell.java#L560-L565
+[projectile]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L51-L115
+[hit-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L153-L213
+[state-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L289-L359
+[shield-host]: https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/entity/spells/AbstractMagicProjectile.java#L361-L405
+[spell]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/spells/symmetry/SwordDanceSpell.java#L21-L93
+[guide]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/resources/assets/iss_magicfromtheeast/lang/en_us.json#L14-L15
+[sword]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/sword_dance/JadeSword.java#L37-L53
+[tick]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/sword_dance/JadeSword.java#L67-L103
+[hit]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/entity/spells/sword_dance/JadeSword.java#L112-L157
+[entity]: https://github.com/WarPhan78/ISS_MagicFromTheEast-1.21.x/blob/f2a095cbbc89f8d8428dca758140663adf54ae88/src/main/java/net/warphan/iss_magicfromtheeast/registries/MFTEEntityRegistries.java#L60-L64
