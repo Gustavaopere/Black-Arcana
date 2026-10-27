@@ -1,0 +1,54 @@
+# Hexalia 1.3.7 — delta técnico de Bloodlust, Spikeskin e Siphon
+
+**Escopo:** três brews **já inventariados**, sem adicionar receitas, magias, IDs ou numeradores. Análise documental de interoperabilidade *clean-room*, em 27/10/2026. **Estado ⚠️ source release-pinned; QA do JAR e do jogador não executado**.
+
+## Autoridades e limite da prova
+
+- **JAR reportado na modlist física do catálogo:** `hexalia-neoforge-1.3.7.jar`, mod ID `hexalia`, Minecraft 1.21.1/NeoForge, SHA-1 `ca90edf1664cf6d44fe7e5318c71069050499c7e`. Esta rodada **não abriu o JAR instalado**.
+- **Fonte 1.3.7 correlacionada à release:** `AstralyaStudios/Hexalia@98c22aaf70e069c616fed5ad2dc56d2b37fcd283` ([commit](https://github.com/AstralyaStudios/Hexalia/commit/98c22aaf70e069c616fed5ad2dc56d2b37fcd283)); versionamento documentado no [README do provider](../README.md). A igualdade byte a byte source↔JAR 1.3.7 **não é demonstrada**.
+- **Fonte de comparação 1.3.6:** `AstralyaStudios/Hexalia@4952c65233bf31e9f0d3e55ff76be7fa1007ee3d` ([commit](https://github.com/AstralyaStudios/Hexalia/commit/4952c65233bf31e9f0d3e55ff76be7fa1007ee3d)). O recorte histórico 1.3.6 das fichas individuais permanece válido **apenas para aquela versão**.
+- O commit de manutenção 1.3.7 posterior ao pin da release não foi usado para inferir comportamento do JAR instalado.
+
+## Diferença confirmada em `ModMobEffects`
+
+Comparação direta dos arquivos `ModMobEffects.java` 1.3.6 vs 1.3.7, sem extrapolar valores *effective* de `AttributeInstance`:
+
+| Effect e atributo | 1.3.6: amount declarado | 1.3.7: amount declarado | Operation | Leitura permitida |
+|---|---:|---:|---|---|
+| `hexalia:bloodlust` → `ATTACK_DAMAGE` | `0.0F` | **`3.0F`** | `ADD_VALUE` | o registro de atributo mudou; dano final de ataque não foi medido |
+| `hexalia:spikeskin` → `ARMOR` | `0.0F` | **`3.0F`** | `ADD_VALUE` | o registro de atributo mudou; armor efetivo não medido |
+| `hexalia:spikeskin` → `MOVEMENT_SPEED` | `-0.10F` | `-0.10F` | `ADD_MULTIPLIED_TOTAL` | operação e amount do template são estáveis; aplicação runtime pendente |
+| `hexalia:siphon` → `ATTACK_SPEED` | `+0.4F` | `+0.4F` | `ADD_VALUE` | sem alteração no registro desse atributo |
+
+**Fontes localizadas:** [registro 1.3.6](https://github.com/AstralyaStudios/Hexalia/blob/4952c65233bf31e9f0d3e55ff76be7fa1007ee3d/common/src/main/java/net/astralya/hexalia/effect/ModMobEffects.java) e [registro 1.3.7 linhas 50–86](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/effect/ModMobEffects.java#L50-L86). A alteração do `amount` de `0` para `3` em **Bloodlust e Spikeskin** invalida descrições do registro 1.3.6 se apresentadas como sendo da instalação 1.3.7.
+
+## Consumidores e riscos reais para perks
+
+**Bloodlust — classe de efeito e consumer NeoForge separados.** O corpo da [`BloodlustEffect` 1.3.7](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/effect/custom/BloodlustEffect.java#L11-L36) permanece idêntico ao 1.3.6: remove efeitos cujo caminho de registry contém `regeneration`; parâmetro de construtor `3.0D` não utilizado ali. O registro `ATTACK_DAMAGE amount=3.0F` da 1.3.7 é outro canal. **Novo em fonte 1.3.7:** [`LivingEntityMixin.hexalia$applyBloodlustLifeSteal` (LivingEntityMixin.java, L21–32)](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/neoforge/src/main/java/net/astralya/hexalia/neoforge/mixin/LivingEntityMixin.java#L21-L32), `@Inject(method="hurt",at=HEAD)`: quando `source.getEntity()` é `Player` com efeito Bloodlust, calcula `min(6.0F, amount/4.0F)` e chama `player.heal(...)` **se resultado ≥1.0F**, além de som. Portanto há **consumer de lifesteal no source NeoForge 1.3.7** (ausente no pin de 1.3.6 auditado). É uma solicitação de cura baseada no **montante recebido pelo hook antes do settlement final**, não prova de dano aceito, HP final ou cura proporcional ao dano efetivamente causado. Não usar esse ponto para award de Mastery por hit concluído sem outro contrato causal.
+
+**Spikeskin — atributo e retaliação NeoForge separados.** A classe [`SpikeskinEffect`](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/effect/custom/SpikeskinEffect.java#L7-L18) é idêntica ao pin antigo: `adjustModifierAmount(amplifier,modifier)` retorna `3*(amplifier+1)` sem inspecionar o parâmetro `modifier`. Isso coexiste com os templates `ARMOR ADD_VALUE +3.0` e `MOVEMENT_SPEED ADD_MULTIPLIED_TOTAL -0.10`, cujo **valor efetivo em runtime ainda não foi verificado**. **Novo consumer da release NeoForge 1.3.7:** [`LivingEntityMixin.hexalia$applySpikeskinRetaliation` L34–49](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/neoforge/src/main/java/net/astralya/hexalia/neoforge/mixin/LivingEntityMixin.java#L34-L49), injetado em `getDamageAfterArmorAbsorb` no `TAIL`. Com a vítima sob Spikeskin e `source.getEntity()` do tipo `LivingEntity`, ele tenta `livingAttacker.hurt(indirectMagic(...), callbackInfo.getReturnValue()*0.2F + spikeskin.getAmplifier()+1)`. Há veto específico para a fonte `INDIRECT_MAGIC` cuja entidade direta é a própria vítima atual; **isso não é demonstração completa de ausência de recursão, de compatibilidade entre mods ou de proteção PvP**. O valor retornado pelo hook é de pós-armadura; não equivale necessariamente a HP perdido no evento original. Não duplicar a retaliação via perk.
+
+**Registro e limites dos Mixins:** [`hexalia-neoforge.mixins.json`](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/neoforge/src/main/resources/hexalia-neoforge.mixins.json) marca a configuração `required:true`, contém `LivingEntityMixin`, usa Java 21 e `defaultRequire:1`. Foi conferido o caminho **da release source 1.3.7**, com `neoforge/mixin/LivingEntityMixin.java` presente e ausente no pin de 1.3.6 consultado. **Não comprova que o mixin foi empacotado, aplicado em `LivingEntity`, invocado ou aceito pelo JAR do usuário.** Aplicação física, ordem com outros Mixins, reentrância, dano bloqueado e efeito real continuam QA pendente.
+
+**Siphon.** A implementação [`SiphonEffect` 1.3.7](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/effect/custom/SiphonEffect.java#L14-L64) é textualmente igual à de 1.3.6: consulta `HexaliaConfig.siphonRadius()+amplifier`, busca `ItemEntity` na AABB expandida por tick somente para Player não agachado, chama `item.playerTouch(player)` com slot disponível e, no caminho de inventário cheio, movimenta o **primeiro** item encontrado antes de retornar. `getFreeSlot() == -1` não é sinônimo de impossibilidade de *stacking* com todos os itens. O campo `SIPHON ATTACK_SPEED +0.4 ADD_VALUE` permanece declarado [no registry](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/effect/ModMobEffects.java#L77-L86). Não transformar *pickup* ou loop per-tick em cast/XP/Mastery.
+
+## Receita, item, duração e configuração
+
+- Os três JSONs de receita `brew_of_bloodlust_from_small_cauldron`, `brew_of_spikeskin_from_small_cauldron` e `brew_of_siphon_from_small_cauldron` foram comparados nos dois commits e se mostraram **textualmente idênticos**. Cada receita usa tipo `hexalia:small_cauldron`, `duration=4800` e mantém os quatro ingredientes já documentados nas fichas históricas: [Bloodlust](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/generated/resources/data/hexalia/recipe/brew_of_bloodlust_from_small_cauldron.json), [Spikeskin](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/generated/resources/data/hexalia/recipe/brew_of_spikeskin_from_small_cauldron.json), [Siphon](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/generated/resources/data/hexalia/recipe/brew_of_siphon_from_small_cauldron.json).
+- [`ModItems` 1.3.7 linhas 391–433](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/item/ModItems.java#L391-L433) instancia os três `BrewItem` com `durationTicks=20*240` e `amplifier=0`; [`BrewItem` 1.3.7](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/item/custom/BrewItem.java#L18-L53) calcula duração com `1.5` apenas para set Moonweave completo, no servidor. Duração **base 4.800 ticks** e **com set completo 7.200 ticks** são parâmetros de criação do efeito, **não comprovação de duração efetiva no player** (hooks, imunidades, substituições e config final não testados).
+- Não houve leitura da configuração efetivamente instalada nem do resultado real de equipar/desequipar os atributos. Valores declarados em source não autorizam alterar parâmetros de Hexalia por perks per-player.
+
+## Matriz de aceitação
+
+| Gate | Status | Observação |
+|---|---|---|
+| Contagem de três brews | ✅ já inventariados | +0 IDs, +0 certificações |
+| Source 1.3.7 vs 1.3.6 em effect/registry/recipes | ✅ evidência documental verificada | Somente arquivos listados, não varredura exaustiva do repo |
+| Registro exato 1.3.7 no classfile instalado | ⛔ não testado | Hash do JAR registrado; equivalência de bytecode pendente |
+| Spikeskin `adjustModifierAmount` vs armor/speed efetivos | ⛔ não testado | Verificar API, amplificadores, extensão, remoção de efeito/relogin |
+| Spikeskin retaliação | ⚠️ source / ⛔ runtime | Mixin `getDamageAfterArmorAbsorb TAIL` aplica `hurt(indirectMagic,...)`; QA de ordem, recursão e mitigação pendente |
+| Bloodlust lifesteal + ataque efetivo | ⚠️ source / ⛔ runtime | Mixin `hurt HEAD` chama `heal(min(6,amount/4))` sob condição; HP/dano efetivo não provados |
+| Siphon pickup/attraction e mining/exhaustion efetivos | ⚠️/⛔ | Admissão item por tick source-pinned; mineração/exaustão sem consumidor aqui |
+| Perk mutadora / double settlement / claims | ⛔ fail-closed | Hexalia permanece autoridade da consumação e do efeito; RPG Skill Tree controla perks/Mastery |
+
+**Resultado:** correção de versões e localização do **consumer NeoForge 1.3.7** de Bloodlust/Spikeskin, sem permissão para duplicar atributos, retaliar, curar, multiplicar procs ou modificar mundo por bridge. **Hexalia permanece 0/38** no índice perk-ready observado; catálogo global **138/2075** e providers integrais **0/164** são checkpoints lidos da `main@87e8c090ec5fc18a018d854cc608ebe43a4cf4fc`, e não numeradores de objetos completamente auditados. Stage 06.05 e QA físico permanecem independentes.

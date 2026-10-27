@@ -15,14 +15,20 @@ Physical provider: `hexalia-neoforge-1.3.7.jar` / SHA-1 `ca90edf1664cf6d44fe7e53
 | Brew | Item ID | Consumption | Base duration | Current source status |
 |---|---|---|---:|---|
 | [Arachnid Grace](arachnid-grace.md) | `hexalia:brew_of_arachnid_grace` | MobEffect brew | 240 s | wall climb + Poison removal + water/rain Weakness source-confirmed; documented cobweb immunity runtime-unverified |
-| [Bloodlust](bloodlust.md) | `hexalia:brew_of_bloodlust` | MobEffect brew | 240 s | regeneration-effect suppression source-confirmed; advertised lifesteal/strength path not located |
+| [Bloodlust](bloodlust.md) | `hexalia:brew_of_bloodlust` | MobEffect brew | 240 s | release 1.3.7: `ATTACK_DAMAGE +3.0` e Mixin NeoForge `hurt HEAD` de lifesteal; HP/dano efetivo sem QA |
 | [Daybloom](daybloom.md) | `hexalia:brew_of_daybloom` | MobEffect brew | 240 s | 5 s sunlight pulses, heal/damage/speed formula source-confirmed |
 | [Gravebloom](gravebloom.md) | `hexalia:brew_of_gravebloom` | MobEffect brew | 90 s | player-killed Monsters trigger provider moss/plant growth around the death position |
 | [Hollow Silence](hollow-silence.md) | `hexalia:brew_of_hollow_silence` | MobEffect brew | 240 s | registered effect class is inert; advertised sound/vision behavior path not located |
 | [Homestead](homestead.md) | `hexalia:brew_of_homestead` | one-shot custom consumable | instant | interdimensional respawn-return path + 30 s Confusion source-confirmed |
-| [Siphon](siphon.md) | `hexalia:brew_of_siphon` | MobEffect brew | 240 s | item attraction/pickup + attack-speed modifier source-confirmed; advertised mining speed/exhaustion path not located |
+| [Siphon](siphon.md) | `hexalia:brew_of_siphon` | MobEffect brew | 240 s | 1.3.7 reconfirmado: pickup/attraction + `ATTACK_SPEED +0.4 ADD_VALUE`; mineração/exaustão não comprovadas |
 | [Slimewalker](slimewalker.md) | `hexalia:brew_of_slimewalker` | MobEffect brew | 240 s | fall-distance reset + grounded Slowness + bounce path source-confirmed; exact bounce trigger needs runtime QA |
-| [Spikeskin](spikeskin.md) | `hexalia:brew_of_spikeskin` | MobEffect brew | 240 s | attribute registrations/override source-confirmed; effective values + advertised damage reflection require QA |
+| [Spikeskin](spikeskin.md) | `hexalia:brew_of_spikeskin` | MobEffect brew | 240 s | release 1.3.7: `ARMOR +3.0`, `MOVEMENT_SPEED -0.10` templates e Mixin de retaliação; efeito final/QA pendentes |
+
+## Revisão das três brews na release 1.3.7 — 27/10/2026
+
+A [auditoria do delta de Bloodlust, Spikeskin e Siphon](RELEASE-1.3.7-BLOODLUST-SPIKESKIN-SIPHON-ATTRIBUTE-DELTA-20261027.md) compara os registros de atributos, métodos de efeito e três JSONs de receitas entre os commits 1.3.6 e 1.3.7. **Bloodlust e Spikeskin deixaram de registrar valor base `0.0F` para ATTACK_DAMAGE e ARMOR, respectivamente; ambos registram `3.0F` na release 1.3.7.** Siphon permaneceu inalterado nas superfícies confrontadas. São valores declarados em *source*. A revisão posterior desta mesma PR também localizou no **Mixin NeoForge da release 1.3.7** o caminho de cura de Bloodlust em `hurt HEAD` e de retaliação de Spikeskin em `getDamageAfterArmorAbsorb TAIL`; ambos têm fórmulas documentadas no relatório. **Isso não certifica aplicação do mixin, HP/dano final, compatibilidade ou perk mutadora**. As fichas antigas mantêm fatos históricos 1.3.6 e trazem adendos de vigência 1.3.7.
+
+**Sem nova identidade/perk-ready:** catálogo de brews 9/9, provider Hexalia 0/38 e índices gerados permanecem inalterados.
 
 ## Shared BrewItem contract
 
@@ -41,11 +47,11 @@ This closes the **current 1.3.7 brew item/recipe inventory**. It does not close 
 The audit intentionally distinguishes provider text from executable paths:
 
 1. **Arachnid Grace** — cobweb immunity is documented, but no matching source path was located.
-2. **Bloodlust** — heal-from-damage/strength is documented, while the directly located class removes regeneration-like effects; the advertised lifesteal path was not found.
+2. **Bloodlust** — antiga ausência na classe do efeito referia-se à auditoria 1.3.6; source NeoForge 1.3.7 tem Mixin `hurt HEAD` que solicita heal antes do settlement; JAR/runtime e progressão seguem pendentes.
 3. **Hollow Silence** — the registered MobEffect subclass has no custom behavior and no separate effect-specific hook was located.
 4. **Siphon** — mining-speed/exhaustion behavior is documented, but the located implementation proves item attraction and attack-speed modification instead.
 5. **Slimewalker** — the bounce branch explicitly requires `isSuppressingBounce()`; actual player-facing landing/crouch behavior must be tested.
-6. **Spikeskin** — source contains raw armor/movement templates plus a custom modifier-adjustment override; exact applied values and the advertised incoming-damage reflection need runtime/API validation.
+6. **Spikeskin** — o source NeoForge 1.3.7 implementa retaliação em Mixin após armadura; valores aplicados de atributos, reflexo final, recursão e QA com modpack permanecem sem validação física.
 7. **Gravebloom** — current source closes its death-triggered moss/plant mutation, but final assembled world-protection/datapack interaction remains runtime QA.
 
 These are provider QA findings, not Black Arcana defects and not permission for Black Arcana to patch Hexalia implicitly.

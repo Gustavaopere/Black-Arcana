@@ -79,6 +79,10 @@ For `requires_soul` recipes, finishing the offering phase does not immediately s
 
 `CelestialInfusion.java`, `CelestialInfusionRecipe.java`, and all six generated Celestial Infusion recipe JSON blobs are unchanged between the audited 1.3.6 release pin and the 1.3.7 release commit. The existing 6/6 catalog therefore remains semantically current and is repinned to the 1.3.7 release boundary.
 
+## Atualização de contratos de brew — 27/10/2026
+
+A comparação release-pinned dos registros **Bloodlust / Spikeskin / Siphon** na Hexalia 1.3.7 corrigiu duas leituras antigas: `ATTACK_DAMAGE` de Bloodlust e `ARMOR` de Spikeskin passaram de `0.0F` (fonte 1.3.6) para `3.0F` (fonte 1.3.7). O template `MOVEMENT_SPEED -0.10F` de Spikeskin permanece, mas seu override comum exige comprovação no jogador; Siphon conserva `ATTACK_SPEED +0.4F` e a rotina de coleta conferida. **Novidade de source da 1.3.7:** Mixin NeoForge acrescenta lifesteal de Bloodlust em `hurt HEAD` e retaliação Spikeskin em `getDamageAfterArmorAbsorb TAIL`, com comportamento e event-order físicos ainda não testados. [Proveniência e auditoria](brews/RELEASE-1.3.7-BLOODLUST-SPIKESKIN-SIPHON-ATTRIBUTE-DELTA-20261027.md). Sem nova magia, sem certificação, sem autorização de adapter. Os subcatálogos permanecem 9/9 brews e 29 rituais/infusões observados no corte registrado; perk-ready Hexalia 0/38.
+
 ## 1.3.7 non-semantic content delta
 
 The release also adds Gravebloom Brew, Heartseed, Cinderhew, Herb Jar and five Accessories-based magical wearables (`seafoam_talisman`, `moonward_ring`, `witchheart_cluster`, `wyrd_feather`, `green_omen`). These are cataloged as provider items/effects rather than extra semantic spell/ritual identities under the current metric. Gravebloom expands the Small Cauldron brew inventory from 8 to 9; the new accessories are passive/proc equipment; Cinderhew is a weapon/tool action path; Heartseed is a consumable taming interaction.

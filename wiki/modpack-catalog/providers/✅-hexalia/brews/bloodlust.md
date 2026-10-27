@@ -1,5 +1,8 @@
 # Brew of Bloodlust
 
+**VIGÊNCIA 1.3.7:** a seção histórica abaixo corresponde a 1.3.6. No source release 1.3.7, além de `ATTACK_DAMAGE 0.0F → 3.0F`, foi identificado um novo consumer de lifesteal no Mixin NeoForge. Consulte o adendo, sem presumir execução do JAR instalado.
+
+
 ## Estado
 
 `SOURCE-PINNED HEXALIA 1.3.6 / ITEM+EFFECT+RECIPE VERIFIED / DOCUMENTED LIFESTEAL-STRENGTH PATH NOT LOCATED / RUNTIME QA REQUIRED`
@@ -70,3 +73,15 @@ It does occupy the semantic space of a prepared offensive/lifesteal-style witch 
 ## Authority
 
 Hexalia owns the brew/effect state. Black Arcana does not turn each damage event or effect tick into a cast, does not synthesize missing lifesteal behavior, and does not double-settle healing/progression if a verified provider path is later identified.
+
+## Adendo de release — Hexalia 1.3.7 (27/10/2026)
+
+**Estado atual:** ⚠️ `RELEASE-SOURCE-PINNED_1.3.7 / ATTRIBUTE_REGISTRATION_UPDATED / GAMEPLAY_QA_NOT_TESTED`. A origem histórica `1.3.6` acima não deve prevalecer sobre este recorte para a versão instalada. [Auditoria de três brews](RELEASE-1.3.7-BLOODLUST-SPIKESKIN-SIPHON-ATTRIBUTE-DELTA-20261027.md).
+
+- **ID inalterado:** `hexalia:brew_of_bloodlust` aplica `hexalia:bloodlust`. [`ModItems` L402–411](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/item/ModItems.java#L402-L411) define duração de `20*240=4800` ticks e amplificador zero; [`BrewItem`](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/item/custom/BrewItem.java#L18-L53) aplica via servidor, ou `7200` ticks se houver conjunto Moonweave completo.
+- **Mudança de fonte 1.3.6 → 1.3.7:** [`ModMobEffects` L50–59](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/effect/ModMobEffects.java#L50-L59) agora registra `ATTACK_DAMAGE` com `amount=3.0F` e operação `ADD_VALUE` (era `0.0F` no pin antigo). Isto **não prova dano final** aplicado ao jogador.
+- **Classe de efeito preservada entre os dois pins:** [`BloodlustEffect`](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/main/java/net/astralya/hexalia/effect/custom/BloodlustEffect.java#L11-L36) remove por tick efeitos cujo caminho no registry contenha `regeneration`; o argumento de construção `3.0D` não é usado nessa classe. Este canal e o atributo `ATTACK_DAMAGE +3.0F` são distintos.
+- **Receita:** [JSON 1.3.7](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/common/src/generated/resources/data/hexalia/recipe/brew_of_bloodlust_from_small_cauldron.json) é textualmente igual à versão 1.3.6 auditada, com `duration=4800` e os quatro ingredientes anteriores.
+- **Perks:** bônus de ataque, procs ofensivos e cura por hit exigem prova de `AttributeInstance`, DamageSource e retorno de cura. **Consumer em fonte 1.3.7:** [`LivingEntityMixin.hexalia$applyBloodlustLifeSteal` L21–32](https://github.com/AstralyaStudios/Hexalia/blob/98c22aaf70e069c616fed5ad2dc56d2b37fcd283/neoforge/src/main/java/net/astralya/hexalia/neoforge/mixin/LivingEntityMixin.java#L21-L32) injeta em `LivingEntity.hurt` no `HEAD`. Requer `source.getEntity() instanceof Player` com efeito Bloodlust, calcula `healAmount=min(6, amount/4)` e chama `player.heal(healAmount)` se `healAmount>=1`. **Este cálculo usa o amount recebido antes do resultado definitivo de dano, não a perda final de HP.** A existência deste Mixin no source é evidência de caminho de lifesteal; sua execução e os efeitos reais no JAR/cliente ainda NÃO VERIFICADOS. Evitar double heal e Mastery por mera tentativa de dano; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED` e fail-closed.
+
+**Cobertura:** a ficha já estava entre as nove brews. Nenhuma identidade nova nem certificação 100% adicionada.
