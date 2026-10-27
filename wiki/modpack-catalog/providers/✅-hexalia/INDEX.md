@@ -2,7 +2,7 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/38.**
+**Homologadas para perks (somente fichas detectadas): 0/43.**
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
@@ -25,6 +25,11 @@
 | ⚠️ | Moonweave Footwraps From Celestial Infusion | [infusions/cards/moonweave_footwraps_from_celestial_infusion.md](infusions/cards/moonweave_footwraps_from_celestial_infusion.md) |
 | ⚠️ | Moonweave Hood From Celestial Infusion | [infusions/cards/moonweave_hood_from_celestial_infusion.md](infusions/cards/moonweave_hood_from_celestial_infusion.md) |
 | ⚠️ | Moonweave Mantle From Celestial Infusion | [infusions/cards/moonweave_mantle_from_celestial_infusion.md](infusions/cards/moonweave_mantle_from_celestial_infusion.md) |
+| ⚠️ | Green Omen | [items/green-omen.md](items/green-omen.md) |
+| ⚠️ | Moonward Ring | [items/moonward-ring.md](items/moonward-ring.md) |
+| ⚠️ | Seafoam Talisman | [items/seafoam-talisman.md](items/seafoam-talisman.md) |
+| ⚠️ | Witchheart Cluster | [items/witchheart-cluster.md](items/witchheart-cluster.md) |
+| ⚠️ | Wyrd Feather | [items/wyrd-feather.md](items/wyrd-feather.md) |
 | ⚠️ | Aegiflora From Ritual Table | [rituals/cards/aegiflora_from_ritual_table.md](rituals/cards/aegiflora_from_ritual_table.md) |
 | ⚠️ | Air Node From Ritual Table | [rituals/cards/air_node_from_ritual_table.md](rituals/cards/air_node_from_ritual_table.md) |
 | ⚠️ | Astrylis From Ritual Table | [rituals/cards/astrylis_from_ritual_table.md](rituals/cards/astrylis_from_ritual_table.md) |
@@ -56,7 +61,7 @@
 | Brews | 9 | [Abrir índice](brews/INDEX.md) |
 | Censer | 0 | [Abrir índice](censer/INDEX.md) |
 | Infusions | 6 | [Abrir índice](infusions/INDEX.md) |
-| Items | 0 | [Abrir índice](items/INDEX.md) |
+| Items | 5 | [Abrir índice](items/INDEX.md) |
 | Mutations | 0 | [Abrir índice](mutations/INDEX.md) |
 | Processing | 0 | [Abrir índice](processing/INDEX.md) |
 | Rituals | 23 | [Abrir índice](rituals/INDEX.md) |
