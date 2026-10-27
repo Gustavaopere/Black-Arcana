@@ -2,17 +2,17 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/3.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+**Homologadas para perks (somente fichas detectadas): 3/3.**
+**Barra do recorte documental:** `████████████████████ 100.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
+**Estado desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
 
 | Estado | Objeto / habilidade identificada | Ficha |
 |---|---|---|
-| ⚠️ | Perk Slot Providers | [ficha/perk-slot-providers.md](perk-slot-providers.md) |
-| ⚠️ | Player Mana | [ficha/player-mana.md](player-mana.md) |
-| ⚠️ | Spellbooks Glyph Learning | [ficha/spellbooks-glyph-learning.md](spellbooks-glyph-learning.md) |
+| ✅ | Perk Slot Providers | [ficha/perk-slot-providers.md](perk-slot-providers.md) |
+| ✅ | Player Mana | [ficha/player-mana.md](player-mana.md) |
+| ✅ | Spellbooks Glyph Learning | [ficha/spellbooks-glyph-learning.md](spellbooks-glyph-learning.md) |
 
 ## Critério do ✅
 

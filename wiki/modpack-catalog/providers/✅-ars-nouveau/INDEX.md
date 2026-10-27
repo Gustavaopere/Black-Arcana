@@ -2,8 +2,8 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 119/138.**
-**Barra do recorte documental:** `█████████████████░░░ 86.2%`
+**Homologadas para perks (somente fichas detectadas): 138/138.**
+**Barra do recorte documental:** `████████████████████ 100.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
@@ -101,26 +101,26 @@
 | ✅ | Self | [glyphs/forms/self.md](glyphs/forms/self.md) |
 | ✅ | Touch | [glyphs/forms/touch.md](glyphs/forms/touch.md) |
 | ✅ | Underfoot | [glyphs/forms/underfoot.md](glyphs/forms/underfoot.md) |
-| ⚠️ | Amethyst Golem | [perks/amethyst-golem.md](perks/amethyst-golem.md) |
-| ⚠️ | Blank Thread | [perks/blank-thread.md](perks/blank-thread.md) |
-| ⚠️ | Chilling | [perks/chilling.md](perks/chilling.md) |
-| ⚠️ | Depths | [perks/depths.md](perks/depths.md) |
-| ⚠️ | Drygmy | [perks/drygmy.md](perks/drygmy.md) |
-| ⚠️ | Feather | [perks/feather.md](perks/feather.md) |
+| ✅ | Amethyst Golem | [perks/amethyst-golem.md](perks/amethyst-golem.md) |
+| ✅ | Blank Thread | [perks/blank-thread.md](perks/blank-thread.md) |
+| ✅ | Chilling | [perks/chilling.md](perks/chilling.md) |
+| ✅ | Depths | [perks/depths.md](perks/depths.md) |
+| ✅ | Drygmy | [perks/drygmy.md](perks/drygmy.md) |
+| ✅ | Feather | [perks/feather.md](perks/feather.md) |
 | ✅ | Gliding | [perks/gliding.md](perks/gliding.md) |
-| ⚠️ | Heights | [perks/heights.md](perks/heights.md) |
-| ⚠️ | High Step | [perks/high-step.md](perks/high-step.md) |
-| ⚠️ | Immolation | [perks/immolation.md](perks/immolation.md) |
-| ⚠️ | Kindling | [perks/kindling.md](perks/kindling.md) |
+| ✅ | Heights | [perks/heights.md](perks/heights.md) |
+| ✅ | High Step | [perks/high-step.md](perks/high-step.md) |
+| ✅ | Immolation | [perks/immolation.md](perks/immolation.md) |
+| ✅ | Kindling | [perks/kindling.md](perks/kindling.md) |
 | ✅ | Life Drain | [perks/life-drain.md](perks/life-drain.md) |
-| ⚠️ | Magic Capacity | [perks/magic-capacity.md](perks/magic-capacity.md) |
+| ✅ | Magic Capacity | [perks/magic-capacity.md](perks/magic-capacity.md) |
 | ✅ | Repairing | [perks/repairing.md](perks/repairing.md) |
-| ⚠️ | Spell Power | [perks/spell-power.md](perks/spell-power.md) |
-| ⚠️ | Starbuncle | [perks/starbuncle.md](perks/starbuncle.md) |
+| ✅ | Spell Power | [perks/spell-power.md](perks/spell-power.md) |
+| ✅ | Starbuncle | [perks/starbuncle.md](perks/starbuncle.md) |
 | ✅ | Undying | [perks/undying.md](perks/undying.md) |
-| ⚠️ | Warding | [perks/warding.md](perks/warding.md) |
-| ⚠️ | Whirlisprig | [perks/whirlisprig.md](perks/whirlisprig.md) |
-| ⚠️ | Wixie | [perks/wixie.md](perks/wixie.md) |
+| ✅ | Warding | [perks/warding.md](perks/warding.md) |
+| ✅ | Whirlisprig | [perks/whirlisprig.md](perks/whirlisprig.md) |
+| ✅ | Wixie | [perks/wixie.md](perks/wixie.md) |
 | ✅ | Awakening | [rituals/awakening.md](rituals/awakening.md) |
 | ✅ | Binding | [rituals/binding.md](rituals/binding.md) |
 | ✅ | Burrowing | [rituals/burrowing.md](rituals/burrowing.md) |
@@ -145,9 +145,9 @@
 | ✅ | Summon Wilden | [rituals/summon-wilden.md](rituals/summon-wilden.md) |
 | ✅ | Sunrise | [rituals/sunrise.md](rituals/sunrise.md) |
 | ✅ | Warping | [rituals/warping.md](rituals/warping.md) |
-| ⚠️ | Perk Slot Providers | [systems/perk-slot-providers.md](systems/perk-slot-providers.md) |
-| ⚠️ | Player Mana | [systems/player-mana.md](systems/player-mana.md) |
-| ⚠️ | Spellbooks Glyph Learning | [systems/spellbooks-glyph-learning.md](systems/spellbooks-glyph-learning.md) |
+| ✅ | Perk Slot Providers | [systems/perk-slot-providers.md](systems/perk-slot-providers.md) |
+| ✅ | Player Mana | [systems/player-mana.md](systems/player-mana.md) |
+| ✅ | Spellbooks Glyph Learning | [systems/spellbooks-glyph-learning.md](systems/spellbooks-glyph-learning.md) |
 
 ## Subpastas
 
