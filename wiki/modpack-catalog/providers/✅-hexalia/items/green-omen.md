@@ -50,4 +50,3 @@ Não disparar quebra adicional, recompensas de Mastery por drop duplicado ou nov
 Testar c:crops de vários mods, BlockDropsEvent cancelado, loot com ItemStack.EMPTY, listas de múltiplos stacks, chance/feedback, proteção do mundo e plugins de loot.
 
 A evidência é **documental estática da fonte 1.3.7**, não homologação do JAR, hit/loot confirmado, evento/mixin funcional no servidor real ou `COMPLETE_PERK_READY`. [Inventário agregado prévio](RELICS-WARDS-BINDING-AND-WEARABLES.md).
-
