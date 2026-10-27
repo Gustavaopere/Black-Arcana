@@ -1,0 +1,272 @@
+name: Goety 3.1.4 Lightning Leeching symbolic probe
+
+on:
+  push:
+    branches:
+      - audit/goety-314-lightning-leech-symbolic-20261027
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: goety-314-lightning-leech-symbolic-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  exact-symbolic-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Hash-verify publisher JAR and retain scoped relationships only
+        shell: bash
+        working-directory: ${{ runner.temp }}
+        run: |
+          set -euo pipefail
+          cat > goety-lightning-leech-probe.py <<'PYPROBE'
+          #!/usr/bin/env python3
+          """Exact Goety 3.1.4 symbolic probe; never writes or prints javap bodies."""
+          import argparse
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import subprocess
+          import tempfile
+          import urllib.request
+          
+          JAR_URL = "https://cursemaven.com/curse/maven/goety-586095/8689429/goety-586095-8689429.jar"
+          SHA1 = "a0770e180e4e8b1b87d8fa9c8356e9dbf34d82a7"
+          SHA256 = "5158b9df105827f8c3f800396bcfce19076ec98ee9c4bd7a0d656b58cf28701e"
+          ROOT = "com.Polarice3.Goety."
+          LEECH = ROOT + "common.magic.spells.necromancy.LeechingSpell"
+          LIGHTNING = ROOT + "common.magic.spells.storm.LightningSpell"
+          EVENTS = ROOT + "common.events.ModEvents"
+          DAMAGE = ROOT + "utils.ModDamageSource"
+          BOLT = ROOT + "common.entities.projectiles.SpellLightningBolt"
+          FINDER = ROOT + "utils.BlockFinder"
+          PRE = "net.neoforged.neoforge.event.entity.living.LivingDamageEvent$Pre"
+          HEAL = "net.neoforged.neoforge.event.entity.living.LivingHealEvent"
+          ENTITY = "net.minecraft.world.entity.Entity"
+          LIVING = "net.minecraft.world.entity.LivingEntity"
+          SERVER = "net.minecraft.server.level.ServerLevel"
+          SOURCE = "net.minecraft.world.damagesource.DamageSource"
+          SPELL_DESC = "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lcom/Polarice3/Goety/common/magic/SpellStat;)V"
+          ENTITY_BOOL = "(Lnet/minecraft/world/entity/Entity;)Z"
+          LIFE_DESC = "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+          NO_KNOCK_DESC = "(Lnet/minecraft/world/level/Level;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;[Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/world/damagesource/DamageSource;"
+          ROD2 = "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Ljava/util/Optional;"
+          ROD3 = "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;I)Ljava/util/Optional;"
+          TARGETS = {
+              LEECH: [("SpellResult", SPELL_DESC)],
+              EVENTS: [("DamageEvent", "(Lnet/neoforged/neoforge/event/entity/living/LivingDamageEvent$Pre;)V"),
+                       ("onLivingHeal", "(Lnet/neoforged/neoforge/event/entity/living/LivingHealEvent;)V")],
+              DAMAGE: [("lifeLeech", LIFE_DESC), ("noKnockbackDamageSource", NO_KNOCK_DESC)],
+              LIGHTNING: [("SpellResult", SPELL_DESC)],
+              BOLT: [("tick", "()V"), ("canHitEntity", ENTITY_BOOL), ("lambda$tick$0", ENTITY_BOOL),
+                     ("setOwner", "(Lnet/minecraft/world/entity/LivingEntity;)V"),
+                     ("getOwner", "()Lnet/minecraft/world/entity/LivingEntity;"),
+                     ("getCause", "()Lnet/minecraft/server/level/ServerPlayer;"),
+                     ("powerLightningRod", "()V")],
+              FINDER: [("findLightningRod", ROD2), ("findLightningRod", ROD3)],
+          }
+          HEADER = re.compile(r"^  (?:(?:public|protected|private|static|final|abstract|synchronized|native|strictfp|default)\s+).*\([^;]*\);$")
+          REF = re.compile(r"^\s+\d+:\s+(\S+).*?// (Method|InterfaceMethod|Field) (.+)$")
+          
+          
+          def checked_output(command):
+              result = subprocess.run(command, text=True, capture_output=True, check=False)
+              if result.returncode:
+                  raise RuntimeError("javap failed; raw output intentionally not retained")
+              return result.stdout
+          
+          
+          def member_blocks(data):
+              """Exclude constant pool, class attributes and static initializer from methods."""
+              blocks = []
+              header = None
+              lines = []
+              for line in data.splitlines():
+                  new_method = HEADER.match(line)
+                  boundary = new_method or line == "  static {};" or line == "}"
+                  if boundary:
+                      if header is not None:
+                          blocks.append((header, lines))
+                      header = line if new_method else None
+                      lines = []
+                  elif header is not None:
+                      lines.append(line)
+              if header is not None:
+                  blocks.append((header, lines))
+              return blocks
+          
+          
+          def parse_methods(data, class_name):
+              methods = {}
+              for header, lines in member_blocks(data):
+                  descriptors = [line.strip().split(": ", 1)[1] for line in lines if line.strip().startswith("descriptor: ")]
+                  if len(descriptors) != 1:
+                      raise RuntimeError("Expected exactly one descriptor per parsed method")
+                  name = header.split("(", 1)[0].split()[-1]
+                  references = {}
+                  for line in lines:
+                      match = REF.match(line)
+                      if not match:
+                          continue
+                      opcode, kind, symbol = match.groups()
+                      path, separator, descriptor = symbol.partition(":")
+                      if not separator:
+                          raise RuntimeError("Malformed symbolic reference")
+                      if "." in path:
+                          owner, member = path.rsplit(".", 1)
+                          inferred = False
+                          owner = owner.replace("/", ".")
+                      else:
+                          owner, member, inferred = class_name, path, True
+                      reference = {"kind": "field" if kind == "Field" else "method",
+                                   "symbolic_owner": owner, "member": member.strip('"'),
+                                   "descriptor": descriptor, "owner_omitted_by_javap": inferred}
+                      if kind == "Field":
+                          reference["access"] = "read" if opcode in ("getfield", "getstatic") else "write"
+                      key = json.dumps(reference, sort_keys=True)
+                      references[key] = reference
+                  key = (name, descriptors[0])
+                  if key in methods:
+                      raise RuntimeError("Duplicate method name/descriptor")
+                  methods[key] = {"name": name, "descriptor": descriptors[0], "declaration": header.strip(),
+                                  "references": sorted(references.values(), key=lambda x: json.dumps(x, sort_keys=True))}
+              return methods
+          
+          
+          def has(method, owner, name, kind="method", descriptor=None):
+              return any(ref["kind"] == kind and ref["symbolic_owner"] == owner and ref["member"] == name
+                         and (descriptor is None or descriptor == ref["descriptor"]) for ref in method["references"])
+          
+          
+          def main():
+              parser = argparse.ArgumentParser()
+              parser.add_argument("--jar", type=Path, help="Optional existing publisher JAR; always hash-checked")
+              parser.add_argument("--javap", default="javap")
+              parser.add_argument("--output", type=Path, default=Path("report/goety-314-lightning-leech-symbols.json"))
+              args = parser.parse_args()
+              version = checked_output([args.javap, "-version"]).strip()
+              if not version.startswith("21."):
+                  raise RuntimeError("JDK 21 javap required")
+              with tempfile.TemporaryDirectory(prefix="goety-symbols-") as work:
+                  jar = args.jar or Path(work) / "goety-3.1.4-publisher-8689429.jar"
+                  if args.jar is None:
+                      request = urllib.request.Request(JAR_URL, headers={"User-Agent": "Goety-exact-symbolic-audit/1.0"})
+                      with urllib.request.urlopen(request, timeout=180) as response, jar.open("wb") as target:
+                          while chunk := response.read(1024 * 1024):
+                              target.write(chunk)
+                  sha1 = hashlib.sha1(jar.read_bytes()).hexdigest()
+                  sha256 = hashlib.sha256(jar.read_bytes()).hexdigest()
+                  if sha1 != SHA1 or sha256 != SHA256:
+                      raise RuntimeError("Publisher JAR fingerprint mismatch")
+                  classes = {}
+                  selected = {}
+                  for class_name, targets in TARGETS.items():
+                      # Raw disassembly exists only in subprocess memory; never print/write it.
+                      data = checked_output([args.javap, "-p", "-s", "-c", "-classpath", str(jar), class_name])
+                      methods = parse_methods(data, class_name)
+                      del data
+                      chosen = []
+                      for key in targets:
+                          if key not in methods:
+                              raise RuntimeError("Selected method missing: " + class_name + "." + key[0])
+                          chosen.append(methods[key])
+                          selected[(class_name, key[0], key[1])] = methods[key]
+                      classes[class_name] = {"methods": chosen}
+                  verbose = checked_output([args.javap, "-p", "-v", "-classpath", str(jar), EVENTS])
+                  annotations = {
+                      "ModEvents.EventBusSubscriber": bool(re.search(r"^\s+net\.neoforged\.fml\.common\.EventBusSubscriber\($", verbose.rsplit("\n}", 1)[-1], re.M)),
+                  }
+                  for method_name in ("DamageEvent", "onLivingHeal"):
+                      event_blocks = [(header, lines) for header, lines in member_blocks(verbose) if " " + method_name + "(" in header]
+                      if len(event_blocks) != 1:
+                          raise RuntimeError(method_name + " annotation scope ambiguous")
+                      annotations[method_name + ".SubscribeEvent"] = any(line.strip() == "net.neoforged.bus.api.SubscribeEvent" for line in event_blocks[0][1])
+                  del verbose, event_blocks
+                  def get(owner, name, desc=None):
+                      options = [m for (o, n, d), m in selected.items() if o == owner and n == name and (desc is None or d == desc)]
+                      if len(options) != 1:
+                          raise RuntimeError("Method selector ambiguous")
+                      return options[0]
+                  checks = []
+                  def expect(label, actual, expected=True):
+                      checks.append({"assertion": label, "expected": expected, "observed": actual, "pass": actual == expected})
+                  def relationship(owner, method_name, ref_owner, ref_name, kind="method", descriptor=None, expected=True, method_desc=None):
+                      expect(owner + "." + method_name + " -> " + ref_owner + "." + ref_name + " (" + kind + ")",
+                             has(get(owner, method_name, method_desc), ref_owner, ref_name, kind, descriptor), expected)
+                  expect("JDK21", version.startswith("21."))
+                  expect("ExactSHA1", sha1 == SHA1)
+                  expect("ExactSHA256", sha256 == SHA256)
+                  for label, value in annotations.items():
+                      expect(label, value)
+                  for owner, member, kind in [(DAMAGE, "LIFE_LEECH", "field"), (ROOT + "config.SpellConfig", "LeechingPercent", "field"),
+                                               (SOURCE, "getEntity", "method"), (PRE, "getNewDamage", "method"),
+                                               (LIVING, "heal", "method"), (PRE, "setNewDamage", "method"), (EVENTS, "getReducedDamage", "method")]:
+                      relationship(EVENTS, "DamageEvent", owner, member, kind)
+                  for owner, member, kind in [(ROOT + "common.effects.GoetyEffects", "CURSED", "field"), (LIVING, "hasEffect", "method"),
+                                               (LIVING, "getLastDamageSource", "method"), (DAMAGE, "hellfireAttacks", "method"),
+                                               (HEAL, "getEntity", "method"), (HEAL, "getAmount", "method"), (HEAL, "setCanceled", "method")]:
+                      relationship(EVENTS, "onLivingHeal", owner, member, kind)
+                  for owner, member in [(DAMAGE, "lifeLeech"), (LIVING, "hurt"), (LEECH, "rightStaff"), (LIVING, "addEffect")]:
+                      relationship(LEECH, "SpellResult", owner, member)
+                  relationship(LEECH, "SpellResult", LIVING, "heal", expected=False)
+                  relationship(LEECH, "SpellResult", ROOT + "config.SpellConfig", "LeechingPercent", "field", expected=False)
+                  relationship(DAMAGE, "lifeLeech", DAMAGE, "LIFE_LEECH", "field")
+                  relationship(DAMAGE, "lifeLeech", DAMAGE, "noKnockbackDamageSource")
+                  relationship(DAMAGE, "noKnockbackDamageSource", ROOT + "utils.NoKnockBackDamageSource", "<init>")
+                  for owner, member in [(LIGHTNING, "rayTrace"), (FINDER, "findLightningRod"), (LIGHTNING, "getTarget"),
+                                        (BOLT, "setDamage"), (BOLT, "setOwner"), (SERVER, "addFreshEntity")]:
+                      relationship(LIGHTNING, "SpellResult", owner, member)
+                  for owner, member in [("net.neoforged.neoforge.event.EventHooks", "onEntityStruckByLightning"), (ENTITY, "thunderHit"),
+                                        (LIVING, "hurt"), (DAMAGE, "lightning"), ("java.util.Set", "addAll"),
+                                        ("net.minecraft.advancements.critereon.LightningStrikeTrigger", "trigger"),
+                                        ("net.minecraft.advancements.critereon.ChanneledLightningTrigger", "trigger")]:
+                      relationship(BOLT, "tick", owner, member)
+                  relationship(BOLT, "tick", BOLT, "hitEntities", "field")
+                  relationship(BOLT, "canHitEntity", BOLT, "hitEntities", "field", expected=False)
+                  relationship(BOLT, "canHitEntity", "java.util.Set", "contains", expected=False)
+                  relationship(BOLT, "lambda$tick$0", BOLT, "hitEntities", "field")
+                  relationship(BOLT, "lambda$tick$0", "java.util.Set", "contains")
+                  relationship(BOLT, "powerLightningRod", "net.minecraft.world.level.block.LightningRodBlock", "onLightningStrike")
+                  relationship(FINDER, "findLightningRod", FINDER, "findLightningRod", descriptor=ROD3, method_desc=ROD2)
+                  result = {
+                      "schema": "goety.exact.method-symbols.v1", "artifact_url": JAR_URL, "artifact_bytes": jar.stat().st_size,
+                      "artifact_sha1": sha1, "artifact_sha256": sha256, "javap_version": version,
+                      "scope": "Method descriptors, selected direct method/field references and annotation presence only; no raw bodies, offsets, branch paths, numeric operands/constants or assets retained.",
+                      "limits": ["No source parity, formulas, branch/order equivalence, deployed config, final damage/heal, physical gameplay or safe mutating hook certified.",
+                                 "Negative assertions are local to the selected method body; callees, inheritance, event listeners, mixins and runtime remain outside scope.",
+                                 "An omitted javap owner is normalized to the current class symbolic owner; this does not identify the implementation's declaring class.",
+                                 "Only direct bytecode references are listed; invokedynamic bootstrap targets are not reconstructed."],
+                      "classes": classes, "annotations": annotations, "assertions": checks, "pass": all(x["pass"] for x in checks),
+                  }
+                  args.output.parent.mkdir(parents=True, exist_ok=True)
+                  args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
+                  # Logs contain only bounded verification metadata, never disassembly.
+                  print(json.dumps({"artifact_sha1": sha1, "artifact_sha256": sha256, "javap_version": version,
+                                    "classes": len(classes), "selected_methods": len(selected), "assertions": len(checks),
+                                    "pass": result["pass"], "report": str(args.output)}, sort_keys=True))
+                  if not result["pass"]:
+                      raise SystemExit(1)
+          
+          
+          if __name__ == "__main__":
+              main()
+          PYPROBE
+          python3 goety-lightning-leech-probe.py --output report/goety-314-lightning-leech-symbols.json
+      - name: Upload bounded JSON evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: goety-314-lightning-leech-symbolic-report
+          path: ${{ runner.temp }}/report/goety-314-lightning-leech-symbols.json
+          if-no-files-found: warn
+          retention-days: 30
