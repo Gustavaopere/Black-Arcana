@@ -26,6 +26,41 @@ IGNORED_NAME = re.compile(
     r"integration|compatibility|perk-ready|baseline|migration|coverage|notes|"
     r"safety|status|registry|qa)[-_]", re.I
 )
+# Ace 1.2.7.2 registers 27 example items unconditionally in production,
+# plus one distinct ArmorMaterial. Other providers' example folders remain ignored.
+# This exact allowlist prevents tutorial/example documentation from silently
+# becoming a perk-ready candidate when it is not a real provider object.
+ACES_1272_PRODUCTION_EXAMPLE_CARDS = frozenset({
+    "example_ap_magic_sword.md",
+    "example_ap_sword.md",
+    "example_armor_boots.md",
+    "example_armor_chestplate.md",
+    "example_armor_helmet.md",
+    "example_armor_leggings.md",
+    "example_armor_material.md",
+    "example_chromatic_aberration.md",
+    "example_curio.md",
+    "example_dome.md",
+    "example_gun.md",
+    "example_imbue_curio.md",
+    "example_imbue_staff.md",
+    "example_impact_frame_blue.md",
+    "example_impact_frame_green.md",
+    "example_impact_frame_purple.md",
+    "example_impact_frame_red.md",
+    "example_impact_frame_white.md",
+    "example_impact_frame_white_aberration.md",
+    "example_loot_bag.md",
+    "example_passive_ability_spellbook.md",
+    "example_ribbon.md",
+    "example_roar.md",
+    "example_roar_ring.md",
+    "example_sheath.md",
+    "example_staff.md",
+    "example_trail.md",
+    "example_unqiue_ability_spellbook.md",
+})
+
 REQUIRED_EVIDENCE = frozenset({
     "identity", "behavior", "parameters", "targeting", "costs",
     "integration", "validation",
@@ -126,6 +161,10 @@ def is_card(path: Path) -> bool:
     name = path.name
     if name in {"README.md", "INDEX.md"} or not re.match(r"^[a-z]", name) or IGNORED_NAME.match(name):
         return False
+    if (len(rel.parts) == 3
+            and rel.parts[:2] == ("✅-aces-spell-utils", "examples")
+            and name in ACES_1272_PRODUCTION_EXAMPLE_CARDS):
+        return True
     return not any(
         segment in IGNORED_PARTS or re.match(r"^(?:source-|registry-|audit-|technical-|evidence-)", segment, re.I)
         for segment in rel.parts[1:-1]
