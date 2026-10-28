@@ -92,7 +92,7 @@
 | ⚠️ | Technomancy | [schools/technomancy.md](schools/technomancy.md) |
 | ⚠️ | Active Passive Swords | [systems/active-passive-swords.md](systems/active-passive-swords.md) |
 | ⚠️ | Animated Spellcasting Mobs | [systems/animated-spellcasting-mobs.md](systems/animated-spellcasting-mobs.md) |
-| ⚠️ | ASUtils Casting And Unlock Helpers | [systems/asutils-casting-unlock-helpers.md](systems/asutils-casting-unlock-helpers.md) |
+| ⚠️ | Asutils Casting Unlock Helpers | [systems/asutils-casting-unlock-helpers.md](systems/asutils-casting-unlock-helpers.md) |
 | ⚠️ | Boss Phases Music | [systems/boss-phases-music.md](systems/boss-phases-music.md) |
 | ⚠️ | Domain Entity Runtime | [systems/domain-entity-runtime.md](systems/domain-entity-runtime.md) |
 | ⚠️ | Imbue Curios | [systems/imbue-curios.md](systems/imbue-curios.md) |

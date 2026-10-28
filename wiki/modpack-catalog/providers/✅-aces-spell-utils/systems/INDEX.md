@@ -12,7 +12,7 @@
 |---|---|---|
 | ⚠️ | Active Passive Swords | [ficha/active-passive-swords.md](active-passive-swords.md) |
 | ⚠️ | Animated Spellcasting Mobs | [ficha/animated-spellcasting-mobs.md](animated-spellcasting-mobs.md) |
-| ⚠️ | ASUtils Casting And Unlock Helpers | [ficha/asutils-casting-unlock-helpers.md](asutils-casting-unlock-helpers.md) |
+| ⚠️ | Asutils Casting Unlock Helpers | [ficha/asutils-casting-unlock-helpers.md](asutils-casting-unlock-helpers.md) |
 | ⚠️ | Boss Phases Music | [ficha/boss-phases-music.md](boss-phases-music.md) |
 | ⚠️ | Domain Entity Runtime | [ficha/domain-entity-runtime.md](domain-entity-runtime.md) |
 | ⚠️ | Imbue Curios | [ficha/imbue-curios.md](imbue-curios.md) |
