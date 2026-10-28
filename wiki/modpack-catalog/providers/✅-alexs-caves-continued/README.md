@@ -141,3 +141,7 @@ Catalog closure does not assert assembled-pack runtime PASS. Later QA still incl
 Current Alex's Caves Continued semantic inventory: **8 exact-current supernatural/magical player actions**.
 
 Strict semantic delta: **+8**.
+
+## Contratos causais dos staffs — revisão de fonte pública (2026-10-28)
+
+As fichas [Sea Staff — Water Bolt](actions/sea-staff-water-bolt.md), [Sugar Staff — Peppermint](actions/sugar-staff-peppermint-cast.md) e [Sugar Staff — Hex](actions/sugar-staff-hex-cast.md) agora preservam **parâmetros por método** de `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` (range de consulta, colisão, duração, cooldown, tipo de dano e enchantments), inclusive overrides por `tick()`. Esses parâmetros são **SOURCE_SNAPSHOT_ONLY**, porque a auditoria do JAR físico 1.0.10 fechou as identidades, mas **não** comprovou igualdade byte-a-byte com esse commit público. Portanto nenhuma ficha foi promovida a `COMPLETE_PERK_READY`, nenhum hook mutador é declarado e Stage 09/QA física permanecem abertos. Contagem semântica: **8**, inalterada.
