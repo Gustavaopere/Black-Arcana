@@ -99,6 +99,20 @@ Ao lado dos [19 atributos](attributes/INDEX.md) e [três escolas](schools/INDEX.
 
 Nenhuma ficha deste lote estabelece paridade compilada de JAR, contrato mutador verificado no Iron's 3.16.3 ou QA física. **A fila alfabética continua em Ace's Spell Utils**, não em Acolyte, até revisão do restante e resolução transparente dos gates. Nenhuma Stage foi promovida.
 
+## Fichas dos registros menores — revisão de 27/10/2026
+
+**🟡 Recorte em implementação:** além dos [19 atributos](attributes/INDEX.md), [3 escolas](schools/INDEX.md) e [14 famílias de API/runtime](systems/INDEX.md), foram desmembrados **32 objetos técnicos** em [14 tags](tags/INDEX.md), [3 damage types](damage-types/INDEX.md), [1 attachment](attachments/INDEX.md), [1 partícula](particles/INDEX.md), [8 raridades](rarities/INDEX.md) e [5 configurações](config/INDEX.md).
+
+- As tags têm **registry próprio**: nove são `TagKey<Item>`, três são `TagKey<EntityType<?>>` e duas são `TagKey<AbstractSpell>` no `SpellRegistry` do Iron's. Os nove tags de item existem no source Java, mas não receberam valores em arquivos de tag de item dentro do datapack source do Ace; os membros podem ser externos. Tags de spell/entidade possuem dados de valores e referências opcionais devidamente diferenciados.
+- As três damage types têm JSON com `exhaustion=0.0`, `scaling=when_caused_by_living_non_player` e message ID próprio; a key de dano **não cria spell**.
+- O attachment booleano `keep_inv_on_death` tem `copyOnDeath` mais limpeza explícita no evento Clone; integração deve verificar a ordem real.
+- O `trail` é VFX com parâmetros de cor e escala, sem autoridade de cast; raridades são enum metadata com cores, sem efeito/perk próprio.
+- O arquivo TOML possui cinco opções comuns; dois nomes usam *blacklist* enquanto o consumidor usa whitelist, e `Refinement victory factor` usa `define(1.5D)` sem validação explícita do mínimo sugerido pelo comentário.
+
+**Índice atual do provider:** `0/68` fichas candidatas com prova source pinada; **0 certificados estáticos strict**. A categoria *candidata* mede documentação individual, não que tags/raridades sejam perks implementáveis. **Spell registrations owned: 0**. Continuam pendentes as **27 entradas de `ExampleItemRegistry`**, cujas classes concretas e procs devem ter fichas próprias antes de atribuir encerramento semântico completo. Permanecem pendentes qualquer divergência do JAR instalado, source-to-binary parity, comportamento com Iron's 3.16.3 e QA física.
+
+**Não mover a fila alfabética:** `ALPHABETICAL-CATALOG-STATUS.json` ainda aponta Ace's Spell Utils como próximo provider não concluído. Não houve mudança no runtime Black Arcana, nas certificações de perk ou nos Stages.
+
 ## Catalog files
 
 - [REGISTRIES-AND-ATTRIBUTES.md](REGISTRIES-AND-ATTRIBUTES.md)

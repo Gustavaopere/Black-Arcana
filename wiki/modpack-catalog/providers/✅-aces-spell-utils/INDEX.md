@@ -2,7 +2,7 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/36.**
+**Homologadas para perks (somente fichas detectadas): 0/68.**
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
@@ -12,6 +12,7 @@
 
 | Estado | Objeto / habilidade identificada | Ficha |
 |---|---|---|
+| ⚠️ | Keep Inv On Death | [attachments/keep_inv_on_death.md](attachments/keep_inv_on_death.md) |
 | ⚠️ | Evasive | [attributes/evasive.md](attributes/evasive.md) |
 | ⚠️ | Goliath Slayer | [attributes/goliath_slayer.md](attributes/goliath_slayer.md) |
 | ⚠️ | Hunger Steal | [attributes/hunger_steal.md](attributes/hunger_steal.md) |
@@ -31,6 +32,23 @@
 | ⚠️ | Technomancy Magic Resist | [attributes/technomancy_magic_resist.md](attributes/technomancy_magic_resist.md) |
 | ⚠️ | Technomancy Spell Power | [attributes/technomancy_spell_power.md](attributes/technomancy_spell_power.md) |
 | ⚠️ | Vigor Reap | [attributes/vigor_reap.md](attributes/vigor_reap.md) |
+| ⚠️ | Enable Dev Mode | [config/enable-dev-mode.md](config/enable-dev-mode.md) |
+| ⚠️ | Mana Rend Entity Blacklist | [config/mana-rend-entity-blacklist.md](config/mana-rend-entity-blacklist.md) |
+| ⚠️ | Mana Steal Drains Mana | [config/mana-steal-drains-mana.md](config/mana-steal-drains-mana.md) |
+| ⚠️ | Mana Steal Entity Blacklist | [config/mana-steal-entity-blacklist.md](config/mana-steal-entity-blacklist.md) |
+| ⚠️ | Refinement Victory Factor | [config/refinement-victory-factor.md](config/refinement-victory-factor.md) |
+| ⚠️ | Hydro Magic | [damage-types/hydro_magic.md](damage-types/hydro_magic.md) |
+| ⚠️ | Ritual Magic | [damage-types/ritual_magic.md](damage-types/ritual_magic.md) |
+| ⚠️ | Technomancy Magic | [damage-types/technomancy_magic.md](damage-types/technomancy_magic.md) |
+| ⚠️ | Trail | [particles/trail.md](particles/trail.md) |
+| ⚠️ | Accursed | [rarities/accursed.md](rarities/accursed.md) |
+| ⚠️ | Aquatic | [rarities/aquatic.md](rarities/aquatic.md) |
+| ⚠️ | Arid | [rarities/arid.md](rarities/arid.md) |
+| ⚠️ | Cosmic | [rarities/cosmic.md](rarities/cosmic.md) |
+| ⚠️ | Forbidden | [rarities/forbidden.md](rarities/forbidden.md) |
+| ⚠️ | Glacial | [rarities/glacial.md](rarities/glacial.md) |
+| ⚠️ | Sculk | [rarities/sculk.md](rarities/sculk.md) |
+| ⚠️ | Verdant | [rarities/verdant.md](rarities/verdant.md) |
 | ⚠️ | Hydro | [schools/hydro.md](schools/hydro.md) |
 | ⚠️ | Ritual | [schools/ritual.md](schools/ritual.md) |
 | ⚠️ | Technomancy | [schools/technomancy.md](schools/technomancy.md) |
@@ -48,14 +66,34 @@
 | ⚠️ | Summon Spell Helper | [systems/summon-spell-helper.md](systems/summon-spell-helper.md) |
 | ⚠️ | Vfx Client Payloads | [systems/vfx-client-payloads.md](systems/vfx-client-payloads.md) |
 | ⚠️ | Wizard Spell Combo Ai | [systems/wizard-spell-combo-ai.md](systems/wizard-spell-combo-ai.md) |
+| ⚠️ | Entity Type Boss Like Entities | [tags/entity_type-boss_like_entities.md](tags/entity_type-boss_like_entities.md) |
+| ⚠️ | Entity Type Mana Rend Whitelist | [tags/entity_type-mana_rend_whitelist.md](tags/entity_type-mana_rend_whitelist.md) |
+| ⚠️ | Entity Type Mana Steal Whitelist | [tags/entity_type-mana_steal_whitelist.md](tags/entity_type-mana_steal_whitelist.md) |
+| ⚠️ | Item Hydro Focus | [tags/item-hydro_focus.md](tags/item-hydro_focus.md) |
+| ⚠️ | Item Hydro Runes | [tags/item-hydro_runes.md](tags/item-hydro_runes.md) |
+| ⚠️ | Item Hydro Upgrade Orbs | [tags/item-hydro_upgrade_orbs.md](tags/item-hydro_upgrade_orbs.md) |
+| ⚠️ | Item Ritual Focus | [tags/item-ritual_focus.md](tags/item-ritual_focus.md) |
+| ⚠️ | Item Ritual Runes | [tags/item-ritual_runes.md](tags/item-ritual_runes.md) |
+| ⚠️ | Item Ritual Upgrade Orbs | [tags/item-ritual_upgrade_orbs.md](tags/item-ritual_upgrade_orbs.md) |
+| ⚠️ | Item Technomancy Focus | [tags/item-technomancy_focus.md](tags/item-technomancy_focus.md) |
+| ⚠️ | Item Technomancy Runes | [tags/item-technomancy_runes.md](tags/item-technomancy_runes.md) |
+| ⚠️ | Item Technomancy Upgrade Orbs | [tags/item-technomancy_upgrade_orbs.md](tags/item-technomancy_upgrade_orbs.md) |
+| ⚠️ | Spell Slash Like Spell | [tags/spell-slash_like_spell.md](tags/spell-slash_like_spell.md) |
+| ⚠️ | Spell Stomp Like Spell | [tags/spell-stomp_like_spell.md](tags/spell-stomp_like_spell.md) |
 
 ## Subpastas
 
 | Subpasta | Fichas individuais detectadas | Índice |
 |---|---:|---|
+| Attachments | 1 | [Abrir índice](attachments/INDEX.md) |
 | Attributes | 19 | [Abrir índice](attributes/INDEX.md) |
+| Config | 5 | [Abrir índice](config/INDEX.md) |
+| Damage Types | 3 | [Abrir índice](damage-types/INDEX.md) |
+| Particles | 1 | [Abrir índice](particles/INDEX.md) |
+| Rarities | 8 | [Abrir índice](rarities/INDEX.md) |
 | Schools | 3 | [Abrir índice](schools/INDEX.md) |
 | Systems | 14 | [Abrir índice](systems/INDEX.md) |
+| Tags | 14 | [Abrir índice](tags/INDEX.md) |
 
 ## Critério do ✅
 
