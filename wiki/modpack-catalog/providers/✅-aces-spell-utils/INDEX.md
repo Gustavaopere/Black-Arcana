@@ -2,7 +2,7 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/22.**
+**Homologadas para perks (somente fichas detectadas): 0/36.**
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
@@ -34,6 +34,20 @@
 | ⚠️ | Hydro | [schools/hydro.md](schools/hydro.md) |
 | ⚠️ | Ritual | [schools/ritual.md](schools/ritual.md) |
 | ⚠️ | Technomancy | [schools/technomancy.md](schools/technomancy.md) |
+| ⚠️ | Active Passive Swords | [systems/active-passive-swords.md](systems/active-passive-swords.md) |
+| ⚠️ | Animated Spellcasting Mobs | [systems/animated-spellcasting-mobs.md](systems/animated-spellcasting-mobs.md) |
+| ⚠️ | Boss Phases Music | [systems/boss-phases-music.md](systems/boss-phases-music.md) |
+| ⚠️ | Domain Entity Runtime | [systems/domain-entity-runtime.md](systems/domain-entity-runtime.md) |
+| ⚠️ | Imbue Curios | [systems/imbue-curios.md](systems/imbue-curios.md) |
+| ⚠️ | Imbue Staves | [systems/imbue-staves.md](systems/imbue-staves.md) |
+| ⚠️ | Keep Inventory Companion | [systems/keep-inventory-companion.md](systems/keep-inventory-companion.md) |
+| ⚠️ | Mace Casting Family | [systems/mace-casting-family.md](systems/mace-casting-family.md) |
+| ⚠️ | Magic Gun Casting | [systems/magic-gun-casting.md](systems/magic-gun-casting.md) |
+| ⚠️ | Passive Ability Spellbooks | [systems/passive-ability-spellbooks.md](systems/passive-ability-spellbooks.md) |
+| ⚠️ | Passive Cooldown Curios | [systems/passive-cooldown-curios.md](systems/passive-cooldown-curios.md) |
+| ⚠️ | Summon Spell Helper | [systems/summon-spell-helper.md](systems/summon-spell-helper.md) |
+| ⚠️ | Vfx Client Payloads | [systems/vfx-client-payloads.md](systems/vfx-client-payloads.md) |
+| ⚠️ | Wizard Spell Combo Ai | [systems/wizard-spell-combo-ai.md](systems/wizard-spell-combo-ai.md) |
 
 ## Subpastas
 
@@ -41,6 +55,7 @@
 |---|---:|---|
 | Attributes | 19 | [Abrir índice](attributes/INDEX.md) |
 | Schools | 3 | [Abrir índice](schools/INDEX.md) |
+| Systems | 14 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
 
