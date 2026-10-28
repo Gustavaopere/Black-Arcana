@@ -91,6 +91,14 @@ Esses objetos eram previamente conhecidos no inventário agregado; **não** repr
 
 **Sem promoção alfabética:** `ALPHABETICAL-CATALOG-STATUS.json` continua apontando Ace como o segundo provider pendente. A prova source-pinned não substitui testes no host/JAR nem cataloga os sistemas compartilhados restantes.
 
+## Sistemas compartilhados — fichas individuais (27/10/2026)
+
+**🟡 14/14 famílias deste recorte** foram desmembradas em [`systems/`](systems/INDEX.md): domínio/clash, base de summon/recast, mobs conjuradores animados, bosses/fases/música, AI combos, keep-inventory, curios com imbuement, curios passivos/sheaths, spellbooks passivos, staves, espadas com API ativa/passiva, magic gun casting, mace/mace-staffs e transporte visual de payloads. São **famílias de classes**, não 14 spell registrations; não são prova de completude de todos os helper classes do provider.
+
+Ao lado dos [19 atributos](attributes/INDEX.md) e [três escolas](schools/INDEX.md), o recorte tem **36 fichas individuais candidatas, 0 certificadas**. O índice de perks é **`0/36`**; o contador semântico do Ace continua **0 spells standalone**. Os riscos source-level identificados incluem `TicketType.FORCED` em domínio, equip/trigger/cooldown delegado a subclasses, preservação de inventário em clone/death e VFX **somente cliente**. Os demais registros menores (tags, damage types, attachment, rarities, examples, partículas, configs e seus consumers) permanecem documentados nos inventários agregados e não devem ser presumidos integralmente desmembrados.
+
+Nenhuma ficha deste lote estabelece paridade compilada de JAR, contrato mutador verificado no Iron's 3.16.3 ou QA física. **A fila alfabética continua em Ace's Spell Utils**, não em Acolyte, até revisão do restante e resolução transparente dos gates. Nenhuma Stage foi promovida.
+
 ## Catalog files
 
 - [REGISTRIES-AND-ATTRIBUTES.md](REGISTRIES-AND-ATTRIBUTES.md)
