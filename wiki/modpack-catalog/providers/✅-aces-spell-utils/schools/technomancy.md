@@ -8,7 +8,7 @@ O [`ASSchoolRegistry`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/bl
 
 - **Constante Java:** `TECHNOMANCY`.
 - **Item tag de foco:** `aces_spell_utils:technomancy_focus` — [`ASTags.TECHNOMANCY_FOCUS`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/utils/ASTags.java).
-- **Localization key:** `school.aces_spell_utils.technomancy`; display style `#b3bec5`. 
+- **Localization key:** `school.aces_spell_utils.technomancy`; display style `#b3bec5`.
 - **Atributo spell power:** `aces_spell_utils:technomancy_spell_power` — [ficha](../attributes/technomancy_spell_power.md).
 - **Atributo magic resistance:** `aces_spell_utils:technomancy_magic_resist` — [ficha](../attributes/technomancy_magic_resist.md).
 - **Som de cast:** `SoundRegistry.EVOCATION_CAST` do Iron's.
