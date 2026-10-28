@@ -8,7 +8,7 @@ O [`ASSchoolRegistry`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/bl
 
 - **Constante Java:** `ABYSSAL` — nome legado ABYSSAL, **não** ID `abyssal`.
 - **Item tag de foco:** `aces_spell_utils:hydro_focus` — [`ASTags.HYDRO_FOCUS`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/utils/ASTags.java).
-- **Localization key:** `school.aces_spell_utils.hydro`; display style `#36156c`. 
+- **Localization key:** `school.aces_spell_utils.hydro`; display style `#36156c`.
 - **Atributo spell power:** `aces_spell_utils:hydro_spell_power` — [ficha](../attributes/hydro_spell_power.md).
 - **Atributo magic resistance:** `aces_spell_utils:hydro_magic_resist` — [ficha](../attributes/hydro_magic_resist.md).
 - **Som de cast:** `SoundRegistry.EVOCATION_CAST` do Iron's.
