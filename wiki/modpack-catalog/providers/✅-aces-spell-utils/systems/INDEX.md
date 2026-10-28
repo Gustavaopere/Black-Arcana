@@ -2,7 +2,7 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/17.**
+**Homologadas para perks (somente fichas detectadas): 0/18.**
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
@@ -25,6 +25,7 @@
 | ⚠️ | Roar Command Visual Triggers | [ficha/roar-command-visual-triggers.md](roar-command-visual-triggers.md) |
 | ⚠️ | Spell Animation Holders | [ficha/spell-animation-holders.md](spell-animation-holders.md) |
 | ⚠️ | Summon Spell Helper | [ficha/summon-spell-helper.md](summon-spell-helper.md) |
+| ⚠️ | Unused Summon Template | [ficha/unused-summon-template.md](unused-summon-template.md) |
 | ⚠️ | Vfx Client Payloads | [ficha/vfx-client-payloads.md](vfx-client-payloads.md) |
 | ⚠️ | Wizard Spell Combo Ai | [ficha/wizard-spell-combo-ai.md](wizard-spell-combo-ai.md) |
 

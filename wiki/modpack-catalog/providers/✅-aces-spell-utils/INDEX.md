@@ -66,7 +66,6 @@
 | ⚠️ | Example Roar Ring | [examples/example_roar_ring.md](examples/example_roar_ring.md) |
 | ⚠️ | Example Sheath | [examples/example_sheath.md](examples/example_sheath.md) |
 | ⚠️ | Example Staff | [examples/example_staff.md](examples/example_staff.md) |
-| ⚠️ | Example Summon Spell Template | [examples/example-summon-spell-template.md](examples/example-summon-spell-template.md) |
 | ⚠️ | Example Trail | [examples/example_trail.md](examples/example_trail.md) |
 | ⚠️ | Example Unqiue Ability Spellbook | [examples/example_unqiue_ability_spellbook.md](examples/example_unqiue_ability_spellbook.md) |
 | ⚠️ | Living Entity Evasive Iframe | [mixins/living-entity-evasive-iframe.md](mixins/living-entity-evasive-iframe.md) |
@@ -106,6 +105,7 @@
 | ⚠️ | Roar Command Visual Triggers | [systems/roar-command-visual-triggers.md](systems/roar-command-visual-triggers.md) |
 | ⚠️ | Spell Animation Holders | [systems/spell-animation-holders.md](systems/spell-animation-holders.md) |
 | ⚠️ | Summon Spell Helper | [systems/summon-spell-helper.md](systems/summon-spell-helper.md) |
+| ⚠️ | Unused Summon Template | [systems/unused-summon-template.md](systems/unused-summon-template.md) |
 | ⚠️ | Vfx Client Payloads | [systems/vfx-client-payloads.md](systems/vfx-client-payloads.md) |
 | ⚠️ | Wizard Spell Combo Ai | [systems/wizard-spell-combo-ai.md](systems/wizard-spell-combo-ai.md) |
 | ⚠️ | Entity Type Boss Like Entities | [tags/entity_type-boss_like_entities.md](tags/entity_type-boss_like_entities.md) |
@@ -136,13 +136,13 @@
 | Attributes | 19 | [Abrir índice](attributes/INDEX.md) |
 | Config | 5 | [Abrir índice](config/INDEX.md) |
 | Damage Types | 3 | [Abrir índice](damage-types/INDEX.md) |
-| Examples | 29 | [Abrir índice](examples/INDEX.md) |
+| Examples | 28 | [Abrir índice](examples/INDEX.md) |
 | Mixins | 2 | [Abrir índice](mixins/INDEX.md) |
 | Particles | 1 | [Abrir índice](particles/INDEX.md) |
 | Payloads | 8 | [Abrir índice](payloads/INDEX.md) |
 | Rarities | 8 | [Abrir índice](rarities/INDEX.md) |
 | Schools | 3 | [Abrir índice](schools/INDEX.md) |
-| Systems | 17 | [Abrir índice](systems/INDEX.md) |
+| Systems | 18 | [Abrir índice](systems/INDEX.md) |
 | Tags | 14 | [Abrir índice](tags/INDEX.md) |
 | Vfx Runtime | 5 | [Abrir índice](vfx-runtime/INDEX.md) |
 
