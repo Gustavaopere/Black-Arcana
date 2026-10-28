@@ -42,7 +42,6 @@
 | Attributes | 19 | [Abrir índice](attributes/INDEX.md) |
 | Schools | 3 | [Abrir índice](schools/INDEX.md) |
 
-
 ## Critério do ✅
 
 Somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../meta/PERK-READY-CERTIFICATIONS.json) podem receber ✅, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido.
