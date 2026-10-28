@@ -2,7 +2,7 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/96.**
+**Homologadas para perks (somente fichas detectadas): 0/111.**
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
@@ -68,7 +68,17 @@
 | ⚠️ | Example Staff | [examples/example_staff.md](examples/example_staff.md) |
 | ⚠️ | Example Trail | [examples/example_trail.md](examples/example_trail.md) |
 | ⚠️ | Example Unqiue Ability Spellbook | [examples/example_unqiue_ability_spellbook.md](examples/example_unqiue_ability_spellbook.md) |
+| ⚠️ | Living Entity Evasive Iframe | [mixins/living-entity-evasive-iframe.md](mixins/living-entity-evasive-iframe.md) |
+| ⚠️ | Player Keep Inventory Drop | [mixins/player-keep-inventory-drop.md](mixins/player-keep-inventory-drop.md) |
 | ⚠️ | Trail | [particles/trail.md](particles/trail.md) |
+| ⚠️ | Add Shader Effect | [payloads/add_shader_effect.md](payloads/add_shader_effect.md) |
+| ⚠️ | Remove Shader Effect | [payloads/remove_shader_effect.md](payloads/remove_shader_effect.md) |
+| ⚠️ | Trigger Chromatic Aberration | [payloads/trigger_chromatic_aberration.md](payloads/trigger_chromatic_aberration.md) |
+| ⚠️ | Trigger Dome | [payloads/trigger_dome.md](payloads/trigger_dome.md) |
+| ⚠️ | Trigger Impact Frame | [payloads/trigger_impact_frame.md](payloads/trigger_impact_frame.md) |
+| ⚠️ | Trigger Ribbon | [payloads/trigger_ribbon.md](payloads/trigger_ribbon.md) |
+| ⚠️ | Trigger Roar | [payloads/trigger_roar.md](payloads/trigger_roar.md) |
+| ⚠️ | Trigger Shake | [payloads/trigger_shake.md](payloads/trigger_shake.md) |
 | ⚠️ | Accursed | [rarities/accursed.md](rarities/accursed.md) |
 | ⚠️ | Aquatic | [rarities/aquatic.md](rarities/aquatic.md) |
 | ⚠️ | Arid | [rarities/arid.md](rarities/arid.md) |
@@ -108,6 +118,11 @@
 | ⚠️ | Item Technomancy Upgrade Orbs | [tags/item-technomancy_upgrade_orbs.md](tags/item-technomancy_upgrade_orbs.md) |
 | ⚠️ | Spell Slash Like Spell | [tags/spell-slash_like_spell.md](tags/spell-slash_like_spell.md) |
 | ⚠️ | Spell Stomp Like Spell | [tags/spell-stomp_like_spell.md](tags/spell-stomp_like_spell.md) |
+| ⚠️ | Dome Shake Coordination | [vfx-runtime/dome-shake-coordination.md](vfx-runtime/dome-shake-coordination.md) |
+| ⚠️ | Impact Aberration Visual Dispatch | [vfx-runtime/impact-aberration-visual-dispatch.md](vfx-runtime/impact-aberration-visual-dispatch.md) |
+| ⚠️ | Ribbon Attachment Tracking | [vfx-runtime/ribbon-attachment-tracking.md](vfx-runtime/ribbon-attachment-tracking.md) |
+| ⚠️ | Roar Notification Routing | [vfx-runtime/roar-notification-routing.md](vfx-runtime/roar-notification-routing.md) |
+| ⚠️ | Trail Manager Tick Lifecycle | [vfx-runtime/trail-manager-tick-lifecycle.md](vfx-runtime/trail-manager-tick-lifecycle.md) |
 
 ## Subpastas
 
@@ -118,11 +133,14 @@
 | Config | 5 | [Abrir índice](config/INDEX.md) |
 | Damage Types | 3 | [Abrir índice](damage-types/INDEX.md) |
 | Examples | 28 | [Abrir índice](examples/INDEX.md) |
+| Mixins | 2 | [Abrir índice](mixins/INDEX.md) |
 | Particles | 1 | [Abrir índice](particles/INDEX.md) |
+| Payloads | 8 | [Abrir índice](payloads/INDEX.md) |
 | Rarities | 8 | [Abrir índice](rarities/INDEX.md) |
 | Schools | 3 | [Abrir índice](schools/INDEX.md) |
 | Systems | 14 | [Abrir índice](systems/INDEX.md) |
 | Tags | 14 | [Abrir índice](tags/INDEX.md) |
+| Vfx Runtime | 5 | [Abrir índice](vfx-runtime/INDEX.md) |
 
 ## Critério do ✅
 
