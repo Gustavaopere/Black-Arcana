@@ -100,3 +100,7 @@ Alshanex's Familiars is All Rights Reserved. Phase 2BD used the exact binary onl
 - 4.0 migration release: `https://www.curseforge.com/minecraft/mc-mods/alshanexs-familiars/files/7920260`
 - publisher Wiki: `https://wiki.pixeldreamstudios.net/mods/alshanex-familiars`
 - Phase 2BD isolated exact-artifact audit: GitHub Actions run `34649305941`, job `103427464735`, text-only evidence artifact `10283338450`
+
+## Divergência de documentação pública e superfícies de datapack (2026-10-28)
+
+A documentação atual do fornecedor foi comparada **sem promoção de versão** com o inventário do JAR 4.0.3: [diferenças de receitas `*_shard` versus ovos e lista de spells](PUBLISHER-WIKI-VERSION-DRIFT-20261028.md) e [tags/rituais, roster de familiares, station rerolls e gates de perks](PUBLISHER-WIKI-DATAPACK-FAMILIARS-20261028.md). Esses documentos são condicionais; **7/7 spells + 11/11 rituais** do artefato seguem contados, porém custos, targeting, output efetivo, hooks e QA física continuam não verificados. Não confundir Wiki sem pin com prova binária da versão instalada.
