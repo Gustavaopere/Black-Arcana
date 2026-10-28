@@ -109,9 +109,19 @@ Nenhuma ficha deste lote estabelece paridade compilada de JAR, contrato mutador 
 - O `trail` é VFX com parâmetros de cor e escala, sem autoridade de cast; raridades são enum metadata com cores, sem efeito/perk próprio.
 - O arquivo TOML possui cinco opções comuns; dois nomes usam *blacklist* enquanto o consumidor usa whitelist, e `Refinement victory factor` usa `define(1.5D)` sem validação explícita do mínimo sugerido pelo comentário.
 
-**Índice atual do provider:** `0/68` fichas candidatas com prova source pinada; **0 certificados estáticos strict**. A categoria *candidata* mede documentação individual, não que tags/raridades sejam perks implementáveis. **Spell registrations owned: 0**. Continuam pendentes as **27 entradas de `ExampleItemRegistry`**, cujas classes concretas e procs devem ter fichas próprias antes de atribuir encerramento semântico completo. Permanecem pendentes qualquer divergência do JAR instalado, source-to-binary parity, comportamento com Iron's 3.16.3 e QA física.
+**Índice atual do provider:** `0/96` fichas candidatas com prova source pinada; **0 certificados estáticos strict**. A categoria *candidata* mede documentação individual, não que tags/raridades sejam perks implementáveis. **Spell registrations owned: 0**. As **27 entradas de `ExampleItemRegistry`** agora possuem fichas próprias, mais o ArmorMaterial `example_armor` (contado separadamente do item). Seguem pendentes a paridade do JAR instalado, a compatibilidade Iron's 3.16.3 e a QA física; os payloads VFX/mixins ainda estão documentados por família, não certificados individualmente.
 
 **Não mover a fila alfabética:** `ALPHABETICAL-CATALOG-STATUS.json` ainda aponta Ace's Spell Utils como próximo provider não concluído. Não houve mudança no runtime Black Arcana, nas certificações de perk ou nos Stages.
+
+## Objetos demonstrativos concretos — lote 27/10/2026
+
+O índice de [`examples/`](examples/INDEX.md) agora inclui **27 itens concretos** registrados no `ExampleItemRegistry`, além de **1 material** registrado pelo `ExampleArmorMaterialRegistry`. São 28 fichas complementares; não foram contados como 27 feitiços ou 28 ações mágicas. O typo do ID `example_unqiue_ability_spellbook` foi mantido para correspondência com o registry real.
+
+Há comportamentos executáveis e não apenas exemplos inertes: `example_sheath` e os dois livros passivos instanciam `Comet` em `LivingIncomingDamageEvent` sob cooldown e equipamento; `example_staff` possui Black Hole 6 e Starfall 10 como **presets Iron's**; `example_curio` usa Raise Dead 10; `example_gun` usa Ball Lightning 10; `example_ap_magic_sword` usa Telekinesis 10 e Abyssal Shroud 10; `example_loot_bag` consulta a loot table `irons_spellbooks:entities/fire_boss` e chama `getMainHandItem().shrink(1)` no consumo. Nenhuma dessas referências representa novo `AbstractSpell` registrado pela Ace.
+
+Os 12 itens visuais têm parâmetros source específicos de impact frame, aberração, trail, ribbon, roar e dome, não hitbox/damage confirmados. Os quatro itens de armadura usam o `aces_spell_utils:example_armor` documentado separadamente com defesa 4/9/7/4, enchantability 25, toughness 3, knockback resistance 0.1 e reparo com mithril do Iron's.
+
+**Estado:** 🟡 recorte source catalogado com `0/96` certificados perks. Antes de marcar provider semântico como encerrado, o gate alfabético exige reconciliação dos demais registros/consumers e documentação de limites; QA física e paridade de JAR continuam como bloqueios distintos, não certificações inferidas.
 
 ## Catalog files
 
