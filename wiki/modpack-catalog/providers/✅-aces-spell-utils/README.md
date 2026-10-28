@@ -109,7 +109,7 @@ Nenhuma ficha deste lote estabelece paridade compilada de JAR, contrato mutador 
 - O `trail` é VFX com parâmetros de cor e escala, sem autoridade de cast; raridades são enum metadata com cores, sem efeito/perk próprio.
 - O arquivo TOML possui cinco opções comuns; dois nomes usam *blacklist* enquanto o consumidor usa whitelist, e `Refinement victory factor` usa `define(1.5D)` sem validação explícita do mínimo sugerido pelo comentário.
 
-**Índice atual do provider:** `0/96` fichas candidatas com prova source pinada; **0 certificados estáticos strict**. A categoria *candidata* mede documentação individual, não que tags/raridades sejam perks implementáveis. **Spell registrations owned: 0**. As **27 entradas de `ExampleItemRegistry`** agora possuem fichas próprias, mais o ArmorMaterial `example_armor` (contado separadamente do item). Seguem pendentes a paridade do JAR instalado, a compatibilidade Iron's 3.16.3 e a QA física; os payloads VFX/mixins ainda estão documentados por família, não certificados individualmente.
+**Índice atual do provider:** `0/111` fichas candidatas com prova source pinada; **0 certificados estáticos strict**. A categoria *candidata* mede documentação individual, não que tags/raridades sejam perks implementáveis. **Spell registrations owned: 0**. As **27 entradas de `ExampleItemRegistry`** agora possuem fichas próprias, mais o ArmorMaterial `example_armor` (contado separadamente do item). Seguem pendentes a paridade do JAR instalado, a compatibilidade Iron's 3.16.3 e a QA física; os 8 payloads VFX e 2 mixins possuem agora fichas individuais, **sem** certificação de runtime.
 
 **Não mover a fila alfabética:** `ALPHABETICAL-CATALOG-STATUS.json` ainda aponta Ace's Spell Utils como próximo provider não concluído. Não houve mudança no runtime Black Arcana, nas certificações de perk ou nos Stages.
 
@@ -121,7 +121,19 @@ Há comportamentos executáveis e não apenas exemplos inertes: `example_sheath`
 
 Os 12 itens visuais têm parâmetros source específicos de impact frame, aberração, trail, ribbon, roar e dome, não hitbox/damage confirmados. Os quatro itens de armadura usam o `aces_spell_utils:example_armor` documentado separadamente com defesa 4/9/7/4, enchantability 25, toughness 3, knockback resistance 0.1 e reparo com mithril do Iron's.
 
-**Estado:** 🟡 recorte source catalogado com `0/96` certificados perks. Antes de marcar provider semântico como encerrado, o gate alfabético exige reconciliação dos demais registros/consumers e documentação de limites; QA física e paridade de JAR continuam como bloqueios distintos, não certificações inferidas.
+**Estado:** 🟡 recorte source catalogado com `0/111` certificados perks. Antes de marcar provider semântico como encerrado, o gate alfabético exige reconciliação dos demais registros/consumers e documentação de limites; QA física e paridade de JAR continuam como bloqueios distintos, não certificações inferidas.
+
+## Payloads S2C, mixins e manutenção visual — revisão individual de 27/10/2026
+
+A revisão do source `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c2ef82647ac` individualizou os **8** pacotes `playToClient` em [`payloads/`](payloads/INDEX.md), os **2** mixins obrigatórios em [`mixins/`](mixins/INDEX.md) e **5** contratos específicos de gerenciamento/roteamento visual em [`vfx-runtime/`](vfx-runtime/INDEX.md). O recorte de **15 fichas** é adicional às 96 previamente indexadas, resultando em **111 candidatas** e **0 certificadas** para Ace. O total global passa a `138/2191` fichas certificadas/candidatas — **não** 111 spells.
+
+- `PayloadHandler` registra protocolo `4.0.0` **opcional**, somente S2C em sua tabela. Shader load/unload, impact frame, aberração, ribbon, roar, dome e shake são apresentação, nunca intenção/resultado autoritativo de casting.
+- `TriggerRibbonPacket` e `TriggerDomePacket` rejeitam gradientes fora de `1..8` cores na decodificação. `DomeConfig` limita raio visual `0.5..128` blocos e duração `1..1200` ticks; `DomeHandler` encaminha adicionalmente `ShakeHandler`. Essa cascata de **dois payloads visuais** não é proc ou hit duplo.
+- `LivingEntityMixin` soma `(int)evasive` aos ticks de invulnerabilidade em dois pontos de escrita, coexistindo com listener Evasive. `PlayerMixin` cancela `Player.dropEquipment` quando o attachment `keep_inv_on_death` é verdadeiro em `ServerPlayer`. Ambos são `required:true` no mixins.json; a carga física no JAR/host ainda exige prova.
+- `TrailManager.tick` em `ServerTickEvent.Post` e `RibbonHandler.pruneDead` mantêm estado server-side; `RibbonHandler.resend` atua no `PlayerEvent.StartTracking` e mapas são limpos em `ServerStoppingEvent`. São ciclos de **VFX**, não autoridade de dano/mana.
+- QA restante: conferir hashes/classes no JAR instalado, protocolo real cliente/servidor, validação de codecs, injeções e ordem com outros mods, sincronização/relog/teleporte, impacto na performance/render e compatibilidade binária com Iron's `3.16.3`.
+
+**Status:** 🟡 documentação individual ampliada; sem promoção da fila alfabética, dos certificados `COMPLETE_PERK_READY` ou do Stage 06.05. O escopo integral do provider e os gates físicos seguem classificados independentemente.
 
 ## Catalog files
 
