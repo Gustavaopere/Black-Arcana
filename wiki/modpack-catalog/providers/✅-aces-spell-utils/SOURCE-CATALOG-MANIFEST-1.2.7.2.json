@@ -1,0 +1,3490 @@
+{
+  "schema_version": 1,
+  "claim_scope": "CATALOG_SOURCE_SCOPE_ONLY",
+  "source_revision": "AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c2ef82647ac",
+  "version": "1.2.7.2-1.21.1",
+  "artifact_sha1": "8cbcd535a0b19bef49504c0b5ecafcbcd1cb1cca",
+  "physical_qa": "NOT_TESTED",
+  "mutating_hook": "NOT_VERIFIED",
+  "scope_note": "Frozen source-file dispositions and individual card hashes. CARD identifiers identify documentation objects, not registered spells. No method-body parity, safe mutator, gameplay QA or COMPLETE_PERK_READY certification is asserted.",
+  "publisher_inventory": {
+    "curseforge_project_id": 1299492,
+    "curseforge_file_id": 8789930,
+    "size_bytes": 381096,
+    "sha256": "da3ec5f0201ff87d52df0d952b8ed379e77b8a5d98666558ec4bea0805fe97be",
+    "outer_class_names": 132,
+    "classfiles_including_inner": 150,
+    "missing_source_outer_names": 0,
+    "extra_publisher_outer_names": 0,
+    "claim_scope": "CLASS_NAME_INVENTORY_ONLY"
+  },
+  "cards": {
+    "✅-aces-spell-utils/attachments/keep_inv_on_death.md": "bcd43e9e7671f48d8f867da4aafbd4f08377e2a7dc19b6886de6c7cf34948599",
+    "✅-aces-spell-utils/attributes/evasive.md": "f7e67385a9042533e48c3d46a10da9f993cd3ef75337f3a29f0036abe54fa5d6",
+    "✅-aces-spell-utils/attributes/goliath_slayer.md": "223c37f5c9224711b4917fce78288f56c4ac661752207aaff0d45f124a34e0a9",
+    "✅-aces-spell-utils/attributes/hunger_steal.md": "459abb3d9b42a882f87a3941ba2f53decd1a02876332d31a47247656757d4364",
+    "✅-aces-spell-utils/attributes/hydro_magic_resist.md": "7cdf812083ee472101964a60ab1ec2b6cca27ebe629e3a66405cedc8a53d3888",
+    "✅-aces-spell-utils/attributes/hydro_spell_power.md": "4f6e7d318c01a310ea73a33f3e2f40b2fd315199aca202b0a307dde2f99ecd16",
+    "✅-aces-spell-utils/attributes/life_recovery.md": "744eb560565d9119ac1ce54ed8ecec836855ba9a7cd66047f6f8d26cbcba3715",
+    "✅-aces-spell-utils/attributes/magic_damage_crit_chance.md": "db91f89b1abd6415d8465ab8e7b3eb0be16dd5cffd249491dfede75a50113093",
+    "✅-aces-spell-utils/attributes/magic_damage_crit_damage.md": "11e0f100f2cd4f8dbef556622585550ecbea1f95964ca165c7df139fcab4f50d",
+    "✅-aces-spell-utils/attributes/magic_projectile_crit_chance.md": "70a07c96eb475a491ca0c467f2cf5be568f87f1f272ad3d407d05bae62d3ea92",
+    "✅-aces-spell-utils/attributes/magic_projectile_crit_damage.md": "4f7a8cb5454e945ecef5f36a4728b99fa18112e5646745bf425f8f6cd7ad7a5b",
+    "✅-aces-spell-utils/attributes/magic_projectile_damage.md": "ed7ef6f9f9efb5a837b2661e2841ee01afa12ddd2d8a69c099d2ec029945700a",
+    "✅-aces-spell-utils/attributes/mana_rend.md": "2031d58256e8cf52cfae75db64193f786b0117e0fa54decc41325f82e9f91947",
+    "✅-aces-spell-utils/attributes/mana_steal.md": "47f055d0637b51f58c4756266b2b145a425e32410574e86715a7dd8ad3837652",
+    "✅-aces-spell-utils/attributes/ritual_magic_resist.md": "74060545e75a75219e339394eba2bfb1fa22b469921760ca8ab3ccec7900f4a0",
+    "✅-aces-spell-utils/attributes/ritual_spell_power.md": "9c0ba06befae7bb1115bcb6e5205ea711de0859c407c483a49321f94bf213332",
+    "✅-aces-spell-utils/attributes/spell_res_penetration.md": "ce58c79d69cd7363ce9c51558ac1109aa9b9518cbb32be7847e3c607f5f62a75",
+    "✅-aces-spell-utils/attributes/technomancy_magic_resist.md": "97db40a9e01fb2d070e47d739bc77470a8277e81e3795f10e254f74f6f455f1f",
+    "✅-aces-spell-utils/attributes/technomancy_spell_power.md": "f6e8c23c892185e85b44dab29ef1464acb1d7d484a624277d0a9a364f95e6455",
+    "✅-aces-spell-utils/attributes/vigor_reap.md": "11a590de5097111688f49c0f853a74545b764bebefd174bf184215620421960e",
+    "✅-aces-spell-utils/config/enable-dev-mode.md": "448f33cde32251b59f96101ced6d4609bf686f5893b708487421a37078892cdf",
+    "✅-aces-spell-utils/config/mana-rend-entity-blacklist.md": "07d58808e5a1f0e3040492107673eb1f0b20ed3199bedb40f2870196e633a30f",
+    "✅-aces-spell-utils/config/mana-steal-drains-mana.md": "fddd5c07a74654b49cbfe85ccb92b36fdb6581820031f9d6e19842215e622b11",
+    "✅-aces-spell-utils/config/mana-steal-entity-blacklist.md": "d8214b06faed39306148cd83a1dcdb408e77ded63915e7b951fe57f92fa151ea",
+    "✅-aces-spell-utils/config/refinement-victory-factor.md": "06ad61a55810951d00faf6e64211be713198867debe16dbf84dcb7afcd8b183d",
+    "✅-aces-spell-utils/damage-types/hydro_magic.md": "254a298c152a452fc1835bc896dfe183e9bcc5b02d509e84025a2f003f5ef201",
+    "✅-aces-spell-utils/damage-types/ritual_magic.md": "71e3aa1629b8dce19c7bbb92ad56fe5cc05d5809e81083d3e8f9c9070f434f70",
+    "✅-aces-spell-utils/damage-types/technomancy_magic.md": "c19de2d440a9831b644a29965dc33186ae4128d81372daa5a364695dda95a409",
+    "✅-aces-spell-utils/examples/example_ap_magic_sword.md": "b0b3148b6e6f7c753d44491a7e9ece607f9f9b5acba0932d134f0a6ff2277da5",
+    "✅-aces-spell-utils/examples/example_ap_sword.md": "14d2faa5a913a4a1a1ef2eedfe2d62d8ce28b2d96da8160176b758e78cc2ba10",
+    "✅-aces-spell-utils/examples/example_armor_boots.md": "64d41fb4e4f71fe97fdd5c58f74f838170e9ad50e1ccf682625f2546c2eaf961",
+    "✅-aces-spell-utils/examples/example_armor_chestplate.md": "c28da756002e31805502af97a608299443e78a4edd0877a11fe438a8b0766e5a",
+    "✅-aces-spell-utils/examples/example_armor_helmet.md": "0b340cd7b28c36e1335c9fa70454eb642a381f2f5ff23238eb3c7074e1e6f370",
+    "✅-aces-spell-utils/examples/example_armor_leggings.md": "8fa1909760ea1eb04fa4e3bf6f47e51daa7ea6768ad7bbff1ee733d7225348b7",
+    "✅-aces-spell-utils/examples/example_armor_material.md": "73f6dc3eb46537ffa4f2bacb784bd9f61ea0b07a84b202c5f8f0ba8ca5b0bc7e",
+    "✅-aces-spell-utils/examples/example_chromatic_aberration.md": "f9c17c33ed6717fa268bb5844a74d1a3762ae729dd3d6efdc5607bb3cbf5739f",
+    "✅-aces-spell-utils/examples/example_curio.md": "d768d4a19d8388d9721013deb80ca956ad901ad7e149775388f7576a1444d741",
+    "✅-aces-spell-utils/examples/example_dome.md": "4f03259ac4f8d7a35fb96f897b0d7981c3245f4c2d25348757c06b8e5cac269f",
+    "✅-aces-spell-utils/examples/example_gun.md": "7c7e3edc5596d317c09df46b5bc4e0266afa0424877e126c20321df862097458",
+    "✅-aces-spell-utils/examples/example_imbue_curio.md": "2bf6dbd5c2555a83da140c2ff8ff4a8036b0e3b886e009928f0d24663e6be04b",
+    "✅-aces-spell-utils/examples/example_imbue_staff.md": "a784afc1d3fa78410ec65db13cdb18b081f223386647f729c58d98024a47451f",
+    "✅-aces-spell-utils/examples/example_impact_frame_blue.md": "e9a9eb2d85768c98b19257d89b9580457f1a4dbfd2700572ec7bff1f448c2163",
+    "✅-aces-spell-utils/examples/example_impact_frame_green.md": "88b37e07ed8b4bb4fe6acb179a5cfae6a4cf31d94fb01671b985a22b83b1547e",
+    "✅-aces-spell-utils/examples/example_impact_frame_purple.md": "2fce5e8d3b61ad3609fc647e556079fba0b94c88932ca56fded26d97d29db64e",
+    "✅-aces-spell-utils/examples/example_impact_frame_red.md": "a9d735de0d6191e79b99cfdeb848991f69f2403c47f7e0128813fd617fed5993",
+    "✅-aces-spell-utils/examples/example_impact_frame_white.md": "a7d98f5e9568f4e2c19977a602aa529bede86b4f68bf43420bc1beeac405b5e9",
+    "✅-aces-spell-utils/examples/example_impact_frame_white_aberration.md": "8e39fffc0851f6e75be58c15cde43a4e3f995a6b23894270ee3278048eab1bc3",
+    "✅-aces-spell-utils/examples/example_loot_bag.md": "2b52cd3a50f1bcf732b751c7a5ddb5d47ffb6d26a84c3eaef4cd0ed804bae594",
+    "✅-aces-spell-utils/examples/example_passive_ability_spellbook.md": "757916b23a44b65851264d2f4909e27413267ac87089b5d3557168afb0d8ed45",
+    "✅-aces-spell-utils/examples/example_ribbon.md": "6ad7b4300349a11bd6435911d9e6f8449263e68c68ce476933f90fa069ce45a0",
+    "✅-aces-spell-utils/examples/example_roar.md": "4f902dfdd103ca0f22bde129fe32f76f0add150f2a718c2ae50608c3646b93e0",
+    "✅-aces-spell-utils/examples/example_roar_ring.md": "d5a98c108cf3023bab1cc84ffbede243c44f08502408a030d7cc00a990048e91",
+    "✅-aces-spell-utils/examples/example_sheath.md": "c7fafa52c60534aa20eef11c6df291ba1a623c00166a5219131cfd1f721daf94",
+    "✅-aces-spell-utils/examples/example_staff.md": "3a549a7f1a41e993c2fd7bf6786facc5e95ea374734324ed96f5f28021994631",
+    "✅-aces-spell-utils/examples/example_trail.md": "3686288aa29f20b8b237c752033847142b41d9a882691bc6ef577157a2de7d03",
+    "✅-aces-spell-utils/examples/example_unqiue_ability_spellbook.md": "0dcab1b4a54990044b1fcc7b343ef1b14d2fd5ff99d4102a2fa129cbf5f61ca3",
+    "✅-aces-spell-utils/mixins/living-entity-evasive-iframe.md": "d247f92f7af3897ff4ca701fc9cf4fdc1899ca0d2bd0ecc1ac52097641ed4007",
+    "✅-aces-spell-utils/mixins/player-keep-inventory-drop.md": "8223c3ad8a733cc1c8c536faf783b1f129ab9c88cfbfb2eb1ca8730c490b21b5",
+    "✅-aces-spell-utils/particles/trail.md": "9a2b95d1d6c413709d6435d7b65ba04ab461b4b40f3ff4dd3d6aa638e48c6655",
+    "✅-aces-spell-utils/payloads/add_shader_effect.md": "ec763a97eefba51f7fadef37766db387502a0a84a1e5f84e50f3716aadb78ded",
+    "✅-aces-spell-utils/payloads/remove_shader_effect.md": "e1f718c0fcd41842738ef309a5342ee3f4ccef79366f8aee80b303bdfd8ada20",
+    "✅-aces-spell-utils/payloads/trigger_chromatic_aberration.md": "c5fd84a9c430c03ad8eb3a370defd027d1bc38dfd6cb39718c321b7db5801be9",
+    "✅-aces-spell-utils/payloads/trigger_dome.md": "ea2a9799b7821dc9e49c3bbdb1dcae7d1216f2b61c282c96a311451ceda9cd45",
+    "✅-aces-spell-utils/payloads/trigger_impact_frame.md": "5660cac2ad3ff4d4790e6f0ff87b05807fdee43e8409b59c3ad444274326c69e",
+    "✅-aces-spell-utils/payloads/trigger_ribbon.md": "3207444b2fb512a4585e87f92c805a2379361b091959fa75879992d5ea7a2a1b",
+    "✅-aces-spell-utils/payloads/trigger_roar.md": "440a2425d3baebf5feb4847ffca6a0394f03f636704c28e950134b5ecd2e707f",
+    "✅-aces-spell-utils/payloads/trigger_shake.md": "75d8c4faa2c8f87f7bcae324558bfae038dede78fcd14efedff3b6ed050f089e",
+    "✅-aces-spell-utils/rarities/accursed.md": "af6bb6527f26da61344dd9b68dc178ca047bd6e820d3a11e5bf58298718333cb",
+    "✅-aces-spell-utils/rarities/aquatic.md": "5d2905b9d3b8da161fe05899ae193bfb10641e2a8ccebcf338805080262041c7",
+    "✅-aces-spell-utils/rarities/arid.md": "b0bf5a8a72c20213fefdff6c09962c9b93e13fd527aa5a3e6895fd08237fe885",
+    "✅-aces-spell-utils/rarities/cosmic.md": "da8bbfc921d86b8f5d9766dca9a93d8b2ed453a4ec21737206bbaf48011aacfb",
+    "✅-aces-spell-utils/rarities/forbidden.md": "ad6b7923cccfed5720b8eaa033c986fb0d44a3bbe55a50f839c7bfadf3d75d0e",
+    "✅-aces-spell-utils/rarities/glacial.md": "54ffdb7baf3587e1912e52e624f499660815a2ae1f1a333c31b9823845ff5968",
+    "✅-aces-spell-utils/rarities/sculk.md": "fcb093d283388b0b146198bb30f342dd21bd7f78c41a6ed26c73a314fbefd681",
+    "✅-aces-spell-utils/rarities/verdant.md": "8da538739667add97d421d8672b25fa3f861834d27e4ac8187b77f593ddffbd6",
+    "✅-aces-spell-utils/schools/hydro.md": "8fc95554c5c08a30f5b0f63acdb69db07b76b361690507a22210501efa932f41",
+    "✅-aces-spell-utils/schools/ritual.md": "87116d1b104dcbbb2fc6faeac127c434f03a872a4bd0e16f5ada0a0aea532e3a",
+    "✅-aces-spell-utils/schools/technomancy.md": "9ecddee2ecc4ec97214d44c127067569001ed940d50aa2e94f1b491516e59701",
+    "✅-aces-spell-utils/systems/active-passive-swords.md": "3cb5295b10383f4cb97d6019a08e6aff1ea42f16b1b71529a14b09b5dc6e3380",
+    "✅-aces-spell-utils/systems/animated-spellcasting-mobs.md": "7a4e0502eff770c72eafdad269b903c5ac92b794f63afdae9a301add518e62b2",
+    "✅-aces-spell-utils/systems/asutils-casting-unlock-helpers.md": "b9cf949f27dbd12a501d1ccdf92a81cdb3b20b356745f6776704d53f739b2574",
+    "✅-aces-spell-utils/systems/boss-phases-music.md": "9a0f36214db55364c6b9ea15f3d4748e758c955f3c1a7787c2e360cf8e95718a",
+    "✅-aces-spell-utils/systems/domain-entity-runtime.md": "42ba14f1ff304c904fad5632dc0ce6e43cee29e10b59f6811745a448763250f4",
+    "✅-aces-spell-utils/systems/emissive-geo-armor-rendering.md": "19cffa827eba497a97657616eaf656077d1d32ad6f42dfde50339f9eadc588ee",
+    "✅-aces-spell-utils/systems/geo-armor-attribute-helper.md": "a4959a93192961419f4337bbbeb61316ed1fcdebe4a84476a891eefb280d9a44",
+    "✅-aces-spell-utils/systems/imbue-curios.md": "de3b80cc5bec864578133a0a9528bd0cdbeefe37b3ac53abe7c399a9e1d117c8",
+    "✅-aces-spell-utils/systems/imbue-staves.md": "4bf2bae1636599d0ceaffeb63d12c2761b3e4457bb0964c107211a74e7372679",
+    "✅-aces-spell-utils/systems/keep-inventory-companion.md": "c2dfcce80ddb82e9bbaaf64f6db2ccbe86cfceba153e8053cc92ffe018f0b53a",
+    "✅-aces-spell-utils/systems/loot-bag-helper.md": "fe8e7fbd8b436b838f09662015e5743c4cd8cd95989a30de3444247add9ea5c0",
+    "✅-aces-spell-utils/systems/mace-casting-family.md": "76088cf419098f5da9a4e4aacb8b225c033a506085f15d01b354ddf67247b978",
+    "✅-aces-spell-utils/systems/magic-gun-casting.md": "eede594a337a6d612a980c1772d3e69e9ccc1fa129251b71fcb40df151bc62bd",
+    "✅-aces-spell-utils/systems/passive-ability-spellbooks.md": "ff15f96c7fe4127fd3c4a69e53a706fc3c2fb4143208b44925a901169cd50bc6",
+    "✅-aces-spell-utils/systems/passive-cooldown-curios.md": "f9bf27b8775a7731a877be0fd693ce1f544906e47751bded6c589dbfc35c5c87",
+    "✅-aces-spell-utils/systems/roar-command-visual-triggers.md": "6c03fd6b961aa45c38b9b779d7a1628ab6c7d74936f58e122b8ff9b9ba28a382",
+    "✅-aces-spell-utils/systems/spell-animation-holders.md": "b6312193534b0934c4f596f043fd871fb628a85ddb971744b7173fb682d4dd34",
+    "✅-aces-spell-utils/systems/summon-spell-helper.md": "6e34d10fd1a24a8d317639fac3b582d691ef1f5b7ab99071b8c7ad3ce4f822f1",
+    "✅-aces-spell-utils/systems/unused-summon-template.md": "b22bbbfec4d73eedfd5feadcb09db9664731defc8e3b9b0209aefe5dcf05fea1",
+    "✅-aces-spell-utils/systems/vfx-client-payloads.md": "cda143900dca58b2cfbefb499269f0fea597d7681304c9cae065d71251d06ad4",
+    "✅-aces-spell-utils/systems/wizard-spell-combo-ai.md": "b9a5bc9c6527ee50330df8d65163bdcb77ceaaad718cb9d2875643bd24a57ee6",
+    "✅-aces-spell-utils/tags/entity_type-boss_like_entities.md": "3e009c0f646715e9b1dcc32acba1268cd6852c1c7d1da9d6760e8e8ea96d7509",
+    "✅-aces-spell-utils/tags/entity_type-mana_rend_whitelist.md": "f90fceca1f5228e26b6a16c384423d45a85fd15bf353d455c10b9c2e28aea13f",
+    "✅-aces-spell-utils/tags/entity_type-mana_steal_whitelist.md": "c8b581e1d38d1d990e3f3595ce5bcf1b64bd58830466207d260e2b2de3a3acbd",
+    "✅-aces-spell-utils/tags/item-hydro_focus.md": "cb1da8ede98670765c8876b9fff317c0399bb2508c151142e2fa00ec7ce510d3",
+    "✅-aces-spell-utils/tags/item-hydro_runes.md": "3a6d0c39f4c0238d3a0ecc2f51f1239ed37cecdb96fff7010728e2911e57e7f6",
+    "✅-aces-spell-utils/tags/item-hydro_upgrade_orbs.md": "d9731f753698e0923eeb62e148719a5063b12dc4cc10cf1a2c0217f970f9a95f",
+    "✅-aces-spell-utils/tags/item-ritual_focus.md": "669f60cac092ddf12f2d14f5ed9f78398321ba378081eaa96570a86b58fb59aa",
+    "✅-aces-spell-utils/tags/item-ritual_runes.md": "f8e0a97f4c9a894c3023f4cc843cbb1eaeee0ab3e736631ad79b73128dad0227",
+    "✅-aces-spell-utils/tags/item-ritual_upgrade_orbs.md": "0b8cda837597acee651510c2f644edb28c094fad474cec01b7f0e326f42802fe",
+    "✅-aces-spell-utils/tags/item-technomancy_focus.md": "bce3fcb71ce4e2b119401a426f1e18eeea2593a566350bd234ab1a4c5581a8f5",
+    "✅-aces-spell-utils/tags/item-technomancy_runes.md": "128ab320b0fced5018bffce6dcb9bdf87b3f884402b9e1ed691aa03b4719c034",
+    "✅-aces-spell-utils/tags/item-technomancy_upgrade_orbs.md": "1985cf2f59e8bcab8a14a89bfcb7f6484ac885032bc86e4c0d80635211a77d2a",
+    "✅-aces-spell-utils/tags/spell-slash_like_spell.md": "9303167839c9a0cf4efcc07b19ea2154d1610a7089566368a342261e81b4ffbd",
+    "✅-aces-spell-utils/tags/spell-stomp_like_spell.md": "51b77a91471aa5664b587ffc803124b6b4cc0ac234d7349d62769b925708f5ba",
+    "✅-aces-spell-utils/vfx-runtime/dome-shake-coordination.md": "e0ed69c630c6f880b8ec81f6056df6e77645439d02c65df20c6d59876e9b9d00",
+    "✅-aces-spell-utils/vfx-runtime/impact-aberration-visual-dispatch.md": "ea3748e7341ff08b0960013aa1526367cadbe9549bef12b734b6cf4f8c9cde24",
+    "✅-aces-spell-utils/vfx-runtime/ribbon-attachment-tracking.md": "e847abb68facb6de3f23f106a847f3543ee588ca35aa9da6d979f4a2678bf8d4",
+    "✅-aces-spell-utils/vfx-runtime/roar-notification-routing.md": "40be0a639b755ba6d6d186ba8a705d91a97203892d0881ebb2d1f0aa78b1ce04",
+    "✅-aces-spell-utils/vfx-runtime/trail-manager-tick-lifecycle.md": "497fc2e96150ec3b3d2c490d22f4c371061c4771559ea2bb150aa5479f6b6ea8"
+  },
+  "catalog_objects": {
+    "CARD:attachments/keep_inv_on_death": "✅-aces-spell-utils/attachments/keep_inv_on_death.md",
+    "CARD:attributes/evasive": "✅-aces-spell-utils/attributes/evasive.md",
+    "CARD:attributes/goliath_slayer": "✅-aces-spell-utils/attributes/goliath_slayer.md",
+    "CARD:attributes/hunger_steal": "✅-aces-spell-utils/attributes/hunger_steal.md",
+    "CARD:attributes/hydro_magic_resist": "✅-aces-spell-utils/attributes/hydro_magic_resist.md",
+    "CARD:attributes/hydro_spell_power": "✅-aces-spell-utils/attributes/hydro_spell_power.md",
+    "CARD:attributes/life_recovery": "✅-aces-spell-utils/attributes/life_recovery.md",
+    "CARD:attributes/magic_damage_crit_chance": "✅-aces-spell-utils/attributes/magic_damage_crit_chance.md",
+    "CARD:attributes/magic_damage_crit_damage": "✅-aces-spell-utils/attributes/magic_damage_crit_damage.md",
+    "CARD:attributes/magic_projectile_crit_chance": "✅-aces-spell-utils/attributes/magic_projectile_crit_chance.md",
+    "CARD:attributes/magic_projectile_crit_damage": "✅-aces-spell-utils/attributes/magic_projectile_crit_damage.md",
+    "CARD:attributes/magic_projectile_damage": "✅-aces-spell-utils/attributes/magic_projectile_damage.md",
+    "CARD:attributes/mana_rend": "✅-aces-spell-utils/attributes/mana_rend.md",
+    "CARD:attributes/mana_steal": "✅-aces-spell-utils/attributes/mana_steal.md",
+    "CARD:attributes/ritual_magic_resist": "✅-aces-spell-utils/attributes/ritual_magic_resist.md",
+    "CARD:attributes/ritual_spell_power": "✅-aces-spell-utils/attributes/ritual_spell_power.md",
+    "CARD:attributes/spell_res_penetration": "✅-aces-spell-utils/attributes/spell_res_penetration.md",
+    "CARD:attributes/technomancy_magic_resist": "✅-aces-spell-utils/attributes/technomancy_magic_resist.md",
+    "CARD:attributes/technomancy_spell_power": "✅-aces-spell-utils/attributes/technomancy_spell_power.md",
+    "CARD:attributes/vigor_reap": "✅-aces-spell-utils/attributes/vigor_reap.md",
+    "CARD:config/enable-dev-mode": "✅-aces-spell-utils/config/enable-dev-mode.md",
+    "CARD:config/mana-rend-entity-blacklist": "✅-aces-spell-utils/config/mana-rend-entity-blacklist.md",
+    "CARD:config/mana-steal-drains-mana": "✅-aces-spell-utils/config/mana-steal-drains-mana.md",
+    "CARD:config/mana-steal-entity-blacklist": "✅-aces-spell-utils/config/mana-steal-entity-blacklist.md",
+    "CARD:config/refinement-victory-factor": "✅-aces-spell-utils/config/refinement-victory-factor.md",
+    "CARD:damage-types/hydro_magic": "✅-aces-spell-utils/damage-types/hydro_magic.md",
+    "CARD:damage-types/ritual_magic": "✅-aces-spell-utils/damage-types/ritual_magic.md",
+    "CARD:damage-types/technomancy_magic": "✅-aces-spell-utils/damage-types/technomancy_magic.md",
+    "CARD:examples/example_ap_magic_sword": "✅-aces-spell-utils/examples/example_ap_magic_sword.md",
+    "CARD:examples/example_ap_sword": "✅-aces-spell-utils/examples/example_ap_sword.md",
+    "CARD:examples/example_armor_boots": "✅-aces-spell-utils/examples/example_armor_boots.md",
+    "CARD:examples/example_armor_chestplate": "✅-aces-spell-utils/examples/example_armor_chestplate.md",
+    "CARD:examples/example_armor_helmet": "✅-aces-spell-utils/examples/example_armor_helmet.md",
+    "CARD:examples/example_armor_leggings": "✅-aces-spell-utils/examples/example_armor_leggings.md",
+    "CARD:examples/example_armor_material": "✅-aces-spell-utils/examples/example_armor_material.md",
+    "CARD:examples/example_chromatic_aberration": "✅-aces-spell-utils/examples/example_chromatic_aberration.md",
+    "CARD:examples/example_curio": "✅-aces-spell-utils/examples/example_curio.md",
+    "CARD:examples/example_dome": "✅-aces-spell-utils/examples/example_dome.md",
+    "CARD:examples/example_gun": "✅-aces-spell-utils/examples/example_gun.md",
+    "CARD:examples/example_imbue_curio": "✅-aces-spell-utils/examples/example_imbue_curio.md",
+    "CARD:examples/example_imbue_staff": "✅-aces-spell-utils/examples/example_imbue_staff.md",
+    "CARD:examples/example_impact_frame_blue": "✅-aces-spell-utils/examples/example_impact_frame_blue.md",
+    "CARD:examples/example_impact_frame_green": "✅-aces-spell-utils/examples/example_impact_frame_green.md",
+    "CARD:examples/example_impact_frame_purple": "✅-aces-spell-utils/examples/example_impact_frame_purple.md",
+    "CARD:examples/example_impact_frame_red": "✅-aces-spell-utils/examples/example_impact_frame_red.md",
+    "CARD:examples/example_impact_frame_white": "✅-aces-spell-utils/examples/example_impact_frame_white.md",
+    "CARD:examples/example_impact_frame_white_aberration": "✅-aces-spell-utils/examples/example_impact_frame_white_aberration.md",
+    "CARD:examples/example_loot_bag": "✅-aces-spell-utils/examples/example_loot_bag.md",
+    "CARD:examples/example_passive_ability_spellbook": "✅-aces-spell-utils/examples/example_passive_ability_spellbook.md",
+    "CARD:examples/example_ribbon": "✅-aces-spell-utils/examples/example_ribbon.md",
+    "CARD:examples/example_roar": "✅-aces-spell-utils/examples/example_roar.md",
+    "CARD:examples/example_roar_ring": "✅-aces-spell-utils/examples/example_roar_ring.md",
+    "CARD:examples/example_sheath": "✅-aces-spell-utils/examples/example_sheath.md",
+    "CARD:examples/example_staff": "✅-aces-spell-utils/examples/example_staff.md",
+    "CARD:examples/example_trail": "✅-aces-spell-utils/examples/example_trail.md",
+    "CARD:examples/example_unqiue_ability_spellbook": "✅-aces-spell-utils/examples/example_unqiue_ability_spellbook.md",
+    "CARD:mixins/living-entity-evasive-iframe": "✅-aces-spell-utils/mixins/living-entity-evasive-iframe.md",
+    "CARD:mixins/player-keep-inventory-drop": "✅-aces-spell-utils/mixins/player-keep-inventory-drop.md",
+    "CARD:particles/trail": "✅-aces-spell-utils/particles/trail.md",
+    "CARD:payloads/add_shader_effect": "✅-aces-spell-utils/payloads/add_shader_effect.md",
+    "CARD:payloads/remove_shader_effect": "✅-aces-spell-utils/payloads/remove_shader_effect.md",
+    "CARD:payloads/trigger_chromatic_aberration": "✅-aces-spell-utils/payloads/trigger_chromatic_aberration.md",
+    "CARD:payloads/trigger_dome": "✅-aces-spell-utils/payloads/trigger_dome.md",
+    "CARD:payloads/trigger_impact_frame": "✅-aces-spell-utils/payloads/trigger_impact_frame.md",
+    "CARD:payloads/trigger_ribbon": "✅-aces-spell-utils/payloads/trigger_ribbon.md",
+    "CARD:payloads/trigger_roar": "✅-aces-spell-utils/payloads/trigger_roar.md",
+    "CARD:payloads/trigger_shake": "✅-aces-spell-utils/payloads/trigger_shake.md",
+    "CARD:rarities/accursed": "✅-aces-spell-utils/rarities/accursed.md",
+    "CARD:rarities/aquatic": "✅-aces-spell-utils/rarities/aquatic.md",
+    "CARD:rarities/arid": "✅-aces-spell-utils/rarities/arid.md",
+    "CARD:rarities/cosmic": "✅-aces-spell-utils/rarities/cosmic.md",
+    "CARD:rarities/forbidden": "✅-aces-spell-utils/rarities/forbidden.md",
+    "CARD:rarities/glacial": "✅-aces-spell-utils/rarities/glacial.md",
+    "CARD:rarities/sculk": "✅-aces-spell-utils/rarities/sculk.md",
+    "CARD:rarities/verdant": "✅-aces-spell-utils/rarities/verdant.md",
+    "CARD:schools/hydro": "✅-aces-spell-utils/schools/hydro.md",
+    "CARD:schools/ritual": "✅-aces-spell-utils/schools/ritual.md",
+    "CARD:schools/technomancy": "✅-aces-spell-utils/schools/technomancy.md",
+    "CARD:systems/active-passive-swords": "✅-aces-spell-utils/systems/active-passive-swords.md",
+    "CARD:systems/animated-spellcasting-mobs": "✅-aces-spell-utils/systems/animated-spellcasting-mobs.md",
+    "CARD:systems/asutils-casting-unlock-helpers": "✅-aces-spell-utils/systems/asutils-casting-unlock-helpers.md",
+    "CARD:systems/boss-phases-music": "✅-aces-spell-utils/systems/boss-phases-music.md",
+    "CARD:systems/domain-entity-runtime": "✅-aces-spell-utils/systems/domain-entity-runtime.md",
+    "CARD:systems/emissive-geo-armor-rendering": "✅-aces-spell-utils/systems/emissive-geo-armor-rendering.md",
+    "CARD:systems/geo-armor-attribute-helper": "✅-aces-spell-utils/systems/geo-armor-attribute-helper.md",
+    "CARD:systems/imbue-curios": "✅-aces-spell-utils/systems/imbue-curios.md",
+    "CARD:systems/imbue-staves": "✅-aces-spell-utils/systems/imbue-staves.md",
+    "CARD:systems/keep-inventory-companion": "✅-aces-spell-utils/systems/keep-inventory-companion.md",
+    "CARD:systems/loot-bag-helper": "✅-aces-spell-utils/systems/loot-bag-helper.md",
+    "CARD:systems/mace-casting-family": "✅-aces-spell-utils/systems/mace-casting-family.md",
+    "CARD:systems/magic-gun-casting": "✅-aces-spell-utils/systems/magic-gun-casting.md",
+    "CARD:systems/passive-ability-spellbooks": "✅-aces-spell-utils/systems/passive-ability-spellbooks.md",
+    "CARD:systems/passive-cooldown-curios": "✅-aces-spell-utils/systems/passive-cooldown-curios.md",
+    "CARD:systems/roar-command-visual-triggers": "✅-aces-spell-utils/systems/roar-command-visual-triggers.md",
+    "CARD:systems/spell-animation-holders": "✅-aces-spell-utils/systems/spell-animation-holders.md",
+    "CARD:systems/summon-spell-helper": "✅-aces-spell-utils/systems/summon-spell-helper.md",
+    "CARD:systems/unused-summon-template": "✅-aces-spell-utils/systems/unused-summon-template.md",
+    "CARD:systems/vfx-client-payloads": "✅-aces-spell-utils/systems/vfx-client-payloads.md",
+    "CARD:systems/wizard-spell-combo-ai": "✅-aces-spell-utils/systems/wizard-spell-combo-ai.md",
+    "CARD:tags/entity_type-boss_like_entities": "✅-aces-spell-utils/tags/entity_type-boss_like_entities.md",
+    "CARD:tags/entity_type-mana_rend_whitelist": "✅-aces-spell-utils/tags/entity_type-mana_rend_whitelist.md",
+    "CARD:tags/entity_type-mana_steal_whitelist": "✅-aces-spell-utils/tags/entity_type-mana_steal_whitelist.md",
+    "CARD:tags/item-hydro_focus": "✅-aces-spell-utils/tags/item-hydro_focus.md",
+    "CARD:tags/item-hydro_runes": "✅-aces-spell-utils/tags/item-hydro_runes.md",
+    "CARD:tags/item-hydro_upgrade_orbs": "✅-aces-spell-utils/tags/item-hydro_upgrade_orbs.md",
+    "CARD:tags/item-ritual_focus": "✅-aces-spell-utils/tags/item-ritual_focus.md",
+    "CARD:tags/item-ritual_runes": "✅-aces-spell-utils/tags/item-ritual_runes.md",
+    "CARD:tags/item-ritual_upgrade_orbs": "✅-aces-spell-utils/tags/item-ritual_upgrade_orbs.md",
+    "CARD:tags/item-technomancy_focus": "✅-aces-spell-utils/tags/item-technomancy_focus.md",
+    "CARD:tags/item-technomancy_runes": "✅-aces-spell-utils/tags/item-technomancy_runes.md",
+    "CARD:tags/item-technomancy_upgrade_orbs": "✅-aces-spell-utils/tags/item-technomancy_upgrade_orbs.md",
+    "CARD:tags/spell-slash_like_spell": "✅-aces-spell-utils/tags/spell-slash_like_spell.md",
+    "CARD:tags/spell-stomp_like_spell": "✅-aces-spell-utils/tags/spell-stomp_like_spell.md",
+    "CARD:vfx-runtime/dome-shake-coordination": "✅-aces-spell-utils/vfx-runtime/dome-shake-coordination.md",
+    "CARD:vfx-runtime/impact-aberration-visual-dispatch": "✅-aces-spell-utils/vfx-runtime/impact-aberration-visual-dispatch.md",
+    "CARD:vfx-runtime/ribbon-attachment-tracking": "✅-aces-spell-utils/vfx-runtime/ribbon-attachment-tracking.md",
+    "CARD:vfx-runtime/roar-notification-routing": "✅-aces-spell-utils/vfx-runtime/roar-notification-routing.md",
+    "CARD:vfx-runtime/trail-manager-tick-lifecycle": "✅-aces-spell-utils/vfx-runtime/trail-manager-tick-lifecycle.md"
+  },
+  "aggregates": {
+    "AGGREGATE:examples-and-development-content": {
+      "evidence": "✅-aces-spell-utils/NETWORK-MIXINS-AND-EXAMPLES.md",
+      "reason": "Registered examples have individual cards; demonstration models, shared tiers and the dev-only creative tab are documented support, not additional spells."
+    },
+    "AGGREGATE:provider-contract-metadata": {
+      "evidence": "✅-aces-spell-utils/REGISTRIES-AND-ATTRIBUTES.md",
+      "reason": "Common registration declarations, namespace/localization metadata and host contract wiring support individually documented registry objects and consumers."
+    },
+    "AGGREGATE:bootstrap-build-and-publisher-metadata": {
+      "evidence": "✅-aces-spell-utils/EVIDENCE-AND-PROVENANCE.md",
+      "reason": "Build, wrapper, repository templates and entrypoint registration wiring establish provenance and initialization without an independent spell or perk."
+    },
+    "AGGREGATE:auxiliary-artwork": {
+      "evidence": "✅-aces-spell-utils/SOURCE-CATALOG-CLOSURE-1.2.7.2.md",
+      "reason": "Unregistered model, texture and pack artwork filenames do not register items, entities or spells; used rendering resources are also mapped to consumers."
+    }
+  },
+  "source_file_count": 245,
+  "java_file_count": 132,
+  "source_files": [
+    {
+      "path": ".gitattributes",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 256,
+      "sha256": "448fc4f5b88765df18eec1a82fb0ed09d7fb148e50fe49bd004be05effb06285",
+      "lines": 5,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/to-do-template.md",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 307,
+      "sha256": "ec8a4d0461bfce5d4387f1e8c6c3750660f8120523fc0399eb1ded945c3ecdd8",
+      "lines": 20,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": ".github/workflows/build.yml",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 717,
+      "sha256": "7034472458dbd62842af49c5b71235baeed735af0d78e5f4e5efc3f66d5c3d3a",
+      "lines": 30,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": ".gitignore",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 163,
+      "sha256": "593a052d393a8360733ed99596572c1149b51dea58ec1539865cede75a1fb8cc",
+      "lines": 26,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": "README.md",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 1291,
+      "sha256": "b0b3005d431f13a481cd7a475aedd49b2baa31658b32513b0202476f10c5c371",
+      "lines": 25,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": "TEMPLATE_LICENSE.txt",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 1159,
+      "sha256": "dac9ce41f6f46e455f31aea51c366f6ffd2a4be8486eb1b1cb4bd99afb584297",
+      "lines": 24,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": "build.gradle",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 11172,
+      "sha256": "cd12a68dd7fc582a4a679a2ef99bb02f57fde014eb18de3294171c6c35209e13",
+      "lines": 269,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": "gradle.properties",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 1333,
+      "sha256": "af2dc272a1ab487535f5f57b4a9b01caf455d5727fbb20fab614586fbd2a4f24",
+      "lines": 46,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.jar",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 43764,
+      "sha256": "7d3a4ac4de1c32b59bc6a4eb8ecb8e612ccd0cf1ae1e99f66902da64df296172",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.properties",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 253,
+      "sha256": "97e38c4092036e177d1d31ebb454332a61a1d1313fc76aefe34b35e88211715d",
+      "lines": 7,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": "gradlew",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 8733,
+      "sha256": "b187b4c52e749f5760afdd6fadc31b2a98ad35fb249bf0dff03b72650f320409",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": "gradlew.bat",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 2843,
+      "sha256": "94102713eb8fb22d032397924c0f38ab2da783ba60d07054339f1190a0c4e2cd",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": "settings.gradle",
+      "kind": "build-or-repository-metadata",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 206,
+      "sha256": "3ad5ae28de00fd6a1e35170fc43f84a074646f953dd1e2876a13927f575d4895",
+      "lines": 11,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/AcesSpellUtils.java",
+      "kind": "java",
+      "classification": "justified_metadata_aggregate",
+      "disposition_reason": "Mod bootstrap binds common config, registries and client item/particle providers; unconditional example registration versus production-gated creative-tab registration is documented as metadata, not a separate action or ability.",
+      "bytes": 4633,
+      "sha256": "a2d615b76946a72158df6982ac61b73b82fa60d7e8d6bdd1e0bbb17d5e429231",
+      "lines": 108,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata",
+        "AGGREGATE:examples-and-development-content",
+        "AGGREGATE:provider-contract-metadata"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/chromaticaberration/ChromaticAberrationEffect.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client effect and timeline implement the named chromatic-aberration payload presentation; no separate registry object, combat action, mana debit or server authority is introduced by this implementation pair.",
+      "bytes": 2930,
+      "sha256": "6d1aba278a6b809dcc15d5c9e091f23698260ce0810467c3c158907cc74d6cd1",
+      "lines": 83,
+      "catalog_refs": [
+        "CARD:payloads/trigger_chromatic_aberration",
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/chromaticaberration/ChromaticAberrationTimeline.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client effect and timeline implement the named chromatic-aberration payload presentation; no separate registry object, combat action, mana debit or server authority is introduced by this implementation pair.",
+      "bytes": 1213,
+      "sha256": "a5352218a1d9f2cc3bfb6be63f8f0ccf5b09dc276710c536ab43201e81da1e63",
+      "lines": 42,
+      "catalog_refs": [
+        "CARD:payloads/trigger_chromatic_aberration",
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/dome/ActiveDome.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Dome instance state, age/removal, shell geometry, render types and optional warp postprocessing implement the documented visual dome contract. These are rendering/lifecycle parts of one dome surface, not separate domains or attacks.",
+      "bytes": 1689,
+      "sha256": "7cb976b89a775869d9d02baf58dfdb9c9a052c72a2164ae13b48c59a5a902c14",
+      "lines": 51,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome",
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/dome/DomeManager.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Dome instance state, age/removal, shell geometry, render types and optional warp postprocessing implement the documented visual dome contract. These are rendering/lifecycle parts of one dome surface, not separate domains or attacks.",
+      "bytes": 1930,
+      "sha256": "b14a452bcdb6151a3599a2b2a092cd2983ef3f29c4a216d39fa5d4827d0dd072",
+      "lines": 64,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome",
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/dome/DomeMesh.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Dome instance state, age/removal, shell geometry, render types and optional warp postprocessing implement the documented visual dome contract. These are rendering/lifecycle parts of one dome surface, not separate domains or attacks.",
+      "bytes": 3658,
+      "sha256": "ccc2ab0ff56cc366296a6608b24e44b50ef712655109b7e431c8c83ddade1f05",
+      "lines": 81,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome",
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/dome/DomeRenderTypes.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Dome instance state, age/removal, shell geometry, render types and optional warp postprocessing implement the documented visual dome contract. These are rendering/lifecycle parts of one dome surface, not separate domains or attacks.",
+      "bytes": 1485,
+      "sha256": "2175c97b5fc4787ad5a7d5d89f1682af4c30bd911454e82bf39902c475c1ff2c",
+      "lines": 30,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome",
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/dome/DomeRenderer.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Dome instance state, age/removal, shell geometry, render types and optional warp postprocessing implement the documented visual dome contract. These are rendering/lifecycle parts of one dome surface, not separate domains or attacks.",
+      "bytes": 2449,
+      "sha256": "4395a4eded9142bcada2e29aab2c3af0b42575525c51034b098c503b6a5f104b",
+      "lines": 49,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome",
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/dome/DomeWarpEffect.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Dome instance state, age/removal, shell geometry, render types and optional warp postprocessing implement the documented visual dome contract. These are rendering/lifecycle parts of one dome surface, not separate domains or attacks.",
+      "bytes": 6199,
+      "sha256": "7764a1467f15249598245713de8c0babd1ee7e5e376f95614e4c7a6510c67ab8",
+      "lines": 149,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome",
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/impactframe/ImpactFrameEffect.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client shader effect and timeline implement the individual impact-frame presentation contract; presentation state is not a new gameplay capability.",
+      "bytes": 3871,
+      "sha256": "1f07873dd30c0deda3c4840468996f8c9adbf54fbf9a8e4a5d15859bd22ce6b0",
+      "lines": 99,
+      "catalog_refs": [
+        "CARD:payloads/trigger_impact_frame",
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/impactframe/ImpactFrameTimeline.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client shader effect and timeline implement the individual impact-frame presentation contract; presentation state is not a new gameplay capability.",
+      "bytes": 2867,
+      "sha256": "b6218dca2fbc265be3527e425d8bfc9bf2091005d6d73d61f5e0697d3c1b80e8",
+      "lines": 90,
+      "catalog_refs": [
+        "CARD:payloads/trigger_impact_frame",
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/particle/TrailParticle.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete sprite particle provider is directly part of the trail-particle card, including the client implementation of the registered particle.",
+      "bytes": 2085,
+      "sha256": "1ece109cfe144d64860ec3aff94e8a4951b4d8592c06dc22c37f83107ec67fe0",
+      "lines": 56,
+      "catalog_refs": [
+        "CARD:particles/trail"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/ribbon/ActiveRibbon.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client ribbon instance, tracking interpolation, trail geometry and render type implement the documented attach/detach ribbon contract. They share its entity and visual config and do not create an independent action.",
+      "bytes": 1035,
+      "sha256": "51868754300abe449d4b5d6584ef1b682f6fae7286fe24058eaaeac55b8c865a",
+      "lines": 37,
+      "catalog_refs": [
+        "CARD:payloads/trigger_ribbon",
+        "CARD:vfx-runtime/ribbon-attachment-tracking"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/ribbon/RibbonManager.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client ribbon instance, tracking interpolation, trail geometry and render type implement the documented attach/detach ribbon contract. They share its entity and visual config and do not create an independent action.",
+      "bytes": 1877,
+      "sha256": "a3726ac356ef5ecd5e101697eee7b88374f1218e193a6f90b8950a9bd704fc6e",
+      "lines": 61,
+      "catalog_refs": [
+        "CARD:payloads/trigger_ribbon",
+        "CARD:vfx-runtime/ribbon-attachment-tracking"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/ribbon/RibbonRenderTypes.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client ribbon instance, tracking interpolation, trail geometry and render type implement the documented attach/detach ribbon contract. They share its entity and visual config and do not create an independent action.",
+      "bytes": 1907,
+      "sha256": "91bfa96f94a77548d679660c9b2f724d7b39be9c462ea0a224158bf5ac649665",
+      "lines": 42,
+      "catalog_refs": [
+        "CARD:payloads/trigger_ribbon",
+        "CARD:vfx-runtime/ribbon-attachment-tracking"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/ribbon/RibbonRenderer.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client ribbon instance, tracking interpolation, trail geometry and render type implement the documented attach/detach ribbon contract. They share its entity and visual config and do not create an independent action.",
+      "bytes": 6044,
+      "sha256": "69c5722b0004e1acaf23733b4ccde31fa7ffbe9c38b0fc63afc485ee4e79bed6",
+      "lines": 129,
+      "catalog_refs": [
+        "CARD:payloads/trigger_ribbon",
+        "CARD:vfx-runtime/ribbon-attachment-tracking"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/roar/RoarEffect.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client roar effect is the consumer of the individual roar payload contract; screen/world presentation and timeline state are implementation support of that surface.",
+      "bytes": 6314,
+      "sha256": "f7f2e4e4f52758bf1869ae9de19d7295cdace7b23147cd5a8c65697d65d98a18",
+      "lines": 160,
+      "catalog_refs": [
+        "CARD:payloads/trigger_roar",
+        "CARD:vfx-runtime/roar-notification-routing"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/shake/ActiveShake.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Camera-shake active state and amplitude manager implement the existing shake payload/cascade; amplitude sampling is client presentation, not combat targeting.",
+      "bytes": 1495,
+      "sha256": "115f7e0038aa693f6029d4285ee6e57ddc6b513acc490d0d38a49e4561026253",
+      "lines": 41,
+      "catalog_refs": [
+        "CARD:payloads/trigger_shake",
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/client/shake/ShakeManager.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Camera-shake active state and amplitude manager implement the existing shake payload/cascade; amplitude sampling is client presentation, not combat targeting.",
+      "bytes": 2299,
+      "sha256": "34b53bab680417affb31f6b92755c899424146a441266281d34a68266571eb92",
+      "lines": 72,
+      "catalog_refs": [
+        "CARD:payloads/trigger_shake",
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/commands/RoarCommand.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Subscribed permission-gated command and each visual subcommand are directly documented in the existing individual command card.",
+      "bytes": 9247,
+      "sha256": "dba01539a9111ea73a46b44c0a53a79b1bef92706e5c9e649a96a4e6c2b22620",
+      "lines": 148,
+      "catalog_refs": [
+        "CARD:systems/roar-command-visual-triggers"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/armor/ExampleWarlockMaskModel.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Concrete demonstration model supplies model, texture and animation resources consumed by the new reusable armor-renderer card; four item identities remain in existing example cards.",
+      "bytes": 1268,
+      "sha256": "4aa8225f614e9a26f2ae331eaeb7c799c1c6f3c378f3a3f7ae6fd62e4b4a9f29",
+      "lines": 29,
+      "catalog_refs": [
+        "CARD:examples/example_armor_boots",
+        "CARD:examples/example_armor_chestplate",
+        "CARD:examples/example_armor_helmet",
+        "CARD:examples/example_armor_leggings",
+        "CARD:systems/emissive-geo-armor-rendering"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/mobs/GenericBossEntity.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing family card owns the abstract boss bases and phase/music extension contracts. A consuming addon must supply the concrete entity and phase behavior.",
+      "bytes": 4701,
+      "sha256": "16a21856e287a88d3a69334460ce2070d03c346bf67bef3363eeed80a52e953b",
+      "lines": 164,
+      "catalog_refs": [
+        "CARD:systems/boss-phases-music"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/mobs/GenericUniqueBossEntity.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing family card owns the abstract boss bases and phase/music extension contracts. A consuming addon must supply the concrete entity and phase behavior.",
+      "bytes": 5300,
+      "sha256": "efeaccdb0e0d992bb86bc7e95976c64fa6d0e7b6691724acc20f71be272cac7a",
+      "lines": 198,
+      "catalog_refs": [
+        "CARD:systems/boss-phases-music"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/mobs/IKeepInventoryEntity.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual card covers the keep-inventory marker and proximity/range extension contract.",
+      "bytes": 437,
+      "sha256": "d5533301f47c2672dd5acfc8c808f6a1f7d23df5e696fc1a354ca471054a8fb8",
+      "lines": 16,
+      "catalog_refs": [
+        "CARD:systems/keep-inventory-companion"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/mobs/IPhaseEntity.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing family card owns the abstract boss bases and phase/music extension contracts. A consuming addon must supply the concrete entity and phase behavior.",
+      "bytes": 814,
+      "sha256": "7c7fe4434bd13a6e961a6f03fc5639ee25149cd602952540cade0ce8286ae569",
+      "lines": 44,
+      "catalog_refs": [
+        "CARD:systems/boss-phases-music"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/mobs/IPhaseMusicEntity.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing family card owns the abstract boss bases and phase/music extension contracts. A consuming addon must supply the concrete entity and phase behavior.",
+      "bytes": 2098,
+      "sha256": "e9677b37103533dedd8eeaea4800f3dc00eeb8ea4b8701c060843cd21b33c6fe",
+      "lines": 79,
+      "catalog_refs": [
+        "CARD:systems/boss-phases-music"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/mobs/UniqueAbstractMeleeCastingMob.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual family card covers the animated spellcasting/melee abstract bases; concrete entity and spells are consumer-owned.",
+      "bytes": 4088,
+      "sha256": "bc2ecffc5aec2566d69aecc648a8ad66e5d4421e10c5307e3d411fdadfd74d6d",
+      "lines": 115,
+      "catalog_refs": [
+        "CARD:systems/animated-spellcasting-mobs"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/mobs/UniqueAbstractSpellCastingMob.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual family card covers the animated spellcasting/melee abstract bases; concrete entity and spells are consumer-owned.",
+      "bytes": 18428,
+      "sha256": "fb3694a842b55c2de093181a6cb1322aa685d30fefd08621b2b65a37790dc6e8",
+      "lines": 435,
+      "catalog_refs": [
+        "CARD:systems/animated-spellcasting-mobs"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/mobs/goals/WizardSpellComboGoal.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual card covers the sequential spell-combo AI goal.",
+      "bytes": 3859,
+      "sha256": "b010e318ba5f2206df64767b5b5281ed61a5fc9c08f136e7bdd0e448181d3422",
+      "lines": 119,
+      "catalog_refs": [
+        "CARD:systems/wizard-spell-combo-ai"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/render/armor/EmissiveGenericCustomArmorRenderer.java",
+      "kind": "java",
+      "classification": "new_individual_card",
+      "disposition_reason": "Previously missing reusable rendering surface: generic GeckoLib armor renderer adds a glowmask re-render layer with a consumer-provided mask resource. New card keeps this distinct from item attributes and example registrations.",
+      "bytes": 1073,
+      "sha256": "d3fccca3c41f980d8ef69276acc1b57507b8eabfc486be351e61db9b19f90765",
+      "lines": 22,
+      "catalog_refs": [
+        "CARD:systems/emissive-geo-armor-rendering"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/render/armor/GeoArmorGlowmaskLayer.java",
+      "kind": "java",
+      "classification": "new_individual_card",
+      "disposition_reason": "Previously missing reusable rendering surface: generic GeckoLib armor renderer adds a glowmask re-render layer with a consumer-provided mask resource. New card keeps this distinct from item attributes and example registrations.",
+      "bytes": 1873,
+      "sha256": "a3c870a220efd98cbdc7ac0f29c9126ea1b14af9ad2002ce8a202615e9f72a9d",
+      "lines": 42,
+      "catalog_refs": [
+        "CARD:systems/emissive-geo-armor-rendering"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/render/items/SheathCurioRenderer.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client-only ICurioRenderer draws the documented sheath ItemStack on HumanoidModel using body transforms and fixed item display; bootstrap registers it for the existing example sheath. No cooldown/proc, registry identity or server mutation is added by the renderer.",
+      "bytes": 2365,
+      "sha256": "89f674cfc993319dbf14dfc10c1c722bb6ba03e427096bffcec051376f573278",
+      "lines": 44,
+      "catalog_refs": [
+        "CARD:examples/example_sheath",
+        "CARD:systems/passive-cooldown-curios"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/entity/spells/AbstractDomainEntity.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual card covers reusable domain lifecycle and subclass callbacks; this is separate from visual domes.",
+      "bytes": 14735,
+      "sha256": "a5132dae12ff43143cc282a509c13f5321eabe046a431341fae5fd0b4b5ed4b0",
+      "lines": 346,
+      "catalog_refs": [
+        "CARD:systems/domain-entity-runtime"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsClient.java",
+      "kind": "java",
+      "classification": "shared_runtime",
+      "disposition_reason": "Shared client wiring: logout clears boss music/ribbon/dome/shake and closes dome shader; post tick advances visual state; GUI pre-processes shaders; camera event applies shake; AFTER_ENTITIES renders ribbons/domes and captures matrices; MagicGun tooltips delegate to ASUtils. These methods support the referenced surfaces without adding a new action.",
+      "bytes": 6707,
+      "sha256": "850a410e8026340e875fdb1f6abaee03909d13a37e7735af56b3246d54f125c5",
+      "lines": 141,
+      "catalog_refs": [
+        "CARD:payloads/trigger_chromatic_aberration",
+        "CARD:payloads/trigger_dome",
+        "CARD:payloads/trigger_impact_frame",
+        "CARD:payloads/trigger_ribbon",
+        "CARD:payloads/trigger_roar",
+        "CARD:payloads/trigger_shake",
+        "CARD:systems/boss-phases-music",
+        "CARD:systems/magic-gun-casting"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java",
+      "kind": "java",
+      "classification": "shared_runtime",
+      "disposition_reason": "Shared subscribed source file is split by behavioral owner: gun, thirteen general attributes, keep-inventory death/clone/XP/Curios behavior, and trail/ribbon stop/tick/tracking maintenance. Individual owners retain their separate cards; source-file aggregation does not merge their semantics.",
+      "bytes": 37282,
+      "sha256": "a4bd14c07c427421d0f21618cdba5af9433711dcad93d4cd6b5b38baba18a405",
+      "lines": 867,
+      "catalog_refs": [
+        "CARD:attributes/evasive",
+        "CARD:attributes/goliath_slayer",
+        "CARD:attributes/hunger_steal",
+        "CARD:attributes/life_recovery",
+        "CARD:attributes/magic_damage_crit_chance",
+        "CARD:attributes/magic_damage_crit_damage",
+        "CARD:attributes/magic_projectile_crit_chance",
+        "CARD:attributes/magic_projectile_crit_damage",
+        "CARD:attributes/magic_projectile_damage",
+        "CARD:attributes/mana_rend",
+        "CARD:attributes/mana_steal",
+        "CARD:attributes/spell_res_penetration",
+        "CARD:attributes/vigor_reap",
+        "CARD:systems/keep-inventory-companion",
+        "CARD:systems/magic-gun-casting",
+        "CARD:vfx-runtime/ribbon-attachment-tracking",
+        "CARD:vfx-runtime/trail-manager-tick-lifecycle"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/events/SpellbookAbilities.java",
+      "kind": "java",
+      "classification": "shared_runtime",
+      "disposition_reason": "Two subscribed demonstration damage procs belong to the two separately registered example spellbooks and their passive-cooldown base; the event file introduces no standalone spell registration.",
+      "bytes": 2789,
+      "sha256": "6d05591feef76cd45448b45be709ad6a62cbe151458668a5a7651b0e15e4bd14",
+      "lines": 70,
+      "catalog_refs": [
+        "CARD:examples/example_passive_ability_spellbook",
+        "CARD:examples/example_unqiue_ability_spellbook",
+        "CARD:systems/passive-ability-spellbooks"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/curios/FlatCooldownPassiveAbilityCurio.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing card directly covers the flat-cooldown helper and abstract sheath subtype.",
+      "bytes": 1398,
+      "sha256": "c817d736063dee44efcd3978cfa7026389b9630ff893c1c06264a18415e3d358",
+      "lines": 42,
+      "catalog_refs": [
+        "CARD:systems/passive-cooldown-curios"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/curios/ImbueableCurioItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing family card covers imbueable and preset curio spell-container initialization.",
+      "bytes": 1079,
+      "sha256": "d30793e46d497180b6a4b14c27224c4867aac9e9f2bdf0c3e57ad1639bcda185",
+      "lines": 30,
+      "catalog_refs": [
+        "CARD:systems/imbue-curios"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/curios/PassiveAbilitySpellbook.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing family card covers passive spellbook container/cooldown APIs and unique preset variant.",
+      "bytes": 2737,
+      "sha256": "7a3b85e733bea3974c81d3b5183eb1f4ab188f74eb58ce42c2b4a91d3b8c68d3",
+      "lines": 83,
+      "catalog_refs": [
+        "CARD:systems/passive-ability-spellbooks"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/curios/PassiveAbilityUniqueSpellbook.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing family card covers passive spellbook container/cooldown APIs and unique preset variant.",
+      "bytes": 2482,
+      "sha256": "7136c1fdc460967c461699f4ba35992b055b7b9ab26a536244d5deb172168841",
+      "lines": 62,
+      "catalog_refs": [
+        "CARD:systems/passive-ability-spellbooks"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/curios/PresetImbueCurio.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing family card covers imbueable and preset curio spell-container initialization.",
+      "bytes": 1816,
+      "sha256": "4f79c1231f7630f34df137b791b965d1170162b1268be367ab91532a95f4de7d",
+      "lines": 48,
+      "catalog_refs": [
+        "CARD:systems/imbue-curios"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/curios/SheathCurioItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing card directly covers the flat-cooldown helper and abstract sheath subtype.",
+      "bytes": 434,
+      "sha256": "09b13cff1c8fd53aebbf152778a33f87c0e07b01a36c392dc2b0f818ed523e57",
+      "lines": 10,
+      "catalog_refs": [
+        "CARD:systems/passive-cooldown-curios"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/custom/LootBagItem.java",
+      "kind": "java",
+      "classification": "new_individual_card",
+      "disposition_reason": "Previously only the concrete example was individualized. New card documents the reusable loot-table key/sound extension contract and server use mutation separately from example registry identity.",
+      "bytes": 4293,
+      "sha256": "c7c31ccae9b61ccedf639de6494384f5cce775f1eef4f6c4162212aabb9fd957",
+      "lines": 98,
+      "catalog_refs": [
+        "CARD:systems/loot-bag-helper"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/armor/ExampleArmorMaterialRegistry.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual material card retains the actual registered armor-material identity and its declared values.",
+      "bytes": 2671,
+      "sha256": "5508862fdc076fa58fd41c4e82338a50ab564f691d5bc392358b7c51e05b1ce1",
+      "lines": 66,
+      "catalog_refs": [
+        "CARD:examples/example_armor_material"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/armor/ExampleWarlockArmorItem.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "One concrete armor class backs four already individualized registry items; it supplies the material, per-slot attribute construction and lazy renderer for those identities. Generic attribute/render contracts are supplied by the two new reusable helper cards.",
+      "bytes": 1551,
+      "sha256": "9cdec80e78782951bdb57f82193bcc3883f3687bfa8924f46670d86e6134083b",
+      "lines": 31,
+      "catalog_refs": [
+        "CARD:examples/example_armor_boots",
+        "CARD:examples/example_armor_chestplate",
+        "CARD:examples/example_armor_helmet",
+        "CARD:examples/example_armor_leggings",
+        "CARD:systems/emissive-geo-armor-rendering",
+        "CARD:systems/geo-armor-attribute-helper"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/armor/ExtendedGeoArmorItem.java",
+      "kind": "java",
+      "classification": "new_individual_card",
+      "disposition_reason": "Previously uncovered reusable GeoArmor bases expose per-slot attribute builders, lazy render-provider/controller contract and conditional spell-container initialization. New card separates these APIs from already cataloged armor items/material.",
+      "bytes": 6635,
+      "sha256": "fc49c99ca768477a73162cf5c831060db4f231eb490abe7b582ecd8d3992200c",
+      "lines": 140,
+      "catalog_refs": [
+        "CARD:systems/geo-armor-attribute-helper"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/armor/ImbuableExtendedGeoArmorItem.java",
+      "kind": "java",
+      "classification": "new_individual_card",
+      "disposition_reason": "Previously uncovered reusable GeoArmor bases expose per-slot attribute builders, lazy render-provider/controller contract and conditional spell-container initialization. New card separates these APIs from already cataloged armor items/material.",
+      "bytes": 1585,
+      "sha256": "f1fe38339715e59667b68ac71e64954ea7016041e378e44606d2b19afaf05885",
+      "lines": 38,
+      "catalog_refs": [
+        "CARD:systems/geo-armor-attribute-helper"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/curios/ExampleImbueCurioItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 1867,
+      "sha256": "567ce70d7109c6076adcfc8eda85427ba992d9861b47f904241ca1a3b7e76a24",
+      "lines": 33,
+      "catalog_refs": [
+        "CARD:examples/example_imbue_curio"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/curios/ExamplePassiveAbilitySpellbook.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 1172,
+      "sha256": "267e71c40db849816304772ac4d6960ba8703b7aea06dc3b7126779a6b1a2c70",
+      "lines": 26,
+      "catalog_refs": [
+        "CARD:examples/example_passive_ability_spellbook"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/curios/ExamplePassiveAbilityUniqueSpellbook.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 2389,
+      "sha256": "49598b8625aa0bd56be8dc86b992212ddc08b6d416467b4a9bf97552b2c3aa14",
+      "lines": 52,
+      "catalog_refs": [
+        "CARD:examples/example_unqiue_ability_spellbook"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/curios/ExamplePresetCurioItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 721,
+      "sha256": "1e96b793d57e6e387a426d196a3bc9acf2357dba92fc008f8a3c08f6b89f4d1d",
+      "lines": 14,
+      "catalog_refs": [
+        "CARD:examples/example_curio"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/curios/ExampleSheathCurioItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 3273,
+      "sha256": "d0d2e37a6fe33f58dc707f0a7c2b219ad54b1c55d51e3ce96004964082aa49b3",
+      "lines": 74,
+      "catalog_refs": [
+        "CARD:examples/example_sheath"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/misc/ExampleChromaticAberrationItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 1024,
+      "sha256": "b96a139ac01be4d2a5348bb014c0c36465380325c6574c7a05288a400a2d0ee9",
+      "lines": 24,
+      "catalog_refs": [
+        "CARD:examples/example_chromatic_aberration"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/misc/ExampleDomeItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 1451,
+      "sha256": "d430935c4275bb417ef93622d0df51737d5577019a942c0c62ba8b873f69032b",
+      "lines": 30,
+      "catalog_refs": [
+        "CARD:examples/example_dome"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/misc/ExampleImpactFrameItem.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Shared concrete class is instantiated with six parameter sets retained separately in the six existing impact-frame item cards; there is no seventh item identity for the implementation class.",
+      "bytes": 1420,
+      "sha256": "fbb50d231452ee17d141355894f54a37eb93d42e1b23d9902e6dcd3ddbe43ac7",
+      "lines": 33,
+      "catalog_refs": [
+        "CARD:examples/example_impact_frame_blue",
+        "CARD:examples/example_impact_frame_green",
+        "CARD:examples/example_impact_frame_purple",
+        "CARD:examples/example_impact_frame_red",
+        "CARD:examples/example_impact_frame_white",
+        "CARD:examples/example_impact_frame_white_aberration"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/misc/ExampleLootBagItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 769,
+      "sha256": "ca3337a570f234b88bf107b39dde6cf02702e4b8888f7ced53a7fdabf347f6c0",
+      "lines": 18,
+      "catalog_refs": [
+        "CARD:examples/example_loot_bag"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/misc/ExamplePresetStaffItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 1128,
+      "sha256": "a9df171d0cea714a933c0626708ed50ddb37523ddec0f8758c339e01761ee386",
+      "lines": 20,
+      "catalog_refs": [
+        "CARD:examples/example_staff"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/misc/ExampleRibbonItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 1573,
+      "sha256": "cf9abde1bbf24e84213aeda2b9ce36ee3736dedf666940de379f7d238e93d90e",
+      "lines": 36,
+      "catalog_refs": [
+        "CARD:examples/example_ribbon"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/misc/ExampleRoarItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 1042,
+      "sha256": "2d236bc0a3e42fb8a496e258062a59687e8045e2f7387f39e2ad6e6af4df8d87",
+      "lines": 25,
+      "catalog_refs": [
+        "CARD:examples/example_roar"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/misc/ExampleRoarRingItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 1064,
+      "sha256": "ef62967934cb8b1ff1fda1f30a874c025e5ac3f62b361ad77d6affffbebe7fc3",
+      "lines": 25,
+      "catalog_refs": [
+        "CARD:examples/example_roar_ring"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/misc/ExampleTrailItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 1220,
+      "sha256": "2e6c8c3a9e29eacb1702c4b036dbbbaf4c15d3621a3d837d4c3dededf56fd38d",
+      "lines": 29,
+      "catalog_refs": [
+        "CARD:examples/example_trail"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/staves/ASStaffTier.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Enum supplies durability/repair/enchantment tier values to the two existing demonstration staff cards; a tier value is construction support, not a new active ability.",
+      "bytes": 2257,
+      "sha256": "5056a678e7f5ad500c7ac106cd674a63534bb8fd02d0d5675195391c0db628aa",
+      "lines": 51,
+      "catalog_refs": [
+        "CARD:examples/example_imbue_staff",
+        "CARD:examples/example_staff"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/staves/ExampleImbueStaffItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 688,
+      "sha256": "ab045a512c43c9103c33d3988662d4a3dfe9005c723125d6ec9d64305dbd0021",
+      "lines": 14,
+      "catalog_refs": [
+        "CARD:examples/example_imbue_staff"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/weapons/ASWeaponTiers.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Tier enum supports the three existing example weapon identities; construction values do not add an independent cast/ability.",
+      "bytes": 4623,
+      "sha256": "e4b780e155d9455beca93d79676c2629a55557a7671dfe97edaef3bda7141493",
+      "lines": 94,
+      "catalog_refs": [
+        "CARD:examples/example_ap_magic_sword",
+        "CARD:examples/example_ap_sword",
+        "CARD:examples/example_gun"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/weapons/ExampleAPMagicSwordItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 1328,
+      "sha256": "b2bab8ccfb222ff3e5553f1ac4c4e85cc158081ab72ef87cd10c0d3176b2baa4",
+      "lines": 30,
+      "catalog_refs": [
+        "CARD:examples/example_ap_magic_sword"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/weapons/ExampleAPSwordItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 933,
+      "sha256": "8d5d862bdaf163877bb4cc800ed18bb528a06e6ea397fbd9489ed8a8cdb0b8f1",
+      "lines": 25,
+      "catalog_refs": [
+        "CARD:examples/example_ap_sword"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/example/items/weapons/ExampleGunItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Concrete registered example implementation is directly assigned to its existing individual registry-item card; the reusable base contract remains separately cataloged.",
+      "bytes": 1243,
+      "sha256": "daf27260b3aacf5f8b8427d7fc93a3197be2e3d88096286941662f59e69267dc",
+      "lines": 35,
+      "catalog_refs": [
+        "CARD:examples/example_gun"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/staves/ImbueableStaffItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual family card covers reusable staff spell-container initialization and preset behavior.",
+      "bytes": 945,
+      "sha256": "00a53433529f347730e7dce10529a236c8fa2deed88412faf1e4a1886f03e576",
+      "lines": 29,
+      "catalog_refs": [
+        "CARD:systems/imbue-staves"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/staves/PresetImbueStaffItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual family card covers reusable staff spell-container initialization and preset behavior.",
+      "bytes": 1988,
+      "sha256": "0979d4684f4af2c75868da62c9541815f2a6a1d9a4df1e2767d912e9bf07e17d",
+      "lines": 51,
+      "catalog_refs": [
+        "CARD:systems/imbue-staves"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/ActiveAndPassiveAbilityMagicSwordItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing family card covers active/passive sword APIs and magic variant.",
+      "bytes": 2619,
+      "sha256": "9d35759f160200449e13f7e6174bce3c686671e07b3d2615349690787be87c32",
+      "lines": 56,
+      "catalog_refs": [
+        "CARD:systems/active-passive-swords"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/ActiveAndPassiveAbilitySwordItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing family card covers active/passive sword APIs and magic variant.",
+      "bytes": 2605,
+      "sha256": "88f4479de948dfdc6de34b3a0a85528e0bdfd8c25c516b03e000c476de5ca5d1",
+      "lines": 57,
+      "catalog_refs": [
+        "CARD:systems/active-passive-swords"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/MagicGunItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual card owns selected-spell cast initiation and shared provider event path.",
+      "bytes": 2994,
+      "sha256": "e747938956001fa3bed4786024321cde8898e4c4aed91afe61e34e3e94dca326",
+      "lines": 69,
+      "catalog_refs": [
+        "CARD:systems/magic-gun-casting"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/ActiveAndPassiveAbilityMaceItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing mace family card owns the nine related bases/subclasses. ImbueableMaceItem is not named explicitly in that card, but implements the same one-slot create(1,true,false) initialize-if-absent spell-container contract already described for the imbueable mace family; it does not establish a new semantic capability.",
+      "bytes": 2395,
+      "sha256": "127195144a44b2978ba72d8a6feac7b573438181229024a9644943034cf05ea8",
+      "lines": 54,
+      "catalog_refs": [
+        "CARD:systems/mace-casting-family"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/ActiveAndPassiveAbilityMagicMaceItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing mace family card owns the nine related bases/subclasses. ImbueableMaceItem is not named explicitly in that card, but implements the same one-slot create(1,true,false) initialize-if-absent spell-container contract already described for the imbueable mace family; it does not establish a new semantic capability.",
+      "bytes": 2558,
+      "sha256": "8c153ebce135620b04e29642cd22c976c7f44f87dab975b335818227afc5144a",
+      "lines": 55,
+      "catalog_refs": [
+        "CARD:systems/mace-casting-family"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/ExtendedMaceItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing mace family card owns the nine related bases/subclasses. ImbueableMaceItem is not named explicitly in that card, but implements the same one-slot create(1,true,false) initialize-if-absent spell-container contract already described for the imbueable mace family; it does not establish a new semantic capability.",
+      "bytes": 1634,
+      "sha256": "db8c6ac2fd5ba3a30b68341c36dc710a903c35db4cc2d9794869cfcc85dcff30",
+      "lines": 36,
+      "catalog_refs": [
+        "CARD:systems/mace-casting-family"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/ImbueableMaceItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing mace family card owns the nine related bases/subclasses. ImbueableMaceItem is not named explicitly in that card, but implements the same one-slot create(1,true,false) initialize-if-absent spell-container contract already described for the imbueable mace family; it does not establish a new semantic capability.",
+      "bytes": 954,
+      "sha256": "edbdc118bd56ae944056f23da55611b41cc64f04b2c026d6db70f19193678e08",
+      "lines": 29,
+      "catalog_refs": [
+        "CARD:systems/mace-casting-family"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/ImbueableMaceStaffItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing mace family card owns the nine related bases/subclasses. ImbueableMaceItem is not named explicitly in that card, but implements the same one-slot create(1,true,false) initialize-if-absent spell-container contract already described for the imbueable mace family; it does not establish a new semantic capability.",
+      "bytes": 908,
+      "sha256": "7af974c6dfc7d1e3f5b62dcb20a42bbf2d097c4219029fb12c71e63f64a88e85",
+      "lines": 28,
+      "catalog_refs": [
+        "CARD:systems/mace-casting-family"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/MaceCastingItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing mace family card owns the nine related bases/subclasses. ImbueableMaceItem is not named explicitly in that card, but implements the same one-slot create(1,true,false) initialize-if-absent spell-container contract already described for the imbueable mace family; it does not establish a new semantic capability.",
+      "bytes": 609,
+      "sha256": "a4960748831a100ca418f06407d13214388a1f204736d0df92027bf8ff902464",
+      "lines": 17,
+      "catalog_refs": [
+        "CARD:systems/mace-casting-family"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/MaceStaffItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing mace family card owns the nine related bases/subclasses. ImbueableMaceItem is not named explicitly in that card, but implements the same one-slot create(1,true,false) initialize-if-absent spell-container contract already described for the imbueable mace family; it does not establish a new semantic capability.",
+      "bytes": 483,
+      "sha256": "54e92e31d4751e0defc0a93fc9b5ed80bd243b12a49e918bbfec0473f207a577",
+      "lines": 21,
+      "catalog_refs": [
+        "CARD:systems/mace-casting-family"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/PresetImbueMaceItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing mace family card owns the nine related bases/subclasses. ImbueableMaceItem is not named explicitly in that card, but implements the same one-slot create(1,true,false) initialize-if-absent spell-container contract already described for the imbueable mace family; it does not establish a new semantic capability.",
+      "bytes": 1991,
+      "sha256": "5d1f3aca59dd6284fe34c29accbf95a5dedfa2468bbd92039f80bce1d1175059",
+      "lines": 51,
+      "catalog_refs": [
+        "CARD:systems/mace-casting-family"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/PresetImbueMaceStaffItem.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing mace family card owns the nine related bases/subclasses. ImbueableMaceItem is not named explicitly in that card, but implements the same one-slot create(1,true,false) initialize-if-absent spell-container contract already described for the imbueable mace family; it does not establish a new semantic capability.",
+      "bytes": 1948,
+      "sha256": "1b50364dfe13fcfc2d9a069e7e73df48c28fdf57d95887b0251227e1099b84d9",
+      "lines": 50,
+      "catalog_refs": [
+        "CARD:systems/mace-casting-family"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/mixins/server/LivingEntityMixin.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual mixin and attribute cards assign the two invulnerableTime injections and provider Evasive event path to their documented owner.",
+      "bytes": 1766,
+      "sha256": "3382cf87c7ba43da17595b9d11b4753ab3b86c6cff9c826ea9f318b79d620a96",
+      "lines": 38,
+      "catalog_refs": [
+        "CARD:attributes/evasive",
+        "CARD:mixins/living-entity-evasive-iframe"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/mixins/server/PlayerMixin.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual mixin, attachment and keep-inventory family cards cover the provider-owned drop cancellation path.",
+      "bytes": 843,
+      "sha256": "2ab31502afe6ea5a67bf63c0fdf5bddbb8143ba5ace1a91231fcec8ac82fe96b",
+      "lines": 23,
+      "catalog_refs": [
+        "CARD:attachments/keep_inv_on_death",
+        "CARD:mixins/player-keep-inventory-drop",
+        "CARD:systems/keep-inventory-companion"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/network/AddShaderEffectPacket.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual payload card records this exact TYPE, S2C registration, wire format, producer/consumer and presentation boundary.",
+      "bytes": 1728,
+      "sha256": "e3c1e7e63082faf9b47625371ea99355368b33208c2a83e8cb2fd153ef00fb4d",
+      "lines": 45,
+      "catalog_refs": [
+        "CARD:payloads/add_shader_effect"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/network/PayloadHandler.java",
+      "kind": "java",
+      "classification": "shared_runtime",
+      "disposition_reason": "Shared optional protocol 4.0.0 registrar binds the eight separately individualized S2C payloads; no C2S spell channel is declared.",
+      "bytes": 2623,
+      "sha256": "cffe8e9a3edcbb1753a18367e212a6456903cee1cfe0f9d127ae36173f93957d",
+      "lines": 47,
+      "catalog_refs": [
+        "CARD:payloads/add_shader_effect",
+        "CARD:payloads/remove_shader_effect",
+        "CARD:payloads/trigger_chromatic_aberration",
+        "CARD:payloads/trigger_dome",
+        "CARD:payloads/trigger_impact_frame",
+        "CARD:payloads/trigger_ribbon",
+        "CARD:payloads/trigger_roar",
+        "CARD:payloads/trigger_shake",
+        "CARD:systems/vfx-client-payloads"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/network/RemoveShaderEffectPacket.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual payload card records this exact TYPE, S2C registration, wire format, producer/consumer and presentation boundary.",
+      "bytes": 1401,
+      "sha256": "1f89fd014326c24134188f4f406026425ec1ffd0f904a27050c5d86fd141f443",
+      "lines": 37,
+      "catalog_refs": [
+        "CARD:payloads/remove_shader_effect"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/network/TriggerChromaticAberrationPacket.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual payload card records this exact TYPE, S2C registration, wire format, producer/consumer and presentation boundary.",
+      "bytes": 1944,
+      "sha256": "21e9a6bb063db2ff8f612a1d9334bda9beab6c4cf3a934927c0b8da858359af8",
+      "lines": 43,
+      "catalog_refs": [
+        "CARD:payloads/trigger_chromatic_aberration"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/network/TriggerDomePacket.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual payload card records this exact TYPE, S2C registration, wire format, producer/consumer and presentation boundary.",
+      "bytes": 5221,
+      "sha256": "f277af56a663b8a3c506949c0b92fccaa50c9a79293898674cfc670ef70a09d8",
+      "lines": 122,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/network/TriggerImpactFramePacket.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual payload card records this exact TYPE, S2C registration, wire format, producer/consumer and presentation boundary.",
+      "bytes": 2819,
+      "sha256": "b76a34507b77b740a86b0c2d2525493965704c224cfbd6be88e2c25496395ae5",
+      "lines": 63,
+      "catalog_refs": [
+        "CARD:payloads/trigger_impact_frame"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/network/TriggerRibbonPacket.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual payload card records this exact TYPE, S2C registration, wire format, producer/consumer and presentation boundary.",
+      "bytes": 4113,
+      "sha256": "3127f97e9f04f01972a375e04fb72079985772580240568603a2fe26f0a54505",
+      "lines": 102,
+      "catalog_refs": [
+        "CARD:payloads/trigger_ribbon"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/network/TriggerRoarPacket.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual payload card records this exact TYPE, S2C registration, wire format, producer/consumer and presentation boundary.",
+      "bytes": 3613,
+      "sha256": "c367c0ff9f0feb278383d25a7db1f463bfb20847d16d6dd83bc82e600b0fab69",
+      "lines": 87,
+      "catalog_refs": [
+        "CARD:payloads/trigger_roar"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/network/TriggerShakePacket.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual payload card records this exact TYPE, S2C registration, wire format, producer/consumer and presentation boundary.",
+      "bytes": 2148,
+      "sha256": "b6efe50a46d896e1d35b937919822c2d344daad2476f1c957a88e67810821d50",
+      "lines": 50,
+      "catalog_refs": [
+        "CARD:payloads/trigger_shake"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/particles/TrailParticleOptions.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing particle card records the one registered trail identity, its options and codec contract; these files implement that identity.",
+      "bytes": 1883,
+      "sha256": "e83869cd1cfa161374030e9f9393396e8674af6b835386884cea5ca091b5cd65",
+      "lines": 48,
+      "catalog_refs": [
+        "CARD:particles/trail"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/registries/ASAttachmentRegistry.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing attachment card records the serialized copy-on-death Boolean attachment identity and consumers.",
+      "bytes": 957,
+      "sha256": "197aea9329ef8116edfcec3b00c3271de673a9762c67fce553894b53219798e1",
+      "lines": 22,
+      "catalog_refs": [
+        "CARD:attachments/keep_inv_on_death"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/registries/ASAttributeRegistry.java",
+      "kind": "java",
+      "classification": "shared_runtime",
+      "disposition_reason": "Shared registry declares all nineteen attributes, each retained as an individual card; registry initialization is not another ability.",
+      "bytes": 6820,
+      "sha256": "ab779581355af8b5ff89afc4c7edc38725b9d6b54c2653bb952fbb8c09cb2040",
+      "lines": 137,
+      "catalog_refs": [
+        "CARD:attributes/evasive",
+        "CARD:attributes/goliath_slayer",
+        "CARD:attributes/hunger_steal",
+        "CARD:attributes/hydro_magic_resist",
+        "CARD:attributes/hydro_spell_power",
+        "CARD:attributes/life_recovery",
+        "CARD:attributes/magic_damage_crit_chance",
+        "CARD:attributes/magic_damage_crit_damage",
+        "CARD:attributes/magic_projectile_crit_chance",
+        "CARD:attributes/magic_projectile_crit_damage",
+        "CARD:attributes/magic_projectile_damage",
+        "CARD:attributes/mana_rend",
+        "CARD:attributes/mana_steal",
+        "CARD:attributes/ritual_magic_resist",
+        "CARD:attributes/ritual_spell_power",
+        "CARD:attributes/spell_res_penetration",
+        "CARD:attributes/technomancy_magic_resist",
+        "CARD:attributes/technomancy_spell_power",
+        "CARD:attributes/vigor_reap"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/registries/ASCreativeModeTabs.java",
+      "kind": "java",
+      "classification": "justified_metadata_aggregate",
+      "disposition_reason": "Production-gated asu_item_tabs creative tab is discoverability metadata listing the same twenty-seven example items already individualized. Existing support document explicitly distinguishes this gate from unconditional item registration; no separate gameplay card is required.",
+      "bytes": 3616,
+      "sha256": "fa21ae06f74fb7429be36188f02bcb505894754eba3a0d920d6d4ff190b2f8ce",
+      "lines": 56,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/registries/ASDamageTypes.java",
+      "kind": "java",
+      "classification": "shared_runtime",
+      "disposition_reason": "Three resource keys are represented by three existing damage-type cards; this registry file is their common declaration.",
+      "bytes": 878,
+      "sha256": "f7db2b1fce1e38715ea91d0fd0b48e4bf0bf26eef1b5642974af06b6b6ce0e62",
+      "lines": 19,
+      "catalog_refs": [
+        "CARD:damage-types/hydro_magic",
+        "CARD:damage-types/ritual_magic",
+        "CARD:damage-types/technomancy_magic"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/registries/ASParticleRegistry.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing particle card records the one registered trail identity, its options and codec contract; these files implement that identity.",
+      "bytes": 1489,
+      "sha256": "aa932f5ad9ddfdbe03270911dcf5dc264f1c1665fa9a141ab066769b01bad2c3",
+      "lines": 34,
+      "catalog_refs": [
+        "CARD:particles/trail"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/registries/ASSchoolRegistry.java",
+      "kind": "java",
+      "classification": "shared_runtime",
+      "disposition_reason": "Three school identities are represented by three existing school cards; their shared register/event class is supporting implementation.",
+      "bytes": 3051,
+      "sha256": "60f9ef4b25fd743835806cfe194e5cd4ccc16a224f53c8d505cc6631513322aa",
+      "lines": 71,
+      "catalog_refs": [
+        "CARD:schools/hydro",
+        "CARD:schools/ritual",
+        "CARD:schools/technomancy"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/registries/ExampleItemRegistry.java",
+      "kind": "java",
+      "classification": "shared_runtime",
+      "disposition_reason": "Common item registry supplies twenty-seven identities, all individually retained under examples; shared registry definition does not create an additional item or spell.",
+      "bytes": 8012,
+      "sha256": "d5c28d1e54bca75c029cb4c50b369df9797bbc43a43c179cc045933969610fef",
+      "lines": 101,
+      "catalog_refs": [
+        "CARD:examples/example_ap_magic_sword",
+        "CARD:examples/example_ap_sword",
+        "CARD:examples/example_armor_boots",
+        "CARD:examples/example_armor_chestplate",
+        "CARD:examples/example_armor_helmet",
+        "CARD:examples/example_armor_leggings",
+        "CARD:examples/example_chromatic_aberration",
+        "CARD:examples/example_curio",
+        "CARD:examples/example_dome",
+        "CARD:examples/example_gun",
+        "CARD:examples/example_imbue_curio",
+        "CARD:examples/example_imbue_staff",
+        "CARD:examples/example_impact_frame_blue",
+        "CARD:examples/example_impact_frame_green",
+        "CARD:examples/example_impact_frame_purple",
+        "CARD:examples/example_impact_frame_red",
+        "CARD:examples/example_impact_frame_white",
+        "CARD:examples/example_impact_frame_white_aberration",
+        "CARD:examples/example_loot_bag",
+        "CARD:examples/example_passive_ability_spellbook",
+        "CARD:examples/example_ribbon",
+        "CARD:examples/example_roar",
+        "CARD:examples/example_roar_ring",
+        "CARD:examples/example_sheath",
+        "CARD:examples/example_staff",
+        "CARD:examples/example_trail",
+        "CARD:examples/example_unqiue_ability_spellbook"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/spells/ASSpellAnimations.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual card enumerates all twenty-seven public animation holder constants and resource identities; constants are not registered spells.",
+      "bytes": 4173,
+      "sha256": "18e741c6ae7e60ec28c2e0ddbd4c7d803790ef8b4efcc57fbd80ee8bb8753651",
+      "lines": 63,
+      "catalog_refs": [
+        "CARD:systems/spell-animation-holders"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/spells/AbstractSummonSpell.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual card owns summon recast/duration extension contract.",
+      "bytes": 3083,
+      "sha256": "f3ea414dfe0d7c2f744609f013c2aa092dc96d02cdc56d1681732930a0fbbd5c",
+      "lines": 67,
+      "catalog_refs": [
+        "CARD:systems/summon-spell-helper"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/spells/ExampleSummonSpell.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual template card explicitly records the unregistered summon demonstration and its declared parameters.",
+      "bytes": 2537,
+      "sha256": "6ba180e48dabfda16b5906d178d307417968562aba7959c29f619e5e695fcc3f",
+      "lines": 69,
+      "catalog_refs": [
+        "CARD:systems/unused-summon-template"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/ASRarities.java",
+      "kind": "java",
+      "classification": "shared_runtime",
+      "disposition_reason": "Eight enum-extension rarity identities each have an existing individual card; shared presentation metadata class is their declaration.",
+      "bytes": 2126,
+      "sha256": "e2c64e4cade6121e744824d59b5205494f64f892505fe5dbe2e913a33067a734",
+      "lines": 57,
+      "catalog_refs": [
+        "CARD:rarities/accursed",
+        "CARD:rarities/aquatic",
+        "CARD:rarities/arid",
+        "CARD:rarities/cosmic",
+        "CARD:rarities/forbidden",
+        "CARD:rarities/glacial",
+        "CARD:rarities/sculk",
+        "CARD:rarities/verdant"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/ASTags.java",
+      "kind": "java",
+      "classification": "shared_runtime",
+      "disposition_reason": "Fourteen Java TagKey contracts each have an existing individual card; consumers keep their separate behavioral cards.",
+      "bytes": 3509,
+      "sha256": "d3cf3e4ec0ba45cfa6e09d08b531ab02e95542c573ad63b1025b833dc639f783",
+      "lines": 53,
+      "catalog_refs": [
+        "CARD:tags/entity_type-boss_like_entities",
+        "CARD:tags/entity_type-mana_rend_whitelist",
+        "CARD:tags/entity_type-mana_steal_whitelist",
+        "CARD:tags/item-hydro_focus",
+        "CARD:tags/item-hydro_runes",
+        "CARD:tags/item-hydro_upgrade_orbs",
+        "CARD:tags/item-ritual_focus",
+        "CARD:tags/item-ritual_runes",
+        "CARD:tags/item-ritual_upgrade_orbs",
+        "CARD:tags/item-technomancy_focus",
+        "CARD:tags/item-technomancy_runes",
+        "CARD:tags/item-technomancy_upgrade_orbs",
+        "CARD:tags/spell-slash_like_spell",
+        "CARD:tags/spell-stomp_like_spell"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/ASUtils.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing individual utility card covers the public spell lookup/unlock/casting-tooltip/helper method family.",
+      "bytes": 12954,
+      "sha256": "ea1a35ae2f6e1d50675ab96dc163002e22747824c954b01cd099eb1e366aacb6",
+      "lines": 357,
+      "catalog_refs": [
+        "CARD:systems/asutils-casting-unlock-helpers"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/AcesSpellUtilsConfig.java",
+      "kind": "java",
+      "classification": "shared_runtime",
+      "disposition_reason": "Five COMMON config identities each have an existing individual card; loading their values is shared metadata/runtime support.",
+      "bytes": 2643,
+      "sha256": "a22918df19218819ef91f82bee236b5eb8c7700ae667f2d5496caa7b1ac41e02",
+      "lines": 54,
+      "catalog_refs": [
+        "CARD:config/enable-dev-mode",
+        "CARD:config/mana-rend-entity-blacklist",
+        "CARD:config/mana-steal-drains-mana",
+        "CARD:config/mana-steal-entity-blacklist",
+        "CARD:config/refinement-victory-factor"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/ChromaticAberrationHandler.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing routing card documents destination overloads, producer clamps and S2C dispatch of the two related presentation effects.",
+      "bytes": 1055,
+      "sha256": "677f04960f1831a625f31961127d32f22c04dc44cf9c1e0b3b06d4db38635796",
+      "lines": 27,
+      "catalog_refs": [
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/DomeHandler.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing routing card covers the dome-to-shake dispatch cascade and recipient geometry.",
+      "bytes": 1579,
+      "sha256": "29428aee9f5ed25bc744367d9ec2d9d2019bb170d52ac28f31d424d4c3c47989",
+      "lines": 32,
+      "catalog_refs": [
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/ImpactFrameHandler.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing routing card documents destination overloads, producer clamps and S2C dispatch of the two related presentation effects.",
+      "bytes": 3075,
+      "sha256": "1fe649f8b56720955a35b81fc62dc6c01ebcffe8633df43bbfa55577564d84d6",
+      "lines": 55,
+      "catalog_refs": [
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/RibbonHandler.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing routing card owns server attach/detach/resend/prune/clear lifecycle.",
+      "bytes": 2684,
+      "sha256": "91d93f61095da397842d7730934da3656579f777f3a9b6027e3f81cc37202ea4",
+      "lines": 73,
+      "catalog_refs": [
+        "CARD:vfx-runtime/ribbon-attachment-tracking"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/RoarHandler.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing routing card documents entity tracking versus fixed-position audience selection.",
+      "bytes": 1794,
+      "sha256": "f5362c7d5845108f0e97ef191706ebf52080d6dc351037eda4feb5fbc512b934",
+      "lines": 44,
+      "catalog_refs": [
+        "CARD:vfx-runtime/roar-notification-routing"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/ShakeHandler.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing routing card covers the dome-to-shake dispatch cascade and recipient geometry.",
+      "bytes": 1148,
+      "sha256": "d33405f685efbc73919a7f8e204640c29403c6fff31fdb6344bacfa85d495929",
+      "lines": 28,
+      "catalog_refs": [
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/TrailHandler.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing lifecycle card owns attach/tick/removal/teleport-spike handling and stop cleanup of provider trail emission.",
+      "bytes": 1006,
+      "sha256": "bf32e9a556b3d9dddd20a2210e210069334fbde81dc44b9ad6258ecb708a20e5",
+      "lines": 29,
+      "catalog_refs": [
+        "CARD:vfx-runtime/trail-manager-tick-lifecycle"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/boss_music/BossMusicManager.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client manager/sound implementations consume the existing IPhaseMusicEntity and boss entity-event music contract; they crossfade, select tracks and stop/clean sound state. They define no concrete registered boss, phase attack or spell; hence remain implementation support of the single boss-phase/music family.",
+      "bytes": 22263,
+      "sha256": "6151a7af7975a7a77e870c516d62814db83accf569d09eb784732926a3752e38",
+      "lines": 542,
+      "catalog_refs": [
+        "CARD:systems/boss-phases-music"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/boss_music/BossSoundInstance.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client manager/sound implementations consume the existing IPhaseMusicEntity and boss entity-event music contract; they crossfade, select tracks and stop/clean sound state. They define no concrete registered boss, phase attack or spell; hence remain implementation support of the single boss-phase/music family.",
+      "bytes": 1023,
+      "sha256": "79a55da1cb99e37bfb7f4031d3e4c416b0430b5cd05d278e414983dfaa3ad628",
+      "lines": 40,
+      "catalog_refs": [
+        "CARD:systems/boss-phases-music"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/utils/boss_music/UniqueBossMusicManager.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Client manager/sound implementations consume the existing IPhaseMusicEntity and boss entity-event music contract; they crossfade, select tracks and stop/clean sound state. They define no concrete registered boss, phase attack or spell; hence remain implementation support of the single boss-phase/music family.",
+      "bytes": 23044,
+      "sha256": "fe30801204e8429dd61924a029f20111a46cc91279b448b913072b802ddada97",
+      "lines": 557,
+      "catalog_refs": [
+        "CARD:systems/boss-phases-music"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/dome/DomeConfig.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Value record and constructor bounds are directly part of the already individualized dome payload/routing contract.",
+      "bytes": 1328,
+      "sha256": "448725ee30a4b71e42b1c150b3e62bdba7565f57b5aec13c7469f79d9f85f742",
+      "lines": 32,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome",
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/dome/DomePulse.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Nested dome config values supply pulse, shell and warp rendering parameters already transported in the individual dome payload; they do not independently trigger an effect.",
+      "bytes": 670,
+      "sha256": "8ea15e51290e1efa920e9bd0647129b8c44cc8204834fff7a4576ab2eb94cc7d",
+      "lines": 20,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/dome/DomeShell.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Nested dome config values supply pulse, shell and warp rendering parameters already transported in the individual dome payload; they do not independently trigger an effect.",
+      "bytes": 1225,
+      "sha256": "63ba2913e4e26b1a2d6dcee4a6a2976ca94bbb8fe5377de4a95226832622cca8",
+      "lines": 26,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/dome/DomeWarp.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Nested dome config values supply pulse, shell and warp rendering parameters already transported in the individual dome payload; they do not independently trigger an effect.",
+      "bytes": 1108,
+      "sha256": "d06fcf674670d78238a113e48b72af8f3f4ca9dc7b6f1bb55b58a8157596a3a7",
+      "lines": 25,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/ribbon/ColorRamp.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Shared color/curve/easing value and interpolation helpers are serialized or evaluated by ribbon/dome/roar presentation. Their pure rendering math is supporting implementation, not a new spell/item/proc surface.",
+      "bytes": 1684,
+      "sha256": "e9207297382a2f5cee4ac99346616e4d3fe43892a2d99197bf0483f5ab20201f",
+      "lines": 50,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome",
+        "CARD:payloads/trigger_ribbon",
+        "CARD:payloads/trigger_roar"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/ribbon/Curve.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Shared color/curve/easing value and interpolation helpers are serialized or evaluated by ribbon/dome/roar presentation. Their pure rendering math is supporting implementation, not a new spell/item/proc surface.",
+      "bytes": 693,
+      "sha256": "fadb6ddaed101683481ac6cafe508632bd0e9cedbf4cc6191874703bb831075a",
+      "lines": 23,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome",
+        "CARD:payloads/trigger_ribbon",
+        "CARD:payloads/trigger_roar"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/ribbon/Easing.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Shared color/curve/easing value and interpolation helpers are serialized or evaluated by ribbon/dome/roar presentation. Their pure rendering math is supporting implementation, not a new spell/item/proc surface.",
+      "bytes": 1325,
+      "sha256": "42ea6c9080ba12e3d45bb3f991ca3622b0d117cf443657084a68930b4aa4e445",
+      "lines": 51,
+      "catalog_refs": [
+        "CARD:payloads/trigger_dome",
+        "CARD:payloads/trigger_ribbon",
+        "CARD:payloads/trigger_roar"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/ribbon/RibbonConfig.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Entity-ribbon value record belongs to the existing wire and attachment-lifecycle contract.",
+      "bytes": 1037,
+      "sha256": "06c816300917ac6a71b9fbab23ae80b602c6a6e76ab42430ae290d516b8373e1",
+      "lines": 25,
+      "catalog_refs": [
+        "CARD:payloads/trigger_ribbon",
+        "CARD:vfx-runtime/ribbon-attachment-tracking"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/roar/RoarConfig.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Roar config/style and timeline are internal values/age progression for the existing roar effect and its payload, not independent actions or registry objects.",
+      "bytes": 2018,
+      "sha256": "228db6a8b29e9a7f53a4bb2bc202fc50147a8b4d892692ea35f3919de49fac47",
+      "lines": 39,
+      "catalog_refs": [
+        "CARD:payloads/trigger_roar",
+        "CARD:vfx-runtime/roar-notification-routing"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/roar/RoarStyle.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Roar config/style and timeline are internal values/age progression for the existing roar effect and its payload, not independent actions or registry objects.",
+      "bytes": 440,
+      "sha256": "7881f4ead389d053a7236a66e77c556dcea6f3d9f4c6717e2cae2b474bdb62ea",
+      "lines": 13,
+      "catalog_refs": [
+        "CARD:payloads/trigger_roar",
+        "CARD:vfx-runtime/roar-notification-routing"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/roar/RoarTimeline.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Roar config/style and timeline are internal values/age progression for the existing roar effect and its payload, not independent actions or registry objects.",
+      "bytes": 1628,
+      "sha256": "fc93212b655d653b9c3f110dcf502e9a5935ebfd1cb61d03d75b8b55e56af625",
+      "lines": 57,
+      "catalog_refs": [
+        "CARD:payloads/trigger_roar",
+        "CARD:vfx-runtime/roar-notification-routing"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/shake/ShakeConfig.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Shake configuration value record is the existing payload/cascade contract input.",
+      "bytes": 853,
+      "sha256": "f723d2848f50cef502a16e6c6f8c65f825237ca7328f20e8de295c41b3da4dd8",
+      "lines": 18,
+      "catalog_refs": [
+        "CARD:payloads/trigger_shake",
+        "CARD:vfx-runtime/dome-shake-coordination"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/trail/ActiveTrail.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Trail instance state and emission config support the existing manager/particle surface and introduce no separate registry object or gameplay trigger.",
+      "bytes": 692,
+      "sha256": "39e32193ebdb4c550924626a2b9de5bd022889e2a760af7d7b262d65fc760c6e",
+      "lines": 32,
+      "catalog_refs": [
+        "CARD:particles/trail",
+        "CARD:vfx-runtime/trail-manager-tick-lifecycle"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/trail/TrailConfig.java",
+      "kind": "java",
+      "classification": "justified_implementation_support",
+      "disposition_reason": "Trail instance state and emission config support the existing manager/particle surface and introduce no separate registry object or gameplay trigger.",
+      "bytes": 644,
+      "sha256": "508f9688153a739dc1f7d6fc3ba7bb2856a733ff7dcbc98e4a1802fb3018f448",
+      "lines": 17,
+      "catalog_refs": [
+        "CARD:particles/trail",
+        "CARD:vfx-runtime/trail-manager-tick-lifecycle"
+      ]
+    },
+    {
+      "path": "src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/trail/TrailManager.java",
+      "kind": "java",
+      "classification": "individual_card",
+      "disposition_reason": "Existing lifecycle card owns attach/tick/removal/teleport-spike handling and stop cleanup of provider trail emission.",
+      "bytes": 3000,
+      "sha256": "754fa48c2848ed55f738b92a5102d7aabfef1afcab252f4ad6b1ebca83cf67bf",
+      "lines": 86,
+      "catalog_refs": [
+        "CARD:vfx-runtime/trail-manager-tick-lifecycle"
+      ]
+    },
+    {
+      "path": "src/main/resources/aces_spell_utils.mixins.json",
+      "kind": "resource",
+      "classification": "mixin-metadata",
+      "disposition_reason": "Required mixin config with LivingEntityMixin and PlayerMixin, defaultRequire1.",
+      "bytes": 328,
+      "sha256": "4d3c3e23293ac4a753bda68e1545f33cda9b0d599cc9516ffdddff849238fef6",
+      "lines": 16,
+      "catalog_refs": [
+        "AGGREGATE:provider-contract-metadata",
+        "CARD:attachments/keep_inv_on_death",
+        "CARD:attributes/evasive",
+        "CARD:mixins/living-entity-evasive-iframe",
+        "CARD:mixins/player-keep-inventory-drop",
+        "CARD:systems/keep-inventory-companion"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/geo/evil_armor.geo.json",
+      "kind": "resource",
+      "classification": "armor-resource",
+      "disposition_reason": "Concrete armor example geometry/texture supports separately mapped reusable armor API.",
+      "bytes": 10376,
+      "sha256": "e8f41147362eb456c8adfe32a53f402c191b2ae653c8c7fc39d0f91250dfca4d",
+      "lines": 223,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:systems/emissive-geo-armor-rendering",
+        "CARD:systems/geo-armor-attribute-helper"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/lang/en_us.json",
+      "kind": "resource",
+      "classification": "localization-metadata",
+      "disposition_reason": "Localization validates labels/contracts; text keys alone do not register additional objects.",
+      "bytes": 7089,
+      "sha256": "1d4abe54ac6dbc34aee37e2085040301d33a3c45085c320359d88e75479ac429",
+      "lines": 106,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "AGGREGATE:provider-contract-metadata"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/affinity_ring_hydro.json",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 118,
+      "sha256": "66534bc0ca797fc24f099bc39aaf9f2802a5b046aad29b4aec9875c1342efdd6",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/affinity_ring_ritual.json",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 119,
+      "sha256": "f6447d05992e938e3c6f6ff534c5998b2e60cbd667a3761c46b7f5367296b4ff",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/affinity_ring_technomancy.json",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 117,
+      "sha256": "fbdf534fffa9c73c84e2a18d39a6b7eb1933c8c5e70cd722ac399e6e4ab774eb",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_ap_magic_sword.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 407,
+      "sha256": "139879230a5db2ae11423bbda07cf93623c076bdb3d913b2bbf32c1a4e451e5e",
+      "lines": 18,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_ap_magic_sword"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_ap_sword.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 427,
+      "sha256": "3875f37f89fdf76c6c37bcd28160ddadbd0d7041ca70666019eb5c21c956291e",
+      "lines": 18,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_ap_sword"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_chromatic_aberration.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_chromatic_aberration"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_curio.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 115,
+      "sha256": "f61ad4c8ca5fa72359f9b9100cbc688fe1af3100706c98175a896fcc027c70e8",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_curio"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_dome.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_dome"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_gun.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 3675,
+      "sha256": "17f692c7acb16c8e1a570ed1c6598213ffbbae849f720bce27cec45d96c824ee",
+      "lines": 117,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_gun"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_imbue_curio.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 117,
+      "sha256": "1f7d61dfb995475ce1d6241a1b3212360adaf55c97c12f995e781fcf58354307",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_imbue_curio"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_imbue_staff.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 5715,
+      "sha256": "5b5985377570f1c08231225d396d2bc85ddbe8b9d6f6ee18fe73c90d5b880a08",
+      "lines": 173,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_imbue_staff"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_impact_frame_blue.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_impact_frame_blue"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_impact_frame_green.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_impact_frame_green"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_impact_frame_purple.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_impact_frame_purple"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_impact_frame_red.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_impact_frame_red"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_impact_frame_white.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_impact_frame_white"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_impact_frame_white_aberration.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_impact_frame_white_aberration"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_loot_bag.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "b70d960c7c7746721244c6af2900ec53d8ce5f437961e5c82c1d9e945036a1fb",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_loot_bag"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_passive_ability_spellbook.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 860,
+      "sha256": "f8862006098e30024623f06087c6ee5fadbd303e7dc293b382d239e0f7266161",
+      "lines": 26,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_passive_ability_spellbook"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_ribbon.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_ribbon"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_roar.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_roar"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_roar_ring.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_roar_ring"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_sheath.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 394,
+      "sha256": "9f4633b77f424520a4e9eb16ecb1ace50cc61ed3466efea43fb1bd32b8c96979",
+      "lines": 15,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_sheath"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_sheath_fixed.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 1379,
+      "sha256": "0d079a514b6157ca62af75ff58c02173a48740007fd5536fe8dfeb2a4cb5ed5b",
+      "lines": 46,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_sheath"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_sheath_gui.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 120,
+      "sha256": "d12c4b18950a0828a05d79c57442cd984f7589361671a2c56ae9d0ab4017ec78",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_sheath"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_sheath_handheld.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 1887,
+      "sha256": "babf83054a02d34312f3418ac101cd8ca14e2d4f4d90883da27b31cae7b4186c",
+      "lines": 68,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_sheath"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_staff.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 4487,
+      "sha256": "9675661269a505d338a98d66a4d8327c5feb143c6f393d647fdd215ac7afc7d3",
+      "lines": 145,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_staff"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_trail.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 108,
+      "sha256": "0b751b24218dab5224831521bcd427cb1c40e11d044979f3b15374cbef0f4945",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_trail"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/example_unqiue_ability_spellbook.json",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 855,
+      "sha256": "88839ffe8e3f5071c98ed8b3ad4af572b66b8315b4c88ef8513f4314c449e7d3",
+      "lines": 26,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_unqiue_ability_spellbook"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/scroll_hydro.json",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 114,
+      "sha256": "35a85403d2c60266d4230eafce9c64562ce6a93df306fe57d064c6f80ad48a70",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/scroll_ritual.json",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 115,
+      "sha256": "510a94fde6e6b27268aa39bd13767311db1cda03478b311fabf75b2c37d5064e",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/models/item/scroll_technomancy.json",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 120,
+      "sha256": "e3323f0d696a76c27fc6ac1753cc6361f64857830d55fcc33937aa80336f3f6c",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/particles/trail.json",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Sprite list for the one registered trail particle.",
+      "bytes": 239,
+      "sha256": "298ec69ef1782f56238a4e3cf902297776b705f0f0dacf4a6fb87a906f4a3016",
+      "lines": 12,
+      "catalog_refs": [
+        "CARD:particles/trail",
+        "CARD:vfx-runtime/ribbon-attachment-tracking",
+        "CARD:vfx-runtime/trail-manager-tick-lifecycle"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/player_animation/casting_animations.json",
+      "kind": "resource",
+      "classification": "animation-resource",
+      "disposition_reason": "Bundled player casting animation asset; animation IDs do not register spells.",
+      "bytes": 211636,
+      "sha256": "ba02c5126910c80a22cf5cf4a586e7458689c1efbeb18aa383778f43973170dd",
+      "lines": 11126,
+      "catalog_refs": [
+        "CARD:systems/spell-animation-holders",
+        "CARD:systems/summon-spell-helper",
+        "CARD:systems/unused-summon-template"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/chromatic_aberration.json",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 279,
+      "sha256": "3c16d6e9eed2e9d320bee0bf902f632ab03d4fffb71bb2bb23e464e8967eb9e1",
+      "lines": 17,
+      "catalog_refs": [
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/dome_warp.json",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 268,
+      "sha256": "d8b048914feaafcf651034d4711a70852d1332a70203427466fca69828112d24",
+      "lines": 17,
+      "catalog_refs": [
+        "CARD:systems/roar-command-visual-triggers",
+        "CARD:vfx-runtime/dome-shake-coordination",
+        "CARD:vfx-runtime/roar-notification-routing"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/grayscale.json",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 556,
+      "sha256": "9b39c684fac261f353a719f818f1719a9086237ba945fac5fc928b3acd2d8c5d",
+      "lines": 31,
+      "catalog_refs": [
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/grayscale_darker.json",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 556,
+      "sha256": "6b653e26fe056562095be4bb04ca8d6f5531086d134bc22bb9ea6c25c39dab40",
+      "lines": 31,
+      "catalog_refs": [
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/impact_frame.json",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 406,
+      "sha256": "78b665921f7b04812be15d14e5e62e623428f65b52e1c1dbea9a54313a9b86ce",
+      "lines": 23,
+      "catalog_refs": [
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/program/chromatic_aberration.fsh",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 584,
+      "sha256": "be7efcec027d1e16af546e99b6f39980c3f8d400fdb6dd0b7e64b547ebbffe1e",
+      "lines": null,
+      "catalog_refs": [
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/program/chromatic_aberration.json",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 574,
+      "sha256": "e7d42141ccb0eb6f05eecf70b7eac7cf9d5a208c39e2ba612a2c54630aeaab8c",
+      "lines": 18,
+      "catalog_refs": [
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/program/dome_warp.fsh",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 2184,
+      "sha256": "129ee4301f7020f5e32e551a0fc52516e6249b99312b54ca0dd1200599f6dbb2",
+      "lines": null,
+      "catalog_refs": [
+        "CARD:systems/roar-command-visual-triggers",
+        "CARD:vfx-runtime/dome-shake-coordination",
+        "CARD:vfx-runtime/roar-notification-routing"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/program/dome_warp.json",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 1616,
+      "sha256": "df613436089889f3b3d9390c9d141d86f6bb9ddccb633e0e73fa53dab0c8a179",
+      "lines": 115,
+      "catalog_refs": [
+        "CARD:systems/roar-command-visual-triggers",
+        "CARD:vfx-runtime/dome-shake-coordination",
+        "CARD:vfx-runtime/roar-notification-routing"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/program/impact_frame.fsh",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 1878,
+      "sha256": "d12bd60c564ce21d2a058d72268be94e58461cc331ec9a3de388cbff6b2b85d4",
+      "lines": null,
+      "catalog_refs": [
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/program/impact_frame.json",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 1238,
+      "sha256": "86716431d9bb79d7b5ae0460bcb656c126720f4ba2f3fe35011a24184ebfa887",
+      "lines": 27,
+      "catalog_refs": [
+        "CARD:vfx-runtime/impact-aberration-visual-dispatch"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/program/roar.fsh",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 3221,
+      "sha256": "d646c7b9068b64f9eb289ef58d8c0c519b6bf007fa6958f4872628e8bad8f705",
+      "lines": null,
+      "catalog_refs": [
+        "CARD:systems/roar-command-visual-triggers",
+        "CARD:vfx-runtime/dome-shake-coordination",
+        "CARD:vfx-runtime/roar-notification-routing"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/program/roar.json",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 1311,
+      "sha256": "dc4727867f1effc1c43a989cfb90581a67bc5721767b8fd8ed24fde20276e87c",
+      "lines": 28,
+      "catalog_refs": [
+        "CARD:systems/roar-command-visual-triggers",
+        "CARD:vfx-runtime/dome-shake-coordination",
+        "CARD:vfx-runtime/roar-notification-routing"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/shaders/roar.json",
+      "kind": "resource",
+      "classification": "vfx-resource",
+      "disposition_reason": "Shader/program resource of mapped presentation API; grayscale resources are generic shader examples, not new powers.",
+      "bytes": 263,
+      "sha256": "71123528af8a31b56f48f7713ab189a9d5f095b64a90296cc5a881b5756c3029",
+      "lines": 17,
+      "catalog_refs": [
+        "CARD:systems/roar-command-visual-triggers",
+        "CARD:vfx-runtime/dome-shake-coordination",
+        "CARD:vfx-runtime/roar-notification-routing"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/entity/test_boss.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 3293,
+      "sha256": "2a2d52bb8ab04a80662feb97078bbf15384c56938819b4f845de8c00c18a8762",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/entity/test_boss_2.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 3266,
+      "sha256": "89da119502c48edb6e4fbca3494bdc794f3a4d42a9d1c01f8ea2bd5ef1c0ca20",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/affinity_ring_hydro.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 476,
+      "sha256": "94dceb06a2c7fc8e1c76f5ac3d1dd74d9384e531fc6d214db652af3efe9d17dd",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/affinity_ring_ritual.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 458,
+      "sha256": "5707d11491a64d5f401801b7ae12eaba92c490b905ecc4c91f48f878e783631b",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/affinity_ring_technomancy.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 524,
+      "sha256": "f34c338c2796c7d4ebc0029584dd0873f587062c0369e27a34d28ed853acd263",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/awakened_night_edge.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 789,
+      "sha256": "7ee861acbe77ff6cbf24dde5621975ca3c72ccfedbeff2f591ac480344d1d47a",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/awakened_night_edge_gui.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 441,
+      "sha256": "9b4949b56e7297fe9603302caccfe9f86997cbb056c65685fd09b82292f0c973",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/darkpulse.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 1824,
+      "sha256": "78f9f326da9e4fa1f1ce7df1da8e535b7b4980519f9689a3bbd1832d6fc6fe72",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/darkpulse.png.mcmeta",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 189,
+      "sha256": "b77aa450bbc9efa785beb2e11eb018f21fe51c77af26dbbe2597f9427263857b",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/darkpulse_gui.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 284,
+      "sha256": "0b93bcb6dcb5bbcbbfdc0c4df6dcafb8ae99a67bb30b53cfd42e9217df1fc9e2",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/dragon_priest_stave.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 750,
+      "sha256": "745e30287439601f032cba9d6b89bfb2ec92b4b142eb3756aa2afbf2f66a3d1f",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/example_curio.png",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 379,
+      "sha256": "47676e946e20d60dbfeb8f38354c9272467a5eff9239b3cc1187487dae26a71a",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_curio"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/example_gun.png",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 994,
+      "sha256": "fe88190cf92994166b395da7c75160cfccef31e147744c5886447248ab4ee872",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_gun"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/example_loot_bag.png",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 498,
+      "sha256": "f2ac3bebfd2340522e3106e5d6eecaa6ab38cc3a83f1270e11761dd1dfc55bdd",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_loot_bag"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/example_sheath.png",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 749,
+      "sha256": "fadc4b1f22dda0b0b474867f6872a94e59f4f1ee7b0d7646e3456cccce13914d",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_sheath"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/example_sheath_gui.png",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 339,
+      "sha256": "69aea079ab14879c17a8f16ccab4e6d509170ca1a7a2f27961508477d2559f4f",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_sheath"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/example_staff.png",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 826,
+      "sha256": "e70bb9c980d830c2c20907ca502f4a78626bc4afa878339fc320a7c19594cf77",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_staff"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/part_blaze_core.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 957,
+      "sha256": "0249ab18a60ef6aba325a95681ae5ab8cdc8a380685d7b1773b855675ed6e2e5",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/part_blaze_core.png.mcmeta",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 184,
+      "sha256": "05462b974346bff89bc9eb6fb7d9d1c1a65857a676b570266149abcba1a8fb16",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/ritual_scroll.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 484,
+      "sha256": "8b788a17ca5a61eb74b3fbec377251ad2ca4eb1232cd34767d54826cd805da01",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/scroll_hydro.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 503,
+      "sha256": "b4f8eaac9abeb598a1076a704d31a7e171a2e611726b2a2e1551a0e0baa6e74f",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/scroll_technomancy.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 384,
+      "sha256": "f28bcb55889a665ef16d2c1007cd529f260f55ca3551b5bb10ddaf69025fe5b0",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/spell_books/example_passive_ability_spellbook.png",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 828,
+      "sha256": "e1e29637d3fe96c95af69e10c4da4c127a2e6a929de2ef994846b8d8f6a17c68",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_passive_ability_spellbook"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/spell_books/example_passive_ability_spellbook_gui.png",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 482,
+      "sha256": "e5422f9422d41fc84f5b343d5354858ceb1b548cd45c8160f0c9cada35951f68",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_passive_ability_spellbook"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/spell_books/example_unqiue_ability_spellbook.png",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 977,
+      "sha256": "b1b8891e9ac8e630fac6e7a9141424719c378e0f7d1bbbcd82af2640681ce2bd",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_unqiue_ability_spellbook"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/item/spell_books/example_unqiue_ability_spellbook_gui.png",
+      "kind": "resource",
+      "classification": "example-artwork",
+      "disposition_reason": "Presentation resource for explicitly inventoried examples, with no extra capability inferred.",
+      "bytes": 481,
+      "sha256": "e212a2fbea785b43237e2896cc52a34188d6e26060e8568b7ef5ecbc56ef616f",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:examples/example_unqiue_ability_spellbook"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/models/armor/evil_armor.png",
+      "kind": "resource",
+      "classification": "armor-resource",
+      "disposition_reason": "Concrete armor example geometry/texture supports separately mapped reusable armor API.",
+      "bytes": 11058,
+      "sha256": "93ea7b9743b68d0346a79e0486b337c9dd0e5883435fb1f053cd021fd9a0ea75",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:systems/emissive-geo-armor-rendering",
+        "CARD:systems/geo-armor-attribute-helper"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/models/armor/evil_armor_tips.png",
+      "kind": "resource",
+      "classification": "armor-resource",
+      "disposition_reason": "Concrete armor example geometry/texture supports separately mapped reusable armor API.",
+      "bytes": 2904,
+      "sha256": "ec76ce0afafdb9149015fa045cf1e8427afe42468285e6e15fbb4c95112943d2",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:systems/emissive-geo-armor-rendering",
+        "CARD:systems/geo-armor-attribute-helper"
+      ]
+    },
+    {
+      "path": "src/main/resources/assets/aces_spell_utils/textures/slot/sheath.png",
+      "kind": "resource",
+      "classification": "curio-data",
+      "disposition_reason": "Curios slot/entity/tag or sheath-slot presentation contract.",
+      "bytes": 190,
+      "sha256": "aa14fee867e89c95b2a15cf18d8410ea855b5417dec2eb6894292a372553b69b",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:systems/imbue-curios",
+        "CARD:systems/passive-ability-spellbooks",
+        "CARD:systems/passive-cooldown-curios"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/curios/entities/entities.json",
+      "kind": "resource",
+      "classification": "curio-data",
+      "disposition_reason": "Curios slot/entity/tag or sheath-slot presentation contract.",
+      "bytes": 51,
+      "sha256": "e7b8f93659609af0e4632fb8aa1f0e8d93e9c690b758ec4c4a78ca14421ba45c",
+      "lines": 4,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:systems/imbue-curios",
+        "CARD:systems/passive-ability-spellbooks",
+        "CARD:systems/passive-cooldown-curios"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/curios/slots/sheath.json",
+      "kind": "resource",
+      "classification": "curio-data",
+      "disposition_reason": "Curios slot/entity/tag or sheath-slot presentation contract.",
+      "bytes": 168,
+      "sha256": "65c070515348100568e6aa5449d6931c6af86dec9d8f4e0cc871f7178299f44d",
+      "lines": 9,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:systems/imbue-curios",
+        "CARD:systems/passive-ability-spellbooks",
+        "CARD:systems/passive-cooldown-curios"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/damage_type/hydro_magic.json",
+      "kind": "resource",
+      "classification": "school-data",
+      "disposition_reason": "Damage-type definition/tag supporting exactly named school.",
+      "bytes": 103,
+      "sha256": "8d469054ecc48e38fc26732d8b83a4ecfcadf632d86371bbc8f64262b8716474",
+      "lines": 5,
+      "catalog_refs": [
+        "CARD:damage-types/hydro_magic",
+        "CARD:schools/hydro"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/damage_type/ritual_magic.json",
+      "kind": "resource",
+      "classification": "school-data",
+      "disposition_reason": "Damage-type definition/tag supporting exactly named school.",
+      "bytes": 104,
+      "sha256": "9e0ccd991634b69e588b95f51c47ed865f3e0d9a46ab02f5c9e25c6de9f3a390",
+      "lines": 5,
+      "catalog_refs": [
+        "CARD:damage-types/ritual_magic",
+        "CARD:schools/ritual"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/damage_type/technomancy_magic.json",
+      "kind": "resource",
+      "classification": "school-data",
+      "disposition_reason": "Damage-type definition/tag supporting exactly named school.",
+      "bytes": 109,
+      "sha256": "9bd58ace1c5fdfea45fc71a856c6c59cbfa5ffd8f1dd4a2ad84ff6c76dfabf80",
+      "lines": 5,
+      "catalog_refs": [
+        "CARD:damage-types/technomancy_magic",
+        "CARD:schools/technomancy"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/tags/damage_type/hydro_magic.json",
+      "kind": "resource",
+      "classification": "school-data",
+      "disposition_reason": "Damage-type definition/tag supporting exactly named school.",
+      "bytes": 56,
+      "sha256": "c1b9cdb710ff0f542b7eb651f38315f200ab34a2dfda4e32fad5da1ae82b7ef1",
+      "lines": 5,
+      "catalog_refs": [
+        "CARD:damage-types/hydro_magic",
+        "CARD:schools/hydro"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/tags/damage_type/ritual_magic.json",
+      "kind": "resource",
+      "classification": "school-data",
+      "disposition_reason": "Damage-type definition/tag supporting exactly named school.",
+      "bytes": 57,
+      "sha256": "d074c5e48a26a1c6c671b9b2abb3de88b45289e7fbe1fd5467b1febf8bbc1c9d",
+      "lines": 5,
+      "catalog_refs": [
+        "CARD:damage-types/ritual_magic",
+        "CARD:schools/ritual"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/tags/damage_type/technomancy_magic.json",
+      "kind": "resource",
+      "classification": "school-data",
+      "disposition_reason": "Damage-type definition/tag supporting exactly named school.",
+      "bytes": 62,
+      "sha256": "ae88de774a7a7c82a5c555327f35a5ffd0afc80e8a834818332244f7a290afc9",
+      "lines": 5,
+      "catalog_refs": [
+        "CARD:damage-types/technomancy_magic",
+        "CARD:schools/technomancy"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/tags/entity_type/boss_like_entities.json",
+      "kind": "resource",
+      "classification": "attribute-data",
+      "disposition_reason": "Entity tag data for provider boss predicate and Goliath Slayer.",
+      "bytes": 146,
+      "sha256": "c46c7bb739693b46a4338dfc4ed2b810a4052386280cdf37668e181aaae84483",
+      "lines": 10,
+      "catalog_refs": [
+        "CARD:attributes/goliath_slayer",
+        "CARD:systems/asutils-casting-unlock-helpers",
+        "CARD:tags/entity_type-boss_like_entities"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/tags/entity_type/mana_rend_whitelist.json",
+      "kind": "resource",
+      "classification": "attribute-data",
+      "disposition_reason": "Whitelist tag data for Mana Rend.",
+      "bytes": 142,
+      "sha256": "df0d9ef530a1087e5ab557fbd9b09b25882f4b2ff848fe0dfe1788f8db14c0e3",
+      "lines": 8,
+      "catalog_refs": [
+        "CARD:attributes/mana_rend",
+        "CARD:tags/entity_type-mana_rend_whitelist"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/tags/entity_type/mana_steal_whitelist.json",
+      "kind": "resource",
+      "classification": "attribute-data",
+      "disposition_reason": "Whitelist tag data for Mana Steal.",
+      "bytes": 142,
+      "sha256": "df0d9ef530a1087e5ab557fbd9b09b25882f4b2ff848fe0dfe1788f8db14c0e3",
+      "lines": 8,
+      "catalog_refs": [
+        "CARD:attributes/mana_steal",
+        "CARD:tags/entity_type-mana_steal_whitelist"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/tags/irons_spellbooks/spells/slash_like_spell.json",
+      "kind": "resource",
+      "classification": "contract-data",
+      "disposition_reason": "Slash/stomp spell-tag member data supports casting-animation selection; does not register spells.",
+      "bytes": 222,
+      "sha256": "093b91986882ec2c0e7b3a4625d721a4cd1401f66dc9859876899a7bd8756528",
+      "lines": 11,
+      "catalog_refs": [
+        "AGGREGATE:provider-contract-metadata",
+        "CARD:systems/animated-spellcasting-mobs",
+        "CARD:systems/asutils-casting-unlock-helpers",
+        "CARD:systems/wizard-spell-combo-ai",
+        "CARD:tags/spell-slash_like_spell"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/aces_spell_utils/tags/irons_spellbooks/spells/stomp_like_spell.json",
+      "kind": "resource",
+      "classification": "contract-data",
+      "disposition_reason": "Slash/stomp spell-tag member data supports casting-animation selection; does not register spells.",
+      "bytes": 175,
+      "sha256": "8e382bc82cdeacab98661c3a518b8c5929f66bed47268cb8aa148d9973c72142",
+      "lines": 10,
+      "catalog_refs": [
+        "AGGREGATE:provider-contract-metadata",
+        "CARD:systems/animated-spellcasting-mobs",
+        "CARD:systems/asutils-casting-unlock-helpers",
+        "CARD:systems/wizard-spell-combo-ai",
+        "CARD:tags/spell-stomp_like_spell"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/c/tags/item/hidden_from_recipe_viewers.json",
+      "kind": "resource",
+      "classification": "example-data",
+      "disposition_reason": "Explicit10-item hiding tag; cannot generalize to all27 registered example items.",
+      "bytes": 446,
+      "sha256": "d78e73ea1d7a8c9365de5ea7051cbba9975e6beba76668cb6371fa45be0a5b38",
+      "lines": 14,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/curios/tags/item/necklace.json",
+      "kind": "resource",
+      "classification": "curio-data",
+      "disposition_reason": "Curios slot/entity/tag or sheath-slot presentation contract.",
+      "bytes": 136,
+      "sha256": "658354841861e12fca9a9a391ae9459e91c3deba4871cb26861ad3b555100e79",
+      "lines": 7,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:systems/imbue-curios",
+        "CARD:systems/passive-ability-spellbooks",
+        "CARD:systems/passive-cooldown-curios"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/curios/tags/item/sheath.json",
+      "kind": "resource",
+      "classification": "curio-data",
+      "disposition_reason": "Curios slot/entity/tag or sheath-slot presentation contract.",
+      "bytes": 79,
+      "sha256": "c49aa57cb6c31a4e6c34419ed2075d5b09d13b07a571fcd530fe33f25b6985ff",
+      "lines": 6,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:systems/imbue-curios",
+        "CARD:systems/passive-ability-spellbooks",
+        "CARD:systems/passive-cooldown-curios"
+      ]
+    },
+    {
+      "path": "src/main/resources/data/curios/tags/item/spellbook.json",
+      "kind": "resource",
+      "classification": "curio-data",
+      "disposition_reason": "Curios slot/entity/tag or sheath-slot presentation contract.",
+      "bytes": 155,
+      "sha256": "2717bf47852598b20ecdd43bd678fd03744ea6fb67cc100494f297b7db587d56",
+      "lines": 7,
+      "catalog_refs": [
+        "AGGREGATE:examples-and-development-content",
+        "CARD:systems/imbue-curios",
+        "CARD:systems/passive-ability-spellbooks",
+        "CARD:systems/passive-cooldown-curios"
+      ]
+    },
+    {
+      "path": "src/main/resources/pack.png",
+      "kind": "resource",
+      "classification": "auxiliary-artwork",
+      "disposition_reason": "Remaining namespace/pack/test/affinity-ring/scroll/weapon artwork has no corresponding additional source registry; retained and excluded from semantic capability counts.",
+      "bytes": 4735,
+      "sha256": "c8d83bf3d1b5a177a47c1db304fb32523321a09fa8d6cb168ec7f859945bf8ce",
+      "lines": null,
+      "catalog_refs": [
+        "AGGREGATE:auxiliary-artwork"
+      ]
+    },
+    {
+      "path": "src/main/templates/META-INF/enumextensions.json",
+      "kind": "template",
+      "classification": "rarity-metadata",
+      "disposition_reason": "Eight NeoForge Rarity enum extensions; presentation metadata, not spell identities.",
+      "bytes": 5783,
+      "sha256": "b740f4c4b7f442b41ed9782186bea53f6e72983f4d7d448d089aa3cfb4bd8711",
+      "lines": 124,
+      "catalog_refs": [
+        "AGGREGATE:provider-contract-metadata",
+        "CARD:rarities/accursed",
+        "CARD:rarities/aquatic",
+        "CARD:rarities/arid",
+        "CARD:rarities/cosmic",
+        "CARD:rarities/forbidden",
+        "CARD:rarities/glacial",
+        "CARD:rarities/sculk",
+        "CARD:rarities/verdant"
+      ]
+    },
+    {
+      "path": "src/main/templates/META-INF/neoforge.mods.toml",
+      "kind": "template",
+      "classification": "build-provenance",
+      "disposition_reason": "Tracked build/source/publisher metadata; no runtime capability registration by this file alone.",
+      "bytes": 4301,
+      "sha256": "7cd73301f7ecd87717020a1ca4d56d3685977d34256f9212f83e84da5054ccb6",
+      "lines": 94,
+      "catalog_refs": [
+        "AGGREGATE:bootstrap-build-and-publisher-metadata"
+      ]
+    }
+  ]
+}

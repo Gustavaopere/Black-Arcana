@@ -9,7 +9,19 @@
       "owned_magic_actions": 0,
       "evidence": "✅-a-good-place/README.md",
       "note": "Publisher-confirmed client-side block-placement animation only; no provider-owned spells, rituals, magical abilities or perk runtime"
+    },
+    {
+      "provider": "✅-aces-spell-utils",
+      "state": "SOURCE_VERSION_CATALOG_CLOSED",
+      "source_revision": "AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c2ef82647ac",
+      "version": "1.2.7.2-1.21.1",
+      "artifact_sha1": "8cbcd535a0b19bef49504c0b5ecafcbcd1cb1cca",
+      "physical_qa": "NOT_TESTED",
+      "mutating_hook": "NOT_VERIFIED",
+      "evidence": "✅-aces-spell-utils/SOURCE-CATALOG-CLOSURE-1.2.7.2.md",
+      "catalog_manifest": "✅-aces-spell-utils/SOURCE-CATALOG-MANIFEST-1.2.7.2.json",
+      "note": "118 individual documentation objects mapped to 132 Java / 245 tracked source files; zero standalone spell registrations. Source catalog closure only, no perk certification or physical QA."
     }
   ],
-  "next_provider": "✅-aces-spell-utils"
+  "next_provider": "✅-acolyte"
 }

@@ -11,7 +11,9 @@
 | `/roar shake at <pos>` | Posição | radius 24; magnitude 1.6; duration 10 | radius 1..256, magnitude 0..20, duration 0..1200 |
 | `/roar dome at <pos>` | Posição | radius 8; duration 200; cor `0xFF2020` | radius 0.5..128; duration 1..1200 |
 
-Rotas zoom/ring despacham a `RoarHandler.trigger(Entity|ServerLevel, ...)`; shake a `ShakeHandler.trigger` com `new ShakeConfig(radius,magnitude,duration,10)`; dome a `DomeHandler.trigger` com `DomeConfig.of`. O último argumento `10` de ShakeConfig foi **observado**, mas sua interpretação semântica depende de documentação do tipo. A versão com entidades pode retornar a quantidade de fontes; a versão posicional retorna 1 após o dispatch.
+Rotas zoom/ring despacham a `RoarHandler.trigger(Entity|ServerLevel, ...)`; shake a `ShakeHandler.trigger` com `new ShakeConfig(radius,magnitude,duration,10)`; dome a `DomeHandler.trigger` com `DomeConfig.of`. O último argumento **10 é fadeTicks adicional ao hold**, conforme [ShakeConfig e ActiveShake](../vfx-runtime/dome-shake-coordination.md), não duração total. Ring usa radius/thickness em **UV corrigida por aspecto**, não blocos; dome/shake usam blocos.
+
+`source` é `EntityArgument.entities()` e `pos` é `Vec3Argument.vec3()`. A árvore permite executar os defaults na raiz do alvo/posição, ou passar **todos os argumentos da rota**; não instala execução nos prefixos intermediários (por exemplo, só strength ou só radius). Não expõe argumentos de cor, easing, fade, shell/pulse/warp: cor dome é 0xFF2020 e easing zoom/ring é EASE_OUT_QUAD. A versão com entidades retorna a quantidade de fontes despachadas, sem confirmar espectadores/render; as versões posicionais retornam 1. Dome também dispara o shake acompanhante do handler; o comando não precisa enviar um segundo shake para reproduzir a cascata.
 
 ## Segurança e integração
 

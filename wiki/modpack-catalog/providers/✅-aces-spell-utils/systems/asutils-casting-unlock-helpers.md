@@ -17,6 +17,12 @@
 | `isBossEntity(EntityType)` | Testa tag `BOSS_LIKE_ENTITES` do provider | Tag não é diagnóstico genérico de boss |
 | `basicDamageCap(amount,min,max)` | `Mth.clamp` | Não assume caps de dano aplicados automaticamente |
 
+## Parâmetros auxiliares e condições de chamada
+
+`spawnParticlesInCircle(count,radius,yHeight,particleSpeed,entity,particle)` usa centro `entity.position()`, plano X/Z e Y=`entity.Y+yHeight`; cada chamada pede uma partícula com deltas zero e force=false. `spawnParticlesInRing` repete isso para três raios independentes. O ângulo vem de **`Math.toRadians(360/count)*i` com divisão inteira**: counts que não dividem 360 produzem espaçamento truncado e count>360 produz ângulo zero em todas as amostras. Count≤0 não entra nos loops. Não há clamp local de count/radius/speed nem budget total; corrigir ou validar no consumidor antes de prometer circunferência uniforme ou custo máximo.
+
+As buscas de unlock percorrem `player.getInventory().getContainerSize()` por identidade `== Item`, sem consultar Curios nem tag/NBT. A variante consumível reduz o primeiro stack correspondente e retorna imediatamente, sem grant/rollback de desbloqueio. `getEyeHeight` retorna Y mundial + eyeHeight − **0.2**; `getChunkPos` usa X/Z `>>4`; `convertTicksToTime` usa ticks/20 inteiro e formata `mm:ss`. O nome público é **`rbgToVector3F`** (grafia do source): divide r/g/b por **255F**, sem clamp 0..255. Nenhum desses métodos muda geometria ou recurso de uma spell.
+
 ## Ausências deliberadas
 
 O helper não fornece API segura verificada para modificar distância, alvo, raio real, tempo/cooldown, mana ou tamanho de projétil de spells Iron's. `getEyeHeight`, `getChunkPos`, `convertTicksToTime`, `rainbowName` e o tooltip de casting existem como utilidades mas não são hooks autoritativos de perks. O último usa `ClientMagicData` e dados do jogador local — apresentação cliente.

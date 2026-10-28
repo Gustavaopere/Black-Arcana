@@ -6,6 +6,8 @@
 
 Todos são `new AnimationHolder(AcesSpellUtils.id(path), boolean)`; `AcesSpellUtils.MOD_ID=aces_spell_utils` no source. A coluna final reproduz o booleano do construtor, sem inferir significado não documentado.
 
+A mesma classe expõe `public static ResourceLocation ANIMATION_RESOURCE = aces_spell_utils:animation` (campo não final); ele não é um 28º holder nem um registro de spell. O asset source correspondente às animações está em [`assets/aces_spell_utils/player_animation/casting_animations.json`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/resources/assets/aces_spell_utils/player_animation/casting_animations.json); existência no source não comprova carregamento, prioridade ou paridade com o JAR instalado.
+
 | Constante Java | ResourceLocation | Bool |
 |---|---|---|
 | `ANIMATION_CLAP` | `aces_spell_utils:clap` | `true` |

@@ -15,6 +15,8 @@
 
 Se o atacante for `LivingEntity`, atributo >0 e `victim.getType().is(aces_spell_utils:boss_like_entities)`, define `event.setAmount(event.getOriginalAmount()*(1+attr))`.
 
+O [JSON default da tag](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/resources/data/aces_spell_utils/tags/entity_type/boss_like_entities.json#L1-L10) usa `replace=false`, inclui `#c:bosses` e `discerning_the_eldritch:ascended_one` opcional; datapacks determinam o conjunto efetivo. Boss bar, tamanho ou max HP não abrem o gate. Atributo é fração: .25 pede 1.25 vezes o original, enquanto o teto 100 permite 101 vezes, antes da resolução posterior; negativos registrados são ignorados ([gate/cálculo](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L291-L305)).
+
 **Targeting / geometria:** Vítima de evento de dano com tag de tipo boss-like, nenhuma seleção independente.
 
 **Custo, cooldown, duração e projétil próprios:** não se trata de spell cast ou de registro de `AbstractSpell`. O atributo não define mana/cooldown/range/duração/projectile size autônomos; essas propriedades, quando aplicáveis, pertencem ao dano/cast/entidade de Iron's e/ou ao consumidor. Não interpretar como valor global de Black Arcana.

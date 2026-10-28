@@ -15,6 +15,8 @@
 
 Requer directEntity como `ServerPlayer`, ataque com `getAttackStrengthScale(0)>=1` e atributo >0. Define fome do atacante como `int(clamp(foodLevel+attr,0,20))`. Se vítima é `Player`, define fome da vítima como `int(clamp(targetFoodLevel-attr,0,20))`.
 
+A unidade é **ponto de fome** (`1=1 ponto`), sem escala pelo dano. Não altera saturação ou exaustão neste handler. Como a segunda conta usa a fome recém-escrita do atacante, H=19 e attr=5 solicitam atacante 20 e vítima 15, podendo aumentar a fome de uma vítima abaixo de 15; H=10 e attr=.5 solicitam atacante 10 e vítima 9. São derivações dos clamps/casts, sem carry de frações, não resultados medidos no pack ([unidade](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L315-L321), [duas escritas](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L345-L361)).
+
 **Targeting / geometria:** Atacante direto em evento de dano `Pre`, vítima se for jogador; não cria dano mágico independente.
 
 **Custo, cooldown, duração e projétil próprios:** não se trata de spell cast ou de registro de `AbstractSpell`. O atributo não define mana/cooldown/range/duração/projectile size autônomos; essas propriedades, quando aplicáveis, pertencem ao dano/cast/entidade de Iron's e/ou ao consumidor. Não interpretar como valor global de Black Arcana.

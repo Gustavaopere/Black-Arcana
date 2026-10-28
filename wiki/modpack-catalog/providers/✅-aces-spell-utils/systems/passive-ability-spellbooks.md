@@ -12,7 +12,11 @@ Pin oficial: `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c
 
 ## Fluxo causal, estado e parâmetros
 
-`PassiveAbilitySpellbook extends SpellBook` oferece `maxSpellSlots` e `getCooldownTicks()` default 0, mais `tryProcCooldown(Player)` usando o cooldown do item. `PassiveAbilityUniqueSpellbook extends PassiveAbilitySpellbook implements UniqueItem`; recebe `SpellDataRegistryHolder[]` e slots opcionais adicionais, inicializa spell container com presets via `ISpellContainer.create(getMaxSpellSlots(), true, true).mutableCopy()` e `addSpell`. `SpellbookAbilities` registra exemplos de proc para livros demonstrativos, incluindo invocação de Comet em eventos qualificantes.
+`PassiveAbilitySpellbook extends SpellBook` oferece `maxSpellSlots` (default 1 slot) e `getCooldownTicks()` default 0. `tryProcCooldown(Player)` retorna false se o cooldown desse **Item** está ativo; caso contrário adiciona a duração literal e retorna true. A base não aplica cooldown reduction, nem exige equipamento/side/recurso, nem comprova efeito bem-sucedido; esses gates pertencem ao consumidor ([construção][book-base], [cooldown][book-cooldown]).
+
+`PassiveAbilityUniqueSpellbook extends PassiveAbilitySpellbook implements UniqueItem`: slots = quantidade de holders ou quantidade + additionalSlots. `getSpells()` resolve os holders uma vez e descarta a referência original; essa lista no Item não é estado por jogador. Inicialização retorna para stack null e só cria container se ausente: `create(getMaxSpellSlots(), true, true)`, presets com `locked=true`, gravação immutable. Um container existente é preservado, mesmo divergente do preset ([presets][book-presets]).
+
+Os dois listeners demonstrativos de `SpellbookAbilities` recebem `LivingIncomingDamageEvent`: exigem atacante `ServerPlayer`, Item concreto equipado e cooldown livre. Não exigem dano final positivo, melee, spell, carga ou morte. Cada proc debita cooldown antes do spawn e cria um Comet com owner player, damage 5, posição da vítima +7Y, trajetória normalizada `(.05,-.85,0)`, chamada `shoot(trajectory,.045F)` e explosionRadius 4.5. O retorno de `addFreshEntity` não é usado para refund; não há cast/mana local. Esses valores são dos exemplos, não defaults de todos os livros ([procs][book-procs]).
 
 ## Targeting, geometria, custos e duração
 
@@ -22,8 +26,13 @@ Não há **um registro de `AbstractSpell` próprio** para esta família de helpe
 
 ## Limites de integração e segurança
 
-`getCooldownTicks=0` no helper base não certifica ausência de cooldown nas subclasses; não reproduzir passivo, entidade Comet ou custo além do handler real. Checar side, equipment lookup, proc damage e titularidade de cast.
+`getCooldownTicks=0` no helper base não certifica ausência de cooldown nas subclasses; não reproduzir passivo, entidade Comet ou custo além do handler real. O cooldown usa Item, não ItemStack: testar duas cópias do mesmo livro, spawn negado e reentrada do dano do Comet. Checar side, equipment lookup, proc damage e titularidade de cast.
 
 **Black Arcana** permanece autoridade sobre seus próprios casts, domains, rituais, Strain, Corruption e WorldEffectPolicy; **Iron's** permanece autoridade de recursos/casting host; **RPG Skill Tree** apenas de progressão/gates por contrato comprovado. Não duplicar execução de provider. O `build.gradle` do source fixa a dependência Iron's `3.16.2`; o pack informa `3.16.3`. Não há comprovação de compilação/teste desse conjunto de versões.
 
 **Evidência/QA:** `source_pinned=true`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Faltam confronto com JAR instalado, contrato host 3.16.3, ordenação dos eventos, datapack/config e QA cliente/servidor. **+0 magias semânticas, +0 certificações estáticas.**
+
+[book-base]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/items/curios/PassiveAbilitySpellbook.java#L15-L37
+[book-cooldown]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/items/curios/PassiveAbilitySpellbook.java#L53-L67
+[book-presets]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/items/curios/PassiveAbilityUniqueSpellbook.java#L15-L61
+[book-procs]: https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/SpellbookAbilities.java#L17-L69

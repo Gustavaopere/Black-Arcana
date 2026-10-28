@@ -7,12 +7,20 @@
 - [`vfx/trail/TrailManager.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/trail/TrailManager.java)
 - [`utils/TrailHandler.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/utils/TrailHandler.java)
 - [`events/AcesSpellUtilsServerEvents.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java)
+- [`vfx/trail/TrailConfig.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/trail/TrailConfig.java) e [`vfx/trail/ActiveTrail.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/vfx/trail/ActiveTrail.java)
+- [`client/particle/TrailParticle.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/client/particle/TrailParticle.java) — consumidor visual das [opções registradas](../particles/trail.md).
 
 **Fluxo source:** `TrailHandler.attach(Entity,TrailConfig)` rejeita entidade nula/removida/cliente; delega para `TrailManager.attach`, que guarda `ActiveTrail` por UUID em `ConcurrentHashMap`. `AcesSpellUtilsServerEvents.onServerTick(ServerTickEvent.Post)` chama `TrailManager.tick()`; o loop remove trilha de entidade morta, ignora saltos > `1024.0` em distância ao quadrado (32 blocos) redefinindo posição e emite partículas via `MagicManager.spawnParticles` segundo density/spread/speed/yOffset. Em parada de servidor, `TrailManager.clear()` limpa o mapa.
 
-**Targeting/range/tempo/consumo:** Estado de emissão visual da entidade anexada, não projétil de dano. O manager interpola movimentos em `config.density()` amostras; sem garantia de orçamento global para density arbitrária na API.
+**Targeting/range/tempo/consumo:** Estado de emissão visual da entidade anexada, não projétil de dano. `TrailConfig` limita density a **1..16**, spread/speed a pelo menos 0; yOffset é livre. `of(particle,density)` usa yOffset/spread/speed **0**. Não valida particle null nem finitude desses floats. O limite é por trilha, sem orçamento global de entidades/tráfego.
 
-**Risco e dependências:** A fonte não mostra limitação global de custo por tick no loop, e altas densities exigem budget/cap do consumidor. Não confundir `TrailParticle` de VFX com hitbox nem implementar tracking duplicado; QA de teleports/dimensions/entity lifecycle.
+**Risco e dependências:** A fonte não mostra limitação global de custo por tick no loop; muitas trilhas exigem budget do consumidor. Não confundir `TrailParticle` de VFX com hitbox nem implementar tracking duplicado; QA de teleports/dimensions/entity lifecycle.
+
+## Amostras, substituição e vida da partícula
+
+`ActiveTrail` guarda entidade/config e inicia lastPos na posição corrente. Attach repetido substitui a entrada por UUID e reinicia lastPos; `isAttached` exige também a mesma instância de entidade, e detach remove por UUID. Para `distance²<10⁻⁶`, uma chamada pede `density` partículas na posição atual+YOffset. Para movimento normal, são `density` chamadas com uma partícula em `from.lerp(to,(i+1)/density)`, incluindo o ponto final e excluindo o inicial. Ambos passam spread nos três eixos, speed e force=false a `MagicManager.spawnParticles`; o transporte é do Iron's, sem payload próprio de trail. Esse attachment não tem TTL/NBT/persistência local.
+
+Quando o tipo usado é `aces_spell_utils:trail`, `TrailParticle` usa RGB/scale das opções, quadSize inicial **scale×0.15**, lifetime aleatório inteiro **14..19 ticks**, friction **0.92**, hasPhysics=false e `PARTICLE_SHEET_TRANSLUCENT`. Após cada tick herdado aplica alpha=`1−age/lifetime` e quadSize×**0.96**; o Provider repassa a velocidade recebida. Lifetime da partícula e duração do attachment são contratos diferentes.
 
 ## Interoperabilidade e QA
 

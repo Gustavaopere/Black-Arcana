@@ -15,6 +15,8 @@
 
 Seleciona `source.getDirectEntity()` quando `LivingEntity`, exige atributo >0; se essa entidade for `ServerPlayer`, requer ataque carregado. Cura `heal((maxHealth-currentHealth)*attr)`.
 
+A entidade direta usa seu próprio atributo e HP; um summon vivo não transfere o proc ao invocador, e um projétil não vivo falha mesmo com owner elegível. Carga, atributo e HP são lidos no callback Post. Máximo 20, atual 5 e attr=.1 solicitam 1.5 HP; em HP cheio ainda chama `heal(0)`. O produto é convertido a float, sem clamp local do déficit; não há cooldown, trava por tick ou deduplicação. Cura anterior, inclusive Life Recovery, pode alterar o déficit conforme a ordem real dos listeners ([gates e fórmula](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L711-L742)).
+
 **Targeting / geometria:** A entidade **direta** do dano, não necessariamente `source.getEntity()` lógico. Atua em sua própria vida atual.
 
 **Custo, cooldown, duração e projétil próprios:** não se trata de spell cast ou de registro de `AbstractSpell`. O atributo não define mana/cooldown/range/duração/projectile size autônomos; essas propriedades, quando aplicáveis, pertencem ao dano/cast/entidade de Iron's e/ou ao consumidor. Não interpretar como valor global de Black Arcana.

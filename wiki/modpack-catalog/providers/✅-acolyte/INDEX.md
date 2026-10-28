@@ -6,6 +6,8 @@
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ — não determinado`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
+**Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
+
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
 
 *Nenhuma ficha individual detectada nesta árvore pelas regras conservadoras.* Isso **não significa zero** magias/habilidades: podem existir inventários agregados, JSONs, classes ou registros ainda não desmembrados.

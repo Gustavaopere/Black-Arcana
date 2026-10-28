@@ -20,6 +20,14 @@ Pin oficial: `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c
 
 `PayloadHandler.register(RegisterPayloadHandlersEvent)` cria um `PayloadRegistrar` com `.versioned("4.0.0").optional()` e oito registros `playToClient`: AddShaderEffect, RemoveShaderEffect, TriggerImpactFrame, TriggerChromaticAberration, TriggerRibbon, TriggerRoar, TriggerDome e TriggerShake. Helpers do handler ligam/desligam shader pela instância cliente `Minecraft`. Não há C2S declarado nesse registrar.
 
+## Scheduling e lifecycle cliente
+
+[`events/AcesSpellUtilsClient.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsClient.java) é restrita a Dist.CLIENT. Em `ClientTickEvent.Post`, chama na ordem **ImpactFrameEffect → ChromaticAberrationEffect → RibbonManager → RoarEffect → DomeManager → ShakeManager**. Ribbon/dome/shake checam pausa nos managers; os três timelines impact/aberration/roar não checam pausa em seus próprios ticks. Não atribuir um único relógio congelado a todo VFX.
+
+`RenderGuiEvent.Pre`, após a mão e antes do HUD, processa **impact frame → chromatic aberration → roar → dome warp**. Em AFTER_ENTITIES renderiza ribbon/dome e captura matrizes para roar/dome warp. `ViewportEvent.ComputeCameraAngles` soma shake ao pitch/yaw/roll com rates 3/5/4, usando a posição dos olhos e amplitude calculada por viewer. Essa ordem descreve composição visual, sem callbacks de hit.
+
+No logout, limpa RibbonManager/DomeManager/ShakeManager e fecha DomeWarpEffect, além de hardStop das duas músicas de boss. O handler não limpa explicitamente as timelines impact/aberration/roar; elas têm expiry próprio. Add/remove shader usam `gameRenderer.loadEffect`/`shutdownEffect` apenas com LocalPlayer presente, sem ownership por cast ou duração no payload. O shutdown não identifica o dono do shader anterior. Os oito codecs e sua validação permanecem nas [fichas de payload](../payloads/INDEX.md); limites/custos locais de [impact/aberration](../vfx-runtime/impact-aberration-visual-dispatch.md), [roar](../vfx-runtime/roar-notification-routing.md), [ribbon](../vfx-runtime/ribbon-attachment-tracking.md), [trail](../vfx-runtime/trail-manager-tick-lifecycle.md) e [dome/shake](../vfx-runtime/dome-shake-coordination.md) não formam um budget global compartilhado.
+
 ## Targeting, geometria, custos e duração
 
 Cliente receptor de efeitos visuais; nenhum payload desse conjunto concede servidor-autoridade de dano, acerto, mana ou cast. O alvo da apresentação vem do remetente/handler, não de um spell próprio do Ace.

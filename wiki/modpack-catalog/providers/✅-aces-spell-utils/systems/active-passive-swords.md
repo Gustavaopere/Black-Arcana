@@ -13,6 +13,8 @@ Pin oficial: `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c
 
 `ActiveAndPassiveAbilitySwordItem extends ExtendedSwordItem`; `ActiveAndPassiveAbilityMagicSwordItem extends MagicSwordItem`. Ambas expõem `getPassiveCooldownTicks()` e `getActiveCooldownTicks()` com retorno default **0**; método de tooltip mostra descrição. A variante MagicSword recebe `SpellDataRegistryHolder[]` no construtor host.
 
+O tooltip chama `super.appendHoverText` e usa prioridade **Shift → passivo** (`getDescriptionId()+".desc"`), **senão Alt → ativo** (`.desc2`), senão duas instruções de detalhes. Os getters entram apenas em `Utils.timeFromTicks(...,1)` para texto. Estas classes não implementam `use`, `hurtEnemy`, `tryProcCooldown`, débito de recurso ou agendamento de habilidade; os nomes ativo/passivo e os valores exibidos não provam um proc executado. O casting/container da variante mágica é herdado do Iron's e deve ser conferido no host, sem inventar um segundo caminho de cast.
+
 ## Targeting, geometria, custos e duração
 
 Espada concreta, usuário, alvo e SpellData passados por subclass/consumidor; funções base não criam habilidade ativa ou projétil automaticamente.

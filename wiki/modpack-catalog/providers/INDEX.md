@@ -3,19 +3,20 @@
 > Os prefixos ✅ antigos significam inventário histórico, não 100% técnico para perks.
 
 **Mods com escopo integral certificado: 0/164.**
-**Fichas com contrato técnico estático certificado: 138/2195.**
+**Fichas com contrato técnico estático certificado: 138/2198.**
 **Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 6.3%`
 **Progresso global confirmado:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Escopo:** pastas atuais de providers; a modlist pode conter outros mods/sistemas ainda não representados. Objetos ausentes do catálogo não são presumidos inexistentes.
 
-**Revisão alfabética do catálogo semântico:** 1/164 providers com escopo explicitamente encerrado; nesta fase, 1 classificado(s) sem ações mágicas próprias. Esse contador NÃO equivale a providers perk-ready.
-**Próximo na fila alfabética:** Aces Spell Utils.
+**Revisão alfabética do catálogo semântico:** 2/164 providers com escopo explicitamente encerrado: 1 sem ações mágicas próprias e 1 com catálogo da versão-fonte documentado. Esse contador NÃO equivale a providers perk-ready.
+**Barra da revisão alfabética:** `░░░░░░░░░░░░░░░░░░░░ 1.2%`
+**Próximo na fila alfabética:** Acolyte.
 
 | Estado 100% | Mod/provider | Fichas individuais candidatas | Fichas 100% certificadas | Índice |
 |---|---|---:|---:|---|
 | ⚠️ | A Good Place — ✅ escopo semântico encerrado (0 ações mágicas) | — | 0 | [Ver fichas](✅-a-good-place/INDEX.md) |
-| ⚠️ | Aces Spell Utils — 🟡 próximo na fila | 115 | 0 | [Ver fichas](✅-aces-spell-utils/INDEX.md) |
-| ⚠️ | Acolyte | — | 0 | [Ver fichas](✅-acolyte/INDEX.md) |
+| ⚠️ | Aces Spell Utils — ✅ catálogo da versão-fonte documentado | 118 | 0 | [Ver fichas](✅-aces-spell-utils/INDEX.md) |
+| ⚠️ | Acolyte — 🟡 próximo na fila | — | 0 | [Ver fichas](✅-acolyte/INDEX.md) |
 | ⚠️ | Aeromancy Additions | 10 | 0 | [Ver fichas](✅-aeromancy-additions/INDEX.md) |
 | ⚠️ | Alexs Caves Continued | 8 | 0 | [Ver fichas](✅-alexs-caves-continued/INDEX.md) |
 | ⚠️ | Alexs Mobs Continued | 3 | 0 | [Ver fichas](✅-alexs-mobs-continued/INDEX.md) |

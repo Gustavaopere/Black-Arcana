@@ -15,6 +15,8 @@
 
 Cura `attackerLivingEntity.heal(attacker.getMaxHealth()*attr)` quando atributo >0. Para `ServerPlayer` exige `getAttackStrengthScale(0)>=1`. Não limita por tipo de `DamageSource` nesse handler.
 
+A carga, o atributo e a vida máxima são lidos no callback Post; o gate de carga também se aplica a um `ServerPlayer` causador de dano por projétil. O TODO de escolher melee/spell/both não implementa esse filtro. A solicitação é float: máximo 20 e attr=.1 pedem 2 HP, independentemente do dano do hit ou do déficit. Não há clamp local ao déficit, cooldown, tick lock ou deduplicação; `heal` não devolve confirmação de HP restaurado neste fluxo ([gates e cálculo](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L669-L696)).
+
 **Targeting / geometria:** O causador lógico `source.getEntity()` como `LivingEntity`; cura o atacante, não a vítima. Sem range/AOE/cooldown próprio.
 
 **Custo, cooldown, duração e projétil próprios:** não se trata de spell cast ou de registro de `AbstractSpell`. O atributo não define mana/cooldown/range/duração/projectile size autônomos; essas propriedades, quando aplicáveis, pertencem ao dano/cast/entidade de Iron's e/ou ao consumidor. Não interpretar como valor global de Black Arcana.
