@@ -81,6 +81,16 @@ Black Arcana must not:
 
 Black Arcana Corruption, Strain, Arcane Danger, casting pipeline and destructive `WorldEffectPolicy` remain Black Arcana-owned.
 
+## Fichas individuais indexadas — lote alfabético de 27/10/2026
+
+**🟡 Em implementação:** 19 atributos registrados em [`attributes/`](attributes/INDEX.md) e 3 escolas `SchoolType` em [`schools/`](schools/INDEX.md) foram materializados em **22 fichas técnicas individuais**, cada uma com ID, registros, parâmetros conhecidos, targeting, fluxo consumidor ou limites, fonte da release `1.2.7.2-1.21.1` e QA pendente. [Índice do provider](INDEX.md).
+
+Esses objetos eram previamente conhecidos no inventário agregado; **não** representam 22 magias novas. Continuam **0 spells standalone**, e as demais famílias de sistemas/itens/API descritas nos dossiês agregados ainda precisam de desmembramento, evidência e reconciliação para fechar o escopo total de Ace. O lote **não** altera a certificação estática: `0/22` das fichas agora detectadas possuem manifesto `COMPLETE_PERK_READY`; há requisitos físicos e de integração ainda não verificados.
+
+**Correção de build-host:** [`build.gradle` na fonte pinada](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/build.gradle) fixa `io.redspace:irons_spellbooks:1.21.1-3.16.2` na dependência efetiva; a propriedade `irons_spells_version=1.21.1-3.11.0` em `gradle.properties` está obsoleta nesse local de build. A linha do modpack registrada é `3.16.3`; não há prova de compatibilidade runtime em assemble. [Análise causal dos eventos](SOURCE-1.2.7.2-COMBAT-CAUSALITY-AND-DOUBLE-SETTLEMENT-20261027.md).
+
+**Sem promoção alfabética:** `ALPHABETICAL-CATALOG-STATUS.json` continua apontando Ace como o segundo provider pendente. A prova source-pinned não substitui testes no host/JAR nem cataloga os sistemas compartilhados restantes.
+
 ## Catalog files
 
 - [REGISTRIES-AND-ATTRIBUTES.md](REGISTRIES-AND-ATTRIBUTES.md)
