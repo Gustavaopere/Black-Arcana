@@ -2,7 +2,7 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/28.**
+**Homologadas para perks (somente fichas detectadas): 0/29.**
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
@@ -36,6 +36,7 @@
 | ⚠️ | Example Roar Ring | [ficha/example_roar_ring.md](example_roar_ring.md) |
 | ⚠️ | Example Sheath | [ficha/example_sheath.md](example_sheath.md) |
 | ⚠️ | Example Staff | [ficha/example_staff.md](example_staff.md) |
+| ⚠️ | Example Summon Spell Template | [ficha/example-summon-spell-template.md](example-summon-spell-template.md) |
 | ⚠️ | Example Trail | [ficha/example_trail.md](example_trail.md) |
 | ⚠️ | Example Unqiue Ability Spellbook | [ficha/example_unqiue_ability_spellbook.md](example_unqiue_ability_spellbook.md) |
 
