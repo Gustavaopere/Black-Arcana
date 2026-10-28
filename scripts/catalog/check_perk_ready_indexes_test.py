@@ -80,6 +80,24 @@ class IndexTests(unittest.TestCase):
         (self.sub / "TECHNICAL-MATRIX.md").write_text("# Evidence\n", encoding="utf8")
         self.assertEqual([], c.check(self.root)["problems"])
 
+    def test_only_exact_aces_production_examples_escape_example_folder_filter(self):
+        ace = self.mods / "✅-aces-spell-utils" / "examples"
+        ace.mkdir(parents=True)
+        example_item = ace / "example_sheath.md"
+        example_material = ace / "example_armor_material.md"
+        unregistered = ace / "example_fake_spell.md"
+        evidence = ace / "README.md"
+        other = self.mod / "examples" / "example_sheath.md"
+        other.parent.mkdir(parents=True)
+        for path in (example_item, example_material, unregistered, evidence, other):
+            path.write_text("# fixture\\n", encoding="utf8")
+        with patch.object(c, "PROVIDERS", self.mods):
+            self.assertTrue(c.is_card(example_item))
+            self.assertTrue(c.is_card(example_material))
+            self.assertFalse(c.is_card(unregistered))
+            self.assertFalse(c.is_card(evidence))
+            self.assertFalse(c.is_card(other))
+
     def full_synthetic_certificate(self):
         return {
             "status": "COMPLETE_PERK_READY",

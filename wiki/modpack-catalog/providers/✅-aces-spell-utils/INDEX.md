@@ -2,7 +2,7 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/68.**
+**Homologadas para perks (somente fichas detectadas): 0/96.**
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
@@ -40,6 +40,34 @@
 | ⚠️ | Hydro Magic | [damage-types/hydro_magic.md](damage-types/hydro_magic.md) |
 | ⚠️ | Ritual Magic | [damage-types/ritual_magic.md](damage-types/ritual_magic.md) |
 | ⚠️ | Technomancy Magic | [damage-types/technomancy_magic.md](damage-types/technomancy_magic.md) |
+| ⚠️ | Example Ap Magic Sword | [examples/example_ap_magic_sword.md](examples/example_ap_magic_sword.md) |
+| ⚠️ | Example Ap Sword | [examples/example_ap_sword.md](examples/example_ap_sword.md) |
+| ⚠️ | Example Armor Boots | [examples/example_armor_boots.md](examples/example_armor_boots.md) |
+| ⚠️ | Example Armor Chestplate | [examples/example_armor_chestplate.md](examples/example_armor_chestplate.md) |
+| ⚠️ | Example Armor Helmet | [examples/example_armor_helmet.md](examples/example_armor_helmet.md) |
+| ⚠️ | Example Armor Leggings | [examples/example_armor_leggings.md](examples/example_armor_leggings.md) |
+| ⚠️ | Example Armor Material | [examples/example_armor_material.md](examples/example_armor_material.md) |
+| ⚠️ | Example Chromatic Aberration | [examples/example_chromatic_aberration.md](examples/example_chromatic_aberration.md) |
+| ⚠️ | Example Curio | [examples/example_curio.md](examples/example_curio.md) |
+| ⚠️ | Example Dome | [examples/example_dome.md](examples/example_dome.md) |
+| ⚠️ | Example Gun | [examples/example_gun.md](examples/example_gun.md) |
+| ⚠️ | Example Imbue Curio | [examples/example_imbue_curio.md](examples/example_imbue_curio.md) |
+| ⚠️ | Example Imbue Staff | [examples/example_imbue_staff.md](examples/example_imbue_staff.md) |
+| ⚠️ | Example Impact Frame Blue | [examples/example_impact_frame_blue.md](examples/example_impact_frame_blue.md) |
+| ⚠️ | Example Impact Frame Green | [examples/example_impact_frame_green.md](examples/example_impact_frame_green.md) |
+| ⚠️ | Example Impact Frame Purple | [examples/example_impact_frame_purple.md](examples/example_impact_frame_purple.md) |
+| ⚠️ | Example Impact Frame Red | [examples/example_impact_frame_red.md](examples/example_impact_frame_red.md) |
+| ⚠️ | Example Impact Frame White | [examples/example_impact_frame_white.md](examples/example_impact_frame_white.md) |
+| ⚠️ | Example Impact Frame White Aberration | [examples/example_impact_frame_white_aberration.md](examples/example_impact_frame_white_aberration.md) |
+| ⚠️ | Example Loot Bag | [examples/example_loot_bag.md](examples/example_loot_bag.md) |
+| ⚠️ | Example Passive Ability Spellbook | [examples/example_passive_ability_spellbook.md](examples/example_passive_ability_spellbook.md) |
+| ⚠️ | Example Ribbon | [examples/example_ribbon.md](examples/example_ribbon.md) |
+| ⚠️ | Example Roar | [examples/example_roar.md](examples/example_roar.md) |
+| ⚠️ | Example Roar Ring | [examples/example_roar_ring.md](examples/example_roar_ring.md) |
+| ⚠️ | Example Sheath | [examples/example_sheath.md](examples/example_sheath.md) |
+| ⚠️ | Example Staff | [examples/example_staff.md](examples/example_staff.md) |
+| ⚠️ | Example Trail | [examples/example_trail.md](examples/example_trail.md) |
+| ⚠️ | Example Unqiue Ability Spellbook | [examples/example_unqiue_ability_spellbook.md](examples/example_unqiue_ability_spellbook.md) |
 | ⚠️ | Trail | [particles/trail.md](particles/trail.md) |
 | ⚠️ | Accursed | [rarities/accursed.md](rarities/accursed.md) |
 | ⚠️ | Aquatic | [rarities/aquatic.md](rarities/aquatic.md) |
@@ -89,6 +117,7 @@
 | Attributes | 19 | [Abrir índice](attributes/INDEX.md) |
 | Config | 5 | [Abrir índice](config/INDEX.md) |
 | Damage Types | 3 | [Abrir índice](damage-types/INDEX.md) |
+| Examples | 28 | [Abrir índice](examples/INDEX.md) |
 | Particles | 1 | [Abrir índice](particles/INDEX.md) |
 | Rarities | 8 | [Abrir índice](rarities/INDEX.md) |
 | Schools | 3 | [Abrir índice](schools/INDEX.md) |
