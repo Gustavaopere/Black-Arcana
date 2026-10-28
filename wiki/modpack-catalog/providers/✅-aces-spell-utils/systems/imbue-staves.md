@@ -11,7 +11,11 @@ Pin oficial: `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c
 
 ## Fluxo causal, estado e parâmetros
 
-`ImbueableStaffItem extends StaffItem implements IPresetSpellContainer` inicializa `ISpellContainer.create(1, true, false)` quando o stack ainda não é container. `PresetImbueStaffItem` usa `SpellDataRegistryHolder[]` e obtém SpellData por `getSpells()` para inicialização de presets; ambos usam o contrato de containers do Iron's.
+`ImbueableStaffItem extends StaffItem implements IPresetSpellContainer`: stack nulo retorna; exige `stack.getItem() instanceof StaffItem` e ausência de container para gravar `ISpellContainer.create(1, true, false)` por `ISpellContainer.set`. É um slot vazio com wheel true e mustEquip false; o container não executa a spell.
+
+`PresetImbueStaffItem` recebe `SpellDataRegistryHolder[]`. `getSpells()` resolve uma lista lazy compartilhada pelo singleton Item, depois zera os holders. Com stack não nulo e sem container, cria `ISpellContainer.create(spells.size(), true, false).mutableCopy()`, adiciona cada spell/nível com **locked=true** e grava o component `ComponentRegistry.SPELL_CONTAINER` imutável. A capacidade é o número de presets; wheel true/mustEquip false são flags do container, sem provar que o host encontra o item em qualquer slot do inventário.
+
+Containers existentes são preservados; não há migração automática, reset nem side-check explícito nestes inicializadores. Não mutar o cache global como perk por jogador. QA pendente: novo/preexistente/null, count/locked, mão e equipamento, cópia/save+load e compatibilidade do casting implement herdado de `StaffItem` com o host efetivo.
 
 ## Targeting, geometria, custos e duração
 

@@ -11,7 +11,11 @@ Pin oficial: `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c
 
 ## Fluxo causal, estado e parâmetros
 
-`AbstractSummonSpell extends AbstractSpell` de Iron's e é base abstrata, não registro próprio. `getEmptyCastData()` fornece `SummonedEntitiesCastData`; `getRecastCount` retorna 2; `onCast` verifica recast existente e chama `onSummoningCast` definido pelo addon, criador de um `RecastInstance` com duração retornada. `spawnHelper` publica `SpellSummonEvent`, faz `addFreshEntity` e delega `SummonManager.initSummon`.
+`AbstractSummonSpell extends AbstractSpell` de Iron's e é base abstrata, não registro próprio. `getEmptyCastData()` fornece `SummonedEntitiesCastData`; `getRecastCount` retorna **2**. `onCast` consulta `MagicData.getPlayerRecasts()`; só sem recast existente cria cast data novo, chama `onSummoningCast` definido pelo addon e usa o retorno como timer de `RecastInstance(spellId, spellLevel, recastCount, timer, castSource, castData)`. Adiciona o recast e sempre chama `super.onCast` ao final; presença de recast não repete localmente `onSummoningCast`.
+
+`onRecastFinished` delega a `SummonManager.recastFinishedHelper` e só chama o método super se o helper retornar true. Remoção/contabilidade/lifetime efetivo e significado das duas recasts pertencem ao host; não interpretar 2 como duas novas invocações.
+
+`spawnHelper(x,y,z,caster,level,summonTimer,castData,Supplier<K extends Mob>,spellId,spellLevel)` cria a entidade, posiciona-a, publica `SpellSummonEvent` e usa **`event.getCreature()`** tanto em `level.addFreshEntity` quanto em `SummonManager.initSummon`. Um listener pode substituir a criatura; não assumir que a instância do supplier é a adicionada. O helper não valida colisão/solo/LOS, não limita quantidade, não faz side-check próprio e não verifica o boolean retornado por `addFreshEntity`; admissão, lado e falhas de spawn exigem validação do consumidor/host. O evento de summon não comprova cast liquidado nem autoriza repetir spawn por um adapter.
 
 ## Targeting, geometria, custos e duração
 

@@ -13,7 +13,9 @@
 
 **Consumidor do source:** `evasiveEvent · LivingIncomingDamageEvent · L428–460; LivingEntityMixin`.
 
-Requer atributo >0 na vítima; lê `event.getContainer().getPostAttackInvulnerabilityTicks()`, multiplica por `int(attr)` e chama `event.setInvulnerabilityTicks`. A fonte também possui `LivingEntityMixin` que soma `(int) attribute` ao campo `invulnerableTime` após writes nos métodos `hurt` e `handleDamageEvent`.
+Requer atributo >0 na vítima; lê `T=event.getContainer().getPostAttackInvulnerabilityTicks()`, calcula `T*int(attr)` e chama `event.setInvulnerabilityTicks`. A conversão ocorre antes da multiplicação: `0<attr<1` solicita **0 ticks**, `attr=1.9` multiplica por 1; não é `T*(1+attr)`. Não há clamp local do produto ([cálculo](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L439-L449)).
+
+O caminho separado de [`LivingEntityMixin`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/mixins/server/LivingEntityMixin.java#L18-L36) soma `(int)attr` ao campo `invulnerableTime` após `PUTFIELD` em `hurt` e `handleDamageEvent`, sem `ordinal` ou guarda de lado local. Isso não prova quantas injeções serão alcançadas no runtime transformado nem uma fórmula combinada entre evento e mixin.
 
 **Targeting / geometria:** A entidade que recebe dano, não o atacante; não há chance de esquiva probabilística neste handler.
 

@@ -8,7 +8,7 @@ Current physical artifact:
 - mod id `aces_spell_utils`
 - runtime `1.2.7.2-1.21.1`
 - SHA-1 `8cbcd535a0b19bef49504c0b5ecafcbcd1cb1cca`
-- Minecraft 1.21.1 / NeoForge pack baseline `21.1.248`
+- Minecraft 1.21.1 / NeoForge physical reference `21.1.250`; Black Arcana compile/dev baseline `21.1.248` ([dated reconciliation](../../meta/PHYSICAL-LEDGER-VERSION-RECONCILIATION-2026-10-08.md)).
 
 The physical modlist/JAR metadata is authority for installed presence/version/hash.
 
@@ -76,7 +76,7 @@ Public project metadata states Iron's Spells 'n Spellbooks as the host/required 
 
 The source `neoforge.mods.toml` template itself only declares NeoForge and Minecraft dependency blocks. Therefore that template is not treated as a complete semantic list of the library's host/API requirements.
 
-Current physical pack contains the required host stack, including Iron's Spells 'n Spellbooks `1.21.1-3.16.3`. Source was developed against Iron's `1.21.1-3.11.0`, so exact host-version behavior/API parity remains runtime QA rather than an inferred guarantee.
+Current physical pack contains the required host stack, including Iron's Spells 'n Spellbooks `1.21.1-3.16.3`. The active dependency in [`build.gradle:141`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/build.gradle#L139-L146) is Iron's `1.21.1-3.16.2`. The `3.11.0` property above is unused by that declaration. Exact host-version behavior/API parity against `3.16.3` remains runtime QA rather than an inferred guarantee.
 
 ## Source naming anomalies preserved
 
@@ -111,3 +111,11 @@ These remain fail-closed integration/QA questions, not reasons to keep the seman
 For a library/API provider, “complete catalog” means the current provider's own registry identities and reusable/runtime capability surfaces are enumerated to the exact source-version evidence ceiling. It does not require inventing player spells that the provider does not register.
 
 Ace's Spell Utils therefore qualifies for component closure with **0 standalone spells**, while retaining explicit runtime/integration QA gates.
+
+## Publisher-to-source inventory boundary — 2026-10-28
+
+The downloaded [official file 8789930](https://www.curseforge.com/minecraft/mc-mods/aces-spell-utils/files/8789930) has 381096 bytes, SHA-1 `8cbcd535a0b19bef49504c0b5ecafcbcd1cb1cca`, SHA-256 `da3ec5f0201ff87d52df0d952b8ed379e77b8a5d98666558ec4bea0805fe97be`. This matches the cataloged physical SHA-1; the original installed profile was not read again.
+
+All 132 Java paths under `src/main/java` correspond exactly to 132 publisher outer-class paths, excluding inner names containing a dollar sign. There are 150 classfiles total (Java 21, major 65), with zero missing or additional outer names. The mixin JSON is semantically equal; its bytes differ. This is a class-name inventory check, **not** method-body, resource-set, reproducible-build or gameplay parity.
+
+The [source manifest](SOURCE-CATALOG-MANIFEST-1.2.7.2.json) retains every one of the 245 tracked source-repository paths, content hashes and documentation dispositions. [Closure evidence](SOURCE-CATALOG-CLOSURE-1.2.7.2.md) explains the permitted conclusion and remaining host/QA gates. Publisher license metadata says MIT; the tracked `TEMPLATE_LICENSE.txt` is template material, not a substitute for checking applicable notices before code reuse. No implementation is imported here.

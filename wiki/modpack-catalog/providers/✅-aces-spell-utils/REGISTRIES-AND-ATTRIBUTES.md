@@ -40,7 +40,7 @@ All three use Iron's `SchoolType` and `EVOCATION_CAST` as the source-observed ca
 | `life_recovery` | Percentage / `0` | `0 .. 1` | heals a percentage of attacker's max health after damage |
 | `vigor_reap` | Percentage / `0` | `0 .. 1` | heals a percentage of attacker's missing health after qualifying hit |
 
-The exact source adds every registered Ace's Spell Utils attribute to every entity type through `EntityAttributeModificationEvent`. That is a provider-global attribute surface; Black Arcana must not create a shadow copy of these values.
+The exact source adds every registered Ace's Spell Utils attribute to the types enumerated by `event.getTypes()` through `EntityAttributeModificationEvent`. That is a provider-global attribute surface; Black Arcana must not create a shadow copy of these values.
 
 ### School power/resistance attributes — 6
 
@@ -127,3 +127,9 @@ The presence of a rarity named `forbidden` is presentation/item metadata only. I
 ## Deduplication consequence
 
 This registry surface occupies shared cross-addon school/attribute/tag/runtime space. A Black Arcana adapter may observe a proven provider state when a real contract requires it, but must not register duplicate Ace's schools, mirror the 19 attributes into a second ledger, reapply provider damage modifiers, or reinterpret provider tags as Black Arcana authorities.
+
+## Supporting registrations and identifier boundaries
+
+The source also registers one `ArmorMaterial`, `aces_spell_utils:example_armor`, separately from the four armor item IDs; see [its individual card](examples/example_armor_material.md). The creative tab `aces_spell_utils:asu_item_tabs` is dev-environment gated, unlike the 27 example item registrations and material. [`AcesSpellUtils` bootstrap](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/AcesSpellUtils.java#L42-L70) and [`ASCreativeModeTabs`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/registries/ASCreativeModeTabs.java#L13-L55) delimit that scope.
+
+The [27 public animation holders](systems/spell-animation-holders.md) are casting helpers, not spell registrations. Rendering resources and animation asset keys are supporting files; neither an asset name nor an enum/holder count increases the standalone spell count.

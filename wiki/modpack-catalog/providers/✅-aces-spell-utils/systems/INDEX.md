@@ -2,7 +2,7 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/18.**
+**Homologadas para perks (somente fichas detectadas): 0/21.**
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
@@ -15,9 +15,12 @@
 | ⚠️ | Asutils Casting Unlock Helpers | [ficha/asutils-casting-unlock-helpers.md](asutils-casting-unlock-helpers.md) |
 | ⚠️ | Boss Phases Music | [ficha/boss-phases-music.md](boss-phases-music.md) |
 | ⚠️ | Domain Entity Runtime | [ficha/domain-entity-runtime.md](domain-entity-runtime.md) |
+| ⚠️ | Emissive Geo Armor Rendering | [ficha/emissive-geo-armor-rendering.md](emissive-geo-armor-rendering.md) |
+| ⚠️ | Geo Armor Attribute Helper | [ficha/geo-armor-attribute-helper.md](geo-armor-attribute-helper.md) |
 | ⚠️ | Imbue Curios | [ficha/imbue-curios.md](imbue-curios.md) |
 | ⚠️ | Imbue Staves | [ficha/imbue-staves.md](imbue-staves.md) |
 | ⚠️ | Keep Inventory Companion | [ficha/keep-inventory-companion.md](keep-inventory-companion.md) |
+| ⚠️ | Loot Bag Helper | [ficha/loot-bag-helper.md](loot-bag-helper.md) |
 | ⚠️ | Mace Casting Family | [ficha/mace-casting-family.md](mace-casting-family.md) |
 | ⚠️ | Magic Gun Casting | [ficha/magic-gun-casting.md](magic-gun-casting.md) |
 | ⚠️ | Passive Ability Spellbooks | [ficha/passive-ability-spellbooks.md](passive-ability-spellbooks.md) |

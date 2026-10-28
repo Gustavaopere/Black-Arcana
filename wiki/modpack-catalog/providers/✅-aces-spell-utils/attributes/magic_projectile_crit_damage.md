@@ -15,6 +15,8 @@
 
 Multiplicador de crítico de projétil. Exige chance acima do threshold e `SpellDamageSource` com directEntity `AbstractMagicProjectile`; cada proc soma `current_event_amount*(critDmg-1)` e multiplica variável de critDmg por `0.85`.
 
+O multiplicador efetivo é lido em cada evento, com gate `m>1` além de `c>0.05`. Para n sucessos, o fator aproximado é `1+Σ(i=0..n-1)(m0*(0.85F)^i-1)` sobre B fixo de entrada. m0=1.5 permite no máximo três parcelas positivas, aproximadamente `.5`, `.275`, `.08375`, mesmo com chance suficiente: `1.85875*B`, sem arredondamentos. Aumentar somente este atributo com chance default continua inativo; ver [chance e RNG](magic_projectile_crit_chance.md) e [valores/loop](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L563-L585).
+
 **Targeting / geometria:** Projétil mágico direto em um `LivingIncomingDamageEvent`; nenhum cast ou dano extra separado.
 
 **Custo, cooldown, duração e projétil próprios:** não se trata de spell cast ou de registro de `AbstractSpell`. O atributo não define mana/cooldown/range/duração/projectile size autônomos; essas propriedades, quando aplicáveis, pertencem ao dano/cast/entidade de Iron's e/ou ao consumidor. Não interpretar como valor global de Black Arcana.

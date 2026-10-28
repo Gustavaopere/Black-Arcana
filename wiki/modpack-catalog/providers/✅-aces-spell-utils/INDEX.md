@@ -2,11 +2,12 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/115.**
+**Homologadas para perks (somente fichas detectadas): 0/118.**
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
+**Catalogação da versão-fonte (independente da homologação de perks):** ✅ 118/118 fichas do escopo documentado; versão 1.2.7.2-1.21.1. [Fechamento e limites](SOURCE-CATALOG-CLOSURE-1.2.7.2.md). Hooks mutadores e QA físico continuam pendentes.
+**Barra do catálogo da versão-fonte:** `████████████████████ 100.0%`
 
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
 
@@ -95,9 +96,12 @@
 | ⚠️ | Asutils Casting Unlock Helpers | [systems/asutils-casting-unlock-helpers.md](systems/asutils-casting-unlock-helpers.md) |
 | ⚠️ | Boss Phases Music | [systems/boss-phases-music.md](systems/boss-phases-music.md) |
 | ⚠️ | Domain Entity Runtime | [systems/domain-entity-runtime.md](systems/domain-entity-runtime.md) |
+| ⚠️ | Emissive Geo Armor Rendering | [systems/emissive-geo-armor-rendering.md](systems/emissive-geo-armor-rendering.md) |
+| ⚠️ | Geo Armor Attribute Helper | [systems/geo-armor-attribute-helper.md](systems/geo-armor-attribute-helper.md) |
 | ⚠️ | Imbue Curios | [systems/imbue-curios.md](systems/imbue-curios.md) |
 | ⚠️ | Imbue Staves | [systems/imbue-staves.md](systems/imbue-staves.md) |
 | ⚠️ | Keep Inventory Companion | [systems/keep-inventory-companion.md](systems/keep-inventory-companion.md) |
+| ⚠️ | Loot Bag Helper | [systems/loot-bag-helper.md](systems/loot-bag-helper.md) |
 | ⚠️ | Mace Casting Family | [systems/mace-casting-family.md](systems/mace-casting-family.md) |
 | ⚠️ | Magic Gun Casting | [systems/magic-gun-casting.md](systems/magic-gun-casting.md) |
 | ⚠️ | Passive Ability Spellbooks | [systems/passive-ability-spellbooks.md](systems/passive-ability-spellbooks.md) |
@@ -142,7 +146,7 @@
 | Payloads | 8 | [Abrir índice](payloads/INDEX.md) |
 | Rarities | 8 | [Abrir índice](rarities/INDEX.md) |
 | Schools | 3 | [Abrir índice](schools/INDEX.md) |
-| Systems | 18 | [Abrir índice](systems/INDEX.md) |
+| Systems | 21 | [Abrir índice](systems/INDEX.md) |
 | Tags | 14 | [Abrir índice](tags/INDEX.md) |
 | Vfx Runtime | 5 | [Abrir índice](vfx-runtime/INDEX.md) |
 

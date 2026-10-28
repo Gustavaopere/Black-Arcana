@@ -13,7 +13,9 @@
 
 **Consumidor do source:** `magicProjectileDamageCriticalStrike · LivingIncomingDamageEvent LOWEST · L546–613`.
 
-Mesmo loop por chance e multiplicador, mas requer `source.getDirectEntity() instanceof AbstractMagicProjectile` **e** `source instanceof SpellDamageSource`. O guard de chance é `>0.05`; RNG da vítima e decréscimo de chance por proc.
+Requer atacante `LivingEntity`, `source.getDirectEntity() instanceof AbstractMagicProjectile` **e** `source instanceof SpellDamageSource`; ambos os atributos do par precisam existir. Exige `c>0.05` e `m>1`. Com B=amount na entrada e d=B, usa RNG da vítima em `nextFloat()<=c && m>1`; a cada sucesso faz `c-=1`, `d+=float(B*(m-1))`, `m*=0.85F`; só depois escreve d. Não multiplica o acumulado por m ([admissão](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L548-L575), [loop](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L577-L605)).
+
+Chance não é limitada a 100%: c>=1 garante um teste enquanto m>1, e c local=0 ainda pode passar com RNG exatamente zero. O teto 10 admite até 11 sucessos pelo critério de chance, frequentemente menos por decaimento de m. Não há cooldown ou trava por cast/tick; os atributos não são drenados pelo loop ([loop](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L577-L585)).
 
 **Targeting / geometria:** Dano do projétil mágico de Iron's no evento existente; não cria projétil, altera tamanho, velocidade ou trajetória.
 

@@ -15,6 +15,8 @@
 
 Modificador de dano crítico para spell `SpellDamageSource`, compartilhado com `magic_damage_crit_chance`. Loop inicializa `damage = event.getAmount()`, e a cada sucesso soma `event.getAmount()*(critDamage-1)`, depois `critDamage *= 0.85`.
 
+Para n sucessos, antes dos arredondamentos float, o fator sobre o amount B de entrada é `1+Σ(i=0..n-1)(m0*(0.85F)^i-1)`. Com m0=1.5, as três primeiras parcelas são aproximadamente `.5`, `.275`, `.08375`: se a chance permitir os três sucessos, solicita `1.85875*B`; o multiplicador então cai abaixo de 1 e encerra novas parcelas. Não é `1.5^n`. O par precisa existir, com `c>0.05` e `m>1`; ver [chance e RNG](magic_damage_crit_chance.md) e [gates/loop](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/events/AcesSpellUtilsServerEvents.java#L477-L508).
+
 **Targeting / geometria:** Mesmo dano/evento do spell; não cria novo ataque. Só tem efeito quando a chance supera o threshold de `0.05`.
 
 **Custo, cooldown, duração e projétil próprios:** não se trata de spell cast ou de registro de `AbstractSpell`. O atributo não define mana/cooldown/range/duração/projectile size autônomos; essas propriedades, quando aplicáveis, pertencem ao dano/cast/entidade de Iron's e/ou ao consumidor. Não interpretar como valor global de Black Arcana.

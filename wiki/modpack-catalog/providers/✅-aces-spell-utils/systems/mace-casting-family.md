@@ -10,6 +10,7 @@
 - [`ActiveAndPassiveAbilityMaceItem.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/ActiveAndPassiveAbilityMaceItem.java) — `items/weapons/maces/ActiveAndPassiveAbilityMaceItem.java`
 - [`ActiveAndPassiveAbilityMagicMaceItem.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/ActiveAndPassiveAbilityMagicMaceItem.java) — `items/weapons/maces/ActiveAndPassiveAbilityMagicMaceItem.java`
 - [`ExtendedMaceItem.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/ExtendedMaceItem.java) — `items/weapons/maces/ExtendedMaceItem.java`
+- [`ImbueableMaceItem.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/ImbueableMaceItem.java) — `items/weapons/maces/ImbueableMaceItem.java`
 - [`PresetImbueMaceItem.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/PresetImbueMaceItem.java) — `items/weapons/maces/PresetImbueMaceItem.java`
 - [`PresetImbueMaceStaffItem.java`](https://github.com/AceTheEldritchKing/Aces_Spell_Utils/blob/a0b2f4c2fcfa938c8e47239279c77c2ef82647ac/src/main/java/net/acetheeldritchking/aces_spell_utils/items/weapons/maces/PresetImbueMaceStaffItem.java) — `items/weapons/maces/PresetImbueMaceStaffItem.java`
 
@@ -17,7 +18,19 @@ Pin oficial: `AceTheEldritchKing/Aces_Spell_Utils@a0b2f4c2fcfa938c8e47239279c77c
 
 ## Fluxo causal, estado e parâmetros
 
-`MaceCastingItem extends MaceItem` adiciona ao item o componente Iron's `ComponentRegistry.CASTING_IMPLEMENT`, e a regra de animação de re-equipamento observa mudança de slot. `MaceStaffItem` estende a base, marca `isEnchantable` verdadeiro e valor de enchantment 20. `ImbueableMaceStaffItem` inicializa um `ISpellContainer.create(1, true, false)` em stack de mace-staff sem container. `ActiveAndPassiveAbilityMaceItem` expõe cooldowns ativos/passivos default 0. Outras subclasses na família compõem opções de mace mágica, imbue e presets, não spells registrados.
+| Classe da família (9) | Contrato local observado |
+|---|---|
+| `ExtendedMaceItem extends MaceItem` | `createAttributes(IronsWeaponTier)` constrói ATTACK_DAMAGE=tier.damage e ATTACK_SPEED=tier.speed como ADD_VALUE, mais `additionalAttributes`, todos MAINHAND. A factory **não é aplicada automaticamente** pelo construtor que recebe só Properties; a mecânica smash é herdada de vanilla. |
+| `ImbueableMaceItem extends ExtendedMaceItem` | Recebe Tier, mas não o aplica localmente. Stack null retorna; exige ExtendedMaceItem e ausência de container para criar um slot vazio `create(1,true,false)`. |
+| `PresetImbueMaceItem extends ExtendedMaceItem` | Tier também não aplicado localmente; presets lazy dos holders; sem container cria `create(spells.size(),true,false)`, adiciona slots locked=true e grava component imutável. |
+| `MaceCastingItem extends MaceItem` | Adiciona `ComponentRegistry.CASTING_IMPLEMENT=Unit.INSTANCE` às Properties. `shouldCauseReequipAnimation` retorna **apenas slotChanged**. |
+| `MaceStaffItem extends MaceCastingItem` | `isEnchantable=true`, enchantmentValue **20**, `hasCustomRendering=false`. |
+| `ImbueableMaceStaffItem extends MaceStaffItem` | Null retorna; exige MaceStaffItem e ausência de container para um slot vazio `create(1,true,false)`. |
+| `PresetImbueMaceStaffItem extends MaceStaffItem` | Presets lazy, capacidade `spells.size()`, wheel=true, mustEquip=false, slots locked=true e component imutável. |
+| `ActiveAndPassiveAbilityMaceItem extends ImbueableMaceItem` | Herda o slot vazio; getters de cooldown ativo/passivo **0**, usados no tooltip. |
+| `ActiveAndPassiveAbilityMagicMaceItem extends PresetImbueMaceItem` | Herda presets; mesmos getters **0** e tooltip. |
+
+Nas duas variantes active/passive, Shift mostra passivo/.desc, senão Alt mostra ativo/.desc2; não há `use`, `hurtEnemy`, proc ou cooldown executado por esses métodos. Presets resolvem a lista uma vez no singleton Item e descartam os holders; inicializadores retornam para null e preservam containers existentes. Container e marcador de casting são contratos distintos: ExtendedMace/ImbueableMace/PresetImbueMace não adicionam CASTING_IMPLEMENT localmente. Não há mace de exemplo registrado no `ExampleItemRegistry` desta revisão para atribuir dano, presets ou habilidades concretas a estas bases.
 
 ## Targeting, geometria, custos e duração
 

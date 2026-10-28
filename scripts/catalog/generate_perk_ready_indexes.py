@@ -7,7 +7,9 @@ Run without flags to update all INDEX.md, then --check to verify consistency.
 """
 from __future__ import annotations
 import argparse
+import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -25,26 +27,144 @@ def bar(done: int, total: int) -> str:
     return ("█" * count + "░" * (20 - count) +
             (f" {100 * done / total:.1f}%" if total else " — não determinado"))
 
+def canonical_relative_posix(relative: object) -> bool:
+    """Reject aliases so one source file cannot inflate an inspected-file count."""
+    return (isinstance(relative, str) and bool(relative)
+            and "\\" not in relative and "\x00" not in relative
+            and ":" not in relative
+            and all(part not in {"", ".", ".."} for part in relative.split("/")))
+
+
+def provider_evidence(provider: str, relative: str, suffix: str) -> Path:
+    """Resolve a local closure artifact without escaping its provider."""
+    if (not canonical_relative_posix(relative)
+            or not relative.startswith(provider + "/")
+            or not relative.endswith(suffix)):
+        raise ValueError("unsafe alphabetical evidence path")
+    path = (ROOT / relative).resolve()
+    if not path.is_relative_to((ROOT / provider).resolve()) or not path.is_file():
+        raise ValueError("missing alphabetical evidence artifact")
+    return path
+
+
+def source_catalog_scope(item: dict, cards: list[Path]) -> None:
+    """Check a frozen source catalog without certifying perks or a binary build."""
+    provider = item["provider"]
+    revision = item.get("source_revision")
+    if (not isinstance(revision, str)
+            or not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@[0-9a-f]{40}", revision)
+            or not isinstance(item.get("version"), str) or not item["version"].strip()
+            or not isinstance(item.get("artifact_sha1"), str)
+            or not re.fullmatch(r"[0-9a-f]{40}", item["artifact_sha1"])
+            or item.get("physical_qa") != "NOT_TESTED"
+            or item.get("mutating_hook") != "NOT_VERIFIED"):
+        raise ValueError("source catalog closure lacks bounded identity or QA limits")
+    evidence = provider_evidence(provider, item.get("evidence"), ".md")
+    facts = set(evidence.read_text(encoding="utf8").splitlines())
+    if not all(token in facts for token in (
+            "CATALOG_SOURCE_SCOPE_ONLY", revision,
+            "version=" + item["version"], "artifact_sha1=" + item["artifact_sha1"],
+            "physical_qa=NOT_TESTED", "mutating_hook=NOT_VERIFIED")):
+        raise ValueError("source catalog proof lacks explicit source-only limits")
+    manifest = json.loads(provider_evidence(
+        provider, item.get("catalog_manifest"), ".json").read_text(encoding="utf8"),
+        object_pairs_hook=qa._unique_pairs)
+    if (not isinstance(manifest, dict)
+            or type(manifest.get("schema_version")) is not int
+            or manifest["schema_version"] != 1
+            or manifest.get("source_revision") != revision
+            or manifest.get("version") != item["version"]
+            or manifest.get("artifact_sha1") != item["artifact_sha1"]):
+        raise ValueError("source catalog manifest identity mismatch")
+    if (manifest.get("claim_scope") != "CATALOG_SOURCE_SCOPE_ONLY"
+            or manifest.get("physical_qa") != "NOT_TESTED"
+            or manifest.get("mutating_hook") != "NOT_VERIFIED"):
+        raise ValueError("source catalog manifest lacks explicit source-only limits")
+    hashes = manifest.get("cards")
+    actual = {p.relative_to(ROOT).as_posix() for p in cards
+              if ROOT / provider in p.parents}
+    if not isinstance(hashes, dict) or not hashes or set(hashes) != actual:
+        raise ValueError("source catalog closure does not cover exactly the detected cards")
+    for relative, expected in hashes.items():
+        path = provider_evidence(provider, relative, ".md")
+        data = path.read_bytes()
+        if (not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected)
+                or hashlib.sha256(data).hexdigest() != expected):
+            raise ValueError("source catalog card changed")
+    objects = manifest.get("catalog_objects")
+    aggregates = manifest.get("aggregates")
+    if (not isinstance(objects, dict) or not objects
+            or not all(isinstance(key, str) and key.strip() for key in objects)
+            or not all(isinstance(value, str) for value in objects.values())
+            or set(objects.values()) != actual
+            or len(objects) != len(actual)
+            or not isinstance(aggregates, dict)
+            or not all(isinstance(key, str) and key.strip() for key in aggregates)
+            or set(objects) & set(aggregates)):
+        raise ValueError("source catalog object/aggregate crosswalk is incomplete")
+    for aggregate in aggregates.values():
+        if (not isinstance(aggregate, dict)
+                or not isinstance(aggregate.get("reason"), str)
+                or len(aggregate["reason"].strip()) < 18):
+            raise ValueError("source catalog aggregate needs a bounded rationale")
+        provider_evidence(provider, aggregate.get("evidence"), ".md")
+    files = manifest.get("source_files")
+    if (not isinstance(files, list) or not files
+            or type(manifest.get("source_file_count")) is not int
+            or manifest.get("source_file_count") != len(files)
+            or type(manifest.get("java_file_count")) is not int
+            or manifest.get("java_file_count") != sum(
+                isinstance(source, dict) and isinstance(source.get("path"), str)
+                and source["path"].endswith(".java")
+                for source in files)):
+        raise ValueError("source catalog inspected-file manifest is empty")
+    seen = set()
+    referenced = set()
+    catalog_keys = objects.keys() | aggregates.keys()
+    for source in files:
+        relative = source.get("path") if isinstance(source, dict) else None
+        refs = source.get("catalog_refs") if isinstance(source, dict) else None
+        if (not canonical_relative_posix(relative)
+                or relative in seen
+                or not isinstance(source.get("sha256"), str)
+                or not re.fullmatch(r"[0-9a-f]{64}", source["sha256"])
+                or not isinstance(refs, list) or not refs
+                or not all(isinstance(ref, str) and ref in catalog_keys
+                           for ref in refs)):
+            raise ValueError("invalid or unmapped inspected source file")
+        seen.add(relative)
+        referenced.update(refs)
+    if not objects.keys() <= referenced:
+        raise ValueError("source catalog objects lack inspected source references")
+
+
 def alphabetical_scope(mods: list[Path], cards: list[Path]) -> dict:
     """Verified alphabetical triage; never imply perk-ready from semantic closure."""
     path = ROOT.parent / "meta/ALPHABETICAL-CATALOG-STATUS.json"
     if not path.is_file():
         return {"completed_prefix": [], "next_provider": None}
-    doc = json.loads(path.read_text(encoding="utf8"))
-    if doc.get("schema_version") != 1 or doc.get("order") != "provider_directory_name_ascending":
+    doc = json.loads(path.read_text(encoding="utf8"), object_pairs_hook=qa._unique_pairs)
+    if (not isinstance(doc, dict) or type(doc.get("schema_version")) is not int
+            or doc["schema_version"] != 1
+            or doc.get("order") != "provider_directory_name_ascending"):
         raise ValueError("invalid alphabetical catalog ledger schema")
     entries = doc.get("completed_prefix")
     names = [p.name for p in mods]
-    if not isinstance(entries, list) or len(entries) > len(names):
+    if (not isinstance(entries, list) or len(entries) > len(names)
+            or not all(isinstance(item, dict) for item in entries)):
         raise ValueError("invalid completed alphabetical prefix")
     if [x.get("provider") for x in entries] != names[:len(entries)]:
         raise ValueError("alphabetical catalog entries must be a contiguous provider prefix")
     if doc.get("next_provider") != (names[len(entries)] if len(entries) < len(names) else None):
         raise ValueError("next provider is not the next alphabetical entry")
     for item in entries:
+        if item.get("state") == "SOURCE_VERSION_CATALOG_CLOSED":
+            source_catalog_scope(item, cards)
+            continue
         mod = ROOT / item["provider"]
         evidence = item.get("evidence")
         if (item.get("state") != "NONMAGICAL_SCOPE_CLOSED"
+                or type(item.get("owned_magic_actions")) is not int
                 or item.get("owned_magic_actions") != 0
                 or evidence != item["provider"] + "/README.md"
                 or any(mod in card.parents for card in cards)):
@@ -62,7 +182,7 @@ def alphabetical_scope(mods: list[Path], cards: list[Path]) -> dict:
 
 
 def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
-                    ledger: dict) -> str:
+                    ledger: dict, *, alphabetical: dict | None = None) -> str:
     parts = folder.relative_to(ROOT).parts
     mod = ROOT / parts[0]
     group = sorted(p for p in cards if folder in p.parents)
@@ -79,14 +199,27 @@ def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
         "não equivale ao progresso total do mod.", "",
     ]
     if folder == mod:
-        alpha = alphabetical_scope(sorted(p for p in ROOT.iterdir() if p.is_dir()), cards)
+        alpha = (alphabetical if alphabetical is not None else
+                 alphabetical_scope(sorted(p for p in ROOT.iterdir() if p.is_dir()), cards))
         closed = {item["provider"]: item for item in alpha["completed_prefix"]}
         if mod.name in closed:
-            rows += [
-                "**Catalogação semântica (independente da homologação de perks):** "
-                "✅ escopo encerrado: 0 feitiços, 0 rituais e 0 habilidades mágicas "
-                "próprias. Apenas apresentação visual; [evidência](README.md).", ""
-            ]
+            item = closed[mod.name]
+            if item["state"] == "NONMAGICAL_SCOPE_CLOSED":
+                rows += [
+                    "**Catalogação semântica (independente da homologação de perks):** "
+                    "✅ escopo encerrado: 0 feitiços, 0 rituais e 0 habilidades mágicas "
+                    "próprias. Apenas apresentação visual; [evidência](README.md).", ""
+                ]
+            else:
+                proof = Path(item["evidence"]).relative_to(mod.name).as_posix()
+                rows += [
+                    "**Catalogação da versão-fonte (independente da homologação de perks):** "
+                    f"✅ {len(group)}/{len(group)} fichas do escopo documentado; "
+                    f"versão {item['version']}. [Fechamento e limites]({proof}). "
+                    "Hooks mutadores e QA físico continuam pendentes.",
+                    f"**Barra do catálogo da versão-fonte:** {TICK}{bar(len(group), len(group))}{TICK}",
+                    ""
+                ]
         elif mod.name == alpha["next_provider"]:
             rows += [
                 "**Fila alfabética:** 🟡 próximo provider a concluir. "
@@ -150,9 +283,12 @@ def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
     ]
     return "\n".join(rows)
 
-def global_index(mods: list[Path], cards: list[Path], ledger: dict) -> str:
-    alpha = alphabetical_scope(mods, cards)
-    closed = {item["provider"] for item in alpha["completed_prefix"]}
+def global_index(mods: list[Path], cards: list[Path], ledger: dict, *,
+                 alphabetical: dict | None = None) -> str:
+    alpha = alphabetical if alphabetical is not None else alphabetical_scope(mods, cards)
+    closed = {item["provider"]: item for item in alpha["completed_prefix"]}
+    nonmagical = sum(item["state"] == "NONMAGICAL_SCOPE_CLOSED" for item in closed.values())
+    source_closed = len(closed) - nonmagical
     next_mod = alpha["next_provider"]
     done = sum(qa.mod_certified(mod, cards, ledger) for mod in mods)
     object_done = sum(qa.certified(card, ledger) for card in cards)
@@ -168,9 +304,11 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict) -> str:
         "mods/sistemas ainda não representados. Objetos ausentes do catálogo "
         "não são presumidos inexistentes.", "",
         f"**Revisão alfabética do catálogo semântico:** {len(closed)}/{len(mods)} "
-        "providers com escopo explicitamente encerrado; nesta fase, "
-        f"{len(closed)} classificado(s) sem ações mágicas próprias. "
+        "providers com escopo explicitamente encerrado: "
+        f"{nonmagical} sem ações mágicas próprias e {source_closed} com catálogo "
+        "da versão-fonte documentado. "
         "Esse contador NÃO equivale a providers perk-ready.",
+        f"**Barra da revisão alfabética:** {TICK}{bar(len(closed), len(mods))}{TICK}",
         f"**Próximo na fila alfabética:** {friendly(next_mod) if next_mod else 'Nenhum'}.", "",
         "| Estado 100% | Mod/provider | Fichas individuais candidatas | "
         "Fichas 100% certificadas | Índice |", "|---|---|---:|---:|---|",
@@ -181,7 +319,9 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict) -> str:
         state = "✅" if qa.mod_certified(mod, cards, ledger) else "⚠️"
         display = friendly(mod.name)
         if mod.name in closed:
-            display += " — ✅ escopo semântico encerrado (0 ações mágicas)"
+            display += (" — ✅ escopo semântico encerrado (0 ações mágicas)"
+                        if closed[mod.name]["state"] == "NONMAGICAL_SCOPE_CLOSED" else
+                        " — ✅ catálogo da versão-fonte documentado")
         elif mod.name == next_mod:
             display += " — 🟡 próximo na fila"
         rows.append(f"| {state} | {display} | "
@@ -208,18 +348,18 @@ def main() -> int:
         result = qa.check()
         ledger = qa.read_ledger(qa.LEDGER)
         dirs, mods, cards = qa.inventory()
+        alpha = alphabetical_scope(mods, cards)
         # Verify the generated alphabetical ledger text as well as the numeric
         # index contract, so catalog status cannot be silently hand-edited.
-        expected = global_index(mods, cards, ledger)
+        expected = global_index(mods, cards, ledger, alphabetical=alpha)
         if (ROOT / "INDEX.md").read_text(encoding="utf8") != expected:
             result["problems"].append("global alphabetical catalog status drift")
-        alpha = alphabetical_scope(mods, cards)
         watched = {item["provider"] for item in alpha["completed_prefix"]}
         if alpha["next_provider"]:
             watched.add(alpha["next_provider"])
         for name in watched:
             folder = ROOT / name
-            expected_mod = directory_index(folder, dirs, cards, ledger)
+            expected_mod = directory_index(folder, dirs, cards, ledger, alphabetical=alpha)
             if (folder / "INDEX.md").read_text(encoding="utf8") != expected_mod:
                 result["problems"].append("provider alphabetical catalog status drift: " + name)
         print(f"INDEX CHECK: {result['expected_indexes']} indexes, "
@@ -228,15 +368,18 @@ def main() -> int:
         return int(bool(result["problems"]))
     ledger = qa.read_ledger(qa.LEDGER)
     dirs, mods, cards = qa.inventory()
+    # Freeze validation for this invocation only: rendering changes INDEX.md,
+    # while a subsequent invocation must recheck every proof and card hash.
+    alpha = alphabetical_scope(mods, cards)
     changed = 0
     for folder in dirs:
         dest = folder / "INDEX.md"
-        data = directory_index(folder, dirs, cards, ledger)
+        data = directory_index(folder, dirs, cards, ledger, alphabetical=alpha)
         if not dest.is_file() or dest.read_text(encoding="utf8") != data:
             dest.write_text(data, encoding="utf8")
             changed += 1
     dest = ROOT / "INDEX.md"
-    data = global_index(mods, cards, ledger)
+    data = global_index(mods, cards, ledger, alphabetical=alpha)
     if not dest.is_file() or dest.read_text(encoding="utf8") != data:
         dest.write_text(data, encoding="utf8")
         changed += 1
