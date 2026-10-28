@@ -2,7 +2,7 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/111.**
+**Homologadas para perks (somente fichas detectadas): 0/115.**
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
@@ -92,6 +92,7 @@
 | ⚠️ | Technomancy | [schools/technomancy.md](schools/technomancy.md) |
 | ⚠️ | Active Passive Swords | [systems/active-passive-swords.md](systems/active-passive-swords.md) |
 | ⚠️ | Animated Spellcasting Mobs | [systems/animated-spellcasting-mobs.md](systems/animated-spellcasting-mobs.md) |
+| ⚠️ | Asutils Casting Unlock Helpers | [systems/asutils-casting-unlock-helpers.md](systems/asutils-casting-unlock-helpers.md) |
 | ⚠️ | Boss Phases Music | [systems/boss-phases-music.md](systems/boss-phases-music.md) |
 | ⚠️ | Domain Entity Runtime | [systems/domain-entity-runtime.md](systems/domain-entity-runtime.md) |
 | ⚠️ | Imbue Curios | [systems/imbue-curios.md](systems/imbue-curios.md) |
@@ -101,7 +102,10 @@
 | ⚠️ | Magic Gun Casting | [systems/magic-gun-casting.md](systems/magic-gun-casting.md) |
 | ⚠️ | Passive Ability Spellbooks | [systems/passive-ability-spellbooks.md](systems/passive-ability-spellbooks.md) |
 | ⚠️ | Passive Cooldown Curios | [systems/passive-cooldown-curios.md](systems/passive-cooldown-curios.md) |
+| ⚠️ | Roar Command Visual Triggers | [systems/roar-command-visual-triggers.md](systems/roar-command-visual-triggers.md) |
+| ⚠️ | Spell Animation Holders | [systems/spell-animation-holders.md](systems/spell-animation-holders.md) |
 | ⚠️ | Summon Spell Helper | [systems/summon-spell-helper.md](systems/summon-spell-helper.md) |
+| ⚠️ | Unused Summon Template | [systems/unused-summon-template.md](systems/unused-summon-template.md) |
 | ⚠️ | Vfx Client Payloads | [systems/vfx-client-payloads.md](systems/vfx-client-payloads.md) |
 | ⚠️ | Wizard Spell Combo Ai | [systems/wizard-spell-combo-ai.md](systems/wizard-spell-combo-ai.md) |
 | ⚠️ | Entity Type Boss Like Entities | [tags/entity_type-boss_like_entities.md](tags/entity_type-boss_like_entities.md) |
@@ -138,7 +142,7 @@
 | Payloads | 8 | [Abrir índice](payloads/INDEX.md) |
 | Rarities | 8 | [Abrir índice](rarities/INDEX.md) |
 | Schools | 3 | [Abrir índice](schools/INDEX.md) |
-| Systems | 14 | [Abrir índice](systems/INDEX.md) |
+| Systems | 18 | [Abrir índice](systems/INDEX.md) |
 | Tags | 14 | [Abrir índice](tags/INDEX.md) |
 | Vfx Runtime | 5 | [Abrir índice](vfx-runtime/INDEX.md) |
 

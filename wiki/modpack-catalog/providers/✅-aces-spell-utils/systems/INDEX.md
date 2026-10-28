@@ -2,7 +2,7 @@
 
 > Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
 
-**Homologadas para perks (somente fichas detectadas): 0/14.**
+**Homologadas para perks (somente fichas detectadas): 0/18.**
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
@@ -12,6 +12,7 @@
 |---|---|---|
 | ⚠️ | Active Passive Swords | [ficha/active-passive-swords.md](active-passive-swords.md) |
 | ⚠️ | Animated Spellcasting Mobs | [ficha/animated-spellcasting-mobs.md](animated-spellcasting-mobs.md) |
+| ⚠️ | Asutils Casting Unlock Helpers | [ficha/asutils-casting-unlock-helpers.md](asutils-casting-unlock-helpers.md) |
 | ⚠️ | Boss Phases Music | [ficha/boss-phases-music.md](boss-phases-music.md) |
 | ⚠️ | Domain Entity Runtime | [ficha/domain-entity-runtime.md](domain-entity-runtime.md) |
 | ⚠️ | Imbue Curios | [ficha/imbue-curios.md](imbue-curios.md) |
@@ -21,7 +22,10 @@
 | ⚠️ | Magic Gun Casting | [ficha/magic-gun-casting.md](magic-gun-casting.md) |
 | ⚠️ | Passive Ability Spellbooks | [ficha/passive-ability-spellbooks.md](passive-ability-spellbooks.md) |
 | ⚠️ | Passive Cooldown Curios | [ficha/passive-cooldown-curios.md](passive-cooldown-curios.md) |
+| ⚠️ | Roar Command Visual Triggers | [ficha/roar-command-visual-triggers.md](roar-command-visual-triggers.md) |
+| ⚠️ | Spell Animation Holders | [ficha/spell-animation-holders.md](spell-animation-holders.md) |
 | ⚠️ | Summon Spell Helper | [ficha/summon-spell-helper.md](summon-spell-helper.md) |
+| ⚠️ | Unused Summon Template | [ficha/unused-summon-template.md](unused-summon-template.md) |
 | ⚠️ | Vfx Client Payloads | [ficha/vfx-client-payloads.md](vfx-client-payloads.md) |
 | ⚠️ | Wizard Spell Combo Ai | [ficha/wizard-spell-combo-ai.md](wizard-spell-combo-ai.md) |
 

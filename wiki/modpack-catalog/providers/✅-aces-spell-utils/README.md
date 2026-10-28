@@ -109,7 +109,7 @@ Nenhuma ficha deste lote estabelece paridade compilada de JAR, contrato mutador 
 - O `trail` é VFX com parâmetros de cor e escala, sem autoridade de cast; raridades são enum metadata com cores, sem efeito/perk próprio.
 - O arquivo TOML possui cinco opções comuns; dois nomes usam *blacklist* enquanto o consumidor usa whitelist, e `Refinement victory factor` usa `define(1.5D)` sem validação explícita do mínimo sugerido pelo comentário.
 
-**Índice atual do provider:** `0/111` fichas candidatas com prova source pinada; **0 certificados estáticos strict**. A categoria *candidata* mede documentação individual, não que tags/raridades sejam perks implementáveis. **Spell registrations owned: 0**. As **27 entradas de `ExampleItemRegistry`** agora possuem fichas próprias, mais o ArmorMaterial `example_armor` (contado separadamente do item). Seguem pendentes a paridade do JAR instalado, a compatibilidade Iron's 3.16.3 e a QA física; os 8 payloads VFX e 2 mixins possuem agora fichas individuais, **sem** certificação de runtime.
+**Índice atual do provider:** `0/115` fichas candidatas com prova source pinada; **0 certificados estáticos strict**. A categoria *candidata* mede documentação individual, não que tags/raridades sejam perks implementáveis. **Spell registrations owned: 0**. As **27 entradas de `ExampleItemRegistry`** agora possuem fichas próprias, mais o ArmorMaterial `example_armor` (contado separadamente do item). Seguem pendentes a paridade do JAR instalado, a compatibilidade Iron's 3.16.3 e a QA física; os 8 payloads VFX e 2 mixins possuem agora fichas individuais, **sem** certificação de runtime.
 
 **Não mover a fila alfabética:** `ALPHABETICAL-CATALOG-STATUS.json` ainda aponta Ace's Spell Utils como próximo provider não concluído. Não houve mudança no runtime Black Arcana, nas certificações de perk ou nos Stages.
 
@@ -161,3 +161,7 @@ Still fail-closed for runtime integration:
 - cross-mod event ordering with every other installed attribute/proc provider;
 - stable public API guarantees beyond what the publisher/source explicitly exposes;
 - full-modpack client/dedicated-server interaction QA.
+
+## Utilitários adicionais individualizados — 27/10/2026
+
+Mais quatro fichas source-pinned: [ExampleSummonSpell demonstrativo](systems/unused-summon-template.md), [ASUtils (tags, cast type, desbloqueio e fórmula auxiliar)](systems/asutils-casting-unlock-helpers.md), [27 identificadores de AnimationHolder](systems/spell-animation-holders.md) e [comando `/roar` de VFX](systems/roar-command-visual-triggers.md). Incluídas no índice **0/115** de fichas estáticas candidatas (antes 0/111), sem mudar **0 spells standalone**, **0 certificações Ace** nem gates físicos. `ExampleSummonSpell` é **não utilizado** no source, apesar dos parâmetros de demonstração declarados. O denominador global documental passa a **2.195** (certificadas 138). Não declarar provider concluído por esse lote.
