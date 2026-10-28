@@ -86,6 +86,137 @@ class GeneratorTests(unittest.TestCase):
         }), encoding="utf8")
         return card, proof, manifest, status
 
+    def artifact_scope_fixture(self):
+        card, proof, manifest, status = self.source_scope_fixture()
+        state = json.loads(status.read_text())
+        entry = state["completed_prefix"][0]
+        entry.pop("source_revision")
+        entry.update(state="PUBLISHER_ARTIFACT_CATALOG_CLOSED",
+                     artifact_sha256="d" * 64, artifact_size_bytes=64,
+                     installed_artifact_identity="NOT_VERIFIED")
+        data = json.loads(manifest.read_text())
+        for key in ("source_revision", "source_files", "source_file_count", "java_file_count"):
+            data.pop(key)
+        data.update(claim_scope="CATALOG_PUBLISHER_ARTIFACT_SCOPE_ONLY",
+                    artifact_sha256="d" * 64, artifact_size_bytes=64,
+                    installed_artifact_identity="NOT_VERIFIED",
+                    artifact_file_count=1, class_file_count=1,
+                    artifact_files=[{"path": "example/Actor.class", "bytes": 10,
+                                     "sha256": "c" * 64,
+                                     "catalog_refs": ["SYSTEM:air-dash"]}])
+        manifest.write_text(json.dumps(data), encoding="utf8")
+        status.write_text(json.dumps(state), encoding="utf8")
+        fields = ("version", "artifact_sha1", "artifact_sha256", "artifact_size_bytes",
+                  "installed_artifact_identity", "physical_qa", "mutating_hook")
+        proof.write_text("CATALOG_PUBLISHER_ARTIFACT_SCOPE_ONLY\n" +
+                         "\n".join(f"{key}={entry[key]}" for key in fields), encoding="utf8")
+        return card, proof, manifest, status
+
+    def test_publisher_scope_does_not_invent_source_installed_parity_or_perk_certificate(self):
+        self.artifact_scope_fixture()
+        self.render()
+        global_text = (self.root / "INDEX.md").read_text()
+        provider_text = (self.root / "✅-sample/INDEX.md").read_text()
+        self.assertIn("0 com catálogo da versão-fonte documentado e 1 com catálogo do artefato publisher", global_text)
+        self.assertIn("Barra do catálogo do artefato publisher", provider_text)
+        self.assertIn("✅ 1/1 fichas do escopo documentado", provider_text)
+        self.assertIn("Homologadas para perks (somente fichas detectadas): 0/1", provider_text)
+        self.assertIn("⚠️ NÃO HOMOLOGADO como 100%", provider_text)
+        self.assertEqual([], checker.check(self.repo)["problems"])
+
+    def test_publisher_scope_rejects_invalid_entry_identity_and_qa_claims(self):
+        cases = (("artifact_sha1", int("1" * 40)), ("artifact_sha256", int("1" * 64)),
+                 ("artifact_size_bytes", True), ("artifact_size_bytes", 0),
+                 ("artifact_size_bytes", -1), ("version", " "),
+                 ("installed_artifact_identity", "VERIFIED"),
+                 ("physical_qa", "PHYSICALLY_VERIFIED"),
+                 ("mutating_hook", "VERIFIED_CONTRACT"),
+                 ("source_revision", "example/Source@" + "a" * 40))
+        for key, value in cases:
+            with self.subTest(key=key, value=value):
+                _, _, _, status = self.artifact_scope_fixture()
+                data = json.loads(status.read_text())
+                data["completed_prefix"][0][key] = value
+                status.write_text(json.dumps(data))
+                with self.assertRaisesRegex(ValueError, "bounded identity or QA limits"):
+                    self.render()
+
+    def test_publisher_scope_rejects_manifest_identity_and_claim_drift(self):
+        cases = (("artifact_sha1", "e" * 40), ("artifact_sha256", "e" * 64),
+                 ("artifact_size_bytes", True), ("artifact_size_bytes", 65),
+                 ("schema_version", True), ("version", "other"),
+                 ("claim_scope", "CATALOG_SOURCE_SCOPE_ONLY"),
+                 ("installed_artifact_identity", "VERIFIED"),
+                 ("physical_qa", "PHYSICALLY_VERIFIED"),
+                 ("mutating_hook", "VERIFIED_CONTRACT"),
+                 ("source_revision", "example/Source@" + "a" * 40))
+        for key, value in cases:
+            with self.subTest(key=key):
+                _, _, manifest, _ = self.artifact_scope_fixture()
+                data = json.loads(manifest.read_text()); data[key] = value
+                manifest.write_text(json.dumps(data))
+                with self.assertRaises(ValueError):
+                    self.render()
+
+    def test_publisher_scope_requires_each_proof_identity_and_limit(self):
+        fields = ("CATALOG_PUBLISHER_ARTIFACT_SCOPE_ONLY", "version=", "artifact_sha1=",
+                  "artifact_sha256=", "artifact_size_bytes=", "installed_artifact_identity=",
+                  "physical_qa=", "mutating_hook=")
+        for field in fields:
+            with self.subTest(field=field):
+                _, proof, _, _ = self.artifact_scope_fixture()
+                proof.write_text("\n".join(line for line in proof.read_text().splitlines()
+                                           if not line.startswith(field)))
+                with self.assertRaisesRegex(ValueError, "proof lacks explicit artifact-only limits"):
+                    self.render()
+
+    def test_publisher_scope_rejects_archive_aliases_unknown_refs_and_member_sizes(self):
+        for change in ("alias", "duplicate", "unmapped", "bool_size", "negative_size",
+                       "missing_size", "numeric_hash", "file_count", "class_count"):
+            with self.subTest(change=change):
+                _, _, manifest, _ = self.artifact_scope_fixture()
+                data = json.loads(manifest.read_text()); member = data["artifact_files"][0]
+                if change == "alias": member["path"] = "example//Actor.class"
+                elif change == "duplicate":
+                    data["artifact_files"] *= 2
+                    data["artifact_file_count"] = data["class_file_count"] = 2
+                elif change == "unmapped": member["catalog_refs"] = ["MISSING:actor"]
+                elif change == "bool_size": member["bytes"] = True
+                elif change == "negative_size": member["bytes"] = -1
+                elif change == "missing_size": member.pop("bytes")
+                elif change == "numeric_hash": member["sha256"] = int("1" * 64)
+                elif change == "file_count": data["artifact_file_count"] = True
+                else: data["class_file_count"] = 0
+                manifest.write_text(json.dumps(data))
+                with self.assertRaises(ValueError): self.render()
+
+    def test_publisher_scope_rejects_changed_or_uncovered_card(self):
+        for change in ("changed", "uncovered"):
+            with self.subTest(change=change):
+                card, _, _, _ = self.artifact_scope_fixture()
+                if change == "changed": card.write_text(card.read_text() + "Behavior changed\n")
+                else: (card.parent / "new.md").write_text("# New object\n")
+                with self.assertRaises(ValueError): self.render()
+
+    def test_publisher_scope_rejects_duplicate_manifest_keys(self):
+        _, _, manifest, _ = self.artifact_scope_fixture()
+        raw = manifest.read_text().replace('"artifact_file_count": 1',
+                                           '"artifact_file_count": 1, "artifact_file_count": 1')
+        manifest.write_text(raw)
+        with self.assertRaisesRegex(ValueError, "duplicate JSON key"):
+            self.render()
+
+    def test_publisher_scope_rejects_contradictory_or_duplicate_proof_markers(self):
+        for line in ("installed_artifact_identity=VERIFIED", "physical_qa=PHYSICALLY_VERIFIED",
+                     "mutating_hook=VERIFIED_CONTRACT", "CATALOG_SOURCE_SCOPE_ONLY",
+                     "source_revision=madeup/Source@" + "a" * 40,
+                     "version=1.0"):
+            with self.subTest(line=line):
+                _, proof, _, _ = self.artifact_scope_fixture()
+                proof.write_text(proof.read_text() + "\n" + line)
+                with self.assertRaises(ValueError):
+                    self.render()
+
     def test_source_scope_closure_does_not_certify_perks_or_call_library_nonmagical(self):
         card, _, _, _ = self.source_scope_fixture()
         self.assertNotIn("technical_perk_dossier", card.read_text())

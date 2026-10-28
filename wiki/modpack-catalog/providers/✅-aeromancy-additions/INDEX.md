@@ -6,6 +6,8 @@
 **Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
+**Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
+
 **Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
 
 | Estado | Objeto / habilidade identificada | Ficha |

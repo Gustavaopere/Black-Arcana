@@ -1,0 +1,50 @@
+name: Acolyte 1.0.3 publisher artifact catalog
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'wiki/modpack-catalog/providers/✅-acolyte/**'
+      - 'docs/qa/acolyte_103_artifact_catalog_audit.py'
+      - 'docs/qa/acolyte_103_artifact_catalog_audit_test.py'
+      - '.github/workflows/acolyte-103-artifact-catalog.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'wiki/modpack-catalog/providers/✅-acolyte/**'
+      - 'docs/qa/acolyte_103_artifact_catalog_audit.py'
+      - 'docs/qa/acolyte_103_artifact_catalog_audit_test.py'
+      - '.github/workflows/acolyte-103-artifact-catalog.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publisher_artifact_catalog:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Synthetic ZIP and manifest regressions
+        run: python3 docs/qa/acolyte_103_artifact_catalog_audit_test.py -v
+      - name: Download the exact publisher artifact
+        run: |
+          mkdir -p build/acolyte-103
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 120 \
+            'https://edge.forgecdn.net/files/8098/233/acolyte-1.0.3.jar' \
+            --output build/acolyte-103/acolyte-1.0.3.jar
+      - name: Verify pinned bytes and every cataloged ZIP member
+        run: |
+          python3 docs/qa/acolyte_103_artifact_catalog_audit.py \
+            --jar build/acolyte-103/acolyte-1.0.3.jar \
+            --manifest 'wiki/modpack-catalog/providers/✅-acolyte/ARTIFACT-CATALOG-MANIFEST-1.0.3.json' \
+            --output build/acolyte-103/evidence.json
+      - name: Upload bounded JSON evidence only
+        uses: actions/upload-artifact@v7
+        with:
+          name: acolyte-103-publisher-catalog
+          path: build/acolyte-103/evidence.json
+          if-no-files-found: error
+          retention-days: 14
