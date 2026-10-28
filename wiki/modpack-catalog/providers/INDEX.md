@@ -3,8 +3,8 @@
 > Os prefixos ✅ antigos significam inventário histórico, não 100% técnico para perks.
 
 **Mods com escopo integral certificado: 0/164.**
-**Fichas com contrato técnico estático certificado: 138/2148.**
-**Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 6.4%`
+**Fichas com contrato técnico estático certificado: 138/2176.**
+**Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 6.3%`
 **Progresso global confirmado:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 **Escopo:** pastas atuais de providers; a modlist pode conter outros mods/sistemas ainda não representados. Objetos ausentes do catálogo não são presumidos inexistentes.
 
@@ -14,7 +14,7 @@
 | Estado 100% | Mod/provider | Fichas individuais candidatas | Fichas 100% certificadas | Índice |
 |---|---|---:|---:|---|
 | ⚠️ | A Good Place — ✅ escopo semântico encerrado (0 ações mágicas) | — | 0 | [Ver fichas](✅-a-good-place/INDEX.md) |
-| ⚠️ | Aces Spell Utils — 🟡 próximo na fila | 68 | 0 | [Ver fichas](✅-aces-spell-utils/INDEX.md) |
+| ⚠️ | Aces Spell Utils — 🟡 próximo na fila | 96 | 0 | [Ver fichas](✅-aces-spell-utils/INDEX.md) |
 | ⚠️ | Acolyte | — | 0 | [Ver fichas](✅-acolyte/INDEX.md) |
 | ⚠️ | Aeromancy Additions | 10 | 0 | [Ver fichas](✅-aeromancy-additions/INDEX.md) |
 | ⚠️ | Alexs Caves Continued | 8 | 0 | [Ver fichas](✅-alexs-caves-continued/INDEX.md) |
