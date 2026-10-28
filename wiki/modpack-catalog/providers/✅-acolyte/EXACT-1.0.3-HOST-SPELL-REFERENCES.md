@@ -88,6 +88,8 @@ Exact 1.0.3 structural audit found:
 
 ## Result
 
+The current [binary contracts](BINARY-CONTRACTS-1.0.3.md), [six shipped profile cards](profiles/INDEX.md) and [archetype pipeline](systems/archetype-loadout-pipeline.md) now map the publisher's concrete pools, weights, equipment and goal inputs. This closes their static documentation gap; it does not certify effective datapacks, installed artifact identity, host spell success or a universal runtime spell roster.
+
 Acolyte's exact release has **31 explicitly named Iron's spell references** plus dynamic host-selection surfaces, but **0 independent Acolyte spell identities**.
 
 Semantic delta: **+0**.

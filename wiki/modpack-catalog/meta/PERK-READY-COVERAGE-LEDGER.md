@@ -20,7 +20,7 @@ A terceira coluna indica **a situação incremental nesta branch a partir da bas
 |---|---:|---|
 | `✅-a-good-place` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-aces-spell-utils` | 5 | ✅ [Catálogo da versão-fonte 1.2.7.2](../providers/✅-aces-spell-utils/SOURCE-CATALOG-CLOSURE-1.2.7.2.md): 118 fichas / 132 Java / 245 arquivos rastreados, manifesto com hashes; 0 spells standalone. ⚠️ Certificação individual 0/118, paridade de métodos do JAR, Iron's 3.16.3, hooks e QA física pendentes. A coluna 5 é a baseline histórica, não o total atual. |
-| `✅-acolyte` | 2 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
+| `✅-acolyte` | 2 | ✅ [Catálogo do publisher 1.0.3](../providers/✅-acolyte/ARTIFACT-CATALOG-CLOSURE-1.0.3.md): 74 fichas / 359 arquivos / 93 classes; 0 spells próprios, preservando as referências Iron's. ⚠️ Certificação 0/74, identidade instalada, host, hooks e QA física pendentes. A coluna 2 é a baseline histórica. |
 | `✅-aeromancy-additions` | 16 | ✅ 10/10 spells com fichas source-pinned, [matriz de parâmetros, targeting e WORLD SAFETY](../providers/✅-aeromancy-additions/PERK-CAUSAL-ENGINEERING-MATRIX-1.2.8.md); ⚠️ JAR publisher comprovado, **SHA do instalado inválido**, host/config/Survival/QA pendentes; ⛔ perks/adapters não homologadas |
 | `✅-alexs-caves-continued` | 13 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |
 | `✅-alexs-mobs-continued` | 8 | Não auditado em escala para perks; requer conferência de fichas de objetos mágicos |

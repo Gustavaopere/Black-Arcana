@@ -21,7 +21,21 @@
       "evidence": "✅-aces-spell-utils/SOURCE-CATALOG-CLOSURE-1.2.7.2.md",
       "catalog_manifest": "✅-aces-spell-utils/SOURCE-CATALOG-MANIFEST-1.2.7.2.json",
       "note": "118 individual documentation objects mapped to 132 Java / 245 tracked source files; zero standalone spell registrations. Source catalog closure only, no perk certification or physical QA."
+    },
+    {
+      "provider": "✅-acolyte",
+      "state": "PUBLISHER_ARTIFACT_CATALOG_CLOSED",
+      "version": "1.0.3",
+      "artifact_sha1": "ad0abc821f3f8a6573ac19a50970fc1bc46b4275",
+      "artifact_sha256": "73fe745bbb0016fbc00af9ba14c0ecfe0a1d8a7d72a7892557739182b3486256",
+      "artifact_size_bytes": 621837,
+      "installed_artifact_identity": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutating_hook": "NOT_VERIFIED",
+      "evidence": "✅-acolyte/ARTIFACT-CATALOG-CLOSURE-1.0.3.md",
+      "catalog_manifest": "✅-acolyte/ARTIFACT-CATALOG-MANIFEST-1.0.3.json",
+      "note": "74 editorial contracts mapped to all359regularZIPmembers/93classes;110directoriesretained. Publisher-only documentation;0ownspells. Installedbyteequality,mutatorsandphysicalQAunverified."
     }
   ],
-  "next_provider": "✅-acolyte"
+  "next_provider": "✅-aeromancy-additions"
 }

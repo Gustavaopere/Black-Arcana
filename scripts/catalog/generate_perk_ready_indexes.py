@@ -80,17 +80,28 @@ def source_catalog_scope(item: dict, cards: list[Path]) -> None:
             or manifest.get("physical_qa") != "NOT_TESTED"
             or manifest.get("mutating_hook") != "NOT_VERIFIED"):
         raise ValueError("source catalog manifest lacks explicit source-only limits")
+    catalog_manifest_contents(provider, manifest, cards, files_key="source_files",
+                              file_count_key="source_file_count",
+                              class_count_key="java_file_count",
+                              class_suffix=".java", label="source")
+
+
+def catalog_manifest_contents(provider: str, manifest: dict, cards: list[Path], *,
+                              files_key: str, file_count_key: str,
+                              class_count_key: str, class_suffix: str,
+                              label: str) -> None:
+    """Validate a frozen card/member crosswalk without inferring gameplay QA."""
     hashes = manifest.get("cards")
     actual = {p.relative_to(ROOT).as_posix() for p in cards
               if ROOT / provider in p.parents}
     if not isinstance(hashes, dict) or not hashes or set(hashes) != actual:
-        raise ValueError("source catalog closure does not cover exactly the detected cards")
+        raise ValueError(label + " catalog closure does not cover exactly the detected cards")
     for relative, expected in hashes.items():
         path = provider_evidence(provider, relative, ".md")
         data = path.read_bytes()
         if (not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected)
                 or hashlib.sha256(data).hexdigest() != expected):
-            raise ValueError("source catalog card changed")
+            raise ValueError(label + " catalog card changed")
     objects = manifest.get("catalog_objects")
     aggregates = manifest.get("aggregates")
     if (not isinstance(objects, dict) or not objects
@@ -101,23 +112,23 @@ def source_catalog_scope(item: dict, cards: list[Path]) -> None:
             or not isinstance(aggregates, dict)
             or not all(isinstance(key, str) and key.strip() for key in aggregates)
             or set(objects) & set(aggregates)):
-        raise ValueError("source catalog object/aggregate crosswalk is incomplete")
+        raise ValueError(label + " catalog object/aggregate crosswalk is incomplete")
     for aggregate in aggregates.values():
         if (not isinstance(aggregate, dict)
                 or not isinstance(aggregate.get("reason"), str)
                 or len(aggregate["reason"].strip()) < 18):
-            raise ValueError("source catalog aggregate needs a bounded rationale")
+            raise ValueError(label + " catalog aggregate needs a bounded rationale")
         provider_evidence(provider, aggregate.get("evidence"), ".md")
-    files = manifest.get("source_files")
+    files = manifest.get(files_key)
     if (not isinstance(files, list) or not files
-            or type(manifest.get("source_file_count")) is not int
-            or manifest.get("source_file_count") != len(files)
-            or type(manifest.get("java_file_count")) is not int
-            or manifest.get("java_file_count") != sum(
+            or type(manifest.get(file_count_key)) is not int
+            or manifest.get(file_count_key) != len(files)
+            or type(manifest.get(class_count_key)) is not int
+            or manifest.get(class_count_key) != sum(
                 isinstance(source, dict) and isinstance(source.get("path"), str)
-                and source["path"].endswith(".java")
+                and source["path"].endswith(class_suffix)
                 for source in files)):
-        raise ValueError("source catalog inspected-file manifest is empty")
+        raise ValueError(label + " catalog inspected-file manifest is empty")
     seen = set()
     referenced = set()
     catalog_keys = objects.keys() | aggregates.keys()
@@ -131,11 +142,57 @@ def source_catalog_scope(item: dict, cards: list[Path]) -> None:
                 or not isinstance(refs, list) or not refs
                 or not all(isinstance(ref, str) and ref in catalog_keys
                            for ref in refs)):
-            raise ValueError("invalid or unmapped inspected source file")
+            raise ValueError("invalid or unmapped inspected file file")
+        if files_key == "artifact_files" and (type(source.get("bytes")) is not int
+                or source["bytes"] < 0):
+            raise ValueError("invalid artifact member byte count")
         seen.add(relative)
         referenced.update(refs)
     if not objects.keys() <= referenced:
-        raise ValueError("source catalog objects lack inspected source references")
+        raise ValueError(label + " catalog objects lack inspected " + label + " references")
+
+
+def artifact_catalog_scope(item: dict, cards: list[Path]) -> None:
+    """Close a publisher artifact catalog without claiming source or installed parity."""
+    provider = item["provider"]
+    limits = {"installed_artifact_identity": "NOT_VERIFIED",
+              "physical_qa": "NOT_TESTED", "mutating_hook": "NOT_VERIFIED"}
+    if (not isinstance(item.get("version"), str) or not item["version"].strip()
+            or not isinstance(item.get("artifact_sha1"), str)
+            or not re.fullmatch(r"[0-9a-f]{40}", item["artifact_sha1"])
+            or not isinstance(item.get("artifact_sha256"), str)
+            or not re.fullmatch(r"[0-9a-f]{64}", item["artifact_sha256"])
+            or type(item.get("artifact_size_bytes")) is not int
+            or item["artifact_size_bytes"] <= 0
+            or "source_revision" in item
+            or any(item.get(key) != value for key, value in limits.items())):
+        raise ValueError("publisher catalog lacks bounded identity or QA limits")
+    facts = [line.strip() for line in provider_evidence(provider, item.get("evidence"), ".md")
+             .read_text(encoding="utf8").splitlines()]
+    identity = {key: item[key] for key in (
+        "version", "artifact_sha1", "artifact_sha256", "artifact_size_bytes")}
+    if ([line for line in facts if line.startswith("CATALOG_")]
+            != ["CATALOG_PUBLISHER_ARTIFACT_SCOPE_ONLY"]
+            or any(line.startswith("source_revision=") for line in facts)
+            or not all([line for line in facts if line.startswith(key + "=")]
+                       == [f"{key}={value}"] for key, value in (identity | limits).items())):
+        raise ValueError("publisher catalog proof lacks explicit artifact-only limits")
+    manifest = json.loads(provider_evidence(provider, item.get("catalog_manifest"), ".json")
+                          .read_text(encoding="utf8"), object_pairs_hook=qa._unique_pairs)
+    if (not isinstance(manifest, dict)
+            or type(manifest.get("schema_version")) is not int
+            or manifest["schema_version"] != 1
+            or type(manifest.get("artifact_size_bytes")) is not int
+            or any(manifest.get(key) != value for key, value in identity.items())):
+        raise ValueError("publisher catalog manifest identity mismatch")
+    if (manifest.get("claim_scope") != "CATALOG_PUBLISHER_ARTIFACT_SCOPE_ONLY"
+            or "source_revision" in manifest
+            or any(manifest.get(key) != value for key, value in limits.items())):
+        raise ValueError("publisher catalog manifest lacks explicit artifact-only limits")
+    catalog_manifest_contents(provider, manifest, cards, files_key="artifact_files",
+                              file_count_key="artifact_file_count",
+                              class_count_key="class_file_count",
+                              class_suffix=".class", label="publisher")
 
 
 def alphabetical_scope(mods: list[Path], cards: list[Path]) -> dict:
@@ -158,6 +215,9 @@ def alphabetical_scope(mods: list[Path], cards: list[Path]) -> dict:
     if doc.get("next_provider") != (names[len(entries)] if len(entries) < len(names) else None):
         raise ValueError("next provider is not the next alphabetical entry")
     for item in entries:
+        if item.get("state") == "PUBLISHER_ARTIFACT_CATALOG_CLOSED":
+            artifact_catalog_scope(item, cards)
+            continue
         if item.get("state") == "SOURCE_VERSION_CATALOG_CLOSED":
             source_catalog_scope(item, cards)
             continue
@@ -212,12 +272,14 @@ def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
                 ]
             else:
                 proof = Path(item["evidence"]).relative_to(mod.name).as_posix()
+                qualifier = ("da versão-fonte" if item["state"] == "SOURCE_VERSION_CATALOG_CLOSED"
+                             else "do artefato publisher")
                 rows += [
-                    "**Catalogação da versão-fonte (independente da homologação de perks):** "
+                    f"**Catalogação {qualifier} (independente da homologação de perks):** "
                     f"✅ {len(group)}/{len(group)} fichas do escopo documentado; "
                     f"versão {item['version']}. [Fechamento e limites]({proof}). "
                     "Hooks mutadores e QA físico continuam pendentes.",
-                    f"**Barra do catálogo da versão-fonte:** {TICK}{bar(len(group), len(group))}{TICK}",
+                    f"**Barra do catálogo {qualifier}:** {TICK}{bar(len(group), len(group))}{TICK}",
                     ""
                 ]
         elif mod.name == alpha["next_provider"]:
@@ -288,7 +350,10 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict, *,
     alpha = alphabetical if alphabetical is not None else alphabetical_scope(mods, cards)
     closed = {item["provider"]: item for item in alpha["completed_prefix"]}
     nonmagical = sum(item["state"] == "NONMAGICAL_SCOPE_CLOSED" for item in closed.values())
-    source_closed = len(closed) - nonmagical
+    source_closed = sum(item["state"] == "SOURCE_VERSION_CATALOG_CLOSED"
+                        for item in closed.values())
+    artifact_closed = sum(item["state"] == "PUBLISHER_ARTIFACT_CATALOG_CLOSED"
+                          for item in closed.values())
     next_mod = alpha["next_provider"]
     done = sum(qa.mod_certified(mod, cards, ledger) for mod in mods)
     object_done = sum(qa.certified(card, ledger) for card in cards)
@@ -306,7 +371,9 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict, *,
         f"**Revisão alfabética do catálogo semântico:** {len(closed)}/{len(mods)} "
         "providers com escopo explicitamente encerrado: "
         f"{nonmagical} sem ações mágicas próprias e {source_closed} com catálogo "
-        "da versão-fonte documentado. "
+        "da versão-fonte documentado"
+        + (f" e {artifact_closed} com catálogo do artefato publisher documentado"
+           if artifact_closed else "") + ". "
         "Esse contador NÃO equivale a providers perk-ready.",
         f"**Barra da revisão alfabética:** {TICK}{bar(len(closed), len(mods))}{TICK}",
         f"**Próximo na fila alfabética:** {friendly(next_mod) if next_mod else 'Nenhum'}.", "",
@@ -321,7 +388,9 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict, *,
         if mod.name in closed:
             display += (" — ✅ escopo semântico encerrado (0 ações mágicas)"
                         if closed[mod.name]["state"] == "NONMAGICAL_SCOPE_CLOSED" else
-                        " — ✅ catálogo da versão-fonte documentado")
+                        " — ✅ catálogo da versão-fonte documentado"
+                        if closed[mod.name]["state"] == "SOURCE_VERSION_CATALOG_CLOSED" else
+                        " — ✅ catálogo do artefato publisher documentado")
         elif mod.name == next_mod:
             display += " — 🟡 próximo na fila"
         rows.append(f"| {state} | {display} | "
