@@ -30,7 +30,6 @@
 | ⚠️ | Technomancy Spell Power | [ficha/technomancy_spell_power.md](technomancy_spell_power.md) |
 | ⚠️ | Vigor Reap | [ficha/vigor_reap.md](vigor_reap.md) |
 
-
 ## Critério do ✅
 
 Somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) podem receber ✅, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido.
