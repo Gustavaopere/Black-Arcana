@@ -1,0 +1,60 @@
+name: Exact Alshanex 4.0.3 + Iron's 3.16.3 Megido entity ABI
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alshanex-403-megido-dual-entity-abi.yml'
+      - 'docs/qa/alshanex_403_megido_entity_dual_provider.py'
+      - 'docs/qa/alshanex_403_megido_entity_dual_provider_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alshanex-403-megido-dual-entity-abi.yml'
+      - 'docs/qa/alshanex_403_megido_entity_dual_provider.py'
+      - 'docs/qa/alshanex_403_megido_entity_dual_provider_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact_dual_entity_abi:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic fail-closed clean-room tests
+        run: python3 docs/qa/alshanex_403_megido_entity_dual_provider_test.py -v
+      - name: Obtain exact pinned publisher artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/megido-dual
+          curl --fail --silent --show-error --location --retry 3 --retry-all-errors \
+            --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/alshanexs-familiars-1171602/8675568/alshanexs-familiars-1171602-8675568.jar' \
+            --output build/megido-dual/alshanex.jar
+          curl --fail --silent --show-error --location --retry 3 --retry-all-errors \
+            --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/irons-spells-n-spellbooks-855414/8680204/irons-spells-n-spellbooks-855414-8680204.jar' \
+            --output build/megido-dual/irons.jar
+          echo 'e5051c2385a426d05bf203ba8081a23d891f6686  build/megido-dual/alshanex.jar' | sha1sum --check
+          echo '017fd8140c477f9ae602cf95594f1c23bef1d6e3  build/megido-dual/irons.jar' | sha1sum --check
+      - name: Verify entity classes and inspect only bounded method/ABI metadata
+        run: |
+          python3 docs/qa/alshanex_403_megido_entity_dual_provider.py \
+            --alshanex build/megido-dual/alshanex.jar \
+            --irons build/megido-dual/irons.jar \
+            --output build/megido-dual/evidence.json
+      - name: Upload evidence metadata only, never third-party archives
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alshanex-403-irons-3163-megido-entity-abi
+          path: build/megido-dual/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
