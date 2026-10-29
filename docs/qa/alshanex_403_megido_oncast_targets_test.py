@@ -58,6 +58,23 @@ class TestInventory(unittest.TestCase):
                           "4: invokedynamic #2 // InvokeDynamic #0:foo:()V")
         self.assertEqual(inventory(z)["unresolved_invoke_count"],1)
 
+    def test_targeted_descriptor_observed(self):
+        a = inventory(FIXTURE)
+        self.assertIn(
+            {"owner":"UNQUALIFIED_OWNER", "method":"getMaxConnections",
+             "jvm_descriptor":"(ILnet/minecraft/world/entity/LivingEntity;)I", "count":1},
+            a["targeted_jvm_signatures"])
+
+    def test_constructor_descriptor_is_recorded_without_body(self):
+        fixture = FIXTURE.replace(
+            "4: invokestatic #2 // Method net/minecraft/world/entity/EntitySelector.NO_SPECTATORS:()V",
+            '4: invokespecial #2 // Method net/alshanex/alshanex_familiars/entity/misc/MegidoEntity."<init>":(Lnet/minecraft/world/level/Level;)V')
+        a = inventory(fixture)
+        self.assertIn(
+            {"owner":"net/alshanex/alshanex_familiars/entity/misc/MegidoEntity",
+             "method":"<init>", "jvm_descriptor":"(Lnet/minecraft/world/level/Level;)V", "count":1},
+            a["targeted_jvm_signatures"])
+
     def test_missing_method_rejected(self):
         z=FIXTURE.replace("getRadius();","radiusOther();")
         with self.assertRaisesRegex(ValueError,"getter"):

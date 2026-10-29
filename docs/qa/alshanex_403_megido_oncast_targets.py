@@ -19,6 +19,8 @@ HEADER = re.compile(r"^\s{2}(?:public|private|protected)\s+[^;]*\b([A-Za-z_$][\w
 INSTR = re.compile(r"^\s*\d+:\s+([a-z][a-z0-9_]*)\b(.*)$")
 REF = re.compile(r"//\s+(?:Method|InterfaceMethod)\s+([^:\s]+):(\([^)]*\)\S+)")
 GETTERS = {"getRange", "getRadius", "getDamage", "getMaxConnections"}
+SIGNATURE_TARGETS = {"getMaxConnections", "getRange", "getRadius", "getDamage", "<init>",
+                     "setDamage", "setPos", "addFreshEntity", "getTarget"}
 
 
 def inventory(javap_text):
@@ -60,6 +62,7 @@ def inventory(javap_text):
         raise ValueError("invalid/oversized onCast body")
 
     calls = collections.Counter()
+    signatures_used = collections.Counter()
     unresolved = 0
     for op, arg in ops:
         if not op.startswith("invoke"):
@@ -76,6 +79,8 @@ def inventory(javap_text):
         if "/" in name or len(name) > 100 or len(owner) > 200:
             raise ValueError("malformed call reference")
         calls[(owner, name)] += 1
+        if name.strip('"') in SIGNATURE_TARGETS:
+            signatures_used[(owner, name.strip('"'), descriptor)] += 1
     if len(calls) > 100 or unresolved > 200:
         raise ValueError("too many call targets")
 
@@ -84,6 +89,8 @@ def inventory(javap_text):
     alloc = sum(op in ("new", "anewarray", "newarray", "multianewarray") for op, _ in ops)
     direct = [{"symbol_owner": o, "symbol_method": m, "count": n}
               for (o, m), n in sorted(calls.items())]
+    signatures = [{"owner": o, "method": m, "jvm_descriptor": d, "count": n}
+                  for (o, m, d), n in sorted(signatures_used.items())]
     return {
         "on_cast_abi": signatures["onCast"][0],
         "on_cast_instruction_count": len(ops),
@@ -92,6 +99,7 @@ def inventory(javap_text):
         "on_cast_allocation_instruction_count": alloc,
         "unresolved_invoke_count": unresolved,
         "direct_method_references": direct,
+        "targeted_jvm_signatures": signatures,
         "external_target_processing_effect": "NOT_VERIFIED",
         "selected_target_count": "NOT_VERIFIED",
         "execution_bound": "NOT_VERIFIED",
@@ -129,6 +137,8 @@ def main():
           "goto:", contract["on_cast_goto_instruction_count"], "allocations:", contract["on_cast_allocation_instruction_count"])
     for row in contract["direct_method_references"]:
         print("SYMBOL", row["symbol_owner"], row["symbol_method"], row["count"])
+    for row in contract["targeted_jvm_signatures"]:
+        print("ABI", row["owner"], row["method"], row["jvm_descriptor"], row["count"])
     print("No disassembly, third-party method body, or assets saved")
 
 
