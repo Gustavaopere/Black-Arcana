@@ -29,3 +29,7 @@ O método `getUniqueInfo` já havia sido verificado como outro caller direto de 
 4. Exigir testes reais de cliente/servidor modpack, alvos e proteções. **CI de auditoria de JAR não é QA física.**
 
 **Sem promoção:** `mutating_hook=NOT_VERIFIED`, `COMPLETE_PERK_READY=0`, `physical_qa=NOT_TESTED`, `7 spells + 11 rituais = 18 identidades` inalterados. O runtime permanece propriedade do Alshanex/Iron's; Black Arcana não relança efeitos ou liquida custos em paralelo, RPG Skill Tree só fornece progressão através de contrato real.
+
+## Contratos numéricos verificados posteriormente — 29/10/2026
+
+A [auditoria de getDamage/getMaxConnections](EXACT-4.0.3-MEGIDO-DAMAGE-CONNECTIONS-20261029.md) demonstrou um retorno literal **`Integer.MAX_VALUE`** no getter `getMaxConnections`; `getDamage` chama `getSpellPower`, com fórmula/equivalência ainda **`NOT_VERIFIED`**. Esses fatos complementam a evidência de callsites, mas **não** certificam chain count, dano final, valor de AOE/range, custo ou hook seguro.
