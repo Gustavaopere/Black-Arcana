@@ -31,3 +31,7 @@ Megido apresenta **fronteira entre dois providers**: Alshanex detém `MegidoSpel
 Permanecem `NOT_VERIFIED`: comportamento de `MegidoEntity` e `BallLightning`, consumidores finais de `Integer.MAX_VALUE`, limites de target/iterations, deduplicação, cooldown, cost, API de mutação, server authority e proteção de mundo. Próximo exame deve usar JAR físico **das entidades e do Iron's instalado**, não extrapolar de calls simbólicos.
 
 `COMPLETE_PERK_READY=0`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`. Identidades Alshanex: **7 spells + 11 rituais = 18**, sem mudança de denominador, stage ou índice alfabético.
+
+## Complemento posterior — entidades dos dois JARs físicos (29/10/2026)
+
+O [relatório de lifecycle cruzado](EXACT-4.0.3-MEGIDO-DUAL-ENTITY-LIFECYCLE-20261029.md) corrigiu a lacuna de **ausência de inspeção do JAR Iron's**: o Iron's **3.16.3** SHA-1 `017fd8140c477f9ae602cf95594f1c23bef1d6e3` agora foi diretamente auditado junto com o Alshanex 4.0.3. São provadas ABIs e referências simbólicas de `BallLightning` e `MegidoEntity`, **não** a execução de um cast físico nem a cardinalidade de alvos. Permanecem gates de mutação e multiplayer fail-closed.
