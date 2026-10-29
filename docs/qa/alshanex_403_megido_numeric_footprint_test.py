@@ -65,6 +65,24 @@ class TestFootprints(unittest.TestCase):
         self.assertEqual(obj["direct_invocation_owner_group_counts"], {"irons_spellbooks":1})
         self.assertEqual(obj["branch_op_count"], 1)
 
+    def test_exact_direct_integer_literals(self):
+        from alshanex_403_megido_numeric_footprint import direct_integer_return
+        self.assertEqual(direct_integer_return([("iconst_3", ""), ("ireturn", "")]), 3)
+        self.assertEqual(direct_integer_return([("iconst_m1", ""), ("ireturn", "")]), -1)
+        self.assertEqual(direct_integer_return([("bipush", "12"), ("ireturn", "")]), 12)
+        self.assertEqual(direct_integer_return([("sipush", "300"), ("ireturn", "")]), 300)
+        self.assertEqual(direct_integer_return([("ldc", "#7 // int 2000"), ("ireturn", "")]), 2000)
+        self.assertIsNone(direct_integer_return([("iload_1", ""), ("ireturn", "")]))
+        self.assertIsNone(direct_integer_return([("iconst_2", ""), ("iadd", ""), ("ireturn", "")]))
+
+    def test_unqualified_method_target_does_not_imply_same_class_owner(self):
+        sample = DAMAGE.replace(
+            "3: invokevirtual #27 // Method net/minecraft/world/entity/LivingEntity.getHealth:()F",
+            "3: invokevirtual #27 // Method getDamageFromStats:(ILnet/minecraft/world/entity/LivingEntity;)F")
+        result=inspect("public class X {\n"+sample+CONNECT+"}\n")["getDamage"]
+        self.assertEqual(result["direct_invocation_owner_group_counts"], {"unqualified_owner_not_verified":1})
+        self.assertEqual(result["unqualified_direct_target_method_names"], ["getDamageFromStats"])
+
     def test_reject_hash_before_javap(self):
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/"bad.jar"

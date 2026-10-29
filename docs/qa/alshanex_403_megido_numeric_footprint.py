@@ -25,6 +25,27 @@ FLOAT_ARITH = {"fadd", "fsub", "fmul", "fdiv", "frem", "fneg"}
 INT_ARITH = {"iadd", "isub", "imul", "idiv", "irem", "ineg"}
 CONVERSIONS = {"f2d", "f2i", "f2l", "d2f", "i2f", "l2f", "i2d", "d2i"}
 CONSTANTS = {"ldc", "ldc_w", "bipush", "sipush", "aconst_null"}
+INTEGER_LDC = re.compile(r"^#\d+\s+// int\s+(-?\d+)\s*$")
+
+
+def direct_integer_return(instructions):
+    """Only two-instruction integer constant plus ireturn is certifiable."""
+    if len(instructions) != 2 or instructions[-1][0] != "ireturn":
+        return None
+    opcode, arg = instructions[0]
+    if opcode.startswith("iconst_") and not arg:
+        suffix = opcode[len("iconst_"):]
+        if suffix == "m1":
+            return -1
+        if suffix in "012345" and len(suffix) == 1:
+            return int(suffix)
+    if opcode in ("bipush", "sipush") and re.fullmatch(r"-?\d+", arg):
+        return int(arg)
+    if opcode in ("ldc", "ldc_w"):
+        m = INTEGER_LDC.fullmatch(arg)
+        if m:
+            return int(m.group(1))
+    return None
 
 
 def group_owner(owner):
@@ -37,7 +58,7 @@ def group_owner(owner):
     if owner.startswith(("java/", "javax/", "java.", "javax.")):
         return "java"
     if owner == "":
-        return "current_class_implicit"
+        return "unqualified_owner_not_verified"
     return "other_external_or_unknown"
 
 
@@ -86,6 +107,7 @@ def inspect(stdout):
         if len(instructions) > 4096:
             raise ValueError("oversized body: " + method)
         calls = {}
+        unqualified_method_targets = set()
         unknown_invokes = 0
         for op, arg in instructions:
             if op.startswith("invoke"):
@@ -100,6 +122,10 @@ def inspect(stdout):
                     owner, target = "", symbol
                 group = group_owner(owner)
                 calls[group] = calls.get(group, 0) + 1
+                if not owner:
+                    unqualified_method_targets.add(target)
+                if len(unqualified_method_targets) > 16:
+                    raise ValueError("too many unqualified method target names")
         float_arithmetic = sum(op in FLOAT_ARITH for op, _ in instructions)
         int_arithmetic = sum(op in INT_ARITH for op, _ in instructions)
         conversions = sum(op in CONVERSIONS for op, _ in instructions)
@@ -109,8 +135,12 @@ def inspect(stdout):
         level_load = sum(op == "iload_1" or (op == "iload" and arg == "1") for op, arg in instructions)
         caster_load = sum(op == "aload_2" or (op == "aload" and arg == "2") for op, arg in instructions)
         constants = sum(op.startswith(("fconst_", "iconst_", "dconst_", "lconst_")) or op in CONSTANTS for op, _ in instructions)
+        literal = direct_integer_return(instructions) if method == "getMaxConnections" else None
         result[method] = {
             "descriptor": expected,
+            "verified_direct_integer_return": literal,
+            "integer_return_status": "EXACT_DIRECT_INTEGER_LITERAL" if literal is not None else "NOT_VERIFIED",
+            "unqualified_direct_target_method_names": sorted(unqualified_method_targets),
             "instruction_count": len(instructions),
             "float_arithmetic_op_count": float_arithmetic,
             "int_arithmetic_op_count": int_arithmetic,
