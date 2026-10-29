@@ -122,3 +122,7 @@ O [relatório de consumidores na própria classe](EXACT-4.0.3-MEGIDO-GETTER-CALL
 ## Megido — primeiro uso e chamadas de fórmula no JAR (29/10/2026)
 
 A [auditoria limitada de `onCast`](EXACT-4.0.3-MEGIDO-ONCAST-FIRST-USE-20261029.md) confirma uma invocação direta de `getDamage(int, LivingEntity)` e de `getMaxConnections(int, LivingEntity)`, além das chamadas já catalogadas de `getRange` e `getRadius`. `getRadius` sofre conversão numérica imediatamente após a chamada; o consumidor de `getRange` continua indeterminado neste nível de inspeção. Run `40941276448` sucesso, sete testes sintéticos, artifact `12927531288`. **Não** certifica dano final, range/AOE efetivo ou perks. Total de 18 identidades inalterado.
+
+## Megido — retorno máximo de conexões e dependência de dano (29/10/2026)
+
+A [auditoria de parâmetros numéricos no JAR exato](EXACT-4.0.3-MEGIDO-DAMAGE-CONNECTIONS-20261029.md) demonstrou `getMaxConnections(int, LivingEntity) = 2147483647` (`Integer.MAX_VALUE`), **valor retornado**, não saltos efetivos. `getDamage` chama `getSpellPower` sem aritmética local, mas **delegação/igualdade formal não certificada**. O [run 40949235333](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40949235333) concluiu com sucesso (11 testes sintéticos). Perks de chain/damage e QA física continuam bloqueados; inventário de 18 ações semânticas intacto.
