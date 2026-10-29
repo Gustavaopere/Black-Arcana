@@ -1,0 +1,54 @@
+name: Alshanex 4.0.3 Megido literal getter audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alshanex-403-megido-literals.yml'
+      - 'docs/qa/alshanex_403_megido_literal.py'
+      - 'docs/qa/alshanex_403_megido_literal_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alshanex-403-megido-literals.yml'
+      - 'docs/qa/alshanex_403_megido_literal.py'
+      - 'docs/qa/alshanex_403_megido_literal_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  megido_literal_audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic fail-closed parser and SHA rejection tests
+        run: python3 docs/qa/alshanex_403_megido_literal_test.py -v
+      - name: Fetch installed SHA-matched Alshanex 4.0.3 publisher JAR
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/alshanex-megido
+          curl --fail --silent --show-error --location --retry 3 --retry-all-errors \
+            --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/alshanexs-familiars-1171602/8675568/alshanexs-familiars-1171602-8675568.jar' \
+            --output build/alshanex-megido/provider.jar
+          echo 'e5051c2385a426d05bf203ba8081a23d891f6686  build/alshanex-megido/provider.jar' | sha1sum --check
+      - name: Extract exact numeric literals or explicit dynamic/not verified
+        run: |
+          python3 docs/qa/alshanex_403_megido_literal.py \
+            --jar build/alshanex-megido/provider.jar \
+            --output build/alshanex-megido/evidence.json
+      - name: Upload only bounded numeric report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alshanex-403-megido-literals
+          path: build/alshanex-megido/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
