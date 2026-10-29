@@ -126,3 +126,7 @@ A [auditoria limitada de `onCast`](EXACT-4.0.3-MEGIDO-ONCAST-FIRST-USE-20261029.
 ## Megido — retorno máximo de conexões e dependência de dano (29/10/2026)
 
 A [auditoria de parâmetros numéricos no JAR exato](EXACT-4.0.3-MEGIDO-DAMAGE-CONNECTIONS-20261029.md) demonstrou `getMaxConnections(int, LivingEntity) = 2147483647` (`Integer.MAX_VALUE`), **valor retornado**, não saltos efetivos. `getDamage` chama `getSpellPower` sem aritmética local, mas **delegação/igualdade formal não certificada**. O [run 40949235333](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40949235333) concluiu com sucesso (11 testes sintéticos). Perks de chain/damage e QA física continuam bloqueados; inventário de 18 ações semânticas intacto.
+
+## Megido: targeting e cross-provider entity calls (29/10/2026)
+
+A [auditoria hash-matched de `onCast`](EXACT-4.0.3-MEGIDO-ONCAST-TARGET-ENTITY-ABI-20261029.md) verificou referências a `TargetEntityCastData.getTarget` (Iron's), `MegidoEntity` (Alshanex), `BallLightning` (Iron's), uma chamada `setDamage(float)` em cada classe e **duas** chamadas `Level.addFreshEntity`. São callsites, **não dois spawns garantidos**. CI [40952180943](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40952180943) SUCCESS, 8 testes. Sem hook mutador, sem QA física, 18 identidades mantidas.
