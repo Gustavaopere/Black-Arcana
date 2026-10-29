@@ -89,7 +89,7 @@ def inventory(javap_text):
     alloc = sum(op in ("new", "anewarray", "newarray", "multianewarray") for op, _ in ops)
     direct = [{"symbol_owner": o, "symbol_method": m, "count": n}
               for (o, m), n in sorted(calls.items())]
-    signatures = [{"owner": o, "method": m, "jvm_descriptor": d, "count": n}
+    targeted_signatures = [{"owner": o, "method": m, "jvm_descriptor": d, "count": n}
                   for (o, m, d), n in sorted(signatures_used.items())]
     return {
         "on_cast_abi": signatures["onCast"][0],
@@ -99,7 +99,7 @@ def inventory(javap_text):
         "on_cast_allocation_instruction_count": alloc,
         "unresolved_invoke_count": unresolved,
         "direct_method_references": direct,
-        "targeted_jvm_signatures": signatures,
+        "targeted_jvm_signatures": targeted_signatures,
         "external_target_processing_effect": "NOT_VERIFIED",
         "selected_target_count": "NOT_VERIFIED",
         "execution_bound": "NOT_VERIFIED",
