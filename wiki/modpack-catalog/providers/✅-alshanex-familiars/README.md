@@ -118,3 +118,7 @@ O [relatório de dois getters](EXACT-4.0.3-MEGIDO-RANGE-RADIUS-LITERALS-20261029
 ## Callsites exatos de Megido no JAR 4.0.3 (29/10/2026)
 
 O [relatório de consumidores na própria classe](EXACT-4.0.3-MEGIDO-GETTER-CALLSITES-20261029.md) confirmou, no mesmo JAR de SHA-1 físico, que `MegidoSpell.onCast` chama **`getRange()` e `getRadius()` uma vez cada**, e `getUniqueInfo` também chama cada um uma vez (dois callsites por getter na classe). Valores previamente provados: `15.0F` e `10.0F`; fluxo/geometry após cada chamada não comprovado. Run `40938851308`, artifact `12925712688`. Zero novos hooks, zero promoção de perks, QA física pendente, total de identidades 18 inalterado.
+
+## Megido — primeiro uso e chamadas de fórmula no JAR (29/10/2026)
+
+A [auditoria limitada de `onCast`](EXACT-4.0.3-MEGIDO-ONCAST-FIRST-USE-20261029.md) confirma uma invocação direta de `getDamage(int, LivingEntity)` e de `getMaxConnections(int, LivingEntity)`, além das chamadas já catalogadas de `getRange` e `getRadius`. `getRadius` sofre conversão numérica imediatamente após a chamada; o consumidor de `getRange` continua indeterminado neste nível de inspeção. Run `40941276448` sucesso, sete testes sintéticos, artifact `12927531288`. **Não** certifica dano final, range/AOE efetivo ou perks. Total de 18 identidades inalterado.

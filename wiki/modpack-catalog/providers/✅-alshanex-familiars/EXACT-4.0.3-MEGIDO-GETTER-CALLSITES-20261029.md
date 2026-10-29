@@ -27,3 +27,7 @@ Isso demonstra **que `onCast` faz chamadas diretas aos dois getters na classe Me
 4. Verificar a execução física real no pack (multiplayer, cliente/servidor, alvos inválidos, proteções e caps). Até então `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED` e `COMPLETE_PERK_READY=0`.
 
 O inventário global do provider permanece **7 spells + 11 rituais = 18 identidades**. A auditoria não altera o estágio de implementação nem o status alfabético independente de Alex's Caves.
+
+## Primeiro uso do retorno de Megido — continuação 29/10/2026
+
+O [auditor de primeira instrução](EXACT-4.0.3-MEGIDO-ONCAST-FIRST-USE-20261029.md) comprovou, em `onCast`, uma chamada direta a `getDamage` e uma a `getMaxConnections`, além dos getters `getRange/getRadius`. O retorno de `getRadius` é seguido imediatamente de conversão primitiva, enquanto o primeiro passo de `getRange` não prova consumo. Isto **não** é fluxo integral até a área ou dano nem autoriza mutadores; run `40941276448`, artifact `12927531288`.
