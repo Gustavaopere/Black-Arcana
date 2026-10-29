@@ -28,3 +28,7 @@ As assinaturas de `getDamage(int, LivingEntity)`, `getMaxConnections(int, Living
 - `COMPLETE_PERK_READY` **não** é promovido; QA física do modpack segue `NOT_TESTED`. Total de identidades: **7 spells + 11 rituais**, inalterado.
 
 **Reprodução:** script `docs/qa/alshanex_403_megido_literal.py`, testes `docs/qa/alshanex_403_megido_literal_test.py`, workflow `.github/workflows/alshanex-403-megido-literals.yml`; artifact textual `12925410592`, run `40935905518`.
+
+## Evidência complementar posterior: consumidores na própria classe (29/10/2026)
+
+O [relatório de callsites do JAR 4.0.3](EXACT-4.0.3-MEGIDO-GETTER-CALLSITES-20261029.md) verificou duas referências diretas de invocação a cada getter na classe `MegidoSpell`: uma em `onCast` e outra em `getUniqueInfo` (run `40938851308`). Essa verificação **posterior** resolve somente a lacuna anterior de existência dos callsites nessa classe; não demonstra a propagação do valor retornado para targeting, dano ou área efetiva. Nenhum hook/QA física foi certificado.

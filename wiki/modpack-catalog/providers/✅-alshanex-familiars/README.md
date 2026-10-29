@@ -114,3 +114,7 @@ Evidência: [GitHub Actions run 40933045252](https://github.com/Gustavaopere/Bla
 ## Constantes de Megido — JAR exato 4.0.3 (29/10/2026)
 
 O [relatório de dois getters](EXACT-4.0.3-MEGIDO-RANGE-RADIUS-LITERALS-20261029.md) demonstrou que `MegidoSpell.getRange()` retorna literalmente **15.0F** e `getRadius()` retorna **10.0F** no JAR instalado hash-matched (run `40935905518`). Esses valores são contratos locais dos métodos, **não** range/AOE de gameplay certificado, e não promovem hook mutador nem QA física. [Ficha individual](spells/megido.md). Inventário semântico segue 18.
+
+## Callsites exatos de Megido no JAR 4.0.3 (29/10/2026)
+
+O [relatório de consumidores na própria classe](EXACT-4.0.3-MEGIDO-GETTER-CALLSITES-20261029.md) confirmou, no mesmo JAR de SHA-1 físico, que `MegidoSpell.onCast` chama **`getRange()` e `getRadius()` uma vez cada**, e `getUniqueInfo` também chama cada um uma vez (dois callsites por getter na classe). Valores previamente provados: `15.0F` e `10.0F`; fluxo/geometry após cada chamada não comprovado. Run `40938851308`, artifact `12925712688`. Zero novos hooks, zero promoção de perks, QA física pendente, total de identidades 18 inalterado.
