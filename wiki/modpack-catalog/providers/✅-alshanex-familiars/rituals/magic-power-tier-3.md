@@ -24,3 +24,9 @@ Black Arcana does not execute or settle this provider ritual on Alshanex's behal
 ## Provenance
 
 Read-only exact-artifact structured-resource inspection only. No upstream implementation, assets or prose are copied/adapted.
+
+## Schema exato do recurso — 2026-10-29
+
+No JAR 4.0.3 SHA-validado: `central_item` é objeto; `inputs` contém **4 objetos**, cada qual com `ingredient` objeto, `count` explícito e `consume` explícito; `result.id` é `alshanex_familiars:magic_power_tier_3`; `particle_type` é string. **1/4** entrada (posição **1** na lista) declara `consume=false`; as outras três declaram outro valor.
+
+É **estrutura de receita**, não prova de consumo efetivo, execução transacional, duração ou autorização de automação. Evidência [run 40933045252](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40933045252), artifact `12922838095`; ver [matriz exata](../EXACT-4.0.3-RITUAL-SCHEMA-SPELL-ABI-20261029.md). Não duplicar settlement de Alshanex.

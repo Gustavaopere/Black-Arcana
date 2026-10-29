@@ -28,3 +28,11 @@ This spell remains Alshanex-owned and executes through provider/Iron's authority
 ## Provenance
 
 Read-only exact-artifact factual inspection only. No upstream implementation or asset is copied/adapted.
+
+## ABI declarada no binário exato 4.0.3 — 2026-10-29
+
+- Classe: `SwitcherooSpell`; ID canônico: `alshanex_familiars:switcheroo`.
+- Métodos **declarados**, com parâmetros e retorno verificados por `javap -p -s` após SHA-1 físico: `checkPreCastConditions(Level, int, LivingEntity, MagicData): boolean`; `getDistance(int, LivingEntity): float`; `onCast(Level, int, LivingEntity, CastSource, MagicData): void`.
+- Observação de integração: pré-condições e distância não comprovam que teleporte esteja liberado para qualquer alvo.
+- A classe também declara `getDefaultConfig()` e `getCastType()`, sem que seus valores tenham sido decodificados.
+- Evidência: [check de ABI JAR 4.0.3](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40933045252), artifact `12922838095`. Uma assinatura não constitui API pública mutadora; valores numéricos, hooks e QA do modpack continuam `NOT_VERIFIED` e `NOT_TESTED`. Veja `../EXACT-4.0.3-RITUAL-SCHEMA-SPELL-ABI-20261029.md`.

@@ -28,3 +28,11 @@ This spell remains Alshanex-owned and executes through provider/Iron's authority
 ## Provenance
 
 Read-only exact-artifact factual inspection only. No upstream implementation or asset is copied/adapted.
+
+## ABI declarada no binário exato 4.0.3 — 2026-10-29
+
+- Classe: `HikenSpell`; ID canônico: `alshanex_familiars:fire_fist`.
+- Métodos **declarados**, com parâmetros e retorno verificados por `javap -p -s` após SHA-1 físico: `getDamage(int, LivingEntity): float`; `getRadius(int, LivingEntity): int`; `onCast(Level, int, LivingEntity, CastSource, MagicData): void`.
+- Observação de integração: getRadius retorna int neste provider, diferentemente de getRadius(...): float do Ice Age.
+- A classe também declara `getDefaultConfig()` e `getCastType()`, sem que seus valores tenham sido decodificados.
+- Evidência: [check de ABI JAR 4.0.3](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40933045252), artifact `12922838095`. Uma assinatura não constitui API pública mutadora; valores numéricos, hooks e QA do modpack continuam `NOT_VERIFIED` e `NOT_TESTED`. Veja `../EXACT-4.0.3-RITUAL-SCHEMA-SPELL-ABI-20261029.md`.
