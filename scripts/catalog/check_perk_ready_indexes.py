@@ -185,8 +185,14 @@ def inventory():
 def certified(card, ledger):
     return card.relative_to(PROVIDERS).as_posix() in ledger["objects"]
 
+def in_tree(path: Path, folder: Path) -> bool:
+    """Lexical inventory ancestry; security containment must still use resolve()."""
+    folder_parts = folder.parts
+    return (path.anchor == folder.anchor
+            and path.parts[:len(folder_parts)] == folder_parts)
+
 def mod_certified(mod, cards, ledger):
-    these = [p for p in cards if p.is_relative_to(mod)]
+    these = [p for p in cards if in_tree(p, mod)]
     info = ledger["providers"].get(mod.name, {})
     return bool(these and all(certified(p, ledger) for p in these)
                 and info.get("universe_closed") is True and info.get("evidence"))
@@ -203,7 +209,7 @@ def folder_cataloged(folder, cards, ledger, closed):
     provider = PROVIDERS / folder.relative_to(PROVIDERS).parts[0]
     if folder == provider:
         return mod_cataloged(provider, cards, ledger, closed)
-    these = [p for p in cards if p.is_relative_to(folder)]
+    these = [p for p in cards if in_tree(p, folder)]
     return provider.name in closed or bool(these and all(cataloged(p, ledger, closed) for p in these))
 
 def observed_catalog_count(cards, ledger, closed):
@@ -267,7 +273,7 @@ def check(repo=REPO):
             data = path.read_text(encoding="utf8")
             if data != rendered[path]:
                 problems.append("rendered index drift: " + str(path.relative_to(repo)))
-            known = [p for p in cards if p.is_relative_to(folder)]
+            known = [p for p in cards if in_tree(p, folder)]
             done = sum(certified(p, ledger) for p in known)
             matches = PER_FOLDER.findall(data)
             if len(matches) != 1 or tuple(map(int, matches[0])) != (done, len(known)):
@@ -301,7 +307,7 @@ def check(repo=REPO):
             for child in children:
                 if ("(" + child.name + "/INDEX.md)") not in data:
                     problems.append("missing child-index navigation: " + str(child.relative_to(repo)))
-                selected = [p for p in cards if p.is_relative_to(child)]
+                selected = [p for p in cards if in_tree(p, child)]
                 expected = ("✅" if folder_cataloged(child, cards, ledger, closed) else "⚠️",
                             observed_catalog_count(selected, ledger, closed),
                             sum(certified(p, ledger) for p in selected))
@@ -335,7 +341,7 @@ def check(repo=REPO):
             if len(entries) != len(mods) or len(rows) != len(mods):
                 problems.append("provider table population drift")
             for mod in mods:
-                selected = [p for p in cards if p.is_relative_to(mod)]
+                selected = [p for p in cards if in_tree(p, mod)]
                 strict = mod_certified(mod, cards, ledger)
                 expected = ("✅" if mod_cataloged(mod, cards, ledger, closed) else "⚠️",
                             observed_catalog_count(selected, ledger, closed),

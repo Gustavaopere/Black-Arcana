@@ -96,7 +96,7 @@ def catalog_manifest_contents(provider: str, manifest: dict, cards: list[Path], 
     """Validate a frozen card/member crosswalk without inferring gameplay QA."""
     hashes = manifest.get("cards")
     actual = {p.relative_to(ROOT).as_posix() for p in cards
-              if p.is_relative_to(ROOT / provider)}
+              if qa.in_tree(p, ROOT / provider)}
     if not isinstance(hashes, dict) or not hashes or set(hashes) != actual:
         raise ValueError(label + " catalog closure does not cover exactly the detected cards")
     for relative, expected in hashes.items():
@@ -230,7 +230,7 @@ def alphabetical_scope(mods: list[Path], cards: list[Path]) -> dict:
                 or type(item.get("owned_magic_actions")) is not int
                 or item.get("owned_magic_actions") != 0
                 or evidence != item["provider"] + "/README.md"
-                or any(card.is_relative_to(mod) for card in cards)):
+                or any(qa.in_tree(card, mod) for card in cards)):
             raise ValueError("nonmagical catalog closure has unsupported claims")
         source = ROOT / evidence
         if not source.is_file():
@@ -251,7 +251,7 @@ def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
     closed = {item["provider"]: item for item in alpha["completed_prefix"]}
     parts = folder.relative_to(ROOT).parts
     mod = ROOT / parts[0]
-    group = sorted(p for p in cards if p.is_relative_to(folder))
+    group = sorted(p for p in cards if qa.in_tree(p, folder))
     complete = sum(qa.certified(p, ledger) for p in group)
     documented = sum(qa.cataloged(p, ledger, closed) for p in group)
     catalog_complete = qa.folder_cataloged(folder, cards, ledger, closed)
@@ -353,7 +353,7 @@ def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
                  "| Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |",
                  "|---|---|---:|---:|---|"]
         for child in children:
-            selected = [card for card in cards if card.is_relative_to(child)]
+            selected = [card for card in cards if qa.in_tree(card, child)]
             mark = "✅" if qa.folder_cataloged(child, cards, ledger, closed) else "⚠️"
             static = sum(qa.certified(card, ledger) for card in selected)
             rows.append(f"| {mark} | {friendly(child.name)} | "
@@ -423,7 +423,7 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict, *,
         "|---|---|---:|---:|---|---|---|---|",
     ]
     for mod in mods:
-        selected = [p for p in cards if p.is_relative_to(mod)]
+        selected = [p for p in cards if qa.in_tree(p, mod)]
         certified = sum(qa.certified(p, ledger) for p in selected)
         strict = qa.mod_certified(mod, cards, ledger)
         state = "✅" if qa.mod_cataloged(mod, cards, ledger, closed) else "⚠️"

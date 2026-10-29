@@ -12,6 +12,30 @@ from unittest.mock import patch
 import check_perk_ready_indexes as c
 import generate_perk_ready_indexes as generator
 
+class TreeMembershipTests(unittest.TestCase):
+    def test_inventory_membership_matches_path_ancestry_without_resolving(self):
+        cases = (
+            ("/providers/sample", "/providers/sample", True),
+            ("/providers/sample/spells/bolt.md", "/providers/sample", True),
+            ("/providers/sample-other/bolt.md", "/providers/sample", False),
+            ("/providers", "/providers/sample", False),
+            ("providers/sample/bolt.md", "providers/sample", True),
+            ("providers/sample/bolt.md", "/providers/sample", False),
+            ("/providers/sample/bolt.md", "providers/sample", False),
+            ("providers/sample/../other/bolt.md", "providers/sample", True),
+            ("providers/other/bolt.md", "providers/sample/..", False),
+            ("providers/./sample//bolt.md", "providers/sample", True),
+            ("providers/sample/bolt.md", ".", True),
+            ("/providers/sample/bolt.md", ".", False),
+            (".", ".", True),
+            ("/providers/sample", "/", True),
+        )
+        for path, folder, expected in cases:
+            with self.subTest(path=path, folder=folder):
+                path, folder = Path(path), Path(folder)
+                self.assertEqual(expected, c.in_tree(path, folder))
+                self.assertEqual(path.is_relative_to(folder), c.in_tree(path, folder))
+
 class IndexTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
