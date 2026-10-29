@@ -104,3 +104,9 @@ Alshanex's Familiars is All Rights Reserved. Phase 2BD used the exact binary onl
 ## Divergência de documentação pública e superfícies de datapack (2026-10-28)
 
 A documentação atual do fornecedor foi comparada **sem promoção de versão** com o inventário do JAR 4.0.3: [diferenças de receitas `*_shard` versus ovos e lista de spells](PUBLISHER-WIKI-VERSION-DRIFT-20261028.md) e [tags/rituais, roster de familiares, station rerolls e gates de perks](PUBLISHER-WIKI-DATAPACK-FAMILIARS-20261028.md). Esses documentos são condicionais; **7/7 spells + 11/11 rituais** do artefato seguem contados, porém custos, targeting, output efetivo, hooks e QA física continuam não verificados. Não confundir Wiki sem pin com prova binária da versão instalada.
+
+## ABI e esquema do JAR 4.0.3 (29/10/2026)
+
+A [auditoria read-only de ABI e esquemas](EXACT-4.0.3-RITUAL-SCHEMA-SPELL-ABI-20261029.md) confirma no JAR exato (`SHA-1 e5051c2385a426d05bf203ba8081a23d891f6686`) os métodos declarados das **sete classes de spells** e a estrutura dos **onze rituais**, todos com **quatro entradas** explícitas. `druid_shard`, `magic_power_tier_3` e `magic_resist_tier_3` possuem **um** `consume=false` cada; nenhum outro ritual possui esse valor. Os resultados dos 11 JSONs continuam sendo os IDs próprios do catálogo 4.0.3, não ovos da wiki sem pin. As 18 fichas individuais incorporam os fatos exatos.
+
+Evidência: [GitHub Actions run 40933045252](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40933045252) — job `123656242857` SUCCESS, artifact textual `12922838095` (7 assinaturas de classe e 11 schemas). Quantidade semântica `7+11=18` **inalterada**; os métodos declarados não certificam hooks mutadores e nenhum teste físico do modpack foi executado.

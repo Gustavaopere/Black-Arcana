@@ -1,0 +1,57 @@
+name: Alshanex 4.0.3 exact ritual schema and spell ABI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alshanex-403-exact-ritual-spell-abi.yml'
+      - 'docs/qa/alshanex_403_exact_ritual_spell_abi.py'
+      - 'docs/qa/alshanex_403_exact_ritual_spell_abi_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alshanex-403-exact-ritual-spell-abi.yml'
+      - 'docs/qa/alshanex_403_exact_ritual_spell_abi.py'
+      - 'docs/qa/alshanex_403_exact_ritual_spell_abi_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact_alshanex_contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify synthetic fail-closed inventory and ABI parser
+        run: python3 docs/qa/alshanex_403_exact_ritual_spell_abi_test.py -v
+      - name: Download the precisely identified publisher artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/alshanex-403
+          curl --fail --silent --show-error --location --retry 3 --retry-all-errors \
+            --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/alshanexs-familiars-1171602/8675568/alshanexs-familiars-1171602-8675568.jar' \
+            --output build/alshanex-403/provider.jar
+          echo 'e5051c2385a426d05bf203ba8081a23d891f6686  build/alshanex-403/provider.jar' | sha1sum --check
+      - name: Audit only exact recipe schema facts and spell method ABI
+        run: |
+          python3 docs/qa/alshanex_403_exact_ritual_spell_abi.py \
+            --jar build/alshanex-403/provider.jar \
+            --output build/alshanex-403/evidence.json
+      - name: Publish metadata only; never upload third-party archive or disassembly
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alshanex-403-ritual-spell-abi-${{ github.sha }}
+          path: build/alshanex-403/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
