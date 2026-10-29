@@ -130,3 +130,7 @@ A [auditoria de parâmetros numéricos no JAR exato](EXACT-4.0.3-MEGIDO-DAMAGE-C
 ## Megido: targeting e cross-provider entity calls (29/10/2026)
 
 A [auditoria hash-matched de `onCast`](EXACT-4.0.3-MEGIDO-ONCAST-TARGET-ENTITY-ABI-20261029.md) verificou referências a `TargetEntityCastData.getTarget` (Iron's), `MegidoEntity` (Alshanex), `BallLightning` (Iron's), uma chamada `setDamage(float)` em cada classe e **duas** chamadas `Level.addFreshEntity`. São callsites, **não dois spawns garantidos**. CI [40952180943](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40952180943) SUCCESS, 8 testes. Sem hook mutador, sem QA física, 18 identidades mantidas.
+
+## Megido — auditoria cross-provider de entidades físicas (29/10/2026)
+
+O [relatório de `MegidoEntity` e `BallLightning`](EXACT-4.0.3-MEGIDO-DUAL-ENTITY-LIFECYCLE-20261029.md) validou **ambos os JARs por SHA-1 exato** (Alshanex 4.0.3 + Iron's 3.16.3), verificando callsites de `getClosestEntity`, `Stream.filter`, `doHurt`, `canHitVictim`, `handleHitDetection`, `onHitEntity`, `applyDamage` e `discard`. A auditoria de ABI teve **6 testes sintéticos PASS** ([run 40973406416](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40973406416)), mas **não** comprova target count, hits ou spawns efetivos. `COMPLETE_PERK_READY=0`, hooks não certificados e QA física pendente; o inventário permanece 18.
