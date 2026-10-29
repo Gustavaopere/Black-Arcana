@@ -119,3 +119,9 @@ Catalog closure does not assert assembled-pack runtime PASS. Later QA still incl
 Current Alex's Mobs Continued semantic inventory: **3 supernatural roots = 1 strict exact-current + 2 config/reachability-conditional**.
 
 Strict semantic delta: **+1**.
+
+## Source drift / gate de integração (2026-10-29)
+
+O fonte público atualmente acessível em `Codx-org/AlexsMobsContinued@e0dda181b999b3df09c4a4f7fd41e55f1b621ed8` declara `mod.version=2.2.3`, não `2.1.13`. A auditoria bytecode do **artefato 2.1.13 hash-matched** permanece válida para identidades, mas parâmetros da revisão posterior **não** são fonte de autoridade para a versão instalada. Veja [nota de proveniência](PUBLIC-SOURCE-VERSION-DRIFT-2026-10-29.md).
+
+O [grafo de alcance e contratos de aceitação](EXACT-ARTIFACT-PERK-QA-GATES-2.1.13.md) separa três roots, aquisição e condições de uso; o [manifesto JSON](SEMANTIC-REACHABILITY-GATES-2.1.13.json) registra explicitamente **1 `COUNTED_EXACT` + 2 `CONDITIONAL`**, sem promover 2 gates de Void Worm nem habilitar perks mutadoras ou QA física. A fila alfabética não é alterada nesta tranche.

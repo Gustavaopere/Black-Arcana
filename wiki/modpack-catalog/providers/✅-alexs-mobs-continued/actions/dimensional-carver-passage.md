@@ -51,3 +51,7 @@ The Carver action identity and its settlement are exact-current; the blocker is 
 - strict contribution from this root: **+0**.
 
 Source: `../EXACT-2.1.13-ARTIFACT-AUDIT.md`.
+
+## Matriz de execução e progressão (2026-10-29)
+
+Carver: **identidade executável provada no JAR exato**, mas obtenção normal requer Eye/Mandible do Void Worm — logo a contagem estrita herda o gate de summon/config. Verificar receita/loot efetivos, segurança do destino, lifespan de `EntityVoidPortal`, descarte após reload e débito de durabilidade em `AMC-D01..D02`. Não presumir `range` ou duração a partir do fonte público **2.2.3**. Mutadores **⛔ fail-closed**; BA não cria portal ou teleporte em paralelo. Veja [matriz de QA](../EXACT-ARTIFACT-PERK-QA-GATES-2.1.13.md).

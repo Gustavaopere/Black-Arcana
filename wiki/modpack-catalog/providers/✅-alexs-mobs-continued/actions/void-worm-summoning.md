@@ -58,3 +58,7 @@ Defaults are not substituted for deployed state.
 - strict contribution from this root: **+0** until deployed gate evidence closes it.
 
 Source: `../EXACT-2.1.13-ARTIFACT-AUDIT.md`.
+
+## Matriz de execução e progressão (2026-10-29)
+
+`Mysterious Worm` é uma **raiz condicional**, não um cast de mão: o JAR exato processa o dropped item em `onEntityItemUpdate` e o server só pode invocar após os gates de config, dimensão, profundidade e item vivo. Capturar configs **implantadas**, não defaults de release futura. Validar `AMC-V01..V03` no servidor físico antes de habilitar perks de spawn ou marcar a raiz como estrita. Mutadores **⛔ fail-closed**; não fabricar um segundo Void Worm. Veja [grafo de aquisição e QA](../EXACT-ARTIFACT-PERK-QA-GATES-2.1.13.md).

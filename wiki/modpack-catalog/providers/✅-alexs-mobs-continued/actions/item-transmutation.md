@@ -46,3 +46,7 @@ The exact artifact contains the provider's shaped Transmutation Table recipe. Th
 The provider remains authority for candidate generation, rarity pools, effective XP cost, reroll behavior, table state and result settlement. This card does not invent current tuning values.
 
 Source: `../EXACT-2.1.13-ARTIFACT-AUDIT.md`.
+
+## Matriz de execução e progressão (2026-10-29)
+
+Contrato JAR exato: seleção no menu, settlement server-owned de input/output, débito de XP e reroll são **um único evento causal**. O custo numérico e a autorização de `MessageTransmuteFromMenu` por slot/jogador/sessão **não** estão certificados por teste de modpack; validar `AMC-T01..T03` antes de reduzir XP, aumentar escolhas ou alterar candidatos. Não transformar as três opções em três spells. Mutadores **⛔ fail-closed** sem hook real. Veja [matriz de QA](../EXACT-ARTIFACT-PERK-QA-GATES-2.1.13.md) e [desvio de versão-fonte](../PUBLIC-SOURCE-VERSION-DRIFT-2026-10-29.md).

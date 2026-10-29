@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "provider": "alexsmobs",
+  "runtime_version": "2.1.13",
+  "loader": "NeoForge",
+  "minecraft": "1.21.1",
+  "exact_installed_artifact": "alexsmobs-2.1.13-neoforge+1.21.1.jar",
+  "physical_publisher_sha1": "50ddafdf3d12b33331e4eecb4ab514ae451baadd",
+  "authority": "Exact binary audit NON-MERGE PR #511, workflow run 36949047824; deployed effective config not captured",
+  "source_revision_used_for_runtime_parameters": null,
+  "semantic_total": 3,
+  "counted_exact": 1,
+  "conditional": 2,
+  "mutable_hooks_certified": 0,
+  "physical_runtime_qa": "NOT_TESTED",
+  "gates": [
+    {
+      "id": "transmutation",
+      "card": "actions/item-transmutation.md",
+      "owner": "alexsmobs:transmutation_table",
+      "state": "COUNTED_EXACT",
+      "identity": "EXACT_ARTIFACT",
+      "normal_acquisition": "EXACT_RECIPE_PRESENT",
+      "runtime_path": "player -> provider menu selection -> server-owned transmutation -> input/output + XP + reroll",
+      "config_dependencies": [
+        "effective transmutation XP-level cost",
+        "effective input/output loot restrictions"
+      ],
+      "blocked_perk_mutations": [
+        "candidate generation",
+        "XP cost",
+        "server message/result settlement",
+        "reroll state"
+      ],
+      "qa": [
+        "assert server rejects invalid/mismatched menu selection without item or XP loss",
+        "assert one result and one XP charge per valid selection",
+        "check reload and table persistence",
+        "check concurrent client actions and transfer of input stack"
+      ]
+    },
+    {
+      "id": "void_worm",
+      "card": "actions/void-worm-summoning.md",
+      "owner": "alexsmobs:mysterious_worm",
+      "state": "CONDITIONAL",
+      "identity": "EXACT_ARTIFACT",
+      "normal_acquisition": "CAPSID_RECIPE_PRESENT",
+      "runtime_path": "dropped item -> onEntityItemUpdate -> summon/dimension/depth/liveness gates -> provider boss spawn",
+      "config_dependencies": [
+        "AMConfig.voidWormSummonable",
+        "AMConfig.voidWormSpawnDimensions",
+        "effective dimension/depth eligibility"
+      ],
+      "blocked_perk_mutations": [
+        "spawn count",
+        "boss placement",
+        "summon gate bypass",
+        "single-use item settlement"
+      ],
+      "qa": [
+        "capture deployed effective config in exact server",
+        "test denied dimension/no-spawn and correct item retention",
+        "test allowed dimension/depth/spawn once",
+        "test multiplayer ownership and duplicate tick handling"
+      ]
+    },
+    {
+      "id": "dimensional_carver",
+      "card": "actions/dimensional-carver-passage.md",
+      "owner": "alexsmobs:dimensional_carver",
+      "state": "CONDITIONAL",
+      "identity": "EXACT_ARTIFACT",
+      "normal_acquisition": "DEPENDENT_ON_VOID_WORM_LOOT",
+      "depends_on": [
+        "void_worm"
+      ],
+      "runtime_path": "owner channel/use -> provider ray trace -> EntityVoidPortal with destination/dimension/lifespan -> durability settlement",
+      "config_dependencies": [
+        "effective Void Worm summon eligibility and loot/recipe overrides"
+      ],
+      "blocked_perk_mutations": [
+        "targeting / dimension",
+        "portal count / lifecycle",
+        "durability and cooldown",
+        "teleport settlement"
+      ],
+      "qa": [
+        "verify normal acquisition end-to-end from Void Worm drops",
+        "test protected/invalid target and cross-dimension travel",
+        "test portal removal, save/reload and server disconnect",
+        "assert one portal and one durability settlement per accepted use"
+      ]
+    }
+  ]
+}
