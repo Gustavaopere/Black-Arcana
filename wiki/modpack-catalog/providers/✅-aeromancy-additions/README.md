@@ -20,6 +20,8 @@ Iron's mantém autoridade sobre casting, mana, cooldown, aquisição de scrolls 
 
 ## Limites de evidência e prioridades de integração
 
+Physical JAR SHA-1: **NÃO VERIFICADO** — o hash do publisher não comprova a identidade instalada.
+
 O publisher oficial, arquivo CurseForge `8251034`, tem SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`. Os 119 recursos da fonte foram comparados e as classes relacionadas por nome e `SourceFile`. Isso não certifica equivalência dos corpos de métodos. O SHA-1 histórico atribuído ao arquivo instalado, `dee32c9fa84d6e39846608f8f77591ea56f`, tem somente **35 caracteres**; a identidade do JAR instalado continua **NOT_VERIFIED**. [Auditoria binária anterior](EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md).
 
 A fonte compila contra NeoForge `21.1.228` / Iron's `3.16.1`; Black Arcana usa NeoForge `21.1.248` em compile/dev; a autoridade física do pack registra NeoForge `21.1.250` / Iron's `3.16.3`. Aceitação pelo intervalo de dependências não comprova compatibilidade em execução.
