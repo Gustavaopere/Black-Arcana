@@ -32,3 +32,7 @@ Assim, uma perk que some ou multiplique `getMaxConnections` é potencialmente re
 4. Nenhuma certificação de perk/implementação pode ser promovida antes desses gates.
 
 Estado inalterado: `7 spells + 11 rituais = 18` identidades semânticas; `COMPLETE_PERK_READY=0`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`. Alshanex e Iron's mantêm ownership de seus efeitos, custos e casting. O Black Arcana não duplica execução; RPG Skill Tree só entrega progressão mediante contrato.
+
+## Descoberta posterior: entidades/targeting cross-provider (29/10/2026)
+
+O [relatório de ABI do `onCast`](EXACT-4.0.3-MEGIDO-ONCAST-TARGET-ENTITY-ABI-20261029.md) demonstrou referências a `MegidoEntity` (Alshanex) e `BallLightning` (Iron's) com chamadas `setDamage(float)` e dois `Level.addFreshEntity`. Não comprova dois spawns efetivos, consumidores finais de `getMaxConnections` ou dano real. O ownership de cada entidade pertence a seu provider.

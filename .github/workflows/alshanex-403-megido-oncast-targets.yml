@@ -1,0 +1,54 @@
+name: Alshanex 4.0.3 Megido onCast target/processing symbolic references
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alshanex-403-megido-oncast-targets.yml'
+      - 'docs/qa/alshanex_403_megido_oncast_targets.py'
+      - 'docs/qa/alshanex_403_megido_oncast_targets_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alshanex-403-megido-oncast-targets.yml'
+      - 'docs/qa/alshanex_403_megido_oncast_targets.py'
+      - 'docs/qa/alshanex_403_megido_oncast_targets_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alshanex-familiars/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  megido_oncast_symbol_references:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic parser tests
+        run: python3 docs/qa/alshanex_403_megido_oncast_targets_test.py -v
+      - name: Fetch and hash-check installed JAR
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/alshanex-403-targets
+          curl --fail --silent --show-error --location --retry 3 --retry-all-errors \
+            --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/alshanexs-familiars-1171602/8675568/alshanexs-familiars-1171602-8675568.jar' \
+            --output build/alshanex-403-targets/provider.jar
+          echo 'e5051c2385a426d05bf203ba8081a23d891f6686  build/alshanex-403-targets/provider.jar' | sha1sum --check
+      - name: Inspect symbolic onCast method references only
+        run: |
+          python3 docs/qa/alshanex_403_megido_oncast_targets.py \
+            --jar build/alshanex-403-targets/provider.jar \
+            --output build/alshanex-403-targets/evidence.json
+      - name: Upload bounded metadata
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alshanex-403-megido-oncast-targets
+          path: build/alshanex-403-targets/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
