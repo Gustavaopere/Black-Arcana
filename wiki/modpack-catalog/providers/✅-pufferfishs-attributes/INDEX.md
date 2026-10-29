@@ -1,18 +1,30 @@
-# Índice técnico para perks — Pufferfishs Attributes
+# Índice do catálogo — Pufferfishs Attributes
 
-> Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
+> Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
+
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+
+**Fichas catalogadas (somente fichas detectadas): 0/0.**
+
+**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ — não determinado`
+
+**Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Homologadas para perks (somente fichas detectadas): 0/0.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ — não determinado`
-**Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
+**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ — não determinado`
+
+**Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
+
+**Homologação integral para perks:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.
 
 *Nenhuma ficha individual detectada nesta árvore pelas regras conservadoras.* Isso **não significa zero** magias/habilidades: podem existir inventários agregados, JSONs, classes ou registros ainda não desmembrados.
 
 
 ## Critério do ✅
 
-Somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../meta/PERK-READY-CERTIFICATIONS.json) podem receber ✅, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido.
+**Catálogo:** fichas cobertas por fechamento validado de fonte/artefato no manifesto alfabético, ou por certificado técnico individual. O ✅ de uma subpasta cobre apenas seu recorte; o provider exige prova de escopo fechado.
+
+**Contrato estático:** somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../meta/PERK-READY-CERTIFICATIONS.json) recebem ✅ nessa coluna, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido. Hooks e QA exigem seus próprios estados verificados no certificado, sem promoção a partir do catálogo.
 
 Arquivos técnicos de apoio e inventários agregados continuam relevantes, mas não são contabilizados como objetos concluídos. O algoritmo deve ser revisado por provider antes de declarar universo fechado.

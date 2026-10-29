@@ -1,29 +1,41 @@
-# Índice técnico para perks — Mowzies Mobs / Actions
+# Índice do catálogo — Mowzies Mobs / Actions
 
-> Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
+> Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
+
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+
+**Fichas catalogadas (somente fichas detectadas): 0/11.**
+
+**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+
+**Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Homologadas para perks (somente fichas detectadas): 0/11.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
-**Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
+**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
-| Estado | Objeto / habilidade identificada | Ficha |
-|---|---|---|
-| ⚠️ | Boulder Lift | [ficha/boulder-lift.md](boulder-lift.md) |
-| ⚠️ | Ice Breath | [ficha/ice-breath.md](ice-breath.md) |
-| ⚠️ | Pillar Rise | [ficha/pillar-rise.md](pillar-rise.md) |
-| ⚠️ | Rock Sling | [ficha/rock-sling.md](rock-sling.md) |
-| ⚠️ | Solar Beam | [ficha/solar-beam.md](solar-beam.md) |
-| ⚠️ | Solar Flare | [ficha/solar-flare.md](solar-flare.md) |
-| ⚠️ | Sunstrike | [ficha/sunstrike.md](sunstrike.md) |
-| ⚠️ | Supernova | [ficha/supernova.md](supernova.md) |
-| ⚠️ | Tunneling | [ficha/tunneling.md](tunneling.md) |
-| ⚠️ | Wrought Axe Slam | [ficha/wrought-axe-slam.md](wrought-axe-slam.md) |
-| ⚠️ | Wrought Axe Swing | [ficha/wrought-axe-swing.md](wrought-axe-swing.md) |
+**Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
+
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+
+| Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
+|---|---|---|---|---|---|
+| ⚠️ | Boulder Lift | [ficha/boulder-lift.md](boulder-lift.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ice Breath | [ficha/ice-breath.md](ice-breath.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Pillar Rise | [ficha/pillar-rise.md](pillar-rise.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Rock Sling | [ficha/rock-sling.md](rock-sling.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Solar Beam | [ficha/solar-beam.md](solar-beam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Solar Flare | [ficha/solar-flare.md](solar-flare.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sunstrike | [ficha/sunstrike.md](sunstrike.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Supernova | [ficha/supernova.md](supernova.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Tunneling | [ficha/tunneling.md](tunneling.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Wrought Axe Slam | [ficha/wrought-axe-slam.md](wrought-axe-slam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Wrought Axe Swing | [ficha/wrought-axe-swing.md](wrought-axe-swing.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
-Somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) podem receber ✅, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido.
+**Catálogo:** fichas cobertas por fechamento validado de fonte/artefato no manifesto alfabético, ou por certificado técnico individual. O ✅ de uma subpasta cobre apenas seu recorte; o provider exige prova de escopo fechado.
+
+**Contrato estático:** somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) recebem ✅ nessa coluna, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido. Hooks e QA exigem seus próprios estados verificados no certificado, sem promoção a partir do catálogo.
 
 Arquivos técnicos de apoio e inventários agregados continuam relevantes, mas não são contabilizados como objetos concluídos. O algoritmo deve ser revisado por provider antes de declarar universo fechado.

@@ -154,15 +154,23 @@ class ArsRitualStaticTests(unittest.TestCase):
             row_index = next(
                 line for line in self.index.splitlines()
                 if line.startswith("| ✅ | " + label + " | ")
-                and line.endswith("](" + slug + ".md) |")
+                and "](" + slug + ".md) |" in line
             )
             row_root = next(
                 line for line in self.ars.splitlines()
                 if line.startswith("| ✅ | " + label + " | ")
-                and line.endswith("](rituals/" + slug + ".md) |")
+                and "](rituals/" + slug + ".md) |" in line
             )
             self.assertIn(slug + ".md", row_index)
             self.assertIn("rituals/" + slug + ".md", row_root)
+            for row in (row_index, row_root):
+                # Catalog completion is independent from the static certificate
+                # and must never silently promote mutation or physical QA.
+                columns = [cell.strip() for cell in row.strip("|").split("|")]
+                self.assertEqual(6, len(columns))
+                self.assertEqual("✅ certificado", columns[3])
+                self.assertEqual("⚠️ não verificado", columns[4])
+                self.assertEqual("⚠️ não testado", columns[5])
 
     def test_local_ritual_execution_is_not_spell_cooldown_or_mana(self):
         for slug in CASES:

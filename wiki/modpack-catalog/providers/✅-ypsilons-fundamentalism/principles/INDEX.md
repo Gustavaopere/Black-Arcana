@@ -1,31 +1,43 @@
-# Índice técnico para perks — Ypsilons Fundamentalism / Principles
+# Índice do catálogo — Ypsilons Fundamentalism / Principles
 
-> Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
+> Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
+
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+
+**Fichas catalogadas (somente fichas detectadas): 0/13.**
+
+**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+
+**Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Homologadas para perks (somente fichas detectadas): 0/13.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
-**Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
+**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
-| Estado | Objeto / habilidade identificada | Ficha |
-|---|---|---|
-| ⚠️ | Apparitio | [ficha/apparitio.md](apparitio.md) |
-| ⚠️ | Augere | [ficha/augere.md](augere.md) |
-| ⚠️ | Certum | [ficha/certum.md](certum.md) |
-| ⚠️ | Concentratio | [ficha/concentratio.md](concentratio.md) |
-| ⚠️ | Expansio | [ficha/expansio.md](expansio.md) |
-| ⚠️ | Locus | [ficha/locus.md](locus.md) |
-| ⚠️ | Motus | [ficha/motus.md](motus.md) |
-| ⚠️ | Perceptio | [ficha/perceptio.md](perceptio.md) |
-| ⚠️ | Pertinacia | [ficha/pertinacia.md](pertinacia.md) |
-| ⚠️ | Potentia | [ficha/potentia.md](potentia.md) |
-| ⚠️ | Remedium | [ficha/remedium.md](remedium.md) |
-| ⚠️ | Repetitio | [ficha/repetitio.md](repetitio.md) |
-| ⚠️ | Vitale | [ficha/vitale.md](vitale.md) |
+**Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
+
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+
+| Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
+|---|---|---|---|---|---|
+| ⚠️ | Apparitio | [ficha/apparitio.md](apparitio.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Augere | [ficha/augere.md](augere.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Certum | [ficha/certum.md](certum.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Concentratio | [ficha/concentratio.md](concentratio.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Expansio | [ficha/expansio.md](expansio.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Locus | [ficha/locus.md](locus.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Motus | [ficha/motus.md](motus.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Perceptio | [ficha/perceptio.md](perceptio.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Pertinacia | [ficha/pertinacia.md](pertinacia.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Potentia | [ficha/potentia.md](potentia.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Remedium | [ficha/remedium.md](remedium.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Repetitio | [ficha/repetitio.md](repetitio.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Vitale | [ficha/vitale.md](vitale.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
-Somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) podem receber ✅, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido.
+**Catálogo:** fichas cobertas por fechamento validado de fonte/artefato no manifesto alfabético, ou por certificado técnico individual. O ✅ de uma subpasta cobre apenas seu recorte; o provider exige prova de escopo fechado.
+
+**Contrato estático:** somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) recebem ✅ nessa coluna, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido. Hooks e QA exigem seus próprios estados verificados no certificado, sem promoção a partir do catálogo.
 
 Arquivos técnicos de apoio e inventários agregados continuam relevantes, mas não são contabilizados como objetos concluídos. O algoritmo deve ser revisado por provider antes de declarar universo fechado.

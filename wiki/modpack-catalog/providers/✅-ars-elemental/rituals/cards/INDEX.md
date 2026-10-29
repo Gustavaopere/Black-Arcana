@@ -1,26 +1,38 @@
-# Índice técnico para perks — Ars Elemental / Rituals / Cards
+# Índice do catálogo — Ars Elemental / Rituals / Cards
 
-> Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
+> Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
+
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+
+**Fichas catalogadas (somente fichas detectadas): 0/8.**
+
+**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+
+**Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Homologadas para perks (somente fichas detectadas): 0/8.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
-**Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
+**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
-| Estado | Objeto / habilidade identificada | Ficha |
-|---|---|---|
-| ⚠️ | Ritual Archwood Forest | [ficha/ritual_archwood_forest.md](ritual_archwood_forest.md) |
-| ⚠️ | Ritual Archwood Forestation | [ficha/ritual_archwood_forestation.md](ritual_archwood_forestation.md) |
-| ⚠️ | Ritual Attraction | [ficha/ritual_attraction.md](ritual_attraction.md) |
-| ⚠️ | Ritual Detection | [ficha/ritual_detection.md](ritual_detection.md) |
-| ⚠️ | Ritual Pollination | [ficha/ritual_pollination.md](ritual_pollination.md) |
-| ⚠️ | Ritual Repulsion | [ficha/ritual_repulsion.md](ritual_repulsion.md) |
-| ⚠️ | Ritual Squirrels | [ficha/ritual_squirrels.md](ritual_squirrels.md) |
-| ⚠️ | Ritual Tesla Coil | [ficha/ritual_tesla_coil.md](ritual_tesla_coil.md) |
+**Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
+
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+
+| Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
+|---|---|---|---|---|---|
+| ⚠️ | Ritual Archwood Forest | [ficha/ritual_archwood_forest.md](ritual_archwood_forest.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ritual Archwood Forestation | [ficha/ritual_archwood_forestation.md](ritual_archwood_forestation.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ritual Attraction | [ficha/ritual_attraction.md](ritual_attraction.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ritual Detection | [ficha/ritual_detection.md](ritual_detection.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ritual Pollination | [ficha/ritual_pollination.md](ritual_pollination.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ritual Repulsion | [ficha/ritual_repulsion.md](ritual_repulsion.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ritual Squirrels | [ficha/ritual_squirrels.md](ritual_squirrels.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ritual Tesla Coil | [ficha/ritual_tesla_coil.md](ritual_tesla_coil.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
-Somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../../meta/PERK-READY-CERTIFICATIONS.json) podem receber ✅, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido.
+**Catálogo:** fichas cobertas por fechamento validado de fonte/artefato no manifesto alfabético, ou por certificado técnico individual. O ✅ de uma subpasta cobre apenas seu recorte; o provider exige prova de escopo fechado.
+
+**Contrato estático:** somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../../meta/PERK-READY-CERTIFICATIONS.json) recebem ✅ nessa coluna, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido. Hooks e QA exigem seus próprios estados verificados no certificado, sem promoção a partir do catálogo.
 
 Arquivos técnicos de apoio e inventários agregados continuam relevantes, mas não são contabilizados como objetos concluídos. O algoritmo deve ser revisado por provider antes de declarar universo fechado.

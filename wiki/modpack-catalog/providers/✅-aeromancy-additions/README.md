@@ -1,81 +1,31 @@
-# SnackPirate's Aeromancy Additions 1.2.8 — provider dossier
+# SnackPirate's Aeromancy Additions 1.2.8 — catálogo técnico
 
-## Engenharia causal para perks — 17/10/2026
+**✅ Catálogo da versão-fonte: 58/58 fichas documentadas.** O escopo inclui os dez spells ativos e 48 contratos de suporte encontrados nos **205 arquivos rastreados, incluindo 73 Java**, da revisão `ae282b32d25ad76ef8d01c637ec05566a767ae4c`. O [fechamento](SOURCE-CATALOG-CLOSURE-1.2.8.md) e o [manifesto com hashes e mapa de arquivos](SOURCE-CATALOG-MANIFEST-1.2.8.json) delimitam essa conclusão. [Índice e barras atualizados](INDEX.md).
 
-**✅ 10/10 fichas individuais** agora documentam parâmetros de custo/cooldown, geometria, targeting, projectiles, força, duração, atributos, status, DamageSource e alterações de mundo com evidência source-pinned por método: [matriz consolidada](PERK-CAUSAL-ENGINEERING-MATRIX-1.2.8.md), [índice de spells](SPELL-CARDS-1.2.8.md) e [fichas individuais](spells/).
+**Barra documental do provider:** `████████████████████ 100.0%` — 58/58 no escopo da fonte. **Certificação estática para perks: 0/58**; hooks mutadores `NOT_VERIFIED`; QA física `NOT_TESTED`. O [índice geral](../INDEX.md) calcula as barras globais e a fila alfabética. Nenhum Stage ou runtime foi promovido por este fechamento.
 
-**⚠️ Não promover identidade física:** a prova oficial [Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191) confirma 10/10 classes no JAR do publicador 1.2.8, mas o checksum do arquivo *instalado* no histórico sibling é inválido/incompleto (35 caracteres). **COUNTED_SOURCE_PINNED** permanece até hashing físico do JAR instalado; runtime, configuração, Iron's 3.16.3 e QA cliente/servidor continuam pendentes.
+## Conteúdo e autoridade
 
-**Riscos prioritários de perks:** `FlushSpell` chama `level.setBlock(AIR)`, drops e `BucketPickup` sem world-policy ou gate de claims local; percurso BFS limitado a 90/140/190 visitas (níveis 1–3), com potencial risco de propriedades de blocos. `AirstepSpell` usa attachment própria e pacote C2S, com divergência `putFloat`/`getInt` do contador na serialização. `Updraft` usa recasts e UI de stunDuration diferente da lentidão aplicada (100 ticks). `WindCharge` usa windCharge 1.0 + explosão; `Airblast` troca owner do projétil; `WindShield` usa chance de deflexão 30–70% no `ProjectileImpactEvent` da entidade protegida; `FeatherFall` manipula a GRAVITY via modifier nominal provider-owned.
+| Família de fichas | Quantidade | Contratos |
+|---|---:|---|
+| Spells ativos | 10 | [Airblast](spells/airblast.md), [Airstep](spells/airstep.md), [Asphyxiate](spells/asphyxiate.md), [Dash](spells/dash.md), [Feather Fall](spells/feather-fall.md), [Flush](spells/flush.md), [Updraft](spells/updraft.md), [Wind Blade](spells/wind-blade.md), [Wind Charge](spells/wind-charge.md), [Wind Shield](spells/wind-shield.md) |
+| Efeitos e entidades | 11 | [Efeitos](effects/) e [entidades](entities/): aplicação, movimento, impacto, owner, duração, persistência e visual |
+| Itens, atributos e escola | 12 | [Nove itens](items/), [dois atributos](attributes/) e [Wind](schools/wind.md) |
+| Estado, rede e sistemas | 16 | [Attachment](attachments/), [quatro payloads](payloads/), [dois mixins](mixins/) e [nove sistemas](systems/) |
+| Dados e aquisição | 9 | [Dano, tags, receitas, loot, sons, orb, jewelry e helpers não registrados](data-contracts/) |
 
-**Barra por provider:** identidade publicada **10/10 = 100%**, fichas causais **10/10 = 100%**, paridade de arquivo físico ⚠️ condicionada e perks funcionais **⛔ 0 homologadas**. **Barra global: —%** (denominador desconhecido), piso verificado nas autoridades de ledger **1.857 / 1.855 estritos**, +0 novas raízes nesta tranche. `Stage 06.05` 🟡; `Stage 09` físico pendente, PR #825 draft.
+São **10 raízes semânticas ativas**, preservadas como `COUNTED_SOURCE_PINNED`; as novas fichas não acrescentam magias ao ledger semântico. Cinco chamadas de registro comentadas têm [disposição por classe](systems/unregistered-spell-code.md). Entidades e efeitos registrados podem existir mesmo quando o spell correspondente está inativo; assets e nomes de classes não criam IDs ativos.
 
-**⚠️ Auditoria física parcial 2026-10-13:** [JAR oficial: dez registries estáticos verificados, arquivo físico sem SHA válido](EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md), [Java 21 #38431639191](https://github.com/Gustavaopere/Black-Arcana/actions/runs/38431639191) SUCCESS. Publisher file 8251034: 753884 bytes e SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`; modlist sibling #009 confirma a versão instalada 1.2.8, **não** seu checksum completo. `COUNTED_SOURCE_PINNED` permanece; **16/39** exatos/**23/39** pendentes, **+0** raízes, mínimos **1857/1855**. Fonte/defaults abaixo são históricos, não prova de gameplay.
+Iron's mantém autoridade sobre casting, mana, cooldown, aquisição de scrolls e contratos herdados. Aeromancy fornece os spells concretos e seu estado, entidades e efeitos. Um futuro adapter deve usar um consumidor comprovado, respeitar essa autoridade e impedir liquidação duplicada. [Mapa técnico e proveniência](SOURCE-CONTRACTS-1.2.8.md).
 
+## Limites de evidência e prioridades de integração
 
-Status: `COUNTED_SOURCE_PINNED / 10 REGISTERED SPELL IDENTITIES / COMPONENT #64 / CURRENT-HOST RUNTIME QA OPEN`
+Physical JAR SHA-1: **NÃO VERIFICADO** — o hash do publisher não comprova a identidade instalada.
 
-Physical authority: current 595-entry modlist (`SHA-1 7aaece7acbfb07ba4d0c66029042f36c50d046f0`)
-Physical JAR: `aero_additions-1.2.8.jar`
-Physical mod id/version: `aero_additions` / `1.2.8`
-Physical JAR SHA-1: **NÃO VERIFICADO** (registro legado inválido, 35 caracteres: `dee32c9fa84d6e39846608f8f77591ea56f`; não confundir com SHA oficial)
-Physical CurseForge hash: `3079423735`
-Exact public source: `snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c`
-Exact source tree: `fcee08e613fbfa030f034268a0240c8693ab7f45` (`truncated=false`)
+O publisher oficial, arquivo CurseForge `8251034`, tem SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f`. Os 119 recursos da fonte foram comparados e as classes relacionadas por nome e `SourceFile`. Isso não certifica equivalência dos corpos de métodos. O SHA-1 histórico atribuído ao arquivo instalado, `dee32c9fa84d6e39846608f8f77591ea56f`, tem somente **35 caracteres**; a identidade do JAR instalado continua **NOT_VERIFIED**. [Auditoria binária anterior](EXACT-PUBLISHER-SPELLS-1.2.8-PHYSICAL-SHA-BLOCKED.md).
 
-## Fichas por spell
+A fonte compila contra NeoForge `21.1.228` / Iron's `3.16.1`; Black Arcana usa NeoForge `21.1.248` em compile/dev; a autoridade física do pack registra NeoForge `21.1.250` / Iron's `3.16.3`. Aceitação pelo intervalo de dependências não comprova compatibilidade em execução.
 
-As **10 identidades registradas** de Aeromancy Additions 1.2.8 estão materializadas em [`SPELL-CARDS-1.2.8.md`](SPELL-CARDS-1.2.8.md) e nas fichas individuais em `spells/`. A camada preserva `COUNTED_SOURCE_PINNED 10 / +10 strict` e mantém os cinco registros comentados fora do catálogo ativo.
+As fichas destacam mutação de mundo em Flush, estado e autoridade C2S de Airstep, contadores e cleanup, owner após reflexão, força versus dano direto em Wind Charge, deflexão e dodge em Wind Shield, duração aplicada versus tooltip em Updraft e modifiers de Flight. Esses são contratos estáticos e casos de QA; nenhuma falha de gameplay foi declarada reproduzida. [Plano físico pendente](UPSTREAM-TESTS-RUNTIME-QA.md).
 
-## Provider identity
-
-Aeromancy Additions is a mixed Iron's Spells content provider. It owns a Wind school, ten active Iron's `AbstractSpell` registrations, spell-support effects/entities, school gear/items and acquisition support. It is not a UI-only, library-only or compatibility-only component.
-
-The active spell registry at the exact source pin contains exactly:
-
-- `aero_additions:wind_charge`
-- `aero_additions:updraft`
-- `aero_additions:airstep`
-- `aero_additions:asphyxiate`
-- `aero_additions:feather_fall`
-- `aero_additions:wind_shield`
-- `aero_additions:airblast`
-- `aero_additions:wind_blade`
-- `aero_additions:flush`
-- `aero_additions:dash`
-
-`TornadoSpell`, `ThunderclapSpell`, `SummonBreezeSpell`, `TelelinkSpell` and `ShapeshiftSpell` remain present in source/support assets in varying degrees but their `registerSpell(...)` lines are commented out at the audited pin. They are not registry identities and are not counted.
-
-## Registration and authority
-
-`AASpells` creates the provider spell `DeferredRegister` against Iron's `SpellRegistry`. `Aeromancy` calls `AASpells.register(modEventBus)` directly during mod construction. No provider configuration branch around registration was found, and targeted search found no `ForgeConfigSpec`, `ModConfig` or `BooleanValue` gate that conditionally creates/removes these ten identities.
-
-Iron's remains authority for host spell registration/casting, mana, cooldown and Scroll Forge behavior. Aeromancy owns the concrete Wind spells and their provider-specific effects/state. Black Arcana may catalog or later adapt through a verified boundary; it must not duplicate Iron's/Aeromancy casting, cost settlement, cooldowns, projectiles/effects or provider state.
-
-## Host-native reachability
-
-The Wind school is created with Iron's seven-argument `SchoolType` constructor. In Iron's 3.16.3 this defaults to `requiresLearning=false` and `allowLooting=true`.
-
-Provider data puts `minecraft:breeze_rod` in the Wind focus tag and in the host `irons_spellbooks:school_focus` tag. Iron's 3.16.3 Scroll Forge enumerates spells for the matched school and then applies `allowCrafting`, `isEnabled` and `canBeCraftedBy`. Host `DefaultConfig` defaults `enabled=true` and `allowCrafting=true`; `canBeCraftedBy` only adds the learning gate, which Wind does not require. No Aeromancy override of these gates was found for the ten registered classes.
-
-The provider also wires Breeze Rod survival support into Trial Chambers: `data/neoforge/loot_modifiers/global_loot_modifiers.json` registers `aero_additions:trial_chamber_modifiers/normal_vault_modifier`; that modifier targets `minecraft:chests/trial_chambers/reward` and appends `aero_additions:chests/trial_chambers/normal_vault_add`; the appended table contains `minecraft:breeze_rod` with weight 6 and count 5–10. The provider additionally supplies independent embedded-spell item routes for Updraft (`Updraft Tome`) and Wind Blade (`Wind Sword`). These item/support surfaces strengthen reachability evidence but are not counted as extra spell semantics.
-
-Catalog-level conclusion: the ten registered Wind spells have a source-pinned provider/host-native acquisition path, subject to physical-pack configs and runtime behavior that remain QA gates.
-
-## Dependency/version boundary
-
-Source 1.2.8 targets Minecraft 1.21.1, NeoForge 21.1.228 and Iron's 1.21.1-3.16.1. Generated metadata declares Iron's required range `[1.21.1-3.15.0,1.21.1-4.0.0)` and ExpandAbility `[12.0.0,13.0.0)`.
-
-The physical pack uses NeoForge 21.1.248, Iron's 3.16.3 and embeds ExpandAbility 12.0.0 in the Aeromancy JAR. Those values satisfy the provider's declared dependency ranges where applicable, but version-range acceptance is not assembled-runtime PASS evidence.
-
-## Semantic disposition
-
-Aeromancy contributes **+10 `COUNTED_SOURCE_PINNED`** semantic magic objects. The shared-ledger reconciliation promotes the strict minimum from **1322 to 1332** and closes provider component **#64 / 64 of 100**.
-
-This is a catalog/source-pinned promotion only. No assembled-pack runtime PASS is claimed: current-pack client/server boot, required mixins, payload behavior, physical Scroll Forge/config behavior and representative casts remain direct QA gates.
-
-The promotion becomes canonical only after this reconciliation is merged to `main` and the exact merge SHA passes the project post-merge CI gate.
-
-## Clean-room boundary
-
-This audit records identifiers, registry counts/types, dependency declarations, host-contract relationships, mixin/network footprint, acquisition relationships and compatibility risks. It does not copy provider implementation bodies, assets, localization prose, models, sounds or balance text into Black Arcana.
+Os relatórios anteriores de [spells](SPELL-CARDS-1.2.8.md), [matriz causal](PERK-CAUSAL-ENGINEERING-MATRIX-1.2.8.md) e [inventário fonte](EXACT-1.2.8-SPELL-INVENTORY.md) permanecem como evidência histórica. O manifesto e os índices atuais estabelecem o recorte documental vigente. A catalogação registra identificadores e contratos, sem importar implementação ou assets do provider.

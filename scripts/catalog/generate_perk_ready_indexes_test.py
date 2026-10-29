@@ -232,6 +232,98 @@ class GeneratorTests(unittest.TestCase):
         self.assertIn("Homologadas para perks (somente fichas detectadas): 0/1", provider_text)
         self.assertEqual([], checker.check(self.repo)["problems"])
 
+    def test_source_catalog_green_reaches_every_ancestor_and_subfolder_table(self):
+        self.source_scope_fixture()
+        self.render()
+        for folder in (self.root / "✅-sample", self.leaf.parent, self.leaf):
+            with self.subTest(folder=folder):
+                text = (folder / "INDEX.md").read_text()
+                self.assertIn("**Catálogo desta árvore:** ✅", text)
+                self.assertIn("**Fichas catalogadas (somente fichas detectadas): 1/1.**", text)
+                self.assertIn("| ✅ | Air Dash |", text)
+                self.assertIn("| ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |", text)
+                self.assertIn("**Limite da prova do catálogo:**", text)
+        provider = (self.root / "✅-sample/INDEX.md").read_text()
+        self.assertIn("| ✅ | Skills | 1/1 (100.0%) | 0 |", provider)
+        self.assertIn("[Fechamento e limites](../../SOURCE-CLOSURE.md)",
+                      (self.leaf / "INDEX.md").read_text())
+        global_text = (self.root / "INDEX.md").read_text()
+        self.assertTrue(global_text.startswith("# Índice geral — catálogo documentado"))
+        self.assertIn("**Providers com catálogo concluído: 1/1.**", global_text)
+        self.assertIn("**Mods com escopo integral certificado: 0/1.**", global_text)
+        self.assertRegex(global_text, r"\| ✅ \| Sample .* \| 1/1 \(100.0%\) \| 0 \| ⚠️ \| ⚠️ 0/1 verificados \| ⚠️ 0/1 testados \|")
+        self.assertLess(provider.index("**Catálogo desta árvore:** ✅"),
+                        provider.index("**Homologação integral para perks:** ⚠️"))
+
+    def test_publisher_catalog_green_reaches_every_ancestor_without_source_claim(self):
+        self.artifact_scope_fixture()
+        self.render()
+        for folder in (self.root / "✅-sample", self.leaf.parent, self.leaf):
+            text = (folder / "INDEX.md").read_text()
+            self.assertIn("**Catálogo desta árvore:** ✅", text)
+            self.assertIn("paridade de fonte e identidade do artefato instalado não são inferidas", text)
+            self.assertIn("| ✅ | Air Dash |", text)
+            self.assertIn("| ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |", text)
+        self.assertEqual([], checker.check(self.repo)["problems"])
+
+    def test_metrics_are_separate_markdown_paragraphs(self):
+        self.source_scope_fixture()
+        self.render()
+        for path in (self.root / "INDEX.md", self.root / "✅-sample/INDEX.md"):
+            with self.subTest(path=path):
+                lines = path.read_text().splitlines()
+                for index, line in enumerate(lines):
+                    if line.startswith("**") and index + 1 < len(lines):
+                        self.assertEqual("", lines[index + 1])
+
+    def test_checker_rejects_forged_certification_and_catalog_boundary_prose(self):
+        self.source_scope_fixture()
+        cases = (
+            ("✅-sample/INDEX.md",
+             "**Homologação integral para perks:** ⚠️ NÃO HOMOLOGADO como 100%; universo integral ainda depende de validação.",
+             "**Homologação integral para perks:** ✅ 100% certificado com escopo fechado."),
+            ("✅-sample/skills/individual/INDEX.md",
+             "A prova cobre a versão-fonte fixada; identidade do binário instalado não é inferida.",
+             "Identidade do binário instalado: ✅ verificada."),
+            ("INDEX.md", "**Próximo na fila alfabética:** Nenhum.",
+             "**Próximo na fila alfabética:** Wrong Provider."),
+            ("INDEX.md", "**Barra dos providers catalogados:** `████████████████████ 100.0%`",
+             "**Barra dos providers catalogados:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`"),
+        )
+        for relative, original, forged in cases:
+            with self.subTest(index=relative, prose=original):
+                self.render()
+                path = self.root / relative
+                data = path.read_text()
+                self.assertIn(original, data)
+                path.write_text(data.replace(original, forged))
+                self.assertTrue(checker.check(self.repo)["problems"])
+
+    def test_checker_renders_with_one_fresh_proof_snapshot_per_invocation(self):
+        for fixture, validator in ((self.source_scope_fixture, "source_catalog_scope"),
+                                   (self.artifact_scope_fixture, "artifact_catalog_scope")):
+            with self.subTest(validator=validator):
+                card, _, _, _ = fixture()
+                self.render()
+                with patch.object(generator, validator, wraps=getattr(generator, validator)) as validate:
+                    self.assertEqual([], checker.check(self.repo)["problems"])
+                    self.assertEqual(1, validate.call_count)
+                card.write_text(card.read_text() + "Changed after checked snapshot\n")
+                with self.assertRaisesRegex(ValueError, "catalog card changed"):
+                    checker.check(self.repo)
+
+    def test_generator_validates_closure_only_once_per_invocation(self):
+        import contextlib
+        import io
+        for fixture, validator in ((self.source_scope_fixture, "source_catalog_scope"),
+                                   (self.artifact_scope_fixture, "artifact_catalog_scope")):
+            with self.subTest(validator=validator):
+                fixture()
+                with patch.object(generator, validator, wraps=getattr(generator, validator)) as validate:
+                    with patch("sys.argv", ["generate_perk_ready_indexes.py"]), contextlib.redirect_stdout(io.StringIO()):
+                        self.assertEqual(0, generator.main())
+                    self.assertEqual(1, validate.call_count)
+
     def test_source_scope_rejects_new_uncovered_card(self):
         self.source_scope_fixture()
         (self.leaf / "new-effect.md").write_text("# Uncovered\n", encoding="utf8")

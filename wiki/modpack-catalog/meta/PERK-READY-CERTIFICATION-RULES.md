@@ -2,9 +2,16 @@
 
 Esta auditoria é **mais estrita** do que os diretórios legados com prefixo ✅: os nomes antigos significam apenas que um inventário foi criado.
 
-Um ✅ individual exige prova verificável nos campos: identidade e versão exata, comportamento executado e recebedor, parâmetros/fórmulas/limites, targeting e tipos de dano/efeito quando aplicáveis, custos/cooldowns, limites de autoridade/contratos de perks, e validação/testes compatíveis com a alegação. O manifesto guarda o caminho exato da evidência de cada campo. Um campo não aplicável precisa ter prova de não aplicabilidade e nunca deve ser inventado.
+## Estados independentes nos índices
 
-Um provider só recebe ✅ 100% quando:
+A coluna principal **Catálogo** recebe ✅ quando a documentação está comprovada no escopo indicado: fechamento de fonte/artefato validado pelo [registro alfabético](ALPHABETICAL-CATALOG-STATUS.json), ou contrato estático individual certificado. O fechamento de um provider exige evidência própria do universo; alcançar 100% das fichas observadas, isoladamente, não basta. Fechamentos de fonte e artefato selam os hashes de todas as fichas, o mapa completo de arquivos e os limites de identidade/QA.
+
+As colunas **Contrato estático**, **Hooks mutadores** e **QA físico** mantêm suas provas separadas. Um catálogo concluído pode mostrar ✅ e 100% documental enquanto essas três colunas continuam pendentes. O fechamento alfabético não altera o manifesto de certificações para perks. A coluna **Homologação integral para perks** e sua barra usam somente a certificação integral descrita abaixo.
+
+Um ✅ na coluna **Contrato estático** exige prova verificável nos campos: identidade e versão exata, comportamento executado e recebedor, parâmetros/fórmulas/limites, targeting e tipos de dano/efeito quando aplicáveis, custos/cooldowns, limites de autoridade/contratos de perks, e validação/testes compatíveis com a alegação. O manifesto guarda o caminho exato da evidência de cada campo. Um campo não aplicável precisa ter prova de não aplicabilidade e nunca deve ser inventado.
+
+Um provider só recebe ✅ 100% na coluna **Homologação integral para perks** quando:
+
 1. Seu universo catalogável está fechado por fonte verificável atual (todas as famílias mágicas, skills, atributos e sistemas pertinentes);
 2. Todos os objetos foram individualizados (ou exceção semântica justificada) e marcados 100% conforme o manifesto;
 3. A prova do universo fechado, identidade de versões e quaisquer condicionamentos estão documentados;
@@ -27,7 +34,7 @@ Quando houver fichas novas, exclusões, subpastas novas ou evidência suficiente
 
 O workflow "Perk-ready provider index coverage" verifica os índices em PRs que alteram providers, o manifesto, o gerador ou seus testes. Se um objeto novo não aparecer ou se o numerador estiver stale, o CI rejeita o snapshot.
 
-O verificador **não infere** a completude do prefixo antigo da pasta, nem permite ✅ de objeto sem identidade, comportamento, parâmetros, targeting, custos, integração e validação explicitamente documentados. Mesmo uma pasta com todas as fichas concluídas não recebe ✅ de provider até haver fechamento fundamentado do universo de objetos; rosters pontuais de spells não bastam para fechar perks e sistemas de outros tipos.
+O verificador **não infere** a completude do prefixo antigo da pasta, nem permite ✅ de contrato estático sem identidade, comportamento, parâmetros, targeting, custos, integração e validação explicitamente documentados. Mesmo uma pasta com todas as fichas concluídas não recebe ✅ de provider até haver fechamento fundamentado do universo de objetos; rosters pontuais de spells não bastam para fechar perks e sistemas de outros tipos. Os textos e tabelas dos índices também são comparados integralmente com o snapshot gerado; alterar manualmente uma alegação de identidade, homologação ou barra não contorna a validação.
 
 ## Primeiro certificado do recorte estático — Ars Nouveau / Amplify
 
@@ -43,4 +50,4 @@ O manifesto de cada ✅ exige `claim_scope=STATIC_TECHNICAL_CATALOG_ONLY`, `vers
 
 Os links externos de fonte são descritos na ficha, mas não são tratados como arquivos locais comprovados apenas por terem uma URL. Nenhum grau certifica por si só hook mutador, config instalada, QA físico ou universo integral do provider. Os graus que usam source continuam exigindo pin imutável; a inclusão do grau de proveniência de release não remove os requisitos dos graus com prova binária.
 
-**Distinção de percentuais:** o quadro geral mantém dois denominadores independentes: `mods com universo técnico integral fechado / pastas de providers` e `fichas estáticas certificadas / fichas individuais detectadas`. Nenhum dos dois é o total físico universal de tudo que a modlist contém. Um ✅ de ficha não implica ✅ do mod.
+**Distinção de percentuais:** o quadro geral mostra `providers com catálogo concluído / pastas de providers`, `fichas catalogadas / fichas individuais detectadas`, `mods com universo técnico integral certificado / pastas de providers` e `fichas estáticas certificadas / fichas individuais detectadas`. Nenhuma dessas medidas é o total físico universal de tudo que a modlist contém. Um ✅ de ficha não implica ✅ do mod; um ✅ documental não implica hook ou QA aprovado.

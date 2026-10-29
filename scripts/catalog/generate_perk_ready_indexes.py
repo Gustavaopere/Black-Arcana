@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate strict perk-ready indexes; never infer 100% from legacy ✅ folders.
+"""Regenerate catalog indexes with independent static-contract and runtime states.
 
 The denominator is individual Markdown cards found under providers, not every
 possible object in compiled registries or aggregate JSON/catalog documents.
@@ -13,8 +13,11 @@ import re
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import check_perk_ready_indexes as qa
+if __package__:
+    from . import check_perk_ready_indexes as qa
+else:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import check_perk_ready_indexes as qa
 
 ROOT = qa.PROVIDERS
 TICK = chr(96)
@@ -93,7 +96,7 @@ def catalog_manifest_contents(provider: str, manifest: dict, cards: list[Path], 
     """Validate a frozen card/member crosswalk without inferring gameplay QA."""
     hashes = manifest.get("cards")
     actual = {p.relative_to(ROOT).as_posix() for p in cards
-              if ROOT / provider in p.parents}
+              if qa.in_tree(p, ROOT / provider)}
     if not isinstance(hashes, dict) or not hashes or set(hashes) != actual:
         raise ValueError(label + " catalog closure does not cover exactly the detected cards")
     for relative, expected in hashes.items():
@@ -227,7 +230,7 @@ def alphabetical_scope(mods: list[Path], cards: list[Path]) -> dict:
                 or type(item.get("owned_magic_actions")) is not int
                 or item.get("owned_magic_actions") != 0
                 or evidence != item["provider"] + "/README.md"
-                or any(mod in card.parents for card in cards)):
+                or any(qa.in_tree(card, mod) for card in cards)):
             raise ValueError("nonmagical catalog closure has unsupported claims")
         source = ROOT / evidence
         if not source.is_file():
@@ -243,50 +246,70 @@ def alphabetical_scope(mods: list[Path], cards: list[Path]) -> dict:
 
 def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
                     ledger: dict, *, alphabetical: dict | None = None) -> str:
+    alpha = (alphabetical if alphabetical is not None else
+             alphabetical_scope(sorted(p for p in ROOT.iterdir() if p.is_dir()), cards))
+    closed = {item["provider"]: item for item in alpha["completed_prefix"]}
     parts = folder.relative_to(ROOT).parts
     mod = ROOT / parts[0]
-    group = sorted(p for p in cards if folder in p.parents)
+    group = sorted(p for p in cards if qa.in_tree(p, folder))
     complete = sum(qa.certified(p, ledger) for p in group)
+    documented = sum(qa.cataloged(p, ledger, closed) for p in group)
+    catalog_complete = qa.folder_cataloged(folder, cards, ledger, closed)
     manifest_link = "../" * (len(parts) + 1) + "meta/PERK-READY-CERTIFICATIONS.json"
+    catalog_bar = bar(documented, len(group)) if group else (
+        "████████████████████ 100.0% — escopo fechado sem fichas" if catalog_complete
+        else bar(0, 0))
     rows = [
-        "# Índice técnico para perks — " + " / ".join(friendly(x) for x in parts), "",
-        "> Índice das fichas individuais identificadas por nome de arquivo. Uma ficha "
-        "existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, "
-        "integração ou testes.", "",
-        f"**Homologadas para perks (somente fichas detectadas): {complete}/{len(group)}.**",
-        f"**Barra do recorte documental:** {TICK}{bar(complete, len(group))}{TICK}",
-        "**Denominador de todo o conteúdo integrável:** não verificado; o recorte "
-        "não equivale ao progresso total do mod.", "",
+        "# Índice do catálogo — " + " / ".join(friendly(x) for x in parts), "",
+        "> Catálogo documentado, contrato técnico estático, hooks mutadores e QA "
+        "físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.", "",
+        "**Catálogo desta árvore:** " + ("✅ documentado no escopo indicado abaixo."
+            if catalog_complete else "⚠️ conclusão do escopo ainda não comprovada."), "",
+        f"**Fichas catalogadas (somente fichas detectadas): {documented}/{len(group)}.**", "",
+        f"**Barra das fichas catalogadas:** {TICK}{catalog_bar}{TICK}", "",
     ]
-    if folder == mod:
-        alpha = (alphabetical if alphabetical is not None else
-                 alphabetical_scope(sorted(p for p in ROOT.iterdir() if p.is_dir()), cards))
-        closed = {item["provider"]: item for item in alpha["completed_prefix"]}
-        if mod.name in closed:
-            item = closed[mod.name]
-            if item["state"] == "NONMAGICAL_SCOPE_CLOSED":
-                rows += [
-                    "**Catalogação semântica (independente da homologação de perks):** "
-                    "✅ escopo encerrado: 0 feitiços, 0 rituais e 0 habilidades mágicas "
-                    "próprias. Apenas apresentação visual; [evidência](README.md).", ""
-                ]
-            else:
-                proof = Path(item["evidence"]).relative_to(mod.name).as_posix()
-                qualifier = ("da versão-fonte" if item["state"] == "SOURCE_VERSION_CATALOG_CLOSED"
-                             else "do artefato publisher")
-                rows += [
-                    f"**Catalogação {qualifier} (independente da homologação de perks):** "
-                    f"✅ {len(group)}/{len(group)} fichas do escopo documentado; "
-                    f"versão {item['version']}. [Fechamento e limites]({proof}). "
-                    "Hooks mutadores e QA físico continuam pendentes.",
-                    f"**Barra do catálogo {qualifier}:** {TICK}{bar(len(group), len(group))}{TICK}",
-                    ""
-                ]
-        elif mod.name == alpha["next_provider"]:
+    item = closed.get(mod.name)
+    if item:
+        proof = "../" * (len(parts) - 1) + Path(item["evidence"]).relative_to(mod.name).as_posix()
+        if item["state"] == "NONMAGICAL_SCOPE_CLOSED":
+            rows += [
+                "**Catalogação semântica (independente da homologação de perks):** "
+                "✅ escopo encerrado: 0 feitiços, 0 rituais e 0 habilidades mágicas "
+                f"próprias. Apenas apresentação visual; [evidência]({proof}).", ""
+            ]
+        else:
+            qualifier = ("da versão-fonte" if item["state"] == "SOURCE_VERSION_CATALOG_CLOSED"
+                         else "do artefato publisher")
+            boundary = ("A prova cobre a versão-fonte fixada; identidade do binário instalado "
+                        "não é inferida." if item["state"] == "SOURCE_VERSION_CATALOG_CLOSED" else
+                        "A prova cobre o artefato publisher; paridade de fonte e identidade "
+                        "do artefato instalado não são inferidas.")
+            rows += [
+                f"**Catalogação {qualifier} (independente da homologação de perks):** "
+                f"✅ {len(group)}/{len(group)} fichas do escopo documentado; "
+                f"versão {item['version']}. [Fechamento e limites]({proof}). "
+                "Hooks mutadores e QA físico continuam pendentes.", "",
+                f"**Barra do catálogo {qualifier}:** {TICK}{catalog_bar}{TICK}", "",
+                "**Limite da prova do catálogo:** " + boundary, ""
+            ]
+    else:
+        rows += [
+            "**Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos "
+            "certificados sustentam ✅ individual. O universo integral do provider "
+            "continua não verificado; contagens observadas não encerram esse escopo.", ""
+        ]
+        if folder == mod and mod.name == alpha["next_provider"]:
             rows += [
                 "**Fila alfabética:** 🟡 próximo provider a concluir. "
                 "Não presumir 100% a partir de inventário agregado.", ""
             ]
+    rows += [
+        f"**Homologadas para perks (somente fichas detectadas): {complete}/{len(group)}.**", "",
+        f"**Barra dos contratos técnicos estáticos:** {TICK}{bar(complete, len(group))}{TICK}", "",
+        "**Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; "
+        "catálogo concluído não promove hooks mutadores nem QA físico.", ""
+    ]
+    if folder == mod:
         known = ledger.get("known_rosters", {}).get(mod.name)
         if known:
             rows += [
@@ -294,56 +317,65 @@ def directory_index(folder: Path, dirs: list[Path], cards: list[Path],
                 f'([fonte]({known["source"]})). Outros sistemas/objetos podem existir.', ""
             ]
         rows += [
-            ("**Estado técnico global:** ✅ 100% certificado com escopo fechado."
+            ("**Homologação integral para perks:** ✅ 100% certificado com escopo fechado."
              if qa.mod_certified(mod, cards, ledger) else
-             "**Estado técnico global:** ⚠️ NÃO HOMOLOGADO como 100%; "
+             "**Homologação integral para perks:** ⚠️ NÃO HOMOLOGADO como 100%; "
              "universo integral ainda depende de validação."), ""
         ]
     elif group and complete == len(group):
         rows += [
-            "**Estado desta subpasta:** ✅ contratos técnicos estáticos de todas as "
+            "**Contratos desta subpasta:** ✅ contratos técnicos estáticos de todas as "
             "fichas detectadas certificados; recorte documental, sem homologação "
             "de hooks mutadores, QA físico ou universo integral do provider.", ""
         ]
     else:
-        rows += [
-            "**Estado desta subpasta:** ⚠️ validação técnica individual pendente; "
-            "status histórico de catálogo não é certificação.", ""
-        ]
+        rows += ["**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.", ""]
     if group:
-        rows += ["| Estado | Objeto / habilidade identificada | Ficha |", "|---|---|---|"]
+        rows += ["| Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |",
+                 "|---|---|---|---|---|---|"]
         for card in group:
             rel = card.relative_to(folder).as_posix()
             category = "/".join(card.relative_to(folder).parts[:-1]) or "ficha"
-            symbol = "✅" if qa.certified(card, ledger) else "⚠️"
-            rows.append(f"| {symbol} | {friendly(card.stem)} | "
-                        f"[{category}/{card.name}]({rel}) |")
+            catalog, static, hook, physical = qa.card_states(card, ledger, closed)
+            rows.append(f"| {catalog} | {friendly(card.stem)} | "
+                        f"[{category}/{card.name}]({rel}) | {static} | {hook} | {physical} |")
     else:
         rows += [
             "*Nenhuma ficha individual detectada nesta árvore pelas regras conservadoras.* "
-            "Isso **não significa zero** magias/habilidades: podem existir inventários "
-            "agregados, JSONs, classes ou registros ainda não desmembrados.", ""
+            + ("O fechamento acima documenta o escopo sem ações mágicas próprias."
+               if item and item["state"] == "NONMAGICAL_SCOPE_CLOSED" else
+               "Isso **não significa zero** magias/habilidades: podem existir inventários "
+               "agregados, JSONs, classes ou registros ainda não desmembrados."), ""
         ]
     children = sorted(d for d in dirs if d.parent == folder)
     if children:
         rows += ["", "## Subpastas", "",
-                 "| Subpasta | Fichas individuais detectadas | Índice |", "|---|---:|---|"]
+                 "| Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |",
+                 "|---|---|---:|---:|---|"]
         for child in children:
-            count = sum(child in card.parents for card in cards)
-            rows.append(f"| {friendly(child.name)} | {count} | "
+            selected = [card for card in cards if qa.in_tree(card, child)]
+            mark = "✅" if qa.folder_cataloged(child, cards, ledger, closed) else "⚠️"
+            static = sum(qa.certified(card, ledger) for card in selected)
+            rows.append(f"| {mark} | {friendly(child.name)} | "
+                        f"{qa.observed_catalog_count(selected, ledger, closed)} | {static} | "
                         f"[Abrir índice]({child.name}/INDEX.md) |")
     rows += [
         "", "## Critério do ✅", "",
-        "Somente fichas individualmente auditadas no manifesto "
-        f"[PERK-READY-CERTIFICATIONS.json]({manifest_link}) podem receber ✅, "
+        "**Catálogo:** fichas cobertas por fechamento validado de fonte/artefato no "
+        "manifesto alfabético, ou por certificado técnico individual. O ✅ de uma "
+        "subpasta cobre apenas seu recorte; o provider exige prova de escopo fechado.", "",
+        "**Contrato estático:** somente fichas individualmente auditadas no manifesto "
+        f"[PERK-READY-CERTIFICATIONS.json]({manifest_link}) recebem ✅ nessa coluna, "
         "exigindo identidade, comportamento, parâmetros, targeting, custos, "
         "boundary de integração e validação documentados. Hook inseguro ou "
-        "desconhecido nunca é presumido.", "",
+        "desconhecido nunca é presumido. Hooks e QA exigem seus próprios estados "
+        "verificados no certificado, sem promoção a partir do catálogo.", "",
         "Arquivos técnicos de apoio e inventários agregados continuam relevantes, "
         "mas não são contabilizados como objetos concluídos. O algoritmo deve "
         "ser revisado por provider antes de declarar universo fechado.", ""
     ]
     return "\n".join(rows)
+
 
 def global_index(mods: list[Path], cards: list[Path], ledger: dict, *,
                  alphabetical: dict | None = None) -> str:
@@ -355,16 +387,19 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict, *,
     artifact_closed = sum(item["state"] == "PUBLISHER_ARTIFACT_CATALOG_CLOSED"
                           for item in closed.values())
     next_mod = alpha["next_provider"]
+    catalog_done = sum(qa.mod_cataloged(mod, cards, ledger, closed) for mod in mods)
+    documented = sum(qa.cataloged(card, ledger, closed) for card in cards)
     done = sum(qa.mod_certified(mod, cards, ledger) for mod in mods)
     object_done = sum(qa.certified(card, ledger) for card in cards)
     rows = [
-        "# Índice geral — certificação 100% para perks", "",
-        "> Os prefixos ✅ antigos significam inventário histórico, não 100% técnico "
-        "para perks.", "",
-        f"**Mods com escopo integral certificado: {done}/{len(mods)}.**",
-        f"**Fichas com contrato técnico estático certificado: {object_done}/{len(cards)}.**",
-        f"**Barra das fichas estáticas observadas:** {TICK}{bar(object_done, len(cards))}{TICK}",
-        f"**Progresso global confirmado:** {TICK}{bar(done, len(mods))}{TICK}",
+        "# Índice geral — catálogo documentado", "",
+        "> ✅ na coluna Catálogo indica documentação comprovada no escopo informado. "
+        "Contratos estáticos, hooks mutadores e QA físico têm estados separados; "
+        "prefixos ✅ antigos não constituem prova.", "",
+        f"**Providers com catálogo concluído: {catalog_done}/{len(mods)}.**", "",
+        f"**Barra dos providers catalogados:** {TICK}{bar(catalog_done, len(mods))}{TICK}", "",
+        f"**Fichas catalogadas (somente fichas detectadas): {documented}/{len(cards)}.**", "",
+        f"**Barra das fichas catalogadas:** {TICK}{bar(documented, len(cards))}{TICK}", "",
         "**Escopo:** pastas atuais de providers; a modlist pode conter outros "
         "mods/sistemas ainda não representados. Objetos ausentes do catálogo "
         "não são presumidos inexistentes.", "",
@@ -374,16 +409,24 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict, *,
         "da versão-fonte documentado"
         + (f" e {artifact_closed} com catálogo do artefato publisher documentado"
            if artifact_closed else "") + ". "
-        "Esse contador NÃO equivale a providers perk-ready.",
-        f"**Barra da revisão alfabética:** {TICK}{bar(len(closed), len(mods))}{TICK}",
+        "Esse contador NÃO equivale a providers perk-ready.", "",
+        f"**Barra da revisão alfabética:** {TICK}{bar(len(closed), len(mods))}{TICK}", "",
         f"**Próximo na fila alfabética:** {friendly(next_mod) if next_mod else 'Nenhum'}.", "",
-        "| Estado 100% | Mod/provider | Fichas individuais candidatas | "
-        "Fichas 100% certificadas | Índice |", "|---|---|---:|---:|---|",
+        f"**Fichas com contrato técnico estático certificado: {object_done}/{len(cards)}.**", "",
+        f"**Barra das fichas estáticas observadas:** {TICK}{bar(object_done, len(cards))}{TICK}", "",
+        f"**Mods com escopo integral certificado: {done}/{len(mods)}.**", "",
+        f"**Progresso global confirmado (homologação integral para perks):** {TICK}{bar(done, len(mods))}{TICK}", "",
+        "**Limite da homologação:** catálogo concluído não certifica contratos de perks, "
+        "hooks mutadores nem QA físico. Os contadores técnicos acima continuam independentes.", "",
+        "| Catálogo | Mod/provider | Fichas catalogadas / observadas | Contratos estáticos | "
+        "Homologação integral para perks | Hooks mutadores | QA físico | Índice |",
+        "|---|---|---:|---:|---|---|---|---|",
     ]
     for mod in mods:
-        selected = [p for p in cards if mod in p.parents]
+        selected = [p for p in cards if qa.in_tree(p, mod)]
         certified = sum(qa.certified(p, ledger) for p in selected)
-        state = "✅" if qa.mod_certified(mod, cards, ledger) else "⚠️"
+        strict = qa.mod_certified(mod, cards, ledger)
+        state = "✅" if qa.mod_cataloged(mod, cards, ledger, closed) else "⚠️"
         display = friendly(mod.name)
         if mod.name in closed:
             display += (" — ✅ escopo semântico encerrado (0 ações mágicas)"
@@ -393,18 +436,21 @@ def global_index(mods: list[Path], cards: list[Path], ledger: dict, *,
                         " — ✅ catálogo do artefato publisher documentado")
         elif mod.name == next_mod:
             display += " — 🟡 próximo na fila"
+        hook = qa.runtime_summary(selected, ledger, "mutating_hook", universe_closed=strict)
+        physical = qa.runtime_summary(selected, ledger, "physical_qa", universe_closed=strict)
         rows.append(f"| {state} | {display} | "
-                    f"{len(selected) if selected else '—'} | {certified} | "
+                    f"{qa.observed_catalog_count(selected, ledger, closed)} | {certified} | "
+                    f"{'✅' if strict else '⚠️'} | {hook} | {physical} | "
                     f"[Ver fichas]({mod.name}/INDEX.md) |")
     rows += [
-        "", "**Legenda:** ✅ 100% certificado; ⚠️ parcial/condicionado ou ainda não "
-        "homologado; ❌ não catalogado após auditoria específica; 🟡 em implementação; "
-        "⛔ bloqueado por contrato. Ausência de ficha detectada não prova que "
-        "não exista conteúdo.", "",
-        "**Atenção:** as fichas candidatas são um recorte documental, NÃO o "
-        "universo total de feitiços e sistemas. A barra de fichas estáticas observadas "
-        "usa certificados/fichas detectadas. A barra Progresso global confirmado "
-        "usa providers com escopo integral certificado.", ""
+        "", "**Legenda:** ✅ na coluna Catálogo = documentação comprovada no escopo "
+        "indicado; ✅ nas colunas técnicas = prova específica daquela coluna; "
+        "⚠️ = pendente ou escopo ainda não fechado; 🟡 = próximo na fila. "
+        "Ausência de ficha detectada não prova que não exista conteúdo.", "",
+        "**Limite dos percentuais:** fichas catalogadas / observadas mede apenas o recorte "
+        "documental detectado. Mesmo 100% nessa coluna não fecha o universo de um provider "
+        "sem evidência própria. A barra dos providers catalogados usa fechamentos de catálogo; "
+        "a barra de homologação integral usa somente providers certificados para perks.", ""
     ]
     return "\n".join(rows)
 
@@ -415,22 +461,8 @@ def main() -> int:
     args = p.parse_args()
     if args.check:
         result = qa.check()
-        ledger = qa.read_ledger(qa.LEDGER)
-        dirs, mods, cards = qa.inventory()
-        alpha = alphabetical_scope(mods, cards)
-        # Verify the generated alphabetical ledger text as well as the numeric
-        # index contract, so catalog status cannot be silently hand-edited.
-        expected = global_index(mods, cards, ledger, alphabetical=alpha)
-        if (ROOT / "INDEX.md").read_text(encoding="utf8") != expected:
-            result["problems"].append("global alphabetical catalog status drift")
-        watched = {item["provider"] for item in alpha["completed_prefix"]}
-        if alpha["next_provider"]:
-            watched.add(alpha["next_provider"])
-        for name in watched:
-            folder = ROOT / name
-            expected_mod = directory_index(folder, dirs, cards, ledger, alphabetical=alpha)
-            if (folder / "INDEX.md").read_text(encoding="utf8") != expected_mod:
-                result["problems"].append("provider alphabetical catalog status drift: " + name)
+        # The checker validates every index using one fresh, shared catalog proof
+        # snapshot. Do not reread/hash closure manifests per folder or a second time.
         print(f"INDEX CHECK: {result['expected_indexes']} indexes, "
               f"{result['candidate_cards']} candidate cards, "
               f"{len(result['problems'])} errors")

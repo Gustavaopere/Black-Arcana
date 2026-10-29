@@ -1,34 +1,46 @@
-# Índice técnico para perks — Irons Spells / Ender
+# Índice do catálogo — Irons Spells / Ender
 
-> Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
+> Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
+
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+
+**Fichas catalogadas (somente fichas detectadas): 0/16.**
+
+**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+
+**Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Homologadas para perks (somente fichas detectadas): 0/16.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
-**Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
+**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
-| Estado | Objeto / habilidade identificada | Ficha |
-|---|---|---|
-| ⚠️ | Arcane Shackle | [ficha/arcane-shackle.md](arcane-shackle.md) |
-| ⚠️ | Black Hole | [ficha/black-hole.md](black-hole.md) |
-| ⚠️ | Counterspell | [ficha/counterspell.md](counterspell.md) |
-| ⚠️ | Dragons Breath | [ficha/dragons-breath.md](dragons-breath.md) |
-| ⚠️ | Echoing Strikes | [ficha/echoing-strikes.md](echoing-strikes.md) |
-| ⚠️ | Evasion | [ficha/evasion.md](evasion.md) |
-| ⚠️ | Gravity Fissure | [ficha/gravity-fissure.md](gravity-fissure.md) |
-| ⚠️ | Magic Arrow | [ficha/magic-arrow.md](magic-arrow.md) |
-| ⚠️ | Magic Missile | [ficha/magic-missile.md](magic-missile.md) |
-| ⚠️ | Portal | [ficha/portal.md](portal.md) |
-| ⚠️ | Recall | [ficha/recall.md](recall.md) |
-| ⚠️ | Shadow Slash | [ficha/shadow-slash.md](shadow-slash.md) |
-| ⚠️ | Starfall | [ficha/starfall.md](starfall.md) |
-| ⚠️ | Summon Ender Chest | [ficha/summon-ender-chest.md](summon-ender-chest.md) |
-| ⚠️ | Summon Swords | [ficha/summon-swords.md](summon-swords.md) |
-| ⚠️ | Teleport | [ficha/teleport.md](teleport.md) |
+**Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
+
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+
+| Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
+|---|---|---|---|---|---|
+| ⚠️ | Arcane Shackle | [ficha/arcane-shackle.md](arcane-shackle.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Black Hole | [ficha/black-hole.md](black-hole.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Counterspell | [ficha/counterspell.md](counterspell.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Dragons Breath | [ficha/dragons-breath.md](dragons-breath.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Echoing Strikes | [ficha/echoing-strikes.md](echoing-strikes.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Evasion | [ficha/evasion.md](evasion.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravity Fissure | [ficha/gravity-fissure.md](gravity-fissure.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Magic Arrow | [ficha/magic-arrow.md](magic-arrow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Magic Missile | [ficha/magic-missile.md](magic-missile.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Portal | [ficha/portal.md](portal.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Recall | [ficha/recall.md](recall.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Shadow Slash | [ficha/shadow-slash.md](shadow-slash.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Starfall | [ficha/starfall.md](starfall.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Summon Ender Chest | [ficha/summon-ender-chest.md](summon-ender-chest.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Summon Swords | [ficha/summon-swords.md](summon-swords.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Teleport | [ficha/teleport.md](teleport.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
-Somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) podem receber ✅, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido.
+**Catálogo:** fichas cobertas por fechamento validado de fonte/artefato no manifesto alfabético, ou por certificado técnico individual. O ✅ de uma subpasta cobre apenas seu recorte; o provider exige prova de escopo fechado.
+
+**Contrato estático:** somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) recebem ✅ nessa coluna, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido. Hooks e QA exigem seus próprios estados verificados no certificado, sem promoção a partir do catálogo.
 
 Arquivos técnicos de apoio e inventários agregados continuam relevantes, mas não são contabilizados como objetos concluídos. O algoritmo deve ser revisado por provider antes de declarar universo fechado.
