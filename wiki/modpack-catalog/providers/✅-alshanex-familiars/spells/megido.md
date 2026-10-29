@@ -38,3 +38,9 @@ Read-only exact-artifact factual inspection only. No upstream implementation or 
 O [audit binário de constantes literais](../EXACT-4.0.3-MEGIDO-RANGE-RADIUS-LITERALS-20261029.md) validou o publisher JAR 4.0.3 contra SHA-1 `e5051c2385a426d05bf203ba8081a23d891f6686` e comprovou no método **sem parâmetros** `MegidoSpell.getRange():float` um retorno direto de **15.0F**, e em `MegidoSpell.getRadius():float`, **10.0F**. Foi feito pelo [CI run 40935905518](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40935905518), artifact `12925410592`. Ambos têm status `EXACT_DIRECT_FLOAT_LITERAL`.
 
 **Limite:** estes são valores retornados pelos getters exatos, **não** prova de alcance/raio efetivo em todos os estágios de `onCast`. Consumidores, escala de `getMaxConnections`, fórmulas de dano, custo, cooldown e mutabilidade por perk ainda `NOT_VERIFIED`; `physical_qa=NOT_TESTED`, nenhum hook certificado.
+
+## Chamadas diretas aos getters — JAR exato 4.0.3 (29/10/2026)
+
+A [auditoria read-only das chamadas](../EXACT-4.0.3-MEGIDO-GETTER-CALLSITES-20261029.md) comprovou no SHA-1 físico `e5051c2385a426d05bf203ba8081a23d891f6686` que **`onCast` chama diretamente `getRange():float` uma vez e `getRadius():float` uma vez**. Na própria classe `MegidoSpell`, `getUniqueInfo` também chama cada getter **uma vez**: total **2 referências diretas** para cada getter. [Run 40938851308](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40938851308), artifact `12925712688`, job `megido_consumer_audit` SUCCESS, seis testes sintéticos aprovados.
+
+Os retornos literais **15.0F** e **10.0F** da auditoria anterior têm, portanto, callsites exatos em `onCast`. Isso **não** valida o uso do retorno na geometria ou o valor de AOE/range final: fluxo após chamada, alvos, maxConnections e classes de efeito permanecem `NOT_VERIFIED`; hook mutador `NOT_VERIFIED`, QA física `NOT_TESTED`.
