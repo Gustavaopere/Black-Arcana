@@ -1,47 +1,59 @@
-# Índice técnico para perks — Bloodlines / Actions
+# Índice do catálogo — Bloodlines / Actions
 
-> Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
+> Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
+
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+
+**Fichas catalogadas (somente fichas detectadas): 0/29.**
+
+**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+
+**Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Homologadas para perks (somente fichas detectadas): 0/29.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
-**Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
+**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
-| Estado | Objeto / habilidade identificada | Ficha |
-|---|---|---|
-| ⚠️ | Bloodknight Blood Extraction Action | [ficha/bloodknight-blood-extraction-action.md](bloodknight-blood-extraction-action.md) |
-| ⚠️ | Bloodknight Blood Hunt Action | [ficha/bloodknight-blood-hunt-action.md](bloodknight-blood-hunt-action.md) |
-| ⚠️ | Bloodknight Crimson Leap Action | [ficha/bloodknight-crimson-leap-action.md](bloodknight-crimson-leap-action.md) |
-| ⚠️ | Bloodknight Day Walker Action | [ficha/bloodknight-day-walker-action.md](bloodknight-day-walker-action.md) |
-| ⚠️ | Bloodknight Sanguine Infusion Action | [ficha/bloodknight-sanguine-infusion-action.md](bloodknight-sanguine-infusion-action.md) |
-| ⚠️ | Ectotherm Dolphin Leap Action | [ficha/ectotherm-dolphin-leap-action.md](ectotherm-dolphin-leap-action.md) |
-| ⚠️ | Ectotherm Frostlord Action | [ficha/ectotherm-frostlord-action.md](ectotherm-frostlord-action.md) |
-| ⚠️ | Ectotherm Ink Splash Action | [ficha/ectotherm-ink-splash-action.md](ectotherm-ink-splash-action.md) |
-| ⚠️ | Gravebound Crit Action | [ficha/gravebound-crit-action.md](gravebound-crit-action.md) |
-| ⚠️ | Gravebound Devour Soul Action | [ficha/gravebound-devour-soul-action.md](gravebound-devour-soul-action.md) |
-| ⚠️ | Gravebound End Mist Form Action | [ficha/gravebound-end-mist-form-action.md](gravebound-end-mist-form-action.md) |
-| ⚠️ | Gravebound Ghost Walk Action | [ficha/gravebound-ghost-walk-action.md](gravebound-ghost-walk-action.md) |
-| ⚠️ | Gravebound Lingering Devour | [ficha/gravebound-lingering-devour.md](gravebound-lingering-devour.md) |
-| ⚠️ | Gravebound Mist Form Action | [ficha/gravebound-mist-form-action.md](gravebound-mist-form-action.md) |
-| ⚠️ | Gravebound Phylactery Soul Transfer Action | [ficha/gravebound-phylactery-soul-transfer-action.md](gravebound-phylactery-soul-transfer-action.md) |
-| ⚠️ | Gravebound Phylactery Teleport Action | [ficha/gravebound-phylactery-teleport-action.md](gravebound-phylactery-teleport-action.md) |
-| ⚠️ | Gravebound Possession Action | [ficha/gravebound-possession-action.md](gravebound-possession-action.md) |
-| ⚠️ | Gravebound Possession Swap Action | [ficha/gravebound-possession-swap-action.md](gravebound-possession-swap-action.md) |
-| ⚠️ | Gravebound Soul Claiming | [ficha/gravebound-soul-claiming.md](gravebound-soul-claiming.md) |
-| ⚠️ | Gravebound Soul Infusion Action | [ficha/gravebound-soul-infusion-action.md](gravebound-soul-infusion-action.md) |
-| ⚠️ | Noble Celerity Action | [ficha/noble-celerity-action.md](noble-celerity-action.md) |
-| ⚠️ | Noble Flank Action | [ficha/noble-flank-action.md](noble-flank-action.md) |
-| ⚠️ | Noble Invisibility Action | [ficha/noble-invisibility-action.md](noble-invisibility-action.md) |
-| ⚠️ | Noble Leeching Action | [ficha/noble-leeching-action.md](noble-leeching-action.md) |
-| ⚠️ | Noble Mesmerise Action | [ficha/noble-mesmerise-action.md](noble-mesmerise-action.md) |
-| ⚠️ | Zealot Darkcloak Action | [ficha/zealot-darkcloak-action.md](zealot-darkcloak-action.md) |
-| ⚠️ | Zealot Frenzy Action | [ficha/zealot-frenzy-action.md](zealot-frenzy-action.md) |
-| ⚠️ | Zealot Shadowwalk Action | [ficha/zealot-shadowwalk-action.md](zealot-shadowwalk-action.md) |
-| ⚠️ | Zealot Wall Climb Action | [ficha/zealot-wall-climb-action.md](zealot-wall-climb-action.md) |
+**Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
+
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+
+| Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
+|---|---|---|---|---|---|
+| ⚠️ | Bloodknight Blood Extraction Action | [ficha/bloodknight-blood-extraction-action.md](bloodknight-blood-extraction-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Bloodknight Blood Hunt Action | [ficha/bloodknight-blood-hunt-action.md](bloodknight-blood-hunt-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Bloodknight Crimson Leap Action | [ficha/bloodknight-crimson-leap-action.md](bloodknight-crimson-leap-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Bloodknight Day Walker Action | [ficha/bloodknight-day-walker-action.md](bloodknight-day-walker-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Bloodknight Sanguine Infusion Action | [ficha/bloodknight-sanguine-infusion-action.md](bloodknight-sanguine-infusion-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ectotherm Dolphin Leap Action | [ficha/ectotherm-dolphin-leap-action.md](ectotherm-dolphin-leap-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ectotherm Frostlord Action | [ficha/ectotherm-frostlord-action.md](ectotherm-frostlord-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Ectotherm Ink Splash Action | [ficha/ectotherm-ink-splash-action.md](ectotherm-ink-splash-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound Crit Action | [ficha/gravebound-crit-action.md](gravebound-crit-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound Devour Soul Action | [ficha/gravebound-devour-soul-action.md](gravebound-devour-soul-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound End Mist Form Action | [ficha/gravebound-end-mist-form-action.md](gravebound-end-mist-form-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound Ghost Walk Action | [ficha/gravebound-ghost-walk-action.md](gravebound-ghost-walk-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound Lingering Devour | [ficha/gravebound-lingering-devour.md](gravebound-lingering-devour.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound Mist Form Action | [ficha/gravebound-mist-form-action.md](gravebound-mist-form-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound Phylactery Soul Transfer Action | [ficha/gravebound-phylactery-soul-transfer-action.md](gravebound-phylactery-soul-transfer-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound Phylactery Teleport Action | [ficha/gravebound-phylactery-teleport-action.md](gravebound-phylactery-teleport-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound Possession Action | [ficha/gravebound-possession-action.md](gravebound-possession-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound Possession Swap Action | [ficha/gravebound-possession-swap-action.md](gravebound-possession-swap-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound Soul Claiming | [ficha/gravebound-soul-claiming.md](gravebound-soul-claiming.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gravebound Soul Infusion Action | [ficha/gravebound-soul-infusion-action.md](gravebound-soul-infusion-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Noble Celerity Action | [ficha/noble-celerity-action.md](noble-celerity-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Noble Flank Action | [ficha/noble-flank-action.md](noble-flank-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Noble Invisibility Action | [ficha/noble-invisibility-action.md](noble-invisibility-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Noble Leeching Action | [ficha/noble-leeching-action.md](noble-leeching-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Noble Mesmerise Action | [ficha/noble-mesmerise-action.md](noble-mesmerise-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Zealot Darkcloak Action | [ficha/zealot-darkcloak-action.md](zealot-darkcloak-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Zealot Frenzy Action | [ficha/zealot-frenzy-action.md](zealot-frenzy-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Zealot Shadowwalk Action | [ficha/zealot-shadowwalk-action.md](zealot-shadowwalk-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Zealot Wall Climb Action | [ficha/zealot-wall-climb-action.md](zealot-wall-climb-action.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
-Somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) podem receber ✅, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido.
+**Catálogo:** fichas cobertas por fechamento validado de fonte/artefato no manifesto alfabético, ou por certificado técnico individual. O ✅ de uma subpasta cobre apenas seu recorte; o provider exige prova de escopo fechado.
+
+**Contrato estático:** somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) recebem ✅ nessa coluna, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido. Hooks e QA exigem seus próprios estados verificados no certificado, sem promoção a partir do catálogo.
 
 Arquivos técnicos de apoio e inventários agregados continuam relevantes, mas não são contabilizados como objetos concluídos. O algoritmo deve ser revisado por provider antes de declarar universo fechado.

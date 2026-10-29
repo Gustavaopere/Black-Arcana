@@ -35,7 +35,20 @@
       "evidence": "✅-acolyte/ARTIFACT-CATALOG-CLOSURE-1.0.3.md",
       "catalog_manifest": "✅-acolyte/ARTIFACT-CATALOG-MANIFEST-1.0.3.json",
       "note": "74 editorial contracts mapped to all359regularZIPmembers/93classes;110directoriesretained. Publisher-only documentation;0ownspells. Installedbyteequality,mutatorsandphysicalQAunverified."
+    },
+    {
+      "provider": "✅-aeromancy-additions",
+      "state": "SOURCE_VERSION_CATALOG_CLOSED",
+      "source_revision": "snackerpirater/aero-additions@ae282b32d25ad76ef8d01c637ec05566a767ae4c",
+      "version": "1.2.8",
+      "artifact_sha1": "dee32c9fa84a9b3796e39846608f8f77591ea56f",
+      "installed_artifact_identity": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutating_hook": "NOT_VERIFIED",
+      "evidence": "✅-aeromancy-additions/SOURCE-CATALOG-CLOSURE-1.2.8.md",
+      "catalog_manifest": "✅-aeromancy-additions/SOURCE-CATALOG-MANIFEST-1.2.8.json",
+      "note": "58 individual contracts map all 205 tracked source files, including 73 Java. Ten active spell roots preserved; 48 support cards added. Publisher resources and class names inspected; installed identity, mutators and physical QA unverified."
     }
   ],
-  "next_provider": "✅-aeromancy-additions"
+  "next_provider": "✅-alexs-caves-continued"
 }

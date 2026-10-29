@@ -23,6 +23,8 @@ O source pin contém uma chamada ativa `registerSpell(new DashSpell())` para est
 
 ## Evidence boundary
 
+Estado documental: `documentary=SOURCE_PINNED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; identidade instalada **NOT_VERIFIED**; certificação **0**. [Contrato comum](../SOURCE-CONTRACTS-1.2.8.md) · [manifesto](../SOURCE-CATALOG-MANIFEST-1.2.8.json) · [fechamento](../SOURCE-CATALOG-CLOSURE-1.2.8.md).
+
 Esta ficha fecha ID, classe registrada, ownership, escola Wind e estado semântico source-pinned. Mecânica quantitativa, custo, cooldown, acquisition settlement, networking, compatibilidade e comportamento no modpack físico permanecem QA separado quando não explicitamente fechados pelo dossiê.
 
 Source: `../EXACT-1.2.8-SPELL-INVENTORY.md`.
@@ -33,9 +35,11 @@ Source: `../EXACT-1.2.8-SPELL-INVENTORY.md`.
 
 **Raiz `aero_additions:dash` — Dash.** Source-only; dados de domínio, raio, alvo e duração são mensurados conforme os métodos abaixo, quando aplicáveis.
 
+Os pares **base/per-level** abaixo são campos literais entregues a `AbstractSpell`; não significam `base + per-level×level`. Avaliação de nível, atributos/config e custo/cooldown efetivo pertencem ao host.
+
 | Eixo | Observação fonte-fixada | Mutabilidade por perk |
 |---|---|---|
-| Cast/stats | INSTANT, level 1–5, cooldown 2s, baseMana 20+2/nível, power 10+5/nível, castTime 0. | Sem duplicar gasto ou cooldown do host. |
+| Cast/stats | INSTANT, level 1–5, cooldown 2s, mana base/per-level **20/2**, power base/per-level **10/5**, castTime 0. | Sem duplicar gasto ou cooldown do host. |
 | Vetor/cinemática | multiplier `(15+getSpellPower)/12`. Direção = lookAngle.multiply(2,1,2).normalize().scale(multiplier). Em onCast grava ImpulseCastData + setDeltaMovement usando lerp(1,old,vec)=vec, sobrescrevendo velocidade anterior; em onClientCast soma vetor recebido ao movimento client existente. | Risco de divergência server set vs client add, não bug medido; QA jitter/desync. |
 | Proteção | onCast define invulnerableTime=20 e envia DashParticlesPacket a tracking entity + self; não cria DamageSource nem invoca hurt neste body. | Alteração de i-frames/velocity per-player ⛔ sem seam; não confundir invulnerableTime com blindagem universal. |
 | Alvo/range | Self movement, sem AOE/projétil, move na direção do olhar; velocidade depende do power efetivo do caster. | Perk de distance/speed exigiria modificar vetor na origem, antes da replicação. |
@@ -44,3 +48,7 @@ Source: `../EXACT-1.2.8-SPELL-INVENTORY.md`.
 **Localizadores:** [DashSpell.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/dash/DashSpell.java#L25-L85).
 
 **QA pendente e fail-closed:** QA direções extremas, motion server-vs-client, 20 i-frames, speed de atributos, colisão/claims, reconnect e cost/animation. Os valores são defaults ou constantes, não provas de execução em servidor/cliente. **+0 novas magias; +0 adapters aprovados.**
+
+## Contratos de suporte — 28/10/2026
+
+Registro ativo e vínculo ao event bus: [AASpells.java L53–78](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/AASpells.java#L53-L78). Consumidores documentados: [payload de partículas](../payloads/dash-particles.md). Auxiliares não criam raízes adicionais: esta ficha preserva contribuição estrita **1**, enriquecimento **+0**.

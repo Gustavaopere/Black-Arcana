@@ -1,0 +1,25 @@
+# Wind Spell Resistance
+
+- Provider: **SnackPirate's Aeromancy Additions**, `aero_additions` `1.2.8`.
+- Identidade: `aero_additions:wind_magic_resist`.
+- Superfície: atributo registrado (`MagicRangedAttribute`); contribuição ao contador estrito de spells: **0**.
+
+**Teto de evidência:** fonte imutável `ae282b32d25ad76ef8d01c637ec05566a767ae4c`; presença do contrato no JAR oficial de publicação `8251034` quando indicada. O JAR publisher tem 753884 bytes, SHA-1 `dee32c9fa84a9b3796e39846608f8f77591ea56f` e SHA-256 `b2dad354467a2cf1a92519ba68c8e2c32807a976d7b235132d625b7f0f90eea8`. Isso não comprova igualdade com o JAR instalado: o checksum histórico instalado tem 35 caracteres inválidos e permanece **`NOT_VERIFIED`**. [Contrato comum](../SOURCE-CONTRACTS-1.2.8.md) · [fechamento](../SOURCE-CATALOG-CLOSURE-1.2.8.md).
+
+## Registro e consumidor
+
+`AASpells.Attributes.newResistanceAttribute("wind")` cria atributo de descrição **`attribute.aero_additions.wind_magic_resist`**, default **1.0**, intervalo declarado **[−100,100]**, **syncable=true**, no registry vanilla de atributos. `AASpells.register` registra o DeferredRegister; `AAServerEvents.addAttributes` concede o atributo ao tipo **PLAYER**. A escola **`aero_additions:wind`** usa este holder como resistência; gear/orbs do Aero inspecionados concedem potência, não um bônus de resistência Wind.
+
+**Fórmula host separada (Iron's 3.16.3, pin `e4056af90302d37eb1739f5ff05020b020e6e252`):** `SchoolType.getResistanceFor` lê valor raw se existe, senão 1. Em `DamageSources.applyDamage`, o ramo **LivingEntity + SpellDamageSource** usa **`damageAdjusted = baseAmount × [2 − softCap(Rwind × Rgeneral)]`**, após SpellDamageEvent. `Rgeneral` é `irons_spellbooks:spell_resist`; `softCap(x)=x` para `x≤1.5`, e **`2 − 0.25/(x−1)`** para `x>1.5`. Logo, Rwind=Rgeneral=1 dá multiplicador 1; produto 1.5 dá 0.5; produto 2 dá 0.25. Isso é multiplicador de dano, não porcentagem raw de resistência.
+
+O intervalo [−100,100] é limite de atributo, não faixa balanceada: produtos negativos podem aumentar dano, e multiplicações não são automaticamente limitadas a [0,1]. A fonte do host descrita é **3.16.3**, distinta do build Aero **3.16.1**; nenhum valor efetivo do modpack foi medido.
+
+## Fronteira causal
+
+Wind Blade invoca `DamageSources.applyDamage` com DamageSource do spell e, portanto, tem consumidor host de escola/resistência na fonte. **Breathless** chama diretamente `LivingEntity.hurt` com `asphyxiation`; **MagicWindCharge** usa o hit vanilla `windCharge` de 1.0 e explosão. A associação de ambos os spells à escola Wind não prova que esses caminhos recebam resistência Wind. Alterar a resistência para afetar todos os efeitos exigiria uma mudança de contrato, não simples ajuste de atributo.
+
+**Localizadores provider:** [AASpells.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/AASpells.java#L121-L147) · [AAServerEvents.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/AAServerEvents.java#L54-L60) · [WindBladeProjectile.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/wind_blade/WindBladeProjectile.java#L74-L80) · [BreathlessEffect.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/asphyxiate/BreathlessEffect.java#L18-L27) · [MagicWindCharge.java](https://github.com/snackerpirater/aero-additions/blob/ae282b32d25ad76ef8d01c637ec05566a767ae4c/src/main/java/com/snackpirate/aeromancy/spells/wind_charge/MagicWindCharge.java#L96-L110).
+
+**Localizadores host distintos:** [SchoolType.java — Iron's 3.16.3](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/spells/SchoolType.java#L47-L52) · [DamageSources.java — Iron's 3.16.3](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L44-L64) · [DamageSources.java — Iron's 3.16.3](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/damage/DamageSources.java#L165-L174) · [Utils.java — Iron's 3.16.3](https://github.com/iron431/irons-spells-n-spellbooks/blob/e4056af90302d37eb1739f5ff05020b020e6e252/src/main/java/io/redspace/ironsspellbooks/api/util/Utils.java#L177-L185).
+
+**Consumo e QA:** Black Arcana/RPG pode catalogar esta superfície; mudanças de perks precisam de consumidor real e validação causal. Hook/adaptação **`NOT_VERIFIED`**; execução cliente/servidor, configuração efetiva e composição no modpack **`NOT_TESTED`**; **0 certificados**. Valores descritos são contratos de fonte/dados publicados, sem homologação de gameplay.

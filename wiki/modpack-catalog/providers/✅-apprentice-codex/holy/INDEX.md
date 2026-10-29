@@ -1,29 +1,41 @@
-# Índice técnico para perks — Apprentice Codex / Holy
+# Índice do catálogo — Apprentice Codex / Holy
 
-> Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
+> Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
+
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+
+**Fichas catalogadas (somente fichas detectadas): 0/11.**
+
+**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+
+**Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Homologadas para perks (somente fichas detectadas): 0/11.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
-**Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
+**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
-| Estado | Objeto / habilidade identificada | Ficha |
-|---|---|---|
-| ⚠️ | Divine Possession | [ficha/divine-possession.md](divine-possession.md) |
-| ⚠️ | Force Field | [ficha/force-field.md](force-field.md) |
-| ⚠️ | Illuminate Stellar | [ficha/illuminate-stellar.md](illuminate-stellar.md) |
-| ⚠️ | Mage Light | [ficha/mage-light.md](mage-light.md) |
-| ⚠️ | Mana Charge | [ficha/mana-charge.md](mana-charge.md) |
-| ⚠️ | Mana Mending | [ficha/mana-mending.md](mana-mending.md) |
-| ⚠️ | Mystic Shield | [ficha/mystic-shield.md](mystic-shield.md) |
-| ⚠️ | Phalanx Charge | [ficha/phalanx-charge.md](phalanx-charge.md) |
-| ⚠️ | Sense Evil | [ficha/sense-evil.md](sense-evil.md) |
-| ⚠️ | Unite Luna | [ficha/unite-luna.md](unite-luna.md) |
-| ⚠️ | Wizardlamp | [ficha/wizardlamp.md](wizardlamp.md) |
+**Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
+
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+
+| Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
+|---|---|---|---|---|---|
+| ⚠️ | Divine Possession | [ficha/divine-possession.md](divine-possession.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Force Field | [ficha/force-field.md](force-field.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Illuminate Stellar | [ficha/illuminate-stellar.md](illuminate-stellar.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Mage Light | [ficha/mage-light.md](mage-light.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Mana Charge | [ficha/mana-charge.md](mana-charge.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Mana Mending | [ficha/mana-mending.md](mana-mending.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Mystic Shield | [ficha/mystic-shield.md](mystic-shield.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Phalanx Charge | [ficha/phalanx-charge.md](phalanx-charge.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sense Evil | [ficha/sense-evil.md](sense-evil.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Unite Luna | [ficha/unite-luna.md](unite-luna.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Wizardlamp | [ficha/wizardlamp.md](wizardlamp.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
-Somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) podem receber ✅, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido.
+**Catálogo:** fichas cobertas por fechamento validado de fonte/artefato no manifesto alfabético, ou por certificado técnico individual. O ✅ de uma subpasta cobre apenas seu recorte; o provider exige prova de escopo fechado.
+
+**Contrato estático:** somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) recebem ✅ nessa coluna, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido. Hooks e QA exigem seus próprios estados verificados no certificado, sem promoção a partir do catálogo.
 
 Arquivos técnicos de apoio e inventários agregados continuam relevantes, mas não são contabilizados como objetos concluídos. O algoritmo deve ser revisado por provider antes de declarar universo fechado.

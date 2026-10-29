@@ -1,24 +1,36 @@
-# Índice técnico para perks — Hexalia / Infusions / Cards
+# Índice do catálogo — Hexalia / Infusions / Cards
 
-> Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
+> Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
+
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+
+**Fichas catalogadas (somente fichas detectadas): 0/6.**
+
+**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+
+**Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Homologadas para perks (somente fichas detectadas): 0/6.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
-**Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
+**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
-| Estado | Objeto / habilidade identificada | Ficha |
-|---|---|---|
-| ⚠️ | Celestial Crystal From Celestial Infusion | [ficha/celestial_crystal_from_celestial_infusion.md](celestial_crystal_from_celestial_infusion.md) |
-| ⚠️ | Galeberries From Celestial Infusion | [ficha/galeberries_from_celestial_infusion.md](galeberries_from_celestial_infusion.md) |
-| ⚠️ | Moonweave Bindings From Celestial Infusion | [ficha/moonweave_bindings_from_celestial_infusion.md](moonweave_bindings_from_celestial_infusion.md) |
-| ⚠️ | Moonweave Footwraps From Celestial Infusion | [ficha/moonweave_footwraps_from_celestial_infusion.md](moonweave_footwraps_from_celestial_infusion.md) |
-| ⚠️ | Moonweave Hood From Celestial Infusion | [ficha/moonweave_hood_from_celestial_infusion.md](moonweave_hood_from_celestial_infusion.md) |
-| ⚠️ | Moonweave Mantle From Celestial Infusion | [ficha/moonweave_mantle_from_celestial_infusion.md](moonweave_mantle_from_celestial_infusion.md) |
+**Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
+
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+
+| Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
+|---|---|---|---|---|---|
+| ⚠️ | Celestial Crystal From Celestial Infusion | [ficha/celestial_crystal_from_celestial_infusion.md](celestial_crystal_from_celestial_infusion.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Galeberries From Celestial Infusion | [ficha/galeberries_from_celestial_infusion.md](galeberries_from_celestial_infusion.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Moonweave Bindings From Celestial Infusion | [ficha/moonweave_bindings_from_celestial_infusion.md](moonweave_bindings_from_celestial_infusion.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Moonweave Footwraps From Celestial Infusion | [ficha/moonweave_footwraps_from_celestial_infusion.md](moonweave_footwraps_from_celestial_infusion.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Moonweave Hood From Celestial Infusion | [ficha/moonweave_hood_from_celestial_infusion.md](moonweave_hood_from_celestial_infusion.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Moonweave Mantle From Celestial Infusion | [ficha/moonweave_mantle_from_celestial_infusion.md](moonweave_mantle_from_celestial_infusion.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
-Somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../../meta/PERK-READY-CERTIFICATIONS.json) podem receber ✅, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido.
+**Catálogo:** fichas cobertas por fechamento validado de fonte/artefato no manifesto alfabético, ou por certificado técnico individual. O ✅ de uma subpasta cobre apenas seu recorte; o provider exige prova de escopo fechado.
+
+**Contrato estático:** somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../../meta/PERK-READY-CERTIFICATIONS.json) recebem ✅ nessa coluna, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido. Hooks e QA exigem seus próprios estados verificados no certificado, sem promoção a partir do catálogo.
 
 Arquivos técnicos de apoio e inventários agregados continuam relevantes, mas não são contabilizados como objetos concluídos. O algoritmo deve ser revisado por provider antes de declarar universo fechado.

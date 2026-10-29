@@ -1,27 +1,39 @@
-# Índice técnico para perks — Legendary Spellbooks / Annihilation
+# Índice do catálogo — Legendary Spellbooks / Annihilation
 
-> Índice das fichas individuais identificadas por nome de arquivo. Uma ficha existente ou pasta antiga ✅ não certifica parâmetros, fluxo causal, integração ou testes.
+> Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
+
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+
+**Fichas catalogadas (somente fichas detectadas): 0/9.**
+
+**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
+
+**Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Homologadas para perks (somente fichas detectadas): 0/9.**
-**Barra do recorte documental:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
-**Denominador de todo o conteúdo integrável:** não verificado; o recorte não equivale ao progresso total do mod.
 
-**Estado desta subpasta:** ⚠️ validação técnica individual pendente; status histórico de catálogo não é certificação.
+**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
-| Estado | Objeto / habilidade identificada | Ficha |
-|---|---|---|
-| ⚠️ | Annihilation Arrow | [ficha/annihilation-arrow.md](annihilation-arrow.md) |
-| ⚠️ | Annihilation Beam | [ficha/annihilation-beam.md](annihilation-beam.md) |
-| ⚠️ | Annihilation Bomb | [ficha/annihilation-bomb.md](annihilation-bomb.md) |
-| ⚠️ | Annihilation Geyser | [ficha/annihilation-geyser.md](annihilation-geyser.md) |
-| ⚠️ | Annihilation Resonance | [ficha/annihilation-resonance.md](annihilation-resonance.md) |
-| ⚠️ | Annihilation Shockwave | [ficha/annihilation-shockwave.md](annihilation-shockwave.md) |
-| ⚠️ | Flameborn Drift | [ficha/flameborn-drift.md](flameborn-drift.md) |
-| ⚠️ | Release Riftwalker Predator | [ficha/release-riftwalker-predator.md](release-riftwalker-predator.md) |
-| ⚠️ | Summon Flameborn Knights | [ficha/summon-flameborn-knights.md](summon-flameborn-knights.md) |
+**Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
+
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+
+| Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
+|---|---|---|---|---|---|
+| ⚠️ | Annihilation Arrow | [ficha/annihilation-arrow.md](annihilation-arrow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Annihilation Beam | [ficha/annihilation-beam.md](annihilation-beam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Annihilation Bomb | [ficha/annihilation-bomb.md](annihilation-bomb.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Annihilation Geyser | [ficha/annihilation-geyser.md](annihilation-geyser.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Annihilation Resonance | [ficha/annihilation-resonance.md](annihilation-resonance.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Annihilation Shockwave | [ficha/annihilation-shockwave.md](annihilation-shockwave.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Flameborn Drift | [ficha/flameborn-drift.md](flameborn-drift.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Release Riftwalker Predator | [ficha/release-riftwalker-predator.md](release-riftwalker-predator.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Summon Flameborn Knights | [ficha/summon-flameborn-knights.md](summon-flameborn-knights.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
-Somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) podem receber ✅, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido.
+**Catálogo:** fichas cobertas por fechamento validado de fonte/artefato no manifesto alfabético, ou por certificado técnico individual. O ✅ de uma subpasta cobre apenas seu recorte; o provider exige prova de escopo fechado.
+
+**Contrato estático:** somente fichas individualmente auditadas no manifesto [PERK-READY-CERTIFICATIONS.json](../../../meta/PERK-READY-CERTIFICATIONS.json) recebem ✅ nessa coluna, exigindo identidade, comportamento, parâmetros, targeting, custos, boundary de integração e validação documentados. Hook inseguro ou desconhecido nunca é presumido. Hooks e QA exigem seus próprios estados verificados no certificado, sem promoção a partir do catálogo.
 
 Arquivos técnicos de apoio e inventários agregados continuam relevantes, mas não são contabilizados como objetos concluídos. O algoritmo deve ser revisado por provider antes de declarar universo fechado.

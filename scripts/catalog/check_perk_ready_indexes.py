@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit global and per-folder perk-ready INDEX.md ledgers.
+"""Audit catalog completion, static contracts and runtime states in every INDEX.md.
 
 The old ✅ folder prefix means inventory, not technically complete. The checked
 scope is the filesystem snapshot of individually identifiable Markdown cards.
@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
@@ -66,10 +67,15 @@ REQUIRED_EVIDENCE = frozenset({
     "integration", "validation",
 })
 PER_FOLDER = re.compile(r"\*\*Homologadas para perks \(somente fichas detectadas\): (\d+)/(\d+)\.\*\*")
+CATALOG_FOLDER = re.compile(r"\*\*Fichas catalogadas \(somente fichas detectadas\): (\d+)/(\d+)\.\*\*")
+CATALOG_STATE = re.compile(r"\*\*Catálogo desta árvore:\*\* (✅|⚠️)")
 GLOBAL = re.compile(r"\*\*Mods com escopo integral certificado: (\d+)/(\d+)\.\*\*")
 GLOBAL_OBJECTS = re.compile(r"\*\*Fichas com contrato técnico estático certificado: (\d+)/(\d+)\.\*\*")
-CARD_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| \[.*?\]\(([^)]+\.md)\) \|$", re.M)
-PROVIDER_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| (?:\d+|—) \| \d+ \| \[Ver fichas\]\(([^)]+)/INDEX\.md\) \|$", re.M)
+GLOBAL_CATALOG = re.compile(r"\*\*Providers com catálogo concluído: (\d+)/(\d+)\.\*\*")
+GLOBAL_CATALOG_OBJECTS = re.compile(r"\*\*Fichas catalogadas \(somente fichas detectadas\): (\d+)/(\d+)\.\*\*")
+CARD_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| \[.*?\]\(([^)]+\.md)\) \| ([^|]+) \| ([^|]+) \| ([^|]+) \|$", re.M)
+PROVIDER_ROW = re.compile(r"^\| (✅|⚠️) \| .*? \| ([^|]+) \| (\d+) \| (✅|⚠️) \| ([^|]+) \| ([^|]+) \| \[Ver fichas\]\(([^)]+)/INDEX\.md\) \|$", re.M)
+CHILD_ROW = re.compile(r"^\| (✅|⚠️) \| [^|]+ \| ([^|]+) \| (\d+) \| \[Abrir índice\]\(([^)]+)/INDEX\.md\) \|$", re.M)
 
 class CatalogIndexError(ValueError):
     pass
@@ -180,10 +186,66 @@ def certified(card, ledger):
     return card.relative_to(PROVIDERS).as_posix() in ledger["objects"]
 
 def mod_certified(mod, cards, ledger):
-    these = [p for p in cards if mod in p.parents]
+    these = [p for p in cards if p.is_relative_to(mod)]
     info = ledger["providers"].get(mod.name, {})
     return bool(these and all(certified(p, ledger) for p in these)
                 and info.get("universe_closed") is True and info.get("evidence"))
+
+def cataloged(card, ledger, closed):
+    """Documentation proof and static certification are independent evidence paths."""
+    return card.relative_to(PROVIDERS).parts[0] in closed or certified(card, ledger)
+
+def mod_cataloged(mod, cards, ledger, closed):
+    # Matching the observed card count alone never closes a provider universe.
+    return mod.name in closed or mod_certified(mod, cards, ledger)
+
+def folder_cataloged(folder, cards, ledger, closed):
+    provider = PROVIDERS / folder.relative_to(PROVIDERS).parts[0]
+    if folder == provider:
+        return mod_cataloged(provider, cards, ledger, closed)
+    these = [p for p in cards if p.is_relative_to(folder)]
+    return provider.name in closed or bool(these and all(cataloged(p, ledger, closed) for p in these))
+
+def observed_catalog_count(cards, ledger, closed):
+    done = sum(cataloged(p, ledger, closed) for p in cards)
+    return f"{done}/{len(cards)}" + (f" ({100 * done / len(cards):.1f}%)" if cards else "")
+
+def card_states(card, ledger, closed):
+    certificate = ledger["objects"].get(card.relative_to(PROVIDERS).as_posix(), {})
+    return ("✅" if cataloged(card, ledger, closed) else "⚠️",
+            "✅ certificado" if certified(card, ledger) else "⚠️ pendente",
+            "✅ verificado" if certificate.get("mutating_hook") == "VERIFIED_CONTRACT" else "⚠️ não verificado",
+            "✅ testado" if certificate.get("physical_qa") == "PHYSICALLY_VERIFIED" else "⚠️ não testado")
+
+def runtime_summary(cards, ledger, field, *, universe_closed=False):
+    expected = "VERIFIED_CONTRACT" if field == "mutating_hook" else "PHYSICALLY_VERIFIED"
+    done = sum(ledger["objects"].get(p.relative_to(PROVIDERS).as_posix(), {}).get(field) == expected
+               for p in cards)
+    mark = "✅" if universe_closed and cards and done == len(cards) else "⚠️"
+    return f"{mark} {done}/{len(cards)} " + ("verificados" if field == "mutating_hook" else "testados")
+
+def validated_catalog_snapshot(dirs, mods, cards, ledger):
+    # Import after this module has bootstrapped: the renderer imports the checker.
+    if __package__:
+        from . import generate_perk_ready_indexes as generator
+    else:
+        import generate_perk_ready_indexes as generator
+    # Direct-script invocation can load this checker as __main__ and again under
+    # its import name. Render with the active checker and selected repository.
+    previous_root, previous_checker = generator.ROOT, generator.qa
+    try:
+        generator.ROOT = PROVIDERS
+        generator.qa = sys.modules[__name__]
+        alpha = generator.alphabetical_scope(mods, cards)
+        # Share this fresh proof snapshot across every render. Exact comparisons
+        # also protect prose, bars and scope limits without rehashing manifests.
+        rendered = {folder / "INDEX.md": generator.directory_index(
+            folder, dirs, cards, ledger, alphabetical=alpha) for folder in dirs}
+        rendered[PROVIDERS / "INDEX.md"] = generator.global_index(
+            mods, cards, ledger, alphabetical=alpha)
+        return alpha, rendered
+    finally:
+        generator.ROOT, generator.qa = previous_root, previous_checker
 
 def check(repo=REPO):
     global REPO, PROVIDERS, LEDGER
@@ -194,6 +256,8 @@ def check(repo=REPO):
     try:
         ledger = read_ledger(LEDGER)
         dirs, mods, cards = inventory()
+        alpha, rendered = validated_catalog_snapshot(dirs, mods, cards, ledger)
+        closed = {item["provider"]: item for item in alpha["completed_prefix"]}
         problems = []
         for folder in dirs:
             path = folder / "INDEX.md"
@@ -201,30 +265,55 @@ def check(repo=REPO):
                 problems.append("missing subfolder index: " + str(path.relative_to(repo)))
                 continue
             data = path.read_text(encoding="utf8")
-            known = [p for p in cards if folder in p.parents]
+            if data != rendered[path]:
+                problems.append("rendered index drift: " + str(path.relative_to(repo)))
+            known = [p for p in cards if p.is_relative_to(folder)]
             done = sum(certified(p, ledger) for p in known)
             matches = PER_FOLDER.findall(data)
             if len(matches) != 1 or tuple(map(int, matches[0])) != (done, len(known)):
                 problems.append("stale completion numerator/denominator: " + str(path.relative_to(repo)))
-            table = {link: symbol for symbol, link in CARD_ROW.findall(data)}
-            if len(table) != len(known):
+            catalog_matches = CATALOG_FOLDER.findall(data)
+            catalog_done = sum(cataloged(p, ledger, closed) for p in known)
+            if len(catalog_matches) != 1 or tuple(map(int, catalog_matches[0])) != (catalog_done, len(known)):
+                problems.append("stale catalog numerator/denominator: " + str(path.relative_to(repo)))
+            expected_catalog = "✅" if folder_cataloged(folder, cards, ledger, closed) else "⚠️"
+            if CATALOG_STATE.findall(data) != [expected_catalog]:
+                problems.append("wrong folder catalog status: " + str(path.relative_to(repo)))
+            entries = CARD_ROW.findall(data)
+            table = {link: (catalog, static, hook, physical)
+                     for catalog, link, static, hook, physical in entries}
+            if len(entries) != len(known) or len(table) != len(known):
                 problems.append("card table population drift: " + str(path.relative_to(repo)))
             for card in known:
                 rel = card.relative_to(folder).as_posix()
-                expected = "✅" if certified(card, ledger) else "⚠️"
+                expected = card_states(card, ledger, closed)
                 if table.get(rel) != expected:
                     problems.append("missing/wrong card status: " + str(path.relative_to(repo)) + " => " + rel)
             for link in table:
                 if not (folder / link).is_file():
                     problems.append("broken card link: " + str(path.relative_to(repo)) + " => " + link)
-            for child in (p for p in dirs if p.parent == folder):
+            children = [p for p in dirs if p.parent == folder]
+            child_entries = CHILD_ROW.findall(data)
+            child_rows = {name: (mark, counts, int(static))
+                          for mark, counts, static, name in child_entries}
+            if len(child_entries) != len(children) or len(child_rows) != len(children):
+                problems.append("child-index catalog table population drift: " + str(path.relative_to(repo)))
+            for child in children:
                 if ("(" + child.name + "/INDEX.md)") not in data:
                     problems.append("missing child-index navigation: " + str(child.relative_to(repo)))
+                selected = [p for p in cards if p.is_relative_to(child)]
+                expected = ("✅" if folder_cataloged(child, cards, ledger, closed) else "⚠️",
+                            observed_catalog_count(selected, ledger, closed),
+                            sum(certified(p, ledger) for p in selected))
+                if child_rows.get(child.name) != expected:
+                    problems.append("wrong child-index catalog status: " + str(child.relative_to(repo)))
         root = PROVIDERS / "INDEX.md"
         if not root.is_file():
             problems.append("missing global index")
         else:
             data = root.read_text(encoding="utf8")
+            if data != rendered[root]:
+                problems.append("rendered index drift: " + str(root.relative_to(repo)))
             done = sum(mod_certified(mod, cards, ledger) for mod in mods)
             match = GLOBAL.findall(data)
             if len(match) != 1 or tuple(map(int, match[0])) != (done, len(mods)):
@@ -234,12 +323,26 @@ def check(repo=REPO):
             if len(object_pairs) != 1 or tuple(map(int, object_pairs[0])) != (
                     completed_objects, len(cards)):
                 problems.append("stale global certified-object numerator/denominator")
+            for pattern, expected, label in (
+                    (GLOBAL_CATALOG, (sum(mod_cataloged(m, cards, ledger, closed) for m in mods), len(mods)), "provider"),
+                    (GLOBAL_CATALOG_OBJECTS, (sum(cataloged(p, ledger, closed) for p in cards), len(cards)), "object")):
+                matches = pattern.findall(data)
+                if len(matches) != 1 or tuple(map(int, matches[0])) != expected:
+                    problems.append("stale global catalog-" + label + " numerator/denominator")
             entries = PROVIDER_ROW.findall(data)
-            if len(entries) != len(mods):
+            rows = {name: (mark, counts, int(static), strict, hook, physical)
+                    for mark, counts, static, strict, hook, physical, name in entries}
+            if len(entries) != len(mods) or len(rows) != len(mods):
                 problems.append("provider table population drift")
-            rows = {name: mark for mark, name in entries}
             for mod in mods:
-                expected = "✅" if mod_certified(mod, cards, ledger) else "⚠️"
+                selected = [p for p in cards if p.is_relative_to(mod)]
+                strict = mod_certified(mod, cards, ledger)
+                expected = ("✅" if mod_cataloged(mod, cards, ledger, closed) else "⚠️",
+                            observed_catalog_count(selected, ledger, closed),
+                            sum(certified(p, ledger) for p in selected),
+                            "✅" if strict else "⚠️",
+                            runtime_summary(selected, ledger, "mutating_hook", universe_closed=strict),
+                            runtime_summary(selected, ledger, "physical_qa", universe_closed=strict))
                 if rows.get(mod.name) != expected:
                     problems.append("missing/wrong provider status: " + mod.name)
                 if not (mod / "INDEX.md").is_file():
@@ -247,6 +350,8 @@ def check(repo=REPO):
         return {"directories": len(dirs), "providers": len(mods),
                 "candidate_cards": len(cards), "certified_cards": sum(certified(p, ledger) for p in cards),
                 "certified_providers": sum(mod_certified(m, cards, ledger) for m in mods),
+                "cataloged_cards": sum(cataloged(p, ledger, closed) for p in cards),
+                "cataloged_providers": sum(mod_cataloged(m, cards, ledger, closed) for m in mods),
                 "expected_indexes": 1 + len(dirs), "problems": problems}
     finally:
         REPO, PROVIDERS, LEDGER = previous_repo, previous_providers, previous_ledger
