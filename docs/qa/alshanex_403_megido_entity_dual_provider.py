@@ -205,6 +205,21 @@ def main():
         print("METHOD_NAMES", p["modid"], ",".join(p["method_names_with_code"]))
         print("RISK_SYMBOL_COUNTS", p["modid"],
               json.dumps(p["risk_symbol_name_counts"], sort_keys=True))
+        # Report only symbolic ABI and invocation counts for lifecycle surfaces.
+        focus = {"tick", "getClosestEntity", "doHurt", "canHitEntity",
+                 "getRandomBall", "canHitVictim", "handleHitDetection",
+                 "onHitEntity", "onHitBlock", "shouldBeSaved"}
+        for method in p["methods"]:
+            if method["declared_method"] not in focus:
+                continue
+            print("ENTITY_METHOD", p["modid"], method["declared_method"],
+                  method["descriptor"], "ops", method["instruction_count"],
+                  "branch", method["branch_op_count"], "alloc",
+                  method["allocation_op_count"], "owners",
+                  json.dumps(method["direct_invocations_by_owner"], sort_keys=True))
+            for reference in method["risk_related_direct_references"]:
+                print("ENTITY_REFERENCE", p["modid"], method["declared_method"],
+                      json.dumps(reference, sort_keys=True))
     print("No disassembly, code, recipe bodies or third-party assets retained.")
 
 
