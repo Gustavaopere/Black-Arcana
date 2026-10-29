@@ -83,6 +83,18 @@ class TestFootprints(unittest.TestCase):
         self.assertEqual(result["direct_invocation_owner_group_counts"], {"unqualified_owner_not_verified":1})
         self.assertEqual(result["unqualified_direct_target_method_names"], ["getDamageFromStats"])
 
+    def test_direct_spell_power_forward_only_when_exact(self):
+        from alshanex_403_megido_numeric_footprint import direct_spell_power_delegation
+        good = [
+            ("aload_0", ""), ("iload_1", ""), ("aload_2", ""),
+            ("invokevirtual", "#7 // Method getSpellPower:(ILnet/minecraft/world/entity/LivingEntity;)F"),
+            ("freturn", ""),
+        ]
+        self.assertTrue(direct_spell_power_delegation(good))
+        self.assertFalse(direct_spell_power_delegation(good[:-1]+[("fmul", ""),("freturn", "")]))
+        self.assertFalse(direct_spell_power_delegation(good[:3]+[("invokevirtual", "#7 // Method other:(ILnet/minecraft/world/entity/LivingEntity;)F")]+good[4:]))
+        self.assertFalse(direct_spell_power_delegation(good[:3]+[("invokevirtual", "#7 // Method getSpellPower:()F")]+good[4:]))
+
     def test_reject_hash_before_javap(self):
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/"bad.jar"

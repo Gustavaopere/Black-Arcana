@@ -48,6 +48,26 @@ def direct_integer_return(instructions):
     return None
 
 
+def direct_spell_power_delegation(instructions):
+    """One direct level/caster forwarding call and immediate float return."""
+    if len(instructions) != 5:
+        return False
+    if [x[0] for x in instructions[:3]] != ["aload_0", "iload_1", "aload_2"]:
+        return False
+    opcode, arg = instructions[3]
+    if opcode not in ("invokevirtual", "invokespecial"):
+        return False
+    ref = REF.search(arg)
+    if not ref:
+        return False
+    symbol, descriptor = ref.groups()
+    if symbol.rsplit(".", 1)[-1] != "getSpellPower":
+        return False
+    if descriptor != "(ILnet/minecraft/world/entity/LivingEntity;)F":
+        return False
+    return instructions[4][0] == "freturn"
+
+
 def group_owner(owner):
     if owner.startswith(("net/alshanex/", "net.alshanex.")):
         return "provider_alshanex"
@@ -136,7 +156,9 @@ def inspect(stdout):
         caster_load = sum(op == "aload_2" or (op == "aload" and arg == "2") for op, arg in instructions)
         constants = sum(op.startswith(("fconst_", "iconst_", "dconst_", "lconst_")) or op in CONSTANTS for op, _ in instructions)
         literal = direct_integer_return(instructions) if method == "getMaxConnections" else None
+        direct_power = direct_spell_power_delegation(instructions) if method == "getDamage" else False
         result[method] = {
+            "damage_direct_power_forward_status": "EXACT_DIRECT_GET_SPELL_POWER_RETURN" if direct_power else "NOT_VERIFIED",
             "descriptor": expected,
             "verified_direct_integer_return": literal,
             "integer_return_status": "EXACT_DIRECT_INTEGER_LITERAL" if literal is not None else "NOT_VERIFIED",
