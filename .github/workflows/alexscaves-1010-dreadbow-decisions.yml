@@ -6,6 +6,7 @@ on:
     paths:
       - 'docs/qa/alexscaves_1010_dreadbow_decision_probe.py'
       - 'docs/qa/alexscaves_1010_dreadbow_decision_probe_test.py'
+      - 'docs/qa/alexscaves_1010_dreadbow_decision_cards_test.py'
       - '.github/workflows/alexscaves-1010-dreadbow-decisions.yml'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/**'
   push:
@@ -30,6 +31,8 @@ jobs:
           java-version: '21'
       - name: Deterministic negative and positive tests
         run: python3 docs/qa/alexscaves_1010_dreadbow_decision_probe_test.py -v
+      - name: Crosscheck catalogued Precise Volley and Twilight Perfection gates
+        run: python3 docs/qa/alexscaves_1010_dreadbow_decision_cards_test.py -v
       - name: Download exact publisher artifact
         run: |
           mkdir -p build/alexscaves-1010
@@ -42,6 +45,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_dreadbow_decision_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/EXACT-DREADBOW-DECISIONS-1.0.10.json' \
             --output build/alexscaves-1010/dreadbow-decisions.json
       - uses: actions/upload-artifact@v7
         with:

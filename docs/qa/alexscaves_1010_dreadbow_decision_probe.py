@@ -85,6 +85,11 @@ def clipped_window(instructions, index, before=8, after=8):
             for ins in instructions[max(0, index-before):min(len(instructions),index+after+1)]]
 
 
+def matches_invocation_symbol(symbol, klass, name):
+    """Normalize javap display quotes around <init> without changing ABI."""
+    return klass + "." + name + ":" in symbol.replace('"', "")
+
+
 def describe_method(method, label):
     insns = method["instructions"]
     if not 1 <= len(insns) <= 1800:
@@ -101,7 +106,7 @@ def describe_method(method, label):
         ix = at_offset[offset]
         inst = insns[ix]
         if not inst["opcode"].startswith("invoke") or (
-            klass + "." + name + ":") not in inst["symbol"].replace('"', ""):
+            not matches_invocation_symbol(inst["symbol"], klass, name):
             raise DecisionAuditError("exact invocation target drift: " + str(offset))
         sites.append({
             "offset": offset, "symbol": inst["symbol"],
