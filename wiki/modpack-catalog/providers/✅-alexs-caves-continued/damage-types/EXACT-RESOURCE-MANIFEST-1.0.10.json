@@ -1,0 +1,201 @@
+{
+  "artifact": {
+    "bytes": 75279314,
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "consumer_bytecode": "NOT_AUDITED",
+  "damage_type_tags": {
+    "alexscaves:deep_one_ignores": {
+      "json": {
+        "__comment": "all damage types that do not harm deep one reputation.",
+        "values": [
+          "minecraft:thorns"
+        ]
+      },
+      "path": "data/alexscaves/tags/damage_type/deep_one_ignores.json",
+      "sha256": "3769b819d717cdc5f0912c76e0e21c92661dfcb452f759c0eb3992903e497aea"
+    },
+    "minecraft:bypasses_cooldown": {
+      "json": {
+        "replace": false,
+        "values": [
+          "alexscaves:nuke",
+          "alexscaves:raygun",
+          "alexscaves:desolate_dagger",
+          "alexscaves:dark_arrow",
+          "alexscaves:spirit_dinosaur"
+        ]
+      },
+      "path": "data/minecraft/tags/damage_type/bypasses_cooldown.json",
+      "sha256": "0bc51535f4e629ac4f0654411d218781a2474a4560728c6f107bd233ed021990"
+    },
+    "minecraft:is_explosion": {
+      "json": {
+        "replace": false,
+        "values": [
+          "alexscaves:raygun",
+          "alexscaves:nuke"
+        ]
+      },
+      "path": "data/minecraft/tags/damage_type/is_explosion.json",
+      "sha256": "15bd614968d8b1876e9759243cc20f09e9cbda75bfa288e221fdf45a1c5c20f5"
+    },
+    "minecraft:is_fire": {
+      "json": {
+        "replace": false,
+        "values": [
+          "alexscaves:spirit_dinosaur",
+          "alexscaves:nuke"
+        ]
+      },
+      "path": "data/minecraft/tags/damage_type/is_fire.json",
+      "sha256": "1941c0a1ac07556e7aebaf3ed0566ccd233f6981c1355897d8d51646f9ca688d"
+    },
+    "minecraft:is_projectile": {
+      "json": {
+        "replace": false,
+        "values": [
+          "alexscaves:raygun",
+          "alexscaves:dark_arrow"
+        ]
+      },
+      "path": "data/minecraft/tags/damage_type/is_projectile.json",
+      "sha256": "bd2df4b9538f61ab6cd1c4405397983ae4108c8fed073c7ffc726845f7d82e9e"
+    },
+    "minecraft:no_impact": {
+      "json": {
+        "replace": false,
+        "values": [
+          "alexscaves:dark_arrow"
+        ]
+      },
+      "path": "data/minecraft/tags/damage_type/no_impact.json",
+      "sha256": "5e316b3d7a9078d5722ee42fbe425d78a21428b1ade839865f422dae607da0b1"
+    }
+  },
+  "damage_types": {
+    "acid": {
+      "json": {
+        "exhaustion": 0.1,
+        "message_id": "acid",
+        "scaling": "never"
+      },
+      "sha256": "482b88005a50092f022c4cc7058402d148a4102461d6fefcaf837dcb6e4f3b17"
+    },
+    "dark_arrow": {
+      "json": {
+        "exhaustion": 0.3,
+        "message_id": "desolate_dagger",
+        "scaling": "never"
+      },
+      "sha256": "a8c5a9d4d72a4c064c1b0fca923d2059eb6b718e9866fb8d19dc539bb0ffec93"
+    },
+    "desolate_dagger": {
+      "json": {
+        "exhaustion": 0.3,
+        "message_id": "desolate_dagger",
+        "scaling": "never"
+      },
+      "sha256": "a8c5a9d4d72a4c064c1b0fca923d2059eb6b718e9866fb8d19dc539bb0ffec93"
+    },
+    "forsaken_sonic_boom": {
+      "json": {
+        "exhaustion": 0.3,
+        "message_id": "forsaken_sonic_boom",
+        "scaling": "never"
+      },
+      "sha256": "1a8c19b6e54d9030fb706055906dc1598ac20dd9e2fbc5813858855310bbbf30"
+    },
+    "gumball": {
+      "json": {
+        "exhaustion": 0.3,
+        "message_id": "gumball",
+        "scaling": "never"
+      },
+      "sha256": "70b62fe5851e5cbbb630f8dfb0202018fe7184f99c4b8bb19a98e68c4ed83687"
+    },
+    "intentional_game_design": {
+      "json": {
+        "exhaustion": 0.3,
+        "message_id": "intentional_game_design",
+        "scaling": "never"
+      },
+      "sha256": "4146b42cc4a880583fd8e94600ec2bb34f70ac5d4249289932c627e3cac82a09"
+    },
+    "nuke": {
+      "json": {
+        "exhaustion": 0.1,
+        "message_id": "nuke",
+        "scaling": "never"
+      },
+      "sha256": "c44737192a4999c35799e24bb3df4cd9ca77e8f58d5fce1c74a53a71f0170d92"
+    },
+    "radiation": {
+      "json": {
+        "exhaustion": 0.1,
+        "message_id": "radiation",
+        "scaling": "never"
+      },
+      "sha256": "e280db38a17bd5728ef6bbc061d6a4b1a849e062d6e17dedfbf256c7922612d1"
+    },
+    "raygun": {
+      "json": {
+        "exhaustion": 0.3,
+        "message_id": "raygun",
+        "scaling": "never"
+      },
+      "sha256": "dc1095e92e0695b302100993af8fafd72c8d6b948d90717e667a6ced2ae1bc35"
+    },
+    "spirit_dinosaur": {
+      "json": {
+        "exhaustion": 0.3,
+        "message_id": "spirit_dinosaur",
+        "scaling": "never"
+      },
+      "sha256": "82db1eedb1377b9cf24f35db29f646df542da43c7d2c96896ae0bace36014eb4"
+    },
+    "tremorzilla_beam": {
+      "json": {
+        "exhaustion": 0.3,
+        "message_id": "tremorzilla_beam",
+        "scaling": "never"
+      },
+      "sha256": "a059d2c010509db8d56f984d6d403a8901d1442d0ba47eff2f009c6998b58e9a"
+    }
+  },
+  "direct_tag_entries": {
+    "acid": [],
+    "dark_arrow": [
+      "minecraft:bypasses_cooldown",
+      "minecraft:is_projectile",
+      "minecraft:no_impact"
+    ],
+    "desolate_dagger": [
+      "minecraft:bypasses_cooldown"
+    ],
+    "forsaken_sonic_boom": [],
+    "gumball": [],
+    "intentional_game_design": [],
+    "nuke": [
+      "minecraft:bypasses_cooldown",
+      "minecraft:is_explosion",
+      "minecraft:is_fire"
+    ],
+    "radiation": [],
+    "raygun": [
+      "minecraft:bypasses_cooldown",
+      "minecraft:is_explosion",
+      "minecraft:is_projectile"
+    ],
+    "spirit_dinosaur": [
+      "minecraft:bypasses_cooldown",
+      "minecraft:is_fire"
+    ],
+    "tremorzilla_beam": []
+  },
+  "mutating_hooks": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "provider_universe_closed": false,
+  "scope": "EXACT_ARTIFACT_RESOURCE_ONLY_NOT_CONSUMER_OR_RUNTIME"
+}

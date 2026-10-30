@@ -6,9 +6,9 @@
 
 **Barra dos providers catalogados:** `░░░░░░░░░░░░░░░░░░░░ 2.4%`
 
-**Fichas catalogadas (somente fichas detectadas): 404/2328.**
+**Fichas catalogadas (somente fichas detectadas): 404/2339.**
 
-**Barra das fichas catalogadas:** `███░░░░░░░░░░░░░░░░░ 17.4%`
+**Barra das fichas catalogadas:** `███░░░░░░░░░░░░░░░░░ 17.3%`
 
 **Escopo:** pastas atuais de providers; a modlist pode conter outros mods/sistemas ainda não representados. Objetos ausentes do catálogo não são presumidos inexistentes.
 
@@ -18,7 +18,7 @@
 
 **Próximo na fila alfabética:** Alexs Caves Continued.
 
-**Fichas com contrato técnico estático certificado: 154/2328.**
+**Fichas com contrato técnico estático certificado: 154/2339.**
 
 **Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 6.6%`
 
@@ -34,7 +34,7 @@
 | ✅ | Aces Spell Utils — ✅ catálogo da versão-fonte documentado | 118/118 (100.0%) | 0 | ⚠️ | ⚠️ 0/118 verificados | ⚠️ 0/118 testados | [Ver fichas](✅-aces-spell-utils/INDEX.md) |
 | ✅ | Acolyte — ✅ catálogo do artefato publisher documentado | 74/74 (100.0%) | 0 | ⚠️ | ⚠️ 0/74 verificados | ⚠️ 0/74 testados | [Ver fichas](✅-acolyte/INDEX.md) |
 | ✅ | Aeromancy Additions — ✅ catálogo da versão-fonte documentado | 58/58 (100.0%) | 0 | ⚠️ | ⚠️ 0/58 verificados | ⚠️ 0/58 testados | [Ver fichas](✅-aeromancy-additions/INDEX.md) |
-| ⚠️ | Alexs Caves Continued — 🟡 próximo na fila | 16/16 (100.0%) | 16 | ⚠️ | ⚠️ 0/16 verificados | ⚠️ 0/16 testados | [Ver fichas](✅-alexs-caves-continued/INDEX.md) |
+| ⚠️ | Alexs Caves Continued — 🟡 próximo na fila | 16/27 (59.3%) | 16 | ⚠️ | ⚠️ 0/27 verificados | ⚠️ 0/27 testados | [Ver fichas](✅-alexs-caves-continued/INDEX.md) |
 | ⚠️ | Alexs Mobs Continued | 0/3 (0.0%) | 0 | ⚠️ | ⚠️ 0/3 verificados | ⚠️ 0/3 testados | [Ver fichas](✅-alexs-mobs-continued/INDEX.md) |
 | ⚠️ | Alshanex Familiars | 0/18 (0.0%) | 0 | ⚠️ | ⚠️ 0/18 verificados | ⚠️ 0/18 testados | [Ver fichas](✅-alshanex-familiars/INDEX.md) |
 | ⚠️ | Apokinetics | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-apokinetics/INDEX.md) |

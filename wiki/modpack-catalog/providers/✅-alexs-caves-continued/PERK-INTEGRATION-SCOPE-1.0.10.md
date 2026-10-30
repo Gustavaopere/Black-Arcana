@@ -9,7 +9,7 @@ Autoridade: JAR 1.0.10, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-25
 | Ações sobrenaturais | Oito raízes já contadas | Sete campos estáticos documentados nas oito fichas; hooks e QA física separados |
 | Itens / equipamento | 81 classes externas de itens; 42 com assinaturas de interação já classificadas semanticamente | Individualizar os contratos relevantes de armas, movimento, comida, defesa, itens passivos e helpers; separar classes base de registros concretos |
 | Enchantments | 51 JSONs em `data/alexscaves/enchantment/` | Ficha por contrato: nível/custo/slots/exclusividade e consumidor real de cada modifier, inclusive tecnologia/armas |
-| Damage types | 11 JSONs em `data/alexscaves/damage_type/` | Mapear construtores de DamageSource, tags de bypass, autoria e settlement; um nome não prova escola/dano aceito |
+| Damage types | **11/11 JSONs do artefato e 6 tags documentados** ([fichas](damage-types/INDEX.md), [manifesto](damage-types/EXACT-RESOURCE-MANIFEST-1.0.10.json)); 0/11 contratos de consumidores certificados | Rastrear construtores de `DamageSource`, tags finais, owner, dano, efeitos, proteções e settlement; classificação JSON não comprova o consumidor Java nem hook |
 | Mob effects | Oito campos de registro de efeitos | **8/8 contratos estáticos documentados**, incluindo aplicações e consumidores; [fichas](effects/INDEX.md) e [prova exata](EXACT-EFFECT-CONTRACTS-1.0.10.md). Hooks e QA física pendentes |
 | Potions | 12 campos de registro de poções | Conteúdo, níveis/tempo e aquisição, sem contar variantes como novas magias |
 | Config servidor | 40 campos em `ACServerConfig` | Defaults/bounds, momento de leitura, autoridade global/por jogador e consumidores; não presumir valores em execução |
