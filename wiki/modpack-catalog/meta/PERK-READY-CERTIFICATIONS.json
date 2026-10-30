@@ -6379,6 +6379,46 @@
           "reason": "JARfixoSHA1/SHA256,fullclassdigests,recursos,descritores/âncoras ecardseal reproduzíveis; fonte1.1.1 fora deautoridadenumérica; gameQA,pvp econfigpackNOT_TESTED."
         }
       }
+    },
+    "✅-alexs-caves-continued/damage-types/acid.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do tipo de dano Acid e dos seus dois emissores diretos delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/acid.md",
+          "reason": "DamageType alexscaves:acid, JSON e factory SHA-exatos ligados aos dois emissores nativos diretos, sem nova raiz mágica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/acid.md",
+          "reason": "AcidBlock.entityInside e ThrownWasteDrumEntity.tick têm fluxos causais distintos; desgaste, chance, dano, movimento e ciclo de fluido temporário são documentados com seus guards."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/acid.md",
+          "reason": "Fórmula ambiental completa, probabilidade por callback, contagem exata de Hazmat, geometria de altura/AABB, contato de 2F e contadores cumulativos são delimitados por consumidor."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/acid.md",
+          "reason": "Tags ambientais RESISTS_ACID/WEAK_TO_ACID, predicados de slots e filtros próprios do contato do tambor são separados; nenhum deles presume autorização PvP universal."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/acid.md",
+          "reason": "AcidBlock solicita desgaste por slot elegível e não tem mana/casting próprio; o emissor Brainiac consome seu estado de barrel no lançamento, sem inventar cooldown ou custo de jogador."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/acid.md",
+          "reason": "O provider mantém autoridade sobre dano, resistência, fluido e cleanup; fontes, helper de altura e persistência ficam separados, sem hook mutador ou settlement duplicado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/acid.md",
+          "reason": "Ficha e evidências compiladas do JAR 1.0.10 são seladas; fonte 1.1.1 é adjacente e QA física, configuração efetiva e integração executável permanecem pendentes."
+        }
+      }
     }
   },
   "providers": {},

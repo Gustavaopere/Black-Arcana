@@ -22,6 +22,7 @@ EFFECTS = frozenset("effects/" + name + ".md" for name in (
     "irradiated", "magnetizing", "rage", "stunned", "bubbled", "deepsight",
     "darkness-incarnate", "sugar-rush"))
 DREADBOW = frozenset(("equipment/dreadbow.md", "damage-types/dark-arrow.md"))
+ACID = frozenset(("damage-types/acid.md",))
 SCOPE = {"schema_version": 1, "version": "1.0.10",
          "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
          "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR", "mutating_hook": "NOT_VERIFIED",
@@ -30,6 +31,7 @@ SCOPE = {"schema_version": 1, "version": "1.0.10",
          "artifact_sha256": SHA256, "artifact_size_bytes": SIZE_BYTES}
 EFFECT_SCOPE = {**SCOPE, "catalog_family": "MOB_EFFECTS"}
 DREADBOW_SCOPE = {**SCOPE, "catalog_family": "DREADBOW_AND_DARK_ARROW"}
+ACID_SCOPE = {**SCOPE, "catalog_family": "ACID_DAMAGE_CONTRACT"}
 ADJACENT_SOURCE = {"repository": "Codx-org/AlexsCavesContinued",
                    "revision": "523308608422ab8e31974befa7111ecdf495dd37",
                    "declared_version": "1.1.1",
@@ -47,11 +49,13 @@ def require(condition, message):
 
 def profile_spec(profile):
     """Select a literal family without changing the existing action contract."""
-    require(profile in ("actions", "effects", "dreadbow"), "unknown catalog profile")
+    require(profile in ("actions", "effects", "dreadbow", "acid"), "unknown catalog profile")
     if profile == "effects":
         return EFFECT_SCOPE, EFFECTS, "effect_evidence"
     if profile == "dreadbow":
         return DREADBOW_SCOPE, DREADBOW, "contract_evidence"
+    if profile == "acid":
+        return ACID_SCOPE, ACID, "contract_evidence"
     return SCOPE, ACTIONS, "action_evidence"
 
 
@@ -257,7 +261,7 @@ def main(argv=None):
     for flag in ("jar", "manifest", "provider-root", "javap"):
         parser.add_argument("--" + flag, required=True, type=Path)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow"), default="actions")
+    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid"), default="actions")
     args = parser.parse_args(argv)
     try:
         report = audit(args.jar, load_manifest(args.manifest), args.provider_root, args.javap,

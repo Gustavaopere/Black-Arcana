@@ -1,6 +1,6 @@
 # Alex's Caves 1.0.10 — auditoria dos tipos de dano
 
-**Status:** ⚠️ recursos JSON `11/11` e **factories compiladas `11/11` mapeadas**, com **14 invocações diretas em 12 classes**. O [contrato Dark Arrow](dark-arrow.md) e o [equipamento Dreadbow](../equipment/dreadbow.md) foram consolidados na [prova estática conjunta](../EXACT-DREADBOW-CONTRACTS-1.0.10.md): **1/11 tipos de dano possui contrato estático certificado**. Os demais dez consumidores continuam parciais; hooks, hit counts medidos e QA física permanecem pendentes.
+**Status:** ⚠️ recursos JSON `11/11` e **factories compiladas `11/11` mapeadas**, com **14 invocações diretas em 12 classes**. O [contrato Dark Arrow](dark-arrow.md) e o [equipamento Dreadbow](../equipment/dreadbow.md) foram consolidados na [prova estática conjunta](../EXACT-DREADBOW-CONTRACTS-1.0.10.md): **2/11 tipos de dano possuem contratos estáticos certificados**, incluindo agora [Acid e seus dois emissores](../EXACT-ACID-CONTRACT-1.0.10.md). Os demais nove consumidores continuam parciais; hooks, hit counts medidos e QA física permanecem pendentes.
 
 - Artefato oficial: SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, tamanho 75.279.314 bytes.
 - Auditor: [`docs/qa/alexscaves_1010_damage_type_probe.py`](../../../../../docs/qa/alexscaves_1010_damage_type_probe.py); [CI da sonda](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40985275338).
@@ -30,7 +30,7 @@ O recurso `dark_arrow` possui `message_id=desolate_dagger`, igual a `desolate_da
 
 A tag `minecraft:bypasses_cooldown` trata de classificação de dano no Minecraft, não de cooldown de casting de qualquer feitiço. `minecraft:is_explosion`, `minecraft:is_projectile` e `minecraft:is_fire` são declaradas como memberships **textuais**, não como comprovação da aplicação do `DamageSource` no jogo. A tag `alexscaves:deep_one_ignores` é inventariada, mas não lista diretamente nenhum dos onze IDs.
 
-**PENDENTE:** concluir os dez outros contratos de consumidores, owner/causa, fórmulas e targeting. Proteção PvP, mutação segura e QA física continuam pendentes também para Dark Arrow. Os dez tipos parciais permanecem `NOT_CERTIFIED`; hooks `NOT_VERIFIED` e QA `NOT_TESTED` em todo o recorte.
+**PENDENTE:** concluir os nove outros contratos de consumidores, owner/causa, fórmulas e targeting. Proteção PvP, mutação segura e QA física continuam pendentes também para Acid e Dark Arrow. Os nove tipos parciais permanecem `NOT_CERTIFIED`; hooks `NOT_VERIFIED` e QA `NOT_TESTED` em todo o recorte.
 
 ## Mapa binário SHA-exato de `ACDamageTypes`
 
@@ -52,7 +52,7 @@ A tag `minecraft:bypasses_cooldown` trata de classificação de dano no Minecraf
 
 **Divergência relevante:** `NuclearExplosionEntity.tick()` contém referências tanto a `causeIntentionalGameDesign` quanto a `causeNukeDamage`; não se conclui que ambas executem no mesmo tick. `ForsakenAttackGoal.tick()` contém duas referências a `causeForsakenSonicBoomDamage`, mas isso não demonstra dois hits por tick. `dark_arrow` e `desolate_dagger` continuam tipos diferentes embora os JSONs compartilhem `message_id`.
 
-A sobrecarga de `DamageSourceRandomMessages` com argumento `Entity` é usada por algumas factories, enquanto outras recebem somente `RegistryAccess`. Isto permite documentar a assinatura compilada, mas **não** comprova attacker attribution, ownership, targeting, fórmulas, mitigação, repetição de impacto, segurança de hook ou elegibilidade para perks. Contratos técnicos estáticos documentados **1/11**, limitados a Dark Arrow; os manifestos parciais desta seção não homologam hooks; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+A sobrecarga de `DamageSourceRandomMessages` com argumento `Entity` é usada por algumas factories, enquanto outras recebem somente `RegistryAccess`. Isto permite documentar a assinatura compilada, mas **não** comprova attacker attribution, ownership, targeting, fórmulas, mitigação, repetição de impacto, segurança de hook ou elegibilidade para perks. Contratos técnicos estáticos documentados **2/11**, limitados a Acid e Dark Arrow; os manifestos parciais desta seção não homologam hooks; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
 
 ## Janelas de bytecode dos quatro consumidores prioritários
 

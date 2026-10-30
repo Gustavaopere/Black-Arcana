@@ -161,6 +161,20 @@ class ContractAuditTests(unittest.TestCase):
         del doc["action_evidence"]
         return doc
 
+    def acid_fixture(self):
+        """Seal exactly one damage card without borrowing the Dreadbow roster."""
+        doc = copy.deepcopy(self.doc)
+        relative = "damage-types/acid.md"
+        card = self.root / relative
+        card.parent.mkdir(exist_ok=True)
+        card.write_bytes((self.root / ACTIONS[0]).read_bytes())
+        record = doc.pop("action_evidence")[ACTIONS[0]]
+        doc["catalog_family"] = "ACID_DAMAGE_CONTRACT"
+        doc["cards"] = {relative: sha256(card.read_bytes())}
+        doc["contract_evidence"] = {relative: record}
+        doc["classes"] = {path: doc["classes"][path] for path in record["classes"]}
+        return doc
+
     def test_parser_preserves_overloads_constructor_static_lambda_and_switch(self):
         parsed = audit.parse_javap(JAVAP, OWNER)
         self.assertEqual({("<init>", "()V"), ("<clinit>", "()V"), ("value", "()I"),
@@ -413,6 +427,124 @@ class ContractAuditTests(unittest.TestCase):
                 contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(0, audit.main(arguments))
             self.assertEqual("dreadbow", inspect.call_args.kwargs["profile"])
+
+    def test_acid_literal_roster_and_single_class_synthetic_audit(self):
+        doc = self.acid_fixture()
+        self.assertEqual({"damage-types/acid.md"}, set(audit.ACID))
+        audit.validate_structure(doc, profile="acid")
+        audit.validate_cards(doc, self.root, profile="acid")
+        result = self.inspect(doc, profile="acid")
+        self.assertEqual("PASS", result["status"])
+        self.assertEqual("ACID_DAMAGE_CONTRACT", result["catalog_family"])
+        self.assertEqual(1, result["cards_checked"])
+        self.assertEqual(1, result["classes_checked"])
+        self.assertEqual(1, result["methods_checked"])
+        self.assertEqual(8, result["semantic_magic_roots"])
+        self.assertFalse(result["provider_universe_closed"])
+        self.assertEqual("NOT_VERIFIED", result["mutating_hook"])
+        self.assertEqual("NOT_TESTED", result["physical_qa"])
+
+    def test_acid_is_isolated_from_all_previous_profiles_without_global_mutation(self):
+        snapshots = tuple(copy.deepcopy(value) for value in
+                          (audit.SCOPE, audit.EFFECT_SCOPE, audit.DREADBOW_SCOPE, audit.ACID_SCOPE))
+        documents = {"actions": self.doc, "effects": self.effects_fixture(),
+                     "dreadbow": self.dreadbow_fixture(), "acid": self.acid_fixture()}
+        for profile, manifest in documents.items():
+            for other in documents:
+                if profile == other:
+                    continue
+                with self.subTest(profile=profile, selected=other), self.assertRaises(ValueError):
+                    audit.validate_structure(manifest, profile=other)
+                with self.subTest(profile=profile, cards=other), self.assertRaises(ValueError):
+                    audit.validate_cards(manifest, self.root, profile=other)
+        self.inspect(documents["acid"], profile="acid")
+        for profile in ("dreadbow", "effects", "actions"):
+            self.inspect(documents[profile], profile=profile)
+        self.assertEqual(snapshots,
+                         (audit.SCOPE, audit.EFFECT_SCOPE, audit.DREADBOW_SCOPE, audit.ACID_SCOPE))
+
+    def test_acid_missing_extra_and_cross_family_alias_cards_rejected(self):
+        for key in ("cards", "contract_evidence"):
+            for replacement in (None, "damage-types/extra.md", "equipment/dreadbow.md",
+                                "effects/bubbled.md", ACTIONS[0]):
+                doc = self.acid_fixture()
+                value = doc[key].pop("damage-types/acid.md")
+                if replacement is not None:
+                    doc[key][replacement] = value
+                with self.subTest(key=key, replacement=replacement), self.assertRaises(ValueError):
+                    audit.validate_structure(doc, profile="acid")
+            doc = self.acid_fixture()
+            doc[key]["damage-types/extra.md"] = doc[key]["damage-types/acid.md"]
+            with self.subTest(key=key, mode="extra"), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="acid")
+
+    def test_acid_scope_and_evidence_family_tampering_rejected(self):
+        for key, value in (("catalog_family", "DREADBOW_AND_DARK_ARROW"),
+                           ("catalog_family", None), ("semantic_magic_roots", 1),
+                           ("provider_universe_closed", True), ("mutating_hook", "VERIFIED"),
+                           ("physical_qa", "PASS"), ("artifact_size_bytes", True)):
+            doc = self.acid_fixture()
+            if value is None:
+                doc.pop(key)
+            else:
+                doc[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="acid")
+        for alias in ("action_evidence", "effect_evidence"):
+            doc = self.acid_fixture()
+            doc[alias] = doc.pop("contract_evidence")
+            with self.subTest(alias=alias), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="acid")
+
+    def test_acid_still_requires_one_class_with_an_instruction_anchor(self):
+        for mode in ("no_class", "no_anchored_class"):
+            doc = self.acid_fixture()
+            if mode == "no_class":
+                doc["classes"].clear()
+                doc["contract_evidence"]["damage-types/acid.md"]["classes"].clear()
+            else:
+                next(iter(doc["classes"].values()))["methods"] = []
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="acid")
+
+    def test_acid_profile_rejects_stale_card_or_symlink_escape(self):
+        doc = self.acid_fixture()
+        card = self.root / "damage-types/acid.md"
+        original = card.read_bytes()
+        card.write_bytes(original + b"stale acid contract")
+        with self.assertRaises(ValueError):
+            self.inspect(doc, profile="acid")
+        outside = Path(self.temp.name) / "outside-acid.md"
+        outside.write_bytes(original)
+        card.unlink()
+        card.symlink_to(outside)
+        with self.assertRaises(ValueError):
+            self.inspect(doc, profile="acid")
+
+    def test_acid_profile_rechecks_card_after_its_single_bytecode_inspection(self):
+        doc = self.acid_fixture()
+        changed = False
+        def completed(command, **kwargs):
+            nonlocal changed
+            card = self.root / "damage-types/acid.md"
+            card.write_bytes(card.read_bytes() + b"changed during acid audit")
+            changed = True
+            return subprocess.CompletedProcess(command, 0, stdout=JAVAP.replace(OWNER, command[-1]), stderr="")
+        with mock.patch.object(audit.subprocess, "run", side_effect=completed):
+            with self.assertRaises(ValueError):
+                audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="acid",
+                            expected_identity=self.expected_identity)
+        self.assertTrue(changed)
+
+    def test_cli_accepts_explicit_acid_profile(self):
+        arguments = ["--jar", str(self.jar), "--manifest", str(self.root / "manifest.json"),
+                     "--provider-root", str(self.root), "--javap", "synthetic-javap",
+                     "--profile", "acid"]
+        with mock.patch.object(audit, "load_manifest", return_value=self.acid_fixture()), \
+                mock.patch.object(audit, "audit", return_value={"status": "PASS"}) as inspect, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(0, audit.main(arguments))
+            self.assertEqual("acid", inspect.call_args.kwargs["profile"])
 
     def test_missing_extra_action_and_card_evidence_mismatch_rejected(self):
         variants = []
