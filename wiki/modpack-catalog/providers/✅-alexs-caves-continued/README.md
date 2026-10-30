@@ -4,7 +4,7 @@
 
 **Mob effects: 8/8 contratos técnicos estáticos documentados.** [Índice de efeitos](effects/INDEX.md) · [evidência e reprodução](EXACT-EFFECT-CONTRACTS-1.0.10.md) · [manifesto dos efeitos](EXACT-EFFECT-CONTRACTS-1.0.10.json). As fichas distinguem aplicações, atributos, dano, targeting, movimento, consumidores e cleanup; não acrescentam raízes mágicas.
 
-**Damage types (recursos exatos):** 11/11 JSONs e seis arquivos de tags inventariados ([fichas](damage-types/INDEX.md), [manifesto](damage-types/EXACT-RESOURCE-MANIFEST-1.0.10.json)). **0/11** possui consumidor Java/contrato técnico completo certificado. Trata-se de classificação de dano e não de 11 magias adicionais.
+**Damage types (recursos exatos):** 11/11 JSONs e seis arquivos de tags inventariados ([fichas](damage-types/INDEX.md), [manifesto](damage-types/EXACT-RESOURCE-MANIFEST-1.0.10.json)). As **11 factories compiladas** e **14 invocações diretas em 12 classes** foram localizadas no JAR exato ([manifesto binário](damage-types/EXACT-CONSUMERS-1.0.10.json)); **0/11** possui contrato técnico de consumidor integralmente certificado para perks. Trata-se de classificação de dano e não de 11 magias adicionais.
 
 **Catálogo integral do provider: pendente.** As famílias concluídas ainda não abrangem armas, armaduras, enchantments e outros sistemas integráveis por perks. [Escopo e trabalho restante](PERK-INTEGRATION-SCOPE-1.0.10.md), [inventário exato das famílias](INTEGRATION-SCOPE-INVENTORY-1.0.10.json) e [índice geral](../INDEX.md). A fila alfabética permanece neste provider.
 

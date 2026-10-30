@@ -1,0 +1,488 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "candidate_class_count": 16,
+  "damage_type_resource_ids": [
+    "acid",
+    "dark_arrow",
+    "desolate_dagger",
+    "forsaken_sonic_boom",
+    "gumball",
+    "intentional_game_design",
+    "nuke",
+    "radiation",
+    "raygun",
+    "spirit_dinosaur",
+    "tremorzilla_beam"
+  ],
+  "direct_calling_classes": [
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/block/AcidBlock.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 251,
+          "caller_descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)V",
+          "caller_header": "public void entityInside(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity)",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeAcidDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "e2f9c8213633debbcbae6f99f9d1987be60b7de6c73a9825a74eec96b453e959"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/ai/ForsakenAttackGoal.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 108,
+          "caller_descriptor": "()V",
+          "caller_header": "public void tick()",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeForsakenSonicBoomDamage",
+          "opcode": "invokestatic"
+        },
+        {
+          "bytecode_offset": 576,
+          "caller_descriptor": "()V",
+          "caller_header": "public void tick()",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeForsakenSonicBoomDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "48cfdd6c370f68550d0d7af768466f99f330e8fd4f825a520411a1bc5d70fb55"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 37,
+          "caller_descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+          "caller_header": "protected void onHitEntity(net.minecraft.world.phys.EntityHitResult)",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeDarkArrowDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DesolateDaggerEntity.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 339,
+          "caller_descriptor": "()V",
+          "caller_header": "public void tick()",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeDesolateDaggerDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "f82a3f5f1cc05bbe52dfb7e3742f33c2289cbc37810b069a53b45002cfeb4351"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 131,
+          "caller_descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "caller_header": "private void tickTremorsaurus(net.minecraft.world.entity.player.Player)",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeSpiritDinosaurDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "c4f6bbf7dab4aeeb2abd5b8cd227759d2ea1692115d1b3d14b62598a0b3900d7"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 58,
+          "caller_descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+          "caller_header": "protected void onHitEntity(net.minecraft.world.phys.EntityHitResult)",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeSpiritDinosaurDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "084a315c5a63dabc8c6ff1bc91ad008b0b2374e4d7f953bf3692c77394093774"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 86,
+          "caller_descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+          "caller_header": "protected void onHitEntity(net.minecraft.world.phys.EntityHitResult)",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeGumballDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 605,
+          "caller_descriptor": "()V",
+          "caller_header": "public void tick()",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeIntentionalGameDesign",
+          "opcode": "invokestatic"
+        },
+        {
+          "bytecode_offset": 618,
+          "caller_descriptor": "()V",
+          "caller_header": "public void tick()",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeNukeDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "d9c827a9acb2d0f9e7050252ed57e6a3d0a8ad49053e54f19a8eaeb6b84da912"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ThrownWasteDrumEntity.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 161,
+          "caller_descriptor": "()V",
+          "caller_header": "public void tick()",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeAcidDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "7fa2e134bebdeb8ca03025da6268086bde9b02d20c81fa8ed2cdbb9c69d5c739"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 76,
+          "caller_descriptor": "(Lnet/minecraft/world/phys/Vec3;FFFZZZ)Z",
+          "caller_header": "public boolean hurtEntitiesAround(net.minecraft.world.phys.Vec3, float, float, float, boolean, boolean, boolean)",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeTremorzillaBeamDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "e1ac60a8005f9414dde1d25a92a2110df65cef145c3225e9c2557c96672fe8dc"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 1026,
+          "caller_descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+          "caller_header": "public void onUseTick(net.minecraft.world.level.Level, net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, int)",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeRaygunDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect.class",
+      "direct_factory_calls": [
+        {
+          "bytecode_offset": 74,
+          "caller_descriptor": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "caller_header": "public void tick(net.minecraft.world.entity.LivingEntity, int)",
+          "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "factory_name": "causeRadiationDamage",
+          "opcode": "invokestatic"
+        }
+      ],
+      "sha256": "ee532620f143ff83773b08cf52f72b0b20b3fb6e85b18ed7b39dfd930465ba5c"
+    }
+  ],
+  "limits": {
+    "effective_damage_attribution": "NOT_VERIFIED",
+    "factory_runtime_reachability": "NOT_VERIFIED",
+    "mutating_hooks": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "reflection_mixin_datapack_dispatch": "NOT_COVERED",
+    "static_only": true
+  },
+  "owner": {
+    "factory_methods": [
+      {
+        "damage_source_calls": [
+          {
+            "offset": 28,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;I)V"
+          }
+        ],
+        "damage_source_constructor_sites": [
+          {
+            "offset": 28,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;I)V"
+          }
+        ],
+        "damage_type_fields": [
+          {
+            "field": "ACID",
+            "offset": 19
+          }
+        ],
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "header": "public static net.minecraft.world.damagesource.DamageSource causeAcidDamage(net.minecraft.core.RegistryAccess)",
+        "method": "causeAcidDamage",
+        "method_bytecode_instructions": 12
+      },
+      {
+        "damage_source_calls": [
+          {
+            "offset": 28,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;I)V"
+          }
+        ],
+        "damage_source_constructor_sites": [
+          {
+            "offset": 28,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;I)V"
+          }
+        ],
+        "damage_type_fields": [
+          {
+            "field": "RADIATION",
+            "offset": 19
+          }
+        ],
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "header": "public static net.minecraft.world.damagesource.DamageSource causeRadiationDamage(net.minecraft.core.RegistryAccess)",
+        "method": "causeRadiationDamage",
+        "method_bytecode_instructions": 12
+      },
+      {
+        "damage_source_calls": [
+          {
+            "offset": 28,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;I)V"
+          }
+        ],
+        "damage_source_constructor_sites": [
+          {
+            "offset": 28,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;I)V"
+          }
+        ],
+        "damage_type_fields": [
+          {
+            "field": "NUKE",
+            "offset": 19
+          }
+        ],
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "header": "public static net.minecraft.world.damagesource.DamageSource causeNukeDamage(net.minecraft.core.RegistryAccess)",
+        "method": "causeNukeDamage",
+        "method_bytecode_instructions": 12
+      },
+      {
+        "damage_source_calls": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_source_constructor_sites": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_type_fields": [
+          {
+            "field": "RAYGUN",
+            "offset": 19
+          }
+        ],
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "header": "public static net.minecraft.world.damagesource.DamageSource causeRaygunDamage(net.minecraft.core.RegistryAccess, net.minecraft.world.entity.Entity)",
+        "method": "causeRaygunDamage",
+        "method_bytecode_instructions": 13
+      },
+      {
+        "damage_source_calls": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_source_constructor_sites": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_type_fields": [
+          {
+            "field": "FORSAKEN_SONIC_BOOM",
+            "offset": 19
+          }
+        ],
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "header": "public static net.minecraft.world.damagesource.DamageSource causeForsakenSonicBoomDamage(net.minecraft.core.RegistryAccess, net.minecraft.world.entity.Entity)",
+        "method": "causeForsakenSonicBoomDamage",
+        "method_bytecode_instructions": 13
+      },
+      {
+        "damage_source_calls": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_source_constructor_sites": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_type_fields": [
+          {
+            "field": "DESOLATE_DAGGER",
+            "offset": 19
+          }
+        ],
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "header": "public static net.minecraft.world.damagesource.DamageSource causeDesolateDaggerDamage(net.minecraft.core.RegistryAccess, net.minecraft.world.entity.Entity)",
+        "method": "causeDesolateDaggerDamage",
+        "method_bytecode_instructions": 13
+      },
+      {
+        "damage_source_calls": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_source_constructor_sites": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_type_fields": [
+          {
+            "field": "DARK_ARROW",
+            "offset": 19
+          }
+        ],
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "header": "public static net.minecraft.world.damagesource.DamageSource causeDarkArrowDamage(net.minecraft.core.RegistryAccess, net.minecraft.world.entity.Entity)",
+        "method": "causeDarkArrowDamage",
+        "method_bytecode_instructions": 13
+      },
+      {
+        "damage_source_calls": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_source_constructor_sites": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_type_fields": [
+          {
+            "field": "SPIRIT_DINOSAUR",
+            "offset": 19
+          }
+        ],
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "header": "public static net.minecraft.world.damagesource.DamageSource causeSpiritDinosaurDamage(net.minecraft.core.RegistryAccess, net.minecraft.world.entity.Entity)",
+        "method": "causeSpiritDinosaurDamage",
+        "method_bytecode_instructions": 13
+      },
+      {
+        "damage_source_calls": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_source_constructor_sites": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_type_fields": [
+          {
+            "field": "TREMORZILLA_BEAM",
+            "offset": 19
+          }
+        ],
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "header": "public static net.minecraft.world.damagesource.DamageSource causeTremorzillaBeamDamage(net.minecraft.core.RegistryAccess, net.minecraft.world.entity.Entity)",
+        "method": "causeTremorzillaBeamDamage",
+        "method_bytecode_instructions": 13
+      },
+      {
+        "damage_source_calls": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_source_constructor_sites": [
+          {
+            "offset": 29,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+          }
+        ],
+        "damage_type_fields": [
+          {
+            "field": "GUMBALL",
+            "offset": 19
+          }
+        ],
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "header": "public static net.minecraft.world.damagesource.DamageSource causeGumballDamage(net.minecraft.core.RegistryAccess, net.minecraft.world.entity.Entity)",
+        "method": "causeGumballDamage",
+        "method_bytecode_instructions": 13
+      },
+      {
+        "damage_source_calls": [
+          {
+            "offset": 28,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;I)V"
+          }
+        ],
+        "damage_source_constructor_sites": [
+          {
+            "offset": 28,
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;I)V"
+          }
+        ],
+        "damage_type_fields": [
+          {
+            "field": "INTENTIONAL_GAME_DESIGN",
+            "offset": 19
+          }
+        ],
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "header": "public static net.minecraft.world.damagesource.DamageSource causeIntentionalGameDesign(net.minecraft.core.RegistryAccess)",
+        "method": "causeIntentionalGameDesign",
+        "method_bytecode_instructions": 12
+      }
+    ],
+    "path": "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class",
+    "sha256": "389fb88f8d6e1515e3dfe7f401a728bb33629666bd2319ae7e25668f710e4ef6"
+  },
+  "schema_version": 1,
+  "scope": "EXACT_1_0_10_BYTECODE_DIRECT_CALLSITES_ONLY"
+}
