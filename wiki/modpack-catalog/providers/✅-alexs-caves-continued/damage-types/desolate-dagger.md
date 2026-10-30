@@ -66,3 +66,13 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 | `com/github/alexmodguy/alexscaves/server/entity/item/DesolateDaggerEntity.class` | `public void tick()` | `()V` | 339 | `invokestatic` |
 
 **Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NOT_CERTIFIED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
+
+## Aprofundamento de fluxo — 1.0.10 (instruções compiladas)
+
+**Evidência estática delimitada:** [manifesto de janelas e branch opcodes](EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json), auditado no JAR SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`. Classe `com/github/alexmodguy/alexscaves/server/entity/item/DesolateDaggerEntity.class` (SHA-256 `f82a3f5f1cc05bbe52dfb7e3742f33c2289cbc37810b069a53b45002cfeb4351`). Método `public void tick()`, descritor JVM `()V`; 361 instruções extraídas e 20 anchors de branch registrados. Resumo de chamadas diretas: `causeDesolateDaggerDamage` @ `339`.
+
+- Em `tick()`, o método referencia `ACEnchantmentRegistry.IMPENDING_STAB` no offset `317` e `ACCompat.enchantLevel()` no `320`; a factory de tipo de dano é chamada em `339`.
+- O offset `344` referencia `ACCompat.hurt()`, seguido pelo desvio `ifeq` em `347`; também existem referências ao descarte da entidade, mas os motivos e o número efetivo de impactos não foram comprovados.
+- São pontos relevantes para perks de encantamentos e targeting, sem autorização de mutação ou garantia de proc único.
+
+**Limite metodológico:** offsets, referências de método, testes e desvios são provas do *bytecode*; a análise não reconstruiu exceções, switch dispatch, todos os caminhos de CFG ou condições de runtime. `NOT_CERTIFIED` para comportamento integral; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Black Arcana não deve substituir settlement, autorizações de servidor, segurança do mundo ou rotinas próprias do provider.
