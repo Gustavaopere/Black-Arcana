@@ -1,0 +1,50 @@
+name: Alex's Caves 1.0.10 exact dark arrow state
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_dark_arrow_state_probe.py'
+      - 'docs/qa/alexscaves_1010_dark_arrow_state_probe_test.py'
+      - '.github/workflows/alexscaves-1010-dark-arrow-state.yml'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/**'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_dark_arrow_state_probe.py'
+      - 'docs/qa/alexscaves_1010_dark_arrow_state_probe_test.py'
+      - '.github/workflows/alexscaves-1010-dark-arrow-state.yml'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/**'
+permissions:
+  contents: read
+jobs:
+  exact_dark_arrow_state:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic parser and fail-closed tests
+        run: python3 docs/qa/alexscaves_1010_dark_arrow_state_probe_test.py -v
+      - name: Download hash-pinned publisher JAR
+        run: |
+          mkdir -p build/alexscaves-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-1010/alexscaves-1.0.10.jar
+      - name: Inspect exact compiled state references
+        run: |
+          python3 docs/qa/alexscaves_1010_dark_arrow_state_probe.py \
+            --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/alexscaves-1010/dark-arrow-state.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-dark-arrow-state
+          path: build/alexscaves-1010/dark-arrow-state.json
+          if-no-files-found: error
+          retention-days: 14
