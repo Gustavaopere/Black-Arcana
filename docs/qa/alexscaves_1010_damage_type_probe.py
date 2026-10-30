@@ -111,8 +111,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--jar", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--snapshot", required=True, help="tracked resource snapshot must equal exact JAR extraction")
     args = parser.parse_args()
     result = audit(args.jar)
+    frozen = json.loads(Path(args.snapshot).read_text(encoding="utf-8"), object_pairs_hook=strict_pairs)
+    if result != frozen:
+        raise ValueError("tracked 1.0.10 resource snapshot differs from exact publisher JAR")
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")

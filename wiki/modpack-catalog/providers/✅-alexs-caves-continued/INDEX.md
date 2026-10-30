@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 16/16.**
+**Fichas catalogadas (somente fichas detectadas): 16/27.**
 
-**Barra das fichas catalogadas:** `████████████████████ 100.0%`
+**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 59.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 16/16.**
+**Homologadas para perks (somente fichas detectadas): 16/27.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
+**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 59.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -32,6 +32,17 @@
 | ✅ | Sugar Staff Hex Cast | [actions/sugar-staff-hex-cast.md](actions/sugar-staff-hex-cast.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Sugar Staff Peppermint Cast | [actions/sugar-staff-peppermint-cast.md](actions/sugar-staff-peppermint-cast.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Totem Possession Remote Control | [actions/totem-possession-remote-control.md](actions/totem-possession-remote-control.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Acid | [damage-types/acid.md](damage-types/acid.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Dark Arrow | [damage-types/dark-arrow.md](damage-types/dark-arrow.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Desolate Dagger | [damage-types/desolate-dagger.md](damage-types/desolate-dagger.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Forsaken Sonic Boom | [damage-types/forsaken-sonic-boom.md](damage-types/forsaken-sonic-boom.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gumball | [damage-types/gumball.md](damage-types/gumball.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Intentional Game Design | [damage-types/intentional-game-design.md](damage-types/intentional-game-design.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Nuke | [damage-types/nuke.md](damage-types/nuke.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Radiation | [damage-types/radiation.md](damage-types/radiation.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Raygun | [damage-types/raygun.md](damage-types/raygun.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Spirit Dinosaur | [damage-types/spirit-dinosaur.md](damage-types/spirit-dinosaur.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Tremorzilla Beam | [damage-types/tremorzilla-beam.md](damage-types/tremorzilla-beam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Bubbled | [effects/bubbled.md](effects/bubbled.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Darkness Incarnate | [effects/darkness-incarnate.md](effects/darkness-incarnate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Deepsight | [effects/deepsight.md](effects/deepsight.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -46,6 +57,7 @@
 | Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |
 |---|---|---:|---:|---|
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
+| ⚠️ | Damage Types | 0/11 (0.0%) | 0 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 
 ## Critério do ✅
