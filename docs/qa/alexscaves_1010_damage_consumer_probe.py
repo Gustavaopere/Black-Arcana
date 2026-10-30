@@ -51,6 +51,11 @@ def parse_methods(raw):
     methods = []
     current = None
     for line in raw.splitlines():
+        if line.strip() == "static {};":
+            # The JVM class initializer has its own ()V descriptor and code;
+            # never attach it to the preceding causeIntentionalGameDesign factory.
+            current = None
+            continue
         decl = METHOD_LINE.match(line)
         if decl and "(" in decl.group(1) and not decl.group(1).startswith(("descriptor:", "Compiled from")):
             current = {"header": decl.group(1).strip(), "descriptor": None, "instructions": []}
