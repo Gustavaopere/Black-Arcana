@@ -29,9 +29,9 @@ class DamageTypeCards(unittest.TestCase):
                 self.assertIn("alexscaves:" + id, text)
                 self.assertIn(obj["sha256"], text)
                 for field in ("message_id", "scaling", "exhaustion"):
-                    self.assertIn("| \`" + field + "\` | \`" + str(obj["json"][field]) + "\` |", text)
+                    self.assertIn("| `" + field + "` | `" + str(obj["json"][field]) + "` |", text)
                 for tag in self.manifest["direct_tag_entries"][id]:
-                    self.assertIn("- \`" + tag + "\`", text)
+                    self.assertIn("- `" + tag + "`", text)
                 for deny in ("NOT_CERTIFIED", "NOT_VERIFIED", "NOT_TESTED", "NÃO VERIFICADO"):
                     self.assertIn(deny, text)
                 self.assertIn("**+0 raízes mágicas novas**", text)
