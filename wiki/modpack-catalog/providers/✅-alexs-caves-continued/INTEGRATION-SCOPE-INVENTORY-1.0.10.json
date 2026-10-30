@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action static contracts only; no additional semantic root.",
+  "completed_scope": "Eight supernatural/magical action static contracts plus eight registered mob-effect static contracts and their scoped consumers; no additional semantic magic root.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -292,5 +292,17 @@
     "Class existence, public signatures or constant-pool references do not certify behavior, target policy or safe mutating hooks.",
     "42 interaction classes dispositioned historically classify semantic magic; EXCLUDED from that denominator does not exclude perk integration.",
     "Do not advance alphabetical prefix or declare provider100percent before individual integration contracts and explicit support dispositions are complete."
-  ]
+  ],
+  "family_catalog_status": {
+    "supernatural_actions": {
+      "documented_static_contracts": 8,
+      "identified_objects": 8,
+      "evidence": "EXACT-TECHNICAL-CONTRACTS-1.0.10.md"
+    },
+    "mob_effects": {
+      "documented_static_contracts": 8,
+      "identified_objects": 8,
+      "evidence": "EXACT-EFFECT-CONTRACTS-1.0.10.md"
+    }
+  }
 }

@@ -5979,6 +5979,326 @@
           "reason": "Revisão estática manual dos sete campos e check SHA/class/resource/ABI/âncoras/ficha reproduzível; gameplay e hooks continuam não verificados."
         }
       }
+    },
+    "✅-alexs-caves-continued/effects/bubbled.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do efeito registrado e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/bubbled.md",
+          "reason": "Registro bubbled, construtor HARMFUL/cor, classe exata e JAR1.0.10 fixo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/bubbled.md",
+          "reason": "Tick aquático versus não aquático, bridge ACMobEffect, ar/movimento/dano, consumers mixin/event e remoção por fluido."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/bubbled.md",
+          "reason": "Ar max(ar-2,-20), dano solicitado drown2F, arrasto0.8F, y-0.08D, duração aplicada200; amplifier não usado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/bubbled.md",
+          "reason": "Sem débito próprio no efeito; custo delegado SeaStaff já catalogado; aplicação própria DeepOneMage; curativeitems vazio sem inferir dispatch."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/bubbled.md",
+          "reason": "Preservar autoridade provider, lifecycle e fonte de aplicação, separar render/câmera e manipulação de efeito pelo pacote; hook não verificado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/bubbled.md",
+          "reason": "Classes, recursos e offsets exatos1.0.10 auditados estaticamente; QA multiplayer/fluidos/air/reload pendente."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/bubbled.md",
+          "reason": "Aplicador WaterBolt filtra aliados/owner/DeepOne; efeito usa aquatic/tag/waterbreathing/invulnerable; sem área própria."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/effects/darkness-incarnate.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do efeito registrado e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/darkness-incarnate.md",
+          "reason": "Registro1.0.10 liga darkness_incarnate ao efeito beneficial compilado; estado downstream não acrescenta raiz ao Cloak."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/darkness-incarnate.md",
+          "reason": "Tick,gate de luz,eventos/mixins de start/update/end,flight flags e flagSlowFalling estão rastreados no JAR exato."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/darkness-incarnate.md",
+          "reason": "Duração configurável default200,velocidade0.2/0.05,impulso0.1,extensão+600,limiar11/5ticks e intensidade possuem fórmulas/localizadores."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/darkness-incarnate.md",
+          "reason": "PortadorLivingEntity,ServerPlayer paraAbilities,rootvehicle para luz e produtor de maçã requer efeito existente; apresentação cliente separada."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/darkness-incarnate.md",
+          "reason": "Cloak zera carga,maçã delega consumo,efeito não cobra recurso próprio; receita e parâmetros alimentares lidos do artefato."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/darkness-incarnate.md",
+          "reason": "StatefulMobEffect/sharedcounters,ordem callbacks,authorityflight e contratosdeprodutores separados; hook NOT_VERIFIED explícito."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/darkness-incarnate.md",
+          "reason": "JAR SHA-exato,classes/resources/métodos/âncoras e ficha selados; fonte1.1.1 não substitui versão física; QA NOT_TESTED."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/effects/deepsight.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do efeito registrado e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/deepsight.md",
+          "reason": "Registro deepsight e construtor BENEFICIAL/cor noJARexato; poções normal/longa mapeadas sem nova raiz mágica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/deepsight.md",
+          "reason": "firstDuration/lastDuration em objetoefeito, shouldTick, callbacks add/update/remove via mixin e consumidores client fog/lightmap."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/deepsight.md",
+          "reason": "Intensidade min(20,min(activeTime+partial,duration+partial))*0.05, infinitoret1, potion3600/9600ticks; amplifiernãointerfere."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/deepsight.md",
+          "reason": "Efeito não adquire alvo; clientes consultam jogadorlocal enquanto fluid/bloco vêm dacâmera; neblina não éalcanceservidor."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/deepsight.md",
+          "reason": "BrewingAwkward+Lanternfish eDeepsight+Redstoneexatos, ProperBrewingRecipe mesmoitem/dados; semcusto próprio noefeito."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/deepsight.md",
+          "reason": "Camposcompartilhados nãokeyedporentidade ecallbacksreset, visual separado de targeting e atributos; mutador RPG nãohomologado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/deepsight.md",
+          "reason": "JAR e localizadores exatos1.0.10, semparidadefonte1.1.1; físico/shaders/multiplayer pendentes."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/effects/irradiated.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do efeito registrado e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/irradiated.md",
+          "reason": "Registro compilado irradiated vinculado ao construtor IrradiatedEffect no JAR SHA-exato1.0.10."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/irradiated.md",
+          "reason": "Wrappers ACMobEffect e tick/shouldTick fixam amplifier bruto, lifecycle e dano/exaustão; consumidores de cura são separados."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/irradiated.md",
+          "reason": "Frequência200/amplifier, escalaHazmat, duração por produtor e JSONradiation inspecionados no binário e dados exatos."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/irradiated.md",
+          "reason": "Aceitação por produtor e resistência em cura diferenciadas da exclusãoRaycat no tick e da seleçãoGammaroach/Raycat."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/irradiated.md",
+          "reason": "Status sem débito próprio; argumentos de aplicações, alimentos e propriedade dos custos dos produtores documentados sem inferir aquisição física."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/irradiated.md",
+          "reason": "LivingHealEvent, setHealth direto, conversãoTremorzilla e absorçãoRaycat são consumidores diferentes; hookmutador permaneceNOT_VERIFIED."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/irradiated.md",
+          "reason": "Ficha selada e descritores/instruções SHA-exatos reproduzíveis; milkdispatch, configimplantada e QAfísicaNOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/effects/magnetizing.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do efeito registrado e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/magnetizing.md",
+          "reason": "Registro compilado magnetizing vinculado ao construtor MagnetizedEffect e poções concretas no JAR1.0.10."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/magnetizing.md",
+          "reason": "TickVFX separado do EntityMixin/MagnetUtil que efetivamente seleciona suscetibilidade e aplica movimento."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/magnetizing.md",
+          "reason": "Poções3600/9600ticks, buscaPOI5, fórmulas0.25/0.9/0.08, superfície0.50001 e usoMOVEMENT_SPEED documentados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/magnetizing.md",
+          "reason": "Predicados de slotFEET, espectadores/fallbacktags, agachamento e seis rejeições explícitas de canBeAffected inspecionados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/magnetizing.md",
+          "reason": "ReceitasAwkward+FerrouslimeBall e Redstone verificadas; status sem débito próprio ou dano próprio; custo pertence ao produtor."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/magnetizing.md",
+          "reason": "Configglobalwalking_on_magnets, tags e consumidores de velocidade separados de perkporjogador; adapterRPG não homologado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/magnetizing.md",
+          "reason": "Ficha/recursos/classes selados com instruções exatas; expiração aderida, mixinaplicado, configefetiva e multiplayerQApending."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/effects/rage.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do efeito registrado e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/rage.md",
+          "reason": "Registro rage do JAR SHA-exato liga a identidade à classe RageEffect, distinta de um cast autônomo."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/rage.md",
+          "reason": "tick calcula modifier transitório de dano e aquisição probabilística de target; a cadeia de callbacks do mixin liga cleanup ao efeito."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/rage.md",
+          "reason": "Fórmula float por fração de vida perdida e amplifier, operação ADD_VALUE, período 10 ticks e AABB inflada80 documentados por offsets exatos."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/rage.md",
+          "reason": "Filtro servidor/Mob sem target, vivos/aliança/canAttack e substituição probabilística são separados do dano final e da geometria de ataque."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/rage.md",
+          "reason": "Seething Stew fornece2200ticks, alimentação genérica de mob tem gates e cobrança de item/bowl, e receita exata é selada; efeito não tem cast/custo autônomo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/rage.md",
+          "reason": "Modifier reservado e autoridade de atributos/AI do provider são preservados; duração/amplifier/seleção são superfícies distintas sem hook mutador validado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/rage.md",
+          "reason": "JAR1.0.10 e ficha/classes/JSONs selados; fonte1.1.1 explicitamente não fornece parâmetros; QA física e integração executável pendentes."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/effects/stunned.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do efeito registrado e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/stunned.md",
+          "reason": "Registro stunned do JAR SHA-exato liga StunnedEffect, efeito HARMFUL, sem acrescentar raiz mágica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/stunned.md",
+          "reason": "Modifier de velocidade, amortecimento vertical, goal flags, evento de entidade direta e consumidores de dinos são separados e localizados no bytecode."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/stunned.md",
+          "reason": "ADD_MULTIPLIED_BASE -1D, fatores0.1D/30F, ticks150–299/80–159/100 e chance0.8F são certificados estaticamente, sem inferir movimento final."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/stunned.md",
+          "reason": "Club principal e sweep distinguem caixa de lado f de raio, filtros de aliados e tentativa de efeito independente de hurt aceito; dano consulta directEntity."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/stunned.md",
+          "reason": "Club solicita1durabilidade; recipes e enchantment JSONs pinam aquisição; Serene Salad remove e alimentação cobra item/bowl fora de criativo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/stunned.md",
+          "reason": "Amplifier não muda geometria/probabilidade hardcoded; cleanup próprio de flags não é comprovado e hooks Black Arcana/RPG permanecem não homologados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/stunned.md",
+          "reason": "Evidência SHA-exata1.0.10 sela classes/recursos/ficha; diferenças de fonte1.1.1 e QA física multiplayer/expiração/domesticação estão explícitas."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/effects/sugar-rush.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do efeito registrado e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/sugar-rush.md",
+          "reason": "Registro1.0.10 e construtor compilado comprovam SugarRush e modifier alexscaves:effect.sugar_rush em movement_speed."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/sugar-rush.md",
+          "reason": "Tickcliente,eventodeaplicação,refresh/removal de tracker,PlayerMixin e cleanupdireto/expiração/dimensão são distinguidos."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/sugar-rush.md",
+          "reason": "Amount0.699999988079071D,totalmultiplicative,33probabilidadescomida,durações1800/3600,campo10/2 e callbacks com fórmulas próprias."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/sugar-rush.md",
+          "reason": "PortadorPlayer para campo temporal,ownerID/tipovivo,esferadistânciaestrita10,ausênciadefiltroally/LOS e limitação dimensão documentadas."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/sugar-rush.md",
+          "reason": "Efeito sem débito/cooldown próprio; custos alimentares/brewing são dos produtores e sem cobrança duplicada."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/sugar-rush.md",
+          "reason": "Atributo,mixinsdevelocidade,botas,scheduler e apresentação têm superfícies próprias; overlap e autoridade ainda sem hook mutador homologado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/sugar-rush.md",
+          "reason": "Hashes de artefato/classes/resources e seletoresJVM selam evidência1.0.10; comportamentofísico,config e multiplayer continuam NOT_TESTED."
+        }
+      }
     }
   },
   "providers": {},

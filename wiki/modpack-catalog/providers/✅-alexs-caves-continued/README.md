@@ -2,7 +2,9 @@
 
 **Ações sobrenaturais: 8/8 contratos técnicos estáticos documentados.** [Índice de ações](actions/INDEX.md) · [evidência binária](EXACT-TECHNICAL-CONTRACTS-1.0.10.md) · [manifesto dos contratos](EXACT-TECHNICAL-CONTRACTS-1.0.10.json).
 
-**Catálogo integral do provider: pendente.** As oito ações não abrangem armas, armaduras, efeitos, enchantments e outros sistemas integráveis por perks. [Escopo e trabalho restante](PERK-INTEGRATION-SCOPE-1.0.10.md), [inventário exato das famílias](INTEGRATION-SCOPE-INVENTORY-1.0.10.json) e [índice geral](../INDEX.md). A fila alfabética permanece neste provider.
+**Mob effects: 8/8 contratos técnicos estáticos documentados.** [Índice de efeitos](effects/INDEX.md) · [evidência e reprodução](EXACT-EFFECT-CONTRACTS-1.0.10.md) · [manifesto dos efeitos](EXACT-EFFECT-CONTRACTS-1.0.10.json). As fichas distinguem aplicações, atributos, dano, targeting, movimento, consumidores e cleanup; não acrescentam raízes mágicas.
+
+**Catálogo integral do provider: pendente.** As famílias concluídas ainda não abrangem armas, armaduras, enchantments e outros sistemas integráveis por perks. [Escopo e trabalho restante](PERK-INTEGRATION-SCOPE-1.0.10.md), [inventário exato das famílias](INTEGRATION-SCOPE-INVENTORY-1.0.10.json) e [índice geral](../INDEX.md). A fila alfabética permanece neste provider.
 
 ## Identidade e versões
 

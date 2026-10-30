@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Synthetic fail-closed tests; no publisher bytecode or artifact fixture is shipped."""
 import copy
+import contextlib
 import hashlib
+import io
 import json
 from pathlib import Path
 import subprocess
@@ -118,12 +120,27 @@ class ContractAuditTests(unittest.TestCase):
         blob = self.jar.read_bytes()
         return {"sha1": hashlib.sha1(blob).hexdigest(), "sha256": sha256(blob), "size_bytes": len(blob)}
 
-    def inspect(self, doc=None, output=JAVAP):
+    def inspect(self, doc=None, output=JAVAP, *, profile="actions"):
         def completed(command, **kwargs):
             return subprocess.CompletedProcess(command, 0, stdout=output.replace(OWNER, command[-1]), stderr="")
         with mock.patch.object(audit.subprocess, "run", side_effect=completed):
             return audit.audit(self.jar, doc or self.doc, self.root, "synthetic-javap",
-                               expected_identity=self.expected_identity)
+                               expected_identity=self.expected_identity, profile=profile)
+
+    def effects_fixture(self):
+        """Keep artifact fixtures shared, but seal a separate literal card roster."""
+        doc = copy.deepcopy(self.doc)
+        doc["catalog_family"] = "MOB_EFFECTS"
+        doc["effect_evidence"] = {}
+        doc["cards"] = {}
+        for action, effect in zip(ACTIONS, sorted(audit.EFFECTS)):
+            card = self.root / effect
+            card.parent.mkdir(exist_ok=True)
+            card.write_bytes((self.root / action).read_bytes())
+            doc["cards"][effect] = sha256(card.read_bytes())
+            doc["effect_evidence"][effect] = doc["action_evidence"][action]
+        del doc["action_evidence"]
+        return doc
 
     def test_parser_preserves_overloads_constructor_static_lambda_and_switch(self):
         parsed = audit.parse_javap(JAVAP, OWNER)
@@ -161,6 +178,109 @@ class ContractAuditTests(unittest.TestCase):
     def test_valid_structure_and_cards(self):
         audit.validate_structure(self.doc)
         audit.validate_cards(self.doc, self.root)
+
+    def test_effects_profile_validates_separate_literal_roster(self):
+        doc = self.effects_fixture()
+        audit.validate_structure(doc, profile="effects")
+        audit.validate_cards(doc, self.root, profile="effects")
+        self.assertEqual(8, len(doc["cards"]))
+        self.assertEqual({"effects/irradiated.md", "effects/magnetizing.md", "effects/rage.md",
+                          "effects/stunned.md", "effects/bubbled.md", "effects/deepsight.md",
+                          "effects/darkness-incarnate.md", "effects/sugar-rush.md"}, set(doc["cards"]))
+
+    def test_profiles_reject_cross_family_manifests_and_unknown_profile(self):
+        doc = self.effects_fixture()
+        for manifest, profile in ((doc, "actions"), (self.doc, "effects"), (doc, "all")):
+            with self.subTest(profile=profile), self.assertRaises(ValueError):
+                audit.validate_structure(manifest, profile=profile)
+        with self.assertRaises(ValueError):
+            audit.validate_cards(doc, self.root)
+        with self.assertRaises(ValueError):
+            self.inspect(doc, profile="actions")
+        # Selection does not mutate action globals or weaken subsequent defaults.
+        audit.validate_structure(self.doc)
+        self.assertNotIn("catalog_family", audit.SCOPE)
+
+    def test_effects_missing_extra_or_action_alias_card_rejected(self):
+        for key in ("cards", "effect_evidence"):
+            for mode in ("missing", "extra", "action_alias"):
+                doc = self.effects_fixture()
+                victim = "effects/irradiated.md"
+                value = doc[key].pop(victim)
+                if mode == "extra":
+                    doc[key][victim] = value
+                    doc[key]["effects/extra.md"] = value
+                elif mode == "action_alias":
+                    doc[key][ACTIONS[0]] = value
+                with self.subTest(key=key, mode=mode), self.assertRaises(ValueError):
+                    audit.validate_structure(doc, profile="effects")
+
+    def test_effects_profile_rejects_missing_wrong_or_inflated_scope(self):
+        for key, value in (("catalog_family", "ACTIONS"), ("catalog_family", None),
+                           ("semantic_magic_roots", 16), ("provider_universe_closed", True),
+                           ("mutating_hook", "VERIFIED"), ("physical_qa", "PASS")):
+            doc = self.effects_fixture()
+            if value is None:
+                doc.pop(key)
+            else:
+                doc[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="effects")
+
+    def test_effects_synthetic_audit_preserves_root_count_and_runtime_limits(self):
+        result = self.inspect(self.effects_fixture(), profile="effects")
+        self.assertEqual("PASS", result["status"])
+        self.assertEqual("MOB_EFFECTS", result["catalog_family"])
+        self.assertEqual(8, result["semantic_magic_roots"])
+        self.assertEqual(8, result["cards_checked"])
+        self.assertEqual(8, result["classes_checked"])
+        self.assertEqual(8, result["methods_checked"])
+        self.assertFalse(result["provider_universe_closed"])
+        self.assertEqual("NOT_VERIFIED", result["mutating_hook"])
+        self.assertEqual("NOT_TESTED", result["physical_qa"])
+        self.assertNotIn("catalog_family", self.inspect())
+
+    def test_effects_profile_checks_card_seals_and_symlink_containment(self):
+        doc = self.effects_fixture()
+        card = self.root / "effects/irradiated.md"
+        original = card.read_bytes()
+        card.write_bytes(original + b"drift")
+        with self.assertRaises(ValueError):
+            self.inspect(doc, profile="effects")
+        outside = Path(self.temp.name) / "outside-effect.md"
+        outside.write_bytes(original)
+        card.unlink()
+        card.symlink_to(outside)
+        with self.assertRaises(ValueError):
+            self.inspect(doc, profile="effects")
+
+    def test_effects_profile_rechecks_card_seals_after_javap(self):
+        doc = self.effects_fixture()
+        changed = False
+        def completed(command, **kwargs):
+            nonlocal changed
+            if not changed:
+                card = self.root / "effects/irradiated.md"
+                card.write_bytes(card.read_bytes() + b"changed during effects audit")
+                changed = True
+            return subprocess.CompletedProcess(command, 0, stdout=JAVAP.replace(OWNER, command[-1]), stderr="")
+        with mock.patch.object(audit.subprocess, "run", side_effect=completed):
+            with self.assertRaises(ValueError):
+                audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="effects",
+                            expected_identity=self.expected_identity)
+        self.assertTrue(changed)
+
+    def test_cli_selects_explicit_effects_profile_and_keeps_action_default(self):
+        arguments = ["--jar", str(self.jar), "--manifest", str(self.root / "manifest.json"),
+                     "--provider-root", str(self.root), "--javap", "synthetic-javap"]
+        for profile in ("actions", "effects"):
+            argv = arguments + (["--profile", "effects"] if profile == "effects" else [])
+            doc = self.effects_fixture() if profile == "effects" else self.doc
+            with self.subTest(profile=profile), mock.patch.object(audit, "load_manifest", return_value=doc), \
+                    mock.patch.object(audit, "audit", return_value={"status": "PASS"}) as inspect, \
+                    contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, audit.main(argv))
+                self.assertEqual(profile, inspect.call_args.kwargs["profile"])
 
     def test_missing_extra_action_and_card_evidence_mismatch_rejected(self):
         variants = []
