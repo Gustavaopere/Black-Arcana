@@ -49,6 +49,21 @@ class ProbeParserTests(unittest.TestCase):
         self.assertEqual(rows[0]["damage_type_fields"], [{"field": "ACID", "offset": 0}])
         self.assertEqual(len(rows[0]["damage_source_constructor_sites"]), 1)
 
+    def test_class_initializer_does_not_overwrite_last_factory(self):
+        original = FACTORY.replace("}\n", """  static {};
+    descriptor: ()V
+    Code:
+       0: return
+}
+""")
+        result = factories(parse_methods(original))
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["method"], "causeAcidDamage")
+        self.assertEqual(
+            result[0]["descriptor"],
+            "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;"
+        )
+
     def test_does_not_confuse_identical_message_ids_with_resource_keys(self):
         self.assertNotIn("dark_arrow", SAMPLE)
         self.assertTrue(OWNER.endswith("/ACDamageTypes"))
