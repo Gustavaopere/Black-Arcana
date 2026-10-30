@@ -106,7 +106,7 @@ def describe_method(method, label):
         ix = at_offset[offset]
         inst = insns[ix]
         if not inst["opcode"].startswith("invoke") or (
-            not matches_invocation_symbol(inst["symbol"], klass, name):
+            not matches_invocation_symbol(inst["symbol"], klass, name)):
             raise DecisionAuditError("exact invocation target drift: " + str(offset))
         sites.append({
             "offset": offset, "symbol": inst["symbol"],
