@@ -33,8 +33,10 @@ jobs:
           java-version: '21'
       - name: Syntax and deterministic probe tests
         run: |
-          python3 -m py_compile docs/qa/alexscaves_1010_forsaken_timing_probe.py docs/qa/alexscaves_1010_forsaken_timing_probe_test.py
+          python3 -m py_compile docs/qa/alexscaves_1010_forsaken_timing_probe.py docs/qa/alexscaves_1010_forsaken_timing_probe_test.py docs/qa/alexscaves_1010_forsaken_timing_cards_test.py
           python3 docs/qa/alexscaves_1010_forsaken_timing_probe_test.py -v
+      - name: Verify documented timing and exact own-NBT state
+        run: python3 docs/qa/alexscaves_1010_forsaken_timing_cards_test.py -v
       - name: Download hash-pinned installed 1.0.10 JAR
         run: |
           mkdir -p build/alexscaves-1010
@@ -47,6 +49,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_forsaken_timing_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/EXACT-FORSAKEN-TIMING-1.0.10.json' \
             --output build/alexscaves-1010/forsaken-timing.json
       - uses: actions/upload-artifact@v7
         with:
