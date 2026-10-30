@@ -76,3 +76,13 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 - São pontos relevantes para perks de encantamentos e targeting, sem autorização de mutação ou garantia de proc único.
 
 **Limite metodológico:** offsets, referências de método, testes e desvios são provas do *bytecode*; a análise não reconstruiu exceções, switch dispatch, todos os caminhos de CFG ou condições de runtime. `NOT_CERTIFIED` para comportamento integral; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Black Arcana não deve substituir settlement, autorizações de servidor, segurança do mundo ou rotinas próprias do provider.
+
+## Helpers de dano e encantamentos no JAR 1.0.10
+
+**Grau da prova:** `SHA_EXACT_HELPER_ABI_AND_BYTECODE`. [Manifesto fixado](EXACT-DAMAGE-HELPERS-1.0.10.json) e [CI da auditoria](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40997154302). A classe `com/github/alexmodguy/alexscaves/server/misc/ACCompat.class` possui SHA-256 `333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b`.
+
+- `public static int enchantLevel(net.minecraft.world.item.ItemStack, net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment>)`, descritor `(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I`, método SHA-256 `775387837bd0e7dbbd2fd04cd5de0375a6ccd2813de5db375fd152f8b63ad8dc`: consulta `ItemStack.getEnchantments()`, itera `ItemEnchantments.entrySet()`, compara a chave com `Holder.is(ResourceKey)`, retorna `Entry.getIntValue()` quando coincide ou zero (`iconst_0`) ao final.
+- Essa consulta é o helper lido por `DesolateDaggerEntity.tick()` junto à chave `IMPENDING_STAB` identificada no lote #959. **A leitura da chave não comprova** o efeito desse encantamento na magnitude do dano sem auditoria do caller completo.
+- `public static boolean hurt(net.minecraft.world.entity.Entity, net.minecraft.world.damagesource.DamageSource, float)`, descritor `(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z`, método SHA-256 `77997f2089224cd768dc079fb789bc5ffa96c8647bf5c0cabe932b8c3a3702b5`: o wrapper passa os três argumentos a `Entity.hurt(DamageSource,float)` e retorna diretamente o booleano; não altera dano nem aplica pós-processamento nele mesmo.
+
+**Para perks:** nível de encantamento, owner, procura de alvo, frequência de impacto, condições de cooldown e semântica do método chamado `Entity.hurt` devem ser respeitados. A extensão segura ainda não foi comprovada. `NOT_CERTIFIED` / `NOT_VERIFIED` / `NOT_TESTED` / `NO_MUTATION`.

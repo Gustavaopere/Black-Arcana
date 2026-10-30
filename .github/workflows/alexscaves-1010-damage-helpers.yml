@@ -6,6 +6,7 @@ on:
     paths:
       - 'docs/qa/alexscaves_1010_damage_helper_probe.py'
       - 'docs/qa/alexscaves_1010_damage_helper_probe_test.py'
+      - 'docs/qa/alexscaves_1010_damage_helper_cards_test.py'
       - '.github/workflows/alexscaves-1010-damage-helpers.yml'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/**'
   push:
@@ -30,6 +31,8 @@ jobs:
           java-version: '21'
       - name: Synthetic parser and fail-closed tests
         run: python3 docs/qa/alexscaves_1010_damage_helper_probe_test.py -v
+      - name: Verify individual cards against SHA-exact helper evidence
+        run: python3 docs/qa/alexscaves_1010_damage_helper_cards_test.py -v
       - name: Fetch exact publisher artifact
         run: |
           mkdir -p build/alexscaves-1010
@@ -43,6 +46,7 @@ jobs:
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --prior 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json' \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/EXACT-DAMAGE-HELPERS-1.0.10.json' \
             --output build/alexscaves-1010/damage-helpers.json
       - uses: actions/upload-artifact@v7
         with:

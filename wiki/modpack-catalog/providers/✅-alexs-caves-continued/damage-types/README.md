@@ -72,3 +72,17 @@ A auditoria [SHA-exata das janelas](EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json) ampli
 **Projéteis:** `DarkArrowEntity` referencia `getShadowArrowDamage`, `isPerfectShot`, `isAlliedTo` e `ACCompat.hurt`; `DesolateDaggerEntity` referencia o encantamento `IMPENDING_STAB` e `ACCompat.hurt`.
 
 Todos os quatro recortes continuam como `STATIC_BYTECODE_ANCHORS_ONLY`; nenhuma ficha foi promovida para `COMPLETE_PERK_READY` ou hook seguro. Não há alteração de denominadores globais.
+
+## Helpers intermediários — evidência exata do bytecode 1.0.10
+
+A inspeção [`EXACT-DAMAGE-HELPERS-1.0.10.json`](EXACT-DAMAGE-HELPERS-1.0.10.json) de cinco métodos em três classes acrescentou contexto ao Sonic Boom, Dark Arrow e Desolate Dagger, sem adicionar cinco magias ou certificar cinco hooks. O método `ForsakenEntity.getSonicDamageAgainst(LivingEntity)` apresenta **45.0f** para a tag `WEAK_TO_FORSAKEN_SONIC_ATTACK` ou **4.0f** para os demais tipos. `ACCompat.hurt` delega à função `Entity.hurt`. `ACCompat.enchantLevel` lê o nível do encantamento do `ItemStack` (retornando zero se não encontra a chave). `DarkArrowEntity.getShadowArrowDamage` e `isPerfectShot` consultam os accessors sincronizados correspondentes.
+
+| Helper binário SHA-exato | ABI JVM | Contrato parcial |
+|---|---|---|
+| `getSonicDamageAgainst` | `(Lnet/minecraft/world/entity/LivingEntity;)F` | ⚠️ ABI / operações observadas; hook `NOT_VERIFIED` |
+| `hurt` | `(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z` | ⚠️ ABI / operações observadas; hook `NOT_VERIFIED` |
+| `enchantLevel` | `(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I` | ⚠️ ABI / operações observadas; hook `NOT_VERIFIED` |
+| `getShadowArrowDamage` | `()F` | ⚠️ ABI / operações observadas; hook `NOT_VERIFIED` |
+| `isPerfectShot` | `()Z` | ⚠️ ABI / operações observadas; hook `NOT_VERIFIED` |
+
+**Atenção:** `45.0f` e `4.0f` são retornos da função para uma classificação de target; a operação adicional `ceil(base×0.65)` pertence a **um** dos caminhos de `ForsakenAttackGoal.tick()`, não a todos. Não inferir dano final, controle de autoria, regressão de datapack ou hook mutador a partir das cinco ABIs.

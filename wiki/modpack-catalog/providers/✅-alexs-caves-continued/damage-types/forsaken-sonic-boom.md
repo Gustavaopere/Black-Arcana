@@ -75,3 +75,14 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 - Essas duas referências pertencem ao mesmo método `tick()`, mas **não comprovam dois hits** por ciclo nem a quantidade final de vítimas.
 
 **Limite metodológico:** offsets, referências de método, testes e desvios são provas do *bytecode*; a análise não reconstruiu exceções, switch dispatch, todos os caminhos de CFG ou condições de runtime. `NOT_CERTIFIED` para comportamento integral; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Black Arcana não deve substituir settlement, autorizações de servidor, segurança do mundo ou rotinas próprias do provider.
+
+## Helper de dano confirmado no JAR 1.0.10 — `getSonicDamageAgainst`
+
+**Grau da prova:** `SHA_EXACT_HELPER_ABI_AND_BYTECODE`. [Manifesto fixado](EXACT-DAMAGE-HELPERS-1.0.10.json) e [CI da auditoria](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40997154302). Classe `com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.class` (SHA-256 `72981b25b3af251b3ee66b6ef16b650997359ff94673ad500256b2d1cee0cde1`). Método `public float getSonicDamageAgainst(net.minecraft.world.entity.LivingEntity)`, descritor `(Lnet/minecraft/world/entity/LivingEntity;)F` e SHA-256 do método parseado `db47e82eebdb86724b6a71164ca563d0a75910bb143c16b944a5beb63f537d88`.
+
+- O bytecode de `getSonicDamageAgainst(LivingEntity)` usa `LivingEntity.getType()`, `EntityType.builtInRegistryHolder()`, `Holder.Reference.is(TagKey)` e a chave `ACTagRegistry.WEAK_TO_FORSAKEN_SONIC_ATTACK`.
+- Ramo verdadeiro da consulta à tag: constante `45.0f` no offset 16; ramo alternativo: `4.0f` no offset 22. Os dois caminhos convergem no retorno `freturn` offset 25.
+- **Parâmetro bruto por target:** `45.0f` ou `4.0f` segundo aquela tag, **antes** de processamentos do caller, da `LivingEntity.hurt`, resistências ou outros modificadores.
+- A auditoria anterior de `ForsakenAttackGoal.tick()` mostrou dois usos. O segundo caminho possui `0.65f`, `Math.ceil()` e `LivingEntity.hurt()`: a operação local sobre esses retornos resulta, aritmeticamente, em `ceil(45×0.65)=30` ou `ceil(4×0.65)=3` como **argumento bruto daquele trecho**, quando executado. O primeiro caminho não deve herdar esse multiplicador.
+
+**Limites obrigatórios:** a tag de entidade pode ser modificada por datapacks; a condição de ativação do ataque, o número de alvos, o resultado de `LivingEntity.hurt`, as proteções e a frequência de aplicação dependem de outros caminhos. A inspeção **não** homologou hook mutador nem dano efetivo. `NOT_CERTIFIED` / `NOT_VERIFIED` / `NOT_TESTED` / `NO_MUTATION`.
