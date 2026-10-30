@@ -142,6 +142,25 @@ class ContractAuditTests(unittest.TestCase):
         del doc["action_evidence"]
         return doc
 
+    def dreadbow_fixture(self):
+        """A two-card family needs only two anchored classes, independently sealed."""
+        doc = copy.deepcopy(self.doc)
+        doc["catalog_family"] = "DREADBOW_AND_DARK_ARROW"
+        doc["contract_evidence"] = {}
+        doc["cards"] = {}
+        selected_classes = {}
+        for action, relative in zip(ACTIONS, sorted(audit.DREADBOW)):
+            card = self.root / relative
+            card.parent.mkdir(exist_ok=True)
+            card.write_bytes((self.root / action).read_bytes())
+            doc["cards"][relative] = sha256(card.read_bytes())
+            record = doc["action_evidence"][action]
+            doc["contract_evidence"][relative] = record
+            selected_classes.update({path: doc["classes"][path] for path in record["classes"]})
+        doc["classes"] = selected_classes
+        del doc["action_evidence"]
+        return doc
+
     def test_parser_preserves_overloads_constructor_static_lambda_and_switch(self):
         parsed = audit.parse_javap(JAVAP, OWNER)
         self.assertEqual({("<init>", "()V"), ("<clinit>", "()V"), ("value", "()I"),
@@ -281,6 +300,119 @@ class ContractAuditTests(unittest.TestCase):
                     contextlib.redirect_stdout(io.StringIO()):
                 self.assertEqual(0, audit.main(argv))
                 self.assertEqual(profile, inspect.call_args.kwargs["profile"])
+
+    def test_dreadbow_literal_roster_and_two_class_synthetic_audit(self):
+        doc = self.dreadbow_fixture()
+        self.assertEqual({"equipment/dreadbow.md", "damage-types/dark-arrow.md"}, set(audit.DREADBOW))
+        audit.validate_structure(doc, profile="dreadbow")
+        audit.validate_cards(doc, self.root, profile="dreadbow")
+        result = self.inspect(doc, profile="dreadbow")
+        self.assertEqual("PASS", result["status"])
+        self.assertEqual("DREADBOW_AND_DARK_ARROW", result["catalog_family"])
+        self.assertEqual(2, result["cards_checked"])
+        self.assertEqual(2, result["classes_checked"])
+        self.assertEqual(2, result["methods_checked"])
+        self.assertEqual(8, result["semantic_magic_roots"])
+        self.assertFalse(result["provider_universe_closed"])
+        self.assertEqual("NOT_VERIFIED", result["mutating_hook"])
+        self.assertEqual("NOT_TESTED", result["physical_qa"])
+
+    def test_all_three_profiles_are_isolated_without_global_state_mutation(self):
+        snapshots = tuple(copy.deepcopy(value) for value in
+                          (audit.SCOPE, audit.EFFECT_SCOPE, audit.DREADBOW_SCOPE))
+        documents = {"actions": self.doc, "effects": self.effects_fixture(),
+                     "dreadbow": self.dreadbow_fixture()}
+        for profile, manifest in documents.items():
+            for other in documents:
+                if profile == other:
+                    continue
+                with self.subTest(profile=profile, selected=other), self.assertRaises(ValueError):
+                    audit.validate_structure(manifest, profile=other)
+                with self.subTest(profile=profile, cards=other), self.assertRaises(ValueError):
+                    audit.validate_cards(manifest, self.root, profile=other)
+        self.inspect(documents["dreadbow"], profile="dreadbow")
+        self.inspect(documents["effects"], profile="effects")
+        self.inspect()
+        self.assertEqual(snapshots, (audit.SCOPE, audit.EFFECT_SCOPE, audit.DREADBOW_SCOPE))
+
+    def test_dreadbow_missing_extra_or_aliased_roster_rejected(self):
+        for key in ("cards", "contract_evidence"):
+            for mode in ("missing", "extra", "action_alias", "effect_alias"):
+                doc = self.dreadbow_fixture()
+                value = doc[key].pop("equipment/dreadbow.md")
+                if mode == "extra":
+                    doc[key]["equipment/dreadbow.md"] = value
+                    doc[key]["equipment/extra.md"] = value
+                elif mode == "action_alias":
+                    doc[key][ACTIONS[0]] = value
+                elif mode == "effect_alias":
+                    doc[key]["effects/bubbled.md"] = value
+                with self.subTest(key=key, mode=mode), self.assertRaises(ValueError):
+                    audit.validate_structure(doc, profile="dreadbow")
+
+    def test_dreadbow_scope_and_evidence_family_tampering_rejected(self):
+        for key, value in (("catalog_family", "MOB_EFFECTS"), ("catalog_family", None),
+                           ("semantic_magic_roots", 2), ("provider_universe_closed", True),
+                           ("mutating_hook", "VERIFIED"), ("physical_qa", "PASS"),
+                           ("artifact_size_bytes", True)):
+            doc = self.dreadbow_fixture()
+            if value is None:
+                doc.pop(key)
+            else:
+                doc[key] = value
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="dreadbow")
+        for alias in ("action_evidence", "effect_evidence"):
+            doc = self.dreadbow_fixture()
+            doc[alias] = doc.pop("contract_evidence")
+            with self.subTest(alias=alias), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="dreadbow")
+
+    def test_dreadbow_card_count_does_not_weaken_other_profiles_class_minimum(self):
+        for profile, manifest, evidence_key in (
+                ("actions", self.doc, "action_evidence"),
+                ("effects", self.effects_fixture(), "effect_evidence"),
+                ("dreadbow", self.dreadbow_fixture(), "contract_evidence")):
+            for mode in ("class_count", "anchored_class_count"):
+                doc = copy.deepcopy(manifest)
+                path = next(iter(doc["classes"]))
+                if mode == "class_count":
+                    doc["classes"].pop(path)
+                    replacement = next(iter(doc["classes"]))
+                    for record in doc[evidence_key].values():
+                        record["classes"] = [replacement if item == path else item
+                                             for item in record["classes"]]
+                else:
+                    doc["classes"][path]["methods"] = []
+                with self.subTest(profile=profile, mode=mode), self.assertRaises(ValueError):
+                    audit.validate_structure(doc, profile=profile)
+
+    def test_dreadbow_profile_rechecks_card_seal_after_bytecode_inspection(self):
+        doc = self.dreadbow_fixture()
+        changed = False
+        def completed(command, **kwargs):
+            nonlocal changed
+            if not changed:
+                card = self.root / "damage-types/dark-arrow.md"
+                card.write_bytes(card.read_bytes() + b"changed during dreadbow audit")
+                changed = True
+            return subprocess.CompletedProcess(command, 0, stdout=JAVAP.replace(OWNER, command[-1]), stderr="")
+        with mock.patch.object(audit.subprocess, "run", side_effect=completed):
+            with self.assertRaises(ValueError):
+                audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="dreadbow",
+                            expected_identity=self.expected_identity)
+        self.assertTrue(changed)
+
+    def test_cli_accepts_explicit_dreadbow_profile(self):
+        arguments = ["--jar", str(self.jar), "--manifest", str(self.root / "manifest.json"),
+                     "--provider-root", str(self.root), "--javap", "synthetic-javap",
+                     "--profile", "dreadbow"]
+        doc = self.dreadbow_fixture()
+        with mock.patch.object(audit, "load_manifest", return_value=doc), \
+                mock.patch.object(audit, "audit", return_value={"status": "PASS"}) as inspect, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(0, audit.main(arguments))
+            self.assertEqual("dreadbow", inspect.call_args.kwargs["profile"])
 
     def test_missing_extra_action_and_card_evidence_mismatch_rejected(self):
         variants = []

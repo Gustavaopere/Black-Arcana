@@ -73,9 +73,10 @@ class HelperCardsTest(unittest.TestCase):
                 self.assertIn(m["descriptor"], card)
                 self.assertIn(m["parsed_method_sha256"], card)
                 self.assertIn(cls["class_sha256"], card)
-                for token in ("NOT_CERTIFIED", "NOT_VERIFIED", "NOT_TESTED",
+                for token in ("NOT_VERIFIED", "NOT_TESTED",
                               "NO_MUTATION"):
                     self.assertIn(token, card)
+                self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if path == "dark-arrow.md" else "NOT_CERTIFIED", card)
 
 if __name__ == "__main__":
     unittest.main()

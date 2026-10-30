@@ -7,9 +7,9 @@ Autoridade: JAR 1.0.10, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-25
 | Família | Universo exato identificado | Trabalho necessário antes de fechar o provider |
 |---|---|---|
 | Ações sobrenaturais | Oito raízes já contadas | Sete campos estáticos documentados nas oito fichas; hooks e QA física separados |
-| Itens / equipamento | 81 classes externas de itens; 42 com assinaturas de interação já classificadas semanticamente | Individualizar os contratos relevantes de armas, movimento, comida, defesa, itens passivos e helpers; separar classes base de registros concretos |
+| Itens / equipamento | 81 classes externas de itens; 42 com assinaturas de interação já classificadas semanticamente | [Dreadbow](equipment/dreadbow.md) documentado individualmente; demais armas, movimento, comida, defesa e helpers precisam de disposição própria. Classes e fichas não são denominadores equivalentes |
 | Enchantments | 51 JSONs em `data/alexscaves/enchantment/` | Ficha por contrato: nível/custo/slots/exclusividade e consumidor real de cada modifier, inclusive tecnologia/armas |
-| Damage types | **11/11 JSONs e seis tags, 11 factories e 14 chamadas estáticas diretas em 12 classes; adicionalmente, offsets de escrita dos dois accessors sincronizados da Dark Arrow no Dreadbow** ([fichas](damage-types/INDEX.md), [manifesto de bytecode](damage-types/EXACT-CONSUMERS-1.0.10.json)); 0/11 contratos integrais de consumidores certificados | Factories e cinco métodos helpers selecionados auditados ([manifesto](damage-types/EXACT-DAMAGE-HELPERS-1.0.10.json)); ainda rastrear tags finais, origem dos dados sincronizados, restante do fluxo de dano, efeitos, proteções e settlement. Nenhum hook homologado |
+| Damage types | 11 JSONs, 11 factories e seus consumidores diretos localizados no JAR | **1/11 contrato estático documentado: [Dark Arrow](damage-types/dark-arrow.md)**; demais dez contratos continuam parciais. [Prova conjunta com Dreadbow](EXACT-DREADBOW-CONTRACTS-1.0.10.md). Hooks e QA física pendentes |
 | Mob effects | Oito campos de registro de efeitos | **8/8 contratos estáticos documentados**, incluindo aplicações e consumidores; [fichas](effects/INDEX.md) e [prova exata](EXACT-EFFECT-CONTRACTS-1.0.10.md). Hooks e QA física pendentes |
 | Potions | 12 campos de registro de poções | Conteúdo, níveis/tempo e aquisição, sem contar variantes como novas magias |
 | Config servidor | 40 campos em `ACServerConfig` | Defaults/bounds, momento de leitura, autoridade global/por jogador e consumidores; não presumir valores em execução |
@@ -28,13 +28,10 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações e os oito efeitos certificados sustentam ✅ nos recortes de `actions/` e `effects/`. O provider inteiro permanece pendente, e o registro alfabético continua em **Alex's Caves Continued**. Um percentual 16/16 de fichas observadas não fecha o universo maior identificado aqui. Nenhuma família acima foi declarada inexistente por ainda não possuir ficha individual. A próxima família permanece dentro deste provider: enchantments e seus consumidores de armas/equipamentos, além dos demais sistemas ainda abertos.
+As oito ações, oito efeitos, o equipamento Dreadbow e o contrato Dark Arrow somam **18 contratos estáticos certificados entre 28 fichas observadas**. Os índices distinguem as fichas completas dos dez outros tipos de dano ainda parciais. O provider inteiro permanece pendente, e o registro alfabético continua em **Alex's Caves Continued**. O universo de integrações ainda inclui os demais equipamentos, enchantments e sistemas; nenhuma família ausente é presumida inexistente.
 
-## Dark Arrow — pontos de escrita observados
+## Dreadbow e Dark Arrow — contrato consolidado
 
-[Manifesto do estado sincronizado](damage-types/EXACT-DARK-ARROW-STATE-1.0.10.json): o JAR 1.0.10 confirma `SHADOW_ARROW_DAMAGE` e `PERFECT_SHOT` com defaults `0.0f`/`false`, setters em `DarkArrowEntity` e três invocações diretas em `DreadbowItem`. Não confundir essa superfície com API de perks estável; filtro de friendly fire, owner, múltiplos impactos, autoridade servidor/multiplayer e settlement estão pendentes. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+A [prova conjunta](EXACT-DREADBOW-CONTRACTS-1.0.10.md) e as duas fichas acompanham o contador de tiro perfeito, a duração real de uso, a sincronização de `CUSTOM_DATA`, os caminhos de disparo, a fórmula solicitada de dano e os filtros de colisão. Defaults, setters e decisões anteriormente inventariados permanecem nos manifestos de apoio imutáveis; sua existência isolada não homologa API de perks.
 
-
-## Condições do Dreadbow confirmadas por bytecode
-
-O [manifesto de decisões 1.0.10](damage-types/EXACT-DREADBOW-DECISIONS-1.0.10.json) confirma `PRECISE_VOLLEY` → inteiro local 8 → argumento `2.0f`/`3.0f` e `TWILIGHT_PERFECTION` mais `getPerfectShotTicks(ItemStack) > 0` → inteiro local 10 → `setPerfectShot`. O encantamento `RELENTLESS_DARKNESS` e `SHADED_RESPITE` aparecem também como referências; seus efeitos não foram certificados neste recorte. Nenhuma raiz mágica ou hook certificado foi acrescentado.
+Uma perk de duração, alcance, dano, tipo de alvo ou frequência precisa escolher o consumidor correto e preservar a autoridade nativa. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`**. Não há nova raiz mágica, adapter executável ou promoção de Stage.

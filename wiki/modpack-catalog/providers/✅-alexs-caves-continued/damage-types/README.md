@@ -1,6 +1,6 @@
 # Alex's Caves 1.0.10 — auditoria dos tipos de dano
 
-**Status:** ⚠️ recursos JSON `11/11` e **factories compiladas `11/11` mapeadas**, com **14 invocações diretas em 12 classes**. Chamadas diretas são identificadas; consumidores completos, hooks, hit counts, comportamento em jogo e QA física continuam pendentes. O conteúdo aqui **não** é um certificado técnico `COMPLETE_PERK_READY`.
+**Status:** ⚠️ recursos JSON `11/11` e **factories compiladas `11/11` mapeadas**, com **14 invocações diretas em 12 classes**. O [contrato Dark Arrow](dark-arrow.md) e o [equipamento Dreadbow](../equipment/dreadbow.md) foram consolidados na [prova estática conjunta](../EXACT-DREADBOW-CONTRACTS-1.0.10.md): **1/11 tipos de dano possui contrato estático certificado**. Os demais dez consumidores continuam parciais; hooks, hit counts medidos e QA física permanecem pendentes.
 
 - Artefato oficial: SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, tamanho 75.279.314 bytes.
 - Auditor: [`docs/qa/alexscaves_1010_damage_type_probe.py`](../../../../../docs/qa/alexscaves_1010_damage_type_probe.py); [CI da sonda](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40985275338).
@@ -30,7 +30,7 @@ O recurso `dark_arrow` possui `message_id=desolate_dagger`, igual a `desolate_da
 
 A tag `minecraft:bypasses_cooldown` trata de classificação de dano no Minecraft, não de cooldown de casting de qualquer feitiço. `minecraft:is_explosion`, `minecraft:is_projectile` e `minecraft:is_fire` são declaradas como memberships **textuais**, não como comprovação da aplicação do `DamageSource` no jogo. A tag `alexscaves:deep_one_ignores` é inventariada, mas não lista diretamente nenhum dos onze IDs.
 
-**PENDENTE:** rastrear bytecode 1.0.10 para cada construtor/uso real do tipo de dano, owner/causa, valores de dano, invulnerabilidade/impactos, proteção PvP, extensão/alteração segura e entradas do sistema de perks. Até isso, `NOT_CERTIFIED` / `NOT_VERIFIED` / `NOT_TESTED`.
+**PENDENTE:** concluir os dez outros contratos de consumidores, owner/causa, fórmulas e targeting. Proteção PvP, mutação segura e QA física continuam pendentes também para Dark Arrow. Os dez tipos parciais permanecem `NOT_CERTIFIED`; hooks `NOT_VERIFIED` e QA `NOT_TESTED` em todo o recorte.
 
 ## Mapa binário SHA-exato de `ACDamageTypes`
 
@@ -52,7 +52,7 @@ A tag `minecraft:bypasses_cooldown` trata de classificação de dano no Minecraf
 
 **Divergência relevante:** `NuclearExplosionEntity.tick()` contém referências tanto a `causeIntentionalGameDesign` quanto a `causeNukeDamage`; não se conclui que ambas executem no mesmo tick. `ForsakenAttackGoal.tick()` contém duas referências a `causeForsakenSonicBoomDamage`, mas isso não demonstra dois hits por tick. `dark_arrow` e `desolate_dagger` continuam tipos diferentes embora os JSONs compartilhem `message_id`.
 
-A sobrecarga de `DamageSourceRandomMessages` com argumento `Entity` é usada por algumas factories, enquanto outras recebem somente `RegistryAccess`. Isto permite documentar a assinatura compilada, mas **não** comprova attacker attribution, ownership, targeting, fórmulas, mitigação, repetição de impacto, segurança de hook ou elegibilidade para perks. Certificação integral para perks **0/11**; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+A sobrecarga de `DamageSourceRandomMessages` com argumento `Entity` é usada por algumas factories, enquanto outras recebem somente `RegistryAccess`. Isto permite documentar a assinatura compilada, mas **não** comprova attacker attribution, ownership, targeting, fórmulas, mitigação, repetição de impacto, segurança de hook ou elegibilidade para perks. Contratos técnicos estáticos documentados **1/11**, limitados a Dark Arrow; os manifestos parciais desta seção não homologam hooks; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
 
 ## Janelas de bytecode dos quatro consumidores prioritários
 
@@ -71,7 +71,7 @@ A auditoria [SHA-exata das janelas](EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json) ampli
 
 **Projéteis:** `DarkArrowEntity` referencia `getShadowArrowDamage`, `isPerfectShot`, `isAlliedTo` e `ACCompat.hurt`; `DesolateDaggerEntity` referencia o encantamento `IMPENDING_STAB` e `ACCompat.hurt`.
 
-Todos os quatro recortes continuam como `STATIC_BYTECODE_ANCHORS_ONLY`; nenhuma ficha foi promovida para `COMPLETE_PERK_READY` ou hook seguro. Não há alteração de denominadores globais.
+O manifesto de janelas mantém seu escopo `STATIC_BYTECODE_ANCHORS_ONLY`. A certificação posterior de Dark Arrow usa o contrato consolidado e evidências adicionais, sem alterar esse snapshot nem homologar hook seguro.
 
 ## Helpers intermediários — evidência exata do bytecode 1.0.10
 
@@ -96,4 +96,4 @@ A auditoria [`EXACT-DARK-ARROW-STATE-1.0.10.json`](EXACT-DARK-ARROW-STATE-1.0.10
 
 ## Encantamentos que definem os flags da Dark Arrow
 
-O [manifesto SHA-exato](EXACT-DREADBOW-DECISIONS-1.0.10.json) rastreia `PRECISE_VOLLEY` até o slot local 8, usado para selecionar `2.0f`/`3.0f` no setter de dano da Dark Arrow, e `TWILIGHT_PERFECTION` mais `getPerfectShotTicks(ItemStack) > 0` até o slot local 10, usado pelo setter `PERFECT_SHOT`. `RELENTLESS_DARKNESS` e `SHADED_RESPITE` também são consultados pelo Dreadbow. Isso não adiciona novas magias ou contratos completos para perks; origem do contador de perfect shot e autoridade de mutação permanecem pendentes.
+O [manifesto SHA-exato](EXACT-DREADBOW-DECISIONS-1.0.10.json) rastreia `PRECISE_VOLLEY` até o slot local 8, usado para selecionar `2.0f`/`3.0f` no setter de dano da Dark Arrow, e `TWILIGHT_PERFECTION` mais `getPerfectShotTicks(ItemStack) > 0` até o slot local 10, usado pelo setter `PERFECT_SHOT`. `RELENTLESS_DARKNESS` e `SHADED_RESPITE` também são consultados pelo Dreadbow. Isso não adiciona novas magias ou contratos completos para perks; a implementação do contador e a colisão são descritas agora nas fichas consolidadas, enquanto autoridade de mutação e QA física permanecem pendentes.

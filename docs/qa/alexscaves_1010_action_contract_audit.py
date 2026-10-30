@@ -21,6 +21,7 @@ ACTIONS = frozenset("actions/" + name + ".md" for name in (
 EFFECTS = frozenset("effects/" + name + ".md" for name in (
     "irradiated", "magnetizing", "rage", "stunned", "bubbled", "deepsight",
     "darkness-incarnate", "sugar-rush"))
+DREADBOW = frozenset(("equipment/dreadbow.md", "damage-types/dark-arrow.md"))
 SCOPE = {"schema_version": 1, "version": "1.0.10",
          "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
          "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR", "mutating_hook": "NOT_VERIFIED",
@@ -28,6 +29,7 @@ SCOPE = {"schema_version": 1, "version": "1.0.10",
          "semantic_magic_roots": 8, "artifact_sha1": SHA1,
          "artifact_sha256": SHA256, "artifact_size_bytes": SIZE_BYTES}
 EFFECT_SCOPE = {**SCOPE, "catalog_family": "MOB_EFFECTS"}
+DREADBOW_SCOPE = {**SCOPE, "catalog_family": "DREADBOW_AND_DARK_ARROW"}
 ADJACENT_SOURCE = {"repository": "Codx-org/AlexsCavesContinued",
                    "revision": "523308608422ab8e31974befa7111ecdf495dd37",
                    "declared_version": "1.1.1",
@@ -45,9 +47,11 @@ def require(condition, message):
 
 def profile_spec(profile):
     """Select a literal family without changing the existing action contract."""
-    require(profile in ("actions", "effects"), "unknown catalog profile")
+    require(profile in ("actions", "effects", "dreadbow"), "unknown catalog profile")
     if profile == "effects":
         return EFFECT_SCOPE, EFFECTS, "effect_evidence"
+    if profile == "dreadbow":
+        return DREADBOW_SCOPE, DREADBOW, "contract_evidence"
     return SCOPE, ACTIONS, "action_evidence"
 
 
@@ -122,10 +126,11 @@ def validate_structure(manifest, *, profile="actions"):
     require(manifest["adjacent_source"] == ADJACENT_SOURCE, "adjacent source is not the declared corroboration snapshot")
     cards, evidence, classes, resources = (manifest[key] for key in ("cards", evidence_key, "classes", "resources"))
     require(isinstance(cards, dict) and set(cards) == roster and all(digest(h) for h in cards.values()),
-            "cards must seal exactly the eight literal " + profile + " paths")
+            "cards must seal exactly the " + str(len(roster)) + " literal " + profile + " paths")
     require(isinstance(evidence, dict) and set(evidence) == roster,
-            "evidence must cover exactly the eight " + profile)
-    require(isinstance(classes, dict) and 8 <= len(classes) <= 128 and isinstance(resources, dict) and len(resources) <= 256,
+            "evidence must cover exactly the " + str(len(roster)) + " " + profile + " cards")
+    require(isinstance(classes, dict) and len(roster) <= len(classes) <= 128
+            and isinstance(resources, dict) and len(resources) <= 256,
             "invalid class/resource mapping limits")
     method_classes, total_anchors = set(), 0
     for path, entry in classes.items():
@@ -153,7 +158,8 @@ def validate_structure(manifest, *, profile="actions"):
                 offsets.add(offset)
             method_classes.add(path)
             total_anchors += len(anchors)
-    require(len(method_classes) >= 8 and total_anchors <= 8192, "need at least eight critical classes within anchor limit")
+    require(len(method_classes) >= len(roster) and total_anchors <= 8192,
+            "need at least " + str(len(roster)) + " critical classes within anchor limit")
     require(all(canonical(path) and not path.endswith(("/", ".class")) and digest(h) for path, h in resources.items()),
             "invalid resource paths/hashes")
     referenced_classes, referenced_resources = set(), set()
@@ -241,7 +247,7 @@ def audit(jar, manifest, providerroot, javap, *, expected_identity=None, profile
             "semantic_magic_roots": 8, "cards_checked": len(roster), "classes_checked": len(manifest["classes"]),
             "resources_checked": len(manifest["resources"]), "methods_checked": checked_methods,
             "instruction_anchors_checked": checked_anchors}
-    if profile == "effects":
+    if "catalog_family" in scope:
         report["catalog_family"] = scope["catalog_family"]
     return report
 
@@ -251,7 +257,7 @@ def main(argv=None):
     for flag in ("jar", "manifest", "provider-root", "javap"):
         parser.add_argument("--" + flag, required=True, type=Path)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--profile", choices=("actions", "effects"), default="actions")
+    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow"), default="actions")
     args = parser.parse_args(argv)
     try:
         report = audit(args.jar, load_manifest(args.manifest), args.provider_root, args.javap,

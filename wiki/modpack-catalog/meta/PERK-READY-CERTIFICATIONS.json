@@ -6299,6 +6299,86 @@
           "reason": "Hashes de artefato/classes/resources e seletoresJVM selam evidência1.0.10; comportamentofísico,config e multiplayer continuam NOT_TESTED."
         }
       }
+    },
+    "✅-alexs-caves-continued/damage-types/dark-arrow.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do equipamento/projétil e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/dark-arrow.md",
+          "reason": "DarkArrowEntity, registro de entidade e recurso alexscaves:dark_arrow são fixados pelo JAR 1.0.10 e hashes; message_id compartilhado não mescla dois resource IDs."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/dark-arrow.md",
+          "reason": "A implementação própria integral da entidade, factory/wrapper e mixin de flechas documenta sequência de impacto, fading e chamadas herdadas sem importar comportamento da fonte1.1.1."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/dark-arrow.md",
+          "reason": "Float sincronizado, multiplicador2F de Perfect Shot, dimensões1.1F×0.5F, inércia0.9F, escala0.7F e postfixfadeOut>5 são localizados por instruções, distinguindo dano solicitado de recebido."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/dark-arrow.md",
+          "reason": "CFG de impacto prova owner não nulo com identidade e alianças bilaterais, owner nulo com bypass dos gates e startFading gate; mixin DeepOne e colisão herdada são separados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/dark-arrow.md",
+          "reason": "Entidade/tipo não cobram mana/casting; custos e duração de carga são delegados ao equipamento Dreadbow com link e escritores conhecidos, sem confundir exhaustion ou fading com custo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/dark-arrow.md",
+          "reason": "Factory recebe owner em DamageSource(Holder,Entity), hurt delega settlement nativo e setters não são hooks homologados; parâmetros, aliança e geometria são eixos distintos sem adapter validado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/dark-arrow.md",
+          "reason": "Ficha/classes/recursos e métodos são selados contra SHA-exato1.0.10; os antigos recortes permanecem ligados; QA física, persistência efetiva, multiplayer e integração mutadora seguem pendentes."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/equipment/dreadbow.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do equipamento/projétil e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/dreadbow.md",
+          "reason": "Registro e factory1.0.10 ligam IDalexscaves:dreadbow a DreadbowItem; construtor500durabilidade,raridade e receita/tag do JAR fixam aquisição sem nova raiz mágica."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/dreadbow.md",
+          "reason": "Todos os25métodos próprios examinados: use,acInventoryTickclient,releasenormal e onUseTickRelentless,helpers de carga/perfect,criação/substituição de projéteis e consumidores renderer/mixin/packet."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/dreadbow.md",
+          "reason": "Fórmulas M40-8L/M5,p=((t/M)^2+2t/M)/3,limiar>0.1,janela4+3(L-1),contagemceil30p/8p,velocidade/dispersão e defaults de tags documentados com JVM/offsets."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/dreadbow.md",
+          "reason": "Predicate exato Entity.canBeHitByProjectile,consultas128p/fallback42p,elevação15,caixa16x4x16 e critérios de conversão Arrowcolor-1 separados dos filtros de impacto."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/dreadbow.md",
+          "reason": "CustoafterloopforaCreative:1durabilidade e1munição por salva/callback,exceçãoShadedRespitecomflecha comum; retornodespawnignorado,nãocobrançaduplicadaporflecha,receita/enchants distintos."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/dreadbow.md",
+          "reason": "ACTickingItem eUpdatesStackTags diretos noclassfile,dispatchMixin ehandler reais,CUSTOM_DATAclientperfectsemguardaspróprias deowner/progresso; métodos de disparo semguardsideown,hookNOT_VERIFIED."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/dreadbow.md",
+          "reason": "JARfixoSHA1/SHA256,fullclassdigests,recursos,descritores/âncoras ecardseal reproduzíveis; fonte1.1.1 fora deautoridadenumérica; gameQA,pvp econfigpackNOT_TESTED."
+        }
+      }
     }
   },
   "providers": {},
