@@ -34,6 +34,12 @@ class TargetTests(unittest.TestCase):
     def test_duplicate_offsets_rejected(self):
         with self.assertRaises(ForsakenTargetingError):
             compact(method("stop",instructions=[inst(0,"nop"),inst(0,"return")]))
+    def test_passthrough_instructions_are_preserved(self):
+        m=method("targetSelector","(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;",
+                 [inst(0,"aload_0"),inst(1,"areturn")])
+        result=compact(m)
+        self.assertEqual(result["instructions"],m["instructions"])
+        self.assertEqual(result["selected_symbolic_windows"],[])
     def test_bounded_maximum_rejected(self):
         with self.assertRaises(ForsakenTargetingError):
             compact(method("stop",instructions=[inst(i,"nop") for i in range(421)]))

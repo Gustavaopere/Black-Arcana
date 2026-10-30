@@ -63,6 +63,7 @@ def compact(m):
              for i in ins if i["opcode"] in ("ireturn","areturn","return","athrow")]
     return {"header":m["header"],"descriptor":m["descriptor"],
             "parsed_method_sha256":digest_method(m),"instruction_count":len(ins),
+            "instructions":[row(i) for i in ins],
             "selected_symbolic_windows":sites,"branch_anchors":branches,
             "constant_anchors":constants,"exit_sites":returns,
             "runtime_goal_reachability":"NOT_VERIFIED"}
