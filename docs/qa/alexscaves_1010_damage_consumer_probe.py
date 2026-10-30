@@ -167,8 +167,16 @@ def audit(jar, javap_bin):
                 target.write_bytes(content)
             owner_methods = parse_methods(javap(javap_bin, root, OWNER.replace("/", ".")))
             factory_rows = factories(owner_methods)
-            if not factory_rows or len(factory_rows) > 32:
-                raise ValueError("no bounded compiled factory set")
+            if len(factory_rows) != len(IDS):
+                raise ValueError("compiled factory count differs from exact resource roster")
+            actual_fields = [row["damage_type_fields"][0]["field"].lower()
+                             for row in factory_rows if len(row["damage_type_fields"]) == 1]
+            if len(actual_fields) != len(IDS) or set(actual_fields) != set(IDS):
+                raise ValueError("compiled factory resource fields differ from exact ID roster")
+            if any(not row["descriptor"].endswith(
+                    "Lnet/minecraft/world/damagesource/DamageSource;")
+                    or not row["damage_source_constructor_sites"] for row in factory_rows):
+                raise ValueError("factory lacks DamageSource signature/constructor")
             selected = []
             for path, data in candidates:
                 if path == OWNER + ".class":
