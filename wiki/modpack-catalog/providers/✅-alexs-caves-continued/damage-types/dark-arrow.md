@@ -70,3 +70,13 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 | `com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class` | `protected void onHitEntity(net.minecraft.world.phys.EntityHitResult)` | `(Lnet/minecraft/world/phys/EntityHitResult;)V` | 37 | `invokestatic` |
 
 **Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NOT_CERTIFIED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
+
+## Aprofundamento de fluxo — 1.0.10 (instruções compiladas)
+
+**Evidência estática delimitada:** [manifesto de janelas e branch opcodes](EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json), auditado no JAR SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`. Classe `com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class` (SHA-256 `089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad`). Método `protected void onHitEntity(net.minecraft.world.phys.EntityHitResult)`, descritor JVM `(Lnet/minecraft/world/phys/EntityHitResult;)V`; 48 instruções extraídas e 7 anchors de branch registrados. Resumo de chamadas diretas: `causeDarkArrowDamage` @ `37`.
+
+- Em `onHitEntity(EntityHitResult)`, o método referencia `getShadowArrowDamage()` em `11`, `isPerfectShot()` em `17` e a factory em `37`.
+- O mesmo método possui referências a `Entity.isAlliedTo()` nos offsets `56` e `64` e a `ACCompat.hurt()` em `82`, registradas como invocações simbólicas do método; as janelas de invocação não constituem prova de reachability.
+- Não é seguro promover a possibilidade de friendly-fire, valor de dano ou aumento de precisão sem seguir os saltos, o destino dos operandos e o corpo de `ACCompat.hurt()`.
+
+**Limite metodológico:** offsets, referências de método, testes e desvios são provas do *bytecode*; a análise não reconstruiu exceções, switch dispatch, todos os caminhos de CFG ou condições de runtime. `NOT_CERTIFIED` para comportamento integral; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Black Arcana não deve substituir settlement, autorizações de servidor, segurança do mundo ou rotinas próprias do provider.

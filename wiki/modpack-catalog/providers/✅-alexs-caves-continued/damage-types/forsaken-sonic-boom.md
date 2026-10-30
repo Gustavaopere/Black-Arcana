@@ -65,3 +65,13 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 | `com/github/alexmodguy/alexscaves/server/entity/ai/ForsakenAttackGoal.class` | `public void tick()` | `()V` | 576 | `invokestatic` |
 
 **Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NOT_CERTIFIED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
+
+## Aprofundamento de fluxo — 1.0.10 (instruções compiladas)
+
+**Evidência estática delimitada:** [manifesto de janelas e branch opcodes](EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json), auditado no JAR SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`. Classe `com/github/alexmodguy/alexscaves/server/entity/ai/ForsakenAttackGoal.class` (SHA-256 `48cfdd6c370f68550d0d7af768466f99f330e8fd4f825a520411a1bc5d70fb55`). Método `public void tick()`, descritor JVM `()V`; 826 instruções extraídas e 98 anchors de branch registrados. Resumo de chamadas diretas: `causeForsakenSonicBoomDamage` @ `108`, `causeForsakenSonicBoomDamage` @ `576`.
+
+- Em `tick()`, o offset `87` referencia `ForsakenEntity.hasLineOfSight()` antes da factory de offset `108`; a rota também referencia `getSonicDamageAgainst()` em `116` e `LivingEntity.hurt()` em `119`.
+- Na segunda factory (`576`), são visíveis `ACTagRegistry.FORSAKEN_IGNORES` em `551`, o desvio `ifne` em `557`, `getSonicDamageAgainst()` em `584`, a constante `0.65f` em `587`, `fmul` em `590`, `Math.ceil()` em `592` e `LivingEntity.hurt()` em `596`.
+- Essas duas referências pertencem ao mesmo método `tick()`, mas **não comprovam dois hits** por ciclo nem a quantidade final de vítimas.
+
+**Limite metodológico:** offsets, referências de método, testes e desvios são provas do *bytecode*; a análise não reconstruiu exceções, switch dispatch, todos os caminhos de CFG ou condições de runtime. `NOT_CERTIFIED` para comportamento integral; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Black Arcana não deve substituir settlement, autorizações de servidor, segurança do mundo ou rotinas próprias do provider.

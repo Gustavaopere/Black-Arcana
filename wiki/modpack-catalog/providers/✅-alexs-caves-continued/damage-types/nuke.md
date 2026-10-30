@@ -68,3 +68,13 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 | `com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class` | `public void tick()` | `()V` | 618 | `invokestatic` |
 
 **Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NOT_CERTIFIED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
+
+## Aprofundamento de fluxo — 1.0.10 (instruções compiladas)
+
+**Evidência estática delimitada:** [manifesto de janelas e branch opcodes](EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json), auditado no JAR SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`. Classe `com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class` (SHA-256 `d9c827a9acb2d0f9e7050252ed57e6a3d0a8ad49053e54f19a8eaeb6b84da912`). Método `public void tick()`, descritor JVM `()V`; 348 instruções extraídas e 39 anchors de branch registrados. Resumo de chamadas diretas: `causeIntentionalGameDesign` @ `605`, `causeNukeDamage` @ `618`.
+
+- Em `tick()`, o offset `586` usa `ifle` como guarda antes da seleção; `isIntentionalGameDesign()` é consultado em `592`, seguido por `ifeq 611` em `595`.
+- O caminho que passa por `605` chama `causeIntentionalGameDesign()`, e `goto 621` no offset `608` desvia da factory `causeNukeDamage()` localizada em `618`; ambos convergem na referência a `LivingEntity.hurt()` em `623`.
+- A bifurcação local comprova uma escolha de factory **nesse trecho**. Não demonstra o dano total da explosão, número de alvos, proteção de blocos, PvP nem quantas vezes `tick()` percorre essa região.
+
+**Limite metodológico:** offsets, referências de método, testes e desvios são provas do *bytecode*; a análise não reconstruiu exceções, switch dispatch, todos os caminhos de CFG ou condições de runtime. `NOT_CERTIFIED` para comportamento integral; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Black Arcana não deve substituir settlement, autorizações de servidor, segurança do mundo ou rotinas próprias do provider.

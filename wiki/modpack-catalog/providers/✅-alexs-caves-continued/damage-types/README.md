@@ -53,3 +53,22 @@ A tag `minecraft:bypasses_cooldown` trata de classificação de dano no Minecraf
 **Divergência relevante:** `NuclearExplosionEntity.tick()` contém referências tanto a `causeIntentionalGameDesign` quanto a `causeNukeDamage`; não se conclui que ambas executem no mesmo tick. `ForsakenAttackGoal.tick()` contém duas referências a `causeForsakenSonicBoomDamage`, mas isso não demonstra dois hits por tick. `dark_arrow` e `desolate_dagger` continuam tipos diferentes embora os JSONs compartilhem `message_id`.
 
 A sobrecarga de `DamageSourceRandomMessages` com argumento `Entity` é usada por algumas factories, enquanto outras recebem somente `RegistryAccess`. Isto permite documentar a assinatura compilada, mas **não** comprova attacker attribution, ownership, targeting, fórmulas, mitigação, repetição de impacto, segurança de hook ou elegibilidade para perks. Certificação integral para perks **0/11**; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+
+## Janelas de bytecode dos quatro consumidores prioritários
+
+A auditoria [SHA-exata das janelas](EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json) amplia a auditoria das 11 factories com quatro classes de uso direto: `ForsakenAttackGoal.tick()`, `DarkArrowEntity.onHitEntity()`, `DesolateDaggerEntity.tick()` e `NuclearExplosionEntity.tick()`. A prova do binário 1.0.10 tem **6 invocações de factory e 5 IDs de dano envolvidos**, sem novas identidades mágicas. Os números abaixo são somente o recorte dessas quatro classes.
+
+| Consumer compilado | Instruções do método | Branch opcodes | Factories próximas | Evidência |
+|---|---:|---:|---|---|
+| `ForsakenAttackGoal.tick` | 826 | 98 | `causeForsakenSonicBoomDamage@108`, `causeForsakenSonicBoomDamage@576` | [snapshot](EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json) |
+| `DarkArrowEntity.onHitEntity` | 48 | 7 | `causeDarkArrowDamage@37` | [snapshot](EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json) |
+| `DesolateDaggerEntity.tick` | 361 | 20 | `causeDesolateDaggerDamage@339` | [snapshot](EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json) |
+| `NuclearExplosionEntity.tick` | 348 | 39 | `causeIntentionalGameDesign@605`, `causeNukeDamage@618` | [snapshot](EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json) |
+
+**Nuclear:** a chamada `isIntentionalGameDesign()` é seguida de um branch local que escolhe `causeIntentionalGameDesign` ou `causeNukeDamage` antes de `LivingEntity.hurt()` (offsets 592–623). Não implica que ambos sejam aplicados ao mesmo alvo ou tick.
+
+**Forsaken:** há duas regiões `causeForsakenSonicBoomDamage()`, com gates distintos. Na segunda, a tag `FORSAKEN_IGNORES`, uma constante `0.65f` e `Math.ceil()` estão presentes no caminho que referencia `LivingEntity.hurt()`. Não se infere frequência nem dano final sem auditoria adicional.
+
+**Projéteis:** `DarkArrowEntity` referencia `getShadowArrowDamage`, `isPerfectShot`, `isAlliedTo` e `ACCompat.hurt`; `DesolateDaggerEntity` referencia o encantamento `IMPENDING_STAB` e `ACCompat.hurt`.
+
+Todos os quatro recortes continuam como `STATIC_BYTECODE_ANCHORS_ONLY`; nenhuma ficha foi promovida para `COMPLETE_PERK_READY` ou hook seguro. Não há alteração de denominadores globais.

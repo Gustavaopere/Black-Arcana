@@ -1,0 +1,3115 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "limits": {
+    "complete_perk_ready": false,
+    "control_flow_reachability": "NOT_PROVEN",
+    "dynamic_hit_counts": "NOT_VERIFIED",
+    "exception_edges_and_switch_dispatch": "NOT_RECONSTRUCTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "not_entire_provider": true,
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "runtime_damage_amounts": "NOT_VERIFIED",
+    "source_attribution_and_pvp": "NOT_VERIFIED",
+    "target_filters_and_world_protection": "NOT_VERIFIED"
+  },
+  "parent_manifest": "damage-types/EXACT-CONSUMERS-1.0.10.json",
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_SELECTED_DAMAGE_CALLSITE_INSTRUCTION_WINDOWS_ONLY",
+  "selected_classes": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/ai/ForsakenAttackGoal.class",
+      "class_sha256": "48cfdd6c370f68550d0d7af768466f99f330e8fd4f825a520411a1bc5d70fb55",
+      "methods": [
+        {
+          "branch_opcode_anchors": [
+            {
+              "offset": 9,
+              "opcode": "ifnull",
+              "operand": "1881",
+              "simple_target": 1881
+            },
+            {
+              "offset": 16,
+              "opcode": "ifeq",
+              "operand": "1881",
+              "simple_target": 1881
+            },
+            {
+              "offset": 48,
+              "opcode": "ifne",
+              "operand": "55",
+              "simple_target": 55
+            },
+            {
+              "offset": 52,
+              "opcode": "goto",
+              "operand": "56",
+              "simple_target": 56
+            },
+            {
+              "offset": 62,
+              "opcode": "ifle",
+              "operand": "130",
+              "simple_target": 130
+            },
+            {
+              "offset": 79,
+              "opcode": "ifne",
+              "operand": "130",
+              "simple_target": 130
+            },
+            {
+              "offset": 90,
+              "opcode": "ifeq",
+              "operand": "130",
+              "simple_target": 130
+            },
+            {
+              "offset": 134,
+              "opcode": "ifeq",
+              "operand": "623",
+              "simple_target": 623
+            },
+            {
+              "offset": 145,
+              "opcode": "ifeq",
+              "operand": "623",
+              "simple_target": 623
+            },
+            {
+              "offset": 153,
+              "opcode": "ifge",
+              "operand": "623",
+              "simple_target": 623
+            },
+            {
+              "offset": 196,
+              "opcode": "ifgt",
+              "operand": "219",
+              "simple_target": 219
+            },
+            {
+              "offset": 216,
+              "opcode": "ifge",
+              "operand": "262",
+              "simple_target": 262
+            },
+            {
+              "offset": 259,
+              "opcode": "goto",
+              "operand": "302",
+              "simple_target": 302
+            },
+            {
+              "offset": 312,
+              "opcode": "if_acmpne",
+              "operand": "379",
+              "simple_target": 379
+            },
+            {
+              "offset": 327,
+              "opcode": "if_icmplt",
+              "operand": "362",
+              "simple_target": 362
+            },
+            {
+              "offset": 339,
+              "opcode": "if_icmpgt",
+              "operand": "362",
+              "simple_target": 362
+            },
+            {
+              "offset": 346,
+              "opcode": "ifgt",
+              "operand": "362",
+              "simple_target": 362
+            },
+            {
+              "offset": 371,
+              "opcode": "if_icmple",
+              "operand": "379",
+              "simple_target": 379
+            },
+            {
+              "offset": 389,
+              "opcode": "if_acmpne",
+              "operand": "847",
+              "simple_target": 847
+            },
+            {
+              "offset": 404,
+              "opcode": "if_icmplt",
+              "operand": "603",
+              "simple_target": 603
+            },
+            {
+              "offset": 416,
+              "opcode": "if_icmpgt",
+              "operand": "603",
+              "simple_target": 603
+            },
+            {
+              "offset": 428,
+              "opcode": "ifne",
+              "operand": "603",
+              "simple_target": 603
+            },
+            {
+              "offset": 480,
+              "opcode": "ifeq",
+              "operand": "603",
+              "simple_target": 603
+            },
+            {
+              "offset": 501,
+              "opcode": "if_acmpeq",
+              "operand": "600",
+              "simple_target": 600
+            },
+            {
+              "offset": 513,
+              "opcode": "ifne",
+              "operand": "600",
+              "simple_target": 600
+            },
+            {
+              "offset": 525,
+              "opcode": "ifne",
+              "operand": "600",
+              "simple_target": 600
+            },
+            {
+              "offset": 540,
+              "opcode": "ifgt",
+              "operand": "600",
+              "simple_target": 600
+            },
+            {
+              "offset": 557,
+              "opcode": "ifne",
+              "operand": "600",
+              "simple_target": 600
+            },
+            {
+              "offset": 600,
+              "opcode": "goto",
+              "operand": "473",
+              "simple_target": 473
+            },
+            {
+              "offset": 612,
+              "opcode": "if_icmple",
+              "operand": "847",
+              "simple_target": 847
+            },
+            {
+              "offset": 620,
+              "opcode": "goto",
+              "operand": "847",
+              "simple_target": 847
+            },
+            {
+              "offset": 627,
+              "opcode": "ifeq",
+              "operand": "847",
+              "simple_target": 847
+            },
+            {
+              "offset": 634,
+              "opcode": "ifnonnull",
+              "operand": "662",
+              "simple_target": 662
+            },
+            {
+              "offset": 645,
+              "opcode": "ifle",
+              "operand": "652",
+              "simple_target": 652
+            },
+            {
+              "offset": 649,
+              "opcode": "goto",
+              "operand": "653",
+              "simple_target": 653
+            },
+            {
+              "offset": 659,
+              "opcode": "goto",
+              "operand": "847",
+              "simple_target": 847
+            },
+            {
+              "offset": 672,
+              "opcode": "ifeq",
+              "operand": "812",
+              "simple_target": 812
+            },
+            {
+              "offset": 745,
+              "opcode": "ifle",
+              "operand": "769",
+              "simple_target": 769
+            },
+            {
+              "offset": 809,
+              "opcode": "goto",
+              "operand": "847",
+              "simple_target": 847
+            },
+            {
+              "offset": 819,
+              "opcode": "ifeq",
+              "operand": "847",
+              "simple_target": 847
+            },
+            {
+              "offset": 849,
+              "opcode": "ifeq",
+              "operand": "1055",
+              "simple_target": 1055
+            },
+            {
+              "offset": 885,
+              "opcode": "ifge",
+              "operand": "1065",
+              "simple_target": 1065
+            },
+            {
+              "offset": 898,
+              "opcode": "if_acmpne",
+              "operand": "1065",
+              "simple_target": 1065
+            },
+            {
+              "offset": 921,
+              "opcode": "ifge",
+              "operand": "965",
+              "simple_target": 965
+            },
+            {
+              "offset": 930,
+              "opcode": "ifge",
+              "operand": "965",
+              "simple_target": 965
+            },
+            {
+              "offset": 946,
+              "opcode": "ifeq",
+              "operand": "955",
+              "simple_target": 955
+            },
+            {
+              "offset": 952,
+              "opcode": "goto",
+              "operand": "958",
+              "simple_target": 958
+            },
+            {
+              "offset": 962,
+              "opcode": "goto",
+              "operand": "1052",
+              "simple_target": 1052
+            },
+            {
+              "offset": 971,
+              "opcode": "ifge",
+              "operand": "1006",
+              "simple_target": 1006
+            },
+            {
+              "offset": 987,
+              "opcode": "ifeq",
+              "operand": "996",
+              "simple_target": 996
+            },
+            {
+              "offset": 993,
+              "opcode": "goto",
+              "operand": "999",
+              "simple_target": 999
+            },
+            {
+              "offset": 1003,
+              "opcode": "goto",
+              "operand": "1052",
+              "simple_target": 1052
+            },
+            {
+              "offset": 1012,
+              "opcode": "ifge",
+              "operand": "1026",
+              "simple_target": 1026
+            },
+            {
+              "offset": 1023,
+              "opcode": "goto",
+              "operand": "1052",
+              "simple_target": 1052
+            },
+            {
+              "offset": 1052,
+              "opcode": "goto",
+              "operand": "1065",
+              "simple_target": 1065
+            },
+            {
+              "offset": 1070,
+              "opcode": "ifle",
+              "operand": "1093",
+              "simple_target": 1093
+            },
+            {
+              "offset": 1090,
+              "opcode": "iflt",
+              "operand": "1103",
+              "simple_target": 1103
+            },
+            {
+              "offset": 1100,
+              "opcode": "ifeq",
+              "operand": "1123",
+              "simple_target": 1123
+            },
+            {
+              "offset": 1107,
+              "opcode": "ifne",
+              "operand": "1123",
+              "simple_target": 1123
+            },
+            {
+              "offset": 1128,
+              "opcode": "ifle",
+              "operand": "1162",
+              "simple_target": 1162
+            },
+            {
+              "offset": 1148,
+              "opcode": "ifge",
+              "operand": "1162",
+              "simple_target": 1162
+            },
+            {
+              "offset": 1155,
+              "opcode": "ifne",
+              "operand": "1162",
+              "simple_target": 1162
+            },
+            {
+              "offset": 1167,
+              "opcode": "ifge",
+              "operand": "1193",
+              "simple_target": 1193
+            },
+            {
+              "offset": 1174,
+              "opcode": "ifle",
+              "operand": "1193",
+              "simple_target": 1193
+            },
+            {
+              "offset": 1179,
+              "opcode": "ifeq",
+              "operand": "1193",
+              "simple_target": 1193
+            },
+            {
+              "offset": 1190,
+              "opcode": "goto",
+              "operand": "1201",
+              "simple_target": 1201
+            },
+            {
+              "offset": 1211,
+              "opcode": "if_acmpeq",
+              "operand": "1227",
+              "simple_target": 1227
+            },
+            {
+              "offset": 1224,
+              "opcode": "if_acmpne",
+              "operand": "1265",
+              "simple_target": 1265
+            },
+            {
+              "offset": 1238,
+              "opcode": "if_icmpne",
+              "operand": "1265",
+              "simple_target": 1265
+            },
+            {
+              "offset": 1250,
+              "opcode": "if_icmplt",
+              "operand": "1265",
+              "simple_target": 1265
+            },
+            {
+              "offset": 1275,
+              "opcode": "if_acmpne",
+              "operand": "1353",
+              "simple_target": 1353
+            },
+            {
+              "offset": 1287,
+              "opcode": "if_icmplt",
+              "operand": "1353",
+              "simple_target": 1353
+            },
+            {
+              "offset": 1299,
+              "opcode": "if_icmpgt",
+              "operand": "1353",
+              "simple_target": 1353
+            },
+            {
+              "offset": 1316,
+              "opcode": "ifeq",
+              "operand": "1342",
+              "simple_target": 1342
+            },
+            {
+              "offset": 1363,
+              "opcode": "if_acmpne",
+              "operand": "1441",
+              "simple_target": 1441
+            },
+            {
+              "offset": 1375,
+              "opcode": "if_icmplt",
+              "operand": "1441",
+              "simple_target": 1441
+            },
+            {
+              "offset": 1387,
+              "opcode": "if_icmpgt",
+              "operand": "1441",
+              "simple_target": 1441
+            },
+            {
+              "offset": 1404,
+              "opcode": "ifeq",
+              "operand": "1430",
+              "simple_target": 1430
+            },
+            {
+              "offset": 1451,
+              "opcode": "if_acmpne",
+              "operand": "1761",
+              "simple_target": 1761
+            },
+            {
+              "offset": 1463,
+              "opcode": "if_icmplt",
+              "operand": "1761",
+              "simple_target": 1761
+            },
+            {
+              "offset": 1475,
+              "opcode": "if_icmpgt",
+              "operand": "1761",
+              "simple_target": 1761
+            },
+            {
+              "offset": 1612,
+              "opcode": "ifeq",
+              "operand": "1738",
+              "simple_target": 1738
+            },
+            {
+              "offset": 1633,
+              "opcode": "if_acmpeq",
+              "operand": "1735",
+              "simple_target": 1735
+            },
+            {
+              "offset": 1645,
+              "opcode": "ifne",
+              "operand": "1735",
+              "simple_target": 1735
+            },
+            {
+              "offset": 1657,
+              "opcode": "ifne",
+              "operand": "1735",
+              "simple_target": 1735
+            },
+            {
+              "offset": 1671,
+              "opcode": "ifgt",
+              "operand": "1735",
+              "simple_target": 1735
+            },
+            {
+              "offset": 1688,
+              "opcode": "ifne",
+              "operand": "1735",
+              "simple_target": 1735
+            },
+            {
+              "offset": 1703,
+              "opcode": "ifeq",
+              "operand": "1735",
+              "simple_target": 1735
+            },
+            {
+              "offset": 1711,
+              "opcode": "ifeq",
+              "operand": "1735",
+              "simple_target": 1735
+            },
+            {
+              "offset": 1735,
+              "opcode": "goto",
+              "operand": "1605",
+              "simple_target": 1605
+            },
+            {
+              "offset": 1740,
+              "opcode": "ifeq",
+              "operand": "1761",
+              "simple_target": 1761
+            },
+            {
+              "offset": 1771,
+              "opcode": "if_acmpne",
+              "operand": "1824",
+              "simple_target": 1824
+            },
+            {
+              "offset": 1782,
+              "opcode": "if_icmplt",
+              "operand": "1824",
+              "simple_target": 1824
+            },
+            {
+              "offset": 1794,
+              "opcode": "if_icmpgt",
+              "operand": "1824",
+              "simple_target": 1824
+            },
+            {
+              "offset": 1807,
+              "opcode": "ifeq",
+              "operand": "1815",
+              "simple_target": 1815
+            },
+            {
+              "offset": 1835,
+              "opcode": "ifge",
+              "operand": "1881",
+              "simple_target": 1881
+            },
+            {
+              "offset": 1845,
+              "opcode": "ifeq",
+              "operand": "1881",
+              "simple_target": 1881
+            },
+            {
+              "offset": 1874,
+              "opcode": "ifne",
+              "operand": "1881",
+              "simple_target": 1881
+            }
+          ],
+          "factory_windows": [
+            {
+              "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+              "factory_name": "causeForsakenSonicBoomDamage",
+              "invocation_offset": 108,
+              "surrounding_instructions": [
+                {
+                  "offset": 76,
+                  "opcode": "getfield",
+                  "operand": "#24",
+                  "symbol": "Field attemptSonicDamageIn:I"
+                },
+                {
+                  "offset": 79,
+                  "opcode": "ifne",
+                  "operand": "130",
+                  "symbol": ""
+                },
+                {
+                  "offset": 82,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 83,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 86,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 87,
+                  "opcode": "invokevirtual",
+                  "operand": "#87",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.hasLineOfSight:(Lnet/minecraft/world/entity/Entity;)Z"
+                },
+                {
+                  "offset": 90,
+                  "opcode": "ifeq",
+                  "operand": "130",
+                  "symbol": ""
+                },
+                {
+                  "offset": 93,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 94,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 95,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 98,
+                  "opcode": "invokevirtual",
+                  "operand": "#91",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.level:()Lnet/minecraft/world/level/Level;"
+                },
+                {
+                  "offset": 101,
+                  "opcode": "invokevirtual",
+                  "operand": "#95",
+                  "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+                },
+                {
+                  "offset": 104,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 105,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 108,
+                  "opcode": "invokestatic",
+                  "operand": "#101",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeForsakenSonicBoomDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+                },
+                {
+                  "offset": 111,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 112,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 115,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 116,
+                  "opcode": "invokevirtual",
+                  "operand": "#107",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getSonicDamageAgainst:(Lnet/minecraft/world/entity/LivingEntity;)F"
+                },
+                {
+                  "offset": 119,
+                  "opcode": "invokevirtual",
+                  "operand": "#111",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+                },
+                {
+                  "offset": 122,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 123,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 124,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 125,
+                  "opcode": "dconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 126,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 127,
+                  "opcode": "invokevirtual",
+                  "operand": "#115",
+                  "symbol": "Method knockBackAngle:(Lnet/minecraft/world/entity/LivingEntity;DF)V"
+                },
+                {
+                  "offset": 130,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 131,
+                  "opcode": "getfield",
+                  "operand": "#17",
+                  "symbol": "Field sonicEnqueued:Z"
+                },
+                {
+                  "offset": 134,
+                  "opcode": "ifeq",
+                  "operand": "623",
+                  "symbol": ""
+                },
+                {
+                  "offset": 137,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 138,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 141,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 142,
+                  "opcode": "invokevirtual",
+                  "operand": "#87",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.hasLineOfSight:(Lnet/minecraft/world/entity/Entity;)Z"
+                }
+              ]
+            },
+            {
+              "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+              "factory_name": "causeForsakenSonicBoomDamage",
+              "invocation_offset": 576,
+              "surrounding_instructions": [
+                {
+                  "offset": 540,
+                  "opcode": "ifgt",
+                  "operand": "600",
+                  "symbol": ""
+                },
+                {
+                  "offset": 543,
+                  "opcode": "aload",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 545,
+                  "opcode": "invokevirtual",
+                  "operand": "#250",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+                },
+                {
+                  "offset": 548,
+                  "opcode": "invokevirtual",
+                  "operand": "#254",
+                  "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+                },
+                {
+                  "offset": 551,
+                  "opcode": "getstatic",
+                  "operand": "#260",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.FORSAKEN_IGNORES:Lnet/minecraft/tags/TagKey;"
+                },
+                {
+                  "offset": 554,
+                  "opcode": "invokevirtual",
+                  "operand": "#266",
+                  "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+                },
+                {
+                  "offset": 557,
+                  "opcode": "ifne",
+                  "operand": "600",
+                  "symbol": ""
+                },
+                {
+                  "offset": 560,
+                  "opcode": "aload",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 562,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 563,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 566,
+                  "opcode": "invokevirtual",
+                  "operand": "#91",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.level:()Lnet/minecraft/world/level/Level;"
+                },
+                {
+                  "offset": 569,
+                  "opcode": "invokevirtual",
+                  "operand": "#95",
+                  "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+                },
+                {
+                  "offset": 572,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 573,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 576,
+                  "opcode": "invokestatic",
+                  "operand": "#101",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeForsakenSonicBoomDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+                },
+                {
+                  "offset": 579,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 580,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 583,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 584,
+                  "opcode": "invokevirtual",
+                  "operand": "#107",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getSonicDamageAgainst:(Lnet/minecraft/world/entity/LivingEntity;)F"
+                },
+                {
+                  "offset": 587,
+                  "opcode": "ldc_w",
+                  "operand": "#272",
+                  "symbol": "float 0.65f"
+                },
+                {
+                  "offset": 590,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 591,
+                  "opcode": "f2d",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 592,
+                  "opcode": "invokestatic",
+                  "operand": "#206",
+                  "symbol": "Method java/lang/Math.ceil:(D)D"
+                },
+                {
+                  "offset": 595,
+                  "opcode": "d2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 596,
+                  "opcode": "invokevirtual",
+                  "operand": "#111",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+                },
+                {
+                  "offset": 599,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 600,
+                  "opcode": "goto",
+                  "operand": "473",
+                  "symbol": ""
+                },
+                {
+                  "offset": 603,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 604,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 607,
+                  "opcode": "invokevirtual",
+                  "operand": "#201",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+                },
+                {
+                  "offset": 610,
+                  "opcode": "bipush",
+                  "operand": "40",
+                  "symbol": ""
+                },
+                {
+                  "offset": 612,
+                  "opcode": "if_icmple",
+                  "operand": "847",
+                  "symbol": ""
+                },
+                {
+                  "offset": 615,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ],
+          "full_method_parsed_sha256": "1fb8ecdd23c6c76d836ee25a4176f788163ef1226220a142a40e5f48d4df8abe",
+          "method_descriptor": "()V",
+          "method_header": "public void tick()",
+          "method_semantics": "NOT_PROVEN_FROM_ANCHORS",
+          "parsed_instruction_count": 826,
+          "selected_symbolic_invocations": [
+            {
+              "offset": 4,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getTarget:()Lnet/minecraft/world/entity/LivingEntity;"
+            },
+            {
+              "offset": 13,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlive:()Z"
+            },
+            {
+              "offset": 24,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+            },
+            {
+              "offset": 33,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getBbWidth:()F"
+            },
+            {
+              "offset": 37,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getBbWidth:()F"
+            },
+            {
+              "offset": 87,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.hasLineOfSight:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 98,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 108,
+              "opcode": "invokestatic",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeForsakenSonicBoomDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+            },
+            {
+              "offset": 116,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getSonicDamageAgainst:(Lnet/minecraft/world/entity/LivingEntity;)F"
+            },
+            {
+              "offset": 119,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+            },
+            {
+              "offset": 127,
+              "opcode": "invokevirtual",
+              "symbol": "Method knockBackAngle:(Lnet/minecraft/world/entity/LivingEntity;DF)V"
+            },
+            {
+              "offset": 142,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.hasLineOfSight:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 164,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+            },
+            {
+              "offset": 167,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.lookAt:(Lnet/minecraft/commands/arguments/EntityAnchorArgument$Anchor;Lnet/minecraft/world/phys/Vec3;)V"
+            },
+            {
+              "offset": 175,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getId:()I"
+            },
+            {
+              "offset": 178,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.setSonarId:(I)V"
+            },
+            {
+              "offset": 185,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getNavigation:()Lnet/minecraft/world/entity/ai/navigation/PathNavigation;"
+            },
+            {
+              "offset": 188,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/ai/navigation/PathNavigation.stop:()V"
+            },
+            {
+              "offset": 203,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+            },
+            {
+              "offset": 246,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getSoundVolume:()F"
+            },
+            {
+              "offset": 253,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getVoicePitch:()F"
+            },
+            {
+              "offset": 256,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V"
+            },
+            {
+              "offset": 289,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getSoundVolume:()F"
+            },
+            {
+              "offset": 296,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getVoicePitch:()F"
+            },
+            {
+              "offset": 299,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V"
+            },
+            {
+              "offset": 306,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimation:()Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;"
+            },
+            {
+              "offset": 322,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 334,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 366,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 383,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimation:()Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;"
+            },
+            {
+              "offset": 399,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 411,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 423,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 435,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 444,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getBoundingBox:()Lnet/minecraft/world/phys/AABB;"
+            },
+            {
+              "offset": 510,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 522,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 534,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+            },
+            {
+              "offset": 545,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+            },
+            {
+              "offset": 548,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+            },
+            {
+              "offset": 566,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 576,
+              "opcode": "invokestatic",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeForsakenSonicBoomDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+            },
+            {
+              "offset": 584,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getSonicDamageAgainst:(Lnet/minecraft/world/entity/LivingEntity;)F"
+            },
+            {
+              "offset": 596,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+            },
+            {
+              "offset": 607,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 653,
+              "opcode": "invokevirtual",
+              "symbol": "Method findJumpTarget:(Lnet/minecraft/world/entity/LivingEntity;Z)Lnet/minecraft/core/BlockPos;"
+            },
+            {
+              "offset": 669,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.isLeaping:()Z"
+            },
+            {
+              "offset": 679,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+            },
+            {
+              "offset": 692,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/core/BlockPos.getX:()I"
+            },
+            {
+              "offset": 705,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getX:()D"
+            },
+            {
+              "offset": 714,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/core/BlockPos.getZ:()I"
+            },
+            {
+              "offset": 727,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getZ:()D"
+            },
+            {
+              "offset": 796,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.setDeltaMovement:(DDD)V"
+            },
+            {
+              "offset": 816,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.onGround:()Z"
+            },
+            {
+              "offset": 836,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.lookAt:(Lnet/minecraft/commands/arguments/EntityAnchorArgument$Anchor;Lnet/minecraft/world/phys/Vec3;)V"
+            },
+            {
+              "offset": 860,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+            },
+            {
+              "offset": 863,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.lookAt:(Lnet/minecraft/commands/arguments/EntityAnchorArgument$Anchor;Lnet/minecraft/world/phys/Vec3;)V"
+            },
+            {
+              "offset": 870,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getNavigation:()Lnet/minecraft/world/entity/ai/navigation/PathNavigation;"
+            },
+            {
+              "offset": 875,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/ai/navigation/PathNavigation.moveTo:(Lnet/minecraft/world/entity/Entity;D)Z"
+            },
+            {
+              "offset": 892,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimation:()Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;"
+            },
+            {
+              "offset": 905,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+            },
+            {
+              "offset": 925,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getBbWidth:()F"
+            },
+            {
+              "offset": 938,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+            },
+            {
+              "offset": 979,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+            },
+            {
+              "offset": 1049,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.playSound:(Lnet/minecraft/sounds/SoundEvent;)V"
+            },
+            {
+              "offset": 1059,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getNavigation:()Lnet/minecraft/world/entity/ai/navigation/PathNavigation;"
+            },
+            {
+              "offset": 1062,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/ai/navigation/PathNavigation.stop:()V"
+            },
+            {
+              "offset": 1077,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+            },
+            {
+              "offset": 1097,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.hasSonicCharge:()Z"
+            },
+            {
+              "offset": 1120,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.setSonicCharge:(Z)V"
+            },
+            {
+              "offset": 1135,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+            },
+            {
+              "offset": 1187,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.setRunning:(Z)V"
+            },
+            {
+              "offset": 1198,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.setRunning:(Z)V"
+            },
+            {
+              "offset": 1205,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimation:()Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;"
+            },
+            {
+              "offset": 1218,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimation:()Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;"
+            },
+            {
+              "offset": 1231,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getHeldMobId:()I"
+            },
+            {
+              "offset": 1235,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getId:()I"
+            },
+            {
+              "offset": 1245,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 1261,
+              "opcode": "invokevirtual",
+              "symbol": "Method checkAndDealDamage:(Lnet/minecraft/world/entity/LivingEntity;DF)Z"
+            },
+            {
+              "offset": 1269,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimation:()Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;"
+            },
+            {
+              "offset": 1282,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 1294,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 1313,
+              "opcode": "invokevirtual",
+              "symbol": "Method checkAndDealDamage:(Lnet/minecraft/world/entity/LivingEntity;DF)Z"
+            },
+            {
+              "offset": 1339,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.playSound:(Lnet/minecraft/sounds/SoundEvent;)V"
+            },
+            {
+              "offset": 1350,
+              "opcode": "invokevirtual",
+              "symbol": "Method knockBackAngle:(Lnet/minecraft/world/entity/LivingEntity;DF)V"
+            },
+            {
+              "offset": 1357,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimation:()Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;"
+            },
+            {
+              "offset": 1370,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 1382,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 1401,
+              "opcode": "invokevirtual",
+              "symbol": "Method checkAndDealDamage:(Lnet/minecraft/world/entity/LivingEntity;DF)Z"
+            },
+            {
+              "offset": 1427,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.playSound:(Lnet/minecraft/sounds/SoundEvent;)V"
+            },
+            {
+              "offset": 1438,
+              "opcode": "invokevirtual",
+              "symbol": "Method knockBackAngle:(Lnet/minecraft/world/entity/LivingEntity;DF)V"
+            },
+            {
+              "offset": 1445,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimation:()Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;"
+            },
+            {
+              "offset": 1458,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 1470,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 1482,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.position:()Lnet/minecraft/world/phys/Vec3;"
+            },
+            {
+              "offset": 1522,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 1642,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 1654,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 1664,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.distanceToSqr:(Lnet/minecraft/world/phys/Vec3;)D"
+            },
+            {
+              "offset": 1676,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+            },
+            {
+              "offset": 1679,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+            },
+            {
+              "offset": 1700,
+              "opcode": "invokevirtual",
+              "symbol": "Method checkAndDealDamage:(Lnet/minecraft/world/entity/LivingEntity;DF)Z"
+            },
+            {
+              "offset": 1708,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.onGround:()Z"
+            },
+            {
+              "offset": 1718,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+            },
+            {
+              "offset": 1729,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+            },
+            {
+              "offset": 1758,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.playSound:(Lnet/minecraft/sounds/SoundEvent;)V"
+            },
+            {
+              "offset": 1765,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimation:()Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;"
+            },
+            {
+              "offset": 1778,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 1789,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getAnimationTick:()I"
+            },
+            {
+              "offset": 1804,
+              "opcode": "invokevirtual",
+              "symbol": "Method checkAndDealDamage:(Lnet/minecraft/world/entity/LivingEntity;DF)Z"
+            },
+            {
+              "offset": 1821,
+              "opcode": "invokevirtual",
+              "symbol": "Method knockBackAngle:(Lnet/minecraft/world/entity/LivingEntity;DF)V"
+            },
+            {
+              "offset": 1842,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.onGround:()Z"
+            },
+            {
+              "offset": 1855,
+              "opcode": "invokevirtual",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+            },
+            {
+              "offset": 1871,
+              "opcode": "invokevirtual",
+              "symbol": "Method canReach:(Lnet/minecraft/world/entity/LivingEntity;)Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "class_sha256": "089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad",
+      "methods": [
+        {
+          "branch_opcode_anchors": [
+            {
+              "offset": 20,
+              "opcode": "ifeq",
+              "operand": "29",
+              "simple_target": 29
+            },
+            {
+              "offset": 43,
+              "opcode": "ifnull",
+              "operand": "70",
+              "simple_target": 70
+            },
+            {
+              "offset": 51,
+              "opcode": "ifne",
+              "operand": "93",
+              "simple_target": 93
+            },
+            {
+              "offset": 59,
+              "opcode": "ifne",
+              "operand": "93",
+              "simple_target": 93
+            },
+            {
+              "offset": 67,
+              "opcode": "ifne",
+              "operand": "93",
+              "simple_target": 93
+            },
+            {
+              "offset": 74,
+              "opcode": "ifne",
+              "operand": "93",
+              "simple_target": 93
+            },
+            {
+              "offset": 85,
+              "opcode": "ifeq",
+              "operand": "93",
+              "simple_target": 93
+            }
+          ],
+          "factory_windows": [
+            {
+              "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+              "factory_name": "causeDarkArrowDamage",
+              "invocation_offset": 37,
+              "surrounding_instructions": [
+                {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "invokevirtual",
+                  "operand": "#131",
+                  "symbol": "Method getShadowArrowDamage:()F"
+                },
+                {
+                  "offset": 14,
+                  "opcode": "fstore",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 16,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "invokevirtual",
+                  "operand": "#110",
+                  "symbol": "Method isPerfectShot:()Z"
+                },
+                {
+                  "offset": 20,
+                  "opcode": "ifeq",
+                  "operand": "29",
+                  "symbol": ""
+                },
+                {
+                  "offset": 23,
+                  "opcode": "fload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 25,
+                  "opcode": "fconst_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 26,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 27,
+                  "opcode": "fstore",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 29,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 30,
+                  "opcode": "invokevirtual",
+                  "operand": "#135",
+                  "symbol": "Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;"
+                },
+                {
+                  "offset": 33,
+                  "opcode": "invokevirtual",
+                  "operand": "#141",
+                  "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+                },
+                {
+                  "offset": 36,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 37,
+                  "opcode": "invokestatic",
+                  "operand": "#147",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeDarkArrowDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+                },
+                {
+                  "offset": 40,
+                  "opcode": "astore",
+                  "operand": "5",
+                  "symbol": ""
+                },
+                {
+                  "offset": 42,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 43,
+                  "opcode": "ifnull",
+                  "operand": "70",
+                  "symbol": ""
+                },
+                {
+                  "offset": 46,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 47,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 48,
+                  "opcode": "invokevirtual",
+                  "operand": "#153",
+                  "symbol": "Method net/minecraft/world/entity/Entity.is:(Lnet/minecraft/world/entity/Entity;)Z"
+                },
+                {
+                  "offset": 51,
+                  "opcode": "ifne",
+                  "operand": "93",
+                  "symbol": ""
+                },
+                {
+                  "offset": 54,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 55,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 56,
+                  "opcode": "invokevirtual",
+                  "operand": "#157",
+                  "symbol": "Method net/minecraft/world/entity/Entity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+                },
+                {
+                  "offset": 59,
+                  "opcode": "ifne",
+                  "operand": "93",
+                  "symbol": ""
+                },
+                {
+                  "offset": 62,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 63,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 64,
+                  "opcode": "invokevirtual",
+                  "operand": "#157",
+                  "symbol": "Method net/minecraft/world/entity/Entity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+                },
+                {
+                  "offset": 67,
+                  "opcode": "ifne",
+                  "operand": "93",
+                  "symbol": ""
+                },
+                {
+                  "offset": 70,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 71,
+                  "opcode": "getfield",
+                  "operand": "#16",
+                  "symbol": "Field startFading:Z"
+                },
+                {
+                  "offset": 74,
+                  "opcode": "ifne",
+                  "operand": "93",
+                  "symbol": ""
+                }
+              ]
+            }
+          ],
+          "full_method_parsed_sha256": "dbf7e9b92da3adba3d51fcf58171a4860e3244a3df09549e3214baea9ceffad8",
+          "method_descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+          "method_header": "protected void onHitEntity(net.minecraft.world.phys.EntityHitResult)",
+          "method_semantics": "NOT_PROVEN_FROM_ANCHORS",
+          "parsed_instruction_count": 48,
+          "selected_symbolic_invocations": [
+            {
+              "offset": 1,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/phys/EntityHitResult.getEntity:()Lnet/minecraft/world/entity/Entity;"
+            },
+            {
+              "offset": 6,
+              "opcode": "invokevirtual",
+              "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+            },
+            {
+              "offset": 11,
+              "opcode": "invokevirtual",
+              "symbol": "Method getShadowArrowDamage:()F"
+            },
+            {
+              "offset": 30,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 37,
+              "opcode": "invokestatic",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeDarkArrowDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+            },
+            {
+              "offset": 48,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.is:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 56,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 64,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 82,
+              "opcode": "invokestatic",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/DesolateDaggerEntity.class",
+      "class_sha256": "f82a3f5f1cc05bbe52dfb7e3742f33c2289cbc37810b069a53b45002cfeb4351",
+      "methods": [
+        {
+          "branch_opcode_anchors": [
+            {
+              "offset": 24,
+              "opcode": "ifeq",
+              "operand": "58",
+              "simple_target": 58
+            },
+            {
+              "offset": 62,
+              "opcode": "ifne",
+              "operand": "85",
+              "simple_target": 85
+            },
+            {
+              "offset": 86,
+              "opcode": "ifnull",
+              "operand": "526",
+              "simple_target": 526
+            },
+            {
+              "offset": 139,
+              "opcode": "ifne",
+              "operand": "159",
+              "simple_target": 159
+            },
+            {
+              "offset": 239,
+              "opcode": "ifne",
+              "operand": "438",
+              "simple_target": 438
+            },
+            {
+              "offset": 246,
+              "opcode": "ifle",
+              "operand": "269",
+              "simple_target": 269
+            },
+            {
+              "offset": 253,
+              "opcode": "ifeq",
+              "operand": "269",
+              "simple_target": 269
+            },
+            {
+              "offset": 266,
+              "opcode": "goto",
+              "operand": "284",
+              "simple_target": 284
+            },
+            {
+              "offset": 290,
+              "opcode": "iflt",
+              "operand": "438",
+              "simple_target": 438
+            },
+            {
+              "offset": 301,
+              "opcode": "ifnonnull",
+              "operand": "308",
+              "simple_target": 308
+            },
+            {
+              "offset": 305,
+              "opcode": "goto",
+              "operand": "310",
+              "simple_target": 310
+            },
+            {
+              "offset": 347,
+              "opcode": "ifeq",
+              "operand": "434",
+              "simple_target": 434
+            },
+            {
+              "offset": 379,
+              "opcode": "ifle",
+              "operand": "434",
+              "simple_target": 434
+            },
+            {
+              "offset": 387,
+              "opcode": "ifeq",
+              "operand": "434",
+              "simple_target": 434
+            },
+            {
+              "offset": 408,
+              "opcode": "ifge",
+              "operand": "434",
+              "simple_target": 434
+            },
+            {
+              "offset": 523,
+              "opcode": "goto",
+              "operand": "543",
+              "simple_target": 543
+            },
+            {
+              "offset": 531,
+              "opcode": "if_icmple",
+              "operand": "543",
+              "simple_target": 543
+            },
+            {
+              "offset": 575,
+              "opcode": "ifeq",
+              "operand": "714",
+              "simple_target": 714
+            },
+            {
+              "offset": 582,
+              "opcode": "ifle",
+              "operand": "710",
+              "simple_target": 710
+            },
+            {
+              "offset": 707,
+              "opcode": "goto",
+              "operand": "714",
+              "simple_target": 714
+            }
+          ],
+          "factory_windows": [
+            {
+              "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+              "factory_name": "causeDesolateDaggerDamage",
+              "invocation_offset": 339,
+              "surrounding_instructions": [
+                {
+                  "offset": 313,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 314,
+                  "opcode": "invokevirtual",
+                  "operand": "#195",
+                  "symbol": "Method getItemStack:()Lnet/minecraft/world/item/ItemStack;"
+                },
+                {
+                  "offset": 317,
+                  "opcode": "getstatic",
+                  "operand": "#199",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.IMPENDING_STAB:Lnet/minecraft/resources/ResourceKey;"
+                },
+                {
+                  "offset": 320,
+                  "opcode": "invokestatic",
+                  "operand": "#205",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+                },
+                {
+                  "offset": 323,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 324,
+                  "opcode": "fconst_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 325,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 326,
+                  "opcode": "fadd",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 327,
+                  "opcode": "fstore",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 329,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 330,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 331,
+                  "opcode": "invokevirtual",
+                  "operand": "#84",
+                  "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+                },
+                {
+                  "offset": 334,
+                  "opcode": "invokevirtual",
+                  "operand": "#211",
+                  "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+                },
+                {
+                  "offset": 337,
+                  "opcode": "aload",
+                  "operand": "6",
+                  "symbol": ""
+                },
+                {
+                  "offset": 339,
+                  "opcode": "invokestatic",
+                  "operand": "#215",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeDesolateDaggerDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+                },
+                {
+                  "offset": 342,
+                  "opcode": "fload",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 344,
+                  "opcode": "invokestatic",
+                  "operand": "#221",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+                },
+                {
+                  "offset": 347,
+                  "opcode": "ifeq",
+                  "operand": "434",
+                  "symbol": ""
+                },
+                {
+                  "offset": 350,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 351,
+                  "opcode": "getstatic",
+                  "operand": "#225",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.DESOLATE_DAGGER_HIT:Ljava/util/function/Supplier;"
+                },
+                {
+                  "offset": 354,
+                  "opcode": "invokeinterface",
+                  "operand": "#38,  1",
+                  "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+                },
+                {
+                  "offset": 359,
+                  "opcode": "checkcast",
+                  "operand": "#120",
+                  "symbol": "class net/minecraft/sounds/SoundEvent"
+                },
+                {
+                  "offset": 362,
+                  "opcode": "invokevirtual",
+                  "operand": "#122",
+                  "symbol": "Method playSound:(Lnet/minecraft/sounds/SoundEvent;)V"
+                },
+                {
+                  "offset": 365,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 366,
+                  "opcode": "invokevirtual",
+                  "operand": "#195",
+                  "symbol": "Method getItemStack:()Lnet/minecraft/world/item/ItemStack;"
+                },
+                {
+                  "offset": 369,
+                  "opcode": "getstatic",
+                  "operand": "#228",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.SATED_BLADE:Lnet/minecraft/resources/ResourceKey;"
+                },
+                {
+                  "offset": 372,
+                  "opcode": "invokestatic",
+                  "operand": "#205",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+                },
+                {
+                  "offset": 375,
+                  "opcode": "istore",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 377,
+                  "opcode": "iload",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 379,
+                  "opcode": "ifle",
+                  "operand": "434",
+                  "symbol": ""
+                },
+                {
+                  "offset": 382,
+                  "opcode": "aload",
+                  "operand": "6",
+                  "symbol": ""
+                },
+                {
+                  "offset": 384,
+                  "opcode": "instanceof",
+                  "operand": "#231",
+                  "symbol": "class net/minecraft/world/entity/player/Player"
+                },
+                {
+                  "offset": 387,
+                  "opcode": "ifeq",
+                  "operand": "434",
+                  "symbol": ""
+                }
+              ]
+            }
+          ],
+          "full_method_parsed_sha256": "86b8a9b6831bf179710d06128a324cf7c0e5423b81402c598310d5cd32caf165",
+          "method_descriptor": "()V",
+          "method_header": "public void tick()",
+          "method_semantics": "NOT_PROVEN_FROM_ANCHORS",
+          "parsed_instruction_count": 361,
+          "selected_symbolic_invocations": [
+            {
+              "offset": 1,
+              "opcode": "invokespecial",
+              "symbol": "Method net/minecraft/world/entity/Entity.tick:()V"
+            },
+            {
+              "offset": 13,
+              "opcode": "invokevirtual",
+              "symbol": "Method getTargetEntity:()Lnet/minecraft/world/entity/Entity;"
+            },
+            {
+              "offset": 102,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.position:()Lnet/minecraft/world/phys/Vec3;"
+            },
+            {
+              "offset": 107,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.getBbHeight:()F"
+            },
+            {
+              "offset": 174,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.getBbHeight:()F"
+            },
+            {
+              "offset": 191,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.getBbWidth:()F"
+            },
+            {
+              "offset": 250,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.isAlive:()Z"
+            },
+            {
+              "offset": 294,
+              "opcode": "invokevirtual",
+              "symbol": "Method getPlayer:()Lnet/minecraft/world/entity/Entity;"
+            },
+            {
+              "offset": 339,
+              "opcode": "invokestatic",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeDesolateDaggerDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+            },
+            {
+              "offset": 344,
+              "opcode": "invokestatic",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+            },
+            {
+              "offset": 399,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/player/Player.getFoodData:()Lnet/minecraft/world/food/FoodData;"
+            },
+            {
+              "offset": 413,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/player/Player.getFoodData:()Lnet/minecraft/world/food/FoodData;"
+            },
+            {
+              "offset": 418,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/player/Player.getFoodData:()Lnet/minecraft/world/food/FoodData;"
+            },
+            {
+              "offset": 435,
+              "opcode": "invokevirtual",
+              "symbol": "Method discard:()V"
+            },
+            {
+              "offset": 439,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.getZ:()D"
+            },
+            {
+              "offset": 450,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.getEyeY:()D"
+            },
+            {
+              "offset": 461,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/Entity.getX:()D"
+            },
+            {
+              "offset": 540,
+              "opcode": "invokevirtual",
+              "symbol": "Method discard:()V"
+            },
+            {
+              "offset": 551,
+              "opcode": "invokevirtual",
+              "symbol": "Method move:(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class",
+      "class_sha256": "d9c827a9acb2d0f9e7050252ed57e6a3d0a8ad49053e54f19a8eaeb6b84da912",
+      "methods": [
+        {
+          "branch_opcode_anchors": [
+            {
+              "offset": 18,
+              "opcode": "ifne",
+              "operand": "144",
+              "simple_target": 144
+            },
+            {
+              "offset": 43,
+              "opcode": "if_icmple",
+              "operand": "95",
+              "simple_target": 95
+            },
+            {
+              "offset": 59,
+              "opcode": "ifle",
+              "operand": "95",
+              "simple_target": 95
+            },
+            {
+              "offset": 86,
+              "opcode": "ifeq",
+              "operand": "95",
+              "simple_target": 95
+            },
+            {
+              "offset": 92,
+              "opcode": "goto",
+              "operand": "35",
+              "simple_target": 35
+            },
+            {
+              "offset": 132,
+              "opcode": "ifeq",
+              "operand": "139",
+              "simple_target": 139
+            },
+            {
+              "offset": 136,
+              "opcode": "goto",
+              "operand": "140",
+              "simple_target": 140
+            },
+            {
+              "offset": 150,
+              "opcode": "if_icmple",
+              "operand": "173",
+              "simple_target": 173
+            },
+            {
+              "offset": 160,
+              "opcode": "ifeq",
+              "operand": "173",
+              "simple_target": 173
+            },
+            {
+              "offset": 170,
+              "opcode": "goto",
+              "operand": "705",
+              "simple_target": 705
+            },
+            {
+              "offset": 180,
+              "opcode": "ifne",
+              "operand": "361",
+              "simple_target": 361
+            },
+            {
+              "offset": 187,
+              "opcode": "ifne",
+              "operand": "361",
+              "simple_target": 361
+            },
+            {
+              "offset": 194,
+              "opcode": "ifne",
+              "operand": "214",
+              "simple_target": 214
+            },
+            {
+              "offset": 201,
+              "opcode": "ifne",
+              "operand": "214",
+              "simple_target": 214
+            },
+            {
+              "offset": 221,
+              "opcode": "ifeq",
+              "operand": "329",
+              "simple_target": 329
+            },
+            {
+              "offset": 241,
+              "opcode": "if_icmpgt",
+              "operand": "313",
+              "simple_target": 313
+            },
+            {
+              "offset": 253,
+              "opcode": "if_icmpgt",
+              "operand": "307",
+              "simple_target": 307
+            },
+            {
+              "offset": 265,
+              "opcode": "if_icmpgt",
+              "operand": "301",
+              "simple_target": 301
+            },
+            {
+              "offset": 298,
+              "opcode": "goto",
+              "operand": "261",
+              "simple_target": 261
+            },
+            {
+              "offset": 304,
+              "opcode": "goto",
+              "operand": "249",
+              "simple_target": 249
+            },
+            {
+              "offset": 310,
+              "opcode": "goto",
+              "operand": "237",
+              "simple_target": 237
+            },
+            {
+              "offset": 326,
+              "opcode": "goto",
+              "operand": "361",
+              "simple_target": 361
+            },
+            {
+              "offset": 347,
+              "opcode": "if_icmpge",
+              "operand": "361",
+              "simple_target": 361
+            },
+            {
+              "offset": 358,
+              "opcode": "goto",
+              "operand": "344",
+              "simple_target": 344
+            },
+            {
+              "offset": 438,
+              "opcode": "ifeq",
+              "operand": "705",
+              "simple_target": 705
+            },
+            {
+              "offset": 501,
+              "opcode": "ifeq",
+              "operand": "512",
+              "simple_target": 512
+            },
+            {
+              "offset": 509,
+              "opcode": "goto",
+              "operand": "514",
+              "simple_target": 514
+            },
+            {
+              "offset": 520,
+              "opcode": "ifle",
+              "operand": "627",
+              "simple_target": 627
+            },
+            {
+              "offset": 528,
+              "opcode": "ifeq",
+              "operand": "537",
+              "simple_target": 537
+            },
+            {
+              "offset": 534,
+              "opcode": "goto",
+              "operand": "582",
+              "simple_target": 582
+            },
+            {
+              "offset": 551,
+              "opcode": "ifeq",
+              "operand": "582",
+              "simple_target": 582
+            },
+            {
+              "offset": 573,
+              "opcode": "ifeq",
+              "operand": "582",
+              "simple_target": 582
+            },
+            {
+              "offset": 586,
+              "opcode": "ifle",
+              "operand": "627",
+              "simple_target": 627
+            },
+            {
+              "offset": 595,
+              "opcode": "ifeq",
+              "operand": "611",
+              "simple_target": 611
+            },
+            {
+              "offset": 608,
+              "opcode": "goto",
+              "operand": "621",
+              "simple_target": 621
+            },
+            {
+              "offset": 650,
+              "opcode": "ifne",
+              "operand": "702",
+              "simple_target": 702
+            },
+            {
+              "offset": 684,
+              "opcode": "ifgt",
+              "operand": "691",
+              "simple_target": 691
+            },
+            {
+              "offset": 688,
+              "opcode": "goto",
+              "operand": "692",
+              "simple_target": 692
+            },
+            {
+              "offset": 702,
+              "opcode": "goto",
+              "operand": "431",
+              "simple_target": 431
+            }
+          ],
+          "factory_windows": [
+            {
+              "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+              "factory_name": "causeIntentionalGameDesign",
+              "invocation_offset": 605,
+              "surrounding_instructions": [
+                {
+                  "offset": 577,
+                  "opcode": "fstore",
+                  "operand": "11",
+                  "symbol": ""
+                },
+                {
+                  "offset": 579,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 580,
+                  "opcode": "fstore",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 582,
+                  "opcode": "fload",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 584,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 585,
+                  "opcode": "fcmpl",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 586,
+                  "opcode": "ifle",
+                  "operand": "627",
+                  "symbol": ""
+                },
+                {
+                  "offset": 589,
+                  "opcode": "aload",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 591,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 592,
+                  "opcode": "invokevirtual",
+                  "operand": "#95",
+                  "symbol": "Method isIntentionalGameDesign:()Z"
+                },
+                {
+                  "offset": 595,
+                  "opcode": "ifeq",
+                  "operand": "611",
+                  "symbol": ""
+                },
+                {
+                  "offset": 598,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 599,
+                  "opcode": "invokevirtual",
+                  "operand": "#48",
+                  "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+                },
+                {
+                  "offset": 602,
+                  "opcode": "invokevirtual",
+                  "operand": "#256",
+                  "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+                },
+                {
+                  "offset": 605,
+                  "opcode": "invokestatic",
+                  "operand": "#260",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeIntentionalGameDesign:(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;"
+                },
+                {
+                  "offset": 608,
+                  "opcode": "goto",
+                  "operand": "621",
+                  "symbol": ""
+                },
+                {
+                  "offset": 611,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 612,
+                  "opcode": "invokevirtual",
+                  "operand": "#48",
+                  "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+                },
+                {
+                  "offset": 615,
+                  "opcode": "invokevirtual",
+                  "operand": "#256",
+                  "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+                },
+                {
+                  "offset": 618,
+                  "opcode": "invokestatic",
+                  "operand": "#266",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeNukeDamage:(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;"
+                },
+                {
+                  "offset": 621,
+                  "opcode": "fload",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 623,
+                  "opcode": "invokevirtual",
+                  "operand": "#269",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+                },
+                {
+                  "offset": 626,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 627,
+                  "opcode": "aload",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 629,
+                  "opcode": "aload",
+                  "operand": "10",
+                  "symbol": ""
+                },
+                {
+                  "offset": 631,
+                  "opcode": "fload",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 633,
+                  "opcode": "ldc",
+                  "operand": "#253",
+                  "symbol": "float 0.1f"
+                },
+                {
+                  "offset": 635,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 636,
+                  "opcode": "fload",
+                  "operand": "11",
+                  "symbol": ""
+                },
+                {
+                  "offset": 638,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 639,
+                  "opcode": "f2d",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 640,
+                  "opcode": "invokevirtual",
+                  "operand": "#273",
+                  "symbol": "Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;"
+                },
+                {
+                  "offset": 643,
+                  "opcode": "invokevirtual",
+                  "operand": "#277",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+                }
+              ]
+            },
+            {
+              "factory_descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+              "factory_name": "causeNukeDamage",
+              "invocation_offset": 618,
+              "surrounding_instructions": [
+                {
+                  "offset": 585,
+                  "opcode": "fcmpl",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 586,
+                  "opcode": "ifle",
+                  "operand": "627",
+                  "symbol": ""
+                },
+                {
+                  "offset": 589,
+                  "opcode": "aload",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 591,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 592,
+                  "opcode": "invokevirtual",
+                  "operand": "#95",
+                  "symbol": "Method isIntentionalGameDesign:()Z"
+                },
+                {
+                  "offset": 595,
+                  "opcode": "ifeq",
+                  "operand": "611",
+                  "symbol": ""
+                },
+                {
+                  "offset": 598,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 599,
+                  "opcode": "invokevirtual",
+                  "operand": "#48",
+                  "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+                },
+                {
+                  "offset": 602,
+                  "opcode": "invokevirtual",
+                  "operand": "#256",
+                  "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+                },
+                {
+                  "offset": 605,
+                  "opcode": "invokestatic",
+                  "operand": "#260",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeIntentionalGameDesign:(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;"
+                },
+                {
+                  "offset": 608,
+                  "opcode": "goto",
+                  "operand": "621",
+                  "symbol": ""
+                },
+                {
+                  "offset": 611,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 612,
+                  "opcode": "invokevirtual",
+                  "operand": "#48",
+                  "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+                },
+                {
+                  "offset": 615,
+                  "opcode": "invokevirtual",
+                  "operand": "#256",
+                  "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+                },
+                {
+                  "offset": 618,
+                  "opcode": "invokestatic",
+                  "operand": "#266",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeNukeDamage:(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;"
+                },
+                {
+                  "offset": 621,
+                  "opcode": "fload",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 623,
+                  "opcode": "invokevirtual",
+                  "operand": "#269",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+                },
+                {
+                  "offset": 626,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 627,
+                  "opcode": "aload",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 629,
+                  "opcode": "aload",
+                  "operand": "10",
+                  "symbol": ""
+                },
+                {
+                  "offset": 631,
+                  "opcode": "fload",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 633,
+                  "opcode": "ldc",
+                  "operand": "#253",
+                  "symbol": "float 0.1f"
+                },
+                {
+                  "offset": 635,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 636,
+                  "opcode": "fload",
+                  "operand": "11",
+                  "symbol": ""
+                },
+                {
+                  "offset": 638,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 639,
+                  "opcode": "f2d",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 640,
+                  "opcode": "invokevirtual",
+                  "operand": "#273",
+                  "symbol": "Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;"
+                },
+                {
+                  "offset": 643,
+                  "opcode": "invokevirtual",
+                  "operand": "#277",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+                },
+                {
+                  "offset": 646,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 647,
+                  "opcode": "invokevirtual",
+                  "operand": "#95",
+                  "symbol": "Method isIntentionalGameDesign:()Z"
+                },
+                {
+                  "offset": 650,
+                  "opcode": "ifne",
+                  "operand": "702",
+                  "symbol": ""
+                },
+                {
+                  "offset": 653,
+                  "opcode": "aload",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 655,
+                  "opcode": "new",
+                  "operand": "#281",
+                  "symbol": "class net/minecraft/world/effect/MobEffectInstance"
+                }
+              ]
+            }
+          ],
+          "full_method_parsed_sha256": "64f9a412c81a25525edf5b9576d56cec8354f6963ef718a44e6179347fcd8a25",
+          "method_descriptor": "()V",
+          "method_header": "public void tick()",
+          "method_semantics": "NOT_PROVEN_FROM_ANCHORS",
+          "parsed_instruction_count": 348,
+          "selected_symbolic_invocations": [
+            {
+              "offset": 1,
+              "opcode": "invokespecial",
+              "symbol": "Method net/minecraft/world/entity/Entity.tick:()V"
+            },
+            {
+              "offset": 77,
+              "opcode": "invokestatic",
+              "symbol": "Method net/minecraft/core/BlockPos.containing:(DDD)Lnet/minecraft/core/BlockPos;"
+            },
+            {
+              "offset": 80,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/level/Level.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"
+            },
+            {
+              "offset": 83,
+              "opcode": "invokevirtual",
+              "symbol": "Method isDestroyable:(Lnet/minecraft/world/level/block/state/BlockState;)Z"
+            },
+            {
+              "offset": 167,
+              "opcode": "invokevirtual",
+              "symbol": "Method remove:(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
+            },
+            {
+              "offset": 225,
+              "opcode": "invokevirtual",
+              "symbol": "Method blockPosition:()Lnet/minecraft/core/BlockPos;"
+            },
+            {
+              "offset": 288,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/core/BlockPos.offset:(III)Lnet/minecraft/core/BlockPos;"
+            },
+            {
+              "offset": 318,
+              "opcode": "invokedynamic",
+              "symbol": "InvokeDynamic #0:compare:(Lcom/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity;)Ljava/util/Comparator;"
+            },
+            {
+              "offset": 456,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+            },
+            {
+              "offset": 466,
+              "opcode": "invokevirtual",
+              "symbol": "Method calculateDamage:(FF)F"
+            },
+            {
+              "offset": 473,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.position:()Lnet/minecraft/world/phys/Vec3;"
+            },
+            {
+              "offset": 539,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+            },
+            {
+              "offset": 542,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+            },
+            {
+              "offset": 605,
+              "opcode": "invokestatic",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeIntentionalGameDesign:(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;"
+            },
+            {
+              "offset": 618,
+              "opcode": "invokestatic",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeNukeDamage:(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;"
+            },
+            {
+              "offset": 623,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+            },
+            {
+              "offset": 643,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+            },
+            {
+              "offset": 698,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.addEffect:(Lnet/minecraft/world/effect/MobEffectInstance;)Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
