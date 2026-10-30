@@ -50,3 +50,8 @@ A [auditoria de identidade do artefato](EXACT-1.0.10-ARTIFACT-AUDIT.md), a [disp
 ### Estado sincronizado de Dark Arrow
 
 No JAR 1.0.10, `DarkArrowEntity.defineSynchedData` atribui defaults `0.0f` e `false`, e `DreadbowItem` contém as chamadas diretas a ambos os setters, com argumentos estáticos `2.0f`/`3.0f` no caminho `releaseUsing` e `2.0f` em `onUseTick` ([manifesto de estado](damage-types/EXACT-DARK-ARROW-STATE-1.0.10.json)). O contrato é somente de bytecode; nenhum hook mutador, fórmula final de dano ou QA física foi certificado.
+
+
+### Dreadbow — condições dos dois flags
+
+[Auditoria da versão instalada](damage-types/EXACT-DREADBOW-DECISIONS-1.0.10.json): `PRECISE_VOLLEY` determina o argumento bruto de dano `2.0f`/`3.0f`, enquanto `TWILIGHT_PERFECTION` em conjunto com `getPerfectShotTicks > 0` determina o booleano de `PERFECT_SHOT`. Esses são contratos parciais estáticos; sem hook mutador seguro, dano final ou QA física certificados.

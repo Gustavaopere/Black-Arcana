@@ -33,3 +33,8 @@ As oito ações e os oito efeitos certificados sustentam ✅ nos recortes de `ac
 ## Dark Arrow — pontos de escrita observados
 
 [Manifesto do estado sincronizado](damage-types/EXACT-DARK-ARROW-STATE-1.0.10.json): o JAR 1.0.10 confirma `SHADOW_ARROW_DAMAGE` e `PERFECT_SHOT` com defaults `0.0f`/`false`, setters em `DarkArrowEntity` e três invocações diretas em `DreadbowItem`. Não confundir essa superfície com API de perks estável; filtro de friendly fire, owner, múltiplos impactos, autoridade servidor/multiplayer e settlement estão pendentes. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+
+
+## Condições do Dreadbow confirmadas por bytecode
+
+O [manifesto de decisões 1.0.10](damage-types/EXACT-DREADBOW-DECISIONS-1.0.10.json) confirma `PRECISE_VOLLEY` → inteiro local 8 → argumento `2.0f`/`3.0f` e `TWILIGHT_PERFECTION` mais `getPerfectShotTicks(ItemStack) > 0` → inteiro local 10 → `setPerfectShot`. O encantamento `RELENTLESS_DARKNESS` e `SHADED_RESPITE` aparecem também como referências; seus efeitos não foram certificados neste recorte. Nenhuma raiz mágica ou hook certificado foi acrescentado.

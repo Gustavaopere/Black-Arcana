@@ -92,3 +92,8 @@ A inspeção [`EXACT-DAMAGE-HELPERS-1.0.10.json`](EXACT-DAMAGE-HELPERS-1.0.10.js
 A auditoria [`EXACT-DARK-ARROW-STATE-1.0.10.json`](EXACT-DARK-ARROW-STATE-1.0.10.json) adiciona os defaults compilados `SHADOW_ARROW_DAMAGE=0.0f` e `PERFECT_SHOT=false`, dois setters diretos de `SynchedEntityData` e três chamadas em `DreadbowItem` (`releaseUsing`: dano e tiro perfeito; `onUseTick`: dano). A compilação apresenta argumentos `2.0f` / `3.0f` em `releaseUsing` e `2.0f` em `onUseTick`; não estabelece dano efetivo, chance de perfect shot, autorização nem hook estável.
 
 **Escopo:** 5 classes candidatas, 4 selecionadas, 28 referências/anchors simbólicas; sem adicionar raízes mágicas ou contratos `COMPLETE_PERK_READY`. A [ficha Dark Arrow](dark-arrow.md) identifica offsets JVM e limites para perks.
+
+
+## Encantamentos que definem os flags da Dark Arrow
+
+O [manifesto SHA-exato](EXACT-DREADBOW-DECISIONS-1.0.10.json) rastreia `PRECISE_VOLLEY` até o slot local 8, usado para selecionar `2.0f`/`3.0f` no setter de dano da Dark Arrow, e `TWILIGHT_PERFECTION` mais `getPerfectShotTicks(ItemStack) > 0` até o slot local 10, usado pelo setter `PERFECT_SHOT`. `RELENTLESS_DARKNESS` e `SHADED_RESPITE` também são consultados pelo Dreadbow. Isso não adiciona novas magias ou contratos completos para perks; origem do contador de perfect shot e autoridade de mutação permanecem pendentes.

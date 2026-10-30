@@ -123,3 +123,20 @@ Os três pontos acima foram encontrados por referências diretas do bytecode de 
 ### Restrições para Black Arcana / perks
 
 Os accessors sincronizados pertencem ao provider. **Não** assumir que `setShadowArrowDamage` ou `setPerfectShot` é um hook público estável para manipulação de perks, nem que esses argumentos equivalem ao dano recebido no settlement de `Entity.hurt`. Faltam os cálculos completos do `DreadbowItem`, a origem dos flags, autoridade de servidor, colisões, filtros de aliados, cooldown e multiplayer. `NOT_CERTIFIED` / `mutating_hook=NOT_VERIFIED` / `physical_qa=NOT_TESTED` / `NO_MUTATION`.
+
+
+## Origem de Precise Volley e Twilight Perfection — bytecode 1.0.10
+
+Evidência: [manifesto de decisões do Dreadbow](EXACT-DREADBOW-DECISIONS-1.0.10.json) e [auditoria da CI](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41003421569). A classe `com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class` foi verificada no JAR oficial 1.0.10 pelo SHA-256 `b9cd6e843f923877775e38b89214e8649c10d4d5be704ed9dd377900439d44ae`.
+
+| Origem/condição compilada | Offsets exatos | Significado limitado |
+|---|---|---|
+| `PRECISE_VOLLEY` via `ACCompat.enchantLevel` | Campo 43, consulta 46, `ifle 56` em 49, `iconst_1` em 52, `iconst_0` em 56 e `istore 8` em 57 | Inteiro local 8 é verdadeiro somente com nível do encantamento superior a zero |
+| Seleção do argumento de dano da Dark Arrow | `iload 8` em 390, `ifeq 399` em 392; `fconst_2` em 395 / `ldc_w 3.0f` em 399; `setShadowArrowDamage` em 402 | Parâmetro bruto: `2.0f` se Precise Volley positivo, `3.0f` no ramo alternativo, quando o caminho alcançar o setter |
+| `TWILIGHT_PERFECTION` e contador de tiro perfeito | Campo 87, `ACCompat.enchantLevel` em 90, `ifle 107` em 93; `getPerfectShotTicks(ItemStack)` em 97, `ifle 107` em 100; `iconst_1` em 103, `iconst_0` em 107, `istore 10` em 108 | Inteiro local 10 é verdadeiro somente quando **ambas** as condições são positivas |
+| Escrita do indicador de tiro perfeito | `iload 10` em 407, `setPerfectShot(boolean)` em 409 | Encaminha a condição calculada ao estado sincronizado do projétil |
+| Caminho `onUseTick` | Construtor da Dark Arrow no offset 188; `fconst_2` em 195; `setShadowArrowDamage` em 196 | Há outro caminho com argumento bruto `2.0f`; não estabelece disparo efetivo ou alvo atingido |
+
+Outras referências observadas nas rotinas: `RELENTLESS_DARKNESS`, `SHADED_RESPITE`, `DarknessIncarnateEffect.isInLight`, `getPowerForTime`, `isConvertibleArrow`, `ProjectileUtil.getHitResultOnViewVector`, `AbstractArrow.shoot` e `Level.addFreshEntity`. A presença desses símbolos **não certifica** frequência, alcance, número de projéteis, proteção de terreno ou permissões.
+
+Os métodos auditados contêm 391 instruções compiladas em `releaseUsing` e 175 em `onUseTick`. O manifesto registra desvios, constantes, chamadas e janelas dos locais 8/10; não reconstrói CFG completo nem semântica de exceções. **Próximas evidências necessárias:** corpo exato de `getPerfectShotTicks`, condições de colisão/dano final e validações de PvP, servidor e multiplayer. **Estado:** `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Não conectar perks diretamente aos setters.
