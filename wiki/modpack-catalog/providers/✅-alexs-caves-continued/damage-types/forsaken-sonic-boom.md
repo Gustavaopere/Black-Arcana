@@ -197,3 +197,24 @@ As prioridades inteiras aparecem no JAR, mas **a ordenação de execução efeti
 | `setLeaping` | `(Z)V` | `9ce582d416a6b73fa739ad2d2ddad336628bb805798ba831920149baf4d68dd6` |
 
 **Limites persistentes:** o estudo registra referências simbólicas e branches de nove métodos, sem reconstrução de CFG completo, sem execução de goals no mundo, sem medir quantidade de hits, sem verificar permissões, sem QA física e sem hook seguro para alterar targeting, alcance, animações ou dano. `NOT_CERTIFIED` / `mutating_hook=NOT_VERIFIED` / `physical_qa=NOT_TESTED` / `NO_MUTATION`. Não promover o contrato estático integral da ficha, nem acrescentar nova magia ao catálogo por esta auditoria.
+
+
+## Temporização do Sonic e estados próprios — auditoria 1.0.10
+
+**Evidência:** [manifesto de ticks e declarações NBT](EXACT-FORSAKEN-TIMING-1.0.10.json) extraído do [workflow CI](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41096171833) contra o JAR instalado (SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`). Os dois métodos `tick()` preservam seus hashes compilados anteriores: `ForsakenAttackGoal.tick` = `1fb8ecdd23c6c76d836ee25a4176f788163ef1226220a142a40e5f48d4df8abe` e `ForsakenEntity.tick` = `733efd62558f45ce4d8390e43fb09baff389490f8d96f9be709952a6a284341f`.
+
+### Gating temporal, dano e duração
+
+- O contador interno `attemptSonicDamageIn` é lido em **59**; se positivo, passa pelo decremento `getfield 67`, `iconst_1 70`, `isub 71`, `putfield 72`. Na transição para zero, o caminho de disparo direto também verifica linha de visão. Uma passagem de `Goal.tick()` não garante um tick efetivo em toda atualização de mundo: o escalonador nativo ainda é autoridade.
+- Para `ANIMATION_SONIC_ATTACK`, `getAnimationTick` é comparado com **10** (`bipush 325`, branch 327) e **30** (337, branch 339). Quando `attemptSonicDamageIn` não é positivo (branch 346), um caminho escreve o resultado de um cálculo que contém literal double `0.20000000298023224d` e `Math.ceil` nos offsets **351/355/359**. A origem e os limites do operando local não foram formalmente certificados: **não** chamar essa expressão de cooldown global.
+- O flag `sonicEnqueued` pode ser limpo após `getAnimationTick > 30` na animação direcionada (`getAnimationTick 366`, branch 371, `putfield 376`) ou após tick **40** no caminho do Sonic Blast (`getAnimationTick 607`, branch 612, `putfield 617`). Essas são transições locais de estado, não garantias de duração efetiva da animação.
+- A varredura Sonic Blast depende de `ANIMATION_SONIC_BLAST` e do tick de animação entre **10 e 30, inclusive** (`getAnimationTick` em 399/411 e branches 404/416). Exige ainda `animationTick % 5 == 0` (`getAnimationTick 423`, `iconst_5 426`, `irem 427`, `ifne 428`). Isso define **momentos potenciais para processamento de área**, não número fixo de hits; filtros de aliados, tags, distância, aceitação do `LivingEntity.hurt` e agendamento do goal continuam aplicáveis.
+- Quando `hasSonicCharge()` é verdadeiro (consulta em 1097) e `sonicEnqueued` está falso (1104/1107), há ramo que define `sonicEnqueued=true` (**1112**) e chama `setSonicCharge(false)` (**1120**). A carga é estado do provider, sem equivalência automática a mana, custos de cast ou perk.
+
+### Estado sincronizado não equivale a NBT persistido
+
+O método `ForsakenEntity.defineSynchedData(SynchedEntityData.Builder)` (SHA-256 parseado `a0a8ea7ca18a20a07a12bc39710ea22447264a4f359767c809c7044fb1cacde2`) chama o método de `Monster` e inicializa `LEAPING = false` (offsets 18/21/25), `SONIC_CHARGE = false` (30/33/37) e `SONAR_ID = -1` (54/57/61). Esses valores são **defaults no nascimento da entidade**. O getter próprio `getAnimationTick()` (SHA `d2f19727526eec9cd6ae71b7d2ce80ee9d587192c88551b7e92564bf446149ae`) lê o campo local `animationTick`.
+
+A classe `ForsakenEntity` da build 1.0.10 **não declara** métodos próprios com as assinaturas exatas `addAdditionalSaveData(CompoundTag):void` e `readAdditionalSaveData(CompoundTag):void`. **Isso não prova ausência de persistência em disco:** superclasses, outros mixins e mecanismos de saves/entidades não foram auditados. Tampouco comprova recuperação dos flags sincronizados após troca de dimensão, reinício ou unload.
+
+**Limites:** análise estática de métodos selecionados, sem reconstruir CFG inteiro, sem medir tempo real/hitcount, sem teste multiplayer ou física do modpack, nem hook mutador certificado. `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Nenhuma nova ficha ou certificação global é criada.
