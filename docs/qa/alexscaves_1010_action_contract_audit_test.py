@@ -175,6 +175,24 @@ class ContractAuditTests(unittest.TestCase):
         doc["classes"] = {path: doc["classes"][path] for path in record["classes"]}
         return doc
 
+    def desolate_dagger_fixture(self):
+        """Seal the two literal dagger cards with independent member evidence."""
+        doc = copy.deepcopy(self.doc)
+        doc["catalog_family"] = "DESOLATE_DAGGER_CONTRACTS"
+        doc["cards"], doc["contract_evidence"] = {}, {}
+        selected_classes = {}
+        for action, relative in zip(ACTIONS, sorted(audit.DESOLATE_DAGGER)):
+            card = self.root / relative
+            card.parent.mkdir(exist_ok=True)
+            card.write_bytes((self.root / action).read_bytes())
+            doc["cards"][relative] = sha256(card.read_bytes())
+            record = doc["action_evidence"][action]
+            doc["contract_evidence"][relative] = record
+            selected_classes.update({path: doc["classes"][path] for path in record["classes"]})
+        doc["classes"] = selected_classes
+        del doc["action_evidence"]
+        return doc
+
     def test_parser_preserves_overloads_constructor_static_lambda_and_switch(self):
         parsed = audit.parse_javap(JAVAP, OWNER)
         self.assertEqual({("<init>", "()V"), ("<clinit>", "()V"), ("value", "()I"),
@@ -545,6 +563,129 @@ class ContractAuditTests(unittest.TestCase):
                 contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(0, audit.main(arguments))
             self.assertEqual("acid", inspect.call_args.kwargs["profile"])
+
+    def test_desolate_dagger_literal_roster_and_two_class_synthetic_audit(self):
+        doc = self.desolate_dagger_fixture()
+        self.assertEqual({"equipment/desolate-dagger.md", "damage-types/desolate-dagger.md"},
+                         set(audit.DESOLATE_DAGGER))
+        audit.validate_structure(doc, profile="desolate_dagger")
+        audit.validate_cards(doc, self.root, profile="desolate_dagger")
+        result = self.inspect(doc, profile="desolate_dagger")
+        self.assertEqual("PASS", result["status"])
+        self.assertEqual("DESOLATE_DAGGER_CONTRACTS", result["catalog_family"])
+        self.assertEqual(2, result["cards_checked"])
+        self.assertEqual(2, result["classes_checked"])
+        self.assertEqual(2, result["methods_checked"])
+        self.assertEqual(8, result["semantic_magic_roots"])
+        self.assertFalse(result["provider_universe_closed"])
+        self.assertEqual("NOT_VERIFIED", result["mutating_hook"])
+        self.assertEqual("NOT_TESTED", result["physical_qa"])
+
+    def test_desolate_dagger_is_isolated_from_four_previous_profiles(self):
+        globals_ = (audit.SCOPE, audit.EFFECT_SCOPE, audit.DREADBOW_SCOPE,
+                    audit.ACID_SCOPE, audit.DESOLATE_DAGGER_SCOPE)
+        snapshots = tuple(copy.deepcopy(value) for value in globals_)
+        documents = {"actions": self.doc, "effects": self.effects_fixture(),
+                     "dreadbow": self.dreadbow_fixture(), "acid": self.acid_fixture(),
+                     "desolate_dagger": self.desolate_dagger_fixture()}
+        for profile, manifest in documents.items():
+            for other in documents:
+                if profile == other:
+                    continue
+                with self.subTest(profile=profile, selected=other), self.assertRaises(ValueError):
+                    audit.validate_structure(manifest, profile=other)
+                with self.subTest(profile=profile, cards=other), self.assertRaises(ValueError):
+                    audit.validate_cards(manifest, self.root, profile=other)
+        for profile in ("desolate_dagger", "acid", "dreadbow", "effects", "actions"):
+            self.inspect(documents[profile], profile=profile)
+        self.assertEqual(snapshots, globals_)
+
+    def test_desolate_dagger_missing_extra_and_cross_family_alias_cards_rejected(self):
+        for key in ("cards", "contract_evidence"):
+            for replacement in (None, "equipment/extra.md", "equipment/dreadbow.md",
+                                "damage-types/acid.md", "effects/bubbled.md", ACTIONS[0]):
+                doc = self.desolate_dagger_fixture()
+                value = doc[key].pop("equipment/desolate-dagger.md")
+                if replacement is not None:
+                    doc[key][replacement] = value
+                with self.subTest(key=key, replacement=replacement), self.assertRaises(ValueError):
+                    audit.validate_structure(doc, profile="desolate_dagger")
+            doc = self.desolate_dagger_fixture()
+            doc[key]["equipment/extra.md"] = doc[key]["equipment/desolate-dagger.md"]
+            with self.subTest(key=key, mode="extra"), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="desolate_dagger")
+
+    def test_desolate_dagger_scope_and_evidence_family_tampering_rejected(self):
+        for key, value in (("catalog_family", "ACID_DAMAGE_CONTRACT"), ("catalog_family", None),
+                           ("semantic_magic_roots", 2), ("provider_universe_closed", True),
+                           ("mutating_hook", "VERIFIED"), ("physical_qa", "PASS"),
+                           ("artifact_size_bytes", True)):
+            doc = self.desolate_dagger_fixture()
+            if value is None:
+                doc.pop(key)
+            else:
+                doc[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="desolate_dagger")
+        for alias in ("action_evidence", "effect_evidence"):
+            doc = self.desolate_dagger_fixture()
+            doc[alias] = doc.pop("contract_evidence")
+            with self.subTest(alias=alias), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="desolate_dagger")
+
+    def test_desolate_dagger_keeps_two_class_and_anchored_class_minima(self):
+        for mode in ("missing_class", "anchorless_class"):
+            doc = self.desolate_dagger_fixture()
+            path = next(iter(doc["classes"]))
+            if mode == "missing_class":
+                doc["classes"].pop(path)
+                replacement = next(iter(doc["classes"]))
+                for record in doc["contract_evidence"].values():
+                    record["classes"] = [replacement if item == path else item for item in record["classes"]]
+            else:
+                doc["classes"][path]["methods"] = []
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="desolate_dagger")
+
+    def test_desolate_dagger_rejects_stale_card_and_symlink_escape(self):
+        doc = self.desolate_dagger_fixture()
+        card = self.root / "equipment/desolate-dagger.md"
+        original = card.read_bytes()
+        card.write_bytes(original + b"stale dagger card")
+        with self.assertRaises(ValueError):
+            self.inspect(doc, profile="desolate_dagger")
+        outside = Path(self.temp.name) / "outside-dagger.md"
+        outside.write_bytes(original)
+        card.unlink()
+        card.symlink_to(outside)
+        with self.assertRaises(ValueError):
+            self.inspect(doc, profile="desolate_dagger")
+
+    def test_desolate_dagger_rechecks_card_after_bytecode_inspection(self):
+        doc = self.desolate_dagger_fixture()
+        changed = False
+        def completed(command, **kwargs):
+            nonlocal changed
+            if not changed:
+                card = self.root / "damage-types/desolate-dagger.md"
+                card.write_bytes(card.read_bytes() + b"changed during dagger audit")
+                changed = True
+            return subprocess.CompletedProcess(command, 0, stdout=JAVAP.replace(OWNER, command[-1]), stderr="")
+        with mock.patch.object(audit.subprocess, "run", side_effect=completed):
+            with self.assertRaises(ValueError):
+                audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="desolate_dagger",
+                            expected_identity=self.expected_identity)
+        self.assertTrue(changed)
+
+    def test_cli_accepts_explicit_desolate_dagger_profile(self):
+        arguments = ["--jar", str(self.jar), "--manifest", str(self.root / "manifest.json"),
+                     "--provider-root", str(self.root), "--javap", "synthetic-javap",
+                     "--profile", "desolate_dagger"]
+        with mock.patch.object(audit, "load_manifest", return_value=self.desolate_dagger_fixture()), \
+                mock.patch.object(audit, "audit", return_value={"status": "PASS"}) as inspect, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(0, audit.main(arguments))
+            self.assertEqual("desolate_dagger", inspect.call_args.kwargs["profile"])
 
     def test_missing_extra_action_and_card_evidence_mismatch_rejected(self):
         variants = []

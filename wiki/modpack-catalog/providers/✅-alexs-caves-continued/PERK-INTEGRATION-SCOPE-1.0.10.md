@@ -7,9 +7,9 @@ Autoridade: JAR 1.0.10, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-25
 | Família | Universo exato identificado | Trabalho necessário antes de fechar o provider |
 |---|---|---|
 | Ações sobrenaturais | Oito raízes já contadas | Sete campos estáticos documentados nas oito fichas; hooks e QA física separados |
-| Itens / equipamento | 81 classes externas de itens; 42 com assinaturas de interação já classificadas semanticamente | [Dreadbow](equipment/dreadbow.md) documentado individualmente; demais armas, movimento, comida, defesa e helpers precisam de disposição própria. Classes e fichas não são denominadores equivalentes |
+| Itens / equipamento | 81 classes externas de itens; 42 com assinaturas de interação já classificadas semanticamente | [Dreadbow](equipment/dreadbow.md) e [Desolate Dagger](equipment/desolate-dagger.md) documentados individualmente; demais armas, movimento, comida, defesa e helpers precisam de disposição própria. Classes e fichas não são denominadores equivalentes |
 | Enchantments | 51 JSONs em `data/alexscaves/enchantment/` | Ficha por contrato: nível/custo/slots/exclusividade e consumidor real de cada modifier, inclusive tecnologia/armas |
-| Damage types | 11 JSONs, 11 factories e seus consumidores diretos localizados no JAR | **2/11 contratos estáticos documentados: [Acid](damage-types/acid.md) e [Dark Arrow](damage-types/dark-arrow.md)**; demais nove contratos continuam parciais. [Prova de Acid](EXACT-ACID-CONTRACT-1.0.10.md). [Prova conjunta com Dreadbow](EXACT-DREADBOW-CONTRACTS-1.0.10.md). Hooks e QA física pendentes |
+| Damage types | 11 JSONs, 11 factories e seus consumidores diretos localizados no JAR | **3/11 contratos estáticos documentados: [Acid](damage-types/acid.md), [Dark Arrow](damage-types/dark-arrow.md) e [Desolate Dagger](damage-types/desolate-dagger.md)**; demais oito contratos continuam parciais. [Prova de Desolate Dagger](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md). [Prova de Acid](EXACT-ACID-CONTRACT-1.0.10.md). [Prova conjunta com Dreadbow](EXACT-DREADBOW-CONTRACTS-1.0.10.md). Hooks e QA física pendentes |
 | Mob effects | Oito campos de registro de efeitos | **8/8 contratos estáticos documentados**, incluindo aplicações e consumidores; [fichas](effects/INDEX.md) e [prova exata](EXACT-EFFECT-CONTRACTS-1.0.10.md). Hooks e QA física pendentes |
 | Potions | 12 campos de registro de poções | Conteúdo, níveis/tempo e aquisição, sem contar variantes como novas magias |
 | Config servidor | 40 campos em `ACServerConfig` | Defaults/bounds, momento de leitura, autoridade global/por jogador e consumidores; não presumir valores em execução |
@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, o equipamento Dreadbow e os contratos Acid/Dark Arrow somam **19 contratos estáticos certificados entre 28 fichas observadas**. Os índices distinguem as fichas completas dos nove outros tipos de dano ainda parciais. O provider inteiro permanece pendente, e o registro alfabético continua em **Alex's Caves Continued**. O universo de integrações ainda inclui os demais equipamentos, enchantments e sistemas; nenhuma família ausente é presumida inexistente.
+As oito ações, oito efeitos, os equipamentos Dreadbow/Desolate Dagger e os contratos Acid/Dark Arrow/Desolate Dagger somam **21 contratos estáticos certificados entre 29 fichas observadas**. Os índices distinguem as fichas completas dos oito outros tipos de dano ainda parciais. O provider inteiro permanece pendente, e o registro alfabético continua em **Alex's Caves Continued**. O universo de integrações ainda inclui os demais equipamentos, enchantments e sistemas; nenhuma família ausente é presumida inexistente.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 
@@ -39,3 +39,7 @@ Uma perk de duração, alcance, dano, tipo de alvo ou frequência precisa escolh
 ## Acid — dois emissores com contratos distintos
 
 A [prova de Acid](EXACT-ACID-CONTRACT-1.0.10.md) acompanha a fórmula ambiental probabilística, a contagem de peças Hazmat, o contato do drum, seu movimento e os guards de colocação/limpeza de fluido. Esses caminhos compartilham o tipo de dano, mas mantêm filtros e parâmetros próprios. Corrosão, o sistema completo de fluidos e toda a AI do Brainiac continuam superfícies separadas; o recorte de dano não encerra esses sistemas nem o provider.
+
+## Desolate Dagger — equipamento e entidade separados
+
+A [prova conjunta](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md) relaciona o callback de ataque do item, a produção de entidades, os dados sincronizados, órbita/stab, solicitação de dano e descarte. O produtor nativo não preenche o ID de jogador usado pela entidade; autoria e benefícios condicionados a Player mantêm essa fronteira explícita. Os dois contratos não encerram todos os equipamentos, encantamentos ou sistemas de combate.

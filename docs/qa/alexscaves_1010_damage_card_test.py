@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check exact resources and the separately sealed Acid/Dark Arrow contracts."""
+"""Check exact resources and three separately sealed static damage contracts."""
 import hashlib
 import json
 import re
@@ -19,6 +19,11 @@ STATIC_CONTRACTS = {
         "manifest": "EXACT-DREADBOW-CONTRACTS-1.0.10.json",
         "family": "DREADBOW_AND_DARK_ARROW",
         "cards": frozenset({"damage-types/dark-arrow.md", "equipment/dreadbow.md"}),
+    },
+    "desolate_dagger": {
+        "manifest": "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json",
+        "family": "DESOLATE_DAGGER_CONTRACTS",
+        "cards": frozenset({"damage-types/desolate-dagger.md", "equipment/desolate-dagger.md"}),
     },
 }
 
@@ -50,10 +55,10 @@ class DamageTypeCards(unittest.TestCase):
                 self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if id in STATIC_CONTRACTS else "NOT_CERTIFIED", text)
                 self.assertIn("**+0 raízes mágicas novas**", text)
 
-    def test_two_static_certificates_have_sealed_cards_and_runtime_limits(self):
+    def test_three_static_certificates_have_sealed_cards_and_runtime_limits(self):
         provider = FAMILY.parent
         ledger = json.loads((ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text())
-        self.assertEqual(set(STATIC_CONTRACTS), {"acid", "dark_arrow"})
+        self.assertEqual(set(STATIC_CONTRACTS), {"acid", "dark_arrow", "desolate_dagger"})
         for id, scope in STATIC_CONTRACTS.items():
             with self.subTest(id=id):
                 manifest = json.loads((provider / scope["manifest"]).read_text())
@@ -70,18 +75,30 @@ class DamageTypeCards(unittest.TestCase):
                 self.assertEqual(manifest["catalog_family"], scope["family"])
                 self.assertEqual(set(manifest["cards"]), scope["cards"])
                 self.assertEqual(set(manifest["contract_evidence"]), scope["cards"])
-                self.assertEqual(manifest["cards"][relative],
-                                 hashlib.sha256((provider / relative).read_bytes()).hexdigest())
+                for card_relative in scope["cards"]:
+                    self.assertEqual(manifest["cards"][card_relative],
+                                     hashlib.sha256((provider / card_relative).read_bytes()).hexdigest())
+                    sealed_cert = ledger["objects"][provider.name + "/" + card_relative]
+                    for key, expected in {
+                        "status": "COMPLETE_PERK_READY",
+                        "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+                        "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+                        "version": "1.0.10",
+                        "artifact_sha1": self.manifest["artifact"]["sha1"],
+                        "mutating_hook": "NOT_VERIFIED",
+                        "physical_qa": "NOT_TESTED",
+                    }.items():
+                        self.assertEqual(sealed_cert[key], expected)
                 resource = "data/alexscaves/damage_type/" + id + ".json"
                 self.assertEqual(manifest["resources"][resource], self.manifest["damage_types"][id]["sha256"])
                 self.assertIn(resource, manifest["contract_evidence"][relative]["resources"])
                 self.assertFalse(manifest["provider_universe_closed"])
                 self.assertEqual(manifest["semantic_magic_roots"], 8)
 
-    def test_other_nine_damage_types_remain_uncertified(self):
+    def test_other_eight_damage_types_remain_uncertified(self):
         ledger = json.loads((ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text())
         remaining = set(self.manifest["damage_types"]) - set(STATIC_CONTRACTS)
-        self.assertEqual(len(remaining), 9)
+        self.assertEqual(len(remaining), 8)
         for id in remaining:
             with self.subTest(id=id):
                 relative = FAMILY.parent.name + "/damage-types/" + id.replace("_", "-") + ".md"
