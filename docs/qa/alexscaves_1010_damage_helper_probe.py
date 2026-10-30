@@ -83,10 +83,17 @@ def load_prior(path):
         if not item:
             raise EvidenceMismatch("missing prior " + filename)
         # Earlier SHA-exact evidence must actually mention each desired helper.
+        # The preceding probe's filtered symbolic list intentionally omits
+        # some helper names (e.g. isPerfectShot/enchantLevel). Its hash-pinned
+        # factory instruction windows retain those exact method references.
         symbol_text = "\n".join(
             anchor["symbol"]
             for method in item["methods"]
-            for anchor in method["selected_symbolic_invocations"]
+            for anchor in (
+                method["selected_symbolic_invocations"] +
+                [inst for window in method["factory_windows"]
+                 for inst in window["surrounding_instructions"]]
+            )
         )
         for name in helper_names:
             if name not in symbol_text:
