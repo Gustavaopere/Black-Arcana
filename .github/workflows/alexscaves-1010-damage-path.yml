@@ -46,7 +46,7 @@ jobs:
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --earlier 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/EXACT-CONSUMERS-1.0.10.json' \
-            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json'
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/EXACT-DAMAGE-PATH-ANCHORS-1.0.10.json' \
             --output build/alexscaves-1010/damage-path-anchors.json
       - uses: actions/upload-artifact@v7
         with:
