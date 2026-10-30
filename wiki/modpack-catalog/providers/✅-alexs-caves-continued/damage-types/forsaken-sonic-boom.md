@@ -82,7 +82,37 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 
 - O bytecode de `getSonicDamageAgainst(LivingEntity)` usa `LivingEntity.getType()`, `EntityType.builtInRegistryHolder()`, `Holder.Reference.is(TagKey)` e a chave `ACTagRegistry.WEAK_TO_FORSAKEN_SONIC_ATTACK`.
 - Ramo verdadeiro da consulta à tag: constante `45.0f` no offset 16; ramo alternativo: `4.0f` no offset 22. Os dois caminhos convergem no retorno `freturn` offset 25.
-- **Parâmetro bruto por target:** `45.0f` ou `4.0f` segundo aquela tag, **antes** de processamentos do caller, da `LivingEntity.hurt`, resistências ou outros modificadores.
+- **Parâmetro bruto para a entidade passada ao helper:** `45.0f` ou `4.0f` segundo aquela tag, **antes** de processamentos do caller, da `LivingEntity.hurt`, resistências ou outros modificadores.
 - A auditoria anterior de `ForsakenAttackGoal.tick()` mostrou dois usos. O segundo caminho possui `0.65f`, `Math.ceil()` e `LivingEntity.hurt()`: a operação local sobre esses retornos resulta, aritmeticamente, em `ceil(45×0.65)=30` ou `ceil(4×0.65)=3` como **argumento bruto daquele trecho**, quando executado. O primeiro caminho não deve herdar esse multiplicador.
 
 **Limites obrigatórios:** a tag de entidade pode ser modificada por datapacks; a condição de ativação do ataque, o número de alvos, o resultado de `LivingEntity.hurt`, as proteções e a frequência de aplicação dependem de outros caminhos. A inspeção **não** homologou hook mutador nem dano efetivo. `NOT_CERTIFIED` / `NOT_VERIFIED` / `NOT_TESTED` / `NO_MUTATION`.
+
+
+## Contratos estáticos adicionais — fluxo Forsaken Sonic (JAR 1.0.10)
+
+**Fonte:** [manifesto exato dos métodos de ataque](EXACT-FORSAKEN-SONIC-1.0.10.json), extraído do JAR 1.0.10 com SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570` / SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`. O manifesto registra `ForsakenAttackGoal` (SHA de classe `48cfdd6c370f68550d0d7af768466f99f330e8fd4f825a520411a1bc5d70fb55`) e `ForsakenEntity` (`72981b25b3af251b3ee66b6ef16b650997359ff94673ad500256b2d1cee0cde1`), com descritores, hashes de métodos e instruções simbólicas delimitadas. A fonte 1.1.1 não é utilizada como autoridade para esta build.
+
+### Dois caminhos observados — não presumir dois hits
+
+| Condição e execução | Instruções verificadas | Limitação |
+|---|---|---|
+| Habilitação do goal | `canUse()` consulta `ForsakenEntity.getTarget()`; exige referência não nula e `LivingEntity.isAlive()` | Não constitui condição integral de combate: goals concorrentes podem impedir execução |
+| Inicialização | `start()` zera `navigationCheckCooldown`, `jumpEnqueued` e `attemptSonicDamageIn`; `getRandom().nextBoolean()` alimenta `sonicEnqueued` | Não traduzir o booleano aleatório em chance efetiva de ataque/hit |
+| **Sonic direcionado** | `tick()`: obtém alvo principal via `ForsakenEntity.getTarget()` em offset 4 e `astore_1` em 7; sob `attemptSonicDamageIn == 0` (branch 79) e `hasLineOfSight(alvoPrincipal)` em 87 (branch 90), cria fonte `causeForsakenSonicBoomDamage` em 108 e chama `getSonicDamageAgainst(alvoPrincipal)` em 116; solicita `LivingEntity.hurt` em 119, com posterior `knockBackAngle` em 127 | O retorno de `hurt` é descartado (`pop` em 122). Não presumir dano aplicado/knockback condicionado ao hit aceito |
+| **Sonic Blast em área** | `sonicEnqueued` e LOS (branches 134/145) e `ANIMATION_SONIC_BLAST` controlam caminho; na janela da animação, `AABB.inflate(16,8,16)` precede `Level.getEntitiesOfClass(LivingEntity,...)` em 459 e iteração da lista | `16,8,16` são expansões de caixa da consulta, não raio esférico de dano nem alcance garantido |
+| Filtro por vítima na varredura de área | `isAlliedTo` do Forsaken (510) e da vítima (522), checagem de distância `distanceTo` com valor `14.0f` (534/537/540) e `ACTagRegistry.FORSAKEN_IGNORES` (551/554/557); desvios pulam a solicitação de dano | Os valores de tags são resolvidos no ambiente, inclusive datapacks; execução do laço, alvos e compatibilidade multiplayer não foram medidos |
+| Aplicação solicitada na varredura | `aload 9` em 560 carrega a **vítima iterada**; `causeForsakenSonicBoomDamage` em 576; `getSonicDamageAgainst` em 584, multiplicação por `0.65f` em 587/590, `Math.ceil` em 592 e `LivingEntity.hurt` em 596 | O caminho é condicional; não são garantidos hits, número de vítimas, settlement ou permissões |
+
+### Distinção causal essencial: alvo principal ≠ vítima iterada
+
+Em `tick()`, **`astore_1` no offset 7 armazena o alvo principal** consultado via `getTarget()`. Já o caminho de varredura mantém uma entidade candidata em um slot local distinto, **`aload 9` no offset 560**, que é o destinatário de `LivingEntity.hurt`. Porém, no offset **583 ocorre `aload_1`**, imediatamente antes de `getSonicDamageAgainst(LivingEntity)` no **584**. Portanto, no caminho de Sonic Blast documentado, **a classificação de dano-base é consultada para o alvo principal**, e não recalculada contra cada vítima da área.
+
+O helper `ForsakenEntity.getSonicDamageAgainst(LivingEntity)`, SHA-256 de método parseado `db47e82eebdb86724b6a71164ca563d0a75910bb143c16b944a5beb63f537d88`, consulta `WEAK_TO_FORSAKEN_SONIC_ATTACK`: retorna `45.0f` se a entidade **passada ao helper** pertence à tag, senão `4.0f`. No caminho direto (offset 116), ela é o alvo atingido. Na varredura (offset 584), ela é o **alvo principal** e o valor fica **`ceil(45×0.65)=30`** ou **`ceil(4×0.65)=3`** como parâmetro bruto solicitado a `hurt` para a vítima iterada, se todos os filtros e o ramo de execução forem satisfeitos.
+
+Essa distinção invalida assumir que uma perk de dano em área pode obter a categoria de cada vítima só observando `getSonicDamageAgainst` no ponto 584. Qualquer proposta de escalonamento específico por vítima precisaria de contrato de hook independente, preservação de filtros, ausência de dupla aplicação e respeito à autoridade do provider.
+
+### Movimento, animação, custos e limites
+
+`ForsakenAttackGoal.start()` escolhe o estado `sonicEnqueued` e a animação consulta `ANIMATION_SONIC_ATTACK` / `ANIMATION_SONIC_BLAST`; `stop()` limpa flags e `setRunning(false)`. `knockBackAngle(LivingEntity,double,float)` delega a `ACCompat.knockback` com componentes construídos a partir de `yBodyRot`, `Mth.sin` e `Mth.cos`. Os valores de força aplicados e efeitos de colisão em mundo real não foram homologados. O goal não constitui um cast do Black Arcana: custos de mana, cooldown de feitiço, mana pool e progressão permanecem **não aplicáveis como contratos nativos provados**, em vez de assumir valores zero.
+
+**Pendências:** sem certificado estático integral desta ficha, sem hook mutador certificado, sem QA física, sem prova de direito de interceptação, owner/PvP/protection, número de hits, noção exata de período, alcance de LOS ou semântica integral dos helpers herdados. Registro: `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Não elevar o contador de fichas certificadas por esta auditoria parcial.
