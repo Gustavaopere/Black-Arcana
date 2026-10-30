@@ -154,3 +154,46 @@ Essa distinção invalida assumir que uma perk de dano em área pode obter a cat
 ### Consequências para perks e validação
 
 O player poderá ter interesse em perks de seleção de alvo, knockback, estados de animação ou dano, mas **nenhum desses métodos configura, por si, contrato estável de mutação**. A responsabilidade pela IA, pelo `LivingEntity.knockback`, pelo estado sincronizado e pelo `LivingEntity.hurt` continua nos owners nativos. Não duplicar settlement, atribuição de dano ou cálculos de seleção de alvos. Pendente comprovar conflitos de IA, permissões, PvP, resistência a knockback, frequência e resultados de hit em QA real. **Contrato do Forsaken permanece ⚠️ parcial:** `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Nenhum contador é incrementado neste lote.
+
+
+## Auditoria adicional — registro de IA e ciclo de vida (JAR 1.0.10)
+
+**Evidência primária:** [manifesto SHA-exato do lifecycle](EXACT-FORSAKEN-LIFECYCLE-1.0.10.json) e [CI da coleta](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41093385042). O artefato publisher foi validado por SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, tamanho `75279314` bytes. As classes de `ForsakenAttackGoal` e `ForsakenEntity` são as mesmas já verificadas na auditoria da PR #964.
+
+### Registro de goals e seleção de alvos
+
+`ForsakenEntity.registerGoals()` faz **seis** chamadas diretas a `goalSelector.addGoal` (offsets 13, 29, 45, 64, 84, 100), incluindo `ForsakenAttackGoal` no construtor do offset **26** e seu registro no **29**, além de goals de flutuação, salto aleatório, passeio e observação. A mesma rotina registra **três** entradas em `targetSelector.addGoal` (125, 145 e 173). Os construtores compilados incluem `HurtByTargetGoal` (122) e duas variantes de `NearestAttackableTargetGoal` (142 e 170), sendo a última acompanhada da referência a `TARGETING` (164) e `ACCompat.targetSelector(Predicate)` (167).
+
+As prioridades inteiras aparecem no JAR, mas **a ordenação de execução efetiva, a possibilidade de targets concomitantes, as condições de compatibilidade entre goals e o resultado da seleção em mundo não foram simulados**. Não confundir predicados de `targetSelector` com permissões de PvP/claim ou com o estado de sonar.
+
+### Alcance de navegação e salto
+
+- `ForsakenAttackGoal.canReach(LivingEntity)` invoca `PathNavigation.createPath(Entity,int)` no **9**, consulta `Path.getEndNode()` no **20** e trata referências nulas em branches **14/25**. O caminho final inclui a constante `3.0d` no offset **81** e um teste no **85**. Esse número não deve ser rotulado como alcance universal da habilidade Sonic.
+- `startCleanJump()` escreve `jumpTarget` (offset **2**) e define `jumpEnqueued` no **7**, com `iconst_1` no **6**. O significado de “salto limpo” depende dos demais controles da IA; não equivale a um cast, teleport ou dash autorizado pelo Black Arcana.
+- `findJumpTarget(LivingEntity,boolean)` avalia posição candidata com `ACCompat.isSolidRender` (offset **205**), `ACCompat.pathTypeStatic` (231), `ForsakenEntity.getPathfindingMalus` (234) e `Level.isUnobstructed` (258). O retorno tem caminho de posição candidata (266) ou `null` (268). Seleção espacial e sucesso de movimento permanecem condicionais, sem promessa de distância ou coordenada fixa.
+
+### Sonic, efeitos visuais e estado da entidade
+
+`ForsakenEntity.tick()` (817 instruções parseadas) referencia `ANIMATION_SONIC_ATTACK` (**806**) e `ANIMATION_SONIC_BLAST` (**898**) e consulta `getAnimationTick()` nas janelas de ambas. Também referencia as partículas `FORSAKEN_SONAR` (**843**) e `FORSAKEN_SONAR_LARGE` (**935**) e invoca `AnimationHandler.updateAnimations(Entity)` em **1679**. **Essas referências não convertem partículas, sons ou atualização de animação em dano adicional**: os dois callsites `LivingEntity.hurt` do Sonic continuam no `ForsakenAttackGoal.tick()` (manifesto anterior).
+
+`ForsakenEntity.setAnimationTick(int)` grava o campo `animationTick` (offset **2**). `setSonarId(int)` escreve o accessor sincronizado `SONAR_ID` via `SynchedEntityData.set`; `setLeaping(boolean)` escreve `LEAPING` da mesma forma. São pontos nativos de estado, **não hooks públicos mutadores certificados para perks**.
+
+### World safety — caminho de destruição separado do Sonic
+
+`ForsakenEntity.customServerAiStep()` contém uma rotina distinta que verifica `ACPlatform.canEntityGrief(Level,Entity)` (**40**), `ACCompat.canEntityDestroy` (**153**), `EventHooks.onEntityDestroyBlock` (**175**) e solicita `Level.destroyBlock` (**189**), com branches de interrupção. Essa presença prova um **caminho condicionado de destruição de blocos pela IA** e é relevante ao planejamento de proteção de mundo. **Não** comprova que Sonic Blast destrói blocos; o método não é um hook do runtime Black Arcana, e a política `WorldEffectPolicy` do Black Arcana não assume automaticamente autoridade sobre efeitos nativos de terceiros.
+
+### Métodos e identidades verificadas
+
+| Método | Descriptor JVM | SHA-256 das instruções parseadas |
+|---|---|---|
+| `canReach` | `(Lnet/minecraft/world/entity/LivingEntity;)Z` | `2dd5166c68f7f909aadd4288303b7ad7aaca0e15823d38a3c79d9fc0633ef8f0` |
+| `startCleanJump` | `()V` | `da3033d7ee48849e4035731c14dda7c23914271a97b44325197d10327eb68466` |
+| `findJumpTarget` | `(Lnet/minecraft/world/entity/LivingEntity;Z)Lnet/minecraft/core/BlockPos;` | `198642c7720d30d8a93062cf893a7d2e4d3147e41817dc211279c19e8a4f43a8` |
+| `registerGoals` | `()V` | `c9f73f7eda5fa9b0368ccccb497b35be1395580889fb3bca9106cdf62578365e` |
+| `tick` | `()V` | `733efd62558f45ce4d8390e43fb09baff389490f8d96f9be709952a6a284341f` |
+| `customServerAiStep` | `()V` | `abdd554815865a9cda9fc13f68df7a4a274d450fda04d5f3aa06027478ae79fb` |
+| `setSonarId` | `(I)V` | `85d993ec2e0a26d21e726f705645dfbf86b97a18808994ceb6c1e62d7e073f30` |
+| `setAnimationTick` | `(I)V` | `4a9aafe463d849f469ef90d0d5e4fe54b08b521d9424e16b3b71661740d71d2a` |
+| `setLeaping` | `(Z)V` | `9ce582d416a6b73fa739ad2d2ddad336628bb805798ba831920149baf4d68dd6` |
+
+**Limites persistentes:** o estudo registra referências simbólicas e branches de nove métodos, sem reconstrução de CFG completo, sem execução de goals no mundo, sem medir quantidade de hits, sem verificar permissões, sem QA física e sem hook seguro para alterar targeting, alcance, animações ou dano. `NOT_CERTIFIED` / `mutating_hook=NOT_VERIFIED` / `physical_qa=NOT_TESTED` / `NO_MUTATION`. Não promover o contrato estático integral da ficha, nem acrescentar nova magia ao catálogo por esta auditoria.

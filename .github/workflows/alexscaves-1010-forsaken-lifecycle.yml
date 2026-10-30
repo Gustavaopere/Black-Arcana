@@ -33,8 +33,10 @@ jobs:
           java-version: '21'
       - name: Syntax and deterministic audit regressions
         run: |
-          python3 -m py_compile docs/qa/alexscaves_1010_forsaken_lifecycle_probe.py docs/qa/alexscaves_1010_forsaken_lifecycle_probe_test.py
+          python3 -m py_compile docs/qa/alexscaves_1010_forsaken_lifecycle_probe.py docs/qa/alexscaves_1010_forsaken_lifecycle_probe_test.py docs/qa/alexscaves_1010_forsaken_lifecycle_cards_test.py
           python3 docs/qa/alexscaves_1010_forsaken_lifecycle_probe_test.py -v
+      - name: Match documented Forsaken lifecycle to exact evidence
+        run: python3 docs/qa/alexscaves_1010_forsaken_lifecycle_cards_test.py -v
       - name: Download pinned installed publisher JAR
         run: |
           mkdir -p build/alexscaves-1010
@@ -47,6 +49,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_forsaken_lifecycle_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/EXACT-FORSAKEN-LIFECYCLE-1.0.10.json' \
             --output build/alexscaves-1010/forsaken-lifecycle.json
       - uses: actions/upload-artifact@v7
         with:
