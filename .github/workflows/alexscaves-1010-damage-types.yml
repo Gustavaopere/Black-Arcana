@@ -1,0 +1,47 @@
+name: Alex's Caves 1.0.10 damage-type resource probe
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_damage_type_probe.py'
+      - 'docs/qa/alexscaves_1010_damage_type_probe_test.py'
+      - '.github/workflows/alexscaves-1010-damage-types.yml'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/**'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_damage_type_probe.py'
+      - 'docs/qa/alexscaves_1010_damage_type_probe_test.py'
+      - '.github/workflows/alexscaves-1010-damage-types.yml'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/**'
+
+permissions:
+  contents: read
+
+jobs:
+  exact_damage_type_resources:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Synthetic regression tests
+        run: python3 docs/qa/alexscaves_1010_damage_type_probe_test.py -v
+      - name: Fetch pinned publisher JAR
+        run: |
+          mkdir -p build/alexscaves-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-1010/alexscaves-1.0.10.jar
+      - name: Probe exact 11 damage types and tag resources
+        run: |
+          python3 docs/qa/alexscaves_1010_damage_type_probe.py \
+            --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
+            --output build/alexscaves-1010/damage-type-resources.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-damage-types
+          path: build/alexscaves-1010/damage-type-resources.json
+          retention-days: 14
+          if-no-files-found: error
