@@ -6,6 +6,7 @@ on:
     paths:
       - 'docs/qa/alexscaves_1010_dark_arrow_state_probe.py'
       - 'docs/qa/alexscaves_1010_dark_arrow_state_probe_test.py'
+      - 'docs/qa/alexscaves_1010_dark_arrow_state_cards_test.py'
       - '.github/workflows/alexscaves-1010-dark-arrow-state.yml'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/**'
   push:
@@ -29,6 +30,8 @@ jobs:
           java-version: '21'
       - name: Synthetic parser and fail-closed tests
         run: python3 docs/qa/alexscaves_1010_dark_arrow_state_probe_test.py -v
+      - name: Verify Dark Arrow card and exact compiled state snapshot
+        run: python3 docs/qa/alexscaves_1010_dark_arrow_state_cards_test.py -v
       - name: Download hash-pinned publisher JAR
         run: |
           mkdir -p build/alexscaves-1010
@@ -41,6 +44,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_dark_arrow_state_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/EXACT-DARK-ARROW-STATE-1.0.10.json' \
             --output build/alexscaves-1010/dark-arrow-state.json
       - uses: actions/upload-artifact@v7
         with:

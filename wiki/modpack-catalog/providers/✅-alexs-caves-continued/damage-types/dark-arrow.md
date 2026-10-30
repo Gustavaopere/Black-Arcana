@@ -91,3 +91,35 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 - `public static boolean hurt(net.minecraft.world.entity.Entity, net.minecraft.world.damagesource.DamageSource, float)` — `(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z` na classe `com/github/alexmodguy/alexscaves/server/misc/ACCompat.class` (SHA-256 `333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b`). Seu bytecode possui cinco instruções e encaminha `Entity, DamageSource, float` para `Entity.hurt(DamageSource,float)`, retornando diretamente o booleano; não há branch próprio nesse wrapper.
 
 **Para perks:** a origem do valor armazenado, os pontos de escrita, o cálculo de `PERFECT_SHOT`, a validação de aliança e os efeitos de `Entity.hurt` ainda exigem evidência específica. `NOT_CERTIFIED` / `NOT_VERIFIED` / `NOT_TESTED` / `NO_MUTATION`. Não duplicar settlement nem substituir o targeting do projectile.
+
+## Escrita e inicialização do estado sincronizado — auditoria JVM 1.0.10
+
+**Autoridade desta seção:** [manifesto SHA-exato das referências](EXACT-DARK-ARROW-STATE-1.0.10.json) e [auditoria CI](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41001621930); JAR publisher 1.0.10, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`. A análise não usa a fonte pública 1.1.1 para atribuir comportamento à build instalada.
+
+### Entidade — `DarkArrowEntity`
+
+Classe `com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class` (SHA-256 `089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad`).
+
+| Método compilado | Descritor JVM | Referências exatas | Limite |
+|---|---|---|---|
+| `defineSynchedData` | `(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V` | `SHADOW_ARROW_DAMAGE` no offset `6` e `Builder.define` no `13` com `fconst_0` no `9`; `PERFECT_SHOT` no `18` e `Builder.define` no `25` com `iconst_0` no `21` | Defaults compilados `0.0f` e `false`, não valores finais de todos os projéteis |
+| `setShadowArrowDamage` | `(F)V` | `SHADOW_ARROW_DAMAGE` no offset `4`; `SynchedEntityData.set` no `11` | Armazena o parâmetro float, não certifica caller autorizado |
+| `setPerfectShot` | `(Z)V` | `PERFECT_SHOT` no offset `4`; `SynchedEntityData.set` no `11` | Armazena booleano, não comprova origem ou chance de proc |
+| `getShadowArrowDamage` | `()F` | `SynchedEntityData.get` no offset `7` | Leitura do accessor; não substitui fórmula de dano |
+| `isPerfectShot` | `()Z` | `SynchedEntityData.get` no offset `7` | Leitura do flag; não certifica targeting |
+
+### Equipamento consumidor — `DreadbowItem`
+
+Classe `com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class` (SHA-256 `b9cd6e843f923877775e38b89214e8649c10d4d5be704ed9dd377900439d44ae`).
+
+| Método/rota | Descriptor JVM | Ponto de escrita observado | Natureza da evidência |
+|---|---|---|---|
+| `releaseUsing` | `(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V` | `setShadowArrowDamage(float)` no offset `402`, após seleção local `fconst_2` (395) / `ldc_w float 3.0f` (399) e desvio `goto 402` (396) | Argumento bruto `2.0f` ou `3.0f`, condicionado pelo controle anterior (`iload 8`/ `ifeq` em 392); não se infere a origem do flag |
+| `releaseUsing` | `(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V` | `setPerfectShot(boolean)` no offset `409` após `iload 10` no `407` | Repassa booleano local; a condição que o construiu ainda carece de auditoria dedicada |
+| `onUseTick` | `(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V` | `setShadowArrowDamage(float)` no offset `196`, após `fconst_2` em `195` | Argumento bruto compilado `2.0f`; não comprova um disparo efetivo ou target |
+
+Os três pontos acima foram encontrados por referências diretas do bytecode de `DreadbowItem`; o manifesto inclui também referências de rendering no cliente, que **não** constituem escrita de dano no servidor. Este inventário de cinco classes candidatas e quatro classes selecionadas não cobre reflexão, herança, mixins, datapacks nem consumidores externos.
+
+### Restrições para Black Arcana / perks
+
+Os accessors sincronizados pertencem ao provider. **Não** assumir que `setShadowArrowDamage` ou `setPerfectShot` é um hook público estável para manipulação de perks, nem que esses argumentos equivalem ao dano recebido no settlement de `Entity.hurt`. Faltam os cálculos completos do `DreadbowItem`, a origem dos flags, autoridade de servidor, colisões, filtros de aliados, cooldown e multiplayer. `NOT_CERTIFIED` / `mutating_hook=NOT_VERIFIED` / `physical_qa=NOT_TESTED` / `NO_MUTATION`.

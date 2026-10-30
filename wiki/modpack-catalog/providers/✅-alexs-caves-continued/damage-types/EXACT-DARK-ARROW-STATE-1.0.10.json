@@ -1,0 +1,2203 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "candidate_classes": 5,
+  "dark_arrow_class_sha256": "089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad",
+  "limits": {
+    "candidate_filter": "CONSTANT_POOL_TOKEN_ONLY",
+    "complete_perk_ready": false,
+    "dataflow_and_cfg": "NOT_RECONSTRUCTED",
+    "final_damage_and_hit_counts": "NOT_VERIFIED",
+    "inherited_dispatch_and_reflection": "NOT_COVERED",
+    "mutating_hook": "NOT_VERIFIED",
+    "owner_and_protections": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "runtime_writers": "NOT_CERTIFIED"
+  },
+  "schema_version": 1,
+  "scope": "EXACT_ALEXSCAVES_1010_DARK_ARROW_SYMBOLIC_STATE_FLOW_ONLY",
+  "selected_classes": [
+    {
+      "class": "com/github/alexmodguy/alexscaves/client/model/DarkArrowModel.class",
+      "methods": [
+        {
+          "anchors": [
+            {
+              "nearby": [
+                {
+                  "offset": 1,
+                  "opcode": "invokevirtual",
+                  "operand": "#79",
+                  "symbol": "Method resetToDefaultPose:()V"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "fconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 5,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 6,
+                  "opcode": "fload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 9,
+                  "opcode": "getfield",
+                  "operand": "#82",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.tickCount:I"
+                },
+                {
+                  "offset": 12,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 13,
+                  "opcode": "fsub",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 14,
+                  "opcode": "invokevirtual",
+                  "operand": "#87",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getFadeOut:(F)F"
+                },
+                {
+                  "offset": 17,
+                  "opcode": "fsub",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 18,
+                  "opcode": "fstore",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 20,
+                  "opcode": "fload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 22,
+                  "opcode": "ldc",
+                  "operand": "#64",
+                  "symbol": "float 10.0f"
+                }
+              ],
+              "offset": 9,
+              "opcode": "getfield",
+              "operand": "#82",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.tickCount:I"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 6,
+                  "opcode": "fload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 9,
+                  "opcode": "getfield",
+                  "operand": "#82",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.tickCount:I"
+                },
+                {
+                  "offset": 12,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 13,
+                  "opcode": "fsub",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 14,
+                  "opcode": "invokevirtual",
+                  "operand": "#87",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getFadeOut:(F)F"
+                },
+                {
+                  "offset": 17,
+                  "opcode": "fsub",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 18,
+                  "opcode": "fstore",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 20,
+                  "opcode": "fload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 22,
+                  "opcode": "ldc",
+                  "operand": "#64",
+                  "symbol": "float 10.0f"
+                },
+                {
+                  "offset": 24,
+                  "opcode": "fdiv",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 25,
+                  "opcode": "fconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 26,
+                  "opcode": "invokestatic",
+                  "operand": "#91",
+                  "symbol": "Method java/lang/Math.min:(FF)F"
+                }
+              ],
+              "offset": 14,
+              "opcode": "invokevirtual",
+              "operand": "#87",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getFadeOut:(F)F"
+            }
+          ],
+          "control_flow_reachability": "NOT_PROVEN",
+          "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity;FFFFF)V",
+          "method_header": "public void setupAnim(com.github.alexmodguy.alexscaves.server.entity.item.DarkArrowEntity, float, float, float, float, float)",
+          "parsed_instruction_count": 31,
+          "parsed_method_sha256": "2b07f3af51aa70dfce7c265729df0ebdc25b8c4c3efc007091f5e9ffd4739a89"
+        }
+      ],
+      "sha256": "9e3262d44c7f1999a92629abd3b5515b4b223cb11705961488466dadb6fd4ef2"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/client/render/entity/DarkArrowRenderer.class",
+      "methods": [
+        {
+          "anchors": [
+            {
+              "nearby": [
+                {
+                  "offset": 2,
+                  "opcode": "invokevirtual",
+                  "operand": "#7",
+                  "symbol": "Method com/mojang/blaze3d/vertex/PoseStack.pushPose:()V"
+                },
+                {
+                  "offset": 5,
+                  "opcode": "aload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "getstatic",
+                  "operand": "#13",
+                  "symbol": "Field com/mojang/math/Axis.YP:Lcom/mojang/math/Axis;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "fload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getfield",
+                  "operand": "#19",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.yRotO:F"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 16,
+                  "opcode": "invokevirtual",
+                  "operand": "#25",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getYRot:()F"
+                },
+                {
+                  "offset": 19,
+                  "opcode": "invokestatic",
+                  "operand": "#29",
+                  "symbol": "Method net/minecraft/util/Mth.lerp:(FFF)F"
+                },
+                {
+                  "offset": 22,
+                  "opcode": "invokeinterface",
+                  "operand": "#35,  2",
+                  "symbol": "InterfaceMethod com/mojang/math/Axis.rotationDegrees:(F)Lorg/joml/Quaternionf;"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "invokevirtual",
+                  "operand": "#39",
+                  "symbol": "Method com/mojang/blaze3d/vertex/PoseStack.mulPose:(Lorg/joml/Quaternionf;)V"
+                },
+                {
+                  "offset": 30,
+                  "opcode": "aload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 32,
+                  "opcode": "getstatic",
+                  "operand": "#43",
+                  "symbol": "Field com/mojang/math/Axis.XN:Lcom/mojang/math/Axis;"
+                }
+              ],
+              "offset": 12,
+              "opcode": "getfield",
+              "operand": "#19",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.yRotO:F"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 7,
+                  "opcode": "getstatic",
+                  "operand": "#13",
+                  "symbol": "Field com/mojang/math/Axis.YP:Lcom/mojang/math/Axis;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "fload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getfield",
+                  "operand": "#19",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.yRotO:F"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 16,
+                  "opcode": "invokevirtual",
+                  "operand": "#25",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getYRot:()F"
+                },
+                {
+                  "offset": 19,
+                  "opcode": "invokestatic",
+                  "operand": "#29",
+                  "symbol": "Method net/minecraft/util/Mth.lerp:(FFF)F"
+                },
+                {
+                  "offset": 22,
+                  "opcode": "invokeinterface",
+                  "operand": "#35,  2",
+                  "symbol": "InterfaceMethod com/mojang/math/Axis.rotationDegrees:(F)Lorg/joml/Quaternionf;"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "invokevirtual",
+                  "operand": "#39",
+                  "symbol": "Method com/mojang/blaze3d/vertex/PoseStack.mulPose:(Lorg/joml/Quaternionf;)V"
+                },
+                {
+                  "offset": 30,
+                  "opcode": "aload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 32,
+                  "opcode": "getstatic",
+                  "operand": "#43",
+                  "symbol": "Field com/mojang/math/Axis.XN:Lcom/mojang/math/Axis;"
+                },
+                {
+                  "offset": 35,
+                  "opcode": "fload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 36,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 16,
+              "opcode": "invokevirtual",
+              "operand": "#25",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getYRot:()F"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 27,
+                  "opcode": "invokevirtual",
+                  "operand": "#39",
+                  "symbol": "Method com/mojang/blaze3d/vertex/PoseStack.mulPose:(Lorg/joml/Quaternionf;)V"
+                },
+                {
+                  "offset": 30,
+                  "opcode": "aload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 32,
+                  "opcode": "getstatic",
+                  "operand": "#43",
+                  "symbol": "Field com/mojang/math/Axis.XN:Lcom/mojang/math/Axis;"
+                },
+                {
+                  "offset": 35,
+                  "opcode": "fload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 36,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 37,
+                  "opcode": "getfield",
+                  "operand": "#46",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.xRotO:F"
+                },
+                {
+                  "offset": 40,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 41,
+                  "opcode": "invokevirtual",
+                  "operand": "#49",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getXRot:()F"
+                },
+                {
+                  "offset": 44,
+                  "opcode": "invokestatic",
+                  "operand": "#29",
+                  "symbol": "Method net/minecraft/util/Mth.lerp:(FFF)F"
+                },
+                {
+                  "offset": 47,
+                  "opcode": "invokeinterface",
+                  "operand": "#35,  2",
+                  "symbol": "InterfaceMethod com/mojang/math/Axis.rotationDegrees:(F)Lorg/joml/Quaternionf;"
+                },
+                {
+                  "offset": 52,
+                  "opcode": "invokevirtual",
+                  "operand": "#39",
+                  "symbol": "Method com/mojang/blaze3d/vertex/PoseStack.mulPose:(Lorg/joml/Quaternionf;)V"
+                },
+                {
+                  "offset": 55,
+                  "opcode": "aload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 57,
+                  "opcode": "dconst_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 37,
+              "opcode": "getfield",
+              "operand": "#46",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.xRotO:F"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 32,
+                  "opcode": "getstatic",
+                  "operand": "#43",
+                  "symbol": "Field com/mojang/math/Axis.XN:Lcom/mojang/math/Axis;"
+                },
+                {
+                  "offset": 35,
+                  "opcode": "fload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 36,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 37,
+                  "opcode": "getfield",
+                  "operand": "#46",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.xRotO:F"
+                },
+                {
+                  "offset": 40,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 41,
+                  "opcode": "invokevirtual",
+                  "operand": "#49",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getXRot:()F"
+                },
+                {
+                  "offset": 44,
+                  "opcode": "invokestatic",
+                  "operand": "#29",
+                  "symbol": "Method net/minecraft/util/Mth.lerp:(FFF)F"
+                },
+                {
+                  "offset": 47,
+                  "opcode": "invokeinterface",
+                  "operand": "#35,  2",
+                  "symbol": "InterfaceMethod com/mojang/math/Axis.rotationDegrees:(F)Lorg/joml/Quaternionf;"
+                },
+                {
+                  "offset": 52,
+                  "opcode": "invokevirtual",
+                  "operand": "#39",
+                  "symbol": "Method com/mojang/blaze3d/vertex/PoseStack.mulPose:(Lorg/joml/Quaternionf;)V"
+                },
+                {
+                  "offset": 55,
+                  "opcode": "aload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 57,
+                  "opcode": "dconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 58,
+                  "opcode": "ldc2_w",
+                  "operand": "#52",
+                  "symbol": "double 1.5d"
+                },
+                {
+                  "offset": 61,
+                  "opcode": "ldc2_w",
+                  "operand": "#54",
+                  "symbol": "double -0.15d"
+                }
+              ],
+              "offset": 41,
+              "opcode": "invokevirtual",
+              "operand": "#49",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getXRot:()F"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 69,
+                  "opcode": "getstatic",
+                  "operand": "#60",
+                  "symbol": "Field com/mojang/math/Axis.XP:Lcom/mojang/math/Axis;"
+                },
+                {
+                  "offset": 72,
+                  "opcode": "ldc",
+                  "operand": "#63",
+                  "symbol": "float 180.0f"
+                },
+                {
+                  "offset": 74,
+                  "opcode": "invokeinterface",
+                  "operand": "#35,  2",
+                  "symbol": "InterfaceMethod com/mojang/math/Axis.rotationDegrees:(F)Lorg/joml/Quaternionf;"
+                },
+                {
+                  "offset": 79,
+                  "opcode": "invokevirtual",
+                  "operand": "#39",
+                  "symbol": "Method com/mojang/blaze3d/vertex/PoseStack.mulPose:(Lorg/joml/Quaternionf;)V"
+                },
+                {
+                  "offset": 82,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 83,
+                  "opcode": "getfield",
+                  "operand": "#64",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.shakeTime:I"
+                },
+                {
+                  "offset": 86,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 87,
+                  "opcode": "fload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 88,
+                  "opcode": "fsub",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 89,
+                  "opcode": "fstore",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 91,
+                  "opcode": "fload",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 93,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 94,
+                  "opcode": "fcmpl",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 83,
+              "opcode": "getfield",
+              "operand": "#64",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.shakeTime:I"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 114,
+                  "opcode": "getstatic",
+                  "operand": "#73",
+                  "symbol": "Field com/mojang/math/Axis.ZP:Lcom/mojang/math/Axis;"
+                },
+                {
+                  "offset": 117,
+                  "opcode": "fload",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 119,
+                  "opcode": "invokeinterface",
+                  "operand": "#35,  2",
+                  "symbol": "InterfaceMethod com/mojang/math/Axis.rotationDegrees:(F)Lorg/joml/Quaternionf;"
+                },
+                {
+                  "offset": 124,
+                  "opcode": "invokevirtual",
+                  "operand": "#39",
+                  "symbol": "Method com/mojang/blaze3d/vertex/PoseStack.mulPose:(Lorg/joml/Quaternionf;)V"
+                },
+                {
+                  "offset": 127,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 128,
+                  "opcode": "getfield",
+                  "operand": "#76",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.tickCount:I"
+                },
+                {
+                  "offset": 131,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 132,
+                  "opcode": "fload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 133,
+                  "opcode": "fadd",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 134,
+                  "opcode": "fstore",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 136,
+                  "opcode": "fconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 137,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 138,
+                  "opcode": "fload",
+                  "operand": "8",
+                  "symbol": ""
+                }
+              ],
+              "offset": 128,
+              "opcode": "getfield",
+              "operand": "#76",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.tickCount:I"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 134,
+                  "opcode": "fstore",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 136,
+                  "opcode": "fconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 137,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 138,
+                  "opcode": "fload",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 140,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 141,
+                  "opcode": "getfield",
+                  "operand": "#76",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.tickCount:I"
+                },
+                {
+                  "offset": 144,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 145,
+                  "opcode": "fsub",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 146,
+                  "opcode": "invokevirtual",
+                  "operand": "#79",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getFadeOut:(F)F"
+                },
+                {
+                  "offset": 149,
+                  "opcode": "fsub",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 150,
+                  "opcode": "fstore",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 152,
+                  "opcode": "fload",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 154,
+                  "opcode": "ldc",
+                  "operand": "#82",
+                  "symbol": "float 4.0f"
+                }
+              ],
+              "offset": 141,
+              "opcode": "getfield",
+              "operand": "#76",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.tickCount:I"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 138,
+                  "opcode": "fload",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 140,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 141,
+                  "opcode": "getfield",
+                  "operand": "#76",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.tickCount:I"
+                },
+                {
+                  "offset": 144,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 145,
+                  "opcode": "fsub",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 146,
+                  "opcode": "invokevirtual",
+                  "operand": "#79",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getFadeOut:(F)F"
+                },
+                {
+                  "offset": 149,
+                  "opcode": "fsub",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 150,
+                  "opcode": "fstore",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 152,
+                  "opcode": "fload",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 154,
+                  "opcode": "ldc",
+                  "operand": "#82",
+                  "symbol": "float 4.0f"
+                },
+                {
+                  "offset": 156,
+                  "opcode": "fdiv",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 157,
+                  "opcode": "fconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 158,
+                  "opcode": "invokestatic",
+                  "operand": "#83",
+                  "symbol": "Method java/lang/Math.min:(FF)F"
+                }
+              ],
+              "offset": 146,
+              "opcode": "invokevirtual",
+              "operand": "#79",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getFadeOut:(F)F"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 205,
+                  "opcode": "aload",
+                  "operand": "12",
+                  "symbol": ""
+                },
+                {
+                  "offset": 207,
+                  "opcode": "sipush",
+                  "operand": "240",
+                  "symbol": ""
+                },
+                {
+                  "offset": 210,
+                  "opcode": "getstatic",
+                  "operand": "#117",
+                  "symbol": "Field net/minecraft/client/renderer/texture/OverlayTexture.NO_OVERLAY:I"
+                },
+                {
+                  "offset": 213,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 214,
+                  "opcode": "fload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 215,
+                  "opcode": "invokevirtual",
+                  "operand": "#122",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getArrowRed:(F)F"
+                },
+                {
+                  "offset": 218,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 219,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 220,
+                  "opcode": "fload",
+                  "operand": "10",
+                  "symbol": ""
+                },
+                {
+                  "offset": 222,
+                  "opcode": "invokevirtual",
+                  "operand": "#125",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/client/model/DarkArrowModel.renderToBuffer:(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V"
+                },
+                {
+                  "offset": 225,
+                  "opcode": "aload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 227,
+                  "opcode": "invokevirtual",
+                  "operand": "#129",
+                  "symbol": "Method com/mojang/blaze3d/vertex/PoseStack.popPose:()V"
+                },
+                {
+                  "offset": 230,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 215,
+              "opcode": "invokevirtual",
+              "operand": "#122",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.getArrowRed:(F)F"
+            }
+          ],
+          "control_flow_reachability": "NOT_PROVEN",
+          "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+          "method_header": "public void render(com.github.alexmodguy.alexscaves.server.entity.item.DarkArrowEntity, float, float, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.MultiBufferSource, int)",
+          "parsed_instruction_count": 119,
+          "parsed_method_sha256": "899bb0005becb93c07e09d9c0b59f02e9c594e91b12c9d1364fc7452ab2ff3a9"
+        }
+      ],
+      "sha256": "bd8356a76e294c0775bba6aaa175d2f4ca1c6762777ad24cf47a3d4415cf72b8"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "methods": [
+        {
+          "anchors": [
+            {
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 2,
+                  "opcode": "invokespecial",
+                  "operand": "#52",
+                  "symbol": "Method net/minecraft/world/entity/projectile/AbstractArrow.defineSynchedData:(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V"
+                },
+                {
+                  "offset": 5,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 6,
+                  "opcode": "getstatic",
+                  "operand": "#56",
+                  "symbol": "Field SHADOW_ARROW_DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 9,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 10,
+                  "opcode": "invokestatic",
+                  "operand": "#60",
+                  "symbol": "Method java/lang/Float.valueOf:(F)Ljava/lang/Float;"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#66",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getstatic",
+                  "operand": "#72",
+                  "symbol": "Field PERFECT_SHOT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 6,
+              "opcode": "getstatic",
+              "operand": "#56",
+              "symbol": "Field SHADOW_ARROW_DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 2,
+                  "opcode": "invokespecial",
+                  "operand": "#52",
+                  "symbol": "Method net/minecraft/world/entity/projectile/AbstractArrow.defineSynchedData:(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V"
+                },
+                {
+                  "offset": 5,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 6,
+                  "opcode": "getstatic",
+                  "operand": "#56",
+                  "symbol": "Field SHADOW_ARROW_DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 9,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 10,
+                  "opcode": "invokestatic",
+                  "operand": "#60",
+                  "symbol": "Method java/lang/Float.valueOf:(F)Ljava/lang/Float;"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#66",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getstatic",
+                  "operand": "#72",
+                  "symbol": "Field PERFECT_SHOT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 22,
+                  "opcode": "invokestatic",
+                  "operand": "#75",
+                  "symbol": "Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;"
+                },
+                {
+                  "offset": 25,
+                  "opcode": "invokevirtual",
+                  "operand": "#66",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+                },
+                {
+                  "offset": 28,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 13,
+              "opcode": "invokevirtual",
+              "operand": "#66",
+              "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 9,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 10,
+                  "opcode": "invokestatic",
+                  "operand": "#60",
+                  "symbol": "Method java/lang/Float.valueOf:(F)Ljava/lang/Float;"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#66",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getstatic",
+                  "operand": "#72",
+                  "symbol": "Field PERFECT_SHOT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 22,
+                  "opcode": "invokestatic",
+                  "operand": "#75",
+                  "symbol": "Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;"
+                },
+                {
+                  "offset": 25,
+                  "opcode": "invokevirtual",
+                  "operand": "#66",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+                },
+                {
+                  "offset": 28,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 29,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 18,
+              "opcode": "getstatic",
+              "operand": "#72",
+              "symbol": "Field PERFECT_SHOT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 16,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getstatic",
+                  "operand": "#72",
+                  "symbol": "Field PERFECT_SHOT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 22,
+                  "opcode": "invokestatic",
+                  "operand": "#75",
+                  "symbol": "Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;"
+                },
+                {
+                  "offset": 25,
+                  "opcode": "invokevirtual",
+                  "operand": "#66",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+                },
+                {
+                  "offset": 28,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 29,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 25,
+              "opcode": "invokevirtual",
+              "operand": "#66",
+              "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+            }
+          ],
+          "control_flow_reachability": "NOT_PROVEN",
+          "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+          "method_header": "protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData$Builder)",
+          "parsed_instruction_count": 16,
+          "parsed_method_sha256": "6271e4d0a4bb72477c75c17a2edd5c8f5342254354c746966eed7fae121f49bc"
+        },
+        {
+          "anchors": [
+            {
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#166",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#56",
+                  "symbol": "Field SHADOW_ARROW_DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "invokevirtual",
+                  "operand": "#170",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "checkcast",
+                  "operand": "#61",
+                  "symbol": "class java/lang/Float"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#175",
+                  "symbol": "Method java/lang/Float.floatValue:()F"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "freturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 4,
+              "opcode": "getstatic",
+              "operand": "#56",
+              "symbol": "Field SHADOW_ARROW_DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#166",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#56",
+                  "symbol": "Field SHADOW_ARROW_DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "invokevirtual",
+                  "operand": "#170",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "checkcast",
+                  "operand": "#61",
+                  "symbol": "class java/lang/Float"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#175",
+                  "symbol": "Method java/lang/Float.floatValue:()F"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "freturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 7,
+              "opcode": "invokevirtual",
+              "operand": "#170",
+              "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+            }
+          ],
+          "control_flow_reachability": "NOT_PROVEN",
+          "descriptor": "()F",
+          "method_header": "public float getShadowArrowDamage()",
+          "parsed_instruction_count": 7,
+          "parsed_method_sha256": "afe89892cb041a585baf6a4c38a5877942193db84612d830d0f2babdc7c080cf"
+        },
+        {
+          "anchors": [
+            {
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#166",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#56",
+                  "symbol": "Field SHADOW_ARROW_DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "fload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "invokestatic",
+                  "operand": "#60",
+                  "symbol": "Method java/lang/Float.valueOf:(F)Ljava/lang/Float;"
+                },
+                {
+                  "offset": 11,
+                  "opcode": "invokevirtual",
+                  "operand": "#178",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+                },
+                {
+                  "offset": 14,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 4,
+              "opcode": "getstatic",
+              "operand": "#56",
+              "symbol": "Field SHADOW_ARROW_DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#166",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#56",
+                  "symbol": "Field SHADOW_ARROW_DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "fload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "invokestatic",
+                  "operand": "#60",
+                  "symbol": "Method java/lang/Float.valueOf:(F)Ljava/lang/Float;"
+                },
+                {
+                  "offset": 11,
+                  "opcode": "invokevirtual",
+                  "operand": "#178",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+                },
+                {
+                  "offset": 14,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 11,
+              "opcode": "invokevirtual",
+              "operand": "#178",
+              "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+            }
+          ],
+          "control_flow_reachability": "NOT_PROVEN",
+          "descriptor": "(F)V",
+          "method_header": "public void setShadowArrowDamage(float)",
+          "parsed_instruction_count": 7,
+          "parsed_method_sha256": "22744dfebc748de9eec56cdad792ab3feb7f6b3e125f427940431357dda68b9a"
+        },
+        {
+          "anchors": [
+            {
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#166",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#72",
+                  "symbol": "Field PERFECT_SHOT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "iload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "invokestatic",
+                  "operand": "#75",
+                  "symbol": "Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;"
+                },
+                {
+                  "offset": 11,
+                  "opcode": "invokevirtual",
+                  "operand": "#178",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+                },
+                {
+                  "offset": 14,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 4,
+              "opcode": "getstatic",
+              "operand": "#72",
+              "symbol": "Field PERFECT_SHOT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#166",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#72",
+                  "symbol": "Field PERFECT_SHOT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "iload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "invokestatic",
+                  "operand": "#75",
+                  "symbol": "Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;"
+                },
+                {
+                  "offset": 11,
+                  "opcode": "invokevirtual",
+                  "operand": "#178",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+                },
+                {
+                  "offset": 14,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 11,
+              "opcode": "invokevirtual",
+              "operand": "#178",
+              "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+            }
+          ],
+          "control_flow_reachability": "NOT_PROVEN",
+          "descriptor": "(Z)V",
+          "method_header": "public void setPerfectShot(boolean)",
+          "parsed_instruction_count": 7,
+          "parsed_method_sha256": "ad5e611c260962b67fc693edaf36f251da331d4b2557d047f9d5410a167a50c5"
+        },
+        {
+          "anchors": [
+            {
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#166",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#72",
+                  "symbol": "Field PERFECT_SHOT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "invokevirtual",
+                  "operand": "#170",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "checkcast",
+                  "operand": "#76",
+                  "symbol": "class java/lang/Boolean"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#182",
+                  "symbol": "Method java/lang/Boolean.booleanValue:()Z"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "ireturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 4,
+              "opcode": "getstatic",
+              "operand": "#72",
+              "symbol": "Field PERFECT_SHOT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#166",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#72",
+                  "symbol": "Field PERFECT_SHOT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "invokevirtual",
+                  "operand": "#170",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "checkcast",
+                  "operand": "#76",
+                  "symbol": "class java/lang/Boolean"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#182",
+                  "symbol": "Method java/lang/Boolean.booleanValue:()Z"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "ireturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ],
+              "offset": 7,
+              "opcode": "invokevirtual",
+              "operand": "#170",
+              "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+            }
+          ],
+          "control_flow_reachability": "NOT_PROVEN",
+          "descriptor": "()Z",
+          "method_header": "public boolean isPerfectShot()",
+          "parsed_instruction_count": 7,
+          "parsed_method_sha256": "c91a50e4a585ac94cd3a7680b8b7faaebe31351cc261c057ae469909551a99cd"
+        }
+      ],
+      "sha256": "089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "methods": [
+        {
+          "anchors": [
+            {
+              "nearby": [
+                {
+                  "offset": 374,
+                  "opcode": "ifeq",
+                  "operand": "419",
+                  "symbol": ""
+                },
+                {
+                  "offset": 377,
+                  "opcode": "new",
+                  "operand": "#422",
+                  "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity"
+                },
+                {
+                  "offset": 380,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 381,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 382,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 383,
+                  "opcode": "invokespecial",
+                  "operand": "#424",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+                },
+                {
+                  "offset": 386,
+                  "opcode": "astore",
+                  "operand": "21",
+                  "symbol": ""
+                },
+                {
+                  "offset": 388,
+                  "opcode": "aload",
+                  "operand": "21",
+                  "symbol": ""
+                },
+                {
+                  "offset": 390,
+                  "opcode": "iload",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 392,
+                  "opcode": "ifeq",
+                  "operand": "399",
+                  "symbol": ""
+                },
+                {
+                  "offset": 395,
+                  "opcode": "fconst_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 396,
+                  "opcode": "goto",
+                  "operand": "402",
+                  "symbol": ""
+                },
+                {
+                  "offset": 399,
+                  "opcode": "ldc_w",
+                  "operand": "#313",
+                  "symbol": "float 3.0f"
+                }
+              ],
+              "offset": 383,
+              "opcode": "invokespecial",
+              "operand": "#424",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 390,
+                  "opcode": "iload",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 392,
+                  "opcode": "ifeq",
+                  "operand": "399",
+                  "symbol": ""
+                },
+                {
+                  "offset": 395,
+                  "opcode": "fconst_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 396,
+                  "opcode": "goto",
+                  "operand": "402",
+                  "symbol": ""
+                },
+                {
+                  "offset": 399,
+                  "opcode": "ldc_w",
+                  "operand": "#313",
+                  "symbol": "float 3.0f"
+                },
+                {
+                  "offset": 402,
+                  "opcode": "invokevirtual",
+                  "operand": "#427",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setShadowArrowDamage:(F)V"
+                },
+                {
+                  "offset": 405,
+                  "opcode": "aload",
+                  "operand": "21",
+                  "symbol": ""
+                },
+                {
+                  "offset": 407,
+                  "opcode": "iload",
+                  "operand": "10",
+                  "symbol": ""
+                },
+                {
+                  "offset": 409,
+                  "opcode": "invokevirtual",
+                  "operand": "#431",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setPerfectShot:(Z)V"
+                },
+                {
+                  "offset": 412,
+                  "opcode": "aload",
+                  "operand": "21",
+                  "symbol": ""
+                },
+                {
+                  "offset": 414,
+                  "opcode": "astore",
+                  "operand": "12",
+                  "symbol": ""
+                },
+                {
+                  "offset": 416,
+                  "opcode": "goto",
+                  "operand": "443",
+                  "symbol": ""
+                },
+                {
+                  "offset": 419,
+                  "opcode": "iload",
+                  "operand": "10",
+                  "symbol": ""
+                }
+              ],
+              "offset": 402,
+              "opcode": "invokevirtual",
+              "operand": "#427",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setShadowArrowDamage:(F)V"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 396,
+                  "opcode": "goto",
+                  "operand": "402",
+                  "symbol": ""
+                },
+                {
+                  "offset": 399,
+                  "opcode": "ldc_w",
+                  "operand": "#313",
+                  "symbol": "float 3.0f"
+                },
+                {
+                  "offset": 402,
+                  "opcode": "invokevirtual",
+                  "operand": "#427",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setShadowArrowDamage:(F)V"
+                },
+                {
+                  "offset": 405,
+                  "opcode": "aload",
+                  "operand": "21",
+                  "symbol": ""
+                },
+                {
+                  "offset": 407,
+                  "opcode": "iload",
+                  "operand": "10",
+                  "symbol": ""
+                },
+                {
+                  "offset": 409,
+                  "opcode": "invokevirtual",
+                  "operand": "#431",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setPerfectShot:(Z)V"
+                },
+                {
+                  "offset": 412,
+                  "opcode": "aload",
+                  "operand": "21",
+                  "symbol": ""
+                },
+                {
+                  "offset": 414,
+                  "opcode": "astore",
+                  "operand": "12",
+                  "symbol": ""
+                },
+                {
+                  "offset": 416,
+                  "opcode": "goto",
+                  "operand": "443",
+                  "symbol": ""
+                },
+                {
+                  "offset": 419,
+                  "opcode": "iload",
+                  "operand": "10",
+                  "symbol": ""
+                },
+                {
+                  "offset": 421,
+                  "opcode": "ifeq",
+                  "operand": "443",
+                  "symbol": ""
+                },
+                {
+                  "offset": 424,
+                  "opcode": "aload",
+                  "operand": "12",
+                  "symbol": ""
+                },
+                {
+                  "offset": 426,
+                  "opcode": "aload",
+                  "operand": "12",
+                  "symbol": ""
+                }
+              ],
+              "offset": 409,
+              "opcode": "invokevirtual",
+              "operand": "#431",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setPerfectShot:(Z)V"
+            }
+          ],
+          "control_flow_reachability": "NOT_PROVEN",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "method_header": "public void releaseUsing(net.minecraft.world.item.ItemStack, net.minecraft.world.level.Level, net.minecraft.world.entity.LivingEntity, int)",
+          "parsed_instruction_count": 391,
+          "parsed_method_sha256": "5d4e8c88df5b5c0442c67f6d7f81e0a674a223d87e6d7b1b75894e34fe4742aa"
+        },
+        {
+          "anchors": [
+            {
+              "nearby": [
+                {
+                  "offset": 179,
+                  "opcode": "ifeq",
+                  "operand": "203",
+                  "symbol": ""
+                },
+                {
+                  "offset": 182,
+                  "opcode": "new",
+                  "operand": "#422",
+                  "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity"
+                },
+                {
+                  "offset": 185,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 186,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 187,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 188,
+                  "opcode": "invokespecial",
+                  "operand": "#424",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+                },
+                {
+                  "offset": 191,
+                  "opcode": "astore",
+                  "operand": "13",
+                  "symbol": ""
+                },
+                {
+                  "offset": 193,
+                  "opcode": "aload",
+                  "operand": "13",
+                  "symbol": ""
+                },
+                {
+                  "offset": 195,
+                  "opcode": "fconst_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 196,
+                  "opcode": "invokevirtual",
+                  "operand": "#427",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setShadowArrowDamage:(F)V"
+                },
+                {
+                  "offset": 199,
+                  "opcode": "aload",
+                  "operand": "13",
+                  "symbol": ""
+                },
+                {
+                  "offset": 201,
+                  "opcode": "astore",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 203,
+                  "opcode": "aload",
+                  "operand": "8",
+                  "symbol": ""
+                }
+              ],
+              "offset": 188,
+              "opcode": "invokespecial",
+              "operand": "#424",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+            },
+            {
+              "nearby": [
+                {
+                  "offset": 187,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 188,
+                  "opcode": "invokespecial",
+                  "operand": "#424",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+                },
+                {
+                  "offset": 191,
+                  "opcode": "astore",
+                  "operand": "13",
+                  "symbol": ""
+                },
+                {
+                  "offset": 193,
+                  "opcode": "aload",
+                  "operand": "13",
+                  "symbol": ""
+                },
+                {
+                  "offset": 195,
+                  "opcode": "fconst_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 196,
+                  "opcode": "invokevirtual",
+                  "operand": "#427",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setShadowArrowDamage:(F)V"
+                },
+                {
+                  "offset": 199,
+                  "opcode": "aload",
+                  "operand": "13",
+                  "symbol": ""
+                },
+                {
+                  "offset": 201,
+                  "opcode": "astore",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 203,
+                  "opcode": "aload",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 205,
+                  "opcode": "aload",
+                  "operand": "8",
+                  "symbol": ""
+                },
+                {
+                  "offset": 207,
+                  "opcode": "invokevirtual",
+                  "operand": "#521",
+                  "symbol": "Method net/minecraft/world/entity/projectile/AbstractArrow.position:()Lnet/minecraft/world/phys/Vec3;"
+                },
+                {
+                  "offset": 210,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 211,
+                  "opcode": "invokevirtual",
+                  "operand": "#237",
+                  "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+                }
+              ],
+              "offset": 196,
+              "opcode": "invokevirtual",
+              "operand": "#427",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setShadowArrowDamage:(F)V"
+            }
+          ],
+          "control_flow_reachability": "NOT_PROVEN",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+          "method_header": "public void onUseTick(net.minecraft.world.level.Level, net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, int)",
+          "parsed_instruction_count": 175,
+          "parsed_method_sha256": "377ba9047604044c07dcffcc1ada989e83c4074b0140481588e958dc9fb5db18"
+        }
+      ],
+      "sha256": "b9cd6e843f923877775e38b89214e8649c10d4d5be704ed9dd377900439d44ae"
+    }
+  ],
+  "total_symbolic_anchors": 28
+}
