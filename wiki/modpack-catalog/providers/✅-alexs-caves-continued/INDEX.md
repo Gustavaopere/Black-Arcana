@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 18/28.**
+**Fichas catalogadas (somente fichas detectadas): 19/28.**
 
-**Barra das fichas catalogadas:** `████████████░░░░░░░░ 64.3%`
+**Barra das fichas catalogadas:** `█████████████░░░░░░░ 67.9%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 18/28.**
+**Homologadas para perks (somente fichas detectadas): 19/28.**
 
-**Barra dos contratos técnicos estáticos:** `████████████░░░░░░░░ 64.3%`
+**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 67.9%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -32,7 +32,7 @@
 | ✅ | Sugar Staff Hex Cast | [actions/sugar-staff-hex-cast.md](actions/sugar-staff-hex-cast.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Sugar Staff Peppermint Cast | [actions/sugar-staff-peppermint-cast.md](actions/sugar-staff-peppermint-cast.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Totem Possession Remote Control | [actions/totem-possession-remote-control.md](actions/totem-possession-remote-control.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Acid | [damage-types/acid.md](damage-types/acid.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Acid | [damage-types/acid.md](damage-types/acid.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dark Arrow | [damage-types/dark-arrow.md](damage-types/dark-arrow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Desolate Dagger | [damage-types/desolate-dagger.md](damage-types/desolate-dagger.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Forsaken Sonic Boom | [damage-types/forsaken-sonic-boom.md](damage-types/forsaken-sonic-boom.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -58,7 +58,7 @@
 | Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |
 |---|---|---:|---:|---|
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
-| ⚠️ | Damage Types | 1/11 (9.1%) | 1 | [Abrir índice](damage-types/INDEX.md) |
+| ⚠️ | Damage Types | 2/11 (18.2%) | 2 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Equipment | 1/1 (100.0%) | 1 | [Abrir índice](equipment/INDEX.md) |
 

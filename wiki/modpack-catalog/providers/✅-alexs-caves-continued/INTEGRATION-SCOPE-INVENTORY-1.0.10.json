@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, one Dreadbow equipment contract and one Dark Arrow damage/projectile contract; no additional semantic magic root.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, one Dreadbow equipment contract and two damage contracts (Acid and Dark Arrow) with their scoped native consumers; no additional semantic magic root.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -312,12 +312,16 @@
       "evidence": "EXACT-DREADBOW-CONTRACTS-1.0.10.md"
     },
     "damage_types": {
-      "documented_static_contracts": 1,
+      "documented_static_contracts": 2,
       "identified_objects": 11,
       "cards": [
+        "damage-types/acid.md",
         "damage-types/dark-arrow.md"
       ],
-      "evidence": "EXACT-DREADBOW-CONTRACTS-1.0.10.md"
+      "evidence": "EXACT-ACID-CONTRACT-1.0.10.md",
+      "related_evidence": [
+        "EXACT-DREADBOW-CONTRACTS-1.0.10.md"
+      ]
     }
   }
 }

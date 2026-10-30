@@ -7,6 +7,7 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parents[2]
 CARDS = BASE / "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types"
 SNAPSHOT = CARDS / "EXACT-CONSUMERS-1.0.10.json"
+STATIC_DAMAGE_TYPES = frozenset({"acid", "dark_arrow"})
 
 class DamageConsumerCardsTest(unittest.TestCase):
     @classmethod
@@ -54,7 +55,7 @@ class DamageConsumerCardsTest(unittest.TestCase):
                 for absent in ("NOT_VERIFIED", "NOT_TESTED",
                                "NO_MUTATION"):
                     self.assertIn(absent, text)
-                self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if id == "dark_arrow" else "NOT_CERTIFIED", text)
+                self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if id in STATIC_DAMAGE_TYPES else "NOT_CERTIFIED", text)
         self.assertFalse(self.obj["limits"]["provider_universe_closed"])
         self.assertTrue(self.obj["limits"]["static_only"])
 
