@@ -5659,6 +5659,326 @@
           "reason": "Source imutável e fingerprint de release verificados; sem identidade compilada destes objetos, sem equivalência integral de métodos e sem QA física. mutating_hook=NOT_VERIFIED; physical_qa=NOT_TESTED."
         }
       }
+    },
+    "✅-alexs-caves-continued/actions/sea-staff-water-bolt.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Sete campos estáticos de Water Bolt no JAR 1.0.10; fonte pública 1.1.1 apenas adjacente. Não homologa mutações, execução no pack ou universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "A identidade SHA-exata 1.0.10, classfiles e recursos são verificados no manifesto selado, com a fonte 1.1.1 mantida separada."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sea-staff-water-bolt.md",
+          "reason": "Getters e tick verificam dano, alcance/colisão, homing e modifiers; a ficha distingue os predicados float/double e o consumidor efetivo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sea-staff-water-bolt.md",
+          "reason": "Parâmetros, fórmulas, unidades e limites têm localizadores de métodos/descriptors/offsets do binário exato; valores efetivos de config permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sea-staff-water-bolt.md",
+          "reason": "A ficha documenta filtros, geometria e causalidade de alvo/área/owner ou não aplicabilidade; não presume que tracking/visual seja raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sea-staff-water-bolt.md",
+          "reason": "Custos, cooldown, charge, consumo/settlement e aquisição empacotada são distinguídos dos valores ou resultados ainda não observados no pack."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sea-staff-water-bolt.md",
+          "reason": "A autoridade do provider e os limites de mutação por perks são explícitos; existência de setter, evento ou pacote não homologa um hook seguro."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "Revisão estática manual dos sete campos e check SHA/class/resource/ABI/âncoras/ficha reproduzível; gameplay e hooks continuam não verificados."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/actions/sugar-staff-peppermint-cast.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Sete campos estáticos de Peppermint Cast no JAR 1.0.10; fonte pública 1.1.1 apenas adjacente. Não homologa mutações, execução no pack ou universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "A identidade SHA-exata 1.0.10, classfiles e recursos são verificados no manifesto selado, com a fonte 1.1.1 mantida separada."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sugar-staff-peppermint-cast.md",
+          "reason": "Quantidade, órbita, movimento, dano e duração têm consumidores binários; limitações de owner, seeking e NBT são explicitadas."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sugar-staff-peppermint-cast.md",
+          "reason": "Parâmetros, fórmulas, unidades e limites têm localizadores de métodos/descriptors/offsets do binário exato; valores efetivos de config permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sugar-staff-peppermint-cast.md",
+          "reason": "A ficha documenta filtros, geometria e causalidade de alvo/área/owner ou não aplicabilidade; não presume que tracking/visual seja raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sugar-staff-peppermint-cast.md",
+          "reason": "Custos, cooldown, charge, consumo/settlement e aquisição empacotada são distinguídos dos valores ou resultados ainda não observados no pack."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sugar-staff-peppermint-cast.md",
+          "reason": "A autoridade do provider e os limites de mutação por perks são explícitos; existência de setter, evento ou pacote não homologa um hook seguro."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "Revisão estática manual dos sete campos e check SHA/class/resource/ABI/âncoras/ficha reproduzível; gameplay e hooks continuam não verificados."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/actions/sugar-staff-hex-cast.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Sete campos estáticos de Hex Cast no JAR 1.0.10; fonte pública 1.1.1 apenas adjacente. Não homologa mutações, execução no pack ou universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "A identidade SHA-exata 1.0.10, classfiles e recursos são verificados no manifesto selado, com a fonte 1.1.1 mantida separada."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sugar-staff-hex-cast.md",
+          "reason": "A ficha mapeia posição, escala, AABB, dano, duração e diferenças entre owner em memória e UUID restaurado no binário."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sugar-staff-hex-cast.md",
+          "reason": "Parâmetros, fórmulas, unidades e limites têm localizadores de métodos/descriptors/offsets do binário exato; valores efetivos de config permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sugar-staff-hex-cast.md",
+          "reason": "A ficha documenta filtros, geometria e causalidade de alvo/área/owner ou não aplicabilidade; não presume que tracking/visual seja raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sugar-staff-hex-cast.md",
+          "reason": "Custos, cooldown, charge, consumo/settlement e aquisição empacotada são distinguídos dos valores ou resultados ainda não observados no pack."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/sugar-staff-hex-cast.md",
+          "reason": "A autoridade do provider e os limites de mutação por perks são explícitos; existência de setter, evento ou pacote não homologa um hook seguro."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "Revisão estática manual dos sete campos e check SHA/class/resource/ABI/âncoras/ficha reproduzível; gameplay e hooks continuam não verificados."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/actions/magic-conch-summon-deep-ones.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Sete campos estáticos de Magic Conch no JAR 1.0.10; fonte pública 1.1.1 apenas adjacente. Não homologa mutações, execução no pack ou universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "A identidade SHA-exata 1.0.10, classfiles e recursos são verificados no manifesto selado, com a fonte 1.1.1 mantida separada."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/magic-conch-summon-deep-ones.md",
+          "reason": "A implementação compilada e os consumidores dos summons delimitam charge, custo, número, tipos, duração, ownership e cleanup."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/magic-conch-summon-deep-ones.md",
+          "reason": "Parâmetros, fórmulas, unidades e limites têm localizadores de métodos/descriptors/offsets do binário exato; valores efetivos de config permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/magic-conch-summon-deep-ones.md",
+          "reason": "A ficha documenta filtros, geometria e causalidade de alvo/área/owner ou não aplicabilidade; não presume que tracking/visual seja raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/magic-conch-summon-deep-ones.md",
+          "reason": "Custos, cooldown, charge, consumo/settlement e aquisição empacotada são distinguídos dos valores ou resultados ainda não observados no pack."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/magic-conch-summon-deep-ones.md",
+          "reason": "A autoridade do provider e os limites de mutação por perks são explícitos; existência de setter, evento ou pacote não homologa um hook seguro."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "Revisão estática manual dos sete campos e check SHA/class/resource/ABI/âncoras/ficha reproduzível; gameplay e hooks continuam não verificados."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/actions/occult-gem-beholder-observation.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Sete campos estáticos de Beholder Observation no JAR 1.0.10; fonte pública 1.1.1 apenas adjacente. Não homologa mutações, execução no pack ou universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "A identidade SHA-exata 1.0.10, classfiles e recursos são verificados no manifesto selado, com a fonte 1.1.1 mantida separada."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/occult-gem-beholder-observation.md",
+          "reason": "Métodos e pacotes compilados delimitam binding, câmera, autorização, tickets de chunks e cleanup sem presumir simetria em execução."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/occult-gem-beholder-observation.md",
+          "reason": "Parâmetros, fórmulas, unidades e limites têm localizadores de métodos/descriptors/offsets do binário exato; valores efetivos de config permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/occult-gem-beholder-observation.md",
+          "reason": "A ficha documenta filtros, geometria e causalidade de alvo/área/owner ou não aplicabilidade; não presume que tracking/visual seja raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/occult-gem-beholder-observation.md",
+          "reason": "Custos, cooldown, charge, consumo/settlement e aquisição empacotada são distinguídos dos valores ou resultados ainda não observados no pack."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/occult-gem-beholder-observation.md",
+          "reason": "A autoridade do provider e os limites de mutação por perks são explícitos; existência de setter, evento ou pacote não homologa um hook seguro."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "Revisão estática manual dos sete campos e check SHA/class/resource/ABI/âncoras/ficha reproduzível; gameplay e hooks continuam não verificados."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/actions/cloak-darkness-incarnate.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Sete campos estáticos de Darkness Incarnate no JAR 1.0.10; fonte pública 1.1.1 apenas adjacente. Não homologa mutações, execução no pack ou universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "A identidade SHA-exata 1.0.10, classfiles e recursos são verificados no manifesto selado, com a fonte 1.1.1 mantida separada."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/cloak-darkness-incarnate.md",
+          "reason": "Charge, custo, duração, input, voo, efeitos/eventos e remoção são vinculados aos consumidores compilados e configs não efetivos."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/cloak-darkness-incarnate.md",
+          "reason": "Parâmetros, fórmulas, unidades e limites têm localizadores de métodos/descriptors/offsets do binário exato; valores efetivos de config permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/cloak-darkness-incarnate.md",
+          "reason": "A ficha documenta filtros, geometria e causalidade de alvo/área/owner ou não aplicabilidade; não presume que tracking/visual seja raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/cloak-darkness-incarnate.md",
+          "reason": "Custos, cooldown, charge, consumo/settlement e aquisição empacotada são distinguídos dos valores ou resultados ainda não observados no pack."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/cloak-darkness-incarnate.md",
+          "reason": "A autoridade do provider e os limites de mutação por perks são explícitos; existência de setter, evento ou pacote não homologa um hook seguro."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "Revisão estática manual dos sete campos e check SHA/class/resource/ABI/âncoras/ficha reproduzível; gameplay e hooks continuam não verificados."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/actions/conversion-crucible-biome-conversion.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Sete campos estáticos de Biome Conversion no JAR 1.0.10; fonte pública 1.1.1 apenas adjacente. Não homologa mutações, execução no pack ou universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "A identidade SHA-exata 1.0.10, classfiles e recursos são verificados no manifesto selado, com a fonte 1.1.1 mantida separada."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/conversion-crucible-biome-conversion.md",
+          "reason": "Métodos compilados delimitam ofertas, custo, contador, largura10, geometria quart, fila de blocos e campos realmente persistidos."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/conversion-crucible-biome-conversion.md",
+          "reason": "Parâmetros, fórmulas, unidades e limites têm localizadores de métodos/descriptors/offsets do binário exato; valores efetivos de config permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/conversion-crucible-biome-conversion.md",
+          "reason": "A ficha documenta filtros, geometria e causalidade de alvo/área/owner ou não aplicabilidade; não presume que tracking/visual seja raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/conversion-crucible-biome-conversion.md",
+          "reason": "Custos, cooldown, charge, consumo/settlement e aquisição empacotada são distinguídos dos valores ou resultados ainda não observados no pack."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/conversion-crucible-biome-conversion.md",
+          "reason": "A autoridade do provider e os limites de mutação por perks são explícitos; existência de setter, evento ou pacote não homologa um hook seguro."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "Revisão estática manual dos sete campos e check SHA/class/resource/ABI/âncoras/ficha reproduzível; gameplay e hooks continuam não verificados."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/actions/totem-possession-remote-control.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Sete campos estáticos de Totem Possession no JAR 1.0.10; fonte pública 1.1.1 apenas adjacente. Não homologa mutações, execução no pack ou universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "A identidade SHA-exata 1.0.10, classfiles e recursos são verificados no manifesto selado, com a fonte 1.1.1 mantida separada."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/totem-possession-remote-control.md",
+          "reason": "Binding, geometria de olhar, movimento, ataque, desgaste cliente e sincronização de CUSTOM_DATA são causalmente separados no JAR exato."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/totem-possession-remote-control.md",
+          "reason": "Parâmetros, fórmulas, unidades e limites têm localizadores de métodos/descriptors/offsets do binário exato; valores efetivos de config permanecem separados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/totem-possession-remote-control.md",
+          "reason": "A ficha documenta filtros, geometria e causalidade de alvo/área/owner ou não aplicabilidade; não presume que tracking/visual seja raio de combate."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/totem-possession-remote-control.md",
+          "reason": "Custos, cooldown, charge, consumo/settlement e aquisição empacotada são distinguídos dos valores ou resultados ainda não observados no pack."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/actions/totem-possession-remote-control.md",
+          "reason": "A autoridade do provider e os limites de mutação por perks são explícitos; existência de setter, evento ou pacote não homologa um hook seguro."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.md",
+          "reason": "Revisão estática manual dos sete campos e check SHA/class/resource/ABI/âncoras/ficha reproduzível; gameplay e hooks continuam não verificados."
+        }
+      }
     }
   },
   "providers": {},
@@ -5672,6 +5992,11 @@
       "scope": "spells registrados no JAR 1.1.5",
       "total": 22,
       "source": "EXACT-BINARY-SPELLS-1.1.5.md"
+    },
+    "✅-alexs-caves-continued": {
+      "scope": "raízes sobrenaturais do recorte SHA-exato 1.0.10 (não universo integral de integrações)",
+      "total": 8,
+      "source": "EXACT-TECHNICAL-CONTRACTS-1.0.10.md"
     }
   }
 }

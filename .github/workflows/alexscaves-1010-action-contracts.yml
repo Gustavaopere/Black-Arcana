@@ -1,0 +1,58 @@
+name: Alex's Caves 1.0.10 exact static action contracts
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'docs/qa/alexscaves_1010_action_contract_audit.py'
+      - 'docs/qa/alexscaves_1010_action_contract_audit_test.py'
+      - '.github/workflows/alexscaves-1010-action-contracts.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'docs/qa/alexscaves_1010_action_contract_audit.py'
+      - 'docs/qa/alexscaves_1010_action_contract_audit_test.py'
+      - '.github/workflows/alexscaves-1010-action-contracts.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact_action_static_contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic immutable-evidence and scope regressions
+        run: python3 docs/qa/alexscaves_1010_action_contract_audit_test.py -v
+      - name: Download the exact publisher artifact
+        run: |
+          mkdir -p build/alexscaves-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-1010/alexscaves-1.0.10.jar
+      - name: Verify sealed cards and bounded exact bytecode anchors
+        run: |
+          python3 docs/qa/alexscaves_1010_action_contract_audit.py \
+            --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.json' \
+            --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/alexscaves-1010/evidence.json
+      - name: Export bounded JSON evidence only
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-static-action-contracts
+          path: build/alexscaves-1010/evidence.json
+          if-no-files-found: error
+          retention-days: 14

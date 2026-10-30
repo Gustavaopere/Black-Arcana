@@ -1,151 +1,42 @@
-# Alex's Caves Continued — 1.0.10
+# Alex's Caves Continued — catálogo técnico 1.0.10
 
-Status: `✅ CATALOGED / EXACT PHYSICAL=PUBLISHER ARTIFACT / 42 ITEM-ACTIVATION CLASSES DISPOSITIONED + BLOCK-RITUAL SURFACE CLOSED / 8 COUNTED_EXACT / RUNTIME QA SEPARATE`
+**Ações sobrenaturais: 8/8 contratos técnicos estáticos documentados.** [Índice de ações](actions/INDEX.md) · [evidência binária](EXACT-TECHNICAL-CONTRACTS-1.0.10.md) · [manifesto dos contratos](EXACT-TECHNICAL-CONTRACTS-1.0.10.json).
 
-## Current physical identity
+**Catálogo integral do provider: pendente.** As oito ações não abrangem armas, armaduras, efeitos, enchantments e outros sistemas integráveis por perks. [Escopo e trabalho restante](PERK-INTEGRATION-SCOPE-1.0.10.md), [inventário exato das famílias](INTEGRATION-SCOPE-INVENTORY-1.0.10.json) e [índice geral](../INDEX.md). A fila alfabética permanece neste provider.
 
-Current sibling physical authority identifies:
+## Identidade e versões
 
-- physical row: **#19**;
-- JAR: `alexscaves-1.0.10-neoforge+1.21.1.jar`;
-- mod id: `alexscaves`;
-- runtime: `1.0.10`;
-- Minecraft / loader: 1.21.1 / NeoForge;
-- physical SHA-1: `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`;
-- required Continued dependency in the pack: CodxLib 1.6.0.
+- Artefato: `alexscaves-1.0.10-neoforge+1.21.1.jar`, mod id `alexscaves`, Minecraft 1.21.1 / NeoForge.
+- Fingerprint físico/publicador: SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, 75.279.314 bytes.
+- Publisher: CurseForge projeto `1645389`, arquivo `8856293`; autoridade física histórica: linha #19 do sibling.
+- Dependência declarada no JAR: CodxLib `[1.3.6,)`; o pack registra CodxLib 1.6.0. Compatibilidade em execução continua pendente.
+- Fonte pública usada anteriormente: commit `523308608422ab8e31974befa7111ecdf495dd37`, que declara **1.1.1**. Seus parâmetros não são tratados como 1.0.10. Os contratos atuais usam bytecode/dados do JAR exato; [distinção de autoridades](EXACT-TECHNICAL-CONTRACTS-1.0.10.md#diferença-entre-fonte-e-release).
 
-Alex's Caves Continued is cross-domain for the magic catalog: the sibling categorizes it under worldgen/exploration, but the exact installed artifact exposes player-owned supernatural staffs, summoning, possession, remote occult observation, Darkness Incarnate activation and a ritual-like biome-conversion lifecycle.
+## Oito raízes e seus contratos
 
-## Exact publisher-artifact closure
+| Ação | Ficha | Eixos úteis para perks |
+|---|---|---|
+| Water Bolt | [Sea Staff](actions/sea-staff-water-bolt.md) | Dano, homing, busca/colisão, cooldown e custo |
+| Peppermint Cast | [Sugar Staff](actions/sugar-staff-peppermint-cast.md) | Quantidade, órbita, movimento, dano, duração e save/load |
+| Hex Cast | [Sugar Staff Hex](actions/sugar-staff-hex-cast.md) | Posição, área/escala, dano, duração e owner |
+| Summon Deep Ones | [Magic Conch](actions/magic-conch-summon-deep-ones.md) | Charge, seleção dos summons, custo, duração e ownership |
+| Possession / Control | [Totem](actions/totem-possession-remote-control.md) | Binding, geometria de olhar, movimento, ataque, desgaste e sincronização |
+| Remote Observation | [Occult Gem + Beholder](actions/occult-gem-beholder-observation.md) | Binding, autoridade do pacote, câmera, tickets e cleanup |
+| Darkness Incarnate | [Cloak of Darkness](actions/cloak-darkness-incarnate.md) | Carga, ativação, voo, duração, ambiente e remoção |
+| Biome Conversion | [Conversion Crucible](actions/conversion-crucible-biome-conversion.md) | Ofertas, tempo, largura/bioma quart, fila de blocos e persistência |
 
-NON-MERGE evidence PR **#509** audits the exact current publisher artifact and hard-gates it against the physical pack fingerprint.
+São **8 COUNTED_EXACT**, já integrantes do ledger semântico; esta revisão acrescenta **0 raízes**. Sugar Staff tem duas ações escolhidas pelo jogador. Binding/gestão do Totem, variantes de Deep Ones, cores, enchants e passos do Crucible são parâmetros/consequências, não novos spells.
 
-Final exact audit checkpoint used by this catalog:
+As fichas cobrem identidade, comportamento, parâmetros, targeting, custos, integração e validação. A certificação limita-se a **STATIC_TECHNICAL_CATALOG_ONLY** / **SHA_EXACT_BINARY_BEHAVIOR**. Hooks mutadores continuam **NOT_VERIFIED** e QA física **NOT_TESTED**. Nenhum adapter ou Stage é promovido por esses certificados.
 
-- audit HEAD: `fc05d04cd2b13b6c905bcc77bce35579d4f6f86a`;
-- exact-artifact run: `36947136917` — **SUCCESS**;
-- evidence artifact: `11202366754`;
-- evidence digest: `sha256:455641235c3834c29a2d3519ceda452a07aaff96bd931eebbe08fcedc0e6314e`;
-- CurseForge project/file: `1645389 / 8856293`;
-- publisher SHA-1: `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`;
-- publisher SHA-256: `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`;
-- bytes: `75,279,314`.
+## Aquisição e autoridade
 
-The publisher SHA-1 exactly equals the current physical sibling SHA-1.
+O inventário anterior identifica Sea Staff no barter de Deep One Mage, Sugar Staff no loot de Licowitch, Magic Conch no barter de Deep One Knight, Occult Gem no loot de Forlorn/Watcher e receitas de Beholder, Totem, Cloak/Hood, Crucible e Biome Treat. As fichas atuais distinguem dados empacotados, condições de uso e valores dependentes da configuração; existência da receita não prova aquisição executada em Survival.
 
-The exact artifact contains **8,898 archive entries / 1,555 classes / 7,343 non-class resources / 1,573 provider data paths**, including **81 item classes, 155 block classes and 25 message classes**. Exhaustive signature inspection finds **42 item classes with player-interaction surfaces**.
+O Biome Treat pode armazenar uma chave de bioma válida; o nome do componente `CaveBiome` não comprova whitelist restrita às seis cavernas. O Crucible converte um ciclo por vez; bioma, ofertas, sacrifício, ticks e alterações de blocos são partes dessa raiz. A busca de jogadores para advancement não define o raio da mutação de bioma.
 
-See [`EXACT-1.0.10-ARTIFACT-AUDIT.md`](EXACT-1.0.10-ARTIFACT-AUDIT.md).
+Alex's Caves mantém autoridade sobre cast, custo, cooldown, dano, movimento, AI, voo, câmera, tickets e alteração de mundo. Black Arcana/RPG Skill Tree não devem repetir settlement, invocar entidades em duplicidade ou presumir que um setter permita mutação por jogador. Casos de multiplayer, autorização de rede, proteção de mundo, cleanup e reload continuam no plano de QA das fichas.
 
-## Semantic-magic result — 8 exact player actions
+## Histórico preservado
 
-Eight provider-owned actions satisfy the canonical semantic rule for a discrete supernatural/magical player action:
-
-1. **Sea Staff — Water Bolt**;
-2. **Sugar Staff — Peppermint Cast**;
-3. **Sugar Staff — Hex Cast**;
-4. **Magic Conch — Summon Deep Ones**;
-5. **Totem of Possession — Possession / Remote Control**;
-6. **Occult Gem + Beholder — Remote Beholder Observation**;
-7. **Cloak of Darkness — Darkness Incarnate activation**;
-8. **Conversion Crucible — Biome Conversion ritual/process**.
-
-All eight are `COUNTED_EXACT` in the current semantic ledger.
-
-Object-level cards:
-
-- aggregate: [`actions/SUPERNATURAL-ACTION-CARDS.md`](actions/SUPERNATURAL-ACTION-CARDS.md);
-- [Sea Staff — Water Bolt](actions/sea-staff-water-bolt.md);
-- [Sugar Staff — Peppermint Cast](actions/sugar-staff-peppermint-cast.md);
-- [Sugar Staff — Hex Cast](actions/sugar-staff-hex-cast.md);
-- [Magic Conch — Summon Deep Ones](actions/magic-conch-summon-deep-ones.md);
-- [Totem of Possession — Possession / Remote Control](actions/totem-possession-remote-control.md);
-- [Occult Gem + Beholder — Remote Observation](actions/occult-gem-beholder-observation.md);
-- [Cloak of Darkness — Darkness Incarnate](actions/cloak-darkness-incarnate.md);
-- [Conversion Crucible — Biome Conversion](actions/conversion-crucible-biome-conversion.md).
-
-Individual-card checkpoint: [`INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md`](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md).
-
-## Why Sugar Staff contributes two identities
-
-The exact owner has two deliberate activation branches with independent settlement:
-
-- normal use creates the provider peppermint-cast entity pattern;
-- sneaking use creates a provider Sugar Staff Hex entity with its own cast sound/cooldown.
-
-These are not animation phases of one action; they are distinct player-selected causal roots under the same owner.
-
-## Conversion Crucible counting rule
-
-The exact block/block-entity path closes a provider-owned biome-conversion lifecycle:
-
-1. player supplies a Cave Biome-bound `Biome Treat` to select a conversion target;
-2. the Crucible requests/consumes provider-selected offerings and final sacrifice;
-3. when filled, the server advances one conversion lifecycle;
-4. settlement calls the provider biome-conversion path and rewrites the local biome/block surface.
-
-This is counted once as **Biome Conversion**. Individual target biomes, requested offerings, sacrifices, recursive block placements, ticks, particles and sounds are parameters or downstream consequences rather than new magical identities.
-
-## Exact item-surface disposition
-
-All 42 exact item classes with interaction signatures are explicitly dispositioned in [`ITEM-ACTION-DISPOSITION-1.0.10.md`](ITEM-ACTION-DISPOSITION-1.0.10.md).
-
-Important exclusions include:
-
-- Dreadbow, spears, Ortholance and ordinary thrown/projectile items — primary weapon modes;
-- Desolate Dagger and other `hurtEnemy` items — on-hit/primary weapon behavior;
-- Galena Gauntlet, Raygun, Quarry Smasher and Remote Detonator — technological/magnetic/mining weapon or utility systems;
-- Moth Dust, foods, drinks and Prehistoric Mixture — consumable/feeding/effect behavior;
-- boats, Submarine, Floater and hook mobility — vehicle/traversal utility rather than semantic magic;
-- Biome Treat — setup/preparation for the counted Crucible action;
-- Totem binding/release/transfer/enchantment branches — setup, management or downstream consequences of the one counted Possession root.
-
-The exact block pass also excludes Forsaken Idol: the block has no player activation seam. Underzealot sacrifice/Forsaken transformation is mob-native behavior rather than a player-owned magic action.
-
-## Acquisition/reachability
-
-Exact provider data closes current catalog-level acquisition for the counted owners:
-
-- Sea Staff — Deep One Mage barter loot;
-- Sugar Staff — Licowitch loot;
-- Magic Conch — Deep One Knight barter loot;
-- Occult Gem — Forlorn/Watcher loot plus exact Beholder recipe surface;
-- Totem of Possession — exact provider recipe;
-- Cloak/Hood of Darkness — exact provider recipes;
-- Conversion Crucible + Biome Treat — exact provider recipes.
-
-No identity-level boolean registration gate was found that removes these eight roots from the exact artifact. Numerical configs, enchantment branches, range, duration and target constraints remain provider/runtime authority rather than semantic-denominator blockers.
-
-## Authority boundary
-
-Alex's Caves Continued remains authority for:
-
-- staff targeting/projectiles/entities;
-- summoning membership/lifetime/reputation;
-- Totem binding, possession state and controlled-entity movement/attacks;
-- Beholder binding, remote observation and chunk/view lifecycle;
-- Darkness armor charge/effect duration;
-- Crucible requested items, conversion progress and biome/world settlement;
-- all numerical config, effects, particles, sounds, cooldowns and enchantment modifiers.
-
-Black Arcana catalogs these action identities but must not replay provider effects, re-spawn provider entities, charge a second cost, duplicate possession control, force a second Beholder observation session or re-run Crucible biome conversion.
-
-## Runtime QA remains separate
-
-Catalog closure does not assert assembled-pack runtime PASS. Later QA still includes CodxLib compatibility, `/acc` effective config, dedicated-server/multiplayer behavior, cross-mod protection/worldgen effects, Beholder forced-chunk cleanup, possession persistence, staff entity settlement and Conversion Crucible behavior in the full pack.
-
-## Result
-
-**✅ Cataloged — `COUNTED_EXACT`.**
-
-Current Alex's Caves Continued semantic inventory: **8 exact-current supernatural/magical player actions**.
-
-Strict semantic delta: **+8**.
-
-## Contratos causais dos staffs — revisão de fonte pública (2026-10-28)
-
-As fichas [Sea Staff — Water Bolt](actions/sea-staff-water-bolt.md), [Sugar Staff — Peppermint](actions/sugar-staff-peppermint-cast.md) e [Sugar Staff — Hex](actions/sugar-staff-hex-cast.md) agora preservam **parâmetros por método** de `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` (range de consulta, colisão, duração, cooldown, tipo de dano e enchantments), inclusive overrides por `tick()`. Esses parâmetros são **SOURCE_SNAPSHOT_ONLY**, porque a auditoria do JAR físico 1.0.10 fechou as identidades, mas **não** comprovou igualdade byte-a-byte com esse commit público. Portanto nenhuma ficha foi promovida a `COMPLETE_PERK_READY`, nenhum hook mutador é declarado e Stage 09/QA física permanecem abertos. Contagem semântica: **8**, inalterada.
-
-## Invocação, observação e voo — contratos por método (2026-10-28)
-
-As fichas [Magic Conch — Summon Deep Ones](actions/magic-conch-summon-deep-ones.md), [Occult Gem + Beholder — Remote Observation](actions/occult-gem-beholder-observation.md) e [Cloak of Darkness — Darkness Incarnate](actions/cloak-darkness-incarnate.md) agora distinguem duração/custos/tentativas de summons, ownership e limpeza de **chunk tickets**, e validação de **charge/packet/flight**. A fonte consultada é `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37`, sem paridade binária demonstrada com o JAR físico 1.0.10. Os parâmetros são **SOURCE_SNAPSHOT_ONLY**, inclusive potenciais riscos de `CHARTING_CALL` com `nextInt(0)` e validação de `ArmorKeyMessage`, que **não** são incidentes do pack comprovados. Nenhum hook mutador foi homologado, nenhuma nova ação foi contabilizada e os gates de QA física seguem abertos. O total do provider continua **8 ações COUNTED_EXACT**.
+A [auditoria de identidade do artefato](EXACT-1.0.10-ARTIFACT-AUDIT.md), a [disposição semântica de 42 classes](ITEM-ACTION-DISPOSITION-1.0.10.md), o [checkpoint de materialização](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md) e o [resumo de identidades](actions/SUPERNATURAL-ACTION-CARDS.md) permanecem como histórico. As PRs #944 e #945 foram preservadas e aprofundadas pelo exame binário exato; a fonte 1.1.1 ficou identificada como corroboração adjacente. O JAR e os assets do provider não são distribuídos neste repositório.

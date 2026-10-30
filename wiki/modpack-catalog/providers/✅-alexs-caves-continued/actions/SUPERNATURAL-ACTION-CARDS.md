@@ -15,7 +15,7 @@ Individual files:
 
 These files materialize the existing eight-root denominator and do not change the +8 strict accounting.
 
-These cards retain only the player-owned causal identity. Numerical tuning, enchantment modifiers, entity AI, particles, sounds, cooldowns and world settlement remain Alex's Caves Continued authority.
+This aggregate retains the player-owned causal identities. The linked individual cards now provide seven-field exact-binary 1.0.10 static contracts; see [technical evidence](../EXACT-TECHNICAL-CONTRACTS-1.0.10.md). Numerical tuning, enchantment modifiers, entity AI, particles, sounds, cooldowns and world settlement remain Alex's Caves Continued authority.
 
 ## 1. Sea Staff — Water Bolt
 
