@@ -43,3 +43,7 @@ A [prova de Acid](EXACT-ACID-CONTRACT-1.0.10.md) acompanha a fórmula ambiental 
 ## Desolate Dagger — equipamento e entidade separados
 
 A [prova conjunta](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md) relaciona o callback de ataque do item, a produção de entidades, os dados sincronizados, órbita/stab, solicitação de dano e descarte. O produtor nativo não preenche o ID de jogador usado pela entidade; autoria e benefícios condicionados a Player mantêm essa fronteira explícita. Os dois contratos não encerram todos os equipamentos, encantamentos ou sistemas de combate.
+
+## Forsaken Sonic — contrato intermediário dos helpers
+
+[Auditoria de 10 helpers do JAR 1.0.10](damage-types/EXACT-FORSAKEN-HELPERS-1.0.10.json) distingue `tryAnimation`, `isMovementFrozen`, getters/setters de estado `SONIC_CHARGE`, `getSonarTarget`, `checkAndDealDamage` com `mobAttack` e `ACCompat.knockback`. O caminho de dano Sonic permanece distinto de melee, e nenhuma intervenção em `LivingEntity.hurt`, `SynchedEntityData` ou `knockback` foi habilitada. Contrato estático integral, hooks mutadores e QA física seguem pendentes.
