@@ -1,0 +1,1873 @@
+{
+  "classes": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.class",
+      "class_sha256": "72981b25b3af251b3ee66b6ef16b650997359ff94673ad500256b2d1cee0cde1",
+      "selected_methods": [
+        {
+          "branch_anchors": [
+            {
+              "offset": 13,
+              "opcode": "ifne",
+              "operand": "20",
+              "symbol": ""
+            },
+            {
+              "offset": 17,
+              "opcode": "goto",
+              "operand": "21",
+              "symbol": ""
+            }
+          ],
+          "constant_anchors": [
+            {
+              "offset": 16,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 20,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "exit_sites": [
+            {
+              "offset": 21,
+              "opcode": "ireturn"
+            }
+          ],
+          "header": "private static boolean lambda$static$0(net.minecraft.world.entity.LivingEntity)",
+          "instruction_count": 10,
+          "instructions": [
+            {
+              "offset": 0,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "invokevirtual",
+              "operand": "#817",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+            },
+            {
+              "offset": 4,
+              "opcode": "invokevirtual",
+              "operand": "#821",
+              "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+            },
+            {
+              "offset": 7,
+              "opcode": "getstatic",
+              "operand": "#854",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.FORSAKEN_IGNORES:Lnet/minecraft/tags/TagKey;"
+            },
+            {
+              "offset": 10,
+              "opcode": "invokevirtual",
+              "operand": "#830",
+              "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+            },
+            {
+              "offset": 13,
+              "opcode": "ifne",
+              "operand": "20",
+              "symbol": ""
+            },
+            {
+              "offset": 16,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 17,
+              "opcode": "goto",
+              "operand": "21",
+              "symbol": ""
+            },
+            {
+              "offset": 20,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 21,
+              "opcode": "ireturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "name": "lambda$static$0",
+          "parsed_method_sha256": "cfa4a5d278a63d29041f8af87ec32c148db680704cadaca1df546de4d46ea865",
+          "runtime_goal_reachability": "NOT_VERIFIED",
+          "selected_symbolic_windows": [
+            {
+              "instruction": {
+                "offset": 1,
+                "opcode": "invokevirtual",
+                "operand": "#817",
+                "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+              },
+              "offset": 1,
+              "window": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "invokevirtual",
+                  "operand": "#817",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "invokevirtual",
+                  "operand": "#821",
+                  "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "getstatic",
+                  "operand": "#854",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.FORSAKEN_IGNORES:Lnet/minecraft/tags/TagKey;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "invokevirtual",
+                  "operand": "#830",
+                  "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "ifne",
+                  "operand": "20",
+                  "symbol": ""
+                },
+                {
+                  "offset": 16,
+                  "opcode": "iconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "goto",
+                  "operand": "21",
+                  "symbol": ""
+                },
+                {
+                  "offset": 20,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 21,
+                  "opcode": "ireturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 4,
+                "opcode": "invokevirtual",
+                "operand": "#821",
+                "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+              },
+              "offset": 4,
+              "window": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "invokevirtual",
+                  "operand": "#817",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "invokevirtual",
+                  "operand": "#821",
+                  "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "getstatic",
+                  "operand": "#854",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.FORSAKEN_IGNORES:Lnet/minecraft/tags/TagKey;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "invokevirtual",
+                  "operand": "#830",
+                  "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "ifne",
+                  "operand": "20",
+                  "symbol": ""
+                },
+                {
+                  "offset": 16,
+                  "opcode": "iconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "goto",
+                  "operand": "21",
+                  "symbol": ""
+                },
+                {
+                  "offset": 20,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 21,
+                  "opcode": "ireturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 7,
+                "opcode": "getstatic",
+                "operand": "#854",
+                "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.FORSAKEN_IGNORES:Lnet/minecraft/tags/TagKey;"
+              },
+              "offset": 7,
+              "window": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "invokevirtual",
+                  "operand": "#817",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "invokevirtual",
+                  "operand": "#821",
+                  "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "getstatic",
+                  "operand": "#854",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.FORSAKEN_IGNORES:Lnet/minecraft/tags/TagKey;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "invokevirtual",
+                  "operand": "#830",
+                  "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "ifne",
+                  "operand": "20",
+                  "symbol": ""
+                },
+                {
+                  "offset": 16,
+                  "opcode": "iconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "goto",
+                  "operand": "21",
+                  "symbol": ""
+                },
+                {
+                  "offset": 20,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 21,
+                  "opcode": "ireturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 10,
+                "opcode": "invokevirtual",
+                "operand": "#830",
+                "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+              },
+              "offset": 10,
+              "window": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "invokevirtual",
+                  "operand": "#817",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "invokevirtual",
+                  "operand": "#821",
+                  "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "getstatic",
+                  "operand": "#854",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.FORSAKEN_IGNORES:Lnet/minecraft/tags/TagKey;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "invokevirtual",
+                  "operand": "#830",
+                  "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "ifne",
+                  "operand": "20",
+                  "symbol": ""
+                },
+                {
+                  "offset": 16,
+                  "opcode": "iconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "goto",
+                  "operand": "21",
+                  "symbol": ""
+                },
+                {
+                  "offset": 20,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 21,
+                  "opcode": "ireturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "class_sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+      "selected_methods": [
+        {
+          "branch_anchors": [],
+          "constant_anchors": [],
+          "descriptor": "(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;",
+          "exit_sites": [
+            {
+              "offset": 1,
+              "opcode": "areturn"
+            }
+          ],
+          "header": "public static java.util.function.Predicate<net.minecraft.world.entity.LivingEntity> targetSelector(java.util.function.Predicate<net.minecraft.world.entity.LivingEntity>)",
+          "instruction_count": 2,
+          "instructions": [
+            {
+              "offset": 0,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "areturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "name": "targetSelector",
+          "parsed_method_sha256": "b10a5989478262171604d8f1692ba5ad5da3f4d13f96e2ab39f78e9c57e61ca1",
+          "runtime_goal_reachability": "NOT_VERIFIED",
+          "selected_symbolic_windows": []
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/ai/ForsakenAttackGoal.class",
+      "class_sha256": "48cfdd6c370f68550d0d7af768466f99f330e8fd4f825a520411a1bc5d70fb55",
+      "selected_methods": [
+        {
+          "branch_anchors": [
+            {
+              "offset": 9,
+              "opcode": "ifnull",
+              "operand": "23",
+              "symbol": ""
+            },
+            {
+              "offset": 16,
+              "opcode": "ifeq",
+              "operand": "23",
+              "symbol": ""
+            },
+            {
+              "offset": 20,
+              "opcode": "goto",
+              "operand": "24",
+              "symbol": ""
+            }
+          ],
+          "constant_anchors": [
+            {
+              "offset": 19,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 23,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "descriptor": "()Z",
+          "exit_sites": [
+            {
+              "offset": 24,
+              "opcode": "ireturn"
+            }
+          ],
+          "header": "public boolean canUse()",
+          "instruction_count": 13,
+          "instructions": [
+            {
+              "offset": 0,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "getfield",
+              "operand": "#27",
+              "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+            },
+            {
+              "offset": 4,
+              "opcode": "invokevirtual",
+              "operand": "#50",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getTarget:()Lnet/minecraft/world/entity/LivingEntity;"
+            },
+            {
+              "offset": 7,
+              "opcode": "astore_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 8,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 9,
+              "opcode": "ifnull",
+              "operand": "23",
+              "symbol": ""
+            },
+            {
+              "offset": 12,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 13,
+              "opcode": "invokevirtual",
+              "operand": "#56",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlive:()Z"
+            },
+            {
+              "offset": 16,
+              "opcode": "ifeq",
+              "operand": "23",
+              "symbol": ""
+            },
+            {
+              "offset": 19,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 20,
+              "opcode": "goto",
+              "operand": "24",
+              "symbol": ""
+            },
+            {
+              "offset": 23,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 24,
+              "opcode": "ireturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "name": "canUse",
+          "parsed_method_sha256": "6309c2f6f04ccaa8100eb422ad81cdd6f5ba1b05ff0a973157b378a546803661",
+          "runtime_goal_reachability": "NOT_VERIFIED",
+          "selected_symbolic_windows": [
+            {
+              "instruction": {
+                "offset": 1,
+                "opcode": "getfield",
+                "operand": "#27",
+                "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+              },
+              "offset": 1,
+              "window": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "invokevirtual",
+                  "operand": "#50",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getTarget:()Lnet/minecraft/world/entity/LivingEntity;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "astore_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 9,
+                  "opcode": "ifnull",
+                  "operand": "23",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#56",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlive:()Z"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "ifeq",
+                  "operand": "23",
+                  "symbol": ""
+                },
+                {
+                  "offset": 19,
+                  "opcode": "iconst_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 4,
+                "opcode": "invokevirtual",
+                "operand": "#50",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getTarget:()Lnet/minecraft/world/entity/LivingEntity;"
+              },
+              "offset": 4,
+              "window": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "invokevirtual",
+                  "operand": "#50",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getTarget:()Lnet/minecraft/world/entity/LivingEntity;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "astore_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 9,
+                  "opcode": "ifnull",
+                  "operand": "23",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#56",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlive:()Z"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "ifeq",
+                  "operand": "23",
+                  "symbol": ""
+                },
+                {
+                  "offset": 19,
+                  "opcode": "iconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 20,
+                  "opcode": "goto",
+                  "operand": "24",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 13,
+                "opcode": "invokevirtual",
+                "operand": "#56",
+                "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlive:()Z"
+              },
+              "offset": 13,
+              "window": [
+                {
+                  "offset": 4,
+                  "opcode": "invokevirtual",
+                  "operand": "#50",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getTarget:()Lnet/minecraft/world/entity/LivingEntity;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "astore_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 9,
+                  "opcode": "ifnull",
+                  "operand": "23",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#56",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlive:()Z"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "ifeq",
+                  "operand": "23",
+                  "symbol": ""
+                },
+                {
+                  "offset": 19,
+                  "opcode": "iconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 20,
+                  "opcode": "goto",
+                  "operand": "24",
+                  "symbol": ""
+                },
+                {
+                  "offset": 23,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 24,
+                  "opcode": "ireturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "branch_anchors": [],
+          "constant_anchors": [
+            {
+              "offset": 1,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 6,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 27,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "descriptor": "()V",
+          "exit_sites": [
+            {
+              "offset": 31,
+              "opcode": "return"
+            }
+          ],
+          "header": "public void start()",
+          "instruction_count": 16,
+          "instructions": [
+            {
+              "offset": 0,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 2,
+              "opcode": "putfield",
+              "operand": "#20",
+              "symbol": "Field navigationCheckCooldown:I"
+            },
+            {
+              "offset": 5,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 6,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 7,
+              "opcode": "putfield",
+              "operand": "#13",
+              "symbol": "Field jumpEnqueued:Z"
+            },
+            {
+              "offset": 10,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 11,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 12,
+              "opcode": "getfield",
+              "operand": "#27",
+              "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+            },
+            {
+              "offset": 15,
+              "opcode": "invokevirtual",
+              "operand": "#62",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+            },
+            {
+              "offset": 18,
+              "opcode": "invokeinterface",
+              "operand": "#66,  1",
+              "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+            },
+            {
+              "offset": 23,
+              "opcode": "putfield",
+              "operand": "#17",
+              "symbol": "Field sonicEnqueued:Z"
+            },
+            {
+              "offset": 26,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 27,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 28,
+              "opcode": "putfield",
+              "operand": "#24",
+              "symbol": "Field attemptSonicDamageIn:I"
+            },
+            {
+              "offset": 31,
+              "opcode": "return",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "name": "start",
+          "parsed_method_sha256": "8e2fdcc7854b68ac0ad8d5b4c04b16b82aa8183c47016eb03d549cb42a816797",
+          "runtime_goal_reachability": "NOT_VERIFIED",
+          "selected_symbolic_windows": [
+            {
+              "instruction": {
+                "offset": 2,
+                "opcode": "putfield",
+                "operand": "#20",
+                "symbol": "Field navigationCheckCooldown:I"
+              },
+              "offset": 2,
+              "window": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 2,
+                  "opcode": "putfield",
+                  "operand": "#20",
+                  "symbol": "Field navigationCheckCooldown:I"
+                },
+                {
+                  "offset": 5,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 6,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "putfield",
+                  "operand": "#13",
+                  "symbol": "Field jumpEnqueued:Z"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "invokevirtual",
+                  "operand": "#62",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "invokeinterface",
+                  "operand": "#66,  1",
+                  "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 7,
+                "opcode": "putfield",
+                "operand": "#13",
+                "symbol": "Field jumpEnqueued:Z"
+              },
+              "offset": 7,
+              "window": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 2,
+                  "opcode": "putfield",
+                  "operand": "#20",
+                  "symbol": "Field navigationCheckCooldown:I"
+                },
+                {
+                  "offset": 5,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 6,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "putfield",
+                  "operand": "#13",
+                  "symbol": "Field jumpEnqueued:Z"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "invokevirtual",
+                  "operand": "#62",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "invokeinterface",
+                  "operand": "#66,  1",
+                  "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+                },
+                {
+                  "offset": 23,
+                  "opcode": "putfield",
+                  "operand": "#17",
+                  "symbol": "Field sonicEnqueued:Z"
+                },
+                {
+                  "offset": 26,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 27,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 12,
+                "opcode": "getfield",
+                "operand": "#27",
+                "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+              },
+              "offset": 12,
+              "window": [
+                {
+                  "offset": 5,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 6,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "putfield",
+                  "operand": "#13",
+                  "symbol": "Field jumpEnqueued:Z"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "invokevirtual",
+                  "operand": "#62",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "invokeinterface",
+                  "operand": "#66,  1",
+                  "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+                },
+                {
+                  "offset": 23,
+                  "opcode": "putfield",
+                  "operand": "#17",
+                  "symbol": "Field sonicEnqueued:Z"
+                },
+                {
+                  "offset": 26,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 27,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "putfield",
+                  "operand": "#24",
+                  "symbol": "Field attemptSonicDamageIn:I"
+                },
+                {
+                  "offset": 31,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 15,
+                "opcode": "invokevirtual",
+                "operand": "#62",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+              },
+              "offset": 15,
+              "window": [
+                {
+                  "offset": 6,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "putfield",
+                  "operand": "#13",
+                  "symbol": "Field jumpEnqueued:Z"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "invokevirtual",
+                  "operand": "#62",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "invokeinterface",
+                  "operand": "#66,  1",
+                  "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+                },
+                {
+                  "offset": 23,
+                  "opcode": "putfield",
+                  "operand": "#17",
+                  "symbol": "Field sonicEnqueued:Z"
+                },
+                {
+                  "offset": 26,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 27,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "putfield",
+                  "operand": "#24",
+                  "symbol": "Field attemptSonicDamageIn:I"
+                },
+                {
+                  "offset": 31,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 18,
+                "opcode": "invokeinterface",
+                "operand": "#66,  1",
+                "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+              },
+              "offset": 18,
+              "window": [
+                {
+                  "offset": 7,
+                  "opcode": "putfield",
+                  "operand": "#13",
+                  "symbol": "Field jumpEnqueued:Z"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "invokevirtual",
+                  "operand": "#62",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "invokeinterface",
+                  "operand": "#66,  1",
+                  "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+                },
+                {
+                  "offset": 23,
+                  "opcode": "putfield",
+                  "operand": "#17",
+                  "symbol": "Field sonicEnqueued:Z"
+                },
+                {
+                  "offset": 26,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 27,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "putfield",
+                  "operand": "#24",
+                  "symbol": "Field attemptSonicDamageIn:I"
+                },
+                {
+                  "offset": 31,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 23,
+                "opcode": "putfield",
+                "operand": "#17",
+                "symbol": "Field sonicEnqueued:Z"
+              },
+              "offset": 23,
+              "window": [
+                {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "invokevirtual",
+                  "operand": "#62",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "invokeinterface",
+                  "operand": "#66,  1",
+                  "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+                },
+                {
+                  "offset": 23,
+                  "opcode": "putfield",
+                  "operand": "#17",
+                  "symbol": "Field sonicEnqueued:Z"
+                },
+                {
+                  "offset": 26,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 27,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "putfield",
+                  "operand": "#24",
+                  "symbol": "Field attemptSonicDamageIn:I"
+                },
+                {
+                  "offset": 31,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 28,
+                "opcode": "putfield",
+                "operand": "#24",
+                "symbol": "Field attemptSonicDamageIn:I"
+              },
+              "offset": 28,
+              "window": [
+                {
+                  "offset": 15,
+                  "opcode": "invokevirtual",
+                  "operand": "#62",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.getRandom:()Lnet/minecraft/util/RandomSource;"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "invokeinterface",
+                  "operand": "#66,  1",
+                  "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+                },
+                {
+                  "offset": 23,
+                  "opcode": "putfield",
+                  "operand": "#17",
+                  "symbol": "Field sonicEnqueued:Z"
+                },
+                {
+                  "offset": 26,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 27,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "putfield",
+                  "operand": "#24",
+                  "symbol": "Field attemptSonicDamageIn:I"
+                },
+                {
+                  "offset": 31,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "branch_anchors": [],
+          "constant_anchors": [
+            {
+              "offset": 1,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 6,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 14,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "descriptor": "()V",
+          "exit_sites": [
+            {
+              "offset": 18,
+              "opcode": "return"
+            }
+          ],
+          "header": "public void stop()",
+          "instruction_count": 11,
+          "instructions": [
+            {
+              "offset": 0,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 2,
+              "opcode": "putfield",
+              "operand": "#13",
+              "symbol": "Field jumpEnqueued:Z"
+            },
+            {
+              "offset": 5,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 6,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 7,
+              "opcode": "putfield",
+              "operand": "#17",
+              "symbol": "Field sonicEnqueued:Z"
+            },
+            {
+              "offset": 10,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 11,
+              "opcode": "getfield",
+              "operand": "#27",
+              "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+            },
+            {
+              "offset": 14,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 15,
+              "opcode": "invokevirtual",
+              "operand": "#71",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.setRunning:(Z)V"
+            },
+            {
+              "offset": 18,
+              "opcode": "return",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "name": "stop",
+          "parsed_method_sha256": "eca88a14990b3181b0622017a017334a9c1b23339bd8cdc51440e318258198b7",
+          "runtime_goal_reachability": "NOT_VERIFIED",
+          "selected_symbolic_windows": [
+            {
+              "instruction": {
+                "offset": 2,
+                "opcode": "putfield",
+                "operand": "#13",
+                "symbol": "Field jumpEnqueued:Z"
+              },
+              "offset": 2,
+              "window": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 2,
+                  "opcode": "putfield",
+                  "operand": "#13",
+                  "symbol": "Field jumpEnqueued:Z"
+                },
+                {
+                  "offset": 5,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 6,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "putfield",
+                  "operand": "#17",
+                  "symbol": "Field sonicEnqueued:Z"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 14,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 15,
+                  "opcode": "invokevirtual",
+                  "operand": "#71",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.setRunning:(Z)V"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 7,
+                "opcode": "putfield",
+                "operand": "#17",
+                "symbol": "Field sonicEnqueued:Z"
+              },
+              "offset": 7,
+              "window": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 2,
+                  "opcode": "putfield",
+                  "operand": "#13",
+                  "symbol": "Field jumpEnqueued:Z"
+                },
+                {
+                  "offset": 5,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 6,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "putfield",
+                  "operand": "#17",
+                  "symbol": "Field sonicEnqueued:Z"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 14,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 15,
+                  "opcode": "invokevirtual",
+                  "operand": "#71",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.setRunning:(Z)V"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 11,
+                "opcode": "getfield",
+                "operand": "#27",
+                "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+              },
+              "offset": 11,
+              "window": [
+                {
+                  "offset": 2,
+                  "opcode": "putfield",
+                  "operand": "#13",
+                  "symbol": "Field jumpEnqueued:Z"
+                },
+                {
+                  "offset": 5,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 6,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "putfield",
+                  "operand": "#17",
+                  "symbol": "Field sonicEnqueued:Z"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 14,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 15,
+                  "opcode": "invokevirtual",
+                  "operand": "#71",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.setRunning:(Z)V"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "instruction": {
+                "offset": 15,
+                "opcode": "invokevirtual",
+                "operand": "#71",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.setRunning:(Z)V"
+              },
+              "offset": 15,
+              "window": [
+                {
+                  "offset": 6,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "putfield",
+                  "operand": "#17",
+                  "symbol": "Field sonicEnqueued:Z"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 11,
+                  "opcode": "getfield",
+                  "operand": "#27",
+                  "symbol": "Field entity:Lcom/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity;"
+                },
+                {
+                  "offset": 14,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 15,
+                  "opcode": "invokevirtual",
+                  "operand": "#71",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/ForsakenEntity.setRunning:(Z)V"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "call_graph_and_exception_cfg": "NOT_RECONSTRUCTED",
+    "complete_perk_ready": false,
+    "mutating_hook": "NOT_VERIFIED",
+    "other_mods_datapacks_tags": "NOT_RESOLVED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "selected_provider_methods_only": true,
+    "target_results_owner_pvp": "NOT_VERIFIED",
+    "vanilla_goal_scheduler_and_targeting": "NOT_AUDITED"
+  },
+  "publisher_jar": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "schema_version": 1,
+  "scope": "EXACT_1010_FORSAKEN_TARGET_PREDICATE_AND_GOAL_GATES_ONLY"
+}

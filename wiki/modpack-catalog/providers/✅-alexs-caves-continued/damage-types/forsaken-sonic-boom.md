@@ -218,3 +218,36 @@ O método `ForsakenEntity.defineSynchedData(SynchedEntityData.Builder)` (SHA-256
 A classe `ForsakenEntity` da build 1.0.10 **não declara** métodos próprios com as assinaturas exatas `addAdditionalSaveData(CompoundTag):void` e `readAdditionalSaveData(CompoundTag):void`. **Isso não prova ausência de persistência em disco:** superclasses, outros mixins e mecanismos de saves/entidades não foram auditados. Tampouco comprova recuperação dos flags sincronizados após troca de dimensão, reinício ou unload.
 
 **Limites:** análise estática de métodos selecionados, sem reconstruir CFG inteiro, sem medir tempo real/hitcount, sem teste multiplayer ou física do modpack, nem hook mutador certificado. `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Nenhuma nova ficha ou certificação global é criada.
+
+
+## Seleção por tag e entrada/saída do goal — contrato delimitado 1.0.10
+
+**Evidência:** [snapshot reproduzível dos cinco métodos](EXACT-FORSAKEN-TARGETING-1.0.10.json), validado pela [auditoria de targeting](../../../../../.github/workflows/alexscaves-1010-forsaken-target.yml). JAR publisher de 75.279.314 bytes, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570` e SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`. O snapshot sela **52 instruções em cinco métodos**, com descritores, hashes, branches e janelas simbólicas; a fonte 1.1.1 não fornece os parâmetros desta build.
+
+### Elegibilidade do predicado e adapter
+
+- `ForsakenEntity.lambda$static$0(LivingEntity)` consulta `getType()` no offset **1**, `builtInRegistryHolder()` em **4** e a tag `FORSAKEN_IGNORES` em **7**, seguida de `Holder.Reference.is(TagKey)` em **10**. O branch `ifne 20` (**13**) retorna falso para uma entidade cujo tipo pertence à tag; o outro ramo retorna verdadeiro (**16–21**). Esta seleção não sela a ligação de bootstrap entre a lambda e o campo `TARGETING`; o registro de goals lê esse campo, como documentado acima. A própria lambda não contém verificação de vida, distância, linha de visão ou permissões de PvP/claims.
+- `ACCompat.targetSelector(Predicate)` contém somente `aload_0` (**0**) e `areturn` (**1**): **devolve a mesma referência recebida**, sem adicionar filtros ou wrapper próprio. Essa identidade não estabelece a política final de `NearestAttackableTargetGoal`, de seu construtor ou de outras camadas nativas.
+- A tag de exclusão pode receber alterações de datapacks. O predicado de aquisição não substitui a filtragem por vítima no Sonic Blast: o caminho de dano continua com suas verificações de aliança, distância e tag, documentadas anteriormente. Uma perk que pretenda trocar o tipo de alvo precisaria preservar essas duas etapas e o escalonamento da IA; nenhum hook seguro foi homologado.
+
+### Ativação, inicialização e encerramento
+
+| Método próprio | Fluxo confirmado pelas instruções | Limite para integração |
+|---|---|---|
+| `canUse()` | `getTarget()` em **4**, branch nulo em **9**, `isAlive()` em **13** e branch falso em **16**; retorna verdadeiro somente para referência não nula e viva nesse método | Não verifica diretamente LOS, alcance, tag ou cooldown; guards herdados, prioridades, concorrência e seleção final não foram executados |
+| `start()` | Zera `navigationCheckCooldown` (**1–2**), `jumpEnqueued` (**6–7**) e `attemptSonicDamageIn` (**27–28**); grava em `sonicEnqueued` (**23**) o retorno de `RandomSource.nextBoolean()` (**18**) | O booleano inicial não equivale à chance efetiva de um Sonic acertar nem permite inferir custo de mana ou período global |
+| `stop()` | Zera `jumpEnqueued` (**1–2**) e `sonicEnqueued` (**6–7**); chama `setRunning(false)` (**14–15**) | O corpo próprio não zera `attemptSonicDamageIn`, não limpa o alvo e não redefine animação; isso não demonstra persistência após nova inicialização nem define quando o escalonador cancela o goal |
+
+### Identidades seladas e fronteira de execução
+
+Classes auditadas: `ForsakenEntity.class` SHA-256 `72981b25b3af251b3ee66b6ef16b650997359ff94673ad500256b2d1cee0cde1`; `ACCompat.class` `333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b`; `ForsakenAttackGoal.class` `48cfdd6c370f68550d0d7af768466f99f330e8fd4f825a520411a1bc5d70fb55`.
+
+| Método | Descritor JVM | SHA-256 das instruções parseadas |
+|---|---|---|
+| `ForsakenEntity.lambda$static$0` | `(Lnet/minecraft/world/entity/LivingEntity;)Z` | `cfa4a5d278a63d29041f8af87ec32c148db680704cadaca1df546de4d46ea865` |
+| `ACCompat.targetSelector` | `(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;` | `b10a5989478262171604d8f1692ba5ad5da3f4d13f96e2ab39f78e9c57e61ca1` |
+| `ForsakenAttackGoal.canUse` | `()Z` | `6309c2f6f04ccaa8100eb422ad81cdd6f5ba1b05ff0a973157b378a546803661` |
+| `ForsakenAttackGoal.start` | `()V` | `8e2fdcc7854b68ac0ad8d5b4c04b16b82aa8183c47016eb03d549cb42a816797` |
+| `ForsakenAttackGoal.stop` | `()V` | `eca88a14990b3181b0622017a017334a9c1b23339bd8cdc51440e318258198b7` |
+
+**Estado mantido:** `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. A prova delimita o corpo dos cinco métodos próprios; não reconstrói a seleção herdada, o agendamento de goals, os valores finais de tags, resultados multiplayer ou permissões. Não prova frequência de ataques, número de hits, dano líquido nem segurança para mutar range, alvo ou animação. Nenhuma nova ficha, raiz mágica ou certificação é contabilizada nesta etapa.
