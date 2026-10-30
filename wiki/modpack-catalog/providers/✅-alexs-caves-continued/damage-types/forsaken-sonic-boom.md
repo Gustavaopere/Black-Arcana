@@ -116,3 +116,41 @@ Essa distinção invalida assumir que uma perk de dano em área pode obter a cat
 `ForsakenAttackGoal.start()` escolhe o estado `sonicEnqueued` e a animação consulta `ANIMATION_SONIC_ATTACK` / `ANIMATION_SONIC_BLAST`; `stop()` limpa flags e `setRunning(false)`. `knockBackAngle(LivingEntity,double,float)` delega a `ACCompat.knockback` com componentes construídos a partir de `yBodyRot`, `Mth.sin` e `Mth.cos`. Os valores de força aplicados e efeitos de colisão em mundo real não foram homologados. O goal não constitui um cast do Black Arcana: custos de mana, cooldown de feitiço, mana pool e progressão permanecem **não aplicáveis como contratos nativos provados**, em vez de assumir valores zero.
 
 **Pendências:** sem certificado estático integral desta ficha, sem hook mutador certificado, sem QA física, sem prova de direito de interceptação, owner/PvP/protection, número de hits, noção exata de período, alcance de LOS ou semântica integral dos helpers herdados. Registro: `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Não elevar o contador de fichas certificadas por esta auditoria parcial.
+
+
+## Animações, leitura de estado e knockback — helpers exatos 1.0.10
+
+**Fonte:** [manifesto SHA-exato de 10 métodos](EXACT-FORSAKEN-HELPERS-1.0.10.json) e [CI da inspeção](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41087017470); publisher JAR `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`. Foram verificados os SHA-256 das classes `ForsakenAttackGoal` (`48cfdd6c370f68550d0d7af768466f99f330e8fd4f825a520411a1bc5d70fb55`), `ForsakenEntity` (`72981b25b3af251b3ee66b6ef16b650997359ff94673ad500256b2d1cee0cde1`) e `ACCompat` (`333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b`). A inspeção cobre **somente métodos selecionados**, e não a IA herdada ou a execução completa em jogo.
+
+### Gating de animações e movimento
+
+- `ForsakenAttackGoal.tryAnimation(Animation)` verifica `ForsakenEntity.getAnimation()` (offset 4) contra `IAnimatedEntity.NO_ANIMATION` (7) e o branch `if_acmpne 23` (10). Quando a animação atual é `NO_ANIMATION`, chama `ForsakenEntity.setAnimation(Animation)` no offset 18 e retorna `true` (21–22); caso contrário retorna `false` (23–24). **Não significa que o novo ataque já atingiu o alvo.**
+- `ForsakenAttackGoal.isMovementFrozen()` compara o estado de animação com `ANIMATION_LEFT_PICKUP` (offset 7) e `ANIMATION_RIGHT_PICKUP` (20), retornando booleano de pertencimento a essas duas animações. Não considerar **toda** animação uma imobilização.
+- `ForsakenEntity.getAnimation()` lê o campo `currentAnimation`; `setAnimation(Animation)` escreve nesse mesmo campo. A existência dessa superfície **não prova** sincronização de rede por si só nem validação de servidor externo.
+- `ForsakenEntity.hasSonicCharge()` obtém o booleano do accessor sincronizado `SONIC_CHARGE` via `SynchedEntityData.get`; `setSonicCharge(boolean)` encaminha o argumento a `SynchedEntityData.set`. São métodos de leitura/escrita **nativos**, não hooks de perks certificados.
+- `ForsakenEntity.getSonarTarget()` lê `SONAR_ID`; devolve `null` quando o ID vale `-1`, ou chama `Level.getEntity(int)` nos demais casos. **SONAR_ID não equivale automaticamente a `Mob.getTarget()`**, usado no cálculo-base do Sonic Blast. Não confundir os dois caminhos para targeting.
+
+### Dano corpo a corpo versus dano Sonic
+
+`ForsakenAttackGoal.checkAndDealDamage(LivingEntity,double,float)` é uma superfície distinta dos dois callsites Sonic em `tick()`: consulta `hasLineOfSight` (5), distância e larguras das caixas; monta `DamageSources.mobAttack(ForsakenEntity)` (47), lê `Attributes.ATTACK_DAMAGE` e `AttributeInstance.getValue` (55–61), e chama `ACCompat.hurt(Entity,DamageSource,float)` (66). O fluxo do helper também consulta `RandomSource.nextInt(2)` e `nextInt(5)`, modifica `sonicEnqueued` em caminho condicionado e retorna um booleano. Estes símbolos **não** permitem transportar os valores `45.0f/4.0f` do Sonic Boom para a fórmula corpo a corpo, nem afirmar chance global de ataque só pelas constantes de randomização.
+
+`ForsakenAttackGoal.knockBackAngle(LivingEntity,double,float)` usa `yBodyRot`, `Mth.sin`, `Mth.cos` e a constante angular `0.017453292f`, delegando a `ACCompat.knockback(LivingEntity,double,double,double)` (offset 35). O corpo desse wrapper contém a única invocação `LivingEntity.knockback(double,double,double)` (offset 5), sem branches ou modificadores próprios. Isso confirma a **delegação**, mas não os deslocamentos efetivos quando as resistências, colisões e outros sistemas do Minecraft intervêm.
+
+### Índice exato de métodos
+
+| Método compilado | Descritor JVM | SHA-256 do método parseado |
+|---|---|---|
+| `isMovementFrozen` | `()Z` | `d6066616df310a8d53b81481d1dde352801433f246df9767437050be2d3d0e54` |
+| `tryAnimation` | `(Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;)Z` | `83c4dd2d1f87f654d3eeef7f4f6914b9360a52243cda2c9796a95d9581d4450b` |
+| `checkAndDealDamage` | `(Lnet/minecraft/world/entity/LivingEntity;DF)Z` | `e730ecfd665bf10060e4592ff81c16c91ce472541de43c2418c947da80eb4825` |
+| `knockBackAngle` | `(Lnet/minecraft/world/entity/LivingEntity;DF)V` | `8ef9a3e156ca8311e23507cde598367388a0ceffd92e5bf7fd33f09f003003fa` |
+| `hasSonicCharge` | `()Z` | `22a775652346057551780b9ee73aa9be765fc324bfce53d6424bf2159d51a111` |
+| `setSonicCharge` | `(Z)V` | `4af4bb0f7993dd0eebd895bd7c0f3a564eaa0ceb47bd33374ba6d2d27fe984cb` |
+| `getSonarTarget` | `()Lnet/minecraft/world/entity/Entity;` | `0508d61342066d9992ae16df6934341f8555d96b2d2e49675644bf2f072c5188` |
+| `getAnimation` | `()Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;` | `b377f6d233817c6c962ee3cce1af4f71ff4455d1dd019be76c8ec73addab4fbf` |
+| `setAnimation` | `(Lcom/github/alexmodguy/alexscaves/citadel/animation/Animation;)V` | `6929fc02dcd16b3ac008164d88f69c74ec7f7f5213dc84d807526dfb305bbd85` |
+| `knockback` | `(Lnet/minecraft/world/entity/LivingEntity;DDD)V` | `b5340a2a4a3dfaecf0a4f39700ee15b8c0134015b594734d0f22c5e0548095f7` |
+
+### Consequências para perks e validação
+
+O player poderá ter interesse em perks de seleção de alvo, knockback, estados de animação ou dano, mas **nenhum desses métodos configura, por si, contrato estável de mutação**. A responsabilidade pela IA, pelo `LivingEntity.knockback`, pelo estado sincronizado e pelo `LivingEntity.hurt` continua nos owners nativos. Não duplicar settlement, atribuição de dano ou cálculos de seleção de alvos. Pendente comprovar conflitos de IA, permissões, PvP, resistência a knockback, frequência e resultados de hit em QA real. **Contrato do Forsaken permanece ⚠️ parcial:** `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Nenhum contador é incrementado neste lote.

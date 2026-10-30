@@ -97,3 +97,7 @@ A auditoria [`EXACT-DARK-ARROW-STATE-1.0.10.json`](EXACT-DARK-ARROW-STATE-1.0.10
 ## Encantamentos que definem os flags da Dark Arrow
 
 O [manifesto SHA-exato](EXACT-DREADBOW-DECISIONS-1.0.10.json) rastreia `PRECISE_VOLLEY` até o slot local 8, usado para selecionar `2.0f`/`3.0f` no setter de dano da Dark Arrow, e `TWILIGHT_PERFECTION` mais `getPerfectShotTicks(ItemStack) > 0` até o slot local 10, usado pelo setter `PERFECT_SHOT`. `RELENTLESS_DARKNESS` e `SHADED_RESPITE` também são consultados pelo Dreadbow. Isso não adiciona novas magias ou contratos completos para perks; a implementação do contador e a colisão são descritas agora nas fichas consolidadas, enquanto autoridade de mutação e QA física permanecem pendentes.
+
+## Forsaken Sonic — predicados e knockback
+
+O [manifesto dos 10 helpers selecionados](EXACT-FORSAKEN-HELPERS-1.0.10.json) diferencia o gate `NO_ANIMATION` em `tryAnimation`, as duas animações de pickup que congelam movimento, o estado nativo `SONIC_CHARGE` e a delegação `ACCompat.knockback → LivingEntity.knockback`. O helper `checkAndDealDamage` utiliza `mobAttack` e `ATTACK_DAMAGE`, **não** a factory `causeForsakenSonicBoomDamage`. A leitura `SONAR_ID` e `Mob.getTarget()` tampouco são alvos equivalentes por presunção. [Ficha e pendências](forsaken-sonic-boom.md); contrato ainda parcial e hooks não homologados.

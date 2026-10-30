@@ -39,3 +39,7 @@ Uma perk de duração, alcance, dano, tipo de alvo ou frequência precisa escolh
 ## Acid — dois emissores com contratos distintos
 
 A [prova de Acid](EXACT-ACID-CONTRACT-1.0.10.md) acompanha a fórmula ambiental probabilística, a contagem de peças Hazmat, o contato do drum, seu movimento e os guards de colocação/limpeza de fluido. Esses caminhos compartilham o tipo de dano, mas mantêm filtros e parâmetros próprios. Corrosão, o sistema completo de fluidos e toda a AI do Brainiac continuam superfícies separadas; o recorte de dano não encerra esses sistemas nem o provider.
+
+## Forsaken Sonic — contrato intermediário dos helpers
+
+[Auditoria de 10 helpers do JAR 1.0.10](damage-types/EXACT-FORSAKEN-HELPERS-1.0.10.json) distingue `tryAnimation`, `isMovementFrozen`, getters/setters de estado `SONIC_CHARGE`, `getSonarTarget`, `checkAndDealDamage` com `mobAttack` e `ACCompat.knockback`. O caminho de dano Sonic permanece distinto de melee, e nenhuma intervenção em `LivingEntity.hurt`, `SynchedEntityData` ou `knockback` foi habilitada. Contrato estático integral, hooks mutadores e QA física seguem pendentes.
