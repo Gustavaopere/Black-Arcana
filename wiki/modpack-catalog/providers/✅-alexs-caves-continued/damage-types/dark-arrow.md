@@ -80,3 +80,14 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 - Não é seguro promover a possibilidade de friendly-fire, valor de dano ou aumento de precisão sem seguir os saltos, o destino dos operandos e o corpo de `ACCompat.hurt()`.
 
 **Limite metodológico:** offsets, referências de método, testes e desvios são provas do *bytecode*; a análise não reconstruiu exceções, switch dispatch, todos os caminhos de CFG ou condições de runtime. `NOT_CERTIFIED` para comportamento integral; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Black Arcana não deve substituir settlement, autorizações de servidor, segurança do mundo ou rotinas próprias do provider.
+
+## Helpers de dano e tiro perfeito no JAR 1.0.10
+
+**Grau da prova:** `SHA_EXACT_HELPER_ABI_AND_BYTECODE`. [Manifesto fixado](EXACT-DAMAGE-HELPERS-1.0.10.json) e [CI da auditoria](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40997154302).
+
+- `public float getShadowArrowDamage()` — `()F`, SHA-256 do método `afe89892cb041a585baf6a4c38a5877942193db84612d830d0f2babdc7c080cf`: lê `SynchedEntityData.get` pelo accessor `SHADOW_ARROW_DAMAGE`, converte `Float.floatValue()` e retorna. **Não** calcula a fórmula de dano nem mostra quando o accessor foi definido.
+- `public boolean isPerfectShot()` — `()Z`, SHA-256 do método `c91a50e4a585ac94cd3a7680b8b7faaebe31351cc261c057ae469909551a99cd`: lê `SynchedEntityData.get` pelo accessor `PERFECT_SHOT`, converte `Boolean.booleanValue()` e retorna. **Não** indica por si só chance de tiro perfeito, atribuição ou definição do flag.
+- Ambos pertencem a `com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class` (SHA-256 `089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad`).
+- `public static boolean hurt(net.minecraft.world.entity.Entity, net.minecraft.world.damagesource.DamageSource, float)` — `(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z` na classe `com/github/alexmodguy/alexscaves/server/misc/ACCompat.class` (SHA-256 `333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b`). Seu bytecode possui cinco instruções e encaminha `Entity, DamageSource, float` para `Entity.hurt(DamageSource,float)`, retornando diretamente o booleano; não há branch próprio nesse wrapper.
+
+**Para perks:** a origem do valor armazenado, os pontos de escrita, o cálculo de `PERFECT_SHOT`, a validação de aliança e os efeitos de `Entity.hurt` ainda exigem evidência específica. `NOT_CERTIFIED` / `NOT_VERIFIED` / `NOT_TESTED` / `NO_MUTATION`. Não duplicar settlement nem substituir o targeting do projectile.
