@@ -55,7 +55,7 @@ class DarkArrowCardTests(unittest.TestCase):
     def test_card_provenance_and_fail_closed(self):
         self.assertIn(self.index["DreadbowItem.class"]["sha256"],self.card)
         self.assertIn(self.index["DarkArrowEntity.class"]["sha256"],self.card)
-        for tok in ("NOT_CERTIFIED","NOT_VERIFIED","NOT_TESTED","NO_MUTATION"):
+        for tok in ("STATIC_TECHNICAL_CATALOG_ONLY","NOT_VERIFIED","NOT_TESTED","NO_MUTATION"):
             self.assertIn(tok,self.card)
         self.assertEqual(self.d["limits"]["runtime_writers"],"NOT_CERTIFIED")
 if __name__=="__main__":

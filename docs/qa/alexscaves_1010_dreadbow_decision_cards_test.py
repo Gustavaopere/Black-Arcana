@@ -50,7 +50,7 @@ class DreadbowDecisionCards(unittest.TestCase):
     def test_card_records_pins_and_no_false_perk_certification(self):
         for tok in ("PRECISE_VOLLEY","TWILIGHT_PERFECTION","getPerfectShotTicks",
                     self.obj["class_sha256"],
-                    "NOT_CERTIFIED","NOT_VERIFIED","NOT_TESTED","NO_MUTATION"):
+                    "STATIC_TECHNICAL_CATALOG_ONLY","NOT_VERIFIED","NOT_TESTED","NO_MUTATION"):
             self.assertIn(tok,self.card)
         self.assertIn("EXACT-DREADBOW-DECISIONS-1.0.10.json", self.card)
 

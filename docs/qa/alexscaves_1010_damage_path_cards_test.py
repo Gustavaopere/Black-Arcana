@@ -47,14 +47,16 @@ class DamagePathCards(unittest.TestCase):
                     card = (FOLDER / name).read_text(encoding="utf-8")
                     self.assertIn(cls["class_sha256"], card)
                     self.assertIn(cls["class_path"], card)
-                    self.assertIn("## Aprofundamento de fluxo — 1.0.10", card)
+                    self.assertIn("## 4. Impacto, fórmula e filtros causais" if name == "dark-arrow.md"
+                                  else "## Aprofundamento de fluxo — 1.0.10", card)
                     for method in cls["methods"]:
                         self.assertIn(method["method_descriptor"], card)
                         for window in method["factory_windows"]:
                             self.assertIn(window["factory_name"], card)
                             self.assertIn(str(window["invocation_offset"]), card)
-                    for token in ("NOT_CERTIFIED", "NOT_VERIFIED", "NOT_TESTED"):
+                    for token in ("NOT_VERIFIED", "NOT_TESTED"):
                         self.assertIn(token, card)
+                    self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if name == "dark-arrow.md" else "NOT_CERTIFIED", card)
 
     def test_no_full_flow_claim(self):
         self.assertEqual(self.e["limits"]["control_flow_reachability"], "NOT_PROVEN")

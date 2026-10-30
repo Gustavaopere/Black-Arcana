@@ -51,9 +51,10 @@ class DamageConsumerCardsTest(unittest.TestCase):
                     if any(x["factory_name"] == factory["method"]
                            for x in c["direct_factory_calls"]):
                         self.assertIn(c["class"], text)
-                for absent in ("NOT_VERIFIED", "NOT_TESTED", "NOT_CERTIFIED",
+                for absent in ("NOT_VERIFIED", "NOT_TESTED",
                                "NO_MUTATION"):
                     self.assertIn(absent, text)
+                self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if id == "dark_arrow" else "NOT_CERTIFIED", text)
         self.assertFalse(self.obj["limits"]["provider_universe_closed"])
         self.assertTrue(self.obj["limits"]["static_only"])
 
