@@ -48,7 +48,7 @@ CALLS={"getfield","putfield","getstatic","putstatic","invokevirtual","invokestat
        "invokespecial","invokeinterface","invokedynamic"}
 BRANCHES={"goto","goto_w","tableswitch","lookupswitch","jsr","jsr_w"}
 MAX_SELECTED=22
-MAX_ANCHORS_PER_METHOD=230
+MAX_ANCHORS_PER_METHOD=500
 MAX_WINDOW_SIZE=30
 
 class ForsakenEvidenceError(ValueError):
