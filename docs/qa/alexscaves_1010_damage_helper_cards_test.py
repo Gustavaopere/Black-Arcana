@@ -14,6 +14,7 @@ CARDS = {
     "hurt": "desolate-dagger.md",
     "enchantLevel": "desolate-dagger.md",
 }
+STATIC_CARDS = frozenset({"dark-arrow.md", "desolate-dagger.md"})
 
 class HelperCardsTest(unittest.TestCase):
     @classmethod
@@ -76,7 +77,7 @@ class HelperCardsTest(unittest.TestCase):
                 for token in ("NOT_VERIFIED", "NOT_TESTED",
                               "NO_MUTATION"):
                     self.assertIn(token, card)
-                self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if path == "dark-arrow.md" else "NOT_CERTIFIED", card)
+                self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if path in STATIC_CARDS else "NOT_CERTIFIED", card)
 
 if __name__ == "__main__":
     unittest.main()

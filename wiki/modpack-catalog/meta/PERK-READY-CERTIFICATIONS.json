@@ -6419,6 +6419,86 @@
           "reason": "Ficha e evidências compiladas do JAR 1.0.10 são seladas; fonte 1.1.1 é adjacente e QA física, configuração efetiva e integração executável permanecem pendentes."
         }
       }
+    },
+    "✅-alexs-caves-continued/damage-types/desolate-dagger.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de Desolate Dagger (equipamento ou dano/entidade) e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/desolate-dagger.md",
+          "reason": "JAR SHA-exato fixa DamageType, entidade, registry, dimensões e produtor; tipos Dark Arrow e Desolate Dagger permanecem distintos apesar do JSON compartilhado."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/desolate-dagger.md",
+          "reason": "Todos os vinte métodos próprios da entidade foram lidos; countdown/stab, tentativa servidor, descarte incondicional e continuação do movimento estão separados de apresentação e herança."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/desolate-dagger.md",
+          "reason": "Fórmula 2+2L, Sated Blade condicional, geometria 0.6, contador default e sobrescrita do item, RNG, passo0.2 e arrasto são localizados no binário."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/desolate-dagger.md",
+          "reason": "Target e player resolvem IDs inteiros no Level atual, sem nova consulta em área ou filtro próprio de colisão/aliança/distância no stab; alcance do produtor permanece separado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/desolate-dagger.md",
+          "reason": "A entidade não debita recursos no tick; custo do melee e criação são do item, enquanto saturação é resultado condicional após dano aceito e source Player."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/desolate-dagger.md",
+          "reason": "ITEMSTACK direto e PLAYER_ID default sem escrita no produtor delimitam autoria e efeitos; getters/setters e dados sincronizados não homologam hook mutador nem snapshot estável."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/desolate-dagger.md",
+          "reason": "Ficha, classes, recursos e instruções são selados contra o JAR1.0.10; source1.1.1 não fornece parâmetros, hooks NOT_VERIFIED e QA física NOT_TESTED explícitos."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/equipment/desolate-dagger.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de Desolate Dagger (equipamento ou dano/entidade) e dos consumidores delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/desolate-dagger.md",
+          "reason": "O registro desolate_dagger, supplier e construtor do item SHA-exato ligam o equipamento à classe DesolateDaggerItem e seus seis métodos próprios."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/desolate-dagger.md",
+          "reason": "O callback delega a SwordItem.hurtEnemy e condiciona a produção ao seu booleano; a ficha acompanha loop, vínculos, referência do stack e inserção sem confundir hook com aceitação de dano."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/desolate-dagger.md",
+          "reason": "Tier Diamond, durabilidade360, argumentos0/-2F da factory de atributos, condição1+DoubleStab e orbitFor20/40+nextInt10 são fixados por bytecode e separados dos resultados físicos."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/desolate-dagger.md",
+          "reason": "A vítima é recebida pelo callback e ligada por ID inteiro; a origem copia atacante e não há seleção própria por distância, área, aliança ou PvP no item."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/desolate-dagger.md",
+          "reason": "Custos herdados permanecem delegados sem débito adicional próprio por entidade; Pure Darkness é comparado pelo helper de reparo, e o loot Underzealot, chances e aquisição são selados em recursos exatos."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/desolate-dagger.md",
+          "reason": "A ficha separa nível inicial e leitura posterior do stack, autoria não escrita pelo produtor e parent Better Combat sem tuning local; preserva settlement nativo e exige hook mutador validado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/desolate-dagger.md",
+          "reason": "Ficha, classes e recursos1.0.10 têm hashes e localizadores JVM reproduzíveis; fonte1.1.1 não fornece parâmetros e hooks/QA física continuam explicitamente pendentes."
+        }
+      }
     }
   },
   "providers": {},

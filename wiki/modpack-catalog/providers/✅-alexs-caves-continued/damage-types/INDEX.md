@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 2/11.**
+**Fichas catalogadas (somente fichas detectadas): 3/11.**
 
-**Barra das fichas catalogadas:** `███░░░░░░░░░░░░░░░░░ 18.2%`
+**Barra das fichas catalogadas:** `█████░░░░░░░░░░░░░░░ 27.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 2/11.**
+**Homologadas para perks (somente fichas detectadas): 3/11.**
 
-**Barra dos contratos técnicos estáticos:** `███░░░░░░░░░░░░░░░░░ 18.2%`
+**Barra dos contratos técnicos estáticos:** `█████░░░░░░░░░░░░░░░ 27.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -22,7 +22,7 @@
 |---|---|---|---|---|---|
 | ✅ | Acid | [ficha/acid.md](acid.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dark Arrow | [ficha/dark-arrow.md](dark-arrow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Desolate Dagger | [ficha/desolate-dagger.md](desolate-dagger.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Desolate Dagger | [ficha/desolate-dagger.md](desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Forsaken Sonic Boom | [ficha/forsaken-sonic-boom.md](forsaken-sonic-boom.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gumball | [ficha/gumball.md](gumball.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Intentional Game Design | [ficha/intentional-game-design.md](intentional-game-design.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

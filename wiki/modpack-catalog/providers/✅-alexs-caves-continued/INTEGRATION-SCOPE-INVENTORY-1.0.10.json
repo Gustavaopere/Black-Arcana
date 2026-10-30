@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, one Dreadbow equipment contract and two damage contracts (Acid and Dark Arrow) with their scoped native consumers; no additional semantic magic root.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, two equipment contracts (Dreadbow and Desolate Dagger) and three damage contracts (Acid, Dark Arrow and Desolate Dagger) with scoped native consumers; no additional semantic magic root.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -306,20 +306,26 @@
     },
     "equipment_contracts": {
       "cards": [
-        "equipment/dreadbow.md"
+        "equipment/dreadbow.md",
+        "equipment/desolate-dagger.md"
       ],
       "family_universe_closed": false,
-      "evidence": "EXACT-DREADBOW-CONTRACTS-1.0.10.md"
+      "evidence": "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md",
+      "related_evidence": [
+        "EXACT-DREADBOW-CONTRACTS-1.0.10.md"
+      ]
     },
     "damage_types": {
-      "documented_static_contracts": 2,
+      "documented_static_contracts": 3,
       "identified_objects": 11,
       "cards": [
         "damage-types/acid.md",
-        "damage-types/dark-arrow.md"
+        "damage-types/dark-arrow.md",
+        "damage-types/desolate-dagger.md"
       ],
-      "evidence": "EXACT-ACID-CONTRACT-1.0.10.md",
+      "evidence": "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md",
       "related_evidence": [
+        "EXACT-ACID-CONTRACT-1.0.10.md",
         "EXACT-DREADBOW-CONTRACTS-1.0.10.md"
       ]
     }
