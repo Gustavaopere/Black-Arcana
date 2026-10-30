@@ -1,6 +1,6 @@
 # Alex's Caves Continued 1.0.10 — escopo de integrações ainda aberto
 
-O recorte das oito ações mágicas tem contratos estáticos próprios. Ele **não cobre todo o conteúdo integrável por perks** do mod. A classificação histórica `EXCLUDED` em [42 classes de interação](ITEM-ACTION-DISPOSITION-1.0.10.md) significa exclusão do denominador de magia, não exclusão do trabalho de integração.
+Os recortes das oito ações mágicas e dos oito efeitos registrados têm contratos estáticos próprios. Eles **não cobrem todo o conteúdo integrável por perks** do mod. A classificação histórica `EXCLUDED` em [42 classes de interação](ITEM-ACTION-DISPOSITION-1.0.10.md) significa exclusão do denominador de magia, não exclusão do trabalho de integração.
 
 Autoridade: JAR 1.0.10, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, 75.279.314 bytes. O [inventário JSON](INTEGRATION-SCOPE-INVENTORY-1.0.10.json) enumera os nomes exatos abaixo a partir do artefato, sem importar os parâmetros da fonte 1.1.1. [Limites e reprodução](EXACT-TECHNICAL-CONTRACTS-1.0.10.md).
 
@@ -10,7 +10,7 @@ Autoridade: JAR 1.0.10, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-25
 | Itens / equipamento | 81 classes externas de itens; 42 com assinaturas de interação já classificadas semanticamente | Individualizar os contratos relevantes de armas, movimento, comida, defesa, itens passivos e helpers; separar classes base de registros concretos |
 | Enchantments | 51 JSONs em `data/alexscaves/enchantment/` | Ficha por contrato: nível/custo/slots/exclusividade e consumidor real de cada modifier, inclusive tecnologia/armas |
 | Damage types | 11 JSONs em `data/alexscaves/damage_type/` | Mapear construtores de DamageSource, tags de bypass, autoria e settlement; um nome não prova escola/dano aceito |
-| Mob effects | Oito campos de registro de efeitos | Duração/amplifier, tick, atributos, consumidores/eventos e cleanup; registro não equivale a aplicação |
+| Mob effects | Oito campos de registro de efeitos | **8/8 contratos estáticos documentados**, incluindo aplicações e consumidores; [fichas](effects/INDEX.md) e [prova exata](EXACT-EFFECT-CONTRACTS-1.0.10.md). Hooks e QA física pendentes |
 | Potions | 12 campos de registro de poções | Conteúdo, níveis/tempo e aquisição, sem contar variantes como novas magias |
 | Config servidor | 40 campos em `ACServerConfig` | Defaults/bounds, momento de leitura, autoridade global/por jogador e consumidores; não presumir valores em execução |
 | Config cliente | 15 campos em `ACClientConfig` | Distinguir HUD, luz, shader, som e câmera de comportamento servidor e atributos |
@@ -28,4 +28,4 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito fichas certificadas sustentam ✅ no recorte de `actions/`. O provider inteiro permanece pendente, e o registro alfabético continua em **Alex's Caves Continued**. Um percentual 8/8 de fichas observadas não fecha o universo maior identificado aqui. Nenhuma família acima foi declarada inexistente por ainda não possuir ficha individual.
+As oito ações e os oito efeitos certificados sustentam ✅ nos recortes de `actions/` e `effects/`. O provider inteiro permanece pendente, e o registro alfabético continua em **Alex's Caves Continued**. Um percentual 16/16 de fichas observadas não fecha o universo maior identificado aqui. Nenhuma família acima foi declarada inexistente por ainda não possuir ficha individual. A próxima família permanece dentro deste provider: enchantments e seus consumidores de armas/equipamentos, além dos demais sistemas ainda abertos.

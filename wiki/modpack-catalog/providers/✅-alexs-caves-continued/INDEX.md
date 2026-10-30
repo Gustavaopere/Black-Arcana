@@ -4,7 +4,7 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 8/8.**
+**Fichas catalogadas (somente fichas detectadas): 16/16.**
 
 **Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
@@ -12,7 +12,7 @@
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 8/8.**
+**Homologadas para perks (somente fichas detectadas): 16/16.**
 
 **Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
@@ -32,12 +32,21 @@
 | ✅ | Sugar Staff Hex Cast | [actions/sugar-staff-hex-cast.md](actions/sugar-staff-hex-cast.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Sugar Staff Peppermint Cast | [actions/sugar-staff-peppermint-cast.md](actions/sugar-staff-peppermint-cast.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Totem Possession Remote Control | [actions/totem-possession-remote-control.md](actions/totem-possession-remote-control.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Bubbled | [effects/bubbled.md](effects/bubbled.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Darkness Incarnate | [effects/darkness-incarnate.md](effects/darkness-incarnate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Deepsight | [effects/deepsight.md](effects/deepsight.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Irradiated | [effects/irradiated.md](effects/irradiated.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Magnetizing | [effects/magnetizing.md](effects/magnetizing.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Rage | [effects/rage.md](effects/rage.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Stunned | [effects/stunned.md](effects/stunned.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Sugar Rush | [effects/sugar-rush.md](effects/sugar-rush.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Subpastas
 
 | Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |
 |---|---|---:|---:|---|
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
+| ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 
 ## Critério do ✅
 

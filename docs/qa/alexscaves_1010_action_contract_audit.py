@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Seal eight static Alex's Caves contracts against one exact JAR; no runtime claims."""
+"""Seal a bounded Alex's Caves contract family against one exact JAR; no runtime claims."""
 from __future__ import annotations
 
 import argparse
@@ -18,12 +18,16 @@ ACTIONS = frozenset("actions/" + name + ".md" for name in (
     "magic-conch-summon-deep-ones", "totem-possession-remote-control",
     "occult-gem-beholder-observation", "cloak-darkness-incarnate",
     "conversion-crucible-biome-conversion"))
+EFFECTS = frozenset("effects/" + name + ".md" for name in (
+    "irradiated", "magnetizing", "rage", "stunned", "bubbled", "deepsight",
+    "darkness-incarnate", "sugar-rush"))
 SCOPE = {"schema_version": 1, "version": "1.0.10",
          "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
          "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR", "mutating_hook": "NOT_VERIFIED",
          "physical_qa": "NOT_TESTED", "provider_universe_closed": False,
          "semantic_magic_roots": 8, "artifact_sha1": SHA1,
          "artifact_sha256": SHA256, "artifact_size_bytes": SIZE_BYTES}
+EFFECT_SCOPE = {**SCOPE, "catalog_family": "MOB_EFFECTS"}
 ADJACENT_SOURCE = {"repository": "Codx-org/AlexsCavesContinued",
                    "revision": "523308608422ab8e31974befa7111ecdf495dd37",
                    "declared_version": "1.1.1",
@@ -37,6 +41,14 @@ class AuditError(ValueError):
 def require(condition, message):
     if not condition:
         raise AuditError(message)
+
+
+def profile_spec(profile):
+    """Select a literal family without changing the existing action contract."""
+    require(profile in ("actions", "effects"), "unknown catalog profile")
+    if profile == "effects":
+        return EFFECT_SCOPE, EFFECTS, "effect_evidence"
+    return SCOPE, ACTIONS, "action_evidence"
 
 
 def unique_pairs(pairs):
@@ -100,17 +112,19 @@ def parse_javap(raw, owner):
     return methods
 
 
-def validate_structure(manifest):
+def validate_structure(manifest, *, profile="actions"):
+    scope, roster, evidence_key = profile_spec(profile)
     require(isinstance(manifest, dict), "manifest must be an object")
-    require(set(manifest) == set(SCOPE) | {"adjacent_source", "cards", "action_evidence", "classes", "resources"},
+    require(set(manifest) == set(scope) | {"adjacent_source", "cards", evidence_key, "classes", "resources"},
             "unexpected or missing manifest fields")
-    for key, value in SCOPE.items():
+    for key, value in scope.items():
         require(type(manifest[key]) is type(value) and manifest[key] == value, "scope/identity mismatch: " + key)
     require(manifest["adjacent_source"] == ADJACENT_SOURCE, "adjacent source is not the declared corroboration snapshot")
-    cards, evidence, classes, resources = (manifest[key] for key in ("cards", "action_evidence", "classes", "resources"))
-    require(isinstance(cards, dict) and set(cards) == ACTIONS and all(digest(h) for h in cards.values()),
-            "cards must seal exactly the eight literal action paths")
-    require(isinstance(evidence, dict) and set(evidence) == ACTIONS, "action evidence must cover exactly eight actions")
+    cards, evidence, classes, resources = (manifest[key] for key in ("cards", evidence_key, "classes", "resources"))
+    require(isinstance(cards, dict) and set(cards) == roster and all(digest(h) for h in cards.values()),
+            "cards must seal exactly the eight literal " + profile + " paths")
+    require(isinstance(evidence, dict) and set(evidence) == roster,
+            "evidence must cover exactly the eight " + profile)
     require(isinstance(classes, dict) and 8 <= len(classes) <= 128 and isinstance(resources, dict) and len(resources) <= 256,
             "invalid class/resource mapping limits")
     method_classes, total_anchors = set(), 0
@@ -143,21 +157,22 @@ def validate_structure(manifest):
     require(all(canonical(path) and not path.endswith(("/", ".class")) and digest(h) for path, h in resources.items()),
             "invalid resource paths/hashes")
     referenced_classes, referenced_resources = set(), set()
-    for action, record in evidence.items():
-        require(isinstance(record, dict) and set(record) == {"classes", "resources"}, "invalid action evidence")
+    for card, record in evidence.items():
+        require(isinstance(record, dict) and set(record) == {"classes", "resources"}, "invalid card evidence")
         for key, mapping, referenced in (("classes", classes, referenced_classes), ("resources", resources, referenced_resources)):
             paths = record[key]
             require(isinstance(paths, list) and all(isinstance(path, str) for path in paths)
                     and len(paths) == len(set(paths)) and all(path in mapping for path in paths), "unknown/duplicate evidence paths")
             referenced.update(paths)
-        require(set(record["classes"]) & method_classes, "action lacks an anchored class: " + action)
+        require(set(record["classes"]) & method_classes, "card lacks an anchored class: " + card)
     require(referenced_classes == set(classes) and referenced_resources == set(resources), "unreferenced class/resource evidence")
 
 
-def validate_cards(manifest, providerroot):
+def validate_cards(manifest, providerroot, *, profile="actions"):
+    _, roster, _ = profile_spec(profile)
     root = Path(providerroot).resolve(strict=True)
     for relative, expected in manifest["cards"].items():
-        require(relative in ACTIONS and canonical(relative), "invalid card path")
+        require(relative in roster and canonical(relative), "invalid card path")
         card = (root / relative).resolve(strict=True)
         require(card.is_relative_to(root) and card.is_file(), "card escapes provider root: " + relative)
         require(hashlib.sha256(card.read_bytes()).hexdigest() == expected, "stale card seal: " + relative)
@@ -177,10 +192,11 @@ def artifact_identity(path):
     return {"sha1": sha1.hexdigest(), "sha256": sha256.hexdigest(), "size_bytes": size}
 
 
-def audit(jar, manifest, providerroot, javap, *, expected_identity=None):
+def audit(jar, manifest, providerroot, javap, *, expected_identity=None, profile="actions"):
     """expected_identity is a zero-argument synthetic-test seam, never a CLI option."""
-    validate_structure(manifest)
-    validate_cards(manifest, providerroot)
+    scope, roster, _ = profile_spec(profile)
+    validate_structure(manifest, profile=profile)
+    validate_cards(manifest, providerroot, profile=profile)
     jar = Path(jar).resolve(strict=True)
     observed = artifact_identity(jar)
     require(observed == (expected_identity or pinned_identity)(), "exact publisher artifact identity mismatch")
@@ -218,13 +234,16 @@ def audit(jar, manifest, providerroot, javap, *, expected_identity=None):
     require(all(getattr(initial_stat, field) == getattr(final_stat, field)
                 for field in ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns"))
             and artifact_identity(jar) == observed, "artifact changed during audit")
-    validate_cards(manifest, providerroot)
-    return {"status": "PASS", "version": "1.0.10", "artifact": observed,
-            "claim_scope": SCOPE["claim_scope"], "evidence_grade": SCOPE["evidence_grade"],
+    validate_cards(manifest, providerroot, profile=profile)
+    report = {"status": "PASS", "version": "1.0.10", "artifact": observed,
+            "claim_scope": scope["claim_scope"], "evidence_grade": scope["evidence_grade"],
             "mutating_hook": "NOT_VERIFIED", "physical_qa": "NOT_TESTED", "provider_universe_closed": False,
-            "semantic_magic_roots": 8, "cards_checked": 8, "classes_checked": len(manifest["classes"]),
+            "semantic_magic_roots": 8, "cards_checked": len(roster), "classes_checked": len(manifest["classes"]),
             "resources_checked": len(manifest["resources"]), "methods_checked": checked_methods,
             "instruction_anchors_checked": checked_anchors}
+    if profile == "effects":
+        report["catalog_family"] = scope["catalog_family"]
+    return report
 
 
 def main(argv=None):
@@ -232,9 +251,11 @@ def main(argv=None):
     for flag in ("jar", "manifest", "provider-root", "javap"):
         parser.add_argument("--" + flag, required=True, type=Path)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--profile", choices=("actions", "effects"), default="actions")
     args = parser.parse_args(argv)
     try:
-        report = audit(args.jar, load_manifest(args.manifest), args.provider_root, args.javap)
+        report = audit(args.jar, load_manifest(args.manifest), args.provider_root, args.javap,
+                       profile=args.profile)
     except (AuditError, OSError, zipfile.BadZipFile, subprocess.SubprocessError, json.JSONDecodeError) as error:
         parser.exit(1, "audit failed: " + str(error) + "\n")
     rendered = json.dumps(report, indent=2) + "\n"
