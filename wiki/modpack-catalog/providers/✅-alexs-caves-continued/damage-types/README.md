@@ -86,3 +86,9 @@ A inspeção [`EXACT-DAMAGE-HELPERS-1.0.10.json`](EXACT-DAMAGE-HELPERS-1.0.10.js
 | `isPerfectShot` | `()Z` | ⚠️ ABI / operações observadas; hook `NOT_VERIFIED` |
 
 **Atenção:** `45.0f` e `4.0f` são retornos da função para uma classificação de target; a operação adicional `ceil(base×0.65)` pertence a **um** dos caminhos de `ForsakenAttackGoal.tick()`, não a todos. Não inferir dano final, controle de autoria, regressão de datapack ou hook mutador a partir das cinco ABIs.
+
+## Dark Arrow — propagação do estado do Dreadbow
+
+A auditoria [`EXACT-DARK-ARROW-STATE-1.0.10.json`](EXACT-DARK-ARROW-STATE-1.0.10.json) adiciona os defaults compilados `SHADOW_ARROW_DAMAGE=0.0f` e `PERFECT_SHOT=false`, dois setters diretos de `SynchedEntityData` e três chamadas em `DreadbowItem` (`releaseUsing`: dano e tiro perfeito; `onUseTick`: dano). A compilação apresenta argumentos `2.0f` / `3.0f` em `releaseUsing` e `2.0f` em `onUseTick`; não estabelece dano efetivo, chance de perfect shot, autorização nem hook estável.
+
+**Escopo:** 5 classes candidatas, 4 selecionadas, 28 referências/anchors simbólicas; sem adicionar raízes mágicas ou contratos `COMPLETE_PERK_READY`. A [ficha Dark Arrow](dark-arrow.md) identifica offsets JVM e limites para perks.

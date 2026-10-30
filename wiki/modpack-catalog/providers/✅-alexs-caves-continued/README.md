@@ -46,3 +46,7 @@ Alex's Caves mantém autoridade sobre cast, custo, cooldown, dano, movimento, AI
 ## Histórico preservado
 
 A [auditoria de identidade do artefato](EXACT-1.0.10-ARTIFACT-AUDIT.md), a [disposição semântica de 42 classes](ITEM-ACTION-DISPOSITION-1.0.10.md), o [checkpoint de materialização](INDIVIDUAL-ACTION-CARDS-CHECKPOINT.md) e o [resumo de identidades](actions/SUPERNATURAL-ACTION-CARDS.md) permanecem como histórico. As PRs #944 e #945 foram preservadas e aprofundadas pelo exame binário exato; a fonte 1.1.1 ficou identificada como corroboração adjacente. O JAR e os assets do provider não são distribuídos neste repositório.
+
+### Estado sincronizado de Dark Arrow
+
+No JAR 1.0.10, `DarkArrowEntity.defineSynchedData` atribui defaults `0.0f` e `false`, e `DreadbowItem` contém as chamadas diretas a ambos os setters, com argumentos estáticos `2.0f`/`3.0f` no caminho `releaseUsing` e `2.0f` em `onUseTick` ([manifesto de estado](damage-types/EXACT-DARK-ARROW-STATE-1.0.10.json)). O contrato é somente de bytecode; nenhum hook mutador, fórmula final de dano ou QA física foi certificado.
