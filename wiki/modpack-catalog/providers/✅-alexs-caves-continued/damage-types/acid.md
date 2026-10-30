@@ -31,7 +31,7 @@ Essas são **entradas textuais diretas** dos seis arquivos `data/*/tags/damage_t
 
 | Capacidade pretendida | Situação |
 |---|---|
-| Classe criadora de `DamageSource` e caminho de disparo | `NÃO VERIFICADO` |
+| Factory de `DamageSource` / chamadas JVM | ✅ localizadas estaticamente; comportamento e caminhos efetivos `NÃO VERIFICADO` |
 | Origem, atacante, owner, attribution e condições de PvP | `NÃO VERIFICADO` |
 | Fórmula de dano, mitigação, críticos e resistências | `NÃO VERIFICADO` |
 | Alvos elegíveis, tipo target/área, alcance, raio e filtros | `NÃO VERIFICADO` |
@@ -46,3 +46,22 @@ Essas são **entradas textuais diretas** dos seis arquivos `data/*/tags/damage_t
 O *provider* mantém autoridade sobre a criação, classificação e aplicação de dano. Black Arcana não altera `DamageSource`, escola, dano, tags ou projéteis sem evidência dos consumidores Java e hooks seguros. O RPG Skill Tree fornece perks/atributos somente através de boundary verificada, sem double-processing. **Fail-closed:** `NO_MUTATION` até a auditoria dos consumidores e a validação específica.
 
 **Contabilidade:** 1/11 recursos de tipo de dano documentados; **+0 raízes mágicas novas**. Este objeto não recebe status `COMPLETE_PERK_READY` apenas por existir como JSON.
+
+## Evidência compilada 1.0.10 — factory e consumidores diretos
+
+**Escopo:** `SHA_EXACT_STATIC_FACTORY_AND_DIRECT_CALLSITE_ONLY`. [Manifesto dos consumidores](EXACT-CONSUMERS-1.0.10.json) · [CI da auditoria](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40993193816).
+
+- **Classe de fábrica:** `com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class`, SHA-256 `389fb88f8d6e1515e3dfe7f401a728bb33629666bd2319ae7e25668f710e4ef6`.
+- **Método:** `ACDamageTypes.causeAcidDamage`.
+- **Descritor JVM:** `(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;`.
+- **Campo de DamageType lido:** `ACID` (offset `19`).
+- **Construtor de DamageSource referenciado:** `Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages."<init>":(Lnet/minecraft/core/Holder$Reference;I)V`.
+- **Parâmetros da factory:** apenas `RegistryAccess` — nenhum argumento `Entity` na assinatura da factory.
+- **Referências `invokestatic` encontradas:** 2 em 2 classes. Isso não representa quantidade de hits por ataque.
+
+| Classe chamadora | Método chamador | Descritor JVM | Offset | Opcode |
+|---|---|---|---:|---|
+| `com/github/alexmodguy/alexscaves/server/block/AcidBlock.class` | `public void entityInside(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity)` | `(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)V` | 251 | `invokestatic` |
+| `com/github/alexmodguy/alexscaves/server/entity/item/ThrownWasteDrumEntity.class` | `public void tick()` | `()V` | 161 | `invokestatic` |
+
+**Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NOT_CERTIFIED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
