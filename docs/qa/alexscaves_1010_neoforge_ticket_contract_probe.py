@@ -169,6 +169,32 @@ def audit(neoforge, publisher, javap_bin, previous):
         },
     }
 
+def deep_bytecode(neoforge, javap_bin):
+    """Bounded runtime-independent JVM instruction trace, emitted in CI logs only."""
+    target_classes = {
+        "TicketController.class": {"forceChunk"},
+        "ForcedChunkManager.class": {"forceChunk", "reinstatePersistentChunks",
+                                      "lambda$reinstatePersistentChunks$6",
+                                      "lambda$reinstatePersistentChunks$10"},
+        "TicketHelper.class": {"removeAllTickets"},
+    }
+    output={}
+    for short,names in target_classes.items():
+        cls=ROOT+short
+        methods=parse_methods(javap(javap_bin,neoforge,cls[:-6].replace("/",".")))
+        selected={}
+        for m in methods:
+            if name_of(m) not in names or len(m["instructions"])>110: continue
+            key=name_of(m)+":"+m["descriptor"]
+            if key in selected: raise GumballStateProbeError("duplicate deep NeoForge method")
+            selected[key]=m["instructions"]
+        if not selected:
+            raise GumballStateProbeError("deep NeoForge selected methods absent")
+        output[cls]=selected
+    if len(json.dumps(output).encode("utf8"))>80000:
+        raise GumballStateProbeError("deep static evidence budget")
+    return output
+
 def seal(doc):
     # The method roster and anchored, size-bounded callsite facts are sufficient
     # to detect drift without committing the publisher's full implementation.
@@ -213,6 +239,9 @@ def main():
     print("NEOFORGE_TICKET_WINDOWS_BEGIN")
     print(raw)
     print("NEOFORGE_TICKET_WINDOWS_END")
+    print("NEOFORGE_TICKET_DEEP_BEGIN")
+    print(json.dumps(deep_bytecode(Path(a.neoforge),a.javap),sort_keys=True,separators=(",",":"),ensure_ascii=False))
+    print("NEOFORGE_TICKET_DEEP_END")
     print("NO_RUNTIME_CLEANUP_OR_PROTECTION_CERTIFICATION")
 
 if __name__=="__main__":
