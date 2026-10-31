@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - 'docs/qa/alexscaves_1010_gumball_probe.py'
+      - 'docs/qa/alexscaves_1010_gumball_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GUMBALL-IMPACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/gumball.md'
       - '.github/workflows/alexscaves-1010-gumball-probe.yml'
   push:
     branches: [main]
@@ -28,6 +31,8 @@ jobs:
           java-version: '21'
       - name: Validate probe syntax
         run: python3 -m py_compile docs/qa/alexscaves_1010_gumball_probe.py
+      - name: Test snapshot fail-closed regressions
+        run: python3 docs/qa/alexscaves_1010_gumball_probe_test.py -v
       - name: Download the exact publisher artifact
         run: |
           mkdir -p build/alexscaves-1010
@@ -40,6 +45,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_gumball_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GUMBALL-IMPACT-1.0.10.json' \
             --output build/alexscaves-1010/gumball-evidence.json
       - name: Publish bounded static evidence for review
         uses: actions/upload-artifact@v7
