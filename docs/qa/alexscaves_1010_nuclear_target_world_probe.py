@@ -19,16 +19,17 @@ TICK_SHA = "64f9a412c81a25525edf5b9576d56cec8354f6963ef718a44e6179347fcd8a25"
 TICK_COUNT = 348
 HIGHLIGHTS = (1, 80, 83, 167, 225, 288, 318, 421, 456, 466,
               570, 586, 605, 618, 623, 643, 659)
-HELPER_NAMES = {"isDestroyable", "isNoGriefing", "getSize", "tick"}
+HELPER_NAMES = {"isDestroyable", "isNoGriefing", "getSize", "tick",
+                "getChunksAffected", "removeChunk", "loadChunksAround"}
 MAX_CLASS_METHODS = 120
-MAX_HELPER_INSNS = 200
+MAX_HELPER_INSNS = 1250
 MAX_TICK_INSNS = 450
-MAX_REFERENCES = 160
-MAX_BRANCHES = 160
-MAX_CONSTANTS = 180
+MAX_REFERENCES = 250
+MAX_BRANCHES = 250
+MAX_CONSTANTS = 250
 MAX_WINDOWS = 25
 WINDOW_HALF = 11
-MAX_BYTES = 100000
+MAX_BYTES = 225000
 
 
 def digest(method):
@@ -141,7 +142,7 @@ def audit(jar, javap_bin):
     }
     if len(json.dumps(data).encode("utf8")) > MAX_BYTES:
         raise GumballStateProbeError("target/world snapshot byte budget exceeded")
-    return data, raw[tick_key]
+    return data, raw
 
 
 def seal(document):
@@ -175,7 +176,8 @@ def main():
     p.add_argument("--output",required=True)
     p.add_argument("--snapshot")
     args=p.parse_args()
-    doc, tick=audit(Path(args.jar),args.javap)
+    doc, methods=audit(Path(args.jar),args.javap)
+    tick=methods['tick:()V']
     selected=seal(doc)
     if args.snapshot:
         frozen=json.loads(Path(args.snapshot).read_text(encoding="utf8"),
@@ -192,6 +194,10 @@ def main():
     print("NUCLEAR_TARGET_WORLD_TICK_BEGIN")
     print(json.dumps(tick["instructions"],separators=(",",":"),ensure_ascii=False))
     print("NUCLEAR_TARGET_WORLD_TICK_END")
+    print("NUCLEAR_TARGET_WORLD_HELPERS_BEGIN")
+    print(json.dumps({key: val["instructions"] for key, val in methods.items()
+                      if key != "tick:()V"}, separators=(",",":"), ensure_ascii=False))
+    print("NUCLEAR_TARGET_WORLD_HELPERS_END")
     print("NO_RUNTIME_MUTATION_OR_PHYSICAL_QA")
 
 
