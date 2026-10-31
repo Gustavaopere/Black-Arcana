@@ -119,3 +119,24 @@ Esta é uma **auditoria de superfícies estáticas**. Faltam rastrear produtores
 **Fronteira:** a classificação de dano depende da flag sincronizada **no consumidor**, não do nome ou visual da explosão. O mesmo consumidor também pode usar `alexscaves:nuke`; o `SackOfSatingItem` fornece evidência explícita da variante intentional no caminho selecionado, **sem provar que essa seja a única origem possível** (reflexão, mixins, indireção e mudanças de configuração permanecem fora do inventário). Não duplicar raízes mágicas ou o pipeline de `hurt`.
 
 **Status:** ⚠️ evidência de emitters adicionada, contrato integral `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; contadores e Stage sem promoção.
+
+
+## Expressão de dano compartilhada com Nuke — SHA-exata 1.0.10
+
+**Evidência selecionada:** [EXACT-NUCLEAR-NUMERIC-1.0.10.json](../EXACT-NUCLEAR-NUMERIC-1.0.10.json), [verificador da CI](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-nuclear-numeric.yml) e [análise ampliada da ficha Nuke](nuke.md#cálculo-numérico-e-tamanho-de-emissão--método-sha-exato-1010). `NuclearExplosionEntity.calculateDamage(float,float)` é o **mesmo helper nativo** utilizado na execução que seleciona `causeIntentionalGameDesign` ou `causeNukeDamage`. A escolha do `DamageSource` acontece depois de o consumidor armazenar o valor bruto. Não registrar duas fórmulas ou dois hits para um único evento.
+
+Do método compilado (26 instruções), com `d` = primeiro `float`, `r` = segundo `float` e `s` = `getSize()`:
+
+\[
+D_{\mathrm{raw}}=\frac{r-d}{r}\times
+\begin{cases}
+100,&s\leq1.5\\
+100+400(s-1.5),&s>1.5.
+\end{cases}
+\]
+
+A multiplicação se baseia nos offsets `0–4`, `7–14`, `17–38` e `41–45`. O valor bruto pode ser descartado por guards do `tick`, sofrer mitigação, ou não resultar em hit válido; não inferir a partir deste cálculo que houve dano real.
+
+**Atribuição da variante:** `SackOfSatingItem.acInventoryTick` usa `setSize(0.5f)` e `setIntentionalGameDesign(true)` antes de solicitar spawn, conforme manifesto anterior. A expressão desta seção descreve o helper compartilhado; não significa que as explosões de `NucleeperEntity` (tamanho `1.0f` ou `1.75f` dependendo de `isCharged`) ou `NuclearBombEntity` (size por `ACServerConfig.nukeExplosionSizeModifier`) usem automaticamente a classificação `intentional_game_design`. Consultar a flag real do consumidor. O inventário de produtores permanece parcial quanto a indireções e mods externos.
+
+**Limites:** contrato `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Sem claims de player-owner, Mastery, custo, PvP, proteção do mundo ou fechamento do provider.
