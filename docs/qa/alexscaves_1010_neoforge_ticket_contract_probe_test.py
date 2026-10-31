@@ -21,6 +21,7 @@ class NeoTicketSyntheticTests(unittest.TestCase):
         self.assertEqual(NEOFORGE_VERSION,"21.1.248")
         self.assertIn("TicketController.class",NEO_CLASSES)
         self.assertIn("ForcedChunkManager.class",NEO_CLASSES)
+        self.assertIn("ForcedChunkManager$TicketTracker.class",NEO_CLASSES)
 
     def test_bytecode_offset_duplication_rejected(self):
         with self.assertRaisesRegex(GumballStateProbeError,"duplicate JVM offset"):
@@ -90,7 +91,7 @@ class ExactNeoForgeTicketSnapshotTests(unittest.TestCase):
         self.assertEqual(self.doc["neo"]["file_sha256"],
                          "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5")
         self.assertEqual(self.doc["neo"]["size_bytes"],3551268)
-        self.assertEqual(self.doc["neoforge_class_count"],5)
+        self.assertEqual(self.doc["neoforge_class_count"],6)
         self.assertEqual(self.doc["publisher"]["sha256"],
                          "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c")
         self.assertFalse(self.doc["limits"]["allow_mutation"])
