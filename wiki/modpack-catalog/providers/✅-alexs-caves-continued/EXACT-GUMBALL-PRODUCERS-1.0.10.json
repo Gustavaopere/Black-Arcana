@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_GUMBALL_DIRECT_PRODUCER_REFERENCE_INVENTORY_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "projectile_class": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+  "candidate_class_count": 9,
+  "selected_class_count": 3,
+  "selected_method_count": 4,
+  "registry_support": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.class",
+      "class_sha256": "7d7c91ddbb534d7c0e86a590ef7d7c3154ec2a628153c31e9fc7318a4b29e072",
+      "role": "REGISTRY_SUPPORT_NOT_PRODUCER_PROOF"
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.class",
+      "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+      "role": "REGISTRY_SUPPORT_NOT_PRODUCER_PROOF"
+    }
+  ],
+  "no_selected_symbols": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity$1.class",
+      "class_sha256": "c6647166e3b3fd6b129068782254ba3cb8523a1075483a06073828c0ee2a792f",
+      "disposition": "NO_EXPLICIT_TARGET_SYMBOLIC_CALLSITE"
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/ACFoods.class",
+      "class_sha256": "a52ec981fe51c97003383a46f7c0b2de06baa5e3ca3f73db988655abce51e12e",
+      "disposition": "NO_EXPLICIT_TARGET_SYMBOLIC_CALLSITE"
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry.class",
+      "class_sha256": "e73ea47bee91ada022b06c5c73eebf454f68cfe769bbc7e7a22b2561cc23822d",
+      "disposition": "NO_EXPLICIT_TARGET_SYMBOLIC_CALLSITE"
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.class",
+      "class_sha256": "561ce50ed30684becb2c33468e939489874816745851a17a3d61b72223967633",
+      "disposition": "NO_EXPLICIT_TARGET_SYMBOLIC_CALLSITE"
+    }
+  ],
+  "selected_classes": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/living/GumbeeperEntity.class",
+      "class_sha256": "6a24f05a730218352a083da32f233c3d48fb5f85a6f24f1ba45d78c422b0266c",
+      "methods": [
+        {
+          "name": "tick",
+          "descriptor": "()V",
+          "instruction_count": 324,
+          "parsed_method_sha256": "673e96a2759a7492e424a02a0f739af82c429df10cd542691224869fe7462138",
+          "anchors": [
+            {
+              "offset": 385,
+              "opcode": "invokespecial",
+              "operand": "#286",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+            },
+            {
+              "offset": 542,
+              "opcode": "invokevirtual",
+              "operand": "#324",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+            },
+            {
+              "offset": 560,
+              "opcode": "invokevirtual",
+              "operand": "#337",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+            },
+            {
+              "offset": 579,
+              "opcode": "invokevirtual",
+              "operand": "#337",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+            }
+          ]
+        },
+        {
+          "name": "shootGumball",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "instruction_count": 198,
+          "parsed_method_sha256": "26380c4830c57381fa6d39220234305da5b408e7ad11bf56878e061b6e45ecb2",
+          "anchors": [
+            {
+              "offset": 80,
+              "opcode": "invokespecial",
+              "operand": "#286",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+            },
+            {
+              "offset": 265,
+              "opcode": "invokevirtual",
+              "operand": "#580",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.shoot:(DDDFF)V"
+            },
+            {
+              "offset": 289,
+              "opcode": "invokevirtual",
+              "operand": "#324",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+            },
+            {
+              "offset": 307,
+              "opcode": "invokevirtual",
+              "operand": "#337",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+            },
+            {
+              "offset": 326,
+              "opcode": "invokevirtual",
+              "operand": "#337",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/ShotGumItem.class",
+      "class_sha256": "08aa8b9aa1781f2ead7d899e4fde758ea44bc527a2ee5968997e5b3ffdd32238",
+      "methods": [
+        {
+          "name": "acInventoryTick",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "instruction_count": 285,
+          "parsed_method_sha256": "6f9325406aaf142af4b415bff94b9123882b72a2ab981370d9be30a5e7c18093",
+          "anchors": [
+            {
+              "offset": 316,
+              "opcode": "invokespecial",
+              "operand": "#258",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+            },
+            {
+              "offset": 434,
+              "opcode": "invokevirtual",
+              "operand": "#308",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setTargetsOnBounce:(Z)V"
+            },
+            {
+              "offset": 441,
+              "opcode": "invokevirtual",
+              "operand": "#312",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setSplitsOnHit:(Z)V"
+            },
+            {
+              "offset": 448,
+              "opcode": "invokevirtual",
+              "operand": "#315",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setExplosive:(Z)V"
+            },
+            {
+              "offset": 480,
+              "opcode": "invokevirtual",
+              "operand": "#324",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.shootFromRotation:(Lnet/minecraft/world/entity/Entity;FFFFF)V"
+            },
+            {
+              "offset": 487,
+              "opcode": "invokevirtual",
+              "operand": "#328",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+            },
+            {
+              "offset": 495,
+              "opcode": "invokevirtual",
+              "operand": "#332",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class",
+      "class_sha256": "389fb88f8d6e1515e3dfe7f401a728bb33629666bd2319ae7e25668f710e4ef6",
+      "methods": [
+        {
+          "name": "causeGumballDamage",
+          "descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "instruction_count": 13,
+          "parsed_method_sha256": "259e3bc0f1fa05ac0cf2c31e959a8e5497884cf49d7e5e04a70b9da3447262a7",
+          "anchors": [
+            {
+              "offset": 19,
+              "opcode": "getstatic",
+              "operand": "#68",
+              "symbol": "Field GUMBALL:Lnet/minecraft/resources/ResourceKey;"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
