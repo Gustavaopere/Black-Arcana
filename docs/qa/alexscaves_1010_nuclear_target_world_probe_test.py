@@ -38,7 +38,7 @@ class NuclearWorldContractTests(unittest.TestCase):
             instruction(2,"ifeq"),
             instruction(7,"ldc","float 1.0f"),
             instruction(9,"invokevirtual","Method Level.getBlockState:()V"), name="synthetic"))
-        self.assertEqual([x["offset"] for x in m["references"]],[0,9])
+        self.assertEqual([x["offset"] for x in m["references"]],[0,7,9])
         self.assertEqual([x["offset"] for x in m["branches"]],[2])
         self.assertEqual([x["offset"] for x in m["constants"]],[7])
 
