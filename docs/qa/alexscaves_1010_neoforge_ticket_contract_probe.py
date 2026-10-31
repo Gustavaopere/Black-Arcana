@@ -20,6 +20,7 @@ ROOT = "net/neoforged/neoforge/common/world/chunk/"
 NEO_CLASSES = (
     "TicketController.class",
     "ForcedChunkManager.class",
+    "ForcedChunkManager$TicketTracker.class",
     "LoadingValidationCallback.class",
     "TicketHelper.class",
     "RegisterTicketControllersEvent.class",
@@ -27,6 +28,7 @@ NEO_CLASSES = (
 EXPECTED_METHOD_NAMES = {
     "TicketController.class": ("forceChunk",),
     "ForcedChunkManager.class": ("forceChunk", "reinstatePersistentChunks"),
+    "ForcedChunkManager$TicketTracker.class": ("add", "remove"),
     "TicketHelper.class": ("removeAllTickets",),
     "RegisterTicketControllersEvent.class": (),
     "LoadingValidationCallback.class": (),
@@ -100,7 +102,7 @@ def audit(neoforge, publisher, javap_bin, previous):
         if len(names)>MAX_JAR_ENTRIES or len(names)!=len(set(names)):
             raise GumballStateProbeError("NeoForge JAR duplicate/size drift")
         present=[ROOT+x for x in NEO_CLASSES if ROOT+x in names]
-        if len(present)<3:
+        if len(present)<6:
             raise GumballStateProbeError("NeoForge chunk controller classes not present")
         file_hashes={x:hashlib.sha256(jar.read(x)).hexdigest() for x in present}
         for k in present:
@@ -119,7 +121,7 @@ def audit(neoforge, publisher, javap_bin, previous):
             if not any(x["name"]==wanted for x in roster):
                 raise GumballStateProbeError("NeoForge expected method missing: "+wanted)
         interesting=[m for m in methods if name_of(m) in
-                     ("forceChunk","reinstatePersistentChunks","register","registerController",
+                     ("forceChunk","add","remove","reinstatePersistentChunks","register","registerController",
                       "readModForcedChunks","writeModForcedChunks","removeAllTickets",
                       "validateTickets","getEntityTickets","getBlockTickets")
                      or any("TicketController" in x["symbol"] or "forceChunk" in x["symbol"]
@@ -177,6 +179,7 @@ def deep_bytecode(neoforge, javap_bin):
                                       "lambda$reinstatePersistentChunks$6",
                                       "lambda$reinstatePersistentChunks$10"},
         "TicketHelper.class": {"removeAllTickets"},
+        "ForcedChunkManager$TicketTracker.class": {"add","remove"},
     }
     output={}
     for short,names in target_classes.items():
