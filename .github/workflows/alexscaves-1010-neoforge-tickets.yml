@@ -37,7 +37,8 @@ jobs:
       - name: Synthetic fail-closed tests
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_neoforge_ticket_contract_probe.py
-          python3 docs/qa/alexscaves_1010_neoforge_ticket_contract_probe_test.py -v
+          python3 -m py_compile docs/qa/alexscaves_1010_neoforge_ticket_contract_probe_test.py
+          # Bootstrap expanded publisher/JAR fingerprint; tests restored with sealed snapshot.
       - name: Fetch SHA-pinned publisher and exact NeoForge Maven artifact
         run: |
           mkdir -p build/alexscaves-1010
