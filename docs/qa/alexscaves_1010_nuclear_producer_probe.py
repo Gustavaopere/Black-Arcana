@@ -187,6 +187,31 @@ def main():
     print(json.dumps(minimal, ensure_ascii=False,
                      separators=(",", ":"), sort_keys=True))
     print("NUCLEAR_PRODUCERS_1010_END")
+    chosen = {
+        "NuclearFurnaceBlockEntity.class",
+        "NuclearBombEntity.class",
+        "NucleeperEntity.class",
+        "SackOfSatingItem.class",
+    }
+    details = []
+    for cls in data["classes_with_bytecode_references"]:
+        if cls["class_path"].rsplit("/", 1)[-1] not in chosen:
+            continue
+        details.append({
+            "class_path": cls["class_path"],
+            "selected_methods": [{
+                "name": method["name"],
+                "descriptor": method["descriptor"],
+                "sites": [
+                    {"at": x["at"], "ins": x["ins"]}
+                    for x in method["sites"]
+                    if x["at"] in {0, 43, 61, 260, 278, 288, 302, 330, 336}
+                ],
+            } for method in cls["selected_methods"]],
+        })
+    print("NUCLEAR_PRODUCER_WINDOWS_BEGIN")
+    print(json.dumps(details, sort_keys=True, separators=(",", ":")))
+    print("NUCLEAR_PRODUCER_WINDOWS_END")
     print("NO_RUNTIME_OR_MUTATING_HOOK_CERTIFICATION")
 
 
