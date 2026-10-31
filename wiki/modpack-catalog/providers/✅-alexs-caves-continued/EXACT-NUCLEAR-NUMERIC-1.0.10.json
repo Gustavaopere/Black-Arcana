@@ -1,0 +1,577 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "classes": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class",
+      "class_sha256": "d9c827a9acb2d0f9e7050252ed57e6a3d0a8ad49053e54f19a8eaeb6b84da912",
+      "methods": [
+        {
+          "descriptor": "(FF)F",
+          "header": "private float calculateDamage(float, float)",
+          "instruction_count": 26,
+          "instructions": [
+            {
+              "offset": 0,
+              "opcode": "fload_2",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "fload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 2,
+              "opcode": "fsub",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 3,
+              "opcode": "fload_2",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 4,
+              "opcode": "fdiv",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 5,
+              "opcode": "fstore_3",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 6,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 7,
+              "opcode": "invokevirtual",
+              "operand": "#91",
+              "symbol": "Method getSize:()F"
+            },
+            {
+              "offset": 10,
+              "opcode": "ldc_w",
+              "operand": "#297",
+              "symbol": "float 1.5f"
+            },
+            {
+              "offset": 13,
+              "opcode": "fcmpg",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 14,
+              "opcode": "ifgt",
+              "operand": "23",
+              "symbol": ""
+            },
+            {
+              "offset": 17,
+              "opcode": "ldc_w",
+              "operand": "#341",
+              "symbol": "float 100.0f"
+            },
+            {
+              "offset": 20,
+              "opcode": "goto",
+              "operand": "39",
+              "symbol": ""
+            },
+            {
+              "offset": 23,
+              "opcode": "ldc_w",
+              "operand": "#341",
+              "symbol": "float 100.0f"
+            },
+            {
+              "offset": 26,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 27,
+              "opcode": "invokevirtual",
+              "operand": "#91",
+              "symbol": "Method getSize:()F"
+            },
+            {
+              "offset": 30,
+              "opcode": "ldc_w",
+              "operand": "#297",
+              "symbol": "float 1.5f"
+            },
+            {
+              "offset": 33,
+              "opcode": "fsub",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 34,
+              "opcode": "ldc_w",
+              "operand": "#342",
+              "symbol": "float 400.0f"
+            },
+            {
+              "offset": 37,
+              "opcode": "fmul",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 38,
+              "opcode": "fadd",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 39,
+              "opcode": "fstore",
+              "operand": "4",
+              "symbol": ""
+            },
+            {
+              "offset": 41,
+              "opcode": "fload_3",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 42,
+              "opcode": "fload",
+              "operand": "4",
+              "symbol": ""
+            },
+            {
+              "offset": 44,
+              "opcode": "fmul",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 45,
+              "opcode": "freturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "name": "calculateDamage",
+          "sha256": "9cedbccfd5048497dd0dc492232ca72dc8064fad3aa9257c03053f2efef5f547"
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/living/NucleeperEntity.class",
+      "class_sha256": "5c25275ba23c5760ca4c63ddaeff3a0b8ca48a3c4cc7dfa5de999887c7d4beb2",
+      "methods": [
+        {
+          "descriptor": "()V",
+          "header": "private void explode()",
+          "instruction_count": 34,
+          "instructions": [
+            {
+              "offset": 0,
+              "opcode": "getstatic",
+              "operand": "#448",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.NUCLEAR_EXPLOSION:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 3,
+              "opcode": "invokeinterface",
+              "operand": "#454,  1",
+              "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+            },
+            {
+              "offset": 8,
+              "opcode": "checkcast",
+              "operand": "#457",
+              "symbol": "class net/minecraft/world/entity/EntityType"
+            },
+            {
+              "offset": 11,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 12,
+              "opcode": "invokevirtual",
+              "operand": "#250",
+              "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 15,
+              "opcode": "invokestatic",
+              "operand": "#459",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.createEntity:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;"
+            },
+            {
+              "offset": 18,
+              "opcode": "checkcast",
+              "operand": "#463",
+              "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity"
+            },
+            {
+              "offset": 21,
+              "opcode": "astore_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 22,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 23,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 24,
+              "opcode": "invokevirtual",
+              "operand": "#465",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.copyPosition:(Lnet/minecraft/world/entity/Entity;)V"
+            },
+            {
+              "offset": 27,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 28,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 29,
+              "opcode": "invokevirtual",
+              "operand": "#173",
+              "symbol": "Method isCharged:()Z"
+            },
+            {
+              "offset": 32,
+              "opcode": "ifeq",
+              "operand": "41",
+              "symbol": ""
+            },
+            {
+              "offset": 35,
+              "opcode": "ldc_w",
+              "operand": "#468",
+              "symbol": "float 1.75f"
+            },
+            {
+              "offset": 38,
+              "opcode": "goto",
+              "operand": "42",
+              "symbol": ""
+            },
+            {
+              "offset": 41,
+              "opcode": "fconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 42,
+              "opcode": "invokevirtual",
+              "operand": "#469",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.setSize:(F)V"
+            },
+            {
+              "offset": 45,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 46,
+              "opcode": "invokevirtual",
+              "operand": "#250",
+              "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 49,
+              "opcode": "getstatic",
+              "operand": "#472",
+              "symbol": "Field net/minecraft/world/level/GameRules.RULE_MOBGRIEFING:Lnet/minecraft/world/level/GameRules$Key;"
+            },
+            {
+              "offset": 52,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 53,
+              "opcode": "invokestatic",
+              "operand": "#478",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.gameRule:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/GameRules$Key;Z)Z"
+            },
+            {
+              "offset": 56,
+              "opcode": "ifne",
+              "operand": "64",
+              "symbol": ""
+            },
+            {
+              "offset": 59,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 60,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 61,
+              "opcode": "invokevirtual",
+              "operand": "#482",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.setNoGriefing:(Z)V"
+            },
+            {
+              "offset": 64,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 65,
+              "opcode": "invokevirtual",
+              "operand": "#250",
+              "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 68,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 69,
+              "opcode": "invokevirtual",
+              "operand": "#485",
+              "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 72,
+              "opcode": "pop",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 73,
+              "opcode": "return",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "name": "explode",
+          "sha256": "3ab58237a2034998d177e1a2afd78620b3fe799b5506fe2bc03265a8106913f0"
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearBombEntity.class",
+      "class_sha256": "36ccc6ce0993d0ff7884c50857a11f6edb7bace66c15c1b157e8013627b4f3d3",
+      "methods": [
+        {
+          "descriptor": "()V",
+          "header": "private void explode()",
+          "instruction_count": 24,
+          "instructions": [
+            {
+              "offset": 0,
+              "opcode": "getstatic",
+              "operand": "#213",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.NUCLEAR_EXPLOSION:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 3,
+              "opcode": "invokeinterface",
+              "operand": "#19,  1",
+              "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+            },
+            {
+              "offset": 8,
+              "opcode": "checkcast",
+              "operand": "#25",
+              "symbol": "class net/minecraft/world/entity/EntityType"
+            },
+            {
+              "offset": 11,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 12,
+              "opcode": "invokevirtual",
+              "operand": "#131",
+              "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 15,
+              "opcode": "invokestatic",
+              "operand": "#216",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.createEntity:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;"
+            },
+            {
+              "offset": 18,
+              "opcode": "checkcast",
+              "operand": "#222",
+              "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity"
+            },
+            {
+              "offset": 21,
+              "opcode": "astore_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 22,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 23,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 24,
+              "opcode": "invokevirtual",
+              "operand": "#224",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.copyPosition:(Lnet/minecraft/world/entity/Entity;)V"
+            },
+            {
+              "offset": 27,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 28,
+              "opcode": "getstatic",
+              "operand": "#227",
+              "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.COMMON_CONFIG:Lcom/github/alexmodguy/alexscaves/server/config/ACServerConfig;"
+            },
+            {
+              "offset": 31,
+              "opcode": "getfield",
+              "operand": "#233",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/config/ACServerConfig.nukeExplosionSizeModifier:Lnet/neoforged/neoforge/common/ModConfigSpec$DoubleValue;"
+            },
+            {
+              "offset": 34,
+              "opcode": "invokevirtual",
+              "operand": "#239",
+              "symbol": "Method net/neoforged/neoforge/common/ModConfigSpec$DoubleValue.get:()Ljava/lang/Object;"
+            },
+            {
+              "offset": 37,
+              "opcode": "checkcast",
+              "operand": "#242",
+              "symbol": "class java/lang/Double"
+            },
+            {
+              "offset": 40,
+              "opcode": "invokevirtual",
+              "operand": "#244",
+              "symbol": "Method java/lang/Double.floatValue:()F"
+            },
+            {
+              "offset": 43,
+              "opcode": "invokevirtual",
+              "operand": "#247",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.setSize:(F)V"
+            },
+            {
+              "offset": 46,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 47,
+              "opcode": "invokevirtual",
+              "operand": "#131",
+              "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 50,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 51,
+              "opcode": "invokevirtual",
+              "operand": "#251",
+              "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 54,
+              "opcode": "pop",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 55,
+              "opcode": "return",
+              "operand": "",
+              "symbol": ""
+            }
+          ],
+          "name": "explode",
+          "sha256": "9472b45fd5e0e8164835d1714f540ff44811d28f2715e54de59425043b8ca1ac"
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "compiled_selected_methods_only": true,
+    "complete_perk_ready": false,
+    "configuration_effective_values": "NOT_VERIFIED",
+    "damage_after_mitigation": "NOT_VERIFIED",
+    "float_math_semantics": "JVM_BYTECODE_EXACT_NOT_A_RUNTIME_DAMAGE_PREDICTION",
+    "mutating_hook": "NOT_VERIFIED",
+    "nonselected_methods_and_initializers": "NOT_CLOSED",
+    "owner_and_mastery": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "world_protection_and_pvp": "NOT_VERIFIED"
+  },
+  "parent_snapshots": [
+    "EXACT-NUCLEAR-ENVELOPE-1.0.10.json",
+    "EXACT-NUCLEAR-PRODUCERS-1.0.10.json"
+  ],
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_NUCLEAR_CALCULATE_DAMAGE_AND_TWO_EMITTERS_FULL_SELECTED_BYTECODE"
+}
