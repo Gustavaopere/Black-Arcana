@@ -1,0 +1,321 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "classes": [
+    {
+      "arithmetic_chain": [],
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "class_sha256": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "essential_anchors": [
+        {
+          "offset": 86,
+          "opcode": "invokestatic",
+          "operand": "#483",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeGumballDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+        },
+        {
+          "offset": 139,
+          "opcode": "invokevirtual",
+          "operand": "#494",
+          "symbol": "Method net/minecraft/world/entity/Entity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+        },
+        {
+          "offset": 144,
+          "opcode": "invokevirtual",
+          "operand": "#453",
+          "symbol": "Method splitsOnHit:()Z"
+        },
+        {
+          "offset": 155,
+          "opcode": "iconst_3",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 156,
+          "opcode": "if_icmpge",
+          "operand": "345",
+          "symbol": ""
+        },
+        {
+          "offset": 174,
+          "opcode": "invokestatic",
+          "operand": "#498",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.createEntity:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;"
+        },
+        {
+          "offset": 290,
+          "opcode": "invokevirtual",
+          "operand": "#523",
+          "symbol": "Method setSplitsOnHit:(Z)V"
+        },
+        {
+          "offset": 299,
+          "opcode": "invokevirtual",
+          "operand": "#527",
+          "symbol": "Method setDamage:(F)V"
+        },
+        {
+          "offset": 308,
+          "opcode": "invokevirtual",
+          "operand": "#530",
+          "symbol": "Method setTargetsOnBounce:(Z)V"
+        },
+        {
+          "offset": 317,
+          "opcode": "invokevirtual",
+          "operand": "#533",
+          "symbol": "Method setExplosive:(Z)V"
+        },
+        {
+          "offset": 326,
+          "opcode": "invokevirtual",
+          "operand": "#536",
+          "symbol": "Method setMaximumBounces:(I)V"
+        },
+        {
+          "offset": 335,
+          "opcode": "invokevirtual",
+          "operand": "#539",
+          "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+        },
+        {
+          "offset": 346,
+          "opcode": "invokevirtual",
+          "operand": "#224",
+          "symbol": "Method discard:()V"
+        }
+      ],
+      "instruction_count": 162,
+      "name": "onHitEntity",
+      "parsed_method_sha256": "0797340fb44ecfa83c2b77dc07a12e1101b5427d9cb3ca5e4308b054ee309ffe"
+    },
+    {
+      "arithmetic_chain": [
+        {
+          "offset": 188,
+          "opcode": "iconst_4",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 190,
+          "opcode": "getstatic",
+          "operand": "#228",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.BOUNCY_BALL:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 193,
+          "opcode": "invokestatic",
+          "operand": "#218",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 196,
+          "opcode": "iconst_2",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 197,
+          "opcode": "imul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 198,
+          "opcode": "iadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 199,
+          "opcode": "istore",
+          "operand": "12",
+          "symbol": ""
+        }
+      ],
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/ShotGumItem.class",
+      "class_sha256": "08aa8b9aa1781f2ead7d899e4fde758ea44bc527a2ee5968997e5b3ffdd32238",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+      "essential_anchors": [
+        {
+          "offset": 138,
+          "opcode": "getstatic",
+          "operand": "#212",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TARGETED_RICOCHET:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 141,
+          "opcode": "invokestatic",
+          "operand": "#218",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 144,
+          "opcode": "ifle",
+          "operand": "151",
+          "symbol": ""
+        },
+        {
+          "offset": 151,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 155,
+          "opcode": "getstatic",
+          "operand": "#222",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TRIPLE_SPLIT:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 158,
+          "opcode": "invokestatic",
+          "operand": "#218",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 161,
+          "opcode": "ifle",
+          "operand": "168",
+          "symbol": ""
+        },
+        {
+          "offset": 168,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 172,
+          "opcode": "getstatic",
+          "operand": "#225",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.EXPLOSIVE_FLAVOR:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 175,
+          "opcode": "invokestatic",
+          "operand": "#218",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 178,
+          "opcode": "ifle",
+          "operand": "185",
+          "symbol": ""
+        },
+        {
+          "offset": 185,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 188,
+          "opcode": "iconst_4",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 190,
+          "opcode": "getstatic",
+          "operand": "#228",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.BOUNCY_BALL:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 193,
+          "opcode": "invokestatic",
+          "operand": "#218",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 196,
+          "opcode": "iconst_2",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 205,
+          "opcode": "ifeq",
+          "operand": "518",
+          "symbol": ""
+        },
+        {
+          "offset": 316,
+          "opcode": "invokespecial",
+          "operand": "#258",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+        },
+        {
+          "offset": 434,
+          "opcode": "invokevirtual",
+          "operand": "#308",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setTargetsOnBounce:(Z)V"
+        },
+        {
+          "offset": 441,
+          "opcode": "invokevirtual",
+          "operand": "#312",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setSplitsOnHit:(Z)V"
+        },
+        {
+          "offset": 448,
+          "opcode": "invokevirtual",
+          "operand": "#315",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setExplosive:(Z)V"
+        },
+        {
+          "offset": 480,
+          "opcode": "invokevirtual",
+          "operand": "#324",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.shootFromRotation:(Lnet/minecraft/world/entity/Entity;FFFFF)V"
+        },
+        {
+          "offset": 487,
+          "opcode": "invokevirtual",
+          "operand": "#328",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+        },
+        {
+          "offset": 495,
+          "opcode": "invokevirtual",
+          "operand": "#332",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+        },
+        {
+          "offset": 508,
+          "opcode": "invokevirtual",
+          "operand": "#339",
+          "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+        }
+      ],
+      "instruction_count": 285,
+      "name": "acInventoryTick",
+      "parsed_method_sha256": "6f9325406aaf142af4b415bff94b9123882b72a2ab981370d9be30a5e7c18093"
+    },
+    {
+      "arithmetic_chain": [],
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "class_sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+      "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;",
+      "essential_anchors": [
+        {
+          "offset": 2,
+          "opcode": "invokevirtual",
+          "operand": "#540",
+          "symbol": "Method net/minecraft/world/entity/EntityType.create:(Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;"
+        }
+      ],
+      "instruction_count": 4,
+      "name": "createEntity",
+      "parsed_method_sha256": "5c615940bdddde55326bc71b0e8858a4956b72f5db2b405093e51d6027f10c11"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_GUMBALL_SPLIT_FACTORY_AND_SHOTGUM_ENCHANT_GATES"
+}
