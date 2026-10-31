@@ -153,3 +153,14 @@ A multiplicação se baseia nos offsets `0–4`, `7–14`, `17–38` e `41–45`
 - Sob a origem conhecida `SackOfSatingItem`, `SIZE=0.5f` produz `ceil(SIZE)=1`, com inflação geométrica de `(22.5,9,22.5)` blocos adicionados à AABB-base e segundo argumento do dano bruto `r=23.5`. Esses são parâmetros internos compilados do consumidor, não raio de casting, alcance de clique ou hit confirmado.
 
 **Permissão:** não ativar perks de range/AoE, griefing, tamanho, efeito, owner, Mastery, PvP ou multiplicação de procs com base nesta evidência. É necessário contrato mutador nativo realmente comprovado, política de mundo no Black Arcana, bounds e QA físico. **⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`.** Catálogo e Stage inalterados.
+
+
+## Cleanup de tickets de chunk compartilhado — auditoria SHA-exata 1.0.10
+
+**Fonte:** [EXACT-NUCLEAR-CHUNK-LIFECYCLE-1.0.10.json](../EXACT-NUCLEAR-CHUNK-LIFECYCLE-1.0.10.json) · [ficha Nuke — tickets e lifecycle](nuke.md#tickets-de-chunks-aquisição-tentativa-de-liberação-e-restauração--jar-1010) · [CI dedicada](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-nuclear-chunk-lifecycle.yml).
+
+A flag `INTENTIONAL_GAME_DESIGN` seleciona o tipo de `DamageSource`, mas **não cria outro sistema de gerenciamento de chunks**. O consumidor compartilhado `NuclearExplosionEntity.tick()` define `loadingChunks=true` e solicita `loadChunksAround(true)` no ramo de destruição do servidor; seu `remove(RemovalReason)` sobrescrito testa `loadingChunks`, grava `false` e chama `loadChunksAround(false)` antes de `Entity.remove`. A rotina encaminha os dois booleanos para `ACPlatform.forceChunk`, que delega a `TicketController.forceChunk` NeoForge e descarta o resultado booleano. É evidência de **tentativa de release**, não prova de êxito integral ou persistência de tickets.
+
+O `SackOfSatingItem` registra `SIZE=0.5f` e `setIntentionalGameDesign(true)` no caminho previamente selecionado, mas **não** demonstrou alteração explícita de `NO_GRIEFING`. Se o caminho de destruição for ativado, o raio da grade de tickets depende de `q=max(ceil(SIZE), floor(viewDistance/2))`, não apenas do tamanho visual/raio de dano. O estado `WasLoadingChunks` persistido na entidade é um booleano, sem lista de tickets ou confirmação de cleanup após restart. Não promover claims de proteção do mundo, economia de chunks, owner ou segurança por associação à variante intentional.
+
+**Estado permanece:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`, sem incremento de ficha ou promoção de Stage.

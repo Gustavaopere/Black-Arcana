@@ -1,0 +1,586 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "candidate_class_count": 5,
+  "candidate_classes": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/BeholderEyeEntity.class",
+      "class_sha256": "c86e63058c2b1409a2bc21529ab0b33a19646a33d66cf7a17acfa6a024dab9cd",
+      "method_count": 26,
+      "relevant_methods": [
+        {
+          "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "instruction_count": 11,
+          "name": "BeholderEyeEntity",
+          "parsed_method_sha256": "e4bc9c64f55077c0ceeeeeb058d81158530ad2310a9a8833d854fd11bb90fb58",
+          "site_anchors": [
+            {
+              "offset": 8,
+              "opcode": "putfield",
+              "operand": "#7",
+              "symbol": "Field loadingChunks:Z"
+            }
+          ]
+        },
+        {
+          "descriptor": "()V",
+          "instruction_count": 113,
+          "name": "tick",
+          "parsed_method_sha256": "514e4f1e6822dfdfe6df3f59bc9f389be4a3fbc664469f9c699e7f3667501f83",
+          "site_anchors": [
+            {
+              "offset": 24,
+              "opcode": "getfield",
+              "operand": "#7",
+              "symbol": "Field loadingChunks:Z"
+            },
+            {
+              "offset": 32,
+              "opcode": "putfield",
+              "operand": "#7",
+              "symbol": "Field loadingChunks:Z"
+            },
+            {
+              "offset": 37,
+              "opcode": "invokevirtual",
+              "operand": "#62",
+              "symbol": "Method loadChunksAround:(Z)V"
+            },
+            {
+              "offset": 73,
+              "opcode": "getfield",
+              "operand": "#7",
+              "symbol": "Field loadingChunks:Z"
+            },
+            {
+              "offset": 81,
+              "opcode": "putfield",
+              "operand": "#7",
+              "symbol": "Field loadingChunks:Z"
+            },
+            {
+              "offset": 86,
+              "opcode": "invokevirtual",
+              "operand": "#62",
+              "symbol": "Method loadChunksAround:(Z)V"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "instruction_count": 9,
+          "name": "remove",
+          "parsed_method_sha256": "b7cbf490672c89bae108c22078e4882369359653901bbd5dbd464ae856ea6876",
+          "site_anchors": [
+            {
+              "offset": 12,
+              "opcode": "invokespecial",
+              "operand": "#157",
+              "symbol": "Method net/minecraft/world/entity/Entity.remove:(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Z)V",
+          "instruction_count": 109,
+          "name": "loadChunksAround",
+          "parsed_method_sha256": "49fd1f64e677c36216868a8cf3369a6e689cd65ac9867174555d9df0b9578eb7",
+          "site_anchors": [
+            {
+              "offset": 60,
+              "opcode": "invokestatic",
+              "operand": "#309",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACPlatform.forceChunk:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;IIZZ)V"
+            },
+            {
+              "offset": 79,
+              "opcode": "invokevirtual",
+              "operand": "#315",
+              "symbol": "Method net/minecraft/server/players/PlayerList.getViewDistance:()I"
+            },
+            {
+              "offset": 131,
+              "opcode": "invokestatic",
+              "operand": "#309",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACPlatform.forceChunk:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;IIZZ)V"
+            },
+            {
+              "offset": 164,
+              "opcode": "new",
+              "operand": "#328",
+              "symbol": "class net/minecraft/network/protocol/game/ClientboundLevelChunkWithLightPacket"
+            },
+            {
+              "offset": 186,
+              "opcode": "invokevirtual",
+              "operand": "#330",
+              "symbol": "Method net/minecraft/world/level/Level.getChunk:(II)Lnet/minecraft/world/level/chunk/LevelChunk;"
+            },
+            {
+              "offset": 204,
+              "opcode": "invokespecial",
+              "operand": "#340",
+              "symbol": "Method net/minecraft/network/protocol/game/ClientboundLevelChunkWithLightPacket.\"<init>\":(Lnet/minecraft/world/level/chunk/LevelChunk;Lnet/minecraft/world/level/lighting/LevelLightEngine;Ljava/util/BitSet;Ljava/util/BitSet;)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class",
+      "class_sha256": "d9c827a9acb2d0f9e7050252ed57e6a3d0a8ad49053e54f19a8eaeb6b84da912",
+      "method_count": 19,
+      "relevant_methods": [
+        {
+          "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "instruction_count": 16,
+          "name": "NuclearExplosionEntity",
+          "parsed_method_sha256": "c75031592eee5cab3986d77c792fad2ae643e8f4f4ffceb9115b1b528f56ffaa",
+          "site_anchors": [
+            {
+              "offset": 24,
+              "opcode": "putfield",
+              "operand": "#22",
+              "symbol": "Field loadingChunks:Z"
+            }
+          ]
+        },
+        {
+          "descriptor": "()V",
+          "instruction_count": 348,
+          "name": "tick",
+          "parsed_method_sha256": "64f9a412c81a25525edf5b9576d56cec8354f6963ef718a44e6179347fcd8a25",
+          "site_anchors": [
+            {
+              "offset": 5,
+              "opcode": "invokevirtual",
+              "operand": "#34",
+              "symbol": "Method getChunksAffected:()I"
+            },
+            {
+              "offset": 167,
+              "opcode": "invokevirtual",
+              "operand": "#116",
+              "symbol": "Method remove:(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
+            },
+            {
+              "offset": 191,
+              "opcode": "getfield",
+              "operand": "#22",
+              "symbol": "Field loadingChunks:Z"
+            },
+            {
+              "offset": 206,
+              "opcode": "putfield",
+              "operand": "#22",
+              "symbol": "Field loadingChunks:Z"
+            },
+            {
+              "offset": 211,
+              "opcode": "invokevirtual",
+              "operand": "#129",
+              "symbol": "Method loadChunksAround:(Z)V"
+            },
+            {
+              "offset": 352,
+              "opcode": "invokevirtual",
+              "operand": "#160",
+              "symbol": "Method removeChunk:(I)V"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "instruction_count": 17,
+          "name": "remove",
+          "parsed_method_sha256": "8eb89c85d5125decad3a9975e1d0b453e9911f59f4fd8f2f36f40b15d96d5854",
+          "site_anchors": [
+            {
+              "offset": 11,
+              "opcode": "getfield",
+              "operand": "#22",
+              "symbol": "Field loadingChunks:Z"
+            },
+            {
+              "offset": 19,
+              "opcode": "putfield",
+              "operand": "#22",
+              "symbol": "Field loadingChunks:Z"
+            },
+            {
+              "offset": 24,
+              "opcode": "invokevirtual",
+              "operand": "#129",
+              "symbol": "Method loadChunksAround:(Z)V"
+            },
+            {
+              "offset": 29,
+              "opcode": "invokespecial",
+              "operand": "#305",
+              "symbol": "Method net/minecraft/world/entity/Entity.remove:(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Z)V",
+          "instruction_count": 53,
+          "name": "loadChunksAround",
+          "parsed_method_sha256": "0ede215fd19dd7a9c3215668a481a02ad8da5bf75af2c44100d6716182f32d33",
+          "site_anchors": [
+            {
+              "offset": 26,
+              "opcode": "invokevirtual",
+              "operand": "#34",
+              "symbol": "Method getChunksAffected:()I"
+            },
+            {
+              "offset": 36,
+              "opcode": "invokevirtual",
+              "operand": "#322",
+              "symbol": "Method net/minecraft/server/players/PlayerList.getViewDistance:()I"
+            },
+            {
+              "offset": 88,
+              "opcode": "invokestatic",
+              "operand": "#337",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACPlatform.forceChunk:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;IIZZ)V"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "instruction_count": 6,
+          "name": "readAdditionalSaveData",
+          "parsed_method_sha256": "331b1d37c9c17b2c8cd90195bc707ae37bdd1b85f4404c3caa9df2d3f187f155",
+          "site_anchors": [
+            {
+              "offset": 2,
+              "opcode": "ldc_w",
+              "operand": "#561",
+              "symbol": "String WasLoadingChunks"
+            },
+            {
+              "offset": 8,
+              "opcode": "putfield",
+              "operand": "#22",
+              "symbol": "Field loadingChunks:Z"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "instruction_count": 6,
+          "name": "addAdditionalSaveData",
+          "parsed_method_sha256": "6c353de627463ac14a843845a1589dfd564f61fb0a068dd464ed1146cad1d3dd",
+          "site_anchors": [
+            {
+              "offset": 1,
+              "opcode": "ldc_w",
+              "operand": "#561",
+              "symbol": "String WasLoadingChunks"
+            },
+            {
+              "offset": 5,
+              "opcode": "getfield",
+              "operand": "#22",
+              "symbol": "Field loadingChunks:Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/OccultGemItem.class",
+      "class_sha256": "90dd1de3b1c665927997736a033db0319d0e7efe7e50fb666ddd82d92ce09e51",
+      "method_count": 12,
+      "relevant_methods": [
+        {
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "instruction_count": 80,
+          "name": "use",
+          "parsed_method_sha256": "58cc8b34ea10c859c14e5aee232dc92d403ca33de7bd16440dc0a9530c19d584",
+          "site_anchors": [
+            {
+              "offset": 109,
+              "opcode": "invokestatic",
+              "operand": "#134",
+              "symbol": "Method loadChunksAround:(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;Lnet/minecraft/core/BlockPos;Z)V"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;Lnet/minecraft/core/BlockPos;Z)V",
+          "instruction_count": 31,
+          "name": "loadChunksAround",
+          "parsed_method_sha256": "8ca7b4ab8c722958b74b44c25a1baef7f57392e2a74927cb23566ad2b414f3c6",
+          "site_anchors": [
+            {
+              "offset": 44,
+              "opcode": "invokestatic",
+              "operand": "#187",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACPlatform.forceChunk:(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;IIZZ)V"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "instruction_count": 77,
+          "name": "acInventoryTick",
+          "parsed_method_sha256": "6d09972ae6232d78457630e4645a93dae4c944675667dcd05e3df14d0330896d",
+          "site_anchors": [
+            {
+              "offset": 158,
+              "opcode": "invokevirtual",
+              "operand": "#217",
+              "symbol": "Method net/minecraft/nbt/CompoundTag.remove:(Ljava/lang/String;)V"
+            },
+            {
+              "offset": 165,
+              "opcode": "invokevirtual",
+              "operand": "#217",
+              "symbol": "Method net/minecraft/nbt/CompoundTag.remove:(Ljava/lang/String;)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/RemoteDetonatorItem.class",
+      "class_sha256": "6d6e8cd94df306aec6f99b07af856b477b8e6f34d41aaca06a35921b53f2c4b8",
+      "method_count": 11,
+      "relevant_methods": [
+        {
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "instruction_count": 91,
+          "name": "use",
+          "parsed_method_sha256": "847701b18ae0f4fe61a04887fb3766425dc6a988827fcb6d2883a1154cac8caa",
+          "site_anchors": [
+            {
+              "offset": 94,
+              "opcode": "invokestatic",
+              "operand": "#131",
+              "symbol": "Method loadChunksAround:(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;Lnet/minecraft/core/BlockPos;Z)V"
+            },
+            {
+              "offset": 166,
+              "opcode": "invokevirtual",
+              "operand": "#185",
+              "symbol": "Method net/minecraft/nbt/CompoundTag.remove:(Ljava/lang/String;)V"
+            },
+            {
+              "offset": 173,
+              "opcode": "invokevirtual",
+              "operand": "#185",
+              "symbol": "Method net/minecraft/nbt/CompoundTag.remove:(Ljava/lang/String;)V"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;Lnet/minecraft/core/BlockPos;Z)V",
+          "instruction_count": 31,
+          "name": "loadChunksAround",
+          "parsed_method_sha256": "1680620c5c706167eaa0beff3a685346d52e84dfa88a767d98a339b13c872660",
+          "site_anchors": [
+            {
+              "offset": 44,
+              "opcode": "invokestatic",
+              "operand": "#227",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACPlatform.forceChunk:(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;IIZZ)V"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "instruction_count": 75,
+          "name": "acInventoryTick",
+          "parsed_method_sha256": "e50851dd9b3ce62e7ed8b23aa4d5eb283c607cfcf0ba50a0812dd0eb776337af",
+          "site_anchors": [
+            {
+              "offset": 150,
+              "opcode": "invokevirtual",
+              "operand": "#185",
+              "symbol": "Method net/minecraft/nbt/CompoundTag.remove:(Ljava/lang/String;)V"
+            },
+            {
+              "offset": 157,
+              "opcode": "invokevirtual",
+              "operand": "#185",
+              "symbol": "Method net/minecraft/nbt/CompoundTag.remove:(Ljava/lang/String;)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACPlatform.class",
+      "class_sha256": "662a4d2593fe515ed8790bad06d8184d1eb921423033dfd11b3b44142dedc3e6",
+      "method_count": 42,
+      "relevant_methods": [
+        {
+          "descriptor": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;IIZZ)V",
+          "instruction_count": 13,
+          "name": "forceChunk",
+          "parsed_method_sha256": "068bff3ce99b6b6aac84db7e249a0309ee8a16138c0892332a47e0a4c63c270f",
+          "site_anchors": [
+            {
+              "offset": 20,
+              "opcode": "invokevirtual",
+              "operand": "#281",
+              "symbol": "Method net/neoforged/neoforge/common/world/chunk/TicketController.forceChunk:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;IIZZ)Z"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;IIZZ)V",
+          "instruction_count": 13,
+          "name": "forceChunk",
+          "parsed_method_sha256": "2b96549f365a734de5b65b4004f308dc31debde5fae1b735e961a00f06bb1652",
+          "site_anchors": [
+            {
+              "offset": 20,
+              "opcode": "invokevirtual",
+              "operand": "#285",
+              "symbol": "Method net/neoforged/neoforge/common/world/chunk/TicketController.forceChunk:(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;IIZZ)Z"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": {
+    "ACPlatform_indirection_effective_runtime": "NOT_PROVEN",
+    "actual_server_runtime_observation": false,
+    "constant_pool_candidates_are_not_proven_calls": true,
+    "force_chunk_release_at_every_lifecycle_exit": "NOT_PROVEN",
+    "mutating_hook": "NOT_VERIFIED",
+    "perk_ready": false,
+    "physical_qa": "NOT_TESTED",
+    "source_attribution_and_dimension_unload": "NOT_PROVEN",
+    "static_initializers_excluded_by_parser": true,
+    "world_effect_policy": "NOT_CERTIFIED",
+    "world_protection_mod_event_cooperation": "NOT_PROVEN"
+  },
+  "nuclear_class_path": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class",
+  "nuclear_class_sha256": "d9c827a9acb2d0f9e7050252ed57e6a3d0a8ad49053e54f19a8eaeb6b84da912",
+  "nuclear_declared_method_roster": [
+    {
+      "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+      "instruction_count": 16,
+      "name": "NuclearExplosionEntity",
+      "parsed_method_sha256": "c75031592eee5cab3986d77c792fad2ae643e8f4f4ffceb9115b1b528f56ffaa"
+    },
+    {
+      "descriptor": "(Lnet/minecraft/server/level/ServerEntity;)Lnet/minecraft/network/protocol/Packet;",
+      "instruction_count": 4,
+      "name": "getAddEntityPacket",
+      "parsed_method_sha256": "dc785ed0b5cb371ebef1dd6ea4761d4fa20b6c74bb54e14bd1691ede4d2d3b7a"
+    },
+    {
+      "descriptor": "()V",
+      "instruction_count": 348,
+      "name": "tick",
+      "parsed_method_sha256": "64f9a412c81a25525edf5b9576d56cec8354f6963ef718a44e6179347fcd8a25"
+    },
+    {
+      "descriptor": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+      "instruction_count": 17,
+      "name": "remove",
+      "parsed_method_sha256": "8eb89c85d5125decad3a9975e1d0b453e9911f59f4fd8f2f36f40b15d96d5854"
+    },
+    {
+      "descriptor": "()I",
+      "instruction_count": 6,
+      "name": "getChunksAffected",
+      "parsed_method_sha256": "b3feffcf00b25e038e04477c104f29b3bf377d231ec6f5dab02e64a10903a7a3"
+    },
+    {
+      "descriptor": "(Z)V",
+      "instruction_count": 53,
+      "name": "loadChunksAround",
+      "parsed_method_sha256": "0ede215fd19dd7a9c3215668a481a02ad8da5bf75af2c44100d6716182f32d33"
+    },
+    {
+      "descriptor": "(FF)F",
+      "instruction_count": 26,
+      "name": "calculateDamage",
+      "parsed_method_sha256": "9cedbccfd5048497dd0dc492232ca72dc8064fad3aa9257c03053f2efef5f547"
+    },
+    {
+      "descriptor": "(I)V",
+      "instruction_count": 269,
+      "name": "removeChunk",
+      "parsed_method_sha256": "1315d82748db215c82dae6e79502c6c7f41e9c4fdfbe737d83dfb4f57dcaee50"
+    },
+    {
+      "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+      "instruction_count": 25,
+      "name": "isDestroyable",
+      "parsed_method_sha256": "767acd1bae8487ab7d1bc52fd68991150fdb5e5cdb6157a484bd3da63501884f"
+    },
+    {
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "instruction_count": 19,
+      "name": "defineSynchedData",
+      "parsed_method_sha256": "1b23a877083057db0cf7d0a0e19341b06a7d86d3a6c798318fd1036ebd903f51"
+    },
+    {
+      "descriptor": "()F",
+      "instruction_count": 7,
+      "name": "getSize",
+      "parsed_method_sha256": "ea9c535481ed1a82c829c3c7894138b941f4bdbb4ee6423d2ad7949ebe3afb48"
+    },
+    {
+      "descriptor": "(F)V",
+      "instruction_count": 7,
+      "name": "setSize",
+      "parsed_method_sha256": "d06a4c82603d1e2ff1d30344b9f7cbc4f463f95f992162a6f914b5817360a79d"
+    },
+    {
+      "descriptor": "()Z",
+      "instruction_count": 7,
+      "name": "isNoGriefing",
+      "parsed_method_sha256": "5e1b1b294bb2df393fbdd6b3ec7f5407330911fc2f2b28a653f75ad7cc78c974"
+    },
+    {
+      "descriptor": "(Z)V",
+      "instruction_count": 7,
+      "name": "setNoGriefing",
+      "parsed_method_sha256": "1bc708464ea2daeb02be4d3c21947028d3acd8a7bb7ab8fecfe836fa126efa58"
+    },
+    {
+      "descriptor": "()Z",
+      "instruction_count": 7,
+      "name": "isIntentionalGameDesign",
+      "parsed_method_sha256": "52cd5cbeea0b9b91f2d7ce8aa2aad8152cd727ec25dc451f311e3e3a8c6c4c0e"
+    },
+    {
+      "descriptor": "(Z)V",
+      "instruction_count": 7,
+      "name": "setIntentionalGameDesign",
+      "parsed_method_sha256": "e05cf60f5c0a771abc25138ee3dcc2d8fcb3439a19fbd09f852f07c0fda35099"
+    },
+    {
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "instruction_count": 6,
+      "name": "readAdditionalSaveData",
+      "parsed_method_sha256": "331b1d37c9c17b2c8cd90195bc707ae37bdd1b85f4404c3caa9df2d3f187f155"
+    },
+    {
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "instruction_count": 6,
+      "name": "addAdditionalSaveData",
+      "parsed_method_sha256": "6c353de627463ac14a843845a1589dfd564f61fb0a068dd464ed1146cad1d3dd"
+    },
+    {
+      "descriptor": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;)I",
+      "instruction_count": 12,
+      "name": "lambda$tick$0",
+      "parsed_method_sha256": "2653456186fe65ae2daf9fddda797f6d105929bfd7f1b6c0b49c9dee1bf5291f"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_NUCLEAR_CHUNK_LIFECYCLE_AND_PLATFORM_FORCING_REFERENCES"
+}
