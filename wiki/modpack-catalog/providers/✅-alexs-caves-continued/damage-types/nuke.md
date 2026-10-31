@@ -96,3 +96,38 @@ O recorte demonstra diferentes **origens, valores de tamanho e gates nativos** q
 **Owner e segurança:** a factory de criação `ACCompat.createEntity(EntityType,Level)` selecionada delega a `EntityType.create(Level)`. Nenhum owner causal foi certificado para estes quatro emitters, ainda que alguns sejam disparados por itens/entidades. `setNoGriefing` em um produtor e o valor default `NO_GRIEFING=false` na entidade não comprovam proteção de blocos em todos os caminhos. Qualquer implementação futura requer boundary de `WorldEffectPolicy`, limites de área, deduplicação e validação servidor/PvP.
 
 **Limites documentados:** inventário estático de candidatos, não um call graph exaustivo. O parser exclui inicializadores de classe, não resolve lambdas indiretas, callbacks, outras bibliotecas, mixins ou runtime. **`NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`**; contadores e Stage intactos.
+
+
+## Cálculo numérico e tamanho de emissão — método SHA-exato 1.0.10
+
+**Manifesto adicional verificável:** [EXACT-NUCLEAR-NUMERIC-1.0.10.json](../EXACT-NUCLEAR-NUMERIC-1.0.10.json) · [workflow de verificação](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-nuclear-numeric.yml). O arquivo contém as **26 instruções** de `NuclearExplosionEntity.calculateDamage(FF)F`, as **34 instruções** de `NucleeperEntity.explode()V` e as **24 instruções** de `NuclearBombEntity.explode()V`, verificadas contra hashes de método e classe publicados anteriormente. É evidência de bytecode selecionado do JAR publisher 1.0.10, sem garantir alcance operacional ou dano pós-mitigação.
+
+### Expressão compilada por `calculateDamage(float, float)`
+
+Definindo `d` como o primeiro argumento `fload_1`, `r` como o segundo argumento `fload_2` e `s` como `getSize()`, o método calcula:
+
+\[
+D_{\mathrm{raw}} = \left(\frac{r-d}{r}\right)\cdot M(s),
+\quad
+M(s)=
+\begin{cases}
+100,&s\leq1.5\\
+100+400(s-1.5),&s>1.5.
+\end{cases}
+\]
+
+**Proveniência de instruções:** `fload_2, fload_1, fsub, fload_2, fdiv` (offsets 0–4) formam a proporção; `getSize` @7, `1.5f` @10, `fcmpg` @13, `ifgt 23` @14 escolhem o ramo; `100f` @17 ou `100f + (getSize()-1.5f)*400f` @23–38; `fmul` @44 e `freturn` @45.
+
+O segundo `float` é fornecido pela variável local `5` em `NuclearExplosionEntity.tick` na chamada `calculateDamage` @466; o primeiro vem de `LivingEntity.distanceTo` @456. **Não chamar `r` de raio de destruição comprovado**, pois o significado e a inicialização de `local 5` requerem rastreamento completo do consumidor. Não existe `clamp` explícito **neste método**; divisão por zero, valores fora do intervalo e regras de arredondamento IEEE 754 devem ser avaliados separadamente. O `tick` usa `fstore 9` @469 e verifica `ifle 627` @586 antes de chamar `LivingEntity.hurt` @623; portanto, valores numéricos calculados **não equivalem a hits aceitos ou dano final**. A seleção entre `nuke` e `intentional_game_design` é uma etapa diferente da fórmula.
+
+### Fontes de `SIZE` verificadas sem inferir configuração efetiva
+
+| Origem | Código de emissão selecionado | Interpretação limitada |
+|---|---|---|
+| `NucleeperEntity.explode` | `isCharged()` @29; `ifeq 41` @32; `ldc float 1.75f` @35, alternativamente `fconst_1` @41; ambos convergem em `NuclearExplosionEntity.setSize` @42. | `SIZE=1.75f` quando carregado e `SIZE=1.0f` quando não carregado, **neste produtor**. |
+| `NuclearBombEntity.explode` | `AlexsCaves.COMMON_CONFIG` @28 → campo exato `ACServerConfig.nukeExplosionSizeModifier` @31 → `ModConfigSpec.DoubleValue.get` @34 → `Double.floatValue` @40 → `setSize` @43. | O tamanho é um **parâmetro de configuração nativo**; o valor efetivo, os limites e overrides da instalação continuam `NOT_VERIFIED`. |
+| `NucleeperEntity.explode` (griefing) | `RULE_MOBGRIEFING` @49, `ACCompat.gameRule(Level,Key,true)` @53, `ifne 64` @56; sob retorno falso, `setNoGriefing(true)` @61. | Essa condição de um emissor não demonstra proteção contra destruição para todos os demais nem autoriza contornar `WorldEffectPolicy`. |
+
+**Permissões para perks:** tratar o tamanho da emissão, a intensidade numérica bruta e o settlement do dano como variáveis diferentes. As flags de world griefing, a atribuição causal a jogador e os limites de área não foram integralmente auditados. Não inferir escalonamento global a partir do caso `Nucleeper` ou promover integração por interpolação da fórmula.
+
+**Status:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Não houve promoção do certificado de sete campos, alteração de índices, concessão de hooks nem avanço de Stage.
