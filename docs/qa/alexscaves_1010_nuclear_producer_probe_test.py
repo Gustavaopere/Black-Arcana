@@ -2,6 +2,7 @@
 """Fail-closed synthetic regression tests for NuclearExplosion producer audit."""
 import json
 import unittest
+from pathlib import Path
 
 from alexscaves_1010_gumball_state_probe import GumballStateProbeError, strict_pairs
 from alexscaves_1010_nuclear_producer_probe import relevant_method, sealed
@@ -57,6 +58,51 @@ class NuclearProducerTest(unittest.TestCase):
         with self.assertRaisesRegex(GumballStateProbeError, "duplicate snapshot key"):
             json.loads('{"scope":1,"scope":2}', object_pairs_hook=strict_pairs)
 
+
+
+class ExactProducerSnapshotTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        path = (Path(__file__).resolve().parents[2] /
+                "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NUCLEAR-PRODUCERS-1.0.10.json")
+        cls.snapshot = json.loads(path.read_text(encoding="utf8"), object_pairs_hook=strict_pairs)
+
+    def test_publisher_identity_and_candidate_set(self):
+        obj=self.snapshot
+        self.assertEqual(obj["artifact"]["sha1"],
+                         "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570")
+        self.assertEqual(obj["artifact"]["size_bytes"],75279314)
+        self.assertEqual(len(obj["candidate_classes"]),9)
+        self.assertEqual(len(obj["classes_with_bytecode_references"]),6)
+
+    def test_four_native_server_reference_producers(self):
+        data = self.snapshot["classes_with_bytecode_references"]
+        paths = {c["class_path"].rsplit("/",1)[-1]: c for c in data}
+        expected = {
+            "NuclearFurnaceBlockEntity.class":"destroyWhileCritical",
+            "NuclearBombEntity.class":"explode",
+            "NucleeperEntity.class":"explode",
+            "SackOfSatingItem.class":"acInventoryTick",
+        }
+        for filename, method_name in expected.items():
+            self.assertIn(filename,paths)
+            methods = paths[filename]["selected_methods"]
+            self.assertTrue(any(m["name"]==method_name for m in methods))
+            self.assertTrue(any(any("NUCLEAR_EXPLOSION" in a["symbol"]
+                                    for a in m["site_anchors"]) for m in methods))
+        self.assertTrue(any("setIntentionalGameDesign" in a["symbol"]
+                            for m in paths["SackOfSatingItem.class"]["selected_methods"]
+                            for a in m["site_anchors"]))
+        self.assertTrue(any("setNoGriefing" in a["symbol"]
+                            for m in paths["NucleeperEntity.class"]["selected_methods"]
+                            for a in m["site_anchors"]))
+
+    def test_snapshot_reflects_distinct_client_renderer(self):
+        names = {x["class_path"].rsplit("/",1)[-1]
+                 for x in self.snapshot["classes_with_bytecode_references"]}
+        self.assertIn("ClientProxy.class",names)
+        self.assertNotIn("ACEntityRegistry.class",names)
+        self.assertNotIn("MushroomCloudParticle.class",names)
 
 if __name__ == "__main__":
     unittest.main()
