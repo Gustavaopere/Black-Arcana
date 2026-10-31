@@ -107,3 +107,54 @@ A [auditoria SHA-exata dos produtores](../EXACT-GUMBALL-PRODUCERS-1.0.10.json) u
 **Limites da busca:** `ACEntityRegistry` e `ACItemRegistry` aparecem apenas como registries de suporte, não prova de disparo. As outras candidatas sem chamadas simbólicas selecionadas não são afirmadas como irrelevantes. A ausência de um match não demonstra ausência de emitters indiretos.
 
 **Status:** este checkpoint **não** sela ainda os sete campos do contrato completo de Gumball. Continuam `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; nenhum aumento dos contadores, nenhuma raiz mágica nova ou promoção de Stage. Próximo fechamento deve ligar guardas completos, formulação dos valores iniciais, herança de owner/atribuição e persistência ao contrato de impacto, validar a versão instalada e só então alterar índices.
+
+
+## Estado sincronizado, munição e temporização — JAR exato 1.0.10
+
+**Evidência estática adicional:** [EXACT-GUMBALL-STATE-1.0.10.json](../EXACT-GUMBALL-STATE-1.0.10.json) sela hashes de **52 métodos selecionados**, três classes e **105 âncoras de offsets críticos** em 19 recortes, a serem confrontados com o JAR publisher pela CI. Não é certificação de hook/perk, nem reprodução dos métodos completos.
+
+### `GumballEntity`: valores padrão e autoria
+
+| Campo | Valor e prova compilada | Fronteira de integração |
+|---|---|---|
+| `MAXIMUM_BOUNCES` | `5`, `defineSynchedData` offsets 1/4 | Pode ser sobrescrito pelo emissor |
+| `BOUNCES` | `0`, offsets 13/16 | Contador de ricochetes, não cooldown |
+| `COLOR` | `0`, offsets 25/28; construtor chama `RandomSource.nextInt(12)` e `setColor` | Cor visual não constitui tipo de dano |
+| `DAMAGE` | `2.0f`, offsets 37/40 | Valor inicial; ShotGum usa `setDamage(4.0f)` |
+| `TARGETS_ON_BOUNCE` | `false`, offsets 49/52 | Configuração nativa de targeting |
+| `SPLITS_ON_HIT` | `false`, offsets 61/64 | Filhos não surgem por padrão |
+| `EXPLOSIVE` | `false`, offsets 73/76 | A explosão exige flag do produtor |
+| Owner | Construtor `GumballEntity(Level,LivingEntity)` invoca `setOwner(Entity)` no offset 18 | Demonstra atribuição na emissão primária; não prova owner em descendentes |
+| Gravidade | `getDefaultGravity()` retorna double `0.07999999821186066` | Constante compilada, não trajetória medida |
+| NBT específico | `addAdditionalSaveData` e `readAdditionalSaveData` salvam/leem diretamente `Color`, mais chamadas à superclasse | Não presumir que os outros seis campos sincronizados sobrevivam ao save/reload |
+
+Os sete atributos acima usam `SynchedEntityData` com setters/getters próprios. Esse armazenamento não constitui uma API autorizada para perks. A emissão e a mutação permanecem sob autoridade do provider.
+
+### `ShotGumItem`: custos e tempo próprios
+
+| Superfície | Prova no binário | Limites |
+|---|---|---|
+| Carregador | `getGumballsLeft` lê a tag `Gumballs`, retornando **4** se não houver tag (offset 27) | Não é o inventário de munição do mob |
+| Disparo | `isShooting`, `setShooting`, `getShootTime` e `setShootTime` usam tags `Shooting`/`ShootTime`; `acInventoryTick` compara o contador com literal **5** (83–89) | A comparação não homologa cadência total ou cooldown de casting |
+| Uso mantido | `getUseDuration` retorna **72000** | Limite declarado de duração da interação, não cooldown de 72.000 ticks |
+| Recarga | `use` invoca `findAmmo(Player)` (45), verifica criativo e stack vazia (51/58), pode chamar `ItemStack.shrink(1)` (67) e `setGumballsLeft(...,4)` (80/81) | Um ramo nativo pode consumir **uma unidade de item para repor quatro cargas**, condicionado aos guards; custo transacional Black Arcana não verificado |
+| Emissão | `acInventoryTick` cria `GumballEntity(Level,LivingEntity)` (316), escreve `setTargetsOnBounce` (434), `setSplitsOnHit` (441), `setExplosive` (448), `shootFromRotation` (480), `setMaximumBounces` (487) e `setDamage(4.0f)` (492/495) | Dano solicitado não garante quatro pontos líquidos após mitigação |
+| Lado servidor | `Level.isClientSide` (499) guarda a chamada `addFreshEntity` (508) | Não autoriza criar segundo emitter Black Arcana |
+| Encantamentos do disparador | `TARGETED_RICOCHET` (138/141), `TRIPLE_SPLIT` (155/158), `EXPLOSIVE_FLAVOR` (172/175), `BOUNCY_BALL` (190/193) são consultados via `ACCompat.enchantLevel` | Variantes/níveis e compatibilidade precisam de contratos de enchantment independentes |
+| Persistência de estado | As tags do item incluem `PrevShootTime`, `ShootTime`, `PrevCrankAngle`, `CrankAngle`, `Gumballs` e `Shooting` | ItemStack e NBT de projétil são domínios separados |
+
+A avaliação dos perks deve identificar o valor aplicado ao projétil, a quantidade de emissões e a unidade de munição realmente debitada, sem duplicar hit, charge ou consumo.
+
+### `GumbeeperEntity`: flags, disparo e save
+
+- `defineSynchedData` inicia `GUMBALLS_LEFT=6`, `CHARGED=false` e `POSSESSOR_LICOWITCH_ID=-1`, além de `EXPLODING`, `ATTACK_CHARGE` e `SHOOTING`. Esses valores são do mob.
+- `canShootGumball` consulta `getGumballsLeft`, `dialRot` (literal **450.0f**) e `getAttackCharge` (comparação com `1.0f`). Esses gates pertencem ao ciclo de ataque do mob e não à arma do jogador.
+- `shootGumball` e `tick` são emissores distintos. A flag `isCharged` modifica seus ramos; aparecem `setMaximumBounces(10)` e `Attributes.ATTACK_DAMAGE`, com literal `2.0f` na variante carregada. A fórmula efetiva depende das instruções intermediárias e do ramo escolhido.
+- Os overrides de `addAdditionalSaveData` e `readAdditionalSaveData` persistem diretamente `Charged` (boolean) e `Gumballs` (int), além da superclasse. Não provam persistência de charge intermediária, alvo nem projéteis ativos.
+- `canAttack` consulta o possessor Licowitch e `isFriendlyFire`; `hasLineOfSightToGumballHole` usa `Level.clip` com `COLLIDER` e `Fluid.NONE`, contendo literal `128.0d` no cálculo de distância. Esse valor não deve ser anunciado como alcance efetivo de Gumball.
+
+### Fronteiras ainda pendentes
+
+A prova é SHA-exata, porém não reconstrói integralmente CFG/branches, nem confirma aceitação de `Entity.hurt`, execução de todas as variantes de enchantments, persistência real em save/reload ou herança de owner nos descendentes. Explosões nativas em `Level.explode` e novos efeitos Black Arcana exigem contratos de world safety distintos. O RPG Skill Tree continua restrito a progressão/atributos/perks por boundary verificada.
+
+**Estado:** `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED` e `NO_MUTATION`. Sem certificação integral, o índice permanece em **22/29** para Alex’s Caves e **160/2341** para contratos técnicos estáticos globais. Próximo fechamento: validar fluxo completo dos produtores, propagação de autoria, limites dos encantamentos e os sete campos técnicos individuais, antes de promover Gumball.
