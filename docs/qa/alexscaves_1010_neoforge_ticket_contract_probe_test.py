@@ -158,5 +158,58 @@ class ExactNeoForgeTicketSnapshotTests(unittest.TestCase):
                          "NOT_CLOSED")
 
 
+
+    def test_compiled_provider_add_and_remove_pass_same_flag_twice(self):
+        paths={r["class_path"].rsplit("/",1)[-1]:r for r in
+               self.doc["publisher_boolean_paths"]}
+        nuc={x["name"]:x for x in paths["NuclearExplosionEntity.class"]["selected_methods"]}
+        def by_at(m):
+            return {x["offset"]:(x["opcode"],x["operand"],x["symbol"])
+                    for x in m["selected_stack"]}
+        tick=by_at(nuc["tick"]);rem=by_at(nuc["remove"]);load=by_at(nuc["loadChunksAround"])
+        self.assertEqual(tick[210][0],"iconst_1")
+        self.assertIn("loadChunksAround",tick[211][2])
+        self.assertEqual(rem[23][0],"iconst_0")
+        self.assertIn("loadChunksAround",rem[24][2])
+        self.assertEqual(load[86][0],"iload_1")
+        self.assertEqual(load[87][0],"iload_1")
+        self.assertIn("ACPlatform.forceChunk",load[88][2])
+        ac=by_at(paths["ACPlatform.class"]["selected_methods"][0])
+        self.assertEqual(ac[16][:2],("iload","4"))
+        self.assertEqual(ac[18][:2],("iload","5"))
+        self.assertIn("TicketController.forceChunk",ac[20][2])
+        self.assertEqual(ac[23][0],"pop")
+
+    def test_compiled_uuid_controller_switches_entity_ticket_type(self):
+        desc="(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;IIZZ)Z"
+        site=self.sites("TicketController.class","forceChunk",desc)
+        self.assertIn("ENTITY_TICKING",site[18])
+        self.assertIn("ForcedChunkManager.ENTITY:",site[24])
+        self.assertIn("ForcedChunkManager.forceChunk",site[32])
+
+    def test_ticket_tracker_has_distinct_ticking_and_plain_maps(self):
+        cls="ForcedChunkManager$TicketTracker.class"
+        selection=self.selected(cls,"getTickets","(Z)Ljava/util/Map;")
+        self.assertEqual(selection["method_sha256"],
+                         "92ded3124a30ce90720339d2fc879dfbfc08e33c376fdc03570122f750ba05a9")
+        sites=self.sites(cls,"getTickets","(Z)Ljava/util/Map;")
+        self.assertIn("tickingChunks",sites[5])
+        self.assertIn("chunks:",sites[12])
+        desc="(Lnet/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketOwner;JZ)Z"
+        add=self.selected(cls,"add",desc)
+        rem=self.selected(cls,"remove",desc)
+        self.assertEqual(add["method_sha256"],
+                         "b08776a0342a948ebd1db8f13776aa9400277c2b34753002ddcade7b2396446d")
+        self.assertEqual(rem["method_sha256"],
+                         "3ed7002a78ed399d27f7b86764600b940a64312c10ad336899bc2f01bd013e25")
+        self.assertIn("getTickets:",self.sites(cls,"add",desc)[3])
+        self.assertIn("getTickets:",self.sites(cls,"remove",desc)[3])
+
+    def test_static_ticket_bucket_mismatch_is_not_a_live_leak_claim(self):
+        self.assertEqual(self.doc["native_release_ticket_bucket_mismatch"],
+                         "CONFIRMED_SELECTED_STATIC_BRANCHES_NOT_LIVE_RUNTIME")
+        self.assertEqual(self.doc["actual_persistent_ticket_leak"],"NOT_OBSERVED")
+        self.assertEqual(self.doc["limits"]["restart_reinstate_validation"],"NOT_CLOSED")
+
 if __name__=="__main__":
     unittest.main()
