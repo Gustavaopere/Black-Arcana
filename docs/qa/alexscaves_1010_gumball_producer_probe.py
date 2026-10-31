@@ -149,13 +149,85 @@ def audit(jar, javap_bin):
     }
 
 
+
+# A deliberately narrow contract: class/method digests and selected direct refs.
+# Neither upstream source code nor runtime reachability is inferred.
+PRODUCER_SNAPSHOT_SITES = {
+    SERVER + "entity/living/GumbeeperEntity.class": {
+        "tick": (385, 542, 560, 579),
+        "shootGumball": (80, 265, 289, 307, 326),
+    },
+    SERVER + "item/ShotGumItem.class": {
+        "acInventoryTick": (316, 434, 441, 448, 480, 487, 495),
+    },
+    SERVER + "misc/ACDamageTypes.class": {
+        "causeGumballDamage": (19,),
+    },
+}
+
+
+def strict_pairs(pairs):
+    out = {}
+    for key, value in pairs:
+        if key in out:
+            raise ProducerProbeError("duplicate snapshot key: " + key)
+        out[key] = value
+    return out
+
+
+def snapshot_view(observed):
+    classes = []
+    seen = set()
+    for cls in observed["selected_classes"]:
+        class_path = cls["class_path"]
+        if class_path in seen:
+            raise ProducerProbeError("duplicate producer class")
+        seen.add(class_path)
+        expected = PRODUCER_SNAPSHOT_SITES.get(class_path)
+        if expected is None:
+            raise ProducerProbeError("unmapped producer class")
+        selected = []
+        for m in cls["methods"]:
+            sites = expected.get(m["name"])
+            if sites is None:
+                raise ProducerProbeError("unmapped producer method: " + m["name"])
+            refs = []
+            for at in sites:
+                matches = [w["reference"] for w in m["reference_windows"] if w["at"] == at]
+                if len(matches) != 1:
+                    raise ProducerProbeError("missing/duplicate producer anchor: " + m["name"] + ":" + str(at))
+                refs.append(matches[0])
+            selected.append({
+                **{k: m[k] for k in ("name", "descriptor", "instruction_count", "parsed_method_sha256")},
+                "anchors": refs,
+            })
+        if set(m["name"] for m in cls["methods"]) != set(expected):
+            raise ProducerProbeError("unexpected or missing selected methods")
+        classes.append({"class_path": class_path, "class_sha256": cls["class_sha256"], "methods": selected})
+    if set(PRODUCER_SNAPSHOT_SITES) != seen:
+        raise ProducerProbeError("unexpected or missing selected classes")
+    return {
+        **{k: observed[k] for k in (
+            "schema_version", "scope", "artifact", "projectile_class",
+            "candidate_class_count", "selected_class_count", "selected_method_count",
+            "registry_support", "no_selected_symbols"
+        )},
+        "selected_classes": classes,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--jar", required=True)
     parser.add_argument("--javap", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--snapshot")
     args = parser.parse_args()
     output = audit(args.jar, args.javap)
+    if args.snapshot:
+        expected = json.loads(Path(args.snapshot).read_text(encoding="utf8"), object_pairs_hook=strict_pairs)
+        if snapshot_view(output) != expected:
+            raise ProducerProbeError("SHA-exact Gumball producer evidence drift")
     target = Path(args.output)
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(output, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf8")
