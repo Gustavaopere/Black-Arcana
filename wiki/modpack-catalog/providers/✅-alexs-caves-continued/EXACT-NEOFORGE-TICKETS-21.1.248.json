@@ -1,4 +1,5 @@
 {
+  "actual_persistent_ticket_leak": "NOT_OBSERVED",
   "limits": {
     "allow_mutation": false,
     "controller_registration_and_callback": "NOT_CLOSED",
@@ -10,13 +11,14 @@
     "safe_mutating_hook": "NOT_VERIFIED",
     "unload_crash_and_dimension_transition": "NOT_TESTED"
   },
+  "native_release_ticket_bucket_mismatch": "CONFIRMED_SELECTED_STATIC_BRANCHES_NOT_LIVE_RUNTIME",
   "neo": {
     "file_sha1": "9a97bebbd7641685052d59368bb32c56ecb9c913",
     "file_sha256": "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5",
     "size_bytes": 3551268,
     "version": "21.1.248"
   },
-  "neoforge_class_count": 5,
+  "neoforge_class_count": 6,
   "neoforge_classes": [
     {
       "class_path": "net/neoforged/neoforge/common/world/chunk/TicketController.class",
@@ -131,13 +133,25 @@
           "name": "forceChunk",
           "site_anchors": [
             {
+              "offset": 18,
+              "opcode": "getstatic",
+              "operand": "#57",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager.ENTITY_TICKING:Lnet/minecraft/server/level/TicketType;"
+            },
+            {
+              "offset": 24,
+              "opcode": "getstatic",
+              "operand": "#60",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager.ENTITY:Lnet/minecraft/server/level/TicketType;"
+            },
+            {
               "offset": 32,
               "opcode": "invokestatic",
               "operand": "#41",
               "symbol": "Method net/neoforged/neoforge/common/world/chunk/ForcedChunkManager.forceChunk:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceLocation;Ljava/lang/Comparable;IIZZLnet/minecraft/server/level/TicketType;Ljava/util/function/Function;)Z"
             }
           ],
-          "total_cue_sites": 1
+          "total_cue_sites": 3
         },
         {
           "anchors_truncated": false,
@@ -536,6 +550,12 @@
               "symbol": "Method net/minecraft/world/level/ForcedChunksSavedData.getBlockForcedChunks:()Lnet/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker;"
             },
             {
+              "offset": 79,
+              "opcode": "getfield",
+              "operand": "#212",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.chunks:Ljava/util/Map;"
+            },
+            {
               "offset": 83,
               "opcode": "invokestatic",
               "operand": "#214",
@@ -548,10 +568,22 @@
               "symbol": "Method net/minecraft/world/level/ForcedChunksSavedData.getBlockForcedChunks:()Lnet/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker;"
             },
             {
+              "offset": 94,
+              "opcode": "getfield",
+              "operand": "#221",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.tickingChunks:Ljava/util/Map;"
+            },
+            {
               "offset": 98,
               "opcode": "invokestatic",
               "operand": "#214",
               "symbol": "Method reinstatePersistentChunks:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/level/TicketType;Ljava/util/Map;Z)V"
+            },
+            {
+              "offset": 102,
+              "opcode": "getstatic",
+              "operand": "#224",
+              "symbol": "Field ENTITY:Lnet/minecraft/server/level/TicketType;"
             },
             {
               "offset": 106,
@@ -560,10 +592,22 @@
               "symbol": "Method net/minecraft/world/level/ForcedChunksSavedData.getEntityForcedChunks:()Lnet/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker;"
             },
             {
+              "offset": 109,
+              "opcode": "getfield",
+              "operand": "#212",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.chunks:Ljava/util/Map;"
+            },
+            {
               "offset": 113,
               "opcode": "invokestatic",
               "operand": "#214",
               "symbol": "Method reinstatePersistentChunks:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/level/TicketType;Ljava/util/Map;Z)V"
+            },
+            {
+              "offset": 117,
+              "opcode": "getstatic",
+              "operand": "#227",
+              "symbol": "Field ENTITY_TICKING:Lnet/minecraft/server/level/TicketType;"
             },
             {
               "offset": 121,
@@ -572,13 +616,19 @@
               "symbol": "Method net/minecraft/world/level/ForcedChunksSavedData.getEntityForcedChunks:()Lnet/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker;"
             },
             {
+              "offset": 124,
+              "opcode": "getfield",
+              "operand": "#221",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.tickingChunks:Ljava/util/Map;"
+            },
+            {
               "offset": 128,
               "opcode": "invokestatic",
               "operand": "#214",
               "symbol": "Method reinstatePersistentChunks:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/level/TicketType;Ljava/util/Map;Z)V"
             }
           ],
-          "total_cue_sites": 11
+          "total_cue_sites": 17
         },
         {
           "anchors_truncated": false,
@@ -604,8 +654,57 @@
           "instructions": 93,
           "method_sha256": "23bbf3d8d75a8d08f9a1c7e095dc2176da02c5084621bbd0590a2cbfeafe31ad",
           "name": "readModForcedChunks",
-          "site_anchors": [],
-          "total_cue_sites": 0
+          "site_anchors": [
+            {
+              "offset": 141,
+              "opcode": "getfield",
+              "operand": "#212",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.chunks:Ljava/util/Map;"
+            },
+            {
+              "offset": 144,
+              "opcode": "invokestatic",
+              "operand": "#389",
+              "symbol": "Method readBlockForcedChunks:(Lnet/minecraft/resources/ResourceLocation;JLnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/Map;)V"
+            },
+            {
+              "offset": 157,
+              "opcode": "getfield",
+              "operand": "#221",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.tickingChunks:Ljava/util/Map;"
+            },
+            {
+              "offset": 160,
+              "opcode": "invokestatic",
+              "operand": "#389",
+              "symbol": "Method readBlockForcedChunks:(Lnet/minecraft/resources/ResourceLocation;JLnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/Map;)V"
+            },
+            {
+              "offset": 173,
+              "opcode": "getfield",
+              "operand": "#212",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.chunks:Ljava/util/Map;"
+            },
+            {
+              "offset": 176,
+              "opcode": "invokestatic",
+              "operand": "#395",
+              "symbol": "Method readEntityForcedChunks:(Lnet/minecraft/resources/ResourceLocation;JLnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/Map;)V"
+            },
+            {
+              "offset": 189,
+              "opcode": "getfield",
+              "operand": "#221",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.tickingChunks:Ljava/util/Map;"
+            },
+            {
+              "offset": 192,
+              "opcode": "invokestatic",
+              "operand": "#395",
+              "symbol": "Method readEntityForcedChunks:(Lnet/minecraft/resources/ResourceLocation;JLnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/Map;)V"
+            }
+          ],
+          "total_cue_sites": 8
         },
         {
           "anchors_truncated": false,
@@ -712,6 +811,117 @@
             }
           ],
           "total_cue_sites": 3
+        }
+      ]
+    },
+    {
+      "class_path": "net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.class",
+      "class_sha256": "ef9ea888d97efd896f3fd000032c1dc39ed940338d3b6ecef949d4207959a58c",
+      "declared_method_count": 8,
+      "method_roster": [
+        {
+          "descriptor": "()V",
+          "instructions": 13,
+          "method_sha256": "343c9f8684675ad98d27c662c768b868c4b00d8167174146ec9cafa44c80f0ff",
+          "name": "ForcedChunkManager$TicketTracker"
+        },
+        {
+          "descriptor": "()Ljava/util/Map;",
+          "instructions": 4,
+          "method_sha256": "a12f2f8d392caa4eb22c40257b17bae34a574ddf25ca5f7e20352073c23d77ef",
+          "name": "getChunks"
+        },
+        {
+          "descriptor": "()Ljava/util/Map;",
+          "instructions": 4,
+          "method_sha256": "00f8d2d0eca93703dbd7193a30382d8dc77e66304c7a1402af3967ea407b1ed0",
+          "name": "getTickingChunks"
+        },
+        {
+          "descriptor": "()Z",
+          "instructions": 12,
+          "method_sha256": "83bb96244faf1ed1de3992ff4dcb5e7d8ca168d35918cd742a8efb6ce14fd048",
+          "name": "isEmpty"
+        },
+        {
+          "descriptor": "(Z)Ljava/util/Map;",
+          "instructions": 8,
+          "method_sha256": "92ded3124a30ce90720339d2fc879dfbfc08e33c376fdc03570122f750ba05a9",
+          "name": "getTickets"
+        },
+        {
+          "descriptor": "(Lnet/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketOwner;JZ)Z",
+          "instructions": 28,
+          "method_sha256": "3ed7002a78ed399d27f7b86764600b940a64312c10ad336899bc2f01bd013e25",
+          "name": "remove"
+        },
+        {
+          "descriptor": "(Lnet/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketOwner;JZ)Z",
+          "instructions": 10,
+          "method_sha256": "b08776a0342a948ebd1db8f13776aa9400277c2b34753002ddcade7b2396446d",
+          "name": "add"
+        },
+        {
+          "descriptor": "(Lnet/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketOwner;)Lit/unimi/dsi/fastutil/longs/LongSet;",
+          "instructions": 4,
+          "method_sha256": "058e0afc79343b1b92a31bfaf455d631c6c44f02f2187e15563bdfd5f843021c",
+          "name": "lambda$add$0"
+        }
+      ],
+      "selected_methods": [
+        {
+          "anchors_truncated": false,
+          "descriptor": "(Z)Ljava/util/Map;",
+          "instructions": 8,
+          "method_sha256": "92ded3124a30ce90720339d2fc879dfbfc08e33c376fdc03570122f750ba05a9",
+          "name": "getTickets",
+          "site_anchors": [
+            {
+              "offset": 5,
+              "opcode": "getfield",
+              "operand": "#16",
+              "symbol": "Field tickingChunks:Ljava/util/Map;"
+            },
+            {
+              "offset": 12,
+              "opcode": "getfield",
+              "operand": "#10",
+              "symbol": "Field chunks:Ljava/util/Map;"
+            }
+          ],
+          "total_cue_sites": 2
+        },
+        {
+          "anchors_truncated": false,
+          "descriptor": "(Lnet/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketOwner;JZ)Z",
+          "instructions": 28,
+          "method_sha256": "3ed7002a78ed399d27f7b86764600b940a64312c10ad336899bc2f01bd013e25",
+          "name": "remove",
+          "site_anchors": [
+            {
+              "offset": 3,
+              "opcode": "invokevirtual",
+              "operand": "#31",
+              "symbol": "Method getTickets:(Z)Ljava/util/Map;"
+            }
+          ],
+          "total_cue_sites": 1
+        },
+        {
+          "anchors_truncated": false,
+          "descriptor": "(Lnet/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketOwner;JZ)Z",
+          "instructions": 10,
+          "method_sha256": "b08776a0342a948ebd1db8f13776aa9400277c2b34753002ddcade7b2396446d",
+          "name": "add",
+          "site_anchors": [
+            {
+              "offset": 3,
+              "opcode": "invokevirtual",
+              "operand": "#31",
+              "symbol": "Method getTickets:(Z)Ljava/util/Map;"
+            }
+          ],
+          "total_cue_sites": 1
         }
       ]
     },
@@ -882,6 +1092,30 @@
           "name": "removeAllTickets",
           "site_anchors": [
             {
+              "offset": 14,
+              "opcode": "getfield",
+              "operand": "#42",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.chunks:Ljava/util/Map;"
+            },
+            {
+              "offset": 27,
+              "opcode": "getfield",
+              "operand": "#53",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.tickingChunks:Ljava/util/Map;"
+            },
+            {
+              "offset": 40,
+              "opcode": "getfield",
+              "operand": "#42",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.chunks:Ljava/util/Map;"
+            },
+            {
+              "offset": 51,
+              "opcode": "getfield",
+              "operand": "#53",
+              "symbol": "Field net/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketTracker.tickingChunks:Ljava/util/Map;"
+            },
+            {
               "offset": 62,
               "opcode": "getfield",
               "operand": "#7",
@@ -894,7 +1128,7 @@
               "symbol": "Method net/minecraft/world/level/ForcedChunksSavedData.setDirty:(Z)V"
             }
           ],
-          "total_cue_sites": 2
+          "total_cue_sites": 6
         }
       ]
     },
@@ -949,6 +1183,124 @@
     "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
     "size_bytes": 75279314
   },
+  "publisher_boolean_paths": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class",
+      "class_sha256": "d9c827a9acb2d0f9e7050252ed57e6a3d0a8ad49053e54f19a8eaeb6b84da912",
+      "selected_methods": [
+        {
+          "descriptor": "()V",
+          "instruction_count": 348,
+          "name": "tick",
+          "parsed_method_sha256": "64f9a412c81a25525edf5b9576d56cec8354f6963ef718a44e6179347fcd8a25",
+          "selected_stack": [
+            {
+              "offset": 210,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 211,
+              "opcode": "invokevirtual",
+              "operand": "#129",
+              "symbol": "Method loadChunksAround:(Z)V"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "instruction_count": 17,
+          "name": "remove",
+          "parsed_method_sha256": "8eb89c85d5125decad3a9975e1d0b453e9911f59f4fd8f2f36f40b15d96d5854",
+          "selected_stack": [
+            {
+              "offset": 23,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 24,
+              "opcode": "invokevirtual",
+              "operand": "#129",
+              "symbol": "Method loadChunksAround:(Z)V"
+            },
+            {
+              "offset": 29,
+              "opcode": "invokespecial",
+              "operand": "#305",
+              "symbol": "Method net/minecraft/world/entity/Entity.remove:(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
+            }
+          ]
+        },
+        {
+          "descriptor": "(Z)V",
+          "instruction_count": 53,
+          "name": "loadChunksAround",
+          "parsed_method_sha256": "0ede215fd19dd7a9c3215668a481a02ad8da5bf75af2c44100d6716182f32d33",
+          "selected_stack": [
+            {
+              "offset": 86,
+              "opcode": "iload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 87,
+              "opcode": "iload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 88,
+              "opcode": "invokestatic",
+              "operand": "#337",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACPlatform.forceChunk:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;IIZZ)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACPlatform.class",
+      "class_sha256": "662a4d2593fe515ed8790bad06d8184d1eb921423033dfd11b3b44142dedc3e6",
+      "selected_methods": [
+        {
+          "descriptor": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;IIZZ)V",
+          "instruction_count": 13,
+          "name": "forceChunk",
+          "parsed_method_sha256": "068bff3ce99b6b6aac84db7e249a0309ee8a16138c0892332a47e0a4c63c270f",
+          "selected_stack": [
+            {
+              "offset": 16,
+              "opcode": "iload",
+              "operand": "4",
+              "symbol": ""
+            },
+            {
+              "offset": 18,
+              "opcode": "iload",
+              "operand": "5",
+              "symbol": ""
+            },
+            {
+              "offset": 20,
+              "opcode": "invokevirtual",
+              "operand": "#281",
+              "symbol": "Method net/neoforged/neoforge/common/world/chunk/TicketController.forceChunk:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;IIZZ)Z"
+            },
+            {
+              "offset": 23,
+              "opcode": "pop",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "schema_version": 1,
   "scope": "EXACT_PUBLISHER_1010_VERSUS_EXACT_NEOFORGE_21_1_248_TICKETCONTRACT_STATIC"
 }
