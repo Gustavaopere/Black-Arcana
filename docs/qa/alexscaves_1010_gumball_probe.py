@@ -140,13 +140,73 @@ def audit(jar, javap_bin):
     return evidence
 
 
+
+# The SHA-exact contract pins declared signatures and critical instruction anchors
+# without pretending to reconstruct every instruction or prove runtime reachability.
+SNAPSHOT_OFFSETS = {
+    "onHitEntity": (6, 11, 31, 44, 71, 86, 97, 105, 113, 139, 144, 159, 174, 284, 290, 299, 308, 317, 326, 335, 346),
+    "onHit": (2, 43, 54, 77, 94, 107, 168),
+    "bounceFromDirection": (39, 46, 101, 167, 183, 189, 242, 287, 445, 458),
+    "tick": (176, 183, 187, 197, 200, 207, 218, 237, 238, 239, 242, 247),
+    "addAdditionalSaveData": (10, 13),
+    "readAdditionalSaveData": (10, 13),
+}
+
+
+def strict_pairs(pairs):
+    result = {}
+    for key, val in pairs:
+        if key in result:
+            raise GumballEvidenceError("duplicate snapshot field: " + key)
+        result[key] = val
+    return result
+
+
+def snapshot_view(evidence):
+    """A bounded, exact method-hash and critical-anchored regression surface."""
+    selected = evidence["selected_methods"]
+    identities = [(m["name"], m["descriptor"]) for m in selected]
+    if len(set(identities)) != len(identities):
+        raise GumballEvidenceError("duplicated method identity")
+    anchors = {}
+    for name, requested in SNAPSHOT_OFFSETS.items():
+        matches = [m for m in selected if m["name"] == name]
+        if len(matches) != 1:
+            raise GumballEvidenceError("missing or ambiguous anchored method: " + name)
+        method = matches[0]
+        available = method["symbolic_references"] + method["branches"] + method["constants"]
+        anchors[name] = []
+        for offset in requested:
+            found = [i for i in available if i["offset"] == offset]
+            if len(found) != 1:
+                raise GumballEvidenceError("missing or ambiguous bytecode anchor: " + name + ":" + str(offset))
+            anchors[name].append(found[0])
+    return {
+        "schema_version": 1,
+        "scope": evidence["scope"],
+        "artifact": evidence["artifact"],
+        "class_path": evidence["class_path"],
+        "class_sha256": evidence["class_sha256"],
+        "declared_method_count": len(evidence["declared_methods"]),
+        "selected_methods": [
+            {k: m[k] for k in ("name", "descriptor", "instruction_count", "parsed_method_sha256")}
+            for m in selected
+        ],
+        "selected_anchors": anchors,
+    }
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--jar", required=True)
     p.add_argument("--javap", required=True)
     p.add_argument("--output", required=True)
+    p.add_argument("--snapshot")
     args = p.parse_args()
     evidence = audit(args.jar, args.javap)
+    if args.snapshot:
+        expected = json.loads(Path(args.snapshot).read_text(encoding="utf8"), object_pairs_hook=strict_pairs)
+        if snapshot_view(evidence) != expected:
+            raise GumballEvidenceError("SHA-exact Gumball snapshot drift")
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(evidence, ensure_ascii=False, indent=2, sort_keys=True)+"\n", encoding="utf8")
