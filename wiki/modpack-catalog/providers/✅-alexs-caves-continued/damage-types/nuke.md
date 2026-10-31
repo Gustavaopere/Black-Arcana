@@ -131,3 +131,40 @@ O segundo `float` é fornecido pela variável local `5` em `NuclearExplosionEnti
 **Permissões para perks:** tratar o tamanho da emissão, a intensidade numérica bruta e o settlement do dano como variáveis diferentes. As flags de world griefing, a atribuição causal a jogador e os limites de área não foram integralmente auditados. Não inferir escalonamento global a partir do caso `Nucleeper` ou promover integração por interpolação da fórmula.
 
 **Status:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Não houve promoção do certificado de sete campos, alteração de índices, concessão de hooks nem avanço de Stage.
+
+
+## Alvos, geometria e mutação do mundo — seleção JVM 1.0.10
+
+**Evidência:** [EXACT-NUCLEAR-TARGET-WORLD-1.0.10.json](../EXACT-NUCLEAR-TARGET-WORLD-1.0.10.json) · [workflow SHA-exato](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-nuclear-target-world.yml). O manifesto verifica a classe publisher e sete métodos próprios, com hashes de métodos, referências JVM, branches, constantes e janelas pontuais; `tick` possui **348 instruções**, `removeChunk` **269**, `loadChunksAround` **53** e `isDestroyable` **25**. Trata-se de inspeção estática, não de teste de mundo/proteção.
+
+### Envelope matemático de consulta (não é alcance de casting)
+
+- `getChunksAffected()` (seis instruções) retorna `(int)ceil((double)getSize())`. Seja `c=ceil(s)`, onde `s` é o SIZE nativo, e `B=15c`; o valor `B` surge em `tick` @5–13. Para as quatro origens documentadas, os valores de `s` são particulares de cada produtor.
+- A consulta de `LivingEntity` usa o **`getBoundingBox()` da própria entidade**, ampliado por `AABB.inflate(1.5B, 0.6B, 1.5B)` @362–389, seguido de `Level.getEntitiesOfClass(LivingEntity,AABB)` @421. Os incrementos são em unidades de bloco, adicionados à caixa-base, não representam alcance de lançamento ou esfera de explosão.
+- A variável `local 5` usada no segundo argumento de `calculateDamage` é `r=1.5B+1`, formada em `tick` @402–412; o primeiro argumento é `LivingEntity.distanceTo` @456. A fórmula bruta da seção anterior agora possui **origem confirmada para ambos os argumentos**, sem certificar dano final, LOS ou PvP.
+- Casos derivados apenas dos tamanhos publisher conhecidos: `s=0.5,0.75,1` ⇒ `c=1`, `B=15`, AABB inflada em `(22.5,9,22.5)` e `r=23.5`; `s=1.75` ⇒ `c=2`, `B=30`, inflação `(45,18,45)` e `r=46`. São relações de bytecode para esses sizes, não medições de gameplay nem caps do modpack.
+
+### Filtros por alvo e efeitos nativos
+
+| Superfície | Evidência estática 1.0.10 | Limite para perks |
+|---|---|---|
+| Elegibilidade inicial | `Level.getEntitiesOfClass(LivingEntity,AABB)` @421; iteração @433–448; `distanceTo` @456 e `calculateDamage` @466. | O método não apresenta um contrato de seleção por jogador/cast, LOS ou lista de alvos de magia. |
+| Força horizontal/vertical | `getSize()*0.33f` @394–400; para `Player`, fator `0.5f` @498–514; aplicação final usa `Vec3.scale` @640 e `LivingEntity.setDeltaMovement` @643. | Trata-se de movimento nativo após filtros; não registrar como hook seguro de knockback. |
+| `RaycatEntity` | `instanceof` @525, ramo que escreve dano local igual a `0f` @531–534. | Não inferir que todas as entidades recebem dano. |
+| Tag `RESISTS_RADIATION` | Consulta `Holder.Reference.is(ACTagRegistry.RESISTS_RADIATION)` @542–551; no ramo verdadeiro, multiplica dano bruto por `0.25f` @556–559 e coeficiente de movimento por `0.1f` @563–566. | O conteúdo final da tag depende do registro/dados efetivos. Não presumir resistências de todo mob. |
+| `TremorzillaEntity` | Verificação @570–573 fica **dentro da rota de resistência**; quando satisfeita, `fstore 11=0` @576–577 e `fstore 9=0` @579–580. | Redução especial condicionada, não imunidade global comprovada por classe. |
+| Aplicação de dano | Se dano local for positivo @582–586, seleciona `causeIntentionalGameDesign` @605 **ou** `causeNukeDamage` @618; `LivingEntity.hurt` @623, retorno descartado @626. | Não há double hit: duas factories alternativas, uma aplicação condicional neste caminho. |
+| Irradiação após o ramo | Se `isIntentionalGameDesign()` for verdadeiro, salta @650 para @702; caso contrário, prepara `ACEffectRegistry.IRRADIATED` @659, duração literal `48000` ticks @673 e amplificador `1` se `s<=1.5f`, senão `2` @677–695, com `LivingEntity.addEffect` @698 (retorno descartado). | O fluxo também chega à seção @627 após alguns guards que evitam `hurt`; portanto **irradiar não prova dano aceito**. Não inferir aplicação bem-sucedida ou persistência da effect. |
+
+### Modificações de bloco, carga e riscos
+
+- **Entrada de mundo:** `tick` @174–187 sai do processamento de blocos se `Level.isClientSide()` for verdadeiro ou `isNoGriefing()` for verdadeiro, saltando ao início da seleção de alvos @361. `isNoGriefing()` lê `SynchedEntityData.NO_GRIEFING`; isso não valida `WorldEffectPolicy` do Black Arcana.
+- **Fila e orçamento nativo:** `getChunksAffected()=c`; `tick` @229–313 enfileira posições de regiões em cubo com índices de `-c` a `+c` em três eixos e passo de 16 blocos, potencialmente `(2c+1)^3` entradas de `destroyingChunks`. O ramo @329–358 usa `Math.min(3, Stack.size())` @337 e chama `removeChunk` @352 no máximo **três vezes por execução do tick**. `removeChunk` percorre três loops de 16 posições por eixo (até `16^3=4096` candidatos por entrada); os filtros podem reduzir mutações efetivas. A geração de fila e o escaneamento continuam potencialmente caros; não equivale a budget certificado em servidor.
+- **Proteção nativa por bloco:** `isDestroyable(BlockState)` verifica `ACTagRegistry.NUKE_PROOF` @1–7; se não marcado, compara `Block.getExplosionResistance()` com `ACServerConfig.nukeMaxBlockExplosionResistance` @14–34. O ramo `TREMORZILLA_EGG` @38–52 funciona como exceção específica. Pelo fluxo compilado o predicado equivale a `(!NUKE_PROOF && explosionResistance < configuredMaximum) || isTremorzillaEgg`; este é um filtro **do provider**, não verificação de claims/permissions/proteção de regiões de terceiros.
+- **Efeito material:** `removeChunk` obtém `Level.getBlockState` @310 e checa `isDestroyable` @337; ovos especiais têm caminho `TremorzillaEggBlock.spawnDinosaurs` @416, em vez da destruição comum desse ramo. Nos demais caminhos selecionados há `ACServerConfig.nukesSpawnItemDrops` @425, `Level.destroyBlock(BlockPos,true)` @472 ou `ACCompat.onBlockExploded(BlockState,Level,BlockPos,Explosion)` @490, conforme condições; existe rota aleatória de `Blocks.FIRE` e `Level.setBlockAndUpdate` @539–545. Sem garantir que cada candidato será destruído/incendiado.
+- **Explosão intermediária:** `removeChunk` pode criar `dummyExplosion` por `ACPlatform.explosion` @105, com `Explosion.BlockInteraction.DESTROY` @102. O resultado/relação com eventos de proteção externa necessita auditoria específica; a chamada à API não é certificação de autorização.
+- **Chunk forcing:** `tick` chama `loadChunksAround(true)` @211 após testar `loadingChunks`/`isRemoved`. O helper, quando `ServerLevel`, calcula `max(c, floor(serverViewDistance/2))` @25–44 e itera num quadrado de chunks, chamando `ACPlatform.forceChunk(ServerLevel,Entity,x,z,boolean,boolean)` @88. A implementação dessa plataforma, o desfazer do force e a interação com outros mods **não estão certificados**. `tickCount>40` mais `destroyingChunks` vazia pode levar ao descarte @145–170; não implica duração máxima universal de 40 ticks.
+
+**Fronteira de integração:** Black Arcana não deve replicar/estender efeitos destrutivos nem escalar `SIZE`, alcance, loops, chunks forçados, raio, duração, knockback ou efeitos de radiação sem `WorldEffectPolicy`, limites de trabalho por tick, comprovação de cleanup e testes reais de servidor. O RPG Skill Tree permanece provider de progressão e só pode alterar parâmetros através de contratos seguros efetivos.
+
+**Estado:** ⚠️ contrato estático `NOT_CERTIFIED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. Este snapshot não adiciona raiz mágica, não fecha o universo do provider nem altera índice ou Stage.
