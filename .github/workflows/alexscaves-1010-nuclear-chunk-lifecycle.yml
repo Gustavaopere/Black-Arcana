@@ -44,11 +44,7 @@ jobs:
           curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' --output build/alexscaves-1010/alexscaves-1.0.10.jar
       - name: Collect SHA-exact force-chunk lifecycle references
         run: |
-          args=()
-          if [ -f 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NUCLEAR-CHUNK-LIFECYCLE-1.0.10.json' ]; then
-            args+=(--snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NUCLEAR-CHUNK-LIFECYCLE-1.0.10.json')
-          fi
-          python3 docs/qa/alexscaves_1010_nuclear_chunk_lifecycle_probe.py --jar build/alexscaves-1010/alexscaves-1.0.10.jar --javap "$JAVA_HOME/bin/javap" --output build/alexscaves-1010/nuclear-chunk-lifecycle.json "${args[@]}"
+          python3 docs/qa/alexscaves_1010_nuclear_chunk_lifecycle_probe.py --jar build/alexscaves-1010/alexscaves-1.0.10.jar --javap "$JAVA_HOME/bin/javap" --output build/alexscaves-1010/nuclear-chunk-lifecycle.json --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NUCLEAR-CHUNK-LIFECYCLE-1.0.10.json'
       - uses: actions/upload-artifact@v7
         with:
           name: alexscaves-1010-nuclear-chunk-lifecycle
