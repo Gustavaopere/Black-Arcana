@@ -164,3 +164,14 @@ A flag `INTENTIONAL_GAME_DESIGN` seleciona o tipo de `DamageSource`, mas **não 
 O `SackOfSatingItem` registra `SIZE=0.5f` e `setIntentionalGameDesign(true)` no caminho previamente selecionado, mas **não** demonstrou alteração explícita de `NO_GRIEFING`. Se o caminho de destruição for ativado, o raio da grade de tickets depende de `q=max(ceil(SIZE), floor(viewDistance/2))`, não apenas do tamanho visual/raio de dano. O estado `WasLoadingChunks` persistido na entidade é um booleano, sem lista de tickets ou confirmação de cleanup após restart. Não promover claims de proteção do mundo, economia de chunks, owner ou segurança por associação à variante intentional.
 
 **Estado permanece:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`, sem incremento de ficha ou promoção de Stage.
+
+
+## Atenção: descompasso nos tickets de chunks também afeta a variante intentional
+
+**Prova SHA-exata:** [EXACT-NEOFORGE-TICKETS-21.1.248.json](../EXACT-NEOFORGE-TICKETS-21.1.248.json) · [análise detalhada em Nuke](nuke.md#bloqueio-de-integração-tickets-ticking-não-correspondem-à-liberação--binários-exatos-1010--neoforge-211248).
+
+A seleção de `causeIntentionalGameDesign` não substitui o `NuclearExplosionEntity` nem sua rotina de forçamento de chunks. O caminho de emissão anteriormente observado de `SackOfSatingItem` define `SIZE=0.5f` e `INTENTIONAL_GAME_DESIGN=true`, sem comprovação de `NO_GRIEFING=true`. Portanto, quando a entidade ingressa no ramo de destruição, mantém o mesmo descompasso observado entre `loadChunksAround(true)` (força tickets `ENTITY_TICKING`, usando `tickingChunks` no NeoForge) e `loadChunksAround(false)` (tenta remover tickets `ENTITY`, consultando o mapa separado `chunks`). A ida/volta repassa o mesmo booleano aos parâmetros `add` e `ticking`, conforme offsets `86–88` da versão compilada 1.0.10.
+
+O adaptador `ACPlatform` ignora o retorno booleano do `TicketController`. Reinicialização e recuperação dos tickets são geridas pelo NeoForge com `ForcedChunksSavedData` e `LoadingValidationCallback` opcionais, mas o callback registrado pelo Alex’s Caves e o estado efetivo pós-restart não foram fechados nesta auditoria. **Não certificar cleanup, ausência de vazamento, WorldEffectPolicy ou integração de propriedades mutadoras.** A evidência registra descompasso estático, não observação de vazamento em servidor real.
+
+**Estado:** ⛔ integração mutadora bloqueada; ficha ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. O universo do provider, Stage e índices permanecem inalterados.

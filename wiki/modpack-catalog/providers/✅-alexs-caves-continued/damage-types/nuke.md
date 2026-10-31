@@ -191,3 +191,30 @@ O segundo `float` é fornecido pela variável local `5` em `NuclearExplosionEnti
 - O método `remove` é uma saída analisada; não demonstra todos os caminhos de descarregamento ou exceção, a semântica de retenção da `TicketController` ou autorização sob servidores de terceiros. Nenhuma observação de mundo protegido, WorldEffectPolicy, integração Mastery/PvP, redimensionamento seguro ou rollback foi realizada.
 
 **Autorização:** manter `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Não liberar modificações de SIZE/AoE/griefing, criação ou prolongamento de chunks forçados enquanto os efeitos reais de lifecycle, proteção de mundo e limitações por tick não forem comprovados.
+
+
+## Bloqueio de integração: tickets ticking não correspondem à liberação — binários exatos 1.0.10 × NeoForge 21.1.248
+
+**Evidência cruzada:** [EXACT-NEOFORGE-TICKETS-21.1.248.json](../EXACT-NEOFORGE-TICKETS-21.1.248.json), [manifesto nativo anterior](../EXACT-NUCLEAR-CHUNK-LIFECYCLE-1.0.10.json) e [CI SHA-exata](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-neoforge-tickets.yml). O JAR instalado do provider continua identificado pelo SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`. A contraparte de infraestrutura auditada é `neoforge-21.1.248-universal.jar`, obtida do Maven do NeoForge, com 3.551.268 bytes e SHA-256 **`90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5`**. Essa é também a versão definida em `gradle.properties` do Black Arcana; outros binários do launcher precisam ser reconfirmados no ambiente físico quando aplicável.
+
+### Cadeia de argumentos, categoria de ticket e descompasso
+
+| Camada verificada | Aquisição | Solicitação de liberação |
+|---|---|---|
+| `NuclearExplosionEntity` (1.0.10) | `tick()` @210–211 chama `loadChunksAround(true)`. | `remove(RemovalReason)` @23–24 chama `loadChunksAround(false)` quando servidor e `loadingChunks=true`. |
+| `loadChunksAround(boolean)` | `iload_1` em **@86 e @87** encaminha o mesmo valor booleano duas vezes a `ACPlatform.forceChunk` @88: **`add=true, ticking=true`**. | Os mesmos `iload_1` encaminham **`add=false, ticking=false`**. |
+| `ACPlatform.forceChunk(ServerLevel,Entity,int,int,boolean,boolean)` | Repassa os dois booleanos ao `TicketController.forceChunk` @20. | Repassa os dois booleanos ao mesmo método e descarta seu retorno via `pop` @23. |
+| `TicketController.forceChunk(ServerLevel,Entity,...)` NeoForge 21.1.248 | Extrai `Entity.getUUID()` @3 e delega ao overload de `UUID` @13. Quando `ticking=true`, o overload seleciona `ENTITY_TICKING` @18. | Quando `ticking=false`, seleciona `ENTITY` @24. Não há troca automática do valor de `ticking` para coincidir com a solicitação anterior. |
+| `ForcedChunkManager.TicketTracker` | `add` @3 chama `getTickets(true)`, que seleciona o mapa **`tickingChunks`** (`getTickets` @5). | `remove` @3 chama `getTickets(false)`, que seleciona o mapa separado **`chunks`** (`getTickets` @12). O retorno booleano `false` pode indicar que não houve retirada de registro naquela categoria. |
+
+**Achado estático confirmado — `CONFIRMED_SELECTED_STATIC_BRANCHES_NOT_LIVE_RUNTIME`:** o caminho normal de aquisição solicita ticket da categoria `ENTITY_TICKING`, enquanto a rotina `remove` sobrescrita solicita a retirada na categoria `ENTITY`. O método compilado `TicketTracker.remove(owner,chunk,ticking)` escolhe um mapa em função de `ticking` e não percorre ambos. **Essa diferença pode deixar o ticket ticking criado anteriormente sem a operação simétrica de liberação esperada**. Não registrar como *vazamento observado no servidor*, pois os tickets efetivos e intervenções de outros componentes não foram medidos.
+
+### Persistência, reinício e registros de autorização
+
+- `ForcedChunkManager.forceChunk` (74 instruções) verifica se o ID do controller está registrado no mapa de controllers e lança `IllegalArgumentException` se não estiver; recupera `ForcedChunksSavedData` pelo `DimensionDataStorage`, registra/remover via `TicketTracker.add/remove` e devolve o **booleano de alteração do tracker**. Só quando houve alteração marca `SavedData.setDirty(true)` @145 e aplica `ServerChunkCache.addRegionTicket` ou `removeRegionTicket` pelo helper interno. A camada `ACPlatform` **ignora** esse retorno, logo a entidade não tem comprovação local da remoção.
+- O NeoForge possui `ForcedChunkManager.reinstatePersistentChunks(ServerLevel,ForcedChunksSavedData)`, que processa tickets persistidos separados em `BLOCK`, `BLOCK_TICKING`, `ENTITY` e `ENTITY_TICKING`. O bytecode identifica `LoadingValidationCallback.validateTickets(ServerLevel,TicketHelper)` no caminho de recuperação e `TicketHelper.removeAllTickets(UUID)` como API de sanitização. **Não se comprovou neste recorte** se o controller específico do Alex’s Caves tem callback registrado, se um controller órfão é descartado em cada caso ou se o UUID corresponde a uma entidade sobrevivente após restart.
+- `NuclearExplosionEntity` serializa `WasLoadingChunks` como booleano; esse campo não substitui a prova de reconstituição, remoção, validação de owner nem inventário de tickets persistentes do NeoForge. O descompasso de categoria identificado impede alegar *cleanup garantido* apenas pela existência do override `remove`.
+
+**Implicação operacional:** ⛔ **bloqueada a integração mutadora da explosão** — aumento de `SIZE`, raio, duration, mutações de blocos ou força de chunks por perks — até um boundary realmente seguro, resolução verificável dos tickets `ENTITY_TICKING`, caps/cleanup por dimensão, autorização via `WorldEffectPolicy` e regressão em servidor real. O Black Arcana mantém a autoridade de runtime e **não** deve modificar classes internas do provider sem contrato e provenance adequados.
+
+**Estado da ficha:** ⚠️ catalogação técnica parcial; `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Sem aumento de contadores ou avanço de Stage.

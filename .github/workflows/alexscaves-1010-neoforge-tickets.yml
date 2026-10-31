@@ -1,0 +1,54 @@
+name: Alex's Caves 1.0.10 vs NeoForge 21.1.248 tickets
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-neoforge-tickets.yml'
+      - 'docs/qa/alexscaves_1010_neoforge_ticket_contract_probe.py'
+      - 'docs/qa/alexscaves_1010_neoforge_ticket_contract_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-TICKETS-21.1.248.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/nuke.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-neoforge-tickets.yml'
+      - 'docs/qa/alexscaves_1010_neoforge_ticket_contract_probe.py'
+      - 'docs/qa/alexscaves_1010_neoforge_ticket_contract_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-TICKETS-21.1.248.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/nuke.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact_ticket_contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic fail-closed tests
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_neoforge_ticket_contract_probe.py
+          python3 docs/qa/alexscaves_1010_neoforge_ticket_contract_probe_test.py -v
+      - name: Fetch SHA-pinned publisher and exact NeoForge Maven artifact
+        run: |
+          mkdir -p build/alexscaves-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' --output build/alexscaves-1010/alexscaves-1.0.10.jar
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 'https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar' --output build/alexscaves-1010/neoforge-21.1.248-universal.jar
+      - name: Cross-check compiled publisher and NeoForge ticket contract
+        run: |
+          python3 docs/qa/alexscaves_1010_neoforge_ticket_contract_probe.py --publisher build/alexscaves-1010/alexscaves-1.0.10.jar --neoforge build/alexscaves-1010/neoforge-21.1.248-universal.jar --javap "$JAVA_HOME/bin/javap" --previous 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NUCLEAR-CHUNK-LIFECYCLE-1.0.10.json' --output build/alexscaves-1010/neo-ticket-contract.json --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-TICKETS-21.1.248.json'
+      - uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-neoforge-211248-tickets
+          path: build/alexscaves-1010/neo-ticket-contract.json
+          if-no-files-found: error
+          retention-days: 14
