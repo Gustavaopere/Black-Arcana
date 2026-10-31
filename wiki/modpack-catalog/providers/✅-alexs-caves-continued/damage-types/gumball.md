@@ -158,3 +158,35 @@ A avaliação dos perks deve identificar o valor aplicado ao projétil, a quanti
 A prova é SHA-exata, porém não reconstrói integralmente CFG/branches, nem confirma aceitação de `Entity.hurt`, execução de todas as variantes de enchantments, persistência real em save/reload ou herança de owner nos descendentes. Explosões nativas em `Level.explode` e novos efeitos Black Arcana exigem contratos de world safety distintos. O RPG Skill Tree continua restrito a progressão/atributos/perks por boundary verificada.
 
 **Estado:** `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED` e `NO_MUTATION`. Sem certificação integral, o índice permanece em **22/29** para Alex’s Caves e **160/2341** para contratos técnicos estáticos globais. Próximo fechamento: validar fluxo completo dos produtores, propagação de autoria, limites dos encantamentos e os sete campos técnicos individuais, antes de promover Gumball.
+
+
+## Divisão, autoria dos descendentes e gates de encantamentos — recorte SHA-exato
+
+**Manifesto:** [EXACT-GUMBALL-SPLIT-ENCHANT-1.0.10.json](../EXACT-GUMBALL-SPLIT-ENCHANT-1.0.10.json). Esta auditoria independente verifica no JAR publisher físico 1.0.10 os hashes de três classes, os hashes dos três métodos relevantes e **39 âncoras simbólicas/numéricas/branch**, além de uma cadeia de **sete instruções aritméticas**. Os testes e o workflow de CI exigem correspondência ao snapshot; não são testes físicos.
+
+### Encantamentos do `ShotGumItem`
+
+| Enchantment (registro confirmado) | Teste/efeito comprovado em `acInventoryTick` | Consequência para perks |
+|---|---|---|
+| `TARGETED_RICOCHET` | `ACCompat.enchantLevel` (141) seguido de `ifle` (144), convertido em flag booleana enviada a `setTargetsOnBounce` (434). | Ativa targeting por presença de nível positivo; não prova alcance, critério de alvo ou LOS do ricochete. |
+| `TRIPLE_SPLIT` | Consulta de nível (158), `ifle` (161) e flag enviada a `setSplitsOnHit` (441). | Ativa o ramo de divisão no impacto, não garantia de três filhos inseridos nem três hits válidos. |
+| `EXPLOSIVE_FLAVOR` | Consulta de nível (175), `ifle` (178) e flag enviada a `setExplosive` (448). | Ativa a propriedade explosiva; não homologa world mutation externa ou bypass do `WorldEffectPolicy`. |
+| `BOUNCY_BALL` | Offsets 188–199: `iconst_4`, `enchantLevel` (193), `iconst_2`, `imul`, `iadd`, `istore 12`; valor segue a `setMaximumBounces` (487). | Fórmula de produção da arma: **`4 + 2 × nível nativo`**. Aplicável ao `ShotGumItem`, não a todos os projéteis do mod. |
+
+O `GumballEntity` começa com `MAXIMUM_BOUNCES=5` na sincronização padrão, mas o `ShotGumItem` sobrescreve o parâmetro para **4 sem BOUNCY_BALL**, e adiciona dois por nível nativo positivo. Não extrapolar os níveis máximos permitidos: dependem do registro de encantamento, que não foi certificado neste recorte.
+
+### Atribuição de dano e owner dos filhos
+
+O construtor `GumballEntity(Level, LivingEntity)` grava um `setOwner(Entity)` explícito na origem primária. Já a cadeia de divisão após `splitsOnHit` usa:
+
+1. `GumballEntity.onHitEntity` chama `ACCompat.createEntity(EntityType,Level)` (offset 174); a fábrica verificada tem **4 instruções** e sua única chamada simbólica é `EntityType.create(Level)` (offset 2).
+2. Nesse método de divisão **não há invocação direta de `setOwner`**. Ele copia `setDamage` (299), `setTargetsOnBounce` (308), `setExplosive` (317) e `setMaximumBounces` (326), mas desativa `setSplitsOnHit(false)` (290) antes de solicitar `Level.addFreshEntity` (335).
+3. O laço tem limite compilado de **três tentativas de criação** (155–156), e `Entity.hurt` (139) tem seu boolean descartado antes da decisão de dividir; o ramo de `splitsOnHit` (144) não usa esse retorno como condição. Logo, **não equiparar 'projetil dividiu' a 'hit aceito'**.
+
+**Decisão técnica fail-closed:** a autoria dos filhos não deve ser inferida a partir do owner do projétil original, e o Black Arcana/RPG Skill Tree não deve atribuir gratuitamente bônus de kill, dano, roubo de vida, procs ou Mastery ao jogador em cima desses descendentes. A cadeia selecionada não atribui diretamente owner; ainda podem existir intervenções externas, mixins e efeitos indiretos não abrangidos. Provar causalidade e deduplicação exige observação adicional do runtime/exact modpack, sem criar segundo pipeline de dano.
+
+### Pendências preservadas
+
+O manifesto é um **contrato estático parcial** da emissão, divisão e encantamentos, não uma confirmação de proprietários efetivos sob todos os mixins, de saída de danos após mitigação, de save/reload, de segurança de hooks mutadores ou de QA real. Os sete campos do certificado individual de Gumball, a comparação com todas as regras de enchantments e a boundary de autoria continuam abertos.
+
+**Status:** `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Sem mudança de índices, contagem de raízes ou Stage.
