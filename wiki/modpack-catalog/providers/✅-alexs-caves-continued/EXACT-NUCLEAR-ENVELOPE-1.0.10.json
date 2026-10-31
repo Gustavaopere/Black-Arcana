@@ -1,0 +1,225 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class",
+  "class_sha256": "d9c827a9acb2d0f9e7050252ed57e6a3d0a8ad49053e54f19a8eaeb6b84da912",
+  "declared_method_count": 19,
+  "methods": {
+    "NuclearExplosionEntity:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V": {
+      "instruction_count": 16,
+      "parsed_method_sha256": "c75031592eee5cab3986d77c792fad2ae643e8f4f4ffceb9115b1b528f56ffaa",
+      "selected_offsets": []
+    },
+    "addAdditionalSaveData:(Lnet/minecraft/nbt/CompoundTag;)V": {
+      "instruction_count": 6,
+      "parsed_method_sha256": "6c353de627463ac14a843845a1589dfd564f61fb0a068dd464ed1146cad1d3dd",
+      "selected_offsets": []
+    },
+    "calculateDamage:(FF)F": {
+      "instruction_count": 26,
+      "parsed_method_sha256": "9cedbccfd5048497dd0dc492232ca72dc8064fad3aa9257c03053f2efef5f547",
+      "selected_offsets": []
+    },
+    "defineSynchedData:(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V": {
+      "instruction_count": 19,
+      "parsed_method_sha256": "1b23a877083057db0cf7d0a0e19341b06a7d86d3a6c798318fd1036ebd903f51",
+      "selected_offsets": []
+    },
+    "isIntentionalGameDesign:()Z": {
+      "instruction_count": 7,
+      "parsed_method_sha256": "52cd5cbeea0b9b91f2d7ce8aa2aad8152cd727ec25dc451f311e3e3a8c6c4c0e",
+      "selected_offsets": []
+    },
+    "readAdditionalSaveData:(Lnet/minecraft/nbt/CompoundTag;)V": {
+      "instruction_count": 6,
+      "parsed_method_sha256": "331b1d37c9c17b2c8cd90195bc707ae37bdd1b85f4404c3caa9df2d3f187f155",
+      "selected_offsets": []
+    },
+    "tick:()V": {
+      "instruction_count": 348,
+      "parsed_method_sha256": "64f9a412c81a25525edf5b9576d56cec8354f6963ef718a44e6179347fcd8a25",
+      "selected_offsets": [
+        {
+          "offset": 1,
+          "opcode": "invokespecial",
+          "operand": "#31",
+          "symbol": "Method net/minecraft/world/entity/Entity.tick:()V"
+        },
+        {
+          "offset": 80,
+          "opcode": "invokevirtual",
+          "operand": "#69",
+          "symbol": "Method net/minecraft/world/level/Level.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"
+        },
+        {
+          "offset": 83,
+          "opcode": "invokevirtual",
+          "operand": "#73",
+          "symbol": "Method isDestroyable:(Lnet/minecraft/world/level/block/state/BlockState;)Z"
+        },
+        {
+          "offset": 167,
+          "opcode": "invokevirtual",
+          "operand": "#116",
+          "symbol": "Method remove:(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
+        },
+        {
+          "offset": 225,
+          "opcode": "invokevirtual",
+          "operand": "#133",
+          "symbol": "Method blockPosition:()Lnet/minecraft/core/BlockPos;"
+        },
+        {
+          "offset": 288,
+          "opcode": "invokevirtual",
+          "operand": "#137",
+          "symbol": "Method net/minecraft/core/BlockPos.offset:(III)Lnet/minecraft/core/BlockPos;"
+        },
+        {
+          "offset": 318,
+          "opcode": "invokedynamic",
+          "operand": "#145,  0",
+          "symbol": "InvokeDynamic #0:compare:(Lcom/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity;)Ljava/util/Comparator;"
+        },
+        {
+          "offset": 466,
+          "opcode": "invokevirtual",
+          "operand": "#202",
+          "symbol": "Method calculateDamage:(FF)F"
+        },
+        {
+          "offset": 579,
+          "opcode": "fconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 580,
+          "opcode": "fstore",
+          "operand": "9",
+          "symbol": ""
+        },
+        {
+          "offset": 582,
+          "opcode": "fload",
+          "operand": "9",
+          "symbol": ""
+        },
+        {
+          "offset": 584,
+          "opcode": "fconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 585,
+          "opcode": "fcmpl",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 586,
+          "opcode": "ifle",
+          "operand": "627",
+          "symbol": ""
+        },
+        {
+          "offset": 592,
+          "opcode": "invokevirtual",
+          "operand": "#95",
+          "symbol": "Method isIntentionalGameDesign:()Z"
+        },
+        {
+          "offset": 595,
+          "opcode": "ifeq",
+          "operand": "611",
+          "symbol": ""
+        },
+        {
+          "offset": 605,
+          "opcode": "invokestatic",
+          "operand": "#260",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeIntentionalGameDesign:(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;"
+        },
+        {
+          "offset": 608,
+          "opcode": "goto",
+          "operand": "621",
+          "symbol": ""
+        },
+        {
+          "offset": 618,
+          "opcode": "invokestatic",
+          "operand": "#266",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeNukeDamage:(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;"
+        },
+        {
+          "offset": 621,
+          "opcode": "fload",
+          "operand": "9",
+          "symbol": ""
+        },
+        {
+          "offset": 623,
+          "opcode": "invokevirtual",
+          "operand": "#269",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+        },
+        {
+          "offset": 626,
+          "opcode": "pop",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 633,
+          "opcode": "ldc",
+          "operand": "#253",
+          "symbol": "float 0.1f"
+        },
+        {
+          "offset": 635,
+          "opcode": "fmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 638,
+          "opcode": "fmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 640,
+          "opcode": "invokevirtual",
+          "operand": "#273",
+          "symbol": "Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;"
+        },
+        {
+          "offset": 643,
+          "opcode": "invokevirtual",
+          "operand": "#277",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+        },
+        {
+          "offset": 647,
+          "opcode": "invokevirtual",
+          "operand": "#95",
+          "symbol": "Method isIntentionalGameDesign:()Z"
+        },
+        {
+          "offset": 650,
+          "opcode": "ifne",
+          "operand": "702",
+          "symbol": ""
+        }
+      ]
+    }
+  },
+  "schema_version": 1,
+  "scope": "SHA_EXACT_NUCLEAR_EXPLOSION_1010_SELECTED_STATE_DAMAGE_AND_WORLD_ENVELOPE",
+  "selected_method_count": 7
+}
