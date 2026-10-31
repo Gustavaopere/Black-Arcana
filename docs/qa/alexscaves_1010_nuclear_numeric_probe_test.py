@@ -74,5 +74,52 @@ class NumericGuardTests(unittest.TestCase):
         self.assertTrue(any("DoubleValue.get:()" in x["symbol"] for x in bomb))
 
 
+    @unittest.skipUnless(SNAP.exists(), "snapshot created after first publisher JAR CI")
+    def test_exact_piecewise_float_expression_and_unclamped_ratio(self):
+        d=json.loads(SNAP.read_text(encoding="utf8"),object_pairs_hook=strict_pairs)
+        ins=d["classes"][0]["methods"][0]["instructions"]
+        by={x["offset"]:x for x in ins}
+        self.assertEqual([x["opcode"] for x in ins[:5]],
+                         ["fload_2","fload_1","fsub","fload_2","fdiv"])
+        self.assertEqual((by[13]["opcode"],by[14]["opcode"],by[14]["operand"]),
+                         ("fcmpg","ifgt","23"))
+        self.assertEqual((by[17]["symbol"],by[23]["symbol"]),
+                         ("float 100.0f","float 100.0f"))
+        self.assertEqual(by[30]["symbol"],"float 1.5f")
+        self.assertEqual(by[34]["symbol"],"float 400.0f")
+        self.assertEqual([by[offset]["opcode"] for offset in (33,37,38,44,45)],
+                         ["fsub","fmul","fadd","fmul","freturn"])
+        self.assertFalse(any(x["opcode"].startswith("invoke") and "clamp" in x["symbol"].lower()
+                             for x in ins))
+
+    @unittest.skipUnless(SNAP.exists(), "snapshot created after first publisher JAR CI")
+    def test_exact_nucleeper_charge_size_and_world_rule_gate(self):
+        d=json.loads(SNAP.read_text(encoding="utf8"),object_pairs_hook=strict_pairs)
+        by={x["offset"]:x for x in d["classes"][1]["methods"][0]["instructions"]}
+        self.assertIn("isCharged",by[29]["symbol"])
+        self.assertEqual((by[32]["opcode"],by[32]["operand"]),("ifeq","41"))
+        self.assertEqual(by[35]["symbol"],"float 1.75f")
+        self.assertEqual(by[41]["opcode"],"fconst_1")
+        self.assertIn("setSize:(F)V",by[42]["symbol"])
+        self.assertIn("RULE_MOBGRIEFING",by[49]["symbol"])
+        self.assertEqual((by[56]["opcode"],by[56]["operand"]),("ifne","64"))
+        self.assertIn("setNoGriefing",by[61]["symbol"])
+        self.assertEqual(by[60]["opcode"],"iconst_1")
+        self.assertIn("Level.addFreshEntity",by[69]["symbol"])
+        self.assertEqual(by[72]["opcode"],"pop")
+
+    @unittest.skipUnless(SNAP.exists(), "snapshot created after first publisher JAR CI")
+    def test_bomb_server_config_size_not_literally_constant(self):
+        d=json.loads(SNAP.read_text(encoding="utf8"),object_pairs_hook=strict_pairs)
+        ins=d["classes"][2]["methods"][0]["instructions"]
+        by={x["offset"]:x for x in ins}
+        self.assertIn("nukeExplosionSizeModifier",by[31]["symbol"])
+        self.assertIn("DoubleValue.get",by[34]["symbol"])
+        self.assertIn("Double.floatValue",by[40]["symbol"])
+        self.assertIn("setSize:(F)V",by[43]["symbol"])
+        self.assertIn("Level.addFreshEntity",by[51]["symbol"])
+        self.assertEqual(by[54]["opcode"],"pop")
+
+
 if __name__=="__main__":
     unittest.main()
