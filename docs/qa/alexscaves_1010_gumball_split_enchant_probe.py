@@ -36,6 +36,7 @@ CLASSES = (
 PINNED = {
     "GumballEntity.class": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535",
     "ShotGumItem.class": "08aa8b9aa1781f2ead7d899e4fde758ea44bc527a2ee5968997e5b3ffdd32238",
+    "ACCompat.class": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
 }
 MUST_CALL = {
     "GumballEntity.class": (
