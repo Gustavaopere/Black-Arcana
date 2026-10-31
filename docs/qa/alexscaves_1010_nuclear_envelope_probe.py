@@ -193,6 +193,30 @@ def main():
     print("NUCLEAR_1010_ENVELOPE_BEGIN")
     print(json.dumps(projection, sort_keys=True, separators=(",", ":")))
     print("NUCLEAR_1010_ENVELOPE_END")
+    # A bounded explanation bundle; complete method bodies are not emitted.
+    selected_explanation = {}
+    for method in evidence["selected_methods"]:
+        if method["name"] == "tick":
+            relevant = ("calculateDamage:", "isIntentionalGameDesign:",
+                        "causeIntentionalGameDesign:", "causeNukeDamage:",
+                        "hurt:", "getEntitiesOfClass:", "isDestroyable:",
+                        "remove:", "setDeltaMovement:", "discard:")
+            selected_explanation["tick"] = {
+                "symbols": [v for v in method["symbols"]
+                            if any(token in v["symbol"] for token in relevant)],
+                "windows": [w for w in method["windows"]
+                            if w["at"] in (466, 580, 586, 592, 605, 623, 647, 650)],
+                "constants": method["constants"],
+            }
+        else:
+            selected_explanation[method["name"]] = {
+                "symbols": method["symbols"], "constants": method["constants"],
+                "branches": method["branches"],
+            }
+    print("NUCLEAR_1010_DETAILS_BEGIN")
+    print(json.dumps(selected_explanation, separators=(",", ":"),
+                     ensure_ascii=False, sort_keys=True))
+    print("NUCLEAR_1010_DETAILS_END")
     print("NO_MUTATION NO_RUNTIME_CERTIFICATION")
 
 
