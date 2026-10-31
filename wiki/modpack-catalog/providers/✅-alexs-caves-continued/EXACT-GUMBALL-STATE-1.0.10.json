@@ -1,0 +1,1095 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_GUMBALL_STATE_OWNER_AND_PRODUCER_SELECTED_METHODS_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "selected_method_count": 52,
+  "classes": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "class_sha256": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535",
+      "declared_method_count": 28,
+      "methods": [
+        {
+          "name": "GumballEntity",
+          "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "instruction_count": 19,
+          "parsed_method_sha256": "cd6053f4340d9358649c951e8a48affb9bc9123dc8ebca003cbde963d2330939"
+        },
+        {
+          "name": "GumballEntity",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "instruction_count": 10,
+          "parsed_method_sha256": "d6a6588d5adbbf8c20ad7b20af5cd5eda0d437c762403cea25a24fa3f433cb62"
+        },
+        {
+          "name": "defineSynchedData",
+          "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+          "instruction_count": 43,
+          "parsed_method_sha256": "deea79e6acbb3c39be970d0c9fe5366176f727f01fde3cbbb890136597549d05"
+        },
+        {
+          "name": "tick",
+          "descriptor": "()V",
+          "instruction_count": 165,
+          "parsed_method_sha256": "a275bb0064f438eac6e7ddd5ee937a1e26033c181e4cdc197e57bd1ea6ceb8a8"
+        },
+        {
+          "name": "bounceFromDirection",
+          "descriptor": "(Lnet/minecraft/core/Direction;)V",
+          "instruction_count": 198,
+          "parsed_method_sha256": "0f687d784c92e2b8e7eebfc3cc9a85041b5fdfb37c6c5e4a32aaa2489df66282"
+        },
+        {
+          "name": "getMaximumBounces",
+          "descriptor": "()I",
+          "instruction_count": 7,
+          "parsed_method_sha256": "c45e92256a3739bc4614241d9d6cc8e814632cbc8950109980a57495046d1573"
+        },
+        {
+          "name": "setMaximumBounces",
+          "descriptor": "(I)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "6ccec525f7d55393d30907d20a4d3fe5e48583df2c41f70fa87be0e214808da9"
+        },
+        {
+          "name": "getBounces",
+          "descriptor": "()I",
+          "instruction_count": 7,
+          "parsed_method_sha256": "488ed41f84103d4051d2c48c6aa77a5ac84d2e3c67e7ed53406b9513b5a49bee"
+        },
+        {
+          "name": "setBounces",
+          "descriptor": "(I)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "7fba6225bafcf93d7c5ff4065c547d3ccd80e05348cc823070db4a45992593bc"
+        },
+        {
+          "name": "getDamage",
+          "descriptor": "()F",
+          "instruction_count": 7,
+          "parsed_method_sha256": "434f7752d2969166c4388b32fde3f753df8c2f816101fadab8740392ef58328b"
+        },
+        {
+          "name": "setDamage",
+          "descriptor": "(F)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "c4078f431f71b3919aee382a2edca052083d4048ba70fab2641b2ec8511667ed"
+        },
+        {
+          "name": "getColor",
+          "descriptor": "()I",
+          "instruction_count": 7,
+          "parsed_method_sha256": "a9189ca9ff638b771b0dfc01844669665c91c15ad4fabc174841f675946a0907"
+        },
+        {
+          "name": "setColor",
+          "descriptor": "(I)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "f33aa934c92de28a4b42e07b6ee2ad64b0fd2b7e4ca39e9b9bf44486ab829729"
+        },
+        {
+          "name": "targetsOnBounce",
+          "descriptor": "()Z",
+          "instruction_count": 7,
+          "parsed_method_sha256": "9cd03a004d137fe29438411500c8948d0216ea9536340a2a5ad5a8c0ebff3db1"
+        },
+        {
+          "name": "setTargetsOnBounce",
+          "descriptor": "(Z)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "ab92c0d0d82ac234c6e5dbe910171ca532a0a0cadc5c69d7bb81363e27522979"
+        },
+        {
+          "name": "splitsOnHit",
+          "descriptor": "()Z",
+          "instruction_count": 7,
+          "parsed_method_sha256": "83c6774289b066f1cce8ec958ff6710bbd1c3ef8bd48581668dc494fe1841134"
+        },
+        {
+          "name": "setSplitsOnHit",
+          "descriptor": "(Z)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "dc3be5b6eed66b54c1cd7b08551c803fb976214c7f1cfb4bd6aa3e074559c822"
+        },
+        {
+          "name": "isExplosive",
+          "descriptor": "()Z",
+          "instruction_count": 7,
+          "parsed_method_sha256": "692f2339a5c342555d55169c5c9e7cdcc4d7deacaa2707512c182a6442192388"
+        },
+        {
+          "name": "setExplosive",
+          "descriptor": "(Z)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "475a20ab2f9bf51b0e63290ea3d97afbf21232deaca19dda153408ff919bdc66"
+        },
+        {
+          "name": "getDefaultGravity",
+          "descriptor": "()D",
+          "instruction_count": 2,
+          "parsed_method_sha256": "f0a5a80e132df61791ac69eaa00fe07d8e2ba5449ad32cf6487c17aaaf6663f5"
+        },
+        {
+          "name": "onHit",
+          "descriptor": "(Lnet/minecraft/world/phys/HitResult;)V",
+          "instruction_count": 79,
+          "parsed_method_sha256": "6ba773699f0bddfbc33bff72ee912bdcd63896fde4a09c9bbb19c7ae795dcbe2"
+        },
+        {
+          "name": "onHitEntity",
+          "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+          "instruction_count": 162,
+          "parsed_method_sha256": "0797340fb44ecfa83c2b77dc07a12e1101b5427d9cb3ca5e4308b054ee309ffe"
+        },
+        {
+          "name": "addAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "instruction_count": 9,
+          "parsed_method_sha256": "71d94d6babff7eb6ec1b9ff66f035c970ed9cfd4bf428cfbde1e6dfc9e7a52cf"
+        },
+        {
+          "name": "readAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "instruction_count": 9,
+          "parsed_method_sha256": "6ab17f1d19425646dc4e5bf69274f479ff3634b7f552c005af6041c408c765e5"
+        },
+        {
+          "name": "getExplodeProgress",
+          "descriptor": "(F)F",
+          "instruction_count": 13,
+          "parsed_method_sha256": "627967eca48f762b1308320f25ee8a5ebed6a258300cc7d60058058794db4002"
+        }
+      ],
+      "critical_anchors": [
+        {
+          "name": "GumballEntity",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "anchors": [
+            {
+              "offset": 18,
+              "opcode": "invokevirtual",
+              "operand": "#53",
+              "symbol": "Method setOwner:(Lnet/minecraft/world/entity/Entity;)V"
+            }
+          ]
+        },
+        {
+          "name": "defineSynchedData",
+          "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+          "anchors": [
+            {
+              "offset": 1,
+              "opcode": "getstatic",
+              "operand": "#57",
+              "symbol": "Field MAXIMUM_BOUNCES:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "offset": 4,
+              "opcode": "iconst_5",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 13,
+              "opcode": "getstatic",
+              "operand": "#73",
+              "symbol": "Field BOUNCES:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "offset": 16,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 25,
+              "opcode": "getstatic",
+              "operand": "#76",
+              "symbol": "Field COLOR:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "offset": 28,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 37,
+              "opcode": "getstatic",
+              "operand": "#79",
+              "symbol": "Field DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "offset": 40,
+              "opcode": "fconst_2",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 49,
+              "opcode": "getstatic",
+              "operand": "#87",
+              "symbol": "Field TARGETS_ON_BOUNCE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "offset": 52,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 61,
+              "opcode": "getstatic",
+              "operand": "#95",
+              "symbol": "Field SPLITS_ON_HIT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "offset": 64,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 73,
+              "opcode": "getstatic",
+              "operand": "#98",
+              "symbol": "Field EXPLOSIVE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "offset": 76,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        },
+        {
+          "name": "tick",
+          "descriptor": "()V",
+          "anchors": [
+            {
+              "offset": 197,
+              "opcode": "ldc",
+              "operand": "#207",
+              "symbol": "float 20.0f"
+            },
+            {
+              "offset": 200,
+              "opcode": "ifle",
+              "operand": "253",
+              "symbol": ""
+            },
+            {
+              "offset": 242,
+              "opcode": "invokevirtual",
+              "operand": "#220",
+              "symbol": "Method net/minecraft/world/level/Level.explode:(Lnet/minecraft/world/entity/Entity;DDDFZLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"
+            },
+            {
+              "offset": 247,
+              "opcode": "invokevirtual",
+              "operand": "#224",
+              "symbol": "Method discard:()V"
+            }
+          ]
+        },
+        {
+          "name": "getDefaultGravity",
+          "descriptor": "()D",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "ldc2_w",
+              "operand": "#399",
+              "symbol": "double 0.07999999821186066d"
+            }
+          ]
+        },
+        {
+          "name": "onHitEntity",
+          "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+          "anchors": [
+            {
+              "offset": 6,
+              "opcode": "invokevirtual",
+              "operand": "#208",
+              "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+            },
+            {
+              "offset": 86,
+              "opcode": "invokestatic",
+              "operand": "#483",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeGumballDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+            },
+            {
+              "offset": 139,
+              "opcode": "invokevirtual",
+              "operand": "#494",
+              "symbol": "Method net/minecraft/world/entity/Entity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+            },
+            {
+              "offset": 144,
+              "opcode": "invokevirtual",
+              "operand": "#453",
+              "symbol": "Method splitsOnHit:()Z"
+            },
+            {
+              "offset": 174,
+              "opcode": "invokestatic",
+              "operand": "#498",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.createEntity:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;"
+            },
+            {
+              "offset": 290,
+              "opcode": "invokevirtual",
+              "operand": "#523",
+              "symbol": "Method setSplitsOnHit:(Z)V"
+            },
+            {
+              "offset": 299,
+              "opcode": "invokevirtual",
+              "operand": "#527",
+              "symbol": "Method setDamage:(F)V"
+            },
+            {
+              "offset": 335,
+              "opcode": "invokevirtual",
+              "operand": "#539",
+              "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+            }
+          ]
+        },
+        {
+          "name": "addAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "anchors": [
+            {
+              "offset": 6,
+              "opcode": "ldc_w",
+              "operand": "#546",
+              "symbol": "String Color"
+            },
+            {
+              "offset": 13,
+              "opcode": "invokevirtual",
+              "operand": "#551",
+              "symbol": "Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V"
+            }
+          ]
+        },
+        {
+          "name": "readAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "anchors": [
+            {
+              "offset": 7,
+              "opcode": "ldc_w",
+              "operand": "#546",
+              "symbol": "String Color"
+            },
+            {
+              "offset": 13,
+              "opcode": "invokevirtual",
+              "operand": "#34",
+              "symbol": "Method setColor:(I)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/living/GumbeeperEntity.class",
+      "class_sha256": "6a24f05a730218352a083da32f233c3d48fb5f85a6f24f1ba45d78c422b0266c",
+      "declared_method_count": 36,
+      "methods": [
+        {
+          "name": "defineSynchedData",
+          "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+          "instruction_count": 40,
+          "parsed_method_sha256": "a21fa099becd5dbb70cf6f9ee7afbbeb7244ae1e55dfbd2cbb59ec733b5923a9"
+        },
+        {
+          "name": "tick",
+          "descriptor": "()V",
+          "instruction_count": 324,
+          "parsed_method_sha256": "673e96a2759a7492e424a02a0f739af82c429df10cd542691224869fe7462138"
+        },
+        {
+          "name": "setGumballsLeft",
+          "descriptor": "(I)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "958fb10d755e49b1814c5b96052632dbc977dd8a38c1aaea4ddc1e86fd5f5cbe"
+        },
+        {
+          "name": "getGumballsLeft",
+          "descriptor": "()I",
+          "instruction_count": 7,
+          "parsed_method_sha256": "1e814ec63059b5d29ad5d262d898c609fc43b5bfa7a58a6f772e15867ff2ae84"
+        },
+        {
+          "name": "setPossessedByLicowitchId",
+          "descriptor": "(I)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "4cb17de66ba7964af1c97873f42ef7c7f2523dc55977caa8138e9a83812bca01"
+        },
+        {
+          "name": "getPossessedByLicowitchId",
+          "descriptor": "()I",
+          "instruction_count": 7,
+          "parsed_method_sha256": "8a0a8bb897b8d213b944f5d85f36d30fd563283cc5e90063b1a8d4545f331a2c"
+        },
+        {
+          "name": "canAttack",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instruction_count": 21,
+          "parsed_method_sha256": "5d8a82868b7b20022e6a6a2abda189d09c3a6456e63aac2329a6de55c215d3d2"
+        },
+        {
+          "name": "isCharged",
+          "descriptor": "()Z",
+          "instruction_count": 7,
+          "parsed_method_sha256": "6f43fbbdd6c9276e0b3833894efc2b4b56aad42bda5d6ba43214cb84a12ccd27"
+        },
+        {
+          "name": "setCharged",
+          "descriptor": "(Z)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "4fbb8b9f3b67443da5cc68dc1dc8f9fc87b0fbcbafdd962062e84dab9b446427"
+        },
+        {
+          "name": "canShootGumball",
+          "descriptor": "()Z",
+          "instruction_count": 17,
+          "parsed_method_sha256": "811cb7d7905e463c3420202adfd51e7239f3297ef957e5a1a10c8288898f3f98"
+        },
+        {
+          "name": "shootGumball",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "instruction_count": 198,
+          "parsed_method_sha256": "26380c4830c57381fa6d39220234305da5b408e7ad11bf56878e061b6e45ecb2"
+        },
+        {
+          "name": "hasLineOfSightToGumballHole",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "instruction_count": 55,
+          "parsed_method_sha256": "b49d5862f5be8f96373e60f91ac1f07af527bd2c58815b2f665c8486b39eab98"
+        },
+        {
+          "name": "addAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "instruction_count": 14,
+          "parsed_method_sha256": "f57a3cba582f7d5b2028a3a79d136fab6c51b57a57e639ed2b6248b3fdf224d6"
+        },
+        {
+          "name": "readAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "instruction_count": 14,
+          "parsed_method_sha256": "5ad57443d5094bd3ce2da1bd41cef3d3318e0a49f891d358041333fede775e37"
+        }
+      ],
+      "critical_anchors": [
+        {
+          "name": "defineSynchedData",
+          "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+          "anchors": [
+            {
+              "offset": 30,
+              "opcode": "getstatic",
+              "operand": "#158",
+              "symbol": "Field GUMBALLS_LEFT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "offset": 33,
+              "opcode": "bipush",
+              "operand": "6",
+              "symbol": ""
+            },
+            {
+              "offset": 55,
+              "opcode": "getstatic",
+              "operand": "#169",
+              "symbol": "Field CHARGED:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "offset": 58,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 67,
+              "opcode": "getstatic",
+              "operand": "#172",
+              "symbol": "Field POSSESSOR_LICOWITCH_ID:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            },
+            {
+              "offset": 70,
+              "opcode": "iconst_m1",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        },
+        {
+          "name": "tick",
+          "descriptor": "()V",
+          "anchors": [
+            {
+              "offset": 385,
+              "opcode": "invokespecial",
+              "operand": "#286",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+            },
+            {
+              "offset": 527,
+              "opcode": "invokevirtual",
+              "operand": "#320",
+              "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 542,
+              "opcode": "invokevirtual",
+              "operand": "#324",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+            },
+            {
+              "offset": 560,
+              "opcode": "invokevirtual",
+              "operand": "#337",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+            },
+            {
+              "offset": 579,
+              "opcode": "invokevirtual",
+              "operand": "#337",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+            }
+          ]
+        },
+        {
+          "name": "canShootGumball",
+          "descriptor": "()Z",
+          "anchors": [
+            {
+              "offset": 1,
+              "opcode": "invokevirtual",
+              "operand": "#516",
+              "symbol": "Method getGumballsLeft:()I"
+            },
+            {
+              "offset": 8,
+              "opcode": "getfield",
+              "operand": "#186",
+              "symbol": "Field dialRot:F"
+            },
+            {
+              "offset": 11,
+              "opcode": "ldc",
+              "operand": "#232",
+              "symbol": "float 450.0f"
+            },
+            {
+              "offset": 18,
+              "opcode": "invokevirtual",
+              "operand": "#198",
+              "symbol": "Method getAttackCharge:()F"
+            }
+          ]
+        },
+        {
+          "name": "shootGumball",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "anchors": [
+            {
+              "offset": 80,
+              "opcode": "invokespecial",
+              "operand": "#286",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+            },
+            {
+              "offset": 265,
+              "opcode": "invokevirtual",
+              "operand": "#580",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.shoot:(DDDFF)V"
+            },
+            {
+              "offset": 274,
+              "opcode": "invokevirtual",
+              "operand": "#320",
+              "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 289,
+              "opcode": "invokevirtual",
+              "operand": "#324",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+            },
+            {
+              "offset": 307,
+              "opcode": "invokevirtual",
+              "operand": "#337",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+            },
+            {
+              "offset": 326,
+              "opcode": "invokevirtual",
+              "operand": "#337",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+            }
+          ]
+        },
+        {
+          "name": "addAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "anchors": [
+            {
+              "offset": 6,
+              "opcode": "ldc_w",
+              "operand": "#652",
+              "symbol": "String Charged"
+            },
+            {
+              "offset": 13,
+              "opcode": "invokevirtual",
+              "operand": "#654",
+              "symbol": "Method net/minecraft/nbt/CompoundTag.putBoolean:(Ljava/lang/String;Z)V"
+            },
+            {
+              "offset": 17,
+              "opcode": "ldc_w",
+              "operand": "#660",
+              "symbol": "String Gumballs"
+            },
+            {
+              "offset": 24,
+              "opcode": "invokevirtual",
+              "operand": "#662",
+              "symbol": "Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V"
+            }
+          ]
+        },
+        {
+          "name": "readAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "anchors": [
+            {
+              "offset": 7,
+              "opcode": "ldc_w",
+              "operand": "#652",
+              "symbol": "String Charged"
+            },
+            {
+              "offset": 13,
+              "opcode": "invokevirtual",
+              "operand": "#472",
+              "symbol": "Method setCharged:(Z)V"
+            },
+            {
+              "offset": 18,
+              "opcode": "ldc_w",
+              "operand": "#660",
+              "symbol": "String Gumballs"
+            },
+            {
+              "offset": 24,
+              "opcode": "invokevirtual",
+              "operand": "#595",
+              "symbol": "Method setGumballsLeft:(I)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/ShotGumItem.class",
+      "class_sha256": "08aa8b9aa1781f2ead7d899e4fde758ea44bc527a2ee5968997e5b3ffdd32238",
+      "declared_method_count": 25,
+      "methods": [
+        {
+          "name": "getShootTime",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "instruction_count": 11,
+          "parsed_method_sha256": "34f8e5242c0c05d017b1066b4c7b895ace579b41e3a66cac81042193dde8e2e4"
+        },
+        {
+          "name": "setShootTime",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;I)V",
+          "instruction_count": 11,
+          "parsed_method_sha256": "a2410c025a0e598e65fb6154359e0309a416f03faeb8544f59044bb35f59b1e3"
+        },
+        {
+          "name": "getCrankAngle",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)F",
+          "instruction_count": 11,
+          "parsed_method_sha256": "6f5c66d6be580ffd9fae593561284a4734bb0b77313f268d1a9d5bfdfd39feea"
+        },
+        {
+          "name": "setCrankAngle",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;F)V",
+          "instruction_count": 11,
+          "parsed_method_sha256": "89370a16cc8fd9e091f44355082a334265b0dfbe8b9f2484752b4a383adca02f"
+        },
+        {
+          "name": "getGumballsLeft",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "instruction_count": 15,
+          "parsed_method_sha256": "76a39e8978435a07d4da8c7483aab10bb86c7c7b459b1a1226cdbba4d00932e9"
+        },
+        {
+          "name": "setGumballsLeft",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;I)V",
+          "instruction_count": 11,
+          "parsed_method_sha256": "983c856ab44be07128c08a41d800d84a40ec09829fbc3d74ebd59d97bc699f40"
+        },
+        {
+          "name": "isShooting",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instruction_count": 13,
+          "parsed_method_sha256": "7f2e32023e786754f50bc87b6da0d484027140366e40fce40c06dbfbb2caef60"
+        },
+        {
+          "name": "setShooting",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Z)V",
+          "instruction_count": 11,
+          "parsed_method_sha256": "884fa8a9b89ed43c6135964280fbbb4c98d37f939127ec93c5464612faaa7ec8"
+        },
+        {
+          "name": "hasAmmo",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instruction_count": 7,
+          "parsed_method_sha256": "2026228d5cec4b3c3340fb915138eb0794bb106e4f0895bdabb84fda1fe87dd1"
+        },
+        {
+          "name": "use",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "instruction_count": 79,
+          "parsed_method_sha256": "ad7815c82e25828dc177e07e394c87d813936bc5de8c942b8f7629bfe8f7b303"
+        },
+        {
+          "name": "getUseDuration",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I",
+          "instruction_count": 2,
+          "parsed_method_sha256": "92a67db53ddd0083cdd6cd1836556526a234d4bf4ce22ab67798954ec1c58f91"
+        },
+        {
+          "name": "acInventoryTick",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "instruction_count": 285,
+          "parsed_method_sha256": "6f9325406aaf142af4b415bff94b9123882b72a2ab981370d9be30a5e7c18093"
+        },
+        {
+          "name": "findAmmo",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/world/item/ItemStack;",
+          "instruction_count": 27,
+          "parsed_method_sha256": "8984a373f29347fbb2c78597c76824bd5675e7ce8897cab26d9df2a14f8397a4"
+        }
+      ],
+      "critical_anchors": [
+        {
+          "name": "getGumballsLeft",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "anchors": [
+            {
+              "offset": 10,
+              "opcode": "ldc",
+              "operand": "#96",
+              "symbol": "String Gumballs"
+            },
+            {
+              "offset": 12,
+              "opcode": "invokevirtual",
+              "operand": "#98",
+              "symbol": "Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z"
+            },
+            {
+              "offset": 19,
+              "opcode": "ldc",
+              "operand": "#96",
+              "symbol": "String Gumballs"
+            },
+            {
+              "offset": 21,
+              "opcode": "invokestatic",
+              "operand": "#65",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getInt:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I"
+            },
+            {
+              "offset": 27,
+              "opcode": "iconst_4",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        },
+        {
+          "name": "hasAmmo",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "anchors": [
+            {
+              "offset": 1,
+              "opcode": "invokestatic",
+              "operand": "#114",
+              "symbol": "Method getGumballsLeft:(Lnet/minecraft/world/item/ItemStack;)I"
+            },
+            {
+              "offset": 4,
+              "opcode": "ifle",
+              "operand": "11",
+              "symbol": ""
+            }
+          ]
+        },
+        {
+          "name": "use",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "anchors": [
+            {
+              "offset": 9,
+              "opcode": "invokestatic",
+              "operand": "#124",
+              "symbol": "Method hasAmmo:(Lnet/minecraft/world/item/ItemStack;)Z"
+            },
+            {
+              "offset": 45,
+              "opcode": "invokevirtual",
+              "operand": "#142",
+              "symbol": "Method findAmmo:(Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/world/item/ItemStack;"
+            },
+            {
+              "offset": 51,
+              "opcode": "invokevirtual",
+              "operand": "#146",
+              "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+            },
+            {
+              "offset": 58,
+              "opcode": "invokevirtual",
+              "operand": "#150",
+              "symbol": "Method net/minecraft/world/item/ItemStack.isEmpty:()Z"
+            },
+            {
+              "offset": 67,
+              "opcode": "invokevirtual",
+              "operand": "#153",
+              "symbol": "Method net/minecraft/world/item/ItemStack.shrink:(I)V"
+            },
+            {
+              "offset": 80,
+              "opcode": "iconst_4",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 81,
+              "opcode": "invokestatic",
+              "operand": "#157",
+              "symbol": "Method setGumballsLeft:(Lnet/minecraft/world/item/ItemStack;I)V"
+            }
+          ]
+        },
+        {
+          "name": "getUseDuration",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "ldc",
+              "operand": "#198",
+              "symbol": "int 72000"
+            }
+          ]
+        },
+        {
+          "name": "acInventoryTick",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "anchors": [
+            {
+              "offset": 83,
+              "opcode": "iconst_5",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 84,
+              "opcode": "if_icmpne",
+              "operand": "553",
+              "symbol": ""
+            },
+            {
+              "offset": 89,
+              "opcode": "ifeq",
+              "operand": "553",
+              "symbol": ""
+            },
+            {
+              "offset": 131,
+              "opcode": "invokestatic",
+              "operand": "#134",
+              "symbol": "Method setShooting:(Lnet/minecraft/world/item/ItemStack;Z)V"
+            },
+            {
+              "offset": 141,
+              "opcode": "invokestatic",
+              "operand": "#218",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+            },
+            {
+              "offset": 155,
+              "opcode": "getstatic",
+              "operand": "#222",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TRIPLE_SPLIT:Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "offset": 158,
+              "opcode": "invokestatic",
+              "operand": "#218",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+            },
+            {
+              "offset": 175,
+              "opcode": "invokestatic",
+              "operand": "#218",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+            },
+            {
+              "offset": 193,
+              "opcode": "invokestatic",
+              "operand": "#218",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+            },
+            {
+              "offset": 205,
+              "opcode": "ifeq",
+              "operand": "518",
+              "symbol": ""
+            },
+            {
+              "offset": 316,
+              "opcode": "invokespecial",
+              "operand": "#258",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+            },
+            {
+              "offset": 434,
+              "opcode": "invokevirtual",
+              "operand": "#308",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setTargetsOnBounce:(Z)V"
+            },
+            {
+              "offset": 441,
+              "opcode": "invokevirtual",
+              "operand": "#312",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setSplitsOnHit:(Z)V"
+            },
+            {
+              "offset": 448,
+              "opcode": "invokevirtual",
+              "operand": "#315",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setExplosive:(Z)V"
+            },
+            {
+              "offset": 480,
+              "opcode": "invokevirtual",
+              "operand": "#324",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.shootFromRotation:(Lnet/minecraft/world/entity/Entity;FFFFF)V"
+            },
+            {
+              "offset": 487,
+              "opcode": "invokevirtual",
+              "operand": "#328",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+            },
+            {
+              "offset": 492,
+              "opcode": "ldc_w",
+              "operand": "#331",
+              "symbol": "float 4.0f"
+            },
+            {
+              "offset": 495,
+              "opcode": "invokevirtual",
+              "operand": "#332",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+            },
+            {
+              "offset": 508,
+              "opcode": "invokevirtual",
+              "operand": "#339",
+              "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 533,
+              "opcode": "invokevirtual",
+              "operand": "#146",
+              "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+            },
+            {
+              "offset": 541,
+              "opcode": "invokestatic",
+              "operand": "#114",
+              "symbol": "Method getGumballsLeft:(Lnet/minecraft/world/item/ItemStack;)I"
+            },
+            {
+              "offset": 550,
+              "opcode": "invokestatic",
+              "operand": "#157",
+              "symbol": "Method setGumballsLeft:(Lnet/minecraft/world/item/ItemStack;I)V"
+            },
+            {
+              "offset": 560,
+              "opcode": "iconst_5",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 569,
+              "opcode": "invokestatic",
+              "operand": "#347",
+              "symbol": "Method setShootTime:(Lnet/minecraft/world/item/ItemStack;I)V"
+            },
+            {
+              "offset": 587,
+              "opcode": "invokestatic",
+              "operand": "#347",
+              "symbol": "Method setShootTime:(Lnet/minecraft/world/item/ItemStack;I)V"
+            },
+            {
+              "offset": 600,
+              "opcode": "ldc_w",
+              "operand": "#350",
+              "symbol": "float 45.0f"
+            }
+          ]
+        },
+        {
+          "name": "findAmmo",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/world/item/ItemStack;",
+          "anchors": [
+            {
+              "offset": 1,
+              "opcode": "invokevirtual",
+              "operand": "#146",
+              "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+            },
+            {
+              "offset": 33,
+              "opcode": "getstatic",
+              "operand": "#372",
+              "symbol": "Field AMMO:Ljava/util/function/Predicate;"
+            },
+            {
+              "offset": 37,
+              "opcode": "invokeinterface",
+              "operand": "#376,  2",
+              "symbol": "InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
