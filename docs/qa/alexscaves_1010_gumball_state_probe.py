@@ -37,9 +37,19 @@ GUMBALL_NAMES = {
     "setExplosive", "getDefaultGravity", "onHit", "onHitEntity",
     "addAdditionalSaveData", "readAdditionalSaveData", "getExplodeProgress",
 }
-GUMBEEPER_NAMES = {"tick", "shootGumball", "isCharged",
-                    "getPossessedByLicowitchId", "getPossessingLicowitch"}
-SHOTGUM_NAMES = {"acInventoryTick"}
+GUMBEEPER_NAMES = {
+    "defineSynchedData", "tick", "shootGumball", "isCharged", "setCharged",
+    "getPossessedByLicowitchId", "setPossessedByLicowitchId",
+    "getGumballsLeft", "setGumballsLeft", "canShootGumball",
+    "hasLineOfSightToGumballHole", "canAttack",
+    "addAdditionalSaveData", "readAdditionalSaveData",
+}
+SHOTGUM_NAMES = {
+    "acInventoryTick", "getShootTime", "setShootTime",
+    "getCrankAngle", "setCrankAngle", "getGumballsLeft",
+    "setGumballsLeft", "isShooting", "setShooting",
+    "hasAmmo", "use", "getUseDuration", "findAmmo",
+}
 METHODS = {
     GUMBALL: GUMBALL_NAMES,
     GUMBEEPER: GUMBEEPER_NAMES,
@@ -51,12 +61,16 @@ FOCUS = {
     (GUMBALL, "bounceFromDirection"): [39, 46, 101, 167, 183, 189, 242, 287],
     (GUMBEEPER, "tick"): [385, 518, 527, 542, 560, 579],
     (GUMBEEPER, "shootGumball"): [80, 265, 274, 289, 307, 326],
-    (SHOTGUM, "acInventoryTick"): [316, 427, 434, 441, 448, 480, 487, 495, 499, 508],
+    (SHOTGUM, "acInventoryTick"): [
+        1, 7, 83, 84, 89, 131, 138, 155, 172, 190, 205,
+        316, 434, 441, 448, 480, 487, 495, 508, 533, 541,
+        550, 560, 569, 587, 600,
+    ],
 }
-MAX_SELECTED_METHODS = 35
+MAX_SELECTED_METHODS = 70
 MAX_METHOD_INSNS = 2400
 MAX_PER_KIND = 260
-MAX_WINDOWS = 20
+MAX_WINDOWS = 30
 MAX_WINDOW_INSNS = 21
 SYMBOLIC = {"getfield", "putfield", "getstatic", "putstatic", "invokevirtual",
             "invokestatic", "invokespecial", "invokeinterface", "invokedynamic"}
