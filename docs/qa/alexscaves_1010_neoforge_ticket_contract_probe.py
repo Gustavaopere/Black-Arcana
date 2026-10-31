@@ -28,7 +28,7 @@ NEO_CLASSES = (
 EXPECTED_METHOD_NAMES = {
     "TicketController.class": ("forceChunk",),
     "ForcedChunkManager.class": ("forceChunk", "reinstatePersistentChunks"),
-    "ForcedChunkManager$TicketTracker.class": ("add", "remove"),
+    "ForcedChunkManager$TicketTracker.class": ("add", "remove", "getTickets"),
     "TicketHelper.class": ("removeAllTickets",),
     "RegisterTicketControllersEvent.class": (),
     "LoadingValidationCallback.class": (),
@@ -50,6 +50,7 @@ CUES = (
     "addRegionTicket", "removeRegionTicket", "getDataStorage",
     "isDirty", "setDirty", "getForcedChunks", "getChunk",
     "savedData", "writeModForcedChunks", "readModForcedChunks",
+    "ENTITY_TICKING", "ENTITY:", "tickingChunks", "chunks:",
     "getEntityForcedChunks", "getBlockForcedChunks",
 )
 
@@ -121,7 +122,7 @@ def audit(neoforge, publisher, javap_bin, previous):
             if not any(x["name"]==wanted for x in roster):
                 raise GumballStateProbeError("NeoForge expected method missing: "+wanted)
         interesting=[m for m in methods if name_of(m) in
-                     ("forceChunk","add","remove","reinstatePersistentChunks","register","registerController",
+                     ("forceChunk","add","remove","getTickets","reinstatePersistentChunks","register","registerController",
                       "readModForcedChunks","writeModForcedChunks","removeAllTickets",
                       "validateTickets","getEntityTickets","getBlockTickets")
                      or any("TicketController" in x["symbol"] or "forceChunk" in x["symbol"]
@@ -179,7 +180,7 @@ def deep_bytecode(neoforge, javap_bin):
                                       "lambda$reinstatePersistentChunks$6",
                                       "lambda$reinstatePersistentChunks$10"},
         "TicketHelper.class": {"removeAllTickets"},
-        "ForcedChunkManager$TicketTracker.class": {"add","remove"},
+        "ForcedChunkManager$TicketTracker.class": {"add","remove","getTickets"},
     }
     output={}
     for short,names in target_classes.items():
