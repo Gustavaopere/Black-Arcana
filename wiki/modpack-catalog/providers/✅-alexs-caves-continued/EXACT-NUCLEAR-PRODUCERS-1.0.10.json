@@ -1,0 +1,295 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "candidate_classes": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/ClientProxy.class",
+      "class_sha256": "a3d0eb9e19511f13f4155f994fe5486a51b3d5e645ffcfe8ab58440d790e1a69",
+      "token_matches": [
+        "NUCLEAR_EXPLOSION"
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/particle/MushroomCloudParticle.class",
+      "class_sha256": "ab45ff802ee410de87e0b32634f48fc7fd2028f3904adb2d00d1b29c8b1a1298",
+      "token_matches": [
+        "NUCLEAR_EXPLOSION"
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/block/blockentity/NuclearFurnaceBlockEntity.class",
+      "class_sha256": "08d51ff1617a287d9a70ab8d46e2fa49e17cd3167dd15fb4368aab5385b0dda0",
+      "token_matches": [
+        "NuclearExplosionEntity",
+        "NUCLEAR_EXPLOSION"
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.class",
+      "class_sha256": "7d7c91ddbb534d7c0e86a590ef7d7c3154ec2a628153c31e9fc7318a4b29e072",
+      "token_matches": [
+        "NuclearExplosionEntity",
+        "NUCLEAR_EXPLOSION"
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearBombEntity.class",
+      "class_sha256": "36ccc6ce0993d0ff7884c50857a11f6edb7bace66c15c1b157e8013627b4f3d3",
+      "token_matches": [
+        "NuclearExplosionEntity",
+        "NUCLEAR_EXPLOSION"
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class",
+      "class_sha256": "d9c827a9acb2d0f9e7050252ed57e6a3d0a8ad49053e54f19a8eaeb6b84da912",
+      "token_matches": [
+        "NuclearExplosionEntity"
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/living/NucleeperEntity.class",
+      "class_sha256": "5c25275ba23c5760ca4c63ddaeff3a0b8ca48a3c4cc7dfa5de999887c7d4beb2",
+      "token_matches": [
+        "NuclearExplosionEntity",
+        "NUCLEAR_EXPLOSION"
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/SackOfSatingItem.class",
+      "class_sha256": "e368851433cbf0746f4cdfd70605c4e49e9841beb65bd4dd17df90cbea504c7e",
+      "token_matches": [
+        "NuclearExplosionEntity",
+        "NUCLEAR_EXPLOSION"
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.class",
+      "class_sha256": "561ce50ed30684becb2c33468e939489874816745851a17a3d61b72223967633",
+      "token_matches": [
+        "NUCLEAR_EXPLOSION"
+      ]
+    }
+  ],
+  "classes_with_bytecode_references": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/client/ClientProxy.class",
+      "class_sha256": "a3d0eb9e19511f13f4155f994fe5486a51b3d5e645ffcfe8ab58440d790e1a69",
+      "selected_methods": [
+        {
+          "descriptor": "()V",
+          "instruction_count": 618,
+          "name": "clientInit",
+          "parsed_method_sha256": "bf8dcc3ff254c3dfe50c9951113eb6c949748246682370b8823c4907fb746847",
+          "site_anchors": [
+            {
+              "offset": 801,
+              "opcode": "getstatic",
+              "operand": "#276",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.NUCLEAR_EXPLOSION:Ljava/util/function/Supplier;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/block/blockentity/NuclearFurnaceBlockEntity.class",
+      "class_sha256": "08d51ff1617a287d9a70ab8d46e2fa49e17cd3167dd15fb4368aab5385b0dda0",
+      "selected_methods": [
+        {
+          "descriptor": "(Z)V",
+          "instruction_count": 196,
+          "name": "destroyWhileCritical",
+          "parsed_method_sha256": "12613531d92d501d1169b4fc55b54537f741541a7c24823cd312eee889ac07a6",
+          "site_anchors": [
+            {
+              "offset": 260,
+              "opcode": "getstatic",
+              "operand": "#420",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.NUCLEAR_EXPLOSION:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 278,
+              "opcode": "checkcast",
+              "operand": "#425",
+              "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity"
+            },
+            {
+              "offset": 294,
+              "opcode": "invokevirtual",
+              "operand": "#429",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.setPos:(Lnet/minecraft/world/phys/Vec3;)V"
+            },
+            {
+              "offset": 302,
+              "opcode": "invokevirtual",
+              "operand": "#431",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.setSize:(F)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearBombEntity.class",
+      "class_sha256": "36ccc6ce0993d0ff7884c50857a11f6edb7bace66c15c1b157e8013627b4f3d3",
+      "selected_methods": [
+        {
+          "descriptor": "()V",
+          "instruction_count": 24,
+          "name": "explode",
+          "parsed_method_sha256": "9472b45fd5e0e8164835d1714f540ff44811d28f2715e54de59425043b8ca1ac",
+          "site_anchors": [
+            {
+              "offset": 0,
+              "opcode": "getstatic",
+              "operand": "#213",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.NUCLEAR_EXPLOSION:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 18,
+              "opcode": "checkcast",
+              "operand": "#222",
+              "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity"
+            },
+            {
+              "offset": 24,
+              "opcode": "invokevirtual",
+              "operand": "#224",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.copyPosition:(Lnet/minecraft/world/entity/Entity;)V"
+            },
+            {
+              "offset": 43,
+              "opcode": "invokevirtual",
+              "operand": "#247",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.setSize:(F)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class",
+      "class_sha256": "d9c827a9acb2d0f9e7050252ed57e6a3d0a8ad49053e54f19a8eaeb6b84da912",
+      "selected_methods": [
+        {
+          "descriptor": "()V",
+          "instruction_count": 348,
+          "name": "tick",
+          "parsed_method_sha256": "64f9a412c81a25525edf5b9576d56cec8354f6963ef718a44e6179347fcd8a25",
+          "site_anchors": [
+            {
+              "offset": 318,
+              "opcode": "invokedynamic",
+              "operand": "#145,  0",
+              "symbol": "InvokeDynamic #0:compare:(Lcom/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity;)Ljava/util/Comparator;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/living/NucleeperEntity.class",
+      "class_sha256": "5c25275ba23c5760ca4c63ddaeff3a0b8ca48a3c4cc7dfa5de999887c7d4beb2",
+      "selected_methods": [
+        {
+          "descriptor": "()V",
+          "instruction_count": 34,
+          "name": "explode",
+          "parsed_method_sha256": "3ab58237a2034998d177e1a2afd78620b3fe799b5506fe2bc03265a8106913f0",
+          "site_anchors": [
+            {
+              "offset": 0,
+              "opcode": "getstatic",
+              "operand": "#448",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.NUCLEAR_EXPLOSION:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 18,
+              "opcode": "checkcast",
+              "operand": "#463",
+              "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity"
+            },
+            {
+              "offset": 24,
+              "opcode": "invokevirtual",
+              "operand": "#465",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.copyPosition:(Lnet/minecraft/world/entity/Entity;)V"
+            },
+            {
+              "offset": 42,
+              "opcode": "invokevirtual",
+              "operand": "#469",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.setSize:(F)V"
+            },
+            {
+              "offset": 61,
+              "opcode": "invokevirtual",
+              "operand": "#482",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.setNoGriefing:(Z)V"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/SackOfSatingItem.class",
+      "class_sha256": "e368851433cbf0746f4cdfd70605c4e49e9841beb65bd4dd17df90cbea504c7e",
+      "selected_methods": [
+        {
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "instruction_count": 159,
+          "name": "acInventoryTick",
+          "parsed_method_sha256": "fadcc79b69201de816672aeadc14169e6055dedd6051942e789303e8facace0f",
+          "site_anchors": [
+            {
+              "offset": 288,
+              "opcode": "getstatic",
+              "operand": "#303",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.NUCLEAR_EXPLOSION:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 303,
+              "opcode": "checkcast",
+              "operand": "#321",
+              "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity"
+            },
+            {
+              "offset": 322,
+              "opcode": "invokevirtual",
+              "operand": "#335",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.setPos:(Lnet/minecraft/world/phys/Vec3;)V"
+            },
+            {
+              "offset": 330,
+              "opcode": "invokevirtual",
+              "operand": "#339",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.setSize:(F)V"
+            },
+            {
+              "offset": 336,
+              "opcode": "invokevirtual",
+              "operand": "#343",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.setIntentionalGameDesign:(Z)V"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scan": {
+    "candidate_tokens": [
+      "NuclearExplosionEntity",
+      "NUCLEAR_EXPLOSION"
+    ],
+    "symbol_tokens": [
+      "NuclearExplosionEntity",
+      "ACEntityRegistry.NUCLEAR_EXPLOSION"
+    ]
+  },
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_NUCLEAR_PRODUCER_REFERENCE_CANDIDATES_NOT_CALL_GRAPH"
+}
