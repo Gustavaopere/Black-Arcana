@@ -38,7 +38,7 @@ class NuclearEnvelopeTests(unittest.TestCase):
             selected_anchors(method([instruction(0)]), (0,)*31)
 
     def test_snapshot_requires_unique_selected_method(self):
-        entry={"name":"tick","descriptor":"()V",
+        entry={"name":"calculateDamage","descriptor":"(FF)F",
                "parsed_method_sha256":"a"*64,"instruction_count":2,
                "symbols":[],"branches":[],"constants":[],
                "windows":[]}
