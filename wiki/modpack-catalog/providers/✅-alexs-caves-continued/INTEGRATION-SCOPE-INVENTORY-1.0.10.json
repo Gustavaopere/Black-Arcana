@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, two equipment contracts (Dreadbow and Desolate Dagger) and three damage contracts (Acid, Dark Arrow and Desolate Dagger) with scoped native consumers; no additional semantic magic root.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, two equipment contracts (Dreadbow and Desolate Dagger) and four damage contracts (Acid, Dark Arrow, Desolate Dagger and Forsaken Sonic Boom) with scoped native consumers; no additional semantic magic root.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",

@@ -14,7 +14,7 @@ CARDS = {
     "hurt": "desolate-dagger.md",
     "enchantLevel": "desolate-dagger.md",
 }
-STATIC_CARDS = frozenset({"dark-arrow.md", "desolate-dagger.md"})
+STATIC_CARDS = frozenset({"dark-arrow.md", "desolate-dagger.md", "forsaken-sonic-boom.md"})
 
 class HelperCardsTest(unittest.TestCase):
     @classmethod

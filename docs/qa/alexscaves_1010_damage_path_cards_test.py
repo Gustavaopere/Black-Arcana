@@ -14,6 +14,8 @@ EXPECTED = {
     "NuclearExplosionEntity.class": ("nuke.md", "intentional-game-design.md"),
 }
 STATIC_CONTRACTS = {
+    "forsaken-sonic-boom.md": ("## 4. Targeting, geometria e dano solicitado",
+                               "EXACT-FORSAKEN-CONTRACT-1.0.10.json"),
     "dark-arrow.md": ("## 4. Impacto, fórmula e filtros causais",
                       "EXACT-DREADBOW-CONTRACTS-1.0.10.json"),
     "desolate-dagger.md": ("## 4. Ataque, dano solicitado e Sated Blade",

@@ -85,6 +85,15 @@ jobs:
             --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/alexscaves-1010/desolate-dagger-evidence.json
+      - name: Verify the sealed Forsaken Sonic Boom contract
+        run: |
+          python3 docs/qa/alexscaves_1010_action_contract_audit.py \
+            --profile forsaken \
+            --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FORSAKEN-CONTRACT-1.0.10.json' \
+            --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/alexscaves-1010/forsaken-evidence.json
       - name: Export bounded JSON evidence only
         uses: actions/upload-artifact@v7
         with:
@@ -95,5 +104,6 @@ jobs:
             build/alexscaves-1010/dreadbow-evidence.json
             build/alexscaves-1010/acid-evidence.json
             build/alexscaves-1010/desolate-dagger-evidence.json
+            build/alexscaves-1010/forsaken-evidence.json
           if-no-files-found: error
           retention-days: 14

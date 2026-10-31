@@ -3,6 +3,7 @@
 import json
 import unittest
 from pathlib import Path
+from alexscaves_1010_damage_card_test import assert_sealed_damage_contract
 ROOT=Path(__file__).resolve().parents[2]
 DIR=ROOT/"wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types"
 SNAP=DIR/"EXACT-FORSAKEN-HELPERS-1.0.10.json"
@@ -48,12 +49,13 @@ class ForsakenHelpersCardTests(unittest.TestCase):
         self.assertEqual(self.methods["knockback"]["branch_anchors"],[])
         self.assertIn("ACCompat.knockback:",self.symbols("knockBackAngle"))
     def test_card_evidence_pins_and_unverified_hook(self):
+        assert_sealed_damage_contract(self, "forsaken_sonic_boom")
         for cls in self.doc["classes"]:
             self.assertIn(cls["class_sha256"],self.card)
             for m in cls["methods"]:
                 self.assertIn(m["method_sha256"],self.card)
                 self.assertIn(m["descriptor"],self.card)
-        for token in ("NOT_CERTIFIED","NOT_VERIFIED","NOT_TESTED","NO_MUTATION",
+        for token in ("STATIC_TECHNICAL_CATALOG_ONLY","NOT_VERIFIED","NOT_TESTED","NO_MUTATION",
                       "EXACT-FORSAKEN-HELPERS-1.0.10.json"):
             self.assertIn(token,self.card)
 if __name__=="__main__":

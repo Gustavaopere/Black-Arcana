@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 21/29.**
+**Fichas catalogadas (somente fichas detectadas): 22/29.**
 
-**Barra das fichas catalogadas:** `██████████████░░░░░░ 72.4%`
+**Barra das fichas catalogadas:** `███████████████░░░░░ 75.9%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 21/29.**
+**Homologadas para perks (somente fichas detectadas): 22/29.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 72.4%`
+**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 75.9%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -35,7 +35,7 @@
 | ✅ | Acid | [damage-types/acid.md](damage-types/acid.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dark Arrow | [damage-types/dark-arrow.md](damage-types/dark-arrow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Desolate Dagger | [damage-types/desolate-dagger.md](damage-types/desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Forsaken Sonic Boom | [damage-types/forsaken-sonic-boom.md](damage-types/forsaken-sonic-boom.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Forsaken Sonic Boom | [damage-types/forsaken-sonic-boom.md](damage-types/forsaken-sonic-boom.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gumball | [damage-types/gumball.md](damage-types/gumball.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Intentional Game Design | [damage-types/intentional-game-design.md](damage-types/intentional-game-design.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Nuke | [damage-types/nuke.md](damage-types/nuke.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -59,7 +59,7 @@
 | Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |
 |---|---|---:|---:|---|
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
-| ⚠️ | Damage Types | 3/11 (27.3%) | 3 | [Abrir índice](damage-types/INDEX.md) |
+| ⚠️ | Damage Types | 4/11 (36.4%) | 4 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Equipment | 2/2 (100.0%) | 2 | [Abrir índice](equipment/INDEX.md) |
 

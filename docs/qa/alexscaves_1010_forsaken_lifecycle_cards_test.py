@@ -3,6 +3,7 @@
 import json
 import unittest
 from pathlib import Path
+from alexscaves_1010_damage_card_test import assert_sealed_damage_contract
 
 DIR=Path(__file__).resolve().parents[2]/"wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types"
 SOURCE=DIR/"EXACT-FORSAKEN-LIFECYCLE-1.0.10.json"
@@ -59,10 +60,11 @@ class LifecycleCardTests(unittest.TestCase):
         self.assertIn("LEAPING",self.refs("setLeaping")[4])
         self.assertIn("animationTick",self.refs("setAnimationTick")[2])
 
-    def test_exact_method_pins_documented_and_not_promoted(self):
+    def test_exact_method_pins_documented_and_only_static_promoted(self):
+        assert_sealed_damage_contract(self, "forsaken_sonic_boom")
         for m in self.m.values():
             self.assertIn(m["method_sha256"],self.card)
-        for tok in ("NOT_CERTIFIED","NOT_VERIFIED","NOT_TESTED","NO_MUTATION",
+        for tok in ("STATIC_TECHNICAL_CATALOG_ONLY","NOT_VERIFIED","NOT_TESTED","NO_MUTATION",
                     "EXACT-FORSAKEN-LIFECYCLE-1.0.10.json"):
             self.assertIn(tok,self.card)
 
