@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Synthetic bounds for the SHA-exact Gumball producer reference probe."""
 import unittest
+import json
+from pathlib import Path
 from alexscaves_1010_gumball_producer_probe import (
-    MAX_HITS_PER_METHOD, ProducerProbeError, method_row, REF_PATTERN
+    MAX_HITS_PER_METHOD, ProducerProbeError, method_row, REF_PATTERN, snapshot_view, strict_pairs
 )
 
 
@@ -50,6 +52,42 @@ class ProducerProbeTest(unittest.TestCase):
                         ["Method GumballEntity.<init>:()V"])
         with self.assertRaisesRegex(ProducerProbeError, "unsafe selected method instruction population"):
             method_row(m)
+
+
+    def test_exact_producer_snapshot_and_missing_anchor(self):
+        root = Path(__file__).resolve().parents[2]
+        path = root / "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GUMBALL-PRODUCERS-1.0.10.json"
+        recorded = json.loads(path.read_text(encoding="utf8"), object_pairs_hook=strict_pairs)
+        sample = {
+            k: recorded[k] for k in (
+                "schema_version", "scope", "artifact", "projectile_class",
+                "candidate_class_count", "selected_class_count", "selected_method_count",
+                "registry_support", "no_selected_symbols"
+            )
+        }
+        sample["selected_classes"] = []
+        for cls in recorded["selected_classes"]:
+            selected = []
+            for m in cls["methods"]:
+                row = {k: m[k] for k in ("name", "descriptor", "instruction_count", "parsed_method_sha256")}
+                row["reference_windows"] = [{"at": a["offset"], "reference": a} for a in m["anchors"]]
+                selected.append(row)
+            sample["selected_classes"].append({
+                "class_path": cls["class_path"],
+                "class_sha256": cls["class_sha256"],
+                "methods": selected,
+            })
+        self.assertEqual(snapshot_view(sample), recorded)
+        shotgum = next(x for x in sample["selected_classes"] if x["class_path"].endswith("ShotGumItem.class"))
+        shotgum["methods"][0]["reference_windows"] = [
+            x for x in shotgum["methods"][0]["reference_windows"] if x["at"] != 495
+        ]
+        with self.assertRaisesRegex(ProducerProbeError, "missing/duplicate producer anchor"):
+            snapshot_view(sample)
+
+    def test_duplicate_json_key_fails_closed(self):
+        with self.assertRaisesRegex(ProducerProbeError, "duplicate snapshot key"):
+            json.loads('{"x":1,"x":2}', object_pairs_hook=strict_pairs)
 
 
 if __name__ == "__main__":
