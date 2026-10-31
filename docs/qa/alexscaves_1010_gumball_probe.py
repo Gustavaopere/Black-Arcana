@@ -28,14 +28,14 @@ MAX_WINDOWS = 24
 CALL_OPS = {"getfield", "putfield", "getstatic", "putstatic",
             "invokevirtual", "invokestatic", "invokespecial",
             "invokeinterface", "invokedynamic"}
-MATCH_METHOD = re.compile(r"([A-Za-z0-9_$<>]+)\\(")
+MATCH_METHOD = re.compile(r"([A-Za-z0-9_$<>]+)\(")
 INTERESTING = re.compile(
     r"(?:hit|tick|impact|damage|bounce|split|explode|remove|discard|"
     r"save|load|owner|shoot|collid|deflect|hurt)", re.I
 )
 WINDOW = re.compile(
-    r"(?:causeGumballDamage|\\.hurt:|ACCompat\\.hurt|addFreshEntity|"
-    r"getOwner|discard|setDeltaMovement|\\.explode:)"
+    r"(?:causeGumballDamage|\.hurt:|ACCompat\.hurt|addFreshEntity|"
+    r"getOwner|discard|setDeltaMovement|\.explode:)"
 )
 
 
@@ -149,7 +149,7 @@ def main():
     evidence = audit(args.jar, args.javap)
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(evidence, ensure_ascii=False, indent=2, sort_keys=True)+"\\n", encoding="utf8")
+    out.write_text(json.dumps(evidence, ensure_ascii=False, indent=2, sort_keys=True)+"\n", encoding="utf8")
     print("GUMBALL_1010_BEGIN")
     print(json.dumps(evidence, ensure_ascii=False, separators=(",", ":"), sort_keys=True))
     print("GUMBALL_1010_END")
