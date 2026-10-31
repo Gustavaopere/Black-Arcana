@@ -78,3 +78,21 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 - A bifurcação local comprova uma escolha de factory **nesse trecho**. Não demonstra o dano total da explosão, número de alvos, proteção de blocos, PvP nem quantas vezes `tick()` percorre essa região.
 
 **Limite metodológico:** offsets, referências de método, testes e desvios são provas do *bytecode*; a análise não reconstruiu exceções, switch dispatch, todos os caminhos de CFG ou condições de runtime. `NOT_CERTIFIED` para comportamento integral; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Black Arcana não deve substituir settlement, autorizações de servidor, segurança do mundo ou rotinas próprias do provider.
+
+
+## Origem dos objetos de explosão nuclear — JAR 1.0.10
+
+**Manifesto de referências SHA-exatas:** [EXACT-NUCLEAR-PRODUCERS-1.0.10.json](../EXACT-NUCLEAR-PRODUCERS-1.0.10.json), auditado em [CI específica](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-nuclear-producers.yml). Nove classes do provider contêm os tokens binários pesquisados, seis contêm referências localizadas em método por `javap`, e quatro são candidatas de emissão nativa de `NuclearExplosionEntity`; não se declara fechamento global dos produtores ou enumeração de mixins/indireções.
+
+| Produtor e método | Superfície técnica SHA-exata | Dependência ou ressalva |
+|---|---|---|
+| `NuclearBombEntity.explode()` | `ACEntityRegistry.NUCLEAR_EXPLOSION` @0 → `ACCompat.createEntity` @15 → `copyPosition` @24 → `setSize` @43 → `Level.addFreshEntity` @51. | `setSize` recebe `floatValue` de `ModConfigSpec.DoubleValue.get` via configuração comum do mod; **não há tamanho fixo global auditado**. |
+| `NucleeperEntity.explode()` | Registry @0 → factory @15 → `copyPosition` @24 → `setSize` @42. `ACCompat.gameRule` consulta `GameRules.RULE_MOBGRIEFING` @49/53; `ifne 64` @56 contorna `setNoGriefing(true)` @61 no ramo verdadeiro. Spawn solicitado @69. | Respeita a decisão nativa de bloqueio de griefing nesse caminho; não substitui a política de segurança do Black Arcana. A expressão de tamanho requer investigação específica. |
+| `NuclearFurnaceBlockEntity.destroyWhileCritical(boolean)` | Condição `ifeq 318` @257 precede registry @260 e factory @275; `setPos` @294, `setSize(0.75f)` @299/302 e `Level.addFreshEntity` @311. | Explosão condicionada à destruição crítica da fornalha; não existe prova de casting ou atribuição a player. |
+| `SackOfSatingItem.acInventoryTick` | Condição `isExploding(ItemStack)` @275/278, checagem client-side @282/285; registry @288; factory @300; `setSize(0.5f)` @327/330; `setIntentionalGameDesign(true)` @335/336; spawn @342. | Este emissor **altera o modo de dano** da mesma entidade: não atribuir automaticamente `alexscaves:nuke` à sua explosão; no ramo observado a classificação selecionada pode ser `alexscaves:intentional_game_design`. |
+
+O recorte demonstra diferentes **origens, valores de tamanho e gates nativos** que convergem numa implementação compartilhada de `NuclearExplosionEntity.tick`. Essa rotina seleciona entre `causeIntentionalGameDesign(RegistryAccess)` @605 e `causeNukeDamage(RegistryAccess)` @618 antes de uma chamada `LivingEntity.hurt(DamageSource,float)` @623. A variante do `SackOfSatingItem` e a da bomba não devem gerar processos de perk duplicados pelo nome ou pelas tags de `DamageSource`.
+
+**Owner e segurança:** a factory de criação `ACCompat.createEntity(EntityType,Level)` selecionada delega a `EntityType.create(Level)`. Nenhum owner causal foi certificado para estes quatro emitters, ainda que alguns sejam disparados por itens/entidades. `setNoGriefing` em um produtor e o valor default `NO_GRIEFING=false` na entidade não comprovam proteção de blocos em todos os caminhos. Qualquer implementação futura requer boundary de `WorldEffectPolicy`, limites de área, deduplicação e validação servidor/PvP.
+
+**Limites documentados:** inventário estático de candidatos, não um call graph exaustivo. O parser exclui inicializadores de classe, não resolve lambdas indiretas, callbacks, outras bibliotecas, mixins ou runtime. **`NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`**; contadores e Stage intactos.
