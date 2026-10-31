@@ -22,8 +22,8 @@ MAX_SELECTED_METHODS = 125
 MAX_INSNS = 3200
 MAX_HITS_PER_METHOD = 30
 MAX_WINDOW_ITEMS = 23
-METHOD_PATTERN = re.compile(r"([A-Za-z0-9_$<>]+)\\(")
-REF_PATTERN = re.compile(r"(?:GumballEntity|ACEntityRegistry\\.GUMBALL:|\\bGUMBALL\\b)")
+METHOD_PATTERN = re.compile(r"([A-Za-z0-9_$<>]+)\(")
+REF_PATTERN = re.compile(r"(?:GumballEntity|ACEntityRegistry\.GUMBALL:|\bGUMBALL\b)")
 CONSTANT_PATTERN = re.compile(r"^(?:[ifld]const_|bipush$|sipush$|ldc(?:_w|2_w)?$)")
 SUPPORT_REGISTRIES = {
     SERVER + "entity/ACEntityRegistry.class",
