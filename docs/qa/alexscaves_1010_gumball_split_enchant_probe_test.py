@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Deterministic positive/negative tests for the bounded Gumball evidence seal."""
 import unittest
+import json
+from pathlib import Path
 
 from alexscaves_1010_gumball_split_enchant_probe import (
     CLASSES, GumballStateProbeError, key_anchor, projection
 )
+from alexscaves_1010_gumball_state_probe import strict_pairs
 
 CHAIN = [
     (188, "iconst_4"), (190, "getstatic"), (193, "invokestatic"),
@@ -66,6 +69,46 @@ class GumballSplitEnchantmentTest(unittest.TestCase):
         with self.assertRaisesRegex(GumballStateProbeError,"missing sealed offset"):
             projection(data)
 
+
+
+class SealedPublisherSnapshotTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        path = (Path(__file__).resolve().parents[2] /
+                "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GUMBALL-SPLIT-ENCHANT-1.0.10.json")
+        cls.snapshot = json.loads(path.read_text(encoding="utf8"),
+                                  object_pairs_hook=strict_pairs)
+
+    def test_three_exact_classes_with_pinned_owners(self):
+        entries = self.snapshot["classes"]
+        self.assertEqual(len(entries), 3)
+        self.assertEqual([i["class_path"].split("/")[-1] for i in entries],
+                         ["GumballEntity.class", "ShotGumItem.class", "ACCompat.class"])
+        self.assertEqual(entries[2]["class_sha256"],
+                         "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b")
+        self.assertEqual(entries[2]["instruction_count"], 4)
+        self.assertEqual(entries[2]["essential_anchors"][0]["symbol"],
+                         "Method net/minecraft/world/entity/EntityType.create:(Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;")
+
+    def test_enchantment_arithmetic_and_split_reference_ledger(self):
+        entries = self.snapshot["classes"]
+        self.assertEqual(len(entries[0]["essential_anchors"]), 13)
+        self.assertEqual(len(entries[1]["essential_anchors"]), 25)
+        self.assertEqual(len(entries[2]["essential_anchors"]), 1)
+        self.assertEqual([x["opcode"] for x in entries[1]["arithmetic_chain"]],
+                         [op for _, op in CHAIN])
+        self.assertEqual([x["offset"] for x in entries[1]["arithmetic_chain"]],
+                         [at for at, _ in CHAIN])
+        self.assertEqual(entries[0]["name"], "onHitEntity")
+        self.assertTrue(any("ACCompat.createEntity" in x["symbol"]
+                            for x in entries[0]["essential_anchors"]))
+        self.assertFalse(any("setOwner:" in x["symbol"]
+                             for x in entries[0]["essential_anchors"]))
+
+    def test_duplicate_snapshot_keys_fail_closed(self):
+        with self.assertRaisesRegex(GumballStateProbeError,"duplicate snapshot key"):
+            json.loads('{"schema_version":1,"schema_version":2}',
+                       object_pairs_hook=strict_pairs)
 
 if __name__ == "__main__":
     unittest.main()
