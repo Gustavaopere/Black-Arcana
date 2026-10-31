@@ -74,3 +74,30 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 - Este recorte comprova **seleção condicional de DamageSource**, mas não autoriza derivar percentuais de dano, proteção contra explosões, extensão de área ou novos hooks.
 
 **Limite metodológico:** offsets, referências de método, testes e desvios são provas do *bytecode*; a análise não reconstruiu exceções, switch dispatch, todos os caminhos de CFG ou condições de runtime. `NOT_CERTIFIED` para comportamento integral; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Black Arcana não deve substituir settlement, autorizações de servidor, segurança do mundo ou rotinas próprias do provider.
+
+
+## Envelope nativo da explosão nuclear — auditoria SHA-exata 1.0.10
+
+**Prova adicional:** [EXACT-NUCLEAR-ENVELOPE-1.0.10.json](../EXACT-NUCLEAR-ENVELOPE-1.0.10.json), confrontado com o JAR publisher instalado pelo [workflow do envelope](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-nuclear-envelope.yml). O manifesto sela **19 métodos declarados**, **sete métodos próprios selecionados** de `NuclearExplosionEntity`, suas contagens/hashes de instruções, o hash de classe e **29 offsets críticos** de `tick()`. A prova usa somente bytecode delimitado e não executa o gameplay.
+
+### Estado, duração e persistência do objeto consumidor
+
+| Superfície | Evidência da versão instalada | Limite para perks |
+|---|---|---|
+| Identidade do dano | `NuclearExplosionEntity.tick()` consulta `isIntentionalGameDesign()` (592); `ifeq 611` (595) separa `causeIntentionalGameDesign` (605) de `causeNukeDamage` (618), com convergência em `LivingEntity.hurt(DamageSource,float)` (623). | São duas classificações de `DamageSource` para o **mesmo tipo de entidade consumidora**, não dois feitiços independentes. Uma perk não pode duplicar a aplicação de dano pela bifurcação. |
+| Dados sincronizados | `defineSynchedData` define `SIZE` com default `1.0f` (offsets 1/4), `NO_GRIEFING` com `false` (13/16) e `INTENTIONAL_GAME_DESIGN` com `false` (25/28). | Estados iniciais da entidade. Não inferir que esses defaults sejam os parâmetros efetivos de todos os emissores. |
+| Escala de dano | `tick()` usa `LivingEntity.distanceTo` (456), `calculateDamage(float,float)` (466) e insere o resultado em `fstore 9` (469). O helper `calculateDamage` tem 26 instruções e inclui as constantes `1.5f`, `100.0f` e `400.0f`. | O valor de dano pode variar com distância e tamanho; as constantes **não autorizam publicar fórmula numérica completa** sem reconstruir e validar a pilha/branches de cálculo. Dano final também depende das regras de `hurt`. |
+| Filtro especial de alvo | Em `tick()`, a verificação de `TremorzillaEntity` (570–573) pode zerar parâmetros (576–580); o `ifle 627` (586) avalia o valor antes de emitir `DamageSource`. | Os literais `0` na janela pertencem a um **ramo condicionado**, não provam que todos os ataques causam zero dano. |
+| Cálculo de alvos | O consumidor consulta `Level.getEntitiesOfClass(Class,AABB)` (421) e ajusta movimento com `Vec3.scale` (640) e `LivingEntity.setDeltaMovement` (643). | A caixa e os filtros completos, repetição de hits, LOS, raio de dano e PvP ainda não estão validados. Não interpretar a AABB como alcance de cast. |
+| Efeito pós-dano | Após `hurt`, a verificação `isIntentionalGameDesign` (647) leva a `ifne 702` (650); o outro ramo referencia `ACEffectRegistry.IRRADIATED` (659). | Evidência de diferenciação de efeitos; não inferir duração, incidência, persistência ou o efeito em todos os alvos sem seguir o ramo completo. |
+| Manipulação de blocos | `tick()` chama `Level.getBlockState` (80) e `isDestroyable` (83), e mantém superfície de remoção `Entity.remove` (167). | **World mutation de risco elevado**: não se autoriza reproduzir destruição fora do `WorldEffectPolicy` do Black Arcana. O literal `NO_GRIEFING=false` não prova política efetiva do servidor. |
+| Estado persistido diretamente | `addAdditionalSaveData(CompoundTag)` guarda `WasLoadingChunks` com `putBoolean`; `readAdditionalSaveData` usa `ACCompat.getBoolean` para a mesma chave e reatribui `loadingChunks`. | Esses métodos **não apresentam escrita direta** de `SIZE`, `NO_GRIEFING` ou `INTENTIONAL_GAME_DESIGN`. A restauração desses estados, superclass e eventuais mixins exigem auditoria separada. |
+| Autor/attribution | `causeIntentionalGameDesign(RegistryAccess)` não recebe `Entity`, `LivingEntity` nem `Player` no descritor JVM da factory; `tick()` passa apenas `Level.registryAccess` (599–605). | Ausência de argumento de atacante **não certifica identidade causal** para perks de kill/XP, nem comprova ausência de atribuição por outras rotas. Atribuição fica `NOT_VERIFIED`. |
+
+**Condicionamento importante:** o `DamageSource` selecionado e o valor de dano são operações distintas. O mesmo `float` do consumidor é passado a `LivingEntity.hurt` (621–623), qualquer que seja a factory selecionada; isso comprova compartilhamento do valor compilado no ponto de chamada, sem validar a fórmula nem o resultado após mitigação. O boolean retornado por `hurt` é descartado (`pop` em 626), portanto não deve servir como prova de hit aceito/trigger de perk.
+
+### Limites de autorização e próximo fechamento
+
+Esta é uma **auditoria de superfícies estáticas**. Faltam rastrear produtores da `NuclearExplosionEntity`, parâmetros de spawn/tamanho, filtros exatos da AABB, comportamento por tick, cálculo integral de dano, raio de destruição, persistência de `INTENTIONAL_GAME_DESIGN` e eventuais interações com outros mods no mundo real. A checagem de mundo e a atribuição de autoria não foram homologadas.
+
+**Status mantido:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Este checkpoint não adiciona raiz mágica, não certifica `Nuke` por associação, não altera contadores globais e não promove Stage.
