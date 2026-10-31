@@ -1,0 +1,55 @@
+name: Alex's Caves 1.0.10 Nuclear damage envelope
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_nuclear_envelope_probe.py'
+      - 'docs/qa/alexscaves_1010_nuclear_envelope_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NUCLEAR-ENVELOPE-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md'
+      - '.github/workflows/alexscaves-1010-nuclear-envelope.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_nuclear_envelope_probe.py'
+      - 'docs/qa/alexscaves_1010_nuclear_envelope_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NUCLEAR-ENVELOPE-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md'
+      - '.github/workflows/alexscaves-1010-nuclear-envelope.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact_nuclear_envelope:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic exact-envelope regressions
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_nuclear_envelope_probe.py
+          python3 docs/qa/alexscaves_1010_nuclear_envelope_probe_test.py -v
+      - name: Download pinned publisher artifact
+        run: |
+          mkdir -p build/alexscaves-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' --output build/alexscaves-1010/alexscaves-1.0.10.jar
+      - name: Verify selected NuclearExplosion methods and branch anchors
+        run: |
+          args=()
+          if [ -f 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NUCLEAR-ENVELOPE-1.0.10.json' ]; then
+            args+=(--snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NUCLEAR-ENVELOPE-1.0.10.json')
+          fi
+          python3 docs/qa/alexscaves_1010_nuclear_envelope_probe.py --jar build/alexscaves-1010/alexscaves-1.0.10.jar --javap "$JAVA_HOME/bin/javap" --output build/alexscaves-1010/nuclear-envelope.json "${args[@]}"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-nuclear-envelope
+          path: build/alexscaves-1010/nuclear-envelope.json
+          retention-days: 14
+          if-no-files-found: error
