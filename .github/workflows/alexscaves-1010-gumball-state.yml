@@ -6,6 +6,7 @@ on:
     paths:
       - 'docs/qa/alexscaves_1010_gumball_state_probe.py'
       - 'docs/qa/alexscaves_1010_gumball_state_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GUMBALL-STATE-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/gumball.md'
       - '.github/workflows/alexscaves-1010-gumball-state.yml'
   push:
@@ -13,6 +14,7 @@ on:
     paths:
       - 'docs/qa/alexscaves_1010_gumball_state_probe.py'
       - 'docs/qa/alexscaves_1010_gumball_state_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GUMBALL-STATE-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/gumball.md'
       - '.github/workflows/alexscaves-1010-gumball-state.yml'
   workflow_dispatch:
@@ -46,6 +48,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_gumball_state_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GUMBALL-STATE-1.0.10.json' \
             --output build/alexscaves-1010/gumball-state.json
       - name: Export bounded evidence only
         uses: actions/upload-artifact@v7
