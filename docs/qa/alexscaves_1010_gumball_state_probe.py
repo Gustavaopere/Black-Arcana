@@ -203,13 +203,115 @@ def audit(jar, javap_bin):
     }
 
 
+
+# Representative offsets from the publisher JAR, independent of parameter naming.
+# Every other selected method remains guarded by its parsed-method digest.
+SNAPSHOT_OFFSETS = {
+    (GUMBALL, "GumballEntity", "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"): (18,),
+    (GUMBALL, "defineSynchedData", None): (1, 4, 13, 16, 25, 28, 37, 40, 49, 52, 61, 64, 73, 76),
+    (GUMBALL, "onHitEntity", None): (6, 86, 139, 144, 174, 290, 299, 335),
+    (GUMBALL, "tick", None): (197, 200, 242, 247),
+    (GUMBALL, "getDefaultGravity", None): (0,),
+    (GUMBALL, "addAdditionalSaveData", None): (6, 13),
+    (GUMBALL, "readAdditionalSaveData", None): (7, 13),
+    (GUMBEEPER, "defineSynchedData", None): (30, 33, 55, 58, 67, 70),
+    (GUMBEEPER, "canShootGumball", None): (1, 8, 11, 18),
+    (GUMBEEPER, "shootGumball", None): (80, 265, 274, 289, 307, 326),
+    (GUMBEEPER, "tick", None): (385, 527, 542, 560, 579),
+    (GUMBEEPER, "addAdditionalSaveData", None): (6, 13, 17, 24),
+    (GUMBEEPER, "readAdditionalSaveData", None): (7, 13, 18, 24),
+    (SHOTGUM, "getGumballsLeft", None): (10, 12, 19, 21, 27),
+    (SHOTGUM, "hasAmmo", None): (1, 4),
+    (SHOTGUM, "getUseDuration", None): (0,),
+    (SHOTGUM, "use", None): (9, 45, 51, 58, 67, 80, 81),
+    (SHOTGUM, "findAmmo", None): (1, 33, 37),
+    (SHOTGUM, "acInventoryTick", None): (83, 84, 89, 131, 141, 155, 158, 175, 193, 205, 316, 434, 441, 448, 480, 487, 492, 495, 508, 533, 541, 550, 560, 569, 587, 600),
+}
+
+
+def strict_pairs(pairs):
+    out = {}
+    for k, v in pairs:
+        if k in out:
+            raise GumballStateProbeError("duplicate snapshot key: " + k)
+        out[k] = v
+    return out
+
+
+def snapshot_view(evidence):
+    """Bounded regression projection: class hashes, method identities and key offsets."""
+    classes = []
+    for cls in evidence["selected_classes"]:
+        clsname = cls["class_path"].rsplit("/", 1)[-1]
+        methods = []
+        anchored = []
+        identities = set()
+        for m in cls["selected_methods"]:
+            identity = (m["name"], m["descriptor"])
+            if identity in identities:
+                raise GumballStateProbeError("duplicate selected method")
+            identities.add(identity)
+            methods.append({
+                k: m[k] for k in
+                ("name", "descriptor", "instruction_count", "parsed_method_sha256")
+            })
+            candidates = (m["symbolic_references"] + m["branches"]
+                          + m["numeric_constants"])
+            for (filename, name, descriptor), offsets in SNAPSHOT_OFFSETS.items():
+                if clsname != filename or m["name"] != name:
+                    continue
+                if descriptor is not None and m["descriptor"] != descriptor:
+                    continue
+                refs = []
+                for offset in offsets:
+                    matches = [v for v in candidates if v["offset"] == offset]
+                    if len(matches) != 1:
+                        raise GumballStateProbeError(
+                            "missing/duplicate sealed anchor: " + filename +
+                            "." + name + "@" + str(offset))
+                    refs.append(matches[0])
+                anchored.append({"name": m["name"], "descriptor": m["descriptor"],
+                                 "anchors": refs})
+        classes.append({
+            "class_path": cls["class_path"],
+            "class_sha256": cls["class_sha256"],
+            "declared_method_count": len(cls["declared_methods"]),
+            "methods": methods,
+            "critical_anchors": anchored,
+        })
+    required = {(c, n, d) for c, n, d in SNAPSHOT_OFFSETS}
+    seen = set()
+    for cls in classes:
+        filename = cls["class_path"].rsplit("/", 1)[-1]
+        for m in cls["critical_anchors"]:
+            seen.add((filename, m["name"], m["descriptor"]))
+    for filename, name, descriptor in required:
+        if not any(c == filename and n == name and
+                   (descriptor is None or descriptor == d)
+                   for c, n, d in seen):
+            raise GumballStateProbeError(
+                "missing sealed method: " + filename + "." + name)
+    return {
+        "schema_version": 1,
+        "scope": evidence["scope"],
+        "artifact": evidence["artifact"],
+        "selected_method_count": evidence["selected_method_count"],
+        "classes": classes,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--jar", required=True)
     parser.add_argument("--javap", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--snapshot")
     args = parser.parse_args()
     out = audit(args.jar, args.javap)
+    if args.snapshot:
+        expected = json.loads(Path(args.snapshot).read_text(encoding="utf8"), object_pairs_hook=strict_pairs)
+        if snapshot_view(out) != expected:
+            raise GumballStateProbeError("exact Gumball state snapshot drift")
     target = Path(args.output)
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(out, indent=2, sort_keys=True, ensure_ascii=False)
