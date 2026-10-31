@@ -63,5 +63,99 @@ class NeoTicketSyntheticTests(unittest.TestCase):
         self.assertEqual([v["offset"] for v in method["site_anchors"]],[4])
         self.assertNotIn("window",method)
 
+
+class ExactNeoForgeTicketSnapshotTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        path=Path(__file__).resolve().parents[2] / (
+            "wiki/modpack-catalog/providers/✅-alexs-caves-continued/"
+            "EXACT-NEOFORGE-TICKETS-21.1.248.json")
+        cls.doc=json.loads(path.read_text(encoding="utf8"),object_pairs_hook=strict_pairs)
+        cls.classes={r["class_path"].rsplit("/",1)[-1]:r
+                     for r in cls.doc["neoforge_classes"]}
+
+    def selected(self,cls,name,descriptor=None):
+        items=[m for m in self.classes[cls]["selected_methods"]
+               if m["name"]==name and
+               (descriptor is None or m["descriptor"]==descriptor)]
+        self.assertEqual(len(items),1)
+        return items[0]
+
+    def sites(self,cls,name,descriptor=None):
+        return {x["offset"]:x["symbol"] for x in
+                self.selected(cls,name,descriptor)["site_anchors"]}
+
+    def test_neo_exact_maven_artifact_and_limits(self):
+        self.assertEqual(self.doc["neo"]["version"],"21.1.248")
+        self.assertEqual(self.doc["neo"]["file_sha256"],
+                         "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5")
+        self.assertEqual(self.doc["neo"]["size_bytes"],3551268)
+        self.assertEqual(self.doc["neoforge_class_count"],5)
+        self.assertEqual(self.doc["publisher"]["sha256"],
+                         "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c")
+        self.assertFalse(self.doc["limits"]["allow_mutation"])
+        self.assertEqual(self.doc["limits"]["physical_qa"],"NOT_TESTED")
+
+    def test_entity_overload_maps_to_uuid_by_compiled_descriptor(self):
+        desc="(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;IIZZ)Z"
+        m=self.selected("TicketController.class","forceChunk",desc)
+        self.assertEqual(m["instructions"],10)
+        self.assertEqual(m["method_sha256"],
+                         "0a785309c86c8d97e9788a25081adb25673aa28eda2f5e55783871d066f50783")
+        x={v["offset"]:v["symbol"] for v in m["site_anchors"]}
+        self.assertIn("Entity.getUUID",x[3])
+        self.assertIn("Ljava/util/UUID;IIZZ)Z",x[13])
+
+    def test_uuid_overload_delegates_to_forced_manager(self):
+        desc="(Lnet/minecraft/server/level/ServerLevel;Ljava/util/UUID;IIZZ)Z"
+        m=self.selected("TicketController.class","forceChunk",desc)
+        x={v["offset"]:v["symbol"] for v in m["site_anchors"]}
+        self.assertIn("ForcedChunkManager.forceChunk:",x[32])
+
+    def test_forced_manager_persists_changed_tracker_and_calls_chunk_api(self):
+        desc=("(Lnet/minecraft/server/level/ServerLevel;"
+              "Lnet/minecraft/resources/ResourceLocation;Ljava/lang/Comparable;"
+              "IIZZLnet/minecraft/server/level/TicketType;"
+              "Ljava/util/function/Function;)Z")
+        m=self.selected("ForcedChunkManager.class","forceChunk",desc)
+        self.assertEqual(m["instructions"],74)
+        self.assertEqual(m["method_sha256"],
+                         "541b1e4e1988a40e14b9e479b0ce089ea3ec3db448d637c03b55a099cb7e9570")
+        x={v["offset"]:v["symbol"] for v in m["site_anchors"]}
+        self.assertIn("getDataStorage",x[30])
+        self.assertIn("getChunk:",x[117])
+        self.assertIn("setDirty:",x[145])
+        self.assertIn("forceChunk:",x[159])
+        subdesc=("(Lnet/minecraft/server/level/ServerLevel;"
+                 "Lnet/minecraft/world/level/ChunkPos;"
+                 "Lnet/minecraft/server/level/TicketType;"
+                 "Lnet/neoforged/neoforge/common/world/chunk/ForcedChunkManager$TicketOwner;ZZ)V")
+        sub=self.sites("ForcedChunkManager.class","forceChunk",subdesc)
+        self.assertIn("addRegionTicket:",sub[15])
+        self.assertIn("removeRegionTicket:",sub[31])
+
+    def test_saved_tickets_have_reinstate_callback_path(self):
+        desc=("(Lnet/minecraft/server/level/ServerLevel;"
+              "Lnet/minecraft/world/level/ForcedChunksSavedData;)V")
+        refs=self.sites("ForcedChunkManager.class","reinstatePersistentChunks",desc)
+        self.assertIn("getEntityForcedChunks",refs[106])
+        self.assertIn("reinstatePersistentChunks:",refs[113])
+        m=self.sites("ForcedChunkManager.class","lambda$reinstatePersistentChunks$6")
+        self.assertIn("TicketController.callback:",m[114])
+        self.assertIn("TicketHelper",m[118])
+        self.assertIn("validateTickets:",m[140])
+        self.assertIn("removeAllTickets",self.sites(
+            "TicketHelper.class","removeAllTickets",
+            "(Ljava/util/UUID;)V")[9])
+
+    def test_controller_registration_is_separate_from_provider_registration(self):
+        regs=self.selected("RegisterTicketControllersEvent.class","register")
+        self.assertEqual(regs["descriptor"],
+                         "(Lnet/neoforged/neoforge/common/world/chunk/TicketController;)V")
+        self.assertIn("RegisterTicketControllersEvent.class",self.classes)
+        self.assertEqual(self.doc["limits"]["controller_registration_and_callback"],
+                         "NOT_CLOSED")
+
+
 if __name__=="__main__":
     unittest.main()
