@@ -51,7 +51,7 @@ class GumballStateProbeTests(unittest.TestCase):
 
     def test_maximum_window_budget_is_enforced(self):
         with self.assertRaisesRegex(GumballStateProbeError, "too many evidence windows"):
-            summarize(fake("tick", [inst(0, "return")]), [0]*21)
+            summarize(fake("tick", [inst(0, "return")]), [0]*31)
 
     def test_classification_does_not_report_all_bytecode(self):
         self.assertIsNone(classify(inst(0, "aload_0")))
