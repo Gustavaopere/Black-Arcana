@@ -25,8 +25,8 @@ CLASSES = (
      [86, 139, 144, 155, 156, 174, 290, 299, 308, 317, 326, 335, 346]),
     (BASE + "server/item/ShotGumItem.class", "acInventoryTick",
      "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
-     [138, 141, 144, 147, 151, 155, 158, 161, 164, 168,
-      172, 175, 178, 181, 185, 188, 190, 193, 196, 197, 198, 199,
+     [138, 141, 144, 151, 155, 158, 161, 168,
+      172, 175, 178, 185, 188, 190, 193, 196,
       205, 316, 434, 441, 448, 480, 487, 495, 508]),
     (BASE + "server/misc/ACCompat.class", "createEntity",
      "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;",
@@ -84,7 +84,7 @@ def collect(jar: Path, javap_bin: str):
             method = selected[0]
             if len(method["instructions"]) > 1000:
                 raise GumballStateProbeError("unexpected selected method size")
-            summary = summarize(method, offsets)
+            summary = summarize(method, offsets + ([197, 198, 199] if filename == "ShotGumItem.class" else []))
             refs = summary["symbolic_references"]
             for reference in MUST_CALL[filename]:
                 if not any(reference in x["symbol"] for x in refs):
@@ -144,6 +144,16 @@ def projection(evidence):
                 essential.append(key_anchor(matching[0]))
         elif filename == "ACCompat.class":
             essential = meth["symbols"]
+        chain = []
+        if filename == "ShotGumItem.class":
+            window = next(w for w in meth["selected_windows"] if w["at"] == 198)
+            chain_offsets = (188, 190, 193, 196, 197, 198, 199)
+            chain = [x for x in window["instructions"] if x["offset"] in chain_offsets]
+            if [x["opcode"] for x in chain] != [
+                "iconst_4", "getstatic", "invokestatic", "iconst_2",
+                "imul", "iadd", "istore",
+            ]:
+                raise GumballStateProbeError("enchantment bounce formula changed")
         classes.append({
             "class_path": cls["class_path"],
             "class_sha256": cls["class_sha256"],
@@ -152,6 +162,7 @@ def projection(evidence):
             "parsed_method_sha256": meth["parsed_method_sha256"],
             "instruction_count": meth["instruction_count"],
             "essential_anchors": essential,
+            "arithmetic_chain": chain,
         })
     return {
         "schema_version": evidence["schema_version"],
