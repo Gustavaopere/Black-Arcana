@@ -3,6 +3,7 @@
 import json
 import unittest
 from pathlib import Path
+from alexscaves_1010_damage_card_test import assert_sealed_damage_contract
 from alexscaves_1010_damage_consumer_probe import SHA1,SHA256,SIZE
 from alexscaves_1010_forsaken_target_probe import SELECTION
 from alexscaves_1010_forsaken_helper_probe import EXACT_CLASSES
@@ -62,14 +63,15 @@ class ForsakenTargetCardTests(unittest.TestCase):
         self.assertIn('sonicEnqueued',stop[7]['symbol'])
         self.assertIn('setRunning:',stop[15]['symbol'])
         self.assertFalse(any('attemptSonicDamageIn' in i['symbol'] for i in stop.values()))
-    def test_card_cites_each_identity_and_does_not_promote(self):
+    def test_card_cites_each_identity_and_only_static_promoted(self):
+        assert_sealed_damage_contract(self, "forsaken_sonic_boom")
         for cls in self.doc['classes']:
             self.assertIn(cls['class_sha256'],self.card)
             for m in cls['selected_methods']:
                 self.assertIn(m['descriptor'],self.card)
                 self.assertIn(m['parsed_method_sha256'],self.card)
         for token in ['EXACT-FORSAKEN-TARGETING-1.0.10.json','52 instruções em cinco métodos',
-                      'NOT_CERTIFIED','NOT_VERIFIED','NOT_TESTED','NO_MUTATION']:
+                      'STATIC_TECHNICAL_CATALOG_ONLY','NOT_VERIFIED','NOT_TESTED','NO_MUTATION']:
             self.assertIn(token,self.card)
 
 if __name__=='__main__':

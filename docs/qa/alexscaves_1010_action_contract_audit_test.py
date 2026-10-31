@@ -193,6 +193,20 @@ class ContractAuditTests(unittest.TestCase):
         del doc["action_evidence"]
         return doc
 
+    def forsaken_fixture(self):
+        """Seal the existing damage card without inventing a new magic root."""
+        doc = copy.deepcopy(self.doc)
+        relative = "damage-types/forsaken-sonic-boom.md"
+        card = self.root / relative
+        card.parent.mkdir(exist_ok=True)
+        card.write_bytes((self.root / ACTIONS[0]).read_bytes())
+        record = doc.pop("action_evidence")[ACTIONS[0]]
+        doc["catalog_family"] = "FORSAKEN_SONIC_CONTRACT"
+        doc["cards"] = {relative: sha256(card.read_bytes())}
+        doc["contract_evidence"] = {relative: record}
+        doc["classes"] = {path: doc["classes"][path] for path in record["classes"]}
+        return doc
+
     def test_parser_preserves_overloads_constructor_static_lambda_and_switch(self):
         parsed = audit.parse_javap(JAVAP, OWNER)
         self.assertEqual({("<init>", "()V"), ("<clinit>", "()V"), ("value", "()I"),
@@ -686,6 +700,152 @@ class ContractAuditTests(unittest.TestCase):
                 contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(0, audit.main(arguments))
             self.assertEqual("desolate_dagger", inspect.call_args.kwargs["profile"])
+
+    def test_forsaken_single_card_audit_keeps_static_and_runtime_boundaries(self):
+        doc = self.forsaken_fixture()
+        self.assertEqual({"damage-types/forsaken-sonic-boom.md"}, set(audit.FORSAKEN))
+        audit.validate_structure(doc, profile="forsaken")
+        audit.validate_cards(doc, self.root, profile="forsaken")
+        result = self.inspect(doc, profile="forsaken")
+        self.assertEqual("PASS", result["status"])
+        self.assertEqual("FORSAKEN_SONIC_CONTRACT", result["catalog_family"])
+        self.assertEqual((1, 1, 1, 1), tuple(result[k] for k in
+                         ("cards_checked", "classes_checked", "methods_checked", "instruction_anchors_checked")))
+        self.assertEqual("STATIC_TECHNICAL_CATALOG_ONLY", result["claim_scope"])
+        self.assertEqual("SHA_EXACT_BINARY_BEHAVIOR", result["evidence_grade"])
+        self.assertEqual(8, result["semantic_magic_roots"])
+        self.assertFalse(result["provider_universe_closed"])
+        self.assertEqual("NOT_VERIFIED", result["mutating_hook"])
+        self.assertEqual("NOT_TESTED", result["physical_qa"])
+
+    def test_forsaken_isolated_from_five_prior_families_without_global_mutation(self):
+        globals_ = (audit.SCOPE, audit.EFFECT_SCOPE, audit.DREADBOW_SCOPE,
+                    audit.ACID_SCOPE, audit.DESOLATE_DAGGER_SCOPE, audit.FORSAKEN_SCOPE)
+        snapshots = tuple(copy.deepcopy(value) for value in globals_)
+        documents = {"actions": self.doc, "effects": self.effects_fixture(),
+                     "dreadbow": self.dreadbow_fixture(), "acid": self.acid_fixture(),
+                     "desolate_dagger": self.desolate_dagger_fixture(), "forsaken": self.forsaken_fixture()}
+        for profile, doc in documents.items():
+            for other in documents:
+                if profile == other:
+                    continue
+                with self.subTest(profile=profile, selected=other), self.assertRaises(ValueError):
+                    audit.validate_structure(doc, profile=other)
+                with self.subTest(profile=profile, cards=other), self.assertRaises(ValueError):
+                    audit.validate_cards(doc, self.root, profile=other)
+        for profile in ("forsaken", "desolate_dagger", "acid", "dreadbow", "effects", "actions"):
+            self.inspect(documents[profile], profile=profile)
+        self.assertEqual(snapshots, globals_)
+
+    def test_forsaken_rejects_missing_extra_or_aliased_card_and_evidence_rosters(self):
+        relative = "damage-types/forsaken-sonic-boom.md"
+        for key in ("cards", "contract_evidence"):
+            for replacement in (None, "damage-types/acid.md", "equipment/dreadbow.md",
+                                "damage-types/forsaken-sonic-boom.md/../alias.md", ACTIONS[0]):
+                doc = self.forsaken_fixture()
+                value = doc[key].pop(relative)
+                if replacement is not None:
+                    doc[key][replacement] = value
+                with self.subTest(key=key, replacement=replacement), self.assertRaises(ValueError):
+                    audit.validate_structure(doc, profile="forsaken")
+            doc = self.forsaken_fixture()
+            doc[key]["damage-types/extra.md"] = doc[key][relative]
+            with self.subTest(key=key, mode="extra"), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="forsaken")
+
+    def test_forsaken_rejects_identity_runtime_and_evidence_family_inflation(self):
+        mutations = (("catalog_family", "DESOLATE_DAGGER_CONTRACTS"), ("catalog_family", None),
+                     ("claim_scope", "COMPLETE_PERK_READY"), ("evidence_grade", "SOURCE_ONLY"),
+                     ("artifact_sha1", "a" * 40), ("artifact_sha256", "b" * 64),
+                     ("artifact_size_bytes", True), ("version", "1.1.1"),
+                     ("semantic_magic_roots", 9), ("provider_universe_closed", True),
+                     ("mutating_hook", "VERIFIED"), ("physical_qa", "PASS"))
+        for key, value in mutations:
+            doc = self.forsaken_fixture()
+            if value is None:
+                doc.pop(key)
+            else:
+                doc[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="forsaken")
+        for alias in ("action_evidence", "effect_evidence"):
+            doc = self.forsaken_fixture()
+            doc[alias] = doc.pop("contract_evidence")
+            with self.subTest(alias=alias), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="forsaken")
+
+    def test_forsaken_rejects_stale_card_and_matching_hash_symlink_escape(self):
+        doc = self.forsaken_fixture()
+        card = self.root / "damage-types/forsaken-sonic-boom.md"
+        original = card.read_bytes()
+        card.write_bytes(original + b"stale Forsaken contract")
+        with self.assertRaises(ValueError):
+            self.inspect(doc, profile="forsaken")
+        outside = Path(self.temp.name) / "outside-forsaken.md"
+        outside.write_bytes(original)
+        card.unlink()
+        card.symlink_to(outside)
+        with self.assertRaises(ValueError):
+            self.inspect(doc, profile="forsaken")
+
+    def test_forsaken_rechecks_card_after_bytecode_inspection(self):
+        doc = self.forsaken_fixture()
+        changed = False
+        def completed(command, **kwargs):
+            nonlocal changed
+            card = self.root / "damage-types/forsaken-sonic-boom.md"
+            card.write_bytes(card.read_bytes() + b"changed during Forsaken audit")
+            changed = True
+            return subprocess.CompletedProcess(command, 0, stdout=JAVAP.replace(OWNER, command[-1]), stderr="")
+        with mock.patch.object(audit.subprocess, "run", side_effect=completed):
+            with self.assertRaises(ValueError):
+                audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="forsaken",
+                            expected_identity=self.expected_identity)
+        self.assertTrue(changed)
+
+    def test_forsaken_still_requires_anchored_and_referenced_member_evidence(self):
+        for mode in ("no_class", "no_anchored_class", "duplicate_class", "orphan_resource", "too_many_anchors"):
+            doc = self.forsaken_fixture()
+            path = next(iter(doc["classes"]))
+            record = doc["contract_evidence"]["damage-types/forsaken-sonic-boom.md"]
+            if mode == "no_class":
+                doc["classes"].clear()
+                record["classes"].clear()
+            elif mode == "no_anchored_class":
+                doc["classes"][path]["methods"] = []
+            elif mode == "duplicate_class":
+                record["classes"] *= 2
+            elif mode == "orphan_resource":
+                doc["resources"]["data/alexscaves/orphan.json"] = "a" * 64
+            else:
+                doc["classes"][path]["methods"][0]["anchors"] = [
+                    {"offset": i, "opcode": "nop", "operand": "", "symbol": ""} for i in range(257)]
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="forsaken")
+
+    def test_forsaken_verifies_actual_artifact_resources_and_instruction_values(self):
+        doc = self.forsaken_fixture()
+        with self.assertRaisesRegex(ValueError, "artifact identity mismatch"):
+            audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="forsaken")
+        drifted = copy.deepcopy(doc)
+        path = next(iter(drifted["classes"]))
+        drifted["classes"][path]["methods"][0]["anchors"][0]["opcode"] = "iconst_2"
+        with self.assertRaisesRegex(ValueError, "instruction anchor mismatch"):
+            self.inspect(drifted, profile="forsaken")
+        self.members[self.resource] += b"resource drift"
+        self.write_jar()
+        with self.assertRaisesRegex(ValueError, "resource hash mismatch"):
+            self.inspect(doc, profile="forsaken")
+
+    def test_cli_accepts_explicit_forsaken_profile(self):
+        arguments = ["--jar", str(self.jar), "--manifest", str(self.root / "manifest.json"),
+                     "--provider-root", str(self.root), "--javap", "synthetic-javap",
+                     "--profile", "forsaken"]
+        with mock.patch.object(audit, "load_manifest", return_value=self.forsaken_fixture()), \
+                mock.patch.object(audit, "audit", return_value={"status": "PASS"}) as inspect, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(0, audit.main(arguments))
+            self.assertEqual("forsaken", inspect.call_args.kwargs["profile"])
 
     def test_missing_extra_action_and_card_evidence_mismatch_rejected(self):
         variants = []

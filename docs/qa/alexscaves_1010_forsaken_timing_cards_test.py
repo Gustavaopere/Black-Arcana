@@ -3,6 +3,7 @@
 import json
 import unittest
 from pathlib import Path
+from alexscaves_1010_damage_card_test import assert_sealed_damage_contract
 DIR=Path(__file__).resolve().parents[2]/"wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types"
 
 class ForsakenTimingCardTests(unittest.TestCase):
@@ -46,9 +47,10 @@ class ForsakenTimingCardTests(unittest.TestCase):
             self.assertIsNone(self.own[name]["method"])
         self.assertTrue(self.own["getAnimationTick"]["declared_on_exact_class"])
     def test_document_provenance(self):
+        assert_sealed_damage_contract(self, "forsaken_sonic_boom")
         for name in (self.goal["method_sha256"],self.entity["method_sha256"],
                      self.own["defineSynchedData"]["method"]["method_sha256"],
-                     "EXACT-FORSAKEN-TIMING-1.0.10.json","NOT_CERTIFIED",
+                     "EXACT-FORSAKEN-TIMING-1.0.10.json","STATIC_TECHNICAL_CATALOG_ONLY",
                      "NOT_VERIFIED","NOT_TESTED","NO_MUTATION"):
             self.assertIn(name,self.card)
 if __name__=="__main__":

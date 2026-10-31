@@ -6499,6 +6499,46 @@
           "reason": "Ficha, classes e recursos1.0.10 têm hashes e localizadores JVM reproduzíveis; fonte1.1.1 não fornece parâmetros e hooks/QA física continuam explicitamente pendentes."
         }
       }
+    },
+    "✅-alexs-caves-continued/damage-types/forsaken-sonic-boom.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do Forsaken Sonic Boom e dos consumidores nativos delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/forsaken-sonic-boom.md",
+          "reason": "ID, artefato SHA-exato 1.0.10, JSON e factory com caller Forsaken delimitados; bootstrap/registro e fonte 1.1.1 separada como corroboração."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/forsaken-sonic-boom.md",
+          "reason": "Leitura causal completa dos 12 métodos próprios do goal e consumidores delimitados: contador pendente processado antes da árvore Sonic, variantes direcionada/área, origem e consumo da carga e lifecycle nativo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/forsaken-sonic-boom.md",
+          "reason": "Fórmulas exatas 45/4 e ceil(base*.65), distância float alargada, ceil(d*.20000000298023224), durações 35/45 e janelas/cadências distintas das partículas; defaults de atributos/registro separados de valores efetivos."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/forsaken-sonic-boom.md",
+          "reason": "Seleção TARGETING/lambda por bootstrap, evento nativo de change-target, LOS/alvo principal, caixa inflate(16,8,16), filtros por vítima e distinção alvo principal no slot 1 versus vítima no slot 9."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/forsaken-sonic-boom.md",
+          "reason": "Ação nativa de IA sem débito próprio de mana/stamina/inventário nos métodos auditados; exaustão do DamageType e contador de navegação não reinterpretados como custo/cooldown de spell, scheduling e recursos externos mantidos."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/forsaken-sonic-boom.md",
+          "reason": "Tabela por mutação pretendida preserva owners/filtros/settlement; ATTACK_DAMAGE apenas melee, canal playBidirectional sem certificação de auth; NO_MUTATION, hooks NOT_VERIFIED e universo do provider aberto."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/forsaken-sonic-boom.md",
+          "reason": "Ficha e membros exatos selados em manifesto consolidado, identidades históricas preservadas, métodos/âncoras verificáveis no mesmo JAR; QA física/multiplayer e integração executável continuam NOT_TESTED."
+        }
+      }
     }
   },
   "providers": {},
