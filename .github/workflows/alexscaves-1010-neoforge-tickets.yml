@@ -37,8 +37,7 @@ jobs:
       - name: Synthetic fail-closed tests
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_neoforge_ticket_contract_probe.py
-          python3 -m py_compile docs/qa/alexscaves_1010_neoforge_ticket_contract_probe_test.py
-          # Bootstrap expanded publisher/JAR fingerprint; tests restored with sealed snapshot.
+          python3 docs/qa/alexscaves_1010_neoforge_ticket_contract_probe_test.py -v
       - name: Fetch SHA-pinned publisher and exact NeoForge Maven artifact
         run: |
           mkdir -p build/alexscaves-1010
@@ -46,7 +45,7 @@ jobs:
           curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 'https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar' --output build/alexscaves-1010/neoforge-21.1.248-universal.jar
       - name: Cross-check compiled publisher and NeoForge ticket contract
         run: |
-          python3 docs/qa/alexscaves_1010_neoforge_ticket_contract_probe.py --publisher build/alexscaves-1010/alexscaves-1.0.10.jar --neoforge build/alexscaves-1010/neoforge-21.1.248-universal.jar --javap "$JAVA_HOME/bin/javap" --previous 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NUCLEAR-CHUNK-LIFECYCLE-1.0.10.json' --output build/alexscaves-1010/neo-ticket-contract.json
+          python3 docs/qa/alexscaves_1010_neoforge_ticket_contract_probe.py --publisher build/alexscaves-1010/alexscaves-1.0.10.jar --neoforge build/alexscaves-1010/neoforge-21.1.248-universal.jar --javap "$JAVA_HOME/bin/javap" --previous 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NUCLEAR-CHUNK-LIFECYCLE-1.0.10.json' --output build/alexscaves-1010/neo-ticket-contract.json --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-TICKETS-21.1.248.json'
       - uses: actions/upload-artifact@v7
         with:
           name: alexscaves-1010-neoforge-211248-tickets
