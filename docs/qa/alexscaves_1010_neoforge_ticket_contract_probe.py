@@ -46,7 +46,7 @@ MAX_JAR_ENTRIES = 25000
 CUES = (
     "forceChunk", "getUUID", "TicketController", "validate",
     "callback", "initialis", "register", "removeAll", "reinstate",
-    "getEntityTickets", "getBlockTickets", "TicketHelper",
+    "getEntityTickets", "getBlockTickets", "getTickets:", "TicketHelper",
     "addRegionTicket", "removeRegionTicket", "getDataStorage",
     "isDirty", "setDirty", "getForcedChunks", "getChunk",
     "savedData", "writeModForcedChunks", "readModForcedChunks",
@@ -86,6 +86,50 @@ def evidence(m):
             "window":[compact(v) for v in ins[max(0,i-MAX_WINDOW_RADIUS):i+MAX_WINDOW_RADIUS+1]]
         } for i,x in chosen],
     }
+
+
+def publisher_flag_evidence(publisher, javap_bin, previous):
+    """Exact selected publisher parameter stack evidence, separately SHA-pinned."""
+    specs={
+        "NuclearExplosionEntity.class":{
+            "path":"com/github/alexmodguy/alexscaves/server/entity/item/NuclearExplosionEntity.class",
+            "methods":{
+                ("tick","()V"):("64f9a412c81a25525edf5b9576d56cec8354f6963ef718a44e6179347fcd8a25",(210,211)),
+                ("remove","(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"):("8eb89c85d5125decad3a9975e1d0b453e9911f59f4fd8f2f36f40b15d96d5854",(23,24,29)),
+                ("loadChunksAround","(Z)V"):("0ede215fd19dd7a9c3215668a481a02ad8da5bf75af2c44100d6716182f32d33",(86,87,88)),
+            }
+        },
+        "ACPlatform.class":{
+            "path":"com/github/alexmodguy/alexscaves/server/misc/ACPlatform.class",
+            "methods":{
+                ("forceChunk","(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;IIZZ)V"):
+                  ("068bff3ce99b6b6aac84db7e249a0309ee8a16138c0892332a47e0a4c63c270f",(16,18,20,23)),
+            }
+        }
+    }
+    sealed=[]
+    with zipfile.ZipFile(publisher) as archive:
+        for key,spec in specs.items():
+            prior=next((x for x in previous["candidate_classes"] if x["class_path"]==spec["path"]),None)
+            if prior is None:
+                raise GumballStateProbeError("missing 1.0.10 publisher prior class")
+            sha=hashlib.sha256(archive.read(spec["path"])).hexdigest()
+            if sha!=prior["class_sha256"]:
+                raise GumballStateProbeError("1.0.10 publisher entry SHA drift")
+            methods=parse_methods(javap(javap_bin,publisher,spec["path"][:-6].replace("/",".")))
+            found=[]
+            for (name,descriptor),(expected,at) in spec["methods"].items():
+                options=[m for m in methods if (name_of(m),m["descriptor"])==(name,descriptor)]
+                if len(options)!=1 or mhash(options[0])!=expected:
+                    raise GumballStateProbeError("publisher selected method hash changed: "+name)
+                m=options[0]
+                points=[compact(x) for x in m["instructions"] if x["offset"] in at]
+                if [x["offset"] for x in points]!=list(at):
+                    raise GumballStateProbeError("publisher boolean stack offsets changed")
+                found.append({"name":name,"descriptor":descriptor,"parsed_method_sha256":expected,
+                              "instruction_count":len(m["instructions"]),"selected_stack":points})
+            sealed.append({"class_path":spec["path"],"class_sha256":sha,"selected_methods":found})
+    return sealed
 
 def audit(neoforge, publisher, javap_bin, previous):
     if sha_file(publisher)!=(SHA1,SHA256,SIZE):
@@ -149,6 +193,7 @@ def audit(neoforge, publisher, javap_bin, previous):
                     if "TicketController.forceChunk" in anchor["symbol"]]
     if len(provider_sites)!=2:
         raise GumballStateProbeError("publisher adapter overloaded forceChunk sites drift")
+    publisher_flags=publisher_flag_evidence(publisher,javap_bin,documented)
     return {
         "schema_version":1,
         "scope":"EXACT_PUBLISHER_1010_VERSUS_EXACT_NEOFORGE_21_1_248_TICKETCONTRACT_STATIC",
@@ -157,6 +202,9 @@ def audit(neoforge, publisher, javap_bin, previous):
                "file_sha256":nfsha256,"size_bytes":nfbytes},
         "provider_adapter_static_sha256":wrapper["class_sha256"],
         "provider_force_ticket_calls":provider_sites,
+        "publisher_boolean_paths":publisher_flags,
+        "native_release_ticket_bucket_mismatch":"CONFIRMED_SELECTED_STATIC_BRANCHES_NOT_LIVE_RUNTIME",
+        "actual_persistent_ticket_leak":"NOT_OBSERVED",
         "neoforge_class_count":len(records),
         "neoforge_classes":records,
         "limits":{
