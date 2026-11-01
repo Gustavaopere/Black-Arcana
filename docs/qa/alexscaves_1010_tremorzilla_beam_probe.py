@@ -169,6 +169,11 @@ def verify_sealed_snapshot(report, seal):
     }
     target = report['damage_method']
     observed[(target['method'], target['descriptor'])] = target['parsed_method_sha256']
+    for m in report['local_hurtEntitiesAround_callers']:
+        key = (m['method'], m['descriptor'])
+        if key in observed and observed[key] != m['parsed_method_sha256']:
+            raise BeamProbeError('related/caller duplicate method digest mismatch')
+        observed[key] = m['parsed_method_sha256']
     desired = seal.get('selected_method_digests')
     if not isinstance(desired, list) or not 1 <= len(desired) <= 30:
         raise BeamProbeError('invalid selected method seal size')
