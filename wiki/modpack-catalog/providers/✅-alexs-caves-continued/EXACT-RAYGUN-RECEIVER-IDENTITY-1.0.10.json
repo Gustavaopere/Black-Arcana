@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_RAYGUN_RECEIVER_IDENTITY_AND_ENVELOPE_CONTEXT_READONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_identities": [
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage.class",
+      "sha256": "bda52d12e8cce7e010b3d4cd2db7d83000e78b35657c55773a8ba91a070478c8"
+    },
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/message/ACNetwork$NeoForgeContext.class",
+      "sha256": "896aa280e746e265d5e8d948eea619309f0f650c5a85587a5f304076eaf8da52"
+    },
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/message/ACNetwork$Entry.class",
+      "sha256": "fa8dae2234545d16842b1d8feb221bae2789baa79f1bce95b71b18bd8a733858"
+    },
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/message/ACNetwork.class",
+      "sha256": "8544a3436444be3248f9176bbcdee5fa30ee45ec2fbcf7a35a5e4fe4d9d88482"
+    }
+  ],
+  "receiver": {
+    "name": "handle",
+    "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage;Lcom/github/alexmodguy/alexscaves/server/message/ACNetworkContext;)V",
+    "parsed_method_sha256": "049a8d738fda3cb0fbd3c148b3e01aecc62f067004b0c6ce0a845dacc664e0a3",
+    "instruction_count": 75,
+    "conditional_branches": [
+      {
+        "offset": 20,
+        "opcode": "ifeq",
+        "operand": "30",
+        "symbol": ""
+      },
+      {
+        "offset": 31,
+        "opcode": "ifnull",
+        "operand": "179",
+        "symbol": ""
+      },
+      {
+        "offset": 50,
+        "opcode": "ifeq",
+        "operand": "179",
+        "symbol": ""
+      },
+      {
+        "offset": 84,
+        "opcode": "ifeq",
+        "operand": "100",
+        "symbol": ""
+      },
+      {
+        "offset": 97,
+        "opcode": "goto",
+        "operand": "129",
+        "symbol": ""
+      },
+      {
+        "offset": 116,
+        "opcode": "ifeq",
+        "operand": "129",
+        "symbol": ""
+      },
+      {
+        "offset": 131,
+        "opcode": "ifnull",
+        "operand": "179",
+        "symbol": ""
+      },
+      {
+        "offset": 146,
+        "opcode": "ifeq",
+        "operand": "179",
+        "symbol": ""
+      },
+      {
+        "offset": 161,
+        "opcode": "ifnull",
+        "operand": "179",
+        "symbol": ""
+      }
+    ]
+  },
+  "network_context_methods": [
+    {
+      "name": "enqueueWork",
+      "descriptor": "(Ljava/lang/Runnable;)V",
+      "parsed_method_sha256": "134cdc4b757e8caff89312fb68dcbb6bef24efb5fc9a3eac06dd86bdac9ed587"
+    },
+    {
+      "name": "getSender",
+      "descriptor": "()Lnet/minecraft/server/level/ServerPlayer;",
+      "parsed_method_sha256": "7d3401003a9dd6228eb820660ff87c9cb5148abf5b8a916ec70f4253500fbfe9"
+    },
+    {
+      "name": "isClientSide",
+      "descriptor": "()Z",
+      "parsed_method_sha256": "0c42aa23fff1edd6e3dd24c2ab37ec1754b393322622bc2c2e087b600049c591"
+    }
+  ],
+  "network_entry_methods": [
+    {
+      "name": "handle",
+      "descriptor": "(Ljava/lang/Object;Lcom/github/alexmodguy/alexscaves/server/message/ACNetworkContext;)V",
+      "parsed_method_sha256": "0106386c7385f82f92bcf2f8501b909449e7f57e749498cc77ce46397a38ff17"
+    },
+    {
+      "name": "encoder",
+      "descriptor": "()Ljava/util/function/BiConsumer;",
+      "parsed_method_sha256": "5ee1c17f7b316d46f3152776efb75d0976af95ae20d3c8945cecd94e7d071351"
+    },
+    {
+      "name": "decoder",
+      "descriptor": "()Ljava/util/function/Function;",
+      "parsed_method_sha256": "74bacb691dbd21dbe4bc1e613d66a5c01615e8d31786565aed448e7d4cebbf20"
+    }
+  ],
+  "critical_native_anchors": [
+    {
+      "class": "context",
+      "method": "enqueueWork",
+      "offset": 5,
+      "opcode": "invokeinterface",
+      "symbol": "InterfaceMethod net/neoforged/neoforge/network/handling/IPayloadContext.enqueueWork:(Ljava/lang/Runnable;)Ljava/util/concurrent/CompletableFuture;"
+    },
+    {
+      "class": "context",
+      "method": "getSender",
+      "offset": 4,
+      "opcode": "invokeinterface",
+      "symbol": "InterfaceMethod net/neoforged/neoforge/network/handling/IPayloadContext.player:()Lnet/minecraft/world/entity/player/Player;"
+    },
+    {
+      "class": "context",
+      "method": "getSender",
+      "offset": 11,
+      "opcode": "instanceof",
+      "symbol": "class net/minecraft/server/level/ServerPlayer"
+    },
+    {
+      "class": "context",
+      "method": "getSender",
+      "offset": 14,
+      "opcode": "ifeq",
+      "symbol": ""
+    },
+    {
+      "class": "context",
+      "method": "isClientSide",
+      "offset": 4,
+      "opcode": "invokeinterface",
+      "symbol": "InterfaceMethod net/neoforged/neoforge/network/handling/IPayloadContext.flow:()Lnet/minecraft/network/protocol/PacketFlow;"
+    },
+    {
+      "class": "context",
+      "method": "isClientSide",
+      "offset": 9,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/minecraft/network/protocol/PacketFlow.isClientbound:()Z"
+    },
+    {
+      "class": "entry",
+      "method": "handle",
+      "offset": 6,
+      "opcode": "invokeinterface",
+      "symbol": "InterfaceMethod java/util/function/BiConsumer.accept:(Ljava/lang/Object;Ljava/lang/Object;)V"
+    }
+  ],
+  "limits": {
+    "packet_sender_entity_id_equality": "NOT_DEMONSTRATED_BY_THIS_PROBE",
+    "client_to_server_authorization": "NOT_VERIFIED",
+    "server_side_tag_validation": "NOT_VERIFIED",
+    "network_threading": "NOT_VERIFIED",
+    "replay_and_hand_swap": "NOT_TESTED",
+    "native_security_vulnerability": "NOT_ASSESSED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "static_perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  }
+}
