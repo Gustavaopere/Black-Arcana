@@ -9,7 +9,7 @@ from unittest.mock import patch
 from neoforge_211248_custom_data_delegate_probe import (
     CLASS_PATHS, DelegatedCodecProbeError,
     EXPECTED_SERVER_BYTES, MAX_REFS_PER_METHOD,
-    PINNED_SERVER_JAR_SHA256, audit, interesting_instruction,
+    PINNED_SERVER_JAR_SHA256, PINNED_SRG_JAR_SHA256, audit, choose_archive, interesting_instruction,
     selected_method, snapshot_limits, verify_safe_report,
 )
 
@@ -30,6 +30,7 @@ def empty_report():
         "artifact": {
             "server_jar_sha256": PINNED_SERVER_JAR_SHA256,
             "server_jar_bytes": EXPECTED_SERVER_BYTES,
+            "server_srg_jar_sha256": PINNED_SRG_JAR_SHA256,
         },
         "classes": {key: {"class_path": path} for key, path in CLASS_PATHS.items()},
         "limits": snapshot_limits(),
@@ -37,6 +38,28 @@ def empty_report():
 
 
 class DelegateDiscoveryTests(unittest.TestCase):
+
+    def test_overlay_precedence_over_distributed_srg(self):
+        self.assertEqual(
+            choose_archive("CustomData", {"CustomData"}, {"CustomData"}),
+            "NEOFORGE_OVERLAY",
+        )
+        self.assertEqual(
+            choose_archive("CustomData", set(), {"CustomData"}),
+            "INSTALLED_MINECRAFT_SRG",
+        )
+        self.assertEqual(
+            choose_archive("CustomData", set(), set()),
+            "NOT_FOUND_IN_BOTH_INSTALLED_ARCHIVES",
+        )
+
+    def test_count_literal_near_accounter_is_preserved_as_evidence_only(self):
+        row = selected_method(synthetic_method([
+            ins(0, "ldc2_w", "long 2097152l"),
+            ins(3, "invokestatic", "Method net/minecraft/nbt/NbtAccounter.create:(J)Lnet/minecraft/nbt/NbtAccounter;"),
+            ins(6, "areturn"),
+        ]))
+        self.assertEqual([x["offset"] for x in row["matching_references"]], [0, 3])
 
     def test_complete_scope_is_safe(self):
         self.assertTrue(verify_safe_report(empty_report()))
