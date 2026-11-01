@@ -1,0 +1,103 @@
+name: Minecraft 1.21.1 vanilla ItemStack optional stream ABI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/minecraft-1211-itemstack-vanilla-codec.yml'
+      - 'docs/qa/minecraft_1211_itemstack_optional_stream_probe.py'
+      - 'docs/qa/minecraft_1211_itemstack_optional_stream_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-network-handoff.md'
+      - 'docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/minecraft-1211-itemstack-vanilla-codec.yml'
+      - 'docs/qa/minecraft_1211_itemstack_optional_stream_probe.py'
+      - 'docs/qa/minecraft_1211_itemstack_optional_stream_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-network-handoff.md'
+      - 'docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json'
+
+permissions:
+  contents: read
+
+jobs:
+  minecraft_1211_vanilla_itemstack_stream_abi:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic Mojang mapping/ABI fail-closed tests
+        run: |
+          python3 -m py_compile docs/qa/minecraft_1211_itemstack_optional_stream_probe.py docs/qa/minecraft_1211_itemstack_optional_stream_probe_test.py
+          python3 docs/qa/minecraft_1211_itemstack_optional_stream_probe_test.py -v
+      - name: Download official Mojang 1.21.1 client and mappings (no redistribution)
+        run: |
+          mkdir -p build/minecraft-1211
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+
+          dest = Path("build/minecraft-1211")
+          def download(url, max_bytes):
+              parsed = urllib.parse.urlparse(url)
+              assert parsed.scheme == "https" and parsed.hostname in {
+                  "piston-meta.mojang.com", "piston-data.mojang.com",
+                  "launchermeta.mojang.com", "launcher.mojang.com"
+              }, f"non-Mojang authority for file: {parsed.hostname}"
+              req = urllib.request.Request(url, headers={"User-Agent": "BlackArcana-ExactABI/1.0"})
+              with urllib.request.urlopen(req, timeout=60) as reply:
+                  content = reply.read(max_bytes + 1)
+              assert 0 < len(content) <= max_bytes, "empty/oversize Mojang download"
+              return content
+
+          manifest = json.loads(download(
+              "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json",
+              5_000_000))
+          found = [row for row in manifest["versions"]
+                   if row.get("id") == "1.21.1" and row.get("type") == "release"]
+          assert len(found) == 1, "ambiguous Minecraft 1.21.1 release metadata"
+          metadata = json.loads(download(found[0]["url"], 60_000))
+          assert metadata["id"] == "1.21.1" and metadata["type"] == "release"
+          for key, name, budget in (
+              ("client", "client.jar", 60_000_000),
+              ("client_mappings", "client-mappings.txt", 25_000_000),
+          ):
+              item = metadata["downloads"][key]
+              payload = download(item["url"], budget)
+              assert hashlib.sha1(payload).hexdigest() == item["sha1"], (
+                  "official Mojang artifact SHA-1 mismatch: " + key)
+              assert len(payload) == item["size"], "official size mismatch: " + key
+              if key == "client":
+                  assert item["sha1"] == "30c73b1c5da787909b2f73340419fdf13b9def88"
+              (dest / name).write_bytes(payload)
+          (dest / "version.json").write_text(
+              json.dumps(metadata, sort_keys=True, indent=2) + "\n", encoding="utf8")
+          print("MOJANG_VERSION=1.21.1 VERIFIED_SOURCES=client,client_mappings")
+          PY
+      - name: Inspect official ItemStack static stream codec boundary
+        run: |
+          python3 docs/qa/minecraft_1211_itemstack_optional_stream_probe.py \
+            --client build/minecraft-1211/client.jar \
+            --mappings build/minecraft-1211/client-mappings.txt \
+            --metadata build/minecraft-1211/version.json \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/minecraft-1211/vanilla-itemstack-stream-abi.json
+      - name: Upload bounded evidence only
+        uses: actions/upload-artifact@v7
+        with:
+          name: minecraft-1211-vanilla-itemstack-stream-abi-only
+          path: build/minecraft-1211/vanilla-itemstack-stream-abi.json
+          if-no-files-found: error
+          retention-days: 14
