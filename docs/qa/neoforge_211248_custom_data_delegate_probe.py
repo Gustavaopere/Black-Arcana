@@ -157,7 +157,7 @@ def audit(jar: Path, javap_bin: str, srg_jar: Path | None = None):
                 blob = None
             if blob is not None:
                 require(8 <= len(blob) <= MAX_CLASS_BYTES
-                        and blob[:4] == b"\\xca\\xfe\\xba\\xbe"
+                        and blob[:4] == b"\xca\xfe\xba\xbe"
                         and int.from_bytes(blob[6:8], "big") == 65,
                         "untrusted delegated classfile: " + path)
             class_binaries[key] = blob
