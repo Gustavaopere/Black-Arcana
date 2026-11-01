@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_RAYGUN_NETWORK_REGISTRATION_SELECTED_ABI_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "network_class_path": "com/github/alexmodguy/alexscaves/server/message/ACNetwork.class",
+  "network_class_sha256": "8544a3436444be3248f9176bbcdee5fa30ee45ec2fbcf7a35a5e4fe4d9d88482",
+  "declared_method_count": 8,
+  "packet_class_path": "com/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage.class",
+  "packet_class_sha256": "bda52d12e8cce7e010b3d4cd2db7d83000e78b35657c55773a8ba91a070478c8",
+  "selected_methods": [
+    {
+      "name": "registerMessages",
+      "descriptor": "()V",
+      "parsed_method_sha256": "b791ff9c345122bc0900c195dc6368f1b07d846d23754aa061772b0a5e328fdc",
+      "packet_reference_offsets": [
+        151
+      ]
+    },
+    {
+      "name": "registerPayloads",
+      "descriptor": "(Lnet/neoforged/neoforge/network/event/RegisterPayloadHandlersEvent;)V",
+      "parsed_method_sha256": "75c92fb8da845b8c5386efdc928b2d8f0a9230636474bf8c629f8616906067ff",
+      "packet_reference_offsets": []
+    },
+    {
+      "name": "lambda$registerPayloads$0",
+      "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/message/ACNetwork$ACPayload;Lnet/neoforged/neoforge/network/handling/IPayloadContext;)V",
+      "parsed_method_sha256": "e32611039b289b84b6d3de92d10edf36f6b73f05cf21327cc126f2ba21496433",
+      "packet_reference_offsets": []
+    }
+  ],
+  "critical_anchors": [
+    {
+      "method": "registerMessages",
+      "offset": 151,
+      "opcode": "ldc",
+      "symbol": "class com/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage"
+    },
+    {
+      "method": "registerMessages",
+      "offset": 168,
+      "opcode": "invokestatic",
+      "symbol": "Method register:(Ljava/lang/Class;Ljava/util/function/BiConsumer;Ljava/util/function/Function;Ljava/util/function/BiConsumer;)V"
+    },
+    {
+      "method": "registerPayloads",
+      "offset": 0,
+      "opcode": "invokestatic",
+      "symbol": "Method registerMessages:()V"
+    },
+    {
+      "method": "registerPayloads",
+      "offset": 12,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/neoforged/neoforge/network/event/RegisterPayloadHandlersEvent.registrar:(Ljava/lang/String;)Lnet/neoforged/neoforge/network/registration/PayloadRegistrar;"
+    },
+    {
+      "method": "registerPayloads",
+      "offset": 22,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/neoforged/neoforge/network/registration/PayloadRegistrar.playBidirectional:(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload$Type;Lnet/minecraft/network/codec/StreamCodec;Lnet/neoforged/neoforge/network/handling/IPayloadHandler;)Lnet/neoforged/neoforge/network/registration/PayloadRegistrar;"
+    },
+    {
+      "method": "lambda$registerPayloads$0",
+      "offset": 24,
+      "opcode": "invokespecial",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/message/ACNetwork$NeoForgeContext.\"<init>\":(Lnet/neoforged/neoforge/network/handling/IPayloadContext;)V"
+    },
+    {
+      "method": "lambda$registerPayloads$0",
+      "offset": 27,
+      "opcode": "invokevirtual",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/message/ACNetwork$Entry.handle:(Ljava/lang/Object;Lcom/github/alexmodguy/alexscaves/server/message/ACNetworkContext;)V"
+    }
+  ],
+  "limits": {
+    "packet_register_direction": "UNRESOLVED_PENDING_REVIEW",
+    "network_threading": "UNRESOLVED_PENDING_REVIEW",
+    "sender_entity_id_binding": "NOT_VERIFIED",
+    "custom_data_authorization": "NOT_VERIFIED",
+    "no_full_method_export": true,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  }
+}
