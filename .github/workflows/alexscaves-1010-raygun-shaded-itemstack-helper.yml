@@ -50,6 +50,7 @@ jobs:
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --packet-codec-manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-PACKET-CODEC-1.0.10.json' \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-ITEMSTACK-HELPER-1.0.10.json' \
             --output build/alexscaves-1010/raygun-itemstack-helper.json
       - name: Publish selected ABI references (no full provider method)
         uses: actions/upload-artifact@v7
