@@ -92,6 +92,7 @@ jobs:
           python3 docs/qa/neoforge_211248_custom_data_delegate_probe.py \
             --jar build/neoforge-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --srg-jar build/neoforge-211248/server/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar \
             --output build/neoforge-211248/delegated-custom-data-abi.json
       - name: Publish bounded discovery report
         if: always()
