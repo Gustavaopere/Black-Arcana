@@ -52,6 +52,17 @@ class SpiritDinosaurEvidenceTest(unittest.TestCase):
     def make_sealed_fixture(self):
         e, m = specimen()
         report_method = summarize(m, [e['offset']])
+        second = list(CLASSES.values())[1]
+        spear = {'header': 'protected void onHitEntity()',
+                 'descriptor': second['descriptor'],
+                 'instructions': [
+                     {'offset': 0, 'opcode': 'aload_0', 'symbol': '', 'operand': ''},
+                     {'offset': 58, 'opcode': 'invokestatic',
+                      'symbol': 'Method ACDamageTypes.causeSpiritDinosaurDamage:()V',
+                      'operand': ''},
+                     {'offset': 61, 'opcode': 'return', 'symbol': '', 'operand': ''}
+                 ]}
+        report_method2 = summarize(spear, [58])
         report = {
             'schema_version': 1, 'scope': 'bounded',
             'artifact': {'sha1': 'test'},
@@ -63,8 +74,8 @@ class SpiritDinosaurEvidenceTest(unittest.TestCase):
             }, {
                 'class_path': list(CLASSES)[1],
                 'class_sha256': list(CLASSES.values())[1]['sha'],
-                'declared_method_count': 0,
-                'selected_methods': []
+                'declared_method_count': 1,
+                'selected_methods': [report_method2]
             }]
         }
         manifest = {
@@ -82,9 +93,11 @@ class SpiritDinosaurEvidenceTest(unittest.TestCase):
                  ]},
                 {'class_path': report['classes'][1]['class_path'],
                  'class_sha256': report['classes'][1]['class_sha256'],
-                 'declared_method_count':0, 'selected_method_digests':{},
-                 'anchors':[{'method': 'nonexistent', 'kind':'references',
-                             'offset': 1, 'opcode': 'invokestatic'}]}
+                 'declared_method_count':1,
+                 'selected_method_digests': {'onHitEntity': report_method2['parsed_method_sha256']},
+                 'anchors':[{'method': 'onHitEntity', 'kind':'references',
+                             'offset': 58, 'opcode': 'invokestatic',
+                             'symbol_contains': 'causeSpiritDinosaurDamage:'}]}
             ]
         }
         return report, manifest
@@ -112,6 +125,18 @@ class SpiritDinosaurEvidenceTest(unittest.TestCase):
         manifest['classes'][0]['anchors'][0]['opcode'] = 'invokevirtual'
         with self.assertRaisesRegex(SpiritProbeError,'control opcode'):
             check_sealed_manifest(report, manifest)
+
+
+    def test_positive_sealed_fixture_passes(self):
+        report, manifest = self.make_sealed_fixture()
+        self.assertTrue(check_sealed_manifest(report, manifest))
+
+    def test_duplicate_sealed_class_rejected(self):
+        report, manifest = self.make_sealed_fixture()
+        manifest['classes'][1]['class_path'] = manifest['classes'][0]['class_path']
+        with self.assertRaisesRegex(SpiritProbeError, 'sealed class identity'):
+            check_sealed_manifest(report, manifest)
+
 
 if __name__ == '__main__':
     unittest.main()
