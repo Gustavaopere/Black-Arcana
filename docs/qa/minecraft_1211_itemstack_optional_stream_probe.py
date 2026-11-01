@@ -393,12 +393,11 @@ def main():
     p.add_argument("--metadata", type=Path, required=True)
     p.add_argument("--javap", required=True)
     p.add_argument("--output", type=Path, required=True)
-    p.add_argument("--snapshot", type=Path)
+    p.add_argument("--snapshot", type=Path, required=True)
     args = p.parse_args()
     report = audit(args.client, args.mappings,
                    json.loads(args.metadata.read_text(encoding="utf8")), args.javap)
-    if args.snapshot:
-        verify_snapshot(report, json.loads(args.snapshot.read_text(encoding="utf8")))
+    verify_snapshot(report, json.loads(args.snapshot.read_text(encoding="utf8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True,
                                       ensure_ascii=False) + "\n", encoding="utf8")
