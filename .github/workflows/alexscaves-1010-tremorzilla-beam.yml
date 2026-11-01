@@ -46,6 +46,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_tremorzilla_beam_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-BEAM-1.0.10.json' \
             --output build/alexscaves-1010/tremorzilla-beam-evidence.json
       - name: Export bounded interoperability evidence
         uses: actions/upload-artifact@v7
