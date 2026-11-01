@@ -118,3 +118,34 @@ Em `onUseTick` e `releaseUsing` são encontradas mensagens `UpdateItemTagMessage
 4. Executar cliente/servidor dedicados com casos de níveis de enchantment, alvos aliados/mesmo veículo, Tremorzilla, resistência à radiação, `ItemStack` duplicado, save/reload e proteção de claims.
 
 **Decisão:** a ficha continua `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; nenhum `COMPLETE_PERK_READY`, avanço de 22/29, nova raiz mágica ou promoção de Stage. Os parâmetros acima são **observações estáticas compiladas**, não contratos de intervenção seguros.
+
+## Emissão C2S e recarga — auditoria do receiver no JAR 1.0.10
+
+**Escopo estrito:** `SHA_EXACT_1010_RAYGUN_AMMO_AND_UPDATE_ITEM_TAG_C2S_SELECTED_BYTECODE`. A [evidência selada](../EXACT-RAYGUN-PACKET-AMMO-1.0.10.json) fixa a identidade do JAR, SHA-256 de `RaygunItem.class` e `UpdateItemTagMessage.class`, **13 métodos selecionados** (nove do item e quatro da mensagem) e os offsets dos dois envios. [PR do probe, testes e CI](https://github.com/Gustavaopere/Black-Arcana/pull/986). A auditoria não distribui implementações completas nem valida um cliente real.
+
+### Munição / recharge
+
+- `RaygunItem.findAmmo(Player)` percorre `Inventory.getContainerSize` e `Inventory.getItem`, testando `RaygunItem.AMMO` nos stacks. O predicado é preenchido pelo método compilado `lambda$static$0(ItemStack)`: compara o item com `ACBlockRegistry.URANIUM_ROD` convertido via `Block.asItem()`. **Identidade do insumo nativo:** item de `URANIUM_ROD`, não combustível genérico nem nova mana.
+- `findAmmo` possui um ramo próprio para `Player.isCreative` e retorna `ItemStack.EMPTY` nesse ramo. Portanto, distinguir modo criativo do fluxo de procura/consumo; o retorno vazio do helper **não prova** falha automática da recarga criativa.
+- `RaygunItem.use` consulta `hasCharge`, `findAmmo`, `isCreative`, `isEmpty`; contém `ItemStack.shrink(1) @65` e `setCharge(ItemStack,int) @79`. O literal `1` é o débito potencial de **uma unidade de munição no ramo correspondente**, não cobrança por cada tick de raio. O `0` passado ao setter no caminho de recarga é distinto do limite **1000** de `hasCharge`.
+- `hasCharge` compara `ChargeUsed` com `1000` (`if_icmpge`) e `getCharge/setCharge` usam a tag `ChargeUsed`. A relação exata entre `ENERGY_EFFICIENCY`, custo por tick e todas as transições do item continua exigindo análise completa do fluxo de `onUseTick`.
+
+### Transporte e dispatcher: quem pode ser alterado?
+
+| Local compilado | Relação demonstrada | Limite |
+|---|---|---|
+| `onUseTick @162 / @165` | Constrói `UpdateItemTagMessage(entityId, itemStack)` e invoca `AlexsCaves.sendMSGToServer(Object)`. | O client envia dados, não prova que eles foram aceitos nem tratados como autoridade. |
+| `releaseUsing @25 / @28` | Mesmo par construtor/envio, sob ramo que consulta `Level.isClientSide`. | Não equiparar mensagem enviada a liquidação de custo, dano ou cooldown. |
+| `UpdateItemTagMessage.read/write` | Serializam `entityId` como inteiro e `itemStackFrom` via `PacketBufferUtils.readItemStack/writeItemStack`. | A serialização não valida semântica, propriedade da entidade, cooldown ou direitos do jogador. |
+| `UpdateItemTagMessage.handle` | Consulta `ACNetworkContext.getSender` e `isClientSide`, com seleção de nível/contexto; usa `Level.getEntity(entityId)`, verifica tipo do item nas mãos MAIN_HAND/OFF_HAND e alcança `UpdatesStackTags.updateTagFromServer`. | **Não foi homologado** o vínculo de `entityId` com o remetente, o tipo concreto de item autorizado, a sanitização das tags ou o escopo de atualizações. |
+| `handle @158 / @171 / @174` | Obtém tags de `ItemStack` por `ACCompat.getTag` e chama `UpdatesStackTags.updateTagFromServer(Entity, ItemStack, CompoundTag)`. | O efeito real depende da implementação de `UpdatesStackTags` do item selecionado e de guards prévios; não presumir cópia irrestrita de NBT sem provar o consumidor. |
+
+**Distinção decisiva:** o fato de `UpdateItemTagMessage` aparecer como sender do Raygun **não demonstra que o receiver modifica o `RaygunItem`**. Entre os 26 métodos declarados diretamente pelo `RaygunItem.class` inspecionado não há método `updateTagFromServer`; isso não exclui interfaces, métodos herdados, implementações indiretas ou outros receptores. A interface efetiva do item e o dispatch devem ser fechados antes de qualquer conclusão sobre integridade de carga ou exploit.
+
+### Fronteira de segurança e pending QA
+
+A evidência de referência da mensagem confirma *resolução por ID de entidade* e *seleção de mão por igualdade de item*, mas não substitui revisão de seu fluxo de controle, da identidade do remetente, do código do implementador de `UpdatesStackTags`, das regras de rede e do resultado em servidor. **Não há vulnerabilidade demonstrada, tampouco garantia demonstrada de autorização segura.** Nenhuma perk deve confiar no `ItemStack` recebido como estado de carga autoritativo.
+
+Próxima auditoria obrigatória: identificar a hierarquia concreta do `RaygunItem`, quem implementa `UpdatesStackTags`, quais tags o callback admite, origem de `entityId` e política real de rate-limit/replay; depois executar no modpack exato cliente manipulado/servidor dedicado, mãos distintas, troca de item em trânsito, entityId de outro jogador, reconnect e reload. O Black Arcana não deve alterar esse pacote nem introduzir segundo pipeline de recarga.
+
+**Estado após a auditoria:** `raygun` ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Sem atualização dos índices, contagem de 22/29, Stage ou homologação global.
