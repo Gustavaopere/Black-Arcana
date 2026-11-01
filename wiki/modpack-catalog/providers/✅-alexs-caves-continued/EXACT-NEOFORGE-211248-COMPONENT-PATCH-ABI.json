@@ -1,0 +1,360 @@
+{
+  "schema_version": 1,
+  "scope": "NEOFORGE_211248_DISTRIBUTED_SERVER_COMPONENT_PATCH_ABI_ONLY",
+  "artifact": {
+    "server_jar_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+    "server_jar_bytes": 5675624
+  },
+  "class_path": "net/minecraft/core/component/DataComponentPatch.class",
+  "class_sha256": "24f57ec112e9f3ec1e8db754e9014b5b02e2f2c6283f13fbffd27fb90be8d263",
+  "class_method_count": 15,
+  "selected_method_count": 7,
+  "static_codec_assignment_offset": 49,
+  "codec_class_path": "net/minecraft/core/component/DataComponentPatch$1.class",
+  "codec_class_sha256": "d98b1334116457aea1f6b174e9f0760e6897d965eda58b7f57865bd1e5427880",
+  "codec_method_signatures": [
+    {
+      "name": "DataComponentPatch$1",
+      "descriptor": "()V"
+    },
+    {
+      "name": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;"
+    },
+    {
+      "name": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentPatch;)V"
+    },
+    {
+      "name": "encodeComponent",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)V"
+    },
+    {
+      "name": "decode",
+      "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "name": "encode",
+      "descriptor": "(Ljava/lang/Object;Ljava/lang/Object;)V"
+    }
+  ],
+  "counter_and_initial_capacity_abi": [
+    {
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "#7",
+      "symbol": "Method net/minecraft/network/RegistryFriendlyByteBuf.readVarInt:()I"
+    },
+    {
+      "offset": 4,
+      "opcode": "istore_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 6,
+      "opcode": "invokevirtual",
+      "operand": "#7",
+      "symbol": "Method net/minecraft/network/RegistryFriendlyByteBuf.readVarInt:()I"
+    },
+    {
+      "offset": 9,
+      "opcode": "istore_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 24,
+      "opcode": "iadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 25,
+      "opcode": "istore",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "offset": 31,
+      "opcode": "iload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "offset": 33,
+      "opcode": "ldc",
+      "operand": "#21",
+      "symbol": "int 65536"
+    },
+    {
+      "offset": 35,
+      "opcode": "invokestatic",
+      "operand": "#22",
+      "symbol": "Method java/lang/Math.min:(II)I"
+    },
+    {
+      "offset": 38,
+      "opcode": "invokespecial",
+      "operand": "#28",
+      "symbol": "Method it/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap.\"<init>\":(I)V"
+    },
+    {
+      "offset": 46,
+      "opcode": "iload",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "offset": 48,
+      "opcode": "iload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 49,
+      "opcode": "if_icmpge",
+      "operand": "102",
+      "symbol": ""
+    }
+  ],
+  "count_capacity_interpretation": "65536_MAP_INITIAL_CAPACITY_ONLY_NOT_VERIFIED_ENTRY_LIMIT",
+  "critical_codec_abi": [
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method net/minecraft/network/RegistryFriendlyByteBuf.readVarInt:()I"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 6,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method net/minecraft/network/RegistryFriendlyByteBuf.readVarInt:()I"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 11,
+      "opcode": "ifne",
+      "operand": "22",
+      "symbol": ""
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 15,
+      "opcode": "ifne",
+      "operand": "22",
+      "symbol": ""
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 18,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field net/minecraft/core/component/DataComponentPatch.EMPTY:Lnet/minecraft/core/component/DataComponentPatch;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 35,
+      "opcode": "invokestatic",
+      "operand": "",
+      "symbol": "Method java/lang/Math.min:(II)I"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 38,
+      "opcode": "invokespecial",
+      "operand": "",
+      "symbol": "Method it/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap.\"<init>\":(I)V"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 49,
+      "opcode": "if_icmpge",
+      "operand": "102",
+      "symbol": ""
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 52,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field net/minecraft/core/component/DataComponentType.STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 56,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod net/minecraft/network/codec/StreamCodec.decode:(Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 68,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod net/minecraft/core/component/DataComponentType.streamCodec:()Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 74,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod net/minecraft/network/codec/StreamCodec.decode:(Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 99,
+      "opcode": "goto",
+      "operand": "46",
+      "symbol": ""
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 108,
+      "opcode": "if_icmpge",
+      "operand": "144",
+      "symbol": ""
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 111,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field net/minecraft/core/component/DataComponentType.STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 115,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod net/minecraft/network/codec/StreamCodec.decode:(Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 129,
+      "opcode": "invokestatic",
+      "operand": "",
+      "symbol": "Method java/util/Optional.empty:()Ljava/util/Optional;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;",
+      "offset": 144,
+      "opcode": "new",
+      "operand": "",
+      "symbol": "class net/minecraft/core/component/DataComponentPatch"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentPatch;)V",
+      "offset": 4,
+      "opcode": "ifeq",
+      "operand": "22",
+      "symbol": ""
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentPatch;)V",
+      "offset": 9,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method net/minecraft/network/RegistryFriendlyByteBuf.writeVarInt:(I)Lnet/minecraft/network/FriendlyByteBuf;"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentPatch;)V",
+      "offset": 15,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method net/minecraft/network/RegistryFriendlyByteBuf.writeVarInt:(I)Lnet/minecraft/network/FriendlyByteBuf;"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentPatch;)V",
+      "offset": 93,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method net/minecraft/network/RegistryFriendlyByteBuf.writeVarInt:(I)Lnet/minecraft/network/FriendlyByteBuf;"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentPatch;)V",
+      "offset": 100,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method net/minecraft/network/RegistryFriendlyByteBuf.writeVarInt:(I)Lnet/minecraft/network/FriendlyByteBuf;"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentPatch;)V",
+      "offset": 172,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field net/minecraft/core/component/DataComponentType.STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentPatch;)V",
+      "offset": 191,
+      "opcode": "invokestatic",
+      "operand": "",
+      "symbol": "Method encodeComponent:(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)V"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentPatch;)V",
+      "offset": 261,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field net/minecraft/core/component/DataComponentType.STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "encodeComponent",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)V",
+      "offset": 1,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod net/minecraft/core/component/DataComponentType.streamCodec:()Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "encodeComponent",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)V",
+      "offset": 8,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod net/minecraft/network/codec/StreamCodec.encode:(Ljava/lang/Object;Ljava/lang/Object;)V"
+    }
+  ],
+  "limits": {
+    "full_installed_modpack_class_loaded": "NOT_OBSERVED",
+    "neoforge_runtime_modlauncher_transform": "NOT_OBSERVED",
+    "data_component_patch_byte_limits": "NOT_VERIFIED",
+    "data_component_patch_entry_limits": "NOT_VERIFIED",
+    "nbt_depth_and_field_whitelist": "NOT_VERIFIED",
+    "raygun_tag_authority": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "static_perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  }
+}
