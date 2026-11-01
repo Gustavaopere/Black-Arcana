@@ -81,14 +81,44 @@ evidência exata dos opcodes e revisão do contexto permite melhorar RN-02
 e RN-03, sem automaticamente homologar perks. Um snapshot SHA-exato, quando
 publicado, deve ser revalidado pelo mesmo workflow.
 
+## Auditoria da identidade do receptor (PR #995)
+
+O [probe read-only de identidade](alexscaves_1010_raygun_receiver_identity_probe.py)
+com [manifesto SHA-exato do contexto/receptor](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-RECEIVER-IDENTITY-1.0.10.json)
+(pin de quatro classes, seis métodos, nove desvios e sete âncoras; 14 regressões sintéticas em CI)
+confirma, em execução Java 21 no publisher JAR SHA-exato 1.0.10, o
+`UpdateItemTagMessage.handle` previamente selado, seu contexto
+`ACNetwork$NeoForgeContext` e o dispatch do
+`ACNetwork$Entry`. Evidência de [execução real em CI](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41334822025).
+
+| Componente nativo | Evidência exata do bytecode | Limite da conclusão |
+| --- | --- | --- |
+| `ACNetwork$NeoForgeContext.getSender` | Invoca `IPayloadContext.player @4`; testa `instanceof ServerPlayer @11` e `ifeq @14` | Resolve o player de contexto quando é servidor; não vincula automaticamente esse player ao `entityId` arbitrário presente no payload |
+| `ACNetwork$NeoForgeContext.isClientSide` | `IPayloadContext.flow @4` seguido de `PacketFlow.isClientbound @9` | Define o lado lógico conforme fluxo; não comprova que campos de mensagem estejam autorizados |
+| `ACNetwork$NeoForgeContext.enqueueWork` | `IPayloadContext.enqueueWork @5` | Um helper oferece enfileiramento; o seu uso efetivo pelo Raygun precisa ser provado no call graph |
+| `ACNetwork$Entry.handle` | `BiConsumer.accept @6` | Dispatch nativo da tabela; não é validação semântica da tag |
+| `UpdateItemTagMessage.handle` | Nove desvios JVM em `@20, @31, @50, @84, @97, @116, @131, @146, @161`; branch de escape até `@179` em vários caminhos | São guardas compilados do handler, não evidência de QA física nem autenticação de cada identificador/valor |
+
+**Decisão técnica:** o contexto usa o player provido por
+`IPayloadContext` e a direção real do fluxo, mas é
+necessário reconstruir os dados que atravessam `getSender`,
+`Level.getEntity` e `UpdatesStackTags.updateTagFromServer`.
+Uma validação de tipo de item e presença de tag não basta para confirmar
+ownership do alvo, saneamento de `ChargeUsed` /
+`UseTime` ou proteção contra replay.
+O envelope e o contexto do provider são observados estaticamente;
+**nenhuma vulnerabilidade é afirmada** sem análise dos caminhos externos,
+reprodução controlada e avaliação de permissões. O Black Arcana mantém
+`NO_MUTATION`, sem hooks mutadores ou QA física presumidos.
+
 ## Aceite antes de concluir contrato estático Raygun
 
 | Gate | Evidência necessária | Estado atual |
 | --- | --- | --- |
 | RN-01 | JAR exato + SHA de classes e métodos pertinentes; conflito entre manifestos falha | ✅ descoberta SHA-exata passou no head final da PR #993; traçado dirigido pendente |
 | RN-02 | Identificar no binário a inscrição efetiva do tipo de mensagem, direção e handler, sem inferir da classe sender | ⚠️ registro de entrada `UpdateItemTagMessage` e envelope `playBidirectional` comprovados; direção do wrapper observada, autorização de mensagem individual não verificada |
-| RN-03 | Verificar semântica de threading e as condições de leitura/edição de estado no receiver | ⚠️ não verificado |
-| RN-04 | Confirmar integridade de `entityId`, item, hand swap, `ChargeUsed`/`UseTime` e limites de `CUSTOM_DATA` | ⚠️ não verificado |
+| RN-03 | Verificar semântica de threading e as condições de leitura/edição de estado no receiver | ⚠️ `IPayloadContext.enqueueWork` e `flow/isClientbound` selados estaticamente; threading do handler e update de stack ainda não verificados |
+| RN-04 | Confirmar integridade de `entityId`, item, hand swap, `ChargeUsed`/`UseTime` e limites de `CUSTOM_DATA` | ⚠️ handler e `getSender` documentados em ABI; vínculo remetente–entidade, sanitização e replay **não verificados** |
 | RN-05 | Vincular cobrança nativa, alvo, dano, status e retorno de `hurt` a uma identidade causal única | ⚠️ parcial nos manifestos anteriores |
 | RN-06 | Verificar migração/salvamento, reconexão, multiplayer e casos negativos no cliente + servidor dedicado | ⚠️ QA física não testada |
 | RN-07 | Certificar os sete eixos de evidência estática num manifesto com hash de fichas e em CI antes de mexer nos índices | ⚠️ não certificado |
