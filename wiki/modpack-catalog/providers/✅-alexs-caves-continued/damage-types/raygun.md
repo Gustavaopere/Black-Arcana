@@ -1,6 +1,6 @@
 # Raygun — tipo de dano `alexscaves:raygun` (1.0.10)
 
-**Estado de catalogação:** ⚠️ `RESOURCE_JSON_VERIFIED` (recurso SHA-exato). **Contrato técnico estático para perks:** ⚠️ `NOT_CERTIFIED`. **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`.
+**Estado de catalogação:** ⚠️ `RESOURCE_JSON_VERIFIED + SHA_EXACT_SELECTED_BYTECODE_OBSERVED` (escopo parcial). **Contrato técnico estático para perks:** ⚠️ `NOT_CERTIFIED`. **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`.
 
 ## Proveniência e identidade
 
@@ -36,12 +36,12 @@ O tag `minecraft:bypasses_cooldown` corresponde à classificação de tipo de da
 | Capacidade pretendida | Situação |
 |---|---|
 | Factory de `DamageSource` / chamadas JVM | ✅ localizadas estaticamente; comportamento e caminhos efetivos `NÃO VERIFICADO` |
-| Origem, atacante, owner, attribution e condições de PvP | `NÃO VERIFICADO` |
-| Fórmula de dano, mitigação, críticos e resistências | `NÃO VERIFICADO` |
-| Alvos elegíveis, tipo target/área, alcance, raio e filtros | `NÃO VERIFICADO` |
-| Entidades/projéteis, tamanho, velocidade, colisão e homing | `NÃO VERIFICADO` |
-| Duração, intervalo de hits, custo de ação e cooldown de casting | `NÃO VERIFICADO` |
-| Persistência, ordenação de eventos, server authority e deduplicação | `NÃO VERIFICADO` |
+| Origem, atacante, owner, attribution e condições de PvP | ⚠️ argumento caster observado em `causeRaygunDamage`; atribuição final/kill/PvP ainda não verificados |
+| Fórmula de dano, mitigação, críticos e resistências | ⚠️ `ACCompat.hurt` recebe 1,5f ou 2,0f conforme flag local; causa e aceitação líquida ainda abertas |
+| Alvos elegíveis, tipo target/área, alcance, raio e filtros | ⚠️ ray trace, AABB, exclusões de aliados/mesmo veículo observados; alcance/volume efetivos pendentes |
+| Entidades/projéteis, tamanho, velocidade, colisão e homing | ⚠️ seletores por ray trace e entidades; nenhum spawn direto observado em `onUseTick`, mas indiretos não descartados |
+| Duração, intervalo de hits, custo de ação e cooldown de casting | ⚠️ `getUseDuration=72000`, `ChargeUsed` e 800 ticks de status observados; fórmula de custo/intervalos/cooldown pendentes |
+| Persistência, ordenação de eventos, server authority e deduplicação | ⚠️ tags `ChargeUsed`/`UseTime` e `UpdateItemTagMessage` observadas; handler, reload e antirreplay não testados |
 | Hook de mutação seguro na versão instalada | `NOT_VERIFIED` |
 | QA real em modpack/multiplayer | `NOT_TESTED` |
 
@@ -68,3 +68,53 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 | `com/github/alexmodguy/alexscaves/server/item/RaygunItem.class` | `public void onUseTick(net.minecraft.world.level.Level, net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, int)` | `(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V` | 1026 | `invokestatic` |
 
 **Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NOT_CERTIFIED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
+
+## Auditoria de controle nativo — `RaygunItem` compilado 1.0.10
+
+**Recorte novo:** `SHA_EXACT_1010_RAYGUN_SELECTED_METHOD_REFERENCES_AND_NUMERIC_OPERANDS_ONLY`. [Manifesto imutável de parâmetros e métodos](../EXACT-RAYGUN-CONTROL-1.0.10.json) · [probe e testes da PR #985](https://github.com/Gustavaopere/Black-Arcana/pull/985) · [workflow de evidência](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41256261358).
+
+A inspeção automatizada baixou e validou a versão publisher **1.0.10** do JAR pelos SHA-1/SHA-256 e tamanho físico registrados acima, verificou a classe compilada `server/item/RaygunItem.class` (SHA-256 `3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c`), inspecionou **26 métodos declarados** e exportou **18 métodos selecionados**. O manifesto fixa digest de oito métodos e 14 âncoras numéricas/simbólicas; o resultado da CI não é teste de gameplay nem reconstrução completa do CFG.
+
+### Alvo, range e geometria — não confundir conceitos
+
+| Método e offset compilado | Evidência estática exata | Limite para perks |
+|---|---|---|
+| `onUseTick @11` | Calcula tempo utilizado a partir de `getUseDuration - remainingUseTicks` e inicializa um valor inteiro **15** no início de uma sequência de comparação/proporção. | `15` é um operando do cálculo de uso; não anunciar como alcance ou cooldown sem rastrear o resultado. |
+| `onUseTick @35` | Literal **25.0f** em uma região inicial; mais adiante `getHitResultOnViewVector @69` e `LivingEntity.pick @80` recebem distâncias calculadas. | Há caminhos de ray trace distintos. O literal não basta para certificar o alcance efetivo de cada modo ou um parâmetro público modificável. |
+| `onUseTick @44–50` | Consulta `ACEnchantmentRegistry.X_RAY` via `ACCompat.enchantLevel`. | Enchantment nativo participa da escolha dos caminhos; efeito sobre oclusão/alcance efetivo ainda não está completamente certificado. |
+| `onUseTick @575–640` | Obtém a bounding box do usuário, executa `AABB.inflate` e usa `ProjectileUtil.getEntityHitResult` com vetores e predicado. | AABB de busca, distância do raio e vítima realmente elegível são medidas distintas; não converter caixa em raio circular ou área de dano. |
+| `onUseTick @875–943` | Consulta `Level.isClientSide` e, no caminho de servidor observado, usa `Level.getEntities(source, AABB, Predicate)` para enumerar alvos. | Há um segundo domínio de seleção por entidades. Sem CFG/medidas completas, não declarar cone, número máximo de hits, LOS universal ou tamanho de hitbox. |
+| `onUseTick @978–1008` | Verificações `Entity.is`, `Entity.isAlliedTo`, `LivingEntity.isAlliedTo` e `isPassengerOfSameVehicle`, com saídas de ramo antes de solicitar dano. | Não permitir que uma perk elimine exclusões de autocausação, aliados ou passageiros. Proteção/PvP externa permanece sem teste. |
+
+O recorte de `onUseTick` exportado não mostra chamada simbólica direta a `Level.addFreshEntity`; os caminhos observados recorrem a ray traces, seleção de entidades e partículas. Isso **não** prova ausência de entidades em todos os caminhos indiretos, variantes ou interações com outros mods.
+
+### Charge, uso e encantamentos
+
+| Superfície exata | Dado identificado | Condição de integração |
+|---|---|---|
+| `getUseDuration(ItemStack,LivingEntity)` | Retorna literal inteiro **72000 ticks**. | Tempo máximo declarado para uso mantido, **não cooldown** nem duração obrigatória de cada disparo. |
+| `getCharge / setCharge` | Armazenam/lêem tag de `ItemStack` **`ChargeUsed`**, com fallback de leitura zero quando não há tag. | Unidade de estado do item; não é mana Black Arcana. Persistência/migração real precisa de QA. |
+| `hasCharge` | Compara `getCharge` com **1000** (`if_icmpge` salta para o falso). | O predicado indica elegibilidade enquanto `ChargeUsed < 1000` no método examinado. Não confundir valor gasto com energia disponível. |
+| `use` | Consulta `hasCharge`, depois `findAmmo`, `Player.isCreative`, `ItemStack.isEmpty`, `ItemStack.shrink(1)` e `setCharge`, além de sons de início/recarga/sem munição. | Recarga nativa pode consumir item conforme os guards; não autorizar custo adicional em segundo pipeline. Tipo exato de munição e cada branch de consumo ainda requerem a auditoria do helper `findAmmo`. |
+| `onUseTick @246–319` | Consulta `ENERGY_EFFICIENCY` e usa `Math.floor`, `Math.min`, `getCharge`, `setCharge`, o limite **1000** e literal **1.5f**. | Essa é a região de custo/consumo por tick; a fórmula completa e todos os guards ainda não estão selados para mudança de eficiência. |
+| `onUseTick @332–352` | Consulta `GAMMA_RAY` via nível do encantamento e um sorteio booleano. | Não converter presença de encantamento em mudança garantida de dano/status; conferir branches e valores dos modos. |
+| `setUseTime` | Tags `PrevUseTime` e `UseTime`. | Dados de animação/timing do item; não presumir que replicação ou salvamento prove autoridade do cliente. |
+| `getBarWidth` | Usa literais **13.0f** e **1000.0f** junto de `getCharge`. | Escala do indicador visual, não alcance ou tamanho da colisão. |
+
+Em `onUseTick` e `releaseUsing` são encontradas mensagens `UpdateItemTagMessage` enviadas por `sendMSGToServer`. A inspeção do **sender** não comprova autenticação no handler, integridade de `ChargeUsed`, antirreplay, autorização do ID de entidade nem enforcement de custos no servidor. Nenhuma perk pode tratar o pacote enviado como fonte autoritativa sem prova do receptor.
+
+### Dano, owner e efeito secundário
+
+- `RaygunItem.onUseTick @1013–1047` distingue `TremorzillaEntity` num ramo próprio, chama `ACDamageTypes.causeRaygunDamage(registryAccess, caster)` em `@1026` e solicita `ACCompat.hurt(target, damageSource, amount)` em `@1041`. Na decisão local imediatamente anterior a `hurt`, os operandos possíveis são **`2.0f`** e **`1.5f`**, condicionados a flag local `iload 18`. A origem completa da flag, o resultado de mitigação e a aceitação de cada hit não são certificados por esses números.
+- O `DamageSource` recebe o *caster* como argumento da factory no trecho inspecionado; isso não garante crédito de kill, procs, Mastery ou políticas de PvP de mods externos. O retorno booleano de `ACCompat.hurt` participa dos guards posteriores; um evento visual ou um alvo dentro da AABB não certifica dano aceito.
+- `onUseTick @1076–1119` verifica `ACTagRegistry.RESISTS_RADIATION`, referencia `ACEffectRegistry.IRRADIATED` e, em ramo condicionado, solicita `LivingEntity.addEffect` com `MobEffectInstance(..., **800 ticks**, amplifier local)`. Os 800 ticks são a duração **solicitada ao aplicar o efeito**, não duração universal do DamageType e nem prova de sucesso para todo hit. A ficha [Irradiated](../effects/irradiated.md) conserva o contrato de tick, exaustão e redução Hazmat.
+- `onUseTick @1125–1154` monta `UpdateEffectVisualityEntityMessage`. Esse tráfego é downstream visual e não deve gerar um segundo proc de ataque ou ser usado como confirmação de aplicação do status.
+
+### Requisitos antes de perks mutadoras
+
+1. Fechar CFG e limites efetivos de distância/área, distinguir `X_RAY`, `GAMMA_RAY` e `ENERGY_EFFICIENCY` e os predicados usados nas buscas; não sobrescrever `ProjectileUtil` ou a filtragem de aliados.
+2. Identificar `findAmmo`, custo completo de `ChargeUsed`, servidor autoritativo de tags e validação do `UpdateItemTagMessage`. Não duplicar recarga ou cobrança por feitiço.
+3. Confirmar `ACCompat.hurt`, critérios de sucesso, hits múltiplos/por-tick, atribuição causal, escala de dano, imunidades, `Irradiated` e deduplicação de XP/procs.
+4. Executar cliente/servidor dedicados com casos de níveis de enchantment, alvos aliados/mesmo veículo, Tremorzilla, resistência à radiação, `ItemStack` duplicado, save/reload e proteção de claims.
+
+**Decisão:** a ficha continua `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; nenhum `COMPLETE_PERK_READY`, avanço de 22/29, nova raiz mágica ou promoção de Stage. Os parâmetros acima são **observações estáticas compiladas**, não contratos de intervenção seguros.

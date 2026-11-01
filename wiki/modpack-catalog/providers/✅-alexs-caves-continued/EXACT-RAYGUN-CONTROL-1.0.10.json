@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_RAYGUN_SELECTED_METHOD_REFERENCES_AND_NUMERIC_OPERANDS_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_path": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+  "class_sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c",
+  "declared_method_count": 26,
+  "method_count": 18,
+  "selected_method_digests": {
+    "onUseTick (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+    "hasCharge (Lnet/minecraft/world/item/ItemStack;)Z": "0b89217b97ca4f3d1c155c01b4170d1f0cb9141e4ee854ccf0c72892cd3b1db7",
+    "getCharge (Lnet/minecraft/world/item/ItemStack;)I": "c69c154524dbe4b4e46ed589438f7548cc39658305072a59b7c6a7dc9ec25baa",
+    "setCharge (Lnet/minecraft/world/item/ItemStack;I)V": "cedf012dbfb8edf1ca2171c57001dc8937f2982e3755a156da058a74d260993e",
+    "getUseDuration (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I": "bb2ee4b8612b95dcd731c412eca3c7c8c059d5d41af844ef633c28f71b13a986",
+    "use (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;": "65629e7c194dc7524f3541722f3000a3cf4dab67941beaccd48059dbdfeb5e92",
+    "releaseUsing (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V": "fe123ab0d8ef0e4049d6f51c086b2ec5ca9aa8926a25d6ebae795d583caa677e",
+    "getBarWidth (Lnet/minecraft/world/item/ItemStack;)I": "f21db88b48cb16a4895027c83f9438e2191df97b3241db630a813224d3ec12f5"
+  },
+  "anchors": [
+    {
+      "method": "hasCharge",
+      "offset": 4,
+      "kind": "numeric_constants",
+      "opcode": "sipush",
+      "operand": "1000"
+    },
+    {
+      "method": "getUseDuration",
+      "offset": 0,
+      "kind": "numeric_constants",
+      "opcode": "ldc",
+      "symbol_contains": "int 72000"
+    },
+    {
+      "method": "getCharge",
+      "offset": 10,
+      "kind": "numeric_constants",
+      "opcode": "ldc_w",
+      "symbol_contains": "String ChargeUsed"
+    },
+    {
+      "method": "setCharge",
+      "offset": 6,
+      "kind": "numeric_constants",
+      "opcode": "ldc_w",
+      "symbol_contains": "String ChargeUsed"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 44,
+      "kind": "symbolic_references",
+      "symbol_contains": ".X_RAY:"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 69,
+      "kind": "symbolic_references",
+      "symbol_contains": "ProjectileUtil.getHitResultOnViewVector"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 246,
+      "kind": "symbolic_references",
+      "symbol_contains": ".ENERGY_EFFICIENCY:"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 332,
+      "kind": "symbolic_references",
+      "symbol_contains": ".GAMMA_RAY:"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 640,
+      "kind": "symbolic_references",
+      "symbol_contains": "ProjectileUtil.getEntityHitResult"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 943,
+      "kind": "symbolic_references",
+      "symbol_contains": "Level.getEntities:"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 1026,
+      "kind": "symbolic_references",
+      "opcode": "invokestatic",
+      "symbol_contains": "causeRaygunDamage:"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 1041,
+      "kind": "symbolic_references",
+      "symbol_contains": "ACCompat.hurt:"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 1111,
+      "kind": "numeric_constants",
+      "opcode": "sipush",
+      "operand": "800"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 1119,
+      "kind": "symbolic_references",
+      "symbol_contains": "LivingEntity.addEffect:"
+    }
+  ],
+  "limitations": {
+    "static_only": true,
+    "source_copy": false,
+    "complete_method_bodies_exported": false,
+    "hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "full_provider_closed": false
+  }
+}
