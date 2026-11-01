@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_RAYGUN_AMMO_AND_UPDATE_ITEM_TAG_C2S_SELECTED_BYTECODE",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "classes": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "class_sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c",
+      "declared_method_count": 26,
+      "selected_methods": [
+        {
+          "name": "hasCharge",
+          "parsed_method_sha256": "0b89217b97ca4f3d1c155c01b4170d1f0cb9141e4ee854ccf0c72892cd3b1db7"
+        },
+        {
+          "name": "use",
+          "parsed_method_sha256": "65629e7c194dc7524f3541722f3000a3cf4dab67941beaccd48059dbdfeb5e92"
+        },
+        {
+          "name": "findAmmo",
+          "parsed_method_sha256": "f74a490d7a2bff7997296a6cea080321929a45ea01078e886d0f3d6c8a2a87fe"
+        },
+        {
+          "name": "getUseDuration",
+          "parsed_method_sha256": "bb2ee4b8612b95dcd731c412eca3c7c8c059d5d41af844ef633c28f71b13a986"
+        },
+        {
+          "name": "onUseTick",
+          "parsed_method_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5"
+        },
+        {
+          "name": "getCharge",
+          "parsed_method_sha256": "c69c154524dbe4b4e46ed589438f7548cc39658305072a59b7c6a7dc9ec25baa"
+        },
+        {
+          "name": "setCharge",
+          "parsed_method_sha256": "cedf012dbfb8edf1ca2171c57001dc8937f2982e3755a156da058a74d260993e"
+        },
+        {
+          "name": "releaseUsing",
+          "parsed_method_sha256": "fe123ab0d8ef0e4049d6f51c086b2ec5ca9aa8926a25d6ebae795d583caa677e"
+        },
+        {
+          "name": "lambda$static$0",
+          "parsed_method_sha256": "eff11132e73674eadf28ee9e970b4d28046777f0c6bb44cd8de8f609f090aac6"
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage.class",
+      "class_sha256": "bda52d12e8cce7e010b3d4cd2db7d83000e78b35657c55773a8ba91a070478c8",
+      "declared_method_count": 4,
+      "selected_methods": [
+        {
+          "name": "UpdateItemTagMessage",
+          "parsed_method_sha256": "1ac91c55e09910edfeae3ba5e78e8b58b0a14a624cdef1ca3d8a728766dbf5d7"
+        },
+        {
+          "name": "read",
+          "parsed_method_sha256": "f590db000143ebe02ebc5bfb8fd251f2b73089b6445e8d5a728aec9ffa2f2d1b"
+        },
+        {
+          "name": "write",
+          "parsed_method_sha256": "98fa0d6840f39db9f32986e5ebbb26a0536bfbf58ef9e3f8b0065e256cd4b10c"
+        },
+        {
+          "name": "handle",
+          "parsed_method_sha256": "049a8d738fda3cb0fbd3c148b3e01aecc62f067004b0c6ce0a845dacc664e0a3"
+        }
+      ]
+    }
+  ],
+  "senders": [
+    {
+      "constructor_offset": 162,
+      "method": "onUseTick",
+      "sender_offset": 165
+    },
+    {
+      "constructor_offset": 25,
+      "method": "releaseUsing",
+      "sender_offset": 28
+    }
+  ]
+}
