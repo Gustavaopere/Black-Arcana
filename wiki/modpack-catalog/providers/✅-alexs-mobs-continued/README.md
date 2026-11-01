@@ -125,3 +125,7 @@ Strict semantic delta: **+1**.
 O fonte público atualmente acessível em `Codx-org/AlexsMobsContinued@e0dda181b999b3df09c4a4f7fd41e55f1b621ed8` declara `mod.version=2.2.3`, não `2.1.13`. A auditoria bytecode do **artefato 2.1.13 hash-matched** permanece válida para identidades, mas parâmetros da revisão posterior **não** são fonte de autoridade para a versão instalada. Veja [nota de proveniência](PUBLIC-SOURCE-VERSION-DRIFT-2026-10-29.md).
 
 O [grafo de alcance e contratos de aceitação](EXACT-ARTIFACT-PERK-QA-GATES-2.1.13.md) separa três roots, aquisição e condições de uso; o [manifesto JSON](SEMANTIC-REACHABILITY-GATES-2.1.13.json) registra explicitamente **1 `COUNTED_EXACT` + 2 `CONDITIONAL`**, sem promover 2 gates de Void Worm nem habilitar perks mutadoras ou QA física. A fila alfabética não é alterada nesta tranche.
+
+## Complemento de parâmetros do bytecode 2.1.13 (2026-10-31)
+
+O [mapa de operandos e decisões SHA-exatas](EXACT-CONTROL-OPERANDS-2.1.13.md) documenta os controles observáveis das três fichas individuais: 1,5 bloco de ray trace inicial, cooldowns 40/200 ticks e lifespan inicial 1200 do Carver; `Y < -60` e 25–39 segmentos do Void Worm; clamp 0..2 e fórmula de stack/custo XP da transmutação. O documento delimita cuidadosamente as condições de disparo, sem transportar números da versão-fonte 2.2.3 ou declarar hooks e QA físicos. **Os índices e contadores de certificação permanecem inalterados.**
