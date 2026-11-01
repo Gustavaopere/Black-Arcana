@@ -121,7 +121,7 @@ def audit(jar: Path, javap_bin: str):
             require(path in names, "missing delegated class: " + path)
             blob = zf.read(path)
             require(8 <= len(blob) <= MAX_CLASS_BYTES
-                    and blob[:4] == b"\\xca\\xfe\\xba\\xbe"
+                    and blob[:4] == b"\xca\xfe\xba\xbe"
                     and int.from_bytes(blob[6:8], "big") == 65,
                     "untrusted classfile: " + path)
             class_binaries[key] = blob
@@ -185,7 +185,7 @@ def main():
     report = audit(args.jar, args.javap)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
-        json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False) + "\\n",
+        json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
         encoding="utf8",
     )
     for label, entry in report["classes"].items():
