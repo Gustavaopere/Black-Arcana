@@ -1,0 +1,260 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_RAYGUN_RECEIVER_NORMAL_CFG_AND_PACKET_FIELDS_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "receiver_class_path": "com/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage.class",
+  "receiver_class_sha256": "bda52d12e8cce7e010b3d4cd2db7d83000e78b35657c55773a8ba91a070478c8",
+  "handler": {
+    "name": "handle",
+    "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage;Lcom/github/alexmodguy/alexscaves/server/message/ACNetworkContext;)V",
+    "method_sha256": "049a8d738fda3cb0fbd3c148b3e01aecc62f067004b0c6ce0a845dacc664e0a3",
+    "instruction_count": 75,
+    "entry_offset": 0,
+    "update_dispatch_offset": 174,
+    "normal_cfg_branches": [
+      {
+        "offset": 20,
+        "opcode": "ifeq",
+        "branch_target": 30,
+        "fallthrough": 23
+      },
+      {
+        "offset": 31,
+        "opcode": "ifnull",
+        "branch_target": 179,
+        "fallthrough": 34
+      },
+      {
+        "offset": 50,
+        "opcode": "ifeq",
+        "branch_target": 179,
+        "fallthrough": 53
+      },
+      {
+        "offset": 84,
+        "opcode": "ifeq",
+        "branch_target": 100,
+        "fallthrough": 87
+      },
+      {
+        "offset": 97,
+        "opcode": "goto",
+        "branch_target": 129,
+        "fallthrough": null
+      },
+      {
+        "offset": 116,
+        "opcode": "ifeq",
+        "branch_target": 129,
+        "fallthrough": 119
+      },
+      {
+        "offset": 131,
+        "opcode": "ifnull",
+        "branch_target": 179,
+        "fallthrough": 134
+      },
+      {
+        "offset": 146,
+        "opcode": "ifeq",
+        "branch_target": 179,
+        "fallthrough": 149
+      },
+      {
+        "offset": 161,
+        "opcode": "ifnull",
+        "branch_target": 179,
+        "fallthrough": 164
+      }
+    ],
+    "packet_field_accesses": [
+      {
+        "offset": 39,
+        "opcode": "getfield",
+        "symbol": "Field entityId:I"
+      },
+      {
+        "offset": 60,
+        "opcode": "getfield",
+        "symbol": "Field itemStackFrom:Lnet/minecraft/world/item/ItemStack;"
+      }
+    ]
+  },
+  "pivotal_native_sites": [
+    {
+      "offset": 8,
+      "opcode": "invokeinterface",
+      "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/message/ACNetworkContext.getSender:()Lnet/minecraft/server/level/ServerPlayer;"
+    },
+    {
+      "offset": 15,
+      "opcode": "invokeinterface",
+      "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/message/ACNetworkContext.isClientSide:()Z"
+    },
+    {
+      "offset": 39,
+      "opcode": "getfield",
+      "symbol": "Field entityId:I"
+    },
+    {
+      "offset": 42,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/minecraft/world/level/Level.getEntity:(I)Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "offset": 47,
+      "opcode": "instanceof",
+      "symbol": "class net/minecraft/world/entity/LivingEntity"
+    },
+    {
+      "offset": 60,
+      "opcode": "getfield",
+      "symbol": "Field itemStackFrom:Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "offset": 73,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "offset": 81,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+    },
+    {
+      "offset": 92,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "offset": 105,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "offset": 113,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+    },
+    {
+      "offset": 124,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "offset": 136,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;"
+    },
+    {
+      "offset": 143,
+      "opcode": "instanceof",
+      "symbol": "class com/github/alexmodguy/alexscaves/server/item/UpdatesStackTags"
+    },
+    {
+      "offset": 158,
+      "opcode": "invokestatic",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+    },
+    {
+      "offset": 171,
+      "opcode": "invokestatic",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+    },
+    {
+      "offset": 174,
+      "opcode": "invokeinterface",
+      "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/item/UpdatesStackTags.updateTagFromServer:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+    }
+  ],
+  "required_normal_cfg_dominators": [
+    8,
+    15,
+    39,
+    42,
+    60,
+    81,
+    136,
+    143,
+    158,
+    171,
+    174
+  ],
+  "alternative_non_dominators": [
+    92,
+    105,
+    113,
+    124
+  ],
+  "limits": {
+    "exception_edges": "NOT_ANALYZED",
+    "interprocedural_dataflow": "NOT_ANALYZED",
+    "sender_entity_id_authorization": "NOT_VERIFIED",
+    "packet_tag_sanitization": "NOT_VERIFIED",
+    "packet_validation_security": "NOT_ASSESSED",
+    "runtime_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "static_perk_contract": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  },
+  "local_stack_bindings": [
+    {
+      "offset": 60,
+      "opcode": "getfield",
+      "operand": "#13",
+      "symbol": "Field itemStackFrom:Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "offset": 63,
+      "opcode": "astore",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "offset": 92,
+      "opcode": "invokevirtual",
+      "operand": "#86",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "offset": 95,
+      "opcode": "astore",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "offset": 127,
+      "opcode": "astore",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "offset": 129,
+      "opcode": "aload",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "offset": 156,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "offset": 167,
+      "opcode": "aload",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "offset": 169,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    }
+  ]
+}
