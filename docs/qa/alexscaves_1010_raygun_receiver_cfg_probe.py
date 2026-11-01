@@ -119,6 +119,10 @@ def inspect_handler(method, sealed):
     refs = [{"offset": x["offset"], "opcode": x["opcode"],
              "symbol": x["symbol"][:450]} for x in selected]
     fields = [r for r in refs if r["opcode"] in ("getfield", "putfield")]
+    packet_fields = [r for r in fields if r["symbol"] in
+                     ("Field entityId:I", "Field itemStackFrom:Lnet/minecraft/world/item/ItemStack;")]
+    require([r["offset"] for r in packet_fields] == [39, 60],
+            "sender-controlled packet field read identity drift")
     windows = []
     for off in ANCHOR_OFFSETS:
         i = offsets.index(off)
@@ -143,8 +147,7 @@ def inspect_handler(method, sealed):
         "update_dispatch_offset": sink,
         "normal_cfg_dominators_of_update_dispatch": dominate,
         "selected_call_and_field_refs": refs,
-        "packet_field_accesses": [r for r in fields if
-                                 "UpdateItemTagMessage" in r["symbol"]],
+        "packet_field_accesses": packet_fields,
         "critical_anchor_windows": windows
     }
 
