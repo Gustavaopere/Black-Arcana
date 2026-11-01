@@ -6659,6 +6659,86 @@
           "reason": "Exact JAR/Java21 method/resource/class anchors checked by profile radiation, with individually SHA-sealed card and cross-linked previously sealed Irradiated effect; server/client QA, hooks and provider universe remain unverified."
         }
       }
+    },
+    "✅-alexs-caves-continued/damage-types/intentional-game-design.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de Intentional Game Design ou Nuke e dos consumidores nativos delimitados, preservando o mismatch de tickets e todos os limites físicos na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md",
+          "reason": "ID alexscaves:intentional_game_design, JSON, factory sem Entity e consumidor compartilhado selados no JAR exato 1.0.10; fonte 1.1.1 apenas adjacente."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md",
+          "reason": "Leitura completa dos 20 membros próprios, incluindo inicializador estático, com ordem de fila, remoção, seleção de fonte, hurt, escrita de movimento e efeito pós-dano; dois IDs não duplicam o consumidor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md",
+          "reason": "SIZE e ceil discretizado, AABB, r e fórmula float, defaults/configs, estado e limites de duração descritos; instruções selecionadas dos dois corpos extensos preservam branches e operações significativas."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md",
+          "reason": "Consulta de LivingEntity, ausência de filtros próprios de LOS/aliança/owner, Raycat e resistência/Tremorzilla com precedência explícita; comparação de dano não serve como gate da escrita de movimento ou do efeito."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md",
+          "reason": "Gatilhos e custos dos quatro emissores separados do consumidor sem débito de recursos de player; exhaustion e custo de fila/tickets não reinterpretados como mana ou cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md",
+          "reason": "WorldEffectPolicy e owners nativos preservados, nenhuma bridge a player inferida; mismatch ENTITY_TICKING versus ENTITY permanece confirmado estaticamente, sem alegar reparo, cleanup garantido ou vazamento observado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md",
+          "reason": "Ficha e membros exatos associados ao manifesto consolidado, provas anteriores preservadas; NT-01…NT-07 permanecem não executados, hooks NOT_VERIFIED e QA física NOT_TESTED sob NO_MUTATION."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/damage-types/nuke.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de Intentional Game Design ou Nuke e dos consumidores nativos delimitados, preservando o mismatch de tickets e todos os limites físicos na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/nuke.md",
+          "reason": "ID alexscaves:nuke, JSON, factory sem Entity e consumidor compartilhado selados no JAR exato 1.0.10; fonte 1.1.1 apenas adjacente."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/nuke.md",
+          "reason": "Leitura completa dos 20 membros próprios, incluindo inicializador estático, com ordem de fila, remoção, seleção de fonte, hurt, escrita de movimento e efeito pós-dano; dois IDs não duplicam o consumidor."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/nuke.md",
+          "reason": "SIZE e ceil discretizado, AABB, r e fórmula float, defaults/configs, estado e limites de duração descritos; instruções selecionadas dos dois corpos extensos preservam branches e operações significativas."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/nuke.md",
+          "reason": "Consulta de LivingEntity, ausência de filtros próprios de LOS/aliança/owner, Raycat e resistência/Tremorzilla com precedência explícita; comparação de dano não serve como gate da escrita de movimento ou do efeito."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/nuke.md",
+          "reason": "Gatilhos e custos dos quatro emissores separados do consumidor sem débito de recursos de player; exhaustion e custo de fila/tickets não reinterpretados como mana ou cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/nuke.md",
+          "reason": "WorldEffectPolicy e owners nativos preservados, nenhuma bridge a player inferida; mismatch ENTITY_TICKING versus ENTITY permanece confirmado estaticamente, sem alegar reparo, cleanup garantido ou vazamento observado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/nuke.md",
+          "reason": "Ficha e membros exatos associados ao manifesto consolidado, provas anteriores preservadas; NT-01…NT-07 permanecem não executados, hooks NOT_VERIFIED e QA física NOT_TESTED sob NO_MUTATION."
+        }
+      }
     }
   },
   "providers": {},

@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 6/11.**
+**Fichas catalogadas (somente fichas detectadas): 8/11.**
 
-**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 54.5%`
+**Barra das fichas catalogadas:** `██████████████░░░░░░ 72.7%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 6/11.**
+**Homologadas para perks (somente fichas detectadas): 8/11.**
 
-**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 54.5%`
+**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 72.7%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -25,8 +25,8 @@
 | ✅ | Desolate Dagger | [ficha/desolate-dagger.md](desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Forsaken Sonic Boom | [ficha/forsaken-sonic-boom.md](forsaken-sonic-boom.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Gumball | [ficha/gumball.md](gumball.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Intentional Game Design | [ficha/intentional-game-design.md](intentional-game-design.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Nuke | [ficha/nuke.md](nuke.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Intentional Game Design | [ficha/intentional-game-design.md](intentional-game-design.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Nuke | [ficha/nuke.md](nuke.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Radiation | [ficha/radiation.md](radiation.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Raygun | [ficha/raygun.md](raygun.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Spirit Dinosaur | [ficha/spirit-dinosaur.md](spirit-dinosaur.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
