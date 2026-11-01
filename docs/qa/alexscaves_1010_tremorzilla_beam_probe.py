@@ -70,10 +70,10 @@ def inspect(methods):
     if len(found) != 1:
         raise BeamProbeError('missing/ambiguous beam damage consumer')
     hurt = found[0]
-    anchor = verify_factory(hurt)
     ins = hurt['instructions']
     if not 1 <= len(ins) <= 6500 or len({i['offset'] for i in ins}) != len(ins):
         raise BeamProbeError('invalid or duplicated target instructions')
+    anchor = verify_factory(hurt)
     refs = [i for i in ins if i['opcode'] in REF_OPS]
     nums = [i for i in ins if i['opcode'] in NUM_OPS or i['opcode'].startswith(
         ('iconst_', 'fconst_', 'dconst_', 'lconst_'))]
