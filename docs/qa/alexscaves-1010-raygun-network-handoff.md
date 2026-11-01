@@ -47,12 +47,46 @@ simbólicas relevantes para interoperabilidade.
 
 Esta prova delimita onde examinar o registro do payload e evita reiterar auditorias já incorporadas. Uma certificação futura precisa revisar os opcodes do `ACNetwork` e reconstruir os guards pertinentes, sem tratar o relatório de candidatos como call graph completo.
 
+## Traçado de ABI de registro do pacote — verificação dirigida
+
+Após a descoberta limitada da PR #993, a auditoria adicional
+[`alexscaves_1010_raygun_network_abi_probe.py`](alexscaves_1010_raygun_network_abi_probe.py)
+seleciona três métodos nativos de `ACNetwork.class`:
+
+- `registerMessages`: registro de mensagens — exige referência binária direta a `UpdateItemTagMessage`;
+- `registerPayloads`: interface do registro de payloads;
+- `lambda$registerPayloads$0`: callback que referencia o contexto de payload.
+
+A coleta confere o JAR publisher exato, SHA do `UpdateItemTagMessage.class` selado
+no receiver, classe JVM major 65 e digests por método; publica somente
+descritores, offsets e janelas reduzidas de símbolos ABI. O
+[workflow dedicado](../../.github/workflows/alexscaves-1010-raygun-network-abi.yml)
+executa regressões sintéticas e a inspeção real Java 21.
+
+**Resultado da auditoria direcionada no JAR exato:** a [execução 41333238689](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41333238689) concluiu com sucesso. O `ACNetwork.class` observado tem SHA-256 `8544a3436444be3248f9176bbcdee5fa30ee45ec2fbcf7a35a5e4fe4d9d88482` e oito métodos declarados. Os fatos compilados foram selados no [manifesto de ABI JVM](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-NETWORK-ABI-1.0.10.json); novos CI devem comparar SHA, três digests de métodos, descritores e sete âncoras críticas, rejeitando qualquer alteração.
+
+| Método | Âncora JVM real | Conclusão estritamente apoiada |
+| --- | --- | --- |
+| `registerMessages()` | `ldc UpdateItemTagMessage @151`, seguida por `register(Class,BiConsumer,Function,BiConsumer) @168` | Existe entrada nativa da mensagem na tabela de `ACNetwork`; os três lambdas adjacentes pertencem ao registro, sem prova independente de autorização por remetente |
+| `registerPayloads(RegisterPayloadHandlersEvent)` | `registerMessages @0`, `registrar @12`, `PayloadRegistrar.playBidirectional @22` | O provider registra **um payload/envelope NeoForge bidirecional**; não confundir com registro isolado de `UpdateItemTagMessage` por `playBidirectional` |
+| `lambda$registerPayloads$0(ACPayload,IPayloadContext)` | `ACNetwork$NeoForgeContext.<init> @24`, `ACNetwork$Entry.handle @27` | O callback do envelope encaminha a mensagem por uma entrada nativa usando um wrapper de contexto |
+
+**Interpretação de segurança:** `playBidirectional` descreve a direção permitida do envelope registrado. Não comprova que um `entityId` de mensagem individual esteja vinculado ao remetente, que `ChargeUsed`/`UseTime` sejam saneados ou que qualquer alteração de `CUSTOM_DATA` seja legítima. Também não autoriza declarar vulnerabilidade explorável sem reprodução e análise de contexto. `NO_MUTATION`, `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED` permanecem.
+
+**Escopo:** `ABI_REFERENCE_OBSERVED_ONLY`. Uma chamada simbólica a
+`registerMessages` ou a uma classe de payload não basta para confirmar
+direção registrada do canal, threading, validação do remetente,
+persistência ou segurança da atualização de `CUSTOM_DATA`. Apenas
+evidência exata dos opcodes e revisão do contexto permite melhorar RN-02
+e RN-03, sem automaticamente homologar perks. Um snapshot SHA-exato, quando
+publicado, deve ser revalidado pelo mesmo workflow.
+
 ## Aceite antes de concluir contrato estático Raygun
 
 | Gate | Evidência necessária | Estado atual |
 | --- | --- | --- |
-| RN-01 | JAR exato + SHA de classes e métodos pertinentes; conflito entre manifestos falha | ✅ probe executado no head inicial; aguarda CI final após revisão |
-| RN-02 | Identificar no binário a inscrição efetiva do tipo de mensagem, direção e handler, sem inferir da classe sender | ⚠️ não verificado |
+| RN-01 | JAR exato + SHA de classes e métodos pertinentes; conflito entre manifestos falha | ✅ descoberta SHA-exata passou no head final da PR #993; traçado dirigido pendente |
+| RN-02 | Identificar no binário a inscrição efetiva do tipo de mensagem, direção e handler, sem inferir da classe sender | ⚠️ registro de entrada `UpdateItemTagMessage` e envelope `playBidirectional` comprovados; direção do wrapper observada, autorização de mensagem individual não verificada |
 | RN-03 | Verificar semântica de threading e as condições de leitura/edição de estado no receiver | ⚠️ não verificado |
 | RN-04 | Confirmar integridade de `entityId`, item, hand swap, `ChargeUsed`/`UseTime` e limites de `CUSTOM_DATA` | ⚠️ não verificado |
 | RN-05 | Vincular cobrança nativa, alvo, dano, status e retorno de `hurt` a uma identidade causal única | ⚠️ parcial nos manifestos anteriores |

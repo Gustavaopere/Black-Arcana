@@ -183,3 +183,15 @@ Nova trilha independente de [inspeção do registro do pacote e aceitação](../
 O recorte busca classes candidatas que referenciam `UpdateItemTagMessage` ou `ACNetworkContext` no binário exato. Esses tokens e callsites não demonstram, por si, registro do canal, direção da mensagem, validação de `entityId`, pertencimento do `ItemStack` ou sanitização de `CUSTOM_DATA`. A associação causal do dano com o caster deve continuar condicionada à aceitação nativa de `ACCompat.hurt` e aos guards de alvo do provider. O novo probe não reimplementa as funções nem substitui os três manifestos Raygun existentes.
 
 **Estado inalterado:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Sem novo contrato estático ou alteração de contadores/Stage.
+
+## Registro nativo verificado por ABI — ACNetwork 1.0.10
+
+O manifesto SHA-exato [EXACT-RAYGUN-NETWORK-ABI-1.0.10.json](../EXACT-RAYGUN-NETWORK-ABI-1.0.10.json) acrescenta aos recortes de sender/receiver as entradas do registro de rede nativo do provider, extraídas do JAR publisher 1.0.10 (classe `ACNetwork.class`, SHA-256 `8544a3436444be3248f9176bbcdee5fa30ee45ec2fbcf7a35a5e4fe4d9d88482`). O [probe e seus testes](../../../../../docs/qa/alexscaves_1010_raygun_network_abi_probe.py) selam três métodos, descritores, digests, offsets e sete âncoras. Evidência de execução SHA-exata: [Actions 41333495556](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41333495556).
+
+| Entrada real | Contrato ABI observado | Limite de uso por perks |
+| --- | --- | --- |
+| `ACNetwork.registerMessages()` | `ldc UpdateItemTagMessage @151`; `register(Class,BiConsumer,Function,BiConsumer) @168` | Entrada da mensagem na tabela interna; não é prova isolada de autorização de `entityId` |
+| `ACNetwork.registerPayloads(RegisterPayloadHandlersEvent)` | `registerMessages @0`; `registrar @12`; `PayloadRegistrar.playBidirectional @22` | O **envelope/payload comum** usa registro bidirecional NeoForge; não foi observado registro exclusivo de `UpdateItemTagMessage` como payload separado |
+| `ACNetwork.lambda$registerPayloads$0(ACPayload,IPayloadContext)` | `ACNetwork$NeoForgeContext.<init> @24`; `ACNetwork$Entry.handle @27` | Callback encaminha via entrada interna, sem prova de validação de autoria, alvo, mão, `ChargeUsed` ou `UseTime` |
+
+**Boundary:** os opcodes acima não autorizam modificar `DataComponents.CUSTOM_DATA`, duplicar consumo nativo, nem alterar seleção/dano do Raygun. Os guards do receiver não comprovam vínculo sender–`entityId`, limites semânticos de payload, replay protection ou QA física. `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`; sem mudanças em contadores/Stage.
