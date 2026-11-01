@@ -228,3 +228,11 @@ nenhum saneamento de valores é presumido.
 **Contrato condicional para perks:** o fluxo normal exige passagem pelos checks compilados, mas não oferece contrato demonstrado de autorização do `entityId` pelo remetente, equivalência do `ItemStack` informado, validação de `CUSTOM_DATA` ou antirreplay. Há distinção entre mão principal e secundária; nenhum desses métodos é evidência de hook seguro para alterar `ChargeUsed`, `UseTime` ou dano. O [protocolo de auditoria RN-04](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md) continua condicionado; execução e resultados de QA física **não foram comprovados**.
 
 Status mantido: ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Sem alteração de certificados, índices globais ou Stage.
+
+## Codec nativo do pacote — identidade e campos na versão 1.0.10
+
+O [manifesto SHA-exato de serialização](../EXACT-RAYGUN-PACKET-CODEC-1.0.10.json) sela os quatro métodos de `UpdateItemTagMessage` e nove referências JVM da construção, leitura e escrita dos campos. O `entityId` é lido por `FriendlyByteBuf.readInt @5` e escrito por `FriendlyByteBuf.writeInt @5`; o `itemStackFrom` é lido por `PacketBufferUtils.readItemStack @9` e escrito por `PacketBufferUtils.writeItemStack @14`. O construtor preenche esses campos nos offsets `@6` e `@11`.
+
+O formato transporta um identificador e uma stack, mas **não** verifica autorização do identificador pela sessão de rede, identidade/posse da stack, saneamento de `CompoundTag` ou `ChargeUsed`/`UseTime`. A análise se limita ao ABI do pacote, com QA física ainda não executada. Veja a [matriz RN-04](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md).
+
+**Estado:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`; nenhum hook, certificado ou Stage promovido.
