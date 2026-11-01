@@ -111,6 +111,39 @@ O envelope e o contexto do provider são observados estaticamente;
 reprodução controlada e avaliação de permissões. O Black Arcana mantém
 `NO_MUTATION`, sem hooks mutadores ou QA física presumidos.
 
+## Fluxo normal de entidade, mãos e tag — selo da PR #996
+
+O [manifesto de CFG exata do receptor](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-RECEIVER-CFG-1.0.10.json)
+e o [probe read-only](alexscaves_1010_raygun_receiver_cfg_probe.py) acrescentam
+a auditoria intra-método do `UpdateItemTagMessage.handle`, selada contra os
+dois manifestos anteriores de receiver e identidade.
+O levantamento utiliza o JAR publisher 1.0.10, SHA-256 da classe e digest do
+método. Os desdobramentos abaixo são limitados a callsites/operandos JVM:
+
+| Recorte | Observação compilada | Limite |
+| --- | --- | --- |
+| Remetente e fluxo | `ACNetworkContext.getSender @8`; `isClientSide @15` | O caminho de servidor usa o player do contexto, mas o player obtido não demonstra por si autorização de `entityId` |
+| Entidade informada | **`getfield entityId:I @39`** seguido de `Level.getEntity(I) @42`; `instanceof LivingEntity @47` | Lookup do ID recebido no nível da entidade/player escolhido. Não foi demonstrada equivalência entre entityId e remetente |
+| Item informado | **`getfield itemStackFrom:ItemStack @60`**; depois lookup do item nas mãos e `ItemStack.is(Item) @81/@113` | As chamadas de comparação são de **tipo de item**. Correspondência de classe não estabelece identidade de `ItemStack`, autorização da posse ou proteção contra troca de mão |
+| Item resolvido | `getItemInHand` nas mãos principal/secundária; `instanceof UpdatesStackTags @143` | Há seleção de stack atual e teste de interface, mas o método não comprova autorização do conteúdo da tag |
+| Atualização | `ACCompat.getTag @158/@171` e chamada `UpdatesStackTags.updateTagFromServer @174` | O setter nativo de `CUSTOM_DATA` já foi selado separadamente. Nada aqui demonstra saneamento de `ChargeUsed`/`UseTime` |
+
+No grafo de fluxo **normal intra-método** (sem exception edges,
+despacho interprocedural ou análise formal de valores), as referências a
+`getSender @8`, `entityId @39`,
+`Level.getEntity @42`, `itemStackFrom @60`
+e `updateTagFromServer @174` dominam o ponto de
+atualização, enquanto a chamada alternativa `ItemStack.is @113`
+não o domina. **Dominância de instruções não constitui validação
+de origem, identidade, permissões nem proteção contra replay**.
+
+O [workflow SHA-exato](../../.github/workflows/alexscaves-1010-raygun-receiver-cfg.yml)
+compara branch targets, hashes, acessos de campo e 17 âncoras de ABI
+com o manifesto selado. Sem certificado de sete eixos: `NOT_CERTIFIED`,
+`NO_MUTATION`, `mutating_hook=NOT_VERIFIED` e
+`physical_qa=NOT_TESTED`. Nenhum exploit
+é alegado sem análise mais ampla e reprodução controlada.
+
 ## Aceite antes de concluir contrato estático Raygun
 
 | Gate | Evidência necessária | Estado atual |
@@ -118,7 +151,7 @@ reprodução controlada e avaliação de permissões. O Black Arcana mantém
 | RN-01 | JAR exato + SHA de classes e métodos pertinentes; conflito entre manifestos falha | ✅ descoberta SHA-exata passou no head final da PR #993; traçado dirigido pendente |
 | RN-02 | Identificar no binário a inscrição efetiva do tipo de mensagem, direção e handler, sem inferir da classe sender | ⚠️ registro de entrada `UpdateItemTagMessage` e envelope `playBidirectional` comprovados; direção do wrapper observada, autorização de mensagem individual não verificada |
 | RN-03 | Verificar semântica de threading e as condições de leitura/edição de estado no receiver | ⚠️ `IPayloadContext.enqueueWork` e `flow/isClientbound` selados estaticamente; threading do handler e update de stack ainda não verificados |
-| RN-04 | Confirmar integridade de `entityId`, item, hand swap, `ChargeUsed`/`UseTime` e limites de `CUSTOM_DATA` | ⚠️ handler e `getSender` documentados em ABI; vínculo remetente–entidade, sanitização e replay **não verificados** |
+| RN-04 | Confirmar integridade de `entityId`, item, hand swap, `ChargeUsed`/`UseTime` e limites de `CUSTOM_DATA` | ⚠️ offsets/CFG exatos identificam campos de origem e comparação por tipo de item; **binding remetente–entityId, sanitização e replay continuam NOT_VERIFIED/NOT_TESTED** |
 | RN-05 | Vincular cobrança nativa, alvo, dano, status e retorno de `hurt` a uma identidade causal única | ⚠️ parcial nos manifestos anteriores |
 | RN-06 | Verificar migração/salvamento, reconexão, multiplayer e casos negativos no cliente + servidor dedicado | ⚠️ QA física não testada |
 | RN-07 | Certificar os sete eixos de evidência estática num manifesto com hash de fichas e em CI antes de mexer nos índices | ⚠️ não certificado |
