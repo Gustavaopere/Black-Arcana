@@ -3,7 +3,7 @@
 import unittest
 from alexscaves_1010_tremorzilla_beam_probe import (
     CLASS, CLASS_SHA, DESCRIPTOR, FACTORY_OFFSET, BeamProbeError,
-    bounded, inspect, method_digest, verify_factory, window
+    bounded, inspect, method_digest, verify_factory, window, verify_sealed_snapshot
 )
 
 
@@ -94,6 +94,63 @@ class ExactTremorzillaBeamTests(unittest.TestCase):
         m['instructions'][2]['symbol'] += '_CHANGED'
         self.assertNotEqual(before, method_digest(m))
 
+
+    def sealed_fixture(self):
+        body = inspect([method()])
+        report = {
+            'schema_version': 1, 'scope': 'synthetic', 'artifact': {'sha1': 'test'},
+            'class_path': CLASS, 'class_sha256': CLASS_SHA, **body
+        }
+        seal = {
+            'schema_version': 1, 'scope': 'synthetic', 'artifact': {'sha1': 'test'},
+            'class_path': CLASS, 'class_sha256': CLASS_SHA,
+            'declared_method_count': report['declared_method_count'],
+            'damage_factory_anchor': report['damage_factory_anchor'],
+            'selected_method_digests': [
+                {'name': 'hurtEntitiesAround', 'descriptor': DESCRIPTOR,
+                 'sha256': report['damage_method']['parsed_method_sha256']}
+            ],
+            'local_callers': [],
+            'method_anchors': [
+                {'group': 'references', 'offset': 76, 'opcode': 'invokestatic',
+                 'symbol_contains': 'causeTremorzillaBeamDamage:'}
+            ]
+        }
+        return report, seal
+
+    def test_positive_sealed_fixture_passes(self):
+        report, seal = self.sealed_fixture()
+        self.assertTrue(verify_sealed_snapshot(report, seal))
+
+    def test_changed_method_hash_rejected(self):
+        report, seal = self.sealed_fixture()
+        seal['selected_method_digests'][0]['sha256'] = '0' * 64
+        with self.assertRaisesRegex(BeamProbeError, 'method digest'):
+            verify_sealed_snapshot(report, seal)
+
+    def test_changed_opcode_rejected(self):
+        report, seal = self.sealed_fixture()
+        seal['method_anchors'][0]['opcode'] = 'invokevirtual'
+        with self.assertRaisesRegex(BeamProbeError, 'opcode anchor drift'):
+            verify_sealed_snapshot(report, seal)
+
+    def test_duplicate_sealed_anchor_rejected(self):
+        report, seal = self.sealed_fixture()
+        seal['method_anchors'].append(dict(seal['method_anchors'][0]))
+        with self.assertRaisesRegex(BeamProbeError, 'duplicate sealed'):
+            verify_sealed_snapshot(report, seal)
+
+    def test_unexpected_callers_rejected(self):
+        report, seal = self.sealed_fixture()
+        seal['local_callers'] = [{'method': 'tickBreath', 'descriptor': '()V', 'sites': [552]}]
+        with self.assertRaisesRegex(BeamProbeError, 'producer/callsite drift'):
+            verify_sealed_snapshot(report, seal)
+
+    def test_changed_exact_operand_rejected(self):
+        report, seal = self.sealed_fixture()
+        seal['method_anchors'][0]['operand_equals'] = '12345'
+        with self.assertRaisesRegex(BeamProbeError, 'operand drift'):
+            verify_sealed_snapshot(report, seal)
 
 if __name__ == '__main__':
     unittest.main()
