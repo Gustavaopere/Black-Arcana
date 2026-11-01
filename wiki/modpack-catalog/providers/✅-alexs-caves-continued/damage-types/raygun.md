@@ -198,6 +198,8 @@ O manifesto SHA-exato [EXACT-RAYGUN-NETWORK-ABI-1.0.10.json](../EXACT-RAYGUN-NET
 
 ## Identidade do contexto do pacote — JAR 1.0.10
 
+O [manifesto do contexto e guardas JVM](../EXACT-RAYGUN-RECEIVER-IDENTITY-1.0.10.json) fixa quatro SHA-256 de classes, seis digests de métodos, nove branch targets e sete símbolos nativos; 14 testes sintéticos e auditoria do JAR exato passaram no [workflow da PR #995](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-raygun-receiver-identity.yml). 
+
 A auditoria [PR #995](https://github.com/Gustavaopere/Black-Arcana/pull/995) acrescenta o contexto da mensagem e seu dispatch (sem alterar o runtime). O contrato binário SHA-exato de `UpdateItemTagMessage.handle` foi confrontado com `ACNetwork$NeoForgeContext` e `ACNetwork$Entry`.
 
 - `ACNetwork$NeoForgeContext.getSender` consulta `IPayloadContext.player` e exige `ServerPlayer`; isso identifica a origem de um jogador no contexto, **não** demonstra vínculo automático entre o remetente e o `entityId` buscado pelo handler.
