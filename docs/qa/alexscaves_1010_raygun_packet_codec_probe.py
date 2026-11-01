@@ -169,7 +169,7 @@ def snapshot_projection(report):
             "class_sha256", "declared_method_count")},
         "methods": [
             {key: m[key] for key in (
-                "name", "descriptor", "method_sha256", "instruction_count")}
+                "name", "descriptor", "method_sha256")}
             for m in methods
         ],
         "codec_abi_anchors": anchors,
