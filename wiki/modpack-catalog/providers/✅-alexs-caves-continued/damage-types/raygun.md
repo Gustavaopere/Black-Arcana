@@ -207,3 +207,11 @@ A auditoria [PR #995](https://github.com/Gustavaopere/Black-Arcana/pull/995) acr
 - `ACNetwork$Entry.handle` chama `BiConsumer.accept`; o handler efetivo contém nove desvios compilados relacionados à resolução de entidade, mão e tag. A presença de branches não estabelece resultado físico, ownership, replay protection nem verificação de `ChargeUsed` / `UseTime`.
 
 Ver a [matriz de evidências e requisitos RN-03/RN-04](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md). **Fail-closed:** `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Nenhum novo certificado, hook, objeto, contador ou Stage.
+
+## Entradas do pacote e CFG normal seladas — 1.0.10
+
+A [trilha de controle e campos do receptor](../EXACT-RAYGUN-RECEIVER-CFG-1.0.10.json) fixa, no mesmo método SHA-exato `UpdateItemTagMessage.handle`, os acessos JVM `entityId @39` e `itemStackFrom @60`, o lookup `Level.getEntity @42`, a confirmação de `LivingEntity @47`, as verificações de **tipo** de item das mãos `ItemStack.is @81/@113` e o dispatch de atualização `UpdatesStackTags.updateTagFromServer @174`.
+
+**Contrato condicional para perks:** o fluxo normal exige passagem pelos checks compilados, mas não oferece contrato demonstrado de autorização do `entityId` pelo remetente, equivalência do `ItemStack` informado, validação de `CUSTOM_DATA` ou antirreplay. Há distinção entre mão principal e secundária; nenhum desses métodos é evidência de hook seguro para alterar `ChargeUsed`, `UseTime` ou dano. O [protocolo de auditoria RN-04](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md) continua condicionado; execução e resultados de QA física **não foram comprovados**.
+
+Status mantido: ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Sem alteração de certificados, índices globais ou Stage.
