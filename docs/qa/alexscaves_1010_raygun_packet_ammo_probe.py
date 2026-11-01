@@ -120,7 +120,7 @@ def audit(jar, javap_bin):
             disassembly = javap(javap_bin, jar, path[:-6].replace("/", "."))
             declaration = next((line.strip() for line in disassembly.splitlines()
                                 if line.strip().endswith("{") and
-                                ("class " in line or "interface " in line)), "")
+                                ("class " in line or "interface " in line or "record " in line)), "")
             if not declaration or len(declaration) > 400:
                 raise PacketAmmoProbeError("missing/bounded JVM class declaration")
             methods = parse_methods(disassembly)
