@@ -72,6 +72,7 @@ jobs:
             --jar build/neoforge-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --prior 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-ITEMSTACK-SERVER-ABI.json' \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-COMPONENT-PATCH-ABI.json' \
             --output build/neoforge-211248/component-patch-stream-abi.json
       - name: Publish bounded ABI reference report only
         if: always()
