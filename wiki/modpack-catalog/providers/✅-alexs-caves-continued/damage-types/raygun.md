@@ -236,3 +236,11 @@ O [manifesto SHA-exato de serialização](../EXACT-RAYGUN-PACKET-CODEC-1.0.10.js
 O formato transporta um identificador e uma stack, mas **não** verifica autorização do identificador pela sessão de rede, identidade/posse da stack, saneamento de `CompoundTag` ou `ChargeUsed`/`UseTime`. A análise se limita ao ABI do pacote, com QA física ainda não executada. Veja a [matriz RN-04](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md).
 
 **Estado:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`; nenhum hook, certificado ou Stage promovido.
+
+## Limites do helper de ItemStack — codec nativo 1.0.10
+
+O [manifesto do helper sombreado de Citadel](../EXACT-RAYGUN-ITEMSTACK-HELPER-1.0.10.json) confirma que `PacketBufferUtils.readItemStack(ByteBuf)` utiliza `ItemStack.OPTIONAL_STREAM_CODEC`, faz cast para `RegistryFriendlyByteBuf` e chama `StreamCodec.decode`; `writeItemStack(ByteBuf,ItemStack)` usa o mesmo codec e chama `StreamCodec.encode`. O helper tem **dois métodos pertinentes de seis instruções cada**, sem desvios locais, com sete âncoras ABI seladas por JAR.
+
+Isso determina a **fronteira de delegação ao Minecraft**. O tamanho máximo do `ItemStack`, os limites de NBT/componentes e os controles internos do codec **não foram demonstrados** pela inspeção do helper. Tampouco há evidência de validação server-side dos campos do Raygun, autorização de `entityId`, replay protection ou hooks de perk. Consulte a [matriz RN-04](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md).
+
+**Estado preservado:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Nenhum certificado, contador ou Stage promovido.
