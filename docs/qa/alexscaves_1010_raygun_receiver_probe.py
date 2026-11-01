@@ -169,8 +169,11 @@ def audit(jar, javap_bin):
              "receiver": validated[2]},
             {"path": UPDATES, "sha256": updates_sha,
              "declaration": iface_decl, "declared_method_count": len(iface_methods),
-             "declared_update_methods": [{"name": method_name(m), "descriptor": m["descriptor"]}
-                                         for m in iface_member]}
+             "declared_update_methods": [
+                 {"name": method_name(m), "descriptor": m["descriptor"],
+                  "declaration": m["header"],
+                  "implementation": bounded_method(m, [])}
+                 for m in iface_member]}
         ],
         "limits": {"type_declaration_is_direct_only": True,
                    "indirect_inheritance_verified": False,
