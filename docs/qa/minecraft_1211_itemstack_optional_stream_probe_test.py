@@ -2,12 +2,15 @@
 """Synthetic fail-closed checks for official 1.21.1 vanilla codec evidence."""
 from __future__ import annotations
 
+import copy
+import json
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from minecraft_1211_itemstack_optional_stream_probe import (
     CLIENT_SHA1, MojangBoundaryError, audit, map_itemstack, parse_initializer,
-    codec_class_from_initializer, named_vanilla_classes
+    codec_class_from_initializer, named_vanilla_classes, verify_snapshot
 )
 
 
@@ -127,6 +130,75 @@ class ExactVanillaProbeTests(unittest.TestCase):
             audit("missing.jar", "missing.map",
                   {"id": "1.21.1", "type": "release",
                    "downloads": {"client": {"sha1": "a" * 40}}}, "javap")
+
+    def pinned_fixture(self):
+        seal_path = (Path(__file__).resolve().parents[2] /
+                     "wiki/modpack-catalog/providers/✅-alexs-caves-continued" /
+                     "EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json")
+        seal = json.loads(seal_path.read_text(encoding="utf8"))
+        report = copy.deepcopy(seal)
+        report["static_initializer"] = {
+            "optional_codec_putstatic_offset": 127,
+            "selected_preassignment_abi": [
+                {"offset": 120, "opcode": "new", "symbol": "class cuq$1"},
+                {"offset": 124, "opcode": "invokespecial",
+                 "symbol": 'Method cuq$1."<init>":()V'},
+                {"offset": 127, "opcode": "putstatic", "symbol": "Field h:Lyx;"}
+            ]
+        }
+        impl = {
+            "class_path": seal["codec_class_path"],
+            "class_sha256": seal["codec_class_sha256"],
+            "methods": []
+        }
+        for signature in seal["codec_method_signatures"]:
+            refs = [
+                {k: row[k] for k in ("offset", "opcode", "operand", "symbol")}
+                for row in seal["selected_vanilla_codec_abi"]
+                if row["method"] == signature["name"]
+                and row["descriptor"] == signature["descriptor"]
+            ]
+            impl["methods"].append({**signature, "selected_refs": refs})
+        report["assigned_codec_implementation"] = impl
+        return report, seal
+
+    def test_exact_official_vanilla_snapshot(self):
+        report, seal = self.pinned_fixture()
+        self.assertTrue(verify_snapshot(report, seal))
+
+    def test_codec_count_branch_drift_rejected(self):
+        report, seal = self.pinned_fixture()
+        decode = next(m for m in report["assigned_codec_implementation"]["methods"]
+                      if m["descriptor"] == "(Lwk;)Lcuq;")
+        decode["selected_refs"][1]["operand"] = "15"
+        with self.assertRaisesRegex(MojangBoundaryError, "branch or delegate"):
+            verify_snapshot(report, seal)
+
+    def test_component_patch_delegate_drift_rejected(self):
+        report, seal = self.pinned_fixture()
+        decode = next(m for m in report["assigned_codec_implementation"]["methods"]
+                      if m["descriptor"] == "(Lwk;)Lcuq;")
+        decode["selected_refs"][4]["symbol"] = "Field OtherCodec.c:"
+        with self.assertRaisesRegex(MojangBoundaryError, "branch or delegate"):
+            verify_snapshot(report, seal)
+
+    def test_wrong_vanilla_codec_binary_hash_rejected(self):
+        report, seal = self.pinned_fixture()
+        report["assigned_codec_implementation"]["class_sha256"] = "0" * 64
+        with self.assertRaisesRegex(MojangBoundaryError, "anonymous ItemStack codec"):
+            verify_snapshot(report, seal)
+
+    def test_falsely_claimed_neoforge_validation_rejected(self):
+        report, seal = self.pinned_fixture()
+        report["limits"]["neoforge_21_1_248_merged_runtime"] = "VERIFIED"
+        with self.assertRaisesRegex(MojangBoundaryError, "falsely promoted"):
+            verify_snapshot(report, seal)
+
+    def test_falsely_certified_codec_snapshot_rejected(self):
+        report, seal = self.pinned_fixture()
+        seal["limits"]["mutation"] = "ALLOW"
+        with self.assertRaisesRegex(MojangBoundaryError, "snapshot"):
+            verify_snapshot(report, seal)
 
     def test_wrong_downloaded_client_rejected(self):
         with patch("minecraft_1211_itemstack_optional_stream_probe.sha1_file",
