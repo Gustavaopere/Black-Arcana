@@ -51,8 +51,14 @@ class RadiationScopeTest(unittest.TestCase):
 
     def test_damage_contract_is_derived_exact_subset_of_existing_effect_evidence(self):
         e = self.effects["effect_evidence"][EFFECT_CARD]
-        self.assertEqual(self.damage["contract_evidence"][CARD]["classes"], e["classes"])
-        self.assertEqual(self.damage["contract_evidence"][CARD]["resources"], e["resources"])
+        self.assertEqual(set(self.damage["contract_evidence"][CARD]["classes"]),
+                         set(self.damage["classes"]))
+        self.assertEqual(set(self.damage["contract_evidence"][CARD]["resources"]),
+                         set(self.damage["resources"]))
+        self.assertEqual(len(self.damage["classes"]), 7)
+        self.assertEqual(len(self.damage["resources"]), 2)
+        self.assertTrue(set(self.damage["classes"]) <= set(e["classes"]))
+        self.assertTrue(set(self.damage["resources"]) <= set(e["resources"]))
         for p, value in self.damage["classes"].items():
             self.assertEqual(value, self.effects["classes"][p])
         for p, value in self.damage["resources"].items():
@@ -71,9 +77,8 @@ class RadiationScopeTest(unittest.TestCase):
         doc = copy.deepcopy(self.damage)
         doc["contract_evidence"][CARD]["classes"].remove(CLASS)
         doc["classes"].pop(CLASS)
-        with self.assertRaises(AssertionError):
-            self.assertEqual(doc["contract_evidence"][CARD]["classes"],
-                             self.effects["effect_evidence"][EFFECT_CARD]["classes"])
+        with self.assertRaises(audit.AuditError):
+            audit.validate_structure(doc, profile="radiation")
 
     def test_stale_card_sha_rejected(self):
         doc = copy.deepcopy(self.damage)
