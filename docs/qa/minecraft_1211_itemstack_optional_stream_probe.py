@@ -115,6 +115,21 @@ def parse_initializer(javap_output, expected_field):
 
 
 
+
+def named_vanilla_classes(mappings_text, obfuscated_names):
+    """Resolve exact class symbols from the same official Mojang mapping input."""
+    target = set(obfuscated_names)
+    found = {}
+    for line in mappings_text.splitlines():
+        match = CLASS_MAPPING.match(line)
+        if match and match.group(2) in target:
+            require(match.group(2) not in found,
+                    "ambiguous Mojang obfuscated class mapping")
+            found[match.group(2)] = match.group(1)
+    require(set(found) == target, "missing Mojang mapped bytecode class")
+    return found
+
+
 def codec_class_from_initializer(initializer):
     """Bounded JVM constructor nearest the pinned codec field assignment."""
     items = initializer["selected_preassignment_abi"]
@@ -195,7 +210,8 @@ def audit(client, mappings, metadata, javap_bin):
     require(mapping_sha == expected_mapping["sha1"] and
             mapping_size == expected_mapping.get("size"),
             "downloaded official Mojang class mapping identity mismatch")
-    mapped = map_itemstack(Path(mappings).read_text(encoding="utf-8"))
+    official_mappings_text = Path(mappings).read_text(encoding="utf-8")
+    mapped = map_itemstack(official_mappings_text)
     dotted = mapped["class"]
     class_path = dotted.replace(".", "/") + ".class"
     with zipfile.ZipFile(client) as jar:
@@ -215,6 +231,7 @@ def audit(client, mappings, metadata, javap_bin):
     codec_owner = codec_class_from_initializer(selected)
     codec = inspect_codec_class(client, javap_bin, dotted.replace(".", "/"),
                                 codec_owner)
+    class_map = named_vanilla_classes(official_mappings_text, ("wk", "jm", "kn"))
     report = {
         "schema_version": 1,
         "scope": "OFFICIAL_MOJANG_VANILLA_1211_ITEMSTACK_STATIC_ABI_CORROBORATION_ONLY",
@@ -230,6 +247,7 @@ def audit(client, mappings, metadata, javap_bin):
         "mapped_field_type": mapped["named_field_type"],
         "static_initializer": selected,
         "assigned_codec_implementation": codec,
+        "selected_obfuscated_class_names": class_map,
         "limits": {
             "neoforge_21_1_248_merged_runtime": "NOT_INSPECTED",
             "itemstack_stream_decode_method": "NOT_TRACED",
@@ -273,6 +291,8 @@ def main():
     impl = report["assigned_codec_implementation"]
     print("OPTIONAL_STREAM_CODEC_CLASS=" + impl["class_path"])
     print("OPTIONAL_STREAM_CODEC_CLASS_SHA256=" + impl["class_sha256"])
+    for obf, named in report["selected_obfuscated_class_names"].items():
+        print("OPTIONAL_STREAM_CODEC_MAPPED_CLASS=" + obf + " -> " + named)
     for method in impl["methods"]:
         print("OPTIONAL_STREAM_CODEC_METHOD=" + method["name"] + " " + method["descriptor"])
         for ref in method["selected_refs"]:
