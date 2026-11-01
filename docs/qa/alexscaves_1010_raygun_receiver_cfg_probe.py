@@ -222,6 +222,18 @@ PIVOTAL_SITES = (
     (174, "invokeinterface", "UpdatesStackTags.updateTagFromServer:"),
 )
 
+LOCAL_STACK_SITES = (
+    (60, "getfield", "#13", "Field itemStackFrom:"),
+    (63, "astore", "5", ""),
+    (92, "invokevirtual", "#86", "LivingEntity.getItemInHand:"),
+    (95, "astore", "6", ""),
+    (127, "astore", "6", ""),
+    (129, "aload", "6", ""),
+    (156, "aload", "5", ""),
+    (167, "aload", "6", ""),
+    (169, "aload", "5", ""),
+)
+
 REQUIRED_NORMAL_DOMINATORS = (8, 15, 39, 42, 60, 81, 136, 143, 158, 171, 174)
 ALTERNATIVE_NOT_DOMINATING = (92, 105, 113, 124)
 
@@ -242,6 +254,21 @@ def snapshot_projection(report):
     require([(x["offset"], x["opcode"]) for x in actual_fields] ==
             [(39, "getfield"), (60, "getfield")],
             "unverified packet field selection/ordering")
+    windows = handler["critical_anchor_windows"]
+    sources = {}
+    for window in windows:
+        for ins in window["local_jvm_window"]:
+            offset = ins["offset"]
+            require(offset not in sources or sources[offset] == ins,
+                    "conflicting overlapping local JVM windows")
+            sources[offset] = ins
+    bindings = []
+    for offset, opcode, operand, substring in LOCAL_STACK_SITES:
+        ins = sources.get(offset)
+        require(ins is not None and ins["opcode"] == opcode
+                and ins["operand"] == operand and substring in ins["symbol"],
+                "packet-vs-selected stack local binding drift")
+        bindings.append(ins)
     dom = set(handler["normal_cfg_dominators_of_update_dispatch"])
     require(set(REQUIRED_NORMAL_DOMINATORS) <= dom, "expected normal CFG dominator changed")
     require(not set(ALTERNATIVE_NOT_DOMINATING).intersection(dom),
@@ -261,6 +288,7 @@ def snapshot_projection(report):
              "packet_field_accesses")
         },
         "pivotal_native_sites": selected,
+        "local_stack_bindings": bindings,
         "required_normal_cfg_dominators": list(REQUIRED_NORMAL_DOMINATORS),
         "alternative_non_dominators": list(ALTERNATIVE_NOT_DOMINATING),
         "limits": report["limits"]
@@ -298,6 +326,8 @@ def main():
         print("RAYGUN_PACKET_FIELD=" + json.dumps(f, sort_keys=True))
     for ref in h["selected_call_and_field_refs"]:
         print("RAYGUN_SELECTED_REF=" + json.dumps(ref, sort_keys=True))
+    for row in snapshot_projection(report)["local_stack_bindings"]:
+        print("RAYGUN_STACK_BINDING=" + json.dumps(row, sort_keys=True))
     for win in h["critical_anchor_windows"]:
         print("RAYGUN_LOCAL_WINDOW=" + json.dumps(win, sort_keys=True))
     print("RAYGUN_SECURITY_AUTHORITY=NOT_VERIFIED; NO_MUTATION; NOT_CERTIFIED")
