@@ -121,6 +121,27 @@ def audit(jar, javap_bin, upstream):
                 name.startswith("lambda$") or
                 any(c.lower() in symbols.lower() for c in CUES)):
             candidates.append(m)
+    # Bound a small JVM prefix of the *anonymous decoder* for count/loop
+    # provenance. It is not the full implementation or any proof of limits.
+    impl_cmd = [str(javap_bin), "-classpath", str(jar), "-c", "-p", "-s",
+                implementation["class_path"][:-6].replace("/", ".")]
+    compiled = subprocess.run(impl_cmd, capture_output=True, text=True,
+                              timeout=60, check=False)
+    require(compiled.returncode == 0 and 0 < len(compiled.stdout) < MAX_JAVAP_BYTES,
+            "anonymous codec JVM prefix not readable")
+    impl_methods = parse_methods(compiled.stdout)
+    decoder = [m for m in impl_methods if method_name(m) == "decode" and
+               m["descriptor"] ==
+               "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)"
+               "Lnet/minecraft/core/component/DataComponentPatch;"]
+    require(len(decoder) == 1, "anonymous component patch decoder signature drift")
+    prefix = [
+        {"offset":i["offset"], "opcode":i["opcode"],
+         "operand":i["operand"][:60],
+         "symbol":i["symbol"][:240]}
+        for i in decoder[0]["instructions"] if i["offset"] <= 52
+    ]
+    require(10 <= len(prefix) <= 36, "unbounded/empty codec count prefix")
     require(1 <= len(candidates) <= MAX_RELEVANT_METHODS,
             "bounded component patch codec method discovery exceeded")
     evidence=[selected_method(m) for m in candidates]
@@ -134,6 +155,7 @@ def audit(jar, javap_bin, upstream):
         "class_method_count":len(methods),
         "static_stream_codec_initializer":initializer,
         "stream_codec_implementation":implementation,
+        "stream_codec_count_prefix":prefix,
         "selected_method_count":len(evidence),
         "methods":evidence,
         "limits":{
@@ -176,6 +198,8 @@ def main():
     impl=report["stream_codec_implementation"]
     print("COMPONENT_PATCH_CODEC_CLASS="+impl["class_path"])
     print("COMPONENT_PATCH_CODEC_CLASS_SHA256="+impl["class_sha256"])
+    for row in report["stream_codec_count_prefix"]:
+        print("COMPONENT_PATCH_COUNT_PREFIX="+json.dumps(row,sort_keys=True))
     for method in impl["methods"]:
         print("COMPONENT_PATCH_CODEC_METHOD="+method["name"]+" "+method["descriptor"])
         print("COMPONENT_PATCH_CODEC_METHOD_INSNS="+str(method["instruction_count"]))
