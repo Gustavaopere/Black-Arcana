@@ -75,7 +75,7 @@ def selected_report(methods):
     call = validate_impact_method(impact[0])
     output = []
     for method in relevant:
-        points = [FACTORY_OFFSET] if method is impact[0] else []
+        points = [11, 69, 249, 640, 943, FACTORY_OFFSET, 1119] if method is impact[0] else []
         output.append(summarize(method, points))
     return {"method_count": len(output), "damage_factory_callsite": call,
             "selected_methods": output}
