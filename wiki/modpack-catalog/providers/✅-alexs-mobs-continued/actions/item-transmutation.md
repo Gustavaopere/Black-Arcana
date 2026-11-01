@@ -50,3 +50,13 @@ Source: `../EXACT-2.1.13-ARTIFACT-AUDIT.md`.
 ## Matriz de execução e progressão (2026-10-29)
 
 Contrato JAR exato: seleção no menu, settlement server-owned de input/output, débito de XP e reroll são **um único evento causal**. O custo numérico e a autorização de `MessageTransmuteFromMenu` por slot/jogador/sessão **não** estão certificados por teste de modpack; validar `AMC-T01..T03` antes de reduzir XP, aumentar escolhas ou alterar candidatos. Não transformar as três opções em três spells. Mutadores **⛔ fail-closed** sem hook real. Veja [matriz de QA](../EXACT-ARTIFACT-PERK-QA-GATES-2.1.13.md) e [desvio de versão-fonte](../PUBLIC-SOURCE-VERSION-DRIFT-2026-10-29.md).
+
+## Operandos de controle confirmados no JAR 2.1.13 (2026-10-31)
+
+- `MenuTransmutationTable.clickMenuButton` envia `MessageTransmuteFromMenu(playerId, choice)` pelo cliente; a validação do **handler servidor** e do vínculo sessão/jogador não está certificada.
+- `TileEntityTransmutationTable.getPossibility(int)` aplica **`Mth.clamp(choice, 0, 2)`**; `hasPossibilities` exige os três elementos presentes e não vazios. Não confundir clamp com rejeição de índice inválido.
+- `MenuTransmutationTable.transmute` só entra no settlement se estiver server-side, houver tabela, input não vazio, possibilidades presentes, ratio de tamanhos >0 e XP suficiente **ou** `Abilities.instabuild`.
+- Fórmula observada: `ratio = inputMaxStackSize / outputMaxStackSize`; `outputCount = max(1, floor(inputCount / ratio))`. Depois o provider chama `Slot.set(output)`, `giveExperienceLevels(-AMConfig.transmutingExperienceCost)` e `postTransmute`.
+- `postTransmute` registra dados por UUID, soma a quantidade de entrada ao contador de transmutação, possui advancement em **1000** itens e define o UUID para reroll. XP efetivo, autorização C2S, concorrência e persistência não passaram por QA físico.
+
+**Proveniência:** [mapa de bytecode SHA-exato](../EXACT-CONTROL-OPERANDS-2.1.13.md). Não certificar mutadores que alterem XP, pools, quantidades, ou reroll.
