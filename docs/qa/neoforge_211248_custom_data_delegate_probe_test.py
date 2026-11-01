@@ -3,14 +3,17 @@
 from __future__ import annotations
 
 import copy
+import json
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from neoforge_211248_custom_data_delegate_probe import (
     CLASS_PATHS, DelegatedCodecProbeError,
     EXPECTED_SERVER_BYTES, MAX_REFS_PER_METHOD,
     PINNED_SERVER_JAR_SHA256, PINNED_SRG_JAR_SHA256, audit, choose_archive, interesting_instruction,
-    selected_method, snapshot_limits, verify_safe_report,
+    selected_method, snapshot_limits, snapshot_projection,
+    verify_safe_report, verify_snapshot,
 )
 
 
@@ -38,6 +41,74 @@ def empty_report():
 
 
 class DelegateDiscoveryTests(unittest.TestCase):
+
+    def sealed_fixture(self):
+        file = (Path(__file__).resolve().parents[2] /
+                "wiki/modpack-catalog/providers/✅-alexs-caves-continued" /
+                "EXACT-NEOFORGE-211248-CUSTOM-DATA-DELEGATE-ABI.json")
+        snapshot = json.loads(file.read_text(encoding="utf8"))
+        report = empty_report()
+        report["schema_version"] = 1
+        report["classes"] = {
+            key: {
+                **entry,
+                "matching_methods": [],
+            }
+            for key, entry in snapshot["class_identities"].items()
+        }
+        registry = snapshot["data_components_custom_data_reference"]
+        report["classes"]["data_components"]["matching_methods"] = [{
+            "name": registry["name"],
+            "descriptor": registry["descriptor"],
+            "method_sha256": registry["method_sha256"],
+            "matching_references": [{
+                "offset": registry["offset"], "opcode": registry["opcode"],
+                "symbol": registry["symbol"],
+            }],
+        }]
+        for item in snapshot["nbt_accounter_supplier_sites"]:
+            report["classes"]["byte_buf_codecs"]["matching_methods"].append({
+                "name": item["name"],
+                "descriptor": item["descriptor"],
+                "method_sha256": item["method_sha256"],
+                "matching_references": [
+                    {
+                        "offset": item["literal_offset"],
+                        "opcode": item["literal_opcode"],
+                        "symbol": item["literal_symbol"],
+                    },
+                    {
+                        "offset": item["create_offset"],
+                        "opcode": item["create_opcode"],
+                        "symbol": item["create_symbol"],
+                    },
+                ],
+            })
+        return report, snapshot
+
+    def test_sealed_supplier_anchors_hold(self):
+        report, snapshot = self.sealed_fixture()
+        self.assertTrue(verify_snapshot(report, snapshot))
+
+    def test_literal_drift_rejected_before_seal(self):
+        report, snapshot = self.sealed_fixture()
+        report["classes"]["byte_buf_codecs"]["matching_methods"][0][
+            "matching_references"][0]["symbol"] = "long 4194304l"
+        with self.assertRaisesRegex(DelegatedCodecProbeError, "literal/call"):
+            verify_snapshot(report, snapshot)
+
+    def test_registry_method_digest_drift_rejected(self):
+        report, snapshot = self.sealed_fixture()
+        report["classes"]["data_components"]["matching_methods"][0][
+            "method_sha256"] = "0" * 64
+        with self.assertRaisesRegex(DelegatedCodecProbeError, "snapshot mismatch"):
+            verify_snapshot(report, snapshot)
+
+    def test_cannot_promote_literal_to_raygun_limit(self):
+        report, snapshot = self.sealed_fixture()
+        snapshot["literal_interpretation"] = "RAYGUN_2_MIB_MAX"
+        with self.assertRaisesRegex(DelegatedCodecProbeError, "snapshot mismatch"):
+            verify_snapshot(report, snapshot)
 
     def test_overlay_precedence_over_distributed_srg(self):
         self.assertEqual(
