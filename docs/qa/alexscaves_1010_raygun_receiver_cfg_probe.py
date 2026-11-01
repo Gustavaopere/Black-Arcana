@@ -201,6 +201,78 @@ def audit(jar, javap_bin, receiver_seal, identity_seal):
     }
 
 
+
+PIVOTAL_SITES = (
+    (8, "invokeinterface", "ACNetworkContext.getSender:"),
+    (15, "invokeinterface", "ACNetworkContext.isClientSide:"),
+    (39, "getfield", "Field entityId:I"),
+    (42, "invokevirtual", "Level.getEntity:"),
+    (47, "instanceof", "LivingEntity"),
+    (60, "getfield", "Field itemStackFrom:"),
+    (73, "invokevirtual", "LivingEntity.getItemInHand:"),
+    (81, "invokevirtual", "ItemStack.is:"),
+    (92, "invokevirtual", "LivingEntity.getItemInHand:"),
+    (105, "invokevirtual", "LivingEntity.getItemInHand:"),
+    (113, "invokevirtual", "ItemStack.is:"),
+    (124, "invokevirtual", "LivingEntity.getItemInHand:"),
+    (136, "invokevirtual", "ItemStack.getItem:"),
+    (143, "instanceof", "UpdatesStackTags"),
+    (158, "invokestatic", "ACCompat.getTag:"),
+    (171, "invokestatic", "ACCompat.getTag:"),
+    (174, "invokeinterface", "UpdatesStackTags.updateTagFromServer:"),
+)
+
+REQUIRED_NORMAL_DOMINATORS = (8, 15, 39, 42, 60, 81, 136, 143, 158, 171, 174)
+ALTERNATIVE_NOT_DOMINATING = (92, 105, 113, 124)
+
+
+def snapshot_projection(report):
+    """Stable read-only ABI subset; never infer data authorization from CFG."""
+    handler = report["handler"]
+    refs = {x["offset"]: x for x in handler["selected_call_and_field_refs"]}
+    require(len(refs) == len(handler["selected_call_and_field_refs"]),
+            "duplicate JVM selected reference offset")
+    selected = []
+    for offset, opcode, substring in PIVOTAL_SITES:
+        row = refs.get(offset)
+        require(row is not None and row["opcode"] == opcode
+                and substring in row["symbol"], "pivotal native field/target anchor drift")
+        selected.append(row)
+    actual_fields = handler["packet_field_accesses"]
+    require([(x["offset"], x["opcode"]) for x in actual_fields] ==
+            [(39, "getfield"), (60, "getfield")],
+            "unverified packet field selection/ordering")
+    dom = set(handler["normal_cfg_dominators_of_update_dispatch"])
+    require(set(REQUIRED_NORMAL_DOMINATORS) <= dom, "expected normal CFG dominator changed")
+    require(not set(ALTERNATIVE_NOT_DOMINATING).intersection(dom),
+            "hand-alternative normal CFG dominance drift")
+    require(len(handler["normal_cfg_branches"]) == 9,
+            "unexpected receiver CFG population")
+    return {
+        "schema_version": report["schema_version"],
+        "scope": report["scope"],
+        "artifact": report["artifact"],
+        "receiver_class_path": report["receiver_class_path"],
+        "receiver_class_sha256": report["receiver_class_sha256"],
+        "handler": {
+            k: handler[k] for k in
+            ("name", "descriptor", "method_sha256", "instruction_count",
+             "entry_offset", "update_dispatch_offset", "normal_cfg_branches",
+             "packet_field_accesses")
+        },
+        "pivotal_native_sites": selected,
+        "required_normal_cfg_dominators": list(REQUIRED_NORMAL_DOMINATORS),
+        "alternative_non_dominators": list(ALTERNATIVE_NOT_DOMINATING),
+        "limits": report["limits"]
+    }
+
+
+def verify_snapshot(report, snapshot):
+    require(snapshot_projection(report) == snapshot,
+            "sealed Raygun normal CFG/field ABI snapshot drift")
+    return True
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--jar", required=True, type=Path)
@@ -208,10 +280,13 @@ def main():
     p.add_argument("--receiver-manifest", required=True, type=Path)
     p.add_argument("--identity-manifest", required=True, type=Path)
     p.add_argument("--output", required=True, type=Path)
+    p.add_argument("--snapshot", type=Path)
     args = p.parse_args()
     receiver = json.loads(args.receiver_manifest.read_text(encoding="utf8"))
     identity = json.loads(args.identity_manifest.read_text(encoding="utf8"))
     report = audit(args.jar, args.javap, receiver, identity)
+    if args.snapshot is not None:
+        verify_snapshot(report, json.loads(args.snapshot.read_text(encoding="utf8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False,
          indent=2, sort_keys=True) + "\n", encoding="utf8")
