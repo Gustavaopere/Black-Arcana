@@ -24,7 +24,7 @@ FIELD_MAPPING = re.compile(r"^\s+(.+?)\s+([A-Za-z_$][A-Za-z0-9_$]*) -> ([A-Za-z_
 BYTECODE_LINE = re.compile(r"^\s+(\d+):\s+([a-z][a-z0-9_]*)\s*(.*?)(?:\s+//\s+(.*))?$")
 MAX_JAVAP_BYTES = 2_300_000
 MAX_WINDOW = 34
-MAX_REPORT_BYTES = 16000
+MAX_REPORT_BYTES = 32000
 
 
 class MojangBoundaryError(ValueError):
@@ -114,6 +114,69 @@ def parse_initializer(javap_output, expected_field):
     }
 
 
+
+def codec_class_from_initializer(initializer):
+    """Bounded JVM constructor nearest the pinned codec field assignment."""
+    items = initializer["selected_preassignment_abi"]
+    offset = initializer["optional_codec_putstatic_offset"]
+    created = [
+        row for row in items
+        if row["opcode"] == "new" and
+        0 < offset - row["offset"] <= 18 and
+        re.fullmatch(r"class [A-Za-z0-9_/$]+", row["symbol"])
+    ]
+    require(len(created) == 1, "unresolved/ambiguous vanilla optional codec implementation")
+    return created[0]["symbol"].split(" ", 1)[1]
+
+
+def inspect_codec_class(client, javap_bin, outer_owner, codec_owner):
+    """Selected ABI of the assigned codec class; no full method reproduction."""
+    require(codec_owner.startswith(outer_owner + "$"),
+            "assigned vanilla codec class is not an ItemStack inner class")
+    with zipfile.ZipFile(client) as jar:
+        data = jar.read(codec_owner + ".class")
+        require(len(data) >= 8 and data[:4] == b"\xca\xfe\xba\xbe" and
+                int.from_bytes(data[6:8], "big") == 65,
+                "codec inner classfile version drift")
+    cmd = [str(javap_bin), "-classpath", str(client), "-c", "-p", "-s",
+           codec_owner.replace("/", ".")]
+    result = subprocess.run(cmd, capture_output=True, text=True,
+                            timeout=45, check=False)
+    require(result.returncode == 0 and result.stdout and
+            len(result.stdout) <= MAX_JAVAP_BYTES,
+            "cannot inspect bounded vanilla anonymous codec implementation")
+    # Existing parser exports bytecode offsets, method signatures and symbols only.
+    from alexscaves_1010_damage_consumer_probe import parse_methods
+    from alexscaves_1010_raygun_receiver_probe import method_name
+    methods = parse_methods(result.stdout)
+    require(2 <= len(methods) <= 12,
+            "unbounded/missing optional codec implementation method roster")
+    out = []
+    for m in methods:
+        ins = m["instructions"]
+        require(0 <= len(ins) <= 350, "codec method instruction budget exceeded")
+        selected = [
+            {"offset": x["offset"], "opcode": x["opcode"],
+             "operand": x["operand"][:40] if x["opcode"].startswith(("if", "goto")) else "",
+             "symbol": x["symbol"][:300]}
+            for x in ins if x["opcode"].startswith(("invoke", "if", "goto")) or
+            x["opcode"] in ("getstatic", "putstatic", "getfield", "putfield",
+                            "new", "instanceof", "checkcast", "bipush", "sipush")
+        ]
+        require(len(selected) <= 80, "codec selected method reference budget exceeded")
+        out.append({
+            "name": method_name(m), "descriptor": m["descriptor"],
+            "instruction_count": len(ins),
+            "selected_refs": selected
+        })
+    return {
+        "class_path": codec_owner + ".class",
+        "class_sha256": hashlib.sha256(data).hexdigest(),
+        "declared_methods": len(methods),
+        "methods": out
+    }
+
+
 def audit(client, mappings, metadata, javap_bin):
     require(metadata.get("id") == VERSION and metadata.get("type") == "release",
             "incorrect official version metadata")
@@ -149,6 +212,9 @@ def audit(client, mappings, metadata, javap_bin):
     require(result.returncode == 0 and result.stdout,
             "JDK21 javap cannot inspect official ItemStack binary")
     selected = parse_initializer(result.stdout, mapped["field"])
+    codec_owner = codec_class_from_initializer(selected)
+    codec = inspect_codec_class(client, javap_bin, dotted.replace(".", "/"),
+                                codec_owner)
     report = {
         "schema_version": 1,
         "scope": "OFFICIAL_MOJANG_VANILLA_1211_ITEMSTACK_STATIC_ABI_CORROBORATION_ONLY",
@@ -163,6 +229,7 @@ def audit(client, mappings, metadata, javap_bin):
         "obfuscated_field": mapped["field"],
         "mapped_field_type": mapped["named_field_type"],
         "static_initializer": selected,
+        "assigned_codec_implementation": codec,
         "limits": {
             "neoforge_21_1_248_merged_runtime": "NOT_INSPECTED",
             "itemstack_stream_decode_method": "NOT_TRACED",
@@ -203,6 +270,14 @@ def main():
           str(report["static_initializer"]["optional_codec_putstatic_offset"]))
     for ref in report["static_initializer"]["selected_preassignment_abi"]:
         print("OPTIONAL_STREAM_CODEC_ABI_REF=" + json.dumps(ref, sort_keys=True))
+    impl = report["assigned_codec_implementation"]
+    print("OPTIONAL_STREAM_CODEC_CLASS=" + impl["class_path"])
+    print("OPTIONAL_STREAM_CODEC_CLASS_SHA256=" + impl["class_sha256"])
+    for method in impl["methods"]:
+        print("OPTIONAL_STREAM_CODEC_METHOD=" + method["name"] + " " + method["descriptor"])
+        for ref in method["selected_refs"]:
+            print("OPTIONAL_STREAM_CODEC_METHOD_REF=" + method["name"] + " " +
+                  json.dumps(ref, sort_keys=True))
     print("VANILLA_ONLY; NEOFORGE_RUNTIME_NOT_INSPECTED; NO_MUTATION")
 
 
