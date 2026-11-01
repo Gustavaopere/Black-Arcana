@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "scope": "OFFICIAL_MOJANG_VANILLA_1211_ITEMSTACK_STATIC_ABI_CORROBORATION_ONLY",
+  "version": "1.21.1",
+  "official_client_sha1": "30c73b1c5da787909b2f73340419fdf13b9def88",
+  "official_client_size": 26836906,
+  "official_mapping_sha1": "2244b6f072256667bcd9a73df124d6c58de77992",
+  "official_mapping_size": 9598610,
+  "class_path": "cuq.class",
+  "class_sha256": "a34b9141828bd62fa74ad6a5d3b9b47a81df18b4a86866827c8f73d3ab97f901",
+  "mapped_field": "OPTIONAL_STREAM_CODEC",
+  "obfuscated_field": "h",
+  "mapped_field_type": "net.minecraft.network.codec.StreamCodec",
+  "codec_class_path": "cuq$1.class",
+  "codec_class_sha256": "b67408499e6a5f8edd5120e1bffa67c6e0c50f68658d5d098c4813beebbadfc2",
+  "codec_method_signatures": [
+    {
+      "name": "cuq$1",
+      "descriptor": "()V"
+    },
+    {
+      "name": "a",
+      "descriptor": "(Lwk;)Lcuq;"
+    },
+    {
+      "name": "a",
+      "descriptor": "(Lwk;Lcuq;)V"
+    },
+    {
+      "name": "encode",
+      "descriptor": "(Ljava/lang/Object;Ljava/lang/Object;)V"
+    },
+    {
+      "name": "decode",
+      "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;"
+    }
+  ],
+  "codec_initializer_putstatic_offset": 127,
+  "selected_obfuscated_class_names": {
+    "jm": "net.minecraft.core.Holder",
+    "kn": "net.minecraft.core.component.DataComponentPatch",
+    "wk": "net.minecraft.network.RegistryFriendlyByteBuf"
+  },
+  "selected_vanilla_codec_abi": [
+    {
+      "method": "a",
+      "descriptor": "(Lwk;)Lcuq;",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method wk.l:()I"
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;)Lcuq;",
+      "offset": 6,
+      "opcode": "ifgt",
+      "operand": "13",
+      "symbol": ""
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;)Lcuq;",
+      "offset": 9,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field cuq.l:Lcuq;"
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;)Lcuq;",
+      "offset": 17,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod yx.decode:(Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;)Lcuq;",
+      "offset": 26,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field kn.c:Lyx;"
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;)Lcuq;",
+      "offset": 30,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod yx.decode:(Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;Lcuq;)V",
+      "offset": 4,
+      "opcode": "ifeq",
+      "operand": "14",
+      "symbol": ""
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;Lcuq;)V",
+      "offset": 9,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method wk.c:(I)Lvw;"
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;Lcuq;)V",
+      "offset": 19,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method wk.c:(I)Lvw;"
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;Lcuq;)V",
+      "offset": 23,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field a:Lyx;"
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;Lcuq;)V",
+      "offset": 31,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod yx.encode:(Ljava/lang/Object;Ljava/lang/Object;)V"
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;Lcuq;)V",
+      "offset": 36,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field kn.c:Lyx;"
+    },
+    {
+      "method": "a",
+      "descriptor": "(Lwk;Lcuq;)V",
+      "offset": 47,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod yx.encode:(Ljava/lang/Object;Ljava/lang/Object;)V"
+    }
+  ],
+  "limits": {
+    "neoforge_21_1_248_merged_runtime": "NOT_INSPECTED",
+    "itemstack_stream_decode_method": "NOT_TRACED",
+    "data_component_patch_bounds": "NOT_TRACED",
+    "network_packet_size_limits": "NOT_VERIFIED",
+    "nbt_depth_and_byte_limits": "NOT_VERIFIED",
+    "raygun_tag_authority": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "static_perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  }
+}

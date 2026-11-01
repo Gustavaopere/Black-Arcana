@@ -244,3 +244,11 @@ O [manifesto do helper sombreado de Citadel](../EXACT-RAYGUN-ITEMSTACK-HELPER-1.
 Isso determina a **fronteira de delegação ao Minecraft**. O tamanho máximo do `ItemStack`, os limites de NBT/componentes e os controles internos do codec **não foram demonstrados** pela inspeção do helper. Tampouco há evidência de validação server-side dos campos do Raygun, autorização de `entityId`, replay protection ou hooks de perk. Consulte a [matriz RN-04](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md).
 
 **Estado preservado:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Nenhum certificado, contador ou Stage promovido.
+
+## ItemStack.OPTIONAL_STREAM_CODEC — corroboração Mojang 1.21.1
+
+O [manifesto vanilla 1.21.1](../EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json) acrescenta uma **autoridade binária separada** da versão instalada de NeoForge: `ItemStack` obfuscada como `cuq.class` e `OPTIONAL_STREAM_CODEC` em campo `h`, inicializado com `cuq$1 @120/@127`. No caminho de leitura desse codec vanilla, há comparação `ifgt @6` do valor numérico lido e um ramo `ItemStack.EMPTY`; o outro ramo delega a leitura de item/holder (`StreamCodec.decode @17`) e do patch de componentes (`DataComponentPatch` codificado como `kn.c`, `StreamCodec.decode @30`). No caminho de escrita há um ramo `ifeq @4` e delegações de item e patch (`StreamCodec.encode @31/@47`).
+
+**Escopo do selo:** vanilla **Minecraft 1.21.1 oficial** (cliente/mapping por hashes Mojang), não a classe Minecraft transformada no **NeoForge 21.1.248**. Não prova limites efetivos de NBT, tamanho de item, quantidade máxima, validação server-side do `entityId` e `CUSTOM_DATA`, autorização de charge/tempo nem testes físicos. A [matriz de aceite VC-01…VC-06](../../../../../docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md) mantém esses gates bloqueados.
+
+**Estado preservado:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`; sem novo certificado estático, mutação, indicador global ou promoção de Stage.
