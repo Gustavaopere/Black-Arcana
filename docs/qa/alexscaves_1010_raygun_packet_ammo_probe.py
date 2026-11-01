@@ -25,7 +25,8 @@ PACKET = ROOT + "server/message/UpdateItemTagMessage.class"
 RAYGUN_SHA = "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c"
 RAYGUN_METHODS = {
     "findAmmo", "use", "onUseTick", "releaseUsing", "getCharge",
-    "setCharge", "hasCharge", "getUseDuration"
+    "setCharge", "hasCharge", "getUseDuration", "updateTagFromServer",
+    "lambda$static$0", "lambda$static$1"
 }
 SENDERS = {
     "onUseTick": (162, 165),
@@ -120,7 +121,10 @@ def audit(jar, javap_bin):
             selected = select(methods, RAYGUN_METHODS, raygun=(path == RAYGUN))
             classes.append({
                 "class_path": path, "class_sha256": digest,
-                "declared_method_count": len(methods), "selected_methods": selected
+                "declared_method_count": len(methods),
+                "declared_methods": [{"name": name_of(m), "descriptor": m["descriptor"]}
+                                     for m in methods],
+                "selected_methods": selected
             })
     return {
         "schema_version": 1,
