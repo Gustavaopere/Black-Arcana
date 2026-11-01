@@ -1,6 +1,6 @@
 # Raygun — tipo de dano `alexscaves:raygun` (1.0.10)
 
-**Estado de catalogação:** ⚠️ `RESOURCE_JSON_VERIFIED` (recurso SHA-exato). **Contrato técnico estático para perks:** ⚠️ `NOT_CERTIFIED`. **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`.
+**Estado de catalogação:** ⚠️ `RESOURCE_JSON_VERIFIED + SHA_EXACT_SELECTED_BYTECODE_OBSERVED` (escopo parcial). **Contrato técnico estático para perks:** ⚠️ `NOT_CERTIFIED`. **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`.
 
 ## Proveniência e identidade
 
@@ -36,12 +36,12 @@ O tag `minecraft:bypasses_cooldown` corresponde à classificação de tipo de da
 | Capacidade pretendida | Situação |
 |---|---|
 | Factory de `DamageSource` / chamadas JVM | ✅ localizadas estaticamente; comportamento e caminhos efetivos `NÃO VERIFICADO` |
-| Origem, atacante, owner, attribution e condições de PvP | `NÃO VERIFICADO` |
-| Fórmula de dano, mitigação, críticos e resistências | `NÃO VERIFICADO` |
-| Alvos elegíveis, tipo target/área, alcance, raio e filtros | `NÃO VERIFICADO` |
-| Entidades/projéteis, tamanho, velocidade, colisão e homing | `NÃO VERIFICADO` |
-| Duração, intervalo de hits, custo de ação e cooldown de casting | `NÃO VERIFICADO` |
-| Persistência, ordenação de eventos, server authority e deduplicação | `NÃO VERIFICADO` |
+| Origem, atacante, owner, attribution e condições de PvP | ⚠️ argumento caster observado em `causeRaygunDamage`; atribuição final/kill/PvP ainda não verificados |
+| Fórmula de dano, mitigação, críticos e resistências | ⚠️ `ACCompat.hurt` recebe 1,5f ou 2,0f conforme flag local; causa e aceitação líquida ainda abertas |
+| Alvos elegíveis, tipo target/área, alcance, raio e filtros | ⚠️ ray trace, AABB, exclusões de aliados/mesmo veículo observados; alcance/volume efetivos pendentes |
+| Entidades/projéteis, tamanho, velocidade, colisão e homing | ⚠️ seletores por ray trace e entidades; nenhum spawn direto observado em `onUseTick`, mas indiretos não descartados |
+| Duração, intervalo de hits, custo de ação e cooldown de casting | ⚠️ `getUseDuration=72000`, `ChargeUsed` e 800 ticks de status observados; fórmula de custo/intervalos/cooldown pendentes |
+| Persistência, ordenação de eventos, server authority e deduplicação | ⚠️ tags `ChargeUsed`/`UseTime` e `UpdateItemTagMessage` observadas; handler, reload e antirreplay não testados |
 | Hook de mutação seguro na versão instalada | `NOT_VERIFIED` |
 | QA real em modpack/multiplayer | `NOT_TESTED` |
 
@@ -71,7 +71,7 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 
 ## Auditoria de controle nativo — `RaygunItem` compilado 1.0.10
 
-**Recorte novo:** `SHA_EXACT_1010_RAYGUN_SELECTED_METHOD_REFERENCES_AND_NUMERIC_OPERANDS_ONLY`. [Manifesto imutável de parâmetros e métodos](../EXACT-RAYGUN-CONTROL-1.0.10.json) · [probe e testes](https://github.com/Gustavaopere/Black-Arcana/blob/main/docs/qa/alexscaves_1010_raygun_control_probe.py) (a ligação à main só vale após merge) · [workflow de evidência](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41256261358).
+**Recorte novo:** `SHA_EXACT_1010_RAYGUN_SELECTED_METHOD_REFERENCES_AND_NUMERIC_OPERANDS_ONLY`. [Manifesto imutável de parâmetros e métodos](../EXACT-RAYGUN-CONTROL-1.0.10.json) · [probe e testes da PR #985](https://github.com/Gustavaopere/Black-Arcana/pull/985) · [workflow de evidência](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41256261358).
 
 A inspeção automatizada baixou e validou a versão publisher **1.0.10** do JAR pelos SHA-1/SHA-256 e tamanho físico registrados acima, verificou a classe compilada `server/item/RaygunItem.class` (SHA-256 `3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c`), inspecionou **26 métodos declarados** e exportou **18 métodos selecionados**. O manifesto fixa digest de oito métodos e 14 âncoras numéricas/simbólicas; o resultado da CI não é teste de gameplay nem reconstrução completa do CFG.
 
