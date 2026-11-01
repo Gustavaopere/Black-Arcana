@@ -1,0 +1,84 @@
+name: NeoForge 21.1.248 DataComponentPatch stream codec ABI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-component-patch-stream.yml'
+      - 'docs/qa/neoforge_211248_component_patch_stream_probe.py'
+      - 'docs/qa/neoforge_211248_component_patch_stream_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md'
+      - 'docs/qa/alexscaves-1010-raygun-network-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-COMPONENT-PATCH-ABI.json'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-component-patch-stream.yml'
+      - 'docs/qa/neoforge_211248_component_patch_stream_probe.py'
+      - 'docs/qa/neoforge_211248_component_patch_stream_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md'
+      - 'docs/qa/alexscaves-1010-raygun-network-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-COMPONENT-PATCH-ABI.json'
+permissions:
+  contents: read
+
+jobs:
+  exact_component_patch_stream:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 23
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic read-only DataComponentPatch probe regressions
+        run: |
+          python3 -m py_compile docs/qa/neoforge_211248_component_patch_stream_probe.py docs/qa/neoforge_211248_component_patch_stream_probe_test.py
+          python3 docs/qa/neoforge_211248_component_patch_stream_probe_test.py -v
+      - name: Download and verify official NeoForge 21.1.248 installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/neoforge-211248/server
+          cd build/neoforge-211248/server
+          BASE='https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248'
+          curl --fail --silent --show-error --location --retry 2 --connect-timeout 15 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar.sha256" -o installer.sha256
+          curl --fail --silent --show-error --location --retry 2 --connect-timeout 15 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar" -o neoforge-installer.jar
+          EXPECTED="$(awk '{print $1}' installer.sha256)"
+          ACTUAL="$(sha256sum neoforge-installer.jar | awk '{print $1}')"
+          test "$(printf '%s' "$EXPECTED" | wc -c)" -eq 64
+          test "$EXPECTED" = "$ACTUAL"
+          test "$ACTUAL" = '68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c'
+          unzip -tq neoforge-installer.jar
+          echo "EXACT_NEOFORGE_INSTALLER_SHA256=$ACTUAL"
+      - name: Install exact official server distribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/neoforge-211248/server
+          java -jar neoforge-installer.jar --installServer > installer.log 2>&1 || {
+            tail -n 65 installer.log
+            exit 1
+          }
+          test -f 'libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar'
+      - name: Inspect exact component patch stream codec
+        run: |
+          python3 docs/qa/neoforge_211248_component_patch_stream_probe.py \
+            --jar build/neoforge-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --prior 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-ITEMSTACK-SERVER-ABI.json' \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-COMPONENT-PATCH-ABI.json' \
+            --output build/neoforge-211248/component-patch-stream-abi.json
+      - name: Publish bounded ABI reference report only
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: neoforge-211248-component-patch-stream-abi
+          path: build/neoforge-211248/component-patch-stream-abi.json
+          retention-days: 14
+          if-no-files-found: ignore

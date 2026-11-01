@@ -208,6 +208,12 @@ A [matriz VC-01](alexscaves-1010-raygun-vanilla-codec-acceptance.md) foi atualiz
 
 **VC-01 parcial** · `NOT_CERTIFIED` · `NO_MUTATION` · `physical_qa=NOT_TESTED`.
 
+## VC-02 — DataComponentPatch$1: contagens e capacidade
+
+Na distribuição oficial NeoForge `21.1.248`, o `DataComponentPatch.STREAM_CODEC` é uma classe anônima `$1`. O [manifesto de ABI](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-COMPONENT-PATCH-ABI.json) identifica duas contagens `readVarInt @1/@6`, laços distintos de componentes acrescentados/removidos e dispatch de valores a `DataComponentType.streamCodec`. O literal **65536** entra em `Math.min` como argumento da capacidade *inicial* do mapa criado pelo decoder e **não comprova rejeição de patches maiores**. Veja a [matriz VC-02](alexscaves-1010-raygun-vanilla-codec-acceptance.md).
+
+`data_component_patch_entry_limits=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`.
+
 ## Aceite antes de concluir contrato estático Raygun
 
 | Gate | Evidência necessária | Estado atual |

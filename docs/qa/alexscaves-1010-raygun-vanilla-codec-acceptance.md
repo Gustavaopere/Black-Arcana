@@ -36,12 +36,27 @@ Os hashes das classes da distribuição NeoForge diferem dos hashes do JAR vanil
 
 A inspeção da classe entregue pelo instalador é avanço parcial de VC-01, mas **não fecha VC-01**. Permanecem necessários um levantamento da classe efetivamente carregada, avaliação específica dos codecs do patch de componentes, limites efetivos e QA física em cliente/servidor do modpack. `NOT_CERTIFIED` · `NO_MUTATION`.
 
+## VC-02 — DataComponentPatch.STREAM_CODEC na distribuição NeoForge 21.1.248
+
+Nova prova SHA-exata do **JAR oficial distribuído** `neoforge-21.1.248-server.jar` (SHA-256 `1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359`). O [manifesto do componente](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-COMPONENT-PATCH-ABI.json) sela a classe `DataComponentPatch.class` (SHA-256 `24f57ec112e9f3ec1e8db754e9014b5b02e2f2c6283f13fbffd27fb90be8d263`) e a classe anônima concreta do `STREAM_CODEC`, `DataComponentPatch$1.class` (SHA-256 `d98b1334116457aea1f6b174e9f0760e6897d965eda58b7f57865bd1e5427880`). O campo estático é atribuído em `@49` após instanciar `$1 @42`.
+
+| Caminho compilado do codec $1 | Evidência e interpretação limitada |
+| --- | --- |
+| Decodificação, duas contagens | `RegistryFriendlyByteBuf.readVarInt @1/@6`; `ifne @11/@15` retorna `DataComponentPatch.EMPTY` quando ambas são zero |
+| Capacidade **inicial** do mapa | Soma das contagens `iadd @24`, constante `int 65536 @33`, `Math.min @35` e `Reference2ObjectArrayMap.<init>(I) @38`. **65.536 limita a capacidade inicial escolhida para alocação, NÃO constitui limite máximo de componentes admitidos.** Os laços continuam vinculados às contagens lidas |
+| Componentes acrescentados | Laço com teste `if_icmpge @49`, `DataComponentType.STREAM_CODEC.decode @56`, codec específico do tipo via `DataComponentType.streamCodec @68` e `StreamCodec.decode @74` |
+| Componentes removidos | Segundo laço `if_icmpge @108`, `DataComponentType.STREAM_CODEC.decode @115`, `Optional.empty @129` |
+| Codificação | `writeVarInt` das contagens, `DataComponentType.STREAM_CODEC`, e chamada `encodeComponent` que delega ao codec específico |
+
+A evidência não comprova validação de contagens negativas, limite máximo agregado de bytes/componentes, profundidade de NBT, exceções em buffers malformados ou compatibilidade das transformações do ModLauncher. O papel de `Math.min(65536)` foi verificado pela sequência das instruções, sem afirmar que não existam controles em outras camadas. Não extrapolar para autorização do `entityId`, modificação de `ChargeUsed`/`UseTime`, exploração ou QA física.
+
+**VC-02: parcialmente analisado na distribuição, ainda `NOT_VERIFIED` quanto a limites efetivos.** Conservam-se `NO_MUTATION`, `NOT_CERTIFIED` e `physical_qa=NOT_TESTED`.
 ## Plano de aceite pendente
 
 | ID | Prova requerida | Situação |
 | --- | --- | --- |
 | VC-01 | Inspecionar `ItemStack.OPTIONAL_STREAM_CODEC` na distribuição oficial NeoForge 21.1.248 e na classe final carregada/transformada com o modpack | ⚠️ **Distribuição de servidor SHA-exata INSPECIONADA**, mas bytes carregados pelo ModLauncher/transformações do modpack **NOT_OBSERVED**; falta comparação de runtime |
-| VC-02 | Analisar versão efetiva do `DataComponentPatch.STREAM_CODEC`, `ByteBufCodecs` e limite de componentes/bytes/profundidade da stack no contexto exato | ⚠️ NOT_VERIFIED |
+| VC-02 | Analisar `DataComponentPatch.STREAM_CODEC`, `ByteBufCodecs` e limites de componentes/bytes/profundidade no contexto exato | ⚠️ **Decoder `$1` da distribuição 21.1.248 INSPECIONADO**; `65536` é capacidade inicial do mapa, não cap de componentes; codecs delegados, limites de segurança e runtime modpack **NOT_VERIFIED** |
 | VC-03 | Observar aceitação/rejeição controlada de stack vazia, quantidade inválida, NBT grande, patch desconhecido e buffers malformados em cliente e servidor do modpack (sem entregar pacotes hostis a servidores externos) | ⚠️ NOT_TESTED |
 | VC-04 | Demonstrar que dados C2S não podem atualizar uma entidade/item fora da autoridade do remetente; checar mão principal, secundária, troca de mão, reenvio e jogador remoto | ⚠️ NOT_VERIFIED / NOT_TESTED |
 | VC-05 | Validar `ChargeUsed`/`UseTime` server-owned, limits, custo nativo, ausência de duplicação de dano/uso e compatibilidade com perks | ⛔ NO_MUTATION até contrato e QA apropriados |
