@@ -1,0 +1,86 @@
+name: NeoForge 21.1.248 installed-server ItemStack optional codec
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-raygun-itemstack-server-codec.yml'
+      - 'docs/qa/neoforge_211248_itemstack_server_codec_probe.py'
+      - 'docs/qa/neoforge_211248_itemstack_server_codec_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md'
+      - 'docs/qa/alexscaves-1010-raygun-network-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-ITEMSTACK-SERVER-ABI.json'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-raygun-itemstack-server-codec.yml'
+      - 'docs/qa/neoforge_211248_itemstack_server_codec_probe.py'
+      - 'docs/qa/neoforge_211248_itemstack_server_codec_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md'
+      - 'docs/qa/alexscaves-1010-raygun-network-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-ITEMSTACK-SERVER-ABI.json'
+
+permissions:
+  contents: read
+
+jobs:
+  exact_installed_server_codec:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 23
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Regression tests for SHA and scope fail-closed
+        run: |
+          python3 -m py_compile docs/qa/neoforge_211248_itemstack_server_codec_probe.py docs/qa/neoforge_211248_itemstack_server_codec_probe_test.py
+          python3 docs/qa/neoforge_211248_itemstack_server_codec_probe_test.py -v
+      - name: Download official NeoForge 21.1.248 installer with Maven checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/neoforge-211248/server
+          cd build/neoforge-211248/server
+          BASE='https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248'
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar.sha256" -o installer.sha256
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar" -o neoforge-installer.jar
+          EXPECTED="$(awk '{print $1}' installer.sha256)"
+          ACTUAL="$(sha256sum neoforge-installer.jar | awk '{print $1}')"
+          test "$(printf '%s' "$EXPECTED" | wc -c)" -eq 64
+          test "$EXPECTED" = "$ACTUAL"
+          test "$(wc -c < neoforge-installer.jar)" -gt 5000000
+          unzip -tq neoforge-installer.jar
+          echo "OFFICIAL_NEOFORGE_211248_INSTALLER_SHA256=$ACTUAL"
+      - name: Materialize official NeoForge 21.1.248 installed server distribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/neoforge-211248/server
+          java -jar neoforge-installer.jar --installServer > installer.log 2>&1 || {
+            echo "::error::NEOFORGE_211248_SERVER_INSTALLER_FAILED"
+            tail -n 85 installer.log
+            exit 1
+          }
+          echo "NEOFORGE_211248_INSTALL_SERVER_EXIT=0"
+          test -f 'libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar'
+      - name: Inspect exact distributed ItemStack codec without claiming loaded runtime
+        run: |
+          python3 docs/qa/neoforge_211248_itemstack_server_codec_probe.py \
+            --server build/neoforge-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
+            --vanilla-snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json' \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/neoforge-211248/raygun-itemstack-server-abi.json
+      - name: Publish compact ABI only; no binaries or mapped code
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: neoforge-211248-raygun-itemstack-server-abi
+          path: build/neoforge-211248/raygun-itemstack-server-abi.json
+          retention-days: 14
+          if-no-files-found: ignore
