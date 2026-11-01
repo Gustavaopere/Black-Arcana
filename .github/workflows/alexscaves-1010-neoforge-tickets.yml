@@ -7,6 +7,11 @@ on:
       - '.github/workflows/alexscaves-1010-neoforge-tickets.yml'
       - 'docs/qa/alexscaves_1010_neoforge_ticket_contract_probe.py'
       - 'docs/qa/alexscaves_1010_neoforge_ticket_contract_probe_test.py'
+      - 'docs/qa/alexscaves_1010_nuclear_ticket_promotion_gate_test.py'
+      - 'docs/qa/alexscaves-1010-nuclear-ticket-physical-acceptance.md'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/INDEX.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/INDEX.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-TICKETS-21.1.248.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/nuke.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md'
@@ -16,6 +21,11 @@ on:
       - '.github/workflows/alexscaves-1010-neoforge-tickets.yml'
       - 'docs/qa/alexscaves_1010_neoforge_ticket_contract_probe.py'
       - 'docs/qa/alexscaves_1010_neoforge_ticket_contract_probe_test.py'
+      - 'docs/qa/alexscaves_1010_nuclear_ticket_promotion_gate_test.py'
+      - 'docs/qa/alexscaves-1010-nuclear-ticket-physical-acceptance.md'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/INDEX.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/INDEX.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-TICKETS-21.1.248.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/nuke.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/intentional-game-design.md'
@@ -38,6 +48,7 @@ jobs:
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_neoforge_ticket_contract_probe.py
           python3 docs/qa/alexscaves_1010_neoforge_ticket_contract_probe_test.py -v
+          python3 docs/qa/alexscaves_1010_nuclear_ticket_promotion_gate_test.py -v
       - name: Fetch SHA-pinned publisher and exact NeoForge Maven artifact
         run: |
           mkdir -p build/alexscaves-1010
