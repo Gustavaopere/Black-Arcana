@@ -130,9 +130,55 @@ def audit(jar, javap_bin, receiver):
     return report
 
 
+CRITICAL_ANCHORS = (
+    ("registerMessages", 151, "ldc", "UpdateItemTagMessage"),
+    ("registerMessages", 168, "invokestatic", "Method register:"),
+    ("registerPayloads", 0, "invokestatic", "Method registerMessages:"),
+    ("registerPayloads", 12, "invokevirtual", "RegisterPayloadHandlersEvent.registrar:"),
+    ("registerPayloads", 22, "invokevirtual", "PayloadRegistrar.playBidirectional:"),
+    ("lambda$registerPayloads$0", 24, "invokespecial", "ACNetwork$NeoForgeContext."),
+    ("lambda$registerPayloads$0", 27, "invokevirtual", "ACNetwork$Entry.handle:"),
+)
+
+
+def snapshot_projection(report):
+    """Only SHA-exact ABI identities and critical narrow callsites are sealed."""
+    methods = report["selected_methods"]
+    require([m["name"] for m in methods] == list(TARGET_METHODS),
+            "network selected method order drift")
+    rows = []
+    for method_name_expected, offset, opcode, symbol in CRITICAL_ANCHORS:
+        m = next(x for x in methods if x["name"] == method_name_expected)
+        sources = m["bounded_abi_calls"] + [
+            row for w in m["packet_reference_windows"]
+            for row in w["adjacent_selected_symbols"]
+        ]
+        hits = [x for x in sources if x["offset"] == offset]
+        require(bool(hits) and all(x == hits[0] for x in hits),
+                "network critical anchor missing/ambiguous")
+        require(hits[0]["opcode"] == opcode and symbol in hits[0]["symbol"],
+                "network critical anchor opcode/symbol drift")
+        rows.append({"method": method_name_expected, **hits[0]})
+    return {
+        **{k: report[k] for k in
+           ("schema_version", "scope", "artifact",
+            "network_class_path", "network_class_sha256",
+            "declared_method_count", "packet_class_path", "packet_class_sha256")},
+        "selected_methods": [
+            {k: m[k] for k in
+             ("name", "descriptor", "instruction_count",
+              "parsed_method_sha256", "packet_reference_offsets")}
+            for m in methods
+        ],
+        "critical_anchors": rows,
+        "limits": report["limits"]
+    }
+
+
 def verify_snapshot(report, snapshot):
-    """A frozen manifest must match exact identities/selected method ABI."""
-    require(report == snapshot, "sealed network ABI report drift")
+    """Sealed JAR version, critical opcodes, method hashes and fail-closed limits."""
+    require(snapshot_projection(report) == snapshot,
+            "sealed network ABI snapshot drift")
     return True
 
 
