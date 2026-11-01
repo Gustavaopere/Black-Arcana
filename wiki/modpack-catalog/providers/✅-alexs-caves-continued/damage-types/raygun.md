@@ -252,3 +252,9 @@ O [manifesto vanilla 1.21.1](../EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json) acr
 **Escopo do selo:** vanilla **Minecraft 1.21.1 oficial** (cliente/mapping por hashes Mojang), não a classe Minecraft transformada no **NeoForge 21.1.248**. Não prova limites efetivos de NBT, tamanho de item, quantidade máxima, validação server-side do `entityId` e `CUSTOM_DATA`, autorização de charge/tempo nem testes físicos. A [matriz de aceite VC-01…VC-06](../../../../../docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md) mantém esses gates bloqueados.
 
 **Estado preservado:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`; sem novo certificado estático, mutação, indicador global ou promoção de Stage.
+
+## NeoForge 21.1.248 — ItemStack do servidor distribuído
+
+A [auditoria da distribuição oficial NeoForge 21.1.248](../../../../../docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md) acrescenta classfiles SHA-exatos de `net.minecraft.world.item.ItemStack` e `ItemStack$1` ao dossiê Raygun. O [manifesto do codec de servidor](../EXACT-NEOFORGE-211248-ITEMSTACK-SERVER-ABI.json) fixa 15 referências JVM, incluindo `readVarInt`, `ITEM_STREAM_CODEC`, `DataComponentPatch.STREAM_CODEC` e o ramo de stack vazia. Essa evidência complementa o codec Mojang vanilla sem presumir equivalência binária.
+
+**Escopo restrito:** trata-se do classfile fornecido pelo instalador oficial de servidor; a versão efetivamente carregada pelo ModLauncher com os mods do pack não foi observada. Não foram auditados limites internos do patch de componentes nem homologados campos `CUSTOM_DATA`, `ChargeUsed`/`UseTime`, `entityId` ou ownership. **VC-01 ainda parcial.** `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`.
