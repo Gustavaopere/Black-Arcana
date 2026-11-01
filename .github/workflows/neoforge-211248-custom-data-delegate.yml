@@ -57,6 +57,36 @@ jobs:
             exit 1
           }
           test -f 'libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar'
+      - name: Locate exact delegated classes in installed server archives
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import zipfile
+          from pathlib import Path
+          root = Path("build/neoforge-211248/server")
+          wanted = {
+              "net/minecraft/world/item/component/CustomData.class",
+              "net/minecraft/core/component/DataComponents.class",
+              "net/minecraft/network/codec/ByteBufCodecs.class",
+          }
+          jars = sorted(root.rglob("*.jar"))
+          assert len(jars) <= 700, "unbounded installed library population"
+          print("INSTALLED_JAR_COUNT=" + str(len(jars)))
+          for jar in jars:
+              if jar.stat().st_size > 150_000_000:
+                  continue
+              try:
+                  with zipfile.ZipFile(jar) as zf:
+                      matches = sorted(wanted.intersection(zf.namelist()))
+              except zipfile.BadZipFile:
+                  continue
+              if matches:
+                  sha = hashlib.sha256(jar.read_bytes()).hexdigest()
+                  print("DELEGATE_ARCHIVE=" + str(jar) + " SHA256=" + sha)
+                  for match in matches:
+                      print("DELEGATE_CLASS_FOUND=" + match)
+          PY
       - name: Discover bounded CustomData and delegated NBT ABI only
         run: |
           python3 docs/qa/neoforge_211248_custom_data_delegate_probe.py \
