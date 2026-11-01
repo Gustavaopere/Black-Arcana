@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check exact resources and four separately sealed static damage contracts."""
+"""Check exact resources and five separately sealed static damage contracts."""
 import hashlib
 import json
 import re
@@ -35,6 +35,13 @@ STATIC_CONTRACTS = {
         "family": "FORSAKEN_SONIC_CONTRACT",
         "cards": frozenset({"damage-types/forsaken-sonic-boom.md"}),
     },
+    "gumball": {
+        "manifest": "EXACT-GUMBALL-CONTRACTS-1.0.10.json",
+        "profile": "gumball",
+        "family": "GUMBALL_CONTRACTS",
+        "cards": frozenset({"damage-types/gumball.md", "equipment/shot-gum.md"}),
+    },
+
 }
 
 
@@ -47,12 +54,23 @@ FORSAKEN_PRIOR_MANIFEST_SHA256 = {
 }
 
 
+GUMBALL_PRIOR_MANIFEST_SHA256 = {
+    "EXACT-GUMBALL-IMPACT-1.0.10.json": "9c906ae9c44d01f7a1ca38f3b43c7ea4280bc3d49cee7bb9346bf66ae6b48198",
+    "EXACT-GUMBALL-PRODUCERS-1.0.10.json": "a618be101c4c73384a7bf0b32fb2202b5e9ebdce371d4cc442be0a0fe723c455",
+    "EXACT-GUMBALL-STATE-1.0.10.json": "e2c74f0e2999e8b7286f21f89494cd84b8c0aafee4dcbb7c6ec190610a19a0e1",
+    "EXACT-GUMBALL-SPLIT-ENCHANT-1.0.10.json": "2ace1627c2fd451a23d0aae596301d4d1037d1e03994cc4b21adbaed7e048f9e"
+}
+
 def assert_sealed_damage_contract(case, damage_id):
     """A promoted card needs an exact seal and matching static-only ledger evidence."""
     provider = FAMILY.parent
     if damage_id == "forsaken_sonic_boom":
         for name, expected in FORSAKEN_PRIOR_MANIFEST_SHA256.items():
             case.assertEqual(hashlib.sha256((FAMILY / name).read_bytes()).hexdigest(), expected,
+                             "historical partial evidence must remain immutable: " + name)
+    if damage_id == "gumball":
+        for name, expected in GUMBALL_PRIOR_MANIFEST_SHA256.items():
+            case.assertEqual(hashlib.sha256((provider / name).read_bytes()).hexdigest(), expected,
                              "historical partial evidence must remain immutable: " + name)
     scope = STATIC_CONTRACTS[damage_id]
     manifest = load_manifest(provider / scope["manifest"])
@@ -121,16 +139,16 @@ class DamageTypeCards(unittest.TestCase):
                 self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if id in STATIC_CONTRACTS else "NOT_CERTIFIED", text)
                 self.assertIn("**+0 raízes mágicas novas**", text)
 
-    def test_four_static_certificates_have_sealed_cards_and_runtime_limits(self):
-        self.assertEqual(set(STATIC_CONTRACTS), {"acid", "dark_arrow", "desolate_dagger", "forsaken_sonic_boom"})
+    def test_five_static_certificates_have_sealed_cards_and_runtime_limits(self):
+        self.assertEqual(set(STATIC_CONTRACTS), {"acid", "dark_arrow", "desolate_dagger", "forsaken_sonic_boom", "gumball"})
         for id in STATIC_CONTRACTS:
             with self.subTest(id=id):
                 assert_sealed_damage_contract(self, id)
 
-    def test_other_seven_damage_types_remain_uncertified(self):
+    def test_other_six_damage_types_remain_uncertified(self):
         ledger = json.loads((ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text())
         remaining = set(self.manifest["damage_types"]) - set(STATIC_CONTRACTS)
-        self.assertEqual(len(remaining), 7)
+        self.assertEqual(len(remaining), 6)
         for id in remaining:
             with self.subTest(id=id):
                 relative = FAMILY.parent.name + "/damage-types/" + id.replace("_", "-") + ".md"
