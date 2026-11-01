@@ -22,9 +22,15 @@ class RaygunControlProbeTest(unittest.TestCase):
     def impact(self):
         return method("onUseTick", [
             instr(0, "aload_0"),
+            instr(11, "bipush", "15"),
+            instr(69, "invokestatic", "Method rayTrace:()V"),
+            instr(249, "invokestatic", "Method enchantLevel:()I"),
+            instr(640, "invokestatic", "Method getEntityHitResult:()V"),
+            instr(943, "invokevirtual", "Method getEntities:()V"),
             instr(FACTORY_OFFSET, "invokestatic",
                   "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeRaygunDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"),
-            instr(1030, "return")
+            instr(1119, "invokevirtual", "Method addEffect:()Z"),
+            instr(1123, "return")
         ])
 
     def test_sha_exact_class_identifiers_are_pinned(self):
@@ -38,19 +44,19 @@ class RaygunControlProbeTest(unittest.TestCase):
 
     def test_missing_or_wrong_offset_rejected(self):
         bad = self.impact()
-        bad["instructions"][1]["offset"] = 1025
+        next(x for x in bad["instructions"] if x["offset"] == FACTORY_OFFSET)["offset"] = 1025
         with self.assertRaisesRegex(RaygunProbeError, "missing/moved"):
             validate_impact_method(bad)
 
     def test_wrong_factory_rejected(self):
         bad = self.impact()
-        bad["instructions"][1]["symbol"] = "Method causeNukeDamage:()V"
+        next(x for x in bad["instructions"] if x["offset"] == FACTORY_OFFSET)["symbol"] = "Method causeNukeDamage:()V"
         with self.assertRaisesRegex(RaygunProbeError, "missing/moved"):
             validate_impact_method(bad)
 
     def test_client_or_virtual_call_not_mistaken_for_factory(self):
         bad = self.impact()
-        bad["instructions"][1]["opcode"] = "invokevirtual"
+        next(x for x in bad["instructions"] if x["offset"] == FACTORY_OFFSET)["opcode"] = "invokevirtual"
         with self.assertRaisesRegex(RaygunProbeError, "missing/moved"):
             validate_impact_method(bad)
 
