@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_SPIRIT_DINOSAUR_TWO_DAMAGE_CALLERS_SELECTED_METHODS_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "classes": [
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "class_sha256": "c4f6bbf7dab4aeeb2abd5b8cd227759d2ea1692115d1b3d14b62598a0b3900d7",
+      "declared_method_count": 31,
+      "selected_method_digests": {
+        "tick": "f8006fe06cfad0d5e746ae56c5bd607367a555fcd5dd5b79768be2f73eee93ea",
+        "tickTremorsaurus": "7dd47ff635709cb298d113e9ddf1031ce6fca66509d7ea41dea5a427763ff1df",
+        "tickSubterranodon": "e0068de51919d808e4a0b075560b38eabeb41bda229e5819c4882bd8e7d144a0",
+        "tickGrottoceratops": "5f956122558d1a3d140c1405c68edb9597d10de2076f0bd9afaf4e25000daaf5",
+        "getUsingPlayer": "112488b2beabb48a901099177957282a771cd50754624705b13a45ab9fd31112",
+        "getAttackingEntity": "599d0a65f7aa12a4ce9b568f55acc8a880b0ad7bf7cbd2de6df6b1dfe0899934",
+        "readAdditionalSaveData": "9d7e6ef253c9d939b2758e9ab6487740c30b8cd16736f8538b1c3e10cb1af504",
+        "addAdditionalSaveData": "b33b24ef22fe306ca5fdb8d0e77023257dc66eea3800ce1df62d01f31f183f79"
+      },
+      "anchors": [
+        {
+          "method": "tickTremorsaurus",
+          "kind": "references",
+          "offset": 116,
+          "opcode": "getfield",
+          "symbol_contains": "dealtDamage:Z"
+        },
+        {
+          "method": "tickTremorsaurus",
+          "kind": "references",
+          "offset": 131,
+          "opcode": "invokestatic",
+          "symbol_contains": "ACDamageTypes.causeSpiritDinosaurDamage:"
+        },
+        {
+          "method": "tickTremorsaurus",
+          "kind": "numeric_constants",
+          "offset": 134,
+          "opcode": "iconst_3"
+        },
+        {
+          "method": "tickTremorsaurus",
+          "kind": "numeric_constants",
+          "offset": 135,
+          "opcode": "iconst_2"
+        },
+        {
+          "method": "tickTremorsaurus",
+          "kind": "references",
+          "offset": 137,
+          "opcode": "invokevirtual",
+          "symbol_contains": "getEnchantmentLevel:"
+        },
+        {
+          "method": "tickTremorsaurus",
+          "kind": "references",
+          "offset": 143,
+          "opcode": "invokestatic",
+          "symbol_contains": "ACCompat.hurt:"
+        },
+        {
+          "method": "tickTremorsaurus",
+          "kind": "branches",
+          "offset": 146,
+          "opcode": "ifeq"
+        },
+        {
+          "method": "tickTremorsaurus",
+          "kind": "references",
+          "offset": 151,
+          "opcode": "putfield",
+          "symbol_contains": "dealtDamage:Z"
+        },
+        {
+          "method": "getUsingPlayer",
+          "kind": "references",
+          "offset": 1,
+          "opcode": "invokevirtual",
+          "symbol_contains": "getPlayerUUID:"
+        },
+        {
+          "method": "getAttackingEntity",
+          "kind": "references",
+          "offset": 29,
+          "opcode": "invokevirtual",
+          "symbol_contains": "Level.getEntity:"
+        },
+        {
+          "method": "readAdditionalSaveData",
+          "kind": "numeric_constants",
+          "offset": 1,
+          "opcode": "ldc_w",
+          "symbol_contains": "UsingPlayerUUID"
+        },
+        {
+          "method": "addAdditionalSaveData",
+          "kind": "numeric_constants",
+          "offset": 10,
+          "opcode": "ldc_w",
+          "symbol_contains": "UsingPlayerUUID"
+        }
+      ]
+    },
+    {
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "class_sha256": "084a315c5a63dabc8c6ff1bc91ad008b0b2374e4d7f953bf3692c77394093774",
+      "declared_method_count": 17,
+      "selected_method_digests": {
+        "onHitEntity": "cdee9956e67bf85b8901fe8c072db6e913cd9bc106b0b7618d86293774b4e115",
+        "tick": "e00ec35184c908fd395c4c9b9cad8107793735c9d78ded405e99c18ce3bacd61",
+        "findHitEntity": "eef171e54c63652652682b05d0a4123248c807f49ce6bacd70fe9d7c96f7a9a8",
+        "isAcceptibleReturnOwner": "ce79bc248b564330e964d2a97bbaa791d45891a010180695d577b111f296bb3d"
+      },
+      "anchors": [
+        {
+          "method": "onHitEntity",
+          "kind": "references",
+          "offset": 35,
+          "opcode": "invokevirtual",
+          "symbol_contains": "getOwner:"
+        },
+        {
+          "method": "onHitEntity",
+          "kind": "references",
+          "offset": 58,
+          "opcode": "invokestatic",
+          "symbol_contains": "ACDamageTypes.causeSpiritDinosaurDamage:"
+        },
+        {
+          "method": "onHitEntity",
+          "kind": "references",
+          "offset": 65,
+          "opcode": "putfield",
+          "symbol_contains": "dealtDamage:Z"
+        },
+        {
+          "method": "onHitEntity",
+          "kind": "references",
+          "offset": 85,
+          "opcode": "invokevirtual",
+          "symbol_contains": "igniteForSeconds:"
+        },
+        {
+          "method": "onHitEntity",
+          "kind": "references",
+          "offset": 92,
+          "opcode": "invokestatic",
+          "symbol_contains": "ACCompat.hurt:"
+        },
+        {
+          "method": "onHitEntity",
+          "kind": "references",
+          "offset": 139,
+          "opcode": "invokestatic",
+          "symbol_contains": "ACCompat.postAttackEffects:"
+        },
+        {
+          "method": "onHitEntity",
+          "kind": "references",
+          "offset": 168,
+          "opcode": "invokestatic",
+          "symbol_contains": "ACCompat.createEntity:"
+        },
+        {
+          "method": "onHitEntity",
+          "kind": "references",
+          "offset": 214,
+          "opcode": "invokevirtual",
+          "symbol_contains": "DinosaurSpiritEntity.setPlayerUUID:"
+        },
+        {
+          "method": "onHitEntity",
+          "kind": "references",
+          "offset": 223,
+          "opcode": "invokevirtual",
+          "symbol_contains": "DinosaurSpiritEntity.setAttackingEntityId:"
+        },
+        {
+          "method": "onHitEntity",
+          "kind": "references",
+          "offset": 248,
+          "opcode": "invokestatic",
+          "symbol_contains": "ACCompat.enchantLevel:"
+        },
+        {
+          "method": "onHitEntity",
+          "kind": "references",
+          "offset": 277,
+          "opcode": "invokevirtual",
+          "symbol_contains": "Level.addFreshEntity:"
+        },
+        {
+          "method": "findHitEntity",
+          "kind": "references",
+          "offset": 1,
+          "opcode": "getfield",
+          "symbol_contains": "dealtDamage:Z"
+        },
+        {
+          "method": "tick",
+          "kind": "references",
+          "offset": 5,
+          "opcode": "invokevirtual",
+          "symbol_contains": "getOwner:"
+        }
+      ]
+    }
+  ],
+  "limitations": {
+    "static_only": true,
+    "complete_method_bodies": false,
+    "full_CFG": false,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "status": "NOT_CERTIFIED",
+    "provider_universe_closed": false
+  }
+}
