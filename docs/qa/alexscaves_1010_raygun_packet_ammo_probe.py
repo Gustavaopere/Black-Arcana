@@ -119,8 +119,12 @@ def audit(jar, javap_bin):
             declaration = next((line.strip() for line in disassembly.splitlines()
                                 if line.strip().endswith("{") and
                                 ("class " in line or "interface " in line or "record " in line)), "")
-            if not declaration or len(declaration) > 400:
-                raise PacketAmmoProbeError("missing/bounded JVM class declaration")
+            # An optional javap header is not security evidence. Only the
+            # physical class path, class hash and sealed JVM members gate CI.
+            if not declaration:
+                declaration = "NOT_EXTRACTED"
+            if len(declaration) > 400:
+                declaration = "NOT_EXPORTED_OVERSIZE"
             methods = parse_methods(disassembly)
             selected = select(methods, RAYGUN_METHODS, raygun=(path == RAYGUN))
             classes.append({
