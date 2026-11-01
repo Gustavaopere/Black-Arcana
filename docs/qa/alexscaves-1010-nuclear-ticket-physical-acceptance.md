@@ -57,8 +57,8 @@ substitute for replayable evidence.
 
 ## Release and catalog decision gate
 
-Until the static mismatch is resolved **and** a safe native integration
-contract is proved, **both nuclear damage cards stay**:
+Under the **current evidence and current certification ledger**, **both nuclear
+damage cards remain pending**:
 
 - `NOT_CERTIFIED` as a complete technical static contract;
 - `mutating_hook=NOT_VERIFIED`;
@@ -66,10 +66,14 @@ contract is proved, **both nuclear damage cards stay**:
 - `NO_MUTATION` for size, AoE, damage scaling, blocks, radiation, chunk loading,
   cost/procs, attribution, and perks.
 
-The automatic guard intentionally rejects unilateral promotion of one of the
-two cards while the shared `NuclearExplosionEntity` remains implicated.
-A future legitimate change needs renewed SHA-exact manifests, explicit
-reconciliation of the two native ticket buckets, reviewed acceptance evidence,
-and coordinated modification of the guard/ledger/indexes in one audited PR.
+The automatic guard rejects unilateral promotion against **this exact
+unresolved evidence snapshot**. A future **static-only** certification may be
+reviewed independently once all seven evidence axes are fully sealed, with
+the ticket mismatch and QA limitations explicitly preserved; it does **not**
+require pretending that the native ticket mismatch is fixed. By contrast,
+**mutating perk/runtime authorization stays blocked** until a safe native
+boundary, controller/ticket resolution, protection/budgets and applicable
+physical acceptance are independently verified. Any change to the gate,
+ledger and indexes must be reviewed together in one audited PR.
 A successful static CI pass alone never certifies NT-01…NT-07.
 **No global counters, provider stage or progress percentages are advanced here.**
