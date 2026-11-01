@@ -47,6 +47,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_raygun_receiver_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --snapshot "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-RECEIVER-1.0.10.json" \
             --output build/alexscaves-1010/raygun-receiver.json
       - name: Export bounded interoperability evidence
         uses: actions/upload-artifact@v7
