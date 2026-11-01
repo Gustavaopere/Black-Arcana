@@ -79,13 +79,13 @@ class ExactNativeNetworkABI(unittest.TestCase):
         self.assertTrue(verify_snapshot(report, copy.deepcopy(report)))
         altered = copy.deepcopy(report)
         altered["selected_methods"][0]["parsed_method_sha256"] = "b" * 64
-        with self.assertRaisesRegex(RegistrationProbeError, "snapshot"):
+        with self.assertRaisesRegex(RegistrationProbeError, "sealed network ABI"):
             verify_snapshot(report, altered)
 
     def test_snapshot_rejects_false_physical_status(self):
         report = {"limits": {"physical_qa": "NOT_TESTED"}}
         altered = {"limits": {"physical_qa": "PASS"}}
-        with self.assertRaisesRegex(RegistrationProbeError, "snapshot"):
+        with self.assertRaisesRegex(RegistrationProbeError, "sealed network ABI"):
             verify_snapshot(report, altered)
 
     def test_wrong_publisher_rejected_before_zip_open(self):
