@@ -169,6 +169,73 @@ def audit(jar, javap_bin, receiver_seal, network_seal):
     return result
 
 
+
+CRITICAL_NATIVE_ANCHORS = (
+    ("context", "enqueueWork", 5, "invokeinterface", "IPayloadContext.enqueueWork:"),
+    ("context", "getSender", 4, "invokeinterface", "IPayloadContext.player:"),
+    ("context", "getSender", 11, "instanceof", "ServerPlayer"),
+    ("context", "getSender", 14, "ifeq", ""),
+    ("context", "isClientSide", 4, "invokeinterface", "IPayloadContext.flow:"),
+    ("context", "isClientSide", 9, "invokevirtual", "PacketFlow.isClientbound:"),
+    ("entry", "handle", 6, "invokeinterface", "BiConsumer.accept:"),
+)
+
+
+def snapshot_projection(report):
+    """Minimal pinned native ABI. Must reject changed status, methods or guards."""
+    context, entry = report["network_context_methods"], report["network_entry_methods"]
+    require([x["name"] for x in context] == ["enqueueWork", "getSender", "isClientSide"],
+            "context selected methods changed")
+    require([x["name"] for x in entry] == ["handle", "encoder", "decoder"],
+            "entry selected methods changed")
+    method_groups = {"context": context, "entry": entry}
+    anchors = []
+    for category, name, off, opcode, symbol in CRITICAL_NATIVE_ANCHORS:
+        m = next(x for x in method_groups[category] if x["name"] == name)
+        hits = [i for i in m["selected_references"] if i["offset"] == off]
+        require(len(hits) == 1 and hits[0]["opcode"] == opcode
+                and symbol in hits[0]["symbol"], "context/entry exact ABI anchor drift")
+        anchors.append({
+            "class": category, "method": name, "offset": off, "opcode": opcode,
+            "symbol": hits[0]["symbol"]
+        })
+    rx = report["receiver"]
+    require(rx["name"] == "handle" and rx["descriptor"] == HANDLE,
+            "receiver identity drift")
+    require(len(rx["conditional_branches"]) == 9,
+            "receiver exact guard population drift")
+    return {
+        "schema_version": report["schema_version"],
+        "scope": report["scope"],
+        "artifact": report["artifact"],
+        "class_identities": [
+            {"path": row["path"], "sha256": row["sha256"]}
+            for row in report["class_identities"]
+        ],
+        "receiver": {
+            key: rx[key] for key in
+            ("name", "descriptor", "parsed_method_sha256",
+             "instruction_count", "conditional_branches")
+        },
+        "network_context_methods": [
+            {key: m[key] for key in ("name", "descriptor", "parsed_method_sha256")}
+            for m in context
+        ],
+        "network_entry_methods": [
+            {key: m[key] for key in ("name", "descriptor", "parsed_method_sha256")}
+            for m in entry
+        ],
+        "critical_native_anchors": anchors,
+        "limits": report["limits"]
+    }
+
+
+def verify_snapshot(report, snapshot):
+    require(snapshot_projection(report) == snapshot,
+            "sealed receiver identity/context snapshot mismatch")
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--jar", required=True, type=Path)
@@ -176,10 +243,13 @@ def main():
     parser.add_argument("--receiver-manifest", required=True, type=Path)
     parser.add_argument("--network-manifest", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--snapshot", type=Path)
     args = parser.parse_args()
     receiver = json.loads(args.receiver_manifest.read_text(encoding="utf-8"))
     network = json.loads(args.network_manifest.read_text(encoding="utf-8"))
     report = audit(args.jar, args.javap, receiver, network)
+    if args.snapshot is not None:
+        verify_snapshot(report, json.loads(args.snapshot.read_text(encoding="utf-8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False,
         sort_keys=True, indent=2) + "\n", encoding="utf-8")
