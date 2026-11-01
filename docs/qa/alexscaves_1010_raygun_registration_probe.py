@@ -19,6 +19,7 @@ from alexscaves_1010_raygun_receiver_probe import method_name
 PREFIX = "com/github/alexmodguy/alexscaves/"
 RAYGUN = PREFIX + "server/item/RaygunItem.class"
 PACKET = PREFIX + "server/message/UpdateItemTagMessage.class"
+NETWORK = PREFIX + "server/message/ACNetwork.class"
 SEARCH = (b"UpdateItemTagMessage", b"ACNetworkContext")
 REFERENCE = ("UpdateItemTagMessage", "ACNetworkContext")
 MAX_CANDIDATES = 96
@@ -111,6 +112,11 @@ def audit(jar, javap_bin, sealed):
         result.append({"class_path": path, "class_sha256": digest,
                        "declared_method_count": len(methods),
                        "methods_with_direct_symbolic_references": hits})
+    network = [row for row in result if row["class_path"] == NETWORK]
+    require(len(network) == 1, "native ACNetwork candidate missing/ambiguous")
+    native = {row["name"] for row in network[0]["methods_with_direct_symbolic_references"]}
+    require({"registerMessages", "lambda$registerPayloads$0"} <= native,
+            "native registration path references changed")
     report = {
         "schema_version": 1,
         "scope": "ALEXSCAVES_1010_RAYGUN_C2S_REGISTRATION_REFERENCE_DISCOVERY_ONLY",
