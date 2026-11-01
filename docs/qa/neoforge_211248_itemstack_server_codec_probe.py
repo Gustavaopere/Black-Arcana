@@ -145,6 +145,10 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True,
                                       ensure_ascii=False) + "\n", encoding="utf8")
+    print("NEOFORGE_211248_SERVER_JAR_SHA256=" + report["installed_server_jar_sha256"])
+    print("NEOFORGE_211248_SERVER_JAR_BYTES=" + str(report["installed_server_jar_size"]))
+    print("NEOFORGE_211248_OPTIONAL_PUTSTATIC=" +
+          str(report["optional_codec_initializer"]["optional_codec_putstatic_offset"]))
     print("NEOFORGE_211248_DISTRIBUTION_CLASS_SHA256=" +
           report["itemstack_class_sha256"])
     print("NEOFORGE_211248_DISTRIBUTION_CODEC_CLASS=" +
