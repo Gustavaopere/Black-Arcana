@@ -60,7 +60,7 @@ Carver: **identidade executável provada no JAR exato**, mas obtenção normal r
 
 - `ItemDimensionalCarver.rayTracePortal`: clip inicial de **1,5 bloco** a partir dos olhos (`ClipContext.Block.OUTLINE`); o `use` chama o método com `Fluid.ANY`. Não confundir com alcance total de travessia.
 - `getUseDuration`: **200 ticks**. `onUseTick` contém o limiar `distanceToSqr(caster, anchor) > 9.0d` (>3 blocos) e um caminho de cooldown de **40 ticks**.
-- Quando `remainingUseTicks == 1` no lado do servidor, o código tenta acrescentar `EntityVoidPortal`, chama `onPortalOpen`, aplica **1 ponto de dano à durabilidade** e adiciona cooldown de **200 ticks** ao jogador. Esses são caminhos de controle estáticos, não QA de sucesso/cardi­nalidade de spawn.
+- Quando `remainingUseTicks == 1` no lado do servidor, o código tenta acrescentar `EntityVoidPortal`, chama `onPortalOpen`, aplica **1 ponto de dano à durabilidade** e adiciona cooldown de **200 ticks** ao jogador. Esses são caminhos de controle estáticos, não QA de sucesso/cardinalidade de spawn.
 - `onPortalOpen` atribui **1200 ticks** ao lifespan inicial. Destino depende do respawn dimension/position do `ServerPlayer` ou de fallback local; não há autorização documentada para alterar dimensões arbitrariamente.
 - `releaseUsingImpl` limpa `HASBLOCK` e `BLOCKX/Y/Z`. Duração efetiva, proteção de destino, lifecycle da entidade, multiplayer e hooks de mutação continuam pendentes.
 
