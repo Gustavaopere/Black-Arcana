@@ -51,6 +51,7 @@ jobs:
             --javap "$JAVA_HOME/bin/javap" \
             --receiver-manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-RECEIVER-1.0.10.json' \
             --network-manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-NETWORK-ABI-1.0.10.json' \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-RECEIVER-IDENTITY-1.0.10.json' \
             --output build/alexscaves-1010/raygun-receiver-identity.json
       - name: Publish bounded clean-room ABI evidence
         uses: actions/upload-artifact@v7
