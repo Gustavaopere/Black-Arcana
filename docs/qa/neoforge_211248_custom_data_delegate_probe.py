@@ -61,6 +61,20 @@ def interesting_instruction(i):
     ) and any(term.lower() in i["symbol"].lower() for term in CUES)
 
 
+def relevant_method(key, m):
+    """Select boundary methods, not every CustomData read/write helper."""
+    symbols = " ".join(i["symbol"] for i in m["instructions"])
+    if key == "custom_data":
+        return (
+            method_name(m) in ("<clinit>", "static")
+            or any(token in symbols for token in
+                   ("StreamCodec", "ByteBufCodecs", "STREAM_CODEC"))
+        )
+    if key == "data_components":
+        return "custom_data" in symbols.lower()
+    return any(interesting_instruction(i) for i in m["instructions"])
+
+
 def selected_method(m):
     instructions = m["instructions"]
     selected_offsets = {
@@ -188,7 +202,7 @@ def audit(jar: Path, javap_bin: str, srg_jar: Path | None = None):
                 "duplicate delegated JVM signature: " + path)
         matching = []
         for m in methods:
-            if any(interesting_instruction(i) for i in m["instructions"]):
+            if relevant_method(key, m):
                 matching.append(selected_method(m))
         require(len(matching) <= MAX_SELECTED_METHODS,
                 "delegated matching-method budget exceeded: " + path)
