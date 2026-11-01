@@ -21,6 +21,7 @@ from neoforge_211248_itemstack_server_codec_probe import (
 )
 
 EXPECTED_SERVER_BYTES = 5675624
+PINNED_SRG_JAR_SHA256 = "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71"
 MAX_CLASS_BYTES = 750000
 MAX_JAVAP_BYTES = 3000000
 MAX_METHODS = 850
@@ -61,10 +62,20 @@ def interesting_instruction(i):
 
 
 def selected_method(m):
+    instructions = m["instructions"]
+    selected_offsets = {
+        i["offset"] for i in instructions if interesting_instruction(i)
+    }
+    # Collect the nearby literal operands passed to NbtAccounter.create(J).
+    # This documents compiled arguments, never a validated packet limit.
+    for index, i in enumerate(instructions):
+        if "NbtAccounter.create:" in i["symbol"]:
+            for prior in instructions[max(0, index-3):index]:
+                selected_offsets.add(prior["offset"])
     refs = [
         {"offset": i["offset"], "opcode": i["opcode"],
-         "symbol": i["symbol"][:280]}
-        for i in m["instructions"] if interesting_instruction(i)
+         "operand": i["operand"][:55], "symbol": i["symbol"][:280]}
+        for i in instructions if i["offset"] in selected_offsets
     ]
     require(len(refs) <= MAX_REFS_PER_METHOD,
             "delegated method reference budget exceeded")
@@ -101,56 +112,74 @@ def verify_safe_report(report):
     require(report.get("artifact") == {
         "server_jar_sha256": PINNED_SERVER_JAR_SHA256,
         "server_jar_bytes": EXPECTED_SERVER_BYTES,
+        "server_srg_jar_sha256": PINNED_SRG_JAR_SHA256,
     }, "distribution identity drift")
     require(set(report.get("classes", {})) == set(CLASS_PATHS),
             "delegated class inventory incomplete")
     return True
 
 
-def audit(jar: Path, javap_bin: str):
+
+def choose_archive(path, overlay_names, srg_names):
+    """Patched NeoForge overlay takes precedence over the exact SRG library."""
+    if path in overlay_names:
+        return "NEOFORGE_OVERLAY"
+    if path in srg_names:
+        return "INSTALLED_MINECRAFT_SRG"
+    return "NOT_FOUND_IN_BOTH_INSTALLED_ARCHIVES"
+
+
+def audit(jar: Path, javap_bin: str, srg_jar: Path | None = None):
     digest, size = sha256_file(jar)
     require(digest == PINNED_SERVER_JAR_SHA256
             and size == EXPECTED_SERVER_BYTES,
             "official NeoForge server distribution SHA/size drift")
-    with zipfile.ZipFile(jar) as zf:
-        names = zf.namelist()
-        require(len(names) == len(set(names)),
-                "duplicate NeoForge server JAR members")
-        class_binaries = {}
+    require(srg_jar is not None, "exact server SRG jar required")
+    srg_digest, srg_size = sha256_file(srg_jar)
+    require(srg_digest == PINNED_SRG_JAR_SHA256 and srg_size > 0,
+            "official installed SRG library SHA drift")
+    class_binaries = {}
+    sources = {}
+    with zipfile.ZipFile(jar) as overlay, zipfile.ZipFile(srg_jar) as srg:
+        overlay_names = overlay.namelist()
+        srg_names = srg.namelist()
+        require(len(overlay_names) == len(set(overlay_names))
+                and len(srg_names) == len(set(srg_names)),
+                "duplicate class archive member")
         for key, path in CLASS_PATHS.items():
-            if path not in names:
-                # An installed NeoForge distribution JAR is not necessarily
-                # the complete runtime classpath. Record absence, do not fail
-                # or invent a bytecode/codec contract.
-                class_binaries[key] = None
-                continue
-            blob = zf.read(path)
-            require(8 <= len(blob) <= MAX_CLASS_BYTES
-                    and blob[:4] == b"\xca\xfe\xba\xbe"
-                    and int.from_bytes(blob[6:8], "big") == 65,
-                    "untrusted classfile: " + path)
+            source = choose_archive(path, overlay_names, srg_names)
+            sources[key] = source
+            if source == "NEOFORGE_OVERLAY":
+                blob = overlay.read(path)
+            elif source == "INSTALLED_MINECRAFT_SRG":
+                blob = srg.read(path)
+            else:
+                blob = None
+            if blob is not None:
+                require(8 <= len(blob) <= MAX_CLASS_BYTES
+                        and blob[:4] == b"\\xca\\xfe\\xba\\xbe"
+                        and int.from_bytes(blob[6:8], "big") == 65,
+                        "untrusted delegated classfile: " + path)
             class_binaries[key] = blob
 
     classes = {}
     for key, path in CLASS_PATHS.items():
         if class_binaries[key] is None:
             classes[key] = {
-                "class_path": path,
-                "presence": "NOT_PRESENT_IN_PINNED_SERVER_JAR",
-                "class_sha256": None,
-                "method_count": 0,
-                "matching_method_count": 0,
-                "matching_methods": [],
+                "class_path": path, "source_archive": sources[key],
+                "class_sha256": None, "method_count": 0,
+                "matching_method_count": 0, "matching_methods": [],
             }
             continue
         owner = path[:-6].replace("/", ".")
+        classpath = str(jar) + ":" + str(srg_jar)
         run = subprocess.run(
-            [str(javap_bin), "-classpath", str(jar), "-c", "-p", "-s", owner],
+            [str(javap_bin), "-classpath", classpath, "-c", "-p", "-s", owner],
             capture_output=True, text=True, timeout=65, check=False,
         )
         require(run.returncode == 0
                 and 100 < len(run.stdout) <= MAX_JAVAP_BYTES,
-                "bounded javap failed: " + path)
+                "bounded installed-class javap failed: " + path)
         methods = parse_methods(run.stdout)
         require(1 <= len(methods) <= MAX_METHODS,
                 "delegated class method budget exceeded: " + path)
@@ -165,7 +194,7 @@ def audit(jar: Path, javap_bin: str):
                 "delegated matching-method budget exceeded: " + path)
         classes[key] = {
             "class_path": path,
-            "presence": "PRESENT_IN_PINNED_SERVER_JAR",
+            "source_archive": sources[key],
             "class_sha256": hashlib.sha256(class_binaries[key]).hexdigest(),
             "method_count": len(methods),
             "matching_method_count": len(matching),
@@ -182,6 +211,7 @@ def audit(jar: Path, javap_bin: str):
         "artifact": {
             "server_jar_sha256": digest,
             "server_jar_bytes": size,
+            "server_srg_jar_sha256": srg_digest,
         },
         "classes": classes,
         "limits": snapshot_limits(),
@@ -196,16 +226,17 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--jar", type=Path, required=True)
     p.add_argument("--javap", required=True)
+    p.add_argument("--srg-jar", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
-    report = audit(args.jar, args.javap)
+    report = audit(args.jar, args.javap, args.srg_jar)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
         json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
         encoding="utf8",
     )
     for label, entry in report["classes"].items():
-        print("DELEGATED_CLASS=" + label + " PRESENCE=" + entry["presence"]
+        print("DELEGATED_CLASS=" + label + " SOURCE=" + entry["source_archive"]
               + " SHA256=" + (entry["class_sha256"] or "NOT_PRESENT")
               + " METHODS=" + str(entry["method_count"])
               + " MATCHED=" + str(entry["matching_method_count"]))
