@@ -195,6 +195,13 @@ A ausência de branches nesses dois métodos específicos **não** implica ausê
 
 A verificação automatizada pelo [workflow do helper](../../.github/workflows/alexscaves-1010-raygun-shaded-itemstack-helper.yml) cruza o SHA do publisher com o manifesto do pacote anterior, hashes nativos de classe e métodos, os sete callsites e as proibições de promoção. Aplicar `NO_MUTATION` e manter `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED`.
 
+## Corroboração vanilla oficial 1.21.1 — ItemStack opcional
+
+A [auditoria separada do binário Mojang 1.21.1](alexscaves-1010-raygun-vanilla-codec-acceptance.md) e o [manifesto SHA-exato](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json) confirmam a atribuição de `ItemStack.OPTIONAL_STREAM_CODEC` à classe anônima vanilla `cuq$1`. O mapeamento oficial identifica `wk=RegistryFriendlyByteBuf`, `jm=Holder` e `kn=DataComponentPatch`. O codec vanilla verifica o valor numérico lido (`ifgt @6`), seleciona `ItemStack.EMPTY` no ramo não positivo e delega leitura/escrita do item e do patch de componentes a outros `StreamCodec`s.
+
+**Limitação de autoridade:** essa prova usa o **JAR vanilla do cliente** e o mapping oficial Mojang, verificados por SHA, e serve apenas como **CORROBORATION_ONLY_NOT_INSTALLED**. A classe Minecraft *transformada* no runtime NeoForge `21.1.248`, os limites internos de `DataComponentPatch`, os controles de tamanho/profundidade e a proteção de `CUSTOM_DATA` no servidor **não foram observados**. O workflow não altera o contrato nativo do Raygun nem promove RN-03/RN-04 ou os sete eixos de certificação.
+
+Requisitos remanescentes VC-01…VC-06 e distinção entre validação estática e QA física estão detalhados na matriz acima. `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`.
 ## Aceite antes de concluir contrato estático Raygun
 
 | Gate | Evidência necessária | Estado atual |
