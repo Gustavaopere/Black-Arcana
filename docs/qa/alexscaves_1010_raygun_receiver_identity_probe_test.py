@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import copy
+import json
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from alexscaves_1010_raygun_receiver_identity_probe import (
     IdentityProbeError, method_inventory, extract_receiver_guard, audit,
-    CONTEXT, ENTRY, CLASS_PATHS
+    CONTEXT, ENTRY, CLASS_PATHS, verify_snapshot
 )
 from alexscaves_1010_raygun_receiver_probe import ANCHORS, HANDLE
 from alexscaves_1010_raygun_receiver_identity_probe import digest_method
@@ -97,6 +99,47 @@ class IdentityProbeTests(unittest.TestCase):
                                      for i in range(100)]}]
         with self.assertRaisesRegex(IdentityProbeError, "unbounded"):
             method_inventory(methods, {"handle"})
+
+    def fixture_from_seal(self):
+        path = (Path(__file__).resolve().parents[2] /
+                "wiki/modpack-catalog/providers/✅-alexs-caves-continued" /
+                "EXACT-RAYGUN-RECEIVER-IDENTITY-1.0.10.json")
+        sealed = json.loads(path.read_text(encoding="utf-8"))
+        report = copy.deepcopy(sealed)
+        for section, owner in (("network_context_methods", "context"),
+                               ("network_entry_methods", "entry")):
+            for member in report[section]:
+                member["selected_references"] = [
+                    {k: row[k] for k in ("offset", "opcode", "symbol")}
+                    for row in sealed["critical_native_anchors"]
+                    if row["class"] == owner and row["method"] == member["name"]
+                ]
+        return report, sealed
+
+    def test_sealed_receiver_projection_positive(self):
+        report, sealed = self.fixture_from_seal()
+        self.assertTrue(verify_snapshot(report, sealed))
+
+    def test_sealed_native_context_anchor_drift_rejected(self):
+        report, sealed = self.fixture_from_seal()
+        sender = next(x for x in report["network_context_methods"]
+                      if x["name"] == "getSender")
+        sender["selected_references"][0]["symbol"] = "OtherContext.getUser"
+        with self.assertRaisesRegex(IdentityProbeError, "exact ABI anchor"):
+            verify_snapshot(report, sealed)
+
+    def test_sealed_receiver_branch_target_drift_rejected(self):
+        report, sealed = self.fixture_from_seal()
+        report["receiver"]["conditional_branches"][1]["operand"] = "180"
+        with self.assertRaisesRegex(IdentityProbeError, "snapshot mismatch"):
+            verify_snapshot(report, sealed)
+
+    def test_sealed_false_runtime_or_qa_promotion_rejected(self):
+        report, sealed = self.fixture_from_seal()
+        changed = copy.deepcopy(sealed)
+        changed["limits"]["physical_qa"] = "PASS"
+        with self.assertRaisesRegex(IdentityProbeError, "snapshot mismatch"):
+            verify_snapshot(report, changed)
 
     def test_wrong_publisher_rejected_before_archive(self):
         with patch("alexscaves_1010_raygun_receiver_identity_probe.sha_file",
