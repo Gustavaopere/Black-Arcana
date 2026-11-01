@@ -19,6 +19,8 @@ ROOT = "com/github/alexmodguy/alexscaves/"
 RAYGUN = ROOT + "server/item/RaygunItem.class"
 PACKET = ROOT + "server/message/UpdateItemTagMessage.class"
 UPDATES = ROOT + "server/item/UpdatesStackTags.class"
+COMPAT = ROOT + "server/misc/ACCompat.class"
+SET_TAG = "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
 EXPECTED = {
     RAYGUN: "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c",
     PACKET: "bda52d12e8cce7e010b3d4cd2db7d83000e78b35657c55773a8ba91a070478c8",
@@ -137,6 +139,12 @@ def audit(jar, javap_bin):
     ray_decl, ray_methods = selected_class(jar, javap_bin, RAYGUN, EXPECTED[RAYGUN])
     pkt_decl, pkt_methods = selected_class(jar, javap_bin, PACKET, EXPECTED[PACKET])
     iface_decl, iface_methods = selected_class(jar, javap_bin, UPDATES, updates_sha)
+    with zipfile.ZipFile(jar) as z:
+        compat_sha = hashlib.sha256(z.read(COMPAT)).hexdigest()
+    compat_decl, compat_methods = selected_class(jar, javap_bin, COMPAT, compat_sha)
+    setter = method_by_sig(compat_methods, "setTag", SET_TAG)
+    if not setter["instructions"]:
+        raise ReceiverProbeError("ACCompat.setTag has no observable implementation")
     sender_methods = [
         method_by_sig(ray_methods, "onUseTick",
             "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V"),
@@ -173,7 +181,10 @@ def audit(jar, javap_bin):
                  {"name": method_name(m), "descriptor": m["descriptor"],
                   "declaration": m["header"],
                   "implementation": bounded_method(m, [])}
-                 for m in iface_member]}
+                 for m in iface_member]},
+            {"path": COMPAT, "sha256": compat_sha, "declaration": compat_decl,
+             "declared_method_count": len(compat_methods),
+             "selected_set_tag": bounded_method(setter, [])}
         ],
         "limits": {"type_declaration_is_direct_only": True,
                    "indirect_inheritance_verified": False,
