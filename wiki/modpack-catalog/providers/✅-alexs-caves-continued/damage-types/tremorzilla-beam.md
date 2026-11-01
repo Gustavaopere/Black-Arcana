@@ -1,6 +1,6 @@
 # Tremorzilla Beam — tipo de dano `alexscaves:tremorzilla_beam` (1.0.10)
 
-**Estado de catalogação:** ⚠️ `RESOURCE_JSON_VERIFIED` (recurso SHA-exato). **Contrato técnico estático para perks:** ⚠️ `NOT_CERTIFIED`. **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`.
+**Estado de catalogação:** ⚠️ `RESOURCE_JSON_VERIFIED + SHA_EXACT_SELECTED_BYTECODE_OBSERVED` (recorte parcial, sem certificação). **Contrato técnico estático para perks:** ⚠️ `NOT_CERTIFIED`. **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`.
 
 ## Proveniência e identidade
 
@@ -32,12 +32,12 @@ Essas são **entradas textuais diretas** dos seis arquivos `data/*/tags/damage_t
 | Capacidade pretendida | Situação |
 |---|---|
 | Factory de `DamageSource` / chamadas JVM | ✅ localizadas estaticamente; comportamento e caminhos efetivos `NÃO VERIFICADO` |
-| Origem, atacante, owner, attribution e condições de PvP | `NÃO VERIFICADO` |
-| Fórmula de dano, mitigação, críticos e resistências | `NÃO VERIFICADO` |
-| Alvos elegíveis, tipo target/área, alcance, raio e filtros | `NÃO VERIFICADO` |
-| Entidades/projéteis, tamanho, velocidade, colisão e homing | `NÃO VERIFICADO` |
-| Duração, intervalo de hits, custo de ação e cooldown de casting | `NÃO VERIFICADO` |
-| Persistência, ordenação de eventos, server authority e deduplicação | `NÃO VERIFICADO` |
+| Origem, atacante, owner, attribution e condições de PvP | ⚠️ `DamageSource` usa o Tremorzilla como argumento no ramo do feixe; crédito final e PvP não certificados |
+| Fórmula de dano, mitigação, críticos e resistências | ⚠️ chamadas do `tickBreath` passam `20.0f` como argumento de dano ao helper; mitigação e aceitação reais pendentes |
+| Alvos elegíveis, tipo target/área, alcance, raio e filtros | ⚠️ AABB, `NO_CREATIVE_OR_SPECTATOR`, aliados e `canEntityBeHurtByBeam` observados; geometria efetiva/LOS pendentes |
+| Entidades/projéteis, tamanho, velocidade, colisão e homing | ⚠️ seleção `getEntitiesOfClass`, posicionamento `beamServerTarget` e clip observados; não há contrato de projétil mutável |
+| Duração, intervalo de hits, custo de ação e cooldown de casting | ⚠️ `tickBreath`/`tickBeamTargeting`, `beamTime` e charge nativos observados; frequência, custos e cooldown pendentes |
+| Persistência, ordenação de eventos, server authority e deduplicação | ⚠️ `killCountFromBeam`, flags e `SynchedEntityData` observados; autoridade de servidor, reload e deduplicação pendentes |
 | Hook de mutação seguro na versão instalada | `NOT_VERIFIED` |
 | QA real em modpack/multiplayer | `NOT_TESTED` |
 
@@ -64,3 +64,48 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 | `com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity.class` | `public boolean hurtEntitiesAround(net.minecraft.world.phys.Vec3, float, float, float, boolean, boolean, boolean)` | `(Lnet/minecraft/world/phys/Vec3;FFFZZZ)Z` | 76 | `invokestatic` |
 
 **Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NOT_CERTIFIED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
+
+## Auditoria exata do consumidor e dos emissores — TremorzillaEntity 1.0.10
+
+**Alcance da prova:** `SHA_EXACT_1010_TREMORZILLA_BEAM_SELECTED_JVM_CONSUMER_AND_CALLERS_ONLY`. [Manifesto selado](../EXACT-TREMORZILLA-BEAM-1.0.10.json) · [PR #989](https://github.com/Gustavaopere/Black-Arcana/pull/989) · [workflow da auditoria](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-tremorzilla-beam.yml). A inspeção recompõe somente um recorte de referências/operandos do bytecode compilado original; não exporta fonte/classe integral nem valida gameplay em cliente/servidor.
+
+- Arquivo JVM: `com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity.class`, SHA-256 `e1ac60a8005f9414dde1d25a92a2110df65cef145c3225e9c2557c96672fe8dc`.
+- Universo desta classe compilada: **116 métodos declarados** (não equivale ao inventário total do provider). Manifesto conserva **nove SHA-256 de métodos**, **24 âncoras** de bytecode e os **dez callsites nativos do helper** agrupados em três métodos distintos. Distingue a factory customizada do caminho vanilla.
+- O método central é `hurtEntitiesAround(Vec3,float,float,float,boolean,boolean,boolean):boolean`, descriptor `(Lnet/minecraft/world/phys/Vec3;FFFZZZ)Z`, 169 instruções registradas pelo parser e factory exata `causeTremorzillaBeamDamage @76`.
+
+### Seleção de tipo de dano — o helper não é exclusivo do feixe
+
+| Produtor compilado | Chamadas para `hurtEntitiesAround` | Distinção observada |
+|---|---|---|
+| `tickBreath()` | `@552`, `@578` | Passa a primeira flag booleana `true` e utiliza o ramo `causeTremorzillaBeamDamage` do helper; há um operando `20.0f` na posição de *damage amount*. |
+| `tick()` | `@1455`, `@1537`, `@1558`, `@1579`, `@1599`, `@1619`, `@1863` | Emite chamadas por partes do corpo/ataques próprios; os pontos observados incluem primeira flag `false` e operando `10.0f` de dano. **Não atribuir automaticamente tipo `tremorzilla_beam`**. |
+| `stompEffect(boolean,float,float,float,float)` | `@357` | Primeira flag `false`, com parâmetros próprios de pisão; não é um disparo do feixe. |
+
+Em `hurtEntitiesAround`, a primeira flag é testada em `@63–65`. O ramo verdadeiro monta `ACDamageTypes.causeTremorzillaBeamDamage(registryAccess, this) @76`; o ramo alternativo constrói `DamageSources.mobAttack(this) @82–87`. O `DamageSource` usa o mob Tremorzilla nesse trecho; não há prova de atribuição final de kill, evento de Mastery ou regra de PvP de terceiros. **Não aplicar uma perk de feixe a toda chamada desse helper.**
+
+### Alvos, geometria, dano e status
+
+- O helper constrói uma `AABB` a partir de `Vec3`, ajusta limites verticais com `AABB.setMinY @42` e `setMaxY @56`, incluindo `3.0d` no cálculo de um limite. **Esse `3.0d` não é alcance máximo do feixe** nem raio circular certificado. O box de busca é distinto da linha de tiro.
+- Busca `LivingEntity` por `Level.getEntitiesOfClass @104`, usando `EntitySelector.NO_CREATIVE_OR_SPECTATOR @101`. Na iteração consulta autocorrespondência `LivingEntity.is @139`, aliados `isAlliedTo @148`, igualdade de tipo, distância quadrática `distanceToSqr @193`, predicado `canEntityBeHurtByBeam @213` e tipo `KaijuMob @226`. Os saltos para `@352/355` demonstram condições de descarte de candidatos, mas não homologam cobertura de PvP/claims de outros mods.
+- O predicado compilado `canEntityBeHurtByBeam(LivingEntity,Vec3)` recorre a `ClipContext` com `Block.COLLIDER` e `Fluid.NONE` e `Level.clip`. Há uma superfície de oclusão por blocos separada do box de busca; o resultado booleano exato e possíveis exceções dependem do CFG, não de uma lista de símbolos.
+- `ACCompat.hurt(target, DamageSource, amount) @237` recebe o segundo parâmetro `float` do helper (`fload_3`). Os dois callsites de `tickBreath` passam `20.0f` nessa posição. **20 é dano solicitado antes de mitigação**, não range, duração, raio, número de ticks ou garantia de dano aceito. `ifeq @240` interrompe o caminho de pós-acerto quando o retorno de `hurt` é falso.
+- Depois do retorno verdadeiro há referência a `knockbackTarget @285` e consultas `LivingEntity.getHealth @295`, `Enemy @305`, `killCountFromBeam @313–318`; a existência do incremento condicionado não certifica contagem de abates ou pontuação canônica de Mastery.
+- O mesmo caminho contém `ACEffectRegistry.IRRADIATED @327`, construtor de `MobEffectInstance @345` com **duração solicitada de 6.000 ticks e amplifier 2** (`sipush 6000 @341`, `iconst_2 @344`) e `LivingEntity.addEffect @348`. Isso não implica aplicação incondicional ou duração final em alvo imune; a [ficha de Irradiated](../effects/irradiated.md) preserva a semântica nativa do efeito.
+
+### Targeting, energia e efeitos de mundo
+
+- `tickBeamTargeting()` lê `getTarget`, `getControllingPassenger`, `Player.getViewVector` e atualiza `beamServerTarget`; `createInitialBeamVec` e `getBeamShootFrom` constituem outras superfícies de origem/direção. Não usar parâmetros da busca por AABB como distância de tiro do beam nem assumir que controle por passageiro seja autorização de cliente.
+- `tickBreath` verifica lado lógico, usa `Level.clip` com `COLLIDER/NONE` e acessa `ACServerConfig.devastatingTremorzillaBeam`. O ramo de destruição de blocos, sua extensão, limite de chunks e a política de permissões **não estão certificados por esta inspeção parcial**; qualquer integração com Black Arcana requer `WorldEffectPolicy` e testes de mundo antes de alterar esse comportamento.
+- `getCharge()` lê o campo sincronizado `CHARGE` via `SynchedEntityData`; `getMaxBeamBreakLength()` consulta `MAX_BEAM_BREAK_LENGTH`. As referências a `beamTime`, `maxBeamTime` e `beamServerTarget` são estado do provider, não nova mana, cooldown Black Arcana ou setter seguro automaticamente exposto a perks.
+
+### Matriz de integração / pendências
+
+| Perk pretendida | Consumer que exige auditoria adicional | Decisão |
+|---|---|---|
+| Aumentar dano do feixe | `tickBreath` → `hurtEntitiesAround` com flag do beam → `ACCompat.hurt` | Não alterar o dano de `stompEffect` ou `tick` por engano; prevenir segundo `hurt`/segundo proc. |
+| Alterar alvo/alcance/raio | `tickBeamTargeting`, `canEntityBeHurtByBeam`, `Level.clip`, caixa AABB e ponto final do feixe | Sem CFG/QA de colisão e aliados: `NO_MUTATION`. |
+| Reduzir charge/cooldown | `getCharge`, setters, `beamTime`, config e persistência nativa | Nenhum contrato seguro de custo/cooldown comprovado. |
+| Aumentar tempo/nível de Irradiated | `hurtEntitiesAround` pós-`ACCompat.hurt` e `Irradiated` nativo | Não duplicar efeito, contagem ou eventos de XP; duração da instância não é cooldown. |
+| Ampliar destruição | `tickBreath`, `devastatingTremorzillaBeam`, alteração de blocos e mundo | ⛔ Sem aprovação `WorldEffectPolicy` e verificação de claims. |
+
+**Status mantido:** ⚠️ `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. **+0 raízes e +0 fichas certificadas**; não promover `COMPLETE_PERK_READY`, índices, estágios ou integração RPG Skill Tree. Próxima etapa: mapear integralmente o CFG dos guards de raycast, tick/charge, grieffing e persistência, depois validar servidor/client modpack exato.
