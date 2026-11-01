@@ -124,7 +124,7 @@ def inspect_handler(method, sealed):
     require([r["offset"] for r in packet_fields] == [39, 60],
             "sender-controlled packet field read identity drift")
     windows = []
-    for off in ANCHOR_OFFSETS:
+    for off in sorted(set(ANCHOR_OFFSETS + (60, 129))):
         i = offsets.index(off)
         # Bound each window: selected opcodes and local variable transfer,
         # without copying a full method or provider implementation.
