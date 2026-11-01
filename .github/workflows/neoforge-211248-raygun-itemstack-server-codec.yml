@@ -74,6 +74,7 @@ jobs:
           python3 docs/qa/neoforge_211248_itemstack_server_codec_probe.py \
             --server build/neoforge-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
             --vanilla-snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json' \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-ITEMSTACK-SERVER-ABI.json' \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/neoforge-211248/raygun-itemstack-server-abi.json
       - name: Publish compact ABI only; no binaries or mapped code
