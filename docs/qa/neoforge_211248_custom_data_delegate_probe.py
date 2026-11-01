@@ -118,7 +118,12 @@ def audit(jar: Path, javap_bin: str):
                 "duplicate NeoForge server JAR members")
         class_binaries = {}
         for key, path in CLASS_PATHS.items():
-            require(path in names, "missing delegated class: " + path)
+            if path not in names:
+                # An installed NeoForge distribution JAR is not necessarily
+                # the complete runtime classpath. Record absence, do not fail
+                # or invent a bytecode/codec contract.
+                class_binaries[key] = None
+                continue
             blob = zf.read(path)
             require(8 <= len(blob) <= MAX_CLASS_BYTES
                     and blob[:4] == b"\xca\xfe\xba\xbe"
@@ -128,6 +133,16 @@ def audit(jar: Path, javap_bin: str):
 
     classes = {}
     for key, path in CLASS_PATHS.items():
+        if class_binaries[key] is None:
+            classes[key] = {
+                "class_path": path,
+                "presence": "NOT_PRESENT_IN_PINNED_SERVER_JAR",
+                "class_sha256": None,
+                "method_count": 0,
+                "matching_method_count": 0,
+                "matching_methods": [],
+            }
+            continue
         owner = path[:-6].replace("/", ".")
         run = subprocess.run(
             [str(javap_bin), "-classpath", str(jar), "-c", "-p", "-s", owner],
@@ -150,6 +165,7 @@ def audit(jar: Path, javap_bin: str):
                 "delegated matching-method budget exceeded: " + path)
         classes[key] = {
             "class_path": path,
+            "presence": "PRESENT_IN_PINNED_SERVER_JAR",
             "class_sha256": hashlib.sha256(class_binaries[key]).hexdigest(),
             "method_count": len(methods),
             "matching_method_count": len(matching),
