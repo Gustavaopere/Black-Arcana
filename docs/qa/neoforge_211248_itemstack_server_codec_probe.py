@@ -133,15 +133,125 @@ def audit(server_jar, java_disassembler, vanilla_seal):
     return report
 
 
+
+# Observed in official 21.1.248 --installServer distribution (not a loaded class).
+PINNED_SERVER_JAR_SHA256 = "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359"
+PINNED_ITEMSTACK_CLASS_SHA256 = "072cd6887595d3f928a3a1a9605662ff547fe3201d6b6d713a43bfd2719f1a13"
+PINNED_CODEC_CLASS_SHA256 = "414239d4c913a25cda60a8fc9e6f41661d7939dc9f9f6f4e23f0731468c46925"
+REQUIRED_METHODS = (
+    ("ItemStack$1", "()V"),
+    ("decode", "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/world/item/ItemStack;"),
+    ("encode", "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/world/item/ItemStack;)V"),
+    ("decode", "(Ljava/lang/Object;)Ljava/lang/Object;"),
+    ("encode", "(Ljava/lang/Object;Ljava/lang/Object;)V")
+)
+DEC = REQUIRED_METHODS[1][1]
+ENC = REQUIRED_METHODS[2][1]
+ABI_PIVOTS = (
+    ("decode", DEC, 1, "invokevirtual", "RegistryFriendlyByteBuf.readVarInt:", ""),
+    ("decode", DEC, 6, "ifgt", "", "13"),
+    ("decode", DEC, 9, "getstatic", "ItemStack.EMPTY:", ""),
+    ("decode", DEC, 13, "getstatic", "ITEM_STREAM_CODEC:", ""),
+    ("decode", DEC, 17, "invokeinterface", "StreamCodec.decode:", ""),
+    ("decode", DEC, 26, "getstatic", "DataComponentPatch.STREAM_CODEC:", ""),
+    ("decode", DEC, 30, "invokeinterface", "StreamCodec.decode:", ""),
+    ("encode", ENC, 4, "ifeq", "", "16"),
+    ("encode", ENC, 9, "invokevirtual", "RegistryFriendlyByteBuf.writeVarInt:", ""),
+    ("encode", ENC, 21, "invokevirtual", "RegistryFriendlyByteBuf.writeVarInt:", ""),
+    ("encode", ENC, 25, "getstatic", "ITEM_STREAM_CODEC:", ""),
+    ("encode", ENC, 33, "invokeinterface", "StreamCodec.encode:", ""),
+    ("encode", ENC, 38, "getstatic", "DataComponentPatch.STREAM_CODEC:", ""),
+    ("encode", ENC, 46, "invokevirtual", "PatchedDataComponentMap.asPatch:", ""),
+    ("encode", ENC, 49, "invokeinterface", "StreamCodec.encode:", "")
+)
+SEALED_LIMITS = {
+    "jvm_modlauncher_class_loaded": "NOT_OBSERVED",
+    "neoforge_modpack_runtime_transformations": "NOT_OBSERVED",
+    "gameplay_network_authorization": "NOT_VERIFIED",
+    "data_component_patch_limits": "NOT_VERIFIED",
+    "nbt_size_depth_and_fields": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "perk_static_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+}
+
+
+def snapshot_projection(report):
+    """Server distribution checksum + bounded decoded JVM ABI; not runtime proof."""
+    require(report["scope"] ==
+            "OFFICIAL_NEOFORGE_211248_INSTALLED_SERVER_CLASSFILE_NOT_LOADED_RUNTIME" and
+            report["neoforge_version"] == VERSION and
+            report["minecraft_version"] == "1.21.1",
+            "authority scope/version drift")
+    require(report["installed_server_jar_sha256"] == PINNED_SERVER_JAR_SHA256
+            and report["installed_server_jar_size"] == 5675624,
+            "installed server distribution JAR identity drift")
+    require(report["itemstack_class_path"] == ITEM_CLASS and
+            report["itemstack_class_sha256"] == PINNED_ITEMSTACK_CLASS_SHA256,
+            "distributed ItemStack class identity drift")
+    codec = report["optional_codec_implementation"]
+    require(codec["class_path"] == ITEM + "$1.class" and
+            codec["class_sha256"] == PINNED_CODEC_CLASS_SHA256,
+            "distributed optional stream codec class identity drift")
+    require(report["optional_codec_initializer"]["optional_codec_putstatic_offset"] == 127,
+            "distributed codec initialization ABI drift")
+    methods = codec["methods"]
+    require(tuple((m["name"], m["descriptor"]) for m in methods) ==
+            REQUIRED_METHODS, "distributed codec method roster drift")
+    pivots = []
+    for name, desc, off, opcode, symbol, operand in ABI_PIVOTS:
+        method = next(x for x in methods
+                      if x["name"] == name and x["descriptor"] == desc)
+        matches = [x for x in method["selected_refs"] if x["offset"] == off]
+        require(len(matches) == 1 and matches[0]["opcode"] == opcode
+                and symbol in matches[0]["symbol"] and
+                matches[0]["operand"] == operand,
+                "distributed codec critical branch or delegate drift")
+        pivots.append({
+            "method": name, "descriptor": desc, **matches[0]
+        })
+    require(report["limits"] == SEALED_LIMITS,
+            "false security/runtime/gameplay authority promotion")
+    vanilla = report["vanilla_comparison"]
+    require(vanilla["same_itemstack_class_bytes"] is False and
+            vanilla["same_codec_class_bytes"] is False,
+            "unjustified byte-for-byte vanilla/NeoForge parity claim")
+    return {
+        **{key: report[key] for key in (
+            "schema_version", "scope", "minecraft_version", "neoforge_version",
+            "installed_server_jar_sha256", "installed_server_jar_size",
+            "itemstack_class_path", "itemstack_class_sha256")},
+        "codec_class_path": codec["class_path"],
+        "codec_class_sha256": codec["class_sha256"],
+        "codec_static_assignment_offset":
+            report["optional_codec_initializer"]["optional_codec_putstatic_offset"],
+        "codec_methods": [
+            {"name": m["name"], "descriptor": m["descriptor"]} for m in methods
+        ],
+        "critical_codec_abi": pivots,
+        "vanilla_comparison": vanilla,
+        "limits": report["limits"]
+    }
+
+
+def verify_snapshot(report, snapshot):
+    require(snapshot_projection(report) == snapshot,
+            "sealed official NeoForge distribution codec ABI mismatch")
+    return True
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--server", required=True, type=Path)
     p.add_argument("--vanilla-snapshot", required=True, type=Path)
     p.add_argument("--javap", required=True)
     p.add_argument("--output", required=True, type=Path)
+    p.add_argument("--snapshot", required=True, type=Path)
     args = p.parse_args()
     prior = json.loads(args.vanilla_snapshot.read_text(encoding="utf8"))
     report = audit(args.server, args.javap, prior)
+    verify_snapshot(report, json.loads(args.snapshot.read_text(encoding="utf8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True,
                                       ensure_ascii=False) + "\n", encoding="utf8")
