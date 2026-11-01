@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 from minecraft_1211_itemstack_optional_stream_probe import (
     CLIENT_SHA1, MojangBoundaryError, audit, map_itemstack, parse_initializer,
-    codec_class_from_initializer
+    codec_class_from_initializer, named_vanilla_classes
 )
 
 
@@ -80,6 +80,20 @@ class ExactVanillaProbeTests(unittest.TestCase):
         ]
         with self.assertRaisesRegex(MojangBoundaryError, "unresolved"):
             codec_class_from_initializer(observed)
+
+    def test_official_mapping_resolves_codec_owner_roster(self):
+        mapping = MAPPING + (
+            "net.minecraft.network.RegistryFriendlyByteBuf -> wk:\n"
+            "net.minecraft.core.Holder -> jm:\n"
+            "net.minecraft.core.component.DataComponentPatch -> kn:\n"
+        )
+        names = named_vanilla_classes(mapping, ("wk", "jm", "kn"))
+        self.assertEqual(names["kn"],
+                         "net.minecraft.core.component.DataComponentPatch")
+
+    def test_missing_mapped_codec_owner_fails(self):
+        with self.assertRaisesRegex(MojangBoundaryError, "missing Mojang"):
+            named_vanilla_classes(MAPPING, ("wk", "jm", "kn"))
 
     def test_missing_static_assignment_rejected(self):
         with self.assertRaisesRegex(MojangBoundaryError, "not unique"):
