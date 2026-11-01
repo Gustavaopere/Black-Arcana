@@ -32,11 +32,11 @@ Essas são **entradas textuais diretas** dos seis arquivos `data/*/tags/damage_t
 | Capacidade pretendida | Situação |
 |---|---|
 | Factory de `DamageSource` / chamadas JVM | ✅ localizadas estaticamente; comportamento e caminhos efetivos `NÃO VERIFICADO` |
-| Origem, atacante, owner, attribution e condições de PvP | `NÃO VERIFICADO` |
-| Fórmula de dano, mitigação, críticos e resistências | `NÃO VERIFICADO` |
-| Alvos elegíveis, tipo target/área, alcance, raio e filtros | `NÃO VERIFICADO` |
-| Entidades/projéteis, tamanho, velocidade, colisão e homing | `NÃO VERIFICADO` |
-| Duração, intervalo de hits, custo de ação e cooldown de casting | `NÃO VERIFICADO` |
+| Origem, atacante, owner, attribution e condições de PvP | ⚠️ factory sem parâmetro de entidade confirmada; atribuição causal/PvP ainda não verificados |
+| Fórmula de dano, mitigação, críticos e resistências | ⚠️ cálculo de dano **solicitado** no consumidor `IrradiatedEffect.tick` documentado abaixo; aceitação/mitigação não verificadas |
+| Alvos elegíveis, tipo target/área, alcance, raio e filtros | ⚠️ alvo no tick é a entidade que já possui o status; filtros de aplicação são específicos dos produtores; alcance/área genéricos não existem no `DamageType` |
+| Entidades/projéteis, tamanho, velocidade, colisão e homing | ⚠️ nenhum projétil pertence à factory de `radiation`; emissores indiretos não estão encerrados |
+| Duração, intervalo de hits, custo de ação e cooldown de casting | ⚠️ frequência `shouldTick` documentada para `Irradiated`; duração/custo/cooldown variam por produtor, sem contrato global |
 | Persistência, ordenação de eventos, server authority e deduplicação | `NÃO VERIFICADO` |
 | Hook de mutação seguro na versão instalada | `NOT_VERIFIED` |
 | QA real em modpack/multiplayer | `NOT_TESTED` |
@@ -64,3 +64,56 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 | `com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect.class` | `public void tick(net.minecraft.world.entity.LivingEntity, int)` | `(Lnet/minecraft/world/entity/LivingEntity;I)V` | 74 | `invokestatic` |
 
 **Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NOT_CERTIFIED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
+
+## Contrato cruzado — aplicação real de `radiation` pelo status `Irradiated` (2026-10-31)
+
+**Escopo:** contrato estático **do consumidor direto** observado no JAR exato 1.0.10. A ficha [Irradiated](../effects/irradiated.md) possui auditoria binária individual certificada no [manifesto de efeitos](../EXACT-EFFECT-CONTRACTS-1.0.10.md). A relação entre o efeito e o tipo de dano provém do callsite `IrradiatedEffect.tick → ACDamageTypes.causeRadiationDamage → LivingEntity.hurt`, não de uma inferência baseada nos nomes. Isso **não** promove automaticamente esta ficha de tipo de dano a `COMPLETE_PERK_READY`.
+
+### Unidade causal e identidade de quem causa dano
+
+- `ACDamageTypes.causeRadiationDamage(RegistryAccess)` constrói `DamageSourceRandomMessages(holder, 2)` para `RADIATION`. A assinatura **não recebe `Entity` atacante, projétil ou owner**. Perks que dependem da origem de kills, lifesteal, Mastery, dano do jogador ou PvP **não podem reconstruir autoria a partir dessa factory**.
+- O consumidor `IrradiatedEffect.tick(LivingEntity, int)` passa a própria entidade afetada para `LivingEntity.hurt`; o `int` deste método é o amplifier do efeito, **não o dano infligido**.
+- A chamada de `hurt` ignora o boolean de retorno no bytecode observado. Logo, `hurt` chamado, dano aceito, dano líquido e kill são eventos diferentes; não contabilizar proc/XP sem causalidade própria e deduplicação.
+- A factory está relacionada ao **dano periódico do status**; a aquisição da irradiação pode ocorrer por itens, blocos, bosses, nuvens, explosões ou Raygun, sob gates distintos. `radiation.json` não define área, range, cooldown, custo ou geometria.
+
+### Frequência, proteção Hazmat e custo — valores do consumidor
+
+`IrradiatedEffect.shouldTick(duration,a)` retorna `false` quando `a<=0`. Para `a>0`, computa `j = 200 / a` com divisão inteira; se `j>1`, o tick é elegível quando `duration % j == j/2`; caso contrário é elegível a cada chamada. Exemplos de **período nominal**, não garantias de dano aceito: `a=1 → j=200`, `a=2 → j=100`, `a=3 → j=66`, `a>=101 → j<=1`. O amplifier não multiplica diretamente o dano por hit.
+
+O consumidor conta peças **exatas** de Hazmat nos quatro slots (`h=0..4`), computa `s=1F-0.25F*h` e, para alvo que não é `RaycatEntity`, sorteia `nextFloat() < s+0.1F` para pedir `hurt(radiationSource, s)`.
+
+| Peças Hazmat `h` | `s` passado a `hurt` | Probabilidade nominal de passar o sorteio |
+|---:|---:|---:|
+| 0 | 1,00 | 100% (limiar 1,10) |
+| 1 | 0,75 | 85% |
+| 2 | 0,50 | 60% |
+| 3 | 0,25 | 35% |
+| 4 | 0,00 | 10% (ainda pode chamar `hurt` com zero) |
+
+O `Player` com **zero** peças Hazmat recebe `causeFoodExhaustion(0.4F)` antes do sorteio de dano. Esse gasto específico de alimentação **não** é o campo `exhaustion:0.1` do `DamageType`; não somar os dois como custo de mana/stamina do BA. Mitigação, imunidades efetivas, multipliers do modpack e resultado físico de `hurt(0)` continuam desconhecidos.
+
+### O que o status afeta além de `hurt`
+
+- A presença de `Irradiated` é consultada por `CommonEvents.acLivingHeal`: o `LivingHealEvent` é cancelado quando o alvo tem o efeito **e** seu tipo não está no tag dinâmico `ACTagRegistry.RESISTS_RADIATION`. Essa condição não depende do amplifier e **não prova bloqueio de qualquer mudança arbitrária de vida**.
+- O `IrradiatedEffect.tick` **não executa diretamente** uma checagem `RESISTS_RADIATION`; os produtores têm filtros próprios. Não transformar o tag em imunidade universal ao dano, nem assumir que ter o efeito garante dano no amplifier zero.
+- `RaycatEntity` é excluído do ramo de dano deste consumidor, mas usa `Irradiated` em sua própria AI e em efeitos de absorção/cura; `TremorzillaEntity` também possui tratamento específico. São consumidores de efeitos, **não novos damage types nem casts**.
+
+### Exemplos de duração/área do produtor, não do tipo de dano
+
+| Aplicador exato | Evidência observada | Fronteira |
+|---|---|---|
+| `UnrefinedWasteBlock.entityInside` | instância por 4.000 ticks, amplifier 0 | aplicação não implica dano periódico por `shouldTick` |
+| `NuclearFurnaceComponentBlock.entityInside` | 2.000 ticks, amplifier 3 | produtor possui gates próprios |
+| `RaygunItem.onUseTick` | 800 ticks com amplifier `radiationLevel` calculado pelo item, após hit aceito em alvo elegível | alcance do Raygun não é propriedade do `DamageType radiation` |
+| `NuclearExplosionEntity.tick` | 48.000 ticks, amplifier 1 ou 2 dependendo de tamanho/ramo | não confundir duração do status com vida da explosão; rota nuclear segue bloqueada para mutação |
+| `NuclearFurnaceBlockEntity.destroyWhileCritical` | nuvem com instância-base 9.600 ticks; raio 8F; vida da nuvem 12.000 ticks | raio é da `AreaEffectCloud`, não do dano periódico |
+| `RadioactiveItem.acInventoryTick` | 1.800 ticks, amplifier 0, sujeito ao sorteio e Hazmat | item e efeito possuem authorities e condições separadas |
+
+### Perks, QA e decisão
+
+- **Potenciais eixos de perk a pesquisar**: resistência ao status; alteração de frequência e dano periódico; modulação de Hazmat; chance de aplicação por produtor; cura em `LivingHealEvent`; propagação por nuvens e explosões.
+- **Status real dos mutadores:** nenhum desses eixos possui hook provider-native validado para o JAR 1.0.10. `NO_MUTATION`, sem injetar `LivingEntity.hurt` ou `MobEffectInstance` em paralelo e sem gerar perks ofensivas a partir de ticks de backlash.
+- **QA requerida:** verificar amplifier 0 e >0, quatro peças Hazmat, `hurt(0)`, cancelamento de cura, donos/atribuição, emissões por vários produtores, override de tags, reinício, servidor dedicado e multiplayer. Nenhum cenário é declarado `PASS` nesta revisão.
+- **Contabilidade preservada:** `damage-types/radiation.md` continua ⚠️ `NOT_CERTIFIED`; `effects/irradiated.md` já tinha certificado estático específico. Nenhum novo objeto, alteração de índices, Stage, hook ou contagem global.
+
+**Fontes locais:** [efeito e offsets](../effects/irradiated.md) · [evidência binária de efeitos](../EXACT-EFFECT-CONTRACTS-1.0.10.md) · [factory/consumidores diretos](../EXACT-CONSUMERS-1.0.10.json).
