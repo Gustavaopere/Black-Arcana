@@ -236,14 +236,93 @@ def audit(jar: Path, javap_bin: str, srg_jar: Path | None = None):
     return report
 
 
+
+def snapshot_projection(report):
+    """Pin observed factory arguments; never promote to an enforced packet cap."""
+    verify_safe_report(report)
+    cls = report["classes"]
+    require(all(cls[k]["class_sha256"] for k in CLASS_PATHS),
+            "missing exact delegated class identity")
+    identities = {
+        key: {field: cls[key][field] for field in (
+            "source_archive", "class_sha256", "method_count",
+            "matching_method_count")}
+        for key in CLASS_PATHS
+    }
+    components = cls["data_components"]["matching_methods"]
+    boot = [m for m in components if
+            m["name"] == "bootstrap" and m["descriptor"] ==
+            "(Lnet/minecraft/core/Registry;)Lnet/minecraft/core/component/DataComponentType;"]
+    require(len(boot) == 1, "CUSTOM_DATA registry method not unique")
+    anchors = [x for x in boot[0]["matching_references"] if
+               x["offset"] == 0 and x["opcode"] == "getstatic" and
+               x["symbol"] ==
+               "Field CUSTOM_DATA:Lnet/minecraft/core/component/DataComponentType;"]
+    require(len(anchors) == 1, "CUSTOM_DATA registry anchor drift")
+    registry = {
+        "name": boot[0]["name"],
+        "descriptor": boot[0]["descriptor"],
+        "method_sha256": boot[0]["method_sha256"],
+        **{k: anchors[0][k] for k in ("offset", "opcode", "symbol")},
+    }
+    names = (
+        "lambda$fromCodecWithRegistries$9", "lambda$fromCodec$4",
+        "lambda$static$1", "lambda$static$0",
+    )
+    suppliers = []
+    methods = cls["byte_buf_codecs"]["matching_methods"]
+    for name in names:
+        matches = [m for m in methods
+                   if m["name"] == name and m["descriptor"] ==
+                   "()Lnet/minecraft/nbt/NbtAccounter;"]
+        require(len(matches) == 1, "NBT accounter supplier signature drift")
+        m = matches[0]
+        literal = [x for x in m["matching_references"] if
+                   x["offset"] == 0 and x["opcode"] == "ldc2_w" and
+                   x["symbol"] == "long 2097152l"]
+        creator = [x for x in m["matching_references"] if
+                   x["offset"] == 3 and x["opcode"] == "invokestatic" and
+                   x["symbol"] ==
+                   "Method net/minecraft/nbt/NbtAccounter.create:(J)Lnet/minecraft/nbt/NbtAccounter;"]
+        require(len(literal) == len(creator) == 1,
+                "compiled NBT accounter literal/call drift")
+        suppliers.append({
+            "name": name, "descriptor": m["descriptor"],
+            "method_sha256": m["method_sha256"],
+            "literal_offset": 0, "literal_opcode": "ldc2_w",
+            "literal_symbol": "long 2097152l",
+            "create_offset": 3, "create_opcode": "invokestatic",
+            "create_symbol": creator[0]["symbol"],
+        })
+    return {
+        "schema_version": report["schema_version"],
+        "scope": report["scope"],
+        "artifact": report["artifact"],
+        "class_identities": identities,
+        "data_components_custom_data_reference": registry,
+        "nbt_accounter_supplier_sites": suppliers,
+        "literal_interpretation":
+            "NBT_ACCOUNTER_FACTORY_ARGUMENT_NOT_RAYGUN_PACKET_LIMIT",
+        "limits": report["limits"],
+    }
+
+
+def verify_snapshot(report, snapshot):
+    require(snapshot_projection(report) == snapshot,
+            "sealed delegated NBT codec discovery snapshot mismatch")
+    return True
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--jar", type=Path, required=True)
     p.add_argument("--javap", required=True)
     p.add_argument("--srg-jar", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--snapshot", type=Path, required=True)
     args = p.parse_args()
     report = audit(args.jar, args.javap, args.srg_jar)
+    verify_snapshot(report, json.loads(args.snapshot.read_text(encoding="utf8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
         json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
