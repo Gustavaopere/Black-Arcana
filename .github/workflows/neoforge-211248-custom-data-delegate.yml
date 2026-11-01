@@ -1,0 +1,73 @@
+name: NeoForge 21.1.248 delegated CustomData NBT discovery
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-custom-data-delegate.yml'
+      - 'docs/qa/neoforge_211248_custom_data_delegate_probe.py'
+      - 'docs/qa/neoforge_211248_custom_data_delegate_probe_test.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-custom-data-delegate.yml'
+      - 'docs/qa/neoforge_211248_custom_data_delegate_probe.py'
+      - 'docs/qa/neoforge_211248_custom_data_delegate_probe_test.py'
+permissions:
+  contents: read
+
+jobs:
+  delegated_custom_data_stream:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 23
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic read-only delegate probe tests
+        run: |
+          python3 -m py_compile docs/qa/neoforge_211248_custom_data_delegate_probe.py docs/qa/neoforge_211248_custom_data_delegate_probe_test.py
+          python3 docs/qa/neoforge_211248_custom_data_delegate_probe_test.py -v
+      - name: Download and pin exact official NeoForge installer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/neoforge-211248/server
+          cd build/neoforge-211248/server
+          BASE='https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248'
+          curl --fail --silent --show-error --location --retry 2 --connect-timeout 15 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar.sha256" -o installer.sha256
+          curl --fail --silent --show-error --location --retry 2 --connect-timeout 15 --max-time 180 \
+            "$BASE/neoforge-21.1.248-installer.jar" -o neoforge-installer.jar
+          EXPECTED="$(awk '{print $1}' installer.sha256)"
+          ACTUAL="$(sha256sum neoforge-installer.jar | awk '{print $1}')"
+          test "${#EXPECTED}" -eq 64
+          test "$EXPECTED" = "$ACTUAL"
+          test "$ACTUAL" = '68eeab77059ba53df1812f1afa5bf530ab2566a3cdcd5f924aa6e71be42e410c'
+          unzip -tq neoforge-installer.jar
+      - name: Install exact official server distribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd build/neoforge-211248/server
+          java -jar neoforge-installer.jar --installServer > installer.log 2>&1 || {
+            tail -n 65 installer.log
+            exit 1
+          }
+          test -f 'libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar'
+      - name: Discover bounded CustomData and delegated NBT ABI only
+        run: |
+          python3 docs/qa/neoforge_211248_custom_data_delegate_probe.py \
+            --jar build/neoforge-211248/server/libraries/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-server.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/neoforge-211248/delegated-custom-data-abi.json
+      - name: Publish bounded discovery report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: neoforge-211248-custom-data-delegate-discovery
+          path: build/neoforge-211248/delegated-custom-data-abi.json
+          retention-days: 14
+          if-no-files-found: ignore
