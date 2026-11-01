@@ -116,4 +116,4 @@ O `Player` com **zero** peças Hazmat recebe `causeFoodExhaustion(0.4F)` antes d
 - **QA requerida:** verificar amplifier 0 e >0, quatro peças Hazmat, `hurt(0)`, cancelamento de cura, donos/atribuição, emissões por vários produtores, override de tags, reinício, servidor dedicado e multiplayer. Nenhum cenário é declarado `PASS` nesta revisão.
 - **Contabilidade preservada:** `damage-types/radiation.md` continua ⚠️ `NOT_CERTIFIED`; `effects/irradiated.md` já tinha certificado estático específico. Nenhum novo objeto, alteração de índices, Stage, hook ou contagem global.
 
-**Fontes locais:** [efeito e offsets](../effects/irradiated.md) · [evidência binária de efeitos](../EXACT-EFFECT-CONTRACTS-1.0.10.md) · [factory/consumidores diretos](../EXACT-CONSUMERS-1.0.10.json).
+**Fontes locais:** [efeito e offsets](../effects/irradiated.md) · [evidência binária de efeitos](../EXACT-EFFECT-CONTRACTS-1.0.10.md) · [factory/consumidores diretos](EXACT-CONSUMERS-1.0.10.json).
