@@ -81,6 +81,34 @@ evidência exata dos opcodes e revisão do contexto permite melhorar RN-02
 e RN-03, sem automaticamente homologar perks. Um snapshot SHA-exato, quando
 publicado, deve ser revalidado pelo mesmo workflow.
 
+## Auditoria da identidade do receptor (PR #995)
+
+O [probe read-only de identidade](alexscaves_1010_raygun_receiver_identity_probe.py)
+confirma, em execução Java 21 no publisher JAR SHA-exato 1.0.10, o
+`UpdateItemTagMessage.handle` previamente selado, seu contexto
+`ACNetwork$NeoForgeContext` e o dispatch do
+`ACNetwork$Entry`. Evidência de [execução real em CI](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41334822025).
+
+| Componente nativo | Evidência exata do bytecode | Limite da conclusão |
+| --- | --- | --- |
+| `ACNetwork$NeoForgeContext.getSender` | Invoca `IPayloadContext.player @4`; testa `instanceof ServerPlayer @11` e `ifeq @14` | Resolve o player de contexto quando é servidor; não vincula automaticamente esse player ao `entityId` arbitrário presente no payload |
+| `ACNetwork$NeoForgeContext.isClientSide` | `IPayloadContext.flow @4` seguido de `PacketFlow.isClientbound @9` | Define o lado lógico conforme fluxo; não comprova que campos de mensagem estejam autorizados |
+| `ACNetwork$NeoForgeContext.enqueueWork` | `IPayloadContext.enqueueWork @5` | Um helper oferece enfileiramento; o seu uso efetivo pelo Raygun precisa ser provado no call graph |
+| `ACNetwork$Entry.handle` | `BiConsumer.accept @6` | Dispatch nativo da tabela; não é validação semântica da tag |
+| `UpdateItemTagMessage.handle` | Nove desvios JVM em `@20, @31, @50, @84, @97, @116, @131, @146, @161`; branch de escape até `@179` em vários caminhos | São guardas compilados do handler, não evidência de QA física nem autenticação de cada identificador/valor |
+
+**Decisão técnica:** o contexto usa o player provido por
+`IPayloadContext` e a direção real do fluxo, mas é
+necessário reconstruir os dados que atravessam `getSender`,
+`Level.getEntity` e `UpdatesStackTags.updateTagFromServer`.
+Uma validação de tipo de item e presença de tag não basta para confirmar
+ownership do alvo, saneamento de `ChargeUsed` /
+`UseTime` ou proteção contra replay.
+O envelope e o contexto do provider são observados estaticamente;
+**nenhuma vulnerabilidade é afirmada** sem análise dos caminhos externos,
+reprodução controlada e avaliação de permissões. O Black Arcana mantém
+`NO_MUTATION`, sem hooks mutadores ou QA física presumidos.
+
 ## Aceite antes de concluir contrato estático Raygun
 
 | Gate | Evidência necessária | Estado atual |
