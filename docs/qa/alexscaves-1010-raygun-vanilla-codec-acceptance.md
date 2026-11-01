@@ -2,10 +2,10 @@
 
 ## Autoridades e limitação
 
-- **Provider instalado:** `alexscaves-1.0.10-neoforge+1.21.1.jar`, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, mod ID `alexscaves` (modlist física do sibling). O recorte do helper sombreado está no [manifesto exato do provider](../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-ITEMSTACK-HELPER-1.0.10.json).
+- **Provider instalado:** `alexscaves-1.0.10-neoforge+1.21.1.jar`, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, mod ID `alexscaves` (modlist física do sibling). O recorte do helper sombreado está no [manifesto exato do provider](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-ITEMSTACK-HELPER-1.0.10.json).
 - **Loader instalado:** NeoForge `21.1.248`. A classe Minecraft transformada por esse loader **não foi inspecionada** neste recorte.
 - **Fonte nova, separada:** JAR *client* oficial Mojang **Minecraft 1.21.1**, SHA-1 `30c73b1c5da787909b2f73340419fdf13b9def88` (26.836.906 bytes), mapa oficial SHA-1 `2244b6f072256667bcd9a73df124d6c58de77992` (9.598.610 bytes). Versão e downloads vieram da metadata oficial do launcher; a CI confere hash/tamanho antes de executar o `javap` Java 21. O binário é consultado, **não** publicado.
-- **Selo reprodutível:** [EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json](../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json) e [probe read-only](minecraft_1211_itemstack_optional_stream_probe.py).
+- **Selo reprodutível:** [EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json) e [probe read-only](minecraft_1211_itemstack_optional_stream_probe.py).
 
 O mapping Mojang identifica `net.minecraft.world.item.ItemStack` como `cuq.class` (SHA-256 `a34b9141828bd62fa74ad6a5d3b9b47a81df18b4a86866827c8f73d3ab97f901`) e `OPTIONAL_STREAM_CODEC` como campo `h`. O `<clinit>` instancia `cuq$1` em `@120` e atribui `h @127`; a classe codec possui SHA-256 `b67408499e6a5f8edd5120e1bffa67c6e0c50f68658d5d098c4813beebbadfc2`.
 
