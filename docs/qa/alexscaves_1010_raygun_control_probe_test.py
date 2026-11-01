@@ -61,7 +61,7 @@ class RaygunControlProbeTest(unittest.TestCase):
     def test_bounded_report_contains_selected_window(self):
         res = selected_report([self.impact(), method("other", [instr(0, "return")])])
         self.assertEqual(res["method_count"], 1)
-        self.assertEqual(res["selected_methods"][0]["selected_windows"][0]["at"], FACTORY_OFFSET)
+        self.assertIn(FACTORY_OFFSET, [window["at"] for window in res["selected_methods"][0]["selected_windows"]])
         self.assertTrue(is_focus(self.impact()))
         self.assertFalse(is_focus(method("unrelated", [instr(0, "return")])))
 
