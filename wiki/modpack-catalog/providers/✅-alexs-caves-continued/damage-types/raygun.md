@@ -175,3 +175,11 @@ Próxima auditoria obrigatória: identificar a hierarquia concreta do `RaygunIte
 **Pontos de QA / perks:** investigar política de rede e vínculo remetente-`entityId`, alteração de mão ou stack durante trânsito, validação de `ChargeUsed` e `UseTime`, persistência de `CUSTOM_DATA`, replay, efeitos de encantamentos, proteção em PvP e origem de XP/Mastery. Qualquer perk de custo ou duração deve operar via boundary nativa comprovada e server-authoritative; nenhuma modificação do pacote fica autorizada por esse manifesto.
 
 **Status:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Contador de Alex's Caves Continued **24/30 (80%)**, sem promoção de objetos, hooks ou Stage. O suporte de `UpdatesStackTags` é um contrato de atualização de estado de item, não uma nova magia.
+
+## Registro nativo C2S — descoberta delimitada sem certificação
+
+Nova trilha independente de [inspeção do registro do pacote e aceitação](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md), com [probe read-only](../../../../../docs/qa/alexscaves_1010_raygun_registration_probe.py) e [CI JAR SHA-exata](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-raygun-registration.yml).
+
+O recorte busca classes candidatas que referenciam `UpdateItemTagMessage` ou `ACNetworkContext` no binário exato. Esses tokens e callsites não demonstram, por si, registro do canal, direção da mensagem, validação de `entityId`, pertencimento do `ItemStack` ou sanitização de `CUSTOM_DATA`. A associação causal do dano com o caster deve continuar condicionada à aceitação nativa de `ACCompat.hurt` e aos guards de alvo do provider. O novo probe não reimplementa as funções nem substitui os três manifestos Raygun existentes.
+
+**Estado inalterado:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Sem novo contrato estático ou alteração de contadores/Stage.
