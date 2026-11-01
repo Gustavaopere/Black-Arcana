@@ -266,6 +266,126 @@ def audit(client, mappings, metadata, javap_bin):
     return report
 
 
+
+OFFICIAL_ITEMSTACK_SHA256 = "a34b9141828bd62fa74ad6a5d3b9b47a81df18b4a86866827c8f73d3ab97f901"
+OFFICIAL_OPTIONAL_CODEC_SHA256 = "b67408499e6a5f8edd5120e1bffa67c6e0c50f68658d5d098c4813beebbadfc2"
+OFFICIAL_MAPPING_SHA1 = "2244b6f072256667bcd9a73df124d6c58de77992"
+EXPECTED_OWNER_MAP = {
+    "jm": "net.minecraft.core.Holder",
+    "kn": "net.minecraft.core.component.DataComponentPatch",
+    "wk": "net.minecraft.network.RegistryFriendlyByteBuf"
+}
+EXPECTED_CODEC_METHODS = (
+    ("cuq$1", "()V"),
+    ("a", "(Lwk;)Lcuq;"),
+    ("a", "(Lwk;Lcuq;)V"),
+    ("encode", "(Ljava/lang/Object;Ljava/lang/Object;)V"),
+    ("decode", "(Ljava/lang/Object;)Ljava/lang/Object;")
+)
+CORE_CODEC_ABI = (
+    ("a", "(Lwk;)Lcuq;", 1, "invokevirtual", "wk.l:()I", ""),
+    ("a", "(Lwk;)Lcuq;", 6, "ifgt", "", "13"),
+    ("a", "(Lwk;)Lcuq;", 9, "getstatic", "Field cuq.l:", ""),
+    ("a", "(Lwk;)Lcuq;", 17, "invokeinterface", "yx.decode:", ""),
+    ("a", "(Lwk;)Lcuq;", 26, "getstatic", "Field kn.c:", ""),
+    ("a", "(Lwk;)Lcuq;", 30, "invokeinterface", "yx.decode:", ""),
+    ("a", "(Lwk;Lcuq;)V", 4, "ifeq", "", "14"),
+    ("a", "(Lwk;Lcuq;)V", 9, "invokevirtual", "wk.c:(I)", ""),
+    ("a", "(Lwk;Lcuq;)V", 19, "invokevirtual", "wk.c:(I)", ""),
+    ("a", "(Lwk;Lcuq;)V", 23, "getstatic", "Field a:Lyx;", ""),
+    ("a", "(Lwk;Lcuq;)V", 31, "invokeinterface", "yx.encode:", ""),
+    ("a", "(Lwk;Lcuq;)V", 36, "getstatic", "Field kn.c:", ""),
+    ("a", "(Lwk;Lcuq;)V", 47, "invokeinterface", "yx.encode:", "")
+)
+EXPECTED_STATUS = {
+    "neoforge_21_1_248_merged_runtime": "NOT_INSPECTED",
+    "itemstack_stream_decode_method": "NOT_TRACED",
+    "data_component_patch_bounds": "NOT_TRACED",
+    "network_packet_size_limits": "NOT_VERIFIED",
+    "nbt_depth_and_byte_limits": "NOT_VERIFIED",
+    "raygun_tag_authority": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "static_perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+}
+
+
+def snapshot_projection(report):
+    """Pin exact Mojang vanilla artifact and selected codec semantics; not NeoForge."""
+    require(report["scope"] ==
+            "OFFICIAL_MOJANG_VANILLA_1211_ITEMSTACK_STATIC_ABI_CORROBORATION_ONLY",
+            "changed runtime authority scope")
+    require(report["official_client_sha1"] == CLIENT_SHA1 and
+            report["official_mapping_sha1"] == OFFICIAL_MAPPING_SHA1,
+            "official vanilla artifact or mappings drift")
+    require(report["class_path"] == "cuq.class" and
+            report["class_sha256"] == OFFICIAL_ITEMSTACK_SHA256 and
+            report["mapped_field"] == MOJANG_FIELD and
+            report["obfuscated_field"] == "h",
+            "official vanilla ItemStack identity/field drift")
+    initializer = report["static_initializer"]
+    require(initializer["optional_codec_putstatic_offset"] == 127,
+            "vanilla optional codec assignment drift")
+    symbols = initializer["selected_preassignment_abi"]
+    for off, opcode, fragment in (
+        (120, "new", "class cuq$1"),
+        (124, "invokespecial", "cuq$1"),
+        (127, "putstatic", "Field h:"),
+    ):
+        matches = [x for x in symbols if x["offset"] == off]
+        require(len(matches) == 1 and matches[0]["opcode"] == opcode and
+                fragment in matches[0]["symbol"],
+                "vanilla optional codec initializer ABI drift")
+    require(report["selected_obfuscated_class_names"] == EXPECTED_OWNER_MAP,
+            "official Mojang mapped component/buffer owners drift")
+    impl = report["assigned_codec_implementation"]
+    require(impl["class_path"] == "cuq$1.class" and
+            impl["class_sha256"] == OFFICIAL_OPTIONAL_CODEC_SHA256,
+            "official anonymous ItemStack codec SHA drift")
+    methods = impl["methods"]
+    require(tuple((m["name"], m["descriptor"]) for m in methods) ==
+            EXPECTED_CODEC_METHODS, "vanilla codec method signatures/order drift")
+    anchors = []
+    for method_name, descriptor, offset, opcode, fragment, operand in CORE_CODEC_ABI:
+        m = next(x for x in methods
+                 if x["name"] == method_name and x["descriptor"] == descriptor)
+        hits = [x for x in m["selected_refs"] if x["offset"] == offset]
+        require(len(hits) == 1 and hits[0]["opcode"] == opcode
+                and fragment in hits[0]["symbol"] and
+                hits[0]["operand"] == operand,
+                "vanilla codec branch or delegate ABI drift")
+        anchors.append({
+            "method": method_name, "descriptor": descriptor, **hits[0]
+        })
+    require(report["limits"] == EXPECTED_STATUS,
+            "vanilla codec falsely promoted NeoForge or Raygun status")
+    return {
+        **{k: report[k] for k in (
+            "schema_version", "scope", "version", "official_client_sha1",
+            "official_client_size", "official_mapping_sha1",
+            "official_mapping_size", "class_path", "class_sha256",
+            "mapped_field", "obfuscated_field", "mapped_field_type")},
+        "codec_class_path": impl["class_path"],
+        "codec_class_sha256": impl["class_sha256"],
+        "codec_method_signatures": [
+            {"name": m["name"], "descriptor": m["descriptor"]}
+            for m in methods
+        ],
+        "codec_initializer_putstatic_offset":
+            initializer["optional_codec_putstatic_offset"],
+        "selected_obfuscated_class_names": report["selected_obfuscated_class_names"],
+        "selected_vanilla_codec_abi": anchors,
+        "limits": report["limits"]
+    }
+
+
+def verify_snapshot(report, snapshot):
+    require(snapshot_projection(report) == snapshot,
+            "sealed Mojang vanilla optional codec evidence drift")
+    return True
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--client", type=Path, required=True)
@@ -273,9 +393,12 @@ def main():
     p.add_argument("--metadata", type=Path, required=True)
     p.add_argument("--javap", required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--snapshot", type=Path)
     args = p.parse_args()
     report = audit(args.client, args.mappings,
                    json.loads(args.metadata.read_text(encoding="utf8")), args.javap)
+    if args.snapshot:
+        verify_snapshot(report, json.loads(args.snapshot.read_text(encoding="utf8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True,
                                       ensure_ascii=False) + "\n", encoding="utf8")
