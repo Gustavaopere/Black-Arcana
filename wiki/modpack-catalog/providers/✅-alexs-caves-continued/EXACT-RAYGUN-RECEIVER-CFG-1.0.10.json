@@ -200,5 +200,61 @@
     "physical_qa": "NOT_TESTED",
     "static_perk_contract": "NOT_CERTIFIED",
     "mutation": "NO_MUTATION"
-  }
+  },
+  "local_stack_bindings": [
+    {
+      "offset": 60,
+      "opcode": "getfield",
+      "operand": "#13",
+      "symbol": "Field itemStackFrom:Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "offset": 63,
+      "opcode": "astore",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "offset": 92,
+      "opcode": "invokevirtual",
+      "operand": "#86",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "offset": 95,
+      "opcode": "astore",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "offset": 127,
+      "opcode": "astore",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "offset": 129,
+      "opcode": "aload",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "offset": 156,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "offset": 167,
+      "opcode": "aload",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "offset": 169,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    }
+  ]
 }
