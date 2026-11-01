@@ -57,23 +57,32 @@ substitute for replayable evidence.
 
 ## Release and catalog decision gate
 
-Under the **current evidence and current certification ledger**, **both nuclear
-damage cards remain pending**:
+The current consolidated catalog can certify **only the two static technical
+contracts** when the jointly sealed nuclear manifest, the seven evidence axes,
+the exact card hashes and the ledger/index states agree. The runtime finding in
+the original TicketController snapshot remains unchanged:
 
-- `NOT_CERTIFIED` as a complete technical static contract;
+- `native_release_ticket_bucket_mismatch=CONFIRMED_SELECTED_STATIC_BRANCHES_NOT_LIVE_RUNTIME`;
+- `actual_persistent_ticket_leak=NOT_OBSERVED`;
 - `mutating_hook=NOT_VERIFIED`;
 - `physical_qa=NOT_TESTED`;
 - `NO_MUTATION` for size, AoE, damage scaling, blocks, radiation, chunk loading,
-  cost/procs, attribution, and perks.
+  costs/procs, attribution and perks.
 
-The automatic guard rejects unilateral promotion against **this exact
-unresolved evidence snapshot**. A future **static-only** certification may be
-reviewed independently once all seven evidence axes are fully sealed, with
-the ticket mismatch and QA limitations explicitly preserved; it does **not**
-require pretending that the native ticket mismatch is fixed. By contrast,
-**mutating perk/runtime authorization stays blocked** until a safe native
-boundary, controller/ticket resolution, protection/budgets and applicable
-physical acceptance are independently verified. Any change to the gate,
-ledger and indexes must be reviewed together in one audited PR.
-A successful static CI pass alone never certifies NT-01…NT-07.
-**No global counters, provider stage or progress percentages are advanced here.**
+The automatic guard retains all exact artifact, mismatch, boolean forwarding and
+runtime-state checks for both pending and static-only catalog states. Promotion
+requires **both** nuclear cards, a valid literal `nuclear` family/roster,
+checksummed current files and supplied text, complete seven-axis evidence and
+indexes whose hook and physical-QA columns remain pending. A standalone green
+row, partial pair, missing/changed seal or claimed physical success is rejected.
+The consolidated manifest, gate, ledger and indexes are reviewed together in
+one audited PR; the historical binary evidence is not rewritten.
+
+**NT-01 through NT-07 remain NOT_TESTED.** The additional static inspection of
+provider controller registration/callback bodies does not substitute for their
+actual execution in an exact server, restart validation or ticket observation.
+No native ticket category mismatch is declared fixed. A successful static CI
+pass does not certify any row of the physical matrix and does not establish a
+persistent leak. Mutating perk/runtime authorization remains blocked until its
+own native boundary, protections/budgets and applicable physical acceptance are
+independently verified.

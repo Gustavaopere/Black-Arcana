@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check exact resources and five separately sealed static damage contracts."""
+"""Check exact resources and seven separately sealed static damage contracts."""
 import hashlib
 import json
 import re
@@ -48,6 +48,18 @@ STATIC_CONTRACTS = {
         "cards": frozenset({"damage-types/gumball.md", "equipment/shot-gum.md"}),
     },
 
+    "intentional_game_design": {
+        "manifest": "EXACT-NUCLEAR-CONTRACTS-1.0.10.json",
+        "profile": "nuclear",
+        "family": "NUCLEAR_DAMAGE_CONTRACTS",
+        "cards": frozenset({"damage-types/intentional-game-design.md", "damage-types/nuke.md"}),
+    },
+    "nuke": {
+        "manifest": "EXACT-NUCLEAR-CONTRACTS-1.0.10.json",
+        "profile": "nuclear",
+        "family": "NUCLEAR_DAMAGE_CONTRACTS",
+        "cards": frozenset({"damage-types/intentional-game-design.md", "damage-types/nuke.md"}),
+    },
 }
 
 
@@ -67,6 +79,8 @@ GUMBALL_PRIOR_MANIFEST_SHA256 = {
     "EXACT-GUMBALL-SPLIT-ENCHANT-1.0.10.json": "2ace1627c2fd451a23d0aae596301d4d1037d1e03994cc4b21adbaed7e048f9e"
 }
 
+NUCLEAR_PRIOR_MANIFEST_SHA256 = {'EXACT-NUCLEAR-CHUNK-LIFECYCLE-1.0.10.json': '685b250b6ec56f1e9139619e7202c39641e5426cbd11b1c4ccf330b344f0202c', 'EXACT-NUCLEAR-ENVELOPE-1.0.10.json': '6bb9d1dabb8d3fb333a795a6a428f35caa77da42192f07e4da9c486f6f759bc1', 'EXACT-NUCLEAR-NUMERIC-1.0.10.json': '3923074f3915e9f01c3b15117fdc08aed8bd68e1f8182e1eeff4c0275b0bc34d', 'EXACT-NUCLEAR-PRODUCERS-1.0.10.json': 'c7314202887c12af9007680ce455ea5de984c8e8482ae612d5c99be1ff32e6ea', 'EXACT-NUCLEAR-TARGET-WORLD-1.0.10.json': 'f37f7ea49653a7ec050869880b0f070a9629aabfa6a12aeca908eac155dc3b25', 'EXACT-NEOFORGE-TICKETS-21.1.248.json': '61625bef510ebe5e34a65b69e60cdd4a9a2cd9fc2689701620fdb98c72016d3c'}
+
 def assert_sealed_damage_contract(case, damage_id):
     """A promoted card needs an exact seal and matching static-only ledger evidence."""
     provider = FAMILY.parent
@@ -76,6 +90,10 @@ def assert_sealed_damage_contract(case, damage_id):
                              "historical partial evidence must remain immutable: " + name)
     if damage_id == "gumball":
         for name, expected in GUMBALL_PRIOR_MANIFEST_SHA256.items():
+            case.assertEqual(hashlib.sha256((provider / name).read_bytes()).hexdigest(), expected,
+                             "historical partial evidence must remain immutable: " + name)
+    if damage_id in {"intentional_game_design", "nuke"}:
+        for name, expected in NUCLEAR_PRIOR_MANIFEST_SHA256.items():
             case.assertEqual(hashlib.sha256((provider / name).read_bytes()).hexdigest(), expected,
                              "historical partial evidence must remain immutable: " + name)
     scope = STATIC_CONTRACTS[damage_id]
@@ -145,16 +163,16 @@ class DamageTypeCards(unittest.TestCase):
                 self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if id in STATIC_CONTRACTS else "NOT_CERTIFIED", text)
                 self.assertIn("**+0 raízes mágicas novas**", text)
 
-    def test_six_static_certificates_have_sealed_cards_and_runtime_limits(self):
-        self.assertEqual(set(STATIC_CONTRACTS), {"acid", "dark_arrow", "desolate_dagger", "forsaken_sonic_boom", "gumball", "radiation"})
+    def test_eight_static_certificates_have_sealed_cards_and_runtime_limits(self):
+        self.assertEqual(set(STATIC_CONTRACTS), {"acid", "dark_arrow", "desolate_dagger", "forsaken_sonic_boom", "gumball", "radiation", "intentional_game_design", "nuke"})
         for id in STATIC_CONTRACTS:
             with self.subTest(id=id):
                 assert_sealed_damage_contract(self, id)
 
-    def test_other_five_damage_types_remain_uncertified(self):
+    def test_other_three_damage_types_remain_uncertified(self):
         ledger = json.loads((ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text())
         remaining = set(self.manifest["damage_types"]) - set(STATIC_CONTRACTS)
-        self.assertEqual(len(remaining), 5)
+        self.assertEqual(len(remaining), 3)
         for id in remaining:
             with self.subTest(id=id):
                 relative = FAMILY.parent.name + "/damage-types/" + id.replace("_", "-") + ".md"
