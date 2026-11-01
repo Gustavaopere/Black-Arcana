@@ -93,9 +93,7 @@ def snapshot_projection(report):
             {"class_path": c["class_path"], "class_sha256": c["class_sha256"],
              "declared_method_count": c["declared_method_count"],
              "selected_methods": [
-                 {"name": m["name"], "descriptor": m["descriptor"],
-                  "instruction_count": m["instruction_count"],
-                  "parsed_method_sha256": m["parsed_method_sha256"]}
+                 {"name": m["name"], "parsed_method_sha256": m["parsed_method_sha256"]}
                  for m in c["selected_methods"]
              ]}
             for c in report["classes"]
