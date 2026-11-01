@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_RAYGUN_PACKET_SERIALIZATION_SELECTED_ABI_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_path": "com/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage.class",
+  "class_sha256": "bda52d12e8cce7e010b3d4cd2db7d83000e78b35657c55773a8ba91a070478c8",
+  "declared_method_count": 4,
+  "methods": [
+    {
+      "name": "UpdateItemTagMessage",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)V",
+      "method_sha256": "1ac91c55e09910edfeae3ba5e78e8b58b0a14a624cdef1ca3d8a728766dbf5d7"
+    },
+    {
+      "name": "read",
+      "descriptor": "(Lnet/minecraft/network/FriendlyByteBuf;)Lcom/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage;",
+      "method_sha256": "f590db000143ebe02ebc5bfb8fd251f2b73089b6445e8d5a728aec9ffa2f2d1b"
+    },
+    {
+      "name": "write",
+      "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage;Lnet/minecraft/network/FriendlyByteBuf;)V",
+      "method_sha256": "98fa0d6840f39db9f32986e5ebbb26a0536bfbf58ef9e3f8b0065e256cd4b10c"
+    },
+    {
+      "name": "handle",
+      "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage;Lcom/github/alexmodguy/alexscaves/server/message/ACNetworkContext;)V",
+      "method_sha256": "049a8d738fda3cb0fbd3c148b3e01aecc62f067004b0c6ce0a845dacc664e0a3"
+    }
+  ],
+  "codec_abi_anchors": [
+    {
+      "method": "UpdateItemTagMessage",
+      "offset": 6,
+      "opcode": "putfield",
+      "symbol": "Field entityId:I"
+    },
+    {
+      "method": "UpdateItemTagMessage",
+      "offset": 11,
+      "opcode": "putfield",
+      "symbol": "Field itemStackFrom:Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "method": "read",
+      "offset": 5,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/minecraft/network/FriendlyByteBuf.readInt:()I"
+    },
+    {
+      "method": "read",
+      "offset": 9,
+      "opcode": "invokestatic",
+      "symbol": "Method com/github/alexmodguy/alexscaves/citadel/server/message/PacketBufferUtils.readItemStack:(Lio/netty/buffer/ByteBuf;)Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "method": "read",
+      "offset": 12,
+      "opcode": "invokespecial",
+      "symbol": "Method \"<init>\":(ILnet/minecraft/world/item/ItemStack;)V"
+    },
+    {
+      "method": "write",
+      "offset": 2,
+      "opcode": "getfield",
+      "symbol": "Field entityId:I"
+    },
+    {
+      "method": "write",
+      "offset": 5,
+      "opcode": "invokevirtual",
+      "symbol": "Method net/minecraft/network/FriendlyByteBuf.writeInt:(I)Lnet/minecraft/network/FriendlyByteBuf;"
+    },
+    {
+      "method": "write",
+      "offset": 11,
+      "opcode": "getfield",
+      "symbol": "Field itemStackFrom:Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "method": "write",
+      "offset": 14,
+      "opcode": "invokestatic",
+      "symbol": "Method com/github/alexmodguy/alexscaves/citadel/server/message/PacketBufferUtils.writeItemStack:(Lio/netty/buffer/ByteBuf;Lnet/minecraft/world/item/ItemStack;)V"
+    }
+  ],
+  "limits": {
+    "wire_data_trust": "UNTRUSTED_UNTIL_SERVER_VALIDATED",
+    "sender_entity_id_binding": "NOT_VERIFIED",
+    "stack_identity_binding": "NOT_VERIFIED",
+    "tag_field_whitelist": "NOT_VERIFIED",
+    "network_direction_and_threading": "REQUIRES_SEPARATE_CONTRACTS",
+    "runtime_exploitability": "NOT_ASSESSED",
+    "physical_qa": "NOT_TESTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "perk_static_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  }
+}
