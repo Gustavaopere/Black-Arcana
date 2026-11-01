@@ -175,3 +175,13 @@ A seleção de `causeIntentionalGameDesign` não substitui o `NuclearExplosionEn
 O adaptador `ACPlatform` ignora o retorno booleano do `TicketController`. Reinicialização e recuperação dos tickets são geridas pelo NeoForge com `ForcedChunksSavedData` e `LoadingValidationCallback` opcionais, mas o callback registrado pelo Alex’s Caves e o estado efetivo pós-restart não foram fechados nesta auditoria. **Não certificar cleanup, ausência de vazamento, WorldEffectPolicy ou integração de propriedades mutadoras.** A evidência registra descompasso estático, não observação de vazamento em servidor real.
 
 **Estado:** ⛔ integração mutadora bloqueada; ficha ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. O universo do provider, Stage e índices permanecem inalterados.
+
+## Gate de promoção da variante nuclear — prova e QA ainda pendentes
+
+Os manifests SHA-exatos existentes documentam um descompasso estático entre a categoria de ticket utilizada para forçar chunks (`ENTITY_TICKING`) e a categoria usada na tentativa de liberação (`ENTITY`). Este consumidor `NuclearExplosionEntity` é compartilhado com a outra variante de `DamageSource`; portanto não se certificam separadamente cleanup, escala ou segurança do mundo por meio da seleção de um tipo de dano.
+
+- [Matriz de aceite físico NT-01…NT-07](../../../../../docs/qa/alexscaves-1010-nuclear-ticket-physical-acceptance.md) — **plano PENDING**, sem execução ou comprovação de vazamento em servidor.
+- [Trava de regressão dos dois damage types](../../../../../docs/qa/alexscaves_1010_nuclear_ticket_promotion_gate_test.py) — impede promoção documental unilateral enquanto os binários e limites observados mantiverem o descompasso.
+- Para liberar uma perk mutadora, exigem-se identificação nativa de owner, controles de mundo/claims, budget de chunks e destruição, deduplicação, contrato de mutação no provider e evidência física com JAR/hash exatos. Os testes estáticos não substituem essas provas.
+
+**Decisão atual:** ⚠️ `NOT_CERTIFIED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. Nenhum contador/Stage é elevado por este gate.
