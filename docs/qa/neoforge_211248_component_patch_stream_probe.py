@@ -176,15 +176,172 @@ def audit(jar, javap_bin, upstream):
     return report
 
 
+
+EXACT_CLASS_SHA256 = "24f57ec112e9f3ec1e8db754e9014b5b02e2f2c6283f13fbffd27fb90be8d263"
+EXACT_CODEC_SHA256 = "d98b1334116457aea1f6b174e9f0760e6897d965eda58b7f57865bd1e5427880"
+DECODE = ("decode", "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/core/component/DataComponentPatch;")
+ENCODE = ("encode", "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentPatch;)V")
+ENCODE_COMPONENT = ("encodeComponent", "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)V")
+EXACT_CODEC_METHODS = (
+    ("DataComponentPatch$1", "()V"), DECODE, ENCODE, ENCODE_COMPONENT,
+    ("decode", "(Ljava/lang/Object;)Ljava/lang/Object;"),
+    ("encode", "(Ljava/lang/Object;Ljava/lang/Object;)V")
+)
+# (method, descriptor, JVM offset, opcode, symbolic fragment, optional target)
+ABI_SITES = (
+    (*DECODE, 1, "invokevirtual", "RegistryFriendlyByteBuf.readVarInt:", ""),
+    (*DECODE, 6, "invokevirtual", "RegistryFriendlyByteBuf.readVarInt:", ""),
+    (*DECODE, 11, "ifne", "", "22"),
+    (*DECODE, 15, "ifne", "", "22"),
+    (*DECODE, 18, "getstatic", "DataComponentPatch.EMPTY:", ""),
+    (*DECODE, 35, "invokestatic", "java/lang/Math.min:", ""),
+    (*DECODE, 38, "invokespecial", "Reference2ObjectArrayMap.", ""),
+    (*DECODE, 49, "if_icmpge", "", "102"),
+    (*DECODE, 52, "getstatic", "DataComponentType.STREAM_CODEC:", ""),
+    (*DECODE, 56, "invokeinterface", "StreamCodec.decode:", ""),
+    (*DECODE, 68, "invokeinterface", "DataComponentType.streamCodec:", ""),
+    (*DECODE, 74, "invokeinterface", "StreamCodec.decode:", ""),
+    (*DECODE, 99, "goto", "", "46"),
+    (*DECODE, 108, "if_icmpge", "", "144"),
+    (*DECODE, 111, "getstatic", "DataComponentType.STREAM_CODEC:", ""),
+    (*DECODE, 115, "invokeinterface", "StreamCodec.decode:", ""),
+    (*DECODE, 129, "invokestatic", "java/util/Optional.empty:", ""),
+    (*DECODE, 144, "new", "DataComponentPatch", ""),
+    (*ENCODE, 4, "ifeq", "", "22"),
+    (*ENCODE, 9, "invokevirtual", "RegistryFriendlyByteBuf.writeVarInt:", ""),
+    (*ENCODE, 15, "invokevirtual", "RegistryFriendlyByteBuf.writeVarInt:", ""),
+    (*ENCODE, 93, "invokevirtual", "RegistryFriendlyByteBuf.writeVarInt:", ""),
+    (*ENCODE, 100, "invokevirtual", "RegistryFriendlyByteBuf.writeVarInt:", ""),
+    (*ENCODE, 172, "getstatic", "DataComponentType.STREAM_CODEC:", ""),
+    (*ENCODE, 191, "invokestatic", "encodeComponent:", ""),
+    (*ENCODE, 261, "getstatic", "DataComponentType.STREAM_CODEC:", ""),
+    (*ENCODE_COMPONENT, 1, "invokeinterface", "DataComponentType.streamCodec:", ""),
+    (*ENCODE_COMPONENT, 8, "invokeinterface", "StreamCodec.encode:", ""),
+)
+# JVM prefix: source of two counters, sum, capacity initialization, loop bound.
+COUNT_PREFIX_SITES = (
+    (1, "invokevirtual", "RegistryFriendlyByteBuf.readVarInt:", ""),
+    (4, "istore_2", "", ""),
+    (6, "invokevirtual", "RegistryFriendlyByteBuf.readVarInt:", ""),
+    (9, "istore_3", "", ""),
+    (24, "iadd", "", ""),
+    (25, "istore", "", "4"),
+    (31, "iload", "", "4"),
+    (33, "ldc", "int 65536", ""),
+    (35, "invokestatic", "java/lang/Math.min:", ""),
+    (38, "invokespecial", "Reference2ObjectArrayMap.", ""),
+    (46, "iload", "", "6"),
+    (48, "iload_2", "", ""),
+    (49, "if_icmpge", "", "102"),
+)
+LIMITS = {
+    "full_installed_modpack_class_loaded":"NOT_OBSERVED",
+    "neoforge_runtime_modlauncher_transform":"NOT_OBSERVED",
+    "data_component_patch_byte_limits":"NOT_VERIFIED",
+    "data_component_patch_entry_limits":"NOT_VERIFIED",
+    "nbt_depth_and_field_whitelist":"NOT_VERIFIED",
+    "raygun_tag_authority":"NOT_VERIFIED",
+    "physical_qa":"NOT_TESTED",
+    "mutating_hook":"NOT_VERIFIED",
+    "static_perk_certification":"NOT_CERTIFIED",
+    "mutation":"NO_MUTATION"
+}
+
+
+def snapshot_projection(report):
+    """Solely distributed 21.1.248 JVM ABI; preserve the capacity-vs-limit boundary."""
+    require(report["scope"] == "NEOFORGE_211248_DISTRIBUTED_SERVER_COMPONENT_PATCH_ABI_ONLY"
+            and report["artifact"] == {
+                "server_jar_sha256":PINNED_SERVER_JAR_SHA256,
+                "server_jar_bytes":EXPECTED_JAR_SIZE},
+            "official 21.1.248 distribution authority drift")
+    require(report["class_path"] == CLASS and
+            report["class_sha256"] == EXACT_CLASS_SHA256 and
+            report["class_method_count"] == 15 and
+            report["selected_method_count"] == 7,
+            "component patch outer class roster/hash drift")
+    init=report["static_stream_codec_initializer"]
+    require(init["optional_codec_putstatic_offset"] == 49,
+            "DataComponentPatch.STREAM_CODEC assigned at unexpected JVM offset")
+    initializer=init["selected_preassignment_abi"]
+    for off,op,sym in (
+        (42,"new","DataComponentPatch$1"),
+        (46,"invokespecial","DataComponentPatch$1"),
+        (49,"putstatic","Field STREAM_CODEC:"),
+    ):
+        matches=[x for x in initializer if x["offset"] == off]
+        require(len(matches)==1 and matches[0]["opcode"] == op and
+                sym in matches[0]["symbol"], "component patch static codec owner drift")
+    codec=report["stream_codec_implementation"]
+    require(codec["class_path"] ==
+            "net/minecraft/core/component/DataComponentPatch$1.class" and
+            codec["class_sha256"] == EXACT_CODEC_SHA256,
+            "component patch anonymous codec class hash drift")
+    require(tuple((m["name"],m["descriptor"]) for m in codec["methods"]) ==
+            EXACT_CODEC_METHODS, "component patch native codec method signatures drift")
+    prefix=report["stream_codec_count_prefix"]
+    require(len({p["offset"] for p in prefix}) == len(prefix),
+            "duplicate component patch decoder prefix offset")
+    count_anchors=[]
+    for off,op,sym,operand in COUNT_PREFIX_SITES:
+        m=[x for x in prefix if x["offset"] == off]
+        require(len(m)==1 and m[0]["opcode"] == op and
+                sym in m[0]["symbol"] and
+                (not operand or m[0]["operand"] == operand),
+                "decoded patch counter or initial map capacity ABI drift")
+        count_anchors.append(m[0])
+    # 65536 is passed to Math.min(total count, 65536) for map *capacity*.
+    # The loops use the original packet counts. Do not label it a count cap.
+    method_pivots=[]
+    for name,desc,off,op,sym,operand in ABI_SITES:
+        method=next(m for m in codec["methods"]
+                    if m["name"] == name and m["descriptor"] == desc)
+        matching=[x for x in method["selected_refs"] if x["offset"]==off]
+        require(len(matching)==1 and matching[0]["opcode"] == op and
+                sym in matching[0]["symbol"] and
+                (not operand or matching[0]["operand"] == operand),
+                "distributed component patch decode/encode pivot drift")
+        method_pivots.append({"method":name,"descriptor":desc,**matching[0]})
+    require(report["limits"]==LIMITS,
+            "false gameplay/security/certification promotion")
+    return {
+        "schema_version":report["schema_version"],
+        "scope":report["scope"],
+        "artifact":report["artifact"],
+        "class_path":report["class_path"],
+        "class_sha256":report["class_sha256"],
+        "class_method_count":report["class_method_count"],
+        "selected_method_count":report["selected_method_count"],
+        "static_codec_assignment_offset":init["optional_codec_putstatic_offset"],
+        "codec_class_path":codec["class_path"],
+        "codec_class_sha256":codec["class_sha256"],
+        "codec_method_signatures":[
+            {"name":m["name"],"descriptor":m["descriptor"]}
+            for m in codec["methods"]],
+        "counter_and_initial_capacity_abi":count_anchors,
+        "count_capacity_interpretation":"65536_MAP_INITIAL_CAPACITY_ONLY_NOT_VERIFIED_ENTRY_LIMIT",
+        "critical_codec_abi":method_pivots,
+        "limits":report["limits"]
+    }
+
+
+def verify_snapshot(report, snapshot):
+    require(snapshot_projection(report) == snapshot,
+            "sealed 21.1.248 component patch ABI snapshot mismatch")
+    return True
+
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--jar",type=Path,required=True)
     p.add_argument("--javap",required=True)
     p.add_argument("--prior",type=Path,required=True)
     p.add_argument("--output",type=Path,required=True)
+    p.add_argument("--snapshot",type=Path,required=True)
     args=p.parse_args()
     report=audit(args.jar,args.javap,
                  json.loads(args.prior.read_text(encoding="utf8")))
+    verify_snapshot(report,json.loads(args.snapshot.read_text(encoding="utf8")))
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(report,ensure_ascii=False,indent=2,sort_keys=True)+"\n",
                            encoding="utf8")
