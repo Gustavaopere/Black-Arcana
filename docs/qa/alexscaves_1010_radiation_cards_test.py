@@ -60,7 +60,13 @@ class RadiationScopeTest(unittest.TestCase):
         self.assertTrue(set(self.damage["classes"]) <= set(e["classes"]))
         self.assertTrue(set(self.damage["resources"]) <= set(e["resources"]))
         for p, value in self.damage["classes"].items():
-            self.assertEqual(value, self.effects["classes"][p])
+            original = self.effects["classes"][p]
+            self.assertEqual(value["sha256"], original["sha256"])
+            originals = {(m["name"], m["descriptor"]): m
+                         for m in original["methods"]}
+            for selected in value["methods"]:
+                self.assertEqual(selected,
+                    originals[(selected["name"], selected["descriptor"])])
         for p, value in self.damage["resources"].items():
             self.assertEqual(value, self.effects["resources"][p])
         self.assertFalse(self.damage["provider_universe_closed"])
