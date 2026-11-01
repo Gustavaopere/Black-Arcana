@@ -17,7 +17,10 @@ from pathlib import Path
 from alexscaves_1010_damage_consumer_probe import parse_methods
 from alexscaves_1010_raygun_receiver_probe import method_name
 from alexscaves_1010_raygun_receiver_identity_probe import digest_method
-from minecraft_1211_itemstack_optional_stream_probe import MojangBoundaryError, parse_initializer
+from minecraft_1211_itemstack_optional_stream_probe import (
+    MojangBoundaryError, parse_initializer, codec_class_from_initializer,
+    inspect_codec_class
+)
 from neoforge_211248_itemstack_server_codec_probe import (
     PINNED_SERVER_JAR_SHA256, sha256_file
 )
@@ -96,6 +99,14 @@ def audit(jar, javap_bin, upstream):
     except MojangBoundaryError as exc:
         raise ComponentPatchProbeError("DataComponentPatch.STREAM_CODEC static initializer unresolved: " +
                                       str(exc)) from exc
+    try:
+        implementation_owner=codec_class_from_initializer(initializer)
+        implementation=inspect_codec_class(
+            jar, javap_bin, CLASS[:-6], implementation_owner)
+    except (MojangBoundaryError, KeyError, zipfile.BadZipFile) as exc:
+        raise ComponentPatchProbeError(
+            "DataComponentPatch actual STREAM_CODEC inner class unresolved: " +
+            str(exc)) from exc
     methods=parse_methods(result.stdout)
     require(3 <= len(methods) <= MAX_CLASS_METHODS,
             "unexpected DataComponentPatch method population")
@@ -122,6 +133,7 @@ def audit(jar, javap_bin, upstream):
         "class_path":CLASS, "class_sha256":class_sha,
         "class_method_count":len(methods),
         "static_stream_codec_initializer":initializer,
+        "stream_codec_implementation":implementation,
         "selected_method_count":len(evidence),
         "methods":evidence,
         "limits":{
@@ -161,6 +173,14 @@ def main():
     for ref in report["static_stream_codec_initializer"]["selected_preassignment_abi"]:
         print("COMPONENT_PATCH_STATIC_CODEC_REF="+json.dumps(ref,sort_keys=True))
     print("COMPONENT_PATCH_SELECTED_METHOD_COUNT="+str(report["selected_method_count"]))
+    impl=report["stream_codec_implementation"]
+    print("COMPONENT_PATCH_CODEC_CLASS="+impl["class_path"])
+    print("COMPONENT_PATCH_CODEC_CLASS_SHA256="+impl["class_sha256"])
+    for method in impl["methods"]:
+        print("COMPONENT_PATCH_CODEC_METHOD="+method["name"]+" "+method["descriptor"])
+        print("COMPONENT_PATCH_CODEC_METHOD_INSNS="+str(method["instruction_count"]))
+        for row in method["selected_refs"]:
+            print("COMPONENT_PATCH_CODEC_REF="+method["name"]+" "+json.dumps(row,sort_keys=True))
     for method in report["methods"]:
         print("COMPONENT_PATCH_METHOD="+method["name"]+" "+method["descriptor"])
         print("COMPONENT_PATCH_METHOD_SHA256="+method["method_sha256"])
