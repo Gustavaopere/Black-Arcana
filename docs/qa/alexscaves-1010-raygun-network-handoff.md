@@ -37,11 +37,21 @@ não prova de execução, direção, threading ou identidade de remetente.
 Não copiar implementação Java do provider; somente fatos de ABI e referências
 simbólicas relevantes para interoperabilidade.
 
+## Resultado observado do probe de descoberta
+
+- Execução no publisher 1.0.10: [GitHub Actions — run 41328521835](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41328521835), **sucesso** no head inicial da PR #993; a CI do head atualizado deve repetir a conferência.
+- **32 classes candidatas** encontradas por referências no constant pool; **47 métodos com referências simbólicas** selecionados, sem implicar 32 registries ou 47 handlers do Raygun.
+- No conjunto, `com/github/alexmodguy/alexscaves/server/message/ACNetwork.class` apresenta métodos candidatos `registerMessages()` e `lambda$registerPayloads$0(ACNetwork$ACPayload, IPayloadContext)`, extraídos da versão exata.
+- Outras classes retornadas incluem handlers de mensagens não relacionadas e classes de `citadel`; apenas a presença do nome `ACNetworkContext` não demonstra acoplamento causal ao Raygun.
+- A regressão nova exige as **duas referências de método** no `ACNetwork` real além dos sender e receiver já selados; **não** declara direção de registro, autorização, threading, vínculo de item ou segurança de recepção comprovados.
+
+Esta prova delimita onde examinar o registro do payload e evita reiterar auditorias já incorporadas. Uma certificação futura precisa revisar os opcodes do `ACNetwork` e reconstruir os guards pertinentes, sem tratar o relatório de candidatos como call graph completo.
+
 ## Aceite antes de concluir contrato estático Raygun
 
 | Gate | Evidência necessária | Estado atual |
 | --- | --- | --- |
-| RN-01 | JAR exato + SHA de classes e métodos pertinentes; conflito entre manifestos falha | 🟡 teste automatizado proposto |
+| RN-01 | JAR exato + SHA de classes e métodos pertinentes; conflito entre manifestos falha | ✅ probe executado no head inicial; aguarda CI final após revisão |
 | RN-02 | Identificar no binário a inscrição efetiva do tipo de mensagem, direção e handler, sem inferir da classe sender | ⚠️ não verificado |
 | RN-03 | Verificar semântica de threading e as condições de leitura/edição de estado no receiver | ⚠️ não verificado |
 | RN-04 | Confirmar integridade de `entityId`, item, hand swap, `ChargeUsed`/`UseTime` e limites de `CUSTOM_DATA` | ⚠️ não verificado |
