@@ -157,13 +157,78 @@ def audit(jar, javap_bin):
     return result
 
 
+def verify_sealed_snapshot(report, seal):
+    """Reject identity, method, caller, opcode and numeric drift; no runtime claims."""
+    for field in ('schema_version', 'scope', 'artifact', 'class_path',
+                  'class_sha256', 'declared_method_count', 'damage_factory_anchor'):
+        if report.get(field) != seal.get(field):
+            raise BeamProbeError('SHA-exact sealed identity drift: ' + field)
+    observed = {
+        (m['method'], m['descriptor']): m['parsed_method_sha256']
+        for m in report['related_method_roster']
+    }
+    target = report['damage_method']
+    observed[(target['method'], target['descriptor'])] = target['parsed_method_sha256']
+    desired = seal.get('selected_method_digests')
+    if not isinstance(desired, list) or not 1 <= len(desired) <= 30:
+        raise BeamProbeError('invalid selected method seal size')
+    keys = [(m['name'], m['descriptor']) for m in desired]
+    if len(keys) != len(set(keys)):
+        raise BeamProbeError('duplicate sealed JVM method identity')
+    for m in desired:
+        if (not re.fullmatch(r'[0-9a-f]{64}', m['sha256']) or
+                observed.get((m['name'], m['descriptor'])) != m['sha256']):
+            raise BeamProbeError('sealed method digest/descriptor drift: ' + m['name'])
+    recorded = {}
+    for c in report['local_hurtEntitiesAround_callers']:
+        k = (c['method'], c['descriptor'])
+        if k in recorded:
+            raise BeamProbeError('duplicate local caller')
+        recorded[k] = [s['offset'] for s in c['sites']]
+        if c['site_count'] != len(recorded[k]):
+            raise BeamProbeError('truncated local hurt caller sites')
+    required = seal.get('local_callers')
+    if not isinstance(required, list) or len(required) > 30:
+        raise BeamProbeError('invalid local caller seal')
+    expected = {(c['method'], c['descriptor']): c['sites'] for c in required}
+    if len(expected) != len(required) or expected != recorded:
+        raise BeamProbeError('local native producer/callsite drift')
+    anchors = seal.get('method_anchors')
+    if not isinstance(anchors, list) or not 1 <= len(anchors) <= 70:
+        raise BeamProbeError('invalid sealed opcode anchor budget')
+    seen = set()
+    for anchor in anchors:
+        key = (anchor['group'], anchor['offset'])
+        if key in seen:
+            raise BeamProbeError('duplicate sealed opcode anchor')
+        seen.add(key)
+        if anchor['group'] not in ('references', 'numeric_constants', 'branches'):
+            raise BeamProbeError('unexpected sealed opcode group')
+        # Never treat truncated evidence as comprehensive.
+        group = target[anchor['group']]
+        if group['truncated']:
+            raise BeamProbeError('sealed group is truncated')
+        hits = [x for x in group['exported'] if x['offset'] == anchor['offset']]
+        if len(hits) != 1 or hits[0]['opcode'] != anchor['opcode']:
+            raise BeamProbeError('sealed opcode anchor drift')
+        row = hits[0]
+        if anchor.get('symbol_contains') and anchor['symbol_contains'] not in row['symbol']:
+            raise BeamProbeError('sealed symbol anchor drift')
+        if 'operand_equals' in anchor and row['operand'] != anchor['operand_equals']:
+            raise BeamProbeError('sealed numeric/branch operand drift')
+    return True
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--jar', type=Path, required=True)
     ap.add_argument('--javap', type=Path, required=True)
     ap.add_argument('--output', type=Path, required=True)
+    ap.add_argument('--manifest', type=Path, required=True)
     args = ap.parse_args()
     result = audit(args.jar, args.javap)
+    seal = json.loads(args.manifest.read_text(encoding='utf-8'))
+    verify_sealed_snapshot(result, seal)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + '\n',
                            encoding='utf-8')
