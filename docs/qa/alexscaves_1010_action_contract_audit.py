@@ -24,6 +24,27 @@ EFFECTS = frozenset("effects/" + name + ".md" for name in (
 DREADBOW = frozenset(("equipment/dreadbow.md", "damage-types/dark-arrow.md"))
 ACID = frozenset(("damage-types/acid.md",))
 RADIATION = frozenset(("damage-types/radiation.md",))
+RADIATION_CLASS_NAMES = frozenset((
+    "server/event/CommonEvents",
+    "server/item/HazmatArmorItem",
+    "server/misc/ACDamageTypes",
+    "server/misc/ACTagRegistry",
+    "server/potion/ACEffectRegistry",
+    "server/potion/ACMobEffect",
+    "server/potion/IrradiatedEffect"
+))
+RADIATION_REQUIRED_METHODS = {
+    "server/misc/ACDamageTypes": frozenset({"causeRadiationDamage"}),
+    "server/potion/IrradiatedEffect": frozenset({"shouldTick", "tick"}),
+    "server/potion/ACMobEffect": frozenset({"applyEffectTick", "shouldApplyEffectTickThisTick"}),
+    "server/item/HazmatArmorItem": frozenset({"getWornAmount"}),
+    "server/event/CommonEvents": frozenset({"acLivingHeal", "livingHeal"}),
+}
+RADIATION_RESOURCE_PATHS = frozenset((
+    "data/alexscaves/damage_type/radiation.json",
+    "data/alexscaves/tags/entity_type/resists_radiation.json"
+))
+
 DESOLATE_DAGGER = frozenset(("equipment/desolate-dagger.md", "damage-types/desolate-dagger.md"))
 FORSAKEN = frozenset(("damage-types/forsaken-sonic-boom.md",))
 GUMBALL = frozenset(("equipment/shot-gum.md", "damage-types/gumball.md"))
@@ -152,6 +173,15 @@ def validate_structure(manifest, *, profile="actions"):
     require(isinstance(classes, dict) and len(roster) <= len(classes) <= 128
             and isinstance(resources, dict) and len(resources) <= 256,
             "invalid class/resource mapping limits")
+    if profile == "radiation":
+        prefix = "com/github/alexmodguy/alexscaves/"
+        expected = {prefix + name + ".class" for name in RADIATION_CLASS_NAMES}
+        require(set(classes) == expected, "radiation exact class roster drift")
+        require(set(resources) == RADIATION_RESOURCE_PATHS,
+                "radiation exact damage/resource roster drift")
+        for owner, methods in RADIATION_REQUIRED_METHODS.items():
+            actual = {m["name"] for m in classes[prefix + owner + ".class"]["methods"]}
+            require(methods <= actual, "radiation required JVM methods missing: " + owner)
     method_classes, total_anchors = set(), 0
     for path, entry in classes.items():
         require(canonical(path) and path.startswith("com/github/alexmodguy/alexscaves/") and path.endswith(".class"),
