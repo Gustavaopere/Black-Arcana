@@ -93,6 +93,7 @@ jobs:
             --mappings build/minecraft-1211/client-mappings.txt \
             --metadata build/minecraft-1211/version.json \
             --javap "$JAVA_HOME/bin/javap" \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json' \
             --output build/minecraft-1211/vanilla-itemstack-stream-abi.json
       - name: Upload bounded evidence only
         uses: actions/upload-artifact@v7
