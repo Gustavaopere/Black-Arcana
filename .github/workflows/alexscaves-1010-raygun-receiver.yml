@@ -1,0 +1,58 @@
+name: Alex's Caves 1.0.10 Raygun C2S receiver boundary
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_raygun_receiver_probe.py'
+      - 'docs/qa/alexscaves_1010_raygun_receiver_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-RECEIVER-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+      - '.github/workflows/alexscaves-1010-raygun-receiver.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_raygun_receiver_probe.py'
+      - 'docs/qa/alexscaves_1010_raygun_receiver_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-RECEIVER-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+      - '.github/workflows/alexscaves-1010-raygun-receiver.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  exact_raygun_receiver:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic fail-closed receiver tests
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_raygun_receiver_probe.py docs/qa/alexscaves_1010_raygun_receiver_probe_test.py
+          python3 docs/qa/alexscaves_1010_raygun_receiver_probe_test.py -v
+      - name: Download SHA-exact publisher artifact
+        run: |
+          mkdir -p build/alexscaves-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-1010/alexscaves-1.0.10.jar
+      - name: Audit packet receiver and direct interface
+        run: |
+          python3 docs/qa/alexscaves_1010_raygun_receiver_probe.py \
+            --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --snapshot "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-RECEIVER-1.0.10.json" \
+            --output build/alexscaves-1010/raygun-receiver.json
+      - name: Export bounded interoperability evidence
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-raygun-receiver-evidence
+          path: build/alexscaves-1010/raygun-receiver.json
+          if-no-files-found: error
+          retention-days: 14

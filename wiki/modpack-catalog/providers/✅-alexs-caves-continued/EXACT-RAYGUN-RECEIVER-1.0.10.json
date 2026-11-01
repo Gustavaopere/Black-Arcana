@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_RAYGUN_C2S_RECEIVER_JVM_DISPATCH_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_identities": [
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c",
+      "declared_method_count": 26
+    },
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage.class",
+      "sha256": "bda52d12e8cce7e010b3d4cd2db7d83000e78b35657c55773a8ba91a070478c8",
+      "declared_method_count": 4
+    },
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/item/UpdatesStackTags.class",
+      "sha256": "1ba03e1d244a0a6ad49a888cb406bf518858c52988b4210db204c0bbd1e6e0ad",
+      "declared_method_count": 1
+    },
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+      "declared_method_count": 199
+    }
+  ],
+  "direct_raygun_superclass": "net.minecraft.world.item.Item",
+  "direct_raygun_updates_interface": true,
+  "sender_methods": [
+    {
+      "name": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "parsed_method_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+      "instruction_count": 523
+    },
+    {
+      "name": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "parsed_method_sha256": "fe123ab0d8ef0e4049d6f51c086b2ec5ca9aa8926a25d6ebae795d583caa677e",
+      "instruction_count": 20
+    }
+  ],
+  "packet_receiver": {
+    "name": "handle",
+    "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage;Lcom/github/alexmodguy/alexscaves/server/message/ACNetworkContext;)V",
+    "parsed_method_sha256": "049a8d738fda3cb0fbd3c148b3e01aecc62f067004b0c6ce0a845dacc664e0a3",
+    "instruction_count": 75
+  },
+  "interface_update_method": {
+    "name": "updateTagFromServer",
+    "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V",
+    "parsed_method_sha256": "ea2bdf16c4639bad140677d1c34d5276fd0e3a59233f3e68faf0d80ac1374928",
+    "instruction_count": 4,
+    "declaration": "public default void updateTagFromServer(net.minecraft.world.entity.Entity, net.minecraft.world.item.ItemStack, net.minecraft.nbt.CompoundTag)"
+  },
+  "compat_set_tag": {
+    "name": "setTag",
+    "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V",
+    "parsed_method_sha256": "22a3074673b18cca4ed3a2edf23dd89989b9d7698ac70a91a54a1d7b40fe069c",
+    "instruction_count": 14
+  },
+  "anchors": [
+    {
+      "method": "handle",
+      "offset": 8,
+      "opcode": "invokeinterface",
+      "symbol": "ACNetworkContext.getSender:"
+    },
+    {
+      "method": "handle",
+      "offset": 15,
+      "opcode": "invokeinterface",
+      "symbol": "ACNetworkContext.isClientSide:"
+    },
+    {
+      "method": "handle",
+      "offset": 42,
+      "opcode": "invokevirtual",
+      "symbol": "Level.getEntity:"
+    },
+    {
+      "method": "handle",
+      "offset": 78,
+      "opcode": "invokevirtual",
+      "symbol": "ItemStack.getItem:"
+    },
+    {
+      "method": "handle",
+      "offset": 81,
+      "opcode": "invokevirtual",
+      "symbol": "ItemStack.is:"
+    },
+    {
+      "method": "handle",
+      "offset": 113,
+      "opcode": "invokevirtual",
+      "symbol": "ItemStack.is:"
+    },
+    {
+      "method": "handle",
+      "offset": 158,
+      "opcode": "invokestatic",
+      "symbol": "ACCompat.getTag:"
+    },
+    {
+      "method": "handle",
+      "offset": 171,
+      "opcode": "invokestatic",
+      "symbol": "ACCompat.getTag:"
+    },
+    {
+      "method": "handle",
+      "offset": 174,
+      "opcode": "invokeinterface",
+      "symbol": "UpdatesStackTags.updateTagFromServer:"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 162,
+      "opcode": "invokespecial",
+      "symbol": "UpdateItemTagMessage.\"<init>\":"
+    },
+    {
+      "method": "onUseTick",
+      "offset": 165,
+      "opcode": "invokestatic",
+      "symbol": "AlexsCaves.sendMSGToServer:"
+    },
+    {
+      "method": "releaseUsing",
+      "offset": 25,
+      "opcode": "invokespecial",
+      "symbol": "UpdateItemTagMessage.\"<init>\":"
+    },
+    {
+      "method": "releaseUsing",
+      "offset": 28,
+      "opcode": "invokestatic",
+      "symbol": "AlexsCaves.sendMSGToServer:"
+    }
+  ],
+  "interface_default_call": {
+    "offset": 2,
+    "opcode": "invokestatic",
+    "symbol_contains": "ACCompat.setTag:"
+  },
+  "compat_custom_data_calls": [
+    {
+      "offset": 5,
+      "symbol_contains": "DataComponents.CUSTOM_DATA:"
+    },
+    {
+      "offset": 8,
+      "symbol_contains": "ItemStack.remove:"
+    },
+    {
+      "offset": 20,
+      "symbol_contains": "CustomData.of:"
+    },
+    {
+      "offset": 23,
+      "symbol_contains": "ItemStack.set:"
+    }
+  ]
+}
