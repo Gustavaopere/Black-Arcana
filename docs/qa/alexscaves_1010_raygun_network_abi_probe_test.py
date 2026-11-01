@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import copy
+import json
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from alexscaves_1010_raygun_network_abi_probe import (
@@ -73,20 +75,55 @@ class ExactNativeNetworkABI(unittest.TestCase):
         with self.assertRaisesRegex(RegistrationProbeError, "oversize"):
             bounded_method(m)
 
+    def sealed_fixture(self):
+        path = (Path(__file__).resolve().parents[2] /
+                "wiki/modpack-catalog/providers/✅-alexs-caves-continued" /
+                "EXACT-RAYGUN-NETWORK-ABI-1.0.10.json")
+        seal = json.loads(path.read_text(encoding="utf8"))
+        report = copy.deepcopy(seal)
+        for m in report["selected_methods"]:
+            anchors = [dict(x) for x in seal["critical_anchors"]
+                       if x["method"] == m["name"]]
+            for a in anchors:
+                a.pop("method")
+            m["bounded_abi_calls"] = (
+                anchors if m["name"] != "registerMessages" else [])
+            m["packet_reference_windows"] = (
+                [{"packet_reference_at": 151, "adjacent_selected_symbols": anchors}]
+                if m["name"] == "registerMessages" else [])
+        return report, seal
+
+    def test_exact_sealed_projection_positive(self):
+        report, seal = self.sealed_fixture()
+        self.assertTrue(verify_snapshot(report, seal))
+
     def test_snapshot_rejects_modified_bytecode_digest(self):
-        report = {"selected_methods": [{"parsed_method_sha256": "a" * 64}],
-                  "limits": {"mutation": "NO_MUTATION"}}
-        self.assertTrue(verify_snapshot(report, copy.deepcopy(report)))
-        altered = copy.deepcopy(report)
+        report, seal = self.sealed_fixture()
+        altered = copy.deepcopy(seal)
         altered["selected_methods"][0]["parsed_method_sha256"] = "b" * 64
         with self.assertRaisesRegex(RegistrationProbeError, "sealed network ABI"):
             verify_snapshot(report, altered)
 
     def test_snapshot_rejects_false_physical_status(self):
-        report = {"limits": {"physical_qa": "NOT_TESTED"}}
-        altered = {"limits": {"physical_qa": "PASS"}}
+        report, seal = self.sealed_fixture()
+        altered = copy.deepcopy(seal)
+        altered["limits"]["physical_qa"] = "PASS"
         with self.assertRaisesRegex(RegistrationProbeError, "sealed network ABI"):
             verify_snapshot(report, altered)
+
+    def test_missing_bidirectional_registration_rejected(self):
+        report, seal = self.sealed_fixture()
+        target = report["selected_methods"][1]["bounded_abi_calls"][-1]
+        target["symbol"] = target["symbol"].replace("playBidirectional", "playToClient")
+        with self.assertRaisesRegex(RegistrationProbeError, "critical anchor"):
+            verify_snapshot(report, seal)
+
+    def test_unexpected_network_registration_offset_rejected(self):
+        report, seal = self.sealed_fixture()
+        report["selected_methods"][0]["packet_reference_windows"][0][
+            "adjacent_selected_symbols"][0]["offset"] = 150
+        with self.assertRaisesRegex(RegistrationProbeError, "critical anchor"):
+            verify_snapshot(report, seal)
 
     def test_wrong_publisher_rejected_before_zip_open(self):
         with patch("alexscaves_1010_raygun_network_abi_probe.sha_file",
