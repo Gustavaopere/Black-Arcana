@@ -84,6 +84,8 @@ publicado, deve ser revalidado pelo mesmo workflow.
 ## Auditoria da identidade do receptor (PR #995)
 
 O [probe read-only de identidade](alexscaves_1010_raygun_receiver_identity_probe.py)
+com [manifesto SHA-exato do contexto/receptor](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-RECEIVER-IDENTITY-1.0.10.json)
+(pin de quatro classes, seis métodos, nove desvios e sete âncoras; 14 regressões sintéticas em CI)
 confirma, em execução Java 21 no publisher JAR SHA-exato 1.0.10, o
 `UpdateItemTagMessage.handle` previamente selado, seu contexto
 `ACNetwork$NeoForgeContext` e o dispatch do
@@ -115,8 +117,8 @@ reprodução controlada e avaliação de permissões. O Black Arcana mantém
 | --- | --- | --- |
 | RN-01 | JAR exato + SHA de classes e métodos pertinentes; conflito entre manifestos falha | ✅ descoberta SHA-exata passou no head final da PR #993; traçado dirigido pendente |
 | RN-02 | Identificar no binário a inscrição efetiva do tipo de mensagem, direção e handler, sem inferir da classe sender | ⚠️ registro de entrada `UpdateItemTagMessage` e envelope `playBidirectional` comprovados; direção do wrapper observada, autorização de mensagem individual não verificada |
-| RN-03 | Verificar semântica de threading e as condições de leitura/edição de estado no receiver | ⚠️ não verificado |
-| RN-04 | Confirmar integridade de `entityId`, item, hand swap, `ChargeUsed`/`UseTime` e limites de `CUSTOM_DATA` | ⚠️ não verificado |
+| RN-03 | Verificar semântica de threading e as condições de leitura/edição de estado no receiver | ⚠️ `IPayloadContext.enqueueWork` e `flow/isClientbound` selados estaticamente; threading do handler e update de stack ainda não verificados |
+| RN-04 | Confirmar integridade de `entityId`, item, hand swap, `ChargeUsed`/`UseTime` e limites de `CUSTOM_DATA` | ⚠️ handler e `getSender` documentados em ABI; vínculo remetente–entidade, sanitização e replay **não verificados** |
 | RN-05 | Vincular cobrança nativa, alvo, dano, status e retorno de `hurt` a uma identidade causal única | ⚠️ parcial nos manifestos anteriores |
 | RN-06 | Verificar migração/salvamento, reconexão, multiplayer e casos negativos no cliente + servidor dedicado | ⚠️ QA física não testada |
 | RN-07 | Certificar os sete eixos de evidência estática num manifesto com hash de fichas e em CI antes de mexer nos índices | ⚠️ não certificado |
