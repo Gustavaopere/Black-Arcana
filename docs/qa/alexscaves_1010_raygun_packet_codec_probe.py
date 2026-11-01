@@ -190,13 +190,12 @@ def main():
     p.add_argument("--receiver-manifest", required=True, type=Path)
     p.add_argument("--cfg-manifest", required=True, type=Path)
     p.add_argument("--output", required=True, type=Path)
-    p.add_argument("--snapshot", type=Path)
+    p.add_argument("--snapshot", required=True, type=Path)
     args = p.parse_args()
     old = json.loads(args.receiver_manifest.read_text(encoding="utf8"))
     cfg = json.loads(args.cfg_manifest.read_text(encoding="utf8"))
     report = audit(args.jar, args.javap, old, cfg)
-    if args.snapshot:
-        verify_snapshot(report, json.loads(args.snapshot.read_text(encoding="utf8")))
+    verify_snapshot(report, json.loads(args.snapshot.read_text(encoding="utf8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False,
                                       sort_keys=True) + "\n", encoding="utf8")
