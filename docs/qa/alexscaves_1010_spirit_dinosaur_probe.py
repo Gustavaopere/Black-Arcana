@@ -129,8 +129,9 @@ def check_sealed_manifest(report, manifest):
     if not isinstance(expected_classes, list) or len(expected_classes) != len(CLASSES):
         raise SpiritProbeError('sealed class roster mismatch')
     actual = {c['class_path']: c for c in report['classes']}
-    if len(actual) != len(CLASSES):
-        raise SpiritProbeError('duplicate or missing class result')
+    sealed_paths = [c['class_path'] for c in expected_classes]
+    if len(actual) != len(CLASSES) or set(sealed_paths) != set(CLASSES) or len(set(sealed_paths)) != len(CLASSES):
+        raise SpiritProbeError('duplicate or missing sealed class identity')
     for sealed in expected_classes:
         path = sealed['class_path']
         if path not in actual or path not in CLASSES:
