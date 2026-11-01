@@ -128,6 +128,29 @@ método. Os desdobramentos abaixo são limitados a callsites/operandos JVM:
 | Item resolvido | `getItemInHand` nas mãos principal/secundária; `instanceof UpdatesStackTags @143` | Há seleção de stack atual e teste de interface, mas o método não comprova autorização do conteúdo da tag |
 | Atualização | `ACCompat.getTag @158/@171` e chamada `UpdatesStackTags.updateTagFromServer @174` | O setter nativo de `CUSTOM_DATA` já foi selado separadamente. Nada aqui demonstra saneamento de `ChargeUsed`/`UseTime` |
 
+**Origem dos operandos da atualização — verificação adicional do JAR:**
+o campo `itemStackFrom` é lido em `@60` e armazenado
+no **slot 5 em `@63`**. A seleção nativa de mão principal
+(`getItemInHand @92`) armazena a stack em
+**slot 6 em `@95`**; a seleção alternativa
+da mão secundária armazena a stack no **slot 6 em `@127`**.
+No caminho de atualização, `@156 aload 5`
+alimenta `ACCompat.getTag @158` (checagem de presença).
+Em `@167 aload 6` é passada a stack
+selecionada; `@169 aload 5` alimenta
+`ACCompat.getTag @171`, cujo retorno vai
+para `UpdatesStackTags.updateTagFromServer @174`.
+Os **nove vínculos locais de origem/destino** são conferidos junto
+das 17 âncoras nativas pelo manifesto e testes.
+
+**Implicação de interoperabilidade:** o `CompoundTag`
+recebido pelo método de atualização provém da stack
+**transportada no pacote**; a stack modificável é a selecionada
+**na entidade resolvida**. Identificar as duas origens ajuda a
+desenhar um adaptador seguro, mas não demonstra validação dos
+campos, autoria nem que esse fluxo possa ser alterado por perks.
+Não foi executado teste físico nem ataque controlado.
+
 No grafo de fluxo **normal intra-método** (sem exception edges,
 despacho interprocedural ou análise formal de valores), as referências a
 `getSender @8`, `entityId @39`,
