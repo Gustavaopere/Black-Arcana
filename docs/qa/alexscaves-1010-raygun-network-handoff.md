@@ -182,6 +182,19 @@ O [manifesto SHA-exato de codec](../../wiki/modpack-catalog/providers/✅-alexs-
 O `PacketBufferUtils` observado está sob o namespace `com.github.alexmodguy.alexscaves.citadel`; isso comprova apenas o símbolo compilado usado pela mensagem, não a validação/limites de leitura da tag dentro do helper. Em particular, o wire format **não** demonstra `entityId == sender.getId()`, identidade do stack, validação de `ChargeUsed` / `UseTime`, whitelist de NBT, threading ou proteção contra replay. Esses critérios exigem análise semântica adicional do helper/handler e testes direcionados.
 
 **Gate mantido:** `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. A auditoria não altera nem endossa mecanismos nativos, não afirma exploit e não promove qualquer índice, Stage ou contrato de perk.
+## Implementação exata do helper de ItemStack — versão sombreada no JAR 1.0.10
+
+Reavaliado o callsite `PacketBufferUtils.readItemStack` que aparece em `UpdateItemTagMessage.read`. O [novo manifesto SHA-exato](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-ITEMSTACK-HELPER-1.0.10.json) fixa `com/github/alexmodguy/alexscaves/citadel/server/message/PacketBufferUtils.class` (SHA-256 `3f203404344653e77167846c967635f930f84cad355f60b084358f826c7ae3db`), os métodos `readItemStack(ByteBuf)` e `writeItemStack(ByteBuf,ItemStack)` e sete callsites simbólicos. Cada método tem **seis instruções de bytecode e zero branches locais**.
+
+| Método no JAR instalado | Operações selecionadas | Limite da evidência |
+| --- | --- | --- |
+| `readItemStack` | `ItemStack.OPTIONAL_STREAM_CODEC @0`, cast para `RegistryFriendlyByteBuf @4`, `StreamCodec.decode @7`, cast para `ItemStack @12` | A leitura é delegada ao codec opcional **do Minecraft**; não há validação NBT própria nesse método de helper, e o comportamento interno do codec não foi auditado aqui |
+| `writeItemStack` | `ItemStack.OPTIONAL_STREAM_CODEC @0`, cast para `RegistryFriendlyByteBuf @4`, `StreamCodec.encode @8` | A escrita também é delegada ao codec opcional do Minecraft; não há prova de saneamento de dados do Raygun nessa delegação |
+
+A ausência de branches nesses dois métodos específicos **não** implica ausência de controles dentro do `OPTIONAL_STREAM_CODEC`, da camada NeoForge, nem do processamento posterior. Os limites efetivos de bytes/componentes/NBT, o tratamento de dados malformados, o vínculo sender–`entityId` e a autorização de `ChargeUsed`/`UseTime` continuam não verificados. O cast exige um buffer compatível em execução, mas a auditoria estática não substitui um teste de sessão real.
+
+A verificação automatizada pelo [workflow do helper](../../.github/workflows/alexscaves-1010-raygun-shaded-itemstack-helper.yml) cruza o SHA do publisher com o manifesto do pacote anterior, hashes nativos de classe e métodos, os sete callsites e as proibições de promoção. Aplicar `NO_MUTATION` e manter `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED`.
+
 ## Aceite antes de concluir contrato estático Raygun
 
 | Gate | Evidência necessária | Estado atual |

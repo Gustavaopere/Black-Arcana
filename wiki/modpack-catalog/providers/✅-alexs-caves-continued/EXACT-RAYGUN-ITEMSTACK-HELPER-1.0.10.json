@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_ALEXSCAVES_1010_SHADED_CITADEL_ITEMSTACK_WIRE_ABI_READONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "helper_class_path": "com/github/alexmodguy/alexscaves/citadel/server/message/PacketBufferUtils.class",
+  "helper_class_sha256": "3f203404344653e77167846c967635f930f84cad355f60b084358f826c7ae3db",
+  "declared_method_count": 12,
+  "methods": [
+    {
+      "name": "readItemStack",
+      "descriptor": "(Lio/netty/buffer/ByteBuf;)Lnet/minecraft/world/item/ItemStack;",
+      "method_sha256": "6edfcccfc7b2d316033c92fead107a917d36d123717435dd3bef6d0cbbd66d60",
+      "instruction_count": 6
+    },
+    {
+      "name": "writeItemStack",
+      "descriptor": "(Lio/netty/buffer/ByteBuf;Lnet/minecraft/world/item/ItemStack;)V",
+      "method_sha256": "432dca936b6219a7b84a0a2c857ecda2426e0f4f0700b86653f9866d55ed7322",
+      "instruction_count": 6
+    }
+  ],
+  "stream_codec_abi_anchors": [
+    {
+      "method": "readItemStack",
+      "offset": 0,
+      "opcode": "getstatic",
+      "symbol": "Field net/minecraft/world/item/ItemStack.OPTIONAL_STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "readItemStack",
+      "offset": 4,
+      "opcode": "checkcast",
+      "symbol": "class net/minecraft/network/RegistryFriendlyByteBuf"
+    },
+    {
+      "method": "readItemStack",
+      "offset": 7,
+      "opcode": "invokeinterface",
+      "symbol": "InterfaceMethod net/minecraft/network/codec/StreamCodec.decode:(Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "method": "readItemStack",
+      "offset": 12,
+      "opcode": "checkcast",
+      "symbol": "class net/minecraft/world/item/ItemStack"
+    },
+    {
+      "method": "writeItemStack",
+      "offset": 0,
+      "opcode": "getstatic",
+      "symbol": "Field net/minecraft/world/item/ItemStack.OPTIONAL_STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "writeItemStack",
+      "offset": 4,
+      "opcode": "checkcast",
+      "symbol": "class net/minecraft/network/RegistryFriendlyByteBuf"
+    },
+    {
+      "method": "writeItemStack",
+      "offset": 8,
+      "opcode": "invokeinterface",
+      "symbol": "InterfaceMethod net/minecraft/network/codec/StreamCodec.encode:(Ljava/lang/Object;Ljava/lang/Object;)V"
+    }
+  ],
+  "limits": {
+    "untrusted_wire_item_stack": true,
+    "item_stack_max_bytes": "NOT_VERIFIED",
+    "item_stack_max_components": "NOT_VERIFIED",
+    "nbt_size_depth_and_fields": "NOT_VERIFIED",
+    "server_authoritative_id_and_stack": "NOT_VERIFIED",
+    "sanitized_raygun_charge_and_time": "NOT_VERIFIED",
+    "runtime_exploitability": "NOT_ASSESSED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "static_perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  }
+}
