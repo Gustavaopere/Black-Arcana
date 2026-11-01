@@ -205,7 +205,8 @@ def main():
         encoding="utf8",
     )
     for label, entry in report["classes"].items():
-        print("DELEGATED_CLASS=" + label + " SHA256=" + entry["class_sha256"]
+        print("DELEGATED_CLASS=" + label + " PRESENCE=" + entry["presence"]
+              + " SHA256=" + (entry["class_sha256"] or "NOT_PRESENT")
               + " METHODS=" + str(entry["method_count"])
               + " MATCHED=" + str(entry["matching_method_count"]))
         for method in entry["matching_methods"]:
