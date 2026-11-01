@@ -6,7 +6,8 @@ import unittest
 from unittest.mock import patch
 
 from minecraft_1211_itemstack_optional_stream_probe import (
-    CLIENT_SHA1, MojangBoundaryError, audit, map_itemstack, parse_initializer
+    CLIENT_SHA1, MojangBoundaryError, audit, map_itemstack, parse_initializer,
+    codec_class_from_initializer
 )
 
 
@@ -59,6 +60,26 @@ class ExactVanillaProbeTests(unittest.TestCase):
         self.assertEqual([x["offset"] for x in info["selected_preassignment_abi"]],
                          [0, 4, 7])
         self.assertEqual(info["initializer_instruction_count"], 6)
+
+    def test_optional_codec_class_resolves_pinned_constructor(self):
+        observed = parse_initializer(JAVAP, "h")
+        self.assertEqual(codec_class_from_initializer(observed), "crp$1")
+
+    def test_ambiguous_inner_codec_constructor_rejected(self):
+        observed = parse_initializer(JAVAP, "h")
+        observed["selected_preassignment_abi"].append({
+            "offset": 1, "opcode": "new", "symbol": "class crp$2"
+        })
+        with self.assertRaisesRegex(MojangBoundaryError, "ambiguous"):
+            codec_class_from_initializer(observed)
+
+    def test_missing_nearby_codec_constructor_rejected(self):
+        observed = parse_initializer(JAVAP, "h")
+        observed["selected_preassignment_abi"] = [
+            x for x in observed["selected_preassignment_abi"] if x["opcode"] != "new"
+        ]
+        with self.assertRaisesRegex(MojangBoundaryError, "unresolved"):
+            codec_class_from_initializer(observed)
 
     def test_missing_static_assignment_rejected(self):
         with self.assertRaisesRegex(MojangBoundaryError, "not unique"):
