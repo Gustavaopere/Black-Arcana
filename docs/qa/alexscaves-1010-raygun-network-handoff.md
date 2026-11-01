@@ -167,6 +167,21 @@ com o manifesto selado. Sem certificado de sete eixos: `NOT_CERTIFIED`,
 `physical_qa=NOT_TESTED`. Nenhum exploit
 é alegado sem análise mais ampla e reprodução controlada.
 
+## Codec nativo de `UpdateItemTagMessage` — prova do wire format 1.0.10
+
+O [manifesto SHA-exato de codec](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-PACKET-CODEC-1.0.10.json) é reproduzido pelo [probe read-only](alexscaves_1010_raygun_packet_codec_probe.py) no JAR publisher instalado 1.0.10, comparado com as evidências anteriores do receiver/CFG. Os quatro métodos compilados da mensagem (`UpdateItemTagMessage`, `read`, `write`, `handle`) estão selados por descritor e hash de método, com **nove referências ABI de codec**.
+
+| Fronteira nativa observada | Referência JVM | Implicação permitida |
+| --- | --- | --- |
+| Construtor | `putfield entityId @6`; `putfield itemStackFrom @11` | Estrutura de dois campos da mensagem |
+| Leitura de ID | `FriendlyByteBuf.readInt @5` | Identificador serializado como inteiro; não há prova de vínculo com remetente |
+| Leitura de stack | `PacketBufferUtils.readItemStack @9` | Stack reconstruída a partir de buffer de rede; integridade e NBT continuam sem avaliação semântica |
+| Escrita de ID | `getfield entityId @2`; `FriendlyByteBuf.writeInt @5` | A mensagem envia o valor de ID armazenado, sem comprovar autorização |
+| Escrita de stack | `getfield itemStackFrom @11`; `PacketBufferUtils.writeItemStack @14` | A mensagem envia stack via helper do provider; a validação dos campos não foi demonstrada |
+
+O `PacketBufferUtils` observado está sob o namespace `com.github.alexmodguy.alexscaves.citadel`; isso comprova apenas o símbolo compilado usado pela mensagem, não a validação/limites de leitura da tag dentro do helper. Em particular, o wire format **não** demonstra `entityId == sender.getId()`, identidade do stack, validação de `ChargeUsed` / `UseTime`, whitelist de NBT, threading ou proteção contra replay. Esses critérios exigem análise semântica adicional do helper/handler e testes direcionados.
+
+**Gate mantido:** `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. A auditoria não altera nem endossa mecanismos nativos, não afirma exploit e não promove qualquer índice, Stage ou contrato de perk.
 ## Aceite antes de concluir contrato estático Raygun
 
 | Gate | Evidência necessária | Estado atual |
