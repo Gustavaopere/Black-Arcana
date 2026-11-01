@@ -205,7 +205,8 @@
     {
       "group": "numeric_constants",
       "offset": 341,
-      "opcode": "sipush"
+      "opcode": "sipush",
+      "operand_equals": "6000"
     },
     {
       "group": "numeric_constants",
@@ -215,22 +216,26 @@
     {
       "group": "branches",
       "offset": 65,
-      "opcode": "ifeq"
+      "opcode": "ifeq",
+      "operand_equals": "82"
     },
     {
       "group": "branches",
       "offset": 240,
-      "opcode": "ifeq"
+      "opcode": "ifeq",
+      "operand_equals": "352"
     },
     {
       "group": "branches",
       "offset": 290,
-      "opcode": "ifeq"
+      "opcode": "ifeq",
+      "operand_equals": "352"
     },
     {
       "group": "branches",
       "offset": 352,
-      "opcode": "goto"
+      "opcode": "goto",
+      "operand_equals": "114"
     }
   ],
   "limits": {
