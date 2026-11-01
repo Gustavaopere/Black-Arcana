@@ -120,15 +120,89 @@ def audit(jar, javap_bin, message_codec):
     return result
 
 
+
+EXPECTED_CLASS_SHA256 = "3f203404344653e77167846c967635f930f84cad355f60b084358f826c7ae3db"
+EXPECTED_HELPER_ABI = (
+    ("readItemStack", 0, "getstatic", "ItemStack.OPTIONAL_STREAM_CODEC:"),
+    ("readItemStack", 4, "checkcast", "RegistryFriendlyByteBuf"),
+    ("readItemStack", 7, "invokeinterface", "StreamCodec.decode:"),
+    ("readItemStack", 12, "checkcast", "net/minecraft/world/item/ItemStack"),
+    ("writeItemStack", 0, "getstatic", "ItemStack.OPTIONAL_STREAM_CODEC:"),
+    ("writeItemStack", 4, "checkcast", "RegistryFriendlyByteBuf"),
+    ("writeItemStack", 8, "invokeinterface", "StreamCodec.encode:"),
+)
+EXPECTED_LIMITS = {
+    "untrusted_wire_item_stack": True,
+    "item_stack_max_bytes": "NOT_VERIFIED",
+    "item_stack_max_components": "NOT_VERIFIED",
+    "nbt_size_depth_and_fields": "NOT_VERIFIED",
+    "server_authoritative_id_and_stack": "NOT_VERIFIED",
+    "sanitized_raygun_charge_and_time": "NOT_VERIFIED",
+    "runtime_exploitability": "NOT_ASSESSED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "static_perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+}
+
+
+def snapshot_projection(report):
+    """SHA-exact helper boundary, not a claim about vanilla codec internals."""
+    require(report["helper_class_path"] == HELPER,
+            "shaded Citadel helper path drift")
+    require(report["helper_class_sha256"] == EXPECTED_CLASS_SHA256,
+            "shaded Citadel helper class SHA drift")
+    require(report["limits"] == EXPECTED_LIMITS,
+            "helper boundaries or safety statuses changed")
+    require(report["declared_method_count"] == 12,
+            "helper native method population drift")
+    methods = report["selected_methods"]
+    require([(m["name"], m["descriptor"]) for m in methods] == list(TARGETS),
+            "helper required methods/signatures drift")
+    anchors = []
+    for name, offset, opcode, symbol in EXPECTED_HELPER_ABI:
+        method = next(x for x in methods if x["name"] == name)
+        hits = [x for x in method["selected_symbolic_references"]
+                if x["offset"] == offset]
+        require(len(hits) == 1 and hits[0]["opcode"] == opcode
+                and symbol in hits[0]["symbol"],
+                "exact shaded helper codec callsite drift")
+        anchors.append({"method": name, **hits[0]})
+    require(all(not m["conditional_and_jump_offsets"] for m in methods),
+            "native ItemStack helper now has branch logic")
+    require(all(m["instruction_count"] == 6 for m in methods),
+            "native ItemStack helper instruction count drift")
+    return {
+        **{k: report[k] for k in
+           ("schema_version", "scope", "artifact", "helper_class_path",
+            "helper_class_sha256", "declared_method_count")},
+        "methods": [
+            {k: m[k] for k in
+             ("name", "descriptor", "method_sha256", "instruction_count")}
+            for m in methods
+        ],
+        "stream_codec_abi_anchors": anchors,
+        "limits": report["limits"]
+    }
+
+
+def verify_snapshot(report, snapshot):
+    require(snapshot_projection(report) == snapshot,
+            "exact shaded helper ABI snapshot mismatch")
+    return True
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--jar", required=True, type=Path)
     p.add_argument("--javap", required=True)
     p.add_argument("--packet-codec-manifest", required=True, type=Path)
     p.add_argument("--output", required=True, type=Path)
+    p.add_argument("--snapshot", required=True, type=Path)
     args = p.parse_args()
     upstream = json.loads(args.packet_codec_manifest.read_text(encoding="utf8"))
     report = audit(args.jar, args.javap, upstream)
+    verify_snapshot(report, json.loads(args.snapshot.read_text(encoding="utf8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True,
                                       ensure_ascii=False) + "\n", encoding="utf8")
