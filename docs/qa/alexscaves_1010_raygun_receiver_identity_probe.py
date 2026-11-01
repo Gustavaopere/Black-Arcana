@@ -192,6 +192,7 @@ def main():
                        ("ENTRY", report["network_entry_methods"])):
         for row in rows:
             print("JVM_" + name + "_METHOD=" + row["name"] + " " + row["descriptor"])
+            print("JVM_" + name + "_METHOD_SHA256=" + row["parsed_method_sha256"])
             for ref in row["selected_references"]:
                 print("JVM_" + name + "_REFERENCE=" + json.dumps(ref, sort_keys=True))
     print("SECURITY_REVIEW=REQUIRED; NOT_CERTIFIED; NO_MUTATION")
