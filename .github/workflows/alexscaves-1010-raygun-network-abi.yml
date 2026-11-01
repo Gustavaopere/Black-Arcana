@@ -44,15 +44,11 @@ jobs:
             --output build/alexscaves-1010/alexscaves-1.0.10.jar
       - name: Audit native network registrations and packet ABI
         run: |
-          SNAPSHOT=''
-          if test -f 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-NETWORK-ABI-1.0.10.json'; then
-            SNAPSHOT='--snapshot wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-NETWORK-ABI-1.0.10.json'
-          fi
           python3 docs/qa/alexscaves_1010_raygun_network_abi_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --existing-receiver 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-RECEIVER-1.0.10.json' \
-            $SNAPSHOT \
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-NETWORK-ABI-1.0.10.json' \
             --output build/alexscaves-1010/raygun-network-abi.json
       - name: Publish bounded ABI evidence
         uses: actions/upload-artifact@v7
