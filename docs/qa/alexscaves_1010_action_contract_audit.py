@@ -23,6 +23,28 @@ EFFECTS = frozenset("effects/" + name + ".md" for name in (
     "darkness-incarnate", "sugar-rush"))
 DREADBOW = frozenset(("equipment/dreadbow.md", "damage-types/dark-arrow.md"))
 ACID = frozenset(("damage-types/acid.md",))
+RADIATION = frozenset(("damage-types/radiation.md",))
+RADIATION_CLASS_NAMES = frozenset((
+    "server/event/CommonEvents",
+    "server/item/HazmatArmorItem",
+    "server/misc/ACDamageTypes",
+    "server/misc/ACTagRegistry",
+    "server/potion/ACEffectRegistry",
+    "server/potion/ACMobEffect",
+    "server/potion/IrradiatedEffect"
+))
+RADIATION_REQUIRED_METHODS = {
+    "server/misc/ACDamageTypes": frozenset({"causeRadiationDamage"}),
+    "server/potion/IrradiatedEffect": frozenset({"shouldTick", "tick"}),
+    "server/potion/ACMobEffect": frozenset({"applyEffectTick", "shouldApplyEffectTickThisTick"}),
+    "server/item/HazmatArmorItem": frozenset({"getWornAmount"}),
+    "server/event/CommonEvents": frozenset({"acLivingHeal", "livingHeal"}),
+}
+RADIATION_RESOURCE_PATHS = frozenset((
+    "data/alexscaves/damage_type/radiation.json",
+    "data/alexscaves/tags/entity_type/resists_radiation.json"
+))
+
 DESOLATE_DAGGER = frozenset(("equipment/desolate-dagger.md", "damage-types/desolate-dagger.md"))
 FORSAKEN = frozenset(("damage-types/forsaken-sonic-boom.md",))
 GUMBALL = frozenset(("equipment/shot-gum.md", "damage-types/gumball.md"))
@@ -35,6 +57,7 @@ SCOPE = {"schema_version": 1, "version": "1.0.10",
 EFFECT_SCOPE = {**SCOPE, "catalog_family": "MOB_EFFECTS"}
 DREADBOW_SCOPE = {**SCOPE, "catalog_family": "DREADBOW_AND_DARK_ARROW"}
 ACID_SCOPE = {**SCOPE, "catalog_family": "ACID_DAMAGE_CONTRACT"}
+RADIATION_SCOPE = {**SCOPE, "catalog_family": "RADIATION_DAMAGE_CONTRACT"}
 DESOLATE_DAGGER_SCOPE = {**SCOPE, "catalog_family": "DESOLATE_DAGGER_CONTRACTS"}
 FORSAKEN_SCOPE = {**SCOPE, "catalog_family": "FORSAKEN_SONIC_CONTRACT"}
 GUMBALL_SCOPE = {**SCOPE, "catalog_family": "GUMBALL_CONTRACTS"}
@@ -55,13 +78,15 @@ def require(condition, message):
 
 def profile_spec(profile):
     """Select a literal family without changing the existing action contract."""
-    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball"), "unknown catalog profile")
+    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation"), "unknown catalog profile")
     if profile == "effects":
         return EFFECT_SCOPE, EFFECTS, "effect_evidence"
     if profile == "dreadbow":
         return DREADBOW_SCOPE, DREADBOW, "contract_evidence"
     if profile == "acid":
         return ACID_SCOPE, ACID, "contract_evidence"
+    if profile == "radiation":
+        return RADIATION_SCOPE, RADIATION, "contract_evidence"
     if profile == "desolate_dagger":
         return DESOLATE_DAGGER_SCOPE, DESOLATE_DAGGER, "contract_evidence"
     if profile == "forsaken":
@@ -148,6 +173,15 @@ def validate_structure(manifest, *, profile="actions"):
     require(isinstance(classes, dict) and len(roster) <= len(classes) <= 128
             and isinstance(resources, dict) and len(resources) <= 256,
             "invalid class/resource mapping limits")
+    if profile == "radiation":
+        prefix = "com/github/alexmodguy/alexscaves/"
+        expected = {prefix + name + ".class" for name in RADIATION_CLASS_NAMES}
+        require(set(classes) == expected, "radiation exact class roster drift")
+        require(set(resources) == RADIATION_RESOURCE_PATHS,
+                "radiation exact damage/resource roster drift")
+        for owner, methods in RADIATION_REQUIRED_METHODS.items():
+            actual = {m["name"] for m in classes[prefix + owner + ".class"]["methods"]}
+            require(methods <= actual, "radiation required JVM methods missing: " + owner)
     method_classes, total_anchors = set(), 0
     for path, entry in classes.items():
         require(canonical(path) and path.startswith("com/github/alexmodguy/alexscaves/") and path.endswith(".class"),
@@ -273,7 +307,7 @@ def main(argv=None):
     for flag in ("jar", "manifest", "provider-root", "javap"):
         parser.add_argument("--" + flag, required=True, type=Path)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball"), default="actions")
+    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation"), default="actions")
     args = parser.parse_args(argv)
     try:
         report = audit(args.jar, load_manifest(args.manifest), args.provider_root, args.javap,

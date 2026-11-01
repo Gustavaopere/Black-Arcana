@@ -9,6 +9,7 @@ on:
       - 'docs/qa/alexscaves_1010_action_contract_audit.py'
       - 'docs/qa/alexscaves_1010_action_contract_audit_test.py'
       - 'docs/qa/alexscaves_1010_gumball_cards_test.py'
+      - 'docs/qa/alexscaves_1010_radiation_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   push:
     branches: [main]
@@ -18,6 +19,7 @@ on:
       - 'docs/qa/alexscaves_1010_action_contract_audit.py'
       - 'docs/qa/alexscaves_1010_action_contract_audit_test.py'
       - 'docs/qa/alexscaves_1010_gumball_cards_test.py'
+      - 'docs/qa/alexscaves_1010_radiation_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   workflow_dispatch:
 
@@ -38,6 +40,7 @@ jobs:
         run: |
           python3 docs/qa/alexscaves_1010_action_contract_audit_test.py -v
           python3 docs/qa/alexscaves_1010_gumball_cards_test.py -v
+          python3 docs/qa/alexscaves_1010_radiation_cards_test.py -v
       - name: Download the exact publisher artifact
         run: |
           mkdir -p build/alexscaves-1010
@@ -107,6 +110,15 @@ jobs:
             --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/alexscaves-1010/gumball-evidence.json
+      - name: Verify Radiation damage type and its native Irradiated consumer
+        run: |
+          python3 docs/qa/alexscaves_1010_action_contract_audit.py \
+            --profile radiation \
+            --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RADIATION-CONTRACT-1.0.10.json' \
+            --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/alexscaves-1010/radiation-evidence.json
       - name: Export bounded JSON evidence only
         uses: actions/upload-artifact@v7
         with:
@@ -119,5 +131,6 @@ jobs:
             build/alexscaves-1010/desolate-dagger-evidence.json
             build/alexscaves-1010/forsaken-evidence.json
             build/alexscaves-1010/gumball-evidence.json
+            build/alexscaves-1010/radiation-evidence.json
           if-no-files-found: error
           retention-days: 14

@@ -7,7 +7,7 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parents[2]
 CARDS = BASE / "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types"
 SNAPSHOT = CARDS / "EXACT-CONSUMERS-1.0.10.json"
-STATIC_DAMAGE_TYPES = frozenset({"acid", "dark_arrow", "desolate_dagger", "forsaken_sonic_boom", "gumball"})
+STATIC_DAMAGE_TYPES = frozenset({"acid", "dark_arrow", "desolate_dagger", "forsaken_sonic_boom", "gumball", "radiation"})
 
 class DamageConsumerCardsTest(unittest.TestCase):
     @classmethod

@@ -6619,6 +6619,46 @@
           "reason": "Ficha e membros SHA-exatos selados, 26 métodos com descritores e instruções; artefato, consumidores e recursos auditáveis. Contagens não promovem universo integral do provider, runtime, autorização ou QA física."
         }
       }
+    },
+    "✅-alexs-caves-continued/damage-types/radiation.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do DamageType Radiation e do único consumidor Java direto IrradiatedEffect, com efeitos downstream e produtores enumerados no escopo delimitado; não certifica hook mutador, configuração efetiva, QA física ou universo integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/radiation.md",
+          "reason": "DamageType alexscaves:radiation, SHA-exact resource, native ACDamageTypes factory and one direct IrradiatedEffect consumer; no semantic magic root."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/radiation.md",
+          "reason": "IrradiatedEffect.tick → causeRadiationDamage → LivingEntity.hurt; returned acceptance is not consumed; direct source has no Entity attacker argument; other sources apply effect separately."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/radiation.md",
+          "reason": "Amplifier raw controls 200/a tick scheduling; Hazmat four-slot count and conditional s=1-0.25*h, random s+0.1, exhaustion 0.4 and distinct JSON exhaustion 0.1."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/radiation.md",
+          "reason": "LivingEntity already affected by status is the direct tick target; emitters determine application and geometry independently, including Raygun and nuclear effects; Raycat tick exclusion."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/radiation.md",
+          "reason": "Damage type has no mana, ammo or casting cooldown; those are controlled by each native effect producer; food exhaustion is not a second magical cost."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/radiation.md",
+          "reason": "Native CommonEvents heal cancel and RESISTS_RADIATION conditional separated from periodic hurt; avoid double-processing, invented attacker attribution, unauthorized mutation and duplicate XP/procs."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/radiation.md",
+          "reason": "Exact JAR/Java21 method/resource/class anchors checked by profile radiation, with individually SHA-sealed card and cross-linked previously sealed Irradiated effect; server/client QA, hooks and provider universe remain unverified."
+        }
+      }
     }
   },
   "providers": {},

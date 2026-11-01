@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 5/11.**
+**Fichas catalogadas (somente fichas detectadas): 6/11.**
 
-**Barra das fichas catalogadas:** `█████████░░░░░░░░░░░ 45.5%`
+**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 54.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 5/11.**
+**Homologadas para perks (somente fichas detectadas): 6/11.**
 
-**Barra dos contratos técnicos estáticos:** `█████████░░░░░░░░░░░ 45.5%`
+**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 54.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -27,7 +27,7 @@
 | ✅ | Gumball | [ficha/gumball.md](gumball.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Intentional Game Design | [ficha/intentional-game-design.md](intentional-game-design.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Nuke | [ficha/nuke.md](nuke.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Radiation | [ficha/radiation.md](radiation.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Radiation | [ficha/radiation.md](radiation.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Raygun | [ficha/raygun.md](raygun.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Spirit Dinosaur | [ficha/spirit-dinosaur.md](spirit-dinosaur.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Tremorzilla Beam | [ficha/tremorzilla-beam.md](tremorzilla-beam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

@@ -35,6 +35,12 @@ STATIC_CONTRACTS = {
         "family": "FORSAKEN_SONIC_CONTRACT",
         "cards": frozenset({"damage-types/forsaken-sonic-boom.md"}),
     },
+    "radiation": {
+        "manifest": "EXACT-RADIATION-CONTRACT-1.0.10.json",
+        "profile": "radiation",
+        "family": "RADIATION_DAMAGE_CONTRACT",
+        "cards": frozenset({"damage-types/radiation.md"}),
+    },
     "gumball": {
         "manifest": "EXACT-GUMBALL-CONTRACTS-1.0.10.json",
         "profile": "gumball",
@@ -139,16 +145,16 @@ class DamageTypeCards(unittest.TestCase):
                 self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if id in STATIC_CONTRACTS else "NOT_CERTIFIED", text)
                 self.assertIn("**+0 raízes mágicas novas**", text)
 
-    def test_five_static_certificates_have_sealed_cards_and_runtime_limits(self):
-        self.assertEqual(set(STATIC_CONTRACTS), {"acid", "dark_arrow", "desolate_dagger", "forsaken_sonic_boom", "gumball"})
+    def test_six_static_certificates_have_sealed_cards_and_runtime_limits(self):
+        self.assertEqual(set(STATIC_CONTRACTS), {"acid", "dark_arrow", "desolate_dagger", "forsaken_sonic_boom", "gumball", "radiation"})
         for id in STATIC_CONTRACTS:
             with self.subTest(id=id):
                 assert_sealed_damage_contract(self, id)
 
-    def test_other_six_damage_types_remain_uncertified(self):
+    def test_other_five_damage_types_remain_uncertified(self):
         ledger = json.loads((ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text())
         remaining = set(self.manifest["damage_types"]) - set(STATIC_CONTRACTS)
-        self.assertEqual(len(remaining), 6)
+        self.assertEqual(len(remaining), 5)
         for id in remaining:
             with self.subTest(id=id):
                 relative = FAMILY.parent.name + "/damage-types/" + id.replace("_", "-") + ".md"

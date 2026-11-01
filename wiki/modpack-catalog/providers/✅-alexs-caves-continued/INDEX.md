@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 24/30.**
+**Fichas catalogadas (somente fichas detectadas): 25/30.**
 
-**Barra das fichas catalogadas:** `████████████████░░░░ 80.0%`
+**Barra das fichas catalogadas:** `████████████████░░░░ 83.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 24/30.**
+**Homologadas para perks (somente fichas detectadas): 25/30.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 80.0%`
+**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 83.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -39,7 +39,7 @@
 | ✅ | Gumball | [damage-types/gumball.md](damage-types/gumball.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Intentional Game Design | [damage-types/intentional-game-design.md](damage-types/intentional-game-design.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Nuke | [damage-types/nuke.md](damage-types/nuke.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Radiation | [damage-types/radiation.md](damage-types/radiation.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Radiation | [damage-types/radiation.md](damage-types/radiation.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Raygun | [damage-types/raygun.md](damage-types/raygun.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Spirit Dinosaur | [damage-types/spirit-dinosaur.md](damage-types/spirit-dinosaur.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Tremorzilla Beam | [damage-types/tremorzilla-beam.md](damage-types/tremorzilla-beam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -60,7 +60,7 @@
 | Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |
 |---|---|---:|---:|---|
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
-| ⚠️ | Damage Types | 5/11 (45.5%) | 5 | [Abrir índice](damage-types/INDEX.md) |
+| ⚠️ | Damage Types | 6/11 (54.5%) | 6 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
 

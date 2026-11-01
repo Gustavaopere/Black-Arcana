@@ -1,0 +1,1568 @@
+{
+  "schema_version": 1,
+  "version": "1.0.10",
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "provider_universe_closed": false,
+  "semantic_magic_roots": 8,
+  "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+  "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+  "artifact_size_bytes": 75279314,
+  "catalog_family": "RADIATION_DAMAGE_CONTRACT",
+  "adjacent_source": {
+    "repository": "Codx-org/AlexsCavesContinued",
+    "revision": "523308608422ab8e31974befa7111ecdf495dd37",
+    "declared_version": "1.1.1",
+    "role": "CORROBORATION_ONLY_NOT_INSTALLED_PARAMETERS"
+  },
+  "cards": {
+    "damage-types/radiation.md": "ccf213dadefa310664e5eb0aa29aa6f4a6ecea0ed7f0438ddbf77c6f9fb57cf0"
+  },
+  "contract_evidence": {
+    "damage-types/radiation.md": {
+      "classes": [
+        "com/github/alexmodguy/alexscaves/server/event/CommonEvents.class",
+        "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem.class",
+        "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class",
+        "com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.class",
+        "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.class",
+        "com/github/alexmodguy/alexscaves/server/potion/ACMobEffect.class",
+        "com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect.class"
+      ],
+      "resources": [
+        "data/alexscaves/damage_type/radiation.json",
+        "data/alexscaves/tags/entity_type/resists_radiation.json"
+      ]
+    }
+  },
+  "classes": {
+    "com/github/alexmodguy/alexscaves/server/event/CommonEvents.class": {
+      "sha256": "d132caad67ecab68844091ee396d37fecc4860440d338dcd82384f1555f8ad43",
+      "methods": [
+        {
+          "name": "acLivingHeal",
+          "descriptor": "(Lnet/neoforged/neoforge/event/entity/living/LivingHealEvent;)Z",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "invokevirtual",
+              "operand": "#246",
+              "symbol": "Method net/neoforged/neoforge/event/entity/living/LivingHealEvent.getEntity:()Lnet/minecraft/world/entity/LivingEntity;"
+            },
+            {
+              "offset": 4,
+              "opcode": "getstatic",
+              "operand": "#249",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.IRRADIATED:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 7,
+              "opcode": "invokeinterface",
+              "operand": "#62, 1",
+              "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+            },
+            {
+              "offset": 12,
+              "opcode": "checkcast",
+              "operand": "#254",
+              "symbol": "class net/minecraft/world/effect/MobEffect"
+            },
+            {
+              "offset": 15,
+              "opcode": "invokestatic",
+              "operand": "#256",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.effect:(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/core/Holder;"
+            },
+            {
+              "offset": 18,
+              "opcode": "invokevirtual",
+              "operand": "#260",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.hasEffect:(Lnet/minecraft/core/Holder;)Z"
+            },
+            {
+              "offset": 21,
+              "opcode": "ifeq",
+              "operand": "47",
+              "symbol": ""
+            },
+            {
+              "offset": 24,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 25,
+              "opcode": "invokevirtual",
+              "operand": "#246",
+              "symbol": "Method net/neoforged/neoforge/event/entity/living/LivingHealEvent.getEntity:()Lnet/minecraft/world/entity/LivingEntity;"
+            },
+            {
+              "offset": 28,
+              "opcode": "invokevirtual",
+              "operand": "#25",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+            },
+            {
+              "offset": 31,
+              "opcode": "invokevirtual",
+              "operand": "#264",
+              "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+            },
+            {
+              "offset": 34,
+              "opcode": "getstatic",
+              "operand": "#268",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.RESISTS_RADIATION:Lnet/minecraft/tags/TagKey;"
+            },
+            {
+              "offset": 37,
+              "opcode": "invokevirtual",
+              "operand": "#274",
+              "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+            },
+            {
+              "offset": 40,
+              "opcode": "ifne",
+              "operand": "47",
+              "symbol": ""
+            },
+            {
+              "offset": 43,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 44,
+              "opcode": "goto",
+              "operand": "48",
+              "symbol": ""
+            },
+            {
+              "offset": 47,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 48,
+              "opcode": "ireturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        },
+        {
+          "name": "livingHeal",
+          "descriptor": "(Lnet/neoforged/neoforge/event/entity/living/LivingHealEvent;)V",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 2,
+              "opcode": "invokevirtual",
+              "operand": "#279",
+              "symbol": "Method acLivingHeal:(Lnet/neoforged/neoforge/event/entity/living/LivingHealEvent;)Z"
+            },
+            {
+              "offset": 5,
+              "opcode": "ifeq",
+              "operand": "13",
+              "symbol": ""
+            },
+            {
+              "offset": 8,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 9,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 10,
+              "opcode": "invokevirtual",
+              "operand": "#285",
+              "symbol": "Method net/neoforged/neoforge/event/entity/living/LivingHealEvent.setCanceled:(Z)V"
+            },
+            {
+              "offset": 13,
+              "opcode": "return",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem.class": {
+      "sha256": "289395b93a1a223f2e66a02528ccb4ce3a1a659dd9c82ac071a5b63c32b1c7cb",
+      "methods": [
+        {
+          "name": "getWornAmount",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)I",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "istore_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 2,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 3,
+              "opcode": "getstatic",
+              "operand": "#168",
+              "symbol": "Field net/minecraft/world/entity/EquipmentSlot.HEAD:Lnet/minecraft/world/entity/EquipmentSlot;"
+            },
+            {
+              "offset": 6,
+              "opcode": "invokevirtual",
+              "operand": "#171",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemBySlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
+            },
+            {
+              "offset": 9,
+              "opcode": "getstatic",
+              "operand": "#56",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.HAZMAT_MASK:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 12,
+              "opcode": "invokeinterface",
+              "operand": "#62, 1",
+              "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+            },
+            {
+              "offset": 17,
+              "opcode": "checkcast",
+              "operand": "#67",
+              "symbol": "class net/minecraft/world/item/Item"
+            },
+            {
+              "offset": 20,
+              "opcode": "invokevirtual",
+              "operand": "#69",
+              "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+            },
+            {
+              "offset": 23,
+              "opcode": "ifeq",
+              "operand": "29",
+              "symbol": ""
+            },
+            {
+              "offset": 26,
+              "opcode": "iinc",
+              "operand": "1, 1",
+              "symbol": ""
+            },
+            {
+              "offset": 29,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 30,
+              "opcode": "getstatic",
+              "operand": "#177",
+              "symbol": "Field net/minecraft/world/entity/EquipmentSlot.CHEST:Lnet/minecraft/world/entity/EquipmentSlot;"
+            },
+            {
+              "offset": 33,
+              "opcode": "invokevirtual",
+              "operand": "#171",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemBySlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
+            },
+            {
+              "offset": 36,
+              "opcode": "getstatic",
+              "operand": "#180",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.HAZMAT_CHESTPLATE:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 39,
+              "opcode": "invokeinterface",
+              "operand": "#62, 1",
+              "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+            },
+            {
+              "offset": 44,
+              "opcode": "checkcast",
+              "operand": "#67",
+              "symbol": "class net/minecraft/world/item/Item"
+            },
+            {
+              "offset": 47,
+              "opcode": "invokevirtual",
+              "operand": "#69",
+              "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+            },
+            {
+              "offset": 50,
+              "opcode": "ifeq",
+              "operand": "56",
+              "symbol": ""
+            },
+            {
+              "offset": 53,
+              "opcode": "iinc",
+              "operand": "1, 1",
+              "symbol": ""
+            },
+            {
+              "offset": 56,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 57,
+              "opcode": "getstatic",
+              "operand": "#158",
+              "symbol": "Field net/minecraft/world/entity/EquipmentSlot.LEGS:Lnet/minecraft/world/entity/EquipmentSlot;"
+            },
+            {
+              "offset": 60,
+              "opcode": "invokevirtual",
+              "operand": "#171",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemBySlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
+            },
+            {
+              "offset": 63,
+              "opcode": "getstatic",
+              "operand": "#183",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.HAZMAT_LEGGINGS:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 66,
+              "opcode": "invokeinterface",
+              "operand": "#62, 1",
+              "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+            },
+            {
+              "offset": 71,
+              "opcode": "checkcast",
+              "operand": "#67",
+              "symbol": "class net/minecraft/world/item/Item"
+            },
+            {
+              "offset": 74,
+              "opcode": "invokevirtual",
+              "operand": "#69",
+              "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+            },
+            {
+              "offset": 77,
+              "opcode": "ifeq",
+              "operand": "83",
+              "symbol": ""
+            },
+            {
+              "offset": 80,
+              "opcode": "iinc",
+              "operand": "1, 1",
+              "symbol": ""
+            },
+            {
+              "offset": 83,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 84,
+              "opcode": "getstatic",
+              "operand": "#186",
+              "symbol": "Field net/minecraft/world/entity/EquipmentSlot.FEET:Lnet/minecraft/world/entity/EquipmentSlot;"
+            },
+            {
+              "offset": 87,
+              "opcode": "invokevirtual",
+              "operand": "#171",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemBySlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
+            },
+            {
+              "offset": 90,
+              "opcode": "getstatic",
+              "operand": "#189",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.HAZMAT_BOOTS:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 93,
+              "opcode": "invokeinterface",
+              "operand": "#62, 1",
+              "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+            },
+            {
+              "offset": 98,
+              "opcode": "checkcast",
+              "operand": "#67",
+              "symbol": "class net/minecraft/world/item/Item"
+            },
+            {
+              "offset": 101,
+              "opcode": "invokevirtual",
+              "operand": "#69",
+              "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+            },
+            {
+              "offset": 104,
+              "opcode": "ifeq",
+              "operand": "110",
+              "symbol": ""
+            },
+            {
+              "offset": 107,
+              "opcode": "iinc",
+              "operand": "1, 1",
+              "symbol": ""
+            },
+            {
+              "offset": 110,
+              "opcode": "iload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 111,
+              "opcode": "ireturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class": {
+      "sha256": "389fb88f8d6e1515e3dfe7f401a728bb33629666bd2319ae7e25668f710e4ef6",
+      "methods": [
+        {
+          "name": "causeRadiationDamage",
+          "descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "new",
+              "operand": "#7",
+              "symbol": "class com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages"
+            },
+            {
+              "offset": 3,
+              "opcode": "dup",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 4,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 5,
+              "opcode": "getstatic",
+              "operand": "#9",
+              "symbol": "Field net/minecraft/core/registries/Registries.DAMAGE_TYPE:Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "offset": 8,
+              "opcode": "invokeinterface",
+              "operand": "#15, 2",
+              "symbol": "InterfaceMethod net/minecraft/core/RegistryAccess.registry:(Lnet/minecraft/resources/ResourceKey;)Ljava/util/Optional;"
+            },
+            {
+              "offset": 13,
+              "opcode": "invokevirtual",
+              "operand": "#21",
+              "symbol": "Method java/util/Optional.get:()Ljava/lang/Object;"
+            },
+            {
+              "offset": 16,
+              "opcode": "checkcast",
+              "operand": "#27",
+              "symbol": "class net/minecraft/core/Registry"
+            },
+            {
+              "offset": 19,
+              "opcode": "getstatic",
+              "operand": "#41",
+              "symbol": "Field RADIATION:Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "offset": 22,
+              "opcode": "invokeinterface",
+              "operand": "#34, 2",
+              "symbol": "InterfaceMethod net/minecraft/core/Registry.getHolderOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Holder$Reference;"
+            },
+            {
+              "offset": 27,
+              "opcode": "iconst_2",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 28,
+              "opcode": "invokespecial",
+              "operand": "#38",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;I)V"
+            },
+            {
+              "offset": 31,
+              "opcode": "areturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.class": {
+      "sha256": "f678e725a839f2c05579c71de9e0c03b7613ad6981fd36306c3559f1e0eeb3c0",
+      "methods": []
+    },
+    "com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.class": {
+      "sha256": "f60c1a6704c39eecace6522db8a36ed3219ed13a329f0c56c368737533c51d82",
+      "methods": [
+        {
+          "name": "<clinit>",
+          "descriptor": "()V",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "getstatic",
+              "operand": "#221",
+              "symbol": "Field net/minecraft/core/registries/Registries.MOB_EFFECT:Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "offset": 3,
+              "opcode": "ldc",
+              "operand": "#229",
+              "symbol": "String alexscaves"
+            },
+            {
+              "offset": 5,
+              "opcode": "invokestatic",
+              "operand": "#231",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.create:(Lnet/minecraft/resources/ResourceKey;Ljava/lang/String;)Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 8,
+              "opcode": "putstatic",
+              "operand": "#237",
+              "symbol": "Field DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 11,
+              "opcode": "getstatic",
+              "operand": "#241",
+              "symbol": "Field net/minecraft/core/registries/Registries.POTION:Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "offset": 14,
+              "opcode": "ldc",
+              "operand": "#229",
+              "symbol": "String alexscaves"
+            },
+            {
+              "offset": 16,
+              "opcode": "invokestatic",
+              "operand": "#231",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.create:(Lnet/minecraft/resources/ResourceKey;Ljava/lang/String;)Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 19,
+              "opcode": "putstatic",
+              "operand": "#243",
+              "symbol": "Field POTION_DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 22,
+              "opcode": "getstatic",
+              "operand": "#237",
+              "symbol": "Field DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 25,
+              "opcode": "ldc",
+              "operand": "#195",
+              "symbol": "String magnetizing"
+            },
+            {
+              "offset": 27,
+              "opcode": "invokedynamic",
+              "operand": "#246, 0",
+              "symbol": "InvokeDynamic #0:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 32,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 35,
+              "opcode": "putstatic",
+              "operand": "#192",
+              "symbol": "Field MAGNETIZING:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 38,
+              "opcode": "getstatic",
+              "operand": "#237",
+              "symbol": "Field DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 41,
+              "opcode": "ldc",
+              "operand": "#253",
+              "symbol": "String stunned"
+            },
+            {
+              "offset": 43,
+              "opcode": "invokedynamic",
+              "operand": "#255, 0",
+              "symbol": "InvokeDynamic #1:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 48,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 51,
+              "opcode": "putstatic",
+              "operand": "#256",
+              "symbol": "Field STUNNED:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 54,
+              "opcode": "getstatic",
+              "operand": "#237",
+              "symbol": "Field DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 57,
+              "opcode": "ldc_w",
+              "operand": "#259",
+              "symbol": "String rage"
+            },
+            {
+              "offset": 60,
+              "opcode": "invokedynamic",
+              "operand": "#261, 0",
+              "symbol": "InvokeDynamic #2:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 65,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 68,
+              "opcode": "putstatic",
+              "operand": "#262",
+              "symbol": "Field RAGE:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 71,
+              "opcode": "getstatic",
+              "operand": "#237",
+              "symbol": "Field DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 74,
+              "opcode": "ldc_w",
+              "operand": "#265",
+              "symbol": "String irradiated"
+            },
+            {
+              "offset": 77,
+              "opcode": "invokedynamic",
+              "operand": "#267, 0",
+              "symbol": "InvokeDynamic #3:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 82,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 85,
+              "opcode": "putstatic",
+              "operand": "#268",
+              "symbol": "Field IRRADIATED:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 88,
+              "opcode": "getstatic",
+              "operand": "#237",
+              "symbol": "Field DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 91,
+              "opcode": "ldc_w",
+              "operand": "#271",
+              "symbol": "String bubbled"
+            },
+            {
+              "offset": 94,
+              "opcode": "invokedynamic",
+              "operand": "#273, 0",
+              "symbol": "InvokeDynamic #4:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 99,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 102,
+              "opcode": "putstatic",
+              "operand": "#274",
+              "symbol": "Field BUBBLED:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 105,
+              "opcode": "getstatic",
+              "operand": "#237",
+              "symbol": "Field DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 108,
+              "opcode": "ldc",
+              "operand": "#188",
+              "symbol": "String deepsight"
+            },
+            {
+              "offset": 110,
+              "opcode": "invokedynamic",
+              "operand": "#277, 0",
+              "symbol": "InvokeDynamic #5:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 115,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 118,
+              "opcode": "putstatic",
+              "operand": "#185",
+              "symbol": "Field DEEPSIGHT:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 121,
+              "opcode": "getstatic",
+              "operand": "#237",
+              "symbol": "Field DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 124,
+              "opcode": "ldc_w",
+              "operand": "#278",
+              "symbol": "String darkness_incarnate"
+            },
+            {
+              "offset": 127,
+              "opcode": "invokedynamic",
+              "operand": "#280, 0",
+              "symbol": "InvokeDynamic #6:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 132,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 135,
+              "opcode": "putstatic",
+              "operand": "#281",
+              "symbol": "Field DARKNESS_INCARNATE:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 138,
+              "opcode": "getstatic",
+              "operand": "#237",
+              "symbol": "Field DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 141,
+              "opcode": "ldc",
+              "operand": "#155",
+              "symbol": "String sugar_rush"
+            },
+            {
+              "offset": 143,
+              "opcode": "invokedynamic",
+              "operand": "#284, 0",
+              "symbol": "InvokeDynamic #7:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 148,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 151,
+              "opcode": "putstatic",
+              "operand": "#140",
+              "symbol": "Field SUGAR_RUSH:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 186,
+              "opcode": "getstatic",
+              "operand": "#243",
+              "symbol": "Field POTION_DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 189,
+              "opcode": "ldc",
+              "operand": "#188",
+              "symbol": "String deepsight"
+            },
+            {
+              "offset": 191,
+              "opcode": "invokedynamic",
+              "operand": "#287, 0",
+              "symbol": "InvokeDynamic #10:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 196,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 199,
+              "opcode": "putstatic",
+              "operand": "#74",
+              "symbol": "Field DEEPSIGHT_POTION:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 202,
+              "opcode": "getstatic",
+              "operand": "#243",
+              "symbol": "Field POTION_DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 205,
+              "opcode": "ldc",
+              "operand": "#183",
+              "symbol": "String long_deepsight"
+            },
+            {
+              "offset": 207,
+              "opcode": "invokedynamic",
+              "operand": "#288, 0",
+              "symbol": "InvokeDynamic #11:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 212,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 215,
+              "opcode": "putstatic",
+              "operand": "#77",
+              "symbol": "Field LONG_DEEPSIGHT_POTION:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 314,
+              "opcode": "getstatic",
+              "operand": "#243",
+              "symbol": "Field POTION_DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 317,
+              "opcode": "ldc",
+              "operand": "#155",
+              "symbol": "String sugar_rush"
+            },
+            {
+              "offset": 319,
+              "opcode": "invokedynamic",
+              "operand": "#298, 0",
+              "symbol": "InvokeDynamic #18:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 324,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 327,
+              "opcode": "putstatic",
+              "operand": "#110",
+              "symbol": "Field SUGAR_RUSH_POTION:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 330,
+              "opcode": "getstatic",
+              "operand": "#243",
+              "symbol": "Field POTION_DEF_REG:Lnet/neoforged/neoforge/registries/DeferredRegister;"
+            },
+            {
+              "offset": 333,
+              "opcode": "ldc",
+              "operand": "#136",
+              "symbol": "String long_sugar_rush"
+            },
+            {
+              "offset": 335,
+              "opcode": "invokedynamic",
+              "operand": "#299, 0",
+              "symbol": "InvokeDynamic #19:get:()Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 340,
+              "opcode": "invokevirtual",
+              "operand": "#249",
+              "symbol": "Method net/neoforged/neoforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;"
+            },
+            {
+              "offset": 343,
+              "opcode": "putstatic",
+              "operand": "#113",
+              "symbol": "Field LONG_SUGAR_RUSH_POTION:Ljava/util/function/Supplier;"
+            },
+            {
+              "offset": 346,
+              "opcode": "return",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        },
+        {
+          "name": "lambda$static$3",
+          "descriptor": "()Lnet/minecraft/world/effect/MobEffect;",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "new",
+              "operand": "#209",
+              "symbol": "class com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect"
+            },
+            {
+              "offset": 3,
+              "opcode": "dup",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 4,
+              "opcode": "invokespecial",
+              "operand": "#211",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect.\"<init>\":()V"
+            },
+            {
+              "offset": 7,
+              "opcode": "areturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/potion/ACMobEffect.class": {
+      "sha256": "39f88d7cf3c25eb4806b7bb769846282e5114f9e1e56dee6efaed9eb9e683896",
+      "methods": [
+        {
+          "name": "applyEffectTick",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;I)Z",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 2,
+              "opcode": "iload_2",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 3,
+              "opcode": "invokevirtual",
+              "operand": "#11",
+              "symbol": "Method tick:(Lnet/minecraft/world/entity/LivingEntity;I)V"
+            },
+            {
+              "offset": 6,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 7,
+              "opcode": "ireturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        },
+        {
+          "name": "shouldApplyEffectTickThisTick",
+          "descriptor": "(II)Z",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "iload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 2,
+              "opcode": "iload_2",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 3,
+              "opcode": "invokevirtual",
+              "operand": "#17",
+              "symbol": "Method shouldTick:(II)Z"
+            },
+            {
+              "offset": 6,
+              "opcode": "ireturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect.class": {
+      "sha256": "ee532620f143ff83773b08cf52f72b0b20b3fb6e85b18ed7b39dfd930465ba5c",
+      "methods": [
+        {
+          "name": "<init>",
+          "descriptor": "()V",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "aload_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "getstatic",
+              "operand": "#1",
+              "symbol": "Field net/minecraft/world/effect/MobEffectCategory.HARMFUL:Lnet/minecraft/world/effect/MobEffectCategory;"
+            },
+            {
+              "offset": 4,
+              "opcode": "ldc",
+              "operand": "#7",
+              "symbol": "int 7853582"
+            },
+            {
+              "offset": 6,
+              "opcode": "invokespecial",
+              "operand": "#8",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/potion/ACMobEffect.\"<init>\":(Lnet/minecraft/world/effect/MobEffectCategory;I)V"
+            },
+            {
+              "offset": 9,
+              "opcode": "return",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        },
+        {
+          "name": "getCurativeItems",
+          "descriptor": "()Ljava/util/List;",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "invokestatic",
+              "operand": "#63",
+              "symbol": "InterfaceMethod java/util/List.of:()Ljava/util/List;"
+            },
+            {
+              "offset": 3,
+              "opcode": "areturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        },
+        {
+          "name": "shouldTick",
+          "descriptor": "(II)Z",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "iload_2",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "ifgt",
+              "operand": "6",
+              "symbol": ""
+            },
+            {
+              "offset": 4,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 5,
+              "opcode": "ireturn",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 6,
+              "opcode": "sipush",
+              "operand": "200",
+              "symbol": ""
+            },
+            {
+              "offset": 9,
+              "opcode": "iload_2",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 10,
+              "opcode": "idiv",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 11,
+              "opcode": "istore_3",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 12,
+              "opcode": "iload_3",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 13,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 14,
+              "opcode": "if_icmple",
+              "operand": "32",
+              "symbol": ""
+            },
+            {
+              "offset": 17,
+              "opcode": "iload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 18,
+              "opcode": "iload_3",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 19,
+              "opcode": "irem",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 20,
+              "opcode": "iload_3",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 21,
+              "opcode": "iconst_2",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 22,
+              "opcode": "idiv",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 23,
+              "opcode": "if_icmpne",
+              "operand": "30",
+              "symbol": ""
+            },
+            {
+              "offset": 26,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 27,
+              "opcode": "goto",
+              "operand": "31",
+              "symbol": ""
+            },
+            {
+              "offset": 30,
+              "opcode": "iconst_0",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 31,
+              "opcode": "ireturn",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 32,
+              "opcode": "iconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 33,
+              "opcode": "ireturn",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        },
+        {
+          "name": "tick",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "anchors": [
+            {
+              "offset": 0,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 1,
+              "opcode": "invokestatic",
+              "operand": "#14",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem.getWornAmount:(Lnet/minecraft/world/entity/LivingEntity;)I"
+            },
+            {
+              "offset": 4,
+              "opcode": "istore_3",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 5,
+              "opcode": "fconst_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 6,
+              "opcode": "iload_3",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 7,
+              "opcode": "i2f",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 8,
+              "opcode": "ldc",
+              "operand": "#20",
+              "symbol": "float 0.25f"
+            },
+            {
+              "offset": 10,
+              "opcode": "fmul",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 11,
+              "opcode": "fsub",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 12,
+              "opcode": "fstore",
+              "operand": "4",
+              "symbol": ""
+            },
+            {
+              "offset": 14,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 15,
+              "opcode": "instanceof",
+              "operand": "#21",
+              "symbol": "class net/minecraft/world/entity/player/Player"
+            },
+            {
+              "offset": 18,
+              "opcode": "ifeq",
+              "operand": "38",
+              "symbol": ""
+            },
+            {
+              "offset": 21,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 22,
+              "opcode": "checkcast",
+              "operand": "#21",
+              "symbol": "class net/minecraft/world/entity/player/Player"
+            },
+            {
+              "offset": 25,
+              "opcode": "astore",
+              "operand": "5",
+              "symbol": ""
+            },
+            {
+              "offset": 27,
+              "opcode": "iload_3",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 28,
+              "opcode": "ifne",
+              "operand": "38",
+              "symbol": ""
+            },
+            {
+              "offset": 31,
+              "opcode": "aload",
+              "operand": "5",
+              "symbol": ""
+            },
+            {
+              "offset": 33,
+              "opcode": "ldc",
+              "operand": "#23",
+              "symbol": "float 0.4f"
+            },
+            {
+              "offset": 35,
+              "opcode": "invokevirtual",
+              "operand": "#24",
+              "symbol": "Method net/minecraft/world/entity/player/Player.causeFoodExhaustion:(F)V"
+            },
+            {
+              "offset": 38,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 39,
+              "opcode": "instanceof",
+              "operand": "#28",
+              "symbol": "class com/github/alexmodguy/alexscaves/server/entity/living/RaycatEntity"
+            },
+            {
+              "offset": 42,
+              "opcode": "ifne",
+              "operand": "83",
+              "symbol": ""
+            },
+            {
+              "offset": 45,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 46,
+              "opcode": "invokevirtual",
+              "operand": "#30",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 49,
+              "opcode": "invokevirtual",
+              "operand": "#36",
+              "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+            },
+            {
+              "offset": 52,
+              "opcode": "invokeinterface",
+              "operand": "#42, 1",
+              "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+            },
+            {
+              "offset": 57,
+              "opcode": "fload",
+              "operand": "4",
+              "symbol": ""
+            },
+            {
+              "offset": 59,
+              "opcode": "ldc",
+              "operand": "#48",
+              "symbol": "float 0.1f"
+            },
+            {
+              "offset": 61,
+              "opcode": "fadd",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 62,
+              "opcode": "fcmpg",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 63,
+              "opcode": "ifge",
+              "operand": "83",
+              "symbol": ""
+            },
+            {
+              "offset": 66,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 67,
+              "opcode": "aload_1",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 68,
+              "opcode": "invokevirtual",
+              "operand": "#30",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;"
+            },
+            {
+              "offset": 71,
+              "opcode": "invokevirtual",
+              "operand": "#49",
+              "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+            },
+            {
+              "offset": 74,
+              "opcode": "invokestatic",
+              "operand": "#53",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeRadiationDamage:(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;"
+            },
+            {
+              "offset": 77,
+              "opcode": "fload",
+              "operand": "4",
+              "symbol": ""
+            },
+            {
+              "offset": 79,
+              "opcode": "invokevirtual",
+              "operand": "#59",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+            },
+            {
+              "offset": 82,
+              "opcode": "pop",
+              "operand": "",
+              "symbol": ""
+            },
+            {
+              "offset": 83,
+              "opcode": "return",
+              "operand": "",
+              "symbol": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "resources": {
+    "data/alexscaves/damage_type/radiation.json": "e280db38a17bd5728ef6bbc061d6a4b1a849e062d6e17dedfbf256c7922612d1",
+    "data/alexscaves/tags/entity_type/resists_radiation.json": "1bb63c275f31f6744c071cda8ced3e1225401c5aa1dff2ea7fa3c7949e46a6c4"
+  }
+}

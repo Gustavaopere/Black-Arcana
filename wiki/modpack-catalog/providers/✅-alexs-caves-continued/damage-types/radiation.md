@@ -1,6 +1,6 @@
 # Radiation — tipo de dano `alexscaves:radiation` (1.0.10)
 
-**Estado de catalogação:** ⚠️ `RESOURCE_JSON_VERIFIED` (recurso SHA-exato). **Contrato técnico estático para perks:** ⚠️ `NOT_CERTIFIED`. **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`.
+**Estado de catalogação:** ✅ `STATIC_TECHNICAL_CATALOG_ONLY` (damage type, único consumidor direto e efeitos vinculados). **Contrato técnico estático para perks:** ✅ `COMPLETE_PERK_READY` (escopo delimitado; **não** autoriza mutações). **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`.
 
 ## Proveniência e identidade
 
@@ -27,17 +27,17 @@
 
 Essas são **entradas textuais diretas** dos seis arquivos `data/*/tags/damage_type/*.json` encontrados no JAR. Elas não comprovam as tags finais resolvidas depois de datapacks, outras dependências ou overrides. Uma referência a tag não prova que o ataque usado no jogo produza este `DamageSource`.
 
-## Superfícies necessárias para perks — ainda não auditadas
+## Superfícies necessárias para perks — recorte estático certificado e limites independentes
 
 | Capacidade pretendida | Situação |
 |---|---|
-| Factory de `DamageSource` / chamadas JVM | ✅ localizadas estaticamente; comportamento e caminhos efetivos `NÃO VERIFICADO` |
+| Factory de `DamageSource` / chamadas JVM | ✅ factory e único consumidor direto no inventário exato, com rota de `LivingEntity.hurt` selada; execução física e paths indiretos não homologados |
 | Origem, atacante, owner, attribution e condições de PvP | ⚠️ factory sem parâmetro de entidade confirmada; atribuição causal/PvP ainda não verificados |
 | Fórmula de dano, mitigação, críticos e resistências | ⚠️ cálculo de dano **solicitado** no consumidor `IrradiatedEffect.tick` documentado abaixo; aceitação/mitigação não verificadas |
 | Alvos elegíveis, tipo target/área, alcance, raio e filtros | ⚠️ alvo no tick é a entidade que já possui o status; filtros de aplicação são específicos dos produtores; alcance/área genéricos não existem no `DamageType` |
 | Entidades/projéteis, tamanho, velocidade, colisão e homing | ⚠️ nenhum projétil pertence à factory de `radiation`; emissores indiretos não estão encerrados |
 | Duração, intervalo de hits, custo de ação e cooldown de casting | ⚠️ frequência `shouldTick` documentada para `Irradiated`; duração/custo/cooldown variam por produtor, sem contrato global |
-| Persistência, ordenação de eventos, server authority e deduplicação | `NÃO VERIFICADO` |
+| Persistência, ordenação de eventos, server authority e deduplicação | ⚠️ lifecycle do efeito e produtores observados estaticamente; save/load efetivo, autoridade multiplayer e deduplicação de procs não testados |
 | Hook de mutação seguro na versão instalada | `NOT_VERIFIED` |
 | QA real em modpack/multiplayer | `NOT_TESTED` |
 
@@ -63,11 +63,11 @@ O *provider* mantém autoridade sobre a criação, classificação e aplicação
 |---|---|---|---:|---|
 | `com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect.class` | `public void tick(net.minecraft.world.entity.LivingEntity, int)` | `(Lnet/minecraft/world/entity/LivingEntity;I)V` | 74 | `invokestatic` |
 
-**Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NOT_CERTIFIED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
+**Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`claim_scope=STATIC_TECHNICAL_CATALOG_ONLY`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
 
 ## Contrato cruzado — aplicação real de `radiation` pelo status `Irradiated` (2026-10-31)
 
-**Escopo:** contrato estático **do consumidor direto** observado no JAR exato 1.0.10. A ficha [Irradiated](../effects/irradiated.md) possui auditoria binária individual certificada no [manifesto de efeitos](../EXACT-EFFECT-CONTRACTS-1.0.10.md). A relação entre o efeito e o tipo de dano provém do callsite `IrradiatedEffect.tick → ACDamageTypes.causeRadiationDamage → LivingEntity.hurt`, não de uma inferência baseada nos nomes. Isso **não** promove automaticamente esta ficha de tipo de dano a `COMPLETE_PERK_READY`.
+**Escopo:** contrato estático **do consumidor direto** observado no JAR exato 1.0.10. A ficha [Irradiated](../effects/irradiated.md) possui auditoria binária individual certificada no [manifesto de efeitos](../EXACT-EFFECT-CONTRACTS-1.0.10.md). A relação entre o efeito e o tipo de dano provém do callsite `IrradiatedEffect.tick → ACDamageTypes.causeRadiationDamage → LivingEntity.hurt`, não de uma inferência baseada nos nomes. O certificado estático desta ficha depende do **seu próprio** manifesto SHA-exato de Radiation; a certificação de `Irradiated` isoladamente não bastaria.
 
 ### Unidade causal e identidade de quem causa dano
 
@@ -114,6 +114,24 @@ O `Player` com **zero** peças Hazmat recebe `causeFoodExhaustion(0.4F)` antes d
 - **Potenciais eixos de perk a pesquisar**: resistência ao status; alteração de frequência e dano periódico; modulação de Hazmat; chance de aplicação por produtor; cura em `LivingHealEvent`; propagação por nuvens e explosões.
 - **Status real dos mutadores:** nenhum desses eixos possui hook provider-native validado para o JAR 1.0.10. `NO_MUTATION`, sem injetar `LivingEntity.hurt` ou `MobEffectInstance` em paralelo e sem gerar perks ofensivas a partir de ticks de backlash.
 - **QA requerida:** verificar amplifier 0 e >0, quatro peças Hazmat, `hurt(0)`, cancelamento de cura, donos/atribuição, emissões por vários produtores, override de tags, reinício, servidor dedicado e multiplayer. Nenhum cenário é declarado `PASS` nesta revisão.
-- **Contabilidade preservada:** `damage-types/radiation.md` continua ⚠️ `NOT_CERTIFIED`; `effects/irradiated.md` já tinha certificado estático específico. Nenhum novo objeto, alteração de índices, Stage, hook ou contagem global.
+- **Contabilidade desta revisão:** `damage-types/radiation.md` recebe ✅ **somente para seu contrato técnico estático SHA-exato**; `effects/irradiated.md` mantém certificado separado. Nenhum novo feitiço/raiz semântica, Stage, hook mutador ou QA física é promovido.
 
 **Fontes locais:** [efeito e offsets](../effects/irradiated.md) · [evidência binária de efeitos](../EXACT-EFFECT-CONTRACTS-1.0.10.md) · [factory/consumidores diretos](EXACT-CONSUMERS-1.0.10.json).
+
+## Certificação delimitada de Radiation — JAR exato 1.0.10
+
+**Escopo formal:** `STATIC_TECHNICAL_CATALOG_ONLY` com evidência `SHA_EXACT_BINARY_BEHAVIOR`; objeto certificado é o **DamageType `alexscaves:radiation` e sua rota nativa direta de dano periódico**, não um cast, uma arma, um lançamento de área ou o universo integral de efeitos do mod. [Manifesto reproduzível](../EXACT-RADIATION-CONTRACT-1.0.10.json) · [prova do efeito já certificado](../EXACT-EFFECT-CONTRACTS-1.0.10.md).
+
+**Identidade e comportamento:** o recurso `radiation.json` e a factory `ACDamageTypes.causeRadiationDamage(RegistryAccess)` são estáticos e SHA-exatos. No inventário compilado dos consumidores diretos dessa factory há **um único callsite**: `IrradiatedEffect.tick(LivingEntity,int) @74`. A factory é construída sem argumento `Entity`; o efeito usa `LivingEntity.hurt` sem processar o boolean de retorno. A fonte de dano não atribui automaticamente autoria a quem aplicou o efeito.
+
+**Parâmetros e limites:** `shouldTick` recebe o amplifier bruto, exige `a>0`, e usa `j=200/a` em divisão inteira; duração do efeito provém da instância construída pelo produtor, não de `radiation.json`. O consumidor conta `HazmatArmorItem` nos quatro slots e calcula `s=1-0.25*h` para o dano solicitado, sorteando com limiar `s+0.1`, com exclusão de Raycat. Amplifier zero nunca executa esse tick; `hurt(0)` ainda pode ser solicitado no ramo com quatro peças. A alimentação de Player sem Hazmat recebe exaustão `0.4` antes do sorteio, distinta do `exhaustion:0.1` do resource de DamageType.
+
+**Seleção e alcance:** o *target* de `radiation` é a entidade **já afetada** por `Irradiated`; a factory não seleciona outros alvos. AABB, raio, LOS, projétil, duração de nuvem e chance de aplicação são propriedades do **emissor que concedeu o status**, não deste DamageType. O [contrato certificado de Irradiated](../effects/irradiated.md) distingue produtores e seus gates nativos sem inferir um intervalo de ataque universal.
+
+**Efeitos laterais e causais:** `CommonEvents.acLivingHeal`/`livingHeal` condicionam o cancelamento de `LivingHealEvent` à presença do efeito e à tag dinâmica `RESISTS_RADIATION`. Isso é um canal diferente de dano periódico. O tag de resistência **não** constitui bloqueio universal de aplicação ou `hurt`, tampouco a checagem é executada dentro de `IrradiatedEffect.tick`. Os consumidores Raycat, Gammaroach e Tremorzilla possuem regras próprias de conversão/cura; nenhuma dessas ações é novo DamageType.
+
+**Custo, scaling e integração:** o DamageType não debita mana, carga, munição ou cooldown; a autoridade de custos é do produtor (`Raygun`, itens, blocos, explosões ou outro). Uma perk de resistência ao efeito, frequência do tick, limiar Hazmat ou cura deve ter **hook nativo validado por mecanismo separado**. Os parâmetros são legíveis estaticamente, mas **nenhum hook mutador está certificado**. Black Arcana não executa um segundo `LivingEntity.hurt`, não atribui Mastery ofensiva sem causalidade e não altera tags ou owner fora dos contratos reais.
+
+**Validação do certificado:** o manifesto é vinculado ao SHA-1/SHA-256/tamanho do JAR `alexscaves-1.0.10-neoforge+1.21.1.jar`, aos arquivos `.class` e recursos SHA-exatos, aos métodos/descritores e aos offsets selecionados em `javap` Java 21. Cada reexecução verifica o hash da presente ficha; a homologação do `effects/irradiated.md` permanece uma prova **independente**. Fonte pública 1.1.1 serve somente como corroboração. Não copiar implementação proprietária para o Black Arcana.
+
+**Pendências não promovidas:** nenhuma execução física no modpack, deduplicação de ticks/procs, autorização PvP, mixins indiretos, datapack/override resolvidos, segurança de rede dos produtores, persistência em unload/reload, política de claims, ou API de alteração em runtime é declarada testada. `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `provider_universe_closed=false` · `NO_MUTATION`. **+0 novas raízes mágicas; +1 contrato estático individual** dentro das 30 fichas já identificadas.
