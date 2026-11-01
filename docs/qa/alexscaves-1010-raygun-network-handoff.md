@@ -202,6 +202,12 @@ A [auditoria separada do binário Mojang 1.21.1](alexscaves-1010-raygun-vanilla-
 **Limitação de autoridade:** essa prova usa o **JAR vanilla do cliente** e o mapping oficial Mojang, verificados por SHA, e serve apenas como **CORROBORATION_ONLY_NOT_INSTALLED**. A classe Minecraft *transformada* no runtime NeoForge `21.1.248`, os limites internos de `DataComponentPatch`, os controles de tamanho/profundidade e a proteção de `CUSTOM_DATA` no servidor **não foram observados**. O workflow não altera o contrato nativo do Raygun nem promove RN-03/RN-04 ou os sete eixos de certificação.
 
 Requisitos remanescentes VC-01…VC-06 e distinção entre validação estática e QA física estão detalhados na matriz acima. `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`.
+## NeoForge 21.1.248 — classfile de distribuição oficial
+
+A [matriz VC-01](alexscaves-1010-raygun-vanilla-codec-acceptance.md) foi atualizada com a inspeção do **JAR de servidor distribuído** pelo instalador oficial NeoForge `21.1.248`, com SHA-256 de JAR, `ItemStack.class` e `ItemStack$1.class` e âncoras JVM de leitura/escrita. O [manifesto ABI selado](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-ITEMSTACK-SERVER-ABI.json) não permite confundir classfile distribuído com classe carregada após ModLauncher/Mixins. Os métodos continuam delegando a `DataComponentPatch.STREAM_CODEC`; limites internos, autorização C2S e QA física não são comprovados.
+
+**VC-01 parcial** · `NOT_CERTIFIED` · `NO_MUTATION` · `physical_qa=NOT_TESTED`.
+
 ## Aceite antes de concluir contrato estático Raygun
 
 | Gate | Evidência necessária | Estado atual |
