@@ -92,6 +92,8 @@ def audit(jar, javap_bin, receiver_seal, cfg_seal):
     require(len(handlers) == 1, "packet receiver signature changed")
     require(handlers[0]["method_sha256"] ==
             cfg_seal["handler"]["method_sha256"], "receiver hash no longer matches CFG")
+    require(len(json.dumps(packet, ensure_ascii=False).encode("utf8")) <= MAX_REPORT_BYTES,
+            "bounded codec report budget exceeded")
     # Structural evidence only; packet codecs can still be unsafe semantically.
     return {
         "schema_version": 1,
@@ -116,13 +118,63 @@ def audit(jar, javap_bin, receiver_seal, cfg_seal):
     }
 
 
+PACKET_ABI_NAMES = ("UpdateItemTagMessage", "read", "write", "handle")
+PACKET_CODECS = (
+    ("UpdateItemTagMessage", 6, "putfield", "Field entityId:I"),
+    ("UpdateItemTagMessage", 11, "putfield", "Field itemStackFrom:"),
+    ("read", 5, "invokevirtual", "FriendlyByteBuf.readInt:"),
+    ("read", 9, "invokestatic", "PacketBufferUtils.readItemStack:"),
+    ("read", 12, "invokespecial", "Method \"<init>\":"),
+    ("write", 2, "getfield", "Field entityId:I"),
+    ("write", 5, "invokevirtual", "FriendlyByteBuf.writeInt:"),
+    ("write", 11, "getfield", "Field itemStackFrom:"),
+    ("write", 14, "invokestatic", "PacketBufferUtils.writeItemStack:"),
+)
+SEALED_LIMITS = {
+    "wire_data_trust": "UNTRUSTED_UNTIL_SERVER_VALIDATED",
+    "sender_entity_id_binding": "NOT_VERIFIED",
+    "stack_identity_binding": "NOT_VERIFIED",
+    "tag_field_whitelist": "NOT_VERIFIED",
+    "network_direction_and_threading": "REQUIRES_SEPARATE_CONTRACTS",
+    "runtime_exploitability": "NOT_ASSESSED",
+    "physical_qa": "NOT_TESTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "perk_static_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+}
+
+
 def snapshot_projection(report):
+    """Seal the 4 exact method ABIs and 9 narrow wire codec callsites."""
     methods = report["methods"]
-    require(1 < len(methods) <= MAX_METHODS, "packet method count drift")
-    require(len({(m["name"], m["descriptor"]) for m in methods}) == len(methods),
+    require(len(methods) == 4, "exact packet method count drift")
+    require(tuple(m["name"] for m in methods) == PACKET_ABI_NAMES,
+            "exact packet method roster/order drift")
+    require(len({(m["name"], m["descriptor"]) for m in methods}) == 4,
             "ambiguous packet methods")
-    # Snapshot is the exact ABI-selected rows, not a declaration of field validation.
-    return report
+    require(report["declared_method_count"] == 4, "declared method count drift")
+    require(report["limits"] == SEALED_LIMITS,
+            "unsafe/false Raygun packet status or limits drift")
+    index = {m["name"]: m for m in methods}
+    anchors = []
+    for name, offset, opcode, symbol in PACKET_CODECS:
+        hits = [x for x in index[name]["abi_references"] if x["offset"] == offset]
+        require(len(hits) == 1 and hits[0]["opcode"] == opcode and
+                symbol in hits[0]["symbol"],
+                "exact packet codec opcode/field anchor drift")
+        anchors.append({"method": name, **hits[0]})
+    return {
+        **{key: report[key] for key in (
+            "schema_version", "scope", "artifact", "class_path",
+            "class_sha256", "declared_method_count")},
+        "methods": [
+            {key: m[key] for key in (
+                "name", "descriptor", "method_sha256", "instruction_count")}
+            for m in methods
+        ],
+        "codec_abi_anchors": anchors,
+        "limits": report["limits"]
+    }
 
 
 def verify_snapshot(report, sealed):
