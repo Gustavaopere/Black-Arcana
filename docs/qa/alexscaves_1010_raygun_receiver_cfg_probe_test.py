@@ -84,6 +84,10 @@ class ReceiverCfgTests(unittest.TestCase):
         report = copy.deepcopy(sealed)
         report["handler"]["selected_call_and_field_refs"] = (
             copy.deepcopy(sealed["pivotal_native_sites"]))
+        report["handler"]["critical_anchor_windows"] = [
+            {"anchor": row["offset"], "local_jvm_window": [copy.deepcopy(row)]}
+            for row in sealed["local_stack_bindings"]
+        ]
         report["handler"]["normal_cfg_dominators_of_update_dispatch"] = (
             sealed["required_normal_cfg_dominators"])
         return report, sealed
@@ -102,6 +106,22 @@ class ReceiverCfgTests(unittest.TestCase):
         report, sealed = self.manifest_fixture()
         report["handler"]["selected_call_and_field_refs"][5]["symbol"] = "Field otherStack:I"
         with self.assertRaisesRegex(CfgProbeError, "pivotal native"):
+            verify_snapshot(report, sealed)
+
+    def test_packet_source_local_slot_drift_rejected(self):
+        report, sealed = self.manifest_fixture()
+        row = next(w for w in report["handler"]["critical_anchor_windows"]
+                   if w["anchor"] == 63)
+        row["local_jvm_window"][0]["operand"] = "6"
+        with self.assertRaisesRegex(CfgProbeError, "local binding"):
+            verify_snapshot(report, sealed)
+
+    def test_selected_hand_stack_slot_drift_rejected(self):
+        report, sealed = self.manifest_fixture()
+        row = next(w for w in report["handler"]["critical_anchor_windows"]
+                   if w["anchor"] == 167)
+        row["local_jvm_window"][0]["operand"] = "5"
+        with self.assertRaisesRegex(CfgProbeError, "local binding"):
             verify_snapshot(report, sealed)
 
     def test_branch_target_snapshot_drift_rejected(self):
