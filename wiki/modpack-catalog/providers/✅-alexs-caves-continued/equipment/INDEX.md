@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 2/2.**
+**Fichas catalogadas (somente fichas detectadas): 3/3.**
 
 **Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 2/2.**
+**Homologadas para perks (somente fichas detectadas): 3/3.**
 
 **Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
@@ -22,6 +22,7 @@
 |---|---|---|---|---|---|
 | ✅ | Desolate Dagger | [ficha/desolate-dagger.md](desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dreadbow | [ficha/dreadbow.md](dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Shot Gum | [ficha/shot-gum.md](shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

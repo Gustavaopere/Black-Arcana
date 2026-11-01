@@ -1,192 +1,141 @@
-# Gumball — tipo de dano `alexscaves:gumball` (1.0.10)
+# Gumball — `alexscaves:gumball` (1.0.10)
 
-**Estado de catalogação:** ⚠️ `RESOURCE_JSON_VERIFIED` (recurso SHA-exato). **Contrato técnico estático para perks:** ⚠️ `NOT_CERTIFIED`. **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`.
+**Contrato técnico estático:** ✅ `STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`. **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`. **Política de integração:** `NO_MUTATION`. O certificado cobre o projétil, seu tipo de dano e os consumidores delimitados nesta ficha; o universo integral do provider continua aberto.
 
-## Proveniência e identidade
+## 1. Identidade e proveniência
 
-- **Provider / mod ID:** `Alex's Caves Continued` / `alexscaves`.
-- **Versão do artefato:** `alexscaves-1.0.10-neoforge+1.21.1.jar` (Minecraft 1.21.1).
-- **JAR SHA-1:** `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`.
-- **JAR SHA-256:** `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
-- **Resource ID exato:** `alexscaves:gumball`.
-- **Caminho ZIP:** `data/alexscaves/damage_type/gumball.json`.
-- **SHA-256 do JSON:** `70b62fe5851e5cbbb630f8dfb0202018fe7184f99c4b8bb19a98e68c4ed83687`.
-- **Manifesto verificável:** [snapshot dos recursos](EXACT-RESOURCE-MANIFEST-1.0.10.json) e [auditoria da CI](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40985275338).
+- **Provider / mod ID:** Alex's Caves Continued / `alexscaves`, Minecraft 1.21.1; artefato `alexscaves-1.0.10-neoforge+1.21.1.jar`, CurseForge projeto `1645389`, arquivo `8856293`, **75.279.314 bytes**.
+- **JAR SHA-1:** `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`; **SHA-256:** `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
+- **Resource ID:** `alexscaves:gumball`; membro `data/alexscaves/damage_type/gumball.json`; SHA-256 `70b62fe5851e5cbbb630f8dfb0202018fe7184f99c4b8bb19a98e68c4ed83687`.
+- **Classe consumidora:** `com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class`, SHA-256 `343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535`; estende `ThrowableProjectile` e declara **29 métodos próprios**, incluindo dois construtores e o inicializador estático.
+- **Emissores:** [Shot Gum — equipamento e custos](../equipment/shot-gum.md), disparo de Gumbeeper e sua emissão radial condicionada. Filhos do split são outro caminho de criação.
+- **Prova:** [manifesto consolidado](../EXACT-GUMBALL-CONTRACTS-1.0.10.json) e [limites/reprodução](../EXACT-GUMBALL-CONTRACTS-1.0.10.md). Fonte pública `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37`, versão declarada **1.1.1**, é somente corroboração adjacente; não fornece parâmetros certificados da build 1.0.10.
 
-## Campos JSON confirmados no artefato
-
-| Campo | Valor literal do recurso | Limite de interpretação |
+| Campo | Valor literal do recurso | Interpretação delimitada |
 |---|---|---|
-| `message_id` | `gumball` | Chave de mensagem; não é sinônimo do registro nem classe de implementação |
-| `scaling` | `never` | Campo `scaling` do tipo de dano; não fixa dano causado nem curva de perks |
-| `exhaustion` | `0.3` | Valor do campo `exhaustion`; **não** é mana, stamina, custo do feitiço ou dano |
+| `message_id` | `gumball` | Chave de mensagem de morte; não escola RPG ou fórmula |
+| `scaling` | `never` | Metadado do tipo de dano; não dano líquido invariável |
+| `exhaustion` | `0.3` | Exaustão do DamageType; não mana, stamina ou custo de cast |
 
-## Tags de tipo de dano declaradas diretamente
+Nenhum dos seis arquivos nativos `tags/damage_type/*.json` inclui diretamente `alexscaves:gumball`. Isso não resolve memberships herdadas/recursivas nem tags finais após datapacks e outros mods. O tipo Gumball do impacto direto e o mecanismo de explosão abaixo são caminhos distintos.
 
-- Nenhuma entrada direta para este ID nos seis arquivos `tags/damage_type/*.json` encontrados no artefato.
+## 2. Comportamento, construção e autoria
 
-Essas são **entradas textuais diretas** dos seis arquivos `data/*/tags/damage_type/*.json` encontrados no JAR. Elas não comprovam as tags finais resolvidas depois de datapacks, outras dependências ou overrides. Uma referência a tag não prova que o ataque usado no jogo produza este `DamageSource`.
+O construtor `(EntityType,Level)` chama o construtor de `ThrowableProjectile`, cria uma **lista vazia `hitEntityIds`**, zera `bounceSoundCooldown` e sorteia `setColor(level.random.nextInt(12))`, portanto cor inicial entre `0..11`. Não recebe nem atribui owner próprio. O construtor `(Level,LivingEntity)` usa o tipo `ACEntityRegistry.GUMBALL`, chama o primeiro e então `setOwner(emissor)` em **18**. Esse é o caminho de autoria explicitamente usado pelos emissores primários auditados.
 
-## Superfícies necessárias para perks — ainda não auditadas
-
-| Capacidade pretendida | Situação |
-|---|---|
-| Factory de `DamageSource` / chamadas JVM | ✅ localizadas estaticamente; comportamento e caminhos efetivos `NÃO VERIFICADO` |
-| Origem, atacante, owner, attribution e condições de PvP | `NÃO VERIFICADO` |
-| Fórmula de dano, mitigação, críticos e resistências | `NÃO VERIFICADO` |
-| Alvos elegíveis, tipo target/área, alcance, raio e filtros | `NÃO VERIFICADO` |
-| Entidades/projéteis, tamanho, velocidade, colisão e homing | `NÃO VERIFICADO` |
-| Duração, intervalo de hits, custo de ação e cooldown de casting | `NÃO VERIFICADO` |
-| Persistência, ordenação de eventos, server authority e deduplicação | `NÃO VERIFICADO` |
-| Hook de mutação seguro na versão instalada | `NOT_VERIFIED` |
-| QA real em modpack/multiplayer | `NOT_TESTED` |
-
-## Boundary / decisão provisória
-
-O *provider* mantém autoridade sobre a criação, classificação e aplicação de dano. Black Arcana não altera `DamageSource`, escola, dano, tags ou projéteis sem evidência dos consumidores Java e hooks seguros. O RPG Skill Tree fornece perks/atributos somente através de boundary verificada, sem double-processing. **Fail-closed:** `NO_MUTATION` até a auditoria dos consumidores e a validação específica.
-
-**Contabilidade:** 1/11 recursos de tipo de dano documentados; **+0 raízes mágicas novas**. Este objeto não recebe status `COMPLETE_PERK_READY` apenas por existir como JSON.
-
-## Evidência compilada 1.0.10 — factory e consumidores diretos
-
-**Escopo:** `SHA_EXACT_STATIC_FACTORY_AND_DIRECT_CALLSITE_ONLY`. [Manifesto dos consumidores](EXACT-CONSUMERS-1.0.10.json) · [CI da auditoria](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40993193816).
-
-- **Classe de fábrica:** `com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class`, SHA-256 `389fb88f8d6e1515e3dfe7f401a728bb33629666bd2319ae7e25668f710e4ef6`.
-- **Método:** `ACDamageTypes.causeGumballDamage`.
-- **Descritor JVM:** `(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;`.
-- **Campo de DamageType lido:** `GUMBALL` (offset `19`).
-- **Construtor de DamageSource referenciado:** `Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages."<init>":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V`.
-- **Parâmetros da factory:** `RegistryAccess` e `Entity` — não comprova autoria final.
-- **Referências `invokestatic` encontradas:** 1 em 1 classes. Isso não representa quantidade de hits por ataque.
-
-| Classe chamadora | Método chamador | Descritor JVM | Offset | Opcode |
-|---|---|---|---:|---|
-| `com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class` | `protected void onHitEntity(net.minecraft.world.phys.EntityHitResult)` | `(Lnet/minecraft/world/phys/EntityHitResult;)V` | 86 | `invokestatic` |
-
-**Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NOT_CERTIFIED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
-
-
-## Auditoria do impacto e ricochete — JAR físico 1.0.10
-
-**Novo escopo comprovado:** `SHA_EXACT_1010_GUMBALL_SELECTED_BYTECODE_ANCHORS_ONLY`, a partir da execução [Gumball bounded probe](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41216742769), com o mesmo artefato SHA-1/SHA-256 acima. O [manifesto de regressão](../EXACT-GUMBALL-IMPACT-1.0.10.json) fixa **17 métodos selecionados**, seus descritores e hashes da extração `javap`, mais âncoras de offsets selecionados em seis métodos. Não é um manifesto de todos os consumidores nem auditoria de fluxo total.
-
-A classe compilada auditada é `com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class`, SHA-256 `343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535`. O `GumballEntity` é uma entidade de projétil; **não** se deve confundir seu `DamageSource` com o ataque que originou a entidade, nem um evento visual com uma aplicação de dano.
-
-| Campo de interesse para perks | Evidência delimitada no método compilado | Implicação/limite |
+| Origem nativa | Estado/valor fornecido ao projétil | Limite de contagem e autoria |
 |---|---|---|
-| Origem e autoria | `onHitEntity(EntityHitResult)` lê `getOwner()` (offset 6); a chamada `causeGumballDamage(RegistryAccess, Entity)` no offset **86** recebe esse owner. | Autoridade e atribuição dependem do owner efetivo da instância. O manifesto não prova restauração de owner nas entidades-filhas. |
-| Dano | O método lê `getDamage()` (11), constrói o `DamageSource` (86) e invoca `Entity.hurt(DamageSource,float)` (139). | É uma solicitação de dano; não comprova dano efetivamente aceito, resistência, crítico, morte nem proc resultante. Os valores iniciais do `getDamage()` dependem do produtor, ainda pendente. |
-| Filtro de alvo | Antes do dano há um caso especial `GumbeeperEntity`/`LicowitchEntity.isFriendlyFire` (offset 71). O caminho de dano também compara `Entity.is` (97) e `isAlliedTo` (105, 113). `onHit(HitResult)` consulta `ownedBy` (77) e `hitEntityIds` (94). | Alianças, vítima anterior e owner importam. Uma perk não pode remover esses filtros apenas ampliando a seleção de alvo. A elegibilidade global, inclusive PvP e dependências, não está homologada. |
-| Ricochete e aquisição de alvo | `onHit` invoca `bounceFromDirection(Direction)` para colisão com bloco (54) e no caminho de impacto de entidade (168). `bounceFromDirection` consulta `targetsOnBounce()` (39), `getOwner()` (46), `getEntitiesOfClass(LivingEntity, AABB)` (101), `hitEntityIds.contains` (167) e duas medidas `distanceTo` (183, 189). A construção da caixa usa componentes **−10 a +10** (offsets 72–92). | A caixa de busca não prova raio esférico de acerto, linha de visão nem alcance efetivo de ataque. O consumidor e o filtro devem ser preservados ao projetar perks de targeting ou homing. |
-| Limite de ricochetes e velocidade | O método consulta `getBounces/getMaximumBounces`, incrementa `setBounces`, contém `discard` em caminhos de limite (242 e 445) e escreve `setDeltaMovement` (287 e 458). Há `Vec3.scale(0.800000011920929d)` na rota de perseguição e `bounceSoundCooldown = 5` no offset 298. | `5` é cooldown **de som**, não cooldown de lançamento. `0.8` é literal convertido de float, não multiplicador global de todos os movimentos. |
-| Divisão em projéteis | Após `splitsOnHit()` (144), `onHitEntity` contém um laço delimitado pelo literal **3** (155–156). O caminho usa `ACCompat.createEntity` (174), `setDeltaMovement` (284), `setSplitsOnHit(false)` (290), `setDamage` (299), copia flags `targetsOnBounce`/`isExplosive`, atualiza `setMaximumBounces` e solicita `Level.addFreshEntity` (335). | São até três **tentativas de criação** por execução desse ramo, não três impactos confirmados. Não há chamada direta `setOwner` nessa rotina selecionada; investigar o produtor e a propagação real de autoria antes de perks de multiplicação ou bônus por kill. |
-| Explosão e tempo | `tick()` contém `getBounces/getMaximumBounces` (183/187), contador `explodeProgress` e comparação com literal **20.0f** (197/200), guard `isClientSide` (207/210), e invoca `Level.explode` (242) com força **2.0f** e `ExplosionInteraction.NONE` (237–239), seguido de `discard` (247). | O literal 20 refere-se ao ramo do progresso da explosão, não ao tempo de vida geral de todo projétil. `NONE` é o modo nativo solicitado; não autoriza bypass do `WorldEffectPolicy` do Black Arcana. |
-| Persistência local | `addAdditionalSaveData(CompoundTag)` salva diretamente a chave `Color` via `putInt`; `readAdditionalSaveData` lê `Color` por `ACCompat.getInt`. Ambos chamam os métodos da superclasse. | Esses overrides não demonstram persistência de dano, flags, contagem de ricochetes, lista de vítimas ou autoria em save/reload. Dados sincronizados e restauração devem ser auditados separadamente. |
-| Custo, cooldown e emissão | Os métodos selecionados da entidade não demonstram o custo de munição, cooldown do item produtor, quantidade de disparos, velocidade inicial ou balanceamento da arma. | **NÃO VERIFICADO**; requer auditoria dos produtores e registries exatos, sem usar parâmetros da fonte 1.1.1 como autoridade para 1.0.10. |
+| `ShotGumItem.acInventoryTick` | Construtor `(Level,LivingEntity)`, `DAMAGE=4F`, flags por nível positivo de `TARGETED_RICOCHET`, `TRIPLE_SPLIT`, `EXPLOSIVE_FLAVOR`; máximo `4+2×BOUNCY_BALL` | Custos, cadência e guards são do [equipamento](../equipment/shot-gum.md); chamadas de inserção não garantem entidades aceitas |
+| `GumbeeperEntity.shootGumball` | Construtor `(Level,this)`; uma tentativa normal ou três quando carregado; dano `(float)ATTACK_DAMAGE`, somando `2F` quando carregado; carregado usa máximo `10` | O retorno de `addFreshEntity` é descartado e a chamada precede esses setters; não transferir a fórmula da arma para o mob |
+| Emissão radial em `GumbeeperEntity.tick` | Construtor `(Level,this)`; mesmos ramos de dano/máximo, direção aleatória | Guard `isExploding`, progresso `>=20`, servidor e `!hasExploded`; a base é capturada antes do laço: `15` normal ou `30` carregado. A condição reavalia `base+nextInt(5)` a cada comparação. Sem interrupção externa, são `base..base+4` tentativas; o sorteio não é fixado antes do laço, e inserções/hits não são garantidos |
+| Filhos de `GumballEntity.onHitEntity` | `ACCompat.createEntity(GUMBALL,level)`; copia valores correntes de dano, targeting, explosivo e máximo; desativa split | Essa chamada não fornece o owner do pai; não herdar automaticamente crédito de dano/kill/Mastery |
 
-### Limites para integração
+O disparo do Gumbeeper usa `shoot(dx,dy+sqrt(dx²+dz²)×0.20000000298023224,dz,1.2F,(float)(14−4×difficultyId))`; seus gates, munição e carga pertencem ao mob. Seu burst radial não é a chamada `Level.explode` do projétil. A ficha não certifica toda a IA do Gumbeeper, suas transformações ou todos os caminhos de possessão.
 
-A auditoria identifica métodos e argumentos no binário exato, mas não reconstrução completa do fluxo de controle com exceções, mixins, datapacks, chamadas indiretas ou execução física. Os offsets e literais acima não autorizam inferir segurança de alterar `Entity.hurt`, `getOwner`, `SynchedEntityData`, `onHit` ou `Level.explode`.
+### Gates e custos do emissor Gumbeeper
 
-**Estado após este checkpoint:** `NOT_CERTIFIED` para o contrato completo da ficha, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Sem nova raiz mágica, sem promoção de Stage e **sem incremento** em 22/29 fichas do Alex’s Caves ou 160/2341 certificações estáticas globais. Próximos requisitos: identificar produtores, parâmetros iniciais e owners; fechar os sete campos do contrato; validar o manifesto e regressões antes de promover esta ficha no índice.
+O `AttackGoal` nativo habilita-se com alvo não nulo e vivo. Com munição e LOS pelo buraco de Gumball, aumenta `ATTACK_CHARGE` até `1F`, em passos solicitados de `0.1F` normal ou `0.3F` carregado. `canShootGumball()` exige **`GUMBALLS_LEFT>0`, `dialRot>=450F` e `ATTACK_CHARGE==1F`**. No tick da entidade, o dial aproxima-se de `450F×charge` em passos de `10F` quando a carga não é zero. A comparação de distância `<16` no goal controla navegação/strafe; não é um limite universal próprio de disparo.
 
+`shootGumball` captura a quantidade normal/carregada antes do laço, mas relê o estado carregado depois de solicitar cada inserção para escolher dano e máximo. Ao final, debita uma munição no estado normal; no carregado, só quando um novo `nextFloat()<0.33F`. O retorno de inserção não condiciona esse débito próprio. Em seguida zera attack charge, ativa `SHOOTING` e escreve `postShootTime=5`; esse contador também serve à apresentação, sem equivalência automática a cooldown de casting. Mutações externas durante callbacks não constituem um snapshot imutável desses campos.
 
-## Produtores nativos do Gumball — evidência exata 1.0.10
+Os defaults próprios são `GUMBALLS_LEFT=6`, `CHARGED=false`, `ATTACK_CHARGE=0F`, `EXPLODING=false`, `SHOOTING=false` e possessor ID `−1`. Os overrides NBT persistem diretamente `Charged` e `Gumballs`, além de chamar a superclasse; não demonstram restauração de toda a carga transitória ou dos projéteis. Sem munição, o goal pode armar explosão em distância `<larguraDoAlvo+1.5F`; isso habilita o burst radial já descrito, não transforma esse corpo em `Level.explode`. Esses estados são do mob, separados do carregador de quatro cargas da arma; o contrato não encerra a IA inteira.
 
-A [auditoria SHA-exata dos produtores](../EXACT-GUMBALL-PRODUCERS-1.0.10.json) usa o mesmo JAR publisher 1.0.10 verificado acima. O teste de referências diretas varreu classes de servidor contendo `GumballEntity` ou `GUMBALL` no pool de constantes, encontrou **nove classes candidatas** e preservou **três classes com quatro métodos selecionados**, além de duas classes de registry classificadas somente como suporte. O manifesto sela hashes das classes e dos métodos, mais **17 pontos de referência**; a [execução CI da investigação](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41221362508) passou. Não se trata de enumeração de todos os produtores indiretos, reflexão, mixins ou runtime.
+**Factory de dano:** `ACDamageTypes.causeGumballDamage` tem descritor `(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;`. Classe `com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class`, SHA-256 `389fb88f8d6e1515e3dfe7f401a728bb33629666bd2319ae7e25668f710e4ef6`. Resolve o holder `GUMBALL` e constrói `DamageSourceRandomMessages(holder,callerEntity,1)`; o construtor delega a `DamageSource(Holder,Entity)`. O inteiro `1` regula mensagens de morte, não quantidade de hits. Neste impacto, o argumento é o owner lido da instância, sem um segundo parâmetro separado para projétil/dono; classificação e fonte solicitadas não garantem atribuição final ou permissões.
 
-| Fonte nativa e método | Instruções verificadas | Implicação para perks |
+## 3. Parâmetros, movimento, estado e persistência
+
+`defineSynchedData(SynchedEntityData.Builder)` define sete accessors. Seus getters leem o valor sincronizado e os setters o escrevem diretamente, sem clamp próprio de nível, limite, dano, cor ou flags.
+
+| Accessor | Default sincronizado | Getter / setter próprio |
 |---|---|---|
-| `ShotGumItem.acInventoryTick(ItemStack,Level,Entity,boolean)` | Cria `GumballEntity(Level,LivingEntity)` no offset **316**, ajusta `setPos` (427), `setTargetsOnBounce` (434), `setSplitsOnHit` (441), `setExplosive` (448), `shootFromRotation` (480), `setMaximumBounces` (487) e `setDamage` (495). O trecho contém `Level.isClientSide` (499) e `addFreshEntity` (508), e uma comparação com literal `2` no laço observado. | O equipamento é um produtor efetivo de parâmetros de projétil. O literal do laço não prova duas entidades inseridas em toda ativação. Requer auditoria da origem das flags, custo, cadência e valores usados em cada setter. |
-| `GumbeeperEntity.shootGumball(LivingEntity)` | Cria `GumballEntity` (80), ajusta posição (88), invoca `shoot(DDDFF)` (265), solicita `Level.addFreshEntity` (274), consulta `isCharged` (279) e nos ramos seguintes usa `setMaximumBounces` (289) e `setDamage` (307, 326). O ramo carregado apresenta o literal inteiro `10` para `setMaximumBounces`; a construção de `shoot` usa `getDifficulty().getId()` e constantes compiladas `14` e `4`. | Distinguir os parâmetros do disparo do mob dos parâmetros da arma do jogador. Os setters de dano usam `Attributes.ATTACK_DAMAGE`, com literal `2f` no ramo carregado; não transferir fórmula ou spawn count sem verificar as instruções intermediárias. |
-| `GumbeeperEntity.tick()` | Cria `GumballEntity` (385), atualiza posição/movimento (436/518), solicita `Level.addFreshEntity` (527) e, condicionado a `isCharged` (532), chama `setMaximumBounces(10)` (542) e `setDamage` (560/579). Há uma chamada `RandomSource.nextInt(5)` no caminho de repetição (367). | Uma chamada probabilística com limite `5` não significa cinco disparos garantidos. O caminho de morte/explosão do Gumbeeper não deve ser confundido com `shootGumball`. |
-| `ACDamageTypes.causeGumballDamage(RegistryAccess,Entity)` | Lê `GUMBALL` (19); a chamada `GumballEntity.onHitEntity` em offset 86 já está catalogada. | É a fábrica de `DamageSource` compartilhada, não um quarto produtor de projétil e não mais um tipo de dano. |
+| `MAXIMUM_BOUNCES` | `5` | `getMaximumBounces()` / `setMaximumBounces(int)` |
+| `BOUNCES` | `0` | `getBounces()` / `setBounces(int)` |
+| `DAMAGE` | `2F` | `getDamage()` / `setDamage(float)` |
+| `COLOR` | `0`, depois sobrescrito pelo sorteio do construtor | `getColor()` / `setColor(int)` |
+| `TARGETS_ON_BOUNCE` | `false` | `targetsOnBounce()` / `setTargetsOnBounce(boolean)` |
+| `SPLITS_ON_HIT` | `false` | `splitsOnHit()` / `setSplitsOnHit(boolean)` |
+| `EXPLOSIVE` | `false` | `isExplosive()` / `setExplosive(boolean)` |
 
-**Relação de autoria:** os três métodos de emissão observados chamam o construtor `GumballEntity(Level,LivingEntity)`; isso é uma pista de ownership na origem. Os efeitos efetivos desse construtor, a restauração de autoria, a criação dos descendentes após `splitsOnHit` e a identidade de eventos para evitar múltiplas perks ainda requerem validação de consumidores e de ciclo de vida.
+O registro `GUMBALL` declara categoria `MISC`, dimensões **`0.25F × 0.25F`**, velocity updates `true` e update interval **`1`**. Não declara `clientTrackingRange` próprio nesse builder. A ligação do supplier ao construtor `(EntityType,Level)` está no bootstrap selado da classe de registro. Dimensões corporais, tracking herdado e escala/cor do renderer são parâmetros diferentes de dano, alcance e busca.
 
-**Limites da busca:** `ACEntityRegistry` e `ACItemRegistry` aparecem apenas como registries de suporte, não prova de disparo. As outras candidatas sem chamadas simbólicas selecionadas não são afirmadas como irrelevantes. A ausência de um match não demonstra ausência de emitters indiretos.
+`getDefaultGravity()D` retorna **`0.07999999821186066D`** (float `0.08` alargado). A classe não implementa um alcance balístico universal ou velocidade inicial única; os emissores, ricochete e split escrevem movimento. A execução herdada de `ThrowableProjectile.tick()` continua responsável por sua física/colisão nativa, sujeita ao motor e outros mods. O método próprio não define um limite de vida por `tickCount`.
 
-**Status:** este checkpoint **não** sela ainda os sete campos do contrato completo de Gumball. Continuam `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; nenhum aumento dos contadores, nenhuma raiz mágica nova ou promoção de Stage. Próximo fechamento deve ligar guardas completos, formulação dos valores iniciais, herança de owner/atribuição e persistência ao contrato de impacto, validar a versão instalada e só então alterar índices.
+`tick()` chama a superclasse primeiro, copia `explodeProgress` para `prevExplodeProgress`, depois trata apresentação/interpolação e explosão. No cliente, `lerpTo(DDDFFI)V` guarda posição/ângulos/passos e reaplica a velocidade guardada por `lerpMotion(DDD)V`; o tick interpola posição e pitch quando `lSteps>0`, usa `wrapDegrees(lyr)` para yaw e decrementa os passos. Sem passos, reaplica posição. No servidor, também reaplica posição/rotação nesse caminho próprio. São consumidores de apresentação; não acrescentam dano por interpolação.
 
+`getAddEntityPacket(ServerEntity)` delega a `ACPlatform.getEntitySpawningPacket(Entity,ServerEntity)`, que constrói `ClientboundAddEntityPacket(entity,serverEntity)`. Isso demonstra o pedido nativo de spawn sync, não restauração durável de todos os campos. `addAdditionalSaveData(CompoundTag)` e `readAdditionalSaveData(CompoundTag)` chamam a superclasse e salvam/leem diretamente apenas **`Color`**; a leitura usa `ACCompat.getInt(CompoundTag,String)`. Não há gravação própria desses seis outros accessors, lista de vítimas, contadores de som/progresso ou interpolação. A persistência herdada de owner e a composição final de saves/mixins não são inferidas dessas duas chamadas ao pai.
 
-## Estado sincronizado, munição e temporização — JAR exato 1.0.10
+## 4. Targeting, impacto e dano solicitado
 
-**Evidência estática adicional:** [EXACT-GUMBALL-STATE-1.0.10.json](../EXACT-GUMBALL-STATE-1.0.10.json) sela hashes de **52 métodos selecionados**, três classes e **105 âncoras de offsets críticos** em 19 recortes, a serem confrontados com o JAR publisher pela CI. Não é certificação de hook/perk, nem reprodução dos métodos completos.
+### Ordem de colisão e filtros
 
-### `GumballEntity`: valores padrão e autoria
+`onHit(HitResult)` chama **`super.onHit` antes dos seus filtros locais**. Em hit de bloco, busca seu collision shape e só solicita `bounceFromDirection(face)` quando não está vazio. Em hit de entidade, o trecho posterior exige `!ownedBy(vítima)` e que a vítima não seja outra `GumballEntity`; então adiciona seu ID à lista e, se `!splitsOnHit()`, calcula a direção horizontal da vítima e solicita ricochete. Esses filtros posteriores não são um novo guard anterior à chamada da superclasse.
 
-| Campo | Valor e prova compilada | Fronteira de integração |
+**A lista `hitEntityIds` não deduplica o dano próprio.** `onHit` faz `List.add` sem `contains`, e `onHitEntity` não consulta a lista. Ela exclui entidades da aquisição de homing em `bounceFromDirection`; não comprova que contatos posteriores contra o mesmo alvo sejam incapazes de solicitar dano. A enumeração de colisões, a dispatch herdada e imunidades temporárias permanecem com o motor.
+
+`onHitEntity(EntityHitResult)` lê uma vez a vítima, o owner (`@6`) e o dano corrente (`@11`). Se o owner é Gumbeeper possuído, resolve a Licowitch e retorna antes dos demais efeitos quando a vítima é do tipo `LivingEntity` e ela a classifica como friendly fire. Fora dessa saída especial:
+
+A resolução da possessora usa o ID numérico na Level atual: `-1`, entidade ausente ou entidade de outro tipo retornam `null`; não há busca por UUID. Em `LicowitchEntity.isFriendlyFire(LivingEntity)`, uma vítima que implementa `PossessedByLicowitch` é classificada pela igualdade do seu possessor ID com o ID dessa Licowitch. Só no ramo alternativo o método testa `Witch` ou `vítima.is(estaLicowitch)`; não são três testes somados indiscriminadamente. Isso descreve o predicado nativo, não permissões gerais de PvP/claim.
+
+1. Cria a fonte Gumball com `registryAccess` da Level da vítima e o owner capturado (`@86`).
+2. Se owner não é nulo, impede a solicitação de dano quando `vítima.is(owner)`, `vítima.isAlliedTo(owner)` **ou** `owner.isAlliedTo(vítima)`. Com owner nulo, essa sequência de comparação é pulada.
+3. Se elegível nesse trecho, solicita som e `Entity.hurt(source,danoCapturado)` em **139**. Seu booleano é descartado em **142**; esse corpo não adiciona teste de vida, LOS, raio ou aceitação para prosseguir ao split.
+4. Consulta `splitsOnHit()` em **144**. O ramo é alcançável inclusive quando o passo de dano foi pulado por owner/aliança; apenas a saída friendly-fire anterior retorna antes. Não equiparar divisão a um hit aceito.
+
+### Ricochete, busca e limite
+
+Defina `B=getBounces()` e `M=getMaximumBounces()`. A ordem de `bounceFromDirection(Direction)` é:
+
+- Se **`B>M−1 && isExplosive()`**, fixa movimento `Vec3.ZERO`, escreve `BOUNCES=M` e retorna imediatamente, sem o processamento posterior de som ou incremento. É o caminho de parada para progressão explosiva; os setters não impõem um domínio externo seguro a esses inteiros.
+- Com `TARGETS_ON_BOUNCE`, busca `LivingEntity` em **AABB entre `eyePosition+(−10,−10,−10)` e `eyePosition+(10,10,10)`**. Não é um raio esférico. Quando há owner, exclui `candidato.is(owner)` e `candidato.isAlliedTo(owner)`; aqui não testa aliança inversa. Exclui IDs já na lista e escolhe a menor `distanceTo(this)` estrita entre os candidatos restantes, preservando o primeiro em empate. Não há teste próprio de LOS ou `isAlive` nesse laço; filtros herdados da consulta continuam externos.
+- Ao escolher candidato, marca o ramo como tratado; somente no servidor incrementa `B`. Se o contador lido fica **`>M`**, solicita descarte; caso contrário fixa movimento `normalize(candidato.eyePosition−position)×0.800000011920929`. Não guarda alvo persistente: uma nova chamada pode escolher outra entidade. O descarte não é retorno imediato, mas esse ramo tratado não executa a reflexão comum.
+- Se nenhum candidato foi escolhido, reflete somente o componente do eixo da face: X/Z tornam-se `−componente×0.800000011920929`; Y torna-se `−componente×0.5`; demais componentes são preservados. Depois incrementa `B` somente no servidor e descarta quando **`B>M`**, senão escreve o movimento refletido. O mapa de switch de `GumballEntity$1` liga explicitamente os casos aos eixos X/Y/Z.
+
+Os guards de servidor acima cobrem o incremento; busca, direção, parada explosiva, som e comparações não têm automaticamente o mesmo guard próprio. `bounceSoundCooldown==0` permite solicitar som e repõe **5**; o tick o decrementa quando positivo. Esse contador é de som, não cooldown da arma ou intervalo de dano. Limite `>M` para descarte e limiar `>=M` da explosão são condições diferentes.
+
+### Split e autoria dos descendentes
+
+O laço tenta criar três filhos (`i=0,1,2`), usando `ACCompat.createEntity(EntityType,Level)`. O wrapper contém somente a delegação `EntityType.create(Level)` e retorno; o tipo registrado é o construtor `(EntityType,Level)`. Esse caminho nativo não fornece o owner do pai e **não chama `setOwner`** nessa rotina. Não é prova de owner nulo sob todos os mecanismos externos, nem defeito reproduzido, mas impede atribuir automaticamente suas kills/procs ao jogador por identidade da arma.
+
+Cada filho recebe:
+
+- Direção horizontal derivada do movimento normalizado do pai, com ângulos relativos `+30`, `0`, `−30` graus; vetor de base `(0,0,s)`, onde **`s=0.699999988079071`** se o pai é explosivo e **`s=1.5`** no outro caso. O vetor é rotacionado por `yRot(−radians(heading+30−30×i))`.
+- Posição `vítima.eyePosition + vetor` e deltaMovement igual a esse vetor, sem componente vertical de lançamento nessa construção.
+- `SPLITS_ON_HIT=false`; valores **correntes** do pai para `DAMAGE`, `TARGETS_ON_BOUNCE`, `EXPLOSIVE` e `MAXIMUM_BOUNCES`. O dano do impacto foi capturado antes de `hurt`, mas estes getters são lidos depois; não constituem um snapshot imutável quando eventos externos alteram o pai.
+
+Não copia explicitamente owner, `COLOR`, `BOUNCES`, lista de vítimas ou progresso da explosão. O construtor próprio inicializa lista vazia/cor aleatória e os defaults sincronizados continuam sujeitos aos setters apresentados. O máximo copiado é o total `M`, não `M−B`; split falso impede nova divisão **nesse estado nativo**, sem prometer imunidade a alterações externas. Não há guard de lado, checagem de null da fábrica ou teste do retorno de `addFreshEntity` nesse laço. Depois das três tentativas, descarta o pai; exceções/recusa de inserção não foram simuladas no jogo.
+
+## 5. Explosão, tempo e custos
+
+O trecho explosivo de `tick` só progride quando **`isExplosive() && B>=M`**. Se `explodeProgress<=20F`, incrementa em `1F`; quando já é **`>20F`**, no servidor solicita:
+
+```text
+level.explode(getOwner(), x, y+0.5, z, 2F, false, ExplosionInteraction.NONE)
+discard()
+```
+
+Partindo de progresso zero, são 21 incrementos elegíveis até `21`, com a solicitação na passagem elegível seguinte; não são “20 ticks de vida” para toda Gumball. O próprio trecho incrementa dos dois lados, e só chamada de explosão/descarte possui esse guard de servidor. Se flags/contadores deixam de satisfazer o gate, o progresso não é incrementado nem zerado por esse ramo. As partículas SMOKE são solicitadas após esse processamento, inclusive na passagem que pediu descarte.
+
+O argumento de origem da explosão é `getOwner()` naquele momento, não um `DamageSource` Gumball explícito nem o projétil como argumento separado. O `Level.explode` usado não recebe `causeGumballDamage`; a resolução nativa de dano, exposição, eventos e bloco é externa. `false` é o argumento de fogo e `NONE` o modo solicitado de interação: não é autorização para burlar proteção de mundo, nem prova de ausência de toda alteração externa. `WorldEffectPolicy` do Black Arcana não assume autoridade automática sobre essa explosão nativa.
+
+`getExplodeProgress(partial)` interpola `prev+(atual−prev)×partial`, divide por **20F** e retorna sem clamp próprio; esse valor de apresentação pode passar de `1` e não é uma unidade de dano. O tick não implementa age timeout próprio, cooldown global ou custo de mana/stamina/almas/inventário/durabilidade. Carga da arma e débito de munição são do [Shot Gum](../equipment/shot-gum.md); munição/charge do mob são outros estados. Ausência de débito neste consumidor não define custo global zero para uma integração.
+
+## 6. Integração com perks e sistemas
+
+| Mutação pretendida | Contrato nativo que precisaria preservar | Estado |
 |---|---|---|
-| `MAXIMUM_BOUNCES` | `5`, `defineSynchedData` offsets 1/4 | Pode ser sobrescrito pelo emissor |
-| `BOUNCES` | `0`, offsets 13/16 | Contador de ricochetes, não cooldown |
-| `COLOR` | `0`, offsets 25/28; construtor chama `RandomSource.nextInt(12)` e `setColor` | Cor visual não constitui tipo de dano |
-| `DAMAGE` | `2.0f`, offsets 37/40 | Valor inicial; ShotGum usa `setDamage(4.0f)` |
-| `TARGETS_ON_BOUNCE` | `false`, offsets 49/52 | Configuração nativa de targeting |
-| `SPLITS_ON_HIT` | `false`, offsets 61/64 | Filhos não surgem por padrão |
-| `EXPLOSIVE` | `false`, offsets 73/76 | A explosão exige flag do produtor |
-| Owner | Construtor `GumballEntity(Level,LivingEntity)` invoca `setOwner(Entity)` no offset 18 | Demonstra atribuição na emissão primária; não prova owner em descendentes |
-| Gravidade | `getDefaultGravity()` retorna double `0.07999999821186066` | Constante compilada, não trajetória medida |
-| NBT específico | `addAdditionalSaveData` e `readAdditionalSaveData` salvam/leem diretamente `Color`, mais chamadas à superclasse | Não presumir que os outros seis campos sincronizados sobrevivam ao save/reload |
+| Dano e Mastery por kill | Owner primário versus descendentes, fonte do impacto versus explosão, dano capturado e aceitação de `hurt` | `NOT_VERIFIED`; não atribuir procs por nome do item nem multiplicar settlement |
+| Mais ricochetes | Máximo produzido pelo emissor, contador atual, descarte `>M`, parada/progresso explosivo e listas por instância | Preservar diferenças entre limite de dano, som e explosão |
+| Targeting/homing/área | Consulta cúbica em torno dos olhos, filtros de owner/aliados/IDs, seleção por distância e física herdada | Uma caixa maior não se transforma em LOS, projétil autorizado ou filtro de PvP |
+| Mais filhos ou flags | Três tentativas, estado dos filhos, autoria não propagada explicitamente e split independente de dano aceito | Não duplicar criação, débito de munição ou callbacks de dano |
+| Tamanho, velocidade ou tempo | Registro/hitbox, gravidade, vetores escritos pelos emissores/ricochete/split e progresso de explosão são owners diferentes | Não usar cor, smoke ou escala visual como tamanho de colisão |
+| Black Arcana / Enshrouded / RPG Skill Tree | Cast/owner de jogador e autoridade de servidor próprios, filtros nativos, deduplicação e canal de efeitos | Nenhum adapter executável ou hook seguro homologado por este catálogo |
 
-Os sete atributos acima usam `SynchedEntityData` com setters/getters próprios. Esse armazenamento não constitui uma API autorizada para perks. A emissão e a mutação permanecem sob autoridade do provider.
+As flags por encantamento e seus limites de nível/slots/compatibilidade estão no [contrato do equipamento](../equipment/shot-gum.md). Alterar atributo melee ou uma descrição de encantamento não muda automaticamente o `DAMAGE` armazenado ou a explosão. A lista de IDs e as condições de split não fornecem sozinhas um token de cast para evitar múltiplos procs.
 
-### `ShotGumItem`: custos e tempo próprios
+## 7. Validação e evidência preservada
 
-| Superfície | Prova no binário | Limites |
-|---|---|---|
-| Carregador | `getGumballsLeft` lê a tag `Gumballs`, retornando **4** se não houver tag (offset 27) | Não é o inventário de munição do mob |
-| Disparo | `isShooting`, `setShooting`, `getShootTime` e `setShootTime` usam tags `Shooting`/`ShootTime`; `acInventoryTick` compara o contador com literal **5** (83–89) | A comparação não homologa cadência total ou cooldown de casting |
-| Uso mantido | `getUseDuration` retorna **72000** | Limite declarado de duração da interação, não cooldown de 72.000 ticks |
-| Recarga | `use` invoca `findAmmo(Player)` (45), verifica criativo e stack vazia (51/58), pode chamar `ItemStack.shrink(1)` (67) e `setGumballsLeft(...,4)` (80/81) | Um ramo nativo pode consumir **uma unidade de item para repor quatro cargas**, condicionado aos guards; custo transacional Black Arcana não verificado |
-| Emissão | `acInventoryTick` cria `GumballEntity(Level,LivingEntity)` (316), escreve `setTargetsOnBounce` (434), `setSplitsOnHit` (441), `setExplosive` (448), `shootFromRotation` (480), `setMaximumBounces` (487) e `setDamage(4.0f)` (492/495) | Dano solicitado não garante quatro pontos líquidos após mitigação |
-| Lado servidor | `Level.isClientSide` (499) guarda a chamada `addFreshEntity` (508) | Não autoriza criar segundo emitter Black Arcana |
-| Encantamentos do disparador | `TARGETED_RICOCHET` (138/141), `TRIPLE_SPLIT` (155/158), `EXPLOSIVE_FLAVOR` (172/175), `BOUNCY_BALL` (190/193) são consultados via `ACCompat.enchantLevel` | Variantes/níveis e compatibilidade precisam de contratos de enchantment independentes |
-| Persistência de estado | As tags do item incluem `PrevShootTime`, `ShootTime`, `PrevCrankAngle`, `CrankAngle`, `Gumballs` e `Shooting` | ItemStack e NBT de projétil são domínios separados |
+O manifesto consolidado sela esta ficha, todos os **29 métodos próprios** do projétil e os consumidores delimitados. O [contrato do equipamento](../equipment/shot-gum.md) cobre os custos e a ativação de outro objeto; o suporte do Gumbeeper cobre suas emissões sem certificar toda a IA/possessão/explosão do mob. Helpers e registries mantêm os seus owners. Não se certificam toda a física de ThrowableProjectile/Explosion, todas as políticas de alvo, o sistema de pacotes inteiro ou o universo do provider.
 
-A avaliação dos perks deve identificar o valor aplicado ao projétil, a quantidade de emissões e a unidade de munição realmente debitada, sem duplicar hit, charge ou consumo.
+Os quatro snapshots anteriores permanecem imutáveis, com seus limites históricos: [impacto](../EXACT-GUMBALL-IMPACT-1.0.10.json), [produtores](../EXACT-GUMBALL-PRODUCERS-1.0.10.json), [estado/munição](../EXACT-GUMBALL-STATE-1.0.10.json) e [split/encantamentos](../EXACT-GUMBALL-SPLIT-ENCHANT-1.0.10.json). Também são preservadas as provas de [recursos](EXACT-RESOURCE-MANIFEST-1.0.10.json) e [factories/consumidores](EXACT-CONSUMERS-1.0.10.json). Esses snapshots parciais isolados não substituem o contrato consolidado nem promovem hooks/QA.
 
-### `GumbeeperEntity`: flags, disparo e save
-
-- `defineSynchedData` inicia `GUMBALLS_LEFT=6`, `CHARGED=false` e `POSSESSOR_LICOWITCH_ID=-1`, além de `EXPLODING`, `ATTACK_CHARGE` e `SHOOTING`. Esses valores são do mob.
-- `canShootGumball` consulta `getGumballsLeft`, `dialRot` (literal **450.0f**) e `getAttackCharge` (comparação com `1.0f`). Esses gates pertencem ao ciclo de ataque do mob e não à arma do jogador.
-- `shootGumball` e `tick` são emissores distintos. A flag `isCharged` modifica seus ramos; aparecem `setMaximumBounces(10)` e `Attributes.ATTACK_DAMAGE`, com literal `2.0f` na variante carregada. A fórmula efetiva depende das instruções intermediárias e do ramo escolhido.
-- Os overrides de `addAdditionalSaveData` e `readAdditionalSaveData` persistem diretamente `Charged` (boolean) e `Gumballs` (int), além da superclasse. Não provam persistência de charge intermediária, alvo nem projéteis ativos.
-- `canAttack` consulta o possessor Licowitch e `isFriendlyFire`; `hasLineOfSightToGumballHole` usa `Level.clip` com `COLLIDER` e `Fluid.NONE`, contendo literal `128.0d` no cálculo de distância. Esse valor não deve ser anunciado como alcance efetivo de Gumball.
-
-### Fronteiras ainda pendentes
-
-A prova é SHA-exata, porém não reconstrói integralmente CFG/branches, nem confirma aceitação de `Entity.hurt`, execução de todas as variantes de enchantments, persistência real em save/reload ou herança de owner nos descendentes. Explosões nativas em `Level.explode` e novos efeitos Black Arcana exigem contratos de world safety distintos. O RPG Skill Tree continua restrito a progressão/atributos/perks por boundary verificada.
-
-**Estado:** `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED` e `NO_MUTATION`. Sem certificação integral, o índice permanece em **22/29** para Alex’s Caves e **160/2341** para contratos técnicos estáticos globais. Próximo fechamento: validar fluxo completo dos produtores, propagação de autoria, limites dos encantamentos e os sete campos técnicos individuais, antes de promover Gumball.
-
-
-## Divisão, autoria dos descendentes e gates de encantamentos — recorte SHA-exato
-
-**Manifesto:** [EXACT-GUMBALL-SPLIT-ENCHANT-1.0.10.json](../EXACT-GUMBALL-SPLIT-ENCHANT-1.0.10.json). Esta auditoria independente verifica no JAR publisher físico 1.0.10 os hashes de três classes, os hashes dos três métodos relevantes e **39 âncoras simbólicas/numéricas/branch**, além de uma cadeia de **sete instruções aritméticas**. Os testes e o workflow de CI exigem correspondência ao snapshot; não são testes físicos.
-
-### Encantamentos do `ShotGumItem`
-
-| Enchantment (registro confirmado) | Teste/efeito comprovado em `acInventoryTick` | Consequência para perks |
-|---|---|---|
-| `TARGETED_RICOCHET` | `ACCompat.enchantLevel` (141) seguido de `ifle` (144), convertido em flag booleana enviada a `setTargetsOnBounce` (434). | Ativa targeting por presença de nível positivo; não prova alcance, critério de alvo ou LOS do ricochete. |
-| `TRIPLE_SPLIT` | Consulta de nível (158), `ifle` (161) e flag enviada a `setSplitsOnHit` (441). | Ativa o ramo de divisão no impacto, não garantia de três filhos inseridos nem três hits válidos. |
-| `EXPLOSIVE_FLAVOR` | Consulta de nível (175), `ifle` (178) e flag enviada a `setExplosive` (448). | Ativa a propriedade explosiva; não homologa world mutation externa ou bypass do `WorldEffectPolicy`. |
-| `BOUNCY_BALL` | Offsets 188–199: `iconst_4`, `enchantLevel` (193), `iconst_2`, `imul`, `iadd`, `istore 12`; valor segue a `setMaximumBounces` (487). | Fórmula de produção da arma: **`4 + 2 × nível nativo`**. Aplicável ao `ShotGumItem`, não a todos os projéteis do mod. |
-
-O `GumballEntity` começa com `MAXIMUM_BOUNCES=5` na sincronização padrão, mas o `ShotGumItem` sobrescreve o parâmetro para **4 sem BOUNCY_BALL**, e adiciona dois por nível nativo positivo. Não extrapolar os níveis máximos permitidos: dependem do registro de encantamento, que não foi certificado neste recorte.
-
-### Atribuição de dano e owner dos filhos
-
-O construtor `GumballEntity(Level, LivingEntity)` grava um `setOwner(Entity)` explícito na origem primária. Já a cadeia de divisão após `splitsOnHit` usa:
-
-1. `GumballEntity.onHitEntity` chama `ACCompat.createEntity(EntityType,Level)` (offset 174); a fábrica verificada tem **4 instruções** e sua única chamada simbólica é `EntityType.create(Level)` (offset 2).
-2. Nesse método de divisão **não há invocação direta de `setOwner`**. Ele copia `setDamage` (299), `setTargetsOnBounce` (308), `setExplosive` (317) e `setMaximumBounces` (326), mas desativa `setSplitsOnHit(false)` (290) antes de solicitar `Level.addFreshEntity` (335).
-3. O laço tem limite compilado de **três tentativas de criação** (155–156), e `Entity.hurt` (139) tem seu boolean descartado antes da decisão de dividir; o ramo de `splitsOnHit` (144) não usa esse retorno como condição. Logo, **não equiparar 'projetil dividiu' a 'hit aceito'**.
-
-**Decisão técnica fail-closed:** a autoria dos filhos não deve ser inferida a partir do owner do projétil original, e o Black Arcana/RPG Skill Tree não deve atribuir gratuitamente bônus de kill, dano, roubo de vida, procs ou Mastery ao jogador em cima desses descendentes. A cadeia selecionada não atribui diretamente owner; ainda podem existir intervenções externas, mixins e efeitos indiretos não abrangidos. Provar causalidade e deduplicação exige observação adicional do runtime/exact modpack, sem criar segundo pipeline de dano.
-
-### Pendências preservadas
-
-O manifesto é um **contrato estático parcial** da emissão, divisão e encantamentos, não uma confirmação de proprietários efetivos sob todos os mixins, de saída de danos após mitigação, de save/reload, de segurança de hooks mutadores ou de QA real. Os sete campos do certificado individual de Gumball, a comparação com todas as regras de enchantments e a boundary de autoria continuam abertos.
-
-**Status:** `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Sem mudança de índices, contagem de raízes ou Stage.
+**Contabilidade:** esta é a ficha já existente do tipo de dano, com **+0 raízes mágicas novas**; o provider mantém oito raízes históricas. `STATIC_TECHNICAL_CATALOG_ONLY` não promove integração executável. Permanecem `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION` e universo integral aberto. QA física pendente: impactos aceitos/recusados e repetidos, alterações de owner/flags por evento, spawn recusado, split e autoria real, colisões, explosão/proteção de mundo, reload/persistência, latência, multiplayer e composições de combate.

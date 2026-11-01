@@ -207,6 +207,25 @@ class ContractAuditTests(unittest.TestCase):
         doc["classes"] = {path: doc["classes"][path] for path in record["classes"]}
         return doc
 
+    def gumball_fixture(self):
+        """Seal the two literal Shot Gum and Gumball cards with independent member evidence."""
+        doc = copy.deepcopy(self.doc)
+        doc["catalog_family"] = "GUMBALL_CONTRACTS"
+        doc["cards"], doc["contract_evidence"] = {}, {}
+        selected_classes = {}
+        for action, relative in zip(ACTIONS, sorted(audit.GUMBALL)):
+            card = self.root / relative
+            card.parent.mkdir(exist_ok=True)
+            card.write_bytes((self.root / action).read_bytes())
+            doc["cards"][relative] = sha256(card.read_bytes())
+            record = doc["action_evidence"][action]
+            doc["contract_evidence"][relative] = record
+            selected_classes.update({path: doc["classes"][path] for path in record["classes"]})
+        doc["classes"] = selected_classes
+        del doc["action_evidence"]
+        return doc
+
+
     def test_parser_preserves_overloads_constructor_static_lambda_and_switch(self):
         parsed = audit.parse_javap(JAVAP, OWNER)
         self.assertEqual({("<init>", "()V"), ("<clinit>", "()V"), ("value", "()I"),
@@ -846,6 +865,146 @@ class ContractAuditTests(unittest.TestCase):
                 contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(0, audit.main(arguments))
             self.assertEqual("forsaken", inspect.call_args.kwargs["profile"])
+
+    def test_gumball_literal_roster_and_two_class_synthetic_audit(self):
+        doc = self.gumball_fixture()
+        self.assertEqual({"equipment/shot-gum.md", "damage-types/gumball.md"},
+                         set(audit.GUMBALL))
+        audit.validate_structure(doc, profile="gumball")
+        audit.validate_cards(doc, self.root, profile="gumball")
+        result = self.inspect(doc, profile="gumball")
+        self.assertEqual("PASS", result["status"])
+        self.assertEqual("GUMBALL_CONTRACTS", result["catalog_family"])
+        self.assertEqual(2, result["cards_checked"])
+        self.assertEqual(2, result["classes_checked"])
+        self.assertEqual(2, result["methods_checked"])
+        self.assertEqual(8, result["semantic_magic_roots"])
+        self.assertFalse(result["provider_universe_closed"])
+        self.assertEqual("NOT_VERIFIED", result["mutating_hook"])
+        self.assertEqual("NOT_TESTED", result["physical_qa"])
+
+    def test_gumball_is_isolated_from_six_previous_profiles(self):
+        globals_ = (audit.SCOPE, audit.EFFECT_SCOPE, audit.DREADBOW_SCOPE,
+                    audit.ACID_SCOPE, audit.DESOLATE_DAGGER_SCOPE, audit.FORSAKEN_SCOPE, audit.GUMBALL_SCOPE)
+        snapshots = tuple(copy.deepcopy(value) for value in globals_)
+        documents = {"actions": self.doc, "effects": self.effects_fixture(),
+                     "dreadbow": self.dreadbow_fixture(), "acid": self.acid_fixture(),
+                     "desolate_dagger": self.desolate_dagger_fixture(),
+                     "forsaken": self.forsaken_fixture(), "gumball": self.gumball_fixture()}
+        for profile, manifest in documents.items():
+            for other in documents:
+                if profile == other:
+                    continue
+                with self.subTest(profile=profile, selected=other), self.assertRaises(ValueError):
+                    audit.validate_structure(manifest, profile=other)
+                with self.subTest(profile=profile, cards=other), self.assertRaises(ValueError):
+                    audit.validate_cards(manifest, self.root, profile=other)
+        for profile in ("gumball", "forsaken", "desolate_dagger", "acid", "dreadbow", "effects", "actions"):
+            self.inspect(documents[profile], profile=profile)
+        self.assertEqual(snapshots, globals_)
+
+    def test_gumball_missing_extra_and_cross_family_alias_cards_rejected(self):
+        for key in ("cards", "contract_evidence"):
+            for replacement in (None, "equipment/extra.md", "equipment/dreadbow.md",
+                                "damage-types/acid.md", "damage-types/forsaken-sonic-boom.md",
+                                "equipment/desolate-dagger.md", "effects/bubbled.md", ACTIONS[0]):
+                doc = self.gumball_fixture()
+                value = doc[key].pop("equipment/shot-gum.md")
+                if replacement is not None:
+                    doc[key][replacement] = value
+                with self.subTest(key=key, replacement=replacement), self.assertRaises(ValueError):
+                    audit.validate_structure(doc, profile="gumball")
+            doc = self.gumball_fixture()
+            doc[key]["equipment/extra.md"] = doc[key]["equipment/shot-gum.md"]
+            with self.subTest(key=key, mode="extra"), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="gumball")
+
+    def test_gumball_scope_and_evidence_family_tampering_rejected(self):
+        for key, value in (("catalog_family", "ACID_DAMAGE_CONTRACT"), ("catalog_family", None),
+                           ("semantic_magic_roots", 2), ("provider_universe_closed", True),
+                           ("mutating_hook", "VERIFIED"), ("physical_qa", "PASS"),
+                           ("artifact_size_bytes", True), ("artifact_sha1", "a" * 40),
+                           ("artifact_sha256", "b" * 64), ("version", "1.1.1")):
+            doc = self.gumball_fixture()
+            if value is None:
+                doc.pop(key)
+            else:
+                doc[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="gumball")
+        for alias in ("action_evidence", "effect_evidence"):
+            doc = self.gumball_fixture()
+            doc[alias] = doc.pop("contract_evidence")
+            with self.subTest(alias=alias), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="gumball")
+
+    def test_gumball_keeps_two_class_and_anchored_class_minima(self):
+        for mode in ("missing_class", "anchorless_class"):
+            doc = self.gumball_fixture()
+            path = next(iter(doc["classes"]))
+            if mode == "missing_class":
+                doc["classes"].pop(path)
+                replacement = next(iter(doc["classes"]))
+                for record in doc["contract_evidence"].values():
+                    record["classes"] = [replacement if item == path else item for item in record["classes"]]
+            else:
+                doc["classes"][path]["methods"] = []
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="gumball")
+
+    def test_gumball_rejects_stale_card_and_symlink_escape(self):
+        doc = self.gumball_fixture()
+        card = self.root / "equipment/shot-gum.md"
+        original = card.read_bytes()
+        card.write_bytes(original + b"stale gumball card")
+        with self.assertRaises(ValueError):
+            self.inspect(doc, profile="gumball")
+        outside = Path(self.temp.name) / "outside-gumball.md"
+        outside.write_bytes(original)
+        card.unlink()
+        card.symlink_to(outside)
+        with self.assertRaises(ValueError):
+            self.inspect(doc, profile="gumball")
+
+    def test_gumball_rechecks_card_after_bytecode_inspection(self):
+        doc = self.gumball_fixture()
+        changed = False
+        def completed(command, **kwargs):
+            nonlocal changed
+            if not changed:
+                card = self.root / "damage-types/gumball.md"
+                card.write_bytes(card.read_bytes() + b"changed during gumball audit")
+                changed = True
+            return subprocess.CompletedProcess(command, 0, stdout=JAVAP.replace(OWNER, command[-1]), stderr="")
+        with mock.patch.object(audit.subprocess, "run", side_effect=completed):
+            with self.assertRaises(ValueError):
+                audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="gumball",
+                            expected_identity=self.expected_identity)
+        self.assertTrue(changed)
+
+    def test_cli_accepts_explicit_gumball_profile(self):
+        arguments = ["--jar", str(self.jar), "--manifest", str(self.root / "manifest.json"),
+                     "--provider-root", str(self.root), "--javap", "synthetic-javap",
+                     "--profile", "gumball"]
+        with mock.patch.object(audit, "load_manifest", return_value=self.gumball_fixture()), \
+                mock.patch.object(audit, "audit", return_value={"status": "PASS"}) as inspect, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(0, audit.main(arguments))
+            self.assertEqual("gumball", inspect.call_args.kwargs["profile"])
+
+    def test_gumball_verifies_actual_artifact_resources_and_instruction_values(self):
+        doc = self.gumball_fixture()
+        with self.assertRaisesRegex(ValueError, "artifact identity mismatch"):
+            audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="gumball")
+        drifted = copy.deepcopy(doc)
+        path = next(iter(drifted["classes"]))
+        drifted["classes"][path]["methods"][0]["anchors"][0]["opcode"] = "iconst_2"
+        with self.assertRaisesRegex(ValueError, "instruction anchor mismatch"):
+            self.inspect(drifted, profile="gumball")
+        self.members[self.resource] += b"resource drift"
+        self.write_jar()
+        with self.assertRaisesRegex(ValueError, "resource hash mismatch"):
+            self.inspect(doc, profile="gumball")
 
     def test_missing_extra_action_and_card_evidence_mismatch_rejected(self):
         variants = []

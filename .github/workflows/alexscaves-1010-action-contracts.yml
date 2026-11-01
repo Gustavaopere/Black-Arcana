@@ -8,6 +8,7 @@ on:
       - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
       - 'docs/qa/alexscaves_1010_action_contract_audit.py'
       - 'docs/qa/alexscaves_1010_action_contract_audit_test.py'
+      - 'docs/qa/alexscaves_1010_gumball_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   push:
     branches: [main]
@@ -16,6 +17,7 @@ on:
       - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
       - 'docs/qa/alexscaves_1010_action_contract_audit.py'
       - 'docs/qa/alexscaves_1010_action_contract_audit_test.py'
+      - 'docs/qa/alexscaves_1010_gumball_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   workflow_dispatch:
 
@@ -33,7 +35,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Synthetic immutable-evidence and scope regressions
-        run: python3 docs/qa/alexscaves_1010_action_contract_audit_test.py -v
+        run: |
+          python3 docs/qa/alexscaves_1010_action_contract_audit_test.py -v
+          python3 docs/qa/alexscaves_1010_gumball_cards_test.py -v
       - name: Download the exact publisher artifact
         run: |
           mkdir -p build/alexscaves-1010
@@ -94,6 +98,15 @@ jobs:
             --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/alexscaves-1010/forsaken-evidence.json
+      - name: Verify the sealed Shot Gum and Gumball contracts
+        run: |
+          python3 docs/qa/alexscaves_1010_action_contract_audit.py \
+            --profile gumball \
+            --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GUMBALL-CONTRACTS-1.0.10.json' \
+            --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/alexscaves-1010/gumball-evidence.json
       - name: Export bounded JSON evidence only
         uses: actions/upload-artifact@v7
         with:
@@ -105,5 +118,6 @@ jobs:
             build/alexscaves-1010/acid-evidence.json
             build/alexscaves-1010/desolate-dagger-evidence.json
             build/alexscaves-1010/forsaken-evidence.json
+            build/alexscaves-1010/gumball-evidence.json
           if-no-files-found: error
           retention-days: 14

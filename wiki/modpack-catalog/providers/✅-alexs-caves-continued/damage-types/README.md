@@ -1,6 +1,6 @@
 # Alex's Caves 1.0.10 — auditoria dos tipos de dano
 
-**Status:** ⚠️ recursos JSON `11/11` e **factories compiladas `11/11` mapeadas**, com **14 invocações diretas em 12 classes**. **4/11 tipos de dano possuem contratos estáticos certificados:** [Acid e seus emissores](../EXACT-ACID-CONTRACT-1.0.10.md), [Dark Arrow e Dreadbow](../EXACT-DREADBOW-CONTRACTS-1.0.10.md), [Desolate Dagger e seu equipamento](../EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md) e [Forsaken Sonic Boom](../EXACT-FORSAKEN-CONTRACT-1.0.10.md). Os demais sete consumidores continuam parciais; hooks, hit counts medidos e QA física permanecem pendentes.
+**Status:** ⚠️ recursos JSON `11/11` e **factories compiladas `11/11` mapeadas**, com **14 invocações diretas em 12 classes**. **5/11 tipos de dano possuem contratos estáticos certificados:** [Acid e seus emissores](../EXACT-ACID-CONTRACT-1.0.10.md), [Dark Arrow e Dreadbow](../EXACT-DREADBOW-CONTRACTS-1.0.10.md), [Desolate Dagger e seu equipamento](../EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md), [Forsaken Sonic Boom](../EXACT-FORSAKEN-CONTRACT-1.0.10.md) e [Shot Gum/Gumball](../EXACT-GUMBALL-CONTRACTS-1.0.10.md). Os demais seis consumidores continuam parciais; hooks, hit counts medidos e QA física permanecem pendentes.
 
 - Artefato oficial: SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, tamanho 75.279.314 bytes.
 - Auditor: [`docs/qa/alexscaves_1010_damage_type_probe.py`](../../../../../docs/qa/alexscaves_1010_damage_type_probe.py); [CI da sonda](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40985275338).
@@ -30,7 +30,7 @@ O recurso `dark_arrow` possui `message_id=desolate_dagger`, igual a `desolate_da
 
 A tag `minecraft:bypasses_cooldown` trata de classificação de dano no Minecraft, não de cooldown de casting de qualquer feitiço. `minecraft:is_explosion`, `minecraft:is_projectile` e `minecraft:is_fire` são declaradas como memberships **textuais**, não como comprovação da aplicação do `DamageSource` no jogo. A tag `alexscaves:deep_one_ignores` é inventariada, mas não lista diretamente nenhum dos onze IDs.
 
-**PENDENTE:** concluir os sete outros contratos de consumidores, owner/causa, fórmulas e targeting. Proteção PvP, mutação segura e QA física continuam pendentes também para Acid, Dark Arrow, Desolate Dagger e Forsaken Sonic Boom. Os sete tipos parciais permanecem `NOT_CERTIFIED`; hooks `NOT_VERIFIED` e QA `NOT_TESTED` em todo o recorte.
+**PENDENTE:** concluir os seis outros contratos de consumidores, owner/causa, fórmulas e targeting. Proteção PvP, mutação segura e QA física continuam pendentes também para Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom e Gumball. Os seis tipos parciais permanecem `NOT_CERTIFIED`; hooks `NOT_VERIFIED` e QA `NOT_TESTED` em todo o recorte.
 
 ## Mapa binário SHA-exato de `ACDamageTypes`
 
@@ -52,7 +52,7 @@ A tag `minecraft:bypasses_cooldown` trata de classificação de dano no Minecraf
 
 **Divergência relevante:** `NuclearExplosionEntity.tick()` contém referências tanto a `causeIntentionalGameDesign` quanto a `causeNukeDamage`; não se conclui que ambas executem no mesmo tick. `ForsakenAttackGoal.tick()` contém duas referências a `causeForsakenSonicBoomDamage`, mas isso não demonstra dois hits por tick. `dark_arrow` e `desolate_dagger` continuam tipos diferentes embora os JSONs compartilhem `message_id`.
 
-A sobrecarga de `DamageSourceRandomMessages` com argumento `Entity` é usada por algumas factories, enquanto outras recebem somente `RegistryAccess`. Isto permite documentar a assinatura compilada, mas **não** comprova attacker attribution, ownership, targeting, fórmulas, mitigação, repetição de impacto, segurança de hook ou elegibilidade para perks. Contratos técnicos estáticos documentados **4/11**, limitados a Acid, Dark Arrow, Desolate Dagger e Forsaken Sonic Boom; os manifestos parciais desta seção não homologam hooks; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+A sobrecarga de `DamageSourceRandomMessages` com argumento `Entity` é usada por algumas factories, enquanto outras recebem somente `RegistryAccess`. Isto permite documentar a assinatura compilada, mas **não** comprova attacker attribution, ownership, targeting, fórmulas, mitigação, repetição de impacto, segurança de hook ou elegibilidade para perks. Contratos técnicos estáticos documentados **5/11**, limitados a Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom e Gumball; os manifestos parciais desta seção não homologam hooks; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
 
 ## Janelas de bytecode dos quatro consumidores prioritários
 
@@ -101,3 +101,7 @@ O [manifesto SHA-exato](EXACT-DREADBOW-DECISIONS-1.0.10.json) rastreia `PRECISE_
 ## Forsaken Sonic — predicados e knockback
 
 O [manifesto dos 10 helpers selecionados](EXACT-FORSAKEN-HELPERS-1.0.10.json) diferencia o gate `NO_ANIMATION` em `tryAnimation`, as duas animações de pickup que congelam movimento, o estado nativo `SONIC_CHARGE` e a delegação `ACCompat.knockback → LivingEntity.knockback`. O helper `checkAndDealDamage` utiliza `mobAttack` e `ATTACK_DAMAGE`, **não** a factory `causeForsakenSonicBoomDamage`. A leitura `SONAR_ID` e `Mob.getTarget()` tampouco são alvos equivalentes por presunção. [Ficha consolidada e limites](forsaken-sonic-boom.md); o [contrato estático integral deste recorte](../EXACT-FORSAKEN-CONTRACT-1.0.10.md) não homologa hooks nem QA física.
+
+## Shot Gum e Gumball — contrato consolidado
+
+As [duas fichas seladas](../EXACT-GUMBALL-CONTRACTS-1.0.10.md) completam o equipamento e o projétil/tipo de dano, relacionando emissores, munição, encantamentos, autoria, ricochetes e explosão. Os quatro snapshots parciais anteriores permanecem preservados; suas flags registram os limites daqueles recortes. A certificação consolidada é estática e não homologa hooks, permissões de mundo, integração executável ou QA física.

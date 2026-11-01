@@ -6539,6 +6539,86 @@
           "reason": "Ficha e membros exatos selados em manifesto consolidado, identidades históricas preservadas, métodos/âncoras verificáveis no mesmo JAR; QA física/multiplayer e integração executável continuam NOT_TESTED."
         }
       }
+    },
+    "✅-alexs-caves-continued/damage-types/gumball.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de Shot Gum ou Gumball e dos consumidores nativos delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/gumball.md",
+          "reason": "ID, SHA exato do JAR 1.0.10 e do JSON, classe/factory e emissores delimitados; fonte 1.1.1 apenas corroboração adjacente."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/gumball.md",
+          "reason": "Leitura integral dos 29 métodos próprios: estado sincronizado, colisões, ricochete/homing, split, explosão, apresentação e save, com ordem dos efeitos explícita."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/gumball.md",
+          "reason": "Defaults 5/0/2F e flags, gravidade exata, consulta cúbica, vetores de reflexão/homing/split, limites de bounces e progresso >20, separados de dano líquido e contagens físicas."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/gumball.md",
+          "reason": "Filtros próprios de owner/alianças e Licowitch, aquisição nearest e lista de IDs só para homing; onHit superclass-first e ausência de deduplicação própria de dano explicadas."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/gumball.md",
+          "reason": "Consumidor de projétil sem débito próprio; custos da arma e carga/munição do mob delegados aos produtores, sem tratar exhaustion ou cooldown de som como recurso/cooldown de cast."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/gumball.md",
+          "reason": "Autoria primária versus filhos sem propagação explícita, impacto Gumball versus explosão nativa e owners de filtros/settlement preservados; NO_MUTATION e hooks não verificados."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/gumball.md",
+          "reason": "Todos os métodos próprios e helpers delimitados seláveis por hashes/descritores/âncoras; quatro snapshots históricos preservados, QA física/persistência/multiplayer e universo integral pendentes."
+        }
+      }
+    },
+    "✅-alexs-caves-continued/equipment/shot-gum.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático de Shot Gum ou Gumball e dos consumidores nativos delimitados na ficha; não certifica configuração efetiva, hook mutador, QA física ou universo integral de itens/mobs/poções do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/shot-gum.md",
+          "reason": "Item alexscaves:shot_gum e implementação ShotGumItem, receita e munição identificados no JAR exato 1.0.10; fonte 1.1.1 mantida como corroboração adjacente."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/shot-gum.md",
+          "reason": "Todos os 26 métodos próprios lidos; use distingue armar, recarregar e resultado PASS/CONSUME, e o tick usa estados Shooting/ShootTime capturados antes da emissão e do débito."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/shot-gum.md",
+          "reason": "Emissão normal de duas tentativas ou explosiva de uma; argumentos de velocidade 1.5/0.5, inaccuracy 5, dano 4 e máximo de ricochetes 4+2L, geometria de origem e limites JSON dos quatro encantamentos delimitados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/shot-gum.md",
+          "reason": "O item não adquire vítima; passa LivingEntity ao construtor primário e preserva targeting no consumidor. Comparações de mão escolhem apenas offset; selected não é lido e a pendência não exige permanecer na mão."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/shot-gum.md",
+          "reason": "Recarga usa primeiro Gumball Pile elegível do inventário e consome uma unidade para quatro cargas; criativo retorna munição vazia e repõe sem shrink. Um débito de carga ocorre após as tentativas de spawn, sem depender da aceitação de inserção."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/shot-gum.md",
+          "reason": "Ativação por ACTickingItem/ItemStackTickMixin e dados CUSTOM_DATA são separados de transporte; a classe não emite UpdateItemTagMessage. NO_MUTATION, hooks NOT_VERIFIED, QA física NOT_TESTED e owners nativos explícitos."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/equipment/shot-gum.md",
+          "reason": "Ficha e membros SHA-exatos selados, 26 métodos com descritores e instruções; artefato, consumidores e recursos auditáveis. Contagens não promovem universo integral do provider, runtime, autorização ou QA física."
+        }
+      }
     }
   },
   "providers": {},

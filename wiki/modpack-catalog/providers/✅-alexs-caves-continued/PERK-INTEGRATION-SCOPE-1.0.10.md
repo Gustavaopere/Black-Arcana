@@ -7,9 +7,9 @@ Autoridade: JAR 1.0.10, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-25
 | Família | Universo exato identificado | Trabalho necessário antes de fechar o provider |
 |---|---|---|
 | Ações sobrenaturais | Oito raízes já contadas | Sete campos estáticos documentados nas oito fichas; hooks e QA física separados |
-| Itens / equipamento | 81 classes externas de itens; 42 com assinaturas de interação já classificadas semanticamente | [Dreadbow](equipment/dreadbow.md) e [Desolate Dagger](equipment/desolate-dagger.md) documentados individualmente; demais armas, movimento, comida, defesa e helpers precisam de disposição própria. Classes e fichas não são denominadores equivalentes |
+| Itens / equipamento | 81 classes externas de itens; 42 com assinaturas de interação já classificadas semanticamente | [Dreadbow](equipment/dreadbow.md), [Desolate Dagger](equipment/desolate-dagger.md) e [Shot Gum](equipment/shot-gum.md) documentados individualmente; demais armas, movimento, comida, defesa e helpers precisam de disposição própria. Classes e fichas não são denominadores equivalentes |
 | Enchantments | 51 JSONs em `data/alexscaves/enchantment/` | Ficha por contrato: nível/custo/slots/exclusividade e consumidor real de cada modifier, inclusive tecnologia/armas |
-| Damage types | 11 JSONs, 11 factories e seus consumidores diretos localizados no JAR | **4/11 contratos estáticos documentados: [Acid](damage-types/acid.md), [Dark Arrow](damage-types/dark-arrow.md), [Desolate Dagger](damage-types/desolate-dagger.md) e [Forsaken Sonic Boom](damage-types/forsaken-sonic-boom.md)**; demais sete contratos continuam parciais. [Prova de Forsaken](EXACT-FORSAKEN-CONTRACT-1.0.10.md). [Prova de Desolate Dagger](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md). [Prova de Acid](EXACT-ACID-CONTRACT-1.0.10.md). [Prova conjunta com Dreadbow](EXACT-DREADBOW-CONTRACTS-1.0.10.md). Hooks e QA física pendentes |
+| Damage types | 11 JSONs, 11 factories e seus consumidores diretos localizados no JAR | **5/11 contratos estáticos documentados: [Acid](damage-types/acid.md), [Dark Arrow](damage-types/dark-arrow.md), [Desolate Dagger](damage-types/desolate-dagger.md), [Forsaken Sonic Boom](damage-types/forsaken-sonic-boom.md) e [Gumball](damage-types/gumball.md)**; demais seis contratos continuam parciais. [Prova de Shot Gum/Gumball](EXACT-GUMBALL-CONTRACTS-1.0.10.md). [Prova de Forsaken](EXACT-FORSAKEN-CONTRACT-1.0.10.md). [Prova de Desolate Dagger](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md). [Prova de Acid](EXACT-ACID-CONTRACT-1.0.10.md). [Prova conjunta com Dreadbow](EXACT-DREADBOW-CONTRACTS-1.0.10.md). Hooks e QA física pendentes |
 | Mob effects | Oito campos de registro de efeitos | **8/8 contratos estáticos documentados**, incluindo aplicações e consumidores; [fichas](effects/INDEX.md) e [prova exata](EXACT-EFFECT-CONTRACTS-1.0.10.md). Hooks e QA física pendentes |
 | Potions | 12 campos de registro de poções | Conteúdo, níveis/tempo e aquisição, sem contar variantes como novas magias |
 | Config servidor | 40 campos em `ACServerConfig` | Defaults/bounds, momento de leitura, autoridade global/por jogador e consumidores; não presumir valores em execução |
@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, os equipamentos Dreadbow/Desolate Dagger e os contratos Acid/Dark Arrow/Desolate Dagger/Forsaken Sonic Boom somam **22 contratos estáticos certificados entre 29 fichas observadas**. Os índices distinguem as fichas completas dos sete outros tipos de dano ainda parciais. O provider inteiro permanece pendente, e o registro alfabético continua em **Alex's Caves Continued**. O universo de integrações ainda inclui os demais equipamentos, enchantments e sistemas; nenhuma família ausente é presumida inexistente.
+As oito ações, oito efeitos, os equipamentos Dreadbow/Desolate Dagger/Shot Gum e os contratos Acid/Dark Arrow/Desolate Dagger/Forsaken Sonic Boom/Gumball somam **24 contratos estáticos certificados entre 30 fichas observadas**. Os índices distinguem as fichas completas dos seis outros tipos de dano ainda parciais. O provider inteiro permanece pendente, e o registro alfabético continua em **Alex's Caves Continued**. O universo de integrações ainda inclui os demais equipamentos, enchantments e sistemas; nenhuma família ausente é presumida inexistente.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 
@@ -47,3 +47,7 @@ A [prova conjunta](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md) relaciona o callba
 ## Forsaken Sonic — contrato consolidado do ataque
 
 A [prova consolidada](EXACT-FORSAKEN-CONTRACT-1.0.10.md) liga seleção de alvo, início/encerramento do goal, temporização, animações, produtor/consumo de carga, geometria e dano solicitado. Os cinco manifestos parciais anteriores permanecem preservados como evidências históricas; suas flags não homologam runtime. O contrato da ficha é estático e delimitado: não encerra toda a IA do Forsaken nem habilita intervenção em `LivingEntity.hurt`, `SynchedEntityData`, animação ou `knockback`. Hooks mutadores e QA física seguem pendentes.
+
+## Shot Gum e Gumball — equipamento, projétil e emissores
+
+A [prova consolidada](EXACT-GUMBALL-CONTRACTS-1.0.10.md) acompanha os métodos próprios do item e da entidade, os emissores Gumbeeper e os recursos de encantamento. A munição e o estado da arma, os parâmetros do mob, a fábrica dos descendentes, o dano de impacto e a explosão mantêm consumidores próprios. Esses contratos não encerram o mob inteiro, a configuração de rede ou o universo do provider, nem concedem hooks mutadores.
