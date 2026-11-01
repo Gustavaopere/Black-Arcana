@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "scope": "NEOFORGE_211248_DISTRIBUTED_CUSTOM_DATA_DELEGATE_DISCOVERY_ONLY",
+  "artifact": {
+    "server_jar_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+    "server_jar_bytes": 5675624,
+    "server_srg_jar_sha256": "26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71"
+  },
+  "class_identities": {
+    "custom_data": {
+      "source_archive": "INSTALLED_MINECRAFT_SRG",
+      "class_sha256": "23463cf7238fbd2b9ff5bb11bb4a5466fcc06137e89f65d199fe31b7b7d451c9",
+      "method_count": 26,
+      "matching_method_count": 0
+    },
+    "data_components": {
+      "source_archive": "INSTALLED_MINECRAFT_SRG",
+      "class_sha256": "fee338af2dbe21bd35781275b01752b72e9178b4314b9d574934a0cddc464716",
+      "method_count": 60,
+      "matching_method_count": 1
+    },
+    "byte_buf_codecs": {
+      "source_archive": "NEOFORGE_OVERLAY",
+      "class_sha256": "a5c5cc1792471d16fb8780c4c6b01f65cbcb6cbe5105318541c0d054b58e418c",
+      "method_count": 42,
+      "matching_method_count": 7
+    }
+  },
+  "data_components_custom_data_reference": {
+    "name": "bootstrap",
+    "descriptor": "(Lnet/minecraft/core/Registry;)Lnet/minecraft/core/component/DataComponentType;",
+    "method_sha256": "54116ea2976186a0769820d5f458ddbf7f9a7bb027bc6a52a7df38fc9a23e73f",
+    "offset": 0,
+    "opcode": "getstatic",
+    "symbol": "Field CUSTOM_DATA:Lnet/minecraft/core/component/DataComponentType;"
+  },
+  "nbt_accounter_supplier_sites": [
+    {
+      "name": "lambda$fromCodecWithRegistries$9",
+      "descriptor": "()Lnet/minecraft/nbt/NbtAccounter;",
+      "method_sha256": "fc4e47832602183e48256a7894464277e47011ad132f2381d95c37d1f823733f",
+      "literal_offset": 0,
+      "literal_opcode": "ldc2_w",
+      "literal_symbol": "long 2097152l",
+      "create_offset": 3,
+      "create_opcode": "invokestatic",
+      "create_symbol": "Method net/minecraft/nbt/NbtAccounter.create:(J)Lnet/minecraft/nbt/NbtAccounter;"
+    },
+    {
+      "name": "lambda$fromCodec$4",
+      "descriptor": "()Lnet/minecraft/nbt/NbtAccounter;",
+      "method_sha256": "cb50012b298587b8107c99be80c686d00e62d44544de212df3b85a04ca6a5f03",
+      "literal_offset": 0,
+      "literal_opcode": "ldc2_w",
+      "literal_symbol": "long 2097152l",
+      "create_offset": 3,
+      "create_opcode": "invokestatic",
+      "create_symbol": "Method net/minecraft/nbt/NbtAccounter.create:(J)Lnet/minecraft/nbt/NbtAccounter;"
+    },
+    {
+      "name": "lambda$static$1",
+      "descriptor": "()Lnet/minecraft/nbt/NbtAccounter;",
+      "method_sha256": "b672b959ca0bf3d7578952f8f9def7a4e13fd70ec5d8e8507e9e3fcf37ecedf3",
+      "literal_offset": 0,
+      "literal_opcode": "ldc2_w",
+      "literal_symbol": "long 2097152l",
+      "create_offset": 3,
+      "create_opcode": "invokestatic",
+      "create_symbol": "Method net/minecraft/nbt/NbtAccounter.create:(J)Lnet/minecraft/nbt/NbtAccounter;"
+    },
+    {
+      "name": "lambda$static$0",
+      "descriptor": "()Lnet/minecraft/nbt/NbtAccounter;",
+      "method_sha256": "50876a63c7d62fb0ffc12c68d5b3faf82cd12ec977adf22faa01e2453695b3b3",
+      "literal_offset": 0,
+      "literal_opcode": "ldc2_w",
+      "literal_symbol": "long 2097152l",
+      "create_offset": 3,
+      "create_opcode": "invokestatic",
+      "create_symbol": "Method net/minecraft/nbt/NbtAccounter.create:(J)Lnet/minecraft/nbt/NbtAccounter;"
+    }
+  ],
+  "literal_interpretation": "NBT_ACCOUNTER_FACTORY_ARGUMENT_NOT_RAYGUN_PACKET_LIMIT",
+  "limits": {
+    "actual_delegated_nbt_byte_limit": "NOT_VERIFIED",
+    "actual_delegated_nbt_depth_limit": "NOT_VERIFIED",
+    "custom_data_value_sanitization": "NOT_VERIFIED",
+    "raygun_entity_authorization": "NOT_VERIFIED",
+    "actual_modlauncher_transformed_class": "NOT_OBSERVED",
+    "physical_qa": "NOT_TESTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "static_perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  }
+}

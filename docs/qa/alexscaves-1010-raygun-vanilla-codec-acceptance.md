@@ -65,3 +65,42 @@ A evidência não comprova validação de contagens negativas, limite máximo ag
 Não marcar nenhuma linha física como PASS pela auditoria de bytecode ou CI. O Black Arcana não usa o payload recebido como autoridade de targeting, item, custo ou mundo. A política D006/D008/D035 permanece aplicável.
 
 **Estados preservados:** `Raygun = ⚠️ parcial/condicionado`; `static_perk_certification=NOT_CERTIFIED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. Nenhuma alteração de runtime, certificados, números globais ou Stage.
+
+
+## Inspeção da delegação `CUSTOM_DATA`/NBT — NeoForge 21.1.248 (PR #1002)
+
+A [sonda de descoberta de delegates](neoforge_211248_custom_data_delegate_probe.py)
+e seu [manifesto de referências SHA-exatas](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-NEOFORGE-211248-CUSTOM-DATA-DELEGATE-ABI.json)
+ampliam VC-02 **sem repetir** os 29 pivôs selados no codec `DataComponentPatch$1`.
+A [execução read-only de descoberta no GitHub Actions](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41358213129)
+identificou duas fontes distintas da instalação oficial:
+
+- `neoforge-21.1.248-server.jar`, SHA-256 `1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359`, contém o overlay compilado `ByteBufCodecs.class` (SHA-256 `a5c5cc1792471d16fb8780c4c6b01f65cbcb6cbe5105318541c0d054b58e418c`).
+- `server-1.21.1-20240808.144430-srg.jar`, SHA-256 `26ca9c40d7e1681190b428583c38816852218e78df3f8bdb60a59a78503aec71`, contém `CustomData.class` (SHA-256 `23463cf7238fbd2b9ff5bb11bb4a5466fcc06137e89f65d199fe31b7b7d451c9`) e `DataComponents.class` (SHA-256 `fee338af2dbe21bd35781275b01752b72e9178b4314b9d574934a0cddc464716`).
+
+A seleção estreita registra `DataComponents.bootstrap(Registry)` com
+`getstatic CUSTOM_DATA @0` e quatro métodos fornecedores de `NbtAccounter`
+na classe `ByteBufCodecs`: `lambda$fromCodecWithRegistries$9`,
+`lambda$fromCodec$4`, `lambda$static$1` e `lambda$static$0`.
+Em cada um desses quatro métodos, a sequência observada é
+`ldc2_w long 2097152l @0` seguida de
+`NbtAccounter.create(J) @3`. O literal equivale numericamente a **2 MiB**
+e é argumento de um factory de accounting de NBT nessas quatro funções;
+**não** constitui, isoladamente, limite de tamanho da mensagem Raygun,
+garantia de profundidade máxima ou prova de qual desses caminhos o
+`CUSTOM_DATA` da mensagem percorre.
+
+O classfile SRG de `CustomData` tem 26 métodos; a seleção de referências
+`StreamCodec`/`ByteBufCodecs` não encontrou método correspondente.
+Isso é **ausência de match no filtro restrito**, não demonstração de
+ausência de codec em outros registries/rotas. O overlay inspecionado é
+ainda uma distribuição, não a classe final com transformações do
+ModLauncher/modpack. Nenhum pacote malformado foi enviado, nenhum hook mutador
+foi testado e nenhuma vulnerabilidade é afirmada.
+
+**VC-02 permanece ⚠️ parcial.** Próximo gate: ligar o componente
+`CUSTOM_DATA` ao codec realmente selecionado pela entrada do registry;
+em seguida auditar os limites do ramo concreto e as permissões do
+receiver em ambiente real. `NO_MUTATION`, `NOT_CERTIFIED`,
+`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`; nenhum
+contador de catálogo, certificado ou Stage promovido.

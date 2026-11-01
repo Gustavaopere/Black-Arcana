@@ -264,3 +264,24 @@ A [auditoria da distribuição oficial NeoForge 21.1.248](../../../../../docs/qa
 Na distribuição oficial NeoForge 21.1.248, o [manifesto SHA-exato de `DataComponentPatch$1`](../EXACT-NEOFORGE-211248-COMPONENT-PATCH-ABI.json) observa duas contagens `readVarInt @1/@6`, laços de componentes acrescentados e removidos, e leitura dos valores por codecs específicos de `DataComponentType`. O literal **65.536** (`ldc @33`) é usado como **capacidade inicial** via `Math.min @35` para construir um `Reference2ObjectArrayMap`; **não é uma validação comprovada do número máximo de componentes aceitos**.
 
 Isso esclarece a rota de desserialização do pacote Raygun, mas não prova tamanho máximo/níveis de NBT, whitelist de `CUSTOM_DATA`, vínculo com o remetente, hooks mutadores ou QA física. [Matriz VC-02](../../../../../docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md). **Estado: ⚠️ parcial/condicionado; `NOT_CERTIFIED`, `NO_MUTATION`, `physical_qa=NOT_TESTED`.**
+
+
+## CUSTOM_DATA / NBT — seleção de codecs na distribuição NeoForge 21.1.248
+
+A [auditoria dirigida de delegação SRG + overlay](../../../../../docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md)
+e seu [manifesto SHA-exato](../EXACT-NEOFORGE-211248-CUSTOM-DATA-DELEGATE-ABI.json)
+registram `CustomData.class` e `DataComponents.class` no JAR SRG
+oficial instalado, e `ByteBufCodecs.class` no overlay NeoForge.
+Foram observadas a referência `CUSTOM_DATA` em
+`DataComponents.bootstrap @0` e quatro funções de `ByteBufCodecs`
+que passam `2097152L` (2 MiB) a `NbtAccounter.create(J)`.
+
+**Limite crucial:** os quatro literais são argumentos compilados de
+factories NBT; não certificam limite máximo de bytes/profundidade do
+`ItemStack` recebido, nem estabelecem que a mensagem do Raygun use
+essas quatro funções. A autorização do `entityId`, o saneamento de
+`ChargeUsed`/`UseTime`, a compatibilidade ModLauncher e os testes
+físicos continuam sem demonstração.
+
+**Estado:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` ·
+`mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`.
