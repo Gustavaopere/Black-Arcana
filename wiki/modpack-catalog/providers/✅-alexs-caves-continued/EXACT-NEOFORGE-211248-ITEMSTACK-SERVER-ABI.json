@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "scope": "OFFICIAL_NEOFORGE_211248_INSTALLED_SERVER_CLASSFILE_NOT_LOADED_RUNTIME",
+  "minecraft_version": "1.21.1",
+  "neoforge_version": "21.1.248",
+  "installed_server_jar_sha256": "1808fab692dc44b2d474295d1cdd9f1fe8a7dceab4f594210873646fafdf1359",
+  "installed_server_jar_size": 5675624,
+  "itemstack_class_path": "net/minecraft/world/item/ItemStack.class",
+  "itemstack_class_sha256": "072cd6887595d3f928a3a1a9605662ff547fe3201d6b6d713a43bfd2719f1a13",
+  "codec_class_path": "net/minecraft/world/item/ItemStack$1.class",
+  "codec_class_sha256": "414239d4c913a25cda60a8fc9e6f41661d7939dc9f9f6f4e23f0731468c46925",
+  "codec_static_assignment_offset": 127,
+  "codec_methods": [
+    {
+      "name": "ItemStack$1",
+      "descriptor": "()V"
+    },
+    {
+      "name": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "name": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/world/item/ItemStack;)V"
+    },
+    {
+      "name": "decode",
+      "descriptor": "(Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "name": "encode",
+      "descriptor": "(Ljava/lang/Object;Ljava/lang/Object;)V"
+    }
+  ],
+  "critical_codec_abi": [
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/world/item/ItemStack;",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method net/minecraft/network/RegistryFriendlyByteBuf.readVarInt:()I"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/world/item/ItemStack;",
+      "offset": 6,
+      "opcode": "ifgt",
+      "operand": "13",
+      "symbol": ""
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/world/item/ItemStack;",
+      "offset": 9,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/world/item/ItemStack;",
+      "offset": 13,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field ITEM_STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/world/item/ItemStack;",
+      "offset": 17,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod net/minecraft/network/codec/StreamCodec.decode:(Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/world/item/ItemStack;",
+      "offset": 26,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field net/minecraft/core/component/DataComponentPatch.STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "decode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)Lnet/minecraft/world/item/ItemStack;",
+      "offset": 30,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod net/minecraft/network/codec/StreamCodec.decode:(Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/world/item/ItemStack;)V",
+      "offset": 4,
+      "opcode": "ifeq",
+      "operand": "16",
+      "symbol": ""
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/world/item/ItemStack;)V",
+      "offset": 9,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method net/minecraft/network/RegistryFriendlyByteBuf.writeVarInt:(I)Lnet/minecraft/network/FriendlyByteBuf;"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/world/item/ItemStack;)V",
+      "offset": 21,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method net/minecraft/network/RegistryFriendlyByteBuf.writeVarInt:(I)Lnet/minecraft/network/FriendlyByteBuf;"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/world/item/ItemStack;)V",
+      "offset": 25,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field ITEM_STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/world/item/ItemStack;)V",
+      "offset": 33,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod net/minecraft/network/codec/StreamCodec.encode:(Ljava/lang/Object;Ljava/lang/Object;)V"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/world/item/ItemStack;)V",
+      "offset": 38,
+      "opcode": "getstatic",
+      "operand": "",
+      "symbol": "Field net/minecraft/core/component/DataComponentPatch.STREAM_CODEC:Lnet/minecraft/network/codec/StreamCodec;"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/world/item/ItemStack;)V",
+      "offset": 46,
+      "opcode": "invokevirtual",
+      "operand": "",
+      "symbol": "Method net/minecraft/core/component/PatchedDataComponentMap.asPatch:()Lnet/minecraft/core/component/DataComponentPatch;"
+    },
+    {
+      "method": "encode",
+      "descriptor": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;Lnet/minecraft/world/item/ItemStack;)V",
+      "offset": 49,
+      "opcode": "invokeinterface",
+      "operand": "",
+      "symbol": "InterfaceMethod net/minecraft/network/codec/StreamCodec.encode:(Ljava/lang/Object;Ljava/lang/Object;)V"
+    }
+  ],
+  "vanilla_comparison": {
+    "official_client_sha1": "30c73b1c5da787909b2f73340419fdf13b9def88",
+    "same_codec_class_bytes": false,
+    "same_itemstack_class_bytes": false,
+    "vanilla_codec_class_sha256": "b67408499e6a5f8edd5120e1bffa67c6e0c50f68658d5d098c4813beebbadfc2",
+    "vanilla_itemstack_sha256": "a34b9141828bd62fa74ad6a5d3b9b47a81df18b4a86866827c8f73d3ab97f901"
+  },
+  "limits": {
+    "jvm_modlauncher_class_loaded": "NOT_OBSERVED",
+    "neoforge_modpack_runtime_transformations": "NOT_OBSERVED",
+    "gameplay_network_authorization": "NOT_VERIFIED",
+    "data_component_patch_limits": "NOT_VERIFIED",
+    "nbt_size_depth_and_fields": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "perk_static_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  }
+}
