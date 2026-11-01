@@ -5,7 +5,8 @@ import unittest
 from unittest.mock import patch
 from alexscaves_1010_raygun_registration_probe import (
     PREFIX, PACKET, RAYGUN, RegistrationProbeError, discover_candidates,
-    matching_method_refs, MAX_CANDIDATES, audit
+    matching_method_refs, MAX_CANDIDATES, audit, NETWORK,
+    require_native_registration_candidate
 )
 
 
@@ -98,6 +99,22 @@ class RegistrationProbeSyntheticTests(unittest.TestCase):
         with self.assertRaisesRegex(RegistrationProbeError, "unbounded per-method"):
             matching_method_refs(self.method([
                 self.row(i, "UpdateItemTagMessage.handle") for i in range(71)]))
+
+    def test_native_network_registration_candidates(self):
+        records = [{"class_path": NETWORK, "methods_with_direct_symbolic_references": [
+            {"name": "registerMessages"}, {"name": "lambda$registerPayloads$0"}]}]
+        require_native_registration_candidate(records)
+
+    def test_missing_native_network_registration_rejected(self):
+        with self.assertRaisesRegex(RegistrationProbeError, "candidate missing"):
+            require_native_registration_candidate([])
+
+    def test_missing_second_payload_method_rejected(self):
+        records = [{"class_path": NETWORK,
+                    "methods_with_direct_symbolic_references": [
+                        {"name": "registerMessages"}]}]
+        with self.assertRaisesRegex(RegistrationProbeError, "references changed"):
+            require_native_registration_candidate(records)
 
     def test_fail_closed_if_exact_publisher_not_available(self):
         with patch("alexscaves_1010_raygun_registration_probe.sha_file",
