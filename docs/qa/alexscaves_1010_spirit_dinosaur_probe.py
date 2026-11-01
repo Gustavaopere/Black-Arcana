@@ -119,13 +119,68 @@ def audit(jar, javap_bin):
         raise SpiritProbeError('bounded report size exceeded')
     return result
 
+
+def check_sealed_manifest(report, manifest):
+    """Fail closed on exact two-class identities, method hashes and selected anchors."""
+    for key in ('schema_version', 'scope', 'artifact'):
+        if report.get(key) != manifest.get(key):
+            raise SpiritProbeError('sealed identity mismatch: ' + key)
+    expected_classes = manifest.get('classes')
+    if not isinstance(expected_classes, list) or len(expected_classes) != len(CLASSES):
+        raise SpiritProbeError('sealed class roster mismatch')
+    actual = {c['class_path']: c for c in report['classes']}
+    if len(actual) != len(CLASSES):
+        raise SpiritProbeError('duplicate or missing class result')
+    for sealed in expected_classes:
+        path = sealed['class_path']
+        if path not in actual or path not in CLASSES:
+            raise SpiritProbeError('unknown/missing sealed class')
+        observed = actual[path]
+        for key in ('class_sha256', 'declared_method_count'):
+            if observed[key] != sealed[key]:
+                raise SpiritProbeError('sealed class identity drift: ' + key)
+        methods = {}
+        for m in observed['selected_methods']:
+            methods.setdefault(m['name'], []).append(m)
+        for name, digest in sealed['selected_method_digests'].items():
+            if not isinstance(digest, str) or len(digest) != 64:
+                raise SpiritProbeError('invalid SHA-256 digest seal')
+            found = methods.get(name, [])
+            if len(found) != 1 or found[0]['parsed_method_sha256'] != digest:
+                raise SpiritProbeError('sealed selected method digest drift: ' + name)
+        anchors = sealed['anchors']
+        if not 1 <= len(anchors) <= 40:
+            raise SpiritProbeError('sealed anchor budget exceeded')
+        seen = set()
+        for anchor in anchors:
+            key = (anchor['method'], anchor['kind'], anchor['offset'])
+            if key in seen:
+                raise SpiritProbeError('duplicate sealed control anchor')
+            seen.add(key)
+            found = methods.get(anchor['method'], [])
+            if len(found) != 1:
+                raise SpiritProbeError('missing/ambiguous sealed anchor method')
+            rows = found[0].get(anchor['kind'])
+            if not isinstance(rows, list):
+                raise SpiritProbeError('invalid sealed control group')
+            matches = [row for row in rows if row['offset'] == anchor['offset']]
+            if len(matches) != 1 or matches[0]['opcode'] != anchor['opcode']:
+                raise SpiritProbeError('missing/changed sealed control opcode')
+            if anchor.get('symbol_contains') and anchor['symbol_contains'] not in matches[0]['symbol']:
+                raise SpiritProbeError('sealed symbolic operand drift')
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--jar', required=True, type=Path)
     parser.add_argument('--javap', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--manifest', required=True, type=Path)
     args = parser.parse_args()
     report = audit(args.jar, args.javap)
+    manifest = json.loads(args.manifest.read_text(encoding='utf8'))
+    check_sealed_manifest(report, manifest)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + '\n', encoding='utf8')
     print('selected_spirit_dinosaur_methods=' + str(sum(x['selected_method_count'] for x in report['classes'])) + '; static_only')
