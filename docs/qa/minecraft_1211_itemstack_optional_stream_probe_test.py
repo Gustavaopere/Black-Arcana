@@ -197,7 +197,7 @@ class ExactVanillaProbeTests(unittest.TestCase):
     def test_falsely_certified_codec_snapshot_rejected(self):
         report, seal = self.pinned_fixture()
         seal["limits"]["mutation"] = "ALLOW"
-        with self.assertRaisesRegex(MojangBoundaryError, "snapshot"):
+        with self.assertRaisesRegex(MojangBoundaryError, "sealed Mojang vanilla"):
             verify_snapshot(report, seal)
 
     def test_wrong_downloaded_client_rejected(self):
