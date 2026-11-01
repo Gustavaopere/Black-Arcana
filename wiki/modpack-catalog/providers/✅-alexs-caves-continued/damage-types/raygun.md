@@ -117,7 +117,7 @@ Em `onUseTick` e `releaseUsing` são encontradas mensagens `UpdateItemTagMessage
 3. Confirmar `ACCompat.hurt`, critérios de sucesso, hits múltiplos/por-tick, atribuição causal, escala de dano, imunidades, `Irradiated` e deduplicação de XP/procs.
 4. Executar cliente/servidor dedicados com casos de níveis de enchantment, alvos aliados/mesmo veículo, Tremorzilla, resistência à radiação, `ItemStack` duplicado, save/reload e proteção de claims.
 
-**Decisão:** a ficha continua `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; nenhum `COMPLETE_PERK_READY`, avanço de 22/29, nova raiz mágica ou promoção de Stage. Os parâmetros acima são **observações estáticas compiladas**, não contratos de intervenção seguros.
+**Decisão:** a ficha continua `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; nenhum `COMPLETE_PERK_READY`, avanço de 24/30, nova raiz mágica ou promoção de Stage. Os parâmetros acima são **observações estáticas compiladas**, não contratos de intervenção seguros.
 
 ## Emissão C2S e recarga — auditoria do receiver no JAR 1.0.10
 
@@ -140,7 +140,7 @@ Em `onUseTick` e `releaseUsing` são encontradas mensagens `UpdateItemTagMessage
 | `UpdateItemTagMessage.handle` | Consulta `ACNetworkContext.getSender` e `isClientSide`, com seleção de nível/contexto; usa `Level.getEntity(entityId)`, verifica tipo do item nas mãos MAIN_HAND/OFF_HAND e alcança `UpdatesStackTags.updateTagFromServer`. | **Não foi homologado** o vínculo de `entityId` com o remetente, o tipo concreto de item autorizado, a sanitização das tags ou o escopo de atualizações. |
 | `handle @158 / @171 / @174` | Obtém tags de `ItemStack` por `ACCompat.getTag` e chama `UpdatesStackTags.updateTagFromServer(Entity, ItemStack, CompoundTag)`. | O efeito real depende da implementação de `UpdatesStackTags` do item selecionado e de guards prévios; não presumir cópia irrestrita de NBT sem provar o consumidor. |
 
-**Distinção decisiva:** o fato de `UpdateItemTagMessage` aparecer como sender do Raygun **não demonstra que o receiver modifica o `RaygunItem`**. Entre os 26 métodos declarados diretamente pelo `RaygunItem.class` inspecionado não há método `updateTagFromServer`; isso não exclui interfaces, métodos herdados, implementações indiretas ou outros receptores. A interface efetiva do item e o dispatch devem ser fechados antes de qualquer conclusão sobre integridade de carga ou exploit.
+**Distinção revisada na PR #990:** o `RaygunItem` **implementa diretamente** `UpdatesStackTags` (JAR 1.0.10); entre seus 26 métodos declarados não há override de `updateTagFromServer`, mas a interface fornece uma **implementação `default` compilada**. O método padrão chama `ACCompat.setTag`, que grava ou remove `DataComponents.CUSTOM_DATA`. O destino estático está identificado; autorização do pacote, limites de atualização e efeitos físicos permanecem `NOT_VERIFIED`.
 
 ### Fronteira de segurança e pending QA
 
@@ -148,4 +148,30 @@ A evidência de referência da mensagem confirma *resolução por ID de entidade
 
 Próxima auditoria obrigatória: identificar a hierarquia concreta do `RaygunItem`, quem implementa `UpdatesStackTags`, quais tags o callback admite, origem de `entityId` e política real de rate-limit/replay; depois executar no modpack exato cliente manipulado/servidor dedicado, mãos distintas, troca de item em trânsito, entityId de outro jogador, reconnect e reload. O Black Arcana não deve alterar esse pacote nem introduzir segundo pipeline de recarga.
 
-**Estado após a auditoria:** `raygun` ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Sem atualização dos índices, contagem de 22/29, Stage ou homologação global.
+**Estado após a auditoria:** `raygun` ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Sem atualização dos índices, contagem de 24/30, Stage ou homologação global.
+
+## Contrato SHA-exato — receiver real, interface e `CUSTOM_DATA` (PR #990)
+
+**Escopo:** `SHA_EXACT_1010_RAYGUN_C2S_RECEIVER_JVM_DISPATCH_ONLY`. [Manifesto de quatro classes](../EXACT-RAYGUN-RECEIVER-1.0.10.json) · [PR #990](https://github.com/Gustavaopere/Black-Arcana/pull/990) · [workflow JDK 21](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-raygun-receiver.yml). O manifesto fixa o JAR publisher 1.0.10 por SHA-1/SHA-256/tamanho, quatro SHA-256 de classes, cinco descritores/digests de métodos e 13 anchors de emissão/recepção. Os dados são de bytecode compilado — não observação de cliente ou autorização de servidor.
+
+### Implementação que recebe a atualização
+
+- `RaygunItem.class` — SHA-256 `3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c`. Declaração JVM: estende diretamente `net.minecraft.world.item.Item` e **implementa `com.github.alexmodguy.alexscaves.server.item.UpdatesStackTags`**, além de outras interfaces. Os 26 métodos declarados não sobrescrevem `updateTagFromServer`.
+- `UpdatesStackTags.class` — SHA-256 `1ba03e1d244a0a6ad49a888cb406bf518858c52988b4210db204c0bbd1e6e0ad`. Seu único método declarado é **`public default void updateTagFromServer(Entity,ItemStack,CompoundTag)`**, cuja implementação compilada chama `ACCompat.setTag(ItemStack,CompoundTag)` em `@2`. Isto resolve a rota herdada pelo Raygun sem inventar um override no item.
+- `ACCompat.class` — SHA-256 `333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b`. `setTag(ItemStack,CompoundTag)` usa `DataComponents.CUSTOM_DATA`: com tag nula, invoca `ItemStack.remove(CUSTOM_DATA) @8`; com tag presente, constrói `CustomData.of(tag) @20` e invoca `ItemStack.set(CUSTOM_DATA,value) @23`. Trata-se de escrita em dados do item, **não** da aplicação de dano, mana, status ou cooldown.
+
+### Gates observados no pacote
+
+| Offset em `UpdateItemTagMessage.handle` | Decisão / referência compilada | Limitação |
+|---|---|---|
+| `@8`, `@15`, `@20–31` | Consulta `ACNetworkContext.getSender`, `isClientSide` e, no ramo cliente, `PROXY.getClientSidePlayer`; sai caso não exista jogador | Ter um sender/contexto é diferente de verificar a autoria de cada `entityId` recebido |
+| `@39–50` | Resolve `entityId` via `Level.getEntity(int)` no nível do jogador; exige `LivingEntity` | Não foi comprovado vínculo obrigatório entre remetente e entidade escolhida |
+| `@70–129` | Compara o tipo do item do payload com o item da mão principal e, se necessário, secundária; escolhe o `ItemStack` correspondente | Igualdade de tipo do item não certifica que o stack e seu `CUSTOM_DATA` foram originados do servidor |
+| `@131–161` | Exige stack de mão não nulo, `instanceof UpdatesStackTags` e `ACCompat.getTag(payloadStack) != null` | O guard aceita um `CompoundTag` presente, mas não demonstra validação semântica dos campos `ChargeUsed`/`UseTime` |
+| `@171–174` | Extrai a tag do payload e chama `UpdatesStackTags.updateTagFromServer(entity,heldStack,tag)` | O método `default` repassa essa tag ao setter de `CUSTOM_DATA` do stack selecionado, sujeito aos caminhos anteriores |
+
+**Distinção de autoridade:** a cadeia de referências `RaygunItem.onUseTick/releaseUsing → UpdateItemTagMessage → handle → UpdatesStackTags.default → ACCompat.setTag → DataComponents.CUSTOM_DATA` está confirmada estaticamente para a versão 1.0.10. Isso não comprova que o servidor aceite qualquer mensagem arbitrária, pois o registro/validação do canal, sua direção, os checks de autorização fora do handler e o resultado em sessão real **não foram auditados integralmente**. Também não comprova que os valores de carga ou de tempo estejam saneados por outros consumidores. Não declarar exploit nem segurança demonstrada a partir de uma inspeção local.
+
+**Pontos de QA / perks:** investigar política de rede e vínculo remetente-`entityId`, alteração de mão ou stack durante trânsito, validação de `ChargeUsed` e `UseTime`, persistência de `CUSTOM_DATA`, replay, efeitos de encantamentos, proteção em PvP e origem de XP/Mastery. Qualquer perk de custo ou duração deve operar via boundary nativa comprovada e server-authoritative; nenhuma modificação do pacote fica autorizada por esse manifesto.
+
+**Status:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Contador de Alex's Caves Continued **24/30 (80%)**, sem promoção de objetos, hooks ou Stage. O suporte de `UpdatesStackTags` é um contrato de atualização de estado de item, não uma nova magia.
