@@ -6,12 +6,16 @@ on:
     paths:
       - 'docs/qa/alexscaves_1010_raygun_control_probe.py'
       - 'docs/qa/alexscaves_1010_raygun_control_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTROL-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
       - '.github/workflows/alexscaves-1010-raygun-control.yml'
   push:
     branches: [main]
     paths:
       - 'docs/qa/alexscaves_1010_raygun_control_probe.py'
       - 'docs/qa/alexscaves_1010_raygun_control_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTROL-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
       - '.github/workflows/alexscaves-1010-raygun-control.yml'
 
 permissions:
@@ -43,6 +47,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_raygun_control_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --snapshot "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTROL-1.0.10.json" \
             --output build/alexscaves-1010/raygun-selected-evidence.json
       - name: Export only bounded method references, not provider bytecode
         uses: actions/upload-artifact@v7
