@@ -117,10 +117,24 @@ def audit(jar, javap_bin):
             digest = hashlib.sha256(data).hexdigest()
             if path == RAYGUN and digest != RAYGUN_SHA:
                 raise PacketAmmoProbeError("RaygunItem binary changed")
-            methods = parse_methods(javap(javap_bin, jar, path[:-6].replace("/", ".")))
+            disassembly = javap(javap_bin, jar, path[:-6].replace("/", "."))
+            declaration = next((line.strip() for line in disassembly.splitlines()
+                                if line.strip().endswith("{") and
+                                ("class " in line or "interface " in line)), "")
+            if not declaration or len(declaration) > 400:
+                raise PacketAmmoProbeError("missing/bounded JVM class declaration")
+            methods = parse_methods(disassembly)
             selected = select(methods, RAYGUN_METHODS, raygun=(path == RAYGUN))
             classes.append({
                 "class_path": path, "class_sha256": digest,
+                "class_declaration": declaration,
+                "type_checks": [
+                    {"name": name_of(m), "offset": i["offset"],
+                     "opcode": i["opcode"], "symbol": i["symbol"]}
+                    for m in methods for i in m["instructions"]
+                    if path == PACKET and name_of(m) == "handle" and
+                       i["opcode"] in {"instanceof", "checkcast"}
+                ],
                 "declared_method_count": len(methods),
                 "declared_methods": [{"name": name_of(m), "descriptor": m["descriptor"]}
                                      for m in methods],
