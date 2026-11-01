@@ -198,13 +198,96 @@ def audit(jar, javap_bin):
         raise ReceiverProbeError("bounded report too large")
     return report
 
+def snapshot_projection(report):
+    """Stable SHA-exact four-class boundary without raw full JVM code."""
+    classes = report["classes"]
+    if len(classes) != 4 or len({c["path"] for c in classes}) != 4:
+        raise ReceiverProbeError("invalid four-class sealed roster")
+    raygun, packet, interface, compat = classes
+    if [c["path"] for c in classes] != [RAYGUN, PACKET, UPDATES, COMPAT]:
+        raise ReceiverProbeError("receiver class ordering/identity drift")
+    senders = raygun["sender_methods"]
+    if [m["name"] for m in senders] != ["onUseTick", "releaseUsing"]:
+        raise ReceiverProbeError("missing required sender methods")
+    update_methods = interface["declared_update_methods"]
+    if len(update_methods) != 1:
+        raise ReceiverProbeError("ambiguous update method interface")
+    def row(m):
+        return {"name": m["name"], "descriptor": m["descriptor"],
+                "parsed_method_sha256": m["parsed_method_sha256"],
+                "instruction_count": m["instruction_count"]}
+    return {
+        "schema_version": report["schema_version"],
+        "scope": report["scope"],
+        "artifact": report["artifact"],
+        "class_identities": [{"path": c["path"], "sha256": c["sha256"],
+                              "declared_method_count": c["declared_method_count"]}
+                             for c in classes],
+        "direct_raygun_superclass": raygun["declaration"]["direct_superclass_or_interface"],
+        "direct_raygun_updates_interface": raygun["declaration"]["mentions_updates_interface"],
+        "sender_methods": [row(m) for m in senders],
+        "packet_receiver": row(packet["receiver"]),
+        "interface_update_method": {
+            **row(update_methods[0]["implementation"]),
+            "declaration": update_methods[0]["declaration"]
+        },
+        "compat_set_tag": row(compat["selected_set_tag"]),
+        "anchors": [
+            {"method": "handle", "offset": a, "opcode": op, "symbol": sym}
+            for a, (op, sym) in sorted(ANCHORS["handle"].items())
+        ] + [
+            {"method": name, "offset": a, "opcode": op, "symbol": sym}
+            for name in ("onUseTick", "releaseUsing")
+            for a, (op, sym) in sorted(ANCHORS[name].items())
+        ],
+        "interface_default_call": {
+            "offset": 2,
+            "opcode": "invokestatic",
+            "symbol_contains": "ACCompat.setTag:"
+        },
+        "compat_custom_data_calls": [
+            {"offset": 5, "symbol_contains": "DataComponents.CUSTOM_DATA:"},
+            {"offset": 8, "symbol_contains": "ItemStack.remove:"},
+            {"offset": 20, "symbol_contains": "CustomData.of:"},
+            {"offset": 23, "symbol_contains": "ItemStack.set:"}
+        ]
+    }
+
+
+def verify_sealed_report(report, sealed):
+    """Snapshot must match, and critical native writes must remain on exact offsets."""
+    measured = snapshot_projection(report)
+    if measured != sealed:
+        raise ReceiverProbeError("sealed SHA-exact receiver manifest changed")
+    classes = report["classes"]
+    if not measured["direct_raygun_updates_interface"]:
+        raise ReceiverProbeError("Raygun no longer directly implements UpdatesStackTags")
+    member = classes[2]["declared_update_methods"][0]
+    if not member["declaration"].startswith("public default void updateTagFromServer("):
+        raise ReceiverProbeError("default interface implementation declaration changed")
+    def require_reference(m, offset, symbol, opcode=None):
+        hits = [i for i in m["selected_references"] if i["offset"] == offset]
+        if (len(hits) != 1 or symbol not in hits[0]["symbol"]
+                or opcode is not None and hits[0]["opcode"] != opcode):
+            raise ReceiverProbeError("native receiver write/read path drift " + str(offset))
+    require_reference(member["implementation"], 2, "ACCompat.setTag:", "invokestatic")
+    setter = classes[3]["selected_set_tag"]
+    for row in sealed["compat_custom_data_calls"]:
+        require_reference(setter, row["offset"], row["symbol_contains"])
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--jar", required=True, type=Path)
     parser.add_argument("--javap", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--snapshot", type=Path)
     args = parser.parse_args()
     report = audit(args.jar, args.javap)
+    if args.snapshot is not None:
+        sealed = json.loads(args.snapshot.read_text(encoding="utf8"))
+        verify_sealed_report(report, sealed)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True,
                                       ensure_ascii=False) + "\n", encoding="utf8")
