@@ -166,7 +166,7 @@ def snapshot_projection(report):
             "declared_method_count", "packet_class_path", "packet_class_sha256")},
         "selected_methods": [
             {k: m[k] for k in
-             ("name", "descriptor", "instruction_count",
+             ("name", "descriptor",
               "parsed_method_sha256", "packet_reference_offsets")}
             for m in methods
         ],
