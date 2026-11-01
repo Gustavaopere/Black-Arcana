@@ -115,13 +115,56 @@ def audit(jar: Path, javap_bin: Path):
     return out
 
 
+
+def check_snapshot(report, snapshot):
+    """Fail closed on all selected SHA-exact identity/operand assertions."""
+    for key in ("schema_version", "scope", "artifact", "class_path",
+                "class_sha256", "declared_method_count", "method_count"):
+        if report.get(key) != snapshot.get(key):
+            raise RaygunProbeError("sealed metadata drift: " + key)
+    selected = {m["name"] + " " + m["descriptor"]: m
+                for m in report["selected_methods"]}
+    if len(selected) != report["method_count"]:
+        raise RaygunProbeError("duplicate selected method identity")
+    for key, digest in snapshot["selected_method_digests"].items():
+        if key not in selected or selected[key]["parsed_method_sha256"] != digest:
+            raise RaygunProbeError("sealed method digest drift: " + key)
+    if not 1 <= len(snapshot["anchors"]) <= 40:
+        raise RaygunProbeError("critical anchor budget exceeded")
+    if len({(x["method"], x["kind"], x["offset"]) for x in snapshot["anchors"]}) != len(snapshot["anchors"]):
+        raise RaygunProbeError("duplicate sealed Raygun anchor")
+    by_name = {}
+    for m in report["selected_methods"]:
+        by_name.setdefault(m["name"], []).append(m)
+    for anchor in snapshot["anchors"]:
+        methods = by_name.get(anchor["method"], [])
+        if len(methods) != 1:
+            raise RaygunProbeError("missing or ambiguous sealed method")
+        rows = methods[0].get(anchor["kind"])
+        if not isinstance(rows, list):
+            raise RaygunProbeError("unrecognized sealed anchor category")
+        hits = [x for x in rows if x.get("offset") == anchor["offset"]]
+        if len(hits) != 1:
+            raise RaygunProbeError("missing or duplicate sealed offset")
+        row = hits[0]
+        for key in ("opcode", "operand"):
+            if key in anchor and row.get(key) != anchor[key]:
+                raise RaygunProbeError("sealed Raygun opcode/operand drift")
+        if anchor.get("symbol_contains") not in (None, "") and anchor["symbol_contains"] not in row.get("symbol", ""):
+            raise RaygunProbeError("sealed Raygun symbolic owner drift")
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--jar", required=True, type=Path)
     parser.add_argument("--javap", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--snapshot", type=Path, required=True)
     args = parser.parse_args()
     report = audit(args.jar, args.javap)
+    snapshot = json.loads(args.snapshot.read_text(encoding="utf8"), object_pairs_hook=strict_pairs)
+    check_snapshot(report, snapshot)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False,
                                       sort_keys=True) + "\n", encoding="utf8")
