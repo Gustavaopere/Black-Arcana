@@ -1,0 +1,244 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_TREMORZILLA_BEAM_SELECTED_JVM_CONSUMER_AND_CALLERS_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_path": "com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity.class",
+  "class_sha256": "e1ac60a8005f9414dde1d25a92a2110df65cef145c3225e9c2557c96672fe8dc",
+  "declared_method_count": 116,
+  "damage_factory_anchor": {
+    "name": "hurtEntitiesAround",
+    "descriptor": "(Lnet/minecraft/world/phys/Vec3;FFFZZZ)Z",
+    "bytecode_offset": 76,
+    "opcode": "invokestatic",
+    "factory_symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeTremorzillaBeamDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+  },
+  "selected_method_digests": [
+    {
+      "name": "hurtEntitiesAround",
+      "descriptor": "(Lnet/minecraft/world/phys/Vec3;FFFZZZ)Z",
+      "sha256": "4010320a94f570e9c29818b0935cde665b49f04cac86e55d44d80cf8fe984498"
+    },
+    {
+      "name": "tick",
+      "descriptor": "()V",
+      "sha256": "5bfa4b6d3e067c7fd67ef8c0562c4f27e17d06e7e86e751710c3de49dc301eca"
+    },
+    {
+      "name": "tickBreath",
+      "descriptor": "()V",
+      "sha256": "22d4de159e1a792b620bd117ffdfca70ef3a42e1395cbb4216ae6e480cd2eeec"
+    },
+    {
+      "name": "stompEffect",
+      "descriptor": "(ZFFFF)V",
+      "sha256": "1d5415a47f86ce1335a9265d14800f934f9415f663e475a9e371ac5c2229aa31"
+    },
+    {
+      "name": "canEntityBeHurtByBeam",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/phys/Vec3;)Z",
+      "sha256": "13e05b91afaf21aee584377aab719dfa8b3d18b8096dce18797d259910af854c"
+    },
+    {
+      "name": "tickBeamTargeting",
+      "descriptor": "()V",
+      "sha256": "e30e73ce799d7266d51b0a8d218a92d6bf2d18f168bf90b3cd8c921809f5f90f"
+    },
+    {
+      "name": "createInitialBeamVec",
+      "descriptor": "()Lnet/minecraft/world/phys/Vec3;",
+      "sha256": "6aec2c99a9a6d6e801ac3c5b97749f31e8a88bc34d24294882fe04a851449369"
+    },
+    {
+      "name": "getMaxBeamBreakLength",
+      "descriptor": "()D",
+      "sha256": "130e8f64129e414ac5f9b98889d09a7b70d945f8ab24b97c2c0c3b1d7f4b780b"
+    },
+    {
+      "name": "getCharge",
+      "descriptor": "()I",
+      "sha256": "9b465425e46bf94d86c1d2536fac1d2161aaccd353997e8510e3c2da0f6c4465"
+    }
+  ],
+  "local_callers": [
+    {
+      "method": "tick",
+      "descriptor": "()V",
+      "sites": [
+        1455,
+        1537,
+        1558,
+        1579,
+        1599,
+        1619,
+        1863
+      ]
+    },
+    {
+      "method": "tickBreath",
+      "descriptor": "()V",
+      "sites": [
+        552,
+        578
+      ]
+    },
+    {
+      "method": "stompEffect",
+      "descriptor": "(ZFFFF)V",
+      "sites": [
+        357
+      ]
+    }
+  ],
+  "method_anchors": [
+    {
+      "group": "references",
+      "offset": 76,
+      "opcode": "invokestatic",
+      "symbol_contains": "causeTremorzillaBeamDamage"
+    },
+    {
+      "group": "references",
+      "offset": 87,
+      "opcode": "invokevirtual",
+      "symbol_contains": "DamageSources.mobAttack"
+    },
+    {
+      "group": "references",
+      "offset": 101,
+      "opcode": "getstatic",
+      "symbol_contains": "NO_CREATIVE_OR_SPECTATOR"
+    },
+    {
+      "group": "references",
+      "offset": 104,
+      "opcode": "invokevirtual",
+      "symbol_contains": "getEntitiesOfClass"
+    },
+    {
+      "group": "references",
+      "offset": 139,
+      "opcode": "invokevirtual",
+      "symbol_contains": "LivingEntity.is:"
+    },
+    {
+      "group": "references",
+      "offset": 148,
+      "opcode": "invokevirtual",
+      "symbol_contains": "isAlliedTo:"
+    },
+    {
+      "group": "references",
+      "offset": 193,
+      "opcode": "invokevirtual",
+      "symbol_contains": "distanceToSqr:"
+    },
+    {
+      "group": "references",
+      "offset": 213,
+      "opcode": "invokevirtual",
+      "symbol_contains": "canEntityBeHurtByBeam:"
+    },
+    {
+      "group": "references",
+      "offset": 226,
+      "opcode": "instanceof",
+      "symbol_contains": "KaijuMob"
+    },
+    {
+      "group": "references",
+      "offset": 237,
+      "opcode": "invokestatic",
+      "symbol_contains": "ACCompat.hurt:"
+    },
+    {
+      "group": "references",
+      "offset": 285,
+      "opcode": "invokevirtual",
+      "symbol_contains": "knockbackTarget:"
+    },
+    {
+      "group": "references",
+      "offset": 295,
+      "opcode": "invokevirtual",
+      "symbol_contains": "getHealth:"
+    },
+    {
+      "group": "references",
+      "offset": 305,
+      "opcode": "instanceof",
+      "symbol_contains": "monster/Enemy"
+    },
+    {
+      "group": "references",
+      "offset": 318,
+      "opcode": "putfield",
+      "symbol_contains": "killCountFromBeam"
+    },
+    {
+      "group": "references",
+      "offset": 327,
+      "opcode": "getstatic",
+      "symbol_contains": "IRRADIATED"
+    },
+    {
+      "group": "references",
+      "offset": 345,
+      "opcode": "invokespecial",
+      "symbol_contains": "MobEffectInstance"
+    },
+    {
+      "group": "references",
+      "offset": 348,
+      "opcode": "invokevirtual",
+      "symbol_contains": "addEffect:"
+    },
+    {
+      "group": "numeric_constants",
+      "offset": 52,
+      "opcode": "ldc2_w",
+      "symbol_contains": "double 3.0d"
+    },
+    {
+      "group": "numeric_constants",
+      "offset": 341,
+      "opcode": "sipush"
+    },
+    {
+      "group": "numeric_constants",
+      "offset": 344,
+      "opcode": "iconst_2"
+    },
+    {
+      "group": "branches",
+      "offset": 65,
+      "opcode": "ifeq"
+    },
+    {
+      "group": "branches",
+      "offset": 240,
+      "opcode": "ifeq"
+    },
+    {
+      "group": "branches",
+      "offset": 290,
+      "opcode": "ifeq"
+    },
+    {
+      "group": "branches",
+      "offset": 352,
+      "opcode": "goto"
+    }
+  ],
+  "limits": {
+    "runtime_not_proven": true,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "complete_CFG": false,
+    "complete_provider_inventory": false,
+    "certification": "NOT_CERTIFIED"
+  }
+}
