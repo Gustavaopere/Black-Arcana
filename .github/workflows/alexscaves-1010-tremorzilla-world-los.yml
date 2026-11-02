@@ -7,6 +7,7 @@ on:
       - '.github/workflows/alexscaves-1010-tremorzilla-world-los.yml'
       - 'docs/qa/alexscaves_1010_tremorzilla_world_los_probe.py'
       - 'docs/qa/alexscaves_1010_tremorzilla_world_los_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-WORLD-LOS-1.0.10.json'
       - 'docs/qa/alexscaves-1010-tremorzilla-world-los-handoff.md'
   push:
     branches: [main]
@@ -14,6 +15,7 @@ on:
       - '.github/workflows/alexscaves-1010-tremorzilla-world-los.yml'
       - 'docs/qa/alexscaves_1010_tremorzilla_world_los_probe.py'
       - 'docs/qa/alexscaves_1010_tremorzilla_world_los_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-WORLD-LOS-1.0.10.json'
       - 'docs/qa/alexscaves-1010-tremorzilla-world-los-handoff.md'
 permissions:
   contents: read
@@ -43,6 +45,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_tremorzilla_world_los_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-WORLD-LOS-1.0.10.json' \
             --output build/alexscaves-1010/tremorzilla-world-los-evidence.json
       - name: Publish read-only selected JVM report
         if: always()
