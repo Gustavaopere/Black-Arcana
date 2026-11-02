@@ -101,9 +101,9 @@ def probe_method(m):
     branches=[]
     for offset in DIRECT_BRANCHES:
         inst=ins[positions[offset]]
-        m=JVM_TARGET.match(inst["operand"])
-        require(m is not None,"unreadable JVM branch target @"+str(offset))
-        target=int(m.group(1))
+        branch_match=JVM_TARGET.match(inst["operand"])
+        require(branch_match is not None,"unreadable JVM branch target @"+str(offset))
+        target=int(branch_match.group(1))
         require(target in positions,"branch destination not an instruction")
         idx=positions[offset]
         require(idx+1<len(ins),"missing sequential instruction after branch")
