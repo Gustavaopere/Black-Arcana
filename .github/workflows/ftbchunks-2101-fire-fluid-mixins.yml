@@ -1,0 +1,69 @@
+name: FTB Chunks 2101.1.22 exact Fire and Fluid mixin annotations
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ftbchunks-2101-fire-fluid-mixins.yml'
+      - 'docs/qa/ftbchunks_2101_fire_fluid_mixins_probe.py'
+      - 'docs/qa/ftbchunks_2101_fire_fluid_mixins_probe_test.py'
+      - 'docs/qa/ftbchunks_2101_blockstate_mixin_probe.py'
+      - 'docs/qa/ftbchunks-2101-fire-fluid-mixins-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/FTBCHUNKS-2101-FIRE-FLUID-MIXINS-ABI.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/tremorzilla-beam.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ftbchunks-2101-fire-fluid-mixins.yml'
+      - 'docs/qa/ftbchunks_2101_fire_fluid_mixins_probe.py'
+      - 'docs/qa/ftbchunks_2101_fire_fluid_mixins_probe_test.py'
+      - 'docs/qa/ftbchunks_2101_blockstate_mixin_probe.py'
+      - 'docs/qa/ftbchunks-2101-fire-fluid-mixins-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/FTBCHUNKS-2101-FIRE-FLUID-MIXINS-ABI.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/tremorzilla-beam.md'
+
+permissions:
+  contents: read
+
+jobs:
+  exact_fire_and_fluid:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Test fail-closed classfile annotations and seals
+        run: |
+          python3 -m py_compile docs/qa/ftbchunks_2101_fire_fluid_mixins_probe.py docs/qa/ftbchunks_2101_fire_fluid_mixins_probe_test.py
+          python3 docs/qa/ftbchunks_2101_fire_fluid_mixins_probe_test.py -v
+      - name: Fetch exact FTB Chunks 2101.1.22 publisher artifact
+        run: |
+          mkdir -p build/ftbchunks-2101-fire-fluid
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://maven.ftb.dev/releases/dev/ftb/mods/ftb-chunks-neoforge/2101.1.22/ftb-chunks-neoforge-2101.1.22.jar' \
+            --output build/ftbchunks-2101-fire-fluid/ftb-chunks-neoforge-2101.1.22.jar
+      - name: Inspect SHA-pinned fire and fluid mixin classfiles
+        run: |
+          SEAL=wiki/modpack-catalog/providers/✅-alexs-caves-continued/FTBCHUNKS-2101-FIRE-FLUID-MIXINS-ABI.json
+          if test -f "$SEAL"; then
+            python3 docs/qa/ftbchunks_2101_fire_fluid_mixins_probe.py \
+              --jar build/ftbchunks-2101-fire-fluid/ftb-chunks-neoforge-2101.1.22.jar \
+              --seal "$SEAL" --output build/ftbchunks-2101-fire-fluid/mixins-evidence.json
+          else
+            echo 'UNSEALED FIRE/FLUID DISCOVERY: not a merge certificate.'
+            python3 docs/qa/ftbchunks_2101_fire_fluid_mixins_probe.py \
+              --jar build/ftbchunks-2101-fire-fluid/ftb-chunks-neoforge-2101.1.22.jar \
+              --output build/ftbchunks-2101-fire-fluid/mixins-evidence.json
+          fi
+          python3 -m json.tool build/ftbchunks-2101-fire-fluid/mixins-evidence.json
+      - name: Upload bounded evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ftbchunks-2101-fire-fluid-mixins-evidence
+          path: build/ftbchunks-2101-fire-fluid/mixins-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
