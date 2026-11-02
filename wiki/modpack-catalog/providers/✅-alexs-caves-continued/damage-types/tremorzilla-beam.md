@@ -98,6 +98,16 @@ Em `hurtEntitiesAround`, a primeira flag é testada em `@63–65`. O ramo verdad
 - `tickBreath` verifica lado lógico, usa `Level.clip` com `COLLIDER/NONE` e acessa `ACServerConfig.devastatingTremorzillaBeam`. O ramo de destruição de blocos, sua extensão, limite de chunks e a política de permissões **não estão certificados por esta inspeção parcial**; qualquer integração com Black Arcana requer `WorldEffectPolicy` e testes de mundo antes de alterar esse comportamento.
 - `getCharge()` lê o campo sincronizado `CHARGE` via `SynchedEntityData`; `getMaxBeamBreakLength()` consulta `MAX_BEAM_BREAK_LENGTH`. As referências a `beamTime`, `maxBeamTime` e `beamServerTarget` são estado do provider, não nova mana, cooldown Black Arcana ou setter seguro automaticamente exposto a perks.
 
+### Controle de fluxo normal SHA-exato — guards e desvio de raycast (PR #1006)
+
+A [auditoria de dominadores do CFG normal compilado](../../../../docs/qa/alexscaves-1010-tremorzilla-normal-cfg-handoff.md) e o [manifesto 1.0.10](../EXACT-TREMORZILLA-NORMAL-CFG-1.0.10.json) acrescentam uma verificação de **caminhos normais intramétodo**; não inclui arestas de exceção, dispatch, mixins ou gameplay.
+
+- `breakBlocksAround`: `ACPlatform.canEntityGrief @12` e `Level.isClientSide @22` **dominam** os pontos `destroyBlock @249`, `onBlockExploded @268`, `createEntity @296` e `addFreshEntity @349` no CFG normal. **Isso não certifica a semântica do retorno do predicate, claims de terceiros, loaded chunks ou aplicação da `WorldEffectPolicy`.**
+- `tickBreath`: `Level.isClientSide @4` domina os sites de mundo `breakBlocksAround @525/@620` e de dano `hurtEntitiesAround @552/@578`. Já `Level.clip @393` **não os domina**: há trajetórias normais de execução que contornam essa chamada específica. Isso **não** prova ausência de LOS, ataque através de paredes nem falha de autorização — outro caminho de `canEntityBeHurtByBeam` usa `Level.clip @37`.
+- `canEntityBeHurtByBeam`: seu `Level.clip @37` domina `BlockHitResult.getType @40` no CFG normal. O significado booleano completo dos ramos e permissões permanece pendente.
+
+**Consequência para perks:** não unificar o clip do endpoint, o predicado de LOS por entidade e a política de destruição; o fluxo nativo possui condicionais distintas. Preservar `NO_MUTATION`, `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED`. **Nenhuma nova ficha ou certificação.**
+
 ### Matriz de integração / pendências
 
 | Perk pretendida | Consumer que exige auditoria adicional | Decisão |
