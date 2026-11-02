@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "scope": "FTB_CHUNKS_2101_1_22_DECLARED_MIXINS_AND_EXPLOSION_CALLSITE_CENSUS",
+  "artifact": {
+    "coordinates": "dev.ftb.mods:ftb-chunks-neoforge:2101.1.22",
+    "size_bytes": 655807,
+    "sha256": "4ba1b3352184fa7f6e2aa4bca76edd074867697d62344dfa50dcccdb4dab5217"
+  },
+  "metadata": {
+    "config_sha256": "bd5f99632e804411285c53d1d5fc3cf90f938f265c62e2862b0fc790c00d5ad8",
+    "neoforge_metadata_sha256": "9e626df21afb020a57812373e831aef52ca222c8728d58179c1fe651a3a6cde8",
+    "mixin_package": "dev.ftb.mods.ftbchunks.core.mixin",
+    "declared_mixin_groups": {
+      "mixins": [
+        "ArmorStandMixin",
+        "BiomeMixin",
+        "BlockStateMixin",
+        "ChunkMapMixin",
+        "FireBlockMixin",
+        "FlowingFluidMixin",
+        "ItemFrameMixin",
+        "PistonBaseBlockMixin",
+        "VehicleEntityMixin"
+      ],
+      "client": [
+        "ClientPacketListenerMixin",
+        "GuiMixin",
+        "UtilMixin"
+      ],
+      "server": []
+    },
+    "declared_mixin_population": 12,
+    "neo_registered_mixins": [
+      "ftbchunks-common.mixins.json"
+    ],
+    "java_compatibility_level": "JAVA_17",
+    "injector_default_require": 1
+  },
+  "class_population": 238,
+  "mixins": [
+    {
+      "group": "mixins",
+      "name": "ArmorStandMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/ArmorStandMixin.class",
+      "class_sha256": "f071d4acb7e5cf4d8ff52b37d4a6e1f74478dd4b0f1782661b0853133a6ce503",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": false,
+        "Inject": true,
+        "Redirect": false,
+        "Modify": false
+      }
+    },
+    {
+      "group": "mixins",
+      "name": "BiomeMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/BiomeMixin.class",
+      "class_sha256": "be51aa7b9bbced12d55994c4ab6d421605907960cfd8f651ad036f6a8af046ab",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": false,
+        "Inject": false,
+        "Redirect": false,
+        "Modify": false
+      }
+    },
+    {
+      "group": "mixins",
+      "name": "BlockStateMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/BlockStateMixin.class",
+      "class_sha256": "2920670a37b9ebf4d7768ddf37f488fd685f2e88d4630a82310b75393039d5ce",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": true,
+        "Inject": false,
+        "Redirect": false,
+        "Modify": false
+      }
+    },
+    {
+      "group": "mixins",
+      "name": "ChunkMapMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/ChunkMapMixin.class",
+      "class_sha256": "aa70fdb133227f43b96c80937ffe37ffe9172dabc93df1545dde0aa5ea218f8a",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": false,
+        "Inject": true,
+        "Redirect": false,
+        "Modify": false
+      }
+    },
+    {
+      "group": "mixins",
+      "name": "FireBlockMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/FireBlockMixin.class",
+      "class_sha256": "670463ce84b03d26852ba333370f15f0edf69eae89d8a89d504167b14caa41e2",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": false,
+        "Inject": false,
+        "Redirect": true,
+        "Modify": false
+      }
+    },
+    {
+      "group": "mixins",
+      "name": "FlowingFluidMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/FlowingFluidMixin.class",
+      "class_sha256": "24ffbe40205ff6db02093f18cdc96bb23c54e80e9afd29e769c8067b0a85d971",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": true,
+        "Inject": true,
+        "Redirect": false,
+        "Modify": false
+      }
+    },
+    {
+      "group": "mixins",
+      "name": "ItemFrameMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/ItemFrameMixin.class",
+      "class_sha256": "4002399db17c46fb37ef02c7a960be3b2605d44b2d7a263d17654ec2d48a7823",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": false,
+        "Inject": true,
+        "Redirect": false,
+        "Modify": false
+      }
+    },
+    {
+      "group": "mixins",
+      "name": "PistonBaseBlockMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/PistonBaseBlockMixin.class",
+      "class_sha256": "3708f3eef06665251dc8d57671ca11c0d78735f8396b32ab68dd5981595e42cd",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": false,
+        "Inject": true,
+        "Redirect": false,
+        "Modify": false
+      }
+    },
+    {
+      "group": "mixins",
+      "name": "VehicleEntityMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/VehicleEntityMixin.class",
+      "class_sha256": "9c3b8501b1181e44bdf645ee4c10328febe3b8d3547314dd0924568a33ad0882",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": false,
+        "Inject": true,
+        "Redirect": false,
+        "Modify": false
+      }
+    },
+    {
+      "group": "client",
+      "name": "ClientPacketListenerMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/ClientPacketListenerMixin.class",
+      "class_sha256": "2b37411a0f3acb2ab7b309aee784a1bab1e09f9c2d84566a38de82a786cbf90f",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": false,
+        "Inject": true,
+        "Redirect": false,
+        "Modify": false
+      }
+    },
+    {
+      "group": "client",
+      "name": "GuiMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/GuiMixin.class",
+      "class_sha256": "ad08f809840e866d79ae617c2eec6dafffe8e799e300a41ca27358e579be9d96",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": false,
+        "Inject": true,
+        "Redirect": false,
+        "Modify": false
+      }
+    },
+    {
+      "group": "client",
+      "name": "UtilMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/UtilMixin.class",
+      "class_sha256": "56c2984c2fb61d068aa31ad56cc6e924e000aff3a0de295845e02878d81a8d7f",
+      "raw_constant_pool_string_presence": {
+        "Explosion": false,
+        "explosionDetonate": false,
+        "getToBlow": false,
+        "destroyBlock": false,
+        "onBlockExploded": false,
+        "LevelEvent": false,
+        "BlockState": false,
+        "Inject": true,
+        "Redirect": false,
+        "Modify": false
+      }
+    }
+  ],
+  "compiled_method_name_reference_class_population": 1,
+  "compiled_method_declarations": [
+    {
+      "class_path": "dev/ftb/mods/ftbchunks/FTBChunks.class",
+      "class_sha256": "358473a336917b4b13103a9dec51384fe61c9424058a794e51277f8204140e9e",
+      "target_method_descriptors": [
+        "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/Explosion;Ljava/util/List;)V"
+      ]
+    }
+  ],
+  "direct_jvm_invocation_sites": [],
+  "direct_jvm_invocation_site_count": 0,
+  "interpretation": "DECLARED_MIXINS_AND_STATIC_JVM_REFS_ONLY_NOT_EFFECTIVE_DISPATCH",
+  "limits": {
+    "metadata_registration": "DECLARATIVE_ONLY",
+    "runtime_mixin_application": "NOT_OBSERVED",
+    "external_mod_event_registration": "NOT_VERIFIED",
+    "native_explosion_dispatch": "NOT_VERIFIED",
+    "claim_per_affected_block": "NOT_CERTIFIED",
+    "tremorzilla_level_destroy_block": "NOT_VERIFIED",
+    "tremorzilla_blockstate_on_block_exploded": "NOT_VERIFIED",
+    "black_arcana_world_effect_policy": "NOT_VERIFIED",
+    "loaded_modpack_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  }
+}

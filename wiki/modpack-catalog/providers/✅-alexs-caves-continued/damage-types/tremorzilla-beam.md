@@ -151,6 +151,14 @@ Esta evidência diferencia operações sobre `Explosion.getToBlow()/clearToBlow(
 
 **Decisão de perk:** ⚠️ parcial/condicionado, `NO_MUTATION`, `NOT_CERTIFIED`, `physical_qa=NOT_TESTED`; não ampliar destruição sem prova da execução real e dos callbacks protegidos. Contador 28/30 mantido.
 
+### FTB Chunks 2101.1.22 — mixins registrados e ausência de chamada JVM direta (PR #1012)
+
+A [auditoria dos metadados de mixins e callsites](../../../../../docs/qa/ftbchunks-2101-mixin-explosion-handoff.md) e seu [manifesto selável](../FTBCHUNKS-2101-MIXIN-REGISTRATION-ABI.json) foram produzidos a partir do mesmo JAR publisher SHA-256 `4ba1b3352184fa7f6e2aa4bca76edd074867697d62344dfa50dcccdb4dab5217`. O arquivo `ftbchunks-common.mixins.json` está registrado no `neoforge.mods.toml`, com **12 classes declaradas e presentes** (9 comuns e 3 de cliente); nenhuma delas apresenta os indicadores literais `Explosion`, `explosionDetonate`, `destroyBlock` ou `onBlockExploded` pesquisados nos bytes das classes. Esses indicadores **não equivalem** à inspeção integral de anotações ou aplicação dinâmica das transformações.
+
+No censo das **238 classes** do JAR, `FTBChunks.explosionDetonate(Level,Explosion,List)` tem uma única classe declarante e **zero invocações JVM diretas** nos candidatos selecionados. **Não inferir que o método é morto ou que a proteção por claims não existe**: outras dependências, hooks de loader, mixins externos, invocação dinâmica e comportamento físico não estão cobertos. Para as rotas nativas de `TremorzillaEntity.breakBlocksAround`, `Level.destroyBlock`, `BlockState.onBlockExploded` e spawn continuam **sem garantia de interceptação por bloco**.
+
+**Gate de perks:** ⚠️ parcial/condicionado, `NOT_CERTIFIED`, `NO_MUTATION`, `physical_qa=NOT_TESTED`. Sem habilitar ampliação de raio, dano, duração ou destruição; +0 fichas e +0 hooks homologados. A evidência inicial deve ser selada pela CI sobre a HEAD antes do merge.
+
 ### Matriz de integração / pendências
 
 | Perk pretendida | Consumer que exige auditoria adicional | Decisão |
