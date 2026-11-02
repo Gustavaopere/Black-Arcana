@@ -12,6 +12,7 @@ def synthetic():
         [569,570,571,574,575,578,580,600,619,625,633,635,640,643,647,
          650,657,660,665,668,669]+
         list(range(920,963))+
+        list(range(1080,1123))+
         list(range(1125,1162))
     ))
     ins=[{"offset":i,"opcode":"nop","operand":"","symbol":""} for i in offsets]
@@ -24,11 +25,17 @@ def synthetic():
         (924,"ifeq","931",""),(927,"iconst_4","",""),
         (931,"iconst_0","",""),(932,"istore","23",""),
         (943,"invokevirtual","#3","Method Level.getEntities:()Ljava/util/List;"),
-        (950,"iload","23",""),(1138,"iload","18",""),
+        (950,"iload","23",""),
+        (1111,"sipush","800",""),
+        (1114,"iload","23",""),
+        (1116,"invokespecial","#5","Method MobEffectInstance.<init>:()V"),
+        (1119,"invokevirtual","#6","Method LivingEntity.addEffect:()Z"),
+        (1138,"iload","18",""),
         (1140,"ifeq","1147",""),(1143,"iconst_4","",""),
         (1147,"iconst_0","",""),
-        (1154,"invokespecial","#4",
-         "Method UpdateEffectVisualityEntityMessage.<init>:()V")
+        (1151,"invokespecial","#4",
+         "Method UpdateEffectVisualityEntityMessage.<init>:()V"),
+        (1154,"invokestatic","#7","Method AlexsCaves.sendMSGToAll:()V")
     ]:
         by[off].update(opcode=opcode,operand=operand,symbol=symbol)
     return {"header":"public void onUseTick(...)",
@@ -39,11 +46,11 @@ def example():
             "observations":inspect_selected(synthetic())}
 
 class SelectedBranchConsumersTests(unittest.TestCase):
-    def test_three_bounded_regions(self):
+    def test_four_bounded_regions(self):
         v=inspect_selected(synthetic())
         self.assertEqual([x["name"] for x in v["regions"]],
                          [r[0] for r in REGIONS])
-        self.assertEqual(len(v["regions"]),3)
+        self.assertEqual(len(v["regions"]),4)
         self.assertTrue(all(x["instruction_count"]<=95 for x in v["regions"]))
 
     def test_xray_branch_and_trace_invocation(self):
@@ -63,10 +70,22 @@ class SelectedBranchConsumersTests(unittest.TestCase):
         self.assertEqual([t["access"] for t in v["selected_slot23_accesses"]],
                          ["WRITE","READ"])
 
+    def test_gamma_effect_request_uses_local23_and_duration(self):
+        result=inspect_selected(synthetic())
+        region=result["regions"][2]
+        self.assertTrue(any(x["offset"]==1111 and x["operand"]=="800"
+                            for x in region["numeric_operands"]))
+        self.assertTrue(any(x["offset"]==1114 and x["opcode"]=="iload"
+                            for x in region["selected_local_accesses"]))
+        self.assertTrue(any("MobEffectInstance." in x["symbol"]
+                            for x in region["method_calls"]))
+        self.assertTrue(any("LivingEntity.addEffect:" in x["symbol"]
+                            for x in region["method_calls"]))
+
     def test_visual_region_has_only_compiled_observation(self):
         v=inspect_selected(synthetic())
         self.assertTrue(any("UpdateEffectVisualityEntityMessage"
-                            in m["symbol"] for m in v["regions"][2]["method_calls"]))
+                            in m["symbol"] for m in v["regions"][3]["method_calls"]))
         self.assertIn("NOT_COMPLETE_CFG",v["interpretation"])
 
     def test_pinned_exact_method_drift_rejected(self):
