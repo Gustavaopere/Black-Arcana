@@ -2,12 +2,14 @@
 """Fail-closed synthetic regressions for read-only world/LOS inspection."""
 from __future__ import annotations
 import copy
+import json
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from alexscaves_1010_tremorzilla_world_los_probe import (
     TremorzillaWorldEvidenceError, compact_method, select_rows, extract,
-    audit, limitations,
+    audit, limitations, verify_sealed_snapshot,
 )
 
 
@@ -44,6 +46,76 @@ def fixture():
 
 
 class TremorzillaWorldContractTests(unittest.TestCase):
+    def sealed_fixture(self):
+        manifest = (Path(__file__).resolve().parents[2] /
+                    "wiki/modpack-catalog/providers/✅-alexs-caves-continued" /
+                    "EXACT-TREMORZILLA-WORLD-LOS-1.0.10.json")
+        seal = json.loads(manifest.read_text(encoding="utf-8"))
+        report = {
+            key: copy.deepcopy(seal[key]) for key in
+            ("schema_version", "scope", "artifact", "class_path",
+             "class_sha256", "method_count", "limits")
+        }
+        report["selected"] = {}
+        for row in seal["method_signatures_and_digests"]:
+            report["selected"][row["name"]] = [{
+                "name": row["name"], "descriptor": row["descriptor"],
+                "method_sha256": row["sha256"],
+                "references": {"rows": [], "truncated": False},
+                "constants": {"rows": [], "truncated": False},
+                "branches": {"rows": [], "truncated": False},
+            }]
+        for anchor in seal["selected_abi_anchors"]:
+            row = report["selected"][anchor["method"]][0]
+            row[anchor["group"]]["rows"].append({
+                "offset": anchor["offset"], "opcode": anchor["opcode"],
+                "symbol": anchor.get("symbol_contains", ""),
+                "operand": anchor.get("operand_equals", ""),
+            })
+        return report, seal
+
+    def test_positive_exact_native_seal(self):
+        report, seal = self.sealed_fixture()
+        self.assertTrue(verify_sealed_snapshot(report, seal))
+
+    def test_wrong_world_mutation_opcode_rejected(self):
+        report, seal = self.sealed_fixture()
+        row = next(r for r in report["selected"]["breakBlocksAround"][0]
+                   ["references"]["rows"] if r["offset"] == 249)
+        row["opcode"] = "getstatic"
+        with self.assertRaisesRegex(TremorzillaWorldEvidenceError, "anchor mismatch"):
+            verify_sealed_snapshot(report, seal)
+
+    def test_false_griefing_authorization_rejected(self):
+        report, seal = self.sealed_fixture()
+        report["limits"]["world_protection_and_claims"] = "VERIFIED"
+        with self.assertRaisesRegex(TremorzillaWorldEvidenceError, "promotion"):
+            verify_sealed_snapshot(report, seal)
+
+    def test_false_physical_qa_rejected(self):
+        report, seal = self.sealed_fixture()
+        seal["limits"]["physical_qa"] = "PASS"
+        with self.assertRaisesRegex(TremorzillaWorldEvidenceError, "promotion"):
+            verify_sealed_snapshot(report, seal)
+
+    def test_hurt_method_sha_drift_rejected(self):
+        report, seal = self.sealed_fixture()
+        report["selected"]["tickBreath"][0]["method_sha256"] = "0" * 64
+        with self.assertRaisesRegex(TremorzillaWorldEvidenceError, "digest drift"):
+            verify_sealed_snapshot(report, seal)
+
+    def test_truncated_anchor_evidence_rejected(self):
+        report, seal = self.sealed_fixture()
+        report["selected"]["tickBreath"][0]["references"]["truncated"] = True
+        with self.assertRaisesRegex(TremorzillaWorldEvidenceError, "truncated"):
+            verify_sealed_snapshot(report, seal)
+
+    def test_false_interpretation_rejected(self):
+        report, seal = self.sealed_fixture()
+        seal["interpretation"] = "PERK_READY"
+        with self.assertRaisesRegex(TremorzillaWorldEvidenceError, "semantics"):
+            verify_sealed_snapshot(report, seal)
+
     def test_positive_bounded_boundary_fixture(self):
         evidence = extract(fixture())
         self.assertEqual(len(evidence["tickBreath"]), 1)
