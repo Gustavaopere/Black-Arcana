@@ -1,0 +1,70 @@
+name: NeoForge 21.1.248 exact grief event bytecode
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-grief-event.yml'
+      - 'docs/qa/neoforge_211248_grief_event_probe.py'
+      - 'docs/qa/neoforge_211248_grief_event_probe_test.py'
+      - 'docs/qa/neoforge-211248-grief-event-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/NEOFORGE-211248-GRIEF-EVENT-ABI.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/tremorzilla-beam.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/neoforge-211248-grief-event.yml'
+      - 'docs/qa/neoforge_211248_grief_event_probe.py'
+      - 'docs/qa/neoforge_211248_grief_event_probe_test.py'
+      - 'docs/qa/neoforge-211248-grief-event-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/NEOFORGE-211248-GRIEF-EVENT-ABI.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/tremorzilla-beam.md'
+
+permissions:
+  contents: read
+
+jobs:
+  neoforge_exact_grief:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic fail-closed regressions (not physical QA)
+        run: |
+          python3 -m py_compile docs/qa/neoforge_211248_grief_event_probe.py docs/qa/neoforge_211248_grief_event_probe_test.py
+          python3 docs/qa/neoforge_211248_grief_event_probe_test.py -v
+      - name: Acquire official NeoForge 21.1.248 universal artifact
+        run: |
+          mkdir -p build/neoforge-211248
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.248/neoforge-21.1.248-universal.jar' \
+            --output build/neoforge-211248/neoforge-21.1.248-universal.jar
+      - name: Probe compiled event dispatch and default grief state
+        run: |
+          SEAL=wiki/modpack-catalog/providers/✅-alexs-caves-continued/NEOFORGE-211248-GRIEF-EVENT-ABI.json
+          if test -f "$SEAL"; then
+            python3 docs/qa/neoforge_211248_grief_event_probe.py \
+              --jar build/neoforge-211248/neoforge-21.1.248-universal.jar \
+              --javap "$JAVA_HOME/bin/javap" --seal "$SEAL" \
+              --output build/neoforge-211248/grief-event-evidence.json
+          else
+            echo 'UNSEALED DISCOVERY RUN: no evidence seal committed yet; do not merge as certified.'
+            python3 docs/qa/neoforge_211248_grief_event_probe.py \
+              --jar build/neoforge-211248/neoforge-21.1.248-universal.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --output build/neoforge-211248/grief-event-evidence.json
+          fi
+          python3 -m json.tool build/neoforge-211248/grief-event-evidence.json
+      - name: Upload bounded compiled evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: neoforge-211248-grief-event-evidence
+          path: build/neoforge-211248/grief-event-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
