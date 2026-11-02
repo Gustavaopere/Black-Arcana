@@ -45,6 +45,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_tremorzilla_normal_cfg_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-NORMAL-CFG-1.0.10.json' \
             --output build/alexscaves-1010/tremorzilla-normal-cfg-evidence.json
       - name: Publish bounded JVM normal-CFG report
         if: always()
