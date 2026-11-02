@@ -159,6 +159,12 @@ No censo das **238 classes** do JAR, `FTBChunks.explosionDetonate(Level,Explosio
 
 **Gate de perks:** ⚠️ parcial/condicionado, `NOT_CERTIFIED`, `NO_MUTATION`, `physical_qa=NOT_TESTED`. Sem habilitar ampliação de raio, dano, duração ou destruição; +0 fichas e +0 hooks homologados. A evidência inicial deve ser selada pela CI sobre a HEAD antes do merge.
 
+### `BlockStateMixin` real do FTB Chunks 2101.1.22 (PR #1013)
+
+A inspeção [SHA-exata das anotações JVM](../../../../../docs/qa/ftbchunks-2101-blockstate-mixin-handoff.md) e seu [manifesto compilado](../FTBCHUNKS-2101-BLOCKSTATE-MIXIN-ABI.json) identificaram `BlockStateMixin.class` (SHA-256 `2920670a37b9ebf4d7768ddf37f488fd685f2e88d4630a82310b75393039d5ce`, Java 21). Sua anotação `@Mixin` referencia `net.minecraft.world.level.block.state.BlockState`; a classe declara somente `<init>()V` e `getFTBCIsWater()Z`, **sem anotações de método `@Inject`, `@Redirect` ou `@Overwrite` observadas**. A análise é de metadados e assinaturas, não de execução transformada.
+
+**Limite:** não há evidência nessa classe de uma injeção anotada que intercepte `Level.destroyBlock` ou `BlockState.onBlockExploded` do Tremorzilla. Outras classes de mixin, listeners, carregamento real de claims e proteção de blocos afetados não foram homologados. **⚠️ parcial/condicionado, `NO_MUTATION`, `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`**. Sem ampliar destruição, alvo, área ou alcance de perks a partir deste achado; +0 fichas concluídas.
+
 ### Matriz de integração / pendências
 
 | Perk pretendida | Consumer que exige auditoria adicional | Decisão |
