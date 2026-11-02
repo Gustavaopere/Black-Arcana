@@ -1,0 +1,70 @@
+name: FTB Chunks 2101.1.22 exact explosion ABI boundary
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ftbchunks-2101-explosion-seam.yml'
+      - 'docs/qa/ftbchunks_2101_explosion_seam_probe.py'
+      - 'docs/qa/ftbchunks_2101_explosion_seam_probe_test.py'
+      - 'docs/qa/ftbchunks-2101-explosion-seam-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/FTBCHUNKS-2101-EXPLOSION-ABI.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/tremorzilla-beam.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ftbchunks-2101-explosion-seam.yml'
+      - 'docs/qa/ftbchunks_2101_explosion_seam_probe.py'
+      - 'docs/qa/ftbchunks_2101_explosion_seam_probe_test.py'
+      - 'docs/qa/ftbchunks-2101-explosion-seam-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/FTBCHUNKS-2101-EXPLOSION-ABI.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/tremorzilla-beam.md'
+
+permissions:
+  contents: read
+
+jobs:
+  exact_ftb_explosion:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Static regression tests (not physical claim QA)
+        run: |
+          python3 -m py_compile docs/qa/ftbchunks_2101_explosion_seam_probe.py docs/qa/ftbchunks_2101_explosion_seam_probe_test.py
+          python3 docs/qa/ftbchunks_2101_explosion_seam_probe_test.py -v
+      - name: Download the SHA-pinned official FTB Chunks 2101.1.22 JAR
+        run: |
+          mkdir -p build/ftbchunks-2101
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://maven.ftb.dev/releases/dev/ftb/mods/ftb-chunks-neoforge/2101.1.22/ftb-chunks-neoforge-2101.1.22.jar' \
+            --output build/ftbchunks-2101/ftb-chunks-neoforge-2101.1.22.jar
+      - name: Extract bounded explosion ABI evidence
+        run: |
+          SEAL=wiki/modpack-catalog/providers/✅-alexs-caves-continued/FTBCHUNKS-2101-EXPLOSION-ABI.json
+          if test -f "$SEAL"; then
+            python3 docs/qa/ftbchunks_2101_explosion_seam_probe.py \
+              --jar build/ftbchunks-2101/ftb-chunks-neoforge-2101.1.22.jar \
+              --javap "$JAVA_HOME/bin/javap" --seal "$SEAL" \
+              --output build/ftbchunks-2101/explosion-abi.json
+          else
+            echo 'UNSEALED EXPLOSION DISCOVERY: do not merge as certified.'
+            python3 docs/qa/ftbchunks_2101_explosion_seam_probe.py \
+              --jar build/ftbchunks-2101/ftb-chunks-neoforge-2101.1.22.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --output build/ftbchunks-2101/explosion-abi.json
+          fi
+          python3 -m json.tool build/ftbchunks-2101/explosion-abi.json
+      - name: Upload bounded evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ftbchunks-2101-explosion-abi
+          path: build/ftbchunks-2101/explosion-abi.json
+          if-no-files-found: ignore
+          retention-days: 14

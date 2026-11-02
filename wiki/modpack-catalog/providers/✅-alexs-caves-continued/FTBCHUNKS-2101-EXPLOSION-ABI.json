@@ -1,0 +1,379 @@
+{
+  "schema_version": 1,
+  "scope": "FTBCHUNKS_2101_1_22_EXACT_EXPLOSION_SELECTED_ABI_ONLY",
+  "artifact": {
+    "coordinates": "dev.ftb.mods:ftb-chunks-neoforge:2101.1.22",
+    "size_bytes": 655807,
+    "sha256": "4ba1b3352184fa7f6e2aa4bca76edd074867697d62344dfa50dcccdb4dab5217"
+  },
+  "class": {
+    "path": "dev/ftb/mods/ftbchunks/neoforge/FTBChunksForge.class",
+    "sha256": "64d32b0e46d2e9c454fb78ad656348965971fa4a443251bf8b9ecf465cc5f553"
+  },
+  "candidate_class_population": 2,
+  "candidate_classes": [
+    {
+      "class_path": "dev/ftb/mods/ftbchunks/FTBChunks.class",
+      "class_sha256": "358473a336917b4b13103a9dec51384fe61c9424058a794e51277f8204140e9e",
+      "declared_method_count": 51,
+      "explosion_related_descriptors": [
+        {
+          "name": "ignoreExplosion",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/Explosion;)Z"
+        },
+        {
+          "name": "explosionDetonate",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/Explosion;Ljava/util/List;)V"
+        },
+        {
+          "name": "lambda$explosionDetonate$6",
+          "descriptor": "(Ldev/ftb/mods/ftblibrary/math/ChunkDimPos;)Ljava/lang/Boolean;"
+        }
+      ],
+      "exact_detonate_handler_count": 0
+    },
+    {
+      "class_path": "dev/ftb/mods/ftbchunks/neoforge/FTBChunksForge.class",
+      "class_sha256": "64d32b0e46d2e9c454fb78ad656348965971fa4a443251bf8b9ecf465cc5f553",
+      "declared_method_count": 4,
+      "explosion_related_descriptors": [],
+      "exact_detonate_handler_count": 0
+    }
+  ],
+  "mixin_configuration_resources": [
+    "ftbchunks-common.mixins.json"
+  ],
+  "compiled_explosion_detonate_callsite_candidates": [],
+  "primary_handler_name": null,
+  "primary_handler_owner": null,
+  "handler_status": "NO_EXACT_SIGNATURE_IN_BOUNDED_CLASS_SCAN",
+  "selected_methods": [
+    {
+      "owner_class": "dev/ftb/mods/ftbchunks/FTBChunks.class",
+      "name": "ignoreExplosion",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/Explosion;)Z",
+      "instruction_count": 21,
+      "method_sha256": "2be22c0551a69df9a584f64eb79ca7dddedf598f6259500f2b4ca8ea3bb3e354",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "invokevirtual",
+          "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+        },
+        {
+          "offset": 8,
+          "opcode": "invokevirtual",
+          "symbol": "Method net/minecraft/world/level/Explosion.getToBlow:()Ljava/util/List;"
+        },
+        {
+          "offset": 11,
+          "opcode": "invokeinterface",
+          "symbol": "InterfaceMethod java/util/List.isEmpty:()Z"
+        },
+        {
+          "offset": 22,
+          "opcode": "getfield",
+          "symbol": "Field net/minecraft/world/level/Explosion.source:Lnet/minecraft/world/entity/Entity;"
+        },
+        {
+          "offset": 28,
+          "opcode": "getstatic",
+          "symbol": "Field dev/ftb/mods/ftbchunks/FTBChunksWorldConfig.PROTECT_UNKNOWN_EXPLOSIONS:Ldev/ftb/mods/ftblibrary/snbt/config/BooleanValue;"
+        },
+        {
+          "offset": 31,
+          "opcode": "invokevirtual",
+          "symbol": "Method dev/ftb/mods/ftblibrary/snbt/config/BooleanValue.get:()Ljava/lang/Object;"
+        },
+        {
+          "offset": 34,
+          "opcode": "checkcast",
+          "symbol": "class java/lang/Boolean"
+        },
+        {
+          "offset": 37,
+          "opcode": "invokevirtual",
+          "symbol": "Method java/lang/Boolean.booleanValue:()Z"
+        }
+      ],
+      "branches_and_returns": [
+        {
+          "offset": 4,
+          "opcode": "ifne",
+          "operand": "19"
+        },
+        {
+          "offset": 16,
+          "opcode": "ifeq",
+          "operand": "21"
+        },
+        {
+          "offset": 20,
+          "opcode": "ireturn",
+          "operand": ""
+        },
+        {
+          "offset": 25,
+          "opcode": "ifnonnull",
+          "operand": "47"
+        },
+        {
+          "offset": 40,
+          "opcode": "ifne",
+          "operand": "47"
+        },
+        {
+          "offset": 44,
+          "opcode": "goto",
+          "operand": "48"
+        },
+        {
+          "offset": 48,
+          "opcode": "ireturn",
+          "operand": ""
+        }
+      ],
+      "scope": "STATIC_REFERENCE_SITES_NOT_EFFECTIVE_RUNTIME"
+    },
+    {
+      "owner_class": "dev/ftb/mods/ftbchunks/FTBChunks.class",
+      "name": "explosionDetonate",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/Explosion;Ljava/util/List;)V",
+      "instruction_count": 51,
+      "method_sha256": "ddee781653f6b4985545e97a88d2fafc5d5d90423d7ab77768ca20d673eaca26",
+      "references": [
+        {
+          "offset": 0,
+          "opcode": "getstatic",
+          "symbol": "Field dev/ftb/mods/ftbchunks/FTBChunksWorldConfig.DISABLE_PROTECTION:Ldev/ftb/mods/ftblibrary/snbt/config/BooleanValue;"
+        },
+        {
+          "offset": 3,
+          "opcode": "invokevirtual",
+          "symbol": "Method dev/ftb/mods/ftblibrary/snbt/config/BooleanValue.get:()Ljava/lang/Object;"
+        },
+        {
+          "offset": 6,
+          "opcode": "checkcast",
+          "symbol": "class java/lang/Boolean"
+        },
+        {
+          "offset": 9,
+          "opcode": "invokevirtual",
+          "symbol": "Method java/lang/Boolean.booleanValue:()Z"
+        },
+        {
+          "offset": 18,
+          "opcode": "invokevirtual",
+          "symbol": "Method ignoreExplosion:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/Explosion;)Z"
+        },
+        {
+          "offset": 25,
+          "opcode": "new",
+          "symbol": "class java/util/ArrayList"
+        },
+        {
+          "offset": 30,
+          "opcode": "invokevirtual",
+          "symbol": "Method net/minecraft/world/level/Explosion.getToBlow:()Ljava/util/List;"
+        },
+        {
+          "offset": 33,
+          "opcode": "invokespecial",
+          "symbol": "Method java/util/ArrayList.\"<init>\":(Ljava/util/Collection;)V"
+        },
+        {
+          "offset": 39,
+          "opcode": "invokevirtual",
+          "symbol": "Method net/minecraft/world/level/Explosion.clearToBlow:()V"
+        },
+        {
+          "offset": 42,
+          "opcode": "new",
+          "symbol": "class java/util/HashMap"
+        },
+        {
+          "offset": 46,
+          "opcode": "invokespecial",
+          "symbol": "Method java/util/HashMap.\"<init>\":()V"
+        },
+        {
+          "offset": 53,
+          "opcode": "invokeinterface",
+          "symbol": "InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;"
+        },
+        {
+          "offset": 62,
+          "opcode": "invokeinterface",
+          "symbol": "InterfaceMethod java/util/Iterator.hasNext:()Z"
+        },
+        {
+          "offset": 72,
+          "opcode": "invokeinterface",
+          "symbol": "InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;"
+        },
+        {
+          "offset": 77,
+          "opcode": "checkcast",
+          "symbol": "class net/minecraft/core/BlockPos"
+        },
+        {
+          "offset": 84,
+          "opcode": "new",
+          "symbol": "class dev/ftb/mods/ftblibrary/math/ChunkDimPos"
+        },
+        {
+          "offset": 91,
+          "opcode": "invokespecial",
+          "symbol": "Method dev/ftb/mods/ftblibrary/math/ChunkDimPos.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"
+        },
+        {
+          "offset": 94,
+          "opcode": "invokedynamic",
+          "symbol": "InvokeDynamic #38:apply:()Ljava/util/function/Function;"
+        },
+        {
+          "offset": 99,
+          "opcode": "invokeinterface",
+          "symbol": "InterfaceMethod java/util/Map.computeIfAbsent:(Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object;"
+        },
+        {
+          "offset": 104,
+          "opcode": "checkcast",
+          "symbol": "class java/lang/Boolean"
+        },
+        {
+          "offset": 107,
+          "opcode": "invokevirtual",
+          "symbol": "Method java/lang/Boolean.booleanValue:()Z"
+        },
+        {
+          "offset": 114,
+          "opcode": "invokevirtual",
+          "symbol": "Method net/minecraft/world/level/Explosion.getToBlow:()Ljava/util/List;"
+        },
+        {
+          "offset": 119,
+          "opcode": "invokeinterface",
+          "symbol": "InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z"
+        }
+      ],
+      "branches_and_returns": [
+        {
+          "offset": 12,
+          "opcode": "ifne",
+          "operand": "24"
+        },
+        {
+          "offset": 21,
+          "opcode": "ifeq",
+          "operand": "25"
+        },
+        {
+          "offset": 24,
+          "opcode": "return",
+          "operand": ""
+        },
+        {
+          "offset": 67,
+          "opcode": "ifeq",
+          "operand": "128"
+        },
+        {
+          "offset": 110,
+          "opcode": "ifeq",
+          "operand": "125"
+        },
+        {
+          "offset": 125,
+          "opcode": "goto",
+          "operand": "60"
+        },
+        {
+          "offset": 128,
+          "opcode": "return",
+          "operand": ""
+        }
+      ],
+      "scope": "STATIC_REFERENCE_SITES_NOT_EFFECTIVE_RUNTIME"
+    },
+    {
+      "owner_class": "dev/ftb/mods/ftbchunks/FTBChunks.class",
+      "name": "lambda$explosionDetonate$6",
+      "descriptor": "(Ldev/ftb/mods/ftblibrary/math/ChunkDimPos;)Ljava/lang/Boolean;",
+      "instruction_count": 14,
+      "method_sha256": "79d8f5a9779ef8826c0f55e152919a4c93813fc64f5aaad04b4c75e1b1cdc93d",
+      "references": [
+        {
+          "offset": 0,
+          "opcode": "invokestatic",
+          "symbol": "Method dev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl.getInstance:()Ldev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl;"
+        },
+        {
+          "offset": 4,
+          "opcode": "invokevirtual",
+          "symbol": "Method dev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl.getChunk:(Ldev/ftb/mods/ftblibrary/math/ChunkDimPos;)Ldev/ftb/mods/ftbchunks/data/ClaimedChunkImpl;"
+        },
+        {
+          "offset": 13,
+          "opcode": "invokevirtual",
+          "symbol": "Method dev/ftb/mods/ftbchunks/data/ClaimedChunkImpl.allowExplosions:()Z"
+        },
+        {
+          "offset": 24,
+          "opcode": "invokestatic",
+          "symbol": "Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;"
+        }
+      ],
+      "branches_and_returns": [
+        {
+          "offset": 9,
+          "opcode": "ifnull",
+          "operand": "19"
+        },
+        {
+          "offset": 16,
+          "opcode": "ifeq",
+          "operand": "23"
+        },
+        {
+          "offset": 20,
+          "opcode": "goto",
+          "operand": "24"
+        },
+        {
+          "offset": 27,
+          "opcode": "areturn",
+          "operand": ""
+        }
+      ],
+      "scope": "STATIC_REFERENCE_SITES_NOT_EFFECTIVE_RUNTIME"
+    }
+  ],
+  "observed_symbolic_anchors": {
+    "explosion_affected_blocks": false,
+    "explosion_affected_entities": false,
+    "chunk_dimension_position": true,
+    "claimed_chunk_lookup": true,
+    "allow_explosions_check": true,
+    "block_position_iteration": true,
+    "chunk_position_iteration": false,
+    "list_mutation": false,
+    "event_cancel": false,
+    "direct_world_block_break": false
+  },
+  "interpretation": "BOUNDED_COMPILED_REFERENCES_ONLY_NOT_RUNTIME_PROTECTION",
+  "limits": {
+    "native_explosion_dispatch": "NOT_VERIFIED",
+    "mixin_and_datapack_behavior": "NOT_VERIFIED",
+    "loaded_claim_configuration": "NOT_VERIFIED",
+    "blockstate_on_block_exploded": "NOT_VERIFIED",
+    "direct_level_destroy_block": "NOT_VERIFIED",
+    "claim_per_affected_block": "NOT_CERTIFIED",
+    "world_effect_policy": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  }
+}
