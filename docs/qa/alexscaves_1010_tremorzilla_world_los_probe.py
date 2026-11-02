@@ -143,13 +143,66 @@ def audit(jar, javap_bin):
     return report
 
 
+
+def verify_sealed_snapshot(report, seal):
+    """Reject method, opcode, literal, identity or status drift."""
+    for key in ("schema_version", "scope", "artifact", "class_path",
+                "class_sha256", "method_count"):
+        require(report.get(key) == seal.get(key),
+                "sealed 1.0.10 world/LOS identity drift: " + key)
+    require(report.get("limits") == seal.get("limits") == limitations(),
+            "unsupported gameplay, hook or QA promotion")
+    require(seal.get("interpretation") ==
+            "SELECTED_JVM_REFS_AND_LITERALS_ONLY_NO_INFERRED_AUTHORISATION_OR_FINAL_DAMAGE",
+            "unverified runtime semantics promoted")
+    methods = seal.get("method_signatures_and_digests")
+    require(isinstance(methods, list) and len(methods) == 7,
+            "wrong selected method seal size")
+    signatures = [(m["name"], m["descriptor"]) for m in methods]
+    require(len(set(signatures)) == len(signatures),
+            "duplicate selected signature")
+    observed = {}
+    for items in report["selected"].values():
+        for m in items:
+            key = (m["name"], m["descriptor"])
+            require(key not in observed, "duplicate selected method in report")
+            observed[key] = m
+    for m in methods:
+        original = observed.get((m["name"], m["descriptor"]))
+        require(original is not None and
+                original["method_sha256"] == m["sha256"],
+                "selected method descriptor/digest drift: " + m["name"])
+    anchors = seal.get("selected_abi_anchors")
+    require(isinstance(anchors, list) and 10 <= len(anchors) <= 70,
+            "unbounded or empty world/LOS anchor seal")
+    seen = set()
+    for anchor in anchors:
+        key = (anchor["method"], anchor["group"], anchor["offset"])
+        require(key not in seen, "duplicate sealed world/LOS site")
+        seen.add(key)
+        item = next((m for (name, desc), m in observed.items()
+                     if name == anchor["method"]), None)
+        require(item is not None, "missing sealed method owner")
+        group = item[anchor["group"]]
+        require(not group["truncated"], "truncated world/LOS anchor group")
+        hits = [x for x in group["rows"] if x["offset"] == anchor["offset"]]
+        require(len(hits) == 1 and hits[0]["opcode"] == anchor["opcode"]
+                and anchor.get("symbol_contains", "") in hits[0]["symbol"]
+                and (not anchor.get("operand_equals") or
+                     hits[0]["operand"] == anchor["operand_equals"]),
+                "world/LOS JVM anchor mismatch: " + anchor["method"])
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--jar", type=Path, required=True)
     parser.add_argument("--javap", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--manifest", type=Path, required=True)
     args = parser.parse_args()
     report = audit(args.jar, args.javap)
+    verify_sealed_snapshot(report, json.loads(args.manifest.read_text(encoding="utf-8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
     for name, items in report["selected"].items():
