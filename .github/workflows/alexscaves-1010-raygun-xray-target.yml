@@ -1,0 +1,70 @@
+name: Alex's Caves 1.0.10 Raygun X_RAY target branch windows
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-raygun-xray-target.yml'
+      - 'docs/qa/alexscaves_1010_raygun_xray_target_probe.py'
+      - 'docs/qa/alexscaves_1010_raygun_xray_target_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-xray-target-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-XRAY-TARGET-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-raygun-xray-target.yml'
+      - 'docs/qa/alexscaves_1010_raygun_xray_target_probe.py'
+      - 'docs/qa/alexscaves_1010_raygun_xray_target_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-xray-target-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-XRAY-TARGET-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+
+permissions:
+  contents: read
+
+jobs:
+  raygun_target_anchors:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Bounded synthetic negative regressions
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_raygun_xray_target_probe.py docs/qa/alexscaves_1010_raygun_xray_target_probe_test.py
+          python3 docs/qa/alexscaves_1010_raygun_xray_target_probe_test.py -v
+      - name: Fetch exact Alex's Caves Continued 1.0.10 publisher JAR
+        run: |
+          mkdir -p build/raygun-xray-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/raygun-xray-1010/alexscaves-1.0.10.jar
+      - name: Inspect selected Raygun targeting window anchors
+        run: |
+          SEAL=wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-XRAY-TARGET-1.0.10.json
+          if test -f "$SEAL"; then
+            python3 docs/qa/alexscaves_1010_raygun_xray_target_probe.py \
+              --jar build/raygun-xray-1010/alexscaves-1.0.10.jar \
+              --javap "$JAVA_HOME/bin/javap" --seal "$SEAL" \
+              --output build/raygun-xray-1010/target-evidence.json
+          else
+            echo 'UNSEALED RAYGUN TARGET DISCOVERY: do not merge.'
+            python3 docs/qa/alexscaves_1010_raygun_xray_target_probe.py \
+              --jar build/raygun-xray-1010/alexscaves-1.0.10.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --output build/raygun-xray-1010/target-evidence.json
+          fi
+          python3 -m json.tool build/raygun-xray-1010/target-evidence.json
+      - name: Archive bounded interop evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: raygun-1010-targeting-window-evidence
+          path: build/raygun-xray-1010/target-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
