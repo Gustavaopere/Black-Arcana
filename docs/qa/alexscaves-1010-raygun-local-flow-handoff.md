@@ -23,3 +23,23 @@ O [workflow dedicado](../../.github/workflows/alexscaves-1010-raygun-local-flow.
 - Não promover Stage 06, contadores ou `COMPLETE_PERK_READY`.
 
 A próxima decisão após o selo deve distinguir **quais atribuições por ramo alimentam** os alvos de dano e de distância; somente então considerar uma interface realmente suportada pelo provider ou manter o bloqueio.
+
+
+## Resultado observado no JAR exato — CI exploratória #41510061345
+
+A [execução de descoberta](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41510061345) aprovou **12/12 testes sintéticos** e verificou o publisher JAR original (75.279.314 bytes), a classe `RaygunItem.class` (SHA-256 `3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c`) e as **523 instruções** de `onUseTick` (digest `b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5`). Os fatos estão no [manifesto do censo](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-LOCAL-FLOW-1.0.10.json).
+
+| Slot JVM | Instrução de escrita observada | Leituras observadas no método | Interpretação com restrições |
+|---|---|---|---|
+| `7` (float) | `fstore 7 @33` | `fload @38, @270, @360` | `@28 fdiv`, desvio `@29 goto @33` e alternativa `@32 fconst_1` precedem a atribuição. Há valor por branch; não basta para certificar a curva de range |
+| `8` (float) | `fstore 8 @41` | `fload @66, @75, @90, @578, @597` | `25.0f @35 × fload 7 @38` é armazenado em `8 @41`. São acessos estáticos; as diferenças de branch e raytrace ainda não equivalem a alcance final |
+| `9` (int) | `istore 9 @58` | `iload @105, @122, @569` | A comparação com `ACCompat.enchantLevel(X_RAY) @47` produz 0/1 via `ifle @50`, `iconst_1 @53` e `iconst_0 @57`. O efeito posterior de cada leitura requer análise de branch |
+| `18` (int) | `istore 18 @346` | `iload @367, @402, @922, @1029, @1138` | `@341 iconst_1` / `@345 iconst_0` convergem em `@346`, depois da consulta ao encantamento `GAMMA_RAY @332` observada anteriormente. Ainda não se comprova a fórmula de seleção nem a reachability de cada leitura |
+
+**Relação entre dano e slot 18:** a janela da PR #1015 mostra `iload 18 @1029` → `ifeq @1031` → `fconst_2 @1034` ou `ldc_w 1.5f @1038` → `ACCompat.hurt @1041`, seguida por guarda do retorno `ifeq @1044`. Isso é uma escolha de valores de **dano solicitado** na região compilada e não demonstra dano aceito, bônus de `GAMMA_RAY` em todos os caminhos, incidência por hit ou autoridade PvP.
+
+A população selecionada contém **4 acessos** ao slot 7, **6** ao 8, **4** ao 9 e **6** ao 18. Esses são contadores de referências JVM no método, não quantidades de disparos, acertos, alvos ou ticks.
+
+O censo concluiu uma lacuna de **proveniência imediata das atribuições e conjunto de leituras**. Ele **não** resolve path conditions, todas as reaching definitions, ramo de X_RAY em `@105/@122/@569` ou seleção definitiva de `GAMMA_RAY` em `@346`. Não marcar o Raygun como `COMPLETE_PERK_READY`; a próxima verificação deve tratar a condição do branch e o carregamento/controle de servidor de forma específica.
+
+O manifesto foi criado a partir da descoberta; é obrigatório rodar a CI **selada** na última HEAD da PR antes do merge.
