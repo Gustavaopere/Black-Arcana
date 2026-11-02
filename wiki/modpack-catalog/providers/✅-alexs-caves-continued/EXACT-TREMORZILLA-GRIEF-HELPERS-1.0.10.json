@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_NATIVE_GRIEF_AND_COMPAT_HELPER_SELECTED_ABI_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "selected_methods": [
+    {
+      "owner": "ACPlatform",
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACPlatform.class",
+      "class_sha256": "662a4d2593fe515ed8790bad06d8184d1eb921423033dfd11b3b44142dedc3e6",
+      "declared_method_count": 42,
+      "name": "canEntityGrief",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Z",
+      "method_sha256": "f7a62617940051058449582d858e7df3797ff6231b9c64bab83cd6662729eb84",
+      "instruction_count": 4
+    },
+    {
+      "owner": "ACCompat",
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "class_sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+      "declared_method_count": 199,
+      "name": "onBlockExploded",
+      "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Explosion;)V",
+      "method_sha256": "df693dc5550db9e8ba5cf1a73af9e184ba9646c413f248649c181fb3ead2009c",
+      "instruction_count": 6
+    },
+    {
+      "owner": "ACCompat",
+      "class_path": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "class_sha256": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+      "declared_method_count": 199,
+      "name": "createEntity",
+      "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;",
+      "method_sha256": "5c615940bdddde55326bc71b0e8858a4956b72f5db2b405093e51d6027f10c11",
+      "instruction_count": 4
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "class_path": "com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity.class",
+      "class_sha256": "e1ac60a8005f9414dde1d25a92a2110df65cef145c3225e9c2557c96672fe8dc",
+      "declared_method_count": 116,
+      "name": "breakBlocksAround",
+      "descriptor": "(Lnet/minecraft/world/phys/Vec3;FZZF)Z",
+      "method_sha256": "1212f9fdad485fe769e934ef7048ae21cf022edbce480e7b795089b2bbb39371",
+      "instruction_count": 166
+    }
+  ],
+  "selected_abi_anchors": [
+    {
+      "owner": "ACPlatform",
+      "name": "canEntityGrief",
+      "offset": 2,
+      "opcode": "invokestatic",
+      "symbol_contains": "EventHooks.canEntityGrief:"
+    },
+    {
+      "owner": "ACPlatform",
+      "name": "canEntityGrief",
+      "offset": 5,
+      "opcode": "ireturn"
+    },
+    {
+      "owner": "ACCompat",
+      "name": "onBlockExploded",
+      "offset": 4,
+      "opcode": "invokevirtual",
+      "symbol_contains": "BlockState.onBlockExploded:"
+    },
+    {
+      "owner": "ACCompat",
+      "name": "onBlockExploded",
+      "offset": 7,
+      "opcode": "return"
+    },
+    {
+      "owner": "ACCompat",
+      "name": "createEntity",
+      "offset": 2,
+      "opcode": "invokevirtual",
+      "symbol_contains": "EntityType.create:"
+    },
+    {
+      "owner": "ACCompat",
+      "name": "createEntity",
+      "offset": 5,
+      "opcode": "areturn"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "symbol_contains": "isBaby:"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 4,
+      "opcode": "ifne",
+      "operand_equals": "28"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 12,
+      "opcode": "invokestatic",
+      "symbol_contains": "ACPlatform.canEntityGrief:"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 15,
+      "opcode": "ifeq",
+      "operand_equals": "28"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 22,
+      "opcode": "invokevirtual",
+      "symbol_contains": "Level.isClientSide:"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 25,
+      "opcode": "ifeq",
+      "operand_equals": "30"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 28,
+      "opcode": "iconst_0"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 29,
+      "opcode": "ireturn"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 30,
+      "opcode": "iconst_0"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 249,
+      "opcode": "invokevirtual",
+      "symbol_contains": "Level.destroyBlock:"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 268,
+      "opcode": "invokestatic",
+      "symbol_contains": "ACCompat.onBlockExploded:"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 296,
+      "opcode": "invokestatic",
+      "symbol_contains": "ACCompat.createEntity:"
+    },
+    {
+      "owner": "TremorzillaEntity",
+      "name": "breakBlocksAround",
+      "offset": 349,
+      "opcode": "invokevirtual",
+      "symbol_contains": "Level.addFreshEntity:"
+    }
+  ],
+  "interpretation": "BYTECODE_DELEGATION_AND_EARLY_RETURN_ONLY_NOT_GLOBAL_CLAIMS_PERMISSION",
+  "limits": {
+    "full_interprocedural_cfg": "NOT_RECONSTRUCTED",
+    "guard_return_semantics": "INSPECTION_REQUIRED",
+    "loaded_modpack_claims": "NOT_VERIFIED",
+    "world_effect_policy": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  }
+}

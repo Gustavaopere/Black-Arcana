@@ -108,6 +108,17 @@ A [auditoria de dominadores do CFG normal compilado](../../../../../docs/qa/alex
 
 **Consequência para perks:** não unificar o clip do endpoint, o predicado de LOS por entidade e a política de destruição; o fluxo nativo possui condicionais distintas. Preservar `NO_MUTATION`, `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED`. **Nenhuma nova ficha ou certificação.**
 
+### Helpers compilados — NeoForge grief, early return e callbacks do mundo (PR #1007)
+
+A inspeção [SHA-exata do publisher 1.0.10](../../../../../docs/qa/alexscaves-1010-tremorzilla-grief-helper-handoff.md) e seu [manifesto de ABI](../EXACT-TREMORZILLA-GRIEF-HELPERS-1.0.10.json) identificam a implementação da delegação e os **sentidos dos ramos iniciais** de `breakBlocksAround`, além da dominância registrada na PR #1006:
+
+- `isBaby @1` com `ifne 28 @4` retorna `false` em `@28–29`; `ACPlatform.canEntityGrief @12` com `ifeq 28 @15` também retorna `false` quando o evento retorna falso. `Level.isClientSide @22` com `ifeq 30 @25` impede que o trecho destrutivo prossiga no lado cliente. Esses ramos são **JVM 1.0.10**, não demonstração de modpack transformado.
+- `ACPlatform.canEntityGrief(Level,Entity)` contém quatro instruções e delega diretamente a `net.neoforged.neoforge.event.EventHooks.canEntityGrief @2`, seguida de `ireturn @5`. **A semântica de `EventHooks` e suas integrações de claims ainda dependem de auditoria do NeoForge 21.1.248 e do modpack real.**
+- `ACCompat.onBlockExploded @4` delega a `BlockState.onBlockExploded`, enquanto `ACCompat.createEntity @2` delega a `EntityType.create`. Wrapper compilado não equivale a `WorldEffectPolicy`, autorização de explosão ou spawn seguro.
+- `Level.destroyBlock @249`, `ACCompat.onBlockExploded @268`, `ACCompat.createEntity @296` e `Level.addFreshEntity @349` continuam operações distintas e condicionadas; não presumir que ocorram no mesmo tick ou em toda ativação.
+
+**Estado de integração inalterado:** ⚠️ `NOT_CERTIFIED` / `NO_MUTATION` / `mutating_hook=NOT_VERIFIED` / `physical_qa=NOT_TESTED`. Nenhuma promoção de ficha ou perk só por comprovação de delegação.
+
 ### Matriz de integração / pendências
 
 | Perk pretendida | Consumer que exige auditoria adicional | Decisão |
