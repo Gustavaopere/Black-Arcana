@@ -92,20 +92,31 @@ def audit(jar,javap):
     with zipfile.ZipFile(jar) as z:
         names=z.namelist()
         require(len(names)==len(set(names)),"duplicate JAR entries")
-        candidates=[p for p in names if p.endswith(CLASS_SUFFIX)]
-        require(len(candidates)==1, "missing/ambiguous NeoEventListeners class")
-        selected_class=candidates[0]
+        # The exact release may use different class names than current source.
+        # Inspect only bounded class constant-pool strings for the event type.
+        classes=[p for p in names if p.endswith(".class")]
+        require(len(classes)<=5000, "class scan budget exceeded")
+        candidates=[p for p in classes if b"EntityMobGriefingEvent" in z.read(p)]
+        require(1 <= len(candidates) <= 18,
+                "missing/ambiguous compiled event reference; candidates="+repr(candidates[:8]))
         require(TAG_PATH in names, "FTB blacklist tag missing from published JAR")
         tag=validate_tag(z.read(TAG_PATH))
-        class_digest=digest(z.read(selected_class))
-    fqcn=selected_class[:-6].replace("/",".")
-    proc=subprocess.run([javap,"-classpath",str(jar),"-p","-s","-c",fqcn],
-                        capture_output=True,text=True,timeout=45,check=False)
-    require(proc.returncode==0, "javap failed: "+proc.stderr[:200])
-    methods=parse_methods(proc.stdout)
-    chosen=[m for m in methods if m["name"]==METHOD_NAME and m["descriptor"]==METHOD_DESC]
-    require(len(chosen)==1, "missing/ambiguous exact EntityMobGriefingEvent handler")
-    item=analyze_method(chosen[0])
+        digests={p:digest(z.read(p)) for p in candidates}
+    found=[]
+    for path in candidates:
+        fqcn=path[:-6].replace("/",".")
+        proc=subprocess.run([javap,"-classpath",str(jar),"-p","-s","-c",fqcn],
+                            capture_output=True,text=True,timeout=45,check=False)
+        require(proc.returncode==0, "javap failed: "+fqcn+" "+proc.stderr[:200])
+        methods=parse_methods(proc.stdout)
+        for method in methods:
+            name=method["name"].lower()
+            if method["descriptor"]==METHOD_DESC and "mob" in name and "grief" in name:
+                found.append((path,method))
+    require(len(found)==1, "missing/ambiguous exact grief handler; candidates="+repr(candidates[:8]))
+    selected_class,selected_method=found[0]
+    class_digest=digests[selected_class]
+    item=analyze_method(selected_method)
     report={
       "schema_version":1,
       "scope":"EXACT_FTBCHUNKS_2101_1_22_GRIEF_EVENT_AND_DEFAULT_TAG_ONLY",
