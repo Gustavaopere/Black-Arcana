@@ -314,3 +314,14 @@ O recorte identifica **quatro slots JVM** com a seguinte relação de escrita e 
 A observação **não autoriza identificar cada leitura como uma única definição em todos os caminhos**, pois slot JVM não equivale a variável SSA. Tampouco documenta range externo, dano efetivo, penetração através de blocos, número de alvos, segurança de claims, procs de Mastery ou hooks mutadores.
 
 **Estado preservado:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Não promover contadores 28/30, índices, Stage 06 ou `COMPLETE_PERK_READY`. A auditoria deve ser selada por CI final antes de incorporar o resultado.
+
+
+## Desvios reais de `X_RAY` e `GAMMA_RAY` no Raygun 1.0.10 (PR #1017)
+
+A [auditoria dirigida de branches JVM](../../../../../docs/qa/alexscaves-1010-raygun-condition-branches-handoff.md) e seu [manifesto SHA-exato](../EXACT-RAYGUN-CONDITION-BRANCHES-1.0.10.json) completam a documentação dos oito consumidores já conhecidos dos slots `9` e `18`, sem reconstruir o CFG global nem permitir alteração de runtime.
+
+**X_RAY — flag JVM slot 9**, atribuída em `@58` após `ACCompat.enchantLevel(X_RAY) @47` e `ifle @50`: `iload 9 @105 → ifeq @107` escolhe as referências de `HitResult` (fallthrough `@110` versus destino `@115`), e `iload @122 → ifeq @124` faz segunda escolha (`@127` versus `@132`). `iload @569 → ifeq @571` desvia para `@669` quando zero, ou entra no recorte de `LivingEntity.getBoundingBox @575` e `fload 8 @578` quando não zero. Isso ancora um **branch distinto de seleção/consulta**, mas não certifica penetração universal por blocos, range efetivo, entidade atingida ou permissão territorial.
+
+**GAMMA_RAY — flag JVM slot 18**, atribuída em `@346` após `ACCompat.enchantLevel(GAMMA_RAY) @335` e `ifle @338`: `iload @367 → ifeq @369` seleciona a região de partícula `BLUE_RAYGUN_EXPLOSION`; `@402 → ifeq @404` seleciona a região de `BLUE_HAZMAT_BREATHE`. `@922 → ifeq @924` escolhe `4/0` no caminho observado. **`@1029 → ifeq @1031` escolhe `2.0f` (não zero) ou `1.5f` (zero) antes de `ACCompat.hurt @1041`**. `@1138 → ifeq @1140` seleciona `4/0` para outro caminho. Não interpretar os literais `4/0` como acertos ou amplificador de efeito sem examinar o consumidor posterior.
+
+Esta é evidência de **seleções condicionais estáticas** na versão publisher 1.0.10, não garantia da aplicação de dano, alcance real, cobertura de claims/PvP ou contrato de hook para perks. **⚠️ parcial/condicionado · `NO_MUTATION` · `NOT_CERTIFIED` · `physical_qa=NOT_TESTED`**. A QA física do modpack e validação de `WorldEffectPolicy`, owner e server authorization permanecem pendentes. Contadores 28/30, homologação e Stage 06 não avançam.
