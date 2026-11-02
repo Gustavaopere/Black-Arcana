@@ -92,8 +92,8 @@ def inspect(jar,javap):
         require(len(methods)<=240,"unexpected publisher method population")
         for m in methods:
             for op in m["instructions"]:
-                if op["opcode"].startswith("invoke") and
-                   "explosionDetonate:" in op["symbol"]:
+                if (op["opcode"].startswith("invoke") and
+                        "explosionDetonate:" in op["symbol"]):
                     callsite_rows.append({
                         "owner_class":path,"method":m["name"],
                         "method_descriptor":m["descriptor"],
