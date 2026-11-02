@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "scope": "EXACT_FTBCHUNKS_2101_1_22_FIRE_AND_FLOWING_FLUID_MIXIN_ANNOTATIONS",
+  "artifact": {
+    "coordinates": "dev.ftb.mods:ftb-chunks-neoforge:2101.1.22",
+    "sha256": "4ba1b3352184fa7f6e2aa4bca76edd074867697d62344dfa50dcccdb4dab5217",
+    "size_bytes": 655807
+  },
+  "config": {
+    "path": "ftbchunks-common.mixins.json",
+    "sha256": "bd5f99632e804411285c53d1d5fc3cf90f938f265c62e2862b0fc790c00d5ad8",
+    "package": "dev.ftb.mods.ftbchunks.core.mixin",
+    "two_mixins_declared": true
+  },
+  "mixins": [
+    {
+      "name": "FireBlockMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/FireBlockMixin.class",
+      "class_sha256": "670463ce84b03d26852ba333370f15f0edf69eae89d8a89d504167b14caa41e2",
+      "jvm_class_major_version": 65,
+      "class_annotations": [
+        {
+          "visibility": "RuntimeInvisibleAnnotations",
+          "annotation": {
+            "type": "Lorg/spongepowered/asm/mixin/Mixin;",
+            "elements": {
+              "value": [
+                {
+                  "class_descriptor": "Lnet/minecraft/world/level/block/FireBlock;"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "annotation_types": [
+        "Lorg/spongepowered/asm/mixin/Mixin;",
+        "Lorg/spongepowered/asm/mixin/Shadow;",
+        "Lorg/spongepowered/asm/mixin/injection/Redirect;"
+      ],
+      "declared_methods": [
+        {
+          "name": "<init>",
+          "descriptor": "()V",
+          "access_flags": 1,
+          "bytecode": {
+            "bytecode_size": 5,
+            "bytecode_sha256": "aab13953f9d3feb5b9581e937786ec4c2ebbf1a0ebf7650fa7d8cd37fd68f2ec"
+          },
+          "annotations": [],
+          "recognized_transform_annotation_types": []
+        },
+        {
+          "name": "getIgniteOdds",
+          "descriptor": "(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)I",
+          "access_flags": 1028,
+          "bytecode": null,
+          "annotations": [
+            {
+              "visibility": "RuntimeVisibleAnnotations",
+              "annotation": {
+                "type": "Lorg/spongepowered/asm/mixin/Shadow;",
+                "elements": {}
+              }
+            }
+          ],
+          "recognized_transform_annotation_types": []
+        },
+        {
+          "name": "ftbc$getIgniteOdds",
+          "descriptor": "(Lnet/minecraft/world/level/block/FireBlock;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;)I",
+          "access_flags": 2,
+          "bytecode": {
+            "bytecode_size": 20,
+            "bytecode_sha256": "01389285af24fc055acf9de6a1cf74d4922114773223d090e7787b784459cb68"
+          },
+          "annotations": [
+            {
+              "visibility": "RuntimeVisibleAnnotations",
+              "annotation": {
+                "type": "Lorg/spongepowered/asm/mixin/injection/Redirect;",
+                "elements": {
+                  "method": [
+                    "tick"
+                  ],
+                  "at": {
+                    "type": "Lorg/spongepowered/asm/mixin/injection/At;",
+                    "elements": {
+                      "value": "INVOKE",
+                      "target": "Lnet/minecraft/world/level/block/FireBlock;getIgniteOdds(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)I"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "recognized_transform_annotation_types": [
+            "Lorg/spongepowered/asm/mixin/injection/Redirect;"
+          ]
+        }
+      ],
+      "method_count": 3,
+      "field_count": 0,
+      "method_annotation_count": 2,
+      "interpretation": "ANNOTATION_TARGETS_ONLY_NO_EFFECTIVE_HOOK_OR_PER_BLOCK_AUTHORITY"
+    },
+    {
+      "name": "FlowingFluidMixin",
+      "class_path": "dev/ftb/mods/ftbchunks/core/mixin/FlowingFluidMixin.class",
+      "class_sha256": "24ffbe40205ff6db02093f18cdc96bb23c54e80e9afd29e769c8067b0a85d971",
+      "jvm_class_major_version": 65,
+      "class_annotations": [
+        {
+          "visibility": "RuntimeInvisibleAnnotations",
+          "annotation": {
+            "type": "Lorg/spongepowered/asm/mixin/Mixin;",
+            "elements": {
+              "value": [
+                {
+                  "class_descriptor": "Lnet/minecraft/world/level/material/FlowingFluid;"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "annotation_types": [
+        "Lorg/spongepowered/asm/mixin/Mixin;",
+        "Lorg/spongepowered/asm/mixin/injection/Inject;"
+      ],
+      "declared_methods": [
+        {
+          "name": "<init>",
+          "descriptor": "()V",
+          "access_flags": 1,
+          "bytecode": {
+            "bytecode_size": 5,
+            "bytecode_sha256": "aab13953f9d3feb5b9581e937786ec4c2ebbf1a0ebf7650fa7d8cd37fd68f2ec"
+          },
+          "annotations": [],
+          "recognized_transform_annotation_types": []
+        },
+        {
+          "name": "onGetSpread",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;Ljava/util/Map;)V",
+          "access_flags": 1,
+          "bytecode": {
+            "bytecode_size": 8,
+            "bytecode_sha256": "034c82c80aa97b282fcd6c5f1bcf43ec043b2ea12a2f7dca28b26debb2144281"
+          },
+          "annotations": [
+            {
+              "visibility": "RuntimeVisibleAnnotations",
+              "annotation": {
+                "type": "Lorg/spongepowered/asm/mixin/injection/Inject;",
+                "elements": {
+                  "method": [
+                    "getSpread"
+                  ],
+                  "at": [
+                    {
+                      "type": "Lorg/spongepowered/asm/mixin/injection/At;",
+                      "elements": {
+                        "value": "RETURN"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "recognized_transform_annotation_types": [
+            "Lorg/spongepowered/asm/mixin/injection/Inject;"
+          ]
+        }
+      ],
+      "method_count": 2,
+      "field_count": 0,
+      "method_annotation_count": 1,
+      "interpretation": "ANNOTATION_TARGETS_ONLY_NO_EFFECTIVE_HOOK_OR_PER_BLOCK_AUTHORITY"
+    }
+  ],
+  "limits": {
+    "registered_mixin_configuration": "STATIC_DECLARATION_ONLY",
+    "runtime_mixin_application": "NOT_OBSERVED",
+    "effective_injection_behavior": "NOT_VERIFIED",
+    "claims_per_affected_block": "NOT_CERTIFIED",
+    "tremorzilla_direct_block_mutation": "NOT_VERIFIED",
+    "explosion_world_events": "NOT_VERIFIED",
+    "black_arcana_world_effect_policy": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  },
+  "interpretation": "STATIC_CLASSFILE_ANNOTATIONS_NOT_RUNTIME_MODPACK_CLAIM_ENFORCEMENT"
+}

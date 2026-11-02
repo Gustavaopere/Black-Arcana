@@ -165,6 +165,14 @@ A inspeção [SHA-exata das anotações JVM](../../../../../docs/qa/ftbchunks-21
 
 **Limite:** não há evidência nessa classe de uma injeção anotada que intercepte `Level.destroyBlock` ou `BlockState.onBlockExploded` do Tremorzilla. Outras classes de mixin, listeners, carregamento real de claims e proteção de blocos afetados não foram homologados. **⚠️ parcial/condicionado, `NO_MUTATION`, `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`**. Sem ampliar destruição, alvo, área ou alcance de perks a partir deste achado; +0 fichas concluídas.
 
+### Fogo e fluidos — transformações FTB Chunks 2101.1.22 (PR #1014)
+
+A [auditoria SHA-exata das anotações](../../../../../docs/qa/ftbchunks-2101-fire-fluid-mixins-handoff.md) e seu [manifesto JVM](../FTBCHUNKS-2101-FIRE-FLUID-MIXINS-ABI.json) inspecionaram as classes do JAR publisher 2101.1.22. O `FireBlockMixin` (`@Mixin(FireBlock)`) declara **`@Redirect(method=tick, @At(INVOKE, FireBlock.getIgniteOdds(LevelReader,BlockPos)))`** em `ftbc$getIgniteOdds`; o `FlowingFluidMixin` (`@Mixin(FlowingFluid)`) declara **`@Inject(method=getSpread, @At(RETURN))`** em `onGetSpread`. Esses alvos foram extraídos de anotações JVM, não inferidos apenas de nomes.
+
+O conjunto examinado é pertinente a **ignição/propagação de fogo** e **cálculo de propagação de fluidos**. Nenhum dos dois mixins comprova proteção para os blocos alterados diretamente por `TremorzillaEntity.breakBlocksAround` (`Level.destroyBlock`, `BlockState.onBlockExploded` e spawns). A inspeção de anotações não demonstra comportamento do corpo da injeção, verificação de claims, carregamento real de mixins ou `WorldEffectPolicy`.
+
+**Gate:** ⚠️ parcial/condicionado; `NO_MUTATION`, `NOT_CERTIFIED`, `physical_qa=NOT_TESTED`. Não habilitar perks de raio, área, duração, dano ou destruição a partir dessas anotações. Os contadores globais e 28/30 do provider permanecem inalterados; é necessário selar a evidência na CI final.
+
 ### Matriz de integração / pendências
 
 | Perk pretendida | Consumer que exige auditoria adicional | Decisão |
