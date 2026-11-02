@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import copy
+import json
 import unittest
+from pathlib import Path
 
 from alexscaves_1010_tremorzilla_normal_cfg_probe import (
     NormalCFGError, normal_edges, traverse, dominators,
-    analyze_method, require, ANCHORS
+    analyze_method, verify_sealed_snapshot
 )
 
 
@@ -40,6 +42,54 @@ def block_method():
 
 
 class NormalCFGTests(unittest.TestCase):
+
+    def seal_fixture(self):
+        path = (Path(__file__).resolve().parents[2] /
+                "wiki/modpack-catalog/providers/✅-alexs-caves-continued" /
+                "EXACT-TREMORZILLA-NORMAL-CFG-1.0.10.json")
+        exact = json.loads(path.read_text(encoding="utf-8"))
+        return copy.deepcopy(exact), exact
+
+    def test_positive_exact_sealed_normal_cfg(self):
+        report, seal = self.seal_fixture()
+        self.assertTrue(verify_sealed_snapshot(report, seal))
+
+    def test_wrong_dominator_result_rejected(self):
+        report, seal = self.seal_fixture()
+        report["methods"][0]["sites"][0]["guards"][0]["dominates_normal_paths"] = False
+        with self.assertRaisesRegex(NormalCFGError, "drift"):
+            verify_sealed_snapshot(report, seal)
+
+    def test_false_raycast_assumption_rejected(self):
+        report, seal = self.seal_fixture()
+        report["methods"][1]["sites"][1]["guards"][1]["dominates_normal_paths"] = True
+        with self.assertRaisesRegex(NormalCFGError, "drift"):
+            verify_sealed_snapshot(report, seal)
+
+    def test_wrong_edge_count_rejected(self):
+        report, seal = self.seal_fixture()
+        report["methods"][0]["normal_edge_count"] += 1
+        with self.assertRaisesRegex(NormalCFGError, "drift"):
+            verify_sealed_snapshot(report, seal)
+
+    def test_wrong_method_sha_rejected(self):
+        report, seal = self.seal_fixture()
+        report["methods"][0]["method_sha256"] = "0" * 64
+        with self.assertRaisesRegex(NormalCFGError, "drift"):
+            verify_sealed_snapshot(report, seal)
+
+    def test_false_pvp_world_policy_claim_rejected(self):
+        report, seal = self.seal_fixture()
+        report["limits"]["claims_and_world_protection"] = "VERIFIED"
+        with self.assertRaisesRegex(NormalCFGError, "drift"):
+            verify_sealed_snapshot(report, seal)
+
+    def test_false_physical_QA_rejected(self):
+        report, seal = self.seal_fixture()
+        report["limits"]["physical_qa"] = "PASS"
+        with self.assertRaisesRegex(NormalCFGError, "drift"):
+            verify_sealed_snapshot(report, seal)
+
     def test_positive_conditional_edges_and_exit(self):
         graph = normal_edges(simple(op(0, "iconst_0"), op(1, "ifeq", "5"),
                                     op(4, "return"), op(5, "return")))
