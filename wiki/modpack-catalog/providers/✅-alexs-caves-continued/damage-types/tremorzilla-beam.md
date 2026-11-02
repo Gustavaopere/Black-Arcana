@@ -143,6 +143,14 @@ A modlist registra `FTB Chunks (NeoForge)` 2101.1.22. O [handoff técnico do han
 
 **Decisão:** ⚠️ **parcial/condicionado** e `NO_MUTATION`. Sem aumentar raio, duração, destruição ou dano por perks com base nesta cadeia. Falta verificar datapacks/claims/resolução de tag, inscrição do listener, bloqueios de eventos de mundo e QA física. **+0 fichas, +0 contratos homologados**; o índice continua 28/30.
 
+### Explosões vs mutação direta — FTB Chunks 2101.1.22 (PR #1011)
+
+A [auditoria do JAR exato](../../../../../docs/qa/ftbchunks-2101-explosion-seam-handoff.md) e [manifesto limitado de ABI](../FTBCHUNKS-2101-EXPLOSION-ABI.json) confirmam `FTBChunks.ignoreExplosion(Level,Explosion)`, `FTBChunks.explosionDetonate(Level,Explosion,List)` e `lambda$explosionDetonate$6(ChunkDimPos)` com consulta a `ClaimedChunkImpl.allowExplosions()`. Não foi observado handler `ExplosionEvent$Detonate` no conjunto limitado de classes candidatas do JAR exato, nem callsite JVM direto para `FTBChunks.explosionDetonate` na busca correspondente. A declaração de `ftbchunks-common.mixins.json` e possíveis hooks externos permanecem sem investigação de runtime.
+
+Esta evidência diferencia operações sobre `Explosion.getToBlow()/clearToBlow()` das chamadas `Level.destroyBlock` e `BlockState.onBlockExploded` registradas no `TremorzillaEntity.breakBlocksAround`. **Não há prova de que a proteção de explosões do FTB Chunks intercepte cada bloco destruído diretamente por esse feixe**, nem garantia de autorização por chunks ou `WorldEffectPolicy`. A ausência de callsite selecionado não prova que o método esteja inativo: mixins, callbacks e transformers são limites explícitos do recorte.
+
+**Decisão de perk:** ⚠️ parcial/condicionado, `NO_MUTATION`, `NOT_CERTIFIED`, `physical_qa=NOT_TESTED`; não ampliar destruição sem prova da execução real e dos callbacks protegidos. Contador 28/30 mantido.
+
 ### Matriz de integração / pendências
 
 | Perk pretendida | Consumer que exige auditoria adicional | Decisão |
