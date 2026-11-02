@@ -1,0 +1,327 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_TREMORZILLA_WORLD_AND_LOS_ABI_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_path": "com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity.class",
+  "class_sha256": "e1ac60a8005f9414dde1d25a92a2110df65cef145c3225e9c2557c96672fe8dc",
+  "method_count": 116,
+  "method_signatures_and_digests": [
+    {
+      "name": "tickBreath",
+      "descriptor": "()V",
+      "sha256": "22d4de159e1a792b620bd117ffdfca70ef3a42e1395cbb4216ae6e480cd2eeec"
+    },
+    {
+      "name": "canEntityBeHurtByBeam",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/phys/Vec3;)Z",
+      "sha256": "13e05b91afaf21aee584377aab719dfa8b3d18b8096dce18797d259910af854c"
+    },
+    {
+      "name": "breakBlocksAround",
+      "descriptor": "(Lnet/minecraft/world/phys/Vec3;FZZF)Z",
+      "sha256": "1212f9fdad485fe769e934ef7048ae21cf022edbce480e7b795089b2bbb39371"
+    },
+    {
+      "name": "tickBeamTargeting",
+      "descriptor": "()V",
+      "sha256": "e30e73ce799d7266d51b0a8d218a92d6bf2d18f168bf90b3cd8c921809f5f90f"
+    },
+    {
+      "name": "getBeamShootFrom",
+      "descriptor": "(F)Lnet/minecraft/world/phys/Vec3;",
+      "sha256": "29d55ede44466a692114dc59311c5c7e8f6390bbe8fee6e914fb54ad273118f8"
+    },
+    {
+      "name": "getMaxBeamBreakLength",
+      "descriptor": "()D",
+      "sha256": "130e8f64129e414ac5f9b98889d09a7b70d945f8ab24b97c2c0c3b1d7f4b780b"
+    },
+    {
+      "name": "setMaxBeamBreakLength",
+      "descriptor": "(F)V",
+      "sha256": "3d7f1fe47bc38b70008d786d9326b219a72966851c89af396970efbd08063371"
+    }
+  ],
+  "selected_abi_anchors": [
+    {
+      "method": "tickBreath",
+      "group": "references",
+      "offset": 4,
+      "opcode": "invokevirtual",
+      "symbol_contains": "Level.isClientSide:"
+    },
+    {
+      "method": "tickBreath",
+      "group": "references",
+      "offset": 383,
+      "opcode": "getstatic",
+      "symbol_contains": "ClipContext$Block.COLLIDER:"
+    },
+    {
+      "method": "tickBreath",
+      "group": "references",
+      "offset": 386,
+      "opcode": "getstatic",
+      "symbol_contains": "ClipContext$Fluid.NONE:"
+    },
+    {
+      "method": "tickBreath",
+      "group": "references",
+      "offset": 393,
+      "opcode": "invokevirtual",
+      "symbol_contains": "Level.clip:"
+    },
+    {
+      "method": "tickBreath",
+      "group": "references",
+      "offset": 494,
+      "opcode": "getfield",
+      "symbol_contains": "devastatingTremorzillaBeam:"
+    },
+    {
+      "method": "tickBreath",
+      "group": "references",
+      "offset": 525,
+      "opcode": "invokevirtual",
+      "symbol_contains": "breakBlocksAround:"
+    },
+    {
+      "method": "tickBreath",
+      "group": "references",
+      "offset": 552,
+      "opcode": "invokevirtual",
+      "symbol_contains": "hurtEntitiesAround:"
+    },
+    {
+      "method": "tickBreath",
+      "group": "references",
+      "offset": 578,
+      "opcode": "invokevirtual",
+      "symbol_contains": "hurtEntitiesAround:"
+    },
+    {
+      "method": "tickBreath",
+      "group": "references",
+      "offset": 585,
+      "opcode": "getfield",
+      "symbol_contains": "devastatingTremorzillaBeam:"
+    },
+    {
+      "method": "tickBreath",
+      "group": "references",
+      "offset": 620,
+      "opcode": "invokevirtual",
+      "symbol_contains": "breakBlocksAround:"
+    },
+    {
+      "method": "tickBreath",
+      "group": "references",
+      "offset": 643,
+      "opcode": "invokevirtual",
+      "symbol_contains": "setMaxBeamBreakLength:"
+    },
+    {
+      "method": "canEntityBeHurtByBeam",
+      "group": "references",
+      "offset": 27,
+      "opcode": "getstatic",
+      "symbol_contains": "ClipContext$Block.COLLIDER:"
+    },
+    {
+      "method": "canEntityBeHurtByBeam",
+      "group": "references",
+      "offset": 30,
+      "opcode": "getstatic",
+      "symbol_contains": "ClipContext$Fluid.NONE:"
+    },
+    {
+      "method": "canEntityBeHurtByBeam",
+      "group": "references",
+      "offset": 37,
+      "opcode": "invokevirtual",
+      "symbol_contains": "Level.clip:"
+    },
+    {
+      "method": "canEntityBeHurtByBeam",
+      "group": "references",
+      "offset": 40,
+      "opcode": "invokevirtual",
+      "symbol_contains": "BlockHitResult.getType:"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "references",
+      "offset": 12,
+      "opcode": "invokestatic",
+      "symbol_contains": "ACPlatform.canEntityGrief:"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "references",
+      "offset": 22,
+      "opcode": "invokevirtual",
+      "symbol_contains": "Level.isClientSide:"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "references",
+      "offset": 93,
+      "opcode": "invokestatic",
+      "symbol_contains": "BlockPos.betweenClosed:"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "references",
+      "offset": 131,
+      "opcode": "invokevirtual",
+      "symbol_contains": "Level.getBlockState:"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "references",
+      "offset": 178,
+      "opcode": "invokevirtual",
+      "symbol_contains": "Block.getExplosionResistance:"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "references",
+      "offset": 211,
+      "opcode": "invokevirtual",
+      "symbol_contains": "BlockPos.distToCenterSqr:"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "references",
+      "offset": 249,
+      "opcode": "invokevirtual",
+      "symbol_contains": "Level.destroyBlock:"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "references",
+      "offset": 268,
+      "opcode": "invokestatic",
+      "symbol_contains": "ACCompat.onBlockExploded:"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "references",
+      "offset": 296,
+      "opcode": "invokestatic",
+      "symbol_contains": "ACCompat.createEntity:"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "references",
+      "offset": 340,
+      "opcode": "invokevirtual",
+      "symbol_contains": "NuclearBombEntity.setTime:"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "references",
+      "offset": 349,
+      "opcode": "invokevirtual",
+      "symbol_contains": "Level.addFreshEntity:"
+    },
+    {
+      "method": "tickBreath",
+      "group": "constants",
+      "offset": 362,
+      "opcode": "ldc2_w",
+      "symbol_contains": "double 100.0d"
+    },
+    {
+      "method": "tickBreath",
+      "group": "constants",
+      "offset": 420,
+      "opcode": "iconst_3"
+    },
+    {
+      "method": "tickBreath",
+      "group": "constants",
+      "offset": 472,
+      "opcode": "ldc",
+      "symbol_contains": "float 1.5f"
+    },
+    {
+      "method": "tickBreath",
+      "group": "constants",
+      "offset": 516,
+      "opcode": "ldc_w",
+      "symbol_contains": "float 0.75f"
+    },
+    {
+      "method": "tickBreath",
+      "group": "constants",
+      "offset": 545,
+      "opcode": "ldc_w",
+      "symbol_contains": "float 20.0f"
+    },
+    {
+      "method": "tickBreath",
+      "group": "constants",
+      "offset": 568,
+      "opcode": "ldc_w",
+      "symbol_contains": "float 6.0f"
+    },
+    {
+      "method": "tickBreath",
+      "group": "constants",
+      "offset": 571,
+      "opcode": "ldc_w",
+      "symbol_contains": "float 20.0f"
+    },
+    {
+      "method": "tickBreath",
+      "group": "constants",
+      "offset": 604,
+      "opcode": "bipush"
+    },
+    {
+      "method": "tickBreath",
+      "group": "constants",
+      "offset": 612,
+      "opcode": "ldc_w",
+      "symbol_contains": "float 4.0f"
+    },
+    {
+      "method": "tickBreath",
+      "group": "constants",
+      "offset": 635,
+      "opcode": "ldc2_w",
+      "symbol_contains": "double 5.0d"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "constants",
+      "offset": 181,
+      "opcode": "ldc_w",
+      "symbol_contains": "float 15.0f"
+    },
+    {
+      "method": "breakBlocksAround",
+      "group": "constants",
+      "offset": 337,
+      "opcode": "sipush"
+    }
+  ],
+  "limits": {
+    "loaded_modpack_runtime": "NOT_OBSERVED",
+    "world_protection_and_claims": "NOT_VERIFIED",
+    "destructive_effect_policy": "NOT_VERIFIED",
+    "pvp_and_ownership": "NOT_VERIFIED",
+    "raycast_semantics": "BYTECODE_REFERENCES_ONLY",
+    "full_interprocedural_cfg": "NOT_RECONSTRUCTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "static_perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  },
+  "interpretation": "SELECTED_JVM_REFS_AND_LITERALS_ONLY_NO_INFERRED_AUTHORISATION_OR_FINAL_DAMAGE"
+}
