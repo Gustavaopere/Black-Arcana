@@ -296,3 +296,21 @@ A [auditoria complementar de seis janelas compiladas](../../../../../docs/qa/ale
 - Existem exclusões por `isAlliedTo @987/@996` e `isPassengerOfSameVehicle @1005`, além do ramo `instanceof TremorzillaEntity @1013`. Um pedido de dano `causeRaygunDamage @1026 → ACCompat.hurt @1041` seleciona **`2.0f` ou `1.5f`** por `local 18` (`@1029–1038`), e testa o retorno `ifeq @1044`. Esses são operandos de dano **solicitado** e não equivalem a dano aceito, crescimento por perk ou efeito de `X_RAY`.
 
 **Estado e gates:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Faltam CFG completo e dataflow dos locais `7/9/18`, bloqueios de alvo/LOS, limites efetivos, autenticação de estado de item/rede, custo server-owned e QA real. Não converter essas evidências estáticas em aumento de range/target/área/dano e não alterar contadores ou Stage 06.
+
+
+## Censo de slots locais do Raygun 1.0.10 — condições de targeting e dano (PR #1016)
+
+A [sonda JVM SHA-exata](../../../../../docs/qa/alexscaves-1010-raygun-local-flow-handoff.md) e o [manifesto de acessos a slots](../EXACT-RAYGUN-LOCAL-FLOW-1.0.10.json) complementam os seis pontos de ray trace da PR #1015, com evidência do publisher JAR 1.0.10. A sonda conferiu a mesma classe `RaygunItem.class` e o digest exato de `onUseTick`, **sem exportar o corpo integral do método**.
+
+O recorte identifica **quatro slots JVM** com a seguinte relação de escrita e leituras:
+
+| Slot | Escrita compilada | Leituras selecionadas | Implicação para perks |
+|---|---|---|---|
+| `float 7` | `fstore @33` | `@38/@270/@360` | Usado por `25.0f × local 7` em `@35–41`, mas a entrada do local passa por divisão/alternativa `1.0f` com branch anterior |
+| `float 8` | `fstore @41` | `@66/@75/@90/@578/@597` | Distância calculada alimenta múltiplas regiões de trace/seleção; não prova valor final de range ou intervenção segura |
+| `int 9` | `istore @58` | `@105/@122/@569` | Flag 0/1 derivada da leitura `X_RAY` (`enchantLevel @47`, `ifle @50`); falta controlar os desvios subsequentes |
+| `int 18` | `istore @346` | `@367/@402/@922/@1029/@1138` | Flag 0/1 atribuída após a região `GAMMA_RAY @332`, e consumida em `@1029` para escolher `2.0f/1.5f` antes de `ACCompat.hurt`. A relação de causalidade e de reachability integral ainda requer CFG |
+
+A observação **não autoriza identificar cada leitura como uma única definição em todos os caminhos**, pois slot JVM não equivale a variável SSA. Tampouco documenta range externo, dano efetivo, penetração através de blocos, número de alvos, segurança de claims, procs de Mastery ou hooks mutadores.
+
+**Estado preservado:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Não promover contadores 28/30, índices, Stage 06 ou `COMPLETE_PERK_READY`. A auditoria deve ser selada por CI final antes de incorporar o resultado.
