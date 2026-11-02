@@ -160,13 +160,86 @@ def audit(jar, java):
     return result
 
 
+
+def verify_sealed_snapshot(report, seal):
+    """Reject artifact/class/method/selected JVM branch and delegation drift."""
+    for key in ("schema_version", "scope", "artifact"):
+        require(report.get(key) == seal.get(key),
+                "exact grief helper evidence identity drift: " + key)
+    require(report.get("limits") == seal.get("limits") ==
+            {"full_interprocedural_cfg": "NOT_RECONSTRUCTED",
+             "guard_return_semantics": "INSPECTION_REQUIRED",
+             "loaded_modpack_claims": "NOT_VERIFIED",
+             "world_effect_policy": "NOT_VERIFIED",
+             "mutating_hook": "NOT_VERIFIED",
+             "physical_qa": "NOT_TESTED",
+             "mutation": "NO_MUTATION",
+             "perk_certification": "NOT_CERTIFIED"},
+            "unsupported native helper security or QA promotion")
+    require(seal.get("interpretation") ==
+            "BYTECODE_DELEGATION_AND_EARLY_RETURN_ONLY_NOT_GLOBAL_CLAIMS_PERMISSION",
+            "unsupported permission inference")
+
+    required = seal.get("selected_methods")
+    require(isinstance(required, list) and len(required) == 4,
+            "invalid selected grievance method population")
+    observed = {}
+    for cls in report["classes"]:
+        for m in cls["selected_methods"]:
+            key = (cls["owner"], m["name"], m["descriptor"])
+            require(key not in observed, "duplicate publisher helper method")
+            observed[key] = (cls, m)
+    require(len(observed) == 4, "unexpected publisher helper method universe")
+    for target in required:
+        key = (target["owner"], target["name"], target["descriptor"])
+        require(key in observed, "missing sealed helper owner or method")
+        cls, m = observed[key]
+        for field in ("class_sha256", "class_path", "declared_method_count"):
+            require(cls[field] == target[field],
+                    "publisher class metadata drift: " + field)
+        for field in ("method_sha256", "instruction_count"):
+            require(m[field] == target[field],
+                    "native helper descriptor or method hash drift: " + field)
+    anchors = seal.get("selected_abi_anchors")
+    require(isinstance(anchors, list) and 12 <= len(anchors) <= 60,
+            "invalid world/grief selected anchor count")
+    used = set()
+    for item in anchors:
+        key = (item["owner"], item["name"], item["offset"])
+        require(key not in used, "duplicate exact grief helper anchor")
+        used.add(key)
+        matches = [record for (owner, name, descriptor), record in observed.items()
+                   if owner == item["owner"] and name == item["name"]]
+        require(len(matches) == 1, "missing or ambiguous sealed helper anchor owner")
+        cls, m = matches[0]
+        rows = []
+        for group in ("references", "branches_and_returns"):
+            evidence = m[group]
+            require(not evidence["truncated"],
+                    "truncated publisher helper anchor evidence")
+            rows.extend(evidence["rows"])
+        if item["owner"] == "TremorzillaEntity":
+            for w in m["selected_windows"]:
+                rows.extend(w["nearby_instructions"])
+        found = [op for op in rows if op["offset"] == item["offset"]]
+        require(bool(found) and all(
+            op["opcode"] == item["opcode"] and
+            item.get("symbol_contains", "") in op["symbol"] and
+            ("operand_equals" not in item or op["operand"] == item["operand_equals"])
+            for op in found),
+            "publisher native helper callsite/branch drift: " + str(key))
+    return True
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--jar", type=Path, required=True)
     p.add_argument("--javap", required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--manifest", type=Path, required=True)
     args = p.parse_args()
     report = audit(args.jar, args.javap)
+    verify_sealed_snapshot(report, json.loads(args.manifest.read_text(encoding="utf-8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False,
                                       sort_keys=True) + "\n", encoding="utf-8")
