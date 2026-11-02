@@ -68,7 +68,7 @@ class SelectedBranchConsumersTests(unittest.TestCase):
         self.assertTrue(any(t["offset"]==932 and t["opcode"]=="istore"
                             for t in x["selected_local_accesses"]))
         self.assertEqual([t["access"] for t in v["selected_slot23_accesses"]],
-                         ["WRITE","READ"])
+                         ["WRITE","READ","READ"])
 
     def test_gamma_effect_request_uses_local23_and_duration(self):
         result=inspect_selected(synthetic())
