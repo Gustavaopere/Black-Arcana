@@ -83,6 +83,16 @@ class ExactFtbSynthetic(unittest.TestCase):
         self.assertTrue(report["symbolic_presence"]["tag_registry_reference"])
         self.assertEqual(report["limit"],"SYMBOLS_OBSERVED_ONLY_NOT_COMPLETE_CFG")
 
+    def test_denial_sets_false_in_selected_handler(self):
+        method=parse_methods(BODY)[0]
+        self.assertEqual(analyze_method(method)["setter_argument"],
+                         "EXACT_ICONST_0_BEFORE_SET_CAN_GRIEF")
+
+    def test_changed_denial_true_rejected(self):
+        method=parse_methods(BODY.replace("iconst_0", "iconst_1"))[0]
+        with self.assertRaisesRegex(EvidenceError,"literal false"):
+            analyze_method(method)
+
     def test_wrong_version_name_rejected(self):
         with self.assertRaisesRegex(EvidenceError,"wrong FTB"):
             audit("ftb-chunks-neoforge-2101.1.21.jar","javap")
