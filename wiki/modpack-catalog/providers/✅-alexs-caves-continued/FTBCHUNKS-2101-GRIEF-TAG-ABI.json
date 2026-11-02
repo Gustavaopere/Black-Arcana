@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "scope": "EXACT_FTBCHUNKS_2101_1_22_GRIEF_EVENT_AND_DEFAULT_TAG_ONLY",
+  "artifact": {
+    "coordinates": "dev.ftb.mods:ftb-chunks-neoforge:2101.1.22",
+    "size_bytes": 655807,
+    "sha256": "4ba1b3352184fa7f6e2aa4bca76edd074867697d62344dfa50dcccdb4dab5217"
+  },
+  "class_path": "dev/ftb/mods/ftbchunks/neoforge/FTBChunksForge.class",
+  "class_sha256": "64d32b0e46d2e9c454fb78ad656348965971fa4a443251bf8b9ecf465cc5f553",
+  "method": {
+    "name": "mobGriefing",
+    "descriptor": "(Lnet/neoforged/neoforge/event/entity/EntityMobGriefingEvent;)V",
+    "instruction_count": 28,
+    "method_sha256": "1e39dbc72b8fcc54fb52e358a77361492d3b99f9a1f7ad6e407347f88be62bb2",
+    "selected_references": [
+      {
+        "offset": 1,
+        "opcode": "invokevirtual",
+        "symbol": "Method net/neoforged/neoforge/event/entity/EntityMobGriefingEvent.getEntity:()Lnet/minecraft/world/entity/Entity;"
+      },
+      {
+        "offset": 4,
+        "opcode": "invokevirtual",
+        "symbol": "Method net/minecraft/world/entity/Entity.getType:()Lnet/minecraft/world/entity/EntityType;"
+      },
+      {
+        "offset": 7,
+        "opcode": "getstatic",
+        "symbol": "Field dev/ftb/mods/ftbchunks/api/FTBChunksTags$Entities.ENTITY_MOB_GRIEFING_BLACKLIST_TAG:Lnet/minecraft/tags/TagKey;"
+      },
+      {
+        "offset": 10,
+        "opcode": "invokevirtual",
+        "symbol": "Method net/minecraft/world/entity/EntityType.is:(Lnet/minecraft/tags/TagKey;)Z"
+      },
+      {
+        "offset": 17,
+        "opcode": "invokevirtual",
+        "symbol": "Method net/neoforged/neoforge/event/entity/EntityMobGriefingEvent.getEntity:()Lnet/minecraft/world/entity/Entity;"
+      },
+      {
+        "offset": 20,
+        "opcode": "invokevirtual",
+        "symbol": "Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;"
+      },
+      {
+        "offset": 23,
+        "opcode": "invokevirtual",
+        "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+      },
+      {
+        "offset": 29,
+        "opcode": "invokestatic",
+        "symbol": "Method dev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl.getInstance:()Ldev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl;"
+      },
+      {
+        "offset": 32,
+        "opcode": "new",
+        "symbol": "class dev/ftb/mods/ftblibrary/math/ChunkDimPos"
+      },
+      {
+        "offset": 37,
+        "opcode": "invokevirtual",
+        "symbol": "Method net/neoforged/neoforge/event/entity/EntityMobGriefingEvent.getEntity:()Lnet/minecraft/world/entity/Entity;"
+      },
+      {
+        "offset": 40,
+        "opcode": "invokespecial",
+        "symbol": "Method dev/ftb/mods/ftblibrary/math/ChunkDimPos.\"<init>\":(Lnet/minecraft/world/entity/Entity;)V"
+      },
+      {
+        "offset": 43,
+        "opcode": "invokevirtual",
+        "symbol": "Method dev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl.getChunk:(Ldev/ftb/mods/ftblibrary/math/ChunkDimPos;)Ldev/ftb/mods/ftbchunks/data/ClaimedChunkImpl;"
+      },
+      {
+        "offset": 52,
+        "opcode": "invokevirtual",
+        "symbol": "Method dev/ftb/mods/ftbchunks/data/ClaimedChunkImpl.allowMobGriefing:()Z"
+      },
+      {
+        "offset": 60,
+        "opcode": "invokevirtual",
+        "symbol": "Method net/neoforged/neoforge/event/entity/EntityMobGriefingEvent.setCanGrief:(Z)V"
+      }
+    ],
+    "branches_and_returns": [
+      {
+        "offset": 13,
+        "opcode": "ifeq",
+        "operand": "63"
+      },
+      {
+        "offset": 26,
+        "opcode": "ifne",
+        "operand": "63"
+      },
+      {
+        "offset": 48,
+        "opcode": "ifnull",
+        "operand": "63"
+      },
+      {
+        "offset": 55,
+        "opcode": "ifne",
+        "operand": "63"
+      },
+      {
+        "offset": 63,
+        "opcode": "return",
+        "operand": ""
+      }
+    ],
+    "symbolic_presence": {
+      "entity_event_parameter": true,
+      "entity_type_tag_test": true,
+      "tag_registry_reference": true,
+      "claimed_chunk_access": true,
+      "chunk_position_from_entity": true,
+      "chunk_allow_mob_griefing": true,
+      "event_set_can_grief": true,
+      "client_side_test": true
+    },
+    "setter_argument": "EXACT_ICONST_0_BEFORE_SET_CAN_GRIEF",
+    "limit": "SYMBOLS_OBSERVED_ONLY_NOT_COMPLETE_CFG"
+  },
+  "default_entity_tag": {
+    "path": "data/ftbchunks/tags/entity_type/entity_mob_griefing_blacklist.json",
+    "sha256": "55bbd2c02a21e46248894700d58b044ea8779a1885d170e3ead6b4b304eac7eb",
+    "replace": false,
+    "declared_values": [
+      "minecraft:enderman"
+    ],
+    "value_count": 1,
+    "note": "JAR-local tag only; datapacks and other mods can override/append."
+  },
+  "interpretation": "EVENT_HANDLER_AND_JAR_LOCAL_TAG_NOT_CLAIM_PERMISSION",
+  "limits": {
+    "external_data_pack_tag_resolutions": "NOT_VERIFIED",
+    "tremorzilla_entity_type_tag_membership": "NOT_VERIFIED",
+    "claim_region_per_affected_block": "NOT_VERIFIED",
+    "actual_loaded_claim_state": "NOT_VERIFIED",
+    "event_bus_registration": "NOT_VERIFIED",
+    "black_arcana_world_effect_policy": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  }
+}
