@@ -100,7 +100,7 @@ Em `hurtEntitiesAround`, a primeira flag é testada em `@63–65`. O ramo verdad
 
 ### Controle de fluxo normal SHA-exato — guards e desvio de raycast (PR #1006)
 
-A [auditoria de dominadores do CFG normal compilado](../../../../docs/qa/alexscaves-1010-tremorzilla-normal-cfg-handoff.md) e o [manifesto 1.0.10](../EXACT-TREMORZILLA-NORMAL-CFG-1.0.10.json) acrescentam uma verificação de **caminhos normais intramétodo**; não inclui arestas de exceção, dispatch, mixins ou gameplay.
+A [auditoria de dominadores do CFG normal compilado](../../../../../docs/qa/alexscaves-1010-tremorzilla-normal-cfg-handoff.md) e o [manifesto 1.0.10](../EXACT-TREMORZILLA-NORMAL-CFG-1.0.10.json) acrescentam uma verificação de **caminhos normais intramétodo**; não inclui arestas de exceção, dispatch, mixins ou gameplay.
 
 - `breakBlocksAround`: `ACPlatform.canEntityGrief @12` e `Level.isClientSide @22` **dominam** os pontos `destroyBlock @249`, `onBlockExploded @268`, `createEntity @296` e `addFreshEntity @349` no CFG normal. **Isso não certifica a semântica do retorno do predicate, claims de terceiros, loaded chunks ou aplicação da `WorldEffectPolicy`.**
 - `tickBreath`: `Level.isClientSide @4` domina os sites de mundo `breakBlocksAround @525/@620` e de dano `hurtEntitiesAround @552/@578`. Já `Level.clip @393` **não os domina**: há trajetórias normais de execução que contornam essa chamada específica. Isso **não** prova ausência de LOS, ataque através de paredes nem falha de autorização — outro caminho de `canEntityBeHurtByBeam` usa `Level.clip @37`.
