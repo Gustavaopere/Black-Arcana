@@ -6,7 +6,7 @@
 
 - Modlist do sibling `neoforge-rpg-skilltree/main@59ff2a0e827fd08faa603f4482f8104ac433383c`: `alexscaves`, versão 1.0.10, Minecraft 1.21.1.
 - Artefato publisher: SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, tamanho 75.279.314 bytes.
-- Manifesto: [EXACT-TREMORZILLA-GRIEF-HELPERS-1.0.10.json](../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-GRIEF-HELPERS-1.0.10.json) · [sonda javap](alexscaves_1010_tremorzilla_grief_helper_probe.py) · [testes sintéticos](alexscaves_1010_tremorzilla_grief_helper_probe_test.py) · [workflow dedicado](../.github/workflows/alexscaves-1010-tremorzilla-grief-helper.yml).
+- Manifesto: [EXACT-TREMORZILLA-GRIEF-HELPERS-1.0.10.json](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-GRIEF-HELPERS-1.0.10.json) · [sonda javap](alexscaves_1010_tremorzilla_grief_helper_probe.py) · [testes sintéticos](alexscaves_1010_tremorzilla_grief_helper_probe_test.py) · [workflow dedicado](../../.github/workflows/alexscaves-1010-tremorzilla-grief-helper.yml).
 - O inventário registra SHA-256 das classes e SHA-256 de parse dos métodos, com âncoras exatas de opcode/desvio; não considera transformações dinâmicas, dispatch em dependências nem a classe efetivamente carregada em servidor modpack.
 
 ## Guarda inicial do `breakBlocksAround`
