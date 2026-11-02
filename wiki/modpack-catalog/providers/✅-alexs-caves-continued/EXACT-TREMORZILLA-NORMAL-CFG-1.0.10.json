@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_NORMAL_INTRAMETHOD_CFG_NO_EXCEPTIONS",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_path": "com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity.class",
+  "class_sha256": "e1ac60a8005f9414dde1d25a92a2110df65cef145c3225e9c2557c96672fe8dc",
+  "methods": [
+    {
+      "name": "breakBlocksAround",
+      "descriptor": "(Lnet/minecraft/world/phys/Vec3;FZZF)Z",
+      "method_sha256": "1212f9fdad485fe769e934ef7048ae21cf022edbce480e7b795089b2bbb39371",
+      "instruction_count": 166,
+      "normal_edge_count": 178,
+      "normal_backedge_count": 1,
+      "sites": [
+        {
+          "site_offset": 249,
+          "site_symbol": "Level.destroyBlock:",
+          "guards": [
+            {
+              "guard_offset": 12,
+              "guard_symbol": "ACPlatform.canEntityGrief:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            },
+            {
+              "guard_offset": 22,
+              "guard_symbol": "Level.isClientSide:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            }
+          ]
+        },
+        {
+          "site_offset": 268,
+          "site_symbol": "ACCompat.onBlockExploded:",
+          "guards": [
+            {
+              "guard_offset": 12,
+              "guard_symbol": "ACPlatform.canEntityGrief:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            },
+            {
+              "guard_offset": 22,
+              "guard_symbol": "Level.isClientSide:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            }
+          ]
+        },
+        {
+          "site_offset": 296,
+          "site_symbol": "ACCompat.createEntity:",
+          "guards": [
+            {
+              "guard_offset": 12,
+              "guard_symbol": "ACPlatform.canEntityGrief:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            },
+            {
+              "guard_offset": 22,
+              "guard_symbol": "Level.isClientSide:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            }
+          ]
+        },
+        {
+          "site_offset": 349,
+          "site_symbol": "Level.addFreshEntity:",
+          "guards": [
+            {
+              "guard_offset": 12,
+              "guard_symbol": "ACPlatform.canEntityGrief:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            },
+            {
+              "guard_offset": 22,
+              "guard_symbol": "Level.isClientSide:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tickBreath",
+      "descriptor": "()V",
+      "method_sha256": "22d4de159e1a792b620bd117ffdfca70ef3a42e1395cbb4216ae6e480cd2eeec",
+      "instruction_count": 306,
+      "normal_edge_count": 323,
+      "normal_backedge_count": 1,
+      "sites": [
+        {
+          "site_offset": 525,
+          "site_symbol": "breakBlocksAround:",
+          "guards": [
+            {
+              "guard_offset": 4,
+              "guard_symbol": "Level.isClientSide:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            },
+            {
+              "guard_offset": 393,
+              "guard_symbol": "Level.clip:",
+              "dominates_normal_paths": false,
+              "bypass_normal_path_exists": true
+            }
+          ]
+        },
+        {
+          "site_offset": 552,
+          "site_symbol": "hurtEntitiesAround:",
+          "guards": [
+            {
+              "guard_offset": 4,
+              "guard_symbol": "Level.isClientSide:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            },
+            {
+              "guard_offset": 393,
+              "guard_symbol": "Level.clip:",
+              "dominates_normal_paths": false,
+              "bypass_normal_path_exists": true
+            }
+          ]
+        },
+        {
+          "site_offset": 578,
+          "site_symbol": "hurtEntitiesAround:",
+          "guards": [
+            {
+              "guard_offset": 4,
+              "guard_symbol": "Level.isClientSide:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            },
+            {
+              "guard_offset": 393,
+              "guard_symbol": "Level.clip:",
+              "dominates_normal_paths": false,
+              "bypass_normal_path_exists": true
+            }
+          ]
+        },
+        {
+          "site_offset": 620,
+          "site_symbol": "breakBlocksAround:",
+          "guards": [
+            {
+              "guard_offset": 4,
+              "guard_symbol": "Level.isClientSide:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            },
+            {
+              "guard_offset": 393,
+              "guard_symbol": "Level.clip:",
+              "dominates_normal_paths": false,
+              "bypass_normal_path_exists": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "canEntityBeHurtByBeam",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/phys/Vec3;)Z",
+      "method_sha256": "13e05b91afaf21aee584377aab719dfa8b3d18b8096dce18797d259910af854c",
+      "instruction_count": 27,
+      "normal_edge_count": 27,
+      "normal_backedge_count": 0,
+      "sites": [
+        {
+          "site_offset": 40,
+          "site_symbol": "BlockHitResult.getType:",
+          "guards": [
+            {
+              "guard_offset": 37,
+              "guard_symbol": "Level.clip:",
+              "dominates_normal_paths": true,
+              "bypass_normal_path_exists": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "exception_table_edges": "NOT_MODELED",
+    "dynamic_dispatch_and_transformations": "NOT_MODELED",
+    "guard_return_value_semantics": "NOT_PROVEN",
+    "claims_and_world_protection": "NOT_VERIFIED",
+    "native_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "static_perk_certification": "NOT_CERTIFIED"
+  }
+}
