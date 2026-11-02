@@ -77,8 +77,12 @@ def inspect(jar,javap):
         # mention the expected event directly. This is a bounded inventory.
         paths=sorted(set(candidate_paths+[CLASS_PATH]))
         class_digests={p:sha(z.read(p)) for p in paths}
+        mixin_config_paths=sorted(p for p in names if p.endswith(".json") and
+                                  "mixin" in p.lower())
+        require(len(mixin_config_paths)<=25,"too many mixin config resources")
     selected=[]
     candidate_info=[]
+    callsite_rows=[]
     for path in paths:
         proc=subprocess.run([javap,"-classpath",str(jar),"-p","-s","-c",
                              path[:-6].replace("/",".")],
@@ -86,6 +90,17 @@ def inspect(jar,javap):
         require(proc.returncode==0,"javap failed "+path+" "+proc.stderr[:180])
         methods=parse_methods(proc.stdout)
         require(len(methods)<=240,"unexpected publisher method population")
+        for m in methods:
+            for op in m["instructions"]:
+                if op["opcode"].startswith("invoke") and
+                   "explosionDetonate:" in op["symbol"]:
+                    callsite_rows.append({
+                        "owner_class":path,"method":m["name"],
+                        "method_descriptor":m["descriptor"],
+                        "offset":op["offset"],"opcode":op["opcode"],
+                        "symbol":op["symbol"],
+                    })
+        require(len(callsite_rows)<=25,"bounded explosion callsite budget exceeded")
         exact=[m for m in methods if m["descriptor"]==EXPLOSION_DESCRIPTOR]
         related=[m for m in methods
                  if "explosion" in m["name"].lower() or
@@ -127,6 +142,8 @@ def inspect(jar,javap):
       "class":{"path":CLASS_PATH,"sha256":CLASS_SHA256},
       "candidate_class_population":len(candidate_info),
       "candidate_classes":candidate_info,
+      "mixin_configuration_resources":mixin_config_paths,
+      "compiled_explosion_detonate_callsite_candidates":callsite_rows,
       "primary_handler_name":handlers[0][1]["name"] if handlers else None,
       "primary_handler_owner":handlers[0][0] if handlers else None,
       "handler_status":"ONE_EXACT_SIGNATURE_OBSERVED" if handlers else
