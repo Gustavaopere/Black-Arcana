@@ -216,13 +216,35 @@ def audit(jar, javap_bin):
     return result
 
 
+
+def verify_sealed_snapshot(report, sealed):
+    """No substitution of identities, CFG edges/guards, or QA certification."""
+    expected_keys = ("schema_version", "scope", "artifact", "class_path",
+                     "class_sha256", "methods", "limits")
+    require(set(report) == set(expected_keys), "unexpected normal CFG report schema")
+    require(set(sealed) == set(expected_keys), "unexpected normal CFG sealed schema")
+    require(report == sealed, "exact normal CFG guard digest, edge or status drift")
+    require(report["scope"] == "SHA_EXACT_1010_NORMAL_INTRAMETHOD_CFG_NO_EXCEPTIONS",
+            "unverified expanded CFG scope")
+    require(report["limits"]["exception_table_edges"] == "NOT_MODELED"
+            and report["limits"]["guard_return_value_semantics"] == "NOT_PROVEN"
+            and report["limits"]["claims_and_world_protection"] == "NOT_VERIFIED"
+            and report["limits"]["mutation"] == "NO_MUTATION"
+            and report["limits"]["static_perk_certification"] == "NOT_CERTIFIED"
+            and report["limits"]["physical_qa"] == "NOT_TESTED",
+            "unsupported authority or certification claim")
+    return True
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--jar", type=Path, required=True)
     p.add_argument("--javap", required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--manifest", type=Path, required=True)
     args = p.parse_args()
     r = audit(args.jar, args.javap)
+    verify_sealed_snapshot(r, json.loads(args.manifest.read_text(encoding="utf-8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(r, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     for method in r["methods"]:
