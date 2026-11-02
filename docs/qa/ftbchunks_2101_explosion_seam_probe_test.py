@@ -68,17 +68,22 @@ class ExplosionAbiTests(unittest.TestCase):
         self.assertEqual(result["limits"],LIMITS)
         self.assertTrue(verify_seal(result,copy.deepcopy(result)))
 
-    def test_missing_handler_fails_closed(self):
-        with self.assertRaisesRegex(EvidenceError,"missing/ambiguous"):
-            self.run_synthetic(LAMBDA)
+    def test_missing_handler_is_explicitly_noncertified(self):
+        result=self.run_synthetic(LAMBDA)
+        self.assertEqual(result["handler_status"],
+                         "NO_EXACT_SIGNATURE_IN_BOUNDED_CLASS_SCAN")
+        self.assertIsNone(result["primary_handler_name"])
+        self.assertEqual(result["limits"]["perk_certification"],"NOT_CERTIFIED")
 
     def test_duplicate_handler_fails_closed(self):
-        with self.assertRaisesRegex(EvidenceError,"missing/ambiguous"):
+        with self.assertRaisesRegex(EvidenceError,"ambiguous exact"):
             self.run_synthetic(PRIMARY+PRIMARY)
 
-    def test_changed_handler_descriptor_fails_closed(self):
-        with self.assertRaisesRegex(EvidenceError,"missing/ambiguous"):
-            self.run_synthetic(PRIMARY.replace(EXPLOSION_DESCRIPTOR,"()V")+LAMBDA)
+    def test_changed_handler_descriptor_is_explicitly_noncertified(self):
+        result=self.run_synthetic(PRIMARY.replace(EXPLOSION_DESCRIPTOR,"()V")+LAMBDA)
+        self.assertEqual(result["handler_status"],
+                         "NO_EXACT_SIGNATURE_IN_BOUNDED_CLASS_SCAN")
+        self.assertIsNone(result["primary_handler_name"])
 
     def test_seal_detects_callsite_drift(self):
         result=self.run_synthetic()
