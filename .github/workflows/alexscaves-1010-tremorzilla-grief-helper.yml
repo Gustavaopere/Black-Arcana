@@ -6,6 +6,7 @@ on:
     paths:
       - 'docs/qa/alexscaves_1010_tremorzilla_grief_helper_probe.py'
       - 'docs/qa/alexscaves_1010_tremorzilla_grief_helper_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-GRIEF-HELPERS-1.0.10.json'
       - 'docs/qa/alexscaves-1010-tremorzilla-grief-helper-handoff.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-GRIEF-HELPERS-1.0.10.json'
       - '.github/workflows/alexscaves-1010-tremorzilla-grief-helper.yml'
@@ -14,6 +15,7 @@ on:
     paths:
       - 'docs/qa/alexscaves_1010_tremorzilla_grief_helper_probe.py'
       - 'docs/qa/alexscaves_1010_tremorzilla_grief_helper_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-GRIEF-HELPERS-1.0.10.json'
       - 'docs/qa/alexscaves-1010-tremorzilla-grief-helper-handoff.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-GRIEF-HELPERS-1.0.10.json'
       - '.github/workflows/alexscaves-1010-tremorzilla-grief-helper.yml'
@@ -47,6 +49,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_tremorzilla_grief_helper_probe.py \
             --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-GRIEF-HELPERS-1.0.10.json' \
             --output build/alexscaves-1010/tremorzilla-grief-helper-evidence.json
       - name: Upload bounded ABI evidence
         if: always()
