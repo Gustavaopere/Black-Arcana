@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "scope": "EXACT_FTBCHUNKS_2101_1_22_BLOCKSTATE_MIXIN_CLASSFILE_METADATA",
+  "artifact": {
+    "coordinates": "dev.ftb.mods:ftb-chunks-neoforge:2101.1.22",
+    "sha256": "4ba1b3352184fa7f6e2aa4bca76edd074867697d62344dfa50dcccdb4dab5217",
+    "size_bytes": 655807
+  },
+  "class": {
+    "path": "dev/ftb/mods/ftbchunks/core/mixin/BlockStateMixin.class",
+    "sha256": "2920670a37b9ebf4d7768ddf37f488fd685f2e88d4630a82310b75393039d5ce",
+    "jvm_class_major_version": 65,
+    "class_annotations": [
+      {
+        "visibility": "RuntimeInvisibleAnnotations",
+        "annotation": {
+          "type": "Lorg/spongepowered/asm/mixin/Mixin;",
+          "elements": {
+            "value": [
+              {
+                "class_descriptor": "Lnet/minecraft/world/level/block/state/BlockState;"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "methods": [
+      {
+        "name": "<init>",
+        "descriptor": "()V",
+        "access_flags": 1,
+        "annotations": [],
+        "code": {
+          "bytecode_size": 5,
+          "bytecode_sha256": "ee8fe905afa58e1ab902e451edc2c06539b35ea08defcfbc67e03c71b1a7028a"
+        }
+      },
+      {
+        "name": "getFTBCIsWater",
+        "descriptor": "()Z",
+        "access_flags": 1,
+        "annotations": [],
+        "code": {
+          "bytecode_size": 38,
+          "bytecode_sha256": "46a300833ef90cb9acfd8f37b076b93a0038b9389dbced58dd9b0514e23025f7"
+        }
+      }
+    ],
+    "method_count": 2,
+    "field_count": 1,
+    "annotation_types": [
+      "Lorg/spongepowered/asm/mixin/Mixin;"
+    ]
+  },
+  "configuration": {
+    "name": "ftbchunks-common.mixins.json",
+    "sha256": "bd5f99632e804411285c53d1d5fc3cf90f938f265c62e2862b0fc790c00d5ad8",
+    "blockstate_mixin_declared": true
+  },
+  "limits": {
+    "runtime_mixin_application": "NOT_OBSERVED",
+    "injection_target_behavior": "STATIC_DECLARATION_ONLY",
+    "other_mod_listeners": "NOT_VERIFIED",
+    "claim_per_affected_block": "NOT_CERTIFIED",
+    "native_explosion_dispatch": "NOT_VERIFIED",
+    "black_arcana_world_effect_policy": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  },
+  "interpretation": "ANALYZED_CLASSFILE_METADATA_ONLY_NOT_RUNTIME_PROTECTION"
+}
