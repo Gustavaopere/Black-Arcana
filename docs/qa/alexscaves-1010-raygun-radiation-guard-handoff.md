@@ -19,3 +19,22 @@ Não derivar um callback de perk dos desvios ou do tag. Sem documentação e tes
 O status `irradiated` possui consumidores próprios (tick, exaustão, Hazmat, heal event), que **não** recebem automaticamente as condições do produtor Raygun; consulte a [ficha do efeito](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/effects/irradiated.md). As regras do Black Arcana preservam `WorldEffectPolicy`, autoridade de servidor, claims/PvP, custos/cooldowns e não duplicação do pipeline do provider.
 
 **Estado obrigatório:** ⚠️ parcial/condicionado; `NO_MUTATION`, `NOT_CERTIFIED`, `physical_qa=NOT_TESTED`; Raygun e Tremorzilla Beam ainda pendentes (Alex's Caves 28/30). Stage 06.05 não avança por auditoria de catálogo.
+
+
+## Resultado SHA-exato — primeira CI #41542778991
+
+A [sonda de descoberta](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41542778991) terminou com **15/15 regressões sintéticas aprovadas**. Depois de uma correção de variável local do parser (o objeto do método não deve ser sobrescrito pelo `re.Match` de um branch), o JAR publisher foi auditado com SHA-256 **`36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`** e o método `onUseTick` digest **`b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5`**. O [manifesto do guard e tag](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-RADIATION-GUARDS-1.0.10.json) foi extraído desse resultado.
+
+A tag física `data/alexscaves/tags/entity_type/resists_radiation.json`, SHA-256 **`1bb63c275f31f6744c071cda8ced3e1225401c5aa1dff2ea7fa3c7949e46a6c4`**, tem seis valores: `alexscaves:nucleeper`, `alexscaves:radgill`, `alexscaves:brainiac`, `alexscaves:gammaroach`, `alexscaves:raycat`, `alexscaves:tremorzilla`. Não declara `replace`, cujo default para essa leitura é `false`. Esse inventário é o **default do publisher**, não demonstra o conteúdo efetivo da registry após datapacks.
+
+| Ponto compilado | Evidência | Limitação |
+|---|---|---|
+| `ACCompat.hurt @1041` → `ifeq @1044` | Retorno falso salta para `@1051`; true segue para `@1047` | Não resolve o restante do CFG/controle de danos |
+| `ACTagRegistry.RESISTS_RADIATION @1082` → `Holder$Reference.is @1085` → `ifne @1088` | Predicado verdadeiro salta a `@1157`; falso prossegue `@1091` | O teste refere-se à tag atual em runtime, não a imunidade global |
+| `ACEffectRegistry.IRRADIATED @1097`, `MobEffectInstance(...,800,slot23) @1116`, `LivingEntity.addEffect @1119` | A solicitação nativa usa status Irradiated com duração 800 ticks e amplifier selecionado no provider | Não prova aceitação por todo alvo nem persistence/stacking |
+| `ifeq @1122` após `LivingEntity.addEffect` | Retorno falso pula para `@1157`; verdadeiro segue `@1125` | Apenas ramo booleano de aceite, sem teste físico |
+| `sendMSGToAll @1154` → `goto @1157` | O fluxo visual está depois dos guards observados; retorno do loop em `@953` | Emissão em código não comprova entrega da mensagem, autorização de receptor ou efeito renderizado |
+
+**Interpretação:** na região delimitada, a resistência selecionada pelo tag impede que o fluxo prossiga para a chamada direta de `addEffect`, e o valor booleano de `addEffect` condiciona a continuação da região visual. **Nenhum efeito de perk está liberado**: proteção territorial, regras de PvP, validação do servidor, armadura Hazmat, efeito tick/curas, owner, estado/charge e QA física continuam fora do alcance da sonda. O workflow precisa repetir com `--seal` e toda CI obrigatória verde antes do merge.
+
+O estado permanece **⚠️ parcial/condicionado**; `NO_MUTATION`, `NOT_CERTIFIED`, `physical_qa=NOT_TESTED`, sem promoção de Stage 06 ou números do catálogo.
