@@ -88,8 +88,10 @@ class ExactFtbSynthetic(unittest.TestCase):
             tmp_jar(p)
             with zipfile.ZipFile(p,"a") as z:
                 z.writestr("extra"+CLASS_SUFFIX,b"EntityMobGriefingEvent"+bytes(12000))
-            with self.assertRaisesRegex(EvidenceError,"ambiguous"):
-                audit(p,"javap")
+            with patch("ftbchunks_2101_grief_tag_probe.subprocess.run",
+                       side_effect=fake_javap):
+                with self.assertRaisesRegex(EvidenceError,"ambiguous"):
+                    audit(p,"javap")
 
     def test_valid_synthetic_evidence_and_seal_tamper(self):
         with tempfile.TemporaryDirectory() as d:
