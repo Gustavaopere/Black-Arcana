@@ -1,0 +1,508 @@
+{
+  "schema_version": 1,
+  "scope": "EXACT_ALEXSCAVES_1010_RAYGUN_RADIATION_GUARD_AND_DEFAULT_TAG_ABI",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_path": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+  "class_sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c",
+  "publisher_default_resistance_tag": {
+    "path": "data/alexscaves/tags/entity_type/resists_radiation.json",
+    "sha256": "1bb63c275f31f6744c071cda8ced3e1225401c5aa1dff2ea7fa3c7949e46a6c4",
+    "replace_declared": false,
+    "replace_effective_default": false,
+    "declared_values": [
+      "alexscaves:nucleeper",
+      "alexscaves:radgill",
+      "alexscaves:brainiac",
+      "alexscaves:gammaroach",
+      "alexscaves:raycat",
+      "alexscaves:tremorzilla"
+    ],
+    "value_count": 6,
+    "interpretation": "PUBLISHER_DEFAULT_NOT_EFFECTIVE_RUNTIME_REGISTRY"
+  },
+  "radiation_guard_method": {
+    "method": "onUseTick",
+    "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+    "parsed_method_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+    "instruction_count": 523,
+    "symbols_with_local_context": [
+      {
+        "name": "resistance_tag",
+        "offset": 1082,
+        "opcode": "getstatic",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.RESISTS_RADIATION:Lnet/minecraft/tags/TagKey;",
+        "nearby": [
+          {
+            "offset": 1069,
+            "opcode": "checkcast",
+            "operand": "#170",
+            "symbol": "class net/minecraft/world/entity/LivingEntity"
+          },
+          {
+            "offset": 1072,
+            "opcode": "astore",
+            "operand": "27",
+            "symbol": ""
+          },
+          {
+            "offset": 1074,
+            "opcode": "aload",
+            "operand": "27",
+            "symbol": ""
+          },
+          {
+            "offset": 1076,
+            "opcode": "invokevirtual",
+            "operand": "#513",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+          },
+          {
+            "offset": 1079,
+            "opcode": "invokevirtual",
+            "operand": "#517",
+            "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+          },
+          {
+            "offset": 1082,
+            "opcode": "getstatic",
+            "operand": "#523",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.RESISTS_RADIATION:Lnet/minecraft/tags/TagKey;"
+          },
+          {
+            "offset": 1085,
+            "opcode": "invokevirtual",
+            "operand": "#529",
+            "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+          },
+          {
+            "offset": 1088,
+            "opcode": "ifne",
+            "operand": "1157",
+            "symbol": ""
+          },
+          {
+            "offset": 1091,
+            "opcode": "aload",
+            "operand": "27",
+            "symbol": ""
+          },
+          {
+            "offset": 1093,
+            "opcode": "new",
+            "operand": "#534",
+            "symbol": "class net/minecraft/world/effect/MobEffectInstance"
+          },
+          {
+            "offset": 1096,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "name": "irradiated_effect",
+        "offset": 1097,
+        "opcode": "getstatic",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.IRRADIATED:Ljava/util/function/Supplier;",
+        "nearby": [
+          {
+            "offset": 1085,
+            "opcode": "invokevirtual",
+            "operand": "#529",
+            "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+          },
+          {
+            "offset": 1088,
+            "opcode": "ifne",
+            "operand": "1157",
+            "symbol": ""
+          },
+          {
+            "offset": 1091,
+            "opcode": "aload",
+            "operand": "27",
+            "symbol": ""
+          },
+          {
+            "offset": 1093,
+            "opcode": "new",
+            "operand": "#534",
+            "symbol": "class net/minecraft/world/effect/MobEffectInstance"
+          },
+          {
+            "offset": 1096,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1097,
+            "opcode": "getstatic",
+            "operand": "#536",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.IRRADIATED:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 1100,
+            "opcode": "invokeinterface",
+            "operand": "#68,  1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 1105,
+            "opcode": "checkcast",
+            "operand": "#541",
+            "symbol": "class net/minecraft/world/effect/MobEffect"
+          },
+          {
+            "offset": 1108,
+            "opcode": "invokestatic",
+            "operand": "#543",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.effect:(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/core/Holder;"
+          },
+          {
+            "offset": 1111,
+            "opcode": "sipush",
+            "operand": "800",
+            "symbol": ""
+          },
+          {
+            "offset": 1114,
+            "opcode": "iload",
+            "operand": "23",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "name": "resistance_test",
+        "offset": 1085,
+        "opcode": "invokevirtual",
+        "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z",
+        "nearby": [
+          {
+            "offset": 1072,
+            "opcode": "astore",
+            "operand": "27",
+            "symbol": ""
+          },
+          {
+            "offset": 1074,
+            "opcode": "aload",
+            "operand": "27",
+            "symbol": ""
+          },
+          {
+            "offset": 1076,
+            "opcode": "invokevirtual",
+            "operand": "#513",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+          },
+          {
+            "offset": 1079,
+            "opcode": "invokevirtual",
+            "operand": "#517",
+            "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+          },
+          {
+            "offset": 1082,
+            "opcode": "getstatic",
+            "operand": "#523",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.RESISTS_RADIATION:Lnet/minecraft/tags/TagKey;"
+          },
+          {
+            "offset": 1085,
+            "opcode": "invokevirtual",
+            "operand": "#529",
+            "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+          },
+          {
+            "offset": 1088,
+            "opcode": "ifne",
+            "operand": "1157",
+            "symbol": ""
+          },
+          {
+            "offset": 1091,
+            "opcode": "aload",
+            "operand": "27",
+            "symbol": ""
+          },
+          {
+            "offset": 1093,
+            "opcode": "new",
+            "operand": "#534",
+            "symbol": "class net/minecraft/world/effect/MobEffectInstance"
+          },
+          {
+            "offset": 1096,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1097,
+            "opcode": "getstatic",
+            "operand": "#536",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.IRRADIATED:Ljava/util/function/Supplier;"
+          }
+        ]
+      },
+      {
+        "name": "native_hurt_request",
+        "offset": 1041,
+        "opcode": "invokestatic",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "nearby": [
+          {
+            "offset": 1029,
+            "opcode": "iload",
+            "operand": "18",
+            "symbol": ""
+          },
+          {
+            "offset": 1031,
+            "opcode": "ifeq",
+            "operand": "1038",
+            "symbol": ""
+          },
+          {
+            "offset": 1034,
+            "opcode": "fconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1035,
+            "opcode": "goto",
+            "operand": "1041",
+            "symbol": ""
+          },
+          {
+            "offset": 1038,
+            "opcode": "ldc_w",
+            "operand": "#348",
+            "symbol": "float 1.5f"
+          },
+          {
+            "offset": 1041,
+            "opcode": "invokestatic",
+            "operand": "#509",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+          },
+          {
+            "offset": 1044,
+            "opcode": "ifeq",
+            "operand": "1051",
+            "symbol": ""
+          },
+          {
+            "offset": 1047,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1048,
+            "opcode": "goto",
+            "operand": "1052",
+            "symbol": ""
+          },
+          {
+            "offset": 1051,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1052,
+            "opcode": "istore",
+            "operand": "26",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "name": "status_request",
+        "offset": 1119,
+        "opcode": "invokevirtual",
+        "symbol": "Method net/minecraft/world/entity/LivingEntity.addEffect:(Lnet/minecraft/world/effect/MobEffectInstance;)Z",
+        "nearby": [
+          {
+            "offset": 1105,
+            "opcode": "checkcast",
+            "operand": "#541",
+            "symbol": "class net/minecraft/world/effect/MobEffect"
+          },
+          {
+            "offset": 1108,
+            "opcode": "invokestatic",
+            "operand": "#543",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.effect:(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/core/Holder;"
+          },
+          {
+            "offset": 1111,
+            "opcode": "sipush",
+            "operand": "800",
+            "symbol": ""
+          },
+          {
+            "offset": 1114,
+            "opcode": "iload",
+            "operand": "23",
+            "symbol": ""
+          },
+          {
+            "offset": 1116,
+            "opcode": "invokespecial",
+            "operand": "#547",
+            "symbol": "Method net/minecraft/world/effect/MobEffectInstance.\"<init>\":(Lnet/minecraft/core/Holder;II)V"
+          },
+          {
+            "offset": 1119,
+            "opcode": "invokevirtual",
+            "operand": "#550",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.addEffect:(Lnet/minecraft/world/effect/MobEffectInstance;)Z"
+          },
+          {
+            "offset": 1122,
+            "opcode": "ifeq",
+            "operand": "1157",
+            "symbol": ""
+          },
+          {
+            "offset": 1125,
+            "opcode": "new",
+            "operand": "#554",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/message/UpdateEffectVisualityEntityMessage"
+          },
+          {
+            "offset": 1128,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1129,
+            "opcode": "aload",
+            "operand": "25",
+            "symbol": ""
+          },
+          {
+            "offset": 1131,
+            "opcode": "invokevirtual",
+            "operand": "#556",
+            "symbol": "Method net/minecraft/world/entity/Entity.getId:()I"
+          }
+        ]
+      },
+      {
+        "name": "visual_notification",
+        "offset": 1154,
+        "opcode": "invokestatic",
+        "symbol": "Method com/github/alexmodguy/alexscaves/AlexsCaves.sendMSGToAll:(Ljava/lang/Object;)V",
+        "nearby": [
+          {
+            "offset": 1143,
+            "opcode": "iconst_4",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1144,
+            "opcode": "goto",
+            "operand": "1148",
+            "symbol": ""
+          },
+          {
+            "offset": 1147,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1148,
+            "opcode": "sipush",
+            "operand": "800",
+            "symbol": ""
+          },
+          {
+            "offset": 1151,
+            "opcode": "invokespecial",
+            "operand": "#557",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/message/UpdateEffectVisualityEntityMessage.\"<init>\":(IIII)V"
+          },
+          {
+            "offset": 1154,
+            "opcode": "invokestatic",
+            "operand": "#560",
+            "symbol": "Method com/github/alexmodguy/alexscaves/AlexsCaves.sendMSGToAll:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 1157,
+            "opcode": "goto",
+            "operand": "953",
+            "symbol": ""
+          },
+          {
+            "offset": 1160,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      }
+    ],
+    "selected_branch_edges": [
+      {
+        "offset": 1044,
+        "opcode": "ifeq",
+        "taken_target": 1051,
+        "sequential_next": 1047,
+        "interpretation": "DIRECT_COMPILED_EDGE_ONLY_NOT_GLOBAL_REACHABILITY"
+      },
+      {
+        "offset": 1088,
+        "opcode": "ifne",
+        "taken_target": 1157,
+        "sequential_next": 1091,
+        "interpretation": "DIRECT_COMPILED_EDGE_ONLY_NOT_GLOBAL_REACHABILITY"
+      },
+      {
+        "offset": 1122,
+        "opcode": "ifeq",
+        "taken_target": 1157,
+        "sequential_next": 1125,
+        "interpretation": "DIRECT_COMPILED_EDGE_ONLY_NOT_GLOBAL_REACHABILITY"
+      },
+      {
+        "offset": 1157,
+        "opcode": "goto",
+        "taken_target": 953,
+        "sequential_next": 1160,
+        "interpretation": "DIRECT_COMPILED_EDGE_ONLY_NOT_GLOBAL_REACHABILITY"
+      }
+    ],
+    "interpretation": "STATIC_TAG_AND_ADD_EFFECT_RESULT_GUARDS_NOT_RUNTIME_CERTIFICATION"
+  },
+  "limits": {
+    "authority_of_tag": "PUBLISHER_DEFAULT_DATAPACK_ONLY_REPLACEABLE",
+    "effective_world_datapack": "NOT_VERIFIED",
+    "radiation_resistance_application": "STATIC_BRANCH_ONLY",
+    "hit_acceptance_and_iteration": "NOT_CERTIFIED",
+    "actual_effect_accepted": "NOT_CERTIFIED",
+    "visual_packet_delivery": "NOT_OBSERVED",
+    "server_authority_and_replay": "NOT_VERIFIED",
+    "claims_and_pvp": "NOT_VERIFIED",
+    "full_cfg_exception_edges": "NOT_RECONSTRUCTED",
+    "safe_mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  },
+  "interpretation": "NO_MUTATION_EXACT_VERSION_STATIC_RADIATION_GUARD_SEAMS"
+}
