@@ -125,6 +125,14 @@ O [relatório de auditoria do NeoForge 21.1.248](../../../../../docs/qa/neoforge
 
 **Limites:** a API não recebe uma posição de bloco nem um contexto de claim no método auditado. Listener instalado, semântica de proteções territoriais e mutações subsequentes permanecem desconhecidos; o NeoForge 21.1.248 é baseline de build, enquanto o snapshot físico da modlist registra 21.1.250. Não há evidência de permissão de `WorldEffectPolicy`, loaded chunks, atribuição de jogador ou hook mutador autorizado. **`NO_MUTATION`, `NOT_CERTIFIED`, QA física `NOT_TESTED`**; o índice continua 28/30.
 
+### NeoForge do modpack 21.1.250 — equivalência compilada e limite de claims (PR #1009)
+
+A modlist física registra **NeoForge 21.1.250**, enquanto o Black Arcana mantém baseline de compilação **21.1.248**. A [auditoria da versão física 21.1.250](../../../../../docs/qa/neoforge-211250-grief-event-handoff.md) e o [manifesto selecionado](../NEOFORGE-211250-GRIEF-EVENT-ABI.json) identificaram o JAR Maven oficial 21.1.250 (SHA-256 `1f9cc68fe9ec0416475d34ce76e95a696b9721d5d338168563dab0632c3d2956`). As **duas classes compiladas** `EventHooks` e `EntityMobGriefingEvent` são byte a byte idênticas às da versão 21.1.248; cinco métodos selecionados apresentam os mesmos hashes, descritores e callsites. A CI inicial foi de descoberta; a comprovação final depende da execução `--seal` na HEAD da PR.
+
+Para a chamada não nula efetuada pelo Tremorzilla, a sequência selecionada continua `EventHooks.canEntityGrief(Level, Entity)` → `EntityMobGriefingEvent` no event bus → `canGrief()`, com estado inicial baseado em `mobGriefing`. **Não se infere autorização territorial**, porque não há `BlockPos` nesse contrato e nenhum listener de claims do modpack foi inspecionado. O resultado de um evento consultado antes de `breakBlocksAround` não prova permissão sobre cada bloco, loaded chunks, ownership ou cobertura de `WorldEffectPolicy`.
+
+**Decisão:** `NO_MUTATION`; `NOT_CERTIFIED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Nenhum avanço de contadores (28/30) ou de autorização de perks destrutivas.
+
 ### Matriz de integração / pendências
 
 | Perk pretendida | Consumer que exige auditoria adicional | Decisão |
