@@ -12,6 +12,23 @@ A [sonda read-only](ftbchunks_2101_fire_fluid_mixins_probe.py) reutiliza o parse
 
 A [CI](../../.github/workflows/ftbchunks-2101-fire-fluid-mixins.yml) executa regressões sintéticas negativas e examina o JAR publisher publicado no Maven. A primeira execução coleta evidência `UNSEALED DISCOVERY` e não é suficiente para merge. Dados verificados serão fixados no `FTBCHUNKS-2101-FIRE-FLUID-MIXINS-ABI.json` e submetidos a nova execução com `--seal` sobre a HEAD final, acompanhada da CI completa.
 
+## Observação SHA-exata — primeira CI #41500527241
+
+O [workflow de descoberta](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41500527241) aprovou **12 testes sintéticos** e extraiu metadados das classes `FireBlockMixin.class` e `FlowingFluidMixin.class` do publisher JAR 2101.1.22. O [manifesto da observação](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/FTBCHUNKS-2101-FIRE-FLUID-MIXINS-ABI.json) fixa SHA-256 da classe, métodos, descritores, anotações e digests de bytecode; não inclui corpos de implementação.
+
+| Classe | `@Mixin` alvo compilado | Anotação de método observada | Alvo do ponto de transformação |
+|---|---|---|---|
+| `FireBlockMixin` | `net.minecraft.world.level.block.FireBlock` | `@Redirect` em `ftbc$getIgniteOdds(FireBlock,LevelReader,BlockPos,BlockPos):int` | `method=[tick]`, `@At(value=INVOKE, target=FireBlock.getIgniteOdds(LevelReader,BlockPos):int)` |
+| `FlowingFluidMixin` | `net.minecraft.world.level.material.FlowingFluid` | `@Inject` em `onGetSpread(Level,BlockPos,BlockState,CallbackInfoReturnable,Map):void` | `method=[getSpread]`, `@At(value=RETURN)` |
+
+O `FireBlockMixin` declara **três métodos**: `<init>()V`, `getIgniteOdds(LevelReader,BlockPos):int` marcado como `@Shadow` (sem `Code` no classfile), e `ftbc$getIgniteOdds` marcado como `@Redirect`. O método de redirecionamento tem **20 bytes** de código compilado, SHA-256 `01389285af24fc055acf9de6a1cf74d4922114773223d090e7787b784459cb68`.
+
+O `FlowingFluidMixin` declara **dois métodos**: `<init>()V` e `onGetSpread` com `@Inject`. Este último contém **8 bytes** de código compilado, SHA-256 `034c82c80aa97b282fcd6c5f1bcf43ec043b2ea12a2f7dca28b26debb2144281`. A leitura de anotações não examina de forma semântica as invocações desse bytecode: a existência da injeção não certifica que ele faça veto, consulte claims ou seja aplicado no servidor.
+
+**Conclusão de interoperabilidade:** estas classes declaradamente incidem sobre `FireBlock.tick`/`getIgniteOdds` e `FlowingFluid.getSpread`. Não foi demonstrada por elas interceptação anotada de `Level.destroyBlock`, `BlockState.onBlockExploded` ou `Explosion.getToBlow` do Tremorzilla. Mesmo que as transformações sejam aplicadas corretamente, seu alcance é específico aos métodos listados. O caminho de `WorldEffectPolicy`, acesso a claims resolvidos e a validação física continuam pendentes.
+
+**Gate:** a primeira CI é de descoberta. O manifesto será validado por `--seal` em execução posterior, além da CI principal e GameTests, antes de considerar merge. Não promover a ficha de 28/30, nem Stage 06.
+
 ## Limites obrigatórios
 
 Ainda que se prove uma injeção para propagação de fogo ou fluxo de fluidos, seu alvo é uma rota específica; não fornece autorização territorial genérica para **`TremorzillaEntity.breakBlocksAround`**, `Level.destroyBlock`, `BlockState.onBlockExploded` ou `Explosion.getToBlow`. O runtime Black Arcana conserva `WorldEffectPolicy` e não delega essa autoridade a event handlers alheios sem contrato validado.
