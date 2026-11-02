@@ -1,0 +1,803 @@
+{
+  "schema_version": 1,
+  "scope": "EXACT_ALEXSCAVES_1010_RAYGUN_JVM_LOCAL_SLOT_ACCESS_CENSUS",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_path": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+  "class_sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c",
+  "declared_method_count": 26,
+  "local_access_census": {
+    "method_name": "onUseTick",
+    "method_descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+    "parsed_method_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+    "instruction_count": 523,
+    "selected_slots": {
+      "7": {
+        "access_count": 4,
+        "accesses": [
+          {
+            "offset": 33,
+            "opcode": "fstore",
+            "operand": "7",
+            "access": "WRITE"
+          },
+          {
+            "offset": 38,
+            "opcode": "fload",
+            "operand": "7",
+            "access": "READ"
+          },
+          {
+            "offset": 270,
+            "opcode": "fload",
+            "operand": "7",
+            "access": "READ"
+          },
+          {
+            "offset": 360,
+            "opcode": "fload",
+            "operand": "7",
+            "access": "READ"
+          }
+        ]
+      },
+      "8": {
+        "access_count": 6,
+        "accesses": [
+          {
+            "offset": 41,
+            "opcode": "fstore",
+            "operand": "8",
+            "access": "WRITE"
+          },
+          {
+            "offset": 66,
+            "opcode": "fload",
+            "operand": "8",
+            "access": "READ"
+          },
+          {
+            "offset": 75,
+            "opcode": "fload",
+            "operand": "8",
+            "access": "READ"
+          },
+          {
+            "offset": 90,
+            "opcode": "fload",
+            "operand": "8",
+            "access": "READ"
+          },
+          {
+            "offset": 578,
+            "opcode": "fload",
+            "operand": "8",
+            "access": "READ"
+          },
+          {
+            "offset": 597,
+            "opcode": "fload",
+            "operand": "8",
+            "access": "READ"
+          }
+        ]
+      },
+      "9": {
+        "access_count": 4,
+        "accesses": [
+          {
+            "offset": 58,
+            "opcode": "istore",
+            "operand": "9",
+            "access": "WRITE"
+          },
+          {
+            "offset": 105,
+            "opcode": "iload",
+            "operand": "9",
+            "access": "READ"
+          },
+          {
+            "offset": 122,
+            "opcode": "iload",
+            "operand": "9",
+            "access": "READ"
+          },
+          {
+            "offset": 569,
+            "opcode": "iload",
+            "operand": "9",
+            "access": "READ"
+          }
+        ]
+      },
+      "18": {
+        "access_count": 6,
+        "accesses": [
+          {
+            "offset": 346,
+            "opcode": "istore",
+            "operand": "18",
+            "access": "WRITE"
+          },
+          {
+            "offset": 367,
+            "opcode": "iload",
+            "operand": "18",
+            "access": "READ"
+          },
+          {
+            "offset": 402,
+            "opcode": "iload",
+            "operand": "18",
+            "access": "READ"
+          },
+          {
+            "offset": 922,
+            "opcode": "iload",
+            "operand": "18",
+            "access": "READ"
+          },
+          {
+            "offset": 1029,
+            "opcode": "iload",
+            "operand": "18",
+            "access": "READ"
+          },
+          {
+            "offset": 1138,
+            "opcode": "iload",
+            "operand": "18",
+            "access": "READ"
+          }
+        ]
+      }
+    },
+    "critical_windows": [
+      {
+        "name": "distance_source_read",
+        "offset": 38,
+        "selected_instructions": [
+          {
+            "offset": 28,
+            "opcode": "fdiv",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 29,
+            "opcode": "goto",
+            "operand": "33",
+            "symbol": ""
+          },
+          {
+            "offset": 32,
+            "opcode": "fconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 33,
+            "opcode": "fstore",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 35,
+            "opcode": "ldc_w",
+            "operand": "#269",
+            "symbol": "float 25.0f"
+          },
+          {
+            "offset": 38,
+            "opcode": "fload",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 40,
+            "opcode": "fmul",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 41,
+            "opcode": "fstore",
+            "operand": "8",
+            "symbol": ""
+          },
+          {
+            "offset": 43,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 44,
+            "opcode": "getstatic",
+            "operand": "#270",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.X_RAY:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 47,
+            "opcode": "invokestatic",
+            "operand": "#193",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          }
+        ]
+      },
+      {
+        "name": "distance_result_store",
+        "offset": 41,
+        "selected_instructions": [
+          {
+            "offset": 32,
+            "opcode": "fconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 33,
+            "opcode": "fstore",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 35,
+            "opcode": "ldc_w",
+            "operand": "#269",
+            "symbol": "float 25.0f"
+          },
+          {
+            "offset": 38,
+            "opcode": "fload",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 40,
+            "opcode": "fmul",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 41,
+            "opcode": "fstore",
+            "operand": "8",
+            "symbol": ""
+          },
+          {
+            "offset": 43,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 44,
+            "opcode": "getstatic",
+            "operand": "#270",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.X_RAY:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 47,
+            "opcode": "invokestatic",
+            "operand": "#193",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 50,
+            "opcode": "ifle",
+            "operand": "57",
+            "symbol": ""
+          },
+          {
+            "offset": 53,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "name": "xray_enchant_read",
+        "offset": 44,
+        "selected_instructions": [
+          {
+            "offset": 35,
+            "opcode": "ldc_w",
+            "operand": "#269",
+            "symbol": "float 25.0f"
+          },
+          {
+            "offset": 38,
+            "opcode": "fload",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 40,
+            "opcode": "fmul",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 41,
+            "opcode": "fstore",
+            "operand": "8",
+            "symbol": ""
+          },
+          {
+            "offset": 43,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 44,
+            "opcode": "getstatic",
+            "operand": "#270",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.X_RAY:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 47,
+            "opcode": "invokestatic",
+            "operand": "#193",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 50,
+            "opcode": "ifle",
+            "operand": "57",
+            "symbol": ""
+          },
+          {
+            "offset": 53,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 54,
+            "opcode": "goto",
+            "operand": "58",
+            "symbol": ""
+          },
+          {
+            "offset": 57,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "name": "xray_boolean_store",
+        "offset": 58,
+        "selected_instructions": [
+          {
+            "offset": 47,
+            "opcode": "invokestatic",
+            "operand": "#193",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 50,
+            "opcode": "ifle",
+            "operand": "57",
+            "symbol": ""
+          },
+          {
+            "offset": 53,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 54,
+            "opcode": "goto",
+            "operand": "58",
+            "symbol": ""
+          },
+          {
+            "offset": 57,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 58,
+            "opcode": "istore",
+            "operand": "9",
+            "symbol": ""
+          },
+          {
+            "offset": 60,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 61,
+            "opcode": "invokedynamic",
+            "operand": "#273,  0",
+            "symbol": "InvokeDynamic #0:test:()Ljava/util/function/Predicate;"
+          },
+          {
+            "offset": 66,
+            "opcode": "fload",
+            "operand": "8",
+            "symbol": ""
+          },
+          {
+            "offset": 68,
+            "opcode": "f2d",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 69,
+            "opcode": "invokestatic",
+            "operand": "#276",
+            "symbol": "Method net/minecraft/world/entity/projectile/ProjectileUtil.getHitResultOnViewVector:(Lnet/minecraft/world/entity/Entity;Ljava/util/function/Predicate;D)Lnet/minecraft/world/phys/HitResult;"
+          }
+        ]
+      },
+      {
+        "name": "damage_option_load",
+        "offset": 1029,
+        "selected_instructions": [
+          {
+            "offset": 1019,
+            "opcode": "aload",
+            "operand": "25",
+            "symbol": ""
+          },
+          {
+            "offset": 1021,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1022,
+            "opcode": "invokevirtual",
+            "operand": "#499",
+            "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+          },
+          {
+            "offset": 1025,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1026,
+            "opcode": "invokestatic",
+            "operand": "#503",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeRaygunDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+          },
+          {
+            "offset": 1029,
+            "opcode": "iload",
+            "operand": "18",
+            "symbol": ""
+          },
+          {
+            "offset": 1031,
+            "opcode": "ifeq",
+            "operand": "1038",
+            "symbol": ""
+          },
+          {
+            "offset": 1034,
+            "opcode": "fconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1035,
+            "opcode": "goto",
+            "operand": "1041",
+            "symbol": ""
+          },
+          {
+            "offset": 1038,
+            "opcode": "ldc_w",
+            "operand": "#348",
+            "symbol": "float 1.5f"
+          },
+          {
+            "offset": 1041,
+            "opcode": "invokestatic",
+            "operand": "#509",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+          }
+        ]
+      },
+      {
+        "name": "damage_request",
+        "offset": 1041,
+        "selected_instructions": [
+          {
+            "offset": 1029,
+            "opcode": "iload",
+            "operand": "18",
+            "symbol": ""
+          },
+          {
+            "offset": 1031,
+            "opcode": "ifeq",
+            "operand": "1038",
+            "symbol": ""
+          },
+          {
+            "offset": 1034,
+            "opcode": "fconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1035,
+            "opcode": "goto",
+            "operand": "1041",
+            "symbol": ""
+          },
+          {
+            "offset": 1038,
+            "opcode": "ldc_w",
+            "operand": "#348",
+            "symbol": "float 1.5f"
+          },
+          {
+            "offset": 1041,
+            "opcode": "invokestatic",
+            "operand": "#509",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+          },
+          {
+            "offset": 1044,
+            "opcode": "ifeq",
+            "operand": "1051",
+            "symbol": ""
+          },
+          {
+            "offset": 1047,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1048,
+            "opcode": "goto",
+            "operand": "1052",
+            "symbol": ""
+          },
+          {
+            "offset": 1051,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1052,
+            "opcode": "istore",
+            "operand": "26",
+            "symbol": ""
+          }
+        ]
+      }
+    ],
+    "selected_write_windows": [
+      {
+        "slot": 7,
+        "offset": 33,
+        "selected_instructions": [
+          {
+            "offset": 28,
+            "opcode": "fdiv",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 29,
+            "opcode": "goto",
+            "operand": "33",
+            "symbol": ""
+          },
+          {
+            "offset": 32,
+            "opcode": "fconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 33,
+            "opcode": "fstore",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 35,
+            "opcode": "ldc_w",
+            "operand": "#269",
+            "symbol": "float 25.0f"
+          },
+          {
+            "offset": 38,
+            "opcode": "fload",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 40,
+            "opcode": "fmul",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "slot": 8,
+        "offset": 41,
+        "selected_instructions": [
+          {
+            "offset": 35,
+            "opcode": "ldc_w",
+            "operand": "#269",
+            "symbol": "float 25.0f"
+          },
+          {
+            "offset": 38,
+            "opcode": "fload",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 40,
+            "opcode": "fmul",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 41,
+            "opcode": "fstore",
+            "operand": "8",
+            "symbol": ""
+          },
+          {
+            "offset": 43,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 44,
+            "opcode": "getstatic",
+            "operand": "#270",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.X_RAY:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 47,
+            "opcode": "invokestatic",
+            "operand": "#193",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          }
+        ]
+      },
+      {
+        "slot": 9,
+        "offset": 58,
+        "selected_instructions": [
+          {
+            "offset": 53,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 54,
+            "opcode": "goto",
+            "operand": "58",
+            "symbol": ""
+          },
+          {
+            "offset": 57,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 58,
+            "opcode": "istore",
+            "operand": "9",
+            "symbol": ""
+          },
+          {
+            "offset": 60,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 61,
+            "opcode": "invokedynamic",
+            "operand": "#273,  0",
+            "symbol": "InvokeDynamic #0:test:()Ljava/util/function/Predicate;"
+          },
+          {
+            "offset": 66,
+            "opcode": "fload",
+            "operand": "8",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "slot": 18,
+        "offset": 346,
+        "selected_instructions": [
+          {
+            "offset": 341,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 342,
+            "opcode": "goto",
+            "operand": "346",
+            "symbol": ""
+          },
+          {
+            "offset": 345,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 346,
+            "opcode": "istore",
+            "operand": "18",
+            "symbol": ""
+          },
+          {
+            "offset": 348,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 349,
+            "opcode": "invokevirtual",
+            "operand": "#197",
+            "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+          },
+          {
+            "offset": 352,
+            "opcode": "invokeinterface",
+            "operand": "#362,  1",
+            "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+          }
+        ]
+      }
+    ],
+    "interpretation": "SLOT_ACCESS_AND_NEARBY_INSTRUCTIONS_ONLY_NOT_REACHING_DEFINITIONS"
+  },
+  "limits": {
+    "local_slot_values_and_aliases": "NOT_RECONSTRUCTED",
+    "branch_reaching_definitions": "NOT_RECONSTRUCTED",
+    "control_flow_graph": "NOT_RECONSTRUCTED",
+    "exceptional_edges": "NOT_RECONSTRUCTED",
+    "xray_effective_penetration": "NOT_CERTIFIED",
+    "effective_distance_or_damage": "NOT_CERTIFIED",
+    "world_claim_and_pvp": "NOT_VERIFIED",
+    "authoritative_server_mutation_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  },
+  "interpretation": "OBSERVED_LOCAL_SLOTS_NOT_COMPLETE_DATAFLOW_OR_SAFE_PERK_SURFACE"
+}
