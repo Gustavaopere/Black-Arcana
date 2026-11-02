@@ -337,3 +337,16 @@ O [handoff de consumidores SHA-exatos](../../../../../docs/qa/alexscaves-1010-ra
 - **Reutilização de slot JVM:** o mesmo índice `23` foi usado anteriormente como `float` na região de busca `@587–661` e referência de objeto `@689–858`, antes do `int` usado pelo status. Tratar esses valores como a mesma variável seria erro de semântica JVM.
 
 Esta documentação é **evidência estática do método 1.0.10**, sem teste físico com claims, resistência, C2S e mutabilidade de perks. **⚠️ parcial/condicionado · `NO_MUTATION` · `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`**. Manter Raygun pendente e Alex's Caves Continued em **28/30**; não promover Stage 06.
+
+
+## Raygun 1.0.10 — guards de resistência à radiação e aceite de Irradiated (PR #1019)
+
+A [auditoria SHA-exata dos guards](../../../../../docs/qa/alexscaves-1010-raygun-radiation-guard-handoff.md) e o [manifesto do provider](../EXACT-RAYGUN-RADIATION-GUARDS-1.0.10.json) verificam, no JAR publisher 1.0.10, os saltos compilados que envolvem o status **`alexscaves:irradiated`**:
+
+- `ACCompat.hurt @1041 → ifeq @1044`: a chamada de dano tem retorno booleano consultado pelo método, mas isso não reconstitui seu CFG inteiro.
+- `ACTagRegistry.RESISTS_RADIATION @1082 → Holder$Reference.is(TagKey) @1085 → ifne @1088`: o teste de resistência verdadeiro salta para `@1157`, antes da solicitação nativa de status. No ramo contrário o código alcança a região de `ACEffectRegistry.IRRADIATED @1097`.
+- `MobEffectInstance(..., 800 ticks, amplifier do slot 23) @1116 → LivingEntity.addEffect @1119 → ifeq @1122`: o resultado falso de `addEffect` salta a `@1157`; somente o caminho de retorno verdadeiro prossegue para a região visual, que inclui `sendMSGToAll @1154`. **Solicitar status e ter retorno verdadeiro não equivalem a garantir entrega de pacote visual ou imunidade de todos os produtores de radiação.**
+
+O JSON publisher `resists_radiation.json`, SHA-256 `1bb63c275f31f6744c071cda8ced3e1225401c5aa1dff2ea7fa3c7949e46a6c4`, contém **Nucleeper, Radgill, Brainiac, Gammaroach, Raycat e Tremorzilla**. É tag padrão sujeita a datapacks, não a lista autoritativa do mundo em execução.
+
+**Limites de integração:** não usar esses branches para sobrepor a resistência, amplificar/dilatar o efeito ou duplicar efeitos nativos; o Black Arcana preserva casting/authority do servidor, `WorldEffectPolicy` e gates de PvP/claims. **⚠️ parcial/condicionado; `NO_MUTATION`, `NOT_CERTIFIED`, `physical_qa=NOT_TESTED`**. O catálogo continua 28/30, sem promoção de perks ou Stage 06.
