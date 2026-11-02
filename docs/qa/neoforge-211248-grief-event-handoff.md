@@ -10,7 +10,11 @@
 
 ## Estados da auditoria
 
-O workflow primeiro registra SHA-256 do JAR e hashes SHA-256 de duas classes e cinco métodos selecionados. Depois deve ser incorporado um manifesto `NEOFORGE-211248-GRIEF-EVENT-ABI.json` com os valores efetivamente observados. **Somente a execução subsequente em modo `--seal` pode atestar que o bytecode compilado continua idêntico.** O modo inicial sem manifesto é explicitamente exploratório. Testes sintéticos executados localmente não substituem a execução do JAR oficial.
+**Primeira prova física compilada (CI exploratória [#41384507430](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41384507430)):** o artefato Maven oficial de 3.551.268 bytes possui SHA-256 `90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5`. A sonda confirmou a presença dos dois arquivos de classe e dos cinco métodos selecionados, com contagens de instruções **17** (`EventHooks.canEntityGrief`), **14** (construtor de `EntityMobGriefingEvent`), **3** (`canGrief`), **4** (`setCanGrief`) e **3** (`isMobGriefingEnabled`). Seus hashes e callsites foram registrados no [manifesto SHA-exato](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/NEOFORGE-211248-GRIEF-EVENT-ABI.json).
+
+O bytecode verificado contém o ramo `entity == null` que lê a gamerule e o ramo não nulo que instancia o evento, despacha no `NeoForge.EVENT_BUS` e consulta `canGrief()`. O construtor inicializa `isMobGriefingEnabled` com a gamerule e copia esse estado para `canGrief`; o setter escreve o campo `canGrief` e o getter o consulta. Esses fatos **não demonstram qual listener é instalado no modpack** nem se o resultado respeita claims por bloco.
+
+**Gate de fechamento desta auditoria:** reexecutar a CI sobre a HEAD que contém o manifesto, com `--seal` obrigatoriamente ativo, antes de qualquer merge. A execução exploratória anterior, apesar de verde, não é a execução selada. Testes sintéticos não substituem a análise do JAR oficial.
 
 Mesmo que a implementação confirme esse fluxo, a decisão do evento é dependente de listeners instalados. O evento **não é, isoladamente, um comprovante de autorização por posição, claim, dono ou proteção de terreno**, nem garante tratamento adequado de `BlockState.onBlockExploded`, `Level.destroyBlock` ou spawns. Não se deve alterar raio, volume, dano ou destruição em perks do Tremorzilla por esse recorte. A permissão de WorldEffectPolicy do Black Arcana também não pode ser presumida para uma mutação nativa do provider.
 
