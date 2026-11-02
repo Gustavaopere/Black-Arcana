@@ -119,6 +119,12 @@ A inspeção [SHA-exata do publisher 1.0.10](../../../../../docs/qa/alexscaves-1
 
 **Estado de integração inalterado:** ⚠️ `NOT_CERTIFIED` / `NO_MUTATION` / `mutating_hook=NOT_VERIFIED` / `physical_qa=NOT_TESTED`. Nenhuma promoção de ficha ou perk só por comprovação de delegação.
 
+### Encaminhamento NeoForge 21.1.248 compilado — grief event (PR #1008)
+
+O [relatório de auditoria do NeoForge 21.1.248](../../../../../docs/qa/neoforge-211248-grief-event-handoff.md) e seu [manifesto SHA-exato](../NEOFORGE-211248-GRIEF-EVENT-ABI.json) estendem a delegação da PR #1007 **sem alterar o runtime de Alex's Caves**. O JAR oficial analisado (SHA-256 `90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5`) contém a bifurcação `entity == null` para `GameRules.RULE_MOBGRIEFING` e o outro ramo para `NeoForge.EVENT_BUS.post(new EntityMobGriefingEvent(level, entity)).canGrief()`. No evento, `canGrief` é inicializado pela gamerule e pode receber novo booleano por `setCanGrief`.
+
+**Limites:** a API não recebe uma posição de bloco nem um contexto de claim no método auditado. Listener instalado, semântica de proteções territoriais e mutações subsequentes permanecem desconhecidos; o NeoForge 21.1.248 é baseline de build, enquanto o snapshot físico da modlist registra 21.1.250. Não há evidência de permissão de `WorldEffectPolicy`, loaded chunks, atribuição de jogador ou hook mutador autorizado. **`NO_MUTATION`, `NOT_CERTIFIED`, QA física `NOT_TESTED`**; o índice continua 28/30.
+
 ### Matriz de integração / pendências
 
 | Perk pretendida | Consumer que exige auditoria adicional | Decisão |

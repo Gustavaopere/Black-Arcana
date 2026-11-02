@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "scope": "EXACT_NEOFORGE_211248_CAN_ENTITY_GRIEF_EVENT_BYTECODE",
+  "artifact": {
+    "coordinates": "net.neoforged:neoforge:21.1.248:universal",
+    "size_bytes": 3551268,
+    "sha256": "90a56f70425711b4e1a4b94ff0c2904ae9f6d74ca6478b3b2152ac794a07b8e5"
+  },
+  "classes": [
+    {
+      "owner": "EventHooks",
+      "class_path": "net/neoforged/neoforge/event/EventHooks.class",
+      "class_sha256": "f810377f87c95c04bb4de7a7ac68e8f4862f9ca33a34cc74e067e65e2a92d66b",
+      "selected_methods": [
+        {
+          "name": "canEntityGrief",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Z",
+          "instruction_count": 17,
+          "method_sha256": "6b98cb6e7a3091078a17cbe706517a148277098630f5fea14b87458cfe6db07e",
+          "selected_references": [
+            {
+              "offset": 5,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/level/Level.getGameRules:()Lnet/minecraft/world/level/GameRules;"
+            },
+            {
+              "offset": 8,
+              "opcode": "getstatic",
+              "symbol": "Field net/minecraft/world/level/GameRules.RULE_MOBGRIEFING:Lnet/minecraft/world/level/GameRules$Key;"
+            },
+            {
+              "offset": 11,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/level/GameRules.getBoolean:(Lnet/minecraft/world/level/GameRules$Key;)Z"
+            },
+            {
+              "offset": 15,
+              "opcode": "getstatic",
+              "symbol": "Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;"
+            },
+            {
+              "offset": 18,
+              "opcode": "new",
+              "symbol": "class net/neoforged/neoforge/event/entity/EntityMobGriefingEvent"
+            },
+            {
+              "offset": 24,
+              "opcode": "invokespecial",
+              "symbol": "Method net/neoforged/neoforge/event/entity/EntityMobGriefingEvent.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)V"
+            },
+            {
+              "offset": 27,
+              "opcode": "invokeinterface",
+              "symbol": "InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;"
+            },
+            {
+              "offset": 35,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/neoforged/neoforge/event/entity/EntityMobGriefingEvent.canGrief:()Z"
+            }
+          ],
+          "reference_count": 8
+        }
+      ]
+    },
+    {
+      "owner": "EntityMobGriefingEvent",
+      "class_path": "net/neoforged/neoforge/event/entity/EntityMobGriefingEvent.class",
+      "class_sha256": "9c13a932e729431591b37e8e5de11347f96e58f371c3583ac91d7955d30bc9f8",
+      "selected_methods": [
+        {
+          "name": "<init>",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)V",
+          "instruction_count": 14,
+          "method_sha256": "506b5c58b3e6e2d6880a32753d1471408aee88512d5f47dd0b0952297c6c48b6",
+          "selected_references": [
+            {
+              "offset": 2,
+              "opcode": "invokespecial",
+              "symbol": "Method net/neoforged/neoforge/event/entity/EntityEvent.\"<init>\":(Lnet/minecraft/world/entity/Entity;)V"
+            },
+            {
+              "offset": 7,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/level/Level.getGameRules:()Lnet/minecraft/world/level/GameRules;"
+            },
+            {
+              "offset": 10,
+              "opcode": "getstatic",
+              "symbol": "Field net/minecraft/world/level/GameRules.RULE_MOBGRIEFING:Lnet/minecraft/world/level/GameRules$Key;"
+            },
+            {
+              "offset": 13,
+              "opcode": "invokevirtual",
+              "symbol": "Method net/minecraft/world/level/GameRules.getBoolean:(Lnet/minecraft/world/level/GameRules$Key;)Z"
+            },
+            {
+              "offset": 16,
+              "opcode": "putfield",
+              "symbol": "Field isMobGriefingEnabled:Z"
+            },
+            {
+              "offset": 21,
+              "opcode": "getfield",
+              "symbol": "Field isMobGriefingEnabled:Z"
+            },
+            {
+              "offset": 24,
+              "opcode": "putfield",
+              "symbol": "Field canGrief:Z"
+            }
+          ],
+          "reference_count": 7
+        },
+        {
+          "name": "canGrief",
+          "descriptor": "()Z",
+          "instruction_count": 3,
+          "method_sha256": "2d3fdb058a7964c65572564072873754c21c50f57850dd6998b0ecb951d5b03f",
+          "selected_references": [
+            {
+              "offset": 1,
+              "opcode": "getfield",
+              "symbol": "Field canGrief:Z"
+            }
+          ],
+          "reference_count": 1
+        },
+        {
+          "name": "setCanGrief",
+          "descriptor": "(Z)V",
+          "instruction_count": 4,
+          "method_sha256": "86de9741692b99bde6e916119ecfa617919c6b678360edc0a8bce54a3c4a7f96",
+          "selected_references": [
+            {
+              "offset": 2,
+              "opcode": "putfield",
+              "symbol": "Field canGrief:Z"
+            }
+          ],
+          "reference_count": 1
+        },
+        {
+          "name": "isMobGriefingEnabled",
+          "descriptor": "()Z",
+          "instruction_count": 3,
+          "method_sha256": "1ff1d7bb01a4a97c415ebb53ebc7a731efc9b29b44f8271b4106d32c226214a0",
+          "selected_references": [
+            {
+              "offset": 1,
+              "opcode": "getfield",
+              "symbol": "Field isMobGriefingEnabled:Z"
+            }
+          ],
+          "reference_count": 1
+        }
+      ]
+    }
+  ],
+  "interpretation": "STATIC_EVENT_DELEGATION_ONLY_NOT_CLAIM_AUTHORIZATION",
+  "limits": {
+    "modpack_loader_21_1_250": "NOT_INSPECTED_HERE",
+    "third_party_claim_listeners": "NOT_VERIFIED",
+    "black_arcana_world_effect_policy": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  }
+}
