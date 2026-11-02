@@ -285,3 +285,14 @@ físicos continuam sem demonstração.
 
 **Estado:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` ·
 `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`.
+
+
+## Targeting Raygun 1.0.10 — operandos e desvios `X_RAY` SHA-exatos (PR #1015)
+
+A [auditoria complementar de seis janelas compiladas](../../../../../docs/qa/alexscaves-1010-raygun-xray-target-handoff.md) e seu [manifesto SHA-exato](../EXACT-RAYGUN-XRAY-TARGET-1.0.10.json) reinspecionaram `RaygunItem.onUseTick(Level,LivingEntity,ItemStack,int)` (digest `b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5`), no publisher JAR 1.0.10. Não foi recontado como nova ficha.
+
+- O cálculo local inicial usa **`25.0f × local float 7`** (`ldc_w @35`, `fload @38`, `fmul @40`, `fstore 8 @41`). O nível de `X_RAY` é lido separadamente em `@44–58`, gerando `local int 9` após `ACCompat.enchantLevel`. O significado completo da variável `7` e a atuação posterior de `local 9` precisam de CFG restante: **25 não é alcance final certificado**.
+- `ProjectileUtil.getHitResultOnViewVector @69` e `LivingEntity.pick @80` recebem a distância calculada `local float 8`; em outra região `ProjectileUtil.getEntityHitResult @640` usa uma caixa AABB/predicado com branch `ifnull @647`. A chamada `Level.getEntities @943` abre uma enumeração adicional, com iterador e teste de saída em `@960`. Não declarar cone, alcance máximo por modo ou número total de hits a partir dessas superfícies distintas.
+- Existem exclusões por `isAlliedTo @987/@996` e `isPassengerOfSameVehicle @1005`, além do ramo `instanceof TremorzillaEntity @1013`. Um pedido de dano `causeRaygunDamage @1026 → ACCompat.hurt @1041` seleciona **`2.0f` ou `1.5f`** por `local 18` (`@1029–1038`), e testa o retorno `ifeq @1044`. Esses são operandos de dano **solicitado** e não equivalem a dano aceito, crescimento por perk ou efeito de `X_RAY`.
+
+**Estado e gates:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Faltam CFG completo e dataflow dos locais `7/9/18`, bloqueios de alvo/LOS, limites efetivos, autenticação de estado de item/rede, custo server-owned e QA real. Não converter essas evidências estáticas em aumento de range/target/área/dano e não alterar contadores ou Stage 06.
