@@ -66,54 +66,81 @@ def inspect(jar,javap):
         require(len(names)==len(set(names)), "duplicate ZIP member")
         require(CLASS_PATH in names,"missing publisher protection class")
         require(sha(z.read(CLASS_PATH))==CLASS_SHA256,"publisher protection class drift")
-    proc=subprocess.run([javap,"-classpath",str(jar),"-p","-s","-c",
-                         CLASS_PATH[:-6].replace("/",".")],
-                        text=True,capture_output=True,timeout=45,check=False)
-    require(proc.returncode==0,"javap failed "+proc.stderr[:180])
-    methods=parse_methods(proc.stdout)
-    require(1 <= len(methods) <= 240, "unexpected publisher method population")
-    primary=[m for m in methods if m["descriptor"]==EXPLOSION_DESCRIPTOR]
-    require(len(primary)==1,
-            "missing/ambiguous ExplosionEvent.Detonate handler; found="+str(len(primary)))
-    name=primary[0]["name"]
-    # Compiler-generated helpers are collected as a distinct subpopulation;
-    # no method or ownership inference is made from their names alone.
-    lambdas=[m for m in methods if m["name"].startswith("lambda$"+name+"$")]
-    require(len(lambdas)<=18, "unexpected explosion lambda population")
-    selected=[primary[0]]+lambdas
-    require(len({(m["name"],m["descriptor"]) for m in selected})==len(selected),
-            "ambiguous explosion JVM descriptors")
-    items=[selected_summary(m) for m in selected]
+        class_names=[p for p in names if p.endswith(".class")]
+        require(len(class_names)<=4000,"publisher class search budget exceeded")
+        candidate_paths=[
+            p for p in class_names
+            if b"ExplosionEvent" in z.read(p) or b"explosionDetonate" in z.read(p)
+        ]
+        require(len(candidate_paths)<=35,"too many possible compiled explosion classes")
+        # Include the already-pinned main protection class even if it does not
+        # mention the expected event directly. This is a bounded inventory.
+        paths=sorted(set(candidate_paths+[CLASS_PATH]))
+        class_digests={p:sha(z.read(p)) for p in paths}
+    selected=[]
+    candidate_info=[]
+    for path in paths:
+        proc=subprocess.run([javap,"-classpath",str(jar),"-p","-s","-c",
+                             path[:-6].replace("/",".")],
+                            text=True,capture_output=True,timeout=45,check=False)
+        require(proc.returncode==0,"javap failed "+path+" "+proc.stderr[:180])
+        methods=parse_methods(proc.stdout)
+        require(len(methods)<=240,"unexpected publisher method population")
+        exact=[m for m in methods if m["descriptor"]==EXPLOSION_DESCRIPTOR]
+        related=[m for m in methods
+                 if "explosion" in m["name"].lower() or
+                    "ExplosionEvent" in m["descriptor"]]
+        require(len(related)<=24,"unexpected explosion-related method population")
+        candidate_info.append({
+            "class_path":path,"class_sha256":class_digests[path],
+            "declared_method_count":len(methods),
+            "explosion_related_descriptors":[{"name":m["name"],"descriptor":m["descriptor"]}
+                                             for m in related],
+            "exact_detonate_handler_count":len(exact),
+        })
+        for method in related:
+            selected.append((path,method))
+    handlers=[(p,m) for p,m in selected if m["descriptor"]==EXPLOSION_DESCRIPTOR]
+    require(len(handlers)<=1,"ambiguous exact ExplosionEvent.Detonate handler across JAR")
+    require(len(selected)<=30,"bounded explosion method population exceeded")
+    require(len({(p,m["name"],m["descriptor"]) for p,m in selected})==len(selected),
+            "duplicate selected JVM method identity")
+    items=[{"owner_class":p,**selected_summary(m)} for p,m in selected]
     allrefs=[r["symbol"] for item in items for r in item["references"]]
     markers={
-        "explosion_affected_blocks": "getAffectedBlocks:",
-        "explosion_affected_entities": "getAffectedEntities:",
-        "chunk_dimension_position": "ChunkDimPos",
-        "claimed_chunk_lookup": "ClaimedChunkManagerImpl.getChunk:",
-        "allow_explosions_check": "allowExplosions:",
-        "block_position_iteration": "BlockPos",
-        "chunk_position_iteration": "ChunkPos",
-        "list_mutation": "List.clear:",
-        "event_cancel": "setCanceled:",
-        "direct_world_block_break": "Level.destroyBlock:",
+        "explosion_affected_blocks":"getAffectedBlocks:",
+        "explosion_affected_entities":"getAffectedEntities:",
+        "chunk_dimension_position":"ChunkDimPos",
+        "claimed_chunk_lookup":"ClaimedChunkManagerImpl.getChunk:",
+        "allow_explosions_check":"allowExplosions:",
+        "block_position_iteration":"BlockPos",
+        "chunk_position_iteration":"ChunkPos",
+        "list_mutation":"List.clear:",
+        "event_cancel":"setCanceled:",
+        "direct_world_block_break":"Level.destroyBlock:",
     }
     result={
       "schema_version":1,
       "scope":"FTBCHUNKS_2101_1_22_EXACT_EXPLOSION_SELECTED_ABI_ONLY",
       "artifact":{"coordinates":"dev.ftb.mods:ftb-chunks-neoforge:2101.1.22",
                   "size_bytes":len(data),"sha256":sha(data)},
-      "class":{"path":CLASS_PATH,"sha256":CLASS_SHA256,
-               "declared_method_count":len(methods)},
-      "primary_handler_name":name,
+      "class":{"path":CLASS_PATH,"sha256":CLASS_SHA256},
+      "candidate_class_population":len(candidate_info),
+      "candidate_classes":candidate_info,
+      "primary_handler_name":handlers[0][1]["name"] if handlers else None,
+      "primary_handler_owner":handlers[0][0] if handlers else None,
+      "handler_status":"ONE_EXACT_SIGNATURE_OBSERVED" if handlers else
+                       "NO_EXACT_SIGNATURE_IN_BOUNDED_CLASS_SCAN",
       "selected_methods":items,
       "observed_symbolic_anchors":{k:any(v in r for r in allrefs)
                                    for k,v in markers.items()},
-      "interpretation":"SELECTED_COMPILED_REFERENCES_ONLY_NOT_CLAIM_PROTECTION_CERTIFICATION",
+      "interpretation":"BOUNDED_COMPILED_REFERENCES_ONLY_NOT_RUNTIME_PROTECTION",
       "limits":LIMITS
     }
     require(len(json.dumps(result).encode("utf-8"))<MAX_REPORT,
             "bounded report output budget exceeded")
     return result
+
 
 def verify_seal(observed,seal):
     require(seal.get("scope")=="FTBCHUNKS_2101_1_22_EXACT_EXPLOSION_SELECTED_ABI_ONLY",
