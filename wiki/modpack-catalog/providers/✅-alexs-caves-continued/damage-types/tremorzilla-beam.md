@@ -133,6 +133,16 @@ Para a chamada não nula efetuada pelo Tremorzilla, a sequência selecionada con
 
 **Decisão:** `NO_MUTATION`; `NOT_CERTIFIED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`. Nenhum avanço de contadores (28/30) ou de autorização de perks destrutivas.
 
+### Proteção FTB Chunks — análise da versão exata 2101.1.22 (PR #1010)
+
+A modlist registra `FTB Chunks (NeoForge)` 2101.1.22. O [handoff técnico do handler](../../../../../docs/qa/ftbchunks-2101-grief-tag-handoff.md) e o [manifesto de classe/tag](../FTBCHUNKS-2101-GRIEF-TAG-ABI.json) documentam o artefato Maven dessa versão (SHA-256 `4ba1b3352184fa7f6e2aa4bca76edd074867697d62344dfa50dcccdb4dab5217`).
+
+- O handler efetivo é `FTBChunksForge.mobGriefing(EntityMobGriefingEvent)`, não a classe de revisões posteriores. O bytecode consulta `EntityType.is(ENTITY_MOB_GRIEFING_BLACKLIST_TAG)`, `Level.isClientSide()`, `ClaimedChunkManagerImpl.getChunk(new ChunkDimPos(event.getEntity()))` e `ClaimedChunkImpl.allowMobGriefing()`. O ramo de recusa chama `setCanGrief(false)` com operando `iconst_0` confirmado.
+- A tag **padrão** do JAR `ftbchunks:entity_mob_griefing_blacklist` declara **apenas `minecraft:enderman`** (`replace=false`): não declara o Tremorzilla. O conteúdo da tag resolvida em um servidor com datapacks, e a inscrição ativa do listener, permanecem sem evidência.
+- Mesmo na hipótese de o tipo do Tremorzilla ser incluído na tag, o recorte verificado consulta o chunk **da entidade originadora**, não cada bloco impactado. O feixe tem pontos distintos de `destroyBlock`, `onBlockExploded` e spawn, para os quais esta checagem de mob griefing **não certifica** proteção por bloco, ownership, nem `WorldEffectPolicy`.
+
+**Decisão:** ⚠️ **parcial/condicionado** e `NO_MUTATION`. Sem aumentar raio, duração, destruição ou dano por perks com base nesta cadeia. Falta verificar datapacks/claims/resolução de tag, inscrição do listener, bloqueios de eventos de mundo e QA física. **+0 fichas, +0 contratos homologados**; o índice continua 28/30.
+
 ### Matriz de integração / pendências
 
 | Perk pretendida | Consumer que exige auditoria adicional | Decisão |
