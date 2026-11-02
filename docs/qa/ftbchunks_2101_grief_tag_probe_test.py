@@ -37,7 +37,7 @@ CLASS = "dev/ftb/mods/ftbchunks/neoforge/NeoEventListeners.class"
 def tmp_jar(path, values=None, include_class=True, include_tag=True):
     with zipfile.ZipFile(path,"w") as z:
         if include_class:
-            z.writestr(CLASS, b"\xca\xfe\xba\xbe"+bytes(12000))
+            z.writestr(CLASS, b"\xca\xfe\xba\xbe"+b"EntityMobGriefingEvent"+bytes(12000))
         if include_tag:
             z.writestr(TAG_PATH,json.dumps({"replace":False,
                         "values":values if values is not None else ["minecraft:enderman"]}))
@@ -87,7 +87,7 @@ class ExactFtbSynthetic(unittest.TestCase):
             p=Path(d)/"ftb-chunks-neoforge-2101.1.22.jar"
             tmp_jar(p)
             with zipfile.ZipFile(p,"a") as z:
-                z.writestr("extra"+CLASS_SUFFIX,b"abc")
+                z.writestr("extra"+CLASS_SUFFIX,b"EntityMobGriefingEvent"+bytes(12000))
             with self.assertRaisesRegex(EvidenceError,"ambiguous"):
                 audit(p,"javap")
 
