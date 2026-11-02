@@ -63,9 +63,25 @@ def analyze_method(method):
              i["opcode"] in ("return","ireturn","areturn")]
     require(len(refs) <= 95 and len(jumps) <= 75, "bounded method report limit")
     symbols = [i["symbol"] for i in refs]
+    # Exact-release selected contract: compare code identities and guarantee
+    # the observed handler's denial writes false, not true.
+    required = (
+        "ENTITY_MOB_GRIEFING_BLACKLIST_TAG", "EntityType.is:",
+        "Level.isClientSide:", "ChunkDimPos", "ClaimedChunkManagerImpl.getChunk:",
+        "ClaimedChunkImpl.allowMobGriefing:", "EntityMobGriefingEvent.setCanGrief:",
+    )
+    for symbol in required:
+        require(any(symbol in s for s in symbols),
+                "missing compiled FTB event gate: "+symbol)
+    setters = [idx for idx, op in enumerate(ins)
+               if op["opcode"]=="invokevirtual" and
+               "EntityMobGriefingEvent.setCanGrief:" in op["symbol"]]
+    require(len(setters)==1 and setters[0]>0 and
+            ins[setters[0]-1]["opcode"]=="iconst_0",
+            "FTB claim denial does not pass literal false")
     needles = {
        "entity_event_parameter": "EntityMobGriefingEvent",
-       "entity_type_tag_test": "Entity.is:",
+       "entity_type_tag_test": "EntityType.is:",
        "tag_registry_reference": "ENTITY_MOB_GRIEFING_BLACKLIST_TAG",
        "claimed_chunk_access": "ClaimedChunkManagerImpl",
        "chunk_position_from_entity": "ChunkDimPos",
@@ -79,6 +95,7 @@ def analyze_method(method):
       "method_sha256":digest(json.dumps(ins,sort_keys=True,separators=(",",":")).encode()),
       "selected_references":refs,"branches_and_returns":jumps,
       "symbolic_presence":{k:any(v in s for s in symbols) for k,v in needles.items()},
+      "setter_argument":"EXACT_ICONST_0_BEFORE_SET_CAN_GRIEF",
       "limit":"SYMBOLS_OBSERVED_ONLY_NOT_COMPLETE_CFG",
     }
 
