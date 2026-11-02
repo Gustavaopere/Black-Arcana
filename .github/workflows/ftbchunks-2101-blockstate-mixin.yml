@@ -1,0 +1,68 @@
+name: FTB Chunks 2101.1.22 exact BlockStateMixin annotations
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/ftbchunks-2101-blockstate-mixin.yml'
+      - 'docs/qa/ftbchunks_2101_blockstate_mixin_probe.py'
+      - 'docs/qa/ftbchunks_2101_blockstate_mixin_probe_test.py'
+      - 'docs/qa/ftbchunks-2101-blockstate-mixin-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/FTBCHUNKS-2101-BLOCKSTATE-MIXIN-ABI.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/tremorzilla-beam.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ftbchunks-2101-blockstate-mixin.yml'
+      - 'docs/qa/ftbchunks_2101_blockstate_mixin_probe.py'
+      - 'docs/qa/ftbchunks_2101_blockstate_mixin_probe_test.py'
+      - 'docs/qa/ftbchunks-2101-blockstate-mixin-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/FTBCHUNKS-2101-BLOCKSTATE-MIXIN-ABI.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/tremorzilla-beam.md'
+
+permissions:
+  contents: read
+
+jobs:
+  blockstate_mixin_exact:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Synthetic fail-closed parser tests
+        run: |
+          python3 -m py_compile docs/qa/ftbchunks_2101_blockstate_mixin_probe.py docs/qa/ftbchunks_2101_blockstate_mixin_probe_test.py
+          python3 docs/qa/ftbchunks_2101_blockstate_mixin_probe_test.py -v
+      - name: Fetch SHA-pinned exact published FTB Chunks version
+        run: |
+          mkdir -p build/ftbchunks-2101-blockstate
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://maven.ftb.dev/releases/dev/ftb/mods/ftb-chunks-neoforge/2101.1.22/ftb-chunks-neoforge-2101.1.22.jar' \
+            --output build/ftbchunks-2101-blockstate/ftb-chunks-neoforge-2101.1.22.jar
+      - name: Exact classfile mixin metadata (manifest gated)
+        run: |
+          SEAL=wiki/modpack-catalog/providers/✅-alexs-caves-continued/FTBCHUNKS-2101-BLOCKSTATE-MIXIN-ABI.json
+          if test -f "$SEAL"; then
+            python3 docs/qa/ftbchunks_2101_blockstate_mixin_probe.py \
+              --jar build/ftbchunks-2101-blockstate/ftb-chunks-neoforge-2101.1.22.jar \
+              --output build/ftbchunks-2101-blockstate/metadata-evidence.json \
+              --seal "$SEAL"
+          else
+            echo 'UNSEALED CLASSFILE DISCOVERY: do not merge as certified.'
+            python3 docs/qa/ftbchunks_2101_blockstate_mixin_probe.py \
+              --jar build/ftbchunks-2101-blockstate/ftb-chunks-neoforge-2101.1.22.jar \
+              --output build/ftbchunks-2101-blockstate/metadata-evidence.json
+          fi
+          python3 -m json.tool build/ftbchunks-2101-blockstate/metadata-evidence.json
+      - name: Upload bounded evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ftbchunks-2101-blockstate-mixin-evidence
+          path: build/ftbchunks-2101-blockstate/metadata-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
