@@ -9,6 +9,19 @@
 3. Comparar ao [manifesto 21.1.248](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/NEOFORGE-211248-GRIEF-EVENT-ABI.json) usando hashes de classes, digests de métodos, listas de callsites exatas e sequências simbólicas sem offsets. A comparação não se propõe a certificar comportamento em runtime transformado.
 4. A primeira execução do [workflow](../../.github/workflows/neoforge-211250-grief-event.yml) **não é selada**. Usar o relatório obtido para fixar o manifesto `NEOFORGE-211250-GRIEF-EVENT-ABI.json`, e somente então executar a CI com `--seal` na HEAD final.
 
+## Resultado SHA-exato da descoberta — workflow #41445890080
+
+O JAR Maven oficial `neoforge-21.1.250-universal.jar` possui **3.551.255 bytes**, SHA-256 `1f9cc68fe9ec0416475d34ce76e95a696b9721d5d338168563dab0632c3d2956`. A [primeira CI](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41445890080) executou a sonda contra o artefato compilado e comparou seus resultados ao manifesto já selado de 21.1.248. O [manifesto 21.1.250](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/NEOFORGE-211250-GRIEF-EVENT-ABI.json) fixa os dados observados.
+
+| Verificação entre 21.1.248 e 21.1.250 | Resultado compilado |
+|---|---|
+| Duas classes selecionadas (`EventHooks`, `EntityMobGriefingEvent`) | 2/2 SHA-256 idênticos |
+| Cinco métodos (`canEntityGrief`, construtor, `canGrief`, `setCanGrief`, `isMobGriefingEnabled`) | 5/5 digests e contagem de instruções idênticos |
+| Callsite/opcode selecionado com offset | 5/5 sequências de métodos equivalentes |
+| Sequência simbólica de callsites, independente de offsets | 5/5 equivalentes |
+
+Os bytes das **classes selecionadas** são idênticos nos dois artefatos; os JARs completos possuem SHA e tamanhos diferentes. Essa igualdade não engloba todos os métodos auxiliares do loader, transformações, mixins ou listeners carregados. Uma execução posterior com `--seal` sobre a HEAD final é necessária antes de considerar o manifesto validado por CI.
+
 ## Interpretação e limites
 
 O recorte de 21.1.248 comprovou apenas o caminho `EventHooks.canEntityGrief` → gamerule ou evento → `canGrief()`. A análise de 21.1.250 deverá determinar se os cinco métodos selecionados preservam esse contrato. **Não converter igualdade de bytecode em permissão de destruição em claims.** O helper do NeoForge recebe `Level` e `Entity`, não `BlockPos`; listeners podem fazer verificações adicionais por entidade ou contexto, mas nenhuma integração concreta foi comprovada.
