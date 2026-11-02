@@ -9,7 +9,7 @@ Autoridade: JAR 1.0.10, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-25
 | Ações sobrenaturais | Oito raízes já contadas | Sete campos estáticos documentados nas oito fichas; hooks e QA física separados |
 | Itens / equipamento | 81 classes externas de itens; 42 com assinaturas de interação já classificadas semanticamente | [Dreadbow](equipment/dreadbow.md), [Desolate Dagger](equipment/desolate-dagger.md) e [Shot Gum](equipment/shot-gum.md) documentados individualmente; demais armas, movimento, comida, defesa e helpers precisam de disposição própria. Classes e fichas não são denominadores equivalentes |
 | Enchantments | 51 JSONs em `data/alexscaves/enchantment/` | Ficha por contrato: nível/custo/slots/exclusividade e consumidor real de cada modifier, inclusive tecnologia/armas |
-| Damage types | 11 JSONs, 11 factories e seus consumidores diretos localizados no JAR | **8/11 contratos estáticos documentados:** [Acid](damage-types/acid.md), [Dark Arrow](damage-types/dark-arrow.md), [Desolate Dagger](damage-types/desolate-dagger.md), [Forsaken Sonic Boom](damage-types/forsaken-sonic-boom.md), [Gumball](damage-types/gumball.md), [Radiation](damage-types/radiation.md), [Intentional Game Design](damage-types/intentional-game-design.md), [Nuke](damage-types/nuke.md). Restam Raygun, Spirit Dinosaur e Tremorzilla Beam. [Prova nuclear](EXACT-NUCLEAR-CONTRACTS-1.0.10.md), preservando o mismatch de tickets e toda QA física pendente |
+| Damage types | 11 JSONs, 11 factories e seus consumidores diretos localizados no JAR | **9/11 contratos estáticos documentados:** [Acid](damage-types/acid.md), [Dark Arrow](damage-types/dark-arrow.md), [Desolate Dagger](damage-types/desolate-dagger.md), [Forsaken Sonic Boom](damage-types/forsaken-sonic-boom.md), [Gumball](damage-types/gumball.md), [Radiation](damage-types/radiation.md), [Intentional Game Design](damage-types/intentional-game-design.md), [Nuke](damage-types/nuke.md), [Spirit Dinosaur](damage-types/spirit-dinosaur.md). Restam Raygun e Tremorzilla Beam. [Prova nuclear](EXACT-NUCLEAR-CONTRACTS-1.0.10.md), preservando o mismatch de tickets e toda QA física pendente |
 | Mob effects | Oito campos de registro de efeitos | **8/8 contratos estáticos documentados**, incluindo aplicações e consumidores; [fichas](effects/INDEX.md) e [prova exata](EXACT-EFFECT-CONTRACTS-1.0.10.md). Hooks e QA física pendentes |
 | Potions | 12 campos de registro de poções | Conteúdo, níveis/tempo e aquisição, sem contar variantes como novas magias |
 | Config servidor | 40 campos em `ACServerConfig` | Defaults/bounds, momento de leitura, autoridade global/por jogador e consumidores; não presumir valores em execução |
@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, os três equipamentos e os oito contratos de dano somam **27 contratos estáticos certificados entre 30 fichas observadas**. Restam três tipos de dano ainda parciais nesse universo observado. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
+As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam **28 contratos estáticos certificados entre 30 fichas observadas**. Restam dois tipos de dano ainda parciais nesse universo observado. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 
@@ -55,3 +55,7 @@ A [prova consolidada](EXACT-GUMBALL-CONTRACTS-1.0.10.md) acompanha os métodos p
 ## Intentional Game Design e Nuke — dois modos, um consumidor
 
 A [prova consolidada](EXACT-NUCLEAR-CONTRACTS-1.0.10.md) relaciona os 20 membros próprios da entidade, quatro emissores, dano, movimento, radiação, blocos e tickets. A seleção de fonte não duplica a chamada de dano. A certificação é apenas estática: o mismatch de categorias de ticket permanece, e NT-01…NT-07 continuam NOT_TESTED.
+
+## Spirit Dinosaur — consumidores e autoria distintos
+
+A [prova consolidada](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.md) fecha a ficha existente dos espíritos/lança: os três tipos têm funções diferentes, a flag de dano é atualizada em ordem distinta nos dois consumidores e a explosão Tephra usa outro mecanismo nativo. Custos, produção, defesa Grotto, targeting e persistência continuam com seus owners próprios. O índice passa a 28/30 contratos observados; o universo do provider, hooks e QA física permanecem abertos.

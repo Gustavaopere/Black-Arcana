@@ -245,6 +245,20 @@ class ContractAuditTests(unittest.TestCase):
         return doc
 
 
+    def spirit_dinosaur_fixture(self):
+        """Seal one literal damage contract while reusing synthetic artifact members."""
+        doc = copy.deepcopy(self.doc)
+        relative = "damage-types/spirit-dinosaur.md"
+        card = self.root / relative
+        card.parent.mkdir(exist_ok=True)
+        card.write_bytes((self.root / ACTIONS[0]).read_bytes())
+        record = doc.pop("action_evidence")[ACTIONS[0]]
+        doc["catalog_family"] = "SPIRIT_DINOSAUR_DAMAGE_CONTRACT"
+        doc["cards"] = {relative: sha256(card.read_bytes())}
+        doc["contract_evidence"] = {relative: record}
+        doc["classes"] = {path: doc["classes"][path] for path in record["classes"]}
+        return doc
+
     def test_parser_preserves_overloads_constructor_static_lambda_and_switch(self):
         parsed = audit.parse_javap(JAVAP, OWNER)
         self.assertEqual({("<init>", "()V"), ("<clinit>", "()V"), ("value", "()I"),
@@ -1165,6 +1179,142 @@ class ContractAuditTests(unittest.TestCase):
         self.write_jar()
         with self.assertRaisesRegex(ValueError, "resource hash mismatch"):
             self.inspect(doc, profile="nuclear")
+
+    def test_spirit_dinosaur_literal_roster_and_single_card_synthetic_audit(self):
+        doc = self.spirit_dinosaur_fixture()
+        self.assertEqual({"damage-types/spirit-dinosaur.md"}, set(audit.SPIRIT_DINOSAUR))
+        audit.validate_structure(doc, profile="spirit_dinosaur")
+        audit.validate_cards(doc, self.root, profile="spirit_dinosaur")
+        result = self.inspect(doc, profile="spirit_dinosaur")
+        self.assertEqual("PASS", result["status"])
+        self.assertEqual("SPIRIT_DINOSAUR_DAMAGE_CONTRACT", result["catalog_family"])
+        self.assertEqual((1, 1, 1), (result["cards_checked"], result["classes_checked"], result["methods_checked"]))
+        self.assertEqual("NOT_VERIFIED", result["mutating_hook"])
+        self.assertEqual("NOT_TESTED", result["physical_qa"])
+        self.assertFalse(result["provider_universe_closed"])
+        self.assertEqual(8, result["semantic_magic_roots"])
+
+    def test_spirit_dinosaur_remains_isolated_from_all_previous_profiles(self):
+        previous = {name: audit.profile_spec(name) for name in (
+            "actions", "effects", "dreadbow", "acid", "desolate_dagger",
+            "forsaken", "gumball", "radiation", "nuclear")}
+        snapshots = copy.deepcopy(previous)
+        doc = self.spirit_dinosaur_fixture()
+        for name in previous:
+            with self.subTest(selected=name), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile=name)
+            with self.subTest(cards=name), self.assertRaises(ValueError):
+                audit.validate_cards(doc, self.root, profile=name)
+        fixtures = (self.doc, self.effects_fixture(), self.dreadbow_fixture(), self.acid_fixture(),
+                    self.desolate_dagger_fixture(), self.forsaken_fixture(), self.gumball_fixture(),
+                    self.nuclear_fixture())
+        for manifest in fixtures:
+            with self.subTest(family=manifest.get("catalog_family")), self.assertRaises(ValueError):
+                audit.validate_structure(manifest, profile="spirit_dinosaur")
+        self.inspect(doc, profile="spirit_dinosaur")
+        self.assertEqual(snapshots, previous)
+
+    def test_spirit_dinosaur_rejects_missing_extra_and_aliased_roster(self):
+        relative = "damage-types/spirit-dinosaur.md"
+        for key in ("cards", "contract_evidence"):
+            for replacement in (None, "damage-types/nuke.md", "damage-types/radiation.md",
+                                "damage-types/acid.md", "damage-types/tremorzilla-beam.md",
+                                "effects/irradiated.md", "equipment/extinction-spear.md", ACTIONS[0]):
+                doc = self.spirit_dinosaur_fixture()
+                value = doc[key].pop(relative)
+                if replacement is not None:
+                    doc[key][replacement] = value
+                with self.subTest(key=key, replacement=replacement), self.assertRaises(ValueError):
+                    audit.validate_structure(doc, profile="spirit_dinosaur")
+            doc = self.spirit_dinosaur_fixture()
+            doc[key]["damage-types/extra.md"] = doc[key][relative]
+            with self.subTest(key=key, extra=True), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="spirit_dinosaur")
+
+    def test_spirit_dinosaur_rejects_scope_and_evidence_promotion(self):
+        for key, value in (("catalog_family", "NUCLEAR_DAMAGE_CONTRACTS"), ("catalog_family", None),
+                           ("claim_scope", "COMPLETE_PERK_READY"), ("evidence_grade", "SOURCE_ONLY"),
+                           ("semantic_magic_roots", 9), ("provider_universe_closed", True),
+                           ("mutating_hook", "VERIFIED"), ("physical_qa", "PASS"),
+                           ("artifact_size_bytes", True), ("artifact_sha1", "a" * 40),
+                           ("artifact_sha256", "b" * 64), ("version", "1.1.1")):
+            doc = self.spirit_dinosaur_fixture()
+            if value is None:
+                doc.pop(key)
+            else:
+                doc[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="spirit_dinosaur")
+        for alias in ("action_evidence", "effect_evidence"):
+            doc = self.spirit_dinosaur_fixture()
+            doc[alias] = doc.pop("contract_evidence")
+            with self.subTest(alias=alias), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="spirit_dinosaur")
+
+    def test_spirit_dinosaur_rejects_forged_card_seal_and_symlink_escape(self):
+        doc = self.spirit_dinosaur_fixture()
+        relative = "damage-types/spirit-dinosaur.md"
+        doc["cards"][relative] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "stale card seal"):
+            self.inspect(doc, profile="spirit_dinosaur")
+        doc = self.spirit_dinosaur_fixture()
+        card = self.root / relative
+        outside = Path(self.temp.name) / "outside-spirit.md"
+        outside.write_bytes(card.read_bytes())
+        card.unlink()
+        card.symlink_to(outside)
+        with self.assertRaisesRegex(ValueError, "escapes provider root"):
+            self.inspect(doc, profile="spirit_dinosaur")
+
+    def test_spirit_dinosaur_rechecks_card_after_bytecode_inspection(self):
+        doc = self.spirit_dinosaur_fixture()
+        def completed(command, **kwargs):
+            card = self.root / "damage-types/spirit-dinosaur.md"
+            card.write_bytes(card.read_bytes() + b"changed during audit")
+            return subprocess.CompletedProcess(command, 0, stdout=JAVAP.replace(OWNER, command[-1]), stderr="")
+        with mock.patch.object(audit.subprocess, "run", side_effect=completed):
+            with self.assertRaisesRegex(ValueError, "stale card seal"):
+                audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="spirit_dinosaur",
+                            expected_identity=self.expected_identity)
+
+    def test_spirit_dinosaur_verifies_artifact_resources_and_anchor_operands(self):
+        doc = self.spirit_dinosaur_fixture()
+        with self.assertRaisesRegex(ValueError, "artifact identity mismatch"):
+            audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="spirit_dinosaur")
+        drifted = copy.deepcopy(doc)
+        path = next(iter(drifted["classes"]))
+        drifted["classes"][path]["methods"][0]["anchors"][0]["operand"] = "unobserved operand"
+        with self.assertRaisesRegex(ValueError, "instruction anchor mismatch"):
+            self.inspect(drifted, profile="spirit_dinosaur")
+        self.members[self.resource] += b"resource drift"
+        self.write_jar()
+        with self.assertRaisesRegex(ValueError, "resource hash mismatch"):
+            self.inspect(doc, profile="spirit_dinosaur")
+
+    def test_spirit_dinosaur_keeps_existing_anchor_and_class_budgets(self):
+        for mode in ("missing_class", "anchorless", "too_many_anchors"):
+            doc = self.spirit_dinosaur_fixture()
+            path = next(iter(doc["classes"]))
+            if mode == "missing_class":
+                doc["classes"].clear()
+            elif mode == "anchorless":
+                doc["classes"][path]["methods"] = []
+            else:
+                anchor = doc["classes"][path]["methods"][0]["anchors"][0]
+                doc["classes"][path]["methods"][0]["anchors"] = [
+                    {**anchor, "offset": offset} for offset in range(257)]
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="spirit_dinosaur")
+
+    def test_cli_accepts_explicit_spirit_dinosaur_profile(self):
+        arguments = ["--jar", str(self.jar), "--manifest", str(self.root / "manifest.json"),
+                     "--provider-root", str(self.root), "--javap", "synthetic-javap",
+                     "--profile", "spirit_dinosaur"]
+        with mock.patch.object(audit, "load_manifest", return_value=self.spirit_dinosaur_fixture()), \
+                mock.patch.object(audit, "audit", return_value={"status": "PASS"}) as inspect, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(0, audit.main(arguments))
+            self.assertEqual("spirit_dinosaur", inspect.call_args.kwargs["profile"])
 
     def test_missing_extra_action_and_card_evidence_mismatch_rejected(self):
         variants = []

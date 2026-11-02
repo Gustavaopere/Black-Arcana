@@ -11,6 +11,7 @@ on:
       - 'docs/qa/alexscaves_1010_gumball_cards_test.py'
       - 'docs/qa/alexscaves_1010_radiation_cards_test.py'
       - 'docs/qa/alexscaves_1010_nuclear_cards_test.py'
+      - 'docs/qa/alexscaves_1010_spirit_dinosaur_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   push:
     branches: [main]
@@ -22,6 +23,7 @@ on:
       - 'docs/qa/alexscaves_1010_gumball_cards_test.py'
       - 'docs/qa/alexscaves_1010_radiation_cards_test.py'
       - 'docs/qa/alexscaves_1010_nuclear_cards_test.py'
+      - 'docs/qa/alexscaves_1010_spirit_dinosaur_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   workflow_dispatch:
 
@@ -44,6 +46,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_gumball_cards_test.py -v
           python3 docs/qa/alexscaves_1010_radiation_cards_test.py -v
           python3 docs/qa/alexscaves_1010_nuclear_cards_test.py -v
+          python3 docs/qa/alexscaves_1010_spirit_dinosaur_cards_test.py -v
       - name: Download the exact publisher artifact
         run: |
           mkdir -p build/alexscaves-1010
@@ -131,6 +134,15 @@ jobs:
             --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/alexscaves-1010/nuclear-evidence.json
+      - name: Verify the sealed Spirit Dinosaur damage contract
+        run: |
+          python3 docs/qa/alexscaves_1010_action_contract_audit.py \
+            --profile spirit_dinosaur \
+            --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json' \
+            --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/alexscaves-1010/spirit-dinosaur-evidence.json
       - name: Export bounded JSON evidence only
         uses: actions/upload-artifact@v7
         with:
@@ -145,5 +157,6 @@ jobs:
             build/alexscaves-1010/gumball-evidence.json
             build/alexscaves-1010/radiation-evidence.json
             build/alexscaves-1010/nuclear-evidence.json
+            build/alexscaves-1010/spirit-dinosaur-evidence.json
           if-no-files-found: error
           retention-days: 14

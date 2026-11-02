@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and eight damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design and Nuke) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -307,26 +307,40 @@
     "equipment_contracts": {
       "cards": [
         "equipment/dreadbow.md",
-        "equipment/desolate-dagger.md"
+        "equipment/desolate-dagger.md",
+        "equipment/shot-gum.md"
       ],
       "family_universe_closed": false,
       "evidence": "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md",
       "related_evidence": [
-        "EXACT-DREADBOW-CONTRACTS-1.0.10.md"
-      ]
+        "EXACT-DREADBOW-CONTRACTS-1.0.10.md",
+        "EXACT-GUMBALL-CONTRACTS-1.0.10.md"
+      ],
+      "documented_static_contracts": 3
     },
     "damage_types": {
-      "documented_static_contracts": 3,
+      "documented_static_contracts": 9,
       "identified_objects": 11,
       "cards": [
         "damage-types/acid.md",
         "damage-types/dark-arrow.md",
-        "damage-types/desolate-dagger.md"
+        "damage-types/desolate-dagger.md",
+        "damage-types/forsaken-sonic-boom.md",
+        "damage-types/gumball.md",
+        "damage-types/intentional-game-design.md",
+        "damage-types/nuke.md",
+        "damage-types/radiation.md",
+        "damage-types/spirit-dinosaur.md"
       ],
-      "evidence": "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md",
+      "evidence": "EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.md",
       "related_evidence": [
         "EXACT-ACID-CONTRACT-1.0.10.md",
-        "EXACT-DREADBOW-CONTRACTS-1.0.10.md"
+        "EXACT-DREADBOW-CONTRACTS-1.0.10.md",
+        "EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md",
+        "EXACT-FORSAKEN-CONTRACT-1.0.10.md",
+        "EXACT-GUMBALL-CONTRACTS-1.0.10.md",
+        "EXACT-RADIATION-CONTRACT-1.0.10.md",
+        "EXACT-NUCLEAR-CONTRACTS-1.0.10.md"
       ]
     }
   }
