@@ -73,3 +73,12 @@ Os pontos úteis são: frequência/amplifier no efeito, redução por peças Haz
 A [auditoria estática reproduzível](../EXACT-EFFECT-CONTRACTS-1.0.10.md) sela esta ficha, classes e métodos do JAR exato com descritores JVM e offsets. O roster de referências de campos serve para localizar consumidores; as conclusões acima dependem dos corpos examinados, não apenas da existência de uma referência. Os demais contratos completos de armas, AI, alimentos e explosões continuam no escopo aberto do provider.
 
 QA física necessária: amplifier 0 e 1, diferentes durações residuais, quatro peças Hazmat, dano zero, múltiplas fontes, cancelamento de cura, alimentação, absorção de Raycat, conversão de Tremorzilla, unload/reload e reprodução multiplayer. Nenhum desses resultados foi declarado testado no modpack.
+
+
+## Evidência adicional do produtor Raygun — tag e retorno nativo (PR #1019)
+
+A inspeção publisher SHA-exata do `RaygunItem.onUseTick`, documentada no [handoff](../../../../../docs/qa/alexscaves-1010-raygun-radiation-guard-handoff.md) e [manifesto](../EXACT-RAYGUN-RADIATION-GUARDS-1.0.10.json), corroborou os guards **específicos desse produtor**. O método consulta `ACTagRegistry.RESISTS_RADIATION @1082` por `Holder$Reference.is @1085`; resultado verdadeiro toma `ifne @1088 → @1157`, evitando a aplicação direta no trecho. `LivingEntity.addEffect @1119` tem seu retorno consultado por `ifeq @1122 → @1157`; retorno falso pula o caminho visual de `sendMSGToAll @1154`.
+
+O tag **default do JAR 1.0.10**, SHA-256 `1bb63c275f31f6744c071cda8ced3e1225401c5aa1dff2ea7fa3c7949e46a6c4`, declara `nucleeper`, `radgill`, `brainiac`, `gammaroach`, `raycat` e `tremorzilla` no namespace `alexscaves`; o arquivo não declara `replace`. Datapacks podem alterar a tag efetiva do servidor. Esses guards **não** são impostos automaticamente ao `IrradiatedEffect.tick` ou aos demais produtores, e não substituem `canBeAffected` nativo de cada entidade. Não converter a leitura em imunidade global.
+
+**Estado:** ⚠️ evidência do produtor certificada apenas estaticamente, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`; `NO_MUTATION`, sem perk homologada.
