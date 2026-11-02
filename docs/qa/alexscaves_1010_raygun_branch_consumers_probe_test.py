@@ -83,13 +83,15 @@ class SelectedBranchConsumersTests(unittest.TestCase):
 
     def test_missing_referenced_branch_target_fails(self):
         m=synthetic()
-        next(x for x in m["instructions"] if x["offset"]==571)["operand"]="99999"
+        x=next(x for x in m["instructions"] if x["offset"]==600)
+        x["opcode"]="ifeq";x["operand"]="99999"
         with self.assertRaisesRegex(AuditError,"outside JVM instructions"):
             inspect_selected(m)
 
     def test_invalid_branch_operand_fails(self):
         m=synthetic()
-        next(x for x in m["instructions"] if x["offset"]==647)["operand"]="abc"
+        x=next(x for x in m["instructions"] if x["offset"]==600)
+        x["opcode"]="ifeq";x["operand"]="abc"
         with self.assertRaisesRegex(AuditError,"unknown direct branch"):
             inspect_selected(m)
 
