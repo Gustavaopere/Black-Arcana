@@ -14,6 +14,16 @@ O parser Python independente lê somente metadados de classfile: constant pool, 
 
 O [workflow](../../.github/workflows/ftbchunks-2101-blockstate-mixin.yml) executa testes sintéticos com negativos e baixa o JAR exato do Maven publisher. Na primeira execução coleta evidência `UNSEALED DISCOVERY`. A seguir, apenas valores efetivamente observados devem compor `FTBCHUNKS-2101-BLOCKSTATE-MIXIN-ABI.json`; rerodar com `--seal` sobre a HEAD final e aguardar toda CI pré-merge.
 
+## Resultado do artefato compilado — descoberta CI #41471080408
+
+A [execução exploratória](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41471080408) concluiu **10/10 testes sintéticos** e analisou o classfile exato de SHA-256 `2920670a37b9ebf4d7768ddf37f488fd685f2e88d4630a82310b75393039d5ce`, classfile JVM major **65** (Java 21). O [manifesto SHA-exato](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/FTBCHUNKS-2101-BLOCKSTATE-MIXIN-ABI.json) guarda as anotações e assinaturas observadas.
+
+- **Anotação de classe:** `org.spongepowered.asm.mixin.Mixin`, declarada em `RuntimeInvisibleAnnotations`, com valor JVM `Lnet/minecraft/world/level/block/state/BlockState;`. Esse é o **alvo estático** do mixin, não comprovação de aplicação pelo loader.
+- **Métodos declarados na classe:** construtor `<init>()V` (5 bytes de código, SHA-256 `ee8fe905afa58e1ab902e451edc2c06539b35ea08defcfbc67e03c71b1a7028a`) e `getFTBCIsWater()Z` (38 bytes, SHA-256 `46a300833ef90cb9acfd8f37b076b93a0038b9389dbced58dd9b0514e23025f7`). A inspeção não exporta os corpos dos métodos.
+- **Anotações de método:** nenhuma no recorte `RuntimeVisibleAnnotations` / `RuntimeInvisibleAnnotations`. Não aparecem `@Inject`, `@Redirect` ou `@Overwrite` como anotações desse classfile. O nome `getFTBCIsWater` não basta para interpretar sua implementação ou efeitos no mundo.
+
+**Conclusão delimitada:** este `BlockStateMixin` publisher não evidencia uma **injeção anotada** nos métodos `Level.destroyBlock` ou `BlockState.onBlockExploded`. O método auxiliar identificado tampouco certifica proteção de claims. Outros mixins, eventos, métodos adicionados por transformers, dependências do modpack e comportamento físico continuam não verificados. A primeira CI foi exploratória; para fechar este recorte, exigir nova execução com manifesto `--seal` e a CI integral da HEAD final.
+
 ## Invariantes, bloqueios e próximos passos
 
 Mesmo anotações de transformação bem identificadas são metadados **estáticos**; nenhum teste do servidor real ou efeito sobre claims é demonstrado. Não assumir `BlockStateMixin` como interceptador de `Level.destroyBlock`, `BlockState.onBlockExploded` ou `Explosion.getToBlow` sem respectivas referências/anotações e comportamento demonstrado. Continuam pendentes inspeção dos outros mixins de blocos, eventuais hooks externos, regras de claims e QA física.
