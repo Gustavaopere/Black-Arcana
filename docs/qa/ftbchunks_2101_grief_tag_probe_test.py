@@ -21,14 +21,26 @@ BODY = """  private void mobGriefing(net.neoforged.neoforge.event.entity.EntityM
     Code:
        0: aload_1
        1: invokevirtual  #1  // Method net/neoforged/neoforge/event/entity/EntityMobGriefingEvent.getEntity:()Lnet/minecraft/world/entity/Entity;
-       4: getstatic  #2  // Field FTBChunksTags$Entities.ENTITY_MOB_GRIEFING_BLACKLIST_TAG:Lnet/minecraft/tags/TagKey;
-       7: invokevirtual  #3  // Method net/minecraft/world/entity/Entity.is:(Lnet/minecraft/tags/TagKey;)Z
-      10: ifeq  55
-      13: new  #4  // class dev/ftb/mods/ftbchunks/data/ChunkDimPos
-      16: invokevirtual  #5  // Method ClaimedChunkManagerImpl.getChunk:()V
-      19: invokevirtual  #6  // Method ClaimedChunkImpl.allowMobGriefing:()Z
-      22: invokevirtual  #7  // Method EntityMobGriefingEvent.setCanGrief:(Z)V
-      25: return
+       4: invokevirtual  #2  // Method net/minecraft/world/entity/Entity.getType:()Lnet/minecraft/world/entity/EntityType;
+       7: getstatic  #3  // Field FTBChunksTags$Entities.ENTITY_MOB_GRIEFING_BLACKLIST_TAG:Lnet/minecraft/tags/TagKey;
+      10: invokevirtual  #4  // Method net/minecraft/world/entity/EntityType.is:(Lnet/minecraft/tags/TagKey;)Z
+      13: ifeq  63
+      17: invokevirtual  #5  // Method net/neoforged/neoforge/event/entity/EntityMobGriefingEvent.getEntity:()Lnet/minecraft/world/entity/Entity;
+      20: invokevirtual  #6  // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+      23: invokevirtual  #7  // Method net/minecraft/world/level/Level.isClientSide:()Z
+      26: ifne  63
+      29: invokestatic  #8  // Method ClaimedChunkManagerImpl.getInstance:()Ldev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl;
+      32: new  #9  // class dev/ftb/mods/ftblibrary/math/ChunkDimPos
+      37: invokevirtual  #10  // Method EntityMobGriefingEvent.getEntity:()Lnet/minecraft/world/entity/Entity;
+      40: invokespecial  #11  // Method ChunkDimPos."<init>":(Lnet/minecraft/world/entity/Entity;)V
+      43: invokevirtual  #12  // Method ClaimedChunkManagerImpl.getChunk:()Ldev/ftb/mods/ftbchunks/data/ClaimedChunkImpl;
+      48: ifnull  63
+      52: invokevirtual  #13  // Method ClaimedChunkImpl.allowMobGriefing:()Z
+      55: ifne  63
+      56: aload_1
+      57: iconst_0
+      60: invokevirtual  #14  // Method EntityMobGriefingEvent.setCanGrief:(Z)V
+      63: return
 
 """
 CLASS = "dev/ftb/mods/ftbchunks/neoforge/NeoEventListeners.class"
