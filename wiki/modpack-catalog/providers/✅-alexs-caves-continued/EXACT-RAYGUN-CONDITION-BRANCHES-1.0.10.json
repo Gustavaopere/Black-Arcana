@@ -1,0 +1,1115 @@
+{
+  "schema_version": 1,
+  "scope": "EXACT_ALEXSCAVES_1010_RAYGUN_XRAY_GAMMA_SELECTED_CONDITION_BRANCHES",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class": {
+    "path": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+    "sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c"
+  },
+  "branch_observations": {
+    "method": "onUseTick",
+    "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+    "parsed_method_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+    "instruction_count": 523,
+    "selected_local_consumers": [
+      {
+        "slot": 9,
+        "kind": "xray_local9",
+        "uses": [
+          {
+            "name": "xray_local9@105",
+            "offset": 105,
+            "instructions": [
+              {
+                "offset": 96,
+                "opcode": "aload_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 97,
+                "opcode": "invokevirtual",
+                "operand": "#296",
+                "symbol": "Method net/minecraft/world/entity/LivingEntity.getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 100,
+                "opcode": "invokevirtual",
+                "operand": "#300",
+                "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 103,
+                "opcode": "astore",
+                "operand": "12",
+                "symbol": ""
+              },
+              {
+                "offset": 105,
+                "opcode": "iload",
+                "operand": "9",
+                "symbol": ""
+              },
+              {
+                "offset": 107,
+                "opcode": "ifeq",
+                "operand": "115",
+                "symbol": ""
+              },
+              {
+                "offset": 110,
+                "opcode": "aload",
+                "operand": "12",
+                "symbol": ""
+              },
+              {
+                "offset": 112,
+                "opcode": "goto",
+                "operand": "120",
+                "symbol": ""
+              },
+              {
+                "offset": 115,
+                "opcode": "aload",
+                "operand": "11",
+                "symbol": ""
+              },
+              {
+                "offset": 117,
+                "opcode": "invokevirtual",
+                "operand": "#304",
+                "symbol": "Method net/minecraft/world/phys/HitResult.getLocation:()Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 120,
+                "opcode": "astore",
+                "operand": "13",
+                "symbol": ""
+              }
+            ],
+            "immediate_conditional": {
+              "opcode": "ifeq",
+              "offset": 107,
+              "taken_target": 115,
+              "fallthrough_target": 110,
+              "interpretation": "JVM_DIRECT_CONDITIONAL_NOT_GLOBAL_REACHABILITY"
+            }
+          },
+          {
+            "name": "xray_local9@122",
+            "offset": 122,
+            "instructions": [
+              {
+                "offset": 112,
+                "opcode": "goto",
+                "operand": "120",
+                "symbol": ""
+              },
+              {
+                "offset": 115,
+                "opcode": "aload",
+                "operand": "11",
+                "symbol": ""
+              },
+              {
+                "offset": 117,
+                "opcode": "invokevirtual",
+                "operand": "#304",
+                "symbol": "Method net/minecraft/world/phys/HitResult.getLocation:()Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 120,
+                "opcode": "astore",
+                "operand": "13",
+                "symbol": ""
+              },
+              {
+                "offset": 122,
+                "opcode": "iload",
+                "operand": "9",
+                "symbol": ""
+              },
+              {
+                "offset": 124,
+                "opcode": "ifeq",
+                "operand": "132",
+                "symbol": ""
+              },
+              {
+                "offset": 127,
+                "opcode": "aload",
+                "operand": "12",
+                "symbol": ""
+              },
+              {
+                "offset": 129,
+                "opcode": "goto",
+                "operand": "137",
+                "symbol": ""
+              },
+              {
+                "offset": 132,
+                "opcode": "aload",
+                "operand": "11",
+                "symbol": ""
+              },
+              {
+                "offset": 134,
+                "opcode": "invokevirtual",
+                "operand": "#304",
+                "symbol": "Method net/minecraft/world/phys/HitResult.getLocation:()Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 137,
+                "opcode": "astore",
+                "operand": "14",
+                "symbol": ""
+              }
+            ],
+            "immediate_conditional": {
+              "opcode": "ifeq",
+              "offset": 124,
+              "taken_target": 132,
+              "fallthrough_target": 127,
+              "interpretation": "JVM_DIRECT_CONDITIONAL_NOT_GLOBAL_REACHABILITY"
+            }
+          },
+          {
+            "name": "xray_local9@569",
+            "offset": 569,
+            "instructions": [
+              {
+                "offset": 563,
+                "opcode": "aconst_null",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 564,
+                "opcode": "astore",
+                "operand": "20",
+                "symbol": ""
+              },
+              {
+                "offset": 566,
+                "opcode": "aconst_null",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 567,
+                "opcode": "astore",
+                "operand": "21",
+                "symbol": ""
+              },
+              {
+                "offset": 569,
+                "opcode": "iload",
+                "operand": "9",
+                "symbol": ""
+              },
+              {
+                "offset": 571,
+                "opcode": "ifeq",
+                "operand": "669",
+                "symbol": ""
+              },
+              {
+                "offset": 574,
+                "opcode": "aload_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 575,
+                "opcode": "invokevirtual",
+                "operand": "#390",
+                "symbol": "Method net/minecraft/world/entity/LivingEntity.getBoundingBox:()Lnet/minecraft/world/phys/AABB;"
+              },
+              {
+                "offset": 578,
+                "opcode": "fload",
+                "operand": "8",
+                "symbol": ""
+              },
+              {
+                "offset": 580,
+                "opcode": "f2d",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 581,
+                "opcode": "invokevirtual",
+                "operand": "#394",
+                "symbol": "Method net/minecraft/world/phys/AABB.inflate:(D)Lnet/minecraft/world/phys/AABB;"
+              }
+            ],
+            "immediate_conditional": {
+              "opcode": "ifeq",
+              "offset": 571,
+              "taken_target": 669,
+              "fallthrough_target": 574,
+              "interpretation": "JVM_DIRECT_CONDITIONAL_NOT_GLOBAL_REACHABILITY"
+            }
+          }
+        ]
+      },
+      {
+        "slot": 18,
+        "kind": "gamma_local18",
+        "uses": [
+          {
+            "name": "gamma_local18@367",
+            "offset": 367,
+            "instructions": [
+              {
+                "offset": 360,
+                "opcode": "fload",
+                "operand": "7",
+                "symbol": ""
+              },
+              {
+                "offset": 362,
+                "opcode": "fconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 363,
+                "opcode": "fcmpl",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 364,
+                "opcode": "iflt",
+                "operand": "402",
+                "symbol": ""
+              },
+              {
+                "offset": 367,
+                "opcode": "iload",
+                "operand": "18",
+                "symbol": ""
+              },
+              {
+                "offset": 369,
+                "opcode": "ifeq",
+                "operand": "386",
+                "symbol": ""
+              },
+              {
+                "offset": 372,
+                "opcode": "getstatic",
+                "operand": "#365",
+                "symbol": "Field com/github/alexmodguy/alexscaves/client/particle/ACParticleRegistry.BLUE_RAYGUN_EXPLOSION:Ljava/util/function/Supplier;"
+              },
+              {
+                "offset": 375,
+                "opcode": "invokeinterface",
+                "operand": "#68,  1",
+                "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+              },
+              {
+                "offset": 380,
+                "opcode": "checkcast",
+                "operand": "#370",
+                "symbol": "class net/minecraft/core/particles/ParticleOptions"
+              },
+              {
+                "offset": 383,
+                "opcode": "goto",
+                "operand": "397",
+                "symbol": ""
+              },
+              {
+                "offset": 386,
+                "opcode": "getstatic",
+                "operand": "#372",
+                "symbol": "Field com/github/alexmodguy/alexscaves/client/particle/ACParticleRegistry.RAYGUN_EXPLOSION:Ljava/util/function/Supplier;"
+              }
+            ],
+            "immediate_conditional": {
+              "opcode": "ifeq",
+              "offset": 369,
+              "taken_target": 386,
+              "fallthrough_target": 372,
+              "interpretation": "JVM_DIRECT_CONDITIONAL_NOT_GLOBAL_REACHABILITY"
+            }
+          },
+          {
+            "name": "gamma_local18@402",
+            "offset": 402,
+            "instructions": [
+              {
+                "offset": 389,
+                "opcode": "invokeinterface",
+                "operand": "#68,  1",
+                "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+              },
+              {
+                "offset": 394,
+                "opcode": "checkcast",
+                "operand": "#370",
+                "symbol": "class net/minecraft/core/particles/ParticleOptions"
+              },
+              {
+                "offset": 397,
+                "opcode": "astore",
+                "operand": "19",
+                "symbol": ""
+              },
+              {
+                "offset": 399,
+                "opcode": "goto",
+                "operand": "491",
+                "symbol": ""
+              },
+              {
+                "offset": 402,
+                "opcode": "iload",
+                "operand": "18",
+                "symbol": ""
+              },
+              {
+                "offset": 404,
+                "opcode": "ifeq",
+                "operand": "421",
+                "symbol": ""
+              },
+              {
+                "offset": 407,
+                "opcode": "getstatic",
+                "operand": "#375",
+                "symbol": "Field com/github/alexmodguy/alexscaves/client/particle/ACParticleRegistry.BLUE_HAZMAT_BREATHE:Ljava/util/function/Supplier;"
+              },
+              {
+                "offset": 410,
+                "opcode": "invokeinterface",
+                "operand": "#68,  1",
+                "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+              },
+              {
+                "offset": 415,
+                "opcode": "checkcast",
+                "operand": "#370",
+                "symbol": "class net/minecraft/core/particles/ParticleOptions"
+              },
+              {
+                "offset": 418,
+                "opcode": "goto",
+                "operand": "432",
+                "symbol": ""
+              },
+              {
+                "offset": 421,
+                "opcode": "getstatic",
+                "operand": "#378",
+                "symbol": "Field com/github/alexmodguy/alexscaves/client/particle/ACParticleRegistry.HAZMAT_BREATHE:Ljava/util/function/Supplier;"
+              }
+            ],
+            "immediate_conditional": {
+              "opcode": "ifeq",
+              "offset": 404,
+              "taken_target": 421,
+              "fallthrough_target": 407,
+              "interpretation": "JVM_DIRECT_CONDITIONAL_NOT_GLOBAL_REACHABILITY"
+            }
+          },
+          {
+            "name": "gamma_local18@922",
+            "offset": 922,
+            "instructions": [
+              {
+                "offset": 913,
+                "opcode": "dconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 914,
+                "opcode": "invokevirtual",
+                "operand": "#452",
+                "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 917,
+                "opcode": "invokespecial",
+                "operand": "#463",
+                "symbol": "Method net/minecraft/world/phys/AABB.\"<init>\":(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)V"
+              },
+              {
+                "offset": 920,
+                "opcode": "astore",
+                "operand": "22",
+                "symbol": ""
+              },
+              {
+                "offset": 922,
+                "opcode": "iload",
+                "operand": "18",
+                "symbol": ""
+              },
+              {
+                "offset": 924,
+                "opcode": "ifeq",
+                "operand": "931",
+                "symbol": ""
+              },
+              {
+                "offset": 927,
+                "opcode": "iconst_4",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 928,
+                "opcode": "goto",
+                "operand": "932",
+                "symbol": ""
+              },
+              {
+                "offset": 931,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 932,
+                "opcode": "istore",
+                "operand": "23",
+                "symbol": ""
+              },
+              {
+                "offset": 934,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              }
+            ],
+            "immediate_conditional": {
+              "opcode": "ifeq",
+              "offset": 924,
+              "taken_target": 931,
+              "fallthrough_target": 927,
+              "interpretation": "JVM_DIRECT_CONDITIONAL_NOT_GLOBAL_REACHABILITY"
+            }
+          },
+          {
+            "name": "gamma_local18@1029",
+            "offset": 1029,
+            "instructions": [
+              {
+                "offset": 1021,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 1022,
+                "opcode": "invokevirtual",
+                "operand": "#499",
+                "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+              },
+              {
+                "offset": 1025,
+                "opcode": "aload_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 1026,
+                "opcode": "invokestatic",
+                "operand": "#503",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeRaygunDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+              },
+              {
+                "offset": 1029,
+                "opcode": "iload",
+                "operand": "18",
+                "symbol": ""
+              },
+              {
+                "offset": 1031,
+                "opcode": "ifeq",
+                "operand": "1038",
+                "symbol": ""
+              },
+              {
+                "offset": 1034,
+                "opcode": "fconst_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 1035,
+                "opcode": "goto",
+                "operand": "1041",
+                "symbol": ""
+              },
+              {
+                "offset": 1038,
+                "opcode": "ldc_w",
+                "operand": "#348",
+                "symbol": "float 1.5f"
+              },
+              {
+                "offset": 1041,
+                "opcode": "invokestatic",
+                "operand": "#509",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+              },
+              {
+                "offset": 1044,
+                "opcode": "ifeq",
+                "operand": "1051",
+                "symbol": ""
+              }
+            ],
+            "immediate_conditional": {
+              "opcode": "ifeq",
+              "offset": 1031,
+              "taken_target": 1038,
+              "fallthrough_target": 1034,
+              "interpretation": "JVM_DIRECT_CONDITIONAL_NOT_GLOBAL_REACHABILITY"
+            }
+          },
+          {
+            "name": "gamma_local18@1138",
+            "offset": 1138,
+            "instructions": [
+              {
+                "offset": 1129,
+                "opcode": "aload",
+                "operand": "25",
+                "symbol": ""
+              },
+              {
+                "offset": 1131,
+                "opcode": "invokevirtual",
+                "operand": "#556",
+                "symbol": "Method net/minecraft/world/entity/Entity.getId:()I"
+              },
+              {
+                "offset": 1134,
+                "opcode": "aload_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 1135,
+                "opcode": "invokevirtual",
+                "operand": "#311",
+                "symbol": "Method net/minecraft/world/entity/LivingEntity.getId:()I"
+              },
+              {
+                "offset": 1138,
+                "opcode": "iload",
+                "operand": "18",
+                "symbol": ""
+              },
+              {
+                "offset": 1140,
+                "opcode": "ifeq",
+                "operand": "1147",
+                "symbol": ""
+              },
+              {
+                "offset": 1143,
+                "opcode": "iconst_4",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 1144,
+                "opcode": "goto",
+                "operand": "1148",
+                "symbol": ""
+              },
+              {
+                "offset": 1147,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 1148,
+                "opcode": "sipush",
+                "operand": "800",
+                "symbol": ""
+              },
+              {
+                "offset": 1151,
+                "opcode": "invokespecial",
+                "operand": "#557",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/message/UpdateEffectVisualityEntityMessage.\"<init>\":(IIII)V"
+              }
+            ],
+            "immediate_conditional": {
+              "opcode": "ifeq",
+              "offset": 1140,
+              "taken_target": 1147,
+              "fallthrough_target": 1143,
+              "interpretation": "JVM_DIRECT_CONDITIONAL_NOT_GLOBAL_REACHABILITY"
+            }
+          }
+        ]
+      }
+    ],
+    "selected_producer_and_effect_anchors": [
+      {
+        "name": "xray_enchant",
+        "offset": 47,
+        "instructions": [
+          {
+            "offset": 38,
+            "opcode": "fload",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 40,
+            "opcode": "fmul",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 41,
+            "opcode": "fstore",
+            "operand": "8",
+            "symbol": ""
+          },
+          {
+            "offset": 43,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 44,
+            "opcode": "getstatic",
+            "operand": "#270",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.X_RAY:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 47,
+            "opcode": "invokestatic",
+            "operand": "#193",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 50,
+            "opcode": "ifle",
+            "operand": "57",
+            "symbol": ""
+          },
+          {
+            "offset": 53,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 54,
+            "opcode": "goto",
+            "operand": "58",
+            "symbol": ""
+          },
+          {
+            "offset": 57,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 58,
+            "opcode": "istore",
+            "operand": "9",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "name": "xray_store",
+        "offset": 58,
+        "instructions": [
+          {
+            "offset": 47,
+            "opcode": "invokestatic",
+            "operand": "#193",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 50,
+            "opcode": "ifle",
+            "operand": "57",
+            "symbol": ""
+          },
+          {
+            "offset": 53,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 54,
+            "opcode": "goto",
+            "operand": "58",
+            "symbol": ""
+          },
+          {
+            "offset": 57,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 58,
+            "opcode": "istore",
+            "operand": "9",
+            "symbol": ""
+          },
+          {
+            "offset": 60,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 61,
+            "opcode": "invokedynamic",
+            "operand": "#273,  0",
+            "symbol": "InvokeDynamic #0:test:()Ljava/util/function/Predicate;"
+          },
+          {
+            "offset": 66,
+            "opcode": "fload",
+            "operand": "8",
+            "symbol": ""
+          },
+          {
+            "offset": 68,
+            "opcode": "f2d",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 69,
+            "opcode": "invokestatic",
+            "operand": "#276",
+            "symbol": "Method net/minecraft/world/entity/projectile/ProjectileUtil.getHitResultOnViewVector:(Lnet/minecraft/world/entity/Entity;Ljava/util/function/Predicate;D)Lnet/minecraft/world/phys/HitResult;"
+          }
+        ]
+      },
+      {
+        "name": "gamma_enchant",
+        "offset": 332,
+        "instructions": [
+          {
+            "offset": 325,
+            "opcode": "fconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 326,
+            "opcode": "fstore",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 328,
+            "opcode": "fconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 329,
+            "opcode": "fstore",
+            "operand": "17",
+            "symbol": ""
+          },
+          {
+            "offset": 331,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 332,
+            "opcode": "getstatic",
+            "operand": "#359",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.GAMMA_RAY:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 335,
+            "opcode": "invokestatic",
+            "operand": "#193",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 338,
+            "opcode": "ifle",
+            "operand": "345",
+            "symbol": ""
+          },
+          {
+            "offset": 341,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 342,
+            "opcode": "goto",
+            "operand": "346",
+            "symbol": ""
+          },
+          {
+            "offset": 345,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "name": "gamma_store",
+        "offset": 346,
+        "instructions": [
+          {
+            "offset": 335,
+            "opcode": "invokestatic",
+            "operand": "#193",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 338,
+            "opcode": "ifle",
+            "operand": "345",
+            "symbol": ""
+          },
+          {
+            "offset": 341,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 342,
+            "opcode": "goto",
+            "operand": "346",
+            "symbol": ""
+          },
+          {
+            "offset": 345,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 346,
+            "opcode": "istore",
+            "operand": "18",
+            "symbol": ""
+          },
+          {
+            "offset": 348,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 349,
+            "opcode": "invokevirtual",
+            "operand": "#197",
+            "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+          },
+          {
+            "offset": 352,
+            "opcode": "invokeinterface",
+            "operand": "#362,  1",
+            "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+          },
+          {
+            "offset": 357,
+            "opcode": "ifeq",
+            "operand": "402",
+            "symbol": ""
+          },
+          {
+            "offset": 360,
+            "opcode": "fload",
+            "operand": "7",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "name": "raytrace",
+        "offset": 69,
+        "instructions": [
+          {
+            "offset": 58,
+            "opcode": "istore",
+            "operand": "9",
+            "symbol": ""
+          },
+          {
+            "offset": 60,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 61,
+            "opcode": "invokedynamic",
+            "operand": "#273,  0",
+            "symbol": "InvokeDynamic #0:test:()Ljava/util/function/Predicate;"
+          },
+          {
+            "offset": 66,
+            "opcode": "fload",
+            "operand": "8",
+            "symbol": ""
+          },
+          {
+            "offset": 68,
+            "opcode": "f2d",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 69,
+            "opcode": "invokestatic",
+            "operand": "#276",
+            "symbol": "Method net/minecraft/world/entity/projectile/ProjectileUtil.getHitResultOnViewVector:(Lnet/minecraft/world/entity/Entity;Ljava/util/function/Predicate;D)Lnet/minecraft/world/phys/HitResult;"
+          },
+          {
+            "offset": 72,
+            "opcode": "astore",
+            "operand": "10",
+            "symbol": ""
+          },
+          {
+            "offset": 74,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 75,
+            "opcode": "fload",
+            "operand": "8",
+            "symbol": ""
+          },
+          {
+            "offset": 77,
+            "opcode": "f2d",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 78,
+            "opcode": "fconst_0",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "name": "damage",
+        "offset": 1041,
+        "instructions": [
+          {
+            "offset": 1029,
+            "opcode": "iload",
+            "operand": "18",
+            "symbol": ""
+          },
+          {
+            "offset": 1031,
+            "opcode": "ifeq",
+            "operand": "1038",
+            "symbol": ""
+          },
+          {
+            "offset": 1034,
+            "opcode": "fconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1035,
+            "opcode": "goto",
+            "operand": "1041",
+            "symbol": ""
+          },
+          {
+            "offset": 1038,
+            "opcode": "ldc_w",
+            "operand": "#348",
+            "symbol": "float 1.5f"
+          },
+          {
+            "offset": 1041,
+            "opcode": "invokestatic",
+            "operand": "#509",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+          },
+          {
+            "offset": 1044,
+            "opcode": "ifeq",
+            "operand": "1051",
+            "symbol": ""
+          },
+          {
+            "offset": 1047,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1048,
+            "opcode": "goto",
+            "operand": "1052",
+            "symbol": ""
+          },
+          {
+            "offset": 1051,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1052,
+            "opcode": "istore",
+            "operand": "26",
+            "symbol": ""
+          }
+        ]
+      }
+    ],
+    "interpretation": "SELECTED_DIRECT_BRANCH_EDGES_ONLY_NOT_COMPLETE_DEF_USE_OR_CFG"
+  },
+  "limits": {
+    "compiled_branch_targets": "STATIC_JVM_OFFSETS_ONLY",
+    "full_control_flow_and_exception_cfg": "NOT_RECONSTRUCTED",
+    "all_reaching_definitions": "NOT_RECONSTRUCTED",
+    "exception_flow": "NOT_RECONSTRUCTED",
+    "enchantment_effectiveness": "NOT_CERTIFIED",
+    "range_or_line_of_sight": "NOT_CERTIFIED",
+    "damage_hit_acceptance": "NOT_CERTIFIED",
+    "claims_pvp_authorization": "NOT_VERIFIED",
+    "safe_runtime_mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  },
+  "interpretation": "NO_MUTATION_CONDITION_BRANCHES_NOT_PROVIDER_RUNTIME_CERTIFICATION"
+}
