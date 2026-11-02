@@ -1,0 +1,57 @@
+name: Alex's Caves 1.0.10 Tremorzilla world and LOS bytecode discovery
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-tremorzilla-world-los.yml'
+      - 'docs/qa/alexscaves_1010_tremorzilla_world_los_probe.py'
+      - 'docs/qa/alexscaves_1010_tremorzilla_world_los_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-WORLD-LOS-1.0.10.json'
+      - 'docs/qa/alexscaves-1010-tremorzilla-world-los-handoff.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-tremorzilla-world-los.yml'
+      - 'docs/qa/alexscaves_1010_tremorzilla_world_los_probe.py'
+      - 'docs/qa/alexscaves_1010_tremorzilla_world_los_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-WORLD-LOS-1.0.10.json'
+      - 'docs/qa/alexscaves-1010-tremorzilla-world-los-handoff.md'
+permissions:
+  contents: read
+jobs:
+  exact_tremorzilla_world_los:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic bounded world and LOS probe regressions
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_tremorzilla_world_los_probe.py docs/qa/alexscaves_1010_tremorzilla_world_los_probe_test.py
+          python3 docs/qa/alexscaves_1010_tremorzilla_world_los_probe_test.py -v
+      - name: Download exact publisher JAR for static ABI inspection
+        run: |
+          mkdir -p build/alexscaves-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-1010/alexscaves-1.0.10.jar
+      - name: Inspect 1.0.10 compiled world mutation and LOS method boundaries
+        run: |
+          python3 docs/qa/alexscaves_1010_tremorzilla_world_los_probe.py \
+            --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-WORLD-LOS-1.0.10.json' \
+            --output build/alexscaves-1010/tremorzilla-world-los-evidence.json
+      - name: Publish read-only selected JVM report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-tremorzilla-world-los
+          path: build/alexscaves-1010/tremorzilla-world-los-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
