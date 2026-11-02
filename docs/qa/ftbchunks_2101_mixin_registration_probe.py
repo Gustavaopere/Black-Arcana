@@ -132,8 +132,8 @@ def extract_jar(jar,javap):
             })
         for m in methods:
             for i in m["instructions"]:
-                if i["opcode"].startswith("invoke") and
-                   TARGET_METHOD+":" in i["symbol"]:
+                if (i["opcode"].startswith("invoke") and
+                        TARGET_METHOD+":" in i["symbol"]):
                     references.append({"owner_class":path,"owner_class_sha256":digest,
                          "method_name":m["name"],"method_descriptor":m["descriptor"],
                          "offset":i["offset"],"opcode":i["opcode"],"symbol":i["symbol"]})
