@@ -26,6 +26,7 @@ SCOPE="EXACT_ALEXSCAVES_1010_RAYGUN_BRANCH_CONSUMER_SELECTED_JVM_SEAMS"
 REGIONS=(
     ("xray_optional_entity_trace",569,669),
     ("gamma_enumeration_selector",920,962),
+    ("gamma_status_effect_request",1080,1123),
     ("gamma_effect_visual_dispatch",1125,1161),
 )
 PINNED={
@@ -36,8 +37,13 @@ PINNED={
     922:("iload","18"),924:("ifeq","931"),927:("iconst_4",""),
     931:("iconst_0",""),932:("istore","23"),
     943:("invokevirtual","Level.getEntities:"),
+    1111:("sipush","800"),1114:("iload","23"),
+    1116:("invokespecial","MobEffectInstance."),
+    1119:("invokevirtual","LivingEntity.addEffect:"),
     1138:("iload","18"),1140:("ifeq","1147"),
     1143:("iconst_4",""),1147:("iconst_0",""),
+    1151:("invokespecial","UpdateEffectVisualityEntityMessage."),
+    1154:("invokestatic","AlexsCaves.sendMSGToAll:"),
 }
 METHOD_REFS={"invokevirtual","invokestatic","invokeinterface","invokespecial",
              "invokedynamic"}
