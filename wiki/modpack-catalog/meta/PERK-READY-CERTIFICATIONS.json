@@ -6739,6 +6739,46 @@
           "reason": "Ficha e membros exatos associados ao manifesto consolidado, provas anteriores preservadas; NT-01…NT-07 permanecem não executados, hooks NOT_VERIFIED e QA física NOT_TESTED sob NO_MUTATION."
         }
       }
+    },
+    "✅-alexs-caves-continued/damage-types/spirit-dinosaur.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático do DamageType Spirit Dinosaur, seus dois consumidores e produtores nativos delimitados; não encerra os itens/mobs inteiros, engine herdada, hooks mutadores, QA física ou universo do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/spirit-dinosaur.md",
+          "reason": "Artefato publisher 1.0.10 por SHA-1/SHA-256/tamanho; Resource ID, JSON e tags diretas, duas entidades e factory com descritores selados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/spirit-dinosaur.md",
+          "reason": "Corpos próprios de DinosaurSpiritEntity, enum e ExtinctionSpearEntity; três tipos, colisão, dano aceito, fading, retorno, pickup e emissores do item delimitados."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/spirit-dinosaur.md",
+          "reason": "Fórmulas 3+2×nível e 10+damageBonus, ignição, dimensões de registro, vetores, tempos, offsets e dados/encantamentos do JAR exato."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/spirit-dinosaur.md",
+          "reason": "Alvo por ID volátil e owner por UUID, gates de distância/alive, despachos de colisão e condições de produção documentados sem inventar autorização PvP."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/spirit-dinosaur.md",
+          "reason": "Durabilidade/uso/carga/pickup do item e seus callbacks; ausência de custo próprio não é custo global zero; cada subtipo conserva seus gates."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/spirit-dinosaur.md",
+          "reason": "Autoridade nativa de autoria/dano/movimento e persistência parcial; NO_MUTATION, hooks NOT_VERIFIED, QA NOT_TESTED e provider aberto."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/spirit-dinosaur.md",
+          "reason": "Manifesto consolidado reproduzível, descritores e âncoras de instruções auditadas no JAR exato; testes semânticos e negativos, snapshots prévios preservados."
+        }
+      }
     }
   },
   "providers": {},

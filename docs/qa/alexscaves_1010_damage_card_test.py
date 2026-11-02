@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check exact resources and seven separately sealed static damage contracts."""
+"""Check exact resources and nine separately sealed static damage contracts."""
 import hashlib
 import json
 import re
@@ -11,6 +11,12 @@ ROOT = Path(__file__).resolve().parents[2]
 FAMILY = ROOT / "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types"
 SNAP = FAMILY / "EXACT-RESOURCE-MANIFEST-1.0.10.json"
 STATIC_CONTRACTS = {
+    "spirit_dinosaur": {
+        "manifest": "EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json",
+        "profile": "spirit_dinosaur",
+        "family": "SPIRIT_DINOSAUR_DAMAGE_CONTRACT",
+        "cards": frozenset({"damage-types/spirit-dinosaur.md"}),
+    },
     "acid": {
         "manifest": "EXACT-ACID-CONTRACT-1.0.10.json",
         "profile": "acid",
@@ -163,16 +169,16 @@ class DamageTypeCards(unittest.TestCase):
                 self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if id in STATIC_CONTRACTS else "NOT_CERTIFIED", text)
                 self.assertIn("**+0 raízes mágicas novas**", text)
 
-    def test_eight_static_certificates_have_sealed_cards_and_runtime_limits(self):
-        self.assertEqual(set(STATIC_CONTRACTS), {"acid", "dark_arrow", "desolate_dagger", "forsaken_sonic_boom", "gumball", "radiation", "intentional_game_design", "nuke"})
+    def test_nine_static_certificates_have_sealed_cards_and_runtime_limits(self):
+        self.assertEqual(set(STATIC_CONTRACTS), {"acid", "dark_arrow", "desolate_dagger", "forsaken_sonic_boom", "gumball", "radiation", "intentional_game_design", "nuke", "spirit_dinosaur"})
         for id in STATIC_CONTRACTS:
             with self.subTest(id=id):
                 assert_sealed_damage_contract(self, id)
 
-    def test_other_three_damage_types_remain_uncertified(self):
+    def test_other_two_damage_types_remain_uncertified(self):
         ledger = json.loads((ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text())
         remaining = set(self.manifest["damage_types"]) - set(STATIC_CONTRACTS)
-        self.assertEqual(len(remaining), 3)
+        self.assertEqual(len(remaining), 2)
         for id in remaining:
             with self.subTest(id=id):
                 relative = FAMILY.parent.name + "/damage-types/" + id.replace("_", "-") + ".md"

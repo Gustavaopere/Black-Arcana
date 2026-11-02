@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 8/11.**
+**Fichas catalogadas (somente fichas detectadas): 9/11.**
 
-**Barra das fichas catalogadas:** `██████████████░░░░░░ 72.7%`
+**Barra das fichas catalogadas:** `████████████████░░░░ 81.8%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 8/11.**
+**Homologadas para perks (somente fichas detectadas): 9/11.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 72.7%`
+**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 81.8%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -29,7 +29,7 @@
 | ✅ | Nuke | [ficha/nuke.md](nuke.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Radiation | [ficha/radiation.md](radiation.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Raygun | [ficha/raygun.md](raygun.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Spirit Dinosaur | [ficha/spirit-dinosaur.md](spirit-dinosaur.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Spirit Dinosaur | [ficha/spirit-dinosaur.md](spirit-dinosaur.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Tremorzilla Beam | [ficha/tremorzilla-beam.md](tremorzilla-beam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅

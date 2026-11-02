@@ -1,6 +1,6 @@
 # Alex's Caves 1.0.10 — auditoria dos tipos de dano
 
-**Status:** ⚠️ recursos JSON 11/11 e factories compiladas 11/11 mapeadas. **8/11 contratos estáticos certificados:** Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design e Nuke. [Prova nuclear consolidada](../EXACT-NUCLEAR-CONTRACTS-1.0.10.md). Restam Raygun, Spirit Dinosaur e Tremorzilla Beam. Hooks, resolução física dos tickets, hit counts medidos e QA física continuam pendentes.
+**Status:** ⚠️ recursos JSON 11/11 e factories compiladas 11/11 mapeadas. **9/11 contratos estáticos certificados:** Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke e Spirit Dinosaur. [Prova nuclear consolidada](../EXACT-NUCLEAR-CONTRACTS-1.0.10.md). Restam Raygun e Tremorzilla Beam. Hooks, resolução física dos tickets, hit counts medidos e QA física continuam pendentes.
 
 - Artefato oficial: SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, tamanho 75.279.314 bytes.
 - Auditor: [`docs/qa/alexscaves_1010_damage_type_probe.py`](../../../../../docs/qa/alexscaves_1010_damage_type_probe.py); [CI da sonda](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40985275338).
@@ -30,7 +30,7 @@ O recurso `dark_arrow` possui `message_id=desolate_dagger`, igual a `desolate_da
 
 A tag `minecraft:bypasses_cooldown` trata de classificação de dano no Minecraft, não de cooldown de casting de qualquer feitiço. `minecraft:is_explosion`, `minecraft:is_projectile` e `minecraft:is_fire` são declaradas como memberships **textuais**, não como comprovação da aplicação do `DamageSource` no jogo. A tag `alexscaves:deep_one_ignores` é inventariada, mas não lista diretamente nenhum dos onze IDs.
 
-**PENDENTE:** concluir os três outros contratos (Raygun, Spirit Dinosaur e Tremorzilla Beam). Proteção, mutação segura e QA física continuam pendentes também para os oito contratos estáticos. O mismatch de tickets nucleares permanece confirmado apenas nos ramos binários selecionados, sem vazamento persistente observado ou correção alegada.
+**PENDENTE:** concluir os dois outros contratos (Raygun e Tremorzilla Beam). Proteção, mutação segura e QA física continuam pendentes também para os nove contratos estáticos. O mismatch de tickets nucleares permanece confirmado apenas nos ramos binários selecionados, sem vazamento persistente observado ou correção alegada.
 
 ## Mapa binário SHA-exato de `ACDamageTypes`
 
@@ -52,7 +52,7 @@ A tag `minecraft:bypasses_cooldown` trata de classificação de dano no Minecraf
 
 **Divergência relevante:** `NuclearExplosionEntity.tick()` contém referências tanto a `causeIntentionalGameDesign` quanto a `causeNukeDamage`; não se conclui que ambas executem no mesmo tick. `ForsakenAttackGoal.tick()` contém duas referências a `causeForsakenSonicBoomDamage`, mas isso não demonstra dois hits por tick. `dark_arrow` e `desolate_dagger` continuam tipos diferentes embora os JSONs compartilhem `message_id`.
 
-A sobrecarga de `DamageSourceRandomMessages` com argumento `Entity` é usada por algumas factories, enquanto outras recebem somente `RegistryAccess`. Isto permite documentar a assinatura compilada, mas **não** comprova attacker attribution, ownership, targeting, fórmulas, mitigação, repetição de impacto, segurança de hook ou elegibilidade para perks. Contratos técnicos estáticos documentados **8/11**; os snapshots parciais desta seção não homologam hooks ou QA física. O contrato nuclear preserva seu mismatch conhecido.
+A sobrecarga de `DamageSourceRandomMessages` com argumento `Entity` é usada por algumas factories, enquanto outras recebem somente `RegistryAccess`. Isto permite documentar a assinatura compilada, mas **não** comprova attacker attribution, ownership, targeting, fórmulas, mitigação, repetição de impacto, segurança de hook ou elegibilidade para perks. Contratos técnicos estáticos documentados **9/11**; os snapshots parciais desta seção não homologam hooks ou QA física. O contrato nuclear preserva seu mismatch conhecido.
 
 ## Janelas de bytecode dos quatro consumidores prioritários
 
@@ -109,3 +109,7 @@ As [duas fichas seladas](../EXACT-GUMBALL-CONTRACTS-1.0.10.md) completam o equip
 ## Intentional Game Design e Nuke — fechamento estático delimitado
 
 A [prova conjunta](../EXACT-NUCLEAR-CONTRACTS-1.0.10.md) fecha os sete campos dos dois modos do mesmo consumidor, preservando todos os seis snapshots nucleares/NeoForge anteriores. O [gate de tickets](../../../../../docs/qa/alexscaves_1010_nuclear_ticket_promotion_gate_test.py) exige selo e índices consistentes, mantendo runtime e QA física bloqueados. A classificação estática não é autorização mutadora nem aceitação NT-01…NT-07.
+
+## Spirit Dinosaur — contrato estático consolidado
+
+A [ficha](spirit-dinosaur.md) e a [prova reproduzível](../EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.md) distinguem o Tremorsaurus, a lança e os dois modos de espírito sem dano próprio. Fórmulas, targeting, custos, flags, defesa Grotto e persistência estão documentados; dano recusado, evento Pre com zero e insertions não são provas de hit/spawn aceito. A explosão Tephra é uma fronteira separada. Hooks e QA física continuam pendentes.
