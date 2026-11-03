@@ -59,10 +59,21 @@ jobs:
               --javap "$JAVA_HOME/bin/javap" \
               --output build/alexscaves-bonking-1010/evidence.json
           fi
-      - name: Check official generated indexes
+      - name: Generate and audit canonical catalog index snapshots
         run: |
+          python3 scripts/catalog/generate_perk_ready_indexes.py
           python3 scripts/catalog/check_perk_ready_indexes.py
           python3 scripts/catalog/generate_perk_ready_indexes.py --check
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for f in (
+              'wiki/modpack-catalog/providers/INDEX.md',
+              'wiki/modpack-catalog/providers/✅-alexs-caves-continued/INDEX.md',
+              'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/INDEX.md',
+          ):
+              print('CATALOG_INDEX_SNAPSHOT='+f+'|'+json.dumps(Path(f).read_text(encoding='utf8'),ensure_ascii=True))
+          PY
       - name: Archive bounded static evidence
         if: always()
         uses: actions/upload-artifact@v7
