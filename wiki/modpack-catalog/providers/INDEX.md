@@ -121,7 +121,7 @@
 | ⚠️ | Grapplemod Skybound | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-grapplemod-skybound/INDEX.md) |
 | ⚠️ | Gtbcs Geomancy Plus | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-gtbcs-geomancy-plus/INDEX.md) |
 | ⚠️ | Gtbcs Spelllib | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-gtbcs-spelllib/INDEX.md) |
-| ⚠️ | Hazen N Stuff | 0/38 (0.0%) | 0 | ⚠️ | ⚠️ 0/39 verificados | ⚠️ 0/39 testados | [Ver fichas](✅-hazen-n-stuff/INDEX.md) |
+| ⚠️ | Hazen N Stuff | 0/38 (0.0%) | 0 | ⚠️ | ⚠️ 0/38 verificados | ⚠️ 0/38 testados | [Ver fichas](✅-hazen-n-stuff/INDEX.md) |
 | ⚠️ | Hazentouvelib | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-hazentouvelib/INDEX.md) |
 | ⚠️ | Hexalia | 0/43 (0.0%) | 0 | ⚠️ | ⚠️ 0/43 verificados | ⚠️ 0/43 testados | [Ver fichas](✅-hexalia/INDEX.md) |
 | ⚠️ | Ice And Fire Ce | 0/9 (0.0%) | 0 | ⚠️ | ⚠️ 0/9 verificados | ⚠️ 0/9 testados | [Ver fichas](✅-ice-and-fire-ce/INDEX.md) |
