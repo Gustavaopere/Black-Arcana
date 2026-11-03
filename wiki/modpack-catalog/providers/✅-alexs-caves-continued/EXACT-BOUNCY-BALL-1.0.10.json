@@ -1,0 +1,5049 @@
+{
+  "schema_version": 1,
+  "scope": "EXACT_ALEXSCAVES_1010_BOUNCY_BALL_SHOTGUM_BOUNCE_LIMIT_SELECTED_ABI",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "resources": {
+    "bouncy_ball": {
+      "path": "data/alexscaves/enchantment/bouncy_ball.json",
+      "sha256": "003c602b45f66154304a0cabdff36b71450da876b071bd355ad604e2cab632ca",
+      "json": {
+        "description": {
+          "translate": "enchantment.alexscaves.bouncy_ball"
+        },
+        "supported_items": "#alexscaves:enchantable/shot_gum",
+        "weight": 10,
+        "max_level": 3,
+        "min_cost": {
+          "base": 1,
+          "per_level_above_first": 7
+        },
+        "max_cost": {
+          "base": 41,
+          "per_level_above_first": 10
+        },
+        "anvil_cost": 1,
+        "slots": [
+          "mainhand"
+        ]
+      }
+    },
+    "shot_gum_item_tag": {
+      "path": "data/alexscaves/tags/item/enchantable/shot_gum.json",
+      "sha256": "3ccaf9482a8187e3c99f45ff7d5a28c7c73fe39c1840daef13f294821301e31d",
+      "json": {
+        "values": [
+          "alexscaves:shot_gum"
+        ]
+      }
+    },
+    "targeted_ricochet": {
+      "path": "data/alexscaves/enchantment/targeted_ricochet.json",
+      "sha256": "adb5dfde437fbe38910045b6ec593103c43224224c8ab3a0101dec522a5ebb1e",
+      "json": {
+        "description": {
+          "translate": "enchantment.alexscaves.targeted_ricochet"
+        },
+        "supported_items": "#alexscaves:enchantable/shot_gum",
+        "weight": 2,
+        "max_level": 1,
+        "min_cost": {
+          "base": 1,
+          "per_level_above_first": 16
+        },
+        "max_cost": {
+          "base": 41,
+          "per_level_above_first": 10
+        },
+        "anvil_cost": 4,
+        "slots": [
+          "mainhand"
+        ],
+        "exclusive_set": [
+          "alexscaves:triple_split"
+        ]
+      }
+    }
+  },
+  "owner_classes": [
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ShotGumItem.class",
+      "sha256": "08aa8b9aa1781f2ead7d899e4fde758ea44bc527a2ee5968997e5b3ffdd32238"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "sha256": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/living/GumbeeperEntity.class",
+      "sha256": "6a24f05a730218352a083da32f233c3d48fb5f85a6f24f1ba45d78c422b0266c"
+    }
+  ],
+  "selected_consumers": [
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/ShotGumItem.class",
+      "sha256": "08aa8b9aa1781f2ead7d899e4fde758ea44bc527a2ee5968997e5b3ffdd32238",
+      "method": {
+        "name": "acInventoryTick",
+        "header": "public void acInventoryTick(net.minecraft.world.item.ItemStack, net.minecraft.world.level.Level, net.minecraft.world.entity.Entity, boolean)",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+        "instruction_count": 285,
+        "parsed_method_sha256": "6f9325406aaf142af4b415bff94b9123882b72a2ab981370d9be30a5e7c18093",
+        "selected_symbolic_refs": [
+          {
+            "offset": 1,
+            "opcode": "invokestatic",
+            "operand": "#131",
+            "symbol": "Method isShooting:(Lnet/minecraft/world/item/ItemStack;)Z"
+          },
+          {
+            "offset": 7,
+            "opcode": "invokestatic",
+            "operand": "#128",
+            "symbol": "Method getShootTime:(Lnet/minecraft/world/item/ItemStack;)I"
+          },
+          {
+            "offset": 13,
+            "opcode": "invokestatic",
+            "operand": "#79",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getOrCreateTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+          },
+          {
+            "offset": 22,
+            "opcode": "invokestatic",
+            "operand": "#65",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getInt:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I"
+          },
+          {
+            "offset": 29,
+            "opcode": "invokestatic",
+            "operand": "#65",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getInt:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I"
+          },
+          {
+            "offset": 40,
+            "opcode": "invokestatic",
+            "operand": "#128",
+            "symbol": "Method getShootTime:(Lnet/minecraft/world/item/ItemStack;)I"
+          },
+          {
+            "offset": 43,
+            "opcode": "invokevirtual",
+            "operand": "#82",
+            "symbol": "Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V"
+          },
+          {
+            "offset": 50,
+            "opcode": "invokestatic",
+            "operand": "#73",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getFloat:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)F"
+          },
+          {
+            "offset": 57,
+            "opcode": "invokestatic",
+            "operand": "#73",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getFloat:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)F"
+          },
+          {
+            "offset": 69,
+            "opcode": "invokestatic",
+            "operand": "#199",
+            "symbol": "Method getCrankAngle:(Lnet/minecraft/world/item/ItemStack;)F"
+          },
+          {
+            "offset": 72,
+            "opcode": "invokevirtual",
+            "operand": "#92",
+            "symbol": "Method net/minecraft/nbt/CompoundTag.putFloat:(Ljava/lang/String;F)V"
+          },
+          {
+            "offset": 78,
+            "opcode": "invokestatic",
+            "operand": "#88",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.setTag:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+          },
+          {
+            "offset": 98,
+            "opcode": "invokevirtual",
+            "operand": "#203",
+            "symbol": "Method net/minecraft/world/entity/Entity.getX:()D"
+          },
+          {
+            "offset": 102,
+            "opcode": "invokevirtual",
+            "operand": "#206",
+            "symbol": "Method net/minecraft/world/entity/Entity.getY:()D"
+          },
+          {
+            "offset": 106,
+            "opcode": "invokevirtual",
+            "operand": "#207",
+            "symbol": "Method net/minecraft/world/entity/Entity.getZ:()D"
+          },
+          {
+            "offset": 109,
+            "opcode": "getstatic",
+            "operand": "#208",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.SHOTGUM_SHOOT:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 112,
+            "opcode": "invokeinterface",
+            "operand": "#48,  1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 121,
+            "opcode": "invokevirtual",
+            "operand": "#211",
+            "symbol": "Method net/minecraft/world/entity/Entity.getSoundSource:()Lnet/minecraft/sounds/SoundSource;"
+          },
+          {
+            "offset": 126,
+            "opcode": "invokevirtual",
+            "operand": "#186",
+            "symbol": "Method net/minecraft/world/level/Level.playSound:(Lnet/minecraft/world/entity/player/Player;DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V"
+          },
+          {
+            "offset": 131,
+            "opcode": "invokestatic",
+            "operand": "#134",
+            "symbol": "Method setShooting:(Lnet/minecraft/world/item/ItemStack;Z)V"
+          },
+          {
+            "offset": 138,
+            "opcode": "getstatic",
+            "operand": "#212",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TARGETED_RICOCHET:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 141,
+            "opcode": "invokestatic",
+            "operand": "#218",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 155,
+            "opcode": "getstatic",
+            "operand": "#222",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TRIPLE_SPLIT:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 158,
+            "opcode": "invokestatic",
+            "operand": "#218",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 172,
+            "opcode": "getstatic",
+            "operand": "#225",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.EXPLOSIVE_FLAVOR:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 175,
+            "opcode": "invokestatic",
+            "operand": "#218",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 190,
+            "opcode": "getstatic",
+            "operand": "#228",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.BOUNCY_BALL:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 193,
+            "opcode": "invokestatic",
+            "operand": "#218",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 216,
+            "opcode": "getstatic",
+            "operand": "#233",
+            "symbol": "Field net/minecraft/world/InteractionHand.MAIN_HAND:Lnet/minecraft/world/InteractionHand;"
+          },
+          {
+            "offset": 219,
+            "opcode": "invokevirtual",
+            "operand": "#239",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+          },
+          {
+            "offset": 235,
+            "opcode": "getstatic",
+            "operand": "#240",
+            "symbol": "Field net/minecraft/world/InteractionHand.OFF_HAND:Lnet/minecraft/world/InteractionHand;"
+          },
+          {
+            "offset": 238,
+            "opcode": "invokevirtual",
+            "operand": "#239",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+          },
+          {
+            "offset": 259,
+            "opcode": "invokevirtual",
+            "operand": "#243",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getMainArm:()Lnet/minecraft/world/entity/HumanoidArm;"
+          },
+          {
+            "offset": 262,
+            "opcode": "getstatic",
+            "operand": "#247",
+            "symbol": "Field net/minecraft/world/entity/HumanoidArm.LEFT:Lnet/minecraft/world/entity/HumanoidArm;"
+          },
+          {
+            "offset": 275,
+            "opcode": "invokevirtual",
+            "operand": "#243",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getMainArm:()Lnet/minecraft/world/entity/HumanoidArm;"
+          },
+          {
+            "offset": 278,
+            "opcode": "getstatic",
+            "operand": "#253",
+            "symbol": "Field net/minecraft/world/entity/HumanoidArm.RIGHT:Lnet/minecraft/world/entity/HumanoidArm;"
+          },
+          {
+            "offset": 316,
+            "opcode": "invokespecial",
+            "operand": "#258",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+          },
+          {
+            "offset": 369,
+            "opcode": "invokespecial",
+            "operand": "#269",
+            "symbol": "Method net/minecraft/world/phys/Vec3.\"<init>\":(DDD)V"
+          },
+          {
+            "offset": 373,
+            "opcode": "invokevirtual",
+            "operand": "#272",
+            "symbol": "Method net/minecraft/world/entity/Entity.getXRot:()F"
+          },
+          {
+            "offset": 381,
+            "opcode": "invokevirtual",
+            "operand": "#279",
+            "symbol": "Method net/minecraft/world/phys/Vec3.xRot:(F)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 385,
+            "opcode": "invokevirtual",
+            "operand": "#283",
+            "symbol": "Method net/minecraft/world/entity/Entity.getYHeadRot:()F"
+          },
+          {
+            "offset": 393,
+            "opcode": "invokevirtual",
+            "operand": "#286",
+            "symbol": "Method net/minecraft/world/phys/Vec3.yRot:(F)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 399,
+            "opcode": "invokevirtual",
+            "operand": "#289",
+            "symbol": "Method net/minecraft/world/entity/Entity.position:()Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 404,
+            "opcode": "invokevirtual",
+            "operand": "#293",
+            "symbol": "Method net/minecraft/world/entity/Entity.getBbHeight:()F"
+          },
+          {
+            "offset": 413,
+            "opcode": "invokevirtual",
+            "operand": "#297",
+            "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 418,
+            "opcode": "invokevirtual",
+            "operand": "#301",
+            "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 427,
+            "opcode": "invokevirtual",
+            "operand": "#304",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setPos:(Lnet/minecraft/world/phys/Vec3;)V"
+          },
+          {
+            "offset": 434,
+            "opcode": "invokevirtual",
+            "operand": "#308",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setTargetsOnBounce:(Z)V"
+          },
+          {
+            "offset": 441,
+            "opcode": "invokevirtual",
+            "operand": "#312",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setSplitsOnHit:(Z)V"
+          },
+          {
+            "offset": 448,
+            "opcode": "invokevirtual",
+            "operand": "#315",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setExplosive:(Z)V"
+          },
+          {
+            "offset": 455,
+            "opcode": "invokevirtual",
+            "operand": "#272",
+            "symbol": "Method net/minecraft/world/entity/Entity.getXRot:()F"
+          },
+          {
+            "offset": 459,
+            "opcode": "invokevirtual",
+            "operand": "#318",
+            "symbol": "Method net/minecraft/world/entity/Entity.getYRot:()F"
+          },
+          {
+            "offset": 480,
+            "opcode": "invokevirtual",
+            "operand": "#324",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.shootFromRotation:(Lnet/minecraft/world/entity/Entity;FFFFF)V"
+          },
+          {
+            "offset": 487,
+            "opcode": "invokevirtual",
+            "operand": "#328",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+          },
+          {
+            "offset": 495,
+            "opcode": "invokevirtual",
+            "operand": "#332",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+          },
+          {
+            "offset": 499,
+            "opcode": "invokevirtual",
+            "operand": "#336",
+            "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+          },
+          {
+            "offset": 508,
+            "opcode": "invokevirtual",
+            "operand": "#339",
+            "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+          },
+          {
+            "offset": 533,
+            "opcode": "invokevirtual",
+            "operand": "#146",
+            "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+          },
+          {
+            "offset": 541,
+            "opcode": "invokestatic",
+            "operand": "#114",
+            "symbol": "Method getGumballsLeft:(Lnet/minecraft/world/item/ItemStack;)I"
+          },
+          {
+            "offset": 547,
+            "opcode": "invokestatic",
+            "operand": "#343",
+            "symbol": "Method java/lang/Math.max:(II)I"
+          },
+          {
+            "offset": 550,
+            "opcode": "invokestatic",
+            "operand": "#157",
+            "symbol": "Method setGumballsLeft:(Lnet/minecraft/world/item/ItemStack;I)V"
+          },
+          {
+            "offset": 569,
+            "opcode": "invokestatic",
+            "operand": "#347",
+            "symbol": "Method setShootTime:(Lnet/minecraft/world/item/ItemStack;I)V"
+          },
+          {
+            "offset": 587,
+            "opcode": "invokestatic",
+            "operand": "#347",
+            "symbol": "Method setShootTime:(Lnet/minecraft/world/item/ItemStack;I)V"
+          },
+          {
+            "offset": 597,
+            "opcode": "invokestatic",
+            "operand": "#199",
+            "symbol": "Method getCrankAngle:(Lnet/minecraft/world/item/ItemStack;)F"
+          },
+          {
+            "offset": 604,
+            "opcode": "invokestatic",
+            "operand": "#351",
+            "symbol": "Method setCrankAngle:(Lnet/minecraft/world/item/ItemStack;F)V"
+          }
+        ],
+        "selected_branches": [
+          {
+            "offset": 32,
+            "opcode": "if_icmpeq",
+            "operand": "46",
+            "symbol": ""
+          },
+          {
+            "offset": 61,
+            "opcode": "ifeq",
+            "operand": "75",
+            "symbol": ""
+          },
+          {
+            "offset": 84,
+            "opcode": "if_icmpne",
+            "operand": "553",
+            "symbol": ""
+          },
+          {
+            "offset": 89,
+            "opcode": "ifeq",
+            "operand": "553",
+            "symbol": ""
+          },
+          {
+            "offset": 144,
+            "opcode": "ifle",
+            "operand": "151",
+            "symbol": ""
+          },
+          {
+            "offset": 148,
+            "opcode": "goto",
+            "operand": "152",
+            "symbol": ""
+          },
+          {
+            "offset": 161,
+            "opcode": "ifle",
+            "operand": "168",
+            "symbol": ""
+          },
+          {
+            "offset": 165,
+            "opcode": "goto",
+            "operand": "169",
+            "symbol": ""
+          },
+          {
+            "offset": 178,
+            "opcode": "ifle",
+            "operand": "185",
+            "symbol": ""
+          },
+          {
+            "offset": 182,
+            "opcode": "goto",
+            "operand": "186",
+            "symbol": ""
+          },
+          {
+            "offset": 205,
+            "opcode": "ifeq",
+            "operand": "518",
+            "symbol": ""
+          },
+          {
+            "offset": 223,
+            "opcode": "if_acmpne",
+            "operand": "230",
+            "symbol": ""
+          },
+          {
+            "offset": 227,
+            "opcode": "goto",
+            "operand": "231",
+            "symbol": ""
+          },
+          {
+            "offset": 242,
+            "opcode": "if_acmpne",
+            "operand": "249",
+            "symbol": ""
+          },
+          {
+            "offset": 246,
+            "opcode": "goto",
+            "operand": "250",
+            "symbol": ""
+          },
+          {
+            "offset": 254,
+            "opcode": "ifeq",
+            "operand": "268",
+            "symbol": ""
+          },
+          {
+            "offset": 265,
+            "opcode": "if_acmpeq",
+            "operand": "284",
+            "symbol": ""
+          },
+          {
+            "offset": 270,
+            "opcode": "ifeq",
+            "operand": "288",
+            "symbol": ""
+          },
+          {
+            "offset": 281,
+            "opcode": "if_acmpne",
+            "operand": "288",
+            "symbol": ""
+          },
+          {
+            "offset": 285,
+            "opcode": "goto",
+            "operand": "289",
+            "symbol": ""
+          },
+          {
+            "offset": 298,
+            "opcode": "ifeq",
+            "operand": "305",
+            "symbol": ""
+          },
+          {
+            "offset": 302,
+            "opcode": "goto",
+            "operand": "306",
+            "symbol": ""
+          },
+          {
+            "offset": 306,
+            "opcode": "if_icmpge",
+            "operand": "518",
+            "symbol": ""
+          },
+          {
+            "offset": 327,
+            "opcode": "ifeq",
+            "operand": "334",
+            "symbol": ""
+          },
+          {
+            "offset": 331,
+            "opcode": "goto",
+            "operand": "349",
+            "symbol": ""
+          },
+          {
+            "offset": 337,
+            "opcode": "if_icmpge",
+            "operand": "346",
+            "symbol": ""
+          },
+          {
+            "offset": 343,
+            "opcode": "goto",
+            "operand": "349",
+            "symbol": ""
+          },
+          {
+            "offset": 351,
+            "opcode": "ifeq",
+            "operand": "360",
+            "symbol": ""
+          },
+          {
+            "offset": 357,
+            "opcode": "goto",
+            "operand": "363",
+            "symbol": ""
+          },
+          {
+            "offset": 465,
+            "opcode": "ifeq",
+            "operand": "474",
+            "symbol": ""
+          },
+          {
+            "offset": 471,
+            "opcode": "goto",
+            "operand": "477",
+            "symbol": ""
+          },
+          {
+            "offset": 502,
+            "opcode": "ifne",
+            "operand": "512",
+            "symbol": ""
+          },
+          {
+            "offset": 515,
+            "opcode": "goto",
+            "operand": "294",
+            "symbol": ""
+          },
+          {
+            "offset": 522,
+            "opcode": "ifeq",
+            "operand": "539",
+            "symbol": ""
+          },
+          {
+            "offset": 536,
+            "opcode": "ifne",
+            "operand": "553",
+            "symbol": ""
+          },
+          {
+            "offset": 555,
+            "opcode": "ifeq",
+            "operand": "572",
+            "symbol": ""
+          },
+          {
+            "offset": 561,
+            "opcode": "if_icmpge",
+            "operand": "572",
+            "symbol": ""
+          },
+          {
+            "offset": 574,
+            "opcode": "ifne",
+            "operand": "590",
+            "symbol": ""
+          },
+          {
+            "offset": 579,
+            "opcode": "ifle",
+            "operand": "590",
+            "symbol": ""
+          },
+          {
+            "offset": 592,
+            "opcode": "ifeq",
+            "operand": "607",
+            "symbol": ""
+          }
+        ],
+        "selected_numeric_operands": [
+          {
+            "offset": 20,
+            "opcode": "ldc",
+            "operand": "#63",
+            "symbol": "String PrevShootTime"
+          },
+          {
+            "offset": 27,
+            "opcode": "ldc",
+            "operand": "#69",
+            "symbol": "String ShootTime"
+          },
+          {
+            "offset": 37,
+            "opcode": "ldc",
+            "operand": "#63",
+            "symbol": "String PrevShootTime"
+          },
+          {
+            "offset": 48,
+            "opcode": "ldc",
+            "operand": "#71",
+            "symbol": "String PrevCrankAngle"
+          },
+          {
+            "offset": 55,
+            "opcode": "ldc",
+            "operand": "#77",
+            "symbol": "String CrankAngle"
+          },
+          {
+            "offset": 66,
+            "opcode": "ldc",
+            "operand": "#71",
+            "symbol": "String PrevCrankAngle"
+          },
+          {
+            "offset": 83,
+            "opcode": "iconst_5",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 124,
+            "opcode": "fconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 125,
+            "opcode": "fconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 130,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 134,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 147,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 151,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 164,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 168,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 181,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 185,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 188,
+            "opcode": "iconst_4",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 196,
+            "opcode": "iconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 226,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 230,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 245,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 249,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 284,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 288,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 291,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 301,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 305,
+            "opcode": "iconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 330,
+            "opcode": "fconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 336,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 340,
+            "opcode": "ldc_w",
+            "operand": "#263",
+            "symbol": "float 0.15f"
+          },
+          {
+            "offset": 346,
+            "opcode": "ldc_w",
+            "operand": "#264",
+            "symbol": "float -0.15f"
+          },
+          {
+            "offset": 354,
+            "opcode": "ldc_w",
+            "operand": "#265",
+            "symbol": "float 0.35f"
+          },
+          {
+            "offset": 360,
+            "opcode": "ldc_w",
+            "operand": "#266",
+            "symbol": "float -0.35f"
+          },
+          {
+            "offset": 365,
+            "opcode": "dconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 366,
+            "opcode": "ldc2_w",
+            "operand": "#267",
+            "symbol": "double 0.75d"
+          },
+          {
+            "offset": 377,
+            "opcode": "ldc_w",
+            "operand": "#278",
+            "symbol": "float 0.017453292f"
+          },
+          {
+            "offset": 389,
+            "opcode": "ldc_w",
+            "operand": "#278",
+            "symbol": "float 0.017453292f"
+          },
+          {
+            "offset": 402,
+            "opcode": "dconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 407,
+            "opcode": "ldc_w",
+            "operand": "#296",
+            "symbol": "float 0.8f"
+          },
+          {
+            "offset": 412,
+            "opcode": "dconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 462,
+            "opcode": "fconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 468,
+            "opcode": "ldc_w",
+            "operand": "#321",
+            "symbol": "float 0.5f"
+          },
+          {
+            "offset": 474,
+            "opcode": "ldc_w",
+            "operand": "#322",
+            "symbol": "float 1.5f"
+          },
+          {
+            "offset": 477,
+            "opcode": "ldc_w",
+            "operand": "#323",
+            "symbol": "float 5.0f"
+          },
+          {
+            "offset": 492,
+            "opcode": "ldc_w",
+            "operand": "#331",
+            "symbol": "float 4.0f"
+          },
+          {
+            "offset": 544,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 546,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 560,
+            "opcode": "iconst_5",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 567,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 585,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 600,
+            "opcode": "ldc_w",
+            "operand": "#350",
+            "symbol": "float 45.0f"
+          }
+        ],
+        "prior_exact_anchor_windows": [
+          {
+            "at": 130,
+            "selected_instructions": [
+              {
+                "offset": 121,
+                "opcode": "invokevirtual",
+                "operand": "#211",
+                "symbol": "Method net/minecraft/world/entity/Entity.getSoundSource:()Lnet/minecraft/sounds/SoundSource;"
+              },
+              {
+                "offset": 124,
+                "opcode": "fconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 125,
+                "opcode": "fconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 126,
+                "opcode": "invokevirtual",
+                "operand": "#186",
+                "symbol": "Method net/minecraft/world/level/Level.playSound:(Lnet/minecraft/world/entity/player/Player;DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V"
+              },
+              {
+                "offset": 129,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 130,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 131,
+                "opcode": "invokestatic",
+                "operand": "#134",
+                "symbol": "Method setShooting:(Lnet/minecraft/world/item/ItemStack;Z)V"
+              },
+              {
+                "offset": 134,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 135,
+                "opcode": "istore",
+                "operand": "8",
+                "symbol": ""
+              },
+              {
+                "offset": 137,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 138,
+                "opcode": "getstatic",
+                "operand": "#212",
+                "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TARGETED_RICOCHET:Lnet/minecraft/resources/ResourceKey;"
+              }
+            ]
+          },
+          {
+            "at": 138,
+            "selected_instructions": [
+              {
+                "offset": 130,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 131,
+                "opcode": "invokestatic",
+                "operand": "#134",
+                "symbol": "Method setShooting:(Lnet/minecraft/world/item/ItemStack;Z)V"
+              },
+              {
+                "offset": 134,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 135,
+                "opcode": "istore",
+                "operand": "8",
+                "symbol": ""
+              },
+              {
+                "offset": 137,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 138,
+                "opcode": "getstatic",
+                "operand": "#212",
+                "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TARGETED_RICOCHET:Lnet/minecraft/resources/ResourceKey;"
+              },
+              {
+                "offset": 141,
+                "opcode": "invokestatic",
+                "operand": "#218",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+              },
+              {
+                "offset": 144,
+                "opcode": "ifle",
+                "operand": "151",
+                "symbol": ""
+              },
+              {
+                "offset": 147,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 148,
+                "opcode": "goto",
+                "operand": "152",
+                "symbol": ""
+              },
+              {
+                "offset": 151,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 155,
+            "selected_instructions": [
+              {
+                "offset": 147,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 148,
+                "opcode": "goto",
+                "operand": "152",
+                "symbol": ""
+              },
+              {
+                "offset": 151,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 152,
+                "opcode": "istore",
+                "operand": "9",
+                "symbol": ""
+              },
+              {
+                "offset": 154,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 155,
+                "opcode": "getstatic",
+                "operand": "#222",
+                "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TRIPLE_SPLIT:Lnet/minecraft/resources/ResourceKey;"
+              },
+              {
+                "offset": 158,
+                "opcode": "invokestatic",
+                "operand": "#218",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+              },
+              {
+                "offset": 161,
+                "opcode": "ifle",
+                "operand": "168",
+                "symbol": ""
+              },
+              {
+                "offset": 164,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 165,
+                "opcode": "goto",
+                "operand": "169",
+                "symbol": ""
+              },
+              {
+                "offset": 168,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 172,
+            "selected_instructions": [
+              {
+                "offset": 164,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 165,
+                "opcode": "goto",
+                "operand": "169",
+                "symbol": ""
+              },
+              {
+                "offset": 168,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 169,
+                "opcode": "istore",
+                "operand": "10",
+                "symbol": ""
+              },
+              {
+                "offset": 171,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 172,
+                "opcode": "getstatic",
+                "operand": "#225",
+                "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.EXPLOSIVE_FLAVOR:Lnet/minecraft/resources/ResourceKey;"
+              },
+              {
+                "offset": 175,
+                "opcode": "invokestatic",
+                "operand": "#218",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+              },
+              {
+                "offset": 178,
+                "opcode": "ifle",
+                "operand": "185",
+                "symbol": ""
+              },
+              {
+                "offset": 181,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 182,
+                "opcode": "goto",
+                "operand": "186",
+                "symbol": ""
+              },
+              {
+                "offset": 185,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 190,
+            "selected_instructions": [
+              {
+                "offset": 182,
+                "opcode": "goto",
+                "operand": "186",
+                "symbol": ""
+              },
+              {
+                "offset": 185,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 186,
+                "opcode": "istore",
+                "operand": "11",
+                "symbol": ""
+              },
+              {
+                "offset": 188,
+                "opcode": "iconst_4",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 189,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 190,
+                "opcode": "getstatic",
+                "operand": "#228",
+                "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.BOUNCY_BALL:Lnet/minecraft/resources/ResourceKey;"
+              },
+              {
+                "offset": 193,
+                "opcode": "invokestatic",
+                "operand": "#218",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+              },
+              {
+                "offset": 196,
+                "opcode": "iconst_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 197,
+                "opcode": "imul",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 198,
+                "opcode": "iadd",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 199,
+                "opcode": "istore",
+                "operand": "12",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 205,
+            "selected_instructions": [
+              {
+                "offset": 197,
+                "opcode": "imul",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 198,
+                "opcode": "iadd",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 199,
+                "opcode": "istore",
+                "operand": "12",
+                "symbol": ""
+              },
+              {
+                "offset": 201,
+                "opcode": "aload_3",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 202,
+                "opcode": "instanceof",
+                "operand": "#231",
+                "symbol": "class net/minecraft/world/entity/LivingEntity"
+              },
+              {
+                "offset": 205,
+                "opcode": "ifeq",
+                "operand": "518",
+                "symbol": ""
+              },
+              {
+                "offset": 208,
+                "opcode": "aload_3",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 209,
+                "opcode": "checkcast",
+                "operand": "#231",
+                "symbol": "class net/minecraft/world/entity/LivingEntity"
+              },
+              {
+                "offset": 212,
+                "opcode": "astore",
+                "operand": "13",
+                "symbol": ""
+              },
+              {
+                "offset": 214,
+                "opcode": "aload",
+                "operand": "13",
+                "symbol": ""
+              },
+              {
+                "offset": 216,
+                "opcode": "getstatic",
+                "operand": "#233",
+                "symbol": "Field net/minecraft/world/InteractionHand.MAIN_HAND:Lnet/minecraft/world/InteractionHand;"
+              }
+            ]
+          },
+          {
+            "at": 316,
+            "selected_instructions": [
+              {
+                "offset": 306,
+                "opcode": "if_icmpge",
+                "operand": "518",
+                "symbol": ""
+              },
+              {
+                "offset": 309,
+                "opcode": "new",
+                "operand": "#256",
+                "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity"
+              },
+              {
+                "offset": 312,
+                "opcode": "dup",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 313,
+                "opcode": "aload_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 314,
+                "opcode": "aload",
+                "operand": "13",
+                "symbol": ""
+              },
+              {
+                "offset": 316,
+                "opcode": "invokespecial",
+                "operand": "#258",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+              },
+              {
+                "offset": 319,
+                "opcode": "astore",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 321,
+                "opcode": "new",
+                "operand": "#261",
+                "symbol": "class net/minecraft/world/phys/Vec3"
+              },
+              {
+                "offset": 324,
+                "opcode": "dup",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 325,
+                "opcode": "iload",
+                "operand": "11",
+                "symbol": ""
+              },
+              {
+                "offset": 327,
+                "opcode": "ifeq",
+                "operand": "334",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 434,
+            "selected_instructions": [
+              {
+                "offset": 423,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 425,
+                "opcode": "aload",
+                "operand": "19",
+                "symbol": ""
+              },
+              {
+                "offset": 427,
+                "opcode": "invokevirtual",
+                "operand": "#304",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setPos:(Lnet/minecraft/world/phys/Vec3;)V"
+              },
+              {
+                "offset": 430,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 432,
+                "opcode": "iload",
+                "operand": "9",
+                "symbol": ""
+              },
+              {
+                "offset": 434,
+                "opcode": "invokevirtual",
+                "operand": "#308",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setTargetsOnBounce:(Z)V"
+              },
+              {
+                "offset": 437,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 439,
+                "opcode": "iload",
+                "operand": "10",
+                "symbol": ""
+              },
+              {
+                "offset": 441,
+                "opcode": "invokevirtual",
+                "operand": "#312",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setSplitsOnHit:(Z)V"
+              },
+              {
+                "offset": 444,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 446,
+                "opcode": "iload",
+                "operand": "11",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 441,
+            "selected_instructions": [
+              {
+                "offset": 430,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 432,
+                "opcode": "iload",
+                "operand": "9",
+                "symbol": ""
+              },
+              {
+                "offset": 434,
+                "opcode": "invokevirtual",
+                "operand": "#308",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setTargetsOnBounce:(Z)V"
+              },
+              {
+                "offset": 437,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 439,
+                "opcode": "iload",
+                "operand": "10",
+                "symbol": ""
+              },
+              {
+                "offset": 441,
+                "opcode": "invokevirtual",
+                "operand": "#312",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setSplitsOnHit:(Z)V"
+              },
+              {
+                "offset": 444,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 446,
+                "opcode": "iload",
+                "operand": "11",
+                "symbol": ""
+              },
+              {
+                "offset": 448,
+                "opcode": "invokevirtual",
+                "operand": "#315",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setExplosive:(Z)V"
+              },
+              {
+                "offset": 451,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 453,
+                "opcode": "aload_3",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 448,
+            "selected_instructions": [
+              {
+                "offset": 437,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 439,
+                "opcode": "iload",
+                "operand": "10",
+                "symbol": ""
+              },
+              {
+                "offset": 441,
+                "opcode": "invokevirtual",
+                "operand": "#312",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setSplitsOnHit:(Z)V"
+              },
+              {
+                "offset": 444,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 446,
+                "opcode": "iload",
+                "operand": "11",
+                "symbol": ""
+              },
+              {
+                "offset": 448,
+                "opcode": "invokevirtual",
+                "operand": "#315",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setExplosive:(Z)V"
+              },
+              {
+                "offset": 451,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 453,
+                "opcode": "aload_3",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 454,
+                "opcode": "aload_3",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 455,
+                "opcode": "invokevirtual",
+                "operand": "#272",
+                "symbol": "Method net/minecraft/world/entity/Entity.getXRot:()F"
+              },
+              {
+                "offset": 458,
+                "opcode": "aload_3",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 480,
+            "selected_instructions": [
+              {
+                "offset": 465,
+                "opcode": "ifeq",
+                "operand": "474",
+                "symbol": ""
+              },
+              {
+                "offset": 468,
+                "opcode": "ldc_w",
+                "operand": "#321",
+                "symbol": "float 0.5f"
+              },
+              {
+                "offset": 471,
+                "opcode": "goto",
+                "operand": "477",
+                "symbol": ""
+              },
+              {
+                "offset": 474,
+                "opcode": "ldc_w",
+                "operand": "#322",
+                "symbol": "float 1.5f"
+              },
+              {
+                "offset": 477,
+                "opcode": "ldc_w",
+                "operand": "#323",
+                "symbol": "float 5.0f"
+              },
+              {
+                "offset": 480,
+                "opcode": "invokevirtual",
+                "operand": "#324",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.shootFromRotation:(Lnet/minecraft/world/entity/Entity;FFFFF)V"
+              },
+              {
+                "offset": 483,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 485,
+                "opcode": "iload",
+                "operand": "12",
+                "symbol": ""
+              },
+              {
+                "offset": 487,
+                "opcode": "invokevirtual",
+                "operand": "#328",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+              },
+              {
+                "offset": 490,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 492,
+                "opcode": "ldc_w",
+                "operand": "#331",
+                "symbol": "float 4.0f"
+              }
+            ]
+          },
+          {
+            "at": 487,
+            "selected_instructions": [
+              {
+                "offset": 474,
+                "opcode": "ldc_w",
+                "operand": "#322",
+                "symbol": "float 1.5f"
+              },
+              {
+                "offset": 477,
+                "opcode": "ldc_w",
+                "operand": "#323",
+                "symbol": "float 5.0f"
+              },
+              {
+                "offset": 480,
+                "opcode": "invokevirtual",
+                "operand": "#324",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.shootFromRotation:(Lnet/minecraft/world/entity/Entity;FFFFF)V"
+              },
+              {
+                "offset": 483,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 485,
+                "opcode": "iload",
+                "operand": "12",
+                "symbol": ""
+              },
+              {
+                "offset": 487,
+                "opcode": "invokevirtual",
+                "operand": "#328",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+              },
+              {
+                "offset": 490,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 492,
+                "opcode": "ldc_w",
+                "operand": "#331",
+                "symbol": "float 4.0f"
+              },
+              {
+                "offset": 495,
+                "opcode": "invokevirtual",
+                "operand": "#332",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+              },
+              {
+                "offset": 498,
+                "opcode": "aload_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 499,
+                "opcode": "invokevirtual",
+                "operand": "#336",
+                "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+              }
+            ]
+          },
+          {
+            "at": 495,
+            "selected_instructions": [
+              {
+                "offset": 483,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 485,
+                "opcode": "iload",
+                "operand": "12",
+                "symbol": ""
+              },
+              {
+                "offset": 487,
+                "opcode": "invokevirtual",
+                "operand": "#328",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+              },
+              {
+                "offset": 490,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 492,
+                "opcode": "ldc_w",
+                "operand": "#331",
+                "symbol": "float 4.0f"
+              },
+              {
+                "offset": 495,
+                "opcode": "invokevirtual",
+                "operand": "#332",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+              },
+              {
+                "offset": 498,
+                "opcode": "aload_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 499,
+                "opcode": "invokevirtual",
+                "operand": "#336",
+                "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+              },
+              {
+                "offset": 502,
+                "opcode": "ifne",
+                "operand": "512",
+                "symbol": ""
+              },
+              {
+                "offset": 505,
+                "opcode": "aload_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 506,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 508,
+            "selected_instructions": [
+              {
+                "offset": 498,
+                "opcode": "aload_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 499,
+                "opcode": "invokevirtual",
+                "operand": "#336",
+                "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+              },
+              {
+                "offset": 502,
+                "opcode": "ifne",
+                "operand": "512",
+                "symbol": ""
+              },
+              {
+                "offset": 505,
+                "opcode": "aload_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 506,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 508,
+                "opcode": "invokevirtual",
+                "operand": "#339",
+                "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+              },
+              {
+                "offset": 511,
+                "opcode": "pop",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 512,
+                "opcode": "iinc",
+                "operand": "16, 1",
+                "symbol": ""
+              },
+              {
+                "offset": 515,
+                "opcode": "goto",
+                "operand": "294",
+                "symbol": ""
+              },
+              {
+                "offset": 518,
+                "opcode": "aload_3",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 519,
+                "opcode": "instanceof",
+                "operand": "#119",
+                "symbol": "class net/minecraft/world/entity/player/Player"
+              }
+            ]
+          },
+          {
+            "at": 533,
+            "selected_instructions": [
+              {
+                "offset": 522,
+                "opcode": "ifeq",
+                "operand": "539",
+                "symbol": ""
+              },
+              {
+                "offset": 525,
+                "opcode": "aload_3",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 526,
+                "opcode": "checkcast",
+                "operand": "#119",
+                "symbol": "class net/minecraft/world/entity/player/Player"
+              },
+              {
+                "offset": 529,
+                "opcode": "astore",
+                "operand": "13",
+                "symbol": ""
+              },
+              {
+                "offset": 531,
+                "opcode": "aload",
+                "operand": "13",
+                "symbol": ""
+              },
+              {
+                "offset": 533,
+                "opcode": "invokevirtual",
+                "operand": "#146",
+                "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+              },
+              {
+                "offset": 536,
+                "opcode": "ifne",
+                "operand": "553",
+                "symbol": ""
+              },
+              {
+                "offset": 539,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 540,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 541,
+                "opcode": "invokestatic",
+                "operand": "#114",
+                "symbol": "Method getGumballsLeft:(Lnet/minecraft/world/item/ItemStack;)I"
+              },
+              {
+                "offset": 544,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 541,
+            "selected_instructions": [
+              {
+                "offset": 531,
+                "opcode": "aload",
+                "operand": "13",
+                "symbol": ""
+              },
+              {
+                "offset": 533,
+                "opcode": "invokevirtual",
+                "operand": "#146",
+                "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+              },
+              {
+                "offset": 536,
+                "opcode": "ifne",
+                "operand": "553",
+                "symbol": ""
+              },
+              {
+                "offset": 539,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 540,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 541,
+                "opcode": "invokestatic",
+                "operand": "#114",
+                "symbol": "Method getGumballsLeft:(Lnet/minecraft/world/item/ItemStack;)I"
+              },
+              {
+                "offset": 544,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 545,
+                "opcode": "isub",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 546,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 547,
+                "opcode": "invokestatic",
+                "operand": "#343",
+                "symbol": "Method java/lang/Math.max:(II)I"
+              },
+              {
+                "offset": 550,
+                "opcode": "invokestatic",
+                "operand": "#157",
+                "symbol": "Method setGumballsLeft:(Lnet/minecraft/world/item/ItemStack;I)V"
+              }
+            ]
+          },
+          {
+            "at": 550,
+            "selected_instructions": [
+              {
+                "offset": 541,
+                "opcode": "invokestatic",
+                "operand": "#114",
+                "symbol": "Method getGumballsLeft:(Lnet/minecraft/world/item/ItemStack;)I"
+              },
+              {
+                "offset": 544,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 545,
+                "opcode": "isub",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 546,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 547,
+                "opcode": "invokestatic",
+                "operand": "#343",
+                "symbol": "Method java/lang/Math.max:(II)I"
+              },
+              {
+                "offset": 550,
+                "opcode": "invokestatic",
+                "operand": "#157",
+                "symbol": "Method setGumballsLeft:(Lnet/minecraft/world/item/ItemStack;I)V"
+              },
+              {
+                "offset": 553,
+                "opcode": "iload",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 555,
+                "opcode": "ifeq",
+                "operand": "572",
+                "symbol": ""
+              },
+              {
+                "offset": 558,
+                "opcode": "iload",
+                "operand": "6",
+                "symbol": ""
+              },
+              {
+                "offset": 560,
+                "opcode": "iconst_5",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 561,
+                "opcode": "if_icmpge",
+                "operand": "572",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 560,
+            "selected_instructions": [
+              {
+                "offset": 547,
+                "opcode": "invokestatic",
+                "operand": "#343",
+                "symbol": "Method java/lang/Math.max:(II)I"
+              },
+              {
+                "offset": 550,
+                "opcode": "invokestatic",
+                "operand": "#157",
+                "symbol": "Method setGumballsLeft:(Lnet/minecraft/world/item/ItemStack;I)V"
+              },
+              {
+                "offset": 553,
+                "opcode": "iload",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 555,
+                "opcode": "ifeq",
+                "operand": "572",
+                "symbol": ""
+              },
+              {
+                "offset": 558,
+                "opcode": "iload",
+                "operand": "6",
+                "symbol": ""
+              },
+              {
+                "offset": 560,
+                "opcode": "iconst_5",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 561,
+                "opcode": "if_icmpge",
+                "operand": "572",
+                "symbol": ""
+              },
+              {
+                "offset": 564,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 565,
+                "opcode": "iload",
+                "operand": "6",
+                "symbol": ""
+              },
+              {
+                "offset": 567,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 568,
+                "opcode": "iadd",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 569,
+            "selected_instructions": [
+              {
+                "offset": 561,
+                "opcode": "if_icmpge",
+                "operand": "572",
+                "symbol": ""
+              },
+              {
+                "offset": 564,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 565,
+                "opcode": "iload",
+                "operand": "6",
+                "symbol": ""
+              },
+              {
+                "offset": 567,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 568,
+                "opcode": "iadd",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 569,
+                "opcode": "invokestatic",
+                "operand": "#347",
+                "symbol": "Method setShootTime:(Lnet/minecraft/world/item/ItemStack;I)V"
+              },
+              {
+                "offset": 572,
+                "opcode": "iload",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 574,
+                "opcode": "ifne",
+                "operand": "590",
+                "symbol": ""
+              },
+              {
+                "offset": 577,
+                "opcode": "iload",
+                "operand": "6",
+                "symbol": ""
+              },
+              {
+                "offset": 579,
+                "opcode": "ifle",
+                "operand": "590",
+                "symbol": ""
+              },
+              {
+                "offset": 582,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 587,
+            "selected_instructions": [
+              {
+                "offset": 579,
+                "opcode": "ifle",
+                "operand": "590",
+                "symbol": ""
+              },
+              {
+                "offset": 582,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 583,
+                "opcode": "iload",
+                "operand": "6",
+                "symbol": ""
+              },
+              {
+                "offset": 585,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 586,
+                "opcode": "isub",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 587,
+                "opcode": "invokestatic",
+                "operand": "#347",
+                "symbol": "Method setShootTime:(Lnet/minecraft/world/item/ItemStack;I)V"
+              },
+              {
+                "offset": 590,
+                "opcode": "iload",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 592,
+                "opcode": "ifeq",
+                "operand": "607",
+                "symbol": ""
+              },
+              {
+                "offset": 595,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 596,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 597,
+                "opcode": "invokestatic",
+                "operand": "#199",
+                "symbol": "Method getCrankAngle:(Lnet/minecraft/world/item/ItemStack;)F"
+              }
+            ]
+          },
+          {
+            "at": 600,
+            "selected_instructions": [
+              {
+                "offset": 590,
+                "opcode": "iload",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 592,
+                "opcode": "ifeq",
+                "operand": "607",
+                "symbol": ""
+              },
+              {
+                "offset": 595,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 596,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 597,
+                "opcode": "invokestatic",
+                "operand": "#199",
+                "symbol": "Method getCrankAngle:(Lnet/minecraft/world/item/ItemStack;)F"
+              },
+              {
+                "offset": 600,
+                "opcode": "ldc_w",
+                "operand": "#350",
+                "symbol": "float 45.0f"
+              },
+              {
+                "offset": 603,
+                "opcode": "fadd",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 604,
+                "opcode": "invokestatic",
+                "operand": "#351",
+                "symbol": "Method setCrankAngle:(Lnet/minecraft/world/item/ItemStack;F)V"
+              },
+              {
+                "offset": 607,
+                "opcode": "return",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          }
+        ],
+        "selected_pivots": [
+          {
+            "marker": "BOUNCY_BALL:",
+            "matches": 1,
+            "offset": 190,
+            "selected_instructions": [
+              {
+                "offset": 182,
+                "opcode": "goto",
+                "operand": "186",
+                "symbol": ""
+              },
+              {
+                "offset": 185,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 186,
+                "opcode": "istore",
+                "operand": "11",
+                "symbol": ""
+              },
+              {
+                "offset": 188,
+                "opcode": "iconst_4",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 189,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 190,
+                "opcode": "getstatic",
+                "operand": "#228",
+                "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.BOUNCY_BALL:Lnet/minecraft/resources/ResourceKey;"
+              },
+              {
+                "offset": 193,
+                "opcode": "invokestatic",
+                "operand": "#218",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+              },
+              {
+                "offset": 196,
+                "opcode": "iconst_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 197,
+                "opcode": "imul",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 198,
+                "opcode": "iadd",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 199,
+                "opcode": "istore",
+                "operand": "12",
+                "symbol": ""
+              },
+              {
+                "offset": 201,
+                "opcode": "aload_3",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "marker": "enchantLevel:",
+            "matches": 4,
+            "offset": 141,
+            "selected_instructions": [
+              {
+                "offset": 131,
+                "opcode": "invokestatic",
+                "operand": "#134",
+                "symbol": "Method setShooting:(Lnet/minecraft/world/item/ItemStack;Z)V"
+              },
+              {
+                "offset": 134,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 135,
+                "opcode": "istore",
+                "operand": "8",
+                "symbol": ""
+              },
+              {
+                "offset": 137,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 138,
+                "opcode": "getstatic",
+                "operand": "#212",
+                "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TARGETED_RICOCHET:Lnet/minecraft/resources/ResourceKey;"
+              },
+              {
+                "offset": 141,
+                "opcode": "invokestatic",
+                "operand": "#218",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+              },
+              {
+                "offset": 144,
+                "opcode": "ifle",
+                "operand": "151",
+                "symbol": ""
+              },
+              {
+                "offset": 147,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 148,
+                "opcode": "goto",
+                "operand": "152",
+                "symbol": ""
+              },
+              {
+                "offset": 151,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 152,
+                "opcode": "istore",
+                "operand": "9",
+                "symbol": ""
+              },
+              {
+                "offset": 154,
+                "opcode": "aload_1",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "marker": "setMaximumBounces:",
+            "matches": 1,
+            "offset": 487,
+            "selected_instructions": [
+              {
+                "offset": 474,
+                "opcode": "ldc_w",
+                "operand": "#322",
+                "symbol": "float 1.5f"
+              },
+              {
+                "offset": 477,
+                "opcode": "ldc_w",
+                "operand": "#323",
+                "symbol": "float 5.0f"
+              },
+              {
+                "offset": 480,
+                "opcode": "invokevirtual",
+                "operand": "#324",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.shootFromRotation:(Lnet/minecraft/world/entity/Entity;FFFFF)V"
+              },
+              {
+                "offset": 483,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 485,
+                "opcode": "iload",
+                "operand": "12",
+                "symbol": ""
+              },
+              {
+                "offset": 487,
+                "opcode": "invokevirtual",
+                "operand": "#328",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+              },
+              {
+                "offset": 490,
+                "opcode": "aload",
+                "operand": "17",
+                "symbol": ""
+              },
+              {
+                "offset": 492,
+                "opcode": "ldc_w",
+                "operand": "#331",
+                "symbol": "float 4.0f"
+              },
+              {
+                "offset": 495,
+                "opcode": "invokevirtual",
+                "operand": "#332",
+                "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+              },
+              {
+                "offset": 498,
+                "opcode": "aload_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 499,
+                "opcode": "invokevirtual",
+                "operand": "#336",
+                "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+              },
+              {
+                "offset": 502,
+                "opcode": "ifne",
+                "operand": "512",
+                "symbol": ""
+              }
+            ]
+          }
+        ],
+        "scope": "BOUNDED_JVM_REFERENCES_AND_WINDOWS_NOT_FULL_CFG"
+      }
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "sha256": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535",
+      "method": {
+        "name": "bounceFromDirection",
+        "header": "public void bounceFromDirection(net.minecraft.core.Direction)",
+        "descriptor": "(Lnet/minecraft/core/Direction;)V",
+        "instruction_count": 198,
+        "parsed_method_sha256": "0f687d784c92e2b8e7eebfc3cc9a85041b5fdfb37c6c5e4a32aaa2489df66282",
+        "selected_symbolic_refs": [
+          {
+            "offset": 3,
+            "opcode": "invokevirtual",
+            "operand": "#200",
+            "symbol": "Method getBounces:()I"
+          },
+          {
+            "offset": 7,
+            "opcode": "invokevirtual",
+            "operand": "#204",
+            "symbol": "Method getMaximumBounces:()I"
+          },
+          {
+            "offset": 16,
+            "opcode": "invokevirtual",
+            "operand": "#197",
+            "symbol": "Method isExplosive:()Z"
+          },
+          {
+            "offset": 23,
+            "opcode": "getstatic",
+            "operand": "#241",
+            "symbol": "Field net/minecraft/world/phys/Vec3.ZERO:Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 26,
+            "opcode": "invokevirtual",
+            "operand": "#247",
+            "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+          },
+          {
+            "offset": 31,
+            "opcode": "invokevirtual",
+            "operand": "#204",
+            "symbol": "Method getMaximumBounces:()I"
+          },
+          {
+            "offset": 34,
+            "opcode": "invokevirtual",
+            "operand": "#250",
+            "symbol": "Method setBounces:(I)V"
+          },
+          {
+            "offset": 39,
+            "opcode": "invokevirtual",
+            "operand": "#253",
+            "symbol": "Method targetsOnBounce:()Z"
+          },
+          {
+            "offset": 46,
+            "opcode": "invokevirtual",
+            "operand": "#208",
+            "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+          },
+          {
+            "offset": 51,
+            "opcode": "invokevirtual",
+            "operand": "#256",
+            "symbol": "Method getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 60,
+            "opcode": "invokevirtual",
+            "operand": "#149",
+            "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+          },
+          {
+            "offset": 81,
+            "opcode": "invokevirtual",
+            "operand": "#266",
+            "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 95,
+            "opcode": "invokevirtual",
+            "operand": "#266",
+            "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 98,
+            "opcode": "invokespecial",
+            "operand": "#272",
+            "symbol": "Method net/minecraft/world/phys/AABB.\"<init>\":(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)V"
+          },
+          {
+            "offset": 101,
+            "opcode": "invokevirtual",
+            "operand": "#275",
+            "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+          },
+          {
+            "offset": 104,
+            "opcode": "invokeinterface",
+            "operand": "#279,  1",
+            "symbol": "InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;"
+          },
+          {
+            "offset": 113,
+            "opcode": "invokeinterface",
+            "operand": "#285,  1",
+            "symbol": "InterfaceMethod java/util/Iterator.hasNext:()Z"
+          },
+          {
+            "offset": 123,
+            "opcode": "invokeinterface",
+            "operand": "#290,  1",
+            "symbol": "InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 140,
+            "opcode": "invokevirtual",
+            "operand": "#293",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.is:(Lnet/minecraft/world/entity/Entity;)Z"
+          },
+          {
+            "offset": 149,
+            "opcode": "invokevirtual",
+            "operand": "#297",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+          },
+          {
+            "offset": 156,
+            "opcode": "getfield",
+            "operand": "#12",
+            "symbol": "Field hitEntityIds:Ljava/util/List;"
+          },
+          {
+            "offset": 161,
+            "opcode": "invokevirtual",
+            "operand": "#300",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getId:()I"
+          },
+          {
+            "offset": 164,
+            "opcode": "invokestatic",
+            "operand": "#61",
+            "symbol": "Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+          },
+          {
+            "offset": 167,
+            "opcode": "invokeinterface",
+            "operand": "#303,  2",
+            "symbol": "InterfaceMethod java/util/List.contains:(Ljava/lang/Object;)Z"
+          },
+          {
+            "offset": 183,
+            "opcode": "invokevirtual",
+            "operand": "#307",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+          },
+          {
+            "offset": 189,
+            "opcode": "invokevirtual",
+            "operand": "#311",
+            "symbol": "Method net/minecraft/world/entity/Entity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+          },
+          {
+            "offset": 211,
+            "opcode": "invokevirtual",
+            "operand": "#149",
+            "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+          },
+          {
+            "offset": 214,
+            "opcode": "invokevirtual",
+            "operand": "#153",
+            "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+          },
+          {
+            "offset": 222,
+            "opcode": "invokevirtual",
+            "operand": "#200",
+            "symbol": "Method getBounces:()I"
+          },
+          {
+            "offset": 227,
+            "opcode": "invokevirtual",
+            "operand": "#250",
+            "symbol": "Method setBounces:(I)V"
+          },
+          {
+            "offset": 231,
+            "opcode": "invokevirtual",
+            "operand": "#200",
+            "symbol": "Method getBounces:()I"
+          },
+          {
+            "offset": 235,
+            "opcode": "invokevirtual",
+            "operand": "#204",
+            "symbol": "Method getMaximumBounces:()I"
+          },
+          {
+            "offset": 242,
+            "opcode": "invokevirtual",
+            "operand": "#224",
+            "symbol": "Method discard:()V"
+          },
+          {
+            "offset": 250,
+            "opcode": "invokevirtual",
+            "operand": "#314",
+            "symbol": "Method net/minecraft/world/entity/Entity.getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 254,
+            "opcode": "invokevirtual",
+            "operand": "#315",
+            "symbol": "Method position:()Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 257,
+            "opcode": "invokevirtual",
+            "operand": "#318",
+            "symbol": "Method net/minecraft/world/phys/Vec3.subtract:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 260,
+            "opcode": "invokevirtual",
+            "operand": "#322",
+            "symbol": "Method net/minecraft/world/phys/Vec3.normalize:()Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 266,
+            "opcode": "invokevirtual",
+            "operand": "#327",
+            "symbol": "Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 274,
+            "opcode": "getfield",
+            "operand": "#331",
+            "symbol": "Field net/minecraft/world/phys/Vec3.x:D"
+          },
+          {
+            "offset": 279,
+            "opcode": "getfield",
+            "operand": "#334",
+            "symbol": "Field net/minecraft/world/phys/Vec3.y:D"
+          },
+          {
+            "offset": 284,
+            "opcode": "getfield",
+            "operand": "#337",
+            "symbol": "Field net/minecraft/world/phys/Vec3.z:D"
+          },
+          {
+            "offset": 287,
+            "opcode": "invokevirtual",
+            "operand": "#135",
+            "symbol": "Method setDeltaMovement:(DDD)V"
+          },
+          {
+            "offset": 291,
+            "opcode": "getfield",
+            "operand": "#18",
+            "symbol": "Field bounceSoundCooldown:I"
+          },
+          {
+            "offset": 299,
+            "opcode": "putfield",
+            "operand": "#18",
+            "symbol": "Field bounceSoundCooldown:I"
+          },
+          {
+            "offset": 303,
+            "opcode": "getstatic",
+            "operand": "#340",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.GUMBALL_BOUNCE:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 306,
+            "opcode": "invokeinterface",
+            "operand": "#44,  1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 314,
+            "opcode": "invokevirtual",
+            "operand": "#347",
+            "symbol": "Method playSound:(Lnet/minecraft/sounds/SoundEvent;)V"
+          },
+          {
+            "offset": 322,
+            "opcode": "invokevirtual",
+            "operand": "#351",
+            "symbol": "Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 327,
+            "opcode": "invokevirtual",
+            "operand": "#354",
+            "symbol": "Method net/minecraft/world/phys/Vec3.x:()D"
+          },
+          {
+            "offset": 333,
+            "opcode": "invokevirtual",
+            "operand": "#356",
+            "symbol": "Method net/minecraft/world/phys/Vec3.y:()D"
+          },
+          {
+            "offset": 339,
+            "opcode": "invokevirtual",
+            "operand": "#358",
+            "symbol": "Method net/minecraft/world/phys/Vec3.z:()D"
+          },
+          {
+            "offset": 344,
+            "opcode": "getstatic",
+            "operand": "#360",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity$1.$SwitchMap$net$minecraft$core$Direction$Axis:[I"
+          },
+          {
+            "offset": 348,
+            "opcode": "invokevirtual",
+            "operand": "#366",
+            "symbol": "Method net/minecraft/core/Direction.getAxis:()Lnet/minecraft/core/Direction$Axis;"
+          },
+          {
+            "offset": 351,
+            "opcode": "invokevirtual",
+            "operand": "#372",
+            "symbol": "Method net/minecraft/core/Direction$Axis.ordinal:()I"
+          },
+          {
+            "offset": 414,
+            "opcode": "invokevirtual",
+            "operand": "#149",
+            "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+          },
+          {
+            "offset": 417,
+            "opcode": "invokevirtual",
+            "operand": "#153",
+            "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+          },
+          {
+            "offset": 425,
+            "opcode": "invokevirtual",
+            "operand": "#200",
+            "symbol": "Method getBounces:()I"
+          },
+          {
+            "offset": 430,
+            "opcode": "invokevirtual",
+            "operand": "#250",
+            "symbol": "Method setBounces:(I)V"
+          },
+          {
+            "offset": 434,
+            "opcode": "invokevirtual",
+            "operand": "#200",
+            "symbol": "Method getBounces:()I"
+          },
+          {
+            "offset": 438,
+            "opcode": "invokevirtual",
+            "operand": "#204",
+            "symbol": "Method getMaximumBounces:()I"
+          },
+          {
+            "offset": 445,
+            "opcode": "invokevirtual",
+            "operand": "#224",
+            "symbol": "Method discard:()V"
+          },
+          {
+            "offset": 458,
+            "opcode": "invokevirtual",
+            "operand": "#135",
+            "symbol": "Method setDeltaMovement:(DDD)V"
+          }
+        ],
+        "selected_branches": [
+          {
+            "offset": 12,
+            "opcode": "if_icmple",
+            "operand": "38",
+            "symbol": ""
+          },
+          {
+            "offset": 19,
+            "opcode": "ifeq",
+            "operand": "38",
+            "symbol": ""
+          },
+          {
+            "offset": 42,
+            "opcode": "ifeq",
+            "operand": "290",
+            "symbol": ""
+          },
+          {
+            "offset": 118,
+            "opcode": "ifeq",
+            "operand": "203",
+            "symbol": ""
+          },
+          {
+            "offset": 134,
+            "opcode": "ifnull",
+            "operand": "155",
+            "symbol": ""
+          },
+          {
+            "offset": 143,
+            "opcode": "ifne",
+            "operand": "200",
+            "symbol": ""
+          },
+          {
+            "offset": 152,
+            "opcode": "ifne",
+            "operand": "200",
+            "symbol": ""
+          },
+          {
+            "offset": 172,
+            "opcode": "ifne",
+            "operand": "200",
+            "symbol": ""
+          },
+          {
+            "offset": 177,
+            "opcode": "ifnull",
+            "operand": "196",
+            "symbol": ""
+          },
+          {
+            "offset": 193,
+            "opcode": "ifge",
+            "operand": "200",
+            "symbol": ""
+          },
+          {
+            "offset": 200,
+            "opcode": "goto",
+            "operand": "111",
+            "symbol": ""
+          },
+          {
+            "offset": 205,
+            "opcode": "ifnull",
+            "operand": "290",
+            "symbol": ""
+          },
+          {
+            "offset": 217,
+            "opcode": "ifne",
+            "operand": "230",
+            "symbol": ""
+          },
+          {
+            "offset": 238,
+            "opcode": "if_icmple",
+            "operand": "248",
+            "symbol": ""
+          },
+          {
+            "offset": 245,
+            "opcode": "goto",
+            "operand": "290",
+            "symbol": ""
+          },
+          {
+            "offset": 294,
+            "opcode": "ifne",
+            "operand": "317",
+            "symbol": ""
+          },
+          {
+            "offset": 318,
+            "opcode": "ifne",
+            "operand": "461",
+            "symbol": ""
+          },
+          {
+            "offset": 389,
+            "opcode": "goto",
+            "operand": "413",
+            "symbol": ""
+          },
+          {
+            "offset": 401,
+            "opcode": "goto",
+            "operand": "413",
+            "symbol": ""
+          },
+          {
+            "offset": 420,
+            "opcode": "ifne",
+            "operand": "433",
+            "symbol": ""
+          },
+          {
+            "offset": 441,
+            "opcode": "if_icmple",
+            "operand": "451",
+            "symbol": ""
+          },
+          {
+            "offset": 448,
+            "opcode": "goto",
+            "operand": "461",
+            "symbol": ""
+          }
+        ],
+        "selected_numeric_operands": [
+          {
+            "offset": 0,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 10,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 63,
+            "opcode": "ldc_w",
+            "operand": "#260",
+            "symbol": "class net/minecraft/world/entity/LivingEntity"
+          },
+          {
+            "offset": 72,
+            "opcode": "ldc2_w",
+            "operand": "#264",
+            "symbol": "double -10.0d"
+          },
+          {
+            "offset": 75,
+            "opcode": "ldc2_w",
+            "operand": "#264",
+            "symbol": "double -10.0d"
+          },
+          {
+            "offset": 78,
+            "opcode": "ldc2_w",
+            "operand": "#264",
+            "symbol": "double -10.0d"
+          },
+          {
+            "offset": 86,
+            "opcode": "ldc2_w",
+            "operand": "#270",
+            "symbol": "double 10.0d"
+          },
+          {
+            "offset": 89,
+            "opcode": "ldc2_w",
+            "operand": "#270",
+            "symbol": "double 10.0d"
+          },
+          {
+            "offset": 92,
+            "opcode": "ldc2_w",
+            "operand": "#270",
+            "symbol": "double 10.0d"
+          },
+          {
+            "offset": 208,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 225,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 263,
+            "opcode": "ldc2_w",
+            "operand": "#325",
+            "symbol": "double 0.800000011920929d"
+          },
+          {
+            "offset": 298,
+            "opcode": "iconst_5",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 383,
+            "opcode": "ldc2_w",
+            "operand": "#325",
+            "symbol": "double 0.800000011920929d"
+          },
+          {
+            "offset": 395,
+            "opcode": "ldc2_w",
+            "operand": "#212",
+            "symbol": "double 0.5d"
+          },
+          {
+            "offset": 407,
+            "opcode": "ldc2_w",
+            "operand": "#325",
+            "symbol": "double 0.800000011920929d"
+          },
+          {
+            "offset": 428,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "prior_exact_anchor_windows": [
+          {
+            "at": 39,
+            "selected_instructions": [
+              {
+                "offset": 30,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 31,
+                "opcode": "invokevirtual",
+                "operand": "#204",
+                "symbol": "Method getMaximumBounces:()I"
+              },
+              {
+                "offset": 34,
+                "opcode": "invokevirtual",
+                "operand": "#250",
+                "symbol": "Method setBounces:(I)V"
+              },
+              {
+                "offset": 37,
+                "opcode": "return",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 38,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 39,
+                "opcode": "invokevirtual",
+                "operand": "#253",
+                "symbol": "Method targetsOnBounce:()Z"
+              },
+              {
+                "offset": 42,
+                "opcode": "ifeq",
+                "operand": "290",
+                "symbol": ""
+              },
+              {
+                "offset": 45,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 46,
+                "opcode": "invokevirtual",
+                "operand": "#208",
+                "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 49,
+                "opcode": "astore_3",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 50,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 46,
+            "selected_instructions": [
+              {
+                "offset": 37,
+                "opcode": "return",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 38,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 39,
+                "opcode": "invokevirtual",
+                "operand": "#253",
+                "symbol": "Method targetsOnBounce:()Z"
+              },
+              {
+                "offset": 42,
+                "opcode": "ifeq",
+                "operand": "290",
+                "symbol": ""
+              },
+              {
+                "offset": 45,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 46,
+                "opcode": "invokevirtual",
+                "operand": "#208",
+                "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 49,
+                "opcode": "astore_3",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 50,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 51,
+                "opcode": "invokevirtual",
+                "operand": "#256",
+                "symbol": "Method getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 54,
+                "opcode": "astore",
+                "operand": "4",
+                "symbol": ""
+              },
+              {
+                "offset": 56,
+                "opcode": "aconst_null",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 101,
+            "selected_instructions": [
+              {
+                "offset": 86,
+                "opcode": "ldc2_w",
+                "operand": "#270",
+                "symbol": "double 10.0d"
+              },
+              {
+                "offset": 89,
+                "opcode": "ldc2_w",
+                "operand": "#270",
+                "symbol": "double 10.0d"
+              },
+              {
+                "offset": 92,
+                "opcode": "ldc2_w",
+                "operand": "#270",
+                "symbol": "double 10.0d"
+              },
+              {
+                "offset": 95,
+                "opcode": "invokevirtual",
+                "operand": "#266",
+                "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 98,
+                "opcode": "invokespecial",
+                "operand": "#272",
+                "symbol": "Method net/minecraft/world/phys/AABB.\"<init>\":(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)V"
+              },
+              {
+                "offset": 101,
+                "opcode": "invokevirtual",
+                "operand": "#275",
+                "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+              },
+              {
+                "offset": 104,
+                "opcode": "invokeinterface",
+                "operand": "#279,  1",
+                "symbol": "InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;"
+              },
+              {
+                "offset": 109,
+                "opcode": "astore",
+                "operand": "6",
+                "symbol": ""
+              },
+              {
+                "offset": 111,
+                "opcode": "aload",
+                "operand": "6",
+                "symbol": ""
+              },
+              {
+                "offset": 113,
+                "opcode": "invokeinterface",
+                "operand": "#285,  1",
+                "symbol": "InterfaceMethod java/util/Iterator.hasNext:()Z"
+              },
+              {
+                "offset": 118,
+                "opcode": "ifeq",
+                "operand": "203",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 167,
+            "selected_instructions": [
+              {
+                "offset": 155,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 156,
+                "opcode": "getfield",
+                "operand": "#12",
+                "symbol": "Field hitEntityIds:Ljava/util/List;"
+              },
+              {
+                "offset": 159,
+                "opcode": "aload",
+                "operand": "7",
+                "symbol": ""
+              },
+              {
+                "offset": 161,
+                "opcode": "invokevirtual",
+                "operand": "#300",
+                "symbol": "Method net/minecraft/world/entity/LivingEntity.getId:()I"
+              },
+              {
+                "offset": 164,
+                "opcode": "invokestatic",
+                "operand": "#61",
+                "symbol": "Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+              },
+              {
+                "offset": 167,
+                "opcode": "invokeinterface",
+                "operand": "#303,  2",
+                "symbol": "InterfaceMethod java/util/List.contains:(Ljava/lang/Object;)Z"
+              },
+              {
+                "offset": 172,
+                "opcode": "ifne",
+                "operand": "200",
+                "symbol": ""
+              },
+              {
+                "offset": 175,
+                "opcode": "aload",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 177,
+                "opcode": "ifnull",
+                "operand": "196",
+                "symbol": ""
+              },
+              {
+                "offset": 180,
+                "opcode": "aload",
+                "operand": "7",
+                "symbol": ""
+              },
+              {
+                "offset": 182,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 183,
+            "selected_instructions": [
+              {
+                "offset": 172,
+                "opcode": "ifne",
+                "operand": "200",
+                "symbol": ""
+              },
+              {
+                "offset": 175,
+                "opcode": "aload",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 177,
+                "opcode": "ifnull",
+                "operand": "196",
+                "symbol": ""
+              },
+              {
+                "offset": 180,
+                "opcode": "aload",
+                "operand": "7",
+                "symbol": ""
+              },
+              {
+                "offset": 182,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 183,
+                "opcode": "invokevirtual",
+                "operand": "#307",
+                "symbol": "Method net/minecraft/world/entity/LivingEntity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+              },
+              {
+                "offset": 186,
+                "opcode": "aload",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 188,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 189,
+                "opcode": "invokevirtual",
+                "operand": "#311",
+                "symbol": "Method net/minecraft/world/entity/Entity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+              },
+              {
+                "offset": 192,
+                "opcode": "fcmpg",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 193,
+                "opcode": "ifge",
+                "operand": "200",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 189,
+            "selected_instructions": [
+              {
+                "offset": 180,
+                "opcode": "aload",
+                "operand": "7",
+                "symbol": ""
+              },
+              {
+                "offset": 182,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 183,
+                "opcode": "invokevirtual",
+                "operand": "#307",
+                "symbol": "Method net/minecraft/world/entity/LivingEntity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+              },
+              {
+                "offset": 186,
+                "opcode": "aload",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 188,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 189,
+                "opcode": "invokevirtual",
+                "operand": "#311",
+                "symbol": "Method net/minecraft/world/entity/Entity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+              },
+              {
+                "offset": 192,
+                "opcode": "fcmpg",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 193,
+                "opcode": "ifge",
+                "operand": "200",
+                "symbol": ""
+              },
+              {
+                "offset": 196,
+                "opcode": "aload",
+                "operand": "7",
+                "symbol": ""
+              },
+              {
+                "offset": 198,
+                "opcode": "astore",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 200,
+                "opcode": "goto",
+                "operand": "111",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "at": 242,
+            "selected_instructions": [
+              {
+                "offset": 231,
+                "opcode": "invokevirtual",
+                "operand": "#200",
+                "symbol": "Method getBounces:()I"
+              },
+              {
+                "offset": 234,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 235,
+                "opcode": "invokevirtual",
+                "operand": "#204",
+                "symbol": "Method getMaximumBounces:()I"
+              },
+              {
+                "offset": 238,
+                "opcode": "if_icmple",
+                "operand": "248",
+                "symbol": ""
+              },
+              {
+                "offset": 241,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 242,
+                "opcode": "invokevirtual",
+                "operand": "#224",
+                "symbol": "Method discard:()V"
+              },
+              {
+                "offset": 245,
+                "opcode": "goto",
+                "operand": "290",
+                "symbol": ""
+              },
+              {
+                "offset": 248,
+                "opcode": "aload",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 250,
+                "opcode": "invokevirtual",
+                "operand": "#314",
+                "symbol": "Method net/minecraft/world/entity/Entity.getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 253,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 254,
+                "opcode": "invokevirtual",
+                "operand": "#315",
+                "symbol": "Method position:()Lnet/minecraft/world/phys/Vec3;"
+              }
+            ]
+          },
+          {
+            "at": 287,
+            "selected_instructions": [
+              {
+                "offset": 274,
+                "opcode": "getfield",
+                "operand": "#331",
+                "symbol": "Field net/minecraft/world/phys/Vec3.x:D"
+              },
+              {
+                "offset": 277,
+                "opcode": "aload",
+                "operand": "6",
+                "symbol": ""
+              },
+              {
+                "offset": 279,
+                "opcode": "getfield",
+                "operand": "#334",
+                "symbol": "Field net/minecraft/world/phys/Vec3.y:D"
+              },
+              {
+                "offset": 282,
+                "opcode": "aload",
+                "operand": "6",
+                "symbol": ""
+              },
+              {
+                "offset": 284,
+                "opcode": "getfield",
+                "operand": "#337",
+                "symbol": "Field net/minecraft/world/phys/Vec3.z:D"
+              },
+              {
+                "offset": 287,
+                "opcode": "invokevirtual",
+                "operand": "#135",
+                "symbol": "Method setDeltaMovement:(DDD)V"
+              },
+              {
+                "offset": 290,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 291,
+                "opcode": "getfield",
+                "operand": "#18",
+                "symbol": "Field bounceSoundCooldown:I"
+              },
+              {
+                "offset": 294,
+                "opcode": "ifne",
+                "operand": "317",
+                "symbol": ""
+              },
+              {
+                "offset": 297,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 298,
+                "opcode": "iconst_5",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          }
+        ],
+        "selected_pivots": [
+          {
+            "marker": "getMaximumBounces:",
+            "matches": 4,
+            "offset": 7,
+            "selected_instructions": [
+              {
+                "offset": 0,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 1,
+                "opcode": "istore_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 2,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 3,
+                "opcode": "invokevirtual",
+                "operand": "#200",
+                "symbol": "Method getBounces:()I"
+              },
+              {
+                "offset": 6,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 7,
+                "opcode": "invokevirtual",
+                "operand": "#204",
+                "symbol": "Method getMaximumBounces:()I"
+              },
+              {
+                "offset": 10,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 11,
+                "opcode": "isub",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 12,
+                "opcode": "if_icmple",
+                "operand": "38",
+                "symbol": ""
+              },
+              {
+                "offset": 15,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 16,
+                "opcode": "invokevirtual",
+                "operand": "#197",
+                "symbol": "Method isExplosive:()Z"
+              },
+              {
+                "offset": 19,
+                "opcode": "ifeq",
+                "operand": "38",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "marker": "getBounces:",
+            "matches": 5,
+            "offset": 3,
+            "selected_instructions": [
+              {
+                "offset": 0,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 1,
+                "opcode": "istore_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 2,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 3,
+                "opcode": "invokevirtual",
+                "operand": "#200",
+                "symbol": "Method getBounces:()I"
+              },
+              {
+                "offset": 6,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 7,
+                "opcode": "invokevirtual",
+                "operand": "#204",
+                "symbol": "Method getMaximumBounces:()I"
+              },
+              {
+                "offset": 10,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 11,
+                "opcode": "isub",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 12,
+                "opcode": "if_icmple",
+                "operand": "38",
+                "symbol": ""
+              },
+              {
+                "offset": 15,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "marker": "setBounces:",
+            "matches": 3,
+            "offset": 34,
+            "selected_instructions": [
+              {
+                "offset": 23,
+                "opcode": "getstatic",
+                "operand": "#241",
+                "symbol": "Field net/minecraft/world/phys/Vec3.ZERO:Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 26,
+                "opcode": "invokevirtual",
+                "operand": "#247",
+                "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+              },
+              {
+                "offset": 29,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 30,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 31,
+                "opcode": "invokevirtual",
+                "operand": "#204",
+                "symbol": "Method getMaximumBounces:()I"
+              },
+              {
+                "offset": 34,
+                "opcode": "invokevirtual",
+                "operand": "#250",
+                "symbol": "Method setBounces:(I)V"
+              },
+              {
+                "offset": 37,
+                "opcode": "return",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 38,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 39,
+                "opcode": "invokevirtual",
+                "operand": "#253",
+                "symbol": "Method targetsOnBounce:()Z"
+              },
+              {
+                "offset": 42,
+                "opcode": "ifeq",
+                "operand": "290",
+                "symbol": ""
+              },
+              {
+                "offset": 45,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 46,
+                "opcode": "invokevirtual",
+                "operand": "#208",
+                "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+              }
+            ]
+          },
+          {
+            "marker": "discard:",
+            "matches": 2,
+            "offset": 242,
+            "selected_instructions": [
+              {
+                "offset": 231,
+                "opcode": "invokevirtual",
+                "operand": "#200",
+                "symbol": "Method getBounces:()I"
+              },
+              {
+                "offset": 234,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 235,
+                "opcode": "invokevirtual",
+                "operand": "#204",
+                "symbol": "Method getMaximumBounces:()I"
+              },
+              {
+                "offset": 238,
+                "opcode": "if_icmple",
+                "operand": "248",
+                "symbol": ""
+              },
+              {
+                "offset": 241,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 242,
+                "opcode": "invokevirtual",
+                "operand": "#224",
+                "symbol": "Method discard:()V"
+              },
+              {
+                "offset": 245,
+                "opcode": "goto",
+                "operand": "290",
+                "symbol": ""
+              },
+              {
+                "offset": 248,
+                "opcode": "aload",
+                "operand": "5",
+                "symbol": ""
+              },
+              {
+                "offset": 250,
+                "opcode": "invokevirtual",
+                "operand": "#314",
+                "symbol": "Method net/minecraft/world/entity/Entity.getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 253,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 254,
+                "opcode": "invokevirtual",
+                "operand": "#315",
+                "symbol": "Method position:()Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 257,
+                "opcode": "invokevirtual",
+                "operand": "#318",
+                "symbol": "Method net/minecraft/world/phys/Vec3.subtract:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+              }
+            ]
+          }
+        ],
+        "scope": "BOUNDED_JVM_REFERENCES_AND_WINDOWS_NOT_FULL_CFG"
+      }
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "sha256": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535",
+      "method": {
+        "name": "getMaximumBounces",
+        "header": "public int getMaximumBounces()",
+        "descriptor": "()I",
+        "instruction_count": 7,
+        "parsed_method_sha256": "c45e92256a3739bc4614241d9d6cc8e814632cbc8950109980a57495046d1573",
+        "selected_symbolic_refs": [
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#377",
+            "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+          },
+          {
+            "offset": 4,
+            "opcode": "getstatic",
+            "operand": "#57",
+            "symbol": "Field MAXIMUM_BOUNCES:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+          },
+          {
+            "offset": 7,
+            "opcode": "invokevirtual",
+            "operand": "#381",
+            "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+          },
+          {
+            "offset": 13,
+            "opcode": "invokevirtual",
+            "operand": "#386",
+            "symbol": "Method java/lang/Integer.intValue:()I"
+          }
+        ],
+        "selected_branches": [],
+        "selected_numeric_operands": [],
+        "prior_exact_anchor_windows": [],
+        "selected_pivots": [],
+        "scope": "BOUNDED_JVM_REFERENCES_AND_WINDOWS_NOT_FULL_CFG"
+      }
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "sha256": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535",
+      "method": {
+        "name": "setMaximumBounces",
+        "header": "public void setMaximumBounces(int)",
+        "descriptor": "(I)V",
+        "instruction_count": 7,
+        "parsed_method_sha256": "6ccec525f7d55393d30907d20a4d3fe5e48583df2c41f70fa87be0e214808da9",
+        "selected_symbolic_refs": [
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#377",
+            "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+          },
+          {
+            "offset": 4,
+            "opcode": "getstatic",
+            "operand": "#57",
+            "symbol": "Field MAXIMUM_BOUNCES:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+          },
+          {
+            "offset": 8,
+            "opcode": "invokestatic",
+            "operand": "#61",
+            "symbol": "Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+          },
+          {
+            "offset": 11,
+            "opcode": "invokevirtual",
+            "operand": "#389",
+            "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+          }
+        ],
+        "selected_branches": [],
+        "selected_numeric_operands": [],
+        "prior_exact_anchor_windows": [],
+        "selected_pivots": [],
+        "scope": "BOUNDED_JVM_REFERENCES_AND_WINDOWS_NOT_FULL_CFG"
+      }
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "sha256": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535",
+      "method": {
+        "name": "getBounces",
+        "header": "public int getBounces()",
+        "descriptor": "()I",
+        "instruction_count": 7,
+        "parsed_method_sha256": "488ed41f84103d4051d2c48c6aa77a5ac84d2e3c67e7ed53406b9513b5a49bee",
+        "selected_symbolic_refs": [
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#377",
+            "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+          },
+          {
+            "offset": 4,
+            "opcode": "getstatic",
+            "operand": "#73",
+            "symbol": "Field BOUNCES:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+          },
+          {
+            "offset": 7,
+            "opcode": "invokevirtual",
+            "operand": "#381",
+            "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+          },
+          {
+            "offset": 13,
+            "opcode": "invokevirtual",
+            "operand": "#386",
+            "symbol": "Method java/lang/Integer.intValue:()I"
+          }
+        ],
+        "selected_branches": [],
+        "selected_numeric_operands": [],
+        "prior_exact_anchor_windows": [],
+        "selected_pivots": [],
+        "scope": "BOUNDED_JVM_REFERENCES_AND_WINDOWS_NOT_FULL_CFG"
+      }
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "sha256": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535",
+      "method": {
+        "name": "setBounces",
+        "header": "public void setBounces(int)",
+        "descriptor": "(I)V",
+        "instruction_count": 7,
+        "parsed_method_sha256": "7fba6225bafcf93d7c5ff4065c547d3ccd80e05348cc823070db4a45992593bc",
+        "selected_symbolic_refs": [
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#377",
+            "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+          },
+          {
+            "offset": 4,
+            "opcode": "getstatic",
+            "operand": "#73",
+            "symbol": "Field BOUNCES:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+          },
+          {
+            "offset": 8,
+            "opcode": "invokestatic",
+            "operand": "#61",
+            "symbol": "Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+          },
+          {
+            "offset": 11,
+            "opcode": "invokevirtual",
+            "operand": "#389",
+            "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+          }
+        ],
+        "selected_branches": [],
+        "selected_numeric_operands": [],
+        "prior_exact_anchor_windows": [],
+        "selected_pivots": [],
+        "scope": "BOUNDED_JVM_REFERENCES_AND_WINDOWS_NOT_FULL_CFG"
+      }
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/living/GumbeeperEntity.class",
+      "sha256": "6a24f05a730218352a083da32f233c3d48fb5f85a6f24f1ba45d78c422b0266c",
+      "method": {
+        "name": "shootGumball",
+        "header": "public void shootGumball(net.minecraft.world.entity.LivingEntity)",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+        "instruction_count": 198,
+        "parsed_method_sha256": "26380c4830c57381fa6d39220234305da5b408e7ad11bf56878e061b6e45ecb2",
+        "selected_symbolic_refs": [
+          {
+            "offset": 11,
+            "opcode": "invokespecial",
+            "operand": "#300",
+            "symbol": "Method net/minecraft/world/phys/Vec3.\"<init>\":(DDD)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "getfield",
+            "operand": "#521",
+            "symbol": "Field yBodyRot:F"
+          },
+          {
+            "offset": 23,
+            "opcode": "invokevirtual",
+            "operand": "#525",
+            "symbol": "Method net/minecraft/world/phys/Vec3.yRot:(F)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 27,
+            "opcode": "invokevirtual",
+            "operand": "#529",
+            "symbol": "Method position:()Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 30,
+            "opcode": "invokevirtual",
+            "operand": "#532",
+            "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 35,
+            "opcode": "invokevirtual",
+            "operand": "#281",
+            "symbol": "Method isCharged:()Z"
+          },
+          {
+            "offset": 48,
+            "opcode": "getstatic",
+            "operand": "#535",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.GUMBALL_LAUNCH:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 51,
+            "opcode": "invokeinterface",
+            "operand": "#350,  1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 59,
+            "opcode": "invokevirtual",
+            "operand": "#358",
+            "symbol": "Method playSound:(Lnet/minecraft/sounds/SoundEvent;)V"
+          },
+          {
+            "offset": 76,
+            "opcode": "invokevirtual",
+            "operand": "#240",
+            "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+          },
+          {
+            "offset": 80,
+            "opcode": "invokespecial",
+            "operand": "#286",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+          },
+          {
+            "offset": 88,
+            "opcode": "invokevirtual",
+            "operand": "#303",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setPos:(Lnet/minecraft/world/phys/Vec3;)V"
+          },
+          {
+            "offset": 96,
+            "opcode": "invokevirtual",
+            "operand": "#538",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getX:()D"
+          },
+          {
+            "offset": 103,
+            "opcode": "invokevirtual",
+            "operand": "#543",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getY:(D)D"
+          },
+          {
+            "offset": 107,
+            "opcode": "invokevirtual",
+            "operand": "#545",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getZ:()D"
+          },
+          {
+            "offset": 110,
+            "opcode": "invokespecial",
+            "operand": "#300",
+            "symbol": "Method net/minecraft/world/phys/Vec3.\"<init>\":(DDD)V"
+          },
+          {
+            "offset": 116,
+            "opcode": "invokevirtual",
+            "operand": "#281",
+            "symbol": "Method isCharged:()Z"
+          },
+          {
+            "offset": 153,
+            "opcode": "invokespecial",
+            "operand": "#300",
+            "symbol": "Method net/minecraft/world/phys/Vec3.\"<init>\":(DDD)V"
+          },
+          {
+            "offset": 157,
+            "opcode": "getfield",
+            "operand": "#521",
+            "symbol": "Field yBodyRot:F"
+          },
+          {
+            "offset": 165,
+            "opcode": "invokevirtual",
+            "operand": "#525",
+            "symbol": "Method net/minecraft/world/phys/Vec3.yRot:(F)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 174,
+            "opcode": "invokevirtual",
+            "operand": "#532",
+            "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+          },
+          {
+            "offset": 181,
+            "opcode": "invokevirtual",
+            "operand": "#550",
+            "symbol": "Method net/minecraft/world/phys/Vec3.x:()D"
+          },
+          {
+            "offset": 185,
+            "opcode": "getfield",
+            "operand": "#553",
+            "symbol": "Field net/minecraft/world/phys/Vec3.x:D"
+          },
+          {
+            "offset": 193,
+            "opcode": "invokevirtual",
+            "operand": "#555",
+            "symbol": "Method net/minecraft/world/phys/Vec3.y:()D"
+          },
+          {
+            "offset": 197,
+            "opcode": "getfield",
+            "operand": "#558",
+            "symbol": "Field net/minecraft/world/phys/Vec3.y:D"
+          },
+          {
+            "offset": 205,
+            "opcode": "invokevirtual",
+            "operand": "#560",
+            "symbol": "Method net/minecraft/world/phys/Vec3.z:()D"
+          },
+          {
+            "offset": 209,
+            "opcode": "getfield",
+            "operand": "#563",
+            "symbol": "Field net/minecraft/world/phys/Vec3.z:D"
+          },
+          {
+            "offset": 226,
+            "opcode": "invokestatic",
+            "operand": "#565",
+            "symbol": "Method java/lang/Math.sqrt:(D)D"
+          },
+          {
+            "offset": 252,
+            "opcode": "invokevirtual",
+            "operand": "#240",
+            "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+          },
+          {
+            "offset": 255,
+            "opcode": "invokevirtual",
+            "operand": "#571",
+            "symbol": "Method net/minecraft/world/level/Level.getDifficulty:()Lnet/minecraft/world/Difficulty;"
+          },
+          {
+            "offset": 258,
+            "opcode": "invokevirtual",
+            "operand": "#575",
+            "symbol": "Method net/minecraft/world/Difficulty.getId:()I"
+          },
+          {
+            "offset": 265,
+            "opcode": "invokevirtual",
+            "operand": "#580",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.shoot:(DDDFF)V"
+          },
+          {
+            "offset": 269,
+            "opcode": "invokevirtual",
+            "operand": "#240",
+            "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+          },
+          {
+            "offset": 274,
+            "opcode": "invokevirtual",
+            "operand": "#320",
+            "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+          },
+          {
+            "offset": 279,
+            "opcode": "invokevirtual",
+            "operand": "#281",
+            "symbol": "Method isCharged:()Z"
+          },
+          {
+            "offset": 289,
+            "opcode": "invokevirtual",
+            "operand": "#324",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setMaximumBounces:(I)V"
+          },
+          {
+            "offset": 295,
+            "opcode": "getstatic",
+            "operand": "#112",
+            "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_DAMAGE:Lnet/minecraft/core/Holder;"
+          },
+          {
+            "offset": 298,
+            "opcode": "invokevirtual",
+            "operand": "#328",
+            "symbol": "Method getAttribute:(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;"
+          },
+          {
+            "offset": 301,
+            "opcode": "invokevirtual",
+            "operand": "#332",
+            "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeInstance.getValue:()D"
+          },
+          {
+            "offset": 307,
+            "opcode": "invokevirtual",
+            "operand": "#337",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+          },
+          {
+            "offset": 316,
+            "opcode": "getstatic",
+            "operand": "#112",
+            "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_DAMAGE:Lnet/minecraft/core/Holder;"
+          },
+          {
+            "offset": 319,
+            "opcode": "invokevirtual",
+            "operand": "#328",
+            "symbol": "Method getAttribute:(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;"
+          },
+          {
+            "offset": 322,
+            "opcode": "invokevirtual",
+            "operand": "#332",
+            "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeInstance.getValue:()D"
+          },
+          {
+            "offset": 326,
+            "opcode": "invokevirtual",
+            "operand": "#337",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.setDamage:(F)V"
+          },
+          {
+            "offset": 336,
+            "opcode": "getstatic",
+            "operand": "#584",
+            "symbol": "Field net/minecraft/sounds/SoundEvents.BUBBLE_COLUMN_BUBBLE_POP:Lnet/minecraft/sounds/SoundEvent;"
+          },
+          {
+            "offset": 341,
+            "opcode": "invokevirtual",
+            "operand": "#587",
+            "symbol": "Method getRandom:()Lnet/minecraft/util/RandomSource;"
+          },
+          {
+            "offset": 344,
+            "opcode": "invokeinterface",
+            "operand": "#296,  1",
+            "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+          },
+          {
+            "offset": 357,
+            "opcode": "invokevirtual",
+            "operand": "#591",
+            "symbol": "Method playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V"
+          },
+          {
+            "offset": 361,
+            "opcode": "invokevirtual",
+            "operand": "#281",
+            "symbol": "Method isCharged:()Z"
+          },
+          {
+            "offset": 368,
+            "opcode": "getfield",
+            "operand": "#250",
+            "symbol": "Field random:Lnet/minecraft/util/RandomSource;"
+          },
+          {
+            "offset": 371,
+            "opcode": "invokeinterface",
+            "operand": "#296,  1",
+            "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+          },
+          {
+            "offset": 385,
+            "opcode": "invokevirtual",
+            "operand": "#516",
+            "symbol": "Method getGumballsLeft:()I"
+          },
+          {
+            "offset": 390,
+            "opcode": "invokevirtual",
+            "operand": "#595",
+            "symbol": "Method setGumballsLeft:(I)V"
+          },
+          {
+            "offset": 395,
+            "opcode": "invokevirtual",
+            "operand": "#598",
+            "symbol": "Method setAttackCharge:(F)V"
+          },
+          {
+            "offset": 400,
+            "opcode": "invokevirtual",
+            "operand": "#236",
+            "symbol": "Method setShooting:(Z)V"
+          },
+          {
+            "offset": 405,
+            "opcode": "putfield",
+            "operand": "#13",
+            "symbol": "Field postShootTime:I"
+          }
+        ],
+        "selected_branches": [
+          {
+            "offset": 38,
+            "opcode": "ifeq",
+            "operand": "45",
+            "symbol": ""
+          },
+          {
+            "offset": 42,
+            "opcode": "goto",
+            "operand": "46",
+            "symbol": ""
+          },
+          {
+            "offset": 68,
+            "opcode": "if_icmpge",
+            "operand": "335",
+            "symbol": ""
+          },
+          {
+            "offset": 119,
+            "opcode": "ifeq",
+            "operand": "179",
+            "symbol": ""
+          },
+          {
+            "offset": 127,
+            "opcode": "if_icmpeq",
+            "operand": "179",
+            "symbol": ""
+          },
+          {
+            "offset": 139,
+            "opcode": "if_icmpge",
+            "operand": "148",
+            "symbol": ""
+          },
+          {
+            "offset": 145,
+            "opcode": "goto",
+            "operand": "151",
+            "symbol": ""
+          },
+          {
+            "offset": 282,
+            "opcode": "ifeq",
+            "operand": "313",
+            "symbol": ""
+          },
+          {
+            "offset": 310,
+            "opcode": "goto",
+            "operand": "329",
+            "symbol": ""
+          },
+          {
+            "offset": 332,
+            "opcode": "goto",
+            "operand": "65",
+            "symbol": ""
+          },
+          {
+            "offset": 364,
+            "opcode": "ifeq",
+            "operand": "383",
+            "symbol": ""
+          },
+          {
+            "offset": 380,
+            "opcode": "ifge",
+            "operand": "393",
+            "symbol": ""
+          }
+        ],
+        "selected_numeric_operands": [
+          {
+            "offset": 4,
+            "opcode": "dconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "ldc2_w",
+            "operand": "#260",
+            "symbol": "double 0.30000001192092896d"
+          },
+          {
+            "offset": 8,
+            "opcode": "ldc2_w",
+            "operand": "#519",
+            "symbol": "double 0.4000000059604645d"
+          },
+          {
+            "offset": 19,
+            "opcode": "ldc_w",
+            "operand": "#524",
+            "symbol": "float 0.017453292f"
+          },
+          {
+            "offset": 41,
+            "opcode": "iconst_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 45,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 62,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 100,
+            "opcode": "ldc2_w",
+            "operand": "#541",
+            "symbol": "double 0.6d"
+          },
+          {
+            "offset": 125,
+            "opcode": "iconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 137,
+            "opcode": "iconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 142,
+            "opcode": "ldc2_w",
+            "operand": "#546",
+            "symbol": "double 3.0d"
+          },
+          {
+            "offset": 148,
+            "opcode": "ldc2_w",
+            "operand": "#548",
+            "symbol": "double -3.0d"
+          },
+          {
+            "offset": 151,
+            "opcode": "dconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 152,
+            "opcode": "dconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 161,
+            "opcode": "ldc_w",
+            "operand": "#524",
+            "symbol": "float 0.017453292f"
+          },
+          {
+            "offset": 239,
+            "opcode": "ldc2_w",
+            "operand": "#568",
+            "symbol": "double 0.20000000298023224d"
+          },
+          {
+            "offset": 246,
+            "opcode": "ldc_w",
+            "operand": "#570",
+            "symbol": "float 1.2f"
+          },
+          {
+            "offset": 249,
+            "opcode": "bipush",
+            "operand": "14",
+            "symbol": ""
+          },
+          {
+            "offset": 261,
+            "opcode": "iconst_4",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 287,
+            "opcode": "bipush",
+            "operand": "10",
+            "symbol": ""
+          },
+          {
+            "offset": 305,
+            "opcode": "fconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 339,
+            "opcode": "fconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 349,
+            "opcode": "ldc_w",
+            "operand": "#402",
+            "symbol": "float 0.4f"
+          },
+          {
+            "offset": 353,
+            "opcode": "ldc_w",
+            "operand": "#447",
+            "symbol": "float 0.8f"
+          },
+          {
+            "offset": 376,
+            "opcode": "ldc_w",
+            "operand": "#594",
+            "symbol": "float 0.33f"
+          },
+          {
+            "offset": 388,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 394,
+            "opcode": "fconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 399,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 404,
+            "opcode": "iconst_5",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "prior_exact_anchor_windows": [],
+        "selected_pivots": [],
+        "scope": "BOUNDED_JVM_REFERENCES_AND_WINDOWS_NOT_FULL_CFG"
+      }
+    }
+  ],
+  "limits": {
+    "public_111_exact_parameter_authority": false,
+    "complete_jvm_control_flow": "NOT_RECONSTRUCTED",
+    "ricochet_counts_observed_in_game": "NOT_TESTED",
+    "level_out_of_range_datapacks": "NOT_VERIFIED",
+    "effective_enchanting_tags": "NOT_VERIFIED",
+    "Gumbeeper_uses_item_enchantment": "NOT_EVIDENCED",
+    "additional_mutating_hooks": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  }
+}
