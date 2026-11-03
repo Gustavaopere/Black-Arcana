@@ -6,7 +6,7 @@
 
 **Fichas catalogadas (somente fichas detectadas): 28/38.**
 
-**Barra das fichas catalogadas:** `███████████████░░░░░ 73.7%`
+**Barra das fichas catalogadas:** `██████████████░░░░░░ 73.7%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
@@ -14,7 +14,7 @@
 
 **Homologadas para perks (somente fichas detectadas): 28/38.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 73.7%`
+**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 73.7%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
