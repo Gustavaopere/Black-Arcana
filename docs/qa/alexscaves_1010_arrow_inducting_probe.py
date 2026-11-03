@@ -60,7 +60,8 @@ def summarize(m, classname):
         require(any("SeekingArrowEntity" in x["symbol"] for x in ins), "arrow creation reference missing")
     else:
         markers = ("getArcTowardsID:", "setArcTowardsID:", "getEntities:",
-                   "setDeltaMovement:", "getOwner:", "isAlliedTo:", "getEntity:")
+                   "setDeltaMovement:", "getOwner:", "isAlliedTo:", "getEntity:",
+                   "Math.min:", "AABB.inflate:", "Vec3.scale:", "getBbWidth:")
         anchors = [i for i,x in enumerate(ins) if any(token in x["symbol"] for token in markers)]
         require(any("setArcTowardsID:" in x["symbol"] for x in ins), "seeking-arrow target state missing")
     require(1 <= len(anchors) <= MAX_WINDOWS, "unexpected selected anchor population")
