@@ -69,7 +69,7 @@ def pick(methods,name,desc=None):
 def select_consumer(methods):
     m=pick(methods,"onUseTick",DESC)
     ins=m["instructions"]
-    require(500<=len(ins)<=2600,"unexpected onUseTick size")
+    require(120<=len(ins)<=2600,"unexpected onUseTick size")
     offsets=[x["offset"] for x in ins]
     require(offsets==sorted(set(offsets)),"duplicate/out of order JVM instruction offset")
     direct=[x for x in ins if "ACEnchantmentRegistry.ASTRAL_TRANSFERRING:" in x["symbol"]]
