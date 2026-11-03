@@ -6,7 +6,7 @@
 
 **Barra dos providers catalogados:** `░░░░░░░░░░░░░░░░░░░░ 2.4%`
 
-**Fichas catalogadas (somente fichas detectadas): 416/2350.**
+**Fichas catalogadas (somente fichas detectadas): 416/2351.**
 
 **Barra das fichas catalogadas:** `███░░░░░░░░░░░░░░░░░ 17.7%`
 
@@ -18,7 +18,7 @@
 
 **Próximo na fila alfabética:** Alexs Caves Continued.
 
-**Fichas com contrato técnico estático certificado: 166/2350.**
+**Fichas com contrato técnico estático certificado: 166/2351.**
 
 **Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 7.1%`
 
@@ -34,7 +34,7 @@
 | ✅ | Aces Spell Utils — ✅ catálogo da versão-fonte documentado | 118/118 (100.0%) | 0 | ⚠️ | ⚠️ 0/118 verificados | ⚠️ 0/118 testados | [Ver fichas](✅-aces-spell-utils/INDEX.md) |
 | ✅ | Acolyte — ✅ catálogo do artefato publisher documentado | 74/74 (100.0%) | 0 | ⚠️ | ⚠️ 0/74 verificados | ⚠️ 0/74 testados | [Ver fichas](✅-acolyte/INDEX.md) |
 | ✅ | Aeromancy Additions — ✅ catálogo da versão-fonte documentado | 58/58 (100.0%) | 0 | ⚠️ | ⚠️ 0/58 verificados | ⚠️ 0/58 testados | [Ver fichas](✅-aeromancy-additions/INDEX.md) |
-| ⚠️ | Alexs Caves Continued — 🟡 próximo na fila | 28/38 (73.7%) | 28 | ⚠️ | ⚠️ 0/38 verificados | ⚠️ 0/38 testados | [Ver fichas](✅-alexs-caves-continued/INDEX.md) |
+| ⚠️ | Alexs Caves Continued — 🟡 próximo na fila | 28/39 (71.8%) | 28 | ⚠️ | ⚠️ 0/39 verificados | ⚠️ 0/39 testados | [Ver fichas](✅-alexs-caves-continued/INDEX.md) |
 | ⚠️ | Alexs Mobs Continued | 0/3 (0.0%) | 0 | ⚠️ | ⚠️ 0/3 verificados | ⚠️ 0/3 testados | [Ver fichas](✅-alexs-mobs-continued/INDEX.md) |
 | ⚠️ | Alshanex Familiars | 0/18 (0.0%) | 0 | ⚠️ | ⚠️ 0/18 verificados | ⚠️ 0/18 testados | [Ver fichas](✅-alshanex-familiars/INDEX.md) |
 | ⚠️ | Apokinetics | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-apokinetics/INDEX.md) |
@@ -121,7 +121,7 @@
 | ⚠️ | Grapplemod Skybound | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-grapplemod-skybound/INDEX.md) |
 | ⚠️ | Gtbcs Geomancy Plus | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-gtbcs-geomancy-plus/INDEX.md) |
 | ⚠️ | Gtbcs Spelllib | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-gtbcs-spelllib/INDEX.md) |
-| ⚠️ | Hazen N Stuff | 0/38 (0.0%) | 0 | ⚠️ | ⚠️ 0/38 verificados | ⚠️ 0/38 testados | [Ver fichas](✅-hazen-n-stuff/INDEX.md) |
+| ⚠️ | Hazen N Stuff | 0/38 (0.0%) | 0 | ⚠️ | ⚠️ 0/39 verificados | ⚠️ 0/39 testados | [Ver fichas](✅-hazen-n-stuff/INDEX.md) |
 | ⚠️ | Hazentouvelib | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-hazentouvelib/INDEX.md) |
 | ⚠️ | Hexalia | 0/43 (0.0%) | 0 | ⚠️ | ⚠️ 0/43 verificados | ⚠️ 0/43 testados | [Ver fichas](✅-hexalia/INDEX.md) |
 | ⚠️ | Ice And Fire Ce | 0/9 (0.0%) | 0 | ⚠️ | ⚠️ 0/9 verificados | ⚠️ 0/9 testados | [Ver fichas](✅-ice-and-fire-ce/INDEX.md) |
