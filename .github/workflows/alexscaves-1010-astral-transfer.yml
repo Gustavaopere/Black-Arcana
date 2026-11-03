@@ -59,22 +59,10 @@ jobs:
               --javap "$JAVA_HOME/bin/javap" \
               --output build/alexscaves-astral-1010/astral-evidence.json
           fi
-      - name: Generate and log canonical catalog index snapshots
+      - name: Check canonical generated catalogs without rewriting
         run: |
-          python3 scripts/catalog/generate_perk_ready_indexes.py
           python3 scripts/catalog/check_perk_ready_indexes.py
           python3 scripts/catalog/generate_perk_ready_indexes.py --check
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-          for f in (
-              'wiki/modpack-catalog/providers/INDEX.md',
-              'wiki/modpack-catalog/providers/✅-alexs-caves-continued/INDEX.md',
-              'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/INDEX.md',
-          ):
-              p = Path(f)
-              print('CATALOG_INDEX_SNAPSHOT='+f+'|'+json.dumps(p.read_text(encoding='utf8'),ensure_ascii=True))
-          PY
       - name: Archive read-only evidence
         if: always()
         uses: actions/upload-artifact@v7
