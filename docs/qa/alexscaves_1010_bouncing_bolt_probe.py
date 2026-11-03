@@ -41,7 +41,7 @@ SELECTORS = {
 PIVOTS = {
     "use": ("BOUNCING_BOLT:", "enchantLevel:", "setRicochet:", "TRIPLE_SPLASH:"),
     "damageMobs": ("hurt:", "onRicochetHit:", "isRicochet:", "getRicochet:", "setRicochet:"),
-    "onRicochetHit": ("getEntities:", "getOwner:", "isAlliedTo:", "distanceTo:",
+    "onRicochetHit": ("getEntitiesOfClass:", "getOwner:", "isAlliedTo:", "distanceTo:",
                       "setArcingTowards:", "setTarget:", "addFreshEntity:",
                       "setDeltaMovement:", "setBubbling:", "setPos:",
                       "setRicochet:"),
@@ -98,7 +98,7 @@ def selected_evidence(m,name,lo,hi):
         require(any("onRicochetHit:" in x["symbol"] for x in ins),
                 "native ricochet handoff missing")
     if name=="onRicochetHit":
-        require(any("getEntities:" in x["symbol"] for x in ins),
+        require(any("getEntitiesOfClass:" in x["symbol"] for x in ins),
                 "ricochet candidate query missing")
         require(any("addFreshEntity:" in x["symbol"] for x in ins),
                 "ricochet child spawn call missing")
