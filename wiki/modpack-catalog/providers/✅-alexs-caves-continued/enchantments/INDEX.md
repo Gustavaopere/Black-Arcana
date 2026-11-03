@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/1.**
+**Fichas catalogadas (somente fichas detectadas): 0/2.**
 
 **Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/1.**
+**Homologadas para perks (somente fichas detectadas): 0/2.**
 
 **Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
@@ -21,6 +21,7 @@
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
 | ⚠️ | Arrow Inducting | [ficha/arrow-inducting.md](arrow-inducting.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Astral Transferring | [ficha/astral-transferring.md](astral-transferring.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
