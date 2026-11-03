@@ -1,6 +1,6 @@
 # Alex's Caves Continued 1.0.10 — índice de 51 encantamentos para perks
 
-> **Escopo de catalogação:** inventário de identidades dos **51 recursos JSON** de `data/alexscaves/enchantment/` no artefato publisher 1.0.10. Este índice deriva do [inventário SHA-exato](INTEGRATION-SCOPE-INVENTORY-1.0.10.json) e relaciona **referências textuais nominais** em 43 manifestos técnicos `EXACT-*-1.0.10.json` da árvore atual. Referência nominal em manifesto não comprova consumer completo, registry efetiva, parâmetro de perk, hook seguro nem execução do jogo.
+> **Escopo de catalogação:** inventário de identidades dos **51 recursos JSON** de `data/alexscaves/enchantment/` no artefato publisher 1.0.10. Este índice deriva do [inventário SHA-exato](INTEGRATION-SCOPE-INVENTORY-1.0.10.json) e relaciona **referências textuais nominais** em 44 manifestos técnicos `EXACT-*-1.0.10.json` da árvore atual. Referência nominal em manifesto não comprova consumer completo, registry efetiva, parâmetro de perk, hook seguro nem execução do jogo.
 
 ```text
 scope=ENCHANTMENT_IDENTITY_AND_EXISTING_EVIDENCE_CROSSWALK_ONLY
@@ -10,9 +10,9 @@ artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
 individual_full_enchantment_dossiers=0/51
-individual_partial_enchantment_dossiers=7/51
-names_located_in_selected_exact_manifests=37/51
-names_not_located_in_selected_exact_manifests=14/51
+individual_partial_enchantment_dossiers=8/51
+names_located_in_selected_exact_manifests=38/51
+names_not_located_in_selected_exact_manifests=13/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -22,14 +22,14 @@ perk_certification=NOT_CERTIFIED
 
 **Barra de fichas individuais integralmente auditadas (escopo dos 51 encantamentos):** `░░░░░░░░░░░░░░░░░░░░ 0,0% (0/51)`.
 
-**Barra de fichas com documentação parcial individual (não é conclusão técnica):** `██░░░░░░░░░░░░░░░░░░ 13,7% (7/51)`.
+**Barra de fichas com documentação parcial individual (não é conclusão técnica):** `███░░░░░░░░░░░░░░░░░ 15,7% (8/51)`.
 
-**Barra de rastreio de referências SHA-exatas (não é conclusão):** `███████████████░░░░░ 72,5% (37/51)`. As fichas individuais parciais de Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call e Chomping Spirit entram no denominador observado após regeneração dos índices, **sem certificar contrato estático nem alterar o numerador de certificados**. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
+**Barra de rastreio de referências SHA-exatas (não é conclusão):** `███████████████░░░░░ 74,5% (38/51)`. As fichas individuais parciais de Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit e Crystallization entram no denominador observado após regeneração dos índices, **sem certificar contrato estático nem alterar o numerador de certificados**. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
 
 ## Leitura da coluna de estado
 
 - ⚠️ **Parcial / condicionado:** nome exato encontrado em ao menos um manifesto SHA-exato do recorte, mas ainda falta ficha própria com definição, parâmetros, consumidor compilado, causalidade, targeting, custos, lifecycle, disponibilidade de hooks e QA.
-- ❌ **Não catalogado individualmente:** nenhuma referência nominal foi encontrada nos **43 manifestos selecionados**; isso **não prova** ausência de comportamento ou documentação em outros arquivos, source, assets ou módulos.
+- ❌ **Não catalogado individualmente:** nenhuma referência nominal foi encontrada nos **44 manifestos selecionados**; isso **não prova** ausência de comportamento ou documentação em outros arquivos, source, assets ou módulos.
 - ✅ **Catalogado integralmente:** nenhum desses 51 recebeu esse estado nesta revisão. Evidência de outra ação/equipamento não fecha o universo do encantamento.
 
 ## Índice alfabético dos recursos
@@ -43,20 +43,20 @@ perk_certification=NOT_CERTIFIED
 | ⚠️ | `alexscaves:bouncy_ball` | [Ficha técnica parcial](enchantments/bouncy-ball.md) · [JAR 1.0.10 selado](EXACT-BOUNCY-BALL-1.0.10.json) · [equipamento Shot Gum](equipment/shot-gum.md) · [dano Gumball](damage-types/gumball.md) |
 | ⚠️ | `alexscaves:charting_call` | [Ficha técnica parcial](enchantments/charting-call.md) · [JAR 1.0.10 selado](EXACT-CHARTING-CALL-1.0.10.json) · [ação Magic Conch](actions/magic-conch-summon-deep-ones.md) |
 | ⚠️ | `alexscaves:chomping_spirit` | [Ficha técnica parcial](enchantments/chomping-spirit.md) · [JAR 1.0.10 / consumidor](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) · [dano Spirit Dinosaur](damage-types/spirit-dinosaur.md) |
-| ❌ | `alexscaves:crystallization` | Não localizada nos 43 manifestos selecionados |
+| ⚠️ | `alexscaves:crystallization` | [Ficha técnica parcial](enchantments/crystallization.md) · [publisher 1.0.10 e consumidor](EXACT-CRYSTALLIZATION-1.0.10.json) |
 | ⚠️ | `alexscaves:dark_nock` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:dazing_sweep` | Não localizada nos 43 manifestos selecionados |
+| ❌ | `alexscaves:dazing_sweep` | Não localizada nos 44 manifestos selecionados |
 | ⚠️ | `alexscaves:detonating_death` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:double_stab` | [`EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json`](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:energy_efficiency` | [`EXACT-RAYGUN-CONTROL-1.0.10.json`](EXACT-RAYGUN-CONTROL-1.0.10.json) |
 | ⚠️ | `alexscaves:enveloping_bubble` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:explosive_flavor` | [`EXACT-GUMBALL-CONTRACTS-1.0.10.json`](EXACT-GUMBALL-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:far_flung` | Não localizada nos 43 manifestos selecionados |
-| ❌ | `alexscaves:ferrous_haste` | Não localizada nos 43 manifestos selecionados |
-| ❌ | `alexscaves:field_extension` | Não localizada nos 43 manifestos selecionados |
-| ❌ | `alexscaves:flinging` | Não localizada nos 43 manifestos selecionados |
+| ❌ | `alexscaves:far_flung` | Não localizada nos 44 manifestos selecionados |
+| ❌ | `alexscaves:ferrous_haste` | Não localizada nos 44 manifestos selecionados |
+| ❌ | `alexscaves:field_extension` | Não localizada nos 44 manifestos selecionados |
+| ❌ | `alexscaves:flinging` | Não localizada nos 44 manifestos selecionados |
 | ⚠️ | `alexscaves:gamma_ray` | [`EXACT-RAYGUN-CONTROL-1.0.10.json`](EXACT-RAYGUN-CONTROL-1.0.10.json) |
-| ❌ | `alexscaves:heavy_slam` | Não localizada nos 43 manifestos selecionados |
+| ❌ | `alexscaves:heavy_slam` | Não localizada nos 44 manifestos selecionados |
 | ⚠️ | `alexscaves:herd_phalanx` | [`EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json`](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) |
 | ⚠️ | `alexscaves:humungous_hex` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:impending_stab` | [`EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json`](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) |
@@ -68,23 +68,23 @@ perk_certification=NOT_CERTIFIED
 | ⚠️ | `alexscaves:rapid_possession` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:relentless_darkness` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:sated_blade` | [`EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json`](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:sea_swing` | Não localizada nos 43 manifestos selecionados |
+| ❌ | `alexscaves:sea_swing` | Não localizada nos 44 manifestos selecionados |
 | ⚠️ | `alexscaves:seapairing` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:second_wave` | Não localizada nos 43 manifestos selecionados |
+| ❌ | `alexscaves:second_wave` | Não localizada nos 44 manifestos selecionados |
 | ⚠️ | `alexscaves:seekcandy` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:shaded_respite` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:sharp_cane` | Não localizada nos 43 manifestos selecionados |
+| ❌ | `alexscaves:sharp_cane` | Não localizada nos 44 manifestos selecionados |
 | ⚠️ | `alexscaves:sightless` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:soak_seeking` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:solar` | Não localizada nos 43 manifestos selecionados |
+| ❌ | `alexscaves:solar` | Não localizada nos 44 manifestos selecionados |
 | ⚠️ | `alexscaves:spell_lasting` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:straight_hook` | Não localizada nos 43 manifestos selecionados |
-| ❌ | `alexscaves:swiftwood` | Não localizada nos 43 manifestos selecionados |
+| ❌ | `alexscaves:straight_hook` | Não localizada nos 44 manifestos selecionados |
+| ❌ | `alexscaves:swiftwood` | Não localizada nos 44 manifestos selecionados |
 | ⚠️ | `alexscaves:targeted_ricochet` | [`EXACT-GUMBALL-CONTRACTS-1.0.10.json`](EXACT-GUMBALL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:taxing_bellow` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:triple_splash` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:triple_split` | [`EXACT-GUMBALL-CONTRACTS-1.0.10.json`](EXACT-GUMBALL-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:tsunami` | Não localizada nos 43 manifestos selecionados |
+| ❌ | `alexscaves:tsunami` | Não localizada nos 44 manifestos selecionados |
 | ⚠️ | `alexscaves:twilight_perfection` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:x_ray` | [`EXACT-RAYGUN-CONTROL-1.0.10.json`](EXACT-RAYGUN-CONTROL-1.0.10.json) |
 
@@ -98,4 +98,4 @@ perk_certification=NOT_CERTIFIED
 
 Para substituir ⚠️/❌ por ✅, verificar no **JAR 1.0.10**: (1) recurso JSON completo e registro/mod ID; (2) níveis, valores, custo, exclusividade e slots aplicáveis; (3) consumidor Java real com owner, descriptor, parâmetros e checkpoints; (4) aquisição, ordem causal, custos/recursos e consequências; (5) targeting, dano/tipo, alcance/área, tempo e projétil quando aplicáveis; (6) suporte real de mutação, autoria/servidor, replay/procs e coexistência; (7) QA explícita. Marcar `N/A` quando demonstrado. Sem hook verificado, **⛔ fail-closed** para perks que modificam o pipeline do provider.
 
-A **próxima identidade em ordem alfabética** é `alexscaves:crystallization`; a continuação deve aproveitar as evidências já seladas por ação/equipamento e investigar os dados ausentes, sem repetir suas auditorias. A fila global continua no **Alex's Caves Continued**; Raygun e Tremorzilla Beam permanecem **28/30** contratos técnicos de fichas *já observadas*.
+A **próxima identidade em ordem alfabética** é `alexscaves:dark_nock`; a continuação deve aproveitar as evidências já seladas por ação/equipamento e investigar os dados ausentes, sem repetir suas auditorias. A fila global continua no **Alex's Caves Continued**; Raygun e Tremorzilla Beam permanecem **28/30** contratos técnicos de fichas *já observadas*.
