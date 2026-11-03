@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/10.**
+**Fichas catalogadas (somente fichas detectadas): 0/11.**
 
 **Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/10.**
+**Homologadas para perks (somente fichas detectadas): 0/11.**
 
 **Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
@@ -30,6 +30,7 @@
 | ⚠️ | Crystallization | [ficha/crystallization.md](crystallization.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Dark Nock | [ficha/dark-nock.md](dark-nock.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Dazing Sweep | [ficha/dazing-sweep.md](dazing-sweep.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Detonating Death | [ficha/detonating-death.md](detonating-death.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
