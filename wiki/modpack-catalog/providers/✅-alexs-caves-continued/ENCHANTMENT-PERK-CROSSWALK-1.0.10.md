@@ -24,7 +24,7 @@ perk_certification=NOT_CERTIFIED
 
 **Barra de fichas com documentação parcial individual (não é conclusão técnica):** `███░░░░░░░░░░░░░░░░░ 15,7% (8/51)`.
 
-**Barra de rastreio de referências SHA-exatas (não é conclusão):** `███████████████░░░░░ 74,5% (38/51)`. As fichas individuais parciais de Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit e Crystallization entram no denominador observado após regeneração dos índices, **sem certificar contrato estático nem alterar o numerador de certificados**. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
+**Barra de rastreio de referências SHA-exatas (não é conclusão):** `██████████████░░░░░░ 74,5% (38/51)`. As fichas individuais parciais de Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit e Crystallization entram no denominador observado após regeneração dos índices, **sem certificar contrato estático nem alterar o numerador de certificados**. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
 
 ## Leitura da coluna de estado
 
