@@ -45,7 +45,7 @@ class BouncingBoltProbeTests(unittest.TestCase):
 
     def test_missing_child_spawn_rejected(self):
         rows=[ins(i*2) for i in range(22)]
-        rows[4]=ins(8,"invokevirtual","Method getEntities:()V")
+        rows[4]=ins(8,"invokevirtual","Method getEntitiesOfClass:()V")
         with self.assertRaisesRegex(ValueError,"child spawn"):
             selected_evidence(
                 method("onRicochetHit",SELECTORS[WATER_BOLT][1][1],rows),
