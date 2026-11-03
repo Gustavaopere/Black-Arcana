@@ -1,0 +1,1442 @@
+{
+  "schema_version": 1,
+  "scope": "EXACT_ALEXSCAVES_1010_ASTRAL_TRANSFERRING_SELECTED_CONSUMER_ABI",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "owner": {
+    "class": "com/github/alexmodguy/alexscaves/server/item/TotemOfPossessionItem.class",
+    "sha256": "bad9dd8b88eb621b558d1ede477d2b4ba6a21befdec31b4a0233adcac701773e",
+    "parsed_methods": 22
+  },
+  "resources": [
+    {
+      "path": "data/alexscaves/enchantment/astral_transferring.json",
+      "sha256": "41133c10af9c9e8d5e33d1b8339b734f81547b141f83fc0144aa9cf89f1f04c2",
+      "json": {
+        "description": {
+          "translate": "enchantment.alexscaves.astral_transferring"
+        },
+        "supported_items": "#alexscaves:enchantable/totem_of_possession",
+        "weight": 2,
+        "max_level": 1,
+        "min_cost": {
+          "base": 1,
+          "per_level_above_first": 12
+        },
+        "max_cost": {
+          "base": 41,
+          "per_level_above_first": 10
+        },
+        "anvil_cost": 4,
+        "slots": [
+          "mainhand"
+        ]
+      }
+    },
+    {
+      "path": "data/alexscaves/enchantment/detonating_death.json",
+      "sha256": "8402461954ff5b249ae675b51d7dcc23d933b2b06c494b327bf608371298646e",
+      "json": {
+        "description": {
+          "translate": "enchantment.alexscaves.detonating_death"
+        },
+        "supported_items": "#alexscaves:enchantable/totem_of_possession",
+        "weight": 2,
+        "max_level": 1,
+        "min_cost": {
+          "base": 1,
+          "per_level_above_first": 11
+        },
+        "max_cost": {
+          "base": 41,
+          "per_level_above_first": 10
+        },
+        "anvil_cost": 4,
+        "slots": [
+          "mainhand"
+        ],
+        "exclusive_set": [
+          "alexscaves:astral_transferring"
+        ]
+      }
+    },
+    {
+      "path": "data/alexscaves/tags/item/enchantable/totem_of_possession.json",
+      "sha256": "185a085206993877d91ca6d8c697273c14f945b1d55cb6179e3236c138c357cf",
+      "json": {
+        "values": [
+          "alexscaves:totem_of_possession"
+        ]
+      }
+    },
+    {
+      "path": "data/alexscaves/tags/entity_type/resists_totem_of_possession.json",
+      "sha256": "6ae5d98cd4b12739d3d1d7dc78d37053b2e5b0eb3b1093e3f8a9a6d9768df209",
+      "json": {
+        "__comment": "all mobs that cannot be controlled with a totem of possession.",
+        "values": [
+          "#c:bosses",
+          "minecraft:warden",
+          "minecraft:armor_stand",
+          "alexscaves:hullbreaker",
+          "alexscaves:forsaken",
+          "alexscaves:atlatitan",
+          "alexscaves:tremorzilla"
+        ]
+      }
+    }
+  ],
+  "consumer": {
+    "header": "public void onUseTick(net.minecraft.world.level.Level, net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, int)",
+    "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+    "instruction_count": 478,
+    "parsed_method_sha256": "4d366c998c89884f53bc9554f52c6477c5c6bbb8e6aea1bf0f93867dc1b41d39",
+    "scan_window_offsets": [
+      840,
+      1065
+    ],
+    "selected_symbolic_references": [
+      {
+        "offset": 871,
+        "opcode": "invokevirtual",
+        "operand": "#451",
+        "symbol": "Method net/minecraft/world/entity/Mob.setTarget:(Lnet/minecraft/world/entity/LivingEntity;)V"
+      },
+      {
+        "offset": 878,
+        "opcode": "invokevirtual",
+        "operand": "#455",
+        "symbol": "Method net/minecraft/world/entity/Mob.setLastHurtByMob:(Lnet/minecraft/world/entity/LivingEntity;)V"
+      },
+      {
+        "offset": 890,
+        "opcode": "invokevirtual",
+        "operand": "#458",
+        "symbol": "Method net/minecraft/world/entity/LivingEntity.getHealth:()F"
+      },
+      {
+        "offset": 895,
+        "opcode": "invokevirtual",
+        "operand": "#461",
+        "symbol": "Method net/minecraft/world/entity/Mob.getHealth:()F"
+      },
+      {
+        "offset": 904,
+        "opcode": "invokevirtual",
+        "operand": "#462",
+        "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+      },
+      {
+        "offset": 907,
+        "opcode": "invokevirtual",
+        "operand": "#466",
+        "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+      },
+      {
+        "offset": 910,
+        "opcode": "getstatic",
+        "operand": "#472",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.RESISTS_TOTEM_OF_POSSESSION:Lnet/minecraft/tags/TagKey;"
+      },
+      {
+        "offset": 913,
+        "opcode": "invokevirtual",
+        "operand": "#478",
+        "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+      },
+      {
+        "offset": 920,
+        "opcode": "getstatic",
+        "operand": "#483",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.ASTRAL_TRANSFERRING:Lnet/minecraft/resources/ResourceKey;"
+      },
+      {
+        "offset": 923,
+        "opcode": "invokestatic",
+        "operand": "#136",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+      },
+      {
+        "offset": 932,
+        "opcode": "invokestatic",
+        "operand": "#116",
+        "symbol": "Method setPossessed:(Lnet/minecraft/world/entity/Entity;Z)V"
+      },
+      {
+        "offset": 936,
+        "opcode": "invokestatic",
+        "operand": "#486",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getOrCreateTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+      },
+      {
+        "offset": 948,
+        "opcode": "invokevirtual",
+        "operand": "#492",
+        "symbol": "Method net/minecraft/world/entity/LivingEntity.getUUID:()Ljava/util/UUID;"
+      },
+      {
+        "offset": 951,
+        "opcode": "invokestatic",
+        "operand": "#496",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.putUUID:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/UUID;)V"
+      },
+      {
+        "offset": 956,
+        "opcode": "invokestatic",
+        "operand": "#500",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACPlatform.serializeEntity:(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/nbt/CompoundTag;"
+      },
+      {
+        "offset": 966,
+        "opcode": "getstatic",
+        "operand": "#508",
+        "symbol": "Field net/minecraft/core/registries/BuiltInRegistries.ENTITY_TYPE:Lnet/minecraft/core/DefaultedRegistry;"
+      },
+      {
+        "offset": 971,
+        "opcode": "invokevirtual",
+        "operand": "#462",
+        "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+      },
+      {
+        "offset": 974,
+        "opcode": "invokeinterface",
+        "operand": "#514,  2",
+        "symbol": "InterfaceMethod net/minecraft/core/DefaultedRegistry.getKey:(Ljava/lang/Object;)Lnet/minecraft/resources/ResourceLocation;"
+      },
+      {
+        "offset": 979,
+        "opcode": "invokevirtual",
+        "operand": "#520",
+        "symbol": "Method net/minecraft/resources/ResourceLocation.toString:()Ljava/lang/String;"
+      },
+      {
+        "offset": 982,
+        "opcode": "invokevirtual",
+        "operand": "#526",
+        "symbol": "Method net/minecraft/nbt/CompoundTag.putString:(Ljava/lang/String;Ljava/lang/String;)V"
+      },
+      {
+        "offset": 992,
+        "opcode": "invokevirtual",
+        "operand": "#534",
+        "symbol": "Method net/minecraft/nbt/CompoundTag.put:(Ljava/lang/String;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;"
+      },
+      {
+        "offset": 999,
+        "opcode": "invokestatic",
+        "operand": "#537",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.setTag:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+      },
+      {
+        "offset": 1003,
+        "opcode": "getstatic",
+        "operand": "#142",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.TOTEM_OF_POSSESSION_USE:Ljava/util/function/Supplier;"
+      },
+      {
+        "offset": 1006,
+        "opcode": "invokeinterface",
+        "operand": "#148,  1",
+        "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+      },
+      {
+        "offset": 1014,
+        "opcode": "invokevirtual",
+        "operand": "#541",
+        "symbol": "Method net/minecraft/world/entity/LivingEntity.playSound:(Lnet/minecraft/sounds/SoundEvent;)V"
+      },
+      {
+        "offset": 1048,
+        "opcode": "invokestatic",
+        "operand": "#99",
+        "symbol": "Method updateEntityIdFromServer:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V"
+      }
+    ],
+    "selected_branch_instructions": [
+      {
+        "offset": 842,
+        "opcode": "ifeq",
+        "operand": "1081",
+        "symbol": ""
+      },
+      {
+        "offset": 857,
+        "opcode": "ifeq",
+        "operand": "1054",
+        "symbol": ""
+      },
+      {
+        "offset": 885,
+        "opcode": "ifne",
+        "operand": "1081",
+        "symbol": ""
+      },
+      {
+        "offset": 899,
+        "opcode": "ifle",
+        "operand": "1081",
+        "symbol": ""
+      },
+      {
+        "offset": 916,
+        "opcode": "ifne",
+        "operand": "1081",
+        "symbol": ""
+      },
+      {
+        "offset": 926,
+        "opcode": "ifle",
+        "operand": "1081",
+        "symbol": ""
+      },
+      {
+        "offset": 1021,
+        "opcode": "ifeq",
+        "operand": "1051",
+        "symbol": ""
+      },
+      {
+        "offset": 1034,
+        "opcode": "ifeq",
+        "operand": "1051",
+        "symbol": ""
+      },
+      {
+        "offset": 1051,
+        "opcode": "goto",
+        "operand": "1081",
+        "symbol": ""
+      },
+      {
+        "offset": 1059,
+        "opcode": "ifeq",
+        "operand": "1081",
+        "symbol": ""
+      }
+    ],
+    "selected_numeric_instructions": [
+      {
+        "offset": 883,
+        "opcode": "iconst_4",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 884,
+        "opcode": "irem",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 898,
+        "opcode": "fcmpl",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 931,
+        "opcode": "iconst_1",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 943,
+        "opcode": "ldc_w",
+        "operand": "#490",
+        "symbol": "String BoundEntityUUID"
+      },
+      {
+        "offset": 963,
+        "opcode": "ldc_w",
+        "operand": "#506",
+        "symbol": "String id"
+      },
+      {
+        "offset": 987,
+        "opcode": "ldc_w",
+        "operand": "#532",
+        "symbol": "String BoundEntityTag"
+      }
+    ],
+    "selected_local_windows": [
+      {
+        "marker": "ASTRAL_TRANSFERRING:",
+        "matches": 1,
+        "first_offset": 920,
+        "nearby": [
+          {
+            "offset": 907,
+            "opcode": "invokevirtual",
+            "operand": "#466",
+            "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+          },
+          {
+            "offset": 910,
+            "opcode": "getstatic",
+            "operand": "#472",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.RESISTS_TOTEM_OF_POSSESSION:Lnet/minecraft/tags/TagKey;"
+          },
+          {
+            "offset": 913,
+            "opcode": "invokevirtual",
+            "operand": "#478",
+            "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+          },
+          {
+            "offset": 916,
+            "opcode": "ifne",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 919,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 920,
+            "opcode": "getstatic",
+            "operand": "#483",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.ASTRAL_TRANSFERRING:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 923,
+            "opcode": "invokestatic",
+            "operand": "#136",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 926,
+            "opcode": "ifle",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 929,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 931,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 932,
+            "opcode": "invokestatic",
+            "operand": "#116",
+            "symbol": "Method setPossessed:(Lnet/minecraft/world/entity/Entity;Z)V"
+          },
+          {
+            "offset": 935,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "marker": "RESISTS_TOTEM_OF_POSSESSION:",
+        "matches": 1,
+        "first_offset": 910,
+        "nearby": [
+          {
+            "offset": 898,
+            "opcode": "fcmpl",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 899,
+            "opcode": "ifle",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 902,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 904,
+            "opcode": "invokevirtual",
+            "operand": "#462",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+          },
+          {
+            "offset": 907,
+            "opcode": "invokevirtual",
+            "operand": "#466",
+            "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+          },
+          {
+            "offset": 910,
+            "opcode": "getstatic",
+            "operand": "#472",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.RESISTS_TOTEM_OF_POSSESSION:Lnet/minecraft/tags/TagKey;"
+          },
+          {
+            "offset": 913,
+            "opcode": "invokevirtual",
+            "operand": "#478",
+            "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+          },
+          {
+            "offset": 916,
+            "opcode": "ifne",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 919,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 920,
+            "opcode": "getstatic",
+            "operand": "#483",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.ASTRAL_TRANSFERRING:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 923,
+            "opcode": "invokestatic",
+            "operand": "#136",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 926,
+            "opcode": "ifle",
+            "operand": "1081",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "marker": "ACCompat.enchantLevel:",
+        "matches": 1,
+        "first_offset": 923,
+        "nearby": [
+          {
+            "offset": 910,
+            "opcode": "getstatic",
+            "operand": "#472",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.RESISTS_TOTEM_OF_POSSESSION:Lnet/minecraft/tags/TagKey;"
+          },
+          {
+            "offset": 913,
+            "opcode": "invokevirtual",
+            "operand": "#478",
+            "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+          },
+          {
+            "offset": 916,
+            "opcode": "ifne",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 919,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 920,
+            "opcode": "getstatic",
+            "operand": "#483",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.ASTRAL_TRANSFERRING:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 923,
+            "opcode": "invokestatic",
+            "operand": "#136",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 926,
+            "opcode": "ifle",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 929,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 931,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 932,
+            "opcode": "invokestatic",
+            "operand": "#116",
+            "symbol": "Method setPossessed:(Lnet/minecraft/world/entity/Entity;Z)V"
+          },
+          {
+            "offset": 935,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 936,
+            "opcode": "invokestatic",
+            "operand": "#486",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getOrCreateTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+          }
+        ]
+      },
+      {
+        "marker": "getHealth:",
+        "matches": 2,
+        "first_offset": 890,
+        "nearby": [
+          {
+            "offset": 881,
+            "opcode": "iload",
+            "operand": "6",
+            "symbol": ""
+          },
+          {
+            "offset": 883,
+            "opcode": "iconst_4",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 884,
+            "opcode": "irem",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 885,
+            "opcode": "ifne",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 888,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 890,
+            "opcode": "invokevirtual",
+            "operand": "#458",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getHealth:()F"
+          },
+          {
+            "offset": 893,
+            "opcode": "aload",
+            "operand": "17",
+            "symbol": ""
+          },
+          {
+            "offset": 895,
+            "opcode": "invokevirtual",
+            "operand": "#461",
+            "symbol": "Method net/minecraft/world/entity/Mob.getHealth:()F"
+          },
+          {
+            "offset": 898,
+            "opcode": "fcmpl",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 899,
+            "opcode": "ifle",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 902,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 904,
+            "opcode": "invokevirtual",
+            "operand": "#462",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+          }
+        ]
+      },
+      {
+        "marker": "setLastHurtByMob:",
+        "matches": 1,
+        "first_offset": 878,
+        "nearby": [
+          {
+            "offset": 867,
+            "opcode": "aload",
+            "operand": "17",
+            "symbol": ""
+          },
+          {
+            "offset": 869,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 871,
+            "opcode": "invokevirtual",
+            "operand": "#451",
+            "symbol": "Method net/minecraft/world/entity/Mob.setTarget:(Lnet/minecraft/world/entity/LivingEntity;)V"
+          },
+          {
+            "offset": 874,
+            "opcode": "aload",
+            "operand": "17",
+            "symbol": ""
+          },
+          {
+            "offset": 876,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 878,
+            "opcode": "invokevirtual",
+            "operand": "#455",
+            "symbol": "Method net/minecraft/world/entity/Mob.setLastHurtByMob:(Lnet/minecraft/world/entity/LivingEntity;)V"
+          },
+          {
+            "offset": 881,
+            "opcode": "iload",
+            "operand": "6",
+            "symbol": ""
+          },
+          {
+            "offset": 883,
+            "opcode": "iconst_4",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 884,
+            "opcode": "irem",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 885,
+            "opcode": "ifne",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 888,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 890,
+            "opcode": "invokevirtual",
+            "operand": "#458",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getHealth:()F"
+          }
+        ]
+      },
+      {
+        "marker": "setPossessed:",
+        "matches": 1,
+        "first_offset": 932,
+        "nearby": [
+          {
+            "offset": 920,
+            "opcode": "getstatic",
+            "operand": "#483",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.ASTRAL_TRANSFERRING:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 923,
+            "opcode": "invokestatic",
+            "operand": "#136",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "offset": 926,
+            "opcode": "ifle",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 929,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 931,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 932,
+            "opcode": "invokestatic",
+            "operand": "#116",
+            "symbol": "Method setPossessed:(Lnet/minecraft/world/entity/Entity;Z)V"
+          },
+          {
+            "offset": 935,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 936,
+            "opcode": "invokestatic",
+            "operand": "#486",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getOrCreateTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+          },
+          {
+            "offset": 939,
+            "opcode": "astore",
+            "operand": "19",
+            "symbol": ""
+          },
+          {
+            "offset": 941,
+            "opcode": "aload",
+            "operand": "19",
+            "symbol": ""
+          },
+          {
+            "offset": 943,
+            "opcode": "ldc_w",
+            "operand": "#490",
+            "symbol": "String BoundEntityUUID"
+          },
+          {
+            "offset": 946,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "marker": "BoundEntityUUID",
+        "matches": 1,
+        "first_offset": 943,
+        "nearby": [
+          {
+            "offset": 932,
+            "opcode": "invokestatic",
+            "operand": "#116",
+            "symbol": "Method setPossessed:(Lnet/minecraft/world/entity/Entity;Z)V"
+          },
+          {
+            "offset": 935,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 936,
+            "opcode": "invokestatic",
+            "operand": "#486",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getOrCreateTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+          },
+          {
+            "offset": 939,
+            "opcode": "astore",
+            "operand": "19",
+            "symbol": ""
+          },
+          {
+            "offset": 941,
+            "opcode": "aload",
+            "operand": "19",
+            "symbol": ""
+          },
+          {
+            "offset": 943,
+            "opcode": "ldc_w",
+            "operand": "#490",
+            "symbol": "String BoundEntityUUID"
+          },
+          {
+            "offset": 946,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 948,
+            "opcode": "invokevirtual",
+            "operand": "#492",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getUUID:()Ljava/util/UUID;"
+          },
+          {
+            "offset": 951,
+            "opcode": "invokestatic",
+            "operand": "#496",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.putUUID:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/UUID;)V"
+          },
+          {
+            "offset": 954,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 956,
+            "opcode": "invokestatic",
+            "operand": "#500",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACPlatform.serializeEntity:(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/nbt/CompoundTag;"
+          },
+          {
+            "offset": 959,
+            "opcode": "astore",
+            "operand": "20",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "marker": "BoundEntityTag",
+        "matches": 1,
+        "first_offset": 987,
+        "nearby": [
+          {
+            "offset": 971,
+            "opcode": "invokevirtual",
+            "operand": "#462",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+          },
+          {
+            "offset": 974,
+            "opcode": "invokeinterface",
+            "operand": "#514,  2",
+            "symbol": "InterfaceMethod net/minecraft/core/DefaultedRegistry.getKey:(Ljava/lang/Object;)Lnet/minecraft/resources/ResourceLocation;"
+          },
+          {
+            "offset": 979,
+            "opcode": "invokevirtual",
+            "operand": "#520",
+            "symbol": "Method net/minecraft/resources/ResourceLocation.toString:()Ljava/lang/String;"
+          },
+          {
+            "offset": 982,
+            "opcode": "invokevirtual",
+            "operand": "#526",
+            "symbol": "Method net/minecraft/nbt/CompoundTag.putString:(Ljava/lang/String;Ljava/lang/String;)V"
+          },
+          {
+            "offset": 985,
+            "opcode": "aload",
+            "operand": "19",
+            "symbol": ""
+          },
+          {
+            "offset": 987,
+            "opcode": "ldc_w",
+            "operand": "#532",
+            "symbol": "String BoundEntityTag"
+          },
+          {
+            "offset": 990,
+            "opcode": "aload",
+            "operand": "20",
+            "symbol": ""
+          },
+          {
+            "offset": 992,
+            "opcode": "invokevirtual",
+            "operand": "#534",
+            "symbol": "Method net/minecraft/nbt/CompoundTag.put:(Ljava/lang/String;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;"
+          },
+          {
+            "offset": 995,
+            "opcode": "pop",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 996,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 997,
+            "opcode": "aload",
+            "operand": "19",
+            "symbol": ""
+          },
+          {
+            "offset": 999,
+            "opcode": "invokestatic",
+            "operand": "#537",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.setTag:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+          }
+        ]
+      },
+      {
+        "marker": "putUUID:",
+        "matches": 1,
+        "first_offset": 951,
+        "nearby": [
+          {
+            "offset": 939,
+            "opcode": "astore",
+            "operand": "19",
+            "symbol": ""
+          },
+          {
+            "offset": 941,
+            "opcode": "aload",
+            "operand": "19",
+            "symbol": ""
+          },
+          {
+            "offset": 943,
+            "opcode": "ldc_w",
+            "operand": "#490",
+            "symbol": "String BoundEntityUUID"
+          },
+          {
+            "offset": 946,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 948,
+            "opcode": "invokevirtual",
+            "operand": "#492",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getUUID:()Ljava/util/UUID;"
+          },
+          {
+            "offset": 951,
+            "opcode": "invokestatic",
+            "operand": "#496",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.putUUID:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/UUID;)V"
+          },
+          {
+            "offset": 954,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 956,
+            "opcode": "invokestatic",
+            "operand": "#500",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACPlatform.serializeEntity:(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/nbt/CompoundTag;"
+          },
+          {
+            "offset": 959,
+            "opcode": "astore",
+            "operand": "20",
+            "symbol": ""
+          },
+          {
+            "offset": 961,
+            "opcode": "aload",
+            "operand": "20",
+            "symbol": ""
+          },
+          {
+            "offset": 963,
+            "opcode": "ldc_w",
+            "operand": "#506",
+            "symbol": "String id"
+          },
+          {
+            "offset": 966,
+            "opcode": "getstatic",
+            "operand": "#508",
+            "symbol": "Field net/minecraft/core/registries/BuiltInRegistries.ENTITY_TYPE:Lnet/minecraft/core/DefaultedRegistry;"
+          }
+        ]
+      },
+      {
+        "marker": "serializeEntity:",
+        "matches": 1,
+        "first_offset": 956,
+        "nearby": [
+          {
+            "offset": 943,
+            "opcode": "ldc_w",
+            "operand": "#490",
+            "symbol": "String BoundEntityUUID"
+          },
+          {
+            "offset": 946,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 948,
+            "opcode": "invokevirtual",
+            "operand": "#492",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getUUID:()Ljava/util/UUID;"
+          },
+          {
+            "offset": 951,
+            "opcode": "invokestatic",
+            "operand": "#496",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.putUUID:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/UUID;)V"
+          },
+          {
+            "offset": 954,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 956,
+            "opcode": "invokestatic",
+            "operand": "#500",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACPlatform.serializeEntity:(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/nbt/CompoundTag;"
+          },
+          {
+            "offset": 959,
+            "opcode": "astore",
+            "operand": "20",
+            "symbol": ""
+          },
+          {
+            "offset": 961,
+            "opcode": "aload",
+            "operand": "20",
+            "symbol": ""
+          },
+          {
+            "offset": 963,
+            "opcode": "ldc_w",
+            "operand": "#506",
+            "symbol": "String id"
+          },
+          {
+            "offset": 966,
+            "opcode": "getstatic",
+            "operand": "#508",
+            "symbol": "Field net/minecraft/core/registries/BuiltInRegistries.ENTITY_TYPE:Lnet/minecraft/core/DefaultedRegistry;"
+          },
+          {
+            "offset": 969,
+            "opcode": "aload",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 971,
+            "opcode": "invokevirtual",
+            "operand": "#462",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+          }
+        ]
+      },
+      {
+        "marker": "ACCompat.setTag:",
+        "matches": 1,
+        "first_offset": 999,
+        "nearby": [
+          {
+            "offset": 990,
+            "opcode": "aload",
+            "operand": "20",
+            "symbol": ""
+          },
+          {
+            "offset": 992,
+            "opcode": "invokevirtual",
+            "operand": "#534",
+            "symbol": "Method net/minecraft/nbt/CompoundTag.put:(Ljava/lang/String;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;"
+          },
+          {
+            "offset": 995,
+            "opcode": "pop",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 996,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 997,
+            "opcode": "aload",
+            "operand": "19",
+            "symbol": ""
+          },
+          {
+            "offset": 999,
+            "opcode": "invokestatic",
+            "operand": "#537",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.setTag:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+          },
+          {
+            "offset": 1002,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1003,
+            "opcode": "getstatic",
+            "operand": "#142",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.TOTEM_OF_POSSESSION_USE:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 1006,
+            "opcode": "invokeinterface",
+            "operand": "#148,  1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 1011,
+            "opcode": "checkcast",
+            "operand": "#154",
+            "symbol": "class net/minecraft/sounds/SoundEvent"
+          },
+          {
+            "offset": 1014,
+            "opcode": "invokevirtual",
+            "operand": "#541",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.playSound:(Lnet/minecraft/sounds/SoundEvent;)V"
+          },
+          {
+            "offset": 1017,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      },
+      {
+        "marker": "updateEntityIdFromServer:",
+        "matches": 1,
+        "first_offset": 1048,
+        "nearby": [
+          {
+            "offset": 1038,
+            "opcode": "checkcast",
+            "operand": "#86",
+            "symbol": "class net/minecraft/world/entity/player/Player"
+          },
+          {
+            "offset": 1041,
+            "opcode": "astore",
+            "operand": "22",
+            "symbol": ""
+          },
+          {
+            "offset": 1043,
+            "opcode": "aload",
+            "operand": "21",
+            "symbol": ""
+          },
+          {
+            "offset": 1045,
+            "opcode": "aload",
+            "operand": "22",
+            "symbol": ""
+          },
+          {
+            "offset": 1047,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1048,
+            "opcode": "invokestatic",
+            "operand": "#99",
+            "symbol": "Method updateEntityIdFromServer:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V"
+          },
+          {
+            "offset": 1051,
+            "opcode": "goto",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 1054,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 1056,
+            "opcode": "instanceof",
+            "operand": "#86",
+            "symbol": "class net/minecraft/world/entity/player/Player"
+          },
+          {
+            "offset": 1059,
+            "opcode": "ifeq",
+            "operand": "1081",
+            "symbol": ""
+          },
+          {
+            "offset": 1062,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 1064,
+            "opcode": "checkcast",
+            "operand": "#86",
+            "symbol": "class net/minecraft/world/entity/player/Player"
+          }
+        ]
+      }
+    ],
+    "interpretation": "SELECTED_JVM_WINDOWS_ONLY_NOT_CONTROL_FLOW_GRAPH"
+  },
+  "helpers": [
+    {
+      "name": "setPossessed",
+      "header": "private static void setPossessed(net.minecraft.world.entity.Entity, boolean)",
+      "descriptor": "(Lnet/minecraft/world/entity/Entity;Z)V",
+      "instruction_count": 16,
+      "parsed_method_sha256": "aab3895359fa68cdabb8bb54252d8c4b162144ed5e4e4ca6a741c6ef3c2aa842",
+      "symbolic_references": [
+        {
+          "offset": 10,
+          "opcode": "invokestatic",
+          "operand": "#696",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getPersistentData:(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 17,
+          "opcode": "invokevirtual",
+          "operand": "#701",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.putBoolean:(Ljava/lang/String;Z)V"
+        },
+        {
+          "offset": 24,
+          "opcode": "invokestatic",
+          "operand": "#696",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getPersistentData:(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 30,
+          "opcode": "invokevirtual",
+          "operand": "#573",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.remove:(Ljava/lang/String;)V"
+        }
+      ],
+      "interpretation": "HELPER_SYMBOLS_ONLY_NOT_WHOLE_METHOD"
+    },
+    {
+      "name": "updateEntityIdFromServer",
+      "header": "private static void updateEntityIdFromServer(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.player.Player, net.minecraft.world.item.ItemStack)",
+      "descriptor": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V",
+      "instruction_count": 49,
+      "parsed_method_sha256": "e117857164325eb02c2415c9e69ab3c6eff4b019a188679913e3c95958831f9d",
+      "symbolic_references": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "operand": "#631",
+          "symbol": "Method getBoundEntityUUID:(Lnet/minecraft/world/item/ItemStack;)Ljava/util/UUID;"
+        },
+        {
+          "offset": 6,
+          "opcode": "invokestatic",
+          "operand": "#486",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getOrCreateTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 16,
+          "opcode": "invokevirtual",
+          "operand": "#624",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z"
+        },
+        {
+          "offset": 31,
+          "opcode": "invokestatic",
+          "operand": "#635",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getInt:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I"
+        },
+        {
+          "offset": 45,
+          "opcode": "invokevirtual",
+          "operand": "#639",
+          "symbol": "Method net/minecraft/server/level/ServerLevel.getEntity:(Ljava/util/UUID;)Lnet/minecraft/world/entity/Entity;"
+        },
+        {
+          "offset": 61,
+          "opcode": "invokevirtual",
+          "operand": "#643",
+          "symbol": "Method net/minecraft/world/entity/Entity.getId:()I"
+        },
+        {
+          "offset": 73,
+          "opcode": "invokevirtual",
+          "operand": "#644",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V"
+        },
+        {
+          "offset": 79,
+          "opcode": "invokestatic",
+          "operand": "#537",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.setTag:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+        },
+        {
+          "offset": 94,
+          "opcode": "invokevirtual",
+          "operand": "#648",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getId:()I"
+        },
+        {
+          "offset": 98,
+          "opcode": "invokespecial",
+          "operand": "#182",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage.\"<init>\":(ILnet/minecraft/world/item/ItemStack;)V"
+        },
+        {
+          "offset": 101,
+          "opcode": "invokestatic",
+          "operand": "#649",
+          "symbol": "Method com/github/alexmodguy/alexscaves/AlexsCaves.sendMSGToAll:(Ljava/lang/Object;)V"
+        }
+      ],
+      "interpretation": "HELPER_SYMBOLS_ONLY_NOT_WHOLE_METHOD"
+    }
+  ],
+  "limits": {
+    "source_111_is_parameter_authority": false,
+    "full_cfg_and_all_guards": "NOT_RECONSTRUCTED",
+    "server_authoritative_settlement": "NOT_CERTIFIED",
+    "effective_pack_datapacks": "NOT_VERIFIED",
+    "prior_target_marker_cleanup": "NOT_CERTIFIED",
+    "duplicate_controller_and_replay": "NOT_VERIFIED",
+    "player_gate_and_claim_protection": "NOT_CERTIFIED",
+    "safe_mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED"
+  }
+}
