@@ -10,9 +10,9 @@ artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
 individual_full_enchantment_dossiers=0/51
-individual_partial_enchantment_dossiers=9/51
-names_located_in_selected_exact_manifests=38/51
-names_not_located_in_selected_exact_manifests=13/51
+individual_partial_enchantment_dossiers=10/51
+names_located_in_selected_exact_manifests=39/51
+names_not_located_in_selected_exact_manifests=12/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -22,9 +22,11 @@ perk_certification=NOT_CERTIFIED
 
 **Barra de fichas individuais integralmente auditadas (escopo dos 51 encantamentos):** `░░░░░░░░░░░░░░░░░░░░ 0,0% (0/51)`.
 
-**Barra de fichas com documentação parcial individual (não é conclusão técnica):** `███░░░░░░░░░░░░░░░░░ 17,6% (9/51)`.
+**Barra de fichas com documentação parcial individual (não é conclusão técnica):** `███░░░░░░░░░░░░░░░░░ 19,6% (10/51)`.
 
-**Barra de rastreio de referências SHA-exatas (não é conclusão):** `██████████████░░░░░░ 74,5% (38/51)`. As fichas individuais parciais de Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization e Dark Nock entram no denominador observado após regeneração dos índices, **sem certificar contrato estático nem alterar o numerador de certificados**. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
+**Barra de rastreio de referências SHA-exatas (não é conclusão):** `███████████████░░░░░ 76,5% (39/51)`. As fichas individuais parciais de Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock e Dazing Sweep entram no denominador observado após regeneração dos índices, **sem certificar contrato estático nem alterar o numerador de certificados**. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
+
+**Reconciliação de referência:** `dazing_sweep` já consta como recurso e consumidor no manifesto SHA-exato existente [`EXACT-EFFECT-CONTRACTS-1.0.10.json`](EXACT-EFFECT-CONTRACTS-1.0.10.json), embora o crosswalk anterior o marcasse ❌. A correção eleva somente o rastreio nominal **38→39/51**; não adiciona manifesto, raiz mágica ou certificado de perk.
 
 ## Leitura da coluna de estado
 
@@ -45,7 +47,7 @@ perk_certification=NOT_CERTIFIED
 | ⚠️ | `alexscaves:chomping_spirit` | [Ficha técnica parcial](enchantments/chomping-spirit.md) · [JAR 1.0.10 / consumidor](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) · [dano Spirit Dinosaur](damage-types/spirit-dinosaur.md) |
 | ⚠️ | `alexscaves:crystallization` | [Ficha técnica parcial](enchantments/crystallization.md) · [publisher 1.0.10 e consumidor](EXACT-CRYSTALLIZATION-1.0.10.json) |
 | ⚠️ | `alexscaves:dark_nock` | [Ficha técnica parcial](enchantments/dark-nock.md) · [contrato JAR 1.0.10 já selado](EXACT-DREADBOW-CONTRACTS-1.0.10.json) · [equipamento Dreadbow](equipment/dreadbow.md) |
-| ❌ | `alexscaves:dazing_sweep` | Não localizada nos 44 manifestos selecionados |
+| ⚠️ | `alexscaves:dazing_sweep` | [Ficha técnica parcial](enchantments/dazing-sweep.md) · [consumer e recurso SHA-exatos já selados](EXACT-EFFECT-CONTRACTS-1.0.10.json) · [efeito Stunned](effects/stunned.md) |
 | ⚠️ | `alexscaves:detonating_death` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:double_stab` | [`EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json`](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:energy_efficiency` | [`EXACT-RAYGUN-CONTROL-1.0.10.json`](EXACT-RAYGUN-CONTROL-1.0.10.json) |
@@ -98,4 +100,4 @@ perk_certification=NOT_CERTIFIED
 
 Para substituir ⚠️/❌ por ✅, verificar no **JAR 1.0.10**: (1) recurso JSON completo e registro/mod ID; (2) níveis, valores, custo, exclusividade e slots aplicáveis; (3) consumidor Java real com owner, descriptor, parâmetros e checkpoints; (4) aquisição, ordem causal, custos/recursos e consequências; (5) targeting, dano/tipo, alcance/área, tempo e projétil quando aplicáveis; (6) suporte real de mutação, autoria/servidor, replay/procs e coexistência; (7) QA explícita. Marcar `N/A` quando demonstrado. Sem hook verificado, **⛔ fail-closed** para perks que modificam o pipeline do provider.
 
-A **próxima identidade em ordem alfabética** é `alexscaves:dazing_sweep`; a continuação deve aproveitar as evidências já seladas por ação/equipamento e investigar os dados ausentes, sem repetir suas auditorias. A fila global continua no **Alex's Caves Continued**; Raygun e Tremorzilla Beam permanecem **28/30** contratos técnicos de fichas *já observadas*.
+A **próxima identidade em ordem alfabética** é `alexscaves:detonating_death`; a continuação deve aproveitar as evidências já seladas por ação/equipamento e investigar os dados ausentes, sem repetir suas auditorias. A fila global continua no **Alex's Caves Continued**; Raygun e Tremorzilla Beam permanecem **28/30** contratos técnicos de fichas *já observadas*.
