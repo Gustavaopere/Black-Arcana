@@ -59,21 +59,10 @@ jobs:
               --javap "$JAVA_HOME/bin/javap" \
               --output build/alexscaves-charting-1010/evidence.json
           fi
-      - name: Generate canonical catalog index snapshots
+      - name: Verify canonical indexes without rewriting
         run: |
-          python3 scripts/catalog/generate_perk_ready_indexes.py
           python3 scripts/catalog/check_perk_ready_indexes.py
           python3 scripts/catalog/generate_perk_ready_indexes.py --check
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-          for f in (
-              'wiki/modpack-catalog/providers/INDEX.md',
-              'wiki/modpack-catalog/providers/✅-alexs-caves-continued/INDEX.md',
-              'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/INDEX.md',
-          ):
-              print('CATALOG_INDEX_SNAPSHOT='+f+'|'+json.dumps(Path(f).read_text(encoding='utf8'),ensure_ascii=True))
-          PY
       - name: Archive bounded publisher evidence
         if: always()
         uses: actions/upload-artifact@v7
