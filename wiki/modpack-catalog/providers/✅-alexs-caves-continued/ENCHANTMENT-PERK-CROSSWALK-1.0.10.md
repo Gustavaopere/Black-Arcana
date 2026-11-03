@@ -1,6 +1,6 @@
 # Alex's Caves Continued 1.0.10 — índice de 51 encantamentos para perks
 
-> **Escopo de catalogação:** inventário de identidades dos **51 recursos JSON** de `data/alexscaves/enchantment/` no artefato publisher 1.0.10. Este índice deriva do [inventário SHA-exato](INTEGRATION-SCOPE-INVENTORY-1.0.10.json) e relaciona **referências textuais nominais** em 37 manifestos técnicos `EXACT-*-1.0.10.json` da árvore atual. Referência nominal em manifesto não comprova consumer completo, registry efetiva, parâmetro de perk, hook seguro nem execução do jogo.
+> **Escopo de catalogação:** inventário de identidades dos **51 recursos JSON** de `data/alexscaves/enchantment/` no artefato publisher 1.0.10. Este índice deriva do [inventário SHA-exato](INTEGRATION-SCOPE-INVENTORY-1.0.10.json) e relaciona **referências textuais nominais** em 38 manifestos técnicos `EXACT-*-1.0.10.json` da árvore atual. Referência nominal em manifesto não comprova consumer completo, registry efetiva, parâmetro de perk, hook seguro nem execução do jogo.
 
 ```text
 scope=ENCHANTMENT_IDENTITY_AND_EXISTING_EVIDENCE_CROSSWALK_ONLY
@@ -10,8 +10,9 @@ artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
 individual_full_enchantment_dossiers=0/51
-names_located_in_selected_exact_manifests=35/51
-names_not_located_in_selected_exact_manifests=16/51
+individual_partial_enchantment_dossiers=1/51
+names_located_in_selected_exact_manifests=36/51
+names_not_located_in_selected_exact_manifests=15/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -21,19 +22,21 @@ perk_certification=NOT_CERTIFIED
 
 **Barra de fichas individuais integralmente auditadas (escopo dos 51 encantamentos):** `░░░░░░░░░░░░░░░░░░░░ 0,0% (0/51)`.
 
-**Barra de rastreio de referências pré-existentes (não é conclusão):** `█████████████░░░░░░░ 68,6% (35/51)`. O índice não incrementa os indicadores gerados `416/2342` e `166/2342`: não cria fichas individuais nem certificados estáticos. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
+**Barra de fichas com documentação parcial individual (não é conclusão técnica):** `░░░░░░░░░░░░░░░░░░░░ 2,0% (1/51)`.
+
+**Barra de rastreio de referências SHA-exatas (não é conclusão):** `██████████████░░░░░░ 70,6% (36/51)`. A ficha parcial de Arrow Inducting entra no denominador observado quando os índices forem regenerados, **sem certificar contrato estático nem alterar o numerador de certificados**. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
 
 ## Leitura da coluna de estado
 
 - ⚠️ **Parcial / condicionado:** nome exato encontrado em ao menos um manifesto SHA-exato do recorte, mas ainda falta ficha própria com definição, parâmetros, consumidor compilado, causalidade, targeting, custos, lifecycle, disponibilidade de hooks e QA.
-- ❌ **Não catalogado individualmente:** nenhuma referência nominal foi encontrada nos **37 manifestos selecionados**; isso **não prova** ausência de comportamento ou documentação em outros arquivos, source, assets ou módulos.
+- ❌ **Não catalogado individualmente:** nenhuma referência nominal foi encontrada nos **38 manifestos selecionados**; isso **não prova** ausência de comportamento ou documentação em outros arquivos, source, assets ou módulos.
 - ✅ **Catalogado integralmente:** nenhum desses 51 recebeu esse estado nesta revisão. Evidência de outra ação/equipamento não fecha o universo do encantamento.
 
 ## Índice alfabético dos recursos
 
 | Estado | ID do recurso JSON / encantamento | Referência nominal SHA-exata já disponível |
 |---|---|---|
-| ❌ | `alexscaves:arrow_inducting` | Não localizada nos 37 manifestos selecionados |
+| ⚠️ | `alexscaves:arrow_inducting` | [Ficha técnica parcial](enchantments/arrow-inducting.md) · [JAR 1.0.10 selado](EXACT-ARROW-INDUCTING-1.0.10.json) |
 | ⚠️ | `alexscaves:astral_transferring` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ❌ | `alexscaves:bonking` | Não localizada nos 37 manifestos selecionados |
 | ⚠️ | `alexscaves:bouncing_bolt` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
@@ -95,4 +98,4 @@ perk_certification=NOT_CERTIFIED
 
 Para substituir ⚠️/❌ por ✅, verificar no **JAR 1.0.10**: (1) recurso JSON completo e registro/mod ID; (2) níveis, valores, custo, exclusividade e slots aplicáveis; (3) consumidor Java real com owner, descriptor, parâmetros e checkpoints; (4) aquisição, ordem causal, custos/recursos e consequências; (5) targeting, dano/tipo, alcance/área, tempo e projétil quando aplicáveis; (6) suporte real de mutação, autoria/servidor, replay/procs e coexistência; (7) QA explícita. Marcar `N/A` quando demonstrado. Sem hook verificado, **⛔ fail-closed** para perks que modificam o pipeline do provider.
 
-A **próxima identidade em ordem alfabética** é `alexscaves:arrow_inducting`; a continuação deve aproveitar as evidências já seladas por ação/equipamento e investigar os dados ausentes, sem repetir suas auditorias. A fila global continua no **Alex's Caves Continued**; Raygun e Tremorzilla Beam permanecem **28/30** contratos técnicos de fichas *já observadas*.
+A **próxima identidade em ordem alfabética** é `alexscaves:astral_transferring`; a continuação deve aproveitar as evidências já seladas por ação/equipamento e investigar os dados ausentes, sem repetir suas auditorias. A fila global continua no **Alex's Caves Continued**; Raygun e Tremorzilla Beam permanecem **28/30** contratos técnicos de fichas *já observadas*.
