@@ -38,7 +38,7 @@ A classe compilada `com/github/alexmodguy/alexscaves/server/item/ExtinctionSpear
 3. `@79–83` grava o UUID do **atacante**; `@88–95` lê `ACEnchantmentRegistry.CHOMPING_SPIRIT` por `ACCompat.enchantLevel(stack,key)` e escreve o inteiro `E` através de `setEnchantmentLevel(E)` na entidade.
 4. `@100–104` grava o **entity ID da vítima** como alvo do espírito, `@109–116` orienta sua visão e `@121–122` configura delay inicial de **5 ticks**.
 5. `@125–134` chama `Level.addFreshEntity` e descarta o booleano de retorno. Uma **tentativa** de inserção não é garantia de entidade aceita ou dano subsequente. `@135–142` delega ao `SpearItem.acHurtEnemy` (custo nativo de durabilidade).
-   
+
 Não há segundo `DamageSource`, cast de Black Arcana ou custo de mana criado por este encantamento. O método não apresenta guarda **local** de `isClientSide` nem verificação de sucesso de `addFreshEntity`; isso delimita a evidência e **não** demonstra duplicação física entre lados. Não interpretar o nome do callback como confirmação de dano líquido ou hit aceito pela engine.
 
 ## 4. Consumidor exato — espírito Tremorsaurus
