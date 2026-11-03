@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 28/37.**
+**Fichas catalogadas (somente fichas detectadas): 28/38.**
 
-**Barra das fichas catalogadas:** `███████████████░░░░░ 75.7%`
+**Barra das fichas catalogadas:** `██████████████░░░░░░ 73.7%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 28/37.**
+**Homologadas para perks (somente fichas detectadas): 28/38.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 75.7%`
+**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 73.7%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -58,6 +58,7 @@
 | ⚠️ | Bouncy Ball | [enchantments/bouncy-ball.md](enchantments/bouncy-ball.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Charting Call | [enchantments/charting-call.md](enchantments/charting-call.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Chomping Spirit | [enchantments/chomping-spirit.md](enchantments/chomping-spirit.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Crystallization | [enchantments/crystallization.md](enchantments/crystallization.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Desolate Dagger | [equipment/desolate-dagger.md](equipment/desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dreadbow | [equipment/dreadbow.md](equipment/dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -69,7 +70,7 @@
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
 | ⚠️ | Damage Types | 9/11 (81.8%) | 9 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
-| ⚠️ | Enchantments | 0/7 (0.0%) | 0 | [Abrir índice](enchantments/INDEX.md) |
+| ⚠️ | Enchantments | 0/8 (0.0%) | 0 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
 
 ## Critério do ✅

@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/7.**
+**Fichas catalogadas (somente fichas detectadas): 0/8.**
 
 **Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/7.**
+**Homologadas para perks (somente fichas detectadas): 0/8.**
 
 **Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
@@ -27,6 +27,7 @@
 | ⚠️ | Bouncy Ball | [ficha/bouncy-ball.md](bouncy-ball.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Charting Call | [ficha/charting-call.md](charting-call.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Chomping Spirit | [ficha/chomping-spirit.md](chomping-spirit.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Crystallization | [ficha/crystallization.md](crystallization.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
