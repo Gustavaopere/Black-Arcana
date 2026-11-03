@@ -36,7 +36,7 @@ A auditoria **não** conferiu tiers de loot, disponibilidade em Survival, relaç
 **Método selecionado:** `acLivingAttack(Lnet/neoforged/neoforge/event/entity/living/LivingIncomingDamageEvent;)Z`, digest do parse `3b6a9d9699a101ff2c4aa61dc08308857a1480fdd11f711c5ce04e2638244368`, **91 instruções**.
 
 Na região compilada observada, o fluxo consulta o `DamageSource.getDirectEntity`, o `LivingEntity.isBlocking`, o `LivingEntity.getUseItem` e a igualdade do item com `ACItemRegistry.RESISTOR_SHIELD`. Em seguida:
- 
+
 1. Lê `ACEnchantmentRegistry.ARROW_INDUCTING @63` e chama `ACCompat.enchantLevel @66`. O ramo `ifle @69 → 158` desvia se o nível não for positivo.
 2. Compara o tipo do projétil com `ACEntityRegistry.SEEKING_ARROW @76`. O ramo `if_acmpeq @84 → 158` evita converter a própria flecha buscadora nessa região.
 3. Instancia `SeekingArrowEntity @87–102`, passando a entidade defensora como argumento ao construtor `(Level,LivingEntity)`; copia a posição da flecha original em `@110`.
