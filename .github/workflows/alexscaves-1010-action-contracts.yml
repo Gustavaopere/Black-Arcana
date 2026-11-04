@@ -14,6 +14,7 @@ on:
       - 'docs/qa/alexscaves_1010_spirit_dinosaur_cards_test.py'
       - 'docs/qa/alexscaves_1010_heavy_slam_cards_test.py'
       - 'docs/qa/alexscaves_1010_herd_phalanx_cards_test.py'
+      - 'docs/qa/alexscaves_1010_humungous_hex_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   push:
     branches: [main]
@@ -28,6 +29,7 @@ on:
       - 'docs/qa/alexscaves_1010_spirit_dinosaur_cards_test.py'
       - 'docs/qa/alexscaves_1010_heavy_slam_cards_test.py'
       - 'docs/qa/alexscaves_1010_herd_phalanx_cards_test.py'
+      - 'docs/qa/alexscaves_1010_humungous_hex_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   workflow_dispatch:
 
@@ -53,6 +55,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_spirit_dinosaur_cards_test.py -v
           python3 docs/qa/alexscaves_1010_heavy_slam_cards_test.py -v
           python3 docs/qa/alexscaves_1010_herd_phalanx_cards_test.py -v
+          python3 docs/qa/alexscaves_1010_humungous_hex_cards_test.py -v
       - name: Download the exact publisher artifact
         run: |
           mkdir -p build/alexscaves-1010
