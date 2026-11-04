@@ -9,9 +9,9 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=2/51
+individual_full_enchantment_dossiers=3/51
 individual_partial_enchantment_dossiers=20/51
-individual_existing_enchantment_dossiers=22/51
+individual_existing_enchantment_dossiers=23/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -19,9 +19,11 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `░░░░░░░░░░░░░░░░░░░░ 3.9% (2/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `█░░░░░░░░░░░░░░░░░░░ 5.9% (3/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `████████░░░░░░░░░░░░ 43.1% (22/51)`; destes, vinte permanecem parciais e Heavy Slam e Herd Phalanx recebem certificados estáticos.
+**Barra de dossiers individuais existentes, completos ou parciais:** `█████████░░░░░░░░░░░ 45.1% (23/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx e Humungous Hex possuem contratos estáticos individuais certificados.
+
+**Humungous Hex:** [ficha técnica estática](enchantments/humungous-hex.md), [selo exato 1.0.10](EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.json) e [resumo de reprodução](EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.md). A escala `1+0,25×L` modifica a largura da Hex (4/5/6 nos níveis 0/I/II), mas o consumidor conserva o limite independente `distanceTo<=4` além da AABB. Renderer cliente, dano 1F/6F e duração Spell Lasting são ramos distintos; hook e QA física não foram homologados. O número de fichas parciais não muda.
 
 **Herd Phalanx:** [ficha individual completa no escopo estático](enchantments/herd-phalanx.md) e [prova reaproveitando Spirit Dinosaur](EXACT-HERD-PHALANX-CONTRACT-1.0.10.md). O nível altera 3+L tentativas de Grotto; consumo, órbita, cleanup e pedido de dano zero no Pre conservam seus guards. A entrada não certifica outros espíritos nem reduz os vinte dossiers parciais anteriores.
 
@@ -29,7 +31,7 @@ executable_perk_certification=NOT_CERTIFIED
 
 ## Leitura dos estados
 
-- ✅ **Contrato técnico estático concluído:** Heavy Slam e Herd Phalanx, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
+- ✅ **Contrato técnico estático concluído:** Heavy Slam, Herd Phalanx e Humungous Hex, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
 - ⚠️ **Referência histórica/parcial:** o objeto tem evidências nominais ou consumidor em outro recorte; vários ainda não têm ficha própria. Não promover conclusão por associação a outro equipamento/ação.
 - ❌ **Sem ficha individual no checkpoint histórico:** preserva a pendência existente; não prova inexistência do recurso, ausência de referências ou comportamento.
 
@@ -61,7 +63,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ⚠️ | `alexscaves:gamma_ray` | [Ficha técnica parcial](enchantments/gamma-ray.md) · [Raygun 1.0.10](EXACT-RAYGUN-CONTROL-1.0.10.json) · [branches Gamma](EXACT-RAYGUN-CONDITION-BRANCHES-1.0.10.json) · [consumidores](EXACT-RAYGUN-BRANCH-CONSUMERS-1.0.10.json) |
 | ✅ | `alexscaves:heavy_slam` | [Contrato técnico estático](enchantments/heavy-slam.md) · [JSON/consumidor selados](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
 | ✅ | `alexscaves:herd_phalanx` | [Contrato técnico estático](enchantments/herd-phalanx.md) · [selo individual](EXACT-HERD-PHALANX-CONTRACT-1.0.10.json) · [consumidor Spirit Dinosaur](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
-| ⚠️ | `alexscaves:humungous_hex` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
+| ✅ | `alexscaves:humungous_hex` | [Contrato técnico estático](enchantments/humungous-hex.md) · [JSON/classes/renderer SHA-exatos](EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
 | ⚠️ | `alexscaves:impending_stab` | [`EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json`](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:lasting_morale` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:multiple_mint` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
@@ -101,4 +103,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:humungous_hex`; a continuação deve aproveitar o contrato Sugar Staff Hex existente e fechar os dados específicos do encantamento. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **30/52 contratos estáticos entre fichas observadas**, incluindo 22 fichas de encantamentos. Esses 52 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
+A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:impending_stab`; Humungous Hex reutiliza a ação Sugar Staff Hex já certificada, sem criar raiz nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **31/53 contratos estáticos entre fichas observadas**, incluindo 23 fichas de encantamentos. Esses 53 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
