@@ -10,7 +10,7 @@ def ins(offset):
     return {"offset":offset,"opcode":"nop","operand":"","symbol":""}
 
 def rows():
-    allrows=[ins(i) for i in range(900)]
+    allrows=[ins(i) for i in range(1100)]
     for offset,(op,needle) in MUST_HAVE.items():
         allrows[offset]["opcode"]=op
         allrows[offset]["symbol"]="Method "+needle
