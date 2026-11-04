@@ -259,6 +259,20 @@ class ContractAuditTests(unittest.TestCase):
         doc["classes"] = {path: doc["classes"][path] for path in record["classes"]}
         return doc
 
+    def heavy_slam_fixture(self):
+        """Seal one literal enchantment contract while reusing synthetic artifact members."""
+        doc = copy.deepcopy(self.doc)
+        relative = "enchantments/heavy-slam.md"
+        card = self.root / relative
+        card.parent.mkdir(exist_ok=True)
+        card.write_bytes((self.root / ACTIONS[0]).read_bytes())
+        record = doc.pop("action_evidence")[ACTIONS[0]]
+        doc["catalog_family"] = "HEAVY_SLAM_ENCHANTMENT_CONTRACT"
+        doc["cards"] = {relative: sha256(card.read_bytes())}
+        doc["contract_evidence"] = {relative: record}
+        doc["classes"] = {path: doc["classes"][path] for path in record["classes"]}
+        return doc
+
     def test_parser_preserves_overloads_constructor_static_lambda_and_switch(self):
         parsed = audit.parse_javap(JAVAP, OWNER)
         self.assertEqual({("<init>", "()V"), ("<clinit>", "()V"), ("value", "()I"),
@@ -1315,6 +1329,185 @@ class ContractAuditTests(unittest.TestCase):
                 contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(0, audit.main(arguments))
             self.assertEqual("spirit_dinosaur", inspect.call_args.kwargs["profile"])
+
+    def test_heavy_slam_literal_roster_and_single_card_synthetic_audit(self):
+        doc = self.heavy_slam_fixture()
+        self.assertEqual({"enchantments/heavy-slam.md"}, set(audit.HEAVY_SLAM))
+        audit.validate_structure(doc, profile="heavy_slam")
+        audit.validate_cards(doc, self.root, profile="heavy_slam")
+        result = self.inspect(doc, profile="heavy_slam")
+        self.assertEqual("PASS", result["status"])
+        self.assertEqual("HEAVY_SLAM_ENCHANTMENT_CONTRACT", result["catalog_family"])
+        self.assertEqual((1, 1, 1), (result["cards_checked"], result["classes_checked"], result["methods_checked"]))
+        self.assertEqual("NOT_VERIFIED", result["mutating_hook"])
+        self.assertEqual("NOT_TESTED", result["physical_qa"])
+        self.assertFalse(result["provider_universe_closed"])
+        self.assertEqual(8, result["semantic_magic_roots"])
+
+    def test_heavy_slam_remains_isolated_from_all_previous_profiles(self):
+        previous = {name: audit.profile_spec(name) for name in (
+            "actions", "effects", "dreadbow", "acid", "desolate_dagger",
+            "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur")}
+        snapshots = copy.deepcopy(previous)
+        doc = self.heavy_slam_fixture()
+        for name in previous:
+            with self.subTest(selected=name), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile=name)
+            with self.subTest(cards=name), self.assertRaises(ValueError):
+                audit.validate_cards(doc, self.root, profile=name)
+        fixtures = (self.doc, self.effects_fixture(), self.dreadbow_fixture(), self.acid_fixture(),
+                    self.desolate_dagger_fixture(), self.forsaken_fixture(), self.gumball_fixture(),
+                    self.nuclear_fixture(), self.spirit_dinosaur_fixture())
+        for manifest in fixtures:
+            with self.subTest(family=manifest.get("catalog_family")), self.assertRaises(ValueError):
+                audit.validate_structure(manifest, profile="heavy_slam")
+        self.inspect(doc, profile="heavy_slam")
+        self.assertEqual(snapshots, previous)
+
+    def test_heavy_slam_rejects_missing_extra_and_aliased_roster(self):
+        relative = "enchantments/heavy-slam.md"
+        for key in ("cards", "contract_evidence"):
+            for replacement in (None, "damage-types/nuke.md", "damage-types/radiation.md",
+                                "damage-types/acid.md", "damage-types/tremorzilla-beam.md",
+                                "effects/irradiated.md", "equipment/extinction-spear.md",
+                                "enchantments/heavy_slam.md", "enchantments/triple-strike.md",
+                                "enchantments/../enchantments/heavy-slam.md", ACTIONS[0]):
+                doc = self.heavy_slam_fixture()
+                value = doc[key].pop(relative)
+                if replacement is not None:
+                    doc[key][replacement] = value
+                with self.subTest(key=key, replacement=replacement), self.assertRaises(ValueError):
+                    audit.validate_structure(doc, profile="heavy_slam")
+            doc = self.heavy_slam_fixture()
+            doc[key]["damage-types/extra.md"] = doc[key][relative]
+            with self.subTest(key=key, extra=True), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="heavy_slam")
+
+    def test_heavy_slam_rejects_scope_and_evidence_promotion(self):
+        for key, value in (("catalog_family", "SPIRIT_DINOSAUR_DAMAGE_CONTRACT"), ("catalog_family", None),
+                           ("claim_scope", "COMPLETE_PERK_READY"), ("evidence_grade", "SOURCE_ONLY"),
+                           ("semantic_magic_roots", 9), ("provider_universe_closed", True),
+                           ("mutating_hook", "VERIFIED"), ("physical_qa", "PASS"),
+                           ("artifact_size_bytes", True), ("artifact_sha1", "a" * 40),
+                           ("artifact_sha256", "b" * 64), ("version", "1.1.1")):
+            doc = self.heavy_slam_fixture()
+            if value is None:
+                doc.pop(key)
+            else:
+                doc[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="heavy_slam")
+        for alias in ("action_evidence", "effect_evidence"):
+            doc = self.heavy_slam_fixture()
+            doc[alias] = doc.pop("contract_evidence")
+            with self.subTest(alias=alias), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="heavy_slam")
+
+    def test_heavy_slam_rejects_forged_card_seal_and_symlink_escape(self):
+        doc = self.heavy_slam_fixture()
+        relative = "enchantments/heavy-slam.md"
+        doc["cards"][relative] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "stale card seal"):
+            self.inspect(doc, profile="heavy_slam")
+        doc = self.heavy_slam_fixture()
+        card = self.root / relative
+        outside = Path(self.temp.name) / "outside-heavy-slam.md"
+        outside.write_bytes(card.read_bytes())
+        card.unlink()
+        card.symlink_to(outside)
+        with self.assertRaisesRegex(ValueError, "escapes provider root"):
+            self.inspect(doc, profile="heavy_slam")
+
+    def test_heavy_slam_rechecks_card_after_bytecode_inspection(self):
+        doc = self.heavy_slam_fixture()
+        def completed(command, **kwargs):
+            card = self.root / "enchantments/heavy-slam.md"
+            card.write_bytes(card.read_bytes() + b"changed during audit")
+            return subprocess.CompletedProcess(command, 0, stdout=JAVAP.replace(OWNER, command[-1]), stderr="")
+        with mock.patch.object(audit.subprocess, "run", side_effect=completed):
+            with self.assertRaisesRegex(ValueError, "stale card seal"):
+                audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="heavy_slam",
+                            expected_identity=self.expected_identity)
+
+    def test_heavy_slam_verifies_artifact_resources_and_anchor_operands(self):
+        doc = self.heavy_slam_fixture()
+        with self.assertRaisesRegex(ValueError, "artifact identity mismatch"):
+            audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="heavy_slam")
+        drifted = copy.deepcopy(doc)
+        path = next(iter(drifted["classes"]))
+        drifted["classes"][path]["methods"][0]["anchors"][0]["operand"] = "unobserved operand"
+        with self.assertRaisesRegex(ValueError, "instruction anchor mismatch"):
+            self.inspect(drifted, profile="heavy_slam")
+        self.members[self.resource] += b"resource drift"
+        self.write_jar()
+        with self.assertRaisesRegex(ValueError, "resource hash mismatch"):
+            self.inspect(doc, profile="heavy_slam")
+
+    def test_heavy_slam_rejects_invalid_and_unreferenced_evidence(self):
+        relative = "enchantments/heavy-slam.md"
+        for mode in ("duplicate_class", "unknown_class", "unknown_resource", "unsafe_resource",
+                     "unreferenced_resource", "duplicate_method", "boolean_offset"):
+            doc = self.heavy_slam_fixture()
+            record = doc["contract_evidence"][relative]
+            methods = next(iter(doc["classes"].values()))["methods"]
+            if mode == "duplicate_class":
+                record["classes"] *= 2
+            elif mode == "unknown_class":
+                record["classes"] = ["com/github/alexmodguy/alexscaves/Missing.class"]
+            elif mode == "unknown_resource":
+                record["resources"] = ["data/alexscaves/missing.json"]
+            elif mode == "unsafe_resource":
+                resource = "data/alexscaves/../unsafe.json"
+                doc["resources"] = {resource: "a" * 64}
+                record["resources"] = [resource]
+            elif mode == "unreferenced_resource":
+                doc["resources"]["data/alexscaves/orphan.json"] = "a" * 64
+            elif mode == "duplicate_method":
+                methods.append(copy.deepcopy(methods[0]))
+            else:
+                methods[0]["anchors"][0]["offset"] = True
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="heavy_slam")
+
+    def test_heavy_slam_keeps_existing_anchor_and_class_budgets(self):
+        for mode in ("missing_class", "anchorless", "too_many_classes", "too_many_resources",
+                     "too_many_methods", "too_many_anchors", "too_many_total_anchors"):
+            doc = self.heavy_slam_fixture()
+            path = next(iter(doc["classes"]))
+            entry = doc["classes"][path]
+            if mode == "missing_class":
+                doc["classes"].clear()
+            elif mode == "anchorless":
+                entry["methods"] = []
+            elif mode == "too_many_classes":
+                doc["classes"] = {path.removesuffix(".class") + str(index) + ".class": entry
+                                  for index in range(129)}
+            elif mode == "too_many_resources":
+                doc["resources"] = {"data/alexscaves/synthetic" + str(index) + ".json": "a" * 64
+                                    for index in range(257)}
+            elif mode == "too_many_methods":
+                entry["methods"] = [{**entry["methods"][0], "name": "value" + str(index)}
+                                    for index in range(129)]
+            else:
+                method = entry["methods"][0]
+                anchor = method["anchors"][0]
+                if mode == "too_many_anchors":
+                    method["anchors"] = [{**anchor, "offset": offset} for offset in range(257)]
+                else:
+                    entry["methods"] = [{**method, "name": "value" + str(index), "anchors": [
+                        {**anchor, "offset": offset} for offset in range(256)]} for index in range(33)]
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="heavy_slam")
+
+    def test_cli_accepts_explicit_heavy_slam_profile(self):
+        arguments = ["--jar", str(self.jar), "--manifest", str(self.root / "EXACT-HEAVY-SLAM-CONTRACT-1.0.10.json"),
+                     "--provider-root", str(self.root), "--javap", "synthetic-javap",
+                     "--profile", "heavy_slam"]
+        with mock.patch.object(audit, "load_manifest", return_value=self.heavy_slam_fixture()), \
+                mock.patch.object(audit, "audit", return_value={"status": "PASS"}) as inspect, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(0, audit.main(arguments))
+            self.assertEqual("heavy_slam", inspect.call_args.kwargs["profile"])
 
     def test_missing_extra_action_and_card_evidence_mismatch_rejected(self):
         variants = []

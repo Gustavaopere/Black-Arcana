@@ -1,48 +1,37 @@
 # Alex's Caves Continued 1.0.10 — índice de 51 encantamentos para perks
 
-> **Escopo de catalogação:** inventário de identidades dos **51 recursos JSON** de `data/alexscaves/enchantment/` no artefato publisher 1.0.10. Este índice deriva do [inventário SHA-exato](INTEGRATION-SCOPE-INVENTORY-1.0.10.json) e relaciona **referências textuais nominais** em 48 manifestos técnicos `EXACT-*-1.0.10.json` da árvore atual. Referência nominal em manifesto não comprova consumer completo, registry efetiva, parâmetro de perk, hook seguro nem execução do jogo.
+> Identidades dos 51 JSONs publisher e dossiers individuais são contagens diferentes. A conclusão abaixo é do **contrato técnico estático**, independente de hook mutador e QA física. Referências históricas a nomes/símbolos em outros manifestos permanecem úteis, mas não bastam para concluir outro encantamento.
 
 ```text
-scope=ENCHANTMENT_IDENTITY_AND_EXISTING_EVIDENCE_CROSSWALK_ONLY
+scope=INDIVIDUAL_STATIC_ENCHANTMENT_CATALOG_AND_HISTORICAL_CROSSWALK
 mod_id=alexscaves
 version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=0/51
+individual_full_enchantment_dossiers=1/51
 individual_partial_enchantment_dossiers=20/51
-names_located_in_selected_exact_manifests=43/51
-names_not_located_in_selected_exact_manifests=8/51
+individual_existing_enchantment_dossiers=21/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
 mutation=NO_MUTATION
-perk_certification=NOT_CERTIFIED
+executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra de fichas individuais integralmente auditadas (escopo dos 51 encantamentos):** `░░░░░░░░░░░░░░░░░░░░ 0,0% (0/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `░░░░░░░░░░░░░░░░░░░░ 2.0% (1/51)`.
 
-**Barra de fichas com documentação parcial individual (não é conclusão técnica):** `███████░░░░░░░░░░░░░ 39,2% (20/51)`.
+**Barra de dossiers individuais existentes, completos ou parciais:** `████████░░░░░░░░░░░░ 41.2% (21/51)`; destes, vinte permanecem parciais e apenas Heavy Slam recebe o certificado estático.
 
-**Barra de rastreio de referências SHA-exatas (não é conclusão):** `████████████████░░░░ 84,3% (43/51)`. As fichas individuais parciais de Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging e Gamma Ray entram no denominador observado após regeneração dos índices, **sem certificar contrato estático nem alterar o numerador de certificados**. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
+**Heavy Slam:** [ficha completa no escopo estático](enchantments/heavy-slam.md) e [prova reproduzível](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md). JSON, níveis, custos, slots, aquisição, consumidor, dano, área, cadência, movimento e estado estão documentados; hooks e QA física continuam pendentes. Gamma Ray e as dezenove fichas parciais anteriores são preservadas.
 
-**Nova ficha Gamma Ray:** [dossier parcial](enchantments/gamma-ray.md) consolida os consumidores e branches SHA-exatos **já existentes** do `RaygunItem.onUseTick` (dano solicitado 2.0f/1.5f, `Irradiated` com 800 ticks e amplifier 4/0, visuais e resistência). Isso eleva **19→20/51 fichas individuais parciais**; o rastreio nominal continua **43/51**, pois `GAMMA_RAY` já estava em manifesto selecionado. Nenhum novo JSON individual foi selado, e não se altera certificação de perk, hook ou QA.
+## Leitura dos estados
 
-**Nova evidência Flinging:** [`EXACT-FLINGING-1.0.10.json`](EXACT-FLINGING-1.0.10.json) registra o ID literal `flinging`, JSON e tag publisher, e os métodos compilados de `OrtholanceItem.releaseUsing` / `WaveEntity`, elevando o rastreio nominal **42→43/51**. Os campos simbólicos `TSUNAMI` e `SECOND_WAVE` aparecem nas janelas, mas não contam como IDs minúsculos certificados nem como dossiers individuais; sem novo contrato de perk ou hook mutador.
+- ✅ **Contrato técnico estático concluído:** somente Heavy Slam, sustentado pelo certificado individual, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
+- ⚠️ **Referência histórica/parcial:** o objeto tem evidências nominais ou consumidor em outro recorte; vários ainda não têm ficha própria. Não promover conclusão por associação a outro equipamento/ação.
+- ❌ **Sem ficha individual no checkpoint histórico:** preserva a pendência existente; não prova inexistência do recurso, ausência de referências ou comportamento.
 
-**Nova evidência Field Extension:** [`EXACT-FIELD-EXTENSION-1.0.10.json`](EXACT-FIELD-EXTENSION-1.0.10.json) registra o ID minúsculo literal `field_extension`, o JSON publisher e as janelas JVM SHA-exatas de `MagneticWeaponEntity.tick`, elevando somente o rastreio nominal **41→42/51**. A distância de raycast é delimitada no [dossier parcial](enchantments/field-extension.md), sem novo contrato estático certificado ou hook mutador.
-
-**Nova evidência Ferrous Haste:** [`EXACT-FERROUS-HASTE-1.0.10.json`](EXACT-FERROUS-HASTE-1.0.10.json) adiciona a identidade literal do recurso `ferrous_haste`, seu JSON, tag e janelas JVM de `MagneticWeaponEntity.tick`, elevando o rastreio nominal **40→41/51**, sem promover contratos ou hooks mutadores. Os símbolos JVM de `FIELD_EXTENSION` nesse manifesto anterior eram pistas; a identidade e a ficha parcial próprias foram posteriormente seladas no manifesto Field Extension, sem promover certificação de perk.
-
-**Nova evidência exata:** [`EXACT-FAR-FLUNG-1.0.10.json`](EXACT-FAR-FLUNG-1.0.10.json) acrescenta o ID literal `far_flung` ao recorte SHA-exato e eleva o rastreio **39→40/51**. A sonda também localiza os símbolos JVM em maiúsculas `SHARP_CANE` e `STRAIGHT_HOOK` no mesmo construtor; eles são *pistas técnicas*, não substituem uma ficha individual e não foram somados como IDs literais de recursos JSON neste contador. A classificação ❌ dessas entradas continua sujeita a auditoria própria.
-
-**Reconciliação de referência:** `dazing_sweep` já consta como recurso e consumidor no manifesto SHA-exato existente [`EXACT-EFFECT-CONTRACTS-1.0.10.json`](EXACT-EFFECT-CONTRACTS-1.0.10.json), embora o crosswalk anterior o marcasse ❌. A correção eleva somente o rastreio nominal **38→39/51**; não adiciona manifesto, raiz mágica ou certificado de perk.
-
-## Leitura da coluna de estado
-
-- ⚠️ **Parcial / condicionado:** nome exato encontrado em ao menos um manifesto SHA-exato do recorte; pode já existir ficha individual, mas continuam pendentes fechamento técnico integral, causalidade, targeting, custos, lifecycle, disponibilidade de hooks mutadores e QA.
-- ❌ **Não catalogado individualmente:** não há referência literal ao **ID minúsculo de recurso** nos **48 manifestos selecionados**; campos simbólicos de bytecode em maiúsculas não encerram uma identidade individual. Isso **não prova** ausência de comportamento ou documentação em outros arquivos, fontes, assets ou módulos.
-- ✅ **Catalogado integralmente:** nenhum desses 51 recebeu esse estado nesta revisão. Evidência de outra ação/equipamento não fecha o universo do encantamento.
+Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecionados e misturavam IDs minúsculos e campos JVM. Eles não são recontados como certificação nesta entrega. As barras atuais usam apenas o inventário publisher de 51 IDs, os ficheiros individuais existentes e o ledger de certificados. A relação nominal abaixo é histórica fora da nova linha Heavy Slam; não é uma nova varredura integral dos consumidores de todos os encantamentos.
 
 ## Índice alfabético dos recursos
 
@@ -68,7 +57,7 @@ perk_certification=NOT_CERTIFIED
 | ⚠️ | `alexscaves:field_extension` | [Ficha técnica parcial](enchantments/field-extension.md) · [manifesto SHA-exato 1.0.10](EXACT-FIELD-EXTENSION-1.0.10.json) · [Ferrous Haste](enchantments/ferrous-haste.md) |
 | ⚠️ | `alexscaves:flinging` | [Ficha técnica parcial](enchantments/flinging.md) · [manifesto SHA-exato 1.0.10](EXACT-FLINGING-1.0.10.json) |
 | ⚠️ | `alexscaves:gamma_ray` | [Ficha técnica parcial](enchantments/gamma-ray.md) · [Raygun 1.0.10](EXACT-RAYGUN-CONTROL-1.0.10.json) · [branches Gamma](EXACT-RAYGUN-CONDITION-BRANCHES-1.0.10.json) · [consumidores](EXACT-RAYGUN-BRANCH-CONSUMERS-1.0.10.json) |
-| ❌ | `alexscaves:heavy_slam` | Não localizada nos 48 manifestos selecionados |
+| ✅ | `alexscaves:heavy_slam` | [Contrato técnico estático](enchantments/heavy-slam.md) · [JSON/consumidor selados](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
 | ⚠️ | `alexscaves:herd_phalanx` | [`EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json`](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) |
 | ⚠️ | `alexscaves:humungous_hex` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:impending_stab` | [`EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json`](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) |
@@ -80,23 +69,23 @@ perk_certification=NOT_CERTIFIED
 | ⚠️ | `alexscaves:rapid_possession` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:relentless_darkness` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:sated_blade` | [`EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json`](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:sea_swing` | Não localizada nos 48 manifestos selecionados |
+| ❌ | `alexscaves:sea_swing` | Sem ficha individual no checkpoint histórico; ausência de comportamento não comprovada |
 | ⚠️ | `alexscaves:seapairing` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:second_wave` | Não localizada nos 48 manifestos selecionados |
+| ❌ | `alexscaves:second_wave` | Sem ficha individual no checkpoint histórico; ausência de comportamento não comprovada |
 | ⚠️ | `alexscaves:seekcandy` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:shaded_respite` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:sharp_cane` | Não localizada nos 48 manifestos selecionados |
+| ❌ | `alexscaves:sharp_cane` | Sem ficha individual no checkpoint histórico; ausência de comportamento não comprovada |
 | ⚠️ | `alexscaves:sightless` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:soak_seeking` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:solar` | Não localizada nos 48 manifestos selecionados |
+| ❌ | `alexscaves:solar` | Sem ficha individual no checkpoint histórico; ausência de comportamento não comprovada |
 | ⚠️ | `alexscaves:spell_lasting` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:straight_hook` | Não localizada nos 48 manifestos selecionados |
-| ❌ | `alexscaves:swiftwood` | Não localizada nos 48 manifestos selecionados |
+| ❌ | `alexscaves:straight_hook` | Sem ficha individual no checkpoint histórico; ausência de comportamento não comprovada |
+| ❌ | `alexscaves:swiftwood` | Sem ficha individual no checkpoint histórico; ausência de comportamento não comprovada |
 | ⚠️ | `alexscaves:targeted_ricochet` | [`EXACT-GUMBALL-CONTRACTS-1.0.10.json`](EXACT-GUMBALL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:taxing_bellow` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:triple_splash` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:triple_split` | [`EXACT-GUMBALL-CONTRACTS-1.0.10.json`](EXACT-GUMBALL-CONTRACTS-1.0.10.json) |
-| ❌ | `alexscaves:tsunami` | Não localizada nos 48 manifestos selecionados |
+| ❌ | `alexscaves:tsunami` | Sem ficha individual no checkpoint histórico; ausência de comportamento não comprovada |
 | ⚠️ | `alexscaves:twilight_perfection` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:x_ray` | [`EXACT-RAYGUN-CONTROL-1.0.10.json`](EXACT-RAYGUN-CONTROL-1.0.10.json) |
 
@@ -108,6 +97,6 @@ perk_certification=NOT_CERTIFIED
 
 ## Critério de conclusão por encantamento
 
-Para substituir ⚠️/❌ por ✅, verificar no **JAR 1.0.10**: (1) recurso JSON completo e registro/mod ID; (2) níveis, valores, custo, exclusividade e slots aplicáveis; (3) consumidor Java real com owner, descriptor, parâmetros e checkpoints; (4) aquisição, ordem causal, custos/recursos e consequências; (5) targeting, dano/tipo, alcance/área, tempo e projétil quando aplicáveis; (6) suporte real de mutação, autoria/servidor, replay/procs e coexistência; (7) QA explícita. Marcar `N/A` quando demonstrado. Sem hook verificado, **⛔ fail-closed** para perks que modificam o pipeline do provider.
+Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-A **próxima identidade em ordem alfabética** é `alexscaves:gamma_ray`; a continuação deve aproveitar as evidências já seladas por ação/equipamento e investigar os dados ausentes, sem repetir suas auditorias. A fila global continua no **Alex's Caves Continued**; Raygun e Tremorzilla Beam permanecem **28/30** contratos técnicos de fichas *já observadas*.
+A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:herd_phalanx`; a continuação deve aproveitar o contrato Spirit Dinosaur existente e fechar os dados específicos do encantamento. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **29/51 contratos estáticos entre fichas observadas**, incluindo 21 fichas de encantamentos. Esses 51 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.

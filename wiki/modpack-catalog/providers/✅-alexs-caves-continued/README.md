@@ -61,3 +61,7 @@ No JAR 1.0.10, `DarkArrowEntity.defineSynchedData` atribui defaults `0.0f` e `fa
 [Auditoria da versão instalada](damage-types/EXACT-DREADBOW-DECISIONS-1.0.10.json): `PRECISE_VOLLEY` determina o argumento bruto de dano `2.0f`/`3.0f`, enquanto `TWILIGHT_PERFECTION` em conjunto com `getPerfectShotTicks > 0` determina o booleano de `PERFECT_SHOT`. Esses são contratos parciais estáticos; sem hook mutador seguro, dano final ou QA física certificados.
 
 **Shot Gum e Gumball:** [equipamento](equipment/shot-gum.md), [projétil/dano](damage-types/gumball.md) e [prova conjunta](EXACT-GUMBALL-CONTRACTS-1.0.10.md) relacionam munição, estado, emissores nativos, encantamentos, autoria, ricochetes, impacto e explosão. Os dois contratos são estáticos e delimitados, com hooks e QA física pendentes.
+
+### Encantamentos — Heavy Slam
+
+O [crosswalk de 51 recursos](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md) registra 21 fichas individuais existentes: [Heavy Slam](enchantments/heavy-slam.md) tem contrato técnico estático completo e vinte outras permanecem parciais. [Prova do JAR exato](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md). Hooks mutadores e QA física continuam pendentes; a fila alfabética permanece neste provider.

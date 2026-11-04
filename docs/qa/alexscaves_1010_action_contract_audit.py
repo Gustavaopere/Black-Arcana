@@ -50,6 +50,7 @@ FORSAKEN = frozenset(("damage-types/forsaken-sonic-boom.md",))
 GUMBALL = frozenset(("equipment/shot-gum.md", "damage-types/gumball.md"))
 NUCLEAR = frozenset(("damage-types/intentional-game-design.md", "damage-types/nuke.md"))
 SPIRIT_DINOSAUR = frozenset(("damage-types/spirit-dinosaur.md",))
+HEAVY_SLAM = frozenset(("enchantments/heavy-slam.md",))
 SCOPE = {"schema_version": 1, "version": "1.0.10",
          "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
          "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR", "mutating_hook": "NOT_VERIFIED",
@@ -65,6 +66,7 @@ FORSAKEN_SCOPE = {**SCOPE, "catalog_family": "FORSAKEN_SONIC_CONTRACT"}
 GUMBALL_SCOPE = {**SCOPE, "catalog_family": "GUMBALL_CONTRACTS"}
 NUCLEAR_SCOPE = {**SCOPE, "catalog_family": "NUCLEAR_DAMAGE_CONTRACTS"}
 SPIRIT_DINOSAUR_SCOPE = {**SCOPE, "catalog_family": "SPIRIT_DINOSAUR_DAMAGE_CONTRACT"}
+HEAVY_SLAM_SCOPE = {**SCOPE, "catalog_family": "HEAVY_SLAM_ENCHANTMENT_CONTRACT"}
 ADJACENT_SOURCE = {"repository": "Codx-org/AlexsCavesContinued",
                    "revision": "523308608422ab8e31974befa7111ecdf495dd37",
                    "declared_version": "1.1.1",
@@ -82,7 +84,7 @@ def require(condition, message):
 
 def profile_spec(profile):
     """Select a literal family without changing the existing action contract."""
-    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur"), "unknown catalog profile")
+    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam"), "unknown catalog profile")
     if profile == "effects":
         return EFFECT_SCOPE, EFFECTS, "effect_evidence"
     if profile == "dreadbow":
@@ -101,6 +103,8 @@ def profile_spec(profile):
         return NUCLEAR_SCOPE, NUCLEAR, "contract_evidence"
     if profile == "spirit_dinosaur":
         return SPIRIT_DINOSAUR_SCOPE, SPIRIT_DINOSAUR, "contract_evidence"
+    if profile == "heavy_slam":
+        return HEAVY_SLAM_SCOPE, HEAVY_SLAM, "contract_evidence"
     return SCOPE, ACTIONS, "action_evidence"
 
 
@@ -315,7 +319,7 @@ def main(argv=None):
     for flag in ("jar", "manifest", "provider-root", "javap"):
         parser.add_argument("--" + flag, required=True, type=Path)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur"), default="actions")
+    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam"), default="actions")
     args = parser.parse_args(argv)
     try:
         report = audit(args.jar, load_manifest(args.manifest), args.provider_root, args.javap,
