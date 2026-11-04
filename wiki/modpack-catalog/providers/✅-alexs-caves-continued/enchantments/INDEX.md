@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/15.**
+**Fichas catalogadas (somente fichas detectadas): 0/16.**
 
 **Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/15.**
+**Homologadas para perks (somente fichas detectadas): 0/16.**
 
 **Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
@@ -35,6 +35,7 @@
 | ⚠️ | Energy Efficiency | [ficha/energy-efficiency.md](energy-efficiency.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Enveloping Bubble | [ficha/enveloping-bubble.md](enveloping-bubble.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Explosive Flavor | [ficha/explosive-flavor.md](explosive-flavor.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Far Flung | [ficha/far-flung.md](far-flung.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
