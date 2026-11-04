@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 1/21.**
+**Fichas catalogadas (somente fichas detectadas): 2/22.**
 
-**Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 4.8%`
+**Barra das fichas catalogadas:** `█░░░░░░░░░░░░░░░░░░░ 9.1%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 1/21.**
+**Homologadas para perks (somente fichas detectadas): 2/22.**
 
-**Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 4.8%`
+**Barra dos contratos técnicos estáticos:** `█░░░░░░░░░░░░░░░░░░░ 9.1%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -41,6 +41,7 @@
 | ⚠️ | Flinging | [ficha/flinging.md](flinging.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gamma Ray | [ficha/gamma-ray.md](gamma-ray.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Heavy Slam | [ficha/heavy-slam.md](heavy-slam.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Herd Phalanx | [ficha/herd-phalanx.md](herd-phalanx.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

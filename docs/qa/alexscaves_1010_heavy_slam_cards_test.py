@@ -67,10 +67,9 @@ class HeavySlamContract(unittest.TestCase):
         self.assertEqual({v['path'] for v in cert['evidence'].values()},{str((P/CARD).relative_to(ROOT))})
         cards=list((P/'enchantments').glob('*.md'));cards=[p for p in cards if p.name not in ('INDEX.md','README.md')]
         certified=[k for k in ledger['objects'] if k.startswith(P.name+'/enchantments/')]
-        self.assertEqual(certified,[P.name+'/'+CARD])
-        self.assertEqual(len(cards),21)
+        self.assertIn(P.name+'/'+CARD,certified)
         cross=(P/'ENCHANTMENT-PERK-CROSSWALK-1.0.10.md').read_text()
-        for marker in ('individual_full_enchantment_dossiers=1/51','individual_partial_enchantment_dossiers=20/51','individual_existing_enchantment_dossiers=21/51','| ✅ | `alexscaves:heavy_slam`'):
+        for marker in (f'individual_full_enchantment_dossiers={len(certified)}/51',f'individual_partial_enchantment_dossiers={len(cards)-len(certified)}/51',f'individual_existing_enchantment_dossiers={len(cards)}/51','| ✅ | `alexscaves:heavy_slam`'):
             self.assertIn(marker,cross)
 
 if __name__=='__main__':unittest.main()
