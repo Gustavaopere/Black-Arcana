@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 2/22.**
+**Fichas catalogadas (somente fichas detectadas): 3/23.**
 
-**Barra das fichas catalogadas:** `█░░░░░░░░░░░░░░░░░░░ 9.1%`
+**Barra das fichas catalogadas:** `██░░░░░░░░░░░░░░░░░░ 13.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 2/22.**
+**Homologadas para perks (somente fichas detectadas): 3/23.**
 
-**Barra dos contratos técnicos estáticos:** `█░░░░░░░░░░░░░░░░░░░ 9.1%`
+**Barra dos contratos técnicos estáticos:** `██░░░░░░░░░░░░░░░░░░ 13.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -42,6 +42,7 @@
 | ⚠️ | Gamma Ray | [ficha/gamma-ray.md](gamma-ray.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Heavy Slam | [ficha/heavy-slam.md](heavy-slam.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Herd Phalanx | [ficha/herd-phalanx.md](herd-phalanx.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Humungous Hex | [ficha/humungous-hex.md](humungous-hex.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
