@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "card": {
+    "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md",
+    "sha256": "02ef2036d24f27b2c233b78520be3e380db451d04259bf0c71860bf02a74d1f9"
+  },
+  "resource": {
+    "id": "alexscaves:humungous_hex",
+    "path": "data/alexscaves/enchantment/humungous_hex.json",
+    "sha256": "8c45ec4c64e1ed5e258ce1a8d6a27b7693275336b76b91d108521fb91a015cc0",
+    "size_bytes": 364,
+    "json": {
+      "description": {
+        "translate": "enchantment.alexscaves.humungous_hex"
+      },
+      "supported_items": "#alexscaves:enchantable/sugar_staff",
+      "weight": 5,
+      "max_level": 2,
+      "min_cost": {
+        "base": 1,
+        "per_level_above_first": 9
+      },
+      "max_cost": {
+        "base": 41,
+        "per_level_above_first": 10
+      },
+      "anvil_cost": 2,
+      "slots": [
+        "mainhand"
+      ]
+    },
+    "item_tag": {
+      "path": "data/alexscaves/tags/item/enchantable/sugar_staff.json",
+      "sha256": "eb9f84b401224aba54ba91a239e4dd5b775d82012cecf9b03e8f9608e12b11fc",
+      "json": {
+        "values": [
+          "alexscaves:sugar_staff"
+        ]
+      }
+    },
+    "spell_lasting": {
+      "path": "data/alexscaves/enchantment/spell_lasting.json",
+      "sha256": "839c95095540d2c40624575ad74aada2df482d7b4364d86fd8ebc238593a47dc",
+      "json": {
+        "description": {
+          "translate": "enchantment.alexscaves.spell_lasting"
+        },
+        "supported_items": "#alexscaves:enchantable/sugar_staff",
+        "weight": 10,
+        "max_level": 3,
+        "min_cost": {
+          "base": 1,
+          "per_level_above_first": 8
+        },
+        "max_cost": {
+          "base": 41,
+          "per_level_above_first": 10
+        },
+        "anvil_cost": 1,
+        "slots": [
+          "mainhand"
+        ]
+      }
+    },
+    "english_translations": {
+      "enchantment.alexscaves.humungous_hex": "Humungous Hex",
+      "enchantment.alexscaves.humungous_hex.desc": "Hexes have an additional full block in width for each level"
+    }
+  },
+  "classes": {
+    "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class": {
+      "sha256": "d670f887debdfb95f93a52b0c58b3033154a9aa20777fb8bd2a1673ee1407c3f",
+      "method_digests": {
+        "use (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;": "76ba0a5bbf219e25f809c5e4d512fab3503f3e4dd99721e628787a7bde37d475",
+        "getEnchantmentValue ()I": "798e4edaf36fade21f22743e4675e918297e30c52b2df68b1dd4d56d821664ca",
+        "isEnchantable (Lnet/minecraft/world/item/ItemStack;)Z": "f4337dd25cc1531bb16cb1a6838cc99b0fab5a348285e7ad2d1d42372880438a"
+      }
+    },
+    "com/github/alexmodguy/alexscaves/server/entity/item/SugarStaffHexEntity.class": {
+      "sha256": "39f8d11595654ccebcb78540a2772106f0ae30507490570ac6b2cbe28de8e89c",
+      "method_digests": {
+        "tick ()V": "7e74eb07baffa9564591754a76e56ec237eee0bbae08e84497cff3bedeeea9fa",
+        "setLifespan (I)V": "86ceb63b3ac2cd312739e0937c0a6034dc5bf04bcf9e589e06f2c24461e44578",
+        "getLifespan ()I": "2f6d0e3d2ab32b9eb34e3c5f39beac1690845a2885c89739b93f9155c02f7727",
+        "readAdditionalSaveData (Lnet/minecraft/nbt/CompoundTag;)V": "09c94be5b7344f66796c5bf14afc1a884974c844e081f1a2ee75d6f6131f1f50",
+        "addAdditionalSaveData (Lnet/minecraft/nbt/CompoundTag;)V": "eea7becd8a33a9d01920a0254f9ffb48563151b1f492fa98ec23cf1833e02d5f",
+        "hurtEntities (Z)V": "83b41481b0f5fcd819c2ea7590bb244e16954e728ee734f2c22a34d7b7f73ee9",
+        "onSyncedDataUpdated (Lnet/minecraft/network/syncher/EntityDataAccessor;)V": "552d6afbedf59de2ef1b7191ad19b2a16702a3a4d6114b643bacd1727f81f6b3",
+        "getHexScale ()F": "04a8a71c72acc8cf64f032bd40286cc15233f73a020d6ca27feff1068b553867",
+        "setHexScale (F)V": "d41c8909dd9af338b4595844c2c6604e7a5505761e03b54dee706db1a3e927a9",
+        "getDimensions (Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;": "f1c1ee4858986138b0db14b69f22fe184436e6c49b5e4dc8dfd8cfc6445c0e40"
+      }
+    },
+    "com/github/alexmodguy/alexscaves/client/model/SugarStaffModel.class": {
+      "sha256": "329b7c1e795671c99bd13563c6888b0f8d4978ea1d0f973f6eb7a1987bf7eb06",
+      "method_digests": {
+        "setupAnim (Lnet/minecraft/world/entity/Entity;FFFFF)V": "4f50f37a5dedcdfc9afa44894342f92b427c5387327d031accef450bf27f1882"
+      }
+    },
+    "com/github/alexmodguy/alexscaves/client/render/entity/SugarStaffHexRenderer.class": {
+      "sha256": "f162cdc60c9c7c0d3622edc6a3a8bd103ac0f7bbc769aae62635fe7b4eb2b7d3",
+      "method_digests": {
+        "render (Lcom/github/alexmodguy/alexscaves/server/entity/item/SugarStaffHexEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V": "6bf78d1ed9f6491c373866a72116a7c363b0fda4cc5afef1b4452c9ed39831a1",
+        "render (Lnet/minecraft/world/entity/Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V": "3edeae266667b37ee3d8e2dc2f11c90047e09f84d1db5fcff6e9b6606b7fc0e3"
+      }
+    }
+  },
+  "anchors": [
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 118,
+      "symbol_contains": "setHexScale:"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 172,
+      "symbol_contains": "setLifespan:"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 180,
+      "symbol_contains": "addCooldown:"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SugarStaffHexEntity.class",
+      "method": "getDimensions",
+      "descriptor": "(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;",
+      "offset": 1,
+      "symbol_contains": "getHexScale:"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SugarStaffHexEntity.class",
+      "method": "getDimensions",
+      "descriptor": "(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;",
+      "offset": 4,
+      "symbol_contains": "float 4.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SugarStaffHexEntity.class",
+      "method": "getDimensions",
+      "descriptor": "(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;",
+      "offset": 7,
+      "symbol_contains": "float 0.25f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SugarStaffHexEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "(Z)V",
+      "offset": 53,
+      "symbol_contains": "distanceTo:"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SugarStaffHexEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "(Z)V",
+      "offset": 145,
+      "symbol_contains": "indirectMagic:"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/client/render/entity/SugarStaffHexRenderer.class",
+      "method": "render",
+      "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/entity/item/SugarStaffHexEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+      "offset": 75,
+      "symbol_contains": "getHexScale:"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/client/render/entity/SugarStaffHexRenderer.class",
+      "method": "render",
+      "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/entity/item/SugarStaffHexEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+      "offset": 108,
+      "symbol_contains": "mulPose:"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/client/render/entity/SugarStaffHexRenderer.class",
+      "method": "render",
+      "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/entity/item/SugarStaffHexEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+      "offset": 119,
+      "symbol_contains": "scale:"
+    }
+  ],
+  "limits": {
+    "source_copy": false,
+    "compiled_classfile_digest": true,
+    "renderer_visual_only": true,
+    "semantic_magic_roots_added": 0,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "mutation": "NO_MUTATION",
+    "target_effective_radius": "NOT_CERTIFIED_AS_INCREASED",
+    "renderer_gameplay_authority": "NONE",
+    "future_hook": "FAIL_CLOSED"
+  }
+}

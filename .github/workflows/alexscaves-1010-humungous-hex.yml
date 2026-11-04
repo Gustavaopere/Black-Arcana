@@ -1,0 +1,62 @@
+name: Alex's Caves 1.0.10 Humungous Hex SHA-exact discovery
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_humungous_hex_probe.py'
+      - 'docs/qa/alexscaves_1010_humungous_hex_probe_test.py'
+      - '.github/workflows/alexscaves-1010-humungous-hex.yml'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.json'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/qa/alexscaves_1010_humungous_hex_probe.py'
+      - 'docs/qa/alexscaves_1010_humungous_hex_probe_test.py'
+      - '.github/workflows/alexscaves-1010-humungous-hex.yml'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.md'
+
+permissions:
+  contents: read
+
+jobs:
+  humungous_exact:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Probe syntax and fail-closed synthetic tests
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_humungous_hex_probe.py docs/qa/alexscaves_1010_humungous_hex_probe_test.py
+          python3 docs/qa/alexscaves_1010_humungous_hex_probe_test.py -v
+      - name: Download SHA-exact publisher JAR 1.0.10
+        run: |
+          mkdir -p build/alexscaves-humungous-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-humungous-1010/alexscaves-1.0.10.jar
+      - name: Verify the real resource and selected classfiles
+        run: |
+          python3 docs/qa/alexscaves_1010_humungous_hex_probe.py \
+            --jar build/alexscaves-humungous-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.json' \
+            --output build/alexscaves-humungous-1010/evidence.json
+      - name: Print card SHA-256 for immutable evidence seal
+        run: sha256sum 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md'
+      - name: Archive bounded exact evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-humungous-evidence
+          path: build/alexscaves-humungous-1010/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
