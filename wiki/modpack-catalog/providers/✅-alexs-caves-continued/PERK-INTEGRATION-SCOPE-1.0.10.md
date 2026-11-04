@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com Heavy Slam, o provider registra **29 contratos estáticos certificados entre 51 fichas observadas**: 21 são dossiers de encantamentos, sendo vinte parciais e um estático completo. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
+As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com Heavy Slam e Herd Phalanx, o provider registra **30 contratos estáticos certificados entre 52 fichas observadas**: 22 são dossiers de encantamentos, sendo vinte parciais e dois estáticos completos. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 
@@ -63,3 +63,7 @@ A [prova consolidada](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.md) fecha a ficha ex
 ## Heavy Slam — primeiro contrato estático individual de encantamento
 
 A [ficha](enchantments/heavy-slam.md) e o [manifesto reproduzível](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md) documentam JSON, custos/slots, dano inicial 6+3L, pulsos posteriores2F, área/targeting e as fronteiras de knockback, dois lados lógicos e durabilidade. A conclusão não certifica todo Resistor Shield, não transforma relâmpagos visuais em DamageType elétrico e não concede hook mutador ou QA física.
+
+## Herd Phalanx — quantidade e defesa Grotto
+
+A [ficha individual](enchantments/herd-phalanx.md) e o [selo](EXACT-HERD-PHALANX-CONTRACT-1.0.10.md) reaproveitam a cadeia Spirit Dinosaur para documentar 3+L tentativas de criação, órbita, UUID, consumo e limpeza. Pedido de dano zero no Pre e marcação fading não equivalem a imunidade ou descarte instantâneo medidos. O contrato é estático; hooks, QA física e universo do provider permanecem abertos.

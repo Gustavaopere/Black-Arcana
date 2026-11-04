@@ -9,9 +9,9 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=1/51
+individual_full_enchantment_dossiers=2/51
 individual_partial_enchantment_dossiers=20/51
-individual_existing_enchantment_dossiers=21/51
+individual_existing_enchantment_dossiers=22/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -19,15 +19,17 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `░░░░░░░░░░░░░░░░░░░░ 2.0% (1/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `░░░░░░░░░░░░░░░░░░░░ 3.9% (2/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `████████░░░░░░░░░░░░ 41.2% (21/51)`; destes, vinte permanecem parciais e apenas Heavy Slam recebe o certificado estático.
+**Barra de dossiers individuais existentes, completos ou parciais:** `████████░░░░░░░░░░░░ 43.1% (22/51)`; destes, vinte permanecem parciais e Heavy Slam e Herd Phalanx recebem certificados estáticos.
+
+**Herd Phalanx:** [ficha individual completa no escopo estático](enchantments/herd-phalanx.md) e [prova reaproveitando Spirit Dinosaur](EXACT-HERD-PHALANX-CONTRACT-1.0.10.md). O nível altera 3+L tentativas de Grotto; consumo, órbita, cleanup e pedido de dano zero no Pre conservam seus guards. A entrada não certifica outros espíritos nem reduz os vinte dossiers parciais anteriores.
 
 **Heavy Slam:** [ficha completa no escopo estático](enchantments/heavy-slam.md) e [prova reproduzível](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md). JSON, níveis, custos, slots, aquisição, consumidor, dano, área, cadência, movimento e estado estão documentados; hooks e QA física continuam pendentes. Gamma Ray e as dezenove fichas parciais anteriores são preservadas.
 
 ## Leitura dos estados
 
-- ✅ **Contrato técnico estático concluído:** somente Heavy Slam, sustentado pelo certificado individual, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
+- ✅ **Contrato técnico estático concluído:** Heavy Slam e Herd Phalanx, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
 - ⚠️ **Referência histórica/parcial:** o objeto tem evidências nominais ou consumidor em outro recorte; vários ainda não têm ficha própria. Não promover conclusão por associação a outro equipamento/ação.
 - ❌ **Sem ficha individual no checkpoint histórico:** preserva a pendência existente; não prova inexistência do recurso, ausência de referências ou comportamento.
 
@@ -58,7 +60,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ⚠️ | `alexscaves:flinging` | [Ficha técnica parcial](enchantments/flinging.md) · [manifesto SHA-exato 1.0.10](EXACT-FLINGING-1.0.10.json) |
 | ⚠️ | `alexscaves:gamma_ray` | [Ficha técnica parcial](enchantments/gamma-ray.md) · [Raygun 1.0.10](EXACT-RAYGUN-CONTROL-1.0.10.json) · [branches Gamma](EXACT-RAYGUN-CONDITION-BRANCHES-1.0.10.json) · [consumidores](EXACT-RAYGUN-BRANCH-CONSUMERS-1.0.10.json) |
 | ✅ | `alexscaves:heavy_slam` | [Contrato técnico estático](enchantments/heavy-slam.md) · [JSON/consumidor selados](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
-| ⚠️ | `alexscaves:herd_phalanx` | [`EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json`](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) |
+| ✅ | `alexscaves:herd_phalanx` | [Contrato técnico estático](enchantments/herd-phalanx.md) · [selo individual](EXACT-HERD-PHALANX-CONTRACT-1.0.10.json) · [consumidor Spirit Dinosaur](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
 | ⚠️ | `alexscaves:humungous_hex` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:impending_stab` | [`EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json`](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:lasting_morale` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
@@ -99,4 +101,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:herd_phalanx`; a continuação deve aproveitar o contrato Spirit Dinosaur existente e fechar os dados específicos do encantamento. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **29/51 contratos estáticos entre fichas observadas**, incluindo 21 fichas de encantamentos. Esses 51 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
+A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:humungous_hex`; a continuação deve aproveitar o contrato Sugar Staff Hex existente e fechar os dados específicos do encantamento. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **30/52 contratos estáticos entre fichas observadas**, incluindo 22 fichas de encantamentos. Esses 52 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
