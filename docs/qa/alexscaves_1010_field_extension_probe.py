@@ -25,6 +25,8 @@ SCOPE = "SHA_EXACT_1010_FIELD_EXTENSION_MAGNETIC_WEAPON_RANGE_SELECTED_JVM_EVIDE
 ENCHANT = "data/alexscaves/enchantment/field_extension.json"
 RANGES = ((495, 680), (680, 930), (930, 1005))
 MUST_HAVE = {
+    552: ("ldc", "float 30.0f"),
+    554: ("fstore", ""),
     626: ("getstatic", "FIELD_EXTENSION"),
     629: ("invokestatic", "enchantLevel:"),
     632: ("istore", ""),
@@ -37,6 +39,10 @@ MUST_HAVE = {
     656: ("fload", ""),
     658: ("f2d", ""),
     659: ("invokestatic", "getHitResultOnViewVector:"),
+    813: ("fload", ""),
+    815: ("ldc_w", "float 20.0f"),
+    818: ("fsub", ""),
+    820: ("invokevirtual", "Vec3.scale:"),
 }
 
 def require(ok: bool, reason: str) -> None:
@@ -89,7 +95,7 @@ def validate_windows(rows):
                 "range window too narrow/large: "+str((lo,hi)))
     # Require a source value for the scalar and later use by native raycast;
     # this is not a proof of all caller-side filters or actual observed reach.
-    require(by_offset[644]["operand"]=="8" and by_offset[656]["operand"]=="8",
+    require(all(by_offset[k]["operand"]=="8" for k in (554,644,656,813)),
             "range local is not shared with provider-native raycast")
 
 def selected_windows(rows):
