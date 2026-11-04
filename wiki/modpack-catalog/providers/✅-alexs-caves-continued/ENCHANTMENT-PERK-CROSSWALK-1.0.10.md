@@ -10,7 +10,7 @@ artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
 individual_full_enchantment_dossiers=0/51
-individual_partial_enchantment_dossiers=19/51
+individual_partial_enchantment_dossiers=20/51
 names_located_in_selected_exact_manifests=43/51
 names_not_located_in_selected_exact_manifests=8/51
 whole_provider_catalog_closed=false
@@ -22,9 +22,11 @@ perk_certification=NOT_CERTIFIED
 
 **Barra de fichas individuais integralmente auditadas (escopo dos 51 encantamentos):** `░░░░░░░░░░░░░░░░░░░░ 0,0% (0/51)`.
 
-**Barra de fichas com documentação parcial individual (não é conclusão técnica):** `███████░░░░░░░░░░░░░ 37,3% (19/51)`.
+**Barra de fichas com documentação parcial individual (não é conclusão técnica):** `███████░░░░░░░░░░░░░ 39,2% (20/51)`.
 
-**Barra de rastreio de referências SHA-exatas (não é conclusão):** `████████████████░░░░ 84,3% (43/51)`. As fichas individuais parciais de Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension e Flinging entram no denominador observado após regeneração dos índices, **sem certificar contrato estático nem alterar o numerador de certificados**. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
+**Barra de rastreio de referências SHA-exatas (não é conclusão):** `████████████████░░░░ 84,3% (43/51)`. As fichas individuais parciais de Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging e Gamma Ray entram no denominador observado após regeneração dos índices, **sem certificar contrato estático nem alterar o numerador de certificados**. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
+
+**Nova ficha Gamma Ray:** [dossier parcial](enchantments/gamma-ray.md) consolida os consumidores e branches SHA-exatos **já existentes** do `RaygunItem.onUseTick` (dano solicitado 2.0f/1.5f, `Irradiated` com 800 ticks e amplifier 4/0, visuais e resistência). Isso eleva **19→20/51 fichas individuais parciais**; o rastreio nominal continua **43/51**, pois `GAMMA_RAY` já estava em manifesto selecionado. Nenhum novo JSON individual foi selado, e não se altera certificação de perk, hook ou QA.
 
 **Nova evidência Flinging:** [`EXACT-FLINGING-1.0.10.json`](EXACT-FLINGING-1.0.10.json) registra o ID literal `flinging`, JSON e tag publisher, e os métodos compilados de `OrtholanceItem.releaseUsing` / `WaveEntity`, elevando o rastreio nominal **42→43/51**. Os campos simbólicos `TSUNAMI` e `SECOND_WAVE` aparecem nas janelas, mas não contam como IDs minúsculos certificados nem como dossiers individuais; sem novo contrato de perk ou hook mutador.
 
@@ -65,7 +67,7 @@ perk_certification=NOT_CERTIFIED
 | ⚠️ | `alexscaves:ferrous_haste` | [Ficha técnica parcial](enchantments/ferrous-haste.md) · [manifesto SHA-exato 1.0.10](EXACT-FERROUS-HASTE-1.0.10.json) · [Crystallization](enchantments/crystallization.md) |
 | ⚠️ | `alexscaves:field_extension` | [Ficha técnica parcial](enchantments/field-extension.md) · [manifesto SHA-exato 1.0.10](EXACT-FIELD-EXTENSION-1.0.10.json) · [Ferrous Haste](enchantments/ferrous-haste.md) |
 | ⚠️ | `alexscaves:flinging` | [Ficha técnica parcial](enchantments/flinging.md) · [manifesto SHA-exato 1.0.10](EXACT-FLINGING-1.0.10.json) |
-| ⚠️ | `alexscaves:gamma_ray` | [`EXACT-RAYGUN-CONTROL-1.0.10.json`](EXACT-RAYGUN-CONTROL-1.0.10.json) |
+| ⚠️ | `alexscaves:gamma_ray` | [Ficha técnica parcial](enchantments/gamma-ray.md) · [Raygun 1.0.10](EXACT-RAYGUN-CONTROL-1.0.10.json) · [branches Gamma](EXACT-RAYGUN-CONDITION-BRANCHES-1.0.10.json) · [consumidores](EXACT-RAYGUN-BRANCH-CONSUMERS-1.0.10.json) |
 | ❌ | `alexscaves:heavy_slam` | Não localizada nos 48 manifestos selecionados |
 | ⚠️ | `alexscaves:herd_phalanx` | [`EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json`](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) |
 | ⚠️ | `alexscaves:humungous_hex` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |

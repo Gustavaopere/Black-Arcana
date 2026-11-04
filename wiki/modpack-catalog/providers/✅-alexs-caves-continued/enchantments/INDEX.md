@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 0/19.**
+**Fichas catalogadas (somente fichas detectadas): 0/20.**
 
 **Barra das fichas catalogadas:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 0/19.**
+**Homologadas para perks (somente fichas detectadas): 0/20.**
 
 **Barra dos contratos técnicos estáticos:** `░░░░░░░░░░░░░░░░░░░░ 0.0%`
 
@@ -39,6 +39,7 @@
 | ⚠️ | Ferrous Haste | [ficha/ferrous-haste.md](ferrous-haste.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Field Extension | [ficha/field-extension.md](field-extension.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Flinging | [ficha/flinging.md](flinging.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Gamma Ray | [ficha/gamma-ray.md](gamma-ray.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
