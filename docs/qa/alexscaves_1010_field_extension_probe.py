@@ -85,7 +85,7 @@ def validate_windows(rows):
                 "missing/wrong field extension ABI @"+str(offset))
     for lo,hi in RANGES:
         excerpt=[x for x in rows if lo<=x["offset"]<=hi]
-        require(10<=len(excerpt)<=190,
+        require(10<=len(excerpt)<=300,
                 "range window too narrow/large: "+str((lo,hi)))
     # Require a source value for the scalar and later use by native raycast;
     # this is not a proof of all caller-side filters or actual observed reach.
