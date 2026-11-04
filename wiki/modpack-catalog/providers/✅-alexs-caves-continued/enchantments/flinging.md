@@ -80,7 +80,7 @@ A liberação **com C positivo** calcula impulso, mas as rotinas de ondas/dano/d
 
 ### 3.3. Dano da liberação e targeting
 
-O método nativo monta uma região `AABB` delimitada entre a posição do usuário e uma posição derivada do vetor de impulso e do contador de ondas, com expansão adicional; a área é uma **caixa**, não uma esfera nem um valor único de raio. O manifest selecionado prova `Level.getEntitiesOfClass(LivingEntity.class,AABB) @758` e os guards:
+O método nativo consulta entidades dentro de uma `AABB`, mas **as janelas selecionadas não fecham sua geometria exata nem o cálculo completo de seus limites**; a área é uma caixa, não uma esfera nem um raio escalar certificado. O manifesto selecionado prova `Level.getEntitiesOfClass(LivingEntity.class,AABB) @758` e os guards:
 
 - `isAlliedTo @793`: filtra aliados.
 - `equals @802`: exclui o próprio usuário.
