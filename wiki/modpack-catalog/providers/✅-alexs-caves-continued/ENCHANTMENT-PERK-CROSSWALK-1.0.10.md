@@ -26,12 +26,14 @@ perk_certification=NOT_CERTIFIED
 
 **Barra de rastreio de referências SHA-exatas (não é conclusão):** `███████████████░░░░░ 78,4% (40/51)`. As fichas individuais parciais de Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor e Far Flung entram no denominador observado após regeneração dos índices, **sem certificar contrato estático nem alterar o numerador de certificados**. Não some os 51 recursos ao denominador global sem reconciliação do universo de objetos e duplicações com ações/equipamentos existentes.
 
+**Nova evidência exata:** [`EXACT-FAR-FLUNG-1.0.10.json`](EXACT-FAR-FLUNG-1.0.10.json) acrescenta o ID literal `far_flung` ao recorte SHA-exato e eleva o rastreio **39→40/51**. A sonda também localiza os símbolos JVM em maiúsculas `SHARP_CANE` e `STRAIGHT_HOOK` no mesmo construtor; eles são *pistas técnicas*, não substituem uma ficha individual e não foram somados como IDs literais de recursos JSON neste contador. A classificação ❌ dessas entradas continua sujeita a auditoria própria.
+
 **Reconciliação de referência:** `dazing_sweep` já consta como recurso e consumidor no manifesto SHA-exato existente [`EXACT-EFFECT-CONTRACTS-1.0.10.json`](EXACT-EFFECT-CONTRACTS-1.0.10.json), embora o crosswalk anterior o marcasse ❌. A correção eleva somente o rastreio nominal **38→39/51**; não adiciona manifesto, raiz mágica ou certificado de perk.
 
 ## Leitura da coluna de estado
 
-- ⚠️ **Parcial / condicionado:** nome exato encontrado em ao menos um manifesto SHA-exato do recorte, mas ainda falta ficha própria com definição, parâmetros, consumidor compilado, causalidade, targeting, custos, lifecycle, disponibilidade de hooks e QA.
-- ❌ **Não catalogado individualmente:** nenhuma referência nominal foi encontrada nos **45 manifestos selecionados**; isso **não prova** ausência de comportamento ou documentação em outros arquivos, source, assets ou módulos.
+- ⚠️ **Parcial / condicionado:** nome exato encontrado em ao menos um manifesto SHA-exato do recorte; pode já existir ficha individual, mas continuam pendentes fechamento técnico integral, causalidade, targeting, custos, lifecycle, disponibilidade de hooks mutadores e QA.
+- ❌ **Não catalogado individualmente:** não há referência literal ao **ID minúsculo de recurso** nos **45 manifestos selecionados**; campos simbólicos de bytecode em maiúsculas não encerram uma identidade individual. Isso **não prova** ausência de comportamento ou documentação em outros arquivos, fontes, assets ou módulos.
 - ✅ **Catalogado integralmente:** nenhum desses 51 recebeu esse estado nesta revisão. Evidência de outra ação/equipamento não fecha o universo do encantamento.
 
 ## Índice alfabético dos recursos
