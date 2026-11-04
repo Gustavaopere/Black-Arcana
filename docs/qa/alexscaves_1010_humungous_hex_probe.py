@@ -152,6 +152,12 @@ def main():
           "instruction_count":m["instruction_count"],
           "parsed_method_sha256":m["parsed_method_sha256"]}
           for m in c["selected_methods"]]},ensure_ascii=False))
+    for c in report["classes"]:
+        if c["path"].endswith("SugarStaffHexRenderer.class"):
+            for method in c["selected_methods"]:
+                if method["name"] == "render" and "SugarStaffHexEntity;" in method["descriptor"]:
+                    print("EXACT_RENDERER_WINDOWS="+json.dumps(method["selected_windows"],
+                        ensure_ascii=False,sort_keys=True))
     print("EXACT_DISCOVERY_VALIDATED: artifact, selected class hashes, item tag and JSON")
 if __name__ == "__main__":
     main()
