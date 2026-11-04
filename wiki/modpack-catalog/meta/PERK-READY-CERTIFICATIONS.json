@@ -6779,6 +6779,46 @@
           "reason": "Manifesto consolidado reproduzível, descritores e âncoras de instruções auditadas no JAR exato; testes semânticos e negativos, snapshots prévios preservados."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/heavy-slam.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual de Heavy Slam e do pipeline nativo de pulsos delimitado; não certifica Resistor Shield inteiro, demais encantamentos, engine de dano/knockback, hooks, QA física ou provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/heavy-slam.md",
+          "reason": "JAR publisher1.0.10 SHA-exato, JSON completo heavy_slam, registro/ResourceKey, tag e descrição original de idioma selados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/heavy-slam.md",
+          "reason": "Pulso onUseTick, primeiro slam e pulsos posteriores, dano e knockback em ordem causal, polaridade e lifecycle do item delimitados."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/heavy-slam.md",
+          "reason": "Nível3 declarado, fórmula inteira6+3L no primeiro pulso e2F nos demais, 10ticks iniciais/cadência5, AABB5/1/5 e distância<=5, custos/slots/atributos do item."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/heavy-slam.md",
+          "reason": "Consulta de LivingEntity, exclusão do próprio usuário/aliados e limite de distância; fonte mobAttack(user), resultado de hurt descartado e componentes Azure preservados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/heavy-slam.md",
+          "reason": "Durabilidade1 somente t10servidor independentemente de alvo, custos JSON de encantamento separados, ausência de débito mana/cooldown próprio sem alegar custo global zero."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/heavy-slam.md",
+          "reason": "Autoridade da engine e do provider, dois lados lógicos, CUSTOM_DATA/estado visual, parâmetros de knockback e NO_MUTATION; hooks e QA pendentes."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/heavy-slam.md",
+          "reason": "Manifesto reproduzível, card/class/resource hashes, perfil literal, regressões negativas e semânticas e auditoria do JAR exato; universo integral aberto."
+        }
+      }
     }
   },
   "providers": {},
