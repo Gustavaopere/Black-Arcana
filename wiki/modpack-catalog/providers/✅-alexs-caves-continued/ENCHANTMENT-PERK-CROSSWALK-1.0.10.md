@@ -64,7 +64,7 @@ perk_certification=NOT_CERTIFIED
 | ⚠️ | `alexscaves:far_flung` | [Ficha técnica parcial](enchantments/far-flung.md) · [manifesto SHA-exato 1.0.10](EXACT-FAR-FLUNG-1.0.10.json) · [sonda read-only](../../../../docs/qa/alexscaves_1010_far_flung_probe.py) |
 | ⚠️ | `alexscaves:ferrous_haste` | [Ficha técnica parcial](enchantments/ferrous-haste.md) · [manifesto SHA-exato 1.0.10](EXACT-FERROUS-HASTE-1.0.10.json) · [Crystallization](enchantments/crystallization.md) |
 | ⚠️ | `alexscaves:field_extension` | [Ficha técnica parcial](enchantments/field-extension.md) · [manifesto SHA-exato 1.0.10](EXACT-FIELD-EXTENSION-1.0.10.json) · [Ferrous Haste](enchantments/ferrous-haste.md) |
-| ⚠️ | `alexscaves:flinging` | [Ficha técnica parcial](enchantments/flinging.md) · [manifesto SHA-exato 1.0.10](EXACT-FLINGING-1.0.10.json) · [Ortholance native release](enchantments/flinging.md#3-contrato-nativo-ortholanceitemreleaseusing) |
+| ⚠️ | `alexscaves:flinging` | [Ficha técnica parcial](enchantments/flinging.md) · [manifesto SHA-exato 1.0.10](EXACT-FLINGING-1.0.10.json) |
 | ⚠️ | `alexscaves:gamma_ray` | [`EXACT-RAYGUN-CONTROL-1.0.10.json`](EXACT-RAYGUN-CONTROL-1.0.10.json) |
 | ❌ | `alexscaves:heavy_slam` | Não localizada nos 48 manifestos selecionados |
 | ⚠️ | `alexscaves:herd_phalanx` | [`EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json`](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) |
