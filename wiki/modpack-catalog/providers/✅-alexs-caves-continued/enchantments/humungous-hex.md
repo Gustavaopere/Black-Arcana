@@ -34,9 +34,7 @@ O ramo agachado de `SugarStaffItem.use(Level,Player,InteractionHand)` cria uma `
 
 A expressão numérica no método nativo é:
 
-[
-S = 1{,}0 + 0{,}25 \times L
-]
+**\`S = 1 + 0,25 × L\`**
 
 em que **L** é o nível lido de Humungous Hex e **S** é a escala enviada a `SugarStaffHexEntity.setHexScale`. A entidade usa `getDimensions(Pose)` com largura `4F × S` e altura fixa `0.25F`; alteração do dado sincronizado de escala invoca `refreshDimensions` em `onSyncedDataUpdated`.
 
