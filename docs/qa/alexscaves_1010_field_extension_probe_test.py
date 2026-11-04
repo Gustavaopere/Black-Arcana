@@ -14,8 +14,8 @@ def rows():
     for offset,(op,needle) in MUST_HAVE.items():
         allrows[offset]["opcode"]=op
         allrows[offset]["symbol"]="Method "+needle
-    allrows[644]["operand"]="8"
-    allrows[656]["operand"]="8"
+    for offset in (554,644,656,813):
+        allrows[offset]["operand"]="8"
     return allrows
 
 class FieldExtensionProbeTests(unittest.TestCase):
