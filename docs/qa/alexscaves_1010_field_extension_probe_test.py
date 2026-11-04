@@ -21,7 +21,7 @@ def rows():
 class FieldExtensionProbeTests(unittest.TestCase):
     def test_scope(self):
         self.assertIn("1010",SCOPE)
-        self.assertEqual(len(MUST_HAVE),12)
+        self.assertEqual(len(MUST_HAVE),18)
 
     def test_wrong_identity_fails(self):
         with self.assertRaisesRegex(ValueError,"wrong field extension identity"):
