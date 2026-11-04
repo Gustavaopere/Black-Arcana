@@ -6859,6 +6859,46 @@
           "reason": "Selo individual reaproveita evidência Spirit Dinosaur sem reescrevê-la; hashes/ABIs/âncoras reexaminados no JAR exato, testes semânticos e negativos e estados físicos separados."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/humungous-hex.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Somente contrato estático individual Humungous Hex e vínculo Sugar Staff Hex + renderer; não certifica perks mutadoras, escala/alcance físico, damage lifecycle em multiplayer, save/reload, nem universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md",
+          "reason": "JAR publisher1.0.10 SHA-exato; recurso humungous_hex de 364bytes, tradução literal, tag sugar_staff e quatro classfiles fixados no manifesto individual."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md",
+          "reason": "SugarStaffItem.use seleciona Hex, setHexScale e spawn provider-native; entidade aplica dimensão, hurtEntities e tick; renderer separado do gameplay."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md",
+          "reason": "max_level2, weight5, custos/slots JSON, escala1+0.25L, largura4/5/6 e altura0.25, fórmula Spell Lasting separada e valores de dano1/6."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md",
+          "reason": "AABB dinâmica e distanceTo<=4 independentes, filtros de owner/aliados/Licowitch; sem extensão certificada de raio ou mutabilidade."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md",
+          "reason": "Cooldown100 ticks e durabilidade1 do Sugar Staff, lifespan100+60*Spell Lasting, custo de mesa/anvil separado de uso; sem segunda mana."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md",
+          "reason": "Autoridade do provider, renderer cliente, sincronização/NBT e riscos de reload/PvP/claims; NO_MUTATION e fail-closed sem hook seguro."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md",
+          "reason": "Selo de recurso/classes/métodos/offsets e card hash rechecado contra JAR SHA-exato no GitHub Actions, testes sintéticos e limites explícitos; gameplay não testado."
+        }
+      }
     }
   },
   "providers": {},
