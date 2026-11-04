@@ -9,6 +9,7 @@ on:
       - '.github/workflows/alexscaves-1010-humungous-hex.yml'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.json'
   push:
     branches: [main]
     paths:
@@ -47,6 +48,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_humungous_hex_probe.py \
             --jar build/alexscaves-humungous-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.json' \
             --output build/alexscaves-humungous-1010/evidence.json
       - name: Print card SHA-256 for immutable evidence seal
         run: sha256sum 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/humungous-hex.md'
