@@ -69,6 +69,6 @@ class HerdPhalanxContract(unittest.TestCase):
         self.assertEqual(set(cert['evidence']),{'identity','behavior','parameters','targeting','costs','integration','validation'})
         self.assertEqual({v['path'] for v in cert['evidence'].values()},{str((P/CARD).relative_to(ROOT))})
         cross=(P/'ENCHANTMENT-PERK-CROSSWALK-1.0.10.md').read_text()
-        for m in ('individual_full_enchantment_dossiers=2/51','individual_partial_enchantment_dossiers=20/51','individual_existing_enchantment_dossiers=22/51','| ✅ | `alexscaves:herd_phalanx`'):
+        for m in ('individual_full_enchantment_dossiers=3/51','individual_partial_enchantment_dossiers=20/51','individual_existing_enchantment_dossiers=23/51','| ✅ | `alexscaves:herd_phalanx`'):
             self.assertIn(m,cross)
 if __name__=='__main__':unittest.main()
