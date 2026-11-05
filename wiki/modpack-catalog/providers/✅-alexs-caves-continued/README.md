@@ -62,8 +62,10 @@ No JAR 1.0.10, `DarkArrowEntity.defineSynchedData` atribui defaults `0.0f` e `fa
 
 **Shot Gum e Gumball:** [equipamento](equipment/shot-gum.md), [projétil/dano](damage-types/gumball.md) e [prova conjunta](EXACT-GUMBALL-CONTRACTS-1.0.10.md) relacionam munição, estado, emissores nativos, encantamentos, autoria, ricochetes, impacto e explosão. Os dois contratos são estáticos e delimitados, com hooks e QA física pendentes.
 
-### Encantamentos — Heavy Slam
+### Encantamentos — contratos individuais
 
-O [crosswalk de 51 recursos](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md) registra 22 fichas individuais existentes: [Heavy Slam](enchantments/heavy-slam.md) e [Herd Phalanx](enchantments/herd-phalanx.md) têm contratos técnicos estáticos completos e vinte outras permanecem parciais. [Prova do JAR exato](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md). Hooks mutadores e QA física continuam pendentes; a fila alfabética permanece neste provider.
+O [crosswalk de 51 recursos](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md) registra 24 fichas individuais existentes: [Heavy Slam](enchantments/heavy-slam.md), [Herd Phalanx](enchantments/herd-phalanx.md), [Humungous Hex](enchantments/humungous-hex.md) e [Impending Stab](enchantments/impending-stab.md) têm contratos técnicos estáticos completos e vinte outras permanecem parciais. [Prova do JAR exato de Heavy Slam](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md). Hooks mutadores e QA física continuam pendentes; a fila alfabética permanece neste provider.
 
 [Prova individual de Herd Phalanx](EXACT-HERD-PHALANX-CONTRACT-1.0.10.md): produção e defesa Grottoceratops reaproveitadas de Spirit Dinosaur, sem nova raiz mágica ou integração executável.
+
+[Impending Stab](enchantments/impending-stab.md): quarto contrato estático individual de encantamento; espera e dano relidos em momentos distintos, sem nova raiz mágica. [Prova e reprodução](EXACT-IMPENDING-STAB-CONTRACT-1.0.10.md).

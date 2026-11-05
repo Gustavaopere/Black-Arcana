@@ -67,3 +67,7 @@ A [ficha](enchantments/heavy-slam.md) e o [manifesto reproduzível](EXACT-HEAVY-
 ## Herd Phalanx — quantidade e defesa Grotto
 
 A [ficha individual](enchantments/herd-phalanx.md) e o [selo](EXACT-HERD-PHALANX-CONTRACT-1.0.10.md) reaproveitam a cadeia Spirit Dinosaur para documentar 3+L tentativas de criação, órbita, UUID, consumo e limpeza. Pedido de dano zero no Pre e marcação fading não equivalem a imunidade ou descarte instantâneo medidos. O contrato é estático; hooks, QA física e universo do provider permanecem abertos.
+
+## Impending Stab — espera e dano em momentos diferentes
+
+A [ficha](enchantments/impending-stab.md) e o [selo](EXACT-IMPENDING-STAB-CONTRACT-1.0.10.md) reaproveitam Desolate Dagger: nível positivo escolhe 40–49 no produtor; dano `2+2L` é relido no stab. Stack sem cópia própria, PLAYER_ID não preenchido, exclusividade declarada e descarte após tentativa são limites explícitos. Somente o contrato estático individual é concluído; hooks e QA física continuam pendentes.
