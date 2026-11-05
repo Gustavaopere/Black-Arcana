@@ -9,9 +9,9 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=3/51
+individual_full_enchantment_dossiers=4/51
 individual_partial_enchantment_dossiers=20/51
-individual_existing_enchantment_dossiers=23/51
+individual_existing_enchantment_dossiers=24/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -19,9 +19,11 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `█░░░░░░░░░░░░░░░░░░░ 5.9% (3/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `█░░░░░░░░░░░░░░░░░░░ 7.8% (4/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `█████████░░░░░░░░░░░ 45.1% (23/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx e Humungous Hex possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `█████████░░░░░░░░░░░ 47.1% (24/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex e Impending Stab possuem contratos estáticos individuais certificados.
+
+**Impending Stab:** [ficha individual estática](enchantments/impending-stab.md) e [selo/reprodução](EXACT-IMPENDING-STAB-CONTRACT-1.0.10.md) reaproveitam a cadeia Desolate Dagger. A espera inicial é 40–49 para qualquer nível positivo, enquanto o stab relê a stack e solicita 2+2L; autoria, exclusividade, descarte e persistência conservam fronteiras próprias.
 
 **Humungous Hex:** [ficha técnica estática](enchantments/humungous-hex.md), [selo exato 1.0.10](EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.json) e [resumo de reprodução](EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.md). A escala `1+0,25×L` modifica a largura da Hex (4/5/6 nos níveis 0/I/II), mas o consumidor conserva o limite independente `distanceTo<=4` além da AABB. Renderer cliente, dano 1F/6F e duração Spell Lasting são ramos distintos; hook e QA física não foram homologados. O número de fichas parciais não muda.
 
@@ -31,11 +33,11 @@ executable_perk_certification=NOT_CERTIFIED
 
 ## Leitura dos estados
 
-- ✅ **Contrato técnico estático concluído:** Heavy Slam, Herd Phalanx e Humungous Hex, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
+- ✅ **Contrato técnico estático concluído:** Heavy Slam, Herd Phalanx, Humungous Hex e Impending Stab, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
 - ⚠️ **Referência histórica/parcial:** o objeto tem evidências nominais ou consumidor em outro recorte; vários ainda não têm ficha própria. Não promover conclusão por associação a outro equipamento/ação.
 - ❌ **Sem ficha individual no checkpoint histórico:** preserva a pendência existente; não prova inexistência do recurso, ausência de referências ou comportamento.
 
-Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecionados e misturavam IDs minúsculos e campos JVM. Eles não são recontados como certificação nesta entrega. As barras atuais usam apenas o inventário publisher de 51 IDs, os ficheiros individuais existentes e o ledger de certificados. A relação nominal abaixo é histórica fora da nova linha Heavy Slam; não é uma nova varredura integral dos consumidores de todos os encantamentos.
+Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecionados e misturavam IDs minúsculos e campos JVM. Eles não são recontados como certificação nesta entrega. As barras atuais usam apenas o inventário publisher de 51 IDs, os ficheiros individuais existentes e o ledger de certificados. A relação nominal abaixo é histórica fora das linhas com certificado individual; não é uma nova varredura integral dos consumidores de todos os encantamentos.
 
 ## Índice alfabético dos recursos
 
@@ -64,7 +66,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:heavy_slam` | [Contrato técnico estático](enchantments/heavy-slam.md) · [JSON/consumidor selados](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
 | ✅ | `alexscaves:herd_phalanx` | [Contrato técnico estático](enchantments/herd-phalanx.md) · [selo individual](EXACT-HERD-PHALANX-CONTRACT-1.0.10.json) · [consumidor Spirit Dinosaur](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
 | ✅ | `alexscaves:humungous_hex` | [Contrato técnico estático](enchantments/humungous-hex.md) · [JSON/classes/renderer SHA-exatos](EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
-| ⚠️ | `alexscaves:impending_stab` | [`EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json`](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) |
+| ✅ | `alexscaves:impending_stab` | [Contrato técnico estático](enchantments/impending-stab.md) · [selo individual](EXACT-IMPENDING-STAB-CONTRACT-1.0.10.json) · [consumidores Desolate Dagger](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) · hooks e QA física pendentes |
 | ⚠️ | `alexscaves:lasting_morale` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:multiple_mint` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:peppermint_punting` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
@@ -103,4 +105,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:impending_stab`; Humungous Hex reutiliza a ação Sugar Staff Hex já certificada, sem criar raiz nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **31/53 contratos estáticos entre fichas observadas**, incluindo 23 fichas de encantamentos. Esses 53 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
+A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:lasting_morale`; Impending Stab reutiliza os consumidores Desolate Dagger já certificados, sem criar raiz nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **32/54 contratos estáticos entre fichas observadas**, incluindo 24 fichas de encantamentos. Esses 54 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.

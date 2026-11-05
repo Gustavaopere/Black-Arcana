@@ -6899,6 +6899,46 @@
           "reason": "Selo de recurso/classes/métodos/offsets e card hash rechecado contra JAR SHA-exato no GitHub Actions, testes sintéticos e limites explícitos; gameplay não testado."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/impending-stab.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual de Impending Stab e dos consumidores delimitados de espera/dano; não certifica Desolate Dagger inteiro, Double Stab, Sated Blade, combate integrado, hooks, QA física ou provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/impending-stab.md",
+          "reason": "Publisher 1.0.10 SHA-exato, JSON Impending Stab, registro/chave, tag da arma, idioma e aquisição selados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/impending-stab.md",
+          "reason": "Callback base e produtor, target ID e stack sincronizada, timer orbitFor, progressão STAB e tentativa/descarte do consumidor delimitados."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/impending-stab.md",
+          "reason": "Nível positivo altera faixa 20–29 para 40–49 sem escalar por nível; dano float 2+2L relido no stab; JSON, níveis/custos/slot/exclusividade e propriedades nativas documentados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/impending-stab.md",
+          "reason": "Alvo preatribuído por ID local, ausência de aquisição/AoE e de filtro próprio de contato no stab; origem/PLAYER_ID/fallback da fonte explicitados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/impending-stab.md",
+          "reason": "Custos JSON separados do melee herdado; sem débito adicional próprio por entidade/nível, reparo Pure Darkness e saturação Sated Blade como resultado condicional."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/impending-stab.md",
+          "reason": "Duas leituras temporais e stack sem cópia própria, níveis/componentes não nativos, autoria não ligada pelo produtor e NBT próprio vazio; NO_MUTATION, hooks/QA pendentes."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/impending-stab.md",
+          "reason": "Manifesto individual reaproveita Desolate Dagger sem reescrever evidências; hashes, descritores e âncoras conferidos no JAR exato, regressões e revisão independente; provider aberto."
+        }
+      }
     }
   },
   "providers": {},
