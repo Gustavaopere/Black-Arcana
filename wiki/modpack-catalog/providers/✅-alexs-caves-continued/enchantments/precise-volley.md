@@ -6,7 +6,7 @@
 
 - **Provider:** Alex's Caves Continued (`alexscaves`), versão **1.0.10**, Minecraft 1.21.1/NeoForge, Java 21; modlist sibling registra `alexscaves-1.0.10-neoforge+1.21.1.jar`.
 - **Publisher:** CurseForge projeto `1645389`, arquivo `8856293`, **75.279.314 bytes**; SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570` e SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
-- **Registro/ResourceKey:** `alexscaves:precise_volley`. Recurso `data/alexscaves/enchantment/precise_volley.json`, **363 bytes**, SHA-256 `59efc44222dcd59530e13a50cb413a2db0c875213ced1a2ac9de2ef982615f53`. 
+- **Registro/ResourceKey:** `alexscaves:precise_volley`. Recurso `data/alexscaves/enchantment/precise_volley.json`, **363 bytes**, SHA-256 `59efc44222dcd59530e13a50cb413a2db0c875213ced1a2ac9de2ef982615f53`.
 - **Descrição literal inglesa (`en_us.json`):** “Dreadbow arrows rain down from the sky to a more central position”. Tradução explicativa: a chuva de flechas do Dreadbow converge mais para a região central. O efeito real depende de mira, spawn, movimento, colisões e outros mods; a descrição não fornece porcentagem ou raio resultante.
 - **Equipamento declarado:** `#alexscaves:enchantable/dreadbow`; o recurso `data/alexscaves/tags/item/enchantable/dreadbow.json` (SHA-256 `f22db4f6335af0cc185f0478c482c3c666a86afa430f06bdabc78ccc662076d5`) declara apenas `alexscaves:dreadbow`.
 
