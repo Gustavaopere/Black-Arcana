@@ -6979,6 +6979,46 @@
           "reason": "Manifesto individual, auditoria reproduzível do JAR/descritores/âncoras, regressões e revisão independente preservam provas anteriores e provider aberto."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/multiple-mint.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual de Multiple Mint e consumidores delimitados de quantidade/distribuição de peppermints; não conclui Punting, Seekcandy, Spell Lasting, Hex, renderer, hooks, QA física ou provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/multiple-mint.md",
+          "reason": "Publisher 1.0.10 SHA-exato, JSON Multiple Mint, registro/chave, tag Sugar Staff, descrição original e aquisição selados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/multiple-mint.md",
+          "reason": "Uso servidor sem sneak, leitura única de quantidade, loop/ângulo compartilhados, spawn solicitado e consumidores próprios da entidade delimitados."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/multiple-mint.md",
+          "reason": "JSON I–II/custos/slot, 3+L e distribuição angular, dimensões 0.8×0.4, speed/radius iniciais e sobrescritos, lifespan/contador e dano solicitado documentados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/multiple-mint.md",
+          "reason": "Aquisição por clip separada da AABB LivingEntity; filtros direcionais, owner atual, seeking por ID e aceitação de hurt/inserção mantidos distintos."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/multiple-mint.md",
+          "reason": "Cooldown por Item e wear final por callback sem multiplicação por quantidade; overrides Punting/Seekcandy, ausência de contador de inserção aceita e falha intermediária explicitados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/multiple-mint.md",
+          "reason": "Quantidade não homologa DPS, autoria ou Mastery; momentos de leitura/movimento, lifespan iniciado uma vez, NBT XZZ e seeking não salvo; NO_MUTATION, hooks e QA pendentes."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/multiple-mint.md",
+          "reason": "Manifesto individual, JAR/descritores/âncoras verificados, regressões e revisão independente; provas anteriores preservadas e universo integral aberto."
+        }
+      }
     }
   },
   "providers": {},

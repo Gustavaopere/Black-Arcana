@@ -64,10 +64,12 @@ No JAR 1.0.10, `DarkArrowEntity.defineSynchedData` atribui defaults `0.0f` e `fa
 
 ### Encantamentos — contratos individuais
 
-O [crosswalk de 51 recursos](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md) registra 25 fichas individuais existentes: [Heavy Slam](enchantments/heavy-slam.md), [Herd Phalanx](enchantments/herd-phalanx.md), [Humungous Hex](enchantments/humungous-hex.md), [Impending Stab](enchantments/impending-stab.md) e [Lasting Morale](enchantments/lasting-morale.md) têm contratos técnicos estáticos completos e vinte outras permanecem parciais. [Prova do JAR exato de Heavy Slam](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md). Hooks mutadores e QA física continuam pendentes; a fila alfabética permanece neste provider.
+O [crosswalk de 51 recursos](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md) registra 26 fichas individuais existentes: [Heavy Slam](enchantments/heavy-slam.md), [Herd Phalanx](enchantments/herd-phalanx.md), [Humungous Hex](enchantments/humungous-hex.md), [Impending Stab](enchantments/impending-stab.md), [Lasting Morale](enchantments/lasting-morale.md) e [Multiple Mint](enchantments/multiple-mint.md) têm contratos técnicos estáticos completos e vinte outras permanecem parciais. [Prova do JAR exato de Heavy Slam](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md). Hooks mutadores e QA física continuam pendentes; a fila alfabética permanece neste provider.
 
 [Prova individual de Herd Phalanx](EXACT-HERD-PHALANX-CONTRACT-1.0.10.md): produção e defesa Grottoceratops reaproveitadas de Spirit Dinosaur, sem nova raiz mágica ou integração executável.
 
 [Impending Stab](enchantments/impending-stab.md): quarto contrato estático individual de encantamento; espera e dano relidos em momentos distintos, sem nova raiz mágica. [Prova e reprodução](EXACT-IMPENDING-STAB-CONTRACT-1.0.10.md).
 
 [Lasting Morale](enchantments/lasting-morale.md): quinto contrato estático individual de encantamento; tempo do summon e cooldown compartilham a variável, com lifecycle/NBT próprios. [Prova e reprodução](EXACT-LASTING-MORALE-CONTRACT-1.0.10.md).
+
+[Multiple Mint](enchantments/multiple-mint.md): sexto contrato estático individual de encantamento; quantidade e distribuição angular compartilham o mesmo inteiro, com movimento/dano/persistência próprios. [Prova e reprodução](EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.md).

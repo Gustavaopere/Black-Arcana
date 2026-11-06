@@ -9,9 +9,9 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=5/51
+individual_full_enchantment_dossiers=6/51
 individual_partial_enchantment_dossiers=20/51
-individual_existing_enchantment_dossiers=25/51
+individual_existing_enchantment_dossiers=26/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -19,9 +19,11 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `██░░░░░░░░░░░░░░░░░░ 9.8% (5/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `██░░░░░░░░░░░░░░░░░░ 11.8% (6/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `██████████░░░░░░░░░░ 49.0% (25/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab e Lasting Morale possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `██████████░░░░░░░░░░ 51.0% (26/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale e Multiple Mint possuem contratos estáticos individuais certificados.
+
+**Multiple Mint:** [ficha estática](enchantments/multiple-mint.md) e [prova reproduzível](EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.md) documentam `3+L` como quantidade solicitada e denominador angular, sem promover tentativas de spawn a inserções aceitas, dano proporcional ou hook seguro.
 
 **Lasting Morale:** [ficha estática](enchantments/lasting-morale.md) e [prova reproduzível](EXACT-LASTING-MORALE-CONTRACT-1.0.10.md) documentam a variável `1200+400L` compartilhada entre contador dos summons e cooldown por Item; fade, aceitação de spawn e NBT condicionado ao UUID são fronteiras separadas.
 
@@ -35,7 +37,7 @@ executable_perk_certification=NOT_CERTIFIED
 
 ## Leitura dos estados
 
-- ✅ **Contrato técnico estático concluído:** Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab e Lasting Morale, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
+- ✅ **Contrato técnico estático concluído:** Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale e Multiple Mint, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
 - ⚠️ **Referência histórica/parcial:** o objeto tem evidências nominais ou consumidor em outro recorte; vários ainda não têm ficha própria. Não promover conclusão por associação a outro equipamento/ação.
 - ❌ **Sem ficha individual no checkpoint histórico:** preserva a pendência existente; não prova inexistência do recurso, ausência de referências ou comportamento.
 
@@ -70,7 +72,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:humungous_hex` | [Contrato técnico estático](enchantments/humungous-hex.md) · [JSON/classes/renderer SHA-exatos](EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
 | ✅ | `alexscaves:impending_stab` | [Contrato técnico estático](enchantments/impending-stab.md) · [selo individual](EXACT-IMPENDING-STAB-CONTRACT-1.0.10.json) · [consumidores Desolate Dagger](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) · hooks e QA física pendentes |
 | ✅ | `alexscaves:lasting_morale` | [Contrato técnico estático](enchantments/lasting-morale.md) · [selo individual](EXACT-LASTING-MORALE-CONTRACT-1.0.10.json) · tempo/cooldown compartilhados; hooks e QA física pendentes |
-| ⚠️ | `alexscaves:multiple_mint` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
+| ✅ | `alexscaves:multiple_mint` | [Contrato técnico estático](enchantments/multiple-mint.md) · [selo individual](EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.json) · quantidade/ângulo compartilhados; hooks e QA física pendentes |
 | ⚠️ | `alexscaves:peppermint_punting` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:plummeting_flight` | [`EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json`](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) |
 | ⚠️ | `alexscaves:precise_volley` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
@@ -107,4 +109,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:multiple_mint`; Lasting Morale reutiliza a ação Magic Conch já certificada, sem criar raiz nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **33/55 contratos estáticos entre fichas observadas**, incluindo 25 fichas de encantamentos. Esses 55 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
+A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:peppermint_punting`; Multiple Mint reutiliza a ação Peppermint Cast já certificada, sem criar raiz nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **34/56 contratos estáticos entre fichas observadas**, incluindo 26 fichas de encantamentos. Esses 56 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
