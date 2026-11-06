@@ -345,9 +345,9 @@
     },
     "enchantments": {
       "identified_objects": 51,
-      "individual_dossiers": 31,
+      "individual_dossiers": 32,
       "partial_dossiers": 20,
-      "documented_static_contracts": 11,
+      "documented_static_contracts": 12,
       "cards": [
         "enchantments/heavy-slam.md",
         "enchantments/herd-phalanx.md",
@@ -359,9 +359,10 @@
         "enchantments/plummeting-flight.md",
         "enchantments/precise-volley.md",
         "enchantments/rapid-possession.md",
-        "enchantments/relentless-darkness.md"
+        "enchantments/relentless-darkness.md",
+        "enchantments/sea-swing.md"
       ],
-      "evidence": "EXACT-RELENTLESS-DARKNESS-CONTRACT-1.0.10.md",
+      "evidence": "EXACT-SEA-SWING-STATIC-1.0.10.md",
       "family_universe_closed": false,
       "related_evidence": [
         "EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md",
@@ -373,7 +374,8 @@
         "EXACT-PEPPERMINT-PUNTING-CONTRACT-1.0.10.md",
         "EXACT-PLUMMETING-FLIGHT-CONTRACT-1.0.10.md",
         "EXACT-PRECISE-VOLLEY-CONTRACT-1.0.10.md",
-        "EXACT-RAPID-POSSESSION-CONTRACT-1.0.10.md"
+        "EXACT-RAPID-POSSESSION-CONTRACT-1.0.10.md",
+        "EXACT-RELENTLESS-DARKNESS-CONTRACT-1.0.10.md"
       ]
     }
   }

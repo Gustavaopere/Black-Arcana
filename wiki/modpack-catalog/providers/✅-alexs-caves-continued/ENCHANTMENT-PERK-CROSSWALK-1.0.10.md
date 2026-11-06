@@ -9,8 +9,8 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=11/51
-individual_partial_enchantment_dossiers=21/51
+individual_full_enchantment_dossiers=12/51
+individual_partial_enchantment_dossiers=20/51
 individual_existing_enchantment_dossiers=32/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
@@ -19,11 +19,11 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `████░░░░░░░░░░░░░░░░ 21.6% (11/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `████░░░░░░░░░░░░░░░░ 23.5% (12/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `████████████░░░░░░░░ 62.7% (32/51)`; destes, vinte e um permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession e Relentless Darkness possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `████████████░░░░░░░░ 62.7% (32/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness e Sea Swing possuem contratos estáticos individuais certificados.
 
-**Sea Swing (⚠️ parcial):** [ficha individual](enchantments/sea-swing.md) e [sonda JAR 1.0.10](../../../../docs/qa/alexscaves_1010_sea_swing_probe.py) confirmam identidade e produtor de onda em acHurtEnemy; valores de fonte adjacente 1.1.1 ainda não equivalem a prova binária de toda a cadeia. Nenhum contrato estático integral, hook ou QA física foi promovido.
+**Sea Swing (✅ contrato estático):** [ficha individual](enchantments/sea-swing.md), [manifesto exato](EXACT-SEA-SWING-STATIC-1.0.10.json) e [prova de métodos e NBT](EXACT-SEA-SWING-STATIC-1.0.10.md) comprovam produtor Ortholance e 20 métodos completos + dois construtores nativos, incluindo owner, parâmetros, alvo, dano solicitado e descarte. Hook mutador e QA física continuam **NOT_VERIFIED/NOT_TESTED**; fonte 1.1.1 é corroboração sem paridade alegada.
 
 **Relentless Darkness:** [ficha estática](enchantments/relentless-darkness.md) e [prova reproduzível](EXACT-RELENTLESS-DARKNESS-CONTRACT-1.0.10.md) distinguem `%3` do timer restante, M5/incremento3 visual, 1/2 tentativas de flechas e custos por callback; não homologam DPS, inserção, hook ou QA física.
 
@@ -49,7 +49,7 @@ executable_perk_certification=NOT_CERTIFIED
 
 ## Leitura dos estados
 
-- ✅ **Contrato técnico estático concluído:** Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession e Relentless Darkness, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
+- ✅ **Contrato técnico estático concluído:** Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness e Sea Swing, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
 - ⚠️ **Referência histórica/parcial:** o objeto tem evidências nominais ou consumidor em outro recorte; vários ainda não têm ficha própria. Não promover conclusão por associação a outro equipamento/ação.
 - ❌ **Sem ficha individual no checkpoint histórico:** preserva a pendência existente; não prova inexistência do recurso, ausência de referências ou comportamento.
 
@@ -91,7 +91,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:rapid_possession` | [Contrato técnico estático](enchantments/rapid-possession.md) · [selo SHA-exato](EXACT-RAPID-POSSESSION-CONTRACT-1.0.10.json) · [Totem de Possession preexistente](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) · hook/QA física pendentes |
 | ✅ | `alexscaves:relentless_darkness` | [Contrato técnico estático](enchantments/relentless-darkness.md) · [selo individual](EXACT-RELENTLESS-DARKNESS-CONTRACT-1.0.10.json) · cadência contínua e carga visual distintas; hooks e QA física pendentes |
 | ⚠️ | `alexscaves:sated_blade` | [`EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json`](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) |
-| ⚠️ | `alexscaves:sea_swing` | [Ficha parcial própria](enchantments/sea-swing.md) · [sonda SHA-exata read-only](../../../../docs/qa/alexscaves_1010_sea_swing_probe.py) · consumidor Ortholance/Wave; hook e QA não certificados |
+| ✅ | `alexscaves:sea_swing` | [Ficha estática](enchantments/sea-swing.md) · [prova exata de owner/NBT/dano](EXACT-SEA-SWING-STATIC-1.0.10.md); hooks e QA física seguem pendentes |
 | ⚠️ | `alexscaves:seapairing` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ❌ | `alexscaves:second_wave` | Sem ficha individual no checkpoint histórico; ausência de comportamento não comprovada |
 | ⚠️ | `alexscaves:seekcandy` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
@@ -121,4 +121,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:sated_blade`; Relentless Darkness reutiliza Dreadbow/Dark Arrow já catalogados, sem criar raiz semântica nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **39/62 contratos estáticos entre fichas observadas**, incluindo 32 fichas de encantamentos. Esses 62 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
+A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:sated_blade`; Relentless Darkness reutiliza Dreadbow/Dark Arrow já catalogados, sem criar raiz semântica nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **40/62 contratos estáticos entre fichas observadas**, incluindo 32 fichas de encantamentos. Esses 62 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.

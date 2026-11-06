@@ -1,0 +1,76 @@
+name: Alex's Caves 1.0.10 Sea Swing full static bytecode evidence
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-sea-swing-static.yml'
+      - 'docs/qa/alexscaves_1010_sea_swing_static_probe.py'
+      - 'docs/qa/alexscaves_1010_sea_swing_static_probe_test.py'
+      - 'docs/qa/alexscaves_1010_sea_swing_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-sea-swing-static.yml'
+      - 'docs/qa/alexscaves_1010_sea_swing_static_probe.py'
+      - 'docs/qa/alexscaves_1010_sea_swing_static_probe_test.py'
+      - 'docs/qa/alexscaves_1010_sea_swing_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+
+permissions:
+  contents: read
+
+jobs:
+  exact_static_sea_swing:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Compile probe and run independent fail-closed regressions
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_sea_swing_static_probe.py docs/qa/alexscaves_1010_sea_swing_static_probe_test.py
+          python3 docs/qa/alexscaves_1010_sea_swing_static_probe_test.py -v
+          python3 docs/qa/alexscaves_1010_sea_swing_cards_test.py -v
+      - name: Acquire exact release 1.0.10 from publisher CDN
+        run: |
+          mkdir -p build/alexscaves-sea-swing-static-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-sea-swing-static-1010/alexscaves-1.0.10.jar
+      - name: Extract and seal exact bounded complete JVM methods
+        run: |
+          SEAL='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SEA-SWING-STATIC-1.0.10.json'
+          test -f "$SEAL"
+          python3 docs/qa/alexscaves_1010_sea_swing_static_probe.py \
+            --jar build/alexscaves-sea-swing-static-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" --seal "$SEAL" \
+            --output build/alexscaves-sea-swing-static-1010/evidence.json
+      - name: Emit exact bounded JSON as single CI log record for content certification
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('build/alexscaves-sea-swing-static-1010/evidence.json')
+          o=json.loads(p.read_text())
+          print('SEA_SWING_STATIC_FULL_JSON='+json.dumps(o,ensure_ascii=False,separators=(',',':')))
+          PY
+      - name: Validate canonical catalog progress indexes
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - name: Archive read-only JVM evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-sea-swing-static-evidence
+          path: build/alexscaves-sea-swing-static-1010/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
