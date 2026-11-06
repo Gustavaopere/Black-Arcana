@@ -46,7 +46,7 @@ jobs:
           if test -f "$SEAL"; then
             python3 docs/qa/alexscaves_1010_sea_swing_static_probe.py \
               --jar build/alexscaves-sea-swing-static-1010/alexscaves-1.0.10.jar \
-              --javap "$JAVA_HOME/bin/javap" \
+              --javap "$JAVA_HOME/bin/javap" --seal "$SEAL" \
               --output build/alexscaves-sea-swing-static-1010/evidence.json
           else
             echo 'UNSEALED_DISCOVERY_ONLY — do not count complete'
