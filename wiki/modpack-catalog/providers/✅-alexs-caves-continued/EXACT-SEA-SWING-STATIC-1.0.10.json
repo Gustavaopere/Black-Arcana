@@ -844,6 +844,91 @@
           }
         ]
       },
+      "getSlamAmount": {
+        "descriptor": "(F)F",
+        "instruction_count": 13,
+        "parsed_method_sha256": "80ffcb5e0021e1f6749ab79ed6c8d7c799f79baee84e2921b0304948edb84c1d",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#96",
+            "symbol": "Field prevSlamProgress:F"
+          },
+          {
+            "offset": 4,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "getfield",
+            "operand": "#100",
+            "symbol": "Field slamProgress:F"
+          },
+          {
+            "offset": 8,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 9,
+            "opcode": "getfield",
+            "operand": "#96",
+            "symbol": "Field prevSlamProgress:F"
+          },
+          {
+            "offset": 12,
+            "opcode": "fsub",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 13,
+            "opcode": "fload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 14,
+            "opcode": "fmul",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 15,
+            "opcode": "fadd",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 16,
+            "opcode": "ldc",
+            "operand": "#103",
+            "symbol": "float 0.1f"
+          },
+          {
+            "offset": 18,
+            "opcode": "fmul",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 19,
+            "opcode": "freturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ]
+      },
       "readAdditionalSaveData": {
         "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
         "instruction_count": 19,
@@ -3972,6 +4057,110 @@
           }
         ]
       }
+    }
+  },
+  "constructors": {
+    "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V": {
+      "parsed_method_sha256": "b4f10dcd568a389063c6e1fd5f9ce0bbb9c5cbfdf14b5651bb3ab5a76f87dc89",
+      "instruction_count": 5,
+      "instructions": [
+        {
+          "offset": 0,
+          "opcode": "aload_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 1,
+          "opcode": "aload_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 2,
+          "opcode": "aload_2",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 3,
+          "opcode": "invokespecial",
+          "operand": "#1",
+          "symbol": "Method net/minecraft/world/entity/Entity.\"<init>\":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V"
+        },
+        {
+          "offset": 6,
+          "opcode": "return",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
+    },
+    "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V": {
+      "parsed_method_sha256": "38280f450616f8266da7c775d9cd1df94f7a1d518b404bd0b000988da10e84ef",
+      "instruction_count": 10,
+      "instructions": [
+        {
+          "offset": 0,
+          "opcode": "aload_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 1,
+          "opcode": "getstatic",
+          "operand": "#7",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.WAVE:Ljava/util/function/Supplier;"
+        },
+        {
+          "offset": 4,
+          "opcode": "invokeinterface",
+          "operand": "#13,  1",
+          "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+        },
+        {
+          "offset": 9,
+          "opcode": "checkcast",
+          "operand": "#19",
+          "symbol": "class net/minecraft/world/entity/EntityType"
+        },
+        {
+          "offset": 12,
+          "opcode": "aload_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 13,
+          "opcode": "invokespecial",
+          "operand": "#21",
+          "symbol": "Method \"<init>\":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V"
+        },
+        {
+          "offset": 16,
+          "opcode": "aload_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 17,
+          "opcode": "aload_2",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 18,
+          "opcode": "invokevirtual",
+          "operand": "#24",
+          "symbol": "Method setOwner:(Lnet/minecraft/world/entity/LivingEntity;)V"
+        },
+        {
+          "offset": 21,
+          "opcode": "return",
+          "operand": "",
+          "symbol": ""
+        }
+      ]
     }
   },
   "limits": {
