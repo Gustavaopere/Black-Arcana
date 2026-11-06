@@ -20,7 +20,7 @@
 
 **Fichas com contrato técnico estático certificado: 175/2371.**
 
-**Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 7.3%`
+**Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 7.4%`
 
 **Mods com escopo integral certificado: 0/164.**
 
