@@ -26,7 +26,7 @@ DISCOVERY = "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SEA-
 METHODS = {
     ITEM: ("hurtEnemy", "acHurtEnemy"),
     WAVE: ("getOwner", "setOwner", "defineSynchedData", "getDimensions",
-           "onSyncedDataUpdated", "readAdditionalSaveData",
+           "onSyncedDataUpdated", "getSlamAmount", "getStepHeight", "readAdditionalSaveData",
            "addAdditionalSaveData", "getLifespan", "setLifespan",
            "getWaitingTicks", "setWaitingTicks", "getWaveScale",
            "setWaveScale", "isSlamming", "setSlamming", "tick", "attackEntities"),
@@ -155,6 +155,7 @@ def audit(jar: Path, javap_bin: str, prior: Path) -> dict:
         "class_sha256": {**discovery["class_sha256"]},
         "language": {"path": LANG, "sha256": sha(raw), "translations": translations},
         "methods": {},
+        "constructors": {},
         "limits": {
             "mutating_hook": "NOT_VERIFIED",
             "physical_qa": "NOT_TESTED",
@@ -171,10 +172,32 @@ def audit(jar: Path, javap_bin: str, prior: Path) -> dict:
     for owner, required in METHODS.items():
         methods = parse_methods(javap(javap_bin, jar, owner[:-6].replace("/", ".")))
         selected = select_full(methods, required)
+        if owner == WAVE:
+            expected_ctors = {
+                "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V",
+                "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+            }
+            for method in methods:
+                if name_of(method) != "WaveEntity" or method["descriptor"] not in expected_ctors:
+                    continue
+                descriptor = method["descriptor"]
+                require(descriptor not in result["constructors"], "duplicate constructor")
+                instructions = method["instructions"]
+                require(2 <= len(instructions) <= 30, "unbounded constructor")
+                result["constructors"][descriptor] = {
+                    "parsed_method_sha256": digest_method(method),
+                    "instruction_count": len(instructions),
+                    "instructions": [compact(i) for i in instructions],
+                }
+            require(set(result["constructors"]) == expected_ctors,
+                    "missing exact WaveEntity owner constructors")
         total += sum(x["instruction_count"] for x in selected.values())
         require(total <= MAX_TOTAL_INS, "total selected bytecode exceeds budget")
         result["methods"][owner] = selected
     check_dependency(discovery, result)
+    owner_ctor = result["constructors"]["(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"]
+    require(any("setOwner" in i["symbol"] for i in owner_ctor["instructions"]),
+            "WaveEntity does not actually capture owner from constructor")
     compiled_static_boundaries(result)
     return result
 
