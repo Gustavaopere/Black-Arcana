@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 11/31.**
+**Fichas catalogadas (somente fichas detectadas): 11/32.**
 
-**Barra das fichas catalogadas:** `███████░░░░░░░░░░░░░ 35.5%`
+**Barra das fichas catalogadas:** `██████░░░░░░░░░░░░░░ 34.4%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 11/31.**
+**Homologadas para perks (somente fichas detectadas): 11/32.**
 
-**Barra dos contratos técnicos estáticos:** `███████░░░░░░░░░░░░░ 35.5%`
+**Barra dos contratos técnicos estáticos:** `██████░░░░░░░░░░░░░░ 34.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -51,6 +51,7 @@
 | ✅ | Precise Volley | [ficha/precise-volley.md](precise-volley.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Rapid Possession | [ficha/rapid-possession.md](rapid-possession.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Relentless Darkness | [ficha/relentless-darkness.md](relentless-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Sea Swing | [ficha/sea-swing.md](sea-swing.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

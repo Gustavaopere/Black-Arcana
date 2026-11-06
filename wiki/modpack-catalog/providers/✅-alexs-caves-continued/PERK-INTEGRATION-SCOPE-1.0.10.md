@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os onze contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **39 contratos estáticos certificados entre 61 fichas observadas**: 31 são dossiers de encantamentos, sendo vinte parciais e onze estáticos completos. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
+As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os onze contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **39 contratos estáticos certificados entre 62 fichas observadas**: 32 são dossiers de encantamentos, sendo vinte e uma parciais (incluindo [Sea Swing](enchantments/sea-swing.md)) e onze estáticos completos. A prova de Sea Swing é delimitada a janelas do JAR e não eleva os 39 certificados. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 
