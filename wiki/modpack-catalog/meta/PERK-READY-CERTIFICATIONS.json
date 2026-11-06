@@ -7179,6 +7179,46 @@
           "reason": "Rastreio SHA-exato do JAR 1.0.10, 29 âncoras ancestrais +17 pivôs do método compilado, sonda publisher/javap, testes e índices, sem QA física/Stage/runtime."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/relentless-darkness.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual de Relentless Darkness e consumidores delimitados do Dreadbow/Dark Arrow; não conclui outros encantamentos, factories externas, renderer/protocolo completo, hooks, QA física ou provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/relentless-darkness.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, JSON, registro/chave, tag Dreadbow, descrição original e aquisição selados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/relentless-darkness.md",
+          "reason": "Relentless desvia release e ativa callback com Player, nível positivo e resto por três; estado visual cliente tem consumidor separado."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/relentless-darkness.md",
+          "reason": "Máximo I/predicado positivo, M5 e incremento visual3, 1/2 tentativas convertíveis, speed4+3r, inaccuracy e shadow damage2F documentados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/relentless-darkness.md",
+          "reason": "Direção do olhar e jitter separados dos raycasts/chuva do release; conversão, dimensões e gates de colisão/dano preservam owners nativos."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/relentless-darkness.md",
+          "reason": "Gate inicial de munição/creative e pedidos finais por callback de desgaste/munição, com Shaded Respite e spawn recusado/factory externa delimitados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/relentless-darkness.md",
+          "reason": "Exclusividade de dados, callbacks sem guarda própria global de lado, carga CUSTOM_DATA, owner/fading/persistência e Mastery são fronteiras separadas; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/relentless-darkness.md",
+          "reason": "Manifesto individual reproduzível, corpos contínuo/inventário completos, checkpoints parciais explícitos, regressões e revisão independente preservam evidências anteriores."
+        }
+      }
     }
   },
   "providers": {},

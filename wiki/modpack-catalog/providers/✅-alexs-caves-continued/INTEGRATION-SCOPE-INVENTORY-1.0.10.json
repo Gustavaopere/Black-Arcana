@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Six individual enchantment static contracts (Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale and Multiple Mint); twenty other individual enchantment dossiers remain partial.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Eleven individual enchantment static contracts (Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness); twenty other individual enchantment dossiers remain partial.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -345,25 +345,35 @@
     },
     "enchantments": {
       "identified_objects": 51,
-      "individual_dossiers": 26,
+      "individual_dossiers": 31,
       "partial_dossiers": 20,
-      "documented_static_contracts": 6,
+      "documented_static_contracts": 11,
       "cards": [
         "enchantments/heavy-slam.md",
         "enchantments/herd-phalanx.md",
         "enchantments/humungous-hex.md",
         "enchantments/impending-stab.md",
         "enchantments/lasting-morale.md",
-        "enchantments/multiple-mint.md"
+        "enchantments/multiple-mint.md",
+        "enchantments/peppermint-punting.md",
+        "enchantments/plummeting-flight.md",
+        "enchantments/precise-volley.md",
+        "enchantments/rapid-possession.md",
+        "enchantments/relentless-darkness.md"
       ],
-      "evidence": "EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.md",
+      "evidence": "EXACT-RELENTLESS-DARKNESS-CONTRACT-1.0.10.md",
       "family_universe_closed": false,
       "related_evidence": [
         "EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md",
         "EXACT-HERD-PHALANX-CONTRACT-1.0.10.md",
         "EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.md",
         "EXACT-IMPENDING-STAB-CONTRACT-1.0.10.md",
-        "EXACT-LASTING-MORALE-CONTRACT-1.0.10.md"
+        "EXACT-LASTING-MORALE-CONTRACT-1.0.10.md",
+        "EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.md",
+        "EXACT-PEPPERMINT-PUNTING-CONTRACT-1.0.10.md",
+        "EXACT-PLUMMETING-FLIGHT-CONTRACT-1.0.10.md",
+        "EXACT-PRECISE-VOLLEY-CONTRACT-1.0.10.md",
+        "EXACT-RAPID-POSSESSION-CONTRACT-1.0.10.md"
       ]
     }
   }

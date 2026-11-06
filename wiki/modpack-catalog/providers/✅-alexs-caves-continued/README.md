@@ -64,7 +64,7 @@ No JAR 1.0.10, `DarkArrowEntity.defineSynchedData` atribui defaults `0.0f` e `fa
 
 ### Encantamentos — contratos individuais
 
-O [crosswalk de 51 recursos](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md) registra 26 fichas individuais existentes: [Heavy Slam](enchantments/heavy-slam.md), [Herd Phalanx](enchantments/herd-phalanx.md), [Humungous Hex](enchantments/humungous-hex.md), [Impending Stab](enchantments/impending-stab.md), [Lasting Morale](enchantments/lasting-morale.md) e [Multiple Mint](enchantments/multiple-mint.md) têm contratos técnicos estáticos completos e vinte outras permanecem parciais. [Prova do JAR exato de Heavy Slam](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md). Hooks mutadores e QA física continuam pendentes; a fila alfabética permanece neste provider.
+O [crosswalk de 51 recursos](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md) registra **31 fichas individuais existentes: 11 contratos estáticos completos e vinte fichas parciais**. Contratos completos: [Heavy Slam](enchantments/heavy-slam.md), [Herd Phalanx](enchantments/herd-phalanx.md), [Humungous Hex](enchantments/humungous-hex.md), [Impending Stab](enchantments/impending-stab.md), [Lasting Morale](enchantments/lasting-morale.md), [Multiple Mint](enchantments/multiple-mint.md), [Peppermint Punting](enchantments/peppermint-punting.md), [Plummeting Flight](enchantments/plummeting-flight.md), [Precise Volley](enchantments/precise-volley.md), [Rapid Possession](enchantments/rapid-possession.md), [Relentless Darkness](enchantments/relentless-darkness.md). Hooks mutadores e QA física continuam pendentes; a fila alfabética permanece neste provider.
 
 [Prova individual de Herd Phalanx](EXACT-HERD-PHALANX-CONTRACT-1.0.10.md): produção e defesa Grottoceratops reaproveitadas de Spirit Dinosaur, sem nova raiz mágica ou integração executável.
 
@@ -73,3 +73,5 @@ O [crosswalk de 51 recursos](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md) registra 26 f
 [Lasting Morale](enchantments/lasting-morale.md): quinto contrato estático individual de encantamento; tempo do summon e cooldown compartilham a variável, com lifecycle/NBT próprios. [Prova e reprodução](EXACT-LASTING-MORALE-CONTRACT-1.0.10.md).
 
 [Multiple Mint](enchantments/multiple-mint.md): sexto contrato estático individual de encantamento; quantidade e distribuição angular compartilham o mesmo inteiro, com movimento/dano/persistência próprios. [Prova e reprodução](EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.md).
+
+[Relentless Darkness](enchantments/relentless-darkness.md): modo contínuo por callback, com cadência do timer restante separada de carga visual, custo e dano. [Prova e reprodução](EXACT-RELENTLESS-DARKNESS-CONTRACT-1.0.10.md).
