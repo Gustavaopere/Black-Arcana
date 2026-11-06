@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 8/28.**
+**Fichas catalogadas (somente fichas detectadas): 9/29.**
 
-**Barra das fichas catalogadas:** `█████░░░░░░░░░░░░░░░ 28.6%`
+**Barra das fichas catalogadas:** `██████░░░░░░░░░░░░░░ 31.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 8/28.**
+**Homologadas para perks (somente fichas detectadas): 9/29.**
 
-**Barra dos contratos técnicos estáticos:** `█████░░░░░░░░░░░░░░░ 28.6%`
+**Barra dos contratos técnicos estáticos:** `██████░░░░░░░░░░░░░░ 31.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -48,6 +48,7 @@
 | ✅ | Multiple Mint | [ficha/multiple-mint.md](multiple-mint.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Peppermint Punting | [ficha/peppermint-punting.md](peppermint-punting.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Plummeting Flight | [ficha/plummeting-flight.md](plummeting-flight.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Precise Volley | [ficha/precise-volley.md](precise-volley.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

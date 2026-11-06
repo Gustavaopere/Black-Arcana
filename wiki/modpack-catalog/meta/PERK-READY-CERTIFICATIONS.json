@@ -7099,6 +7099,46 @@
           "reason": "JSON/tag/class SHA-exatos confirmados por probe; 373 âncoras selecionadas do manifesto Spirit Dinosaur já auditado no mesmo JAR; testes de regressão e limites fail-closed."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/precise-volley.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Precise Volley somente no ramo releaseUsing do Dreadbow publisher 1.0.10; inaccuracy e dano solicitado, sem hook, QA física, hit efetivo, políticas PvP/claims ou catálogo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/precise-volley.md",
+          "reason": "SHA-exact publisher JAR 1.0.10, JSON precise_volley de 363 bytes, tag dreadbow, texto en_us, máximos/custos/slots e classfiles Dreadbow/Dark Arrow certificados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/precise-volley.md",
+          "reason": "releaseUsing consulta PRECISE_VOLLEY após bypass Relentless e potencia>0.1 para selecionar inaccuracy zero, não o loop onUseTick; chuva nativa e guardas de conversão preservados."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/precise-volley.md",
+          "reason": "NívelI peso2, anvil4, custos1/41; inaccuracy 0 vs aleatória, shadow damage solicitado2F vs3F, com multiplicador PerfectShot independente; quantidade, spawn-box e raycast inalterados."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/precise-volley.md",
+          "reason": "Raycast 128p/fallback42p, caixa candidata16×4×16, direção hitLocation-spawn e velocidade nominal0.5+1.5r; colisões, filtros owner/aliados/fading no Dark Arrow e acceptance externos."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/precise-volley.md",
+          "reason": "Desgaste e munição uma vez por salva fora creative, Shaded Respite elegível altera cobrança, dados de encantamento não são mana ou custo por projétil; retorno de spawn ignorado."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/precise-volley.md",
+          "reason": "Não acrescenta outra raiz/cast, não duplica arrows/dano, sem hook mutador; rede de tags e estados de client têm fronteiras de autoridade, QA física multiplayer pendente."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/precise-volley.md",
+          "reason": "Sonda JAR 1.0.10 verifica JSON/tag/tradução/3 classes e pivôs; selo individual herda métodos compilados do manifesto Dreadbow SHA-exato; regressões garantem sete eixos sem promoção de runtime."
+        }
+      }
     }
   },
   "providers": {},
