@@ -49,7 +49,7 @@ executable_perk_certification=NOT_CERTIFIED
 
 ## Leitura dos estados
 
-- ✅ **Contrato técnico estático concluído:** Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession Relentless Darkness e Sea Swing, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
+- ✅ **Contrato técnico estático concluído:** Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness e Sea Swing, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
 - ⚠️ **Referência histórica/parcial:** o objeto tem evidências nominais ou consumidor em outro recorte; vários ainda não têm ficha própria. Não promover conclusão por associação a outro equipamento/ação.
 - ❌ **Sem ficha individual no checkpoint histórico:** preserva a pendência existente; não prova inexistência do recurso, ausência de referências ou comportamento.
 
