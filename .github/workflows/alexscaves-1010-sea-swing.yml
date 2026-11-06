@@ -51,6 +51,7 @@ jobs:
           import json
           from pathlib import Path
           x=json.loads(Path('build/alexscaves-sea-swing-1010/evidence.json').read_text())
+          print('SEA_SWING_JSON_RESULT='+json.dumps(x,ensure_ascii=False,separators=(',',':')))
           print('Publisher:', x['artifact'])
           print('Sea Swing JSON:', x['enchantment'])
           print('Producer:', x['producer_method'])
