@@ -26,7 +26,7 @@ DISCOVERY = "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SEA-
 METHODS = {
     ITEM: ("hurtEnemy", "acHurtEnemy"),
     WAVE: ("getOwner", "setOwner", "defineSynchedData", "getDimensions",
-           "onSyncedDataUpdated", "getSlamAmount", "getStepHeight", "readAdditionalSaveData",
+           "onSyncedDataUpdated", "getSlamAmount", "readAdditionalSaveData",
            "addAdditionalSaveData", "getLifespan", "setLifespan",
            "getWaitingTicks", "setWaitingTicks", "getWaveScale",
            "setWaveScale", "isSlamming", "setSlamming", "tick", "attackEntities"),
