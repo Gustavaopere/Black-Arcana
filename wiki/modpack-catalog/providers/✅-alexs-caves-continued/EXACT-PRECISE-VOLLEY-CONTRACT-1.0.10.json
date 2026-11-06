@@ -1,0 +1,2189 @@
+{
+  "schema_version": 1,
+  "catalog_family": "PRECISE_VOLLEY_ENCHANTMENT_CONTRACT",
+  "version": "1.0.10",
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "mutation": "NO_MUTATION",
+  "provider_universe_closed": false,
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "card": {
+    "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/precise-volley.md",
+    "sha256": "f87212f9cf06950bf300bc80282875eb262e622073bcb1953b58ee136b0da8b9"
+  },
+  "resource": {
+    "path": "data/alexscaves/enchantment/precise_volley.json",
+    "sha256": "59efc44222dcd59530e13a50cb413a2db0c875213ced1a2ac9de2ef982615f53",
+    "size_bytes": 363,
+    "json": {
+      "description": {
+        "translate": "enchantment.alexscaves.precise_volley"
+      },
+      "supported_items": "#alexscaves:enchantable/dreadbow",
+      "weight": 2,
+      "max_level": 1,
+      "min_cost": {
+        "base": 1,
+        "per_level_above_first": 18
+      },
+      "max_cost": {
+        "base": 41,
+        "per_level_above_first": 10
+      },
+      "anvil_cost": 4,
+      "slots": [
+        "mainhand"
+      ]
+    }
+  },
+  "english_translations": {
+    "enchantment.alexscaves.precise_volley": "Precise Volley",
+    "enchantment.alexscaves.precise_volley.desc": "Dreadbow arrows rain down from the sky to a more central position"
+  },
+  "item_tag": {
+    "path": "data/alexscaves/tags/item/enchantable/dreadbow.json",
+    "sha256": "f22db4f6335af0cc185f0478c482c3c666a86afa430f06bdabc78ccc662076d5",
+    "json": {
+      "values": [
+        "alexscaves:dreadbow"
+      ]
+    }
+  },
+  "reused_binary_manifest": {
+    "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DREADBOW-CONTRACTS-1.0.10.json",
+    "version": "1.0.10",
+    "family": "DREADBOW_AND_DARK_ARROW",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "class_hashes": {
+    "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class": "b9cd6e843f923877775e38b89214e8649c10d4d5be704ed9dd377900439d44ae",
+    "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class": "089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad",
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32"
+  },
+  "anchors": [
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 0,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 1,
+      "opcode": "instanceof",
+      "operand": "#85",
+      "symbol": "class net/minecraft/world/entity/player/Player"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 4,
+      "opcode": "ifeq",
+      "operand": "899",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 8,
+      "opcode": "checkcast",
+      "operand": "#85",
+      "symbol": "class net/minecraft/world/entity/player/Player"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 14,
+      "opcode": "getstatic",
+      "operand": "#208",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.RELENTLESS_DARKNESS:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 17,
+      "opcode": "invokestatic",
+      "operand": "#214",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 20,
+      "opcode": "ifgt",
+      "operand": "899",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 26,
+      "opcode": "invokevirtual",
+      "operand": "#317",
+      "symbol": "Method getUseDuration:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 31,
+      "opcode": "isub",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 37,
+      "opcode": "invokestatic",
+      "operand": "#321",
+      "symbol": "Method getPowerForTime:(ILnet/minecraft/world/item/ItemStack;)F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 43,
+      "opcode": "getstatic",
+      "operand": "#325",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.PRECISE_VOLLEY:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 46,
+      "opcode": "invokestatic",
+      "operand": "#214",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 49,
+      "opcode": "ifle",
+      "operand": "56",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 52,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 53,
+      "opcode": "goto",
+      "operand": "57",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 56,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 57,
+      "opcode": "istore",
+      "operand": "8",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 60,
+      "opcode": "getstatic",
+      "operand": "#328",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.SHADED_RESPITE:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 63,
+      "opcode": "invokestatic",
+      "operand": "#214",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 66,
+      "opcode": "ifle",
+      "operand": "83",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 71,
+      "opcode": "bipush",
+      "operand": "11",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 73,
+      "opcode": "invokestatic",
+      "operand": "#331",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/potion/DarknessIncarnateEffect.isInLight:(Lnet/minecraft/world/entity/LivingEntity;I)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 76,
+      "opcode": "ifne",
+      "operand": "83",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 79,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 80,
+      "opcode": "goto",
+      "operand": "84",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 83,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 87,
+      "opcode": "getstatic",
+      "operand": "#218",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TWILIGHT_PERFECTION:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 90,
+      "opcode": "invokestatic",
+      "operand": "#214",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 93,
+      "opcode": "ifle",
+      "operand": "107",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 96,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 97,
+      "opcode": "invokestatic",
+      "operand": "#187",
+      "symbol": "Method getPerfectShotTicks:(Lnet/minecraft/world/item/ItemStack;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 100,
+      "opcode": "ifle",
+      "operand": "107",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 103,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 104,
+      "opcode": "goto",
+      "operand": "108",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 107,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 108,
+      "opcode": "istore",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 113,
+      "opcode": "ldc2_w",
+      "operand": "#337",
+      "symbol": "double 0.1d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 116,
+      "opcode": "dcmpl",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 117,
+      "opcode": "ifle",
+      "operand": "899",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 325,
+      "opcode": "invokestatic",
+      "operand": "#406",
+      "symbol": "Method isConvertibleArrow:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 332,
+      "opcode": "ifeq",
+      "operand": "340",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 335,
+      "opcode": "bipush",
+      "operand": "30",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 337,
+      "opcode": "goto",
+      "operand": "342",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 340,
+      "opcode": "bipush",
+      "operand": "8",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 346,
+      "opcode": "getstatic",
+      "operand": "#410",
+      "symbol": "Field net/minecraft/world/entity/projectile/AbstractArrow$Pickup.ALLOWED:Lnet/minecraft/world/entity/projectile/AbstractArrow$Pickup;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 349,
+      "opcode": "putfield",
+      "operand": "#416",
+      "symbol": "Field net/minecraft/world/entity/projectile/AbstractArrow.pickup:Lnet/minecraft/world/entity/projectile/AbstractArrow$Pickup;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 352,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 363,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 365,
+      "opcode": "invokestatic",
+      "operand": "#419",
+      "symbol": "Method java/lang/Math.ceil:(D)D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 368,
+      "opcode": "dcmpg",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 369,
+      "opcode": "ifge",
+      "operand": "804",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 374,
+      "opcode": "ifeq",
+      "operand": "419",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 377,
+      "opcode": "new",
+      "operand": "#422",
+      "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 383,
+      "opcode": "invokespecial",
+      "operand": "#424",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 390,
+      "opcode": "iload",
+      "operand": "8",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 392,
+      "opcode": "ifeq",
+      "operand": "399",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 395,
+      "opcode": "fconst_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 396,
+      "opcode": "goto",
+      "operand": "402",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 399,
+      "opcode": "ldc_w",
+      "operand": "#313",
+      "symbol": "float 3.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 402,
+      "opcode": "invokevirtual",
+      "operand": "#427",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setShadowArrowDamage:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 405,
+      "opcode": "aload",
+      "operand": "21",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 407,
+      "opcode": "iload",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 409,
+      "opcode": "invokevirtual",
+      "operand": "#431",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setPerfectShot:(Z)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 416,
+      "opcode": "goto",
+      "operand": "443",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 421,
+      "opcode": "ifeq",
+      "operand": "443",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 428,
+      "opcode": "checkcast",
+      "operand": "#435",
+      "symbol": "class com/github/alexmodguy/alexscaves/mixin/AbstractArrowAccessor"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 431,
+      "opcode": "invokeinterface",
+      "operand": "#437, 1",
+      "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/mixin/AbstractArrowAccessor.ac$getBaseDamage:()D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 436,
+      "opcode": "ldc2_w",
+      "operand": "#440",
+      "symbol": "double 2.0d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 439,
+      "opcode": "dmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 440,
+      "opcode": "invokevirtual",
+      "operand": "#442",
+      "symbol": "Method net/minecraft/world/entity/projectile/AbstractArrow.setBaseDamage:(D)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 665,
+      "opcode": "ifeq",
+      "operand": "672",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 668,
+      "opcode": "fconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 669,
+      "opcode": "goto",
+      "operand": "700",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 674,
+      "opcode": "ifeq",
+      "operand": "683",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 677,
+      "opcode": "ldc_w",
+      "operand": "#472",
+      "symbol": "float 20.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 680,
+      "opcode": "goto",
+      "operand": "686",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 683,
+      "opcode": "ldc_w",
+      "operand": "#473",
+      "symbol": "float 5.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 687,
+      "opcode": "invokevirtual",
+      "operand": "#237",
+      "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 690,
+      "opcode": "invokeinterface",
+      "operand": "#241, 1",
+      "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 695,
+      "opcode": "ldc_w",
+      "operand": "#474",
+      "symbol": "float 10.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 698,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 699,
+      "opcode": "fadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 704,
+      "opcode": "ifne",
+      "operand": "734",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 708,
+      "opcode": "invokevirtual",
+      "operand": "#237",
+      "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 711,
+      "opcode": "invokeinterface",
+      "operand": "#241, 1",
+      "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 716,
+      "opcode": "ldc_w",
+      "operand": "#475",
+      "symbol": "float 0.25f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 719,
+      "opcode": "fcmpg",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 720,
+      "opcode": "ifge",
+      "operand": "734",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 724,
+      "opcode": "invokevirtual",
+      "operand": "#237",
+      "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 727,
+      "opcode": "invokeinterface",
+      "operand": "#241, 1",
+      "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 738,
+      "opcode": "getfield",
+      "operand": "#267",
+      "symbol": "Field net/minecraft/world/phys/Vec3.x:D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 743,
+      "opcode": "getfield",
+      "operand": "#271",
+      "symbol": "Field net/minecraft/world/phys/Vec3.y:D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 748,
+      "opcode": "getfield",
+      "operand": "#274",
+      "symbol": "Field net/minecraft/world/phys/Vec3.z:D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 751,
+      "opcode": "ldc",
+      "operand": "#247",
+      "symbol": "float 0.5f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 753,
+      "opcode": "ldc_w",
+      "operand": "#476",
+      "symbol": "float 1.5f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 757,
+      "opcode": "invokevirtual",
+      "operand": "#237",
+      "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 760,
+      "opcode": "invokeinterface",
+      "operand": "#241, 1",
+      "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 765,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 766,
+      "opcode": "fadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 769,
+      "opcode": "invokevirtual",
+      "operand": "#477",
+      "symbol": "Method net/minecraft/world/entity/projectile/AbstractArrow.shoot:(DDDFF)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 775,
+      "opcode": "invokevirtual",
+      "operand": "#481",
+      "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 859,
+      "opcode": "invokevirtual",
+      "operand": "#94",
+      "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 862,
+      "opcode": "ifne",
+      "operand": "899",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 867,
+      "opcode": "ifne",
+      "operand": "877",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 871,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 874,
+      "opcode": "invokestatic",
+      "operand": "#500",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurtAndBreakUsedHand:(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 879,
+      "opcode": "ifeq",
+      "operand": "893",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 884,
+      "opcode": "getstatic",
+      "operand": "#350",
+      "symbol": "Field net/minecraft/world/item/Items.ARROW:Lnet/minecraft/world/item/Item;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 887,
+      "opcode": "invokevirtual",
+      "operand": "#504",
+      "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 890,
+      "opcode": "ifne",
+      "operand": "899",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 895,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 896,
+      "opcode": "invokevirtual",
+      "operand": "#508",
+      "symbol": "Method net/minecraft/world/item/ItemStack.shrink:(I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 899,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 6,
+      "opcode": "invokespecial",
+      "operand": "#512",
+      "symbol": "Method net/minecraft/world/item/ProjectileWeaponItem.onUseTick:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 10,
+      "opcode": "instanceof",
+      "operand": "#85",
+      "symbol": "class net/minecraft/world/entity/player/Player"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 13,
+      "opcode": "ifeq",
+      "operand": "382",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 17,
+      "opcode": "checkcast",
+      "operand": "#85",
+      "symbol": "class net/minecraft/world/entity/player/Player"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 23,
+      "opcode": "getstatic",
+      "operand": "#208",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.RELENTLESS_DARKNESS:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 26,
+      "opcode": "invokestatic",
+      "operand": "#214",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 29,
+      "opcode": "ifle",
+      "operand": "382",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 34,
+      "opcode": "iconst_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 35,
+      "opcode": "irem",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 36,
+      "opcode": "ifne",
+      "operand": "382",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 179,
+      "opcode": "ifeq",
+      "operand": "203",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 182,
+      "opcode": "new",
+      "operand": "#422",
+      "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 188,
+      "opcode": "invokespecial",
+      "operand": "#424",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 191,
+      "opcode": "astore",
+      "operand": "13",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 193,
+      "opcode": "aload",
+      "operand": "13",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 195,
+      "opcode": "fconst_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 196,
+      "opcode": "invokevirtual",
+      "operand": "#427",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setShadowArrowDamage:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 342,
+      "opcode": "invokevirtual",
+      "operand": "#94",
+      "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 345,
+      "opcode": "ifne",
+      "operand": "382",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 350,
+      "opcode": "ifne",
+      "operand": "360",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 354,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 357,
+      "opcode": "invokestatic",
+      "operand": "#500",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurtAndBreakUsedHand:(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 362,
+      "opcode": "ifeq",
+      "operand": "376",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 367,
+      "opcode": "getstatic",
+      "operand": "#350",
+      "symbol": "Field net/minecraft/world/item/Items.ARROW:Lnet/minecraft/world/item/Item;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 370,
+      "opcode": "invokevirtual",
+      "operand": "#504",
+      "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 373,
+      "opcode": "ifne",
+      "operand": "382",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 378,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 379,
+      "opcode": "invokevirtual",
+      "operand": "#508",
+      "symbol": "Method net/minecraft/world/item/ItemStack.shrink:(I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "onUseTick",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 382,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 0,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 2,
+      "opcode": "invokevirtual",
+      "operand": "#84",
+      "symbol": "Method net/minecraft/world/entity/player/Player.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 10,
+      "opcode": "invokevirtual",
+      "operand": "#90",
+      "symbol": "Method net/minecraft/world/entity/player/Player.getProjectile:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 16,
+      "opcode": "invokevirtual",
+      "operand": "#94",
+      "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 23,
+      "opcode": "ifne",
+      "operand": "34",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 28,
+      "opcode": "invokevirtual",
+      "operand": "#98",
+      "symbol": "Method net/minecraft/world/item/ItemStack.isEmpty:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 31,
+      "opcode": "ifne",
+      "operand": "109",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 38,
+      "opcode": "getstatic",
+      "operand": "#103",
+      "symbol": "Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 95,
+      "opcode": "invokestatic",
+      "operand": "#138",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.setTag:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 100,
+      "opcode": "invokevirtual",
+      "operand": "#142",
+      "symbol": "Method net/minecraft/world/entity/player/Player.startUsingItem:(Lnet/minecraft/world/InteractionHand;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 105,
+      "opcode": "invokestatic",
+      "operand": "#146",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.useConsume:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 111,
+      "opcode": "invokestatic",
+      "operand": "#150",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.useFail:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 114,
+      "opcode": "areturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 0,
+      "opcode": "iload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 3,
+      "opcode": "invokestatic",
+      "operand": "#221",
+      "symbol": "Method getMaxLoadTime:(Lnet/minecraft/world/item/ItemStack;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 7,
+      "opcode": "fdiv",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 11,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 13,
+      "opcode": "fconst_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 14,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 15,
+      "opcode": "fadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 16,
+      "opcode": "ldc_w",
+      "operand": "#313",
+      "symbol": "float 3.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 19,
+      "opcode": "fdiv",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 22,
+      "opcode": "fconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 23,
+      "opcode": "fcmpl",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 24,
+      "opcode": "ifle",
+      "operand": "29",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 27,
+      "opcode": "fconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getPowerForTime",
+      "descriptor": "(ILnet/minecraft/world/item/ItemStack;)F",
+      "offset": 30,
+      "opcode": "freturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getUseDuration",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I",
+      "offset": 0,
+      "opcode": "ldc",
+      "operand": "#153",
+      "symbol": "int 72000"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class",
+      "method": "getUseDuration",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I",
+      "offset": 2,
+      "opcode": "ireturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 0,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "#122",
+      "symbol": "Method net/minecraft/world/phys/EntityHitResult.getEntity:()Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 4,
+      "opcode": "astore_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 5,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 6,
+      "opcode": "invokevirtual",
+      "operand": "#128",
+      "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 9,
+      "opcode": "astore_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 10,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 11,
+      "opcode": "invokevirtual",
+      "operand": "#131",
+      "symbol": "Method getShadowArrowDamage:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 14,
+      "opcode": "fstore",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 16,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 17,
+      "opcode": "invokevirtual",
+      "operand": "#110",
+      "symbol": "Method isPerfectShot:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 20,
+      "opcode": "ifeq",
+      "operand": "29",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 23,
+      "opcode": "fload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 25,
+      "opcode": "fconst_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 26,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 27,
+      "opcode": "fstore",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 29,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 30,
+      "opcode": "invokevirtual",
+      "operand": "#135",
+      "symbol": "Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 33,
+      "opcode": "invokevirtual",
+      "operand": "#141",
+      "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 36,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 37,
+      "opcode": "invokestatic",
+      "operand": "#147",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeDarkArrowDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 40,
+      "opcode": "astore",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 42,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 43,
+      "opcode": "ifnull",
+      "operand": "70",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 46,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 47,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 48,
+      "opcode": "invokevirtual",
+      "operand": "#153",
+      "symbol": "Method net/minecraft/world/entity/Entity.is:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 51,
+      "opcode": "ifne",
+      "operand": "93",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 54,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 55,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 56,
+      "opcode": "invokevirtual",
+      "operand": "#157",
+      "symbol": "Method net/minecraft/world/entity/Entity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 59,
+      "opcode": "ifne",
+      "operand": "93",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 62,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 63,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 64,
+      "opcode": "invokevirtual",
+      "operand": "#157",
+      "symbol": "Method net/minecraft/world/entity/Entity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 67,
+      "opcode": "ifne",
+      "operand": "93",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 70,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 71,
+      "opcode": "getfield",
+      "operand": "#16",
+      "symbol": "Field startFading:Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 74,
+      "opcode": "ifne",
+      "operand": "93",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 77,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 78,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 80,
+      "opcode": "fload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 82,
+      "opcode": "invokestatic",
+      "operand": "#160",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 85,
+      "opcode": "ifeq",
+      "operand": "93",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 88,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 89,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 90,
+      "opcode": "putfield",
+      "operand": "#16",
+      "symbol": "Field startFading:Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 93,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "getShadowArrowDamage",
+      "descriptor": "()F",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "getShadowArrowDamage",
+      "descriptor": "()F",
+      "offset": 1,
+      "opcode": "getfield",
+      "operand": "#166",
+      "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "getShadowArrowDamage",
+      "descriptor": "()F",
+      "offset": 4,
+      "opcode": "getstatic",
+      "operand": "#56",
+      "symbol": "Field SHADOW_ARROW_DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "getShadowArrowDamage",
+      "descriptor": "()F",
+      "offset": 7,
+      "opcode": "invokevirtual",
+      "operand": "#170",
+      "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "getShadowArrowDamage",
+      "descriptor": "()F",
+      "offset": 10,
+      "opcode": "checkcast",
+      "operand": "#61",
+      "symbol": "class java/lang/Float"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "getShadowArrowDamage",
+      "descriptor": "()F",
+      "offset": 13,
+      "opcode": "invokevirtual",
+      "operand": "#175",
+      "symbol": "Method java/lang/Float.floatValue:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "getShadowArrowDamage",
+      "descriptor": "()F",
+      "offset": 16,
+      "opcode": "freturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "setShadowArrowDamage",
+      "descriptor": "(F)V",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "setShadowArrowDamage",
+      "descriptor": "(F)V",
+      "offset": 1,
+      "opcode": "getfield",
+      "operand": "#166",
+      "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "setShadowArrowDamage",
+      "descriptor": "(F)V",
+      "offset": 4,
+      "opcode": "getstatic",
+      "operand": "#56",
+      "symbol": "Field SHADOW_ARROW_DAMAGE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "setShadowArrowDamage",
+      "descriptor": "(F)V",
+      "offset": 7,
+      "opcode": "fload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "setShadowArrowDamage",
+      "descriptor": "(F)V",
+      "offset": 8,
+      "opcode": "invokestatic",
+      "operand": "#60",
+      "symbol": "Method java/lang/Float.valueOf:(F)Ljava/lang/Float;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "setShadowArrowDamage",
+      "descriptor": "(F)V",
+      "offset": 11,
+      "opcode": "invokevirtual",
+      "operand": "#178",
+      "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class",
+      "method": "setShadowArrowDamage",
+      "descriptor": "(F)V",
+      "offset": 14,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    }
+  ],
+  "limits": {
+    "sealed_pivots": 234,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "complete_cfg_reaudited_here": false,
+    "real_world_spawns": "NOT_TESTED",
+    "projectile_accuracy": "NOT_CERTIFIED",
+    "actual_damage": "NOT_CERTIFIED",
+    "semantic_magic_roots_added": 0
+  }
+}

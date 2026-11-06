@@ -9,9 +9,9 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=8/51
+individual_full_enchantment_dossiers=9/51
 individual_partial_enchantment_dossiers=20/51
-individual_existing_enchantment_dossiers=28/51
+individual_existing_enchantment_dossiers=29/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -19,9 +19,11 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `███░░░░░░░░░░░░░░░░░ 15.7% (8/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `███░░░░░░░░░░░░░░░░░ 17.6% (9/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `███████████░░░░░░░░░ 54.9% (28/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting e Plummeting Flight possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `███████████░░░░░░░░░ 56.9% (29/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight e Precise Volley possuem contratos estáticos individuais certificados.
+
+**Precise Volley:** [ficha técnica estática](enchantments/precise-volley.md) e [selo SHA-exato](EXACT-PRECISE-VOLLEY-CONTRACT-1.0.10.md) fixam que `L>0` zera a imprecisão do disparo e seleciona `shadowArrowDamage=2F` em vez de 3F para Dark Arrows; quantidade, caixa de spawn, mira e custos seguem nativos. Não homologa hit, altura, dano efetivo ou perk mutadora.
 
 **Plummeting Flight:** [ficha técnica estática](enchantments/plummeting-flight.md) e [selo exato individual](EXACT-PLUMMETING-FLIGHT-CONTRACT-1.0.10.md) documentam `0,03+0,005×L` no delta vertical do espírito e limite `duration<40+5L` para transporte, mas não homologam altura final, dano novo, física ou hook mutador. Reutiliza Spirit Dinosaur sem acrescentar raiz mágica.
 
@@ -79,7 +81,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:multiple_mint` | [Contrato técnico estático](enchantments/multiple-mint.md) · [selo individual](EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.json) · quantidade/ângulo compartilhados; hooks e QA física pendentes |
 | ✅ | `alexscaves:peppermint_punting` | [Contrato técnico estático](enchantments/peppermint-punting.md) · [selo reutilizando Multiple Mint](EXACT-PEPPERMINT-PUNTING-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
 | ✅ | `alexscaves:plummeting_flight` | [Contrato estático](enchantments/plummeting-flight.md) · [selo individual SHA-exato](EXACT-PLUMMETING-FLIGHT-CONTRACT-1.0.10.json) · [Spirit Dinosaur](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) · hook/QA física pendentes |
-| ⚠️ | `alexscaves:precise_volley` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
+| ✅ | `alexscaves:precise_volley` | [Contrato técnico estático](enchantments/precise-volley.md) · [selo individual SHA-exato](EXACT-PRECISE-VOLLEY-CONTRACT-1.0.10.json) · [Dreadbow/Dark Arrow](EXACT-DREADBOW-CONTRACTS-1.0.10.json) · hook/QA física pendentes |
 | ⚠️ | `alexscaves:rapid_possession` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:relentless_darkness` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:sated_blade` | [`EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json`](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) |
@@ -113,4 +115,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:precise_volley`; Plummeting Flight reutiliza a cadeia Extinction Spear/Subterranodon já catalogada, sem criar raiz nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **36/58 contratos estáticos entre fichas observadas**, incluindo 28 fichas de encantamentos. Esses 58 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
+A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:rapid_possession`; Precise Volley reutiliza o contrato Dreadbow/Dark Arrow já catalogado, sem criar raiz nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **37/59 contratos estáticos entre fichas observadas**, incluindo 29 fichas de encantamentos. Esses 59 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
