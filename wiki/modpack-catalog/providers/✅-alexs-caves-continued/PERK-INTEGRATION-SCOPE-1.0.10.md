@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com Heavy Slam e Herd Phalanx, o provider registra **30 contratos estáticos certificados entre 52 fichas observadas**: 22 são dossiers de encantamentos, sendo vinte parciais e dois estáticos completos. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
+As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os cinco contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **33 contratos estáticos certificados entre 55 fichas observadas**: 25 são dossiers de encantamentos, sendo vinte parciais e cinco estáticos completos. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 
@@ -58,7 +58,7 @@ A [prova consolidada](EXACT-NUCLEAR-CONTRACTS-1.0.10.md) relaciona os 20 membros
 
 ## Spirit Dinosaur — consumidores e autoria distintos
 
-A [prova consolidada](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.md) fecha a ficha existente dos espíritos/lança: os três tipos têm funções diferentes, a flag de dano é atualizada em ordem distinta nos dois consumidores e a explosão Tephra usa outro mecanismo nativo. Custos, produção, defesa Grotto, targeting e persistência continuam com seus owners próprios. O índice passa a 28/30 contratos observados; o universo do provider, hooks e QA física permanecem abertos.
+A [prova consolidada](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.md) fecha a ficha existente dos espíritos/lança: os três tipos têm funções diferentes, a flag de dano é atualizada em ordem distinta nos dois consumidores e a explosão Tephra usa outro mecanismo nativo. Custos, produção, defesa Grotto, targeting e persistência continuam com seus owners próprios. Naquele checkpoint, o índice passou a 28/30 contratos observados; o universo do provider, hooks e QA física permanecem abertos.
 
 ## Heavy Slam — primeiro contrato estático individual de encantamento
 
@@ -71,3 +71,7 @@ A [ficha individual](enchantments/herd-phalanx.md) e o [selo](EXACT-HERD-PHALANX
 ## Impending Stab — espera e dano em momentos diferentes
 
 A [ficha](enchantments/impending-stab.md) e o [selo](EXACT-IMPENDING-STAB-CONTRACT-1.0.10.md) reaproveitam Desolate Dagger: nível positivo escolhe 40–49 no produtor; dano `2+2L` é relido no stab. Stack sem cópia própria, PLAYER_ID não preenchido, exclusividade declarada e descarte após tentativa são limites explícitos. Somente o contrato estático individual é concluído; hooks e QA física continuam pendentes.
+
+## Lasting Morale — tempo compartilhado e persistência condicionada
+
+A [ficha](enchantments/lasting-morale.md) e a [prova](EXACT-LASTING-MORALE-CONTRACT-1.0.10.md) distinguem carga/custo, leitura de `1200+400L`, contador e cooldown por Item, tentativas de spawn, fade e UUID/NBT. Somente o contrato estático individual é concluído; não se alteram as ações existentes, ataques dos mobs, hooks mutadores ou QA física.

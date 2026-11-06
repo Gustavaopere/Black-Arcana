@@ -6939,6 +6939,46 @@
           "reason": "Manifesto individual reaproveita Desolate Dagger sem reescrever evidências; hashes, descritores e âncoras conferidos no JAR exato, regressões e revisão independente; provider aberto."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/lasting-morale.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual de Lasting Morale e consumidores delimitados de tempo/cooldown do Magic Conch; não conclui Charting Call, Taxing Bellow, ataques dos mobs, hooks, QA física ou provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/lasting-morale.md",
+          "reason": "Publisher 1.0.10 SHA-exato, JSON Lasting Morale, registro/chave, tag Magic Conch, descrição original e tags de aquisição selados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/lasting-morale.md",
+          "reason": "Carga/release, custo anterior ao nível, três loops e init de owner/tempo, contador servidor, progresso e remoção DISCARDED delimitados."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/lasting-morale.md",
+          "reason": "JSON I–III/custos/slot, leitura única de 1200+400L compartilhada por summons e cooldown por Item; domínio forçado sem clamp próprio explicitado."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/lasting-morale.md",
+          "reason": "Placement e tentativas nativas, copyTarget com precedência sem fallback de opção inelegível, testes direcionais de aliança e fronteira com ataques das entidades documentados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/lasting-morale.md",
+          "reason": "Desgaste ou Taxing Bellow antes da guarda servidor, reputação condicionada ao último summon não nulo, ausência de reembolso local e cooldown separados dos custos de encantamento."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/lasting-morale.md",
+          "reason": "Aceitação de spawn não provada por retorno não nulo; AI/dano/autoria sob provider, UUID/tempo NBT condicionais e progresso não salvo; NO_MUTATION, hooks e QA pendentes."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/lasting-morale.md",
+          "reason": "Manifesto individual, auditoria reproduzível do JAR/descritores/âncoras, regressões e revisão independente preservam provas anteriores e provider aberto."
+        }
+      }
     }
   },
   "providers": {},
