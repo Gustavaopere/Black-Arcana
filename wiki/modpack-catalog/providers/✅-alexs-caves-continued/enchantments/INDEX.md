@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 7/27.**
+**Fichas catalogadas (somente fichas detectadas): 8/28.**
 
-**Barra das fichas catalogadas:** `█████░░░░░░░░░░░░░░░ 25.9%`
+**Barra das fichas catalogadas:** `██████░░░░░░░░░░░░░░ 28.6%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 7/27.**
+**Homologadas para perks (somente fichas detectadas): 8/28.**
 
-**Barra dos contratos técnicos estáticos:** `█████░░░░░░░░░░░░░░░ 25.9%`
+**Barra dos contratos técnicos estáticos:** `██████░░░░░░░░░░░░░░ 28.6%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -47,6 +47,7 @@
 | ✅ | Lasting Morale | [ficha/lasting-morale.md](lasting-morale.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Multiple Mint | [ficha/multiple-mint.md](multiple-mint.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Peppermint Punting | [ficha/peppermint-punting.md](peppermint-punting.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Plummeting Flight | [ficha/plummeting-flight.md](plummeting-flight.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
