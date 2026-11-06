@@ -73,7 +73,7 @@ def audit(jar:Path, manifest:Path):
             "artifact":{"sha1":SHA1,"sha256":SHA256,"bytes":SIZE},
             "resource":{"path":PUNTING,"sha256":EXPECTED_RESOURCE,"size_bytes":len(raw),"json":config},
             "english_translations":translations,
-            "item_tag":{"path":TAG,"sha256":sha(z.read(TAG)) if False else reference["resources"][TAG],"json":tag},
+            "item_tag":{"path":TAG,"sha256":reference["resources"][TAG],"json":tag},
             "class_hashes":classes,"bytecode_pivots":pivots,
             "limits":{"runtime_hook":"NOT_VERIFIED","physical_qa":"NOT_TESTED","mutation":"NO_MUTATION"}}
     return report
