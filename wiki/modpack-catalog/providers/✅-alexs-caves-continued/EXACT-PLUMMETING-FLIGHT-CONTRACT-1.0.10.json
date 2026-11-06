@@ -1,0 +1,3443 @@
+{
+  "schema_version": 1,
+  "catalog_family": "PLUMMETING_FLIGHT_ENCHANTMENT_CONTRACT",
+  "version": "1.0.10",
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "mutation": "NO_MUTATION",
+  "provider_universe_closed": false,
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "card": {
+    "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md",
+    "sha256": "81e26f9bcd12d9a9f0f0bf9ff831f08f06005411d8e2b85da0a40d48935df52c"
+  },
+  "resource": {
+    "path": "data/alexscaves/enchantment/plummeting_flight.json",
+    "sha256": "163b032e37c716f0ef172a37b739a6d61340dab7c629c070698f8543999ec830",
+    "size_bytes": 374,
+    "json": {
+      "description": {
+        "translate": "enchantment.alexscaves.plummeting_flight"
+      },
+      "supported_items": "#alexscaves:enchantable/extinction_spear",
+      "weight": 2,
+      "max_level": 3,
+      "min_cost": {
+        "base": 1,
+        "per_level_above_first": 13
+      },
+      "max_cost": {
+        "base": 41,
+        "per_level_above_first": 10
+      },
+      "anvil_cost": 4,
+      "slots": [
+        "mainhand"
+      ]
+    }
+  },
+  "english_translations": {
+    "enchantment.alexscaves.plummeting_flight": "Plummeting Flight",
+    "enchantment.alexscaves.plummeting_flight.desc": "Extinction Spear Subterranodon attack carries foes higher and for longer"
+  },
+  "portuguese_translations": {},
+  "item_tag": {
+    "path": "data/alexscaves/tags/item/enchantable/extinction_spear.json",
+    "sha256": "950e56b0643bb55cb9acab23c3eecdfd75f6ee7ae3f1253d9866c3f2f7fdf5e7",
+    "json": {
+      "values": [
+        "alexscaves:extinction_spear"
+      ]
+    }
+  },
+  "reused_binary_manifest": {
+    "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json",
+    "version": "1.0.10",
+    "family": "SPIRIT_DINOSAUR_DAMAGE_CONTRACT",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "class_hashes": {
+    "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class": "084a315c5a63dabc8c6ff1bc91ad008b0b2374e4d7f953bf3692c77394093774",
+    "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class": "c4f6bbf7dab4aeeb2abd5b8cd227759d2ea1692115d1b3d14b62598a0b3900d7",
+    "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class": "846709940e9e400c4d6e894ec07887b762598b0d8f116fff951fa5585245bfd8",
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32"
+  },
+  "anchors": [
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 0,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "#269",
+      "symbol": "Method net/minecraft/world/phys/EntityHitResult.getEntity:()Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 4,
+      "opcode": "astore_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 5,
+      "opcode": "ldc_w",
+      "operand": "#274",
+      "symbol": "float 10.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 8,
+      "opcode": "fstore_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 9,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 10,
+      "opcode": "instanceof",
+      "operand": "#275",
+      "symbol": "class net/minecraft/world/entity/LivingEntity"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 13,
+      "opcode": "ifeq",
+      "operand": "34",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 16,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 17,
+      "opcode": "checkcast",
+      "operand": "#275",
+      "symbol": "class net/minecraft/world/entity/LivingEntity"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 20,
+      "opcode": "astore",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 22,
+      "opcode": "fload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 23,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 24,
+      "opcode": "invokevirtual",
+      "operand": "#121",
+      "symbol": "Method getDefaultPickupItem:()Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 27,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 29,
+      "opcode": "invokestatic",
+      "operand": "#277",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.damageBonus:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 32,
+      "opcode": "fadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 33,
+      "opcode": "fstore_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 34,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 35,
+      "opcode": "invokevirtual",
+      "operand": "#89",
+      "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 38,
+      "opcode": "astore",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 40,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 41,
+      "opcode": "invokevirtual",
+      "operand": "#103",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 44,
+      "opcode": "invokevirtual",
+      "operand": "#281",
+      "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 47,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 49,
+      "opcode": "ifnonnull",
+      "operand": "56",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 52,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 53,
+      "opcode": "goto",
+      "operand": "58",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 56,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 58,
+      "opcode": "invokestatic",
+      "operand": "#285",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeSpiritDinosaurDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 61,
+      "opcode": "astore",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 63,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 64,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 65,
+      "opcode": "putfield",
+      "operand": "#77",
+      "symbol": "Field dealtDamage:Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 68,
+      "opcode": "getstatic",
+      "operand": "#291",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.EXTINCTION_SPEAR_HIT:Ljava/util/function/Supplier;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 71,
+      "opcode": "invokeinterface",
+      "operand": "#15, 1",
+      "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 76,
+      "opcode": "checkcast",
+      "operand": "#296",
+      "symbol": "class net/minecraft/sounds/SoundEvent"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 79,
+      "opcode": "astore",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 81,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 82,
+      "opcode": "ldc_w",
+      "operand": "#298",
+      "symbol": "float 5.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 85,
+      "opcode": "invokevirtual",
+      "operand": "#299",
+      "symbol": "Method net/minecraft/world/entity/Entity.igniteForSeconds:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 88,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 89,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 91,
+      "opcode": "fload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 92,
+      "opcode": "invokestatic",
+      "operand": "#303",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 95,
+      "opcode": "ifeq",
+      "operand": "281",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 98,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 99,
+      "opcode": "invokevirtual",
+      "operand": "#307",
+      "symbol": "Method net/minecraft/world/entity/Entity.getType:()Lnet/minecraft/world/entity/EntityType;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 102,
+      "opcode": "getstatic",
+      "operand": "#311",
+      "symbol": "Field net/minecraft/world/entity/EntityType.ENDERMAN:Lnet/minecraft/world/entity/EntityType;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 105,
+      "opcode": "if_acmpne",
+      "operand": "109",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 108,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 109,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 110,
+      "opcode": "instanceof",
+      "operand": "#275",
+      "symbol": "class net/minecraft/world/entity/LivingEntity"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 113,
+      "opcode": "ifeq",
+      "operand": "148",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 116,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 117,
+      "opcode": "checkcast",
+      "operand": "#275",
+      "symbol": "class net/minecraft/world/entity/LivingEntity"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 120,
+      "opcode": "astore",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 122,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 124,
+      "opcode": "instanceof",
+      "operand": "#275",
+      "symbol": "class net/minecraft/world/entity/LivingEntity"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 127,
+      "opcode": "ifeq",
+      "operand": "142",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 130,
+      "opcode": "aload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 132,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 134,
+      "opcode": "checkcast",
+      "operand": "#275",
+      "symbol": "class net/minecraft/world/entity/LivingEntity"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 137,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 139,
+      "opcode": "invokestatic",
+      "operand": "#315",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.postAttackEffects:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 142,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 143,
+      "opcode": "aload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 145,
+      "opcode": "invokevirtual",
+      "operand": "#319",
+      "symbol": "Method doPostHurtEffects:(Lnet/minecraft/world/entity/LivingEntity;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 148,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 150,
+      "opcode": "ifnull",
+      "operand": "281",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 153,
+      "opcode": "getstatic",
+      "operand": "#323",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.DINOSAUR_SPIRIT:Ljava/util/function/Supplier;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 156,
+      "opcode": "invokeinterface",
+      "operand": "#15, 1",
+      "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 161,
+      "opcode": "checkcast",
+      "operand": "#39",
+      "symbol": "class net/minecraft/world/entity/EntityType"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 164,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 165,
+      "opcode": "invokevirtual",
+      "operand": "#103",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 168,
+      "opcode": "invokestatic",
+      "operand": "#326",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.createEntity:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 171,
+      "opcode": "checkcast",
+      "operand": "#330",
+      "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 174,
+      "opcode": "astore",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 176,
+      "opcode": "aload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 178,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 179,
+      "opcode": "invokevirtual",
+      "operand": "#332",
+      "symbol": "Method net/minecraft/world/entity/Entity.getX:()D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 182,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 183,
+      "opcode": "invokevirtual",
+      "operand": "#333",
+      "symbol": "Method net/minecraft/world/entity/Entity.getY:()D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 186,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 187,
+      "opcode": "invokevirtual",
+      "operand": "#334",
+      "symbol": "Method net/minecraft/world/entity/Entity.getBbHeight:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 190,
+      "opcode": "f2d",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 191,
+      "opcode": "dadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 192,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 193,
+      "opcode": "invokevirtual",
+      "operand": "#338",
+      "symbol": "Method net/minecraft/world/entity/Entity.getZ:()D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 196,
+      "opcode": "invokevirtual",
+      "operand": "#339",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.setPos:(DDD)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 199,
+      "opcode": "aload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 201,
+      "opcode": "getstatic",
+      "operand": "#343",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity$DinosaurType.SUBTERRANODON:Lcom/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity$DinosaurType;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 204,
+      "opcode": "invokevirtual",
+      "operand": "#349",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.setDinosaurType:(Lcom/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity$DinosaurType;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 207,
+      "opcode": "aload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 209,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 211,
+      "opcode": "invokevirtual",
+      "operand": "#353",
+      "symbol": "Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 214,
+      "opcode": "invokevirtual",
+      "operand": "#357",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.setPlayerUUID:(Ljava/util/UUID;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 217,
+      "opcode": "aload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 219,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 220,
+      "opcode": "invokevirtual",
+      "operand": "#361",
+      "symbol": "Method net/minecraft/world/entity/Entity.getId:()I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 223,
+      "opcode": "invokevirtual",
+      "operand": "#365",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.setAttackingEntityId:(I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 226,
+      "opcode": "aload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 228,
+      "opcode": "getstatic",
+      "operand": "#369",
+      "symbol": "Field net/minecraft/commands/arguments/EntityAnchorArgument$Anchor.EYES:Lnet/minecraft/commands/arguments/EntityAnchorArgument$Anchor;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 231,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 233,
+      "opcode": "invokevirtual",
+      "operand": "#144",
+      "symbol": "Method net/minecraft/world/entity/Entity.getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 236,
+      "opcode": "invokevirtual",
+      "operand": "#375",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.lookAt:(Lnet/minecraft/commands/arguments/EntityAnchorArgument$Anchor;Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 239,
+      "opcode": "aload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 241,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 242,
+      "opcode": "getfield",
+      "operand": "#26",
+      "symbol": "Field spearItem:Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 245,
+      "opcode": "getstatic",
+      "operand": "#379",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.PLUMMETING_FLIGHT:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 248,
+      "opcode": "invokestatic",
+      "operand": "#385",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 251,
+      "opcode": "invokevirtual",
+      "operand": "#389",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.setEnchantmentLevel:(I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 254,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 255,
+      "opcode": "getstatic",
+      "operand": "#392",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.EXTINCTION_SPEAR_SUMMON:Ljava/util/function/Supplier;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 258,
+      "opcode": "invokeinterface",
+      "operand": "#15, 1",
+      "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 263,
+      "opcode": "checkcast",
+      "operand": "#296",
+      "symbol": "class net/minecraft/sounds/SoundEvent"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 266,
+      "opcode": "fconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 267,
+      "opcode": "fconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 268,
+      "opcode": "invokevirtual",
+      "operand": "#395",
+      "symbol": "Method playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 271,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 272,
+      "opcode": "invokevirtual",
+      "operand": "#103",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 275,
+      "opcode": "aload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 277,
+      "opcode": "invokevirtual",
+      "operand": "#399",
+      "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 280,
+      "opcode": "pop",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 281,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 282,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 283,
+      "opcode": "invokevirtual",
+      "operand": "#180",
+      "symbol": "Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 286,
+      "opcode": "ldc2_w",
+      "operand": "#403",
+      "symbol": "double -0.01d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 289,
+      "opcode": "ldc2_w",
+      "operand": "#405",
+      "symbol": "double -0.1d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 292,
+      "opcode": "ldc2_w",
+      "operand": "#403",
+      "symbol": "double -0.01d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 295,
+      "opcode": "invokevirtual",
+      "operand": "#407",
+      "symbol": "Method net/minecraft/world/phys/Vec3.multiply:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 298,
+      "opcode": "invokevirtual",
+      "operand": "#163",
+      "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 301,
+      "opcode": "fconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 302,
+      "opcode": "fstore",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 304,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 305,
+      "opcode": "aload",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 307,
+      "opcode": "fload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 309,
+      "opcode": "fconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 310,
+      "opcode": "invokevirtual",
+      "operand": "#395",
+      "symbol": "Method playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.class",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "offset": 313,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "#259",
+      "symbol": "Method getAttackingEntity:()Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 4,
+      "opcode": "astore_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 5,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 6,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 7,
+      "opcode": "invokevirtual",
+      "operand": "#165",
+      "symbol": "Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 10,
+      "opcode": "dconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 11,
+      "opcode": "ldc2_w",
+      "operand": "#263",
+      "symbol": "double 0.03d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 14,
+      "opcode": "ldc_w",
+      "operand": "#265",
+      "symbol": "float 0.005f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 17,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 18,
+      "opcode": "invokevirtual",
+      "operand": "#266",
+      "symbol": "Method getEnchantmentLevel:()I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 21,
+      "opcode": "i2f",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 22,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 23,
+      "opcode": "f2d",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 24,
+      "opcode": "dadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 25,
+      "opcode": "dconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 26,
+      "opcode": "invokevirtual",
+      "operand": "#269",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 29,
+      "opcode": "invokevirtual",
+      "operand": "#181",
+      "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 32,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 33,
+      "opcode": "ifnull",
+      "operand": "103",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 36,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 37,
+      "opcode": "getfield",
+      "operand": "#16",
+      "symbol": "Field duration:I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 40,
+      "opcode": "bipush",
+      "operand": "40",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 42,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 43,
+      "opcode": "invokevirtual",
+      "operand": "#266",
+      "symbol": "Method getEnchantmentLevel:()I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 46,
+      "opcode": "iconst_5",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 47,
+      "opcode": "imul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 48,
+      "opcode": "iadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 49,
+      "opcode": "if_icmpge",
+      "operand": "103",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 52,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 53,
+      "opcode": "invokevirtual",
+      "operand": "#273",
+      "symbol": "Method position:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 56,
+      "opcode": "dconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 57,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 58,
+      "opcode": "invokevirtual",
+      "operand": "#276",
+      "symbol": "Method net/minecraft/world/entity/Entity.getBbHeight:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 61,
+      "opcode": "f2d",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 62,
+      "opcode": "dconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 63,
+      "opcode": "invokevirtual",
+      "operand": "#279",
+      "symbol": "Method net/minecraft/world/phys/Vec3.subtract:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 66,
+      "opcode": "astore_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 67,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 68,
+      "opcode": "getstatic",
+      "operand": "#282",
+      "symbol": "Field net/minecraft/world/phys/Vec3.ZERO:Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 71,
+      "opcode": "invokevirtual",
+      "operand": "#286",
+      "symbol": "Method net/minecraft/world/entity/Entity.setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 74,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 75,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 76,
+      "opcode": "getfield",
+      "operand": "#287",
+      "symbol": "Field net/minecraft/world/phys/Vec3.x:D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 79,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 80,
+      "opcode": "getfield",
+      "operand": "#290",
+      "symbol": "Field net/minecraft/world/phys/Vec3.y:D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 83,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 84,
+      "opcode": "getfield",
+      "operand": "#293",
+      "symbol": "Field net/minecraft/world/phys/Vec3.z:D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 87,
+      "opcode": "invokevirtual",
+      "operand": "#296",
+      "symbol": "Method net/minecraft/world/entity/Entity.setPos:(DDD)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 90,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 91,
+      "opcode": "dup",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 92,
+      "opcode": "getfield",
+      "operand": "#16",
+      "symbol": "Field duration:I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 95,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 96,
+      "opcode": "iadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 97,
+      "opcode": "putfield",
+      "operand": "#16",
+      "symbol": "Field duration:I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 100,
+      "opcode": "goto",
+      "operand": "108",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 103,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 104,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 105,
+      "opcode": "invokevirtual",
+      "operand": "#185",
+      "symbol": "Method setFading:(Z)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tickSubterranodon",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+      "offset": 108,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 4,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 5,
+      "opcode": "invokevirtual",
+      "operand": "#87",
+      "symbol": "Method getUsingPlayer:()Lnet/minecraft/world/entity/player/Player;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 72,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 178,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 179,
+      "opcode": "invokevirtual",
+      "operand": "#117",
+      "symbol": "Method isFading:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 182,
+      "opcode": "ifeq",
+      "operand": "198",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 189,
+      "opcode": "fconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 191,
+      "opcode": "ifgt",
+      "operand": "198",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 195,
+      "opcode": "invokevirtual",
+      "operand": "#126",
+      "symbol": "Method discard:()V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 198,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 199,
+      "opcode": "invokevirtual",
+      "operand": "#129",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 202,
+      "opcode": "invokevirtual",
+      "operand": "#133",
+      "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 235,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 239,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 240,
+      "opcode": "invokevirtual",
+      "operand": "#165",
+      "symbol": "Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 243,
+      "opcode": "invokevirtual",
+      "operand": "#169",
+      "symbol": "Method move:(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 246,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 251,
+      "opcode": "ldc2_w",
+      "operand": "#173",
+      "symbol": "double 0.8999999761581421d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 254,
+      "opcode": "invokevirtual",
+      "operand": "#175",
+      "symbol": "Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 257,
+      "opcode": "invokevirtual",
+      "operand": "#181",
+      "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 260,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 264,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 265,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 266,
+      "opcode": "invokevirtual",
+      "operand": "#185",
+      "symbol": "Method setFading:(Z)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 269,
+      "opcode": "goto",
+      "operand": "325",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 272,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 273,
+      "opcode": "invokevirtual",
+      "operand": "#189",
+      "symbol": "Method getDinosaurType:()Lcom/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity$DinosaurType;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 276,
+      "opcode": "invokevirtual",
+      "operand": "#193",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity$DinosaurType.ordinal:()I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 279,
+      "opcode": "tableswitch",
+      "operand": "{",
+      "symbol": "0 to 2"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 304,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 305,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 306,
+      "opcode": "invokevirtual",
+      "operand": "#198",
+      "symbol": "Method tickSubterranodon:(Lnet/minecraft/world/entity/player/Player;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 325,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 329,
+      "opcode": "invokevirtual",
+      "operand": "#133",
+      "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 332,
+      "opcode": "ifeq",
+      "operand": "459",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 459,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 1,
+      "opcode": "getfield",
+      "operand": "#436",
+      "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 4,
+      "opcode": "getstatic",
+      "operand": "#55",
+      "symbol": "Field ATTACKING_ENTITY_ID:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 7,
+      "opcode": "invokevirtual",
+      "operand": "#450",
+      "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 10,
+      "opcode": "checkcast",
+      "operand": "#50",
+      "symbol": "class java/lang/Integer"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 13,
+      "opcode": "invokevirtual",
+      "operand": "#479",
+      "symbol": "Method java/lang/Integer.intValue:()I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 16,
+      "opcode": "istore_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 17,
+      "opcode": "iload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 18,
+      "opcode": "iconst_m1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 19,
+      "opcode": "if_icmpne",
+      "operand": "24",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 22,
+      "opcode": "aconst_null",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 23,
+      "opcode": "areturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 24,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 25,
+      "opcode": "invokevirtual",
+      "operand": "#129",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 28,
+      "opcode": "iload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 29,
+      "opcode": "invokevirtual",
+      "operand": "#482",
+      "symbol": "Method net/minecraft/world/level/Level.getEntity:(I)Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getAttackingEntity",
+      "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+      "offset": 32,
+      "opcode": "areturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "#421",
+      "symbol": "Method getPlayerUUID:()Ljava/util/UUID;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 4,
+      "opcode": "astore_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 5,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 6,
+      "opcode": "ifnonnull",
+      "operand": "11",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 9,
+      "opcode": "aconst_null",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 10,
+      "opcode": "areturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 11,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 12,
+      "opcode": "invokevirtual",
+      "operand": "#129",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 15,
+      "opcode": "invokevirtual",
+      "operand": "#133",
+      "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 18,
+      "opcode": "ifeq",
+      "operand": "30",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 21,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 22,
+      "opcode": "invokevirtual",
+      "operand": "#129",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 25,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 26,
+      "opcode": "invokevirtual",
+      "operand": "#459",
+      "symbol": "Method net/minecraft/world/level/Level.getPlayerByUUID:(Ljava/util/UUID;)Lnet/minecraft/world/entity/player/Player;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 29,
+      "opcode": "areturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 30,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 31,
+      "opcode": "invokevirtual",
+      "operand": "#129",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 34,
+      "opcode": "invokevirtual",
+      "operand": "#463",
+      "symbol": "Method net/minecraft/world/level/Level.getServer:()Lnet/minecraft/server/MinecraftServer;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 37,
+      "opcode": "invokevirtual",
+      "operand": "#467",
+      "symbol": "Method net/minecraft/server/MinecraftServer.getPlayerList:()Lnet/minecraft/server/players/PlayerList;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 40,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 41,
+      "opcode": "invokevirtual",
+      "operand": "#473",
+      "symbol": "Method net/minecraft/server/players/PlayerList.getPlayer:(Ljava/util/UUID;)Lnet/minecraft/server/level/ServerPlayer;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getUsingPlayer",
+      "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+      "offset": 44,
+      "opcode": "areturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 24,
+      "opcode": "getstatic",
+      "operand": "#55",
+      "symbol": "Field ATTACKING_ENTITY_ID:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 27,
+      "opcode": "iconst_m1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 35,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 36,
+      "opcode": "getstatic",
+      "operand": "#58",
+      "symbol": "Field DELAY_SPAWN:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 39,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 48,
+      "opcode": "getstatic",
+      "operand": "#61",
+      "symbol": "Field FADING:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 51,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 59,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 71,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 72,
+      "opcode": "getstatic",
+      "operand": "#72",
+      "symbol": "Field ENCHANTMENT_LEVEL:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 75,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 76,
+      "opcode": "invokestatic",
+      "operand": "#49",
+      "symbol": "Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 79,
+      "opcode": "invokevirtual",
+      "operand": "#40",
+      "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "offset": 82,
+      "opcode": "pop",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getEnchantmentLevel",
+      "descriptor": "()I",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getEnchantmentLevel",
+      "descriptor": "()I",
+      "offset": 1,
+      "opcode": "getfield",
+      "operand": "#436",
+      "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getEnchantmentLevel",
+      "descriptor": "()I",
+      "offset": 4,
+      "opcode": "getstatic",
+      "operand": "#72",
+      "symbol": "Field ENCHANTMENT_LEVEL:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getEnchantmentLevel",
+      "descriptor": "()I",
+      "offset": 7,
+      "opcode": "invokevirtual",
+      "operand": "#450",
+      "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getEnchantmentLevel",
+      "descriptor": "()I",
+      "offset": 10,
+      "opcode": "checkcast",
+      "operand": "#50",
+      "symbol": "class java/lang/Integer"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getEnchantmentLevel",
+      "descriptor": "()I",
+      "offset": 13,
+      "opcode": "invokevirtual",
+      "operand": "#479",
+      "symbol": "Method java/lang/Integer.intValue:()I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "getEnchantmentLevel",
+      "descriptor": "()I",
+      "offset": 16,
+      "opcode": "ireturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "setEnchantmentLevel",
+      "descriptor": "(I)V",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "setEnchantmentLevel",
+      "descriptor": "(I)V",
+      "offset": 1,
+      "opcode": "getfield",
+      "operand": "#436",
+      "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "setEnchantmentLevel",
+      "descriptor": "(I)V",
+      "offset": 4,
+      "opcode": "getstatic",
+      "operand": "#72",
+      "symbol": "Field ENCHANTMENT_LEVEL:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "setEnchantmentLevel",
+      "descriptor": "(I)V",
+      "offset": 7,
+      "opcode": "iload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "setEnchantmentLevel",
+      "descriptor": "(I)V",
+      "offset": 8,
+      "opcode": "invokestatic",
+      "operand": "#49",
+      "symbol": "Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "setEnchantmentLevel",
+      "descriptor": "(I)V",
+      "offset": 11,
+      "opcode": "invokevirtual",
+      "operand": "#444",
+      "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "setEnchantmentLevel",
+      "descriptor": "(I)V",
+      "offset": 14,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "#421",
+      "symbol": "Method getPlayerUUID:()Ljava/util/UUID;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 4,
+      "opcode": "astore_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 5,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 6,
+      "opcode": "ifnull",
+      "operand": "17",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 9,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 10,
+      "opcode": "ldc_w",
+      "operand": "#396",
+      "symbol": "String UsingPlayerUUID"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 13,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 14,
+      "opcode": "invokestatic",
+      "operand": "#425",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.putUUID:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/UUID;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 17,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 18,
+      "opcode": "ldc_w",
+      "operand": "#412",
+      "symbol": "String DinosaurType"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 21,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 22,
+      "opcode": "invokevirtual",
+      "operand": "#429",
+      "symbol": "Method getDinosaurTypeInt:()I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 25,
+      "opcode": "invokevirtual",
+      "operand": "#432",
+      "symbol": "Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 28,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 0,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 1,
+      "opcode": "ldc_w",
+      "operand": "#396",
+      "symbol": "String UsingPlayerUUID"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 4,
+      "opcode": "invokevirtual",
+      "operand": "#398",
+      "symbol": "Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 7,
+      "opcode": "ifeq",
+      "operand": "21",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 10,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 11,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 12,
+      "opcode": "ldc_w",
+      "operand": "#396",
+      "symbol": "String UsingPlayerUUID"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 15,
+      "opcode": "invokestatic",
+      "operand": "#404",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getUUID:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Ljava/util/UUID;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 18,
+      "opcode": "invokevirtual",
+      "operand": "#408",
+      "symbol": "Method setPlayerUUID:(Ljava/util/UUID;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 21,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 22,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 23,
+      "opcode": "ldc_w",
+      "operand": "#412",
+      "symbol": "String DinosaurType"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 26,
+      "opcode": "invokestatic",
+      "operand": "#414",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getInt:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 29,
+      "opcode": "invokevirtual",
+      "operand": "#418",
+      "symbol": "Method setDinosaurTypeInt:(I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 32,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "offset": 69,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "offset": 71,
+      "opcode": "getstatic",
+      "operand": "#277",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity$DinosaurType.TREMORSAURUS:Lcom/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity$DinosaurType;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "offset": 74,
+      "opcode": "invokevirtual",
+      "operand": "#163",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.setDinosaurType:(Lcom/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity$DinosaurType;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "offset": 86,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "offset": 88,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "offset": 89,
+      "opcode": "getstatic",
+      "operand": "#280",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.CHOMPING_SPIRIT:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "offset": 92,
+      "opcode": "invokestatic",
+      "operand": "#135",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "offset": 95,
+      "opcode": "invokevirtual",
+      "operand": "#283",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.setEnchantmentLevel:(I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "offset": 98,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "offset": 104,
+      "opcode": "invokevirtual",
+      "operand": "#290",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DinosaurSpiritEntity.setAttackingEntityId:(I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "offset": 131,
+      "opcode": "invokevirtual",
+      "operand": "#71",
+      "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 0,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 1,
+      "opcode": "instanceof",
+      "operand": "#9",
+      "symbol": "class net/minecraft/world/entity/player/Player"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 4,
+      "opcode": "ifeq",
+      "operand": "175",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 7,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 13,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 16,
+      "opcode": "invokevirtual",
+      "operand": "#11",
+      "symbol": "Method getUseDuration:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 19,
+      "opcode": "iload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 22,
+      "opcode": "istore",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 24,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 27,
+      "opcode": "invokevirtual",
+      "operand": "#17",
+      "symbol": "Method getPowerForTime:(I)F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 32,
+      "opcode": "fload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 35,
+      "opcode": "ldc2_w",
+      "operand": "#21",
+      "symbol": "double 0.1d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 39,
+      "opcode": "ifle",
+      "operand": "168",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 42,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 43,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 48,
+      "opcode": "invokestatic",
+      "operand": "#29",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurtAndBreak:(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 51,
+      "opcode": "new",
+      "operand": "#35",
+      "symbol": "class com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 59,
+      "opcode": "invokespecial",
+      "operand": "#37",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 81,
+      "opcode": "ldc",
+      "operand": "#47",
+      "symbol": "float 3.5f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 85,
+      "opcode": "invokevirtual",
+      "operand": "#48",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/ExtinctionSpearEntity.shootFromRotation:(Lnet/minecraft/world/entity/Entity;FFFFF)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 107,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 110,
+      "opcode": "invokevirtual",
+      "operand": "#71",
+      "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 113,
+      "opcode": "pop",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 148,
+      "opcode": "ifne",
+      "operand": "156",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 152,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem.class",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "offset": 153,
+      "opcode": "invokevirtual",
+      "operand": "#101",
+      "symbol": "Method net/minecraft/world/item/ItemStack.shrink:(I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "method": "<clinit>",
+      "descriptor": "()V",
+      "offset": 149,
+      "opcode": "ldc_w",
+      "operand": "#265",
+      "symbol": "String plummeting_flight"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "method": "<clinit>",
+      "descriptor": "()V",
+      "offset": 155,
+      "opcode": "putstatic",
+      "operand": "#267",
+      "symbol": "Field PLUMMETING_FLIGHT:Lnet/minecraft/resources/ResourceKey;"
+    }
+  ],
+  "limits": {
+    "sealed_pivots": 373,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "complete_cfg_reaudited_here": false,
+    "instance_world_qa": "NOT_TESTED",
+    "spawn_accepted": "NOT_CERTIFIED",
+    "transport_height": "NOT_CERTIFIED",
+    "transport_duration_seconds": "NOT_CERTIFIED",
+    "semantic_magic_roots_added": 0
+  }
+}
