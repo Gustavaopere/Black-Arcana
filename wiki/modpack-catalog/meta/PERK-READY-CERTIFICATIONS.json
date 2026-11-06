@@ -7059,6 +7059,46 @@
           "reason": "Sonda verifica Punting JSON/tag/idioma e hashes SHA-exatos do JAR; selo compacto reusa manifest binário Multiple Mint auditado, e testes conferem offsets, escopo e sete eixos."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/plummeting-flight.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Somente contrato técnico estático de Plummeting Flight sobre Extinction Spear/Subterranodon 1.0.10; sem hooks mutadores, altura medida, QA física, nova raiz de magia, Stage ou provider integral certificado.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md",
+          "reason": "JAR publisher Alex's Caves Continued1.0.10 SHA-exato; plummeting_flight.json de 374 bytes, tag Extinction Spear, en_us e quatro classfiles comprovados contra Spirit Dinosaur."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md",
+          "reason": "ExtinctionSpearEntity.onHitEntity exige hurt aceito, não-Enderman e owner para criar Subterranodon; nível transferido à SynchedEntityData, alvo ID e owner UUID com lifecycles distintos."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md",
+          "reason": "Max_levelIII, peso2, anvil4, custos 1/14/27 e 41/51/61; adiçãoY 0.03+0.005×L e limite duration<40+5L, sem prometer altura ou tempo físico."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md",
+          "reason": "Target via Level.getEntity(runtime ID) após hit aceito; setDeltaMovement ZERO e setPos, guardas de resolução do Player e do alvo; sem alvo PvP/claims ou alcance novo homologado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md",
+          "reason": "Arremesso condicionado à potência da lança, desgaste nativo1 e shrink1 fora de creative; sem débito de mana/custo por tick próprio do encantamento."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md",
+          "reason": "Pipeline de lançamento/dano nativo preservado, sem segundo hurt/cast; NBT registra UsingPlayerUUID/DinosaurType mas não level/duration/target ID, hooks e QA física pendentes."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md",
+          "reason": "JSON/tag/class SHA-exatos confirmados por probe; 373 âncoras selecionadas do manifesto Spirit Dinosaur já auditado no mesmo JAR; testes de regressão e limites fail-closed."
+        }
+      }
     }
   },
   "providers": {},

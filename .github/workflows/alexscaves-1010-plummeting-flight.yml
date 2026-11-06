@@ -1,0 +1,55 @@
+name: Alex's Caves 1.0.10 Plummeting Flight exact resource
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-plummeting-flight.yml'
+      - 'docs/qa/alexscaves_1010_plummeting_flight_probe.py'
+      - 'docs/qa/alexscaves_1010_plummeting_flight_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PLUMMETING-FLIGHT-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-plummeting-flight.yml'
+      - 'docs/qa/alexscaves_1010_plummeting_flight_probe.py'
+      - 'docs/qa/alexscaves_1010_plummeting_flight_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PLUMMETING-FLIGHT-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md'
+permissions:
+  contents: read
+jobs:
+  exact_resource:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python syntax guard
+        run: python3 -m py_compile docs/qa/alexscaves_1010_plummeting_flight_probe.py
+      - name: Fetch SHA-exact publisher JAR
+        run: |
+          mkdir -p build/plummeting-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/plummeting-1010/alexscaves-1.0.10.jar
+      - name: Verify native class/resources from publisher
+        run: |
+          python3 docs/qa/alexscaves_1010_plummeting_flight_probe.py \
+            --jar build/plummeting-1010/alexscaves-1.0.10.jar \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json' \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PLUMMETING-FLIGHT-CONTRACT-1.0.10.json' \
+            --output build/plummeting-1010/evidence.json
+      - name: Plummeting Flight semantic regression
+        run: python3 docs/qa/alexscaves_1010_plummeting_flight_cards_test.py -v
+      - name: SHA-256 of individual Plummeting Flight dossier
+        run: sha256sum 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md'
+      - name: Upload bounded discovery record
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-plummeting-evidence
+          path: build/plummeting-1010/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
