@@ -7139,6 +7139,46 @@
           "reason": "Sonda JAR 1.0.10 verifica JSON/tag/tradução/3 classes e pivôs; selo individual herda métodos compilados do manifesto Dreadbow SHA-exato; regressões garantem sete eixos sem promoção de runtime."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/rapid-possession.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Rapid Possession somente speed factor do Totem nativo 1.0.10; ação de Possession já certificada não é duplicada. Não homologa hook, física, desgaste servidor, spawn, alcance estendido, segurança PvP/claims ou provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md",
+          "reason": "Publisher JAR 1.0.10 SHA1/SHA256/tamanho, rapid_possession.json 376 bytes, nível máximoIII, tag Totem, tradução inglesa, classes Totem/Compat/Config."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md",
+          "reason": "onUseTick lê nível Rapid Possession de stack ativa, aplica a navegação de Mob ou alteração de delta não-Mob apenas após gates de vínculo, olhar, config e uso nativos."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md",
+          "reason": "Fator=1.25+0.35L, níveis 0/I/II/III 1.25/1.60/1.95/2.30; 32×ramp em raycast independente; nav moveTo ramp×F e não-Mob 0.8×oldVelocity+0.15×F×direção, sem distância garantida."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md",
+          "reason": "Vinculação por UUID, raio de visão do jogador, filtro projectile-hittable, Mob nav versus não-Mob e caixa alvo inflada3 para ataques delegados ao provider; sem expansão de alcance/alvos pelo encantamento."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md",
+          "reason": "JSON weight10, maxlevel3, anvil1, min1/6/11 max41/51/61; desgaste nominal a cada use tick par client-only, custom data não sincroniza componente de dano; nenhum custo novo por nível comprovado."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md",
+          "reason": "Uma raiz semântica Possession e nenhum segundo bind/attack/transfer/explosion; sem hook mutador, sem violação da autoridade Black Arcana e sem garantia de segurança multiplayer/claims."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md",
+          "reason": "Rastreio SHA-exato do JAR 1.0.10, 29 âncoras ancestrais +17 pivôs do método compilado, sonda publisher/javap, testes e índices, sem QA física/Stage/runtime."
+        }
+      }
     }
   },
   "providers": {},

@@ -20,6 +20,7 @@ on:
       - 'docs/qa/alexscaves_1010_peppermint_punting_cards_test.py'
       - 'docs/qa/alexscaves_1010_plummeting_flight_cards_test.py'
       - 'docs/qa/alexscaves_1010_precise_volley_cards_test.py'
+      - 'docs/qa/alexscaves_1010_rapid_possession_cards_test.py'
       - 'docs/qa/alexscaves_1010_humungous_hex_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   push:
@@ -41,6 +42,7 @@ on:
       - 'docs/qa/alexscaves_1010_peppermint_punting_cards_test.py'
       - 'docs/qa/alexscaves_1010_plummeting_flight_cards_test.py'
       - 'docs/qa/alexscaves_1010_precise_volley_cards_test.py'
+      - 'docs/qa/alexscaves_1010_rapid_possession_cards_test.py'
       - 'docs/qa/alexscaves_1010_humungous_hex_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   workflow_dispatch:
@@ -73,6 +75,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_peppermint_punting_cards_test.py -v
           python3 docs/qa/alexscaves_1010_plummeting_flight_cards_test.py -v
           python3 docs/qa/alexscaves_1010_precise_volley_cards_test.py -v
+          python3 docs/qa/alexscaves_1010_rapid_possession_cards_test.py -v
           python3 docs/qa/alexscaves_1010_humungous_hex_cards_test.py -v
       - name: Download the exact publisher artifact
         run: |
