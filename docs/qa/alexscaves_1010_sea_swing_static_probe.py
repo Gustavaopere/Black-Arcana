@@ -142,7 +142,7 @@ def audit(jar: Path, javap_bin: str, prior: Path) -> dict:
                     "missing publisher Sea Swing localization: " + key)
             translations[key] = value
         class_digests = {}
-        for owner in METHODS:
+        for owner in discovery["class_sha256"]:
             require(owner in filenames, "missing classfile: " + owner)
             class_digests[owner] = sha(archive.read(owner))
     result = {
