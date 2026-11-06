@@ -1,0 +1,54 @@
+name: Alex's Caves 1.0.10 Rapid Possession exact movement
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-rapid-possession.yml'
+      - 'docs/qa/alexscaves_1010_rapid_possession_probe.py'
+      - 'docs/qa/alexscaves_1010_rapid_possession_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAPID-POSSESSION-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-rapid-possession.yml'
+      - 'docs/qa/alexscaves_1010_rapid_possession_probe.py'
+      - 'docs/qa/alexscaves_1010_rapid_possession_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAPID-POSSESSION-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md'
+permissions:
+  contents: read
+jobs:
+  exact_movement:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Syntax check
+        run: python3 -m py_compile docs/qa/alexscaves_1010_rapid_possession_probe.py
+      - name: Fetch SHA-exact publisher JAR
+        run: |
+          mkdir -p build/rapid-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/rapid-1010/alexscaves-1.0.10.jar
+      - name: Verify resource and compiled movement contract
+        run: |
+          python3 docs/qa/alexscaves_1010_rapid_possession_probe.py \
+            --jar build/rapid-1010/alexscaves-1.0.10.jar \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.json' \
+            --output build/rapid-1010/evidence.json
+      - name: Publish bounded probe result
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: rapid-possession-1010-evidence
+          path: build/rapid-1010/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
