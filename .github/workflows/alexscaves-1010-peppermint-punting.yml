@@ -40,6 +40,8 @@ jobs:
             --jar build/alexscaves-punting/alexscaves-1.0.10.jar \
             --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.json' \
             --output build/alexscaves-punting/evidence.json
+      - name: Print exact Peppermint Punting card SHA-256
+        run: sha256sum 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/peppermint-punting.md'
       - name: Publish bounded JSON inspection artifact
         if: always()
         uses: actions/upload-artifact@v7
