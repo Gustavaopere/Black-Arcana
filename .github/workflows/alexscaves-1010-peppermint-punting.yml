@@ -39,7 +39,10 @@ jobs:
           python3 docs/qa/alexscaves_1010_peppermint_punting_probe.py \
             --jar build/alexscaves-punting/alexscaves-1.0.10.jar \
             --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.json' \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PEPPERMINT-PUNTING-CONTRACT-1.0.10.json' \
             --output build/alexscaves-punting/evidence.json
+      - name: Verify individual Punting semantic regression
+        run: python3 docs/qa/alexscaves_1010_peppermint_punting_cards_test.py -v
       - name: Print exact Peppermint Punting card SHA-256
         run: sha256sum 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/peppermint-punting.md'
       - name: Publish bounded JSON inspection artifact

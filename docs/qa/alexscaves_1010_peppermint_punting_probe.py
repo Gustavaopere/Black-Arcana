@@ -78,16 +78,66 @@ def audit(jar:Path, manifest:Path):
             "limits":{"runtime_hook":"NOT_VERIFIED","physical_qa":"NOT_TESTED","mutation":"NO_MUTATION"}}
     return report
 
+def verify_seal(report, seal_file:Path, root:Path, manifest_file:Path):
+    seal=json.loads(seal_file.read_text(encoding="utf-8"))
+    require(seal["schema_version"]==1 and seal["catalog_family"]==
+            "PEPPERMINT_PUNTING_ENCHANTMENT_CONTRACT", "Punting seal schema drift")
+    require(seal["claim_scope"]=="STATIC_TECHNICAL_CATALOG_ONLY" and
+            seal["evidence_grade"]=="SHA_EXACT_BINARY_BEHAVIOR" and
+            seal["mutating_hook"]=="NOT_VERIFIED" and
+            seal["physical_qa"]=="NOT_TESTED" and
+            seal["mutation"]=="NO_MUTATION" and
+            seal["provider_universe_closed"] is False, "unsafe Punting completion claim")
+    require(seal["artifact"]=={"sha1":SHA1,"sha256":SHA256,"size_bytes":SIZE},
+            "Punting artifact mismatch")
+    require(seal["resource"]==report["resource"] and
+            seal["english_translations"]==report["english_translations"],
+            "Punting JSON or language drift")
+    require(seal["item_tag"]["path"]==TAG and
+            seal["item_tag"]["values"]==report["item_tag"]["json"]["values"] and
+            seal["item_tag"]["sha256"]==report["item_tag"]["sha256"],
+            "Punting item tag drift")
+    require(seal["class_hashes"]==report["class_hashes"] or
+            all(report["class_hashes"].get(k)==v for k,v in
+                seal["class_hashes"].items() if k in report["class_hashes"]),
+            "Punting class fingerprint drift")
+    require(seal["reused_binary_manifest"]["path"].endswith(
+            "EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.json"), "wrong reused family")
+    parent=json.loads(manifest_file.read_text(encoding="utf-8"))
+    anchors=seal["anchors"]
+    require(130<=len(anchors)<=256 and
+            seal["limits"]["sealed_pivots"]==len(anchors), "missing Punting anchored coverage")
+    for anchor in anchors:
+        path,name,desc=anchor["class"],anchor["method"],anchor["descriptor"]
+        require(path in parent["classes"] and
+                parent["classes"][path]["sha256"]==
+                seal["class_hashes"][path], "unverified Punting anchored class")
+        matching=[m for m in parent["classes"][path]["methods"]
+                  if m["name"]==name and m["descriptor"]==desc]
+        require(len(matching)==1, "missing Punting reused method")
+        offsets={a["offset"]:a for a in matching[0]["anchors"]}
+        observed=offsets.get(anchor["offset"])
+        require(observed is not None and
+                all(observed[k]==anchor[k] for k in ("offset","opcode","operand","symbol")),
+                "Punting anchored opcode or symbol drift")
+    card=seal["card"]
+    expected="wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/peppermint-punting.md"
+    require(card["path"]==expected and
+            sha((root/card["path"]).read_bytes())==card["sha256"],
+            "Punting documentary card hash mismatch")
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--jar",type=Path,required=True)
     p.add_argument("--manifest",type=Path,required=True)
     p.add_argument("--output",type=Path,required=True)
+    p.add_argument("--seal",type=Path)
     args=p.parse_args()
     obj=audit(args.jar,args.manifest)
+    if args.seal: verify_seal(obj,args.seal,Path(__file__).resolve().parents[2],args.manifest)
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("EXACT_PUNTING_CONFIG="+json.dumps(obj["resource"],sort_keys=True,ensure_ascii=False))
     print("EXACT_PUNTING_DESCRIPTIONS="+json.dumps(obj["english_translations"],ensure_ascii=False,sort_keys=True))
-    print("EXACT_PUNTING_REUSE_VALIDATED="+str(len(obj["bytecode_pivots"]))+" Punting pivots; no mutation")
+    print("EXACT_PUNTING_REUSE_VALIDATED="+str(len(obj["bytecode_pivots"]))+" Punting pivots; no mutation"+("; compact seal valid" if args.seal else "; discovery only"))
 if __name__=="__main__": main()
