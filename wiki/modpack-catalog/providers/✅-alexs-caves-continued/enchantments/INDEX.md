@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 4/24.**
+**Fichas catalogadas (somente fichas detectadas): 5/25.**
 
-**Barra das fichas catalogadas:** `███░░░░░░░░░░░░░░░░░ 16.7%`
+**Barra das fichas catalogadas:** `████░░░░░░░░░░░░░░░░ 20.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 4/24.**
+**Homologadas para perks (somente fichas detectadas): 5/25.**
 
-**Barra dos contratos técnicos estáticos:** `███░░░░░░░░░░░░░░░░░ 16.7%`
+**Barra dos contratos técnicos estáticos:** `████░░░░░░░░░░░░░░░░ 20.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -44,6 +44,7 @@
 | ✅ | Herd Phalanx | [ficha/herd-phalanx.md](herd-phalanx.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Humungous Hex | [ficha/humungous-hex.md](humungous-hex.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Impending Stab | [ficha/impending-stab.md](impending-stab.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Lasting Morale | [ficha/lasting-morale.md](lasting-morale.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

@@ -302,6 +302,21 @@ class ContractAuditTests(unittest.TestCase):
         return doc
 
 
+    def lasting_morale_fixture(self):
+        """Seal one literal enchantment contract while reusing synthetic artifact members."""
+        doc = copy.deepcopy(self.doc)
+        relative = "enchantments/lasting-morale.md"
+        card = self.root / relative
+        card.parent.mkdir(exist_ok=True)
+        card.write_bytes((self.root / ACTIONS[0]).read_bytes())
+        record = doc.pop("action_evidence")[ACTIONS[0]]
+        doc["catalog_family"] = "LASTING_MORALE_ENCHANTMENT_CONTRACT"
+        doc["cards"] = {relative: sha256(card.read_bytes())}
+        doc["contract_evidence"] = {relative: record}
+        doc["classes"] = {path: doc["classes"][path] for path in record["classes"]}
+        return doc
+
+
     def test_parser_preserves_overloads_constructor_static_lambda_and_switch(self):
         parsed = audit.parse_javap(JAVAP, OWNER)
         self.assertEqual({("<init>", "()V"), ("<clinit>", "()V"), ("value", "()I"),
@@ -1910,6 +1925,229 @@ class ContractAuditTests(unittest.TestCase):
                 contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(0, audit.main(arguments))
             self.assertEqual("impending_stab", inspect.call_args.kwargs["profile"])
+
+
+    def test_lasting_morale_literal_roster_and_single_card_synthetic_audit(self):
+        doc = self.lasting_morale_fixture()
+        self.assertEqual({"enchantments/lasting-morale.md"}, set(audit.LASTING_MORALE))
+        audit.validate_structure(doc, profile="lasting_morale")
+        audit.validate_cards(doc, self.root, profile="lasting_morale")
+        result = self.inspect(doc, profile="lasting_morale")
+        self.assertEqual("PASS", result["status"])
+        self.assertEqual("LASTING_MORALE_ENCHANTMENT_CONTRACT", result["catalog_family"])
+        self.assertEqual((1, 1, 1), (result["cards_checked"], result["classes_checked"], result["methods_checked"]))
+        self.assertEqual((1, 1), (result["resources_checked"], result["instruction_anchors_checked"]))
+        self.assertEqual("STATIC_TECHNICAL_CATALOG_ONLY", result["claim_scope"])
+        self.assertEqual("SHA_EXACT_BINARY_BEHAVIOR", result["evidence_grade"])
+        self.assertEqual("NOT_VERIFIED", result["mutating_hook"])
+        self.assertEqual("NOT_TESTED", result["physical_qa"])
+        self.assertFalse(result["provider_universe_closed"])
+        self.assertEqual(8, result["semantic_magic_roots"])
+
+    def test_lasting_morale_remains_isolated_from_all_previous_profiles(self):
+        previous = {name: audit.profile_spec(name) for name in (
+            "actions", "effects", "dreadbow", "acid", "desolate_dagger",
+            "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab")}
+        snapshots = copy.deepcopy(previous)
+        doc = self.lasting_morale_fixture()
+        for name in previous:
+            with self.subTest(selected=name), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile=name)
+            with self.subTest(cards=name), self.assertRaises(ValueError):
+                audit.validate_cards(doc, self.root, profile=name)
+        fixtures = (self.doc, self.effects_fixture(), self.dreadbow_fixture(), self.acid_fixture(),
+                    self.desolate_dagger_fixture(), self.forsaken_fixture(), self.gumball_fixture(),
+                    self.nuclear_fixture(), self.spirit_dinosaur_fixture(), self.heavy_slam_fixture(),
+                    self.herd_phalanx_fixture(), self.impending_stab_fixture())
+        for manifest in fixtures:
+            with self.subTest(family=manifest.get("catalog_family")), self.assertRaises(ValueError):
+                audit.validate_structure(manifest, profile="lasting_morale")
+        self.inspect(doc, profile="lasting_morale")
+        self.assertEqual(snapshots, previous)
+
+    def test_lasting_morale_rejects_missing_extra_and_aliased_roster(self):
+        relative = "enchantments/lasting-morale.md"
+        for key in ("cards", "contract_evidence"):
+            for replacement in (None, "damage-types/nuke.md", "damage-types/radiation.md",
+                                "damage-types/acid.md", "damage-types/tremorzilla-beam.md",
+                                "effects/irradiated.md", "equipment/extinction-spear.md",
+                                "enchantments/lasting_morale.md", "enchantments/impending-stab.md",
+                                "enchantments/heavy-slam.md", "enchantments/triple-strike.md",
+                                "enchantments/herd-phalanx.md", "enchantments/humungous-hex.md",
+                                "enchantments/../enchantments/lasting-morale.md", ACTIONS[0]):
+                doc = self.lasting_morale_fixture()
+                value = doc[key].pop(relative)
+                if replacement is not None:
+                    doc[key][replacement] = value
+                with self.subTest(key=key, replacement=replacement), self.assertRaises(ValueError):
+                    audit.validate_structure(doc, profile="lasting_morale")
+            doc = self.lasting_morale_fixture()
+            doc[key]["damage-types/extra.md"] = doc[key][relative]
+            with self.subTest(key=key, extra=True), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="lasting_morale")
+
+    def test_lasting_morale_rejects_scope_and_evidence_promotion(self):
+        for key, value in (("catalog_family", "HEAVY_SLAM_ENCHANTMENT_CONTRACT"),
+                           ("catalog_family", "HERD_PHALANX_ENCHANTMENT_CONTRACT"),
+                           ("catalog_family", "IMPENDING_STAB_ENCHANTMENT_CONTRACT"), ("catalog_family", None),
+                           ("claim_scope", "COMPLETE_PERK_READY"), ("evidence_grade", "SOURCE_ONLY"),
+                           ("semantic_magic_roots", 9), ("provider_universe_closed", True),
+                           ("mutating_hook", "VERIFIED"), ("physical_qa", "PASS"),
+                           ("artifact_size_bytes", True), ("artifact_sha1", "a" * 40),
+                           ("artifact_sha256", "b" * 64), ("version", "1.1.1"),
+                           ("runtime_verified", True), ("perk_certification", "CERTIFIED"),
+                           ("complete_control_flow", "RECONSTRUCTED"), ("schema_version", True)):
+            doc = self.lasting_morale_fixture()
+            if value is None:
+                doc.pop(key)
+            else:
+                doc[key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="lasting_morale")
+        for alias in ("action_evidence", "effect_evidence"):
+            doc = self.lasting_morale_fixture()
+            doc[alias] = doc.pop("contract_evidence")
+            with self.subTest(alias=alias), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="lasting_morale")
+
+    def test_lasting_morale_rejects_forged_card_seal_and_symlink_escape(self):
+        doc = self.lasting_morale_fixture()
+        relative = "enchantments/lasting-morale.md"
+        doc["cards"][relative] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "stale card seal"):
+            self.inspect(doc, profile="lasting_morale")
+        doc = self.lasting_morale_fixture()
+        card = self.root / relative
+        outside = Path(self.temp.name) / "outside-lasting-morale.md"
+        outside.write_bytes(card.read_bytes())
+        card.unlink()
+        card.symlink_to(outside)
+        with self.assertRaisesRegex(ValueError, "escapes provider root"):
+            self.inspect(doc, profile="lasting_morale")
+
+    def test_lasting_morale_rechecks_card_after_bytecode_inspection(self):
+        doc = self.lasting_morale_fixture()
+        def completed(command, **kwargs):
+            card = self.root / "enchantments/lasting-morale.md"
+            card.write_bytes(card.read_bytes() + b"changed during audit")
+            return subprocess.CompletedProcess(command, 0, stdout=JAVAP.replace(OWNER, command[-1]), stderr="")
+        with mock.patch.object(audit.subprocess, "run", side_effect=completed):
+            with self.assertRaisesRegex(ValueError, "stale card seal"):
+                audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="lasting_morale",
+                            expected_identity=self.expected_identity)
+
+    def test_lasting_morale_verifies_artifact_resources_and_anchor_operands(self):
+        doc = self.lasting_morale_fixture()
+        with self.assertRaisesRegex(ValueError, "artifact identity mismatch"):
+            audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="lasting_morale")
+        drifted = copy.deepcopy(doc)
+        path = next(iter(drifted["classes"]))
+        drifted["classes"][path]["methods"][0]["anchors"][0]["operand"] = "unobserved operand"
+        with self.assertRaisesRegex(ValueError, "instruction anchor mismatch"):
+            self.inspect(drifted, profile="lasting_morale")
+        self.members[self.resource] += b"resource drift"
+        self.write_jar()
+        with self.assertRaisesRegex(ValueError, "resource hash mismatch"):
+            self.inspect(doc, profile="lasting_morale")
+
+    def test_lasting_morale_rejects_class_hash_abi_and_all_anchor_drift(self):
+        for mode in ("class_hash", "descriptor", "offset", "opcode", "operand", "symbol"):
+            doc = self.lasting_morale_fixture()
+            entry = next(iter(doc["classes"].values()))
+            method = entry["methods"][0]
+            if mode == "class_hash":
+                entry["sha256"] = "0" * 64
+            elif mode == "descriptor":
+                method["descriptor"] = "(J)I"
+            else:
+                method["anchors"][0][mode] = {
+                    "offset": 99, "opcode": "iconst_0", "operand": "2", "symbol": "wrong"}[mode]
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                self.inspect(doc, profile="lasting_morale")
+
+    def test_lasting_morale_uses_read_only_javap_with_existing_time_budget(self):
+        doc = self.lasting_morale_fixture()
+        path = next(iter(doc["classes"]))
+        owner = path.removesuffix(".class").replace("/", ".")
+        completed = subprocess.CompletedProcess([], 0, stdout=JAVAP.replace(OWNER, owner), stderr="")
+        with mock.patch.object(audit.subprocess, "run", return_value=completed) as run:
+            audit.audit(self.jar, doc, self.root, "synthetic-javap", profile="lasting_morale",
+                        expected_identity=self.expected_identity)
+        run.assert_called_once_with(
+            ["synthetic-javap", "-p", "-c", "-s", "-classpath", str(self.jar), owner],
+            capture_output=True, text=True, check=False, timeout=60)
+
+    def test_lasting_morale_rejects_invalid_and_unreferenced_evidence(self):
+        relative = "enchantments/lasting-morale.md"
+        for mode in ("duplicate_class", "unknown_class", "unknown_resource", "unsafe_resource",
+                     "unreferenced_class", "unreferenced_resource", "duplicate_resource",
+                     "duplicate_method", "boolean_offset"):
+            doc = self.lasting_morale_fixture()
+            record = doc["contract_evidence"][relative]
+            methods = next(iter(doc["classes"].values()))["methods"]
+            if mode == "duplicate_class":
+                record["classes"] *= 2
+            elif mode == "unknown_class":
+                record["classes"] = ["com/github/alexmodguy/alexscaves/Missing.class"]
+            elif mode == "unknown_resource":
+                record["resources"] = ["data/alexscaves/missing.json"]
+            elif mode == "unsafe_resource":
+                resource = "data/alexscaves/../unsafe.json"
+                doc["resources"] = {resource: "a" * 64}
+                record["resources"] = [resource]
+            elif mode == "unreferenced_class":
+                doc["classes"]["com/github/alexmodguy/alexscaves/Orphan.class"] = {
+                    "sha256": "a" * 64, "methods": []}
+            elif mode == "duplicate_resource":
+                record["resources"] *= 2
+            elif mode == "unreferenced_resource":
+                doc["resources"]["data/alexscaves/orphan.json"] = "a" * 64
+            elif mode == "duplicate_method":
+                methods.append(copy.deepcopy(methods[0]))
+            else:
+                methods[0]["anchors"][0]["offset"] = True
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="lasting_morale")
+
+    def test_lasting_morale_keeps_existing_anchor_and_class_budgets(self):
+        for mode in ("missing_class", "anchorless", "too_many_classes", "too_many_resources",
+                     "too_many_methods", "too_many_anchors", "too_many_total_anchors"):
+            doc = self.lasting_morale_fixture()
+            path = next(iter(doc["classes"]))
+            entry = doc["classes"][path]
+            if mode == "missing_class":
+                doc["classes"].clear()
+            elif mode == "anchorless":
+                entry["methods"] = []
+            elif mode == "too_many_classes":
+                doc["classes"] = {path.removesuffix(".class") + str(index) + ".class": entry
+                                  for index in range(129)}
+            elif mode == "too_many_resources":
+                doc["resources"] = {"data/alexscaves/synthetic" + str(index) + ".json": "a" * 64
+                                    for index in range(257)}
+            elif mode == "too_many_methods":
+                entry["methods"] = [{**entry["methods"][0], "name": "value" + str(index)}
+                                    for index in range(129)]
+            else:
+                method = entry["methods"][0]
+                anchor = method["anchors"][0]
+                if mode == "too_many_anchors":
+                    method["anchors"] = [{**anchor, "offset": offset} for offset in range(257)]
+                else:
+                    entry["methods"] = [{**method, "name": "value" + str(index), "anchors": [
+                        {**anchor, "offset": offset} for offset in range(256)]} for index in range(33)]
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                audit.validate_structure(doc, profile="lasting_morale")
+
+    def test_cli_accepts_explicit_lasting_morale_profile(self):
+        arguments = ["--jar", str(self.jar), "--manifest", str(self.root / "EXACT-LASTING-MORALE-CONTRACT-1.0.10.json"),
+                     "--provider-root", str(self.root), "--javap", "synthetic-javap",
+                     "--profile", "lasting_morale"]
+        with mock.patch.object(audit, "load_manifest", return_value=self.lasting_morale_fixture()), \
+                mock.patch.object(audit, "audit", return_value={"status": "PASS"}) as inspect, \
+                contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(0, audit.main(arguments))
+            self.assertEqual("lasting_morale", inspect.call_args.kwargs["profile"])
 
 
     def test_missing_extra_action_and_card_evidence_mismatch_rejected(self):

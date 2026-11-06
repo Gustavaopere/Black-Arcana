@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Four individual enchantment static contracts (Heavy Slam, Herd Phalanx, Humungous Hex and Impending Stab); twenty other individual enchantment dossiers remain partial.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Five individual enchantment static contracts (Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab and Lasting Morale); twenty other individual enchantment dossiers remain partial.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -345,21 +345,23 @@
     },
     "enchantments": {
       "identified_objects": 51,
-      "individual_dossiers": 24,
+      "individual_dossiers": 25,
       "partial_dossiers": 20,
-      "documented_static_contracts": 4,
+      "documented_static_contracts": 5,
       "cards": [
         "enchantments/heavy-slam.md",
         "enchantments/herd-phalanx.md",
         "enchantments/humungous-hex.md",
-        "enchantments/impending-stab.md"
+        "enchantments/impending-stab.md",
+        "enchantments/lasting-morale.md"
       ],
-      "evidence": "EXACT-IMPENDING-STAB-CONTRACT-1.0.10.md",
+      "evidence": "EXACT-LASTING-MORALE-CONTRACT-1.0.10.md",
       "family_universe_closed": false,
       "related_evidence": [
         "EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md",
         "EXACT-HERD-PHALANX-CONTRACT-1.0.10.md",
-        "EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.md"
+        "EXACT-HUMUNGOUS-HEX-CONTRACT-1.0.10.md",
+        "EXACT-IMPENDING-STAB-CONTRACT-1.0.10.md"
       ]
     }
   }
