@@ -92,18 +92,71 @@ def audit(jar:Path, reference:Path)->dict:
     }
     return report
 
+def verify_seal(report:dict, path:Path, manifest_path:Path):
+    """Verify exact publisher JSON and already certified native JVM anchors."""
+    seal=json.loads(path.read_text(encoding="utf-8"))
+    require(seal["schema_version"]==1 and
+            seal["catalog_family"]=="PLUMMETING_FLIGHT_ENCHANTMENT_CONTRACT" and
+            seal["claim_scope"]=="STATIC_TECHNICAL_CATALOG_ONLY" and
+            seal["evidence_grade"]=="SHA_EXACT_BINARY_BEHAVIOR" and
+            seal["mutating_hook"]=="NOT_VERIFIED" and
+            seal["physical_qa"]=="NOT_TESTED" and
+            seal["mutation"]=="NO_MUTATION" and
+            seal["provider_universe_closed"] is False,
+            "invalid static completion scope")
+    require(seal["artifact"]==report["artifact"],"artifact drift")
+    for name in ("resource","item_tag","english_translations","portuguese_translations","class_hashes"):
+        require(seal[name]==report[name],"exact-JAR "+name+" drift")
+    parent=load_manifest(manifest_path)
+    validate_structure(parent,profile="spirit_dinosaur")
+    require(seal["reused_binary_manifest"]=={
+        "path":"wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json",
+        "version":"1.0.10","family":"SPIRIT_DINOSAUR_DAMAGE_CONTRACT",
+        "evidence_grade":"SHA_EXACT_BINARY_BEHAVIOR","artifact_sha256":SHA256},
+        "noncanonical bytecode source")
+    seen=set()
+    anchors=seal["anchors"]
+    require(300<=len(anchors)<=450 and
+            seal["limits"]["sealed_pivots"]==len(anchors),"insufficient/oversize anchors")
+    for a in anchors:
+        require(set(a)=={"class","method","descriptor","offset","opcode","operand","symbol"},
+                "invalid bytecode pivot")
+        cl=a["class"]
+        require(cl in seal["class_hashes"] and
+                parent["classes"][cl]["sha256"]==seal["class_hashes"][cl],
+                "class SHA mismatch")
+        methods=[m for m in parent["classes"][cl]["methods"] if
+                 m["name"]==a["method"] and m["descriptor"]==a["descriptor"]]
+        require(len(methods)==1, "ambiguous JVM signature")
+        row=[x for x in methods[0]["anchors"] if x["offset"]==a["offset"]]
+        require(len(row)==1 and
+                all(row[0][k]==a[k] for k in ("offset","opcode","operand","symbol")),
+                "JVM anchor changed")
+        identity=(cl,a["method"],a["descriptor"],a["offset"])
+        require(identity not in seen,"duplicate JVM anchor")
+        seen.add(identity)
+    expected="wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md"
+    card=seal["card"]
+    require(card["path"]==expected and
+            sha((Path(__file__).resolve().parents[2]/expected).read_bytes())==
+            card["sha256"],"document hash drift")
+
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--jar",type=Path,required=True)
     parser.add_argument("--manifest",type=Path,required=True)
     parser.add_argument("--output",type=Path,required=True)
+    parser.add_argument("--seal",type=Path)
     args=parser.parse_args()
     result=audit(args.jar,args.manifest)
+    if args.seal:
+        verify_seal(result,args.seal,args.manifest)
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print("PLUMMETING_RESOURCE="+json.dumps(result["resource"],ensure_ascii=False,sort_keys=True))
     print("PLUMMETING_ENGLISH="+json.dumps(result["english_translations"],ensure_ascii=False))
     print("PLUMMETING_PTBR="+json.dumps(result["portuguese_translations"],ensure_ascii=False))
-    print("PLUMMETING_SHA_EXACT_RESOURCE_VALIDATED")
+    print("PLUMMETING_SHA_EXACT_RESOURCE_VALIDATED"+
+          (" AND IMMUTABLE SEAL VERIFIED" if args.seal else " (discovery only)"))
 if __name__=="__main__":
     main()

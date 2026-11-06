@@ -39,7 +39,10 @@ jobs:
           python3 docs/qa/alexscaves_1010_plummeting_flight_probe.py \
             --jar build/plummeting-1010/alexscaves-1.0.10.jar \
             --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json' \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-PLUMMETING-FLIGHT-CONTRACT-1.0.10.json' \
             --output build/plummeting-1010/evidence.json
+      - name: Plummeting Flight semantic regression
+        run: python3 docs/qa/alexscaves_1010_plummeting_flight_cards_test.py -v
       - name: SHA-256 of individual Plummeting Flight dossier
         run: sha256sum 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md'
       - name: Upload bounded discovery record
