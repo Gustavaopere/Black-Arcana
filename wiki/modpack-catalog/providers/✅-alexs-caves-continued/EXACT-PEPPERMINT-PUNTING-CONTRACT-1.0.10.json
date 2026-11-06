@@ -1,0 +1,1603 @@
+{
+  "schema_version": 1,
+  "catalog_family": "PEPPERMINT_PUNTING_ENCHANTMENT_CONTRACT",
+  "version": "1.0.10",
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "mutation": "NO_MUTATION",
+  "provider_universe_closed": false,
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "card": {
+    "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/peppermint-punting.md",
+    "sha256": "81c7f4895884333b51ae6eb74266c5ad44fe27ef782e58dc1a50c4b87436f47d"
+  },
+  "resource": {
+    "path": "data/alexscaves/enchantment/peppermint_punting.json",
+    "sha256": "ebe5a66b3d69d1d4384149959893712a7458ed9acfcc9064fa58fd16e8ba412b",
+    "size_bytes": 370,
+    "json": {
+      "description": {
+        "translate": "enchantment.alexscaves.peppermint_punting"
+      },
+      "supported_items": "#alexscaves:enchantable/sugar_staff",
+      "weight": 2,
+      "max_level": 1,
+      "min_cost": {
+        "base": 1,
+        "per_level_above_first": 12
+      },
+      "max_cost": {
+        "base": 41,
+        "per_level_above_first": 10
+      },
+      "anvil_cost": 4,
+      "slots": [
+        "mainhand"
+      ]
+    }
+  },
+  "english_translations": {
+    "enchantment.alexscaves.peppermint_punting": "Peppermint Punting",
+    "enchantment.alexscaves.peppermint_punting.desc": "Peppermints bounce directly ahead instead of around the attacker"
+  },
+  "item_tag": {
+    "path": "data/alexscaves/tags/item/enchantable/sugar_staff.json",
+    "sha256": "eb9f84b401224aba54ba91a239e4dd5b775d82012cecf9b03e8f9608e12b11fc",
+    "values": [
+      "alexscaves:sugar_staff"
+    ]
+  },
+  "reused_binary_manifest": {
+    "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.json",
+    "version": "1.0.10",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "family": "MULTIPLE_MINT_ENCHANTMENT_CONTRACT",
+    "same_artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "class_hashes": {
+    "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class": "d670f887debdfb95f93a52b0c58b3033154a9aa20777fb8bd2a1673ee1407c3f",
+    "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class": "655e607acf3d22a9caf6be93d9010f7a11c3836e4c680b04878110e61aca4f90",
+    "com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.class": "7d7c91ddbb534d7c0e86a590ef7d7c3154ec2a628153c31e9fc7318a4b29e072",
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b"
+  },
+  "anchors": [
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 7,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 8,
+      "opcode": "invokevirtual",
+      "operand": "#33",
+      "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 11,
+      "opcode": "ifne",
+      "operand": "471",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 35,
+      "opcode": "iload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 37,
+      "opcode": "ifeq",
+      "operand": "186",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 186,
+      "opcode": "iconst_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 189,
+      "opcode": "getstatic",
+      "operand": "#160",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.MULTIPLE_MINT:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 192,
+      "opcode": "invokestatic",
+      "operand": "#116",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 195,
+      "opcode": "iadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 196,
+      "opcode": "istore",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 201,
+      "opcode": "bipush",
+      "operand": "80",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 203,
+      "opcode": "istore",
+      "operand": "9",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 208,
+      "opcode": "iload",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 210,
+      "opcode": "iload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 212,
+      "opcode": "if_icmpge",
+      "operand": "428",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 262,
+      "opcode": "getstatic",
+      "operand": "#183",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.PEPPERMINT_PUNTING:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 265,
+      "opcode": "invokestatic",
+      "operand": "#116",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 268,
+      "opcode": "ifle",
+      "operand": "312",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 273,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 274,
+      "opcode": "invokevirtual",
+      "operand": "#186",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.setStraight:(Z)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 279,
+      "opcode": "ldc",
+      "operand": "#190",
+      "symbol": "float 180.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 282,
+      "opcode": "invokevirtual",
+      "operand": "#191",
+      "symbol": "Method net/minecraft/world/entity/player/Player.getYHeadRot:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 286,
+      "opcode": "iload",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 289,
+      "opcode": "isub",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 290,
+      "opcode": "bipush",
+      "operand": "15",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 292,
+      "opcode": "imul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 295,
+      "opcode": "invokevirtual",
+      "operand": "#194",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.setYRot:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 300,
+      "opcode": "ldc",
+      "operand": "#197",
+      "symbol": "float 8.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 302,
+      "opcode": "invokevirtual",
+      "operand": "#198",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.setSpinSpeed:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 305,
+      "opcode": "bipush",
+      "operand": "20",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 307,
+      "opcode": "istore",
+      "operand": "9",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 309,
+      "opcode": "goto",
+      "operand": "342",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 312,
+      "opcode": "aload",
+      "operand": "11",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 314,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 315,
+      "opcode": "invokevirtual",
+      "operand": "#186",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.setStraight:(Z)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 320,
+      "opcode": "sipush",
+      "operand": "180",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 323,
+      "opcode": "iload",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 327,
+      "opcode": "bipush",
+      "operand": "30",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 329,
+      "opcode": "imul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 332,
+      "opcode": "invokevirtual",
+      "operand": "#194",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.setYRot:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 337,
+      "opcode": "ldc",
+      "operand": "#201",
+      "symbol": "float 12.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 339,
+      "opcode": "invokevirtual",
+      "operand": "#198",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.setSpinSpeed:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 342,
+      "opcode": "aload",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 344,
+      "opcode": "ifnull",
+      "operand": "379",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 349,
+      "opcode": "getstatic",
+      "operand": "#202",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.SEEKCANDY:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 352,
+      "opcode": "invokestatic",
+      "operand": "#116",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 355,
+      "opcode": "ifle",
+      "operand": "379",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 365,
+      "opcode": "invokevirtual",
+      "operand": "#211",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.setSeekingEntityId:(I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 370,
+      "opcode": "ldc",
+      "operand": "#214",
+      "symbol": "float 50.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 372,
+      "opcode": "invokevirtual",
+      "operand": "#198",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.setSpinSpeed:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 375,
+      "opcode": "bipush",
+      "operand": "50",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 377,
+      "opcode": "istore",
+      "operand": "9",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 379,
+      "opcode": "aload",
+      "operand": "11",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 381,
+      "opcode": "ldc",
+      "operand": "#215",
+      "symbol": "float 3.5f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 383,
+      "opcode": "invokevirtual",
+      "operand": "#216",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.setSpinRadius:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 394,
+      "opcode": "iload",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 396,
+      "opcode": "sipush",
+      "operand": "360",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 399,
+      "opcode": "imul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 401,
+      "opcode": "iload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 403,
+      "opcode": "i2f",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 404,
+      "opcode": "fdiv",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 405,
+      "opcode": "invokevirtual",
+      "operand": "#220",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.setStartAngle:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 410,
+      "opcode": "bipush",
+      "operand": "80",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 412,
+      "opcode": "invokevirtual",
+      "operand": "#223",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.setLifespan:(I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 418,
+      "opcode": "invokevirtual",
+      "operand": "#124",
+      "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 421,
+      "opcode": "pop",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 422,
+      "opcode": "iinc",
+      "operand": "10, 1",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 425,
+      "opcode": "goto",
+      "operand": "208",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 456,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 459,
+      "opcode": "iload",
+      "operand": "9",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 461,
+      "opcode": "invokestatic",
+      "operand": "#156",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.addCooldown:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;I)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 464,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 466,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem.class",
+      "method": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "offset": 468,
+      "opcode": "invokestatic",
+      "operand": "#227",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurtAndBreakUsedHand:(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 63,
+      "opcode": "ldc",
+      "operand": "#136",
+      "symbol": "float 3.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 65,
+      "opcode": "invokevirtual",
+      "operand": "#137",
+      "symbol": "Method setSpinRadius:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 69,
+      "opcode": "ldc",
+      "operand": "#141",
+      "symbol": "float 7.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 71,
+      "opcode": "invokevirtual",
+      "operand": "#142",
+      "symbol": "Method setSpinSpeed:(F)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 75,
+      "opcode": "invokevirtual",
+      "operand": "#145",
+      "symbol": "Method getSpinAroundPosition:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 78,
+      "opcode": "astore_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 465,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 466,
+      "opcode": "invokevirtual",
+      "operand": "#276",
+      "symbol": "Method isStraight:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 469,
+      "opcode": "ifeq",
+      "operand": "602",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 473,
+      "opcode": "invokevirtual",
+      "operand": "#106",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 476,
+      "opcode": "invokevirtual",
+      "operand": "#127",
+      "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 479,
+      "opcode": "ifne",
+      "operand": "736",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 488,
+      "opcode": "ldc_w",
+      "operand": "#279",
+      "symbol": "float -0.01f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 492,
+      "opcode": "invokevirtual",
+      "operand": "#280",
+      "symbol": "Method getSpinSpeed:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 501,
+      "opcode": "invokevirtual",
+      "operand": "#201",
+      "symbol": "Method getYRot:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 505,
+      "opcode": "invokestatic",
+      "operand": "#285",
+      "symbol": "Method java/lang/Math.toRadians:(D)D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 510,
+      "opcode": "invokevirtual",
+      "operand": "#289",
+      "symbol": "Method net/minecraft/world/phys/Vec3.yRot:(F)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 519,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 520,
+      "opcode": "invokevirtual",
+      "operand": "#238",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 523,
+      "opcode": "invokevirtual",
+      "operand": "#296",
+      "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 527,
+      "opcode": "invokevirtual",
+      "operand": "#299",
+      "symbol": "Method isNoGravity:()Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 530,
+      "opcode": "ifne",
+      "operand": "555",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 538,
+      "opcode": "ldc2_w",
+      "operand": "#302",
+      "symbol": "double 0.8999999761581421d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 541,
+      "opcode": "invokevirtual",
+      "operand": "#234",
+      "symbol": "Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 545,
+      "opcode": "ldc2_w",
+      "operand": "#304",
+      "symbol": "double -0.08d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 549,
+      "opcode": "invokevirtual",
+      "operand": "#254",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 552,
+      "opcode": "invokevirtual",
+      "operand": "#296",
+      "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 556,
+      "opcode": "getfield",
+      "operand": "#306",
+      "symbol": "Field verticalCollision:Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 559,
+      "opcode": "ifeq",
+      "operand": "588",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 564,
+      "opcode": "invokevirtual",
+      "operand": "#293",
+      "symbol": "Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 568,
+      "opcode": "ldc2_w",
+      "operand": "#302",
+      "symbol": "double 0.8999999761581421d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 572,
+      "opcode": "invokevirtual",
+      "operand": "#254",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 575,
+      "opcode": "ldc2_w",
+      "operand": "#310",
+      "symbol": "double 0.4d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 578,
+      "opcode": "dconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 582,
+      "opcode": "invokevirtual",
+      "operand": "#312",
+      "symbol": "Method net/minecraft/world/phys/Vec3.multiply:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 585,
+      "opcode": "invokevirtual",
+      "operand": "#296",
+      "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 588,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 593,
+      "opcode": "invokevirtual",
+      "operand": "#293",
+      "symbol": "Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 596,
+      "opcode": "invokevirtual",
+      "operand": "#321",
+      "symbol": "Method move:(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 599,
+      "opcode": "goto",
+      "operand": "736",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 602,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 618,
+      "opcode": "invokevirtual",
+      "operand": "#106",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 624,
+      "opcode": "ifne",
+      "operand": "736",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 638,
+      "opcode": "fconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 640,
+      "opcode": "getfield",
+      "operand": "#266",
+      "symbol": "Field tickCount:I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 644,
+      "opcode": "ldc_w",
+      "operand": "#269",
+      "symbol": "float 30.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 647,
+      "opcode": "fdiv",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 648,
+      "opcode": "invokestatic",
+      "operand": "#270",
+      "symbol": "Method java/lang/Math.min:(FF)F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 658,
+      "opcode": "fload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 660,
+      "opcode": "invokevirtual",
+      "operand": "#325",
+      "symbol": "Method getSpinRadius:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 663,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 669,
+      "opcode": "invokevirtual",
+      "operand": "#328",
+      "symbol": "Method getStartAngle:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 673,
+      "opcode": "getfield",
+      "operand": "#331",
+      "symbol": "Field spinAngle:F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 676,
+      "opcode": "fadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 681,
+      "opcode": "dneg",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 683,
+      "opcode": "invokevirtual",
+      "operand": "#289",
+      "symbol": "Method net/minecraft/world/phys/Vec3.yRot:(F)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 689,
+      "opcode": "invokevirtual",
+      "operand": "#238",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 708,
+      "opcode": "ldc2_w",
+      "operand": "#335",
+      "symbol": "double 0.05d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 712,
+      "opcode": "invokevirtual",
+      "operand": "#280",
+      "symbol": "Method getSpinSpeed:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 716,
+      "opcode": "dmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 720,
+      "opcode": "invokevirtual",
+      "operand": "#296",
+      "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 729,
+      "opcode": "invokevirtual",
+      "operand": "#280",
+      "symbol": "Method getSpinSpeed:()F"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 732,
+      "opcode": "fadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 736,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "tick",
+      "descriptor": "()V",
+      "offset": 737,
+      "opcode": "invokevirtual",
+      "operand": "#337",
+      "symbol": "Method hurtEntities:()V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "#462",
+      "symbol": "Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 14,
+      "opcode": "invokevirtual",
+      "operand": "#470",
+      "symbol": "Method net/minecraft/world/damagesource/DamageSources.mobProjectile:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 27,
+      "opcode": "invokevirtual",
+      "operand": "#476",
+      "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 62,
+      "opcode": "invokevirtual",
+      "operand": "#494",
+      "symbol": "Method isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 69,
+      "opcode": "getfield",
+      "operand": "#92",
+      "symbol": "Field owner:Lnet/minecraft/world/entity/LivingEntity;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 81,
+      "opcode": "invokevirtual",
+      "operand": "#498",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.is:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 103,
+      "opcode": "invokevirtual",
+      "operand": "#503",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 134,
+      "opcode": "invokevirtual",
+      "operand": "#504",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/living/LicowitchEntity.isFriendlyFire:(Lnet/minecraft/world/entity/LivingEntity;)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 143,
+      "opcode": "ldc",
+      "operand": "#136",
+      "symbol": "float 3.0f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 145,
+      "opcode": "invokestatic",
+      "operand": "#508",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 148,
+      "opcode": "ifeq",
+      "operand": "181",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 155,
+      "opcode": "ldc2_w",
+      "operand": "#512",
+      "symbol": "double 0.30000001192092896d"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 178,
+      "opcode": "invokestatic",
+      "operand": "#516",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.knockback:(Lnet/minecraft/world/entity/LivingEntity;DDD)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 184,
+      "opcode": "iload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 189,
+      "opcode": "invokevirtual",
+      "operand": "#257",
+      "symbol": "Method getSeekingEntityId:()I"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 193,
+      "opcode": "if_icmpeq",
+      "operand": "200",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "hurtEntities",
+      "descriptor": "()V",
+      "offset": 197,
+      "opcode": "invokevirtual",
+      "operand": "#133",
+      "symbol": "Method discard:()V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 75,
+      "opcode": "ldc_w",
+      "operand": "#410",
+      "symbol": "String AroundY"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 81,
+      "opcode": "ifeq",
+      "operand": "126",
+      "symbol": ""
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 100,
+      "opcode": "ldc_w",
+      "operand": "#408",
+      "symbol": "String AroundX"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 107,
+      "opcode": "ldc_w",
+      "operand": "#412",
+      "symbol": "String AroundZ"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 114,
+      "opcode": "ldc_w",
+      "operand": "#412",
+      "symbol": "String AroundZ"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 120,
+      "opcode": "invokespecial",
+      "operand": "#283",
+      "symbol": "Method net/minecraft/world/phys/Vec3.\"<init>\":(DDD)V"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 61,
+      "opcode": "ldc_w",
+      "operand": "#410",
+      "symbol": "String AroundY"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/item/SpinningPeppermintEntity.class",
+      "method": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "offset": 65,
+      "opcode": "getfield",
+      "operand": "#452",
+      "symbol": "Field net/minecraft/world/phys/Vec3.y:D"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.class",
+      "method": "lambda$static$75",
+      "descriptor": "()Lnet/minecraft/world/entity/EntityType;",
+      "offset": 11,
+      "opcode": "ldc_w",
+      "operand": "#437",
+      "symbol": "float 0.8f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.class",
+      "method": "lambda$static$75",
+      "descriptor": "()Lnet/minecraft/world/entity/EntityType;",
+      "offset": 14,
+      "opcode": "ldc_w",
+      "operand": "#442",
+      "symbol": "float 0.4f"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/entity/ACEntityRegistry.class",
+      "method": "lambda$static$75",
+      "descriptor": "()Lnet/minecraft/world/entity/EntityType;",
+      "offset": 17,
+      "opcode": "invokevirtual",
+      "operand": "#402",
+      "symbol": "Method net/minecraft/world/entity/EntityType$Builder.sized:(FF)Lnet/minecraft/world/entity/EntityType$Builder;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "method": "addCooldown",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 5,
+      "opcode": "invokevirtual",
+      "operand": "#399",
+      "symbol": "Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;"
+    },
+    {
+      "class": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "method": "addCooldown",
+      "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;I)V",
+      "offset": 9,
+      "opcode": "invokevirtual",
+      "operand": "#517",
+      "symbol": "Method net/minecraft/world/item/ItemCooldowns.addCooldown:(Lnet/minecraft/world/item/Item;I)V"
+    }
+  ],
+  "limits": {
+    "sealed_pivots": 169,
+    "full_cfg": "NOT_CERTIFIED",
+    "loaded_datapack": "NOT_VERIFIED",
+    "effective_speed": "NOT_CERTIFIED",
+    "effective_hit": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "semantic_magic_roots_added": 0
+  }
+}

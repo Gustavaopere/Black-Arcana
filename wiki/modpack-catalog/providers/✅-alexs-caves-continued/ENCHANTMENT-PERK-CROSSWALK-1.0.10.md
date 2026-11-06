@@ -9,9 +9,9 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=6/51
+individual_full_enchantment_dossiers=7/51
 individual_partial_enchantment_dossiers=20/51
-individual_existing_enchantment_dossiers=26/51
+individual_existing_enchantment_dossiers=27/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -19,9 +19,11 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `██░░░░░░░░░░░░░░░░░░ 11.8% (6/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `██░░░░░░░░░░░░░░░░░░ 13.7% (7/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `██████████░░░░░░░░░░ 51.0% (26/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale e Multiple Mint possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `██████████░░░░░░░░░░ 52.9% (27/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint e Peppermint Punting possuem contratos estáticos individuais certificados.
+
+**Peppermint Punting:** [ficha técnica estática](enchantments/peppermint-punting.md) e [prova compacta SHA-exata](EXACT-PEPPERMINT-PUNTING-CONTRACT-1.0.10.md) mostram que o nível positivo seleciona `Straight`, yaw inicial e cooldown 20, com overrides de Seekcandy e tick independentes; não multiplica o dano 3F, não altera o número de peppermints e não homologa hook ou QA física.
 
 **Multiple Mint:** [ficha estática](enchantments/multiple-mint.md) e [prova reproduzível](EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.md) documentam `3+L` como quantidade solicitada e denominador angular, sem promover tentativas de spawn a inserções aceitas, dano proporcional ou hook seguro.
 
@@ -73,7 +75,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:impending_stab` | [Contrato técnico estático](enchantments/impending-stab.md) · [selo individual](EXACT-IMPENDING-STAB-CONTRACT-1.0.10.json) · [consumidores Desolate Dagger](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) · hooks e QA física pendentes |
 | ✅ | `alexscaves:lasting_morale` | [Contrato técnico estático](enchantments/lasting-morale.md) · [selo individual](EXACT-LASTING-MORALE-CONTRACT-1.0.10.json) · tempo/cooldown compartilhados; hooks e QA física pendentes |
 | ✅ | `alexscaves:multiple_mint` | [Contrato técnico estático](enchantments/multiple-mint.md) · [selo individual](EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.json) · quantidade/ângulo compartilhados; hooks e QA física pendentes |
-| ⚠️ | `alexscaves:peppermint_punting` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
+| ✅ | `alexscaves:peppermint_punting` | [Contrato técnico estático](enchantments/peppermint-punting.md) · [selo reutilizando Multiple Mint](EXACT-PEPPERMINT-PUNTING-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
 | ⚠️ | `alexscaves:plummeting_flight` | [`EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json`](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) |
 | ⚠️ | `alexscaves:precise_volley` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:rapid_possession` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
@@ -109,4 +111,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:peppermint_punting`; Multiple Mint reutiliza a ação Peppermint Cast já certificada, sem criar raiz nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **34/56 contratos estáticos entre fichas observadas**, incluindo 26 fichas de encantamentos. Esses 56 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
+A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:plummeting_flight`; Peppermint Punting reutiliza a ação Peppermint Cast já certificada, sem criar raiz nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **35/57 contratos estáticos entre fichas observadas**, incluindo 27 fichas de encantamentos. Esses 57 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.

@@ -7019,6 +7019,46 @@
           "reason": "Manifesto individual, JAR/descritores/âncoras verificados, regressões e revisão independente; provas anteriores preservadas e universo integral aberto."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/peppermint-punting.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual de Peppermint Punting baseado nos consumidores Peppermint Cast SHA-exatos já auditados em Multiple Mint; não certifica hook, trajetória ou dano real, addon, renderer, QA física nem provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/peppermint-punting.md",
+          "reason": "JAR publisher Alex's Caves1.0.10 SHA-exato, JSON peppermint_punting com SHA, levels/custos/slots e idioma original atestados por sonda real."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/peppermint-punting.md",
+          "reason": "Ramo server-side Peppermint Cast testa Punting>0 por instância; straight true, yaw dependente de headYaw, parâmetros iniciais e ramo de movimento/colisão da SpinningPeppermintEntity."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/peppermint-punting.md",
+          "reason": "max_level1, peso2, custos 1/41 e anvil4; Punting escolhe straight, yaw com passos15/30, speed 8/12, cooldown20/80, overrides Seekcandy50 e tick speed7/radius3."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/peppermint-punting.md",
+          "reason": "AABB própria de LivingEntity, exclusões de owner/aliados, fonte mobProjectile e pedido de dano3F; dano aceito guardando knockback e descarte seeking, sem novo alcance por Punting."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/peppermint-punting.md",
+          "reason": "Cooldown final por Item 20/80 ou 50 com Seekcandy elegível, 1 de desgaste por uso e lifespan80 do cast; sem mana, custo por entidade ou cooldown por nível."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/peppermint-punting.md",
+          "reason": "Authority e settlement do provider preservados; Punting não cria nova raiz de spell, hook mutador indisponível, QA física PvP/claims/save/reload pendente."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/peppermint-punting.md",
+          "reason": "Sonda verifica Punting JSON/tag/idioma e hashes SHA-exatos do JAR; selo compacto reusa manifest binário Multiple Mint auditado, e testes conferem offsets, escopo e sete eixos."
+        }
+      }
     }
   },
   "providers": {},
