@@ -16,6 +16,7 @@ on:
       - 'docs/qa/alexscaves_1010_herd_phalanx_cards_test.py'
       - 'docs/qa/alexscaves_1010_impending_stab_cards_test.py'
       - 'docs/qa/alexscaves_1010_lasting_morale_cards_test.py'
+      - 'docs/qa/alexscaves_1010_multiple_mint_cards_test.py'
       - 'docs/qa/alexscaves_1010_humungous_hex_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   push:
@@ -33,6 +34,7 @@ on:
       - 'docs/qa/alexscaves_1010_herd_phalanx_cards_test.py'
       - 'docs/qa/alexscaves_1010_impending_stab_cards_test.py'
       - 'docs/qa/alexscaves_1010_lasting_morale_cards_test.py'
+      - 'docs/qa/alexscaves_1010_multiple_mint_cards_test.py'
       - 'docs/qa/alexscaves_1010_humungous_hex_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   workflow_dispatch:
@@ -61,6 +63,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_herd_phalanx_cards_test.py -v
           python3 docs/qa/alexscaves_1010_impending_stab_cards_test.py -v
           python3 docs/qa/alexscaves_1010_lasting_morale_cards_test.py -v
+          python3 docs/qa/alexscaves_1010_multiple_mint_cards_test.py -v
           python3 docs/qa/alexscaves_1010_humungous_hex_cards_test.py -v
       - name: Download the exact publisher artifact
         run: |
@@ -194,6 +197,15 @@ jobs:
             --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/alexscaves-1010/lasting-morale-evidence.json
+      - name: Verify the sealed Multiple Mint enchantment contract
+        run: |
+          python3 docs/qa/alexscaves_1010_action_contract_audit.py \
+            --profile multiple_mint \
+            --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.json' \
+            --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/alexscaves-1010/multiple-mint-evidence.json
       - name: Export bounded JSON evidence only
         uses: actions/upload-artifact@v7
         with:
@@ -213,5 +225,6 @@ jobs:
             build/alexscaves-1010/herd-phalanx-evidence.json
             build/alexscaves-1010/impending-stab-evidence.json
             build/alexscaves-1010/lasting-morale-evidence.json
+            build/alexscaves-1010/multiple-mint-evidence.json
           if-no-files-found: error
           retention-days: 14

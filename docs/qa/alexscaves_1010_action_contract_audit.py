@@ -54,6 +54,7 @@ HEAVY_SLAM = frozenset(("enchantments/heavy-slam.md",))
 HERD_PHALANX = frozenset(("enchantments/herd-phalanx.md",))
 IMPENDING_STAB = frozenset(("enchantments/impending-stab.md",))
 LASTING_MORALE = frozenset(("enchantments/lasting-morale.md",))
+MULTIPLE_MINT = frozenset(("enchantments/multiple-mint.md",))
 SCOPE = {"schema_version": 1, "version": "1.0.10",
          "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
          "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR", "mutating_hook": "NOT_VERIFIED",
@@ -73,6 +74,7 @@ HEAVY_SLAM_SCOPE = {**SCOPE, "catalog_family": "HEAVY_SLAM_ENCHANTMENT_CONTRACT"
 HERD_PHALANX_SCOPE = {**SCOPE, "catalog_family": "HERD_PHALANX_ENCHANTMENT_CONTRACT"}
 IMPENDING_STAB_SCOPE = {**SCOPE, "catalog_family": "IMPENDING_STAB_ENCHANTMENT_CONTRACT"}
 LASTING_MORALE_SCOPE = {**SCOPE, "catalog_family": "LASTING_MORALE_ENCHANTMENT_CONTRACT"}
+MULTIPLE_MINT_SCOPE = {**SCOPE, "catalog_family": "MULTIPLE_MINT_ENCHANTMENT_CONTRACT"}
 ADJACENT_SOURCE = {"repository": "Codx-org/AlexsCavesContinued",
                    "revision": "523308608422ab8e31974befa7111ecdf495dd37",
                    "declared_version": "1.1.1",
@@ -90,7 +92,7 @@ def require(condition, message):
 
 def profile_spec(profile):
     """Select a literal family without changing the existing action contract."""
-    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale"), "unknown catalog profile")
+    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint"), "unknown catalog profile")
     if profile == "effects":
         return EFFECT_SCOPE, EFFECTS, "effect_evidence"
     if profile == "dreadbow":
@@ -117,6 +119,8 @@ def profile_spec(profile):
         return IMPENDING_STAB_SCOPE, IMPENDING_STAB, "contract_evidence"
     if profile == "lasting_morale":
         return LASTING_MORALE_SCOPE, LASTING_MORALE, "contract_evidence"
+    if profile == "multiple_mint":
+        return MULTIPLE_MINT_SCOPE, MULTIPLE_MINT, "contract_evidence"
     return SCOPE, ACTIONS, "action_evidence"
 
 
@@ -331,7 +335,7 @@ def main(argv=None):
     for flag in ("jar", "manifest", "provider-root", "javap"):
         parser.add_argument("--" + flag, required=True, type=Path)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale"), default="actions")
+    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint"), default="actions")
     args = parser.parse_args(argv)
     try:
         report = audit(args.jar, load_manifest(args.manifest), args.provider_root, args.javap,

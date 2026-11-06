@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os cinco contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **33 contratos estáticos certificados entre 55 fichas observadas**: 25 são dossiers de encantamentos, sendo vinte parciais e cinco estáticos completos. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
+As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os seis contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **34 contratos estáticos certificados entre 56 fichas observadas**: 26 são dossiers de encantamentos, sendo vinte parciais e seis estáticos completos. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 
@@ -75,3 +75,7 @@ A [ficha](enchantments/impending-stab.md) e o [selo](EXACT-IMPENDING-STAB-CONTRA
 ## Lasting Morale — tempo compartilhado e persistência condicionada
 
 A [ficha](enchantments/lasting-morale.md) e a [prova](EXACT-LASTING-MORALE-CONTRACT-1.0.10.md) distinguem carga/custo, leitura de `1200+400L`, contador e cooldown por Item, tentativas de spawn, fade e UUID/NBT. Somente o contrato estático individual é concluído; não se alteram as ações existentes, ataques dos mobs, hooks mutadores ou QA física.
+
+## Multiple Mint — quantidade e distribuição ligadas
+
+A [ficha](enchantments/multiple-mint.md) e a [prova](EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.md) acompanham `3+L` no loop e no denominador angular, pedidos de inserção/custo/cooldown, dimensões, movimento, dano, owner e NBT. Essa conclusão é estática e individual; não certifica inserções aceitas, DPS, hooks ou QA física.
