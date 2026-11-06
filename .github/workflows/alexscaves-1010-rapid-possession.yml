@@ -43,7 +43,10 @@ jobs:
           python3 docs/qa/alexscaves_1010_rapid_possession_probe.py \
             --jar build/rapid-1010/alexscaves-1.0.10.jar \
             --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.json' \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAPID-POSSESSION-CONTRACT-1.0.10.json' \
             --output build/rapid-1010/evidence.json
+      - name: Rapid Possession semantic regressions
+        run: python3 docs/qa/alexscaves_1010_rapid_possession_cards_test.py -v
       - name: Fingerprint Rapid Possession dossier
         run: sha256sum 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md'
       - name: Publish bounded probe result

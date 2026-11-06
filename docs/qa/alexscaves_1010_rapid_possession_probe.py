@@ -100,6 +100,55 @@ def audit(jar,manifest_path,javap):
        "limits":{"mutating_hook":"NOT_VERIFIED","physical_qa":"NOT_TESTED",
                  "mutation":"NO_MUTATION","provider_universe_closed":False}}
 
+def verify_seal(out:dict,seal_path:Path,manifest_path:Path):
+    seal=json.loads(seal_path.read_text(encoding="utf-8"))
+    require(seal["schema_version"]==1 and
+            seal["catalog_family"]=="RAPID_POSSESSION_ENCHANTMENT_CONTRACT" and
+            seal["version"]=="1.0.10" and
+            seal["claim_scope"]=="STATIC_TECHNICAL_CATALOG_ONLY" and
+            seal["evidence_grade"]=="SHA_EXACT_BINARY_BEHAVIOR" and
+            seal["mutating_hook"]=="NOT_VERIFIED" and
+            seal["physical_qa"]=="NOT_TESTED" and
+            seal["mutation"]=="NO_MUTATION" and
+            seal["provider_universe_closed"] is False,"unsafe Rapid Possession scope")
+    for k in ("artifact","resource","item_tag","english_translations","class_hashes"):
+        require(seal[k]==out[k],"publisher/seal drift: "+k)
+    d=load_manifest(manifest_path)
+    validate_structure(d,profile="actions")
+    expected_parent={
+        "path":"wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.json",
+        "version":"1.0.10","family":"EIGHT_MAGIC_ACTIONS",
+        "evidence_grade":"SHA_EXACT_BINARY_BEHAVIOR","artifact_sha256":SHA256,
+        "unchanged_action_card_sha256":d["cards"]["actions/totem-possession-remote-control.md"]}
+    require(seal["reused_binary_manifest"]==expected_parent,
+            "unsealed historical Totem action")
+    method=seal["on_use_tick"]
+    require({k:method[k] for k in ("owner","name","descriptor")}==out["method"],
+            "noncanonical native method")
+    ms=[m for m in d["classes"][OWNER]["methods"] if
+        m["name"]==method["name"] and m["descriptor"]==method["descriptor"]]
+    require(len(ms)==1 and method["inherited_anchors"]==ms[0]["anchors"],
+            "historical parent JVM anchors not preserved")
+    actual={a["offset"]:a for a in out["selected_anchors"]}
+    extra=method["level_expression_anchors"]
+    require(12<=len(extra)<=40 and len({x["offset"] for x in extra})==len(extra),
+            "duplicate/missing level expression anchors")
+    for row in extra:
+        require(set(row)=={"offset","opcode","operand","symbol"} and
+                actual.get(row["offset"])==row,
+                "native speed opcode/operand drift")
+    require(seal["limits"]["native_anchor_count"]==
+            len(extra)+len(ms[0]["anchors"]) and
+            seal["limits"]["no_claimed_server_wear"] is True and
+            seal["limits"]["actual_speed_blocks_per_tick"]=="NOT_CERTIFIED" and
+            seal["limits"]["new_semantic_action_roots"]==0,
+            "unsafe gameplay promotion")
+    expected="wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md"
+    require(seal["card"]["path"]==expected and
+            digest((Path(__file__).resolve().parents[2]/expected).read_bytes())==
+            seal["card"]["sha256"],
+            "Rapid Possession card hash drift")
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--jar",type=Path,required=True)
