@@ -45,6 +45,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_sea_swing_probe.py \
             --jar build/alexscaves-sea-swing-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SEA-SWING-DISCOVERY-1.0.10.json' \
             --output build/alexscaves-sea-swing-1010/evidence.json \
             > build/alexscaves-sea-swing-1010/discovery-stdout.json
           python3 - <<'PY'
