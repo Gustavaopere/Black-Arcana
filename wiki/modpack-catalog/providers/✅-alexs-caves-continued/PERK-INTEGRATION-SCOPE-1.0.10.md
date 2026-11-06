@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os seis contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **34 contratos estáticos certificados entre 56 fichas observadas**: 26 são dossiers de encantamentos, sendo vinte parciais e seis estáticos completos. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
+As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os onze contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **39 contratos estáticos certificados entre 61 fichas observadas**: 31 são dossiers de encantamentos, sendo vinte parciais e onze estáticos completos. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 
@@ -79,3 +79,7 @@ A [ficha](enchantments/lasting-morale.md) e a [prova](EXACT-LASTING-MORALE-CONTR
 ## Multiple Mint — quantidade e distribuição ligadas
 
 A [ficha](enchantments/multiple-mint.md) e a [prova](EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.md) acompanham `3+L` no loop e no denominador angular, pedidos de inserção/custo/cooldown, dimensões, movimento, dano, owner e NBT. Essa conclusão é estática e individual; não certifica inserções aceitas, DPS, hooks ou QA física.
+
+## Relentless Darkness — cadência e carga visual separadas
+
+A [ficha](enchantments/relentless-darkness.md) e a [prova](EXACT-RELENTLESS-DARKNESS-CONTRACT-1.0.10.md) acompanham o desvio do release para onUseTick, o módulo do timer restante, o M5/incremento3 visual cliente e custos/dano por seus consumidores nativos. A conclusão é estática e individual; não homologa frequência física, DPS, rede ou perks mutadoras.
