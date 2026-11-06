@@ -94,9 +94,13 @@ class PlummetingFlightContract(unittest.TestCase):
         self.assertEqual(set(cert["evidence"]),{"identity","behavior","parameters","targeting","costs","integration","validation"})
         self.assertEqual({v["path"] for v in cert["evidence"].values()},{str((P/CARD).relative_to(ROOT))})
         cross=(P/"ENCHANTMENT-PERK-CROSSWALK-1.0.10.md").read_text()
-        for value in ("individual_full_enchantment_dossiers=8/51",
-                      "individual_partial_enchantment_dossiers=20/51",
-                      "individual_existing_enchantment_dossiers=28/51",
+        cards=[path for path in (P/"enchantments").glob("*.md")
+               if path.name not in ("INDEX.md","README.md")]
+        certified=[key for key in ledger["objects"]
+                   if key.startswith(P.name+"/enchantments/")]
+        for value in (f"individual_full_enchantment_dossiers={len(certified)}/51",
+                      f"individual_partial_enchantment_dossiers={len(cards)-len(certified)}/51",
+                      f"individual_existing_enchantment_dossiers={len(cards)}/51",
                       "alexscaves:plummeting_flight"):
             self.assertIn(value,cross)
 if __name__=="__main__":unittest.main()

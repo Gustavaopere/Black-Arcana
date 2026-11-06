@@ -66,7 +66,7 @@ class PreciseVolleyStatic(unittest.TestCase):
         self.assertEqual(a[52]["opcode"],"iconst_1")
         self.assertEqual(a[56]["opcode"],"iconst_0")
         self.assertIn("setShadowArrowDamage",a[402]["symbol"])
-        self.assertIn("2.0f",a[395]["symbol"])
+        self.assertEqual(a[395]["opcode"],"fconst_2")
         self.assertIn("3.0f",a[399]["symbol"])
         self.assertIn("setPerfectShot",a[409]["symbol"])
         self.assertEqual((a[665]["opcode"],a[665]["operand"]),("ifeq","672"))

@@ -21,7 +21,7 @@ executable_perk_certification=NOT_CERTIFIED
 
 **Barra dos contratos técnicos estáticos dos 51 encantamentos:** `███░░░░░░░░░░░░░░░░░ 17.6% (9/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `███████████░░░░░░░░░ 56.9% (29/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting Plummeting Flight e Precise Volley possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `███████████░░░░░░░░░ 56.9% (29/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight e Precise Volley possuem contratos estáticos individuais certificados.
 
 **Precise Volley:** [ficha técnica estática](enchantments/precise-volley.md) e [selo SHA-exato](EXACT-PRECISE-VOLLEY-CONTRACT-1.0.10.md) fixam que `L>0` zera a imprecisão do disparo e seleciona `shadowArrowDamage=2F` em vez de 3F para Dark Arrows; quantidade, caixa de spawn, mira e custos seguem nativos. Não homologa hit, altura, dano efetivo ou perk mutadora.
 
