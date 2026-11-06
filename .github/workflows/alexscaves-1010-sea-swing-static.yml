@@ -7,14 +7,18 @@ on:
       - '.github/workflows/alexscaves-1010-sea-swing-static.yml'
       - 'docs/qa/alexscaves_1010_sea_swing_static_probe.py'
       - 'docs/qa/alexscaves_1010_sea_swing_static_probe_test.py'
+      - 'docs/qa/alexscaves_1010_sea_swing_cards_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
   push:
     branches: [main]
     paths:
       - '.github/workflows/alexscaves-1010-sea-swing-static.yml'
       - 'docs/qa/alexscaves_1010_sea_swing_static_probe.py'
       - 'docs/qa/alexscaves_1010_sea_swing_static_probe_test.py'
+      - 'docs/qa/alexscaves_1010_sea_swing_cards_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
 
 permissions:
   contents: read
@@ -33,6 +37,7 @@ jobs:
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_sea_swing_static_probe.py docs/qa/alexscaves_1010_sea_swing_static_probe_test.py
           python3 docs/qa/alexscaves_1010_sea_swing_static_probe_test.py -v
+          python3 docs/qa/alexscaves_1010_sea_swing_cards_test.py -v
       - name: Acquire exact release 1.0.10 from publisher CDN
         run: |
           mkdir -p build/alexscaves-sea-swing-static-1010
@@ -43,18 +48,11 @@ jobs:
       - name: Extract and seal exact bounded complete JVM methods
         run: |
           SEAL='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SEA-SWING-STATIC-1.0.10.json'
-          if test -f "$SEAL"; then
-            python3 docs/qa/alexscaves_1010_sea_swing_static_probe.py \
-              --jar build/alexscaves-sea-swing-static-1010/alexscaves-1.0.10.jar \
-              --javap "$JAVA_HOME/bin/javap" --seal "$SEAL" \
-              --output build/alexscaves-sea-swing-static-1010/evidence.json
-          else
-            echo 'UNSEALED_DISCOVERY_ONLY — do not count complete'
-            python3 docs/qa/alexscaves_1010_sea_swing_static_probe.py \
-              --jar build/alexscaves-sea-swing-static-1010/alexscaves-1.0.10.jar \
-              --javap "$JAVA_HOME/bin/javap" \
-              --output build/alexscaves-sea-swing-static-1010/evidence.json
-          fi
+          test -f "$SEAL"
+          python3 docs/qa/alexscaves_1010_sea_swing_static_probe.py \
+            --jar build/alexscaves-sea-swing-static-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" --seal "$SEAL" \
+            --output build/alexscaves-sea-swing-static-1010/evidence.json
       - name: Emit exact bounded JSON as single CI log record for content certification
         run: |
           python3 - <<'PY'
