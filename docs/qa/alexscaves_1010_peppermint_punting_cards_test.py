@@ -120,9 +120,13 @@ class PuntingContract(unittest.TestCase):
         self.assertEqual({v['path'] for v in cert['evidence'].values()},
                          {str((P/CARD).relative_to(ROOT))})
         cross=(P/'ENCHANTMENT-PERK-CROSSWALK-1.0.10.md').read_text()
-        for name in ('individual_full_enchantment_dossiers=7/51',
-                     'individual_partial_enchantment_dossiers=20/51',
-                     'individual_existing_enchantment_dossiers=27/51',
+        cards=[p for p in (P/'enchantments').glob('*.md')
+               if p.name not in ('INDEX.md','README.md')]
+        certified=[name for name in ledger['objects']
+                   if name.startswith(P.name+'/enchantments/')]
+        for name in (f'individual_full_enchantment_dossiers={len(certified)}/51',
+                     f'individual_partial_enchantment_dossiers={len(cards)-len(certified)}/51',
+                     f'individual_existing_enchantment_dossiers={len(cards)}/51',
                      '| ✅ | `alexscaves:peppermint_punting`'):
             self.assertIn(name,cross)
 
