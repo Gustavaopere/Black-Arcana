@@ -85,6 +85,53 @@ def audit(jar:Path,manifest_path:Path):
             "limits":{"mutating_hook":"NOT_VERIFIED","physical_qa":"NOT_TESTED",
                       "mutation":"NO_MUTATION","provider_universe_closed":False}}
 
+def verify_seal(evidence:dict, seal_path:Path, manifest_path:Path):
+    s=json.loads(seal_path.read_text(encoding="utf-8"))
+    require(s["schema_version"]==1 and
+            s["catalog_family"]=="PRECISE_VOLLEY_ENCHANTMENT_CONTRACT" and
+            s["claim_scope"]=="STATIC_TECHNICAL_CATALOG_ONLY" and
+            s["evidence_grade"]=="SHA_EXACT_BINARY_BEHAVIOR" and
+            s["mutating_hook"]=="NOT_VERIFIED" and
+            s["physical_qa"]=="NOT_TESTED" and
+            s["mutation"]=="NO_MUTATION" and
+            s["provider_universe_closed"] is False,
+            "unsafe Precise Volley seal scope")
+    for key in ("artifact","resource","item_tag","english_translations","class_hashes"):
+        require(s[key]==evidence[key],"Precise Volley exact publisher "+key+" drift")
+    parent=load_manifest(manifest_path)
+    validate_structure(parent,profile="dreadbow")
+    require(s["reused_binary_manifest"]=={
+        "path":"wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DREADBOW-CONTRACTS-1.0.10.json",
+        "version":"1.0.10","family":"DREADBOW_AND_DARK_ARROW",
+        "evidence_grade":"SHA_EXACT_BINARY_BEHAVIOR","artifact_sha256":SHA256},
+        "noncanonical Dreadbow authority")
+    anchors=s["anchors"]
+    require(145<=len(anchors)<=280 and
+            s["limits"]["sealed_pivots"]==len(anchors),
+            "Precise Volley bounded pivots missing")
+    seen=set()
+    for row in anchors:
+        require(set(row)=={"class","method","descriptor","offset","opcode","operand","symbol"},
+                "unverified anchor fields")
+        cl=row["class"]
+        require(cl in s["class_hashes"] and
+                parent["classes"][cl]["sha256"]==s["class_hashes"][cl],
+                "native class hash drift")
+        method=[m for m in parent["classes"][cl]["methods"]
+                if m["name"]==row["method"] and m["descriptor"]==row["descriptor"]]
+        require(len(method)==1,"ambiguous native method")
+        candidate=[a for a in method[0]["anchors"] if a["offset"]==row["offset"]]
+        require(len(candidate)==1 and
+                all(candidate[0][k]==row[k] for k in ("offset","opcode","operand","symbol")),
+                "Precise Volley JVM offset/opcode drift")
+        ident=(cl,row["method"],row["descriptor"],row["offset"])
+        require(ident not in seen,"duplicate native anchor")
+        seen.add(ident)
+    expected="wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/precise-volley.md"
+    require(s["card"]["path"]==expected and
+            digest((Path(__file__).resolve().parents[2]/expected).read_bytes())==
+            s["card"]["sha256"],"Precise Volley dossier hash mismatch")
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--jar",type=Path,required=True)
