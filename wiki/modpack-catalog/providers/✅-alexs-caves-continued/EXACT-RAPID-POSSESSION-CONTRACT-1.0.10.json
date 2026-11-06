@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "catalog_family": "RAPID_POSSESSION_ENCHANTMENT_CONTRACT",
+  "version": "1.0.10",
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "mutation": "NO_MUTATION",
+  "provider_universe_closed": false,
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "card": {
+    "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md",
+    "sha256": "06c75f5965d9b4a42aeb740ea45abcc6c50e669f7a1ec7175f5a4b3c37c04fa6"
+  },
+  "resource": {
+    "path": "data/alexscaves/enchantment/rapid_possession.json",
+    "sha256": "449eda001a6bb6507ef4e43cc18e601659d970e8bd7d43967aff32dfed07288a",
+    "size_bytes": 376,
+    "json": {
+      "description": {
+        "translate": "enchantment.alexscaves.rapid_possession"
+      },
+      "supported_items": "#alexscaves:enchantable/totem_of_possession",
+      "weight": 10,
+      "max_level": 3,
+      "min_cost": {
+        "base": 1,
+        "per_level_above_first": 5
+      },
+      "max_cost": {
+        "base": 41,
+        "per_level_above_first": 10
+      },
+      "anvil_cost": 1,
+      "slots": [
+        "mainhand"
+      ]
+    }
+  },
+  "item_tag": {
+    "path": "data/alexscaves/tags/item/enchantable/totem_of_possession.json",
+    "sha256": "185a085206993877d91ca6d8c697273c14f945b1d55cb6179e3236c138c357cf",
+    "json": {
+      "values": [
+        "alexscaves:totem_of_possession"
+      ]
+    }
+  },
+  "english_translations": {
+    "enchantment.alexscaves.rapid_possession": "Rapid Possession",
+    "enchantment.alexscaves.rapid_possession.desc": "Mobs possessed by the Totem of Possession will move faster"
+  },
+  "class_hashes": {
+    "com/github/alexmodguy/alexscaves/server/item/TotemOfPossessionItem.class": "bad9dd8b88eb621b558d1ede477d2b4ba6a21befdec31b4a0233adcac701773e",
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+    "com/github/alexmodguy/alexscaves/server/config/ACServerConfig.class": "67abf51943537e735a08c268607ca08901c2b197f0b278fa4b464887d40ea129"
+  },
+  "reused_binary_manifest": {
+    "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.json",
+    "version": "1.0.10",
+    "family": "EIGHT_MAGIC_ACTIONS",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "unchanged_action_card_sha256": "f99f192e9461688ef793c7ef95213dd115a9a0f97ee59b6080d8da4c4c82e03e"
+  },
+  "on_use_tick": {
+    "owner": "com/github/alexmodguy/alexscaves/server/item/TotemOfPossessionItem.class",
+    "name": "onUseTick",
+    "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+    "inherited_anchors": [
+      {
+        "offset": 39,
+        "opcode": "aload",
+        "operand": "5",
+        "symbol": ""
+      },
+      {
+        "offset": 87,
+        "opcode": "getstatic",
+        "operand": "#226",
+        "symbol": "Field net/minecraft/world/level/Explosion$BlockInteraction.KEEP:Lnet/minecraft/world/level/Explosion$BlockInteraction;"
+      },
+      {
+        "offset": 97,
+        "opcode": "invokevirtual",
+        "operand": "#235",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/util/TotemExplosion.explode:()V"
+      },
+      {
+        "offset": 103,
+        "opcode": "invokevirtual",
+        "operand": "#238",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/util/TotemExplosion.finalizeExplosion:(Z)V"
+      },
+      {
+        "offset": 143,
+        "opcode": "aload_3",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 177,
+        "opcode": "aload",
+        "operand": "5",
+        "symbol": ""
+      },
+      {
+        "offset": 200,
+        "opcode": "ifne",
+        "operand": "230",
+        "symbol": ""
+      },
+      {
+        "offset": 230,
+        "opcode": "iload",
+        "operand": "4",
+        "symbol": ""
+      },
+      {
+        "offset": 241,
+        "opcode": "ifeq",
+        "operand": "275",
+        "symbol": ""
+      },
+      {
+        "offset": 272,
+        "opcode": "invokevirtual",
+        "operand": "#265",
+        "symbol": "Method net/minecraft/world/item/ItemStack.setDamageValue:(I)V"
+      },
+      {
+        "offset": 286,
+        "opcode": "bipush",
+        "operand": "15",
+        "symbol": ""
+      },
+      {
+        "offset": 310,
+        "opcode": "ldc_w",
+        "operand": "#272",
+        "symbol": "float 32.0f"
+      },
+      {
+        "offset": 318,
+        "opcode": "ldc_w",
+        "operand": "#273",
+        "symbol": "float 1.25f"
+      },
+      {
+        "offset": 347,
+        "opcode": "invokestatic",
+        "operand": "#282",
+        "symbol": "Method net/minecraft/world/entity/projectile/ProjectileUtil.getHitResultOnViewVector:(Lnet/minecraft/world/entity/Entity;Ljava/util/function/Predicate;D)Lnet/minecraft/world/phys/HitResult;"
+      },
+      {
+        "offset": 404,
+        "opcode": "invokevirtual",
+        "operand": "#312",
+        "symbol": "Method net/minecraft/world/entity/ai/navigation/PathNavigation.moveTo:(DDDD)Z"
+      },
+      {
+        "offset": 601,
+        "opcode": "ldc_w",
+        "operand": "#366",
+        "symbol": "float 0.15f"
+      },
+      {
+        "offset": 637,
+        "opcode": "ldc2_w",
+        "operand": "#380",
+        "symbol": "double 0.800000011920929d"
+      },
+      {
+        "offset": 717,
+        "opcode": "aload",
+        "operand": "5",
+        "symbol": ""
+      },
+      {
+        "offset": 722,
+        "opcode": "ldc2_w",
+        "operand": "#413",
+        "symbol": "double 3.0d"
+      },
+      {
+        "offset": 869,
+        "opcode": "aload",
+        "operand": "16",
+        "symbol": ""
+      },
+      {
+        "offset": 878,
+        "opcode": "invokevirtual",
+        "operand": "#455",
+        "symbol": "Method net/minecraft/world/entity/Mob.setLastHurtByMob:(Lnet/minecraft/world/entity/LivingEntity;)V"
+      },
+      {
+        "offset": 883,
+        "opcode": "iconst_4",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 898,
+        "opcode": "fcmpl",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 926,
+        "opcode": "ifle",
+        "operand": "1081",
+        "symbol": ""
+      },
+      {
+        "offset": 929,
+        "opcode": "aload",
+        "operand": "16",
+        "symbol": ""
+      },
+      {
+        "offset": 1048,
+        "opcode": "invokestatic",
+        "operand": "#99",
+        "symbol": "Method updateEntityIdFromServer:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V"
+      },
+      {
+        "offset": 1073,
+        "opcode": "invokevirtual",
+        "operand": "#542",
+        "symbol": "Method net/minecraft/world/entity/player/Player.attack:(Lnet/minecraft/world/entity/Entity;)V"
+      },
+      {
+        "offset": 1078,
+        "opcode": "invokevirtual",
+        "operand": "#546",
+        "symbol": "Method net/minecraft/world/entity/player/Player.resetAttackStrengthTicker:()V"
+      },
+      {
+        "offset": 1084,
+        "opcode": "return",
+        "operand": "",
+        "symbol": ""
+      }
+    ],
+    "level_expression_anchors": [
+      {
+        "offset": 310,
+        "opcode": "ldc_w",
+        "operand": "#272",
+        "symbol": "float 32.0f"
+      },
+      {
+        "offset": 313,
+        "opcode": "fload",
+        "operand": "8",
+        "symbol": ""
+      },
+      {
+        "offset": 315,
+        "opcode": "fmul",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 316,
+        "opcode": "fstore",
+        "operand": "9",
+        "symbol": ""
+      },
+      {
+        "offset": 318,
+        "opcode": "ldc_w",
+        "operand": "#273",
+        "symbol": "float 1.25f"
+      },
+      {
+        "offset": 321,
+        "opcode": "ldc_w",
+        "operand": "#274",
+        "symbol": "float 0.35f"
+      },
+      {
+        "offset": 324,
+        "opcode": "aload_3",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 325,
+        "opcode": "getstatic",
+        "operand": "#275",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.RAPID_POSSESSION:Lnet/minecraft/resources/ResourceKey;"
+      },
+      {
+        "offset": 328,
+        "opcode": "invokestatic",
+        "operand": "#136",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+      },
+      {
+        "offset": 331,
+        "opcode": "i2f",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 332,
+        "opcode": "fmul",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 333,
+        "opcode": "fadd",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 334,
+        "opcode": "fstore",
+        "operand": "10",
+        "symbol": ""
+      },
+      {
+        "offset": 336,
+        "opcode": "aload_2",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 337,
+        "opcode": "aload",
+        "operand": "5",
+        "symbol": ""
+      },
+      {
+        "offset": 339,
+        "opcode": "invokedynamic",
+        "operand": "#278, 0",
+        "symbol": "InvokeDynamic #0:test:(Lnet/minecraft/world/entity/Entity;)Ljava/util/function/Predicate;"
+      },
+      {
+        "offset": 344,
+        "opcode": "fload",
+        "operand": "9",
+        "symbol": ""
+      }
+    ]
+  },
+  "limits": {
+    "native_anchor_count": 46,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "no_claimed_server_wear": true,
+    "actual_speed_blocks_per_tick": "NOT_CERTIFIED",
+    "new_semantic_action_roots": 0
+  }
+}
