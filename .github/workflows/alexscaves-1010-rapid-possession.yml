@@ -44,6 +44,8 @@ jobs:
             --jar build/rapid-1010/alexscaves-1.0.10.jar \
             --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.json' \
             --output build/rapid-1010/evidence.json
+      - name: Fingerprint Rapid Possession dossier
+        run: sha256sum 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/rapid-possession.md'
       - name: Publish bounded probe result
         if: always()
         uses: actions/upload-artifact@v7
