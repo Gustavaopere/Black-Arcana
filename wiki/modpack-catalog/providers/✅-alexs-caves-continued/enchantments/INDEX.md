@@ -12,7 +12,7 @@
 
 **Homologadas para perks (somente fichas detectadas): 11/32.**
 
-**Barra dos contratos técnicos estáticos:** `███████░░░░░░░░░░░░░ 35.5%`
+**Barra dos contratos técnicos estáticos:** `██████░░░░░░░░░░░░░░ 34.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
