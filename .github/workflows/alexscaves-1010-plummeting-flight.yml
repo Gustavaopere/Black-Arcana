@@ -40,6 +40,8 @@ jobs:
             --jar build/plummeting-1010/alexscaves-1.0.10.jar \
             --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json' \
             --output build/plummeting-1010/evidence.json
+      - name: SHA-256 of individual Plummeting Flight dossier
+        run: sha256sum 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/plummeting-flight.md'
       - name: Upload bounded discovery record
         if: always()
         uses: actions/upload-artifact@v7
