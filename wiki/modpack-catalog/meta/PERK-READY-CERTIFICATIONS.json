@@ -7259,6 +7259,46 @@
           "reason": "Manifesto de 20 métodos completos e dois construtores compara SHA, método, offset e descoberta anterior; CI sela JAR sem QA físico."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/sated-blade.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual de Sated Blade e consumidor condicional de saturação; não conclui outros encantamentos, combate integrado, binding runtime, hooks, QA física ou provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sated-blade.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, JSON Sated Blade, registro/chave, tag Desolate Dagger, idiomas e aquisição selados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sated-blade.md",
+          "reason": "Benefício somente após hurt aceito, leitura tardia de nível, fonte Player e gate de saturação; descarte independe de sucesso do benefício."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sated-blade.md",
+          "reason": "JSON I–II/custos/slot, pedido 0.1F×L somado à saturação e gate anterior <5, sem clamp próprio da soma ou conversão em HP/food-level."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sated-blade.md",
+          "reason": "Alvo preatribuído e fonte escolhida distintos; PLAYER_ID default−1, produtor sem binding e fallback adaga explícitos; sem AoE/alcance próprio de alimentação."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sated-blade.md",
+          "reason": "Sem débito adicional no bloco de saturação; custo do melee herdado, equipamento e encantamentos de quantidade/espera mantêm consumers próprios."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sated-blade.md",
+          "reason": "Stack relida depois de hurt, fonte por ID local, setter sem autorização e NBT próprio vazio; não presumir atacante, Mastery ou resultado físico, NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sated-blade.md",
+          "reason": "Prova individual mantém 759 âncoras antigas e adiciona 9 pivôs; bloco local completo dentro de tick 254/361, budgets preservados, regressões e revisão independente."
+        }
+      }
     }
   },
   "providers": {},

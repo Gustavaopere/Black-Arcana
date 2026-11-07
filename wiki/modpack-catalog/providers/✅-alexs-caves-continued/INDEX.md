@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 40/62.**
+**Fichas catalogadas (somente fichas detectadas): 41/63.**
 
-**Barra das fichas catalogadas:** `████████████░░░░░░░░ 64.5%`
+**Barra das fichas catalogadas:** `█████████████░░░░░░░ 65.1%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 40/62.**
+**Homologadas para perks (somente fichas detectadas): 41/63.**
 
-**Barra dos contratos técnicos estáticos:** `████████████░░░░░░░░ 64.5%`
+**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 65.1%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -82,6 +82,7 @@
 | ✅ | Precise Volley | [enchantments/precise-volley.md](enchantments/precise-volley.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Rapid Possession | [enchantments/rapid-possession.md](enchantments/rapid-possession.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Relentless Darkness | [enchantments/relentless-darkness.md](enchantments/relentless-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Sated Blade | [enchantments/sated-blade.md](enchantments/sated-blade.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Sea Swing | [enchantments/sea-swing.md](enchantments/sea-swing.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Desolate Dagger | [equipment/desolate-dagger.md](equipment/desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dreadbow | [equipment/dreadbow.md](equipment/dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -94,7 +95,7 @@
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
 | ⚠️ | Damage Types | 9/11 (81.8%) | 9 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
-| ⚠️ | Enchantments | 12/32 (37.5%) | 12 | [Abrir índice](enchantments/INDEX.md) |
+| ⚠️ | Enchantments | 13/33 (39.4%) | 13 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
 
 ## Critério do ✅
