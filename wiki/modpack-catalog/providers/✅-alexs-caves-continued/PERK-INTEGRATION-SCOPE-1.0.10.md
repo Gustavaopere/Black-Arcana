@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os doze contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **40 contratos estáticos certificados entre 62 fichas observadas**: 32 são dossiers de encantamentos, sendo vinte parciais e doze estáticos completos, incluindo [Sea Swing](enchantments/sea-swing.md). Seu manifesto agora contempla métodos e construtores completos do recorte JAR SHA-exato, sem autorizar hook ou QA física. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
+As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os treze contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **41 contratos estáticos certificados entre 63 fichas observadas**: 33 são dossiers de encantamentos, sendo vinte parciais e treze estáticos completos, incluindo [Sea Swing](enchantments/sea-swing.md). Seu manifesto agora contempla métodos e construtores completos do recorte JAR SHA-exato, sem autorizar hook ou QA física. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 
@@ -83,3 +83,7 @@ A [ficha](enchantments/multiple-mint.md) e a [prova](EXACT-MULTIPLE-MINT-CONTRAC
 ## Relentless Darkness — cadência e carga visual separadas
 
 A [ficha](enchantments/relentless-darkness.md) e a [prova](EXACT-RELENTLESS-DARKNESS-CONTRACT-1.0.10.md) acompanham o desvio do release para onUseTick, o módulo do timer restante, o M5/incremento3 visual cliente e custos/dano por seus consumidores nativos. A conclusão é estática e individual; não homologa frequência física, DPS, rede ou perks mutadoras.
+
+## Sated Blade — saturação e atribuição condicionais
+
+A [ficha](enchantments/sated-blade.md) e a [prova](EXACT-SATED-BLADE-CONTRACT-1.0.10.md) acompanham hurt aceito, leitura tardia, fonte Player e gate anterior à soma de saturação. O produtor não preenche PLAYER_ID; posição copiada e stack não estabelecem beneficiário. A conclusão é apenas estática, sem corrigir runtime, promover hook ou substituir QA física.
