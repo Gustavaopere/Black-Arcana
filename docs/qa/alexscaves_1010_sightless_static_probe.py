@@ -159,12 +159,14 @@ def main():
     p.add_argument("--output",type=Path)
     a=p.parse_args()
     out=evidence(a.jar,a.javap,a.prior,a.astral)
+    # Expose bounded read-only evidence even on a seal mismatch so reviewers
+    # can diagnose the exact drift; the process still fails closed.
+    print("SIGHTLESS_DISCOVERY_JSON="+json.dumps(out,ensure_ascii=False,separators=(",",":")))
     if a.seal:
         require(json.loads(a.seal.read_text(encoding="utf-8"))==out,
                 "publisher Sightless immutable static seal drift")
     if a.output:
         a.output.parent.mkdir(parents=True,exist_ok=True)
         a.output.write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
-    print("SIGHTLESS_DISCOVERY_JSON="+json.dumps(out,ensure_ascii=False,separators=(",",":")))
     print("SIGHTLESS_STATIC_STATUS=READONLY_NO_MUTATION")
 if __name__=="__main__": main()
