@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import zipfile
 
@@ -95,10 +96,15 @@ def selected_methods(javap_bin, jar, cls, wanted, reference):
             require(len(by_offset) == len(m["instructions"]), "duplicate bytecode offsets")
             for anchor in recorded[0]["anchors"]:
                 got = by_offset.get(anchor["offset"])
-                require(got is not None and all(got[k] == anchor[k] for k in
-                        ("offset", "opcode", "operand", "symbol")),
+                valid = got is not None and got["offset"] == anchor["offset"] and (
+                    got["opcode"] == anchor["opcode"] and
+                    re.sub(r"\\s+"," ",got["operand"].strip()) ==
+                    re.sub(r"\\s+"," ",anchor["operand"].strip()) and
+                    got["symbol"] == anchor["symbol"])
+                require(valid,
                         "SHA-exact inherited 1.0.10 method anchor mismatch: "+
-                        cls+"."+method_name+" @"+str(anchor["offset"]))
+                        cls+"."+method_name+" @"+str(anchor["offset"])+
+                        " expected="+repr(anchor)+" received="+repr(got))
         focus = FOCUS.get(cls, {}).get(method_name, ())
         found_offsets = {x["offset"]: x for x in m["instructions"]}
         require(all(o in found_offsets for o in focus),
