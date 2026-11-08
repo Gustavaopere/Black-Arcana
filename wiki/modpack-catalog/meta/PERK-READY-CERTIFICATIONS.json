@@ -7579,6 +7579,46 @@
           "reason": "Manifesto JSON SHA-exato da sonda read-only: 4 métodos com SHA-256, 43 âncoras binárias cruzadas, 1.555 classfiles, recursos e traduções; testes sintéticos de fail-closed e workflow publisher."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/solar.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Solar I 1.0.10: passive server Raygun ChargeUsed decrement conditioned on not using this stack, RNG, sky/day/fixed time/sun-angle; no new spell root. Hook, effective charge authority, C2S, cooldown, QA física and provider-wide closure NOT_VERIFIED; NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/solar.md",
+          "reason": "Installed/publisher 1.0.10 JAR SHA-1/SHA-256 and bytes; JSON solar ID/level/cost/slots, Raygun eligible tag, en_us description, absent pt_br and 2 direct token consumers among 1555 classfiles."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/solar.md",
+          "reason": "RaygunItem.acInventoryTick on server: enchant>0, not using same stack, ChargeUsed>0, random nextFloat<0.02F, canSeeSky(above), isDay, !fixedTime, sunAboveHorizon; request setCharge(D−1) and setUseTime(0)."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/solar.md",
+          "reason": "Exact 0.02F RNG threshold per callback, decrement 1, max_level I, charge used 0/full and <1000 usable; sun helper checks time-of-day <0.259F or >0.74F with independently pinned JVM anchors; no level scaling."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/solar.md",
+          "reason": "Passive stack/inventory context; holder Entity position one block above for canSeeSky, no projectile/ray-trace/AOE/target list native to Solar. LivingEntity only affects usingThisStack equality."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/solar.md",
+          "reason": "Solar callback has no mana, stamina, cooldown, uranium consumption or extra damage; Raygun's separate ammo/charge spending and other enchants remain provider-owned; enchantment JSON costs are acquisition metadata."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/solar.md",
+          "reason": "Charged state stored under ChargeUsed via ACCompat custom tag, UseTime reset separate; C2S UpdateItemTagMessage and possible write races are not certified as authoritative; no invented mutator seam, NO_MUTATION and Mastery dedup."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SOLAR-STATIC-1.0.10.md",
+          "reason": "Individual SHA-exact read-only probe compares 26 Raygun methods population, 9 selected JVM method digests with independently pinned Raygun baseline, ItemStackTickMixin dispatch, exact helper method anchors/branches, 1555-class census, resources, tests and manifest seal."
+        }
+      }
     }
   },
   "providers": {},
