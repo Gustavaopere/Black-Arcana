@@ -122,7 +122,7 @@ class SeekcandyStaticContract(unittest.TestCase):
             symbols=" ".join(x["symbol"] for x in method["anchors"])
             self.assertNotIn("SEEKING_ENTITY",symbols)
             self.assertNotIn("SeekingEntityId",symbols)
-        self.piv(PROJ,"readAdditionalSaveData",117,contains="AroundZ")
+        self.piv(PROJ,"readAdditionalSaveData",114,contains="AroundZ")
         self.piv(PROJ,"getOwner",35,contains="ServerLevel.getEntity")
         self.assertIn("NO_MUTATION",self.card)
     def test_certificate_claims_all_seven_axes_without_runtime_promotion(self):
