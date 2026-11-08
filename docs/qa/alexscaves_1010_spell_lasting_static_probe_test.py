@@ -27,7 +27,7 @@ def method(name="use", descriptor="()V", rows=None):
 class SpellLastingTests(unittest.TestCase):
     def test_sha(self):
         self.assertEqual(sha(b"abc"),
-                         "ba7816bf8f01cfea414140de5dae2223b00361f20015ad")
+                         "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad")
 
     def test_owner_window_has_symbol(self):
         windows = relevant_windows(method(), ITEM)
