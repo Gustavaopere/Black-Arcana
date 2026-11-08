@@ -87,6 +87,70 @@ def collect_methods(javap_bin: str, jar: Path, member: str) -> dict:
             "bounded_pivot_witnesses": witnesses}
 
 
+
+def certify_compiled_branches(hook: dict) -> dict:
+    """Verify the entire small gravity CFG and exact enchantment toggle branch."""
+    methods = hook["bounded_pivot_witnesses"]
+    gravity = [m for m in methods if m["name"] == "getDefaultGravity"
+               and m["descriptor"] == "()D"]
+    require(len(gravity) == 1 and gravity[0]["instructions"] == 20,
+            "missing unique compiled gravity override")
+    witnesses = [w for w in gravity[0]["windows"] if w["pivot"] == "RESISTS_GRAVITY"]
+    require(len(witnesses) == 1, "gravity field read not proven")
+    ins = witnesses[0]["instructions"]
+    require(len(ins) == 20, "gravity CFG must be complete")
+    by_offset = {row["offset"]: row for row in ins}
+    require(len(by_offset) == len(ins), "duplicate gravity JVM offset")
+    required = {
+        1: ("invokevirtual", "isReeling:()Z", None),
+        4: ("ifne", None, "40"),
+        11: ("getstatic", "RESISTS_GRAVITY", None),
+        23: ("ifeq", None, "44"),
+        30: ("invokevirtual", "horizontalDistance:()D", None),
+        33: ("ldc2_w", "double 0.05000000074505806d", None),
+        37: ("ifle", None, "44"),
+        40: ("dconst_0", None, None),
+        41: ("goto", None, "47"),
+        44: ("ldc2_w", "double 0.07999999821186066d", None),
+        47: ("dreturn", None, None),
+    }
+    for offset, (opcode, symbol, operand) in required.items():
+        row = by_offset.get(offset)
+        require(row is not None and row["opcode"] == opcode
+                and (symbol is None or symbol in row["symbol"])
+                and (operand is None or row["operand"] == operand),
+                "exact 1.0.10 gravity CFG mismatch at " + str(offset))
+    constructors = [m for m in methods if m["name"] == "CandyCaneHookEntity"
+                    and "Lnet/minecraft/world/item/ItemStack;" in m["descriptor"]]
+    require(len(constructors) == 1, "no unique owner/stack constructor")
+    ctor = constructors[0]
+    rows = {row["offset"]: row for w in ctor["windows"]
+            for row in w["instructions"]}
+    init = {
+        437: ("getstatic", "STRAIGHT_HOOK", None),
+        440: ("invokestatic", "ACCompat.enchantLevel:", None),
+        443: ("ifle", None, "460"),
+        450: ("getstatic", "RESISTS_GRAVITY", None),
+        453: ("iconst_1", None, None),
+        457: ("invokevirtual", "SynchedEntityData.set:", None),
+    }
+    for offset, (opcode, symbol, operand) in init.items():
+        row = rows.get(offset)
+        require(row is not None and row["opcode"] == opcode
+                and (symbol is None or symbol in row["symbol"])
+                and (operand is None or row["operand"] == operand),
+                "exact Straight Hook constructor branch mismatch at " + str(offset))
+    return {
+        "method": "CandyCaneHookEntity.getDefaultGravity()D",
+        "parsed_method_sha256": gravity[0]["parsed_sha256"],
+        "zero_gravity_when_reeling": True,
+        "zero_gravity_when_straight_hook_and_horizontal_speed_gt": "0.05000000074505806",
+        "otherwise_return_gravity": "0.07999999821186066",
+        "enchant_toggle": "level > 0 on launch stack sets RESISTS_GRAVITY=true",
+        "strictly_compiled_return_not_physical_gameplay": True,
+    }
+
+
 def audit(jar: Path, javap_bin: str) -> dict:
     require(jar.is_file() and sha_file(jar) == (SHA1, SHA256, SIZE),
             "SHA1/SHA256/size mismatch: not the publisher 1.0.10 artifact")
@@ -121,6 +185,7 @@ def audit(jar: Path, javap_bin: str) -> dict:
         require(HOOK in gravity_hits and len(gravity_hits) <= 25,
                 "gravity-state field census mismatch")
     members = {p: collect_methods(javap_bin, jar, p) for p in (HOOK, ITEM)}
+    gravity_proof = certify_compiled_branches(members[HOOK])
     owner = members[HOOK]["bounded_pivot_witnesses"]
     constructors = [m for m in owner if m["name"] == "CandyCaneHookEntity"
                     and "Lnet/minecraft/world/item/ItemStack;" in m["descriptor"]]
@@ -141,6 +206,7 @@ def audit(jar: Path, javap_bin: str) -> dict:
         "scan": {"classfiles": len(classes), "straight_hook_direct_hits": direct_hits,
                  "gravity_state_direct_hits": gravity_hits},
         "owners": members,
+        "compiled_gravity_contract": gravity_proof,
         "limits": {"static_certification": "NOT_CERTIFIED",
                    "whole_provider_closed": False,
                    "mutating_hook": "NOT_VERIFIED",
