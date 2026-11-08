@@ -7376,7 +7376,7 @@
         },
         "validation": {
           "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/seekcandy.md",
-          "reason": "Sonda read-only pinned pelo JAR, hash de 6 classfiles e 25 métodos, varredura 1.555 classfiles, revisão dos pontos completos SHA-exatos e testes semânticos/CI."
+          "reason": "Sonda read-only pinned pelo JAR, hash de 5 classfiles e 25 métodos, varredura 1.555 classfiles, revisão dos pontos completos SHA-exatos e testes semânticos/CI."
         }
       }
     }
