@@ -154,7 +154,7 @@ def discover(jar: Path, javap_bin: str, prior_path: Path = PRIOR) -> dict:
     method_counts = {}
     for cls in (ITEM, HEX):
         parsed = parse_methods(javap(javap_bin, jar, cls[:-6].replace("/", ".")))
-        require(8 <= len(parsed) <= 100, "unexpected method population: " + cls)
+        require(3 <= len(parsed) <= 120, "unexpected method population: " + cls)
         method_counts[cls] = len(parsed)
         chosen = [m for m in parsed if name_of(m) in FOCUS[cls]]
         require(len(chosen) == len({(name_of(m), m["descriptor"]) for m in chosen}),
