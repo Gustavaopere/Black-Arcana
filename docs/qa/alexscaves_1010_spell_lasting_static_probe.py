@@ -43,7 +43,7 @@ PIVOTS = {
     ITEM: ("SPELL_LASTING", "setLifespan", "HUMUNGOUS_HEX",
            "addCooldown", "hurtAndBreakUsedHand", "isShiftKeyDown",
            "addFreshEntity", "float 0.25f"),
-    HEX: ("Lifespan", "DespawnsIn", "Owner", "getLifespan",
+    HEX: ("Lifespan", "DespawnsIn", "despawnsIn", "Owner", "getLifespan",
           "setLifespan", "getOwner", "discard", "hurtEntities",
           "indirectMagic", "getEntitiesOfClass", "isClientSide",
           "setHexScale", "getHexScale", "getDimensions", "noPhysics"),
