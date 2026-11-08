@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import re
 from pathlib import Path
 import zipfile
 
@@ -98,8 +97,8 @@ def selected_methods(javap_bin, jar, cls, wanted, reference):
                 got = by_offset.get(anchor["offset"])
                 valid = got is not None and got["offset"] == anchor["offset"] and (
                     got["opcode"] == anchor["opcode"] and
-                    re.sub(r"\\s+"," ",got["operand"].strip()) ==
-                    re.sub(r"\\s+"," ",anchor["operand"].strip()) and
+                    " ".join(got["operand"].split()) ==
+                    " ".join(anchor["operand"].split()) and
                     got["symbol"] == anchor["symbol"])
                 require(valid,
                         "SHA-exact inherited 1.0.10 method anchor mismatch: "+
