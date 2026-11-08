@@ -7659,6 +7659,46 @@
           "reason": "Dedicated read-only exact 1.0.10 probe independently matches prior Sugar Staff 35, Hex tick 9, Hex hurt 11, Hex NBT read 4 JVM anchors; seals selected complete parsed method SHA, resource/class hashes, bounded windows and 12 synthetic fail-closed tests."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/straight-hook.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Straight Hook I at launch sets snapshot RESISTS_GRAVITY=true when enchant level positive; complete 20-instruction getDefaultGravity returns zero for reeling or resistance flag and horizontal speed >0.05000000074505806; otherwise 0.07999999821186066. Acquisition, targeting, owner, costs, lifecycle and NBT limits documented. No safe mutating hook, physical QA, datapack parity or provider closure; NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/straight-hook.md",
+          "reason": "Publisher/installed SHA-exact 1.0.10 75279314-byte JAR, 369-byte enchantment JSON, candy cane hook tag, compiled registry, English description, and direct 1555-class token census."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/straight-hook.md",
+          "reason": "231-instruction CandyCaneHookEntity stack constructor level>0 toggles RESISTS_GRAVITY at @437-457; 20-instruction getDefaultGravity()D entire CFG consumes flag, isReeling and speed."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/straight-hook.md",
+          "reason": "Exact threshold 0.05000000074505806d with strict greater-than test; returns gravity 0d or 0.07999999821186066d. Level I, declared mainhand; no extra damage, reach multiplier or duration."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/straight-hook.md",
+          "reason": "No targeting, AOE, hitbox, damage/status or extra projectile modifications in the Straight Hook branch; native owner/hit/search lifecycle retains provider authority and separate SHA-exact adjacent Sharp Cane/Far Flung audits."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/straight-hook.md",
+          "reason": "JSON max level I, weight 2, min cost 1, max cost 41, anvil cost 4; item launch/reel cost and durability belong to native hook and do not imply enchantment mana/stamina/XP per tick."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/straight-hook.md",
+          "reason": "Synched boolean defaults false, stack snapshot; own NBT overrides do not explicitly serialize it, engine reload unverified. No mutating hook, no duplicate casts, XP, damage or Mastery; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-STRAIGHT-HOOK-STATIC-1.0.10.md",
+          "reason": "Read-only SHA1/SHA256/size and class/resource seal, 33+13 parsed methods, complete gravity JVM CFG and constructor branch verified in CI 42525288364 with synthetic tamper tests; all hook/gameplay QA claims excluded."
+        }
+      }
     }
   },
   "providers": {},
