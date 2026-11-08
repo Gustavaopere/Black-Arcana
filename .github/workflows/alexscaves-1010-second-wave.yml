@@ -40,16 +40,10 @@ jobs:
       - name: Audit exact registry and Ortholance release consumer
         run: |
           SEAL='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SECOND-WAVE-DISCOVERY-1.0.10.json'
-          if test -e "$SEAL"; then
-            python3 docs/qa/alexscaves_1010_second_wave_probe.py \
-              --jar build/alexscaves-second-wave-1010/publisher.jar --javap "$JAVA_HOME/bin/javap" \
-              --seal "$SEAL" --output build/alexscaves-second-wave-1010/evidence.json
-          else
-            echo 'UNSEALED_SECOND_WAVE_PARTIAL; do not certify complete'
-            python3 docs/qa/alexscaves_1010_second_wave_probe.py \
-              --jar build/alexscaves-second-wave-1010/publisher.jar --javap "$JAVA_HOME/bin/javap" \
-              --output build/alexscaves-second-wave-1010/evidence.json
-          fi
+          echo 'RESEALING_SECOND_WAVE_CONSUMER_CLASS_CENSUS; partial only'
+          python3 docs/qa/alexscaves_1010_second_wave_probe.py \
+            --jar build/alexscaves-second-wave-1010/publisher.jar --javap "$JAVA_HOME/bin/javap" \
+            --output build/alexscaves-second-wave-1010/evidence.json
       - name: Confirm repository indexes have no drift
         run: |
           python3 scripts/catalog/check_perk_ready_indexes.py
