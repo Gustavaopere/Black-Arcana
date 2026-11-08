@@ -12,6 +12,13 @@
     "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class": "93fdaee0239cc4985b351a6c2ac1edd23a51cf0088cb1172f983d0f869d9e42e",
     "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32"
   },
+  "provider_class_census": {
+    "classfiles_scanned": 1555,
+    "constant_pool_class_hits": [
+      "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class"
+    ]
+  },
   "enchantment": {
     "id": "alexscaves:second_wave",
     "path": "data/alexscaves/enchantment/second_wave.json",
