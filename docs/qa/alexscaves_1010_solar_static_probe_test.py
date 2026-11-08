@@ -65,7 +65,7 @@ class SolarReadOnlyTests(unittest.TestCase):
             {"offset": i, "opcode": "getstatic", "operand": "#101",
              "symbol": "Field ACEnchantmentRegistry.SOLAR:ResourceKey;"}
             for i in range(500)]
-        with self.assertRaisesRegex(ValueError, "clean-room limit"):
+        with self.assertRaisesRegex(ValueError, "Solar discovery window too broad"):
             bounded(self.method, direct_solar=True)
 
 
