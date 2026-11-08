@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os dezesseis contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **44 contratos estáticos certificados entre 66 fichas observadas**: 36 são dossiers de encantamentos, sendo vinte parciais e dezesseis estáticos completos, incluindo [Sea Swing](enchantments/sea-swing.md), [Seapairing](enchantments/seapairing.md), [Second Wave](enchantments/second-wave.md) e [Seekcandy](enchantments/seekcandy.md). A prova SHA-exata inclui o censo de 1.555 classfiles e o ramo de ondas da Ortholance, sem autorizar hook ou QA física. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
+As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os dezessete contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **45 contratos estáticos certificados entre 67 fichas observadas**: 37 são dossiers de encantamentos, sendo vinte parciais e dezessete estáticos completos, incluindo [Sea Swing](enchantments/sea-swing.md), [Seapairing](enchantments/seapairing.md), [Second Wave](enchantments/second-wave.md), [Seekcandy](enchantments/seekcandy.md) e [Shaded Respite](enchantments/shaded-respite.md). A prova SHA-exata inclui o censo de 1.555 classfiles e o ramo de ondas da Ortholance, sem autorizar hook ou QA física. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 
@@ -91,3 +91,7 @@ A [ficha](enchantments/sated-blade.md) e a [prova](EXACT-SATED-BLADE-CONTRACT-1.
 ## Seapairing — manutenção passiva e limite da engine
 
 A [ficha](enchantments/seapairing.md) e a [prova](EXACT-SEAPAIRING-CONTRACT-1.0.10.md) cobrem o despacho via interface, callback completo, selected ignorado, uso comparado por equals, RNG antes do ambiente e pedido literal `Math.min(0,D−1)`. O valor armazenado e a distribuição do callback a inventários externos não são resultados certificados. Nenhum hook, crédito de Mastery, mudança de runtime ou QA física foi promovido.
+
+## Shaded Respite — luz, desgaste e munição separados
+
+A [ficha](enchantments/shaded-respite.md) e a [prova](EXACT-SHADED-RESPITE-CONTRACT-1.0.10.md) acompanham o predicado de luz na posição do veículo raiz, nível positivo, gate inicial de munição/creative e custos dos caminhos release/Relentless. A isenção de munição exige o item `Items.ARROW`, enquanto conversibilidade do projétil e factories seguem contratos distintos. A conclusão estática não torna o release inteiro auditado nem homologa execução exclusiva no servidor, hook mutador ou QA física.
