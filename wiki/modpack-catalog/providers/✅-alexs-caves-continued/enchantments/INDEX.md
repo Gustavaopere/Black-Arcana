@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 18/38.**
+**Fichas catalogadas (somente fichas detectadas): 19/39.**
 
-**Barra das fichas catalogadas:** `█████████░░░░░░░░░░░ 47.4%`
+**Barra das fichas catalogadas:** `█████████░░░░░░░░░░░ 48.7%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 18/38.**
+**Homologadas para perks (somente fichas detectadas): 19/39.**
 
-**Barra dos contratos técnicos estáticos:** `█████████░░░░░░░░░░░ 47.4%`
+**Barra dos contratos técnicos estáticos:** `█████████░░░░░░░░░░░ 48.7%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -58,6 +58,7 @@
 | ✅ | Seekcandy | [ficha/seekcandy.md](seekcandy.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shaded Respite | [ficha/shaded-respite.md](shaded-respite.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Sharp Cane | [ficha/sharp-cane.md](sharp-cane.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Sightless | [ficha/sightless.md](sightless.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
