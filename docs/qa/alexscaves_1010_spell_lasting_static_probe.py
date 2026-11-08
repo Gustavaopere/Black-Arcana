@@ -74,8 +74,8 @@ def relevant_windows(method: dict, cls: str) -> list[dict]:
     limit = 14 if cls == ITEM else 16
     windows = []
     for idx, hit in found[:limit]:
-        start = max(0, idx - 5)
-        stop = min(len(ins), idx + 9)
+        start = max(0, idx - 3)
+        stop = min(len(ins), idx + 5)
         selected = [{k: row[k] for k in ("offset", "opcode", "operand", "symbol")}
                     for row in ins[start:stop]]
         windows.append({"pivot": hit["offset"], "symbol": hit["symbol"],
