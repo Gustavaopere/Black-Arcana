@@ -122,7 +122,9 @@ class SeekcandyStaticContract(unittest.TestCase):
             symbols=" ".join(x["symbol"] for x in method["anchors"])
             self.assertNotIn("SEEKING_ENTITY",symbols)
             self.assertNotIn("SeekingEntityId",symbols)
-        self.piv(PROJ,"readAdditionalSaveData",114,contains="AroundZ")
+        self.piv(PROJ,"readAdditionalSaveData",117,contains="ACCompat.getDouble")
+        read=next(x for x in own if x["name"]=="readAdditionalSaveData")
+        self.assertIn("AroundZ",next(x for x in read["anchors"] if x["offset"]==114)["symbol"])
         self.piv(PROJ,"getOwner",35,contains="ServerLevel.getEntity")
         self.assertIn("NO_MUTATION",self.card)
     def test_certificate_claims_all_seven_axes_without_runtime_promotion(self):
