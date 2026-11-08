@@ -7499,6 +7499,46 @@
           "reason": "Manifesto individual com 5 classes, 10 recursos, 50 métodos e 1409 âncoras: 47 corpos completos, prefixo local do tick 256/546 e dois registros delimitados. Auditoria real e regressões preservam budgets e QA física pendente."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/sightless.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual Sightless no Totem of Possession 1.0.10: gates de olhar e level, glow, wear cliente, release e IDs; não conclui runtime de outros efeitos/controles, hook mutador, custo server-owned, QA física, mundo/servidor/claims, autorizações de rede ou provider inteiro; NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sightless.md",
+          "reason": "Publisher 1.0.10 SHA-exato; JSON 369 bytes, Supported Totem tag, en_us, ausência de chave pt_br e dois consumidores binários diretos dentre 1.555 classes confirmados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sightless.md",
+          "reason": "Totem.use permite início sem olhar somente com nível positivo; onUseTick interrompe falha de olhar quando nível igual a zero, glow em Mob com nível positivo e release força false."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sightless.md",
+          "reason": "Threshold de aquisição do enchantment, helper olhar angular 5D ajustado por distância e LOS, 11 métodos digest completos; 72000 do overload próprio não homologa overload herdado usado em tick."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sightless.md",
+          "reason": "Alvo deve estar vinculado e resolvido; helper usa distância, dot e LOS, com bypass condicional, sem ampliar permissão de controlled Player nem controlar alvo ausente."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sightless.md",
+          "reason": "onUseTick pede 1 de dano da stack cada 2 ticks elegíveis no cliente (não creative), release solicita shrink no limite; não se pressupõe débito server-owned nem mana."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sightless.md",
+          "reason": "getControlledEntity usa ID da stack no cliente e UUID em ServerLevel; resetBound limpa tags, release não restaura glow anterior; sem hook, sem QA física ou Mastery aceita."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sightless.md",
+          "reason": "Sonda read-only publisher com sha exato, 1.555 classfiles, 3 classes, 4 resources e 11 corpos de método, hash independente de Astral, regressões semânticas e CI com --seal."
+        }
+      }
     }
   },
   "providers": {},
