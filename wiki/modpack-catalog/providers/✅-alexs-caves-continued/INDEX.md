@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 50/72.**
+**Fichas catalogadas (somente fichas detectadas): 51/73.**
 
-**Barra das fichas catalogadas:** `█████████████░░░░░░░ 69.4%`
+**Barra das fichas catalogadas:** `█████████████░░░░░░░ 69.9%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 50/72.**
+**Homologadas para perks (somente fichas detectadas): 51/73.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 69.4%`
+**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 69.9%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -93,6 +93,7 @@
 | ✅ | Soak Seeking | [enchantments/soak-seeking.md](enchantments/soak-seeking.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Solar | [enchantments/solar.md](enchantments/solar.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Spell Lasting | [enchantments/spell-lasting.md](enchantments/spell-lasting.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Straight Hook | [enchantments/straight-hook.md](enchantments/straight-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Desolate Dagger | [equipment/desolate-dagger.md](equipment/desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dreadbow | [equipment/dreadbow.md](equipment/dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -104,7 +105,7 @@
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
 | ⚠️ | Damage Types | 9/11 (81.8%) | 9 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
-| ⚠️ | Enchantments | 22/42 (52.4%) | 22 | [Abrir índice](enchantments/INDEX.md) |
+| ⚠️ | Enchantments | 23/43 (53.5%) | 23 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
 
 ## Critério do ✅
