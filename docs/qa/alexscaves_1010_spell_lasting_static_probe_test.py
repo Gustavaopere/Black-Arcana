@@ -80,11 +80,10 @@ class SpellLastingTests(unittest.TestCase):
             relevant_windows(method(rows=[ins(i) for i in range(1801)]), HEX)
 
     def test_report_budget_fails(self):
-        m = method(rows=[ins(i, "getstatic", "#1",
-                           "Field ACEnchantmentRegistry.SPELL_LASTING:ResourceKey;")
+        m = method(rows=[ins(i, "getfield", "#1", "Field despawnsIn:I")
                          for i in range(250)])
         with self.assertRaisesRegex(ValueError, "clean-room"):
-            relevant_windows(m, ITEM)
+            relevant_windows(m, HEX)
 
     def test_require_guard(self):
         with self.assertRaisesRegex(ValueError, "blocked"):
