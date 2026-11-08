@@ -2020,6 +2020,18 @@
           "symbol": ""
         },
         {
+          "offset": 12,
+          "opcode": "dadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 13,
+          "opcode": "dmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
           "offset": 14,
           "opcode": "dstore_2",
           "operand": "",
@@ -2062,6 +2074,132 @@
           "symbol": "class net/minecraft/world/phys/Vec3"
         },
         {
+          "offset": 33,
+          "opcode": "aload_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 34,
+          "opcode": "invokevirtual",
+          "operand": "#665",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.getX:()D"
+        },
+        {
+          "offset": 37,
+          "opcode": "dsub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 38,
+          "opcode": "aload_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 39,
+          "opcode": "invokevirtual",
+          "operand": "#409",
+          "symbol": "Method net/minecraft/world/entity/Entity.getBoundingBox:()Lnet/minecraft/world/phys/AABB;"
+        },
+        {
+          "offset": 46,
+          "opcode": "invokevirtual",
+          "operand": "#669",
+          "symbol": "Method net/minecraft/world/entity/Entity.getEyeHeight:()F"
+        },
+        {
+          "offset": 49,
+          "opcode": "f2d",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 50,
+          "opcode": "dadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 51,
+          "opcode": "aload_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 52,
+          "opcode": "invokevirtual",
+          "operand": "#672",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.getY:()D"
+        },
+        {
+          "offset": 56,
+          "opcode": "invokevirtual",
+          "operand": "#673",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.getEyeHeight:()F"
+        },
+        {
+          "offset": 59,
+          "opcode": "f2d",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 60,
+          "opcode": "dadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 61,
+          "opcode": "dsub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 62,
+          "opcode": "aload_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 63,
+          "opcode": "invokevirtual",
+          "operand": "#213",
+          "symbol": "Method net/minecraft/world/entity/Entity.getZ:()D"
+        },
+        {
+          "offset": 66,
+          "opcode": "aload_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 67,
+          "opcode": "invokevirtual",
+          "operand": "#674",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.getZ:()D"
+        },
+        {
+          "offset": 70,
+          "opcode": "dsub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 71,
+          "opcode": "invokespecial",
+          "operand": "#340",
+          "symbol": "Method net/minecraft/world/phys/Vec3.\"<init>\":(DDD)V"
+        },
+        {
+          "offset": 74,
+          "opcode": "astore",
+          "operand": "5",
+          "symbol": ""
+        },
+        {
           "offset": 88,
           "opcode": "astore",
           "operand": "5",
@@ -2100,6 +2238,36 @@
         {
           "offset": 101,
           "opcode": "dconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 102,
+          "opcode": "dload_2",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 103,
+          "opcode": "dload",
+          "operand": "6",
+          "symbol": ""
+        },
+        {
+          "offset": 105,
+          "opcode": "ddiv",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 106,
+          "opcode": "dsub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 107,
+          "opcode": "dcmpl",
           "operand": "",
           "symbol": ""
         },
