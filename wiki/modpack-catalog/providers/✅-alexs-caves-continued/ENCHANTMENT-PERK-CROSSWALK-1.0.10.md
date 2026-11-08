@@ -19,7 +19,7 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `████████░░░░░░░░░░░░ 43.1% (22/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `█████████░░░░░░░░░░░ 43.1% (22/51)`.
 
 **Barra de dossiers individuais existentes, completos ou parciais:** `████████████████░░░░ 82.4% (42/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar e Spell Lasting possuem contratos estáticos individuais certificados.
 
