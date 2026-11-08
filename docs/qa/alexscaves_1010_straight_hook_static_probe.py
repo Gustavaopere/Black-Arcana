@@ -50,7 +50,7 @@ def window(method: dict, needle: str, per_method: int = 3) -> list[dict]:
         {"pivot": needle, "offset": ins[i]["offset"], "matching_instructions": len(hits),
          "instructions": [
              {k: row[k] for k in ("offset", "opcode", "operand", "symbol")}
-             for row in ins[max(0, i - 8):min(len(ins), i + 13)]
+             for row in (ins if len(ins) <= 40 else ins[max(0, i - 8):min(len(ins), i + 13)])
          ]}
         for i in hits[:per_method]
     ]
