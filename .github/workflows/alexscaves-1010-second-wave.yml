@@ -7,14 +7,18 @@ on:
       - '.github/workflows/alexscaves-1010-second-wave.yml'
       - 'docs/qa/alexscaves_1010_second_wave_probe.py'
       - 'docs/qa/alexscaves_1010_second_wave_probe_test.py'
+      - 'docs/qa/alexscaves_1010_second_wave_cards_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
   push:
     branches: [main]
     paths:
       - '.github/workflows/alexscaves-1010-second-wave.yml'
       - 'docs/qa/alexscaves_1010_second_wave_probe.py'
       - 'docs/qa/alexscaves_1010_second_wave_probe_test.py'
+      - 'docs/qa/alexscaves_1010_second_wave_cards_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
 permissions:
   contents: read
 jobs:
@@ -31,6 +35,7 @@ jobs:
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_second_wave_probe.py docs/qa/alexscaves_1010_second_wave_probe_test.py
           python3 docs/qa/alexscaves_1010_second_wave_probe_test.py -v
+          python3 docs/qa/alexscaves_1010_second_wave_cards_test.py -v
       - name: Download exact JAR
         run: |
           mkdir -p build/alexscaves-second-wave-1010
@@ -40,10 +45,10 @@ jobs:
       - name: Audit exact registry and Ortholance release consumer
         run: |
           SEAL='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SECOND-WAVE-DISCOVERY-1.0.10.json'
-          echo 'RESEALING_SECOND_WAVE_CONSUMER_CLASS_CENSUS; partial only'
+          test -f "$SEAL"
           python3 docs/qa/alexscaves_1010_second_wave_probe.py \
             --jar build/alexscaves-second-wave-1010/publisher.jar --javap "$JAVA_HOME/bin/javap" \
-            --output build/alexscaves-second-wave-1010/evidence.json
+            --seal "$SEAL" --output build/alexscaves-second-wave-1010/evidence.json
       - name: Confirm repository indexes have no drift
         run: |
           python3 scripts/catalog/check_perk_ready_indexes.py
