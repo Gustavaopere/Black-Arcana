@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 21/41.**
+**Fichas catalogadas (somente fichas detectadas): 22/42.**
 
-**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 51.2%`
+**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 52.4%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 21/41.**
+**Homologadas para perks (somente fichas detectadas): 22/42.**
 
-**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 51.2%`
+**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 52.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -61,6 +61,7 @@
 | ✅ | Sightless | [ficha/sightless.md](sightless.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Soak Seeking | [ficha/soak-seeking.md](soak-seeking.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Solar | [ficha/solar.md](solar.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Spell Lasting | [ficha/spell-lasting.md](spell-lasting.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
