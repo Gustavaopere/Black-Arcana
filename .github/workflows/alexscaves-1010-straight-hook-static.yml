@@ -1,0 +1,64 @@
+name: Alex's Caves 1.0.10 Straight Hook exact static discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-straight-hook-static.yml'
+      - 'docs/qa/alexscaves_1010_straight_hook_static_probe.py'
+      - 'docs/qa/alexscaves_1010_straight_hook_static_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-straight-hook-static.yml'
+      - 'docs/qa/alexscaves_1010_straight_hook_static_probe.py'
+      - 'docs/qa/alexscaves_1010_straight_hook_static_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+permissions:
+  contents: read
+jobs:
+  exact_straight_hook_readonly:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Synthetic probe regressions
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_straight_hook_static_probe.py
+          python3 docs/qa/alexscaves_1010_straight_hook_static_probe_test.py -v
+      - name: Fetch exact publisher 1.0.10 binary (never commit it)
+        run: |
+          mkdir -p build/alexscaves-straight-hook-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-straight-hook-1010/publisher.jar
+      - name: Inspect 1.0.10 JVM constructor, gravity consumers, resources and lifecycle
+        run: |
+          SEAL='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-STRAIGHT-HOOK-STATIC-1.0.10.json'
+          if test -f "$SEAL"; then
+            python3 docs/qa/alexscaves_1010_straight_hook_static_probe.py \
+              --jar build/alexscaves-straight-hook-1010/publisher.jar \
+              --javap "$JAVA_HOME/bin/javap" --seal "$SEAL" \
+              --output build/alexscaves-straight-hook-1010/evidence.json
+          else
+            echo 'STRAIGHT_HOOK_DISCOVERY_ONLY_NOT_YET_CERTIFIED'
+            python3 docs/qa/alexscaves_1010_straight_hook_static_probe.py \
+              --jar build/alexscaves-straight-hook-1010/publisher.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --output build/alexscaves-straight-hook-1010/evidence.json
+          fi
+      - name: Check canonical catalog, ledger and indexes
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: alexscaves-straight-hook-1010-bounded-discovery
+          path: build/alexscaves-straight-hook-1010/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
