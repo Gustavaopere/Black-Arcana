@@ -1,6 +1,6 @@
 # Second Wave — ondas retardadas da Ortholance (Alex's Caves Continued 1.0.10)
 
-**Estado: ⚠️ contrato estático individual em auditoria, NÃO certificado.** Esta ficha registra a prova compilada de `OrtholanceItem.releaseUsing` e a cadeia já auditada de `WaveEntity`; a atribuição do universo de consumidores, integração externa e homologação permanecem separadas. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Não implementar perks a partir de um símbolo localizado.
+**Estado: ✅ contrato técnico estático individual certificado no escopo delimitado.** Esta ficha documenta o produtor real `OrtholanceItem.releaseUsing`, a cadeia nativa de `WaveEntity` e a varredura das referências diretas no JAR 1.0.10, com prova e regressão reproduzíveis. `claim_scope=STATIC_TECHNICAL_CATALOG_ONLY`; `evidence_grade=SHA_EXACT_BINARY_BEHAVIOR`; **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`**. Nenhum hook ou comportamento físico está homologado.
 
 ## Identidade e proveniência do artefato
 
@@ -18,7 +18,9 @@
 | Método compilado | 435 instruções, digest `00705e7177cb6fe2914531158bd978b64d497ca4c8262f8e7634c1b4ec9ef7ae` |
 | Consumidor de ondas | `WaveEntity.tick` e `WaveEntity.attackEntities`, previamente selados no mesmo JAR |
 
-Fontes de reprodução: [sonda read-only exata](../../../../../docs/qa/alexscaves_1010_second_wave_probe.py), [manifesto de descoberta](../EXACT-SECOND-WAVE-DISCOVERY-1.0.10.json), [inventário de Flinging/lançamento](../EXACT-FLINGING-1.0.10.json) e [contrato WaveEntity de Sea Swing](../EXACT-SEA-SWING-STATIC-1.0.10.md). A fonte pública adjacente 1.1.1 **não é autoridade** para esse JAR 1.0.10.
+Fontes de reprodução: [sonda read-only exata](../../../../../docs/qa/alexscaves_1010_second_wave_probe.py), [manifesto de descoberta selado](../EXACT-SECOND-WAVE-DISCOVERY-1.0.10.json), [certificado individual](../EXACT-SECOND-WAVE-STATIC-1.0.10.md), [regressões semânticas](../../../../../docs/qa/alexscaves_1010_second_wave_cards_test.py), [inventário de Flinging/lançamento](../EXACT-FLINGING-1.0.10.json) e [contrato WaveEntity de Sea Swing](../EXACT-SEA-SWING-STATIC-1.0.10.md). A fonte pública adjacente 1.1.1 **não é autoridade** para esse JAR 1.0.10.
+
+**Universo de referências compiladas:** a auditoria do JAR examinou **1.555 classfiles** do provider; a string binária `SECOND_WAVE` ocorreu somente em `ACEnchantmentRegistry.class` e `OrtholanceItem.class`. Este é um censo por referência de classfile, não uma garantia contra consumidores reflexivos ou datapacks externos.
 
 ## Dados declarativos do encantamento
 
@@ -74,6 +76,8 @@ A entidade só grava em seu NBT próprio `Owner` (UUID, quando existe) e `Lifesp
 | Owner e NBT | Owner inicial capturado; Owner UUID/Lifespan persistidos em overrides | Não presumir restauro automático de owner ou espera após load |
 | Hooks mutadores | `NOT_VERIFIED` | ⛔ `NO_MUTATION`, sem implementar adapter imaginário |
 
-## Limites e pendências para certificação estática
+## Limites do certificado estático e QA pendente
 
-Este recorte de evidência é **read-only e condicionado**, mesmo com hashes exatos. Ainda se exige: fechamento da varredura de consumidores do provider, revisão independente do método completo e das variáveis locais; testes semânticos e selagem reproduzível; alinhamento dos índices globais com a `main` após as alterações de Seapairing em outro agente. QA física posterior precisa cobrir client/server, spawn recusado, proteção de mundo, PvP, aliados, reload, colisões, dano negado e compatibilidade com datapacks. Enquanto incompleto, **⚠️** não entra no numerador de contratos estáticos certificados. Nenhum código Java, hook, Stage ou gameplay foi alterado.
+**O recorte de contrato estático individual foi encerrado com prova SHA-exata; o runtime não.** Foram verificados 1.555 classfiles do provider, com somente duas referências compiladas diretas ao símbolo `SECOND_WAVE` (registro e OrtholanceItem). O método `releaseUsing` tem digest integral SHA-exato e janelas validadas; o consumidor `WaveEntity` reutiliza o manifesto completo do mesmo classfile. A varredura por token não comprova ausência de invocações dinâmicas e não demonstra a execução de todas as implementações de Minecraft/ACCompat.
+
+**Continuam pendentes:** hook seguro, implementação de perk na `main`, QA física de cliente/servidor, spawn recusado, proteção de mundo, PvP, aliados, reload da espera e owner, colisões, dano negado, compatibilidade com datapacks e regras de atribuição de XP/Mastery. Nenhum código Java, Stage ou gameplay foi alterado. A certificação **não** autoriza reexecutar dano, gerar ondas próprias ou cobrar custos adicionais.
