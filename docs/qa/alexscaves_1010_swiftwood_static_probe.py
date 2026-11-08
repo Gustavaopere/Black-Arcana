@@ -34,10 +34,13 @@ PIVOTS = (
     "Mth.clamp:", "Math.min:", "getAttributeModifiers:", "acModifiers:",
     "float -3.75f", "float 0.15f", "double 8.0d", "float 0.0f",
     "ItemAttributeModifiers", "getEnchantmentValue:", "primitive_club",
+    "ACCompat.itemAttributes:", "getDefaultAttributeModifiers:",
 )
 SELECTION = (
     "PrimitiveClubItem", "getStatsForEnchantmentLevel", "getAttributeModifiers",
-    "acModifiers", "getEnchantmentValue", "isEnchantable", "hurtEnemy",
+    "acModifiers", "getDefaultAttributeModifiers",
+    "lambda$getDefaultAttributeModifiers$0",
+    "getEnchantmentValue", "isEnchantable", "hurtEnemy",
     "acHurtEnemy", "mineBlock", "onLeftClickEntity", "onEntitySwing",
     "acInventoryTick",
 )
@@ -88,6 +91,15 @@ def extract(jar: Path, javap_bin: str, owner: str, *, allow_empty: bool) -> dict
             rows = []
             for pivot in PIVOTS:
                 rows.extend(windows(ins, pivot))
+            if name in ("getDefaultAttributeModifiers",
+                        "lambda$getDefaultAttributeModifiers$0"):
+                require(len(ins) <= 16, "unbounded attribute bridge")
+                rows = [{"needle": "SHORT_NATIVE_ATTRIBUTE_BRIDGE",
+                         "offset": 0, "matches": 1,
+                         "nearby": [
+                             {k: row[k] for k in
+                              ("offset", "opcode", "operand", "symbol")}
+                             for row in ins]}]
             require(sum(len(w["nearby"]) for w in rows) <= 470,
                     "unbounded clean-room club windows")
             relevant.append({**identity, "windows": rows})
@@ -106,6 +118,80 @@ def extract(jar: Path, javap_bin: str, owner: str, *, allow_empty: bool) -> dict
     return {"parsed_method_count": len(methods),
             "all_method_signatures_and_digests": index,
             "selected_methods": relevant}
+
+
+
+def exact_attribute_contract(club: dict) -> dict:
+    """Fail-closed exact JVM gates for the Swiftwood attribute contribution."""
+    methods = club["selected_methods"]
+
+    def select(name: str) -> dict:
+        matches = [m for m in methods if m["name"] == name]
+        require(len(matches) == 1, "missing/ambiguous Swiftwood owner method: " + name)
+        return matches[0]
+
+    def by_offset(method: dict) -> dict:
+        rows = {i["offset"]: i for w in method["windows"] for i in w["nearby"]}
+        return rows
+
+    def anchors(name: str, specs: dict[int, tuple[str, str | None, str | None]]) -> dict:
+        m = select(name)
+        found = by_offset(m)
+        for offset, (opcode, symbol, operand) in specs.items():
+            row = found.get(offset)
+            require(row is not None and row["opcode"] == opcode and
+                    (symbol is None or symbol in row["symbol"]) and
+                    (operand is None or operand == row["operand"]),
+                    name + " exact JVM contract mismatch at " + str(offset))
+        return m
+
+    stats = anchors("getStatsForEnchantmentLevel", {
+        5: ("getstatic", "Attributes.ATTACK_DAMAGE:", None),
+        15: ("ldc2_w", "double 8.0d", None),
+        18: ("getstatic", "Operation.ADD_VALUE:", None),
+        29: ("getstatic", "Attributes.ATTACK_SPEED:", None),
+        39: ("fconst_0", None, None),
+        40: ("ldc", "float -3.75f", None),
+        42: ("ldc", "float 0.15f", None),
+        44: ("iload_1", None, None),
+        45: ("i2f", None, None),
+        46: ("fmul", None, None),
+        47: ("fadd", None, None),
+        48: ("invokestatic", "Math.min:(FF)F", None),
+        51: ("f2d", None, None),
+        52: ("getstatic", "Operation.ADD_VALUE:", None),
+    })
+    selector = anchors("acModifiers", {
+        1: ("getstatic", "EquipmentSlot.MAINHAND:", None),
+        4: ("if_acmpeq", None, "9"),
+        7: ("aconst_null", None, None),
+        10: ("getstatic", "ACEnchantmentRegistry.SWIFTWOOD:", None),
+        13: ("invokestatic", "ACCompat.enchantLevel:", None),
+        22: ("iconst_0", None, None),
+        23: ("iconst_3", None, None),
+        24: ("invokestatic", "Mth.clamp:(III)I", None),
+        27: ("aaload", None, None),
+        28: ("areturn", None, None),
+    })
+    bridge = select("getDefaultAttributeModifiers")
+    require(bridge["instructions_total"] <= 12, "unexpected bridge method size")
+    require(any("ACCompat.itemAttributes:" in row["symbol"]
+                for row in by_offset(bridge).values()), "attribute bridge not found")
+    fallback = select("lambda$getDefaultAttributeModifiers$0")
+    require(fallback["instructions_total"] <= 12, "unexpected fallback lambda size")
+    return {
+        "scope": "COMPILED_STATIC_ATTRIBUTE_CONTRIBUTION_ONLY",
+        "damage_attribute_add_value": "8.0D (same for levels 0-3)",
+        "attack_speed_attribute_add_value": "min(0F, -3.75F + 0.15F * clamped_level)",
+        "level_index_clamp": [0, 3], "slot": "MAINHAND",
+        "other_slots": "null (delegate to fallback)",
+        "methods_sha256": {m["name"]: m["method_sha256"]
+                           for m in (stats, selector, bridge, fallback)},
+        "native_attribute_bridge": "getDefaultAttributeModifiers -> ACCompat.itemAttributes",
+        "effective_attribute_application": "NOT_TESTED",
+        "mutating_hook": "NOT_VERIFIED", "physical_qa": "NOT_TESTED",
+        "mutation": "NO_MUTATION",
+    }
 
 
 def audit(jar: Path, javap_bin: str) -> dict:
@@ -143,12 +229,13 @@ def audit(jar: Path, javap_bin: str) -> dict:
                 "unexpected direct SWIFTWOOD owner census")
     owners = {p: extract(jar, javap_bin, p, allow_empty=(p == COMPAT))
               for p in (CLUB, COMPAT)}
+    validated = exact_attribute_contract(owners[CLUB])
     club = owners[CLUB]["selected_methods"]
     require(any(any(w["needle"] == "SWIFTWOOD" for w in m["windows"])
                 for m in club), "no Swiftwood level consumer in club")
     return {
         "schema_version": 1,
-        "claim_scope": "SWIFTWOOD_1010_EXACT_JAR_DISCOVERY_ONLY",
+        "claim_scope": "SWIFTWOOD_1010_SHA_EXACT_COMPILED_ATTRIBUTE_CONTRACT",
         "artifact": {"sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
         "enchantment": {"id": "alexscaves:swiftwood", "path": ENCH,
                         "sha256": hashes[ENCH], "bytes": len(raw_ench),
@@ -159,7 +246,8 @@ def audit(jar: Path, javap_bin: str) -> dict:
         "class_census": {"count": len(classes),
                          "direct_SWIFTWOOD_token_hits": tokens},
         "owners": owners,
-        "limits": {"static_contract": "NOT_CERTIFIED",
+        "exact_attribute_contract": validated,
+        "limits": {"static_contract": "CERTIFIED_STATIC_ONLY",
                    "mutating_hook": "NOT_VERIFIED",
                    "physical_qa": "NOT_TESTED", "mutation": "NO_MUTATION",
                    "source_111_matches_installed_1010": False,
