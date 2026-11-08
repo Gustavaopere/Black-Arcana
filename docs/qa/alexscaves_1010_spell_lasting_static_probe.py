@@ -68,6 +68,7 @@ def relevant_windows(method: dict, cls: str) -> list[dict]:
     require(offsets == sorted(set(offsets)), "duplicate/unsorted JVM offsets")
     found = [(index, x) for index, x in enumerate(ins)
              if any(symbol in x["symbol"] for symbol in PIVOTS[cls])]
+    require(len(found) <= 64, "clean-room pivot census exceeded")
     # The enchantment owner method is long: a small window around every
     # meaningful use/lifespan/side-effect anchor suffices for interoperability.
     limit = 14 if cls == ITEM else 16
@@ -126,6 +127,7 @@ def discover(jar: Path, javap_bin: str, prior_path: Path = PRIOR) -> dict:
         relevant = (ENCH, TAG, LANG_EN, LANG_PT, ITEM, HEX, REG)
         require(all(p in members for p in relevant), "missing resource/class")
         hashes = {p: sha(z.read(p)) for p in relevant}
+        lengths = {p: len(z.read(p)) for p in relevant}
         require(hashes[ITEM] == SHA_ITEM and hashes[HEX] == SHA_HEX and
                 hashes[ENCH] == SHA_ENCH and hashes[TAG] == SHA_TAG,
                 "publisher method owner or resource SHA drift")
@@ -176,9 +178,8 @@ def discover(jar: Path, javap_bin: str, prior_path: Path = PRIOR) -> dict:
         "scope": "SPELL_LASTING_1010_SHA_EXACT_STATIC_HEX_LIFESPAN",
         "artifact": {"sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
         "prior_contract_sha256": sha(prior_raw),
-        "resources": {p: {"sha256": hashes[p],
-                          "bytes": None if p in (ITEM, HEX, REG) else None}
-                      for p in relevant},
+        "resources": {p: {"sha256": hashes[p], "bytes": lengths[p]}
+                      for p in (ENCH, TAG, LANG_EN, LANG_PT)},
         "enchantment": ench, "supported_tag": tag, "translations": translations,
         "class_census": {"classes_scanned": len(classes), "direct_token_hits": direct},
         "class_sha256": {p: hashes[p] for p in (ITEM, HEX, REG)},
