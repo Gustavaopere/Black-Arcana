@@ -91,8 +91,8 @@ def audit(jar,javap_bin,prior):
         class_consumer_hits=[p for p in classfiles if b"SECOND_WAVE" in z.read(p)]
         require(ITEM in class_consumer_hits and REG in class_consumer_hits,
                 "missing native registry or producer constant")
-        require(1 <= len(class_consumer_hits) <= 20,
-                "unexpected Second Wave provider class reference cardinality")
+        require(class_consumer_hits==sorted((ITEM,REG)),
+                "Second Wave class reference universe differs from publisher 1.0.10 certificate")
         sha_classes={}
         for owner in (ITEM,WAVE,REG):
             require(owner in names,"missing provider class")
