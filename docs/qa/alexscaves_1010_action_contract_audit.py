@@ -57,6 +57,7 @@ LASTING_MORALE = frozenset(("enchantments/lasting-morale.md",))
 MULTIPLE_MINT = frozenset(("enchantments/multiple-mint.md",))
 RELENTLESS_DARKNESS = frozenset(("enchantments/relentless-darkness.md",))
 SATED_BLADE = frozenset(("enchantments/sated-blade.md",))
+SEAPAIRING = frozenset(("enchantments/seapairing.md",))
 SCOPE = {"schema_version": 1, "version": "1.0.10",
          "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
          "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR", "mutating_hook": "NOT_VERIFIED",
@@ -79,6 +80,7 @@ LASTING_MORALE_SCOPE = {**SCOPE, "catalog_family": "LASTING_MORALE_ENCHANTMENT_C
 MULTIPLE_MINT_SCOPE = {**SCOPE, "catalog_family": "MULTIPLE_MINT_ENCHANTMENT_CONTRACT"}
 RELENTLESS_DARKNESS_SCOPE = {**SCOPE, "catalog_family": "RELENTLESS_DARKNESS_ENCHANTMENT_CONTRACT"}
 SATED_BLADE_SCOPE = {**SCOPE, "catalog_family": "SATED_BLADE_ENCHANTMENT_CONTRACT"}
+SEAPAIRING_SCOPE = {**SCOPE, "catalog_family": "SEAPAIRING_ENCHANTMENT_CONTRACT"}
 ADJACENT_SOURCE = {"repository": "Codx-org/AlexsCavesContinued",
                    "revision": "523308608422ab8e31974befa7111ecdf495dd37",
                    "declared_version": "1.1.1",
@@ -96,7 +98,7 @@ def require(condition, message):
 
 def profile_spec(profile):
     """Select a literal family without changing the existing action contract."""
-    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade"), "unknown catalog profile")
+    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade", "seapairing"), "unknown catalog profile")
     if profile == "effects":
         return EFFECT_SCOPE, EFFECTS, "effect_evidence"
     if profile == "dreadbow":
@@ -129,6 +131,8 @@ def profile_spec(profile):
         return RELENTLESS_DARKNESS_SCOPE, RELENTLESS_DARKNESS, "contract_evidence"
     if profile == "sated_blade":
         return SATED_BLADE_SCOPE, SATED_BLADE, "contract_evidence"
+    if profile == "seapairing":
+        return SEAPAIRING_SCOPE, SEAPAIRING, "contract_evidence"
     return SCOPE, ACTIONS, "action_evidence"
 
 
@@ -343,7 +347,7 @@ def main(argv=None):
     for flag in ("jar", "manifest", "provider-root", "javap"):
         parser.add_argument("--" + flag, required=True, type=Path)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade"), default="actions")
+    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade", "seapairing"), default="actions")
     args = parser.parse_args(argv)
     try:
         report = audit(args.jar, load_manifest(args.manifest), args.provider_root, args.javap,
