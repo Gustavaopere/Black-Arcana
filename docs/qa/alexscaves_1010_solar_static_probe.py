@@ -39,7 +39,7 @@ FOCUS = (
 )
 SYMBOLS = (
     "SOLAR", "enchantLevel", "ChargeUsed", "getCharge", "setCharge",
-    "getSunAngle", "canSeeSky", "isDay", "isRaining", "isThundering",
+    "getSunAngle", "getTimeOfDay", "float 0.259f", "float 0.74f", "canSeeSky", "isDay", "isRaining", "isThundering",
     "isInWaterRainOrBubble", "getBrightness", "isClientSide",
     "onUseTick", "getUseItem", "isUsingItem", "setUseTime",
     "getUseTime", "ACTickingItem", "acInventoryTick", "getGameTime",
