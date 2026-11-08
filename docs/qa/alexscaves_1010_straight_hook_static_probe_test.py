@@ -39,6 +39,13 @@ class TestStraightHookProbe(unittest.TestCase):
                                 ins(6, "Method setNoGravity:")]), "RESISTS_GRAVITY")
         self.assertEqual([3], [row["offset"] for row in result])
 
+    def test_short_gravity_method_includes_return_branch(self):
+        rows = [ins(i, "Field RESISTS_GRAVITY:" if i == 11 else "",
+                    "getstatic" if i == 11 else "nop") for i in range(20)]
+        evidence = window(method(rows), "RESISTS_GRAVITY")
+        self.assertEqual(20, len(evidence[0]["instructions"]))
+        self.assertEqual(19, evidence[0]["instructions"][-1]["offset"])
+
     def test_no_pivot_is_not_fake_evidence(self):
         self.assertEqual([], window(method([ins(1), ins(2)]), "STRAIGHT_HOOK"))
 
