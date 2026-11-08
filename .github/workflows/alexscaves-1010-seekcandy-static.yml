@@ -44,17 +44,11 @@ jobs:
       - name: Audit exact consumer graph and seals
         run: |
           SEAL='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SEEKCANDY-STATIC-1.0.10.json'
-          if test -e "$SEAL"; then
-            python3 docs/qa/alexscaves_1010_seekcandy_static_probe.py \
-              --jar build/seekcandy-1010/publisher.jar --javap "$JAVA_HOME/bin/javap" \
-              --seal "$SEAL" --output build/seekcandy-1010/evidence.json
-            python3 docs/qa/alexscaves_1010_seekcandy_cards_test.py -v
-          else
-            echo 'UNSEALED_SEEKCANDY_DISCOVERY; DO NOT CERTIFY'
-            python3 docs/qa/alexscaves_1010_seekcandy_static_probe.py \
-              --jar build/seekcandy-1010/publisher.jar --javap "$JAVA_HOME/bin/javap" \
-              --output build/seekcandy-1010/evidence.json
-          fi
+          test -f "$SEAL"
+          python3 docs/qa/alexscaves_1010_seekcandy_static_probe.py \
+            --jar build/seekcandy-1010/publisher.jar --javap "$JAVA_HOME/bin/javap" \
+            --seal "$SEAL" --output build/seekcandy-1010/evidence.json
+          python3 docs/qa/alexscaves_1010_seekcandy_cards_test.py -v
       - name: Verify catalog and alphabetical indexes
         run: |
           python3 scripts/catalog/check_perk_ready_indexes.py
