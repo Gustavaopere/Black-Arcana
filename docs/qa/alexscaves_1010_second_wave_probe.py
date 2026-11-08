@@ -84,6 +84,15 @@ def audit(jar,javap_bin,prior):
     with zipfile.ZipFile(jar) as z:
         names=z.namelist()
         require(len(names)==len(set(names)),"duplicate JAR member")
+        # Binary constant-pool census prevents treating one located producer as
+        # the entire consumer universe without scanning all provider classfiles.
+        classfiles=sorted(p for p in names if p.startswith(BASE) and p.endswith(".class"))
+        require(100 <= len(classfiles) <= 3000, "unbounded provider class inventory")
+        class_consumer_hits=[p for p in classfiles if b"SECOND_WAVE" in z.read(p)]
+        require(ITEM in class_consumer_hits and REG in class_consumer_hits,
+                "missing native registry or producer constant")
+        require(1 <= len(class_consumer_hits) <= 20,
+                "unexpected Second Wave provider class reference cardinality")
         sha_classes={}
         for owner in (ITEM,WAVE,REG):
             require(owner in names,"missing provider class")
@@ -122,6 +131,8 @@ def audit(jar,javap_bin,prior):
       "schema_version":1,"scope":SCOPE,"artifact":{"sha1":SHA1,"sha256":SHA256,"size_bytes":SIZE},
       "prior_flinging_manifest_sha256":digest(prior_raw),
       "class_sha256":sha_classes,
+      "provider_class_census":{"classfiles_scanned":len(classfiles),
+                               "constant_pool_class_hits":class_consumer_hits},
       "enchantment":{"id":"alexscaves:second_wave","path":FILENAME,"json":enc_json,
                      "size_bytes":len(enc),"sha256":digest(enc)},
       "item_tag":{"path":TAG,"json":tag_json,"sha256":digest(tag)},
