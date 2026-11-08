@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 15/35.**
+**Fichas catalogadas (somente fichas detectadas): 16/36.**
 
-**Barra das fichas catalogadas:** `████████░░░░░░░░░░░░ 42.9%`
+**Barra das fichas catalogadas:** `████████░░░░░░░░░░░░ 44.4%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 15/35.**
+**Homologadas para perks (somente fichas detectadas): 16/36.**
 
-**Barra dos contratos técnicos estáticos:** `████████░░░░░░░░░░░░ 42.9%`
+**Barra dos contratos técnicos estáticos:** `████████░░░░░░░░░░░░ 44.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -53,6 +53,7 @@
 | ✅ | Relentless Darkness | [ficha/relentless-darkness.md](relentless-darkness.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Sated Blade | [ficha/sated-blade.md](sated-blade.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Sea Swing | [ficha/sea-swing.md](sea-swing.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Seapairing | [ficha/seapairing.md](seapairing.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Second Wave | [ficha/second-wave.md](second-wave.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Seekcandy | [ficha/seekcandy.md](seekcandy.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
