@@ -3,7 +3,7 @@
 import unittest
 
 from alexscaves_1010_straight_hook_static_probe import (
-    HOOK, ITEM, HOOK_SHA, ITEM_SHA, TAG_SHA, window, require, digest,
+    HOOK, ITEM, HOOK_SHA, ITEM_SHA, TAG_SHA, window, require, digest, certify_compiled_branches,
 )
 
 
@@ -53,6 +53,50 @@ class TestStraightHookProbe(unittest.TestCase):
         entries = [ins(i, "STRAIGHT_HOOK") for i in range(60)]
         with self.assertRaisesRegex(ValueError, "unbounded JVM pivot"):
             window(method(entries), "STRAIGHT_HOOK")
+
+
+    def test_exact_gravity_cfg_rejects_changed_branch(self):
+        offsets = [0, 1, 4, 7, 8, 11, 14, 17, 20, 23, 26, 27,
+                   30, 33, 36, 37, 40, 41, 44, 47]
+        code = {i: ins(i) for i in offsets}
+        checks = {
+            1: ("invokevirtual", "isReeling:()Z", ""),
+            4: ("ifne", "", "40"),
+            11: ("getstatic", "RESISTS_GRAVITY", ""),
+            23: ("ifeq", "", "44"),
+            30: ("invokevirtual", "horizontalDistance:()D", ""),
+            33: ("ldc2_w", "double 0.05000000074505806d", "#607"),
+            37: ("ifle", "", "44"),
+            40: ("dconst_0", "", ""),
+            41: ("goto", "", "47"),
+            44: ("ldc2_w", "double 0.07999999821186066d", "#609"),
+            47: ("dreturn", "", ""),
+        }
+        for i, (op, sym, operand) in checks.items():
+            code[i].update(opcode=op, symbol=sym, operand=operand)
+        ctor = [
+            {"offset": i, "opcode": op, "symbol": sym, "operand": operand}
+            for i, op, sym, operand in (
+                (437, "getstatic", "STRAIGHT_HOOK", ""),
+                (440, "invokestatic", "ACCompat.enchantLevel:", ""),
+                (443, "ifle", "", "460"),
+                (450, "getstatic", "RESISTS_GRAVITY", ""),
+                (453, "iconst_1", "", ""),
+                (457, "invokevirtual", "SynchedEntityData.set:", ""))
+        ]
+        data = {"bounded_pivot_witnesses": [
+            {"name": "getDefaultGravity", "descriptor": "()D", "instructions": 20,
+             "parsed_sha256": "aa", "windows": [
+                 {"pivot": "RESISTS_GRAVITY", "instructions": [code[i] for i in offsets]}]},
+            {"name": "CandyCaneHookEntity", "descriptor":
+             "(Lnet/minecraft/world/item/ItemStack;)V",
+             "windows": [{"pivot": "STRAIGHT_HOOK", "instructions": ctor}]}
+        ]}
+        self.assertEqual("0.07999999821186066",
+                         certify_compiled_branches(data)["otherwise_return_gravity"])
+        code[37]["operand"] = "40"
+        with self.assertRaisesRegex(ValueError, "gravity CFG mismatch"):
+            certify_compiled_branches(data)
 
     def test_require_is_fail_closed(self):
         with self.assertRaisesRegex(ValueError, "test failure"):
