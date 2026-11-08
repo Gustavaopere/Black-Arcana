@@ -7699,6 +7699,46 @@
           "reason": "Read-only SHA1/SHA256/size and class/resource seal, 33+13 parsed methods, complete gravity JVM CFG and constructor branch verified in CI 42525288364 with synthetic tamper tests; all hook/gameplay QA claims excluded."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/swiftwood.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Swiftwood I-III changes Primitive Club mainhand attack-speed ADD_VALUE by 0.15F per level via precomputed min(0F,-3.75F+0.15F*L), clamped selection level 0..3. The club +8D attack damage is unchanged at all levels, not a Swiftwood damage boost. Native getDefaultAttributeModifiers -> ACCompat.itemAttributes bridge verified by SHA-exact JVM; no cast, targeting, AOE or new resource cost. Third-party component composition, physical attack speed, safe mutating hook, QA and full provider universe NOT_VERIFIED; NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/swiftwood.md",
+          "reason": "Physical publisher 1.0.10 JAR SHA1/SHA256/size, 363-byte swiftwood JSON with max_level 3 and primitive_club item tag, translation and direct reference census of 1555 compiled classfiles."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/swiftwood.md",
+          "reason": "Exact 22-instruction PrimitiveClubItem ctor precomputes modifier arrays, 17-instruction acModifiers gates MAINHAND and reads stack Swiftwood level; native getDefaultAttributeModifiers(ItemStack) -> ACCompat.itemAttributes(BiFunction,ItemStack,Supplier) with fallback."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/swiftwood.md",
+          "reason": "Exact 33-instruction getStatsForEnchantmentLevel creates ATTACK_DAMAGE ADD_VALUE +8D independent of Swiftwood and ATTACK_SPEED ADD_VALUE min(0F,-3.75F+0.15F*L); level index clamp 0..3; floats widened to double. No independent duration, projectile/area/range values."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/swiftwood.md",
+          "reason": "No own target selection, projectile, AOE, LOS, summon or damage source in Swiftwood branch; swing, native hit, durability and on-hit methods remain provider-owned and have separate methods and evidence boundaries."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/swiftwood.md",
+          "reason": "Publisher JSON weight2, max levelIII, slots mainhand, min costs 1/9/17, max costs 41/51/61, anvil4; acquisition metadata not mana, stamina, durability, attack cost or proc likelihood."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/swiftwood.md",
+          "reason": "Stack-aware mainhand modifier selection, native ACCompat component bridge and Item fallback do not constitute a safe Black Arcana mutating hook. Effective attributes, external modifiers, reload/network and Mastery XP remain outside static scope; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SWIFTWOOD-STATIC-1.0.10.md",
+          "reason": "SHA-exact 1.0.10 read-only JAR probe, PrimitiveClubItem and ACCompat method SHA+JVM bounded witnesses with synthetic negative tamper checks. GitHub Actions 42534407134 passed. Hooks and physical modpack QA not claimed."
+        }
+      }
     }
   },
   "providers": {},

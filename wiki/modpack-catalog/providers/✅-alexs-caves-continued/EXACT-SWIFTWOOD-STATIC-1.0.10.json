@@ -1,0 +1,3277 @@
+{
+  "schema_version": 1,
+  "claim_scope": "SWIFTWOOD_1010_SHA_EXACT_COMPILED_ATTRIBUTE_CONTRACT",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "enchantment": {
+    "id": "alexscaves:swiftwood",
+    "path": "data/alexscaves/enchantment/swiftwood.json",
+    "sha256": "3d19fac156679ac53f49424b9bb828ad44a003d3d33a8b14dda303d50fc17551",
+    "bytes": 363,
+    "json": {
+      "description": {
+        "translate": "enchantment.alexscaves.swiftwood"
+      },
+      "supported_items": "#alexscaves:enchantable/primitive_club",
+      "weight": 2,
+      "max_level": 3,
+      "min_cost": {
+        "base": 1,
+        "per_level_above_first": 8
+      },
+      "max_cost": {
+        "base": 41,
+        "per_level_above_first": 10
+      },
+      "anvil_cost": 4,
+      "slots": [
+        "mainhand"
+      ]
+    }
+  },
+  "item_tag": {
+    "path": "data/alexscaves/tags/item/enchantable/primitive_club.json",
+    "sha256": "71829c384be93b8cef1e090b6afafa621dcd4eeb520c7a66ab0e6524e8a6ae43",
+    "json": {
+      "values": [
+        "alexscaves:primitive_club"
+      ]
+    }
+  },
+  "language": {
+    "path": "assets/alexscaves/lang/en_us.json",
+    "sha256": "a2a3fab567b07ec10b3d946d4e4ce3e65417b6f9348bd49478d8a253a4232d1f",
+    "entries": {
+      "enchantment.alexscaves.swiftwood": "Swiftwood",
+      "enchantment.alexscaves.swiftwood.desc": "Primitive Club can be swung much faster"
+    }
+  },
+  "class_hashes": {
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem.class": "92bfb58cb5ed2c84dd6f989afad22c98209542889e30b6214c502dbff42fa1ac",
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32",
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b"
+  },
+  "class_census": {
+    "count": 1555,
+    "direct_SWIFTWOOD_token_hits": [
+      "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem.class"
+    ]
+  },
+  "owners": {
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem.class": {
+      "parsed_method_count": 16,
+      "all_method_signatures_and_digests": [
+        {
+          "name": "PrimitiveClubItem",
+          "descriptor": "(Lnet/minecraft/world/item/Item$Properties;)V",
+          "instructions_total": 22,
+          "method_sha256": "b849a765431f981c2be6ff1c178296daa8cfc3207f4501ab8d9ac377896c5972"
+        },
+        {
+          "name": "getStatsForEnchantmentLevel",
+          "descriptor": "(I)Lcom/google/common/collect/ImmutableMultimap;",
+          "instructions_total": 33,
+          "method_sha256": "a724c693a064b959f9dbd6395a4ab430114a3b1318b888546180bb0c3e09333f"
+        },
+        {
+          "name": "getEnchantmentValue",
+          "descriptor": "()I",
+          "instructions_total": 2,
+          "method_sha256": "798e4edaf36fade21f22743e4675e918297e30c52b2df68b1dd4d56d821664ca"
+        },
+        {
+          "name": "isEnchantable",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 8,
+          "method_sha256": "9ccaca33fd0605c6ba343ab2d8e10cd706f86e298eb863f74ca1ac38da602e29"
+        },
+        {
+          "name": "hurtEnemy",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 6,
+          "method_sha256": "8b0171f7acfab03a99f61fa9b59e9269617af4c36e945251098e0a3ccc7833de"
+        },
+        {
+          "name": "acHurtEnemy",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 171,
+          "method_sha256": "6338d400b3200842607d4ad75d5757f317665cb126f42e29bfa199dcdcf868f1"
+        },
+        {
+          "name": "mineBlock",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 15,
+          "method_sha256": "c010a7c63874838d724539fa02c21ff5e0b9c353591bb582b586d17ed7f5fe51"
+        },
+        {
+          "name": "acExtraRepairMaterials",
+          "descriptor": "()[Lnet/minecraft/world/item/Item;",
+          "instructions_total": 9,
+          "method_sha256": "909d11ee4cd1149f5f60851d3a7c92bbfeae3dcbaf66be7db8f8eadeb36981f1"
+        },
+        {
+          "name": "isValidRepairItem",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 13,
+          "method_sha256": "ac157681c63ab4c38e91da7b7b36da2269aeeaecbeb60eb7b1a46cc792e36d08"
+        },
+        {
+          "name": "acModifiers",
+          "descriptor": "(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)Lcom/google/common/collect/Multimap;",
+          "instructions_total": 17,
+          "method_sha256": "cdb36891f41a21806ad79e3ac68339b261c3f5f834cfdf54720b337b8df3681d"
+        },
+        {
+          "name": "getDefaultAttributeModifiers",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+          "instructions_total": 8,
+          "method_sha256": "3ef89b9927daf6ddd6d8fa7d826e2a8a1eeb788a12faef74ad3c1d99918252e4"
+        },
+        {
+          "name": "initializeClient",
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "instructions_total": 6,
+          "method_sha256": "3bc44268fc9463562bf08d24966682ab3f31e81def03e42634fc8bd80447b83f"
+        },
+        {
+          "name": "onLeftClickEntity",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;)Z",
+          "instructions_total": 16,
+          "method_sha256": "e3b4c828a869890518a0a335ca68db2f054c90ade7f33b82c6449a1fe0589481"
+        },
+        {
+          "name": "onEntitySwing",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 24,
+          "method_sha256": "d54227ebeeb67e1393cc389fd28cb26d27f34d09838be645da48fae5c1c5aa14"
+        },
+        {
+          "name": "acInventoryTick",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "instructions_total": 27,
+          "method_sha256": "5cbf2a5731fbcfab6f89ea725867ae284e4b1eeb3f055838d2d365e69be47017"
+        },
+        {
+          "name": "lambda$getDefaultAttributeModifiers$0",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+          "instructions_total": 4,
+          "method_sha256": "cb75b22e942d400bf70796038c5bd88e56cbb64f14239de3aa50b9d3064488d7"
+        }
+      ],
+      "selected_methods": [
+        {
+          "name": "PrimitiveClubItem",
+          "descriptor": "(Lnet/minecraft/world/item/Item$Properties;)V",
+          "instructions_total": 22,
+          "method_sha256": "b849a765431f981c2be6ff1c178296daa8cfc3207f4501ab8d9ac377896c5972",
+          "windows": [
+            {
+              "needle": "getStatsForEnchantmentLevel:",
+              "offset": 27,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 17,
+                  "opcode": "if_icmpgt",
+                  "operand": "37",
+                  "symbol": ""
+                },
+                {
+                  "offset": 20,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 21,
+                  "opcode": "getfield",
+                  "operand": "#9",
+                  "symbol": "Field defaultModifiers:[Lcom/google/common/collect/Multimap;"
+                },
+                {
+                  "offset": 24,
+                  "opcode": "iload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 25,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 26,
+                  "opcode": "iload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 27,
+                  "opcode": "invokevirtual",
+                  "operand": "#15",
+                  "symbol": "Method getStatsForEnchantmentLevel:(I)Lcom/google/common/collect/ImmutableMultimap;"
+                },
+                {
+                  "offset": 30,
+                  "opcode": "aastore",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 31,
+                  "opcode": "iinc",
+                  "operand": "2, 1",
+                  "symbol": ""
+                },
+                {
+                  "offset": 34,
+                  "opcode": "goto",
+                  "operand": "15",
+                  "symbol": ""
+                },
+                {
+                  "offset": 37,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "getStatsForEnchantmentLevel",
+          "descriptor": "(I)Lcom/google/common/collect/ImmutableMultimap;",
+          "instructions_total": 33,
+          "method_sha256": "a724c693a064b959f9dbd6395a4ab430114a3b1318b888546180bb0c3e09333f",
+          "windows": [
+            {
+              "needle": "ATTACK_SPEED",
+              "offset": 29,
+              "matches": 2,
+              "nearby": [
+                {
+                  "offset": 15,
+                  "opcode": "ldc2_w",
+                  "operand": "#35",
+                  "symbol": "double 8.0d"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getstatic",
+                  "operand": "#37",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/AttributeModifier$Operation.ADD_VALUE:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "invokespecial",
+                  "operand": "#43",
+                  "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeModifier.\"<init>\":(Lnet/minecraft/resources/ResourceLocation;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V"
+                },
+                {
+                  "offset": 24,
+                  "opcode": "invokevirtual",
+                  "operand": "#46",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 29,
+                  "opcode": "getstatic",
+                  "operand": "#52",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_SPEED:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 32,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 35,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 36,
+                  "opcode": "getstatic",
+                  "operand": "#55",
+                  "symbol": "Field BASE_ATTACK_SPEED_ID:Lnet/minecraft/resources/ResourceLocation;"
+                },
+                {
+                  "offset": 39,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 40,
+                  "opcode": "ldc",
+                  "operand": "#58",
+                  "symbol": "float -3.75f"
+                },
+                {
+                  "offset": 42,
+                  "opcode": "ldc",
+                  "operand": "#59",
+                  "symbol": "float 0.15f"
+                },
+                {
+                  "offset": 44,
+                  "opcode": "iload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 45,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 46,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "needle": "ATTACK_SPEED",
+              "offset": 36,
+              "matches": 2,
+              "nearby": [
+                {
+                  "offset": 24,
+                  "opcode": "invokevirtual",
+                  "operand": "#46",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 29,
+                  "opcode": "getstatic",
+                  "operand": "#52",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_SPEED:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 32,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 35,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 36,
+                  "opcode": "getstatic",
+                  "operand": "#55",
+                  "symbol": "Field BASE_ATTACK_SPEED_ID:Lnet/minecraft/resources/ResourceLocation;"
+                },
+                {
+                  "offset": 39,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 40,
+                  "opcode": "ldc",
+                  "operand": "#58",
+                  "symbol": "float -3.75f"
+                },
+                {
+                  "offset": 42,
+                  "opcode": "ldc",
+                  "operand": "#59",
+                  "symbol": "float 0.15f"
+                },
+                {
+                  "offset": 44,
+                  "opcode": "iload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 45,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 46,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 47,
+                  "opcode": "fadd",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 48,
+                  "opcode": "invokestatic",
+                  "operand": "#60",
+                  "symbol": "Method java/lang/Math.min:(FF)F"
+                },
+                {
+                  "offset": 51,
+                  "opcode": "f2d",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "needle": "ATTACK_DAMAGE",
+              "offset": 5,
+              "matches": 2,
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "invokestatic",
+                  "operand": "#19",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap.builder:()Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                },
+                {
+                  "offset": 3,
+                  "opcode": "astore_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 4,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 5,
+                  "opcode": "getstatic",
+                  "operand": "#23",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_DAMAGE:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 8,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 11,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getstatic",
+                  "operand": "#31",
+                  "symbol": "Field BASE_ATTACK_DAMAGE_ID:Lnet/minecraft/resources/ResourceLocation;"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "ldc2_w",
+                  "operand": "#35",
+                  "symbol": "double 8.0d"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getstatic",
+                  "operand": "#37",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/AttributeModifier$Operation.ADD_VALUE:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "invokespecial",
+                  "operand": "#43",
+                  "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeModifier.\"<init>\":(Lnet/minecraft/resources/ResourceLocation;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V"
+                },
+                {
+                  "offset": 24,
+                  "opcode": "invokevirtual",
+                  "operand": "#46",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "needle": "ATTACK_DAMAGE",
+              "offset": 12,
+              "matches": 2,
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "invokestatic",
+                  "operand": "#19",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap.builder:()Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                },
+                {
+                  "offset": 3,
+                  "opcode": "astore_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 4,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 5,
+                  "opcode": "getstatic",
+                  "operand": "#23",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_DAMAGE:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 8,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 11,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getstatic",
+                  "operand": "#31",
+                  "symbol": "Field BASE_ATTACK_DAMAGE_ID:Lnet/minecraft/resources/ResourceLocation;"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "ldc2_w",
+                  "operand": "#35",
+                  "symbol": "double 8.0d"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getstatic",
+                  "operand": "#37",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/AttributeModifier$Operation.ADD_VALUE:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "invokespecial",
+                  "operand": "#43",
+                  "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeModifier.\"<init>\":(Lnet/minecraft/resources/ResourceLocation;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V"
+                },
+                {
+                  "offset": 24,
+                  "opcode": "invokevirtual",
+                  "operand": "#46",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 29,
+                  "opcode": "getstatic",
+                  "operand": "#52",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_SPEED:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 32,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 35,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "needle": "AttributeModifier",
+              "offset": 8,
+              "matches": 6,
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "invokestatic",
+                  "operand": "#19",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap.builder:()Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                },
+                {
+                  "offset": 3,
+                  "opcode": "astore_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 4,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 5,
+                  "opcode": "getstatic",
+                  "operand": "#23",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_DAMAGE:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 8,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 11,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getstatic",
+                  "operand": "#31",
+                  "symbol": "Field BASE_ATTACK_DAMAGE_ID:Lnet/minecraft/resources/ResourceLocation;"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "ldc2_w",
+                  "operand": "#35",
+                  "symbol": "double 8.0d"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getstatic",
+                  "operand": "#37",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/AttributeModifier$Operation.ADD_VALUE:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "invokespecial",
+                  "operand": "#43",
+                  "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeModifier.\"<init>\":(Lnet/minecraft/resources/ResourceLocation;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V"
+                },
+                {
+                  "offset": 24,
+                  "opcode": "invokevirtual",
+                  "operand": "#46",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 29,
+                  "opcode": "getstatic",
+                  "operand": "#52",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_SPEED:Lnet/minecraft/core/Holder;"
+                }
+              ]
+            },
+            {
+              "needle": "AttributeModifier",
+              "offset": 18,
+              "matches": 6,
+              "nearby": [
+                {
+                  "offset": 4,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 5,
+                  "opcode": "getstatic",
+                  "operand": "#23",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_DAMAGE:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 8,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 11,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getstatic",
+                  "operand": "#31",
+                  "symbol": "Field BASE_ATTACK_DAMAGE_ID:Lnet/minecraft/resources/ResourceLocation;"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "ldc2_w",
+                  "operand": "#35",
+                  "symbol": "double 8.0d"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getstatic",
+                  "operand": "#37",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/AttributeModifier$Operation.ADD_VALUE:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "invokespecial",
+                  "operand": "#43",
+                  "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeModifier.\"<init>\":(Lnet/minecraft/resources/ResourceLocation;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V"
+                },
+                {
+                  "offset": 24,
+                  "opcode": "invokevirtual",
+                  "operand": "#46",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 29,
+                  "opcode": "getstatic",
+                  "operand": "#52",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_SPEED:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 32,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 35,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 36,
+                  "opcode": "getstatic",
+                  "operand": "#55",
+                  "symbol": "Field BASE_ATTACK_SPEED_ID:Lnet/minecraft/resources/ResourceLocation;"
+                },
+                {
+                  "offset": 39,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "needle": "Math.min:",
+              "offset": 48,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 40,
+                  "opcode": "ldc",
+                  "operand": "#58",
+                  "symbol": "float -3.75f"
+                },
+                {
+                  "offset": 42,
+                  "opcode": "ldc",
+                  "operand": "#59",
+                  "symbol": "float 0.15f"
+                },
+                {
+                  "offset": 44,
+                  "opcode": "iload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 45,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 46,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 47,
+                  "opcode": "fadd",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 48,
+                  "opcode": "invokestatic",
+                  "operand": "#60",
+                  "symbol": "Method java/lang/Math.min:(FF)F"
+                },
+                {
+                  "offset": 51,
+                  "opcode": "f2d",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 52,
+                  "opcode": "getstatic",
+                  "operand": "#37",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/AttributeModifier$Operation.ADD_VALUE:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;"
+                },
+                {
+                  "offset": 55,
+                  "opcode": "invokespecial",
+                  "operand": "#43",
+                  "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeModifier.\"<init>\":(Lnet/minecraft/resources/ResourceLocation;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V"
+                },
+                {
+                  "offset": 58,
+                  "opcode": "invokevirtual",
+                  "operand": "#46",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                },
+                {
+                  "offset": 61,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 62,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 63,
+                  "opcode": "invokevirtual",
+                  "operand": "#66",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap$Builder.build:()Lcom/google/common/collect/ImmutableMultimap;"
+                },
+                {
+                  "offset": 66,
+                  "opcode": "areturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "needle": "float -3.75f",
+              "offset": 40,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 28,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 29,
+                  "opcode": "getstatic",
+                  "operand": "#52",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_SPEED:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 32,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 35,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 36,
+                  "opcode": "getstatic",
+                  "operand": "#55",
+                  "symbol": "Field BASE_ATTACK_SPEED_ID:Lnet/minecraft/resources/ResourceLocation;"
+                },
+                {
+                  "offset": 39,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 40,
+                  "opcode": "ldc",
+                  "operand": "#58",
+                  "symbol": "float -3.75f"
+                },
+                {
+                  "offset": 42,
+                  "opcode": "ldc",
+                  "operand": "#59",
+                  "symbol": "float 0.15f"
+                },
+                {
+                  "offset": 44,
+                  "opcode": "iload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 45,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 46,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 47,
+                  "opcode": "fadd",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 48,
+                  "opcode": "invokestatic",
+                  "operand": "#60",
+                  "symbol": "Method java/lang/Math.min:(FF)F"
+                },
+                {
+                  "offset": 51,
+                  "opcode": "f2d",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 52,
+                  "opcode": "getstatic",
+                  "operand": "#37",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/AttributeModifier$Operation.ADD_VALUE:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;"
+                },
+                {
+                  "offset": 55,
+                  "opcode": "invokespecial",
+                  "operand": "#43",
+                  "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeModifier.\"<init>\":(Lnet/minecraft/resources/ResourceLocation;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V"
+                }
+              ]
+            },
+            {
+              "needle": "float 0.15f",
+              "offset": 42,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 29,
+                  "opcode": "getstatic",
+                  "operand": "#52",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_SPEED:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 32,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 35,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 36,
+                  "opcode": "getstatic",
+                  "operand": "#55",
+                  "symbol": "Field BASE_ATTACK_SPEED_ID:Lnet/minecraft/resources/ResourceLocation;"
+                },
+                {
+                  "offset": 39,
+                  "opcode": "fconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 40,
+                  "opcode": "ldc",
+                  "operand": "#58",
+                  "symbol": "float -3.75f"
+                },
+                {
+                  "offset": 42,
+                  "opcode": "ldc",
+                  "operand": "#59",
+                  "symbol": "float 0.15f"
+                },
+                {
+                  "offset": 44,
+                  "opcode": "iload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 45,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 46,
+                  "opcode": "fmul",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 47,
+                  "opcode": "fadd",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 48,
+                  "opcode": "invokestatic",
+                  "operand": "#60",
+                  "symbol": "Method java/lang/Math.min:(FF)F"
+                },
+                {
+                  "offset": 51,
+                  "opcode": "f2d",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 52,
+                  "opcode": "getstatic",
+                  "operand": "#37",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/AttributeModifier$Operation.ADD_VALUE:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;"
+                },
+                {
+                  "offset": 55,
+                  "opcode": "invokespecial",
+                  "operand": "#43",
+                  "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeModifier.\"<init>\":(Lnet/minecraft/resources/ResourceLocation;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V"
+                },
+                {
+                  "offset": 58,
+                  "opcode": "invokevirtual",
+                  "operand": "#46",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                }
+              ]
+            },
+            {
+              "needle": "double 8.0d",
+              "offset": 15,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 3,
+                  "opcode": "astore_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 4,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 5,
+                  "opcode": "getstatic",
+                  "operand": "#23",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_DAMAGE:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 8,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 11,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "getstatic",
+                  "operand": "#31",
+                  "symbol": "Field BASE_ATTACK_DAMAGE_ID:Lnet/minecraft/resources/ResourceLocation;"
+                },
+                {
+                  "offset": 15,
+                  "opcode": "ldc2_w",
+                  "operand": "#35",
+                  "symbol": "double 8.0d"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getstatic",
+                  "operand": "#37",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/AttributeModifier$Operation.ADD_VALUE:Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "invokespecial",
+                  "operand": "#43",
+                  "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeModifier.\"<init>\":(Lnet/minecraft/resources/ResourceLocation;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V"
+                },
+                {
+                  "offset": 24,
+                  "opcode": "invokevirtual",
+                  "operand": "#46",
+                  "symbol": "Method com/google/common/collect/ImmutableMultimap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMultimap$Builder;"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 29,
+                  "opcode": "getstatic",
+                  "operand": "#52",
+                  "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_SPEED:Lnet/minecraft/core/Holder;"
+                },
+                {
+                  "offset": 32,
+                  "opcode": "new",
+                  "operand": "#29",
+                  "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+                },
+                {
+                  "offset": 35,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 36,
+                  "opcode": "getstatic",
+                  "operand": "#55",
+                  "symbol": "Field BASE_ATTACK_SPEED_ID:Lnet/minecraft/resources/ResourceLocation;"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "getEnchantmentValue",
+          "descriptor": "()I",
+          "instructions_total": 2,
+          "method_sha256": "798e4edaf36fade21f22743e4675e918297e30c52b2df68b1dd4d56d821664ca",
+          "windows": []
+        },
+        {
+          "name": "isEnchantable",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 8,
+          "method_sha256": "9ccaca33fd0605c6ba343ab2d8e10cd706f86e298eb863f74ca1ac38da602e29",
+          "windows": []
+        },
+        {
+          "name": "hurtEnemy",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 6,
+          "method_sha256": "8b0171f7acfab03a99f61fa9b59e9269617af4c36e945251098e0a3ccc7833de",
+          "windows": []
+        },
+        {
+          "name": "acHurtEnemy",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 171,
+          "method_sha256": "6338d400b3200842607d4ad75d5757f317665cb126f42e29bfa199dcdcf868f1",
+          "windows": [
+            {
+              "needle": "enchantLevel:",
+              "offset": 139,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 122,
+                  "opcode": "getstatic",
+                  "operand": "#170",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.PRIMITIVE_CLUB_HIT:Ljava/util/function/Supplier;"
+                },
+                {
+                  "offset": 125,
+                  "opcode": "invokeinterface",
+                  "operand": "#110,  1",
+                  "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+                },
+                {
+                  "offset": 130,
+                  "opcode": "checkcast",
+                  "operand": "#116",
+                  "symbol": "class net/minecraft/sounds/SoundEvent"
+                },
+                {
+                  "offset": 133,
+                  "opcode": "astore",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 135,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 136,
+                  "opcode": "getstatic",
+                  "operand": "#173",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.DAZING_SWEEP:Lnet/minecraft/resources/ResourceKey;"
+                },
+                {
+                  "offset": 139,
+                  "opcode": "invokestatic",
+                  "operand": "#179",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+                },
+                {
+                  "offset": 142,
+                  "opcode": "istore",
+                  "operand": "6",
+                  "symbol": ""
+                },
+                {
+                  "offset": 144,
+                  "opcode": "iload",
+                  "operand": "6",
+                  "symbol": ""
+                },
+                {
+                  "offset": 146,
+                  "opcode": "ifle",
+                  "operand": "361",
+                  "symbol": ""
+                },
+                {
+                  "offset": 149,
+                  "opcode": "iload",
+                  "operand": "6",
+                  "symbol": ""
+                },
+                {
+                  "offset": 151,
+                  "opcode": "i2f",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 152,
+                  "opcode": "ldc",
+                  "operand": "#183",
+                  "symbol": "float 1.2f"
+                },
+                {
+                  "offset": 154,
+                  "opcode": "fadd",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 155,
+                  "opcode": "fstore",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                {
+                  "offset": 157,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "mineBlock",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 15,
+          "method_sha256": "c010a7c63874838d724539fa02c21ff5e0b9c353591bb582b586d17ed7f5fe51",
+          "windows": []
+        },
+        {
+          "name": "acModifiers",
+          "descriptor": "(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)Lcom/google/common/collect/Multimap;",
+          "instructions_total": 17,
+          "method_sha256": "cdb36891f41a21806ad79e3ac68339b261c3f5f834cfdf54720b337b8df3681d",
+          "windows": [
+            {
+              "needle": "SWIFTWOOD",
+              "offset": 10,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "getstatic",
+                  "operand": "#80",
+                  "symbol": "Field net/minecraft/world/entity/EquipmentSlot.MAINHAND:Lnet/minecraft/world/entity/EquipmentSlot;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "if_acmpeq",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "aconst_null",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "areturn",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 9,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 10,
+                  "opcode": "getstatic",
+                  "operand": "#284",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.SWIFTWOOD:Lnet/minecraft/resources/ResourceKey;"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokestatic",
+                  "operand": "#179",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "istore_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getfield",
+                  "operand": "#9",
+                  "symbol": "Field defaultModifiers:[Lcom/google/common/collect/Multimap;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "iload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 22,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 23,
+                  "opcode": "iconst_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 24,
+                  "opcode": "invokestatic",
+                  "operand": "#287",
+                  "symbol": "Method net/minecraft/util/Mth.clamp:(III)I"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "aaload",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "needle": "enchantLevel:",
+              "offset": 13,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 1,
+                  "opcode": "getstatic",
+                  "operand": "#80",
+                  "symbol": "Field net/minecraft/world/entity/EquipmentSlot.MAINHAND:Lnet/minecraft/world/entity/EquipmentSlot;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "if_acmpeq",
+                  "operand": "9",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "aconst_null",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "areturn",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 9,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 10,
+                  "opcode": "getstatic",
+                  "operand": "#284",
+                  "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.SWIFTWOOD:Lnet/minecraft/resources/ResourceKey;"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "invokestatic",
+                  "operand": "#179",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+                },
+                {
+                  "offset": 16,
+                  "opcode": "istore_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getfield",
+                  "operand": "#9",
+                  "symbol": "Field defaultModifiers:[Lcom/google/common/collect/Multimap;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "iload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 22,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 23,
+                  "opcode": "iconst_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 24,
+                  "opcode": "invokestatic",
+                  "operand": "#287",
+                  "symbol": "Method net/minecraft/util/Mth.clamp:(III)I"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "aaload",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "areturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            },
+            {
+              "needle": "Mth.clamp:",
+              "offset": 24,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 16,
+                  "opcode": "istore_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 18,
+                  "opcode": "getfield",
+                  "operand": "#9",
+                  "symbol": "Field defaultModifiers:[Lcom/google/common/collect/Multimap;"
+                },
+                {
+                  "offset": 21,
+                  "opcode": "iload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 22,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 23,
+                  "opcode": "iconst_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 24,
+                  "opcode": "invokestatic",
+                  "operand": "#287",
+                  "symbol": "Method net/minecraft/util/Mth.clamp:(III)I"
+                },
+                {
+                  "offset": 27,
+                  "opcode": "aaload",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 28,
+                  "opcode": "areturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "getDefaultAttributeModifiers",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+          "instructions_total": 8,
+          "method_sha256": "3ef89b9927daf6ddd6d8fa7d826e2a8a1eeb788a12faef74ad3c1d99918252e4",
+          "windows": [
+            {
+              "needle": "SHORT_NATIVE_ATTRIBUTE_BRIDGE",
+              "offset": 0,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "invokedynamic",
+                  "operand": "#293,  0",
+                  "symbol": "InvokeDynamic #1:apply:(Lcom/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem;)Ljava/util/function/BiFunction;"
+                },
+                {
+                  "offset": 6,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 8,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 9,
+                  "opcode": "invokedynamic",
+                  "operand": "#297,  0",
+                  "symbol": "InvokeDynamic #2:get:(Lcom/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem;Lnet/minecraft/world/item/ItemStack;)Ljava/util/function/Supplier;"
+                },
+                {
+                  "offset": 14,
+                  "opcode": "invokestatic",
+                  "operand": "#300",
+                  "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.itemAttributes:(Ljava/util/function/BiFunction;Lnet/minecraft/world/item/ItemStack;Ljava/util/function/Supplier;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;"
+                },
+                {
+                  "offset": 17,
+                  "opcode": "areturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "onLeftClickEntity",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;)Z",
+          "instructions_total": 16,
+          "method_sha256": "e3b4c828a869890518a0a335ca68db2f054c90ade7f33b82c6449a1fe0589481",
+          "windows": []
+        },
+        {
+          "name": "onEntitySwing",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 24,
+          "method_sha256": "d54227ebeeb67e1393cc389fd28cb26d27f34d09838be645da48fae5c1c5aa14",
+          "windows": []
+        },
+        {
+          "name": "acInventoryTick",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "instructions_total": 27,
+          "method_sha256": "5cbf2a5731fbcfab6f89ea725867ae284e4b1eeb3f055838d2d365e69be47017",
+          "windows": []
+        },
+        {
+          "name": "lambda$getDefaultAttributeModifiers$0",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+          "instructions_total": 4,
+          "method_sha256": "cb75b22e942d400bf70796038c5bd88e56cbb64f14239de3aa50b9d3064488d7",
+          "windows": [
+            {
+              "needle": "SHORT_NATIVE_ATTRIBUTE_BRIDGE",
+              "offset": 0,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 2,
+                  "opcode": "invokespecial",
+                  "operand": "#334",
+                  "symbol": "Method net/minecraft/world/item/Item.getDefaultAttributeModifiers:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;"
+                },
+                {
+                  "offset": 5,
+                  "opcode": "areturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class": {
+      "parsed_method_count": 199,
+      "all_method_signatures_and_digests": [
+        {
+          "name": "ACCompat",
+          "descriptor": "()V",
+          "instructions_total": 3,
+          "method_sha256": "63fa2eb3b05013f0c778e367ffec404610da285227f27a01bc515cea9311a5cb"
+        },
+        {
+          "name": "getTag",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+          "instructions_total": 12,
+          "method_sha256": "1fce62d3dfd82f83528432b7d7663b9897e76cd860c3b84d794765e653ec27fc"
+        },
+        {
+          "name": "getOrCreateTag",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+          "instructions_total": 14,
+          "method_sha256": "7bbd1e93a42f562f0bc3eee1338e06806b8eaebbcbbb42e8dd58eab566808468"
+        },
+        {
+          "name": "setTag",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V",
+          "instructions_total": 14,
+          "method_sha256": "22a3074673b18cca4ed3a2edf23dd89989b9d7698ac70a91a54a1d7b40fe069c"
+        },
+        {
+          "name": "hasTag",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 14,
+          "method_sha256": "84540af95d116f3150feb53b9797b8b70723df108427671e1e2a1967ef2b945d"
+        },
+        {
+          "name": "setHoverName",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/network/chat/Component;)Lnet/minecraft/world/item/ItemStack;",
+          "instructions_total": 7,
+          "method_sha256": "d0edeb53cf14e08c9c17209829b07d1f368afbb831944cc7bfd08fb2dcd37153"
+        },
+        {
+          "name": "hasCustomHoverName",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 4,
+          "method_sha256": "486d849861e4bec8571d80e778dec3d45f547378d23f4b93bc7f69a010afdd33"
+        },
+        {
+          "name": "hurtAndBreak",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;)V",
+          "instructions_total": 6,
+          "method_sha256": "5a104fec24d6b0d4324a3bc8b154a39cfc58f9555db7963ada277fa680fcf8e4"
+        },
+        {
+          "name": "hurtAndBreak",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)V",
+          "instructions_total": 7,
+          "method_sha256": "84ad256a82d706fe440efc341f29159e5fdd3fcbc108c66627f811153058fd8c"
+        },
+        {
+          "name": "hurtAndBreakUsedHand",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V",
+          "instructions_total": 8,
+          "method_sha256": "5349ce0a59e4ce10c8a3b252dd3ea8c200f4da735c1e56fb5a6b316c768c5496"
+        },
+        {
+          "name": "slotOf",
+          "descriptor": "(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/entity/EquipmentSlot;",
+          "instructions_total": 7,
+          "method_sha256": "7d6b1447d36e293bc288b6a94e574632fac7ba5647a93f969199f5807d85488a"
+        },
+        {
+          "name": "effect",
+          "descriptor": "(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/core/Holder;",
+          "instructions_total": 4,
+          "method_sha256": "63d9d25ffbeae3d5c4a39c3246278b3f268a5815813c1078903b02f08aed13bf"
+        },
+        {
+          "name": "attribute",
+          "descriptor": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lnet/minecraft/core/Holder;",
+          "instructions_total": 4,
+          "method_sha256": "588b1eea8cb74723adcdce6e897b6ea9ecb507d5c0211e64038d2230a90d4234"
+        },
+        {
+          "name": "vanillaEffect",
+          "descriptor": "(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/effect/MobEffect;",
+          "instructions_total": 4,
+          "method_sha256": "69a0fefb31bee804d24a7d2994c7891916bc14c30b186ff11f9a53309d8f6df4"
+        },
+        {
+          "name": "vanillaEffect",
+          "descriptor": "(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/world/effect/MobEffect;",
+          "instructions_total": 2,
+          "method_sha256": "4a91b42de76f57812e29c3af90d59cd3edc3055e64c3a05aef2a533c785e952c"
+        },
+        {
+          "name": "damageBonus",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)F",
+          "instructions_total": 20,
+          "method_sha256": "9c73c7d56e1d8547ed3a353ba5f991adeadf20f096ef4e30c97252856331de86"
+        },
+        {
+          "name": "isAquatic",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 6,
+          "method_sha256": "ffc02d2aadd9943c32b61bec129452fe61173b9cccc7662a1cd0d182bb5dace3"
+        },
+        {
+          "name": "enchantLevel",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I",
+          "instructions_total": 24,
+          "method_sha256": "775387837bd0e7dbbd2fd04cd5de0375a6ccd2813de5db375fd152f8b63ad8dc"
+        },
+        {
+          "name": "enchantLevelOn",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/resources/ResourceKey;)I",
+          "instructions_total": 10,
+          "method_sha256": "74b3136c0ec14ab044cf6ec2b25a94713945a11ca56c91875f9f8cf24e2d3461"
+        },
+        {
+          "name": "hasFrostWalker",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 8,
+          "method_sha256": "4815a2f3c12bb3477c49fba6be6b10bfc2f3827997ff2d7692b4e0e729b1f941"
+        },
+        {
+          "name": "depthStriderLevel",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)F",
+          "instructions_total": 7,
+          "method_sha256": "044cf81e1e7a5d2b2d1f8305af5bd65d289f80fdd569fcb536a5a259d149d2c2"
+        },
+        {
+          "name": "miningEfficiencyBonus",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)F",
+          "instructions_total": 5,
+          "method_sha256": "a18f13b796ce57e7cab7a89b0ca189488e30599a90f0eae27c13c4fa67210d49"
+        },
+        {
+          "name": "submergedMiningFactor",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;)F",
+          "instructions_total": 5,
+          "method_sha256": "01c697be75a0016dbc3ec4fb910f618dd7665ceb4fe0c061f4e2ce2a433f0fa0"
+        },
+        {
+          "name": "postAttackEffects",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+          "instructions_total": 14,
+          "method_sha256": "b469682d8123aa40f3d68109bdb28f16e2aef902387f0f153baac240f99c90be"
+        },
+        {
+          "name": "postAttackEffects",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+          "instructions_total": 14,
+          "method_sha256": "c6a19e11f851a93c727d48795cc357cbb9906f3385cde93b40657c857f01cafe"
+        },
+        {
+          "name": "explosionKnockback",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;D)D",
+          "instructions_total": 8,
+          "method_sha256": "f028d73daaee38ffb801ce0bbe6b1396178c1b5efcc49ec3be6ac5b732d31b13"
+        },
+        {
+          "name": "enchantRandomly",
+          "descriptor": "(Lnet/minecraft/util/RandomSource;Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/level/Level;)Lnet/minecraft/world/item/ItemStack;",
+          "instructions_total": 14,
+          "method_sha256": "2a626c14f830388279c61b3a7b2dd527f8aae2a178e6e575d4f1b210108159c8"
+        },
+        {
+          "name": "hasVanishingCurse",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 4,
+          "method_sha256": "3c37163bf2fad98c7c8850525d2d5a48cf2dec0351ed8c0a1045205c6a68ed35"
+        },
+        {
+          "name": "amount",
+          "descriptor": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)D",
+          "instructions_total": 3,
+          "method_sha256": "cca32993a0806f66a226522cb5d7bb307b5fd928437cd36c66b5d8ef750f87f2"
+        },
+        {
+          "name": "operation",
+          "descriptor": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;",
+          "instructions_total": 3,
+          "method_sha256": "54ae9edd1125e7c6724ad24898007bf822d24cff6bc106f697e63189daec3b78"
+        },
+        {
+          "name": "itemAttributes",
+          "descriptor": "(Lcom/google/common/collect/Multimap;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/util/function/Supplier;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+          "instructions_total": 19,
+          "method_sha256": "78458bf90e03969ad9054e041a356e40482bc3dc27f54edd4e278f264d331f09"
+        },
+        {
+          "name": "itemAttributes",
+          "descriptor": "(Ljava/util/function/BiFunction;Lnet/minecraft/world/item/ItemStack;Ljava/util/function/Supplier;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+          "instructions_total": 48,
+          "method_sha256": "75e48e223681347822ad84fd6ac8a6f545d6368457be30608b5928d1fac40809"
+        },
+        {
+          "name": "attackDamageBonus",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)D",
+          "instructions_total": 12,
+          "method_sha256": "ce63fc4907d1760c5afef512a19375b946fd25f99dca020398cdfc45afeaf2ab"
+        },
+        {
+          "name": "potionStack",
+          "descriptor": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/world/item/alchemy/Potion;)Lnet/minecraft/world/item/ItemStack;",
+          "instructions_total": 5,
+          "method_sha256": "46357c4979d799c6a1c24c3eab7ec1dfd9f220c58746151029f448d4821de177"
+        },
+        {
+          "name": "vanillaPotion",
+          "descriptor": "(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/item/alchemy/Potion;",
+          "instructions_total": 4,
+          "method_sha256": "093be3f4826112f1d30cd1d14f8fcc0b04bda471b5f07a49e271be7272d57134"
+        },
+        {
+          "name": "potionHolder",
+          "descriptor": "(Lnet/minecraft/world/item/alchemy/Potion;)Lnet/minecraft/core/Holder;",
+          "instructions_total": 4,
+          "method_sha256": "b200e04297eaa20bff96e98a840d11598f7d1bff7a14ea581868f2378d18fc5a"
+        },
+        {
+          "name": "contentsOf",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/alchemy/PotionContents;",
+          "instructions_total": 6,
+          "method_sha256": "de9fbcebec5f1976366dcd8d61de3d9f51b135125b060f527d7d5d040d7c37bd"
+        },
+        {
+          "name": "potionOf",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/alchemy/Potion;",
+          "instructions_total": 9,
+          "method_sha256": "e98ce256e7d209ceae7c3e21eec946c40da37b823127be78fa44af394a8cd93f"
+        },
+        {
+          "name": "potionEffects",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Ljava/lang/Iterable;",
+          "instructions_total": 4,
+          "method_sha256": "724e74a63c1a889045c4b1396f8b5fe550e32401d5cbdb277746069bd515a88a"
+        },
+        {
+          "name": "potionColor",
+          "descriptor": "(Lnet/minecraft/world/item/alchemy/Potion;)I",
+          "instructions_total": 4,
+          "method_sha256": "8e9a2abbb7a76940b63aa7dc6789c23ae0e1c3ee35bf8e2345b08c8721c3ea87"
+        },
+        {
+          "name": "potionColor",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "instructions_total": 4,
+          "method_sha256": "37793b4394e66175ae4d7a5314cde25e0a1b97c45a21f17277b5f638d266ba23"
+        },
+        {
+          "name": "sameItemSameData",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 4,
+          "method_sha256": "051579979f100948d4e6dca9495a02ade8b3f2b2292a3a37e708223d8508b05d"
+        },
+        {
+          "name": "craftingRemainder",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;",
+          "instructions_total": 4,
+          "method_sha256": "8dcd6249c31ad5d986fae4506262d4862c3268eacbe3bdd6df420d59d97875b9"
+        },
+        {
+          "name": "dyeColorOf",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/DyeColor;",
+          "instructions_total": 14,
+          "method_sha256": "ff617eeb7c2fda9cd49ecd56c77c2e2ddb0b292bd1dc3df072dff6fe10cad491"
+        },
+        {
+          "name": "rawSound",
+          "descriptor": "(Lnet/minecraft/core/Holder;)Lnet/minecraft/sounds/SoundEvent;",
+          "instructions_total": 4,
+          "method_sha256": "d21f2d804b7007ed27ff6e732229a421a9b2fb21f845d78be51cdfc8df2cc0c5"
+        },
+        {
+          "name": "rawSound",
+          "descriptor": "(Lnet/minecraft/sounds/SoundEvent;)Lnet/minecraft/sounds/SoundEvent;",
+          "instructions_total": 2,
+          "method_sha256": "6f449f07ebd9f2ba8f56ec31728614a88e07857c4234720a346a79dc7ba819fc"
+        },
+        {
+          "name": "soundHolder",
+          "descriptor": "(Lnet/minecraft/sounds/SoundEvent;)Lnet/minecraft/core/Holder;",
+          "instructions_total": 4,
+          "method_sha256": "ee7954013675fd509f40bdd5574770135a3b4ec65d2052e3936ad5a61b2bceb5"
+        },
+        {
+          "name": "registriesOf",
+          "descriptor": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/core/HolderLookup$Provider;",
+          "instructions_total": 10,
+          "method_sha256": "42b6893287102e12ac5e7439e6bc9e756993298e3b3252ee2b7dbfc166a6411a"
+        },
+        {
+          "name": "saveBlockEntity",
+          "descriptor": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/nbt/CompoundTag;",
+          "instructions_total": 5,
+          "method_sha256": "3edc51bed49246a74eb5a50aeff51306ccd36ad01b45255841e86eeee3e09d75"
+        },
+        {
+          "name": "loadBlockEntity",
+          "descriptor": "(Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/nbt/CompoundTag;)V",
+          "instructions_total": 6,
+          "method_sha256": "9550d57ecb2470342f9b55866a6b764c9c5270bf47d924e5d97c36bdcc423cce"
+        },
+        {
+          "name": "spawnPositionOk",
+          "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z",
+          "instructions_total": 5,
+          "method_sha256": "55cfb3c55a615e20b6ec47e2590ce19ffc5eb496c63546fcda959dca17090e59"
+        },
+        {
+          "name": "rawEffect",
+          "descriptor": "(Lnet/minecraft/world/effect/MobEffectInstance;)Lnet/minecraft/world/effect/MobEffect;",
+          "instructions_total": 5,
+          "method_sha256": "47f212082fc18c5593faae18444d012cc35f3cec4d7970e746bc26af6636a072"
+        },
+        {
+          "name": "width",
+          "descriptor": "(Lnet/minecraft/world/entity/EntityDimensions;)F",
+          "instructions_total": 3,
+          "method_sha256": "f5ce22cf5163fe247e4ee586ef5c0eaf5af32747ba6e28214a3c7626cd8c0ed3"
+        },
+        {
+          "name": "height",
+          "descriptor": "(Lnet/minecraft/world/entity/EntityDimensions;)F",
+          "instructions_total": 3,
+          "method_sha256": "1956d690c1f1273de02ddcdf264d547594df3b7bf408b86c02f58cecd417b2ee"
+        },
+        {
+          "name": "dimensions",
+          "descriptor": "(FFZ)Lnet/minecraft/world/entity/EntityDimensions;",
+          "instructions_total": 10,
+          "method_sha256": "e66e0de1ade947dc706861f4183e3376fdf16c3faca917baf505d87f588ed39e"
+        },
+        {
+          "name": "finalizeSpawn",
+          "descriptor": "(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData;",
+          "instructions_total": 7,
+          "method_sha256": "3f01d9cf8973cb4592a29ca5dd87dc7f6e285818fdaadf92d1360cb53b5e89b3"
+        },
+        {
+          "name": "hurt",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+          "instructions_total": 5,
+          "method_sha256": "77997f2089224cd768dc079fb789bc5ffa96c8647bf5c0cabe932b8c3a3702b5"
+        },
+        {
+          "name": "gameRule",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/GameRules$Key;Z)Z",
+          "instructions_total": 5,
+          "method_sha256": "f6ac30a9e6085a5eaddfed9238f9aa7836fc05a5f61bc72464e459d8ce43ab65"
+        },
+        {
+          "name": "gameRule",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/GameRules$Key;I)I",
+          "instructions_total": 5,
+          "method_sha256": "c97e6b38743fc63f216e80d3f663929915e0930c62c371ba39de65b89dfc3b6c"
+        },
+        {
+          "name": "isInvulnerableTo",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;)Z",
+          "instructions_total": 4,
+          "method_sha256": "32bf8f9986c95acb5aaee5f8d8f8f9db3981a086588baab592bacc1560bd85c4"
+        },
+        {
+          "name": "doHurtTarget",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)Z",
+          "instructions_total": 4,
+          "method_sha256": "f1776e2f45210f090fb36ad410eaa3e11debc748c420c41410098b6b37b5d9df"
+        },
+        {
+          "name": "kill",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)V",
+          "instructions_total": 3,
+          "method_sha256": "3ebd8cd8ee72bc36d67cd61b79e541a64a7082b55e4234279ebb576b03ca5137"
+        },
+        {
+          "name": "convertTo",
+          "descriptor": "(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/entity/EntityType;Z)Lnet/minecraft/world/entity/Mob;",
+          "instructions_total": 5,
+          "method_sha256": "c2b99d836d392f5ecf542a121d9f3da8f98f3da9cee11b34f239ddfb5b1f6eb0"
+        },
+        {
+          "name": "disableShield",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "instructions_total": 3,
+          "method_sha256": "f7cae1eca22d5f83669a62beddbe3627fa626255b2b7f35e83c119bb0ded6d9f"
+        },
+        {
+          "name": "isDamageSourceBlocked",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;)Z",
+          "instructions_total": 4,
+          "method_sha256": "7a695efc90fff3cd48d62784c34ca99eac656db821762cd4182f4cc229297d22"
+        },
+        {
+          "name": "equipmentDropChance",
+          "descriptor": "(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/entity/EquipmentSlot;)F",
+          "instructions_total": 5,
+          "method_sha256": "7f75af740abb295b20965c6fa022ac06b03f7c026f14851dc97698b4cbda3dbd"
+        },
+        {
+          "name": "addCooldown",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;I)V",
+          "instructions_total": 7,
+          "method_sha256": "f5c726c5237bf5d68d45550b5f9ac53f81c06783d01080f35bd1bd24e62c5d64"
+        },
+        {
+          "name": "applyInstantenousEffect",
+          "descriptor": "(Lnet/minecraft/world/effect/MobEffect;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LivingEntity;ID)V",
+          "instructions_total": 8,
+          "method_sha256": "9c91ed958604a01216858736d0b21fd688b2e1902ca91cf5382d8173a5fbf229"
+        },
+        {
+          "name": "spawnAtLocation",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;",
+          "instructions_total": 4,
+          "method_sha256": "6b88b537b734f14ce80f88fdc3d74258cabf3e12036c2ed55c2a82ea3053c0ba"
+        },
+        {
+          "name": "spawnAtLocation",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;F)Lnet/minecraft/world/entity/item/ItemEntity;",
+          "instructions_total": 5,
+          "method_sha256": "5e74637d41fc88fd985778202a4d0ef9266b8b47207c293efe9218b8aa061bc4"
+        },
+        {
+          "name": "spawnAtLocation",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;",
+          "instructions_total": 4,
+          "method_sha256": "a8130b2ecedf0b342c05b4b7b496231e185147090513f1f7afed769130385bb1"
+        },
+        {
+          "name": "spawnAtLocation",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/ItemLike;I)Lnet/minecraft/world/entity/item/ItemEntity;",
+          "instructions_total": 5,
+          "method_sha256": "445cfc3679c93875baf2476f968e0eb6c35d09a071ebea1c42cfbb485275d6a2"
+        },
+        {
+          "name": "createEntity",
+          "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;",
+          "instructions_total": 4,
+          "method_sha256": "5c615940bdddde55326bc71b0e8858a4956b72f5db2b405093e51d6027f10c11"
+        },
+        {
+          "name": "markDisplayEntity",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/entity/Entity;",
+          "instructions_total": 2,
+          "method_sha256": "32f973e835e01e7efdedd2601cd22a308d1b61f0457dd554547f8576e4b9367f"
+        },
+        {
+          "name": "itemResult",
+          "descriptor": "(Lnet/minecraft/world/InteractionResult;)Lnet/minecraft/world/ItemInteractionResult;",
+          "instructions_total": 21,
+          "method_sha256": "d82fba59a522c571bea812df49cff65051d75ebe6dbb3b7dc2b2a01537735904"
+        },
+        {
+          "name": "useSuccess",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+          "instructions_total": 3,
+          "method_sha256": "4a62c169b753d9e13bef7553a1723e3880c80331485b5479937731094ab3c042"
+        },
+        {
+          "name": "useSidedSuccess",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Z)Lnet/minecraft/world/InteractionResultHolder;",
+          "instructions_total": 4,
+          "method_sha256": "96484c2cda17b4e9daa9cc595abecda1b7f84798f53760b975a85fab4d9b4dd7"
+        },
+        {
+          "name": "useConsume",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+          "instructions_total": 3,
+          "method_sha256": "4e56528e4b49186c24167a81a3c4415d778c5cfb59a61baacb1a6cc8ea98f2a7"
+        },
+        {
+          "name": "useFail",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+          "instructions_total": 3,
+          "method_sha256": "de8e3981936f026c4e37d59179ac394f351e30b0ebf3e8e4d679635470645e95"
+        },
+        {
+          "name": "usePass",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+          "instructions_total": 3,
+          "method_sha256": "818b5ef4f16cc92f119d1ea27b808a3ce0b42d322c808e38759a290f1ecd825b"
+        },
+        {
+          "name": "sidedSuccess",
+          "descriptor": "(Z)Lnet/minecraft/world/InteractionResult;",
+          "instructions_total": 3,
+          "method_sha256": "1bffb76f5803da77401bf0bd7bd4bc82abc154dd0b33726e2cfcfea4448b88e1"
+        },
+        {
+          "name": "isPathfindable",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/pathfinder/PathComputationType;)Z",
+          "instructions_total": 4,
+          "method_sha256": "c6de50ef5417abab8b449c8f7d9f89e8472a7abd57f14a1b244489f6844db8c5"
+        },
+        {
+          "name": "pathTypeStatic",
+          "descriptor": "(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/CollisionGetter;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lnet/minecraft/world/level/pathfinder/PathType;",
+          "instructions_total": 8,
+          "method_sha256": "a59f8ecd54055f251ca773e05ded6951d0006fa86275667b649f0f776b4095b8"
+        },
+        {
+          "name": "attributeModifier",
+          "descriptor": "(Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;",
+          "instructions_total": 9,
+          "method_sha256": "7d59cdf94175730bd4471bdb6ece67cba4676c958b9775585aff3698d734a797"
+        },
+        {
+          "name": "food",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/food/FoodProperties;",
+          "instructions_total": 5,
+          "method_sha256": "cd6244178b3a0b2d850c9d4d7d23664e2df45d1c25615913a64c5b529ca37ca1"
+        },
+        {
+          "name": "isEdible",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 4,
+          "method_sha256": "ca973ca1a4b6a688b1fc28dda42134f38e64e125c5577986bff04a105bc5d45d"
+        },
+        {
+          "name": "nutrition",
+          "descriptor": "(Lnet/minecraft/world/food/FoodProperties;)I",
+          "instructions_total": 3,
+          "method_sha256": "a59a7b44f0a1f858188cafa618958c42c5d29301a23b5fb7b7ed68ddf49cf45b"
+        },
+        {
+          "name": "saturationModifier",
+          "descriptor": "(Lnet/minecraft/world/food/FoodProperties;)F",
+          "instructions_total": 14,
+          "method_sha256": "a26260fa28b1959c49e3a06d787d1a63fdf5519089b07704d8a685475498351b"
+        },
+        {
+          "name": "canAlwaysEat",
+          "descriptor": "(Lnet/minecraft/world/food/FoodProperties;)Z",
+          "instructions_total": 3,
+          "method_sha256": "7f656f286bd9d7a417df590c4ce47c36578f046ac797d6a4611dc3a8b3c17b4c"
+        },
+        {
+          "name": "foodEffects",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/List;",
+          "instructions_total": 15,
+          "method_sha256": "89d67ef3998b95e55ee796a3fa185d274fed6ed6d0615735c3366393b46e1dde"
+        },
+        {
+          "name": "isMeat",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 4,
+          "method_sha256": "0be25a8d488e6e4544b6f1280395e040c09d75b264c3cc80f144fd1147f852d6"
+        },
+        {
+          "name": "returnsBowl",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 16,
+          "method_sha256": "056fdbd70e69ea986bad6f581c5e1c9f132b966b65d1dc64e1306b69a6cc9ca5"
+        },
+        {
+          "name": "bowlFood",
+          "descriptor": "(Lnet/minecraft/world/item/Item$Properties;)Lnet/minecraft/world/item/Item;",
+          "instructions_total": 5,
+          "method_sha256": "479107deec97432b8fda0b0633cbcb76b8187a9080812258ff54312567005617"
+        },
+        {
+          "name": "loadStack",
+          "descriptor": "(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/item/ItemStack;",
+          "instructions_total": 7,
+          "method_sha256": "a1d5012ebeecb5f83f506c1507b68bee93bcad7cbc9b8abbec6b80df5e189d5f"
+        },
+        {
+          "name": "saveStack",
+          "descriptor": "(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;",
+          "instructions_total": 5,
+          "method_sha256": "dcc02a505eeaec59536df76a9cf15438dd329007775c37495affd8b5dbf3ca8f"
+        },
+        {
+          "name": "asInput",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "instructions_total": 2,
+          "method_sha256": "313deb0fd5a21f56b0a6d8b24415239344da2550fcb1c9d85f907c94b14431f2"
+        },
+        {
+          "name": "asOutput",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "instructions_total": 2,
+          "method_sha256": "07265ba0f0e3ad530c26533749da7e2f454382e5b58afce1f935aeed6bdef3c5"
+        },
+        {
+          "name": "entityTypeFrom",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)Ljava/util/Optional;",
+          "instructions_total": 3,
+          "method_sha256": "15e0eecf4a9417b135d110a97734f7c73b397c229023139d47fcc6737db5699e"
+        },
+        {
+          "name": "setCloudColor",
+          "descriptor": "(Lnet/minecraft/world/entity/AreaEffectCloud;I)V",
+          "instructions_total": 11,
+          "method_sha256": "0049082c7fdd887e4fb85258cfd0bbdcb8d951104a6419521b503c89c29da5be"
+        },
+        {
+          "name": "lootTable",
+          "descriptor": "(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/world/level/storage/loot/LootTable;",
+          "instructions_total": 6,
+          "method_sha256": "efc3a2360f3fb2ebbcb32861e7a850bd5403f9b3723288afd7d048d9ccafa3df"
+        },
+        {
+          "name": "lootKey",
+          "descriptor": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/resources/ResourceKey;",
+          "instructions_total": 4,
+          "method_sha256": "05b82cce6d69a4a2489240c4575193e573614a33c9f3ac9fcc45086965f6dd26"
+        },
+        {
+          "name": "lootId",
+          "descriptor": "(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/resources/ResourceLocation;",
+          "instructions_total": 3,
+          "method_sha256": "b6da7a3fb183ac737411c5252ed18a90d410714e1f96963e7bbff76ead192b53"
+        },
+        {
+          "name": "getPersistentData",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/nbt/CompoundTag;",
+          "instructions_total": 3,
+          "method_sha256": "d0c75cef3b4377b9022106b06934b3b10070c5beb3f28cee1f00465ac17cb47b"
+        },
+        {
+          "name": "putBlockPos",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Lnet/minecraft/core/BlockPos;)V",
+          "instructions_total": 25,
+          "method_sha256": "94b9f878e4c7786247e94635eee7727997f13eac67867c9553bc85f46e97c906"
+        },
+        {
+          "name": "getBlockPos",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Lnet/minecraft/core/BlockPos;",
+          "instructions_total": 12,
+          "method_sha256": "3e690d7e8bed0a309122b95025936f7452aa25c4fd4007e78e1447490818e952"
+        },
+        {
+          "name": "posToTag",
+          "descriptor": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/nbt/CompoundTag;",
+          "instructions_total": 12,
+          "method_sha256": "2314d4a8cdcf303bcafc52d62e7149b892d2060f51e60c545769658780d13552"
+        },
+        {
+          "name": "posFromTag",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/core/BlockPos;",
+          "instructions_total": 13,
+          "method_sha256": "964d927045c87383b0125cf3b4e8b7617d85bfe27c89d854b1c97b6c3ec6528a"
+        },
+        {
+          "name": "isWornArmor",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 24,
+          "method_sha256": "5afe6497adfc323c58aefa86a622688b5e3908969e07019c5499a1f44c2f072a"
+        },
+        {
+          "name": "recipeDisplaySlots",
+          "descriptor": "(Lnet/minecraft/world/item/crafting/Recipe;Lnet/minecraft/world/level/Level;)Ljava/util/List;",
+          "instructions_total": 23,
+          "method_sha256": "74e6d8390b6611695aaca0768159bcb477b68199e3e484f36669aae3aa93a80b"
+        },
+        {
+          "name": "ingredientItems",
+          "descriptor": "(Lnet/minecraft/world/item/crafting/Ingredient;)[Lnet/minecraft/world/item/ItemStack;",
+          "instructions_total": 8,
+          "method_sha256": "993881f16903c758f6c9494b4b8777d04123e5dcd7dd57276efe77d44ef2b71f"
+        },
+        {
+          "name": "recipeResult",
+          "descriptor": "(Lnet/minecraft/world/item/crafting/Recipe;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/item/ItemStack;",
+          "instructions_total": 5,
+          "method_sha256": "b62a83e636663bbd2fe705df7082a143a7fb7f9246ad9dd68ab6eb487fcd434b"
+        },
+        {
+          "name": "cookingExperience",
+          "descriptor": "(Lnet/minecraft/world/item/crafting/AbstractCookingRecipe;)F",
+          "instructions_total": 3,
+          "method_sha256": "88dbf72b915dc6fc0966c6ce7196e9d4cfeefd0b9f69a175cbe1fb579fcdaffc"
+        },
+        {
+          "name": "cookingTime",
+          "descriptor": "(Lnet/minecraft/world/item/crafting/AbstractCookingRecipe;)I",
+          "instructions_total": 3,
+          "method_sha256": "79007e03340916e4bc64bf1c95bb722729d45105c14cdbdc9d49729181cead8c"
+        },
+        {
+          "name": "recipes",
+          "descriptor": "(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/item/crafting/RecipeManager;",
+          "instructions_total": 3,
+          "method_sha256": "ffbedd6226acd65842cb3aa1a2c49e6bae27331bf0e820c7abfddda9b3c5a208"
+        },
+        {
+          "name": "cookingIngredient",
+          "descriptor": "(Lnet/minecraft/world/item/crafting/AbstractCookingRecipe;)Lnet/minecraft/world/item/crafting/Ingredient;",
+          "instructions_total": 6,
+          "method_sha256": "60cb1a781b2502e996a2e2c82898596a6ceb2b2370ca03a169be52392ba1c8ff"
+        },
+        {
+          "name": "recipeById",
+          "descriptor": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "instructions_total": 5,
+          "method_sha256": "b817fbecab7ba9cfe78b55dbee8e8af967f0127763190cbd85b7e10da093db22"
+        },
+        {
+          "name": "blockOffset",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/Vec3;",
+          "instructions_total": 5,
+          "method_sha256": "e1075dd8ffdfd5dffeca9a02edee260e7ec72ca01b61e3714c4d9b0b89b66791"
+        },
+        {
+          "name": "isSolidRender",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z",
+          "instructions_total": 5,
+          "method_sha256": "31b0e48f8a03514979f10aebeba9e6911fb4be346eca87daac133266fa5d4d4b"
+        },
+        {
+          "name": "targetSelector",
+          "descriptor": "(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;",
+          "instructions_total": 2,
+          "method_sha256": "b10a5989478262171604d8f1692ba5ad5da3f4d13f96e2ab39f78e9c57e61ca1"
+        },
+        {
+          "name": "testTargetConditions",
+          "descriptor": "(Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 5,
+          "method_sha256": "decb505f6fa2b81db195c79f0bea45937e3e0d954e5b7450cd73c9f7d0a01432"
+        },
+        {
+          "name": "getNearestEntity",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Ljava/util/List;Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;Lnet/minecraft/world/entity/LivingEntity;DDD)Lnet/minecraft/world/entity/LivingEntity;",
+          "instructions_total": 9,
+          "method_sha256": "287145f5a4fdafcb266cbec6c9940f377374a09dd4f4a9c8a84ea163f9052611"
+        },
+        {
+          "name": "getNearestPlayer",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;Lnet/minecraft/world/entity/LivingEntity;DDD)Lnet/minecraft/world/entity/player/Player;",
+          "instructions_total": 8,
+          "method_sha256": "736ad7c907e08954da838de61ae245d71a762ac45ad286e612d859133df290b0"
+        },
+        {
+          "name": "getNearbyPlayers",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "instructions_total": 6,
+          "method_sha256": "5801f1ad333d430935a5dee61791841979bf86b952a9aa88480b831f78fcb1eb"
+        },
+        {
+          "name": "onBlockExploded",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Explosion;)V",
+          "instructions_total": 6,
+          "method_sha256": "df693dc5550db9e8ba5cf1a73af9e184ba9646c413f248649c181fb3ead2009c"
+        },
+        {
+          "name": "mayInteract",
+          "descriptor": "(Lnet/minecraft/world/entity/projectile/Projectile;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z",
+          "instructions_total": 5,
+          "method_sha256": "a559dd646f4fb723a4d78ce9c6fc5028f0c49b00c70e6a0b751255f1fa16b36e"
+        },
+        {
+          "name": "angerNearbyPiglins",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;Z)V",
+          "instructions_total": 4,
+          "method_sha256": "58aa7037caf629a48c2663313ee2beb50d8c6d6018e3c1706f8543d550ffa67e"
+        },
+        {
+          "name": "dropsLike",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;",
+          "instructions_total": 4,
+          "method_sha256": "6ee413d5e7ac7f47fe7b7d815aa7ceb01fd2b6ee737d0373ddb2d8cf01cbe18f"
+        },
+        {
+          "name": "sendSystemMessage",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/network/chat/Component;)V",
+          "instructions_total": 10,
+          "method_sha256": "7a4b776df9fbfd133c6ad3b067379ef600c1e8854f8f1473726442ed5c2fef77"
+        },
+        {
+          "name": "minecartRideable",
+          "descriptor": "(Lnet/minecraft/world/entity/vehicle/AbstractMinecart;)Z",
+          "instructions_total": 3,
+          "method_sha256": "8a53657f737a39a3d5cb89891c3ae096958820db38ad92cd79def94563edf688"
+        },
+        {
+          "name": "minecartRailFunctions",
+          "descriptor": "(Lnet/minecraft/world/entity/vehicle/AbstractMinecart;)Z",
+          "instructions_total": 3,
+          "method_sha256": "01ba76f3947a51b37717576d567c0e7aedac72611f5bb43cfd875795a0273462"
+        },
+        {
+          "name": "minecartSlopeAdjustment",
+          "descriptor": "(Lnet/minecraft/world/entity/vehicle/AbstractMinecart;)D",
+          "instructions_total": 3,
+          "method_sha256": "a5aa1e58e4d92904db476648735c1f953bcc01b95080193e4aae580434b04b80"
+        },
+        {
+          "name": "defaultRailMaxSpeed",
+          "descriptor": "(Lnet/minecraft/world/entity/vehicle/AbstractMinecart;)F",
+          "instructions_total": 17,
+          "method_sha256": "6987a9ca24cf989a4c1adb62154cdb4705dbfa6e84ce759b182d49be91264b1d"
+        },
+        {
+          "name": "railOnMinecartPass",
+          "descriptor": "(Lnet/minecraft/world/level/block/BaseRailBlock;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/vehicle/AbstractMinecart;)V",
+          "instructions_total": 7,
+          "method_sha256": "e0811b89a5a1926e2f071db45d738df8320c0414b568bf7802b566734e1634a5"
+        },
+        {
+          "name": "shouldRiderSit",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "instructions_total": 3,
+          "method_sha256": "7d49e21807cc1ba6f2e7135663980c21aa908d851cb57cfcc47bedec24bc19fb"
+        },
+        {
+          "name": "getBlockPathType",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Mob;)Lnet/minecraft/world/level/pathfinder/PathType;",
+          "instructions_total": 6,
+          "method_sha256": "f33daec2b661c9bc0d0dbde00fcd594dd28b618515809437187d0a73ca2fd24f"
+        },
+        {
+          "name": "isLadder",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instructions_total": 6,
+          "method_sha256": "ad67bb3fe2c63e5e098140d1d668c3f42f37e4efb874e69b7ec7cb1b641b992a"
+        },
+        {
+          "name": "isAddedToWorld",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "instructions_total": 3,
+          "method_sha256": "65781feeaf758ae385323fbb2be0be11236e3a636f38623c22413a4a795ca0a7"
+        },
+        {
+          "name": "captureDrops",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;Ljava/util/Collection;)Ljava/util/Collection;",
+          "instructions_total": 4,
+          "method_sha256": "d2dc7900c92bfd4dcd25e3fba9b769d56abaf7a19ed4035f729d7710ea35ee56"
+        },
+        {
+          "name": "setLightningDamage",
+          "descriptor": "(Lnet/minecraft/world/entity/LightningBolt;F)V",
+          "instructions_total": 4,
+          "method_sha256": "36fc2a9cfcd09da7bd6660f789d56868c9b02f88a471f20b9f75004625be803a"
+        },
+        {
+          "name": "isStickyBlock",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "instructions_total": 3,
+          "method_sha256": "9f61726684e2bb0b6624ad88f0e894b3fd37b97ccfbe947a59bb8e96c21c29bf"
+        },
+        {
+          "name": "canStickTo",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "instructions_total": 4,
+          "method_sha256": "04edfd6696770ab60808d06cf4423ded29978f9a77d9cdddcded2f85c3be86f0"
+        },
+        {
+          "name": "blockReach",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;)D",
+          "instructions_total": 3,
+          "method_sha256": "5d2877db9d774a4fbcea07d1d6da7f8879728baf12fb2bf19bdab4f27243daa9"
+        },
+        {
+          "name": "canEntityDestroy",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)Z",
+          "instructions_total": 6,
+          "method_sha256": "20b53c9022fbb73b87184556f4e17c4de82331ecb8d968ef543f3d8ed4bce16e"
+        },
+        {
+          "name": "onCaughtFire",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "instructions_total": 7,
+          "method_sha256": "972ad7f8ab98518f49d7968d7d38d4c770ee27b4bd8cf5f91bddca381fc33ab7"
+        },
+        {
+          "name": "railDirection",
+          "descriptor": "(Lnet/minecraft/world/level/block/BaseRailBlock;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/vehicle/AbstractMinecart;)Lnet/minecraft/world/level/block/state/properties/RailShape;",
+          "instructions_total": 7,
+          "method_sha256": "c4fa2d8e1941f2e2f35066b7aa3fbc779d17253c4dc47129b541ae716fd391ff"
+        },
+        {
+          "name": "soundType",
+          "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/level/block/SoundType;",
+          "instructions_total": 6,
+          "method_sha256": "6ed5e0cdd337a42f25087bc5170e46c7f5197ce8dcf6739757a80b86f3981c9b"
+        },
+        {
+          "name": "addParticleForced",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V",
+          "instructions_total": 11,
+          "method_sha256": "1f69bbe9fbaf54326081b7a9015faac151325c9a47f2ad7a582db9628cc0325b"
+        },
+        {
+          "name": "isInWaterOrBubble",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "instructions_total": 3,
+          "method_sha256": "1b709e191877e136380c14c2ff5c0a3783ed5a20c225a5711cd79d83e3616804"
+        },
+        {
+          "name": "moveTo",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;DDDFF)V",
+          "instructions_total": 8,
+          "method_sha256": "5d736146f21b0dc37249ef217ecce1e987f6c329e28367e2bae2f7ed56850e40"
+        },
+        {
+          "name": "moveTo",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;DDD)V",
+          "instructions_total": 6,
+          "method_sha256": "338f1af3023619dbaec72bdf2cac3b0d26db43d7434b62193a952d941122362f"
+        },
+        {
+          "name": "moveTo",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)V",
+          "instructions_total": 4,
+          "method_sha256": "482c42e61a4da31157f173b96fe657c7f675d987dcadb81c881fe53b0c7e39ad"
+        },
+        {
+          "name": "absMoveTo",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;DDDFF)V",
+          "instructions_total": 8,
+          "method_sha256": "2a2c209ca5e8dc629e271f017f055ebf41936ae21eb6df044b719aee8341781a"
+        },
+        {
+          "name": "getBoolean",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Z",
+          "instructions_total": 4,
+          "method_sha256": "dd467d23cf7f5205d357c8161747f7cffd9c4caf9bc4e4badcd50620edd505f2"
+        },
+        {
+          "name": "getByte",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)B",
+          "instructions_total": 4,
+          "method_sha256": "27f7914f97a25c8b266411b8d8b62053db53f6bb8e2f7ad562863dc560713658"
+        },
+        {
+          "name": "getShort",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)S",
+          "instructions_total": 4,
+          "method_sha256": "bfdfd9f3ec008e5a0e3b880b0f82077a3b10ae574c5b1fec4c3258bbc7fafe7f"
+        },
+        {
+          "name": "getInt",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I",
+          "instructions_total": 4,
+          "method_sha256": "963b5b10630f054002bf8ab9957440fba2d5da7e2d5ac25f7945b435a4f7a37d"
+        },
+        {
+          "name": "getLong",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)J",
+          "instructions_total": 4,
+          "method_sha256": "b6f9999c81e606d6271c0b2b4937a5c480273601672f2461348cc9eb54ddea59"
+        },
+        {
+          "name": "getFloat",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)F",
+          "instructions_total": 4,
+          "method_sha256": "a81f02b2b137705b873556f5877ed58c27234288d277a25f03e68aa23bde4a8a"
+        },
+        {
+          "name": "getDouble",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)D",
+          "instructions_total": 4,
+          "method_sha256": "cd9d8933a119b737f09fe271a149e45dde8a0cbd296d7c846696013083393580"
+        },
+        {
+          "name": "getString",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Ljava/lang/String;",
+          "instructions_total": 4,
+          "method_sha256": "42e9d7b6375e2cfdee139e3ef49e5b7a864db3697ae7e9df1ea6d37da74ce585"
+        },
+        {
+          "name": "getIntArray",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)[I",
+          "instructions_total": 4,
+          "method_sha256": "74bc2a8eefe469001cf4fbaebf821812e57f756d1a7911695072b320c7211809"
+        },
+        {
+          "name": "getByteArray",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)[B",
+          "instructions_total": 4,
+          "method_sha256": "a246a8e86263293e4e6ed07e86e88e81f7510c5a2d23f80574d81bfb097ea709"
+        },
+        {
+          "name": "getCompound",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;",
+          "instructions_total": 4,
+          "method_sha256": "466371c4ea9a5b08c024630f67c696c664c7f43730d93faee06b0071eb7cf0b2"
+        },
+        {
+          "name": "getList",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;I)Lnet/minecraft/nbt/ListTag;",
+          "instructions_total": 5,
+          "method_sha256": "c7b2eaddb106318e63a8c0ceb96c7863c3b547cb3a66562b82b879f7e0404672"
+        },
+        {
+          "name": "contains",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;I)Z",
+          "instructions_total": 5,
+          "method_sha256": "4e76a84ffaee78de3dd4b8468e32343fb906a164e887c23969e2e8abe34f8e64"
+        },
+        {
+          "name": "tagAsString",
+          "descriptor": "(Lnet/minecraft/nbt/Tag;)Ljava/lang/String;",
+          "instructions_total": 3,
+          "method_sha256": "5298bf38696555a04d1099b85bdcc5a0ad528358ab77b324c9afbe32d6fad594"
+        },
+        {
+          "name": "inventoryItems",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Inventory;)Ljava/util/List;",
+          "instructions_total": 3,
+          "method_sha256": "59c75cf7d45bdeec0953f858b0f49bbed8e9fe3c49f8dba980a5b8b55a1384a2"
+        },
+        {
+          "name": "getAllKeys",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)Ljava/util/Set;",
+          "instructions_total": 3,
+          "method_sha256": "cff30c2c7ff37ea34e9c318119d305ea6b8c15ff2d9c66e479486f20a76fea4e"
+        },
+        {
+          "name": "hasUUID",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Z",
+          "instructions_total": 4,
+          "method_sha256": "5a74343c9d15b498c5fde9f8068704f472603ef67612553439972de5cc0491f2"
+        },
+        {
+          "name": "getUUID",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Ljava/util/UUID;",
+          "instructions_total": 4,
+          "method_sha256": "7a227764592115acbf229add07e8b952ab03304f8eef2ade5668bf35ffb3aa36"
+        },
+        {
+          "name": "putUUID",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/UUID;)V",
+          "instructions_total": 5,
+          "method_sha256": "334411a5b8b35fc8cf3cdaa0a984427af2142490620b176efba1e0082ab1ec03"
+        },
+        {
+          "name": "getCompound",
+          "descriptor": "(Lnet/minecraft/nbt/ListTag;I)Lnet/minecraft/nbt/CompoundTag;",
+          "instructions_total": 4,
+          "method_sha256": "5f1a342a0957560c60fece09b675fb9640bf4e45c9383a1d8b3217cad57ef188"
+        },
+        {
+          "name": "getInt",
+          "descriptor": "(Lnet/minecraft/nbt/ListTag;I)I",
+          "instructions_total": 4,
+          "method_sha256": "32beb08a504b7f3f3d4ef5147057c5ecf2e765c8013b7f189f595494d2d4cbab"
+        },
+        {
+          "name": "getFloat",
+          "descriptor": "(Lnet/minecraft/nbt/ListTag;I)F",
+          "instructions_total": 4,
+          "method_sha256": "96c21de243588b63500d89f0763e912840a263ca238fed996dc3ac4d52fb2b7d"
+        },
+        {
+          "name": "getDouble",
+          "descriptor": "(Lnet/minecraft/nbt/ListTag;I)D",
+          "instructions_total": 4,
+          "method_sha256": "ca3947189b19b4242dc38a7e0ad6516e129aebd45ba1e1abe4acc14cc81ea453"
+        },
+        {
+          "name": "getString",
+          "descriptor": "(Lnet/minecraft/nbt/ListTag;I)Ljava/lang/String;",
+          "instructions_total": 4,
+          "method_sha256": "ff29132d7b7bde7e70e798e7c6dc9fb5d9067577d90f41bb16c92ed01d7a9ea6"
+        },
+        {
+          "name": "parseTag",
+          "descriptor": "(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;",
+          "instructions_total": 3,
+          "method_sha256": "b3e006e9d49422be5421c729e16253c014b3c9d83fe3a714aa1284e883231522"
+        },
+        {
+          "name": "canPerform",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/neoforged/neoforge/common/ItemAbility;)Z",
+          "instructions_total": 4,
+          "method_sha256": "30ff0c17966cc2892df8956ae27dcb69802c036066c6e536315bf3c80c04e88e"
+        },
+        {
+          "name": "canBlockAttacks",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 4,
+          "method_sha256": "b9b23c0a3bd1655d8b014f376e24dd4b916db55bf4ca6b4de28822b76fad448a"
+        },
+        {
+          "name": "sunAboveHorizon",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z",
+          "instructions_total": 16,
+          "method_sha256": "e56a191d33a1ab462518d5113e1df101c98663bafa1b263da092cf46a9767da7"
+        },
+        {
+          "name": "displayClientMessage",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/network/chat/Component;Z)V",
+          "instructions_total": 5,
+          "method_sha256": "619ac5564df4fdf98785c91555fc00e2a1fba4fb95132e4bb652a503a6f6b257"
+        },
+        {
+          "name": "itemParticle",
+          "descriptor": "(Lnet/minecraft/core/particles/ParticleType;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/core/particles/ItemParticleOption;",
+          "instructions_total": 6,
+          "method_sha256": "5c59461db918243df164d772b009ae63aca9434f225d28fcc0121e5aa39c041d"
+        },
+        {
+          "name": "particleStack",
+          "descriptor": "(Lnet/minecraft/core/particles/ItemParticleOption;)Lnet/minecraft/world/item/ItemStack;",
+          "instructions_total": 3,
+          "method_sha256": "6fd6d87d1bbcad645ebf655149c68da78b0bddffe726e4581a71bec51b80d6ab"
+        },
+        {
+          "name": "chunkPos",
+          "descriptor": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/ChunkPos;",
+          "instructions_total": 5,
+          "method_sha256": "4486c373df3f1383ea12230fdcb680f34db24f569b7119f3230ba6312b1eb5fd"
+        },
+        {
+          "name": "chunkPos",
+          "descriptor": "(J)Lnet/minecraft/world/level/ChunkPos;",
+          "instructions_total": 5,
+          "method_sha256": "0dfeb62ff9584e0a0083334cc946c6ca1c8b1df41585bc40f1e968e78593bfbd"
+        },
+        {
+          "name": "chunkX",
+          "descriptor": "(Lnet/minecraft/world/level/ChunkPos;)I",
+          "instructions_total": 3,
+          "method_sha256": "2f96334dfecccd79d97d66a542d0d773e38936a4185202be90d17e58601ec939"
+        },
+        {
+          "name": "chunkZ",
+          "descriptor": "(Lnet/minecraft/world/level/ChunkPos;)I",
+          "instructions_total": 3,
+          "method_sha256": "15e95999b9531087e5e210c768f99a915ce49997aa0f008ec0c00280c033c7e0"
+        },
+        {
+          "name": "chunkAsLong",
+          "descriptor": "(II)J",
+          "instructions_total": 4,
+          "method_sha256": "1d9de5f54d04e7148c63e2a750e6477ba48448c0246bab70ef697c7fd6d3aeae"
+        },
+        {
+          "name": "chunkAsLong",
+          "descriptor": "(Lnet/minecraft/world/level/ChunkPos;)J",
+          "instructions_total": 3,
+          "method_sha256": "b71a8e60f7dce2f678c6e0202bb45a3567436f3eed1b922aed77aca0c4674a81"
+        },
+        {
+          "name": "providerState",
+          "descriptor": "(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/world/level/levelgen/feature/stateproviders/BlockStateProvider;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "instructions_total": 5,
+          "method_sha256": "4df14ee52e96580e458cc43bd02326aa8ebb217c4273a6486a458ccb2df837a0"
+        },
+        {
+          "name": "knockback",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;DDD)V",
+          "instructions_total": 6,
+          "method_sha256": "b5340a2a4a3dfaecf0a4f39700ee15b8c0134015b594734d0f22c5e0548095f7"
+        },
+        {
+          "name": "isMultipartEntity",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "instructions_total": 3,
+          "method_sha256": "a8e67976a899789d8620626329f44c5fa5f213126245d674dd24c4ef666e8ed6"
+        },
+        {
+          "name": "temptable",
+          "descriptor": "(Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;)Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;",
+          "instructions_total": 2,
+          "method_sha256": "3677465ae22fc7a851fb94e94833e390920d8ddd7784e6359cfd440a1758bb0e"
+        },
+        {
+          "name": "riderXxa",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;)F",
+          "instructions_total": 3,
+          "method_sha256": "62e7573ed85c832db51b1d59b99b8b5e2c9c15930556d1e984f0897678d16c3f"
+        },
+        {
+          "name": "riderZza",
+          "descriptor": "(Lnet/minecraft/world/entity/player/Player;)F",
+          "instructions_total": 3,
+          "method_sha256": "25dd00cc4e5765df19c513903d32332d769bf7837bcda2bc9ba302fffc2283d1"
+        },
+        {
+          "name": "lambda$returnsBowl$3",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instructions_total": 4,
+          "method_sha256": "eae6e7d508873d4d0e3962b0571da70c6e6f0207b1062dfae19680cefb491882"
+        },
+        {
+          "name": "lambda$attackDamageBonus$2",
+          "descriptor": "([DLnet/minecraft/core/Holder;Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "instructions_total": 14,
+          "method_sha256": "7657a3346470dfc64627146970a5cb10a4c0fde324c87450bf922f714e69723e"
+        },
+        {
+          "name": "lambda$itemAttributes$1",
+          "descriptor": "(Lnet/minecraft/world/item/component/ItemAttributeModifiers$Builder;Lnet/minecraft/world/entity/EquipmentSlotGroup;Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "instructions_total": 7,
+          "method_sha256": "90dab00f04c5b89e0621782466ec8da0d1b6562783335a8be9194ddabd28083d"
+        },
+        {
+          "name": "lambda$itemAttributes$0",
+          "descriptor": "(Lnet/minecraft/world/item/component/ItemAttributeModifiers$Builder;Lnet/minecraft/world/entity/EquipmentSlotGroup;Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "instructions_total": 7,
+          "method_sha256": "a9cd23563383c75219dbf9ce7a8b46f8eeb957e8960f2e59b624a55c0766a92b"
+        }
+      ],
+      "selected_methods": [
+        {
+          "name": "enchantLevel",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I",
+          "instructions_total": 24,
+          "method_sha256": "775387837bd0e7dbbd2fd04cd5de0375a6ccd2813de5db375fd152f8b63ad8dc",
+          "windows": [
+            {
+              "needle": "getEnchantments:",
+              "offset": 1,
+              "matches": 1,
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "invokevirtual",
+                  "operand": "#150",
+                  "symbol": "Method net/minecraft/world/item/ItemStack.getEnchantments:()Lnet/minecraft/world/item/enchantment/ItemEnchantments;"
+                },
+                {
+                  "offset": 4,
+                  "opcode": "invokevirtual",
+                  "operand": "#154",
+                  "symbol": "Method net/minecraft/world/item/enchantment/ItemEnchantments.entrySet:()Ljava/util/Set;"
+                },
+                {
+                  "offset": 7,
+                  "opcode": "invokeinterface",
+                  "operand": "#160,  1",
+                  "symbol": "InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;"
+                },
+                {
+                  "offset": 12,
+                  "opcode": "astore_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 13,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 14,
+                  "opcode": "invokeinterface",
+                  "operand": "#166,  1",
+                  "symbol": "InterfaceMethod java/util/Iterator.hasNext:()Z"
+                },
+                {
+                  "offset": 19,
+                  "opcode": "ifeq",
+                  "operand": "60",
+                  "symbol": ""
+                },
+                {
+                  "offset": 22,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 23,
+                  "opcode": "invokeinterface",
+                  "operand": "#171,  1",
+                  "symbol": "InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;"
+                },
+                {
+                  "offset": 28,
+                  "opcode": "checkcast",
+                  "operand": "#174",
+                  "symbol": "class it/unimi/dsi/fastutil/objects/Object2IntMap$Entry"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "itemAttributes",
+          "descriptor": "(Lcom/google/common/collect/Multimap;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/util/function/Supplier;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+          "instructions_total": 19,
+          "method_sha256": "78458bf90e03969ad9054e041a356e40482bc3dc27f54edd4e278f264d331f09",
+          "windows": [
+            {
+              "needle": "ItemAttributeModifiers",
+              "offset": 10,
+              "matches": 4,
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 1,
+                  "opcode": "ifnonnull",
+                  "operand": "14",
+                  "symbol": ""
+                },
+                {
+                  "offset": 4,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 5,
+                  "opcode": "invokeinterface",
+                  "operand": "#282,  1",
+                  "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "checkcast",
+                  "operand": "#286",
+                  "symbol": "class net/minecraft/world/item/component/ItemAttributeModifiers"
+                },
+                {
+                  "offset": 13,
+                  "opcode": "areturn",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 14,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 15,
+                  "opcode": "invokestatic",
+                  "operand": "#288",
+                  "symbol": "Method net/minecraft/world/entity/EquipmentSlotGroup.bySlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/entity/EquipmentSlotGroup;"
+                },
+                {
+                  "offset": 18,
+                  "opcode": "astore_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 19,
+                  "opcode": "invokestatic",
+                  "operand": "#294",
+                  "symbol": "Method net/minecraft/world/item/component/ItemAttributeModifiers.builder:()Lnet/minecraft/world/item/component/ItemAttributeModifiers$Builder;"
+                },
+                {
+                  "offset": 22,
+                  "opcode": "astore",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 24,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 25,
+                  "opcode": "aload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 27,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "itemAttributes",
+          "descriptor": "(Ljava/util/function/BiFunction;Lnet/minecraft/world/item/ItemStack;Ljava/util/function/Supplier;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+          "instructions_total": 48,
+          "method_sha256": "75e48e223681347822ad84fd6ac8a6f545d6368457be30608b5928d1fac40809",
+          "windows": [
+            {
+              "needle": "ItemAttributeModifiers",
+              "offset": 0,
+              "matches": 4,
+              "nearby": [
+                {
+                  "offset": 0,
+                  "opcode": "invokestatic",
+                  "operand": "#294",
+                  "symbol": "Method net/minecraft/world/item/component/ItemAttributeModifiers.builder:()Lnet/minecraft/world/item/component/ItemAttributeModifiers$Builder;"
+                },
+                {
+                  "offset": 3,
+                  "opcode": "astore_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 4,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 5,
+                  "opcode": "istore",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                {
+                  "offset": 7,
+                  "opcode": "invokestatic",
+                  "operand": "#314",
+                  "symbol": "Method net/minecraft/world/entity/EquipmentSlot.values:()[Lnet/minecraft/world/entity/EquipmentSlot;"
+                },
+                {
+                  "offset": 10,
+                  "opcode": "astore",
+                  "operand": "5",
+                  "symbol": ""
+                },
+                {
+                  "offset": 12,
+                  "opcode": "aload",
+                  "operand": "5",
+                  "symbol": ""
+                },
+                {
+                  "offset": 14,
+                  "opcode": "arraylength",
+                  "operand": "",
+                  "symbol": ""
+                },
+                {
+                  "offset": 15,
+                  "opcode": "istore",
+                  "operand": "6",
+                  "symbol": ""
+                },
+                {
+                  "offset": 17,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "exact_attribute_contract": {
+    "scope": "COMPILED_STATIC_ATTRIBUTE_CONTRIBUTION_ONLY",
+    "damage_attribute_add_value": "8.0D (same for levels 0-3)",
+    "attack_speed_attribute_add_value": "min(0F, -3.75F + 0.15F * clamped_level)",
+    "level_index_clamp": [
+      0,
+      3
+    ],
+    "slot": "MAINHAND",
+    "other_slots": "null (delegate to fallback)",
+    "methods_sha256": {
+      "getStatsForEnchantmentLevel": "a724c693a064b959f9dbd6395a4ab430114a3b1318b888546180bb0c3e09333f",
+      "acModifiers": "cdb36891f41a21806ad79e3ac68339b261c3f5f834cfdf54720b337b8df3681d",
+      "getDefaultAttributeModifiers": "3ef89b9927daf6ddd6d8fa7d826e2a8a1eeb788a12faef74ad3c1d99918252e4",
+      "lambda$getDefaultAttributeModifiers$0": "cb75b22e942d400bf70796038c5bd88e56cbb64f14239de3aa50b9d3064488d7"
+    },
+    "native_attribute_bridge": "getDefaultAttributeModifiers -> ACCompat.itemAttributes",
+    "effective_attribute_application": "NOT_TESTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION"
+  },
+  "limits": {
+    "static_contract": "CERTIFIED_STATIC_ONLY",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "source_111_matches_installed_1010": false,
+    "effective_attribute_stack": "NOT_TESTED",
+    "third_party_modifiers": "NOT_VERIFIED",
+    "provider_universe_closed": false
+  }
+}
