@@ -21,6 +21,7 @@ LANG="assets/alexscaves/lang/en_us.json"
 PRIOR="wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FLINGING-1.0.10.json"
 SCOPE="SECOND_WAVE_1010_BOUNDED_READONLY_DISCOVERY"
 PIVOTS=(460,463,466,469,474,477,482,486,489)
+FLOW_PIVOTS=(495,503,521,535,548,556,563,587,597,602,610,620,633,641,648,663,672,682,687,689,695,702,705,758,793,811,824,866)
 STEP=5
 MAX_SNAP=90000
 MAX_INS=600
@@ -46,6 +47,16 @@ def snapshot(method):
     for p in PIVOTS:
         pos=offset_lookup[p]
         windows.append({"pivot":p,"instructions":ins[max(0,pos-STEP):min(len(ins),pos+STEP+1)]})
+    # Additional sparse independent windows over value flow, waiting, producer
+    # returns and inherited launch settlement; do not export a full method.
+    flow_windows=[]
+    for p in FLOW_PIVOTS:
+        if p not in offset_lookup:
+            # Some offsets are only referenced when that exact instruction exists;
+            # a version drift must fail closed, not produce a shorter contract.
+            raise ValueError("critical branch boundary absent at "+str(p))
+        pos=offset_lookup[p]
+        flow_windows.append({"pivot":p,"instructions":ins[max(0,pos-3):min(len(ins),pos+4)]})
     # The release method has external consumers; emit bounded callsites within
     # the Second Wave segment, not the original third-party implementation.
     block=[x for x in ins if 459<=x["offset"]<705]
@@ -60,6 +71,7 @@ def snapshot(method):
         "block_offset_range":[459,705],
         "selected_block_operands":selected,
         "pivot_windows":windows,
+        "flow_windows":flow_windows,
     }
 
 def audit(jar,javap_bin,prior):
