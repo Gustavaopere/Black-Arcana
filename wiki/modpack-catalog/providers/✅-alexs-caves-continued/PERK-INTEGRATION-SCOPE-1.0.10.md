@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os treze contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **41 contratos estáticos certificados entre 63 fichas observadas**: 33 são dossiers de encantamentos, sendo vinte parciais e treze estáticos completos, incluindo [Sea Swing](enchantments/sea-swing.md). Seu manifesto agora contempla métodos e construtores completos do recorte JAR SHA-exato, sem autorizar hook ou QA física. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
+As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os catorze contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **42 contratos estáticos certificados entre 64 fichas observadas**: 34 são dossiers de encantamentos, sendo vinte parciais e catorze estáticos completos, incluindo [Sea Swing](enchantments/sea-swing.md) e [Second Wave](enchantments/second-wave.md). A prova SHA-exata inclui o censo de 1.555 classfiles e o ramo de ondas da Ortholance, sem autorizar hook ou QA física. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 

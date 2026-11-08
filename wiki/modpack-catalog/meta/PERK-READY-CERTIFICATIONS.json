@@ -7299,6 +7299,46 @@
           "reason": "Prova individual mantém 759 âncoras antigas e adiciona 9 pivôs; bloco local completo dentro de tick 254/361, budgets preservados, regressões e revisão independente."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/second-wave.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Somente o contrato estático do encantamento Second Wave no caminho de lançamento Ortholance e WaveEntity 1.0.10; sem hooks mutadores, garantia de spawn/dano aceito, políticas PvP/claims, reload de espera, QA física ou conclusão integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/second-wave.md",
+          "reason": "JAR publisher SHA-exato 1.0.10; second_wave.json 413 bytes, tag Ortholance, localização en_us e exclusividade Tsunami verificados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/second-wave.md",
+          "reason": "Censo de 1.555 classfiles situa registro e produtor Ortholance; método releaseUsing 435 instruções com gate level positivo e pares de ondas com espera."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/second-wave.md",
+          "reason": "C limitado 0..60, N=max(1,B-1), dois pedidos por iteração, f=i/N, lifespan T=3+trunc((1-f)*3), yaw espelhado e espera8."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/second-wave.md",
+          "reason": "Posição horizontal derivada do usuário + vetor nativo, yaw θ±(60−15i); WaveEntity usa AABB própria+0.5D e exclusões owner/aliados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/second-wave.md",
+          "reason": "Desgaste único da Ortholance solicitado antes do ramo Second Wave; nenhum custo adicional por pedido de onda no bloco próprio; aquisição JSON separada."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/second-wave.md",
+          "reason": "WaveEntity captura owner/UUID; NBT próprio salva Owner/Lifespan, não WAITING_TICKS; uso de campo owner direto no dano limita créditos de Mastery/XP e reload."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/second-wave.md",
+          "reason": "Sonda read-only de releaseUsing confronta digest de método, SHA de classfiles, janelas Flinging e censo completo; ficha, regressões e CI com --seal."
+        }
+      }
     }
   },
   "providers": {},

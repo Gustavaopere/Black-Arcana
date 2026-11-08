@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Thirteen individual enchantment static contracts (Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing); twenty other individual enchantment dossiers remain partial.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Fourteen individual enchantment static contracts (Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Second Wave); twenty other individual enchantment dossiers remain partial.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -345,9 +345,9 @@
     },
     "enchantments": {
       "identified_objects": 51,
-      "individual_dossiers": 33,
+      "individual_dossiers": 34,
       "partial_dossiers": 20,
-      "documented_static_contracts": 13,
+      "documented_static_contracts": 14,
       "cards": [
         "enchantments/heavy-slam.md",
         "enchantments/herd-phalanx.md",
@@ -361,9 +361,10 @@
         "enchantments/rapid-possession.md",
         "enchantments/relentless-darkness.md",
         "enchantments/sated-blade.md",
-        "enchantments/sea-swing.md"
+        "enchantments/sea-swing.md",
+        "enchantments/second-wave.md"
       ],
-      "evidence": "EXACT-SATED-BLADE-CONTRACT-1.0.10.md",
+      "evidence": "EXACT-SECOND-WAVE-STATIC-1.0.10.md",
       "family_universe_closed": false,
       "related_evidence": [
         "EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md",
@@ -377,7 +378,8 @@
         "EXACT-PRECISE-VOLLEY-CONTRACT-1.0.10.md",
         "EXACT-RAPID-POSSESSION-CONTRACT-1.0.10.md",
         "EXACT-RELENTLESS-DARKNESS-CONTRACT-1.0.10.md",
-        "EXACT-SEA-SWING-STATIC-1.0.10.md"
+        "EXACT-SEA-SWING-STATIC-1.0.10.md",
+        "EXACT-SATED-BLADE-CONTRACT-1.0.10.md"
       ]
     }
   }
