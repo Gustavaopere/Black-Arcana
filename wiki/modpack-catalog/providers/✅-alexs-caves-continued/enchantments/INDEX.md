@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 19/39.**
+**Fichas catalogadas (somente fichas detectadas): 20/40.**
 
-**Barra das fichas catalogadas:** `█████████░░░░░░░░░░░ 48.7%`
+**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 50.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 19/39.**
+**Homologadas para perks (somente fichas detectadas): 20/40.**
 
-**Barra dos contratos técnicos estáticos:** `█████████░░░░░░░░░░░ 48.7%`
+**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 50.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -59,6 +59,7 @@
 | ✅ | Shaded Respite | [ficha/shaded-respite.md](shaded-respite.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Sharp Cane | [ficha/sharp-cane.md](sharp-cane.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Sightless | [ficha/sightless.md](sightless.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Soak Seeking | [ficha/soak-seeking.md](soak-seeking.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

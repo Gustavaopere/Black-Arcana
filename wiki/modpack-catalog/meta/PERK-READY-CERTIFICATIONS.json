@@ -7539,6 +7539,46 @@
           "reason": "Sonda read-only publisher com sha exato, 1.555 classfiles, 3 classes, 4 resources e 11 corpos de método, hash independente de Astral, regressões semânticas e CI com --seal."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/soak-seeking.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Soak Seeking 1.0.10: contrato estático do homing nativo do Sea Staff, fórmula, gates float/double, alvo, ownership e não-herança no ricochete. Não certifica hit aceito, datapacks ativos, cast extra, hook mutador, multiplayer, QA física ou universo integral; NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/soak-seeking.md",
+          "reason": "Publisher exato 1.0.10: JAR SHA-1/SHA-256 e bytes, recurso de encantamento, tag Sea Staff, registry e locales presentes ou ausentes selados após censo de 1.555 classes."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/soak-seeking.md",
+          "reason": "SeaStaffItem.use lê SOAK_SEEKING; seta seekAmount por bolt; WaterBoltEntity.tick consulta alvo e executa guards de homing, onRicochetHit cria filho sem herdar seekAmount; spawn e dano são solicitações."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/soak-seeking.md",
+          "reason": "JSON publisher níveis I–III, custos declarativos/slots; fórmula 0.3F+0.2F×L; janela dos ticks 3/20/40 e correção vetorial 0.85F, com ressalva 0.3F versus 0.3D."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/soak-seeking.md",
+          "reason": "UUID de alvo no cast, resolução server-side no tick, distância >1.5F; distinção entre o argumento 128D de aquisição, AABB de dano +2D e alcance físico não homologado."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/soak-seeking.md",
+          "reason": "Custo de encantamento separado do desgaste 1 por cast (!instabuild) do Sea Staff; nenhum débito extra de mana/durabilidade/cooldown de Soak Seeking no método certificado."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/soak-seeking.md",
+          "reason": "Autoridade e lifecycle provider-native, campos internos não são hook seguro; não duplicar casting, dano, XP/Mastery, ricochetes; persistência própria não inclui seekAmount. NO_MUTATION/NOT_VERIFIED/NOT_TESTED."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SOAK-SEEKING-STATIC-1.0.10.md",
+          "reason": "Manifesto JSON SHA-exato da sonda read-only: 4 métodos com SHA-256, 43 âncoras binárias cruzadas, 1.555 classfiles, recursos e traduções; testes sintéticos de fail-closed e workflow publisher."
+        }
+      }
     }
   },
   "providers": {},
