@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Eighteen individual enchantment static contracts (Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane); twenty other individual enchantment dossiers remain partial.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Nineteen individual enchantment static contracts (Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless); twenty other individual enchantment dossiers remain partial.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -345,9 +345,9 @@
     },
     "enchantments": {
       "identified_objects": 51,
-      "individual_dossiers": 38,
+      "individual_dossiers": 39,
       "partial_dossiers": 20,
-      "documented_static_contracts": 18,
+      "documented_static_contracts": 19,
       "cards": [
         "enchantments/heavy-slam.md",
         "enchantments/herd-phalanx.md",
@@ -366,9 +366,10 @@
         "enchantments/second-wave.md",
         "enchantments/seekcandy.md",
         "enchantments/shaded-respite.md",
-        "enchantments/sharp-cane.md"
+        "enchantments/sharp-cane.md",
+        "enchantments/sightless.md"
       ],
-      "evidence": "EXACT-SHARP-CANE-CONTRACT-1.0.10.md",
+      "evidence": "EXACT-SIGHTLESS-STATIC-1.0.10.md",
       "family_universe_closed": false,
       "related_evidence": [
         "EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md",
@@ -387,7 +388,8 @@
         "EXACT-SECOND-WAVE-STATIC-1.0.10.md",
         "EXACT-SEEKCANDY-STATIC-1.0.10.md",
         "EXACT-SEAPAIRING-CONTRACT-1.0.10.md",
-        "EXACT-SHADED-RESPITE-CONTRACT-1.0.10.md"
+        "EXACT-SHADED-RESPITE-CONTRACT-1.0.10.md",
+        "EXACT-SHARP-CANE-CONTRACT-1.0.10.md"
       ]
     }
   }
