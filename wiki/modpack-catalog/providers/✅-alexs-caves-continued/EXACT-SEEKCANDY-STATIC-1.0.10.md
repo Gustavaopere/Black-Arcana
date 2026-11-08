@@ -9,7 +9,7 @@ Modlist do `Gustavaopere/neoforge-rpg-skilltree` → `alexscaves-1.0.10-neoforge
 O [manifesto exato individual](EXACT-SEEKCANDY-STATIC-1.0.10.json) contém:
 - censo por bytes dos **1.555 classfiles do provider**, com referências binárias diretas `SEEKCANDY` exclusivamente no registro e em `SugarStaffItem`;
 - cinco classfiles SHA-256 selecionados e os métodos compilados relevantes, todos com hashes de corpo JVM e descritores validados;
-- todas as âncoras de método previamente validadas pelo [manifesto de Multiple Mint](EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.json) no JAR exato; 
+- todas as âncoras de método previamente validadas pelo [manifesto de Multiple Mint](EXACT-MULTIPLE-MINT-CONTRACT-1.0.10.json) no JAR exato;
 - pivôs de fluxo para ativação, aquisição, estado sincronizado, movimentação, filtros, dano, knockback, descarte, cooldown, desgaste e persistência;
 - resource JSON, `#alexscaves:enchantable/sugar_staff` e locale publisher `en_us` com hashes verificados.
 
