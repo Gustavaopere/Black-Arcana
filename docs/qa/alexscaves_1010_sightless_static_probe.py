@@ -112,6 +112,13 @@ def evidence(jar,java_bin,prior_path,astral_path):
         # preserve up to 6 first and last opcodes for entry/return structure
         chosen.update(range(min(6,len(ins))))
         chosen.update(range(max(0,len(ins)-6),len(ins)))
+        # The 5D gaze helper is an angular/distance/LOS predicate, not
+        # a five-block range. Retain only decisive numerical JVM operations
+        # and their immediate operands to prove the exact installed formula.
+        if name=="isEntityLookingAt":
+            for i,row in enumerate(ins):
+                if row["opcode"] in ("ddiv","dsub","dadd","dmul","dcmpl","dcmpg"):
+                    chosen.update(range(max(0,i-2),min(len(ins),i+3)))
         windows=[compact(ins[i]) for i in sorted(chosen)]
         require(len(windows)<=340,"producer evidence too wide: "+name)
         selected[name]={"descriptor":m["descriptor"],"instructions_total":len(ins),
