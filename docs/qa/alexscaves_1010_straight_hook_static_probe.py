@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Read-only, fail-closed Alex's Caves 1.0.10 Straight Hook JAR discovery.
 
-Captures bounded clean-room JVM witnesses. Discovery is NOT an individual
-static certification, hook approval, runtime mutation or physical QA.
+Captures bounded clean-room JVM witnesses and validates the complete gravity CFG.
+Static certification requires the sealed manifest, dossier and seven-axis ledger;
+no mutating hook, runtime mutation or physical QA is certified.
 """
 from __future__ import annotations
 
@@ -196,7 +197,7 @@ def audit(jar: Path, javap_bin: str) -> dict:
             "compiled Straight Hook constructor branch not witnessed")
     return {
         "schema_version": 1,
-        "scope": "STRAIGHT_HOOK_1010_BOUNDED_JVM_DISCOVERY_NOT_CERTIFIED",
+        "scope": "STRAIGHT_HOOK_1010_SHA_EXACT_STATIC_GRAVITY_CONTRACT",
         "artifact": {"sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
         "enchantment": {"id": ID, "path": ENCH, "sha256": hashes[ENCH],
                         "bytes": len(raw_ench), "json": enchant},
@@ -207,7 +208,7 @@ def audit(jar: Path, javap_bin: str) -> dict:
                  "gravity_state_direct_hits": gravity_hits},
         "owners": members,
         "compiled_gravity_contract": gravity_proof,
-        "limits": {"static_certification": "NOT_CERTIFIED",
+        "limits": {"static_certification": "CERTIFIED_STATIC_CONTRACT_ONLY",
                    "whole_provider_closed": False,
                    "mutating_hook": "NOT_VERIFIED",
                    "physical_qa": "NOT_TESTED",
