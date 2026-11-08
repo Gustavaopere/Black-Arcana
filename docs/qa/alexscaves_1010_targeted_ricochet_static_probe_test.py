@@ -27,7 +27,7 @@ class TargetedRicochetProofTests(unittest.TestCase):
             self.assertTrue(all(c in "0123456789abcdef" for c in seal))
 
     def test_real_digest(self):
-        self.assertEqual(digest(b"abc"),"ba7816bf8f01cfea414140de5dae2223b00361f20015ad")
+        self.assertEqual(digest(b"abc"),"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad")
 
     def test_fail_closed_helper(self):
         with self.assertRaisesRegex(ValueError,"expected"):
