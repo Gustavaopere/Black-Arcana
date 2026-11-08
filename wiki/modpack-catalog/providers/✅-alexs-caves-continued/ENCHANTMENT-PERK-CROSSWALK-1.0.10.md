@@ -9,9 +9,9 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=16/51
+individual_full_enchantment_dossiers=17/51
 individual_partial_enchantment_dossiers=20/51
-individual_existing_enchantment_dossiers=36/51
+individual_existing_enchantment_dossiers=37/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -19,11 +19,13 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `██████░░░░░░░░░░░░░░ 31.4% (16/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `███████░░░░░░░░░░░░░ 33.3% (17/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `██████████████░░░░░░ 70.6% (36/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave e Seekcandy possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `███████████████░░░░░ 72.5% (37/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy e Shaded Respite possuem contratos estáticos individuais certificados.
 
 **Sea Swing (✅ contrato estático):** [ficha individual](enchantments/sea-swing.md), [manifesto exato](EXACT-SEA-SWING-STATIC-1.0.10.json) e [prova de métodos e NBT](EXACT-SEA-SWING-STATIC-1.0.10.md) comprovam produtor Ortholance e 20 métodos completos + dois construtores nativos, incluindo owner, parâmetros, alvo, dano solicitado e descarte. Hook mutador e QA física continuam **NOT_VERIFIED/NOT_TESTED**; fonte 1.1.1 é corroboração sem paridade alegada.
+
+**Shaded Respite:** [ficha estática](enchantments/shaded-respite.md) e [prova reproduzível](EXACT-SHADED-RESPITE-CONTRACT-1.0.10.md) distinguem luz calculada abaixo de 11, desgaste dispensado e isenção de munição somente para `Items.ARROW`. O início de uso ainda exige munição ou creative; release e callback Relentless têm custos próprios. Não homologa factories externas, hook ou QA física.
 
 **Seapairing:** [ficha estática](enchantments/seapairing.md) e [prova reproduzível](EXACT-SEAPAIRING-CONTRACT-1.0.10.md) documentam selected ignorado, igualdade da stack em uso, RNG antes de água/chuva/bolhas e pedido literal `min(0,D−1)`. O setter da engine e o reparo aplicado permanecem fronteiras externas; não homologa hook ou QA física.
 
@@ -53,7 +55,7 @@ executable_perk_certification=NOT_CERTIFIED
 
 ## Leitura dos estados
 
-- ✅ **Contrato técnico estático concluído:** Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave e Seekcandy, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
+- ✅ **Contrato técnico estático concluído:** Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy e Shaded Respite, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
 - ⚠️ **Referência histórica/parcial:** o objeto tem evidências nominais ou consumidor em outro recorte; vários ainda não têm ficha própria. Não promover conclusão por associação a outro equipamento/ação.
 - ❌ **Sem ficha individual no checkpoint histórico:** preserva a pendência existente; não prova inexistência do recurso, ausência de referências ou comportamento.
 
@@ -99,7 +101,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:seapairing` | [Contrato técnico estático](enchantments/seapairing.md) · [selo individual](EXACT-SEAPAIRING-CONTRACT-1.0.10.json) · reparo passivo e fronteira do setter delimitados; hooks e QA física pendentes |
 | ✅ | `alexscaves:second_wave` | [Contrato individual estático](enchantments/second-wave.md) · [prova SHA-exata](EXACT-SECOND-WAVE-STATIC-1.0.10.md) · duas ondas retardadas por iteração; hooks e QA física pendentes |
 | ✅ | `alexscaves:seekcandy` | [Contrato individual estático](enchantments/seekcandy.md) · [prova SHA-exata](EXACT-SEEKCANDY-STATIC-1.0.10.md) · targeting Mob/LoS, homing condicionado, speed resetado no tick, owner/NBT; hooks e QA física pendentes |
-| ⚠️ | `alexscaves:shaded_respite` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
+| ✅ | `alexscaves:shaded_respite` | [Contrato técnico estático](enchantments/shaded-respite.md) · [selo individual](EXACT-SHADED-RESPITE-CONTRACT-1.0.10.json) · luz, munição e desgaste separados; hooks e QA física pendentes |
 | ❌ | `alexscaves:sharp_cane` | Sem ficha individual no checkpoint histórico; ausência de comportamento não comprovada |
 | ⚠️ | `alexscaves:sightless` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:soak_seeking` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
@@ -125,4 +127,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:shaded_respite`; Seapairing reutiliza o Sea Staff e seu callback passivo. Second Wave e Seekcandy permanecem documentados, sem criar raiz semântica nova. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **44/66 contratos estáticos entre fichas observadas**, incluindo 36 fichas de encantamentos. Esses 66 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
+A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:sharp_cane`; Shaded Respite reutiliza o Dreadbow e seus consumidores de custo, sem criar raiz semântica nova. Seapairing, Second Wave e Seekcandy permanecem documentados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **45/67 contratos estáticos entre fichas observadas**, incluindo 37 fichas de encantamentos. Esses 67 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.

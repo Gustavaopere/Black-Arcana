@@ -7419,6 +7419,46 @@
           "reason": "Manifesto individual com 6 classes, 11 recursos, 15 métodos e 452 âncoras: 13 corpos completos e dois inicializadores delimitados; auditoria real e regressões sem ampliar budgets."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/shaded-respite.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual de Shaded Respite e seus consumidores de custo no Dreadbow; não conclui o release inteiro, factories externas, hooks, QA física, outros encantamentos ou provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/shaded-respite.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato; JSON, registro/chave, tag Dreadbow, idiomas e aquisição empacotada documentados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/shaded-respite.md",
+          "reason": "Predicado L>0 e luz calculada menor que 11 nos caminhos release e Relentless; isenção de desgaste e tratamento de munição com consumidores distintos."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/shaded-respite.md",
+          "reason": "Máximo I, peso 1, custos mínimo/máximo 1/41 no nível I, anvil 8 e slot declarado; threshold 11, sem escala com níveis positivos ou duração própria."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/shaded-respite.md",
+          "reason": "Luz na posição do veículo raiz, brilho BLOCK e céu/sol podem elevar a 15; não exige o efeito Darkness Incarnate. Dano, alcance, área, tamanho e velocidade próprios N/A justificados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/shaded-respite.md",
+          "reason": "Creative, desgaste de um ponto e shrink de munição separados; isenção só para Items.ARROW exato, gate inicial continua exigindo munição ou creative. Cobrança por salva/callback, não por alvo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/shaded-respite.md",
+          "reason": "Estado de nível/luz relido no consumidor; fallback, factory/null, conversibilidade e item de munição não intercambiáveis. Ausência de guarda client-side local não prova execução exclusiva; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/shaded-respite.md",
+          "reason": "Manifesto individual SHA-exato, janelas locais completas no release de 391 instruções dentro do budget existente, callbacks/helpers completos, auditoria real e regressões sem promover CFG integral, hooks ou QA física."
+        }
+      }
     }
   },
   "providers": {},
