@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 14/34.**
+**Fichas catalogadas (somente fichas detectadas): 15/35.**
 
-**Barra das fichas catalogadas:** `████████░░░░░░░░░░░░ 41.2%`
+**Barra das fichas catalogadas:** `████████░░░░░░░░░░░░ 42.9%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 14/34.**
+**Homologadas para perks (somente fichas detectadas): 15/35.**
 
-**Barra dos contratos técnicos estáticos:** `████████░░░░░░░░░░░░ 41.2%`
+**Barra dos contratos técnicos estáticos:** `████████░░░░░░░░░░░░ 42.9%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -54,6 +54,7 @@
 | ✅ | Sated Blade | [ficha/sated-blade.md](sated-blade.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Sea Swing | [ficha/sea-swing.md](sea-swing.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Second Wave | [ficha/second-wave.md](second-wave.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Seekcandy | [ficha/seekcandy.md](seekcandy.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

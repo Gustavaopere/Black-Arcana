@@ -7339,6 +7339,46 @@
           "reason": "Sonda read-only de releaseUsing confronta digest de método, SHA de classfiles, janelas Flinging e censo completo; ficha, regressões e CI com --seal."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/seekcandy.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Certificação estática individual do Seekcandy da Sugar Staff, seleção e consumidor SpinningPeppermintEntity no publisher 1.0.10. Não homologa qualquer mutação, desempenho real do target, hits/spawns aceitos, PvP/claims, reload de SeekingEntityId ou QA física; NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/seekcandy.md",
+          "reason": "JAR NeoForge 1.0.10 SHA-exato, recurso seekcandy.json 361 bytes, resource ID, tag Sugar Staff, localização publisher e 1.555 classes verificadas."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/seekcandy.md",
+          "reason": "Fluxos nativos SugarStaff.use, SeaStaff.getClosestLookingAtEntityFor e SpinningPeppermint.tick/hurtEntities com digests íntegros e pivôs reconciliados ao corpus Multiple Mint."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/seekcandy.md",
+          "reason": "Target não nulo e nível>0, speed inicial 50F sobrescrito no tick para 7F, radius convergente 4−4min(1,ticks/30), cooldown 50, lifespan 80, dano pedido 3F e knockback 0.3 condicionado."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/seekcandy.md",
+          "reason": "Raytrace clip VISUAL/Fluid.NONE, AABB e seleção de Mob não aliado/visível; SeekingEntityId por Entity ID, modos straight/orbit separados e descarte após qualquer hit aceito."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/seekcandy.md",
+          "reason": "Uso nativo pede uma redução de durabilidade e um cooldown por Item após loop; Seekcandy não acrescenta projéteis além de 3+Multiple Mint nem custo por peppermint."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/seekcandy.md",
+          "reason": "Owner UUID lazy e campo usado em mobProjectile; SynchedEntityData.SEEKING_ENTITY não persistido nos overrides próprios de NBT; sem hook/adapter mutador verificado."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/seekcandy.md",
+          "reason": "Sonda read-only pinned pelo JAR, hash de 5 classfiles e 25 métodos, varredura 1.555 classfiles, revisão dos pontos completos SHA-exatos e testes semânticos/CI."
+        }
+      }
     }
   },
   "providers": {},
