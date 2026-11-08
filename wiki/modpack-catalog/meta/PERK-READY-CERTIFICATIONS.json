@@ -7459,6 +7459,46 @@
           "reason": "Manifesto individual SHA-exato, janelas locais completas no release de 391 instruções dentro do budget existente, callbacks/helpers completos, auditoria real e regressões sem promover CFG integral, hooks ou QA física."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/sharp-cane.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual de Sharp Cane, snapshot e ramo selecionado de busca/dano do gancho; não conclui tick/CFG integral, aplicação de dano pela engine, persistência herdada, hooks, QA física ou provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sharp-cane.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, JSON, registro/chave, tag Candy Cane Hook, idiomas, receita e aquisição empacotada selados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sharp-cane.md",
+          "reason": "Snapshot DAMAGE=3F×L no construtor; pedido de dano no ramo servidor de busca do tick, enquanto onHitEntity apenas guarda posição e alvo nesse corpo."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sharp-cane.md",
+          "reason": "Máximo II, peso 10, custos 1/9 e 41/51, anvil 1 e slot declarado; Float inicial 0F, gate de dano diferente de zero, sem clamp próprio ao nível máximo."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sharp-cane.md",
+          "reason": "Busca nativa pela AABB do gancho expandida em 1D, Entity.isAlive, normalização de segmentos e comparação condicionada ao owner; UUID anterior ao hurt e ramo com alvo existente sem aquele pedido."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sharp-cane.md",
+          "reason": "Lançamento e recolhimento têm gates e stacks próprios; desgaste 1 nos ramos de recolhimento, sem débito adicional Sharp por hit ou por UUID, spawn booleano descartado."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sharp-cane.md",
+          "reason": "Fonte solicitada thrown(this,owner) e hurt booleano descartado não liquidam dano/XP; supertick precede a captura do alvo e NBT próprio omite DAMAGE. Engine/herança e hooks continuam fronteiras externas; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/sharp-cane.md",
+          "reason": "Manifesto individual com 5 classes, 10 recursos, 50 métodos e 1409 âncoras: 47 corpos completos, prefixo local do tick 256/546 e dois registros delimitados. Auditoria real e regressões preservam budgets e QA física pendente."
+        }
+      }
     }
   },
   "providers": {},

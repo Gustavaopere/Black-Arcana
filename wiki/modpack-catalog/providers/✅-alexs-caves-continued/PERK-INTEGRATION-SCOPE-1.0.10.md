@@ -28,7 +28,7 @@ As interfaces de montaria `FlyingMount`, `KeybindUsingMount` e `RidingMeterMount
 
 ## Estado dos índices
 
-As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os dezessete contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **45 contratos estáticos certificados entre 67 fichas observadas**: 37 são dossiers de encantamentos, sendo vinte parciais e dezessete estáticos completos, incluindo [Sea Swing](enchantments/sea-swing.md), [Seapairing](enchantments/seapairing.md), [Second Wave](enchantments/second-wave.md), [Seekcandy](enchantments/seekcandy.md) e [Shaded Respite](enchantments/shaded-respite.md). A prova SHA-exata inclui o censo de 1.555 classfiles e o ramo de ondas da Ortholance, sem autorizar hook ou QA física. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
+As oito ações, oito efeitos, os três equipamentos e os nove contratos de dano somam 28 contratos estáticos. Com os dezoito contratos individuais de encantamentos do [crosswalk](ENCHANTMENT-PERK-CROSSWALK-1.0.10.md), o provider registra **46 contratos estáticos certificados entre 68 fichas observadas**: 38 são dossiers de encantamentos, sendo vinte parciais e dezoito estáticos completos, incluindo [Sea Swing](enchantments/sea-swing.md), [Seapairing](enchantments/seapairing.md), [Second Wave](enchantments/second-wave.md), [Seekcandy](enchantments/seekcandy.md), [Shaded Respite](enchantments/shaded-respite.md) e [Sharp Cane](enchantments/sharp-cane.md). A prova SHA-exata inclui o censo de 1.555 classfiles e o ramo de ondas da Ortholance, sem autorizar hook ou QA física. Raygun e Tremorzilla Beam continuam parciais. O provider inteiro continua aberto, incluindo os demais equipamentos, encantamentos e sistemas, e a fila alfabética permanece em **Alex's Caves Continued**.
 
 ## Dreadbow e Dark Arrow — contrato consolidado
 
@@ -95,3 +95,7 @@ A [ficha](enchantments/seapairing.md) e a [prova](EXACT-SEAPAIRING-CONTRACT-1.0.
 ## Shaded Respite — luz, desgaste e munição separados
 
 A [ficha](enchantments/shaded-respite.md) e a [prova](EXACT-SHADED-RESPITE-CONTRACT-1.0.10.md) acompanham o predicado de luz na posição do veículo raiz, nível positivo, gate inicial de munição/creative e custos dos caminhos release/Relentless. A isenção de munição exige o item `Items.ARROW`, enquanto conversibilidade do projétil e factories seguem contratos distintos. A conclusão estática não torna o release inteiro auditado nem homologa execução exclusiva no servidor, hook mutador ou QA física.
+
+## Sharp Cane — snapshot, busca e colisão separados
+
+A [ficha](enchantments/sharp-cane.md) e a [prova](EXACT-SHARP-CANE-CONTRACT-1.0.10.md) ligam `3F×L` capturado na criação ao pedido de dano no ramo de busca do tick. UUID anterior ao hurt e retorno descartado não são recibos de dano aceito; o callback `onHitEntity` não contém esse hurt. O prefixo 256/546 permanece parcial, e persistência herdada, engine, hooks mutadores e QA física não são homologados.

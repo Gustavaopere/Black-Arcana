@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 17/37.**
+**Fichas catalogadas (somente fichas detectadas): 18/38.**
 
-**Barra das fichas catalogadas:** `█████████░░░░░░░░░░░ 45.9%`
+**Barra das fichas catalogadas:** `█████████░░░░░░░░░░░ 47.4%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 17/37.**
+**Homologadas para perks (somente fichas detectadas): 18/38.**
 
-**Barra dos contratos técnicos estáticos:** `█████████░░░░░░░░░░░ 45.9%`
+**Barra dos contratos técnicos estáticos:** `█████████░░░░░░░░░░░ 47.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -57,6 +57,7 @@
 | ✅ | Second Wave | [ficha/second-wave.md](second-wave.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Seekcandy | [ficha/seekcandy.md](seekcandy.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shaded Respite | [ficha/shaded-respite.md](shaded-respite.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Sharp Cane | [ficha/sharp-cane.md](sharp-cane.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
