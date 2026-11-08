@@ -200,6 +200,15 @@ def discover(jar: Path, java_bin: str, control_path: Path = CONTROL,
                "sun-angle exact JVM operand drift")
     helper_evidence = method_evidence(helper, {})
     helper_evidence["independent_prior_anchors_checked"] = len(references[0]["anchors"])
+    # The prior anchors prove constants, but the return path must also
+    # distinguish the true branch from the false branch.
+    ensure(by_offset.get(22, {}).get("opcode") == "iconst_1" and
+           by_offset.get(26, {}).get("opcode") == "iconst_0",
+           "sun helper branch literals changed")
+    helper_evidence["branch_result_witness"] = [
+        {k: by_offset[p][k] for k in ("offset", "opcode", "operand", "symbol")}
+        for p in (22, 26)
+    ]
     output = {
         "schema_version": 1, "scope": "SOLAR_1010_READONLY_JAR_DISCOVERY",
         "artifact": {"sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
