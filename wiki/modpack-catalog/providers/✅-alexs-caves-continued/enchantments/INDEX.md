@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 23/43.**
+**Fichas catalogadas (somente fichas detectadas): 24/44.**
 
-**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 53.5%`
+**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 54.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 23/43.**
+**Homologadas para perks (somente fichas detectadas): 24/44.**
 
-**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 53.5%`
+**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 54.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -63,6 +63,7 @@
 | ✅ | Solar | [ficha/solar.md](solar.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Spell Lasting | [ficha/spell-lasting.md](spell-lasting.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Straight Hook | [ficha/straight-hook.md](straight-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Swiftwood | [ficha/swiftwood.md](swiftwood.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
