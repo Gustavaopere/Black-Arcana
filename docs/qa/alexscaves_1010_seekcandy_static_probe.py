@@ -37,7 +37,7 @@ METHODS = {
         "tick", "hurtEntities", "getOwner", "setOwner",
         "getSeekingEntityId", "setSeekingEntityId",
         "addAdditionalSaveData", "readAdditionalSaveData",
-        "defineSynchedData", "getSpinSpeed", "setSpinSpeed", 
+        "defineSynchedData", "getSpinSpeed", "setSpinSpeed",
         "getSpinRadius", "setSpinRadius", "isStraight", "setStraight",
         "getSpinAroundPosition", "setSpinAroundPosition", "getLifespan",
         "setLifespan",
