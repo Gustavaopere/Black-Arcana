@@ -20,6 +20,7 @@ from alexscaves_1010_raygun_local_flow_probe import digest_method
 
 CATALOG = Path("wiki/modpack-catalog/providers/✅-alexs-caves-continued")
 CONTROL = CATALOG / "EXACT-RAYGUN-CONTROL-1.0.10.json"
+PRIOR = CATALOG / "EXACT-TECHNICAL-CONTRACTS-1.0.10.json"
 ENCH = "data/alexscaves/enchantment/solar.json"
 EN = "assets/alexscaves/lang/en_us.json"
 PT = "assets/alexscaves/lang/pt_br.json"
@@ -34,6 +35,7 @@ MAX_REPORT = 85000
 FOCUS = (
     "getCharge", "setCharge", "hasCharge", "use", "onUseTick",
     "acInventoryTick", "inventoryTick", "releaseUsing",
+    "getUseTime", "setUseTime",
 )
 SYMBOLS = (
     "SOLAR", "enchantLevel", "ChargeUsed", "getCharge", "setCharge",
@@ -59,24 +61,38 @@ def digest(data: bytes) -> str:
 
 
 def bounded(method: dict, *, direct_solar: bool) -> list[dict]:
+    """Emit purpose-limited JVM witnesses rather than a full method listing."""
     ins = method["instructions"]
     ensure(0 < len(ins) <= 1700, "unexpected method size")
-    matches = [i for i, r in enumerate(ins) if
-               any(token in r["symbol"] for token in SYMBOLS)]
-    chosen = set(range(min(5, len(ins))))
-    chosen.update(range(max(0, len(ins) - 5), len(ins)))
-    for i in matches[:55]:
-        chosen.update(range(max(0, i - 4), min(len(ins), i + 5)))
-    if direct_solar:
-        solar_sites = [i for i, r in enumerate(ins) if "SOLAR" in r["symbol"]]
-        for start in solar_sites:
-            # Include local conditional chain around the enchant level read.
-            chosen.update(range(max(0, start - 6), min(len(ins), start + 22)))
-            # Include constants and branch operands in bounded nearby region.
-            for i in range(max(0, start - 12), min(len(ins), start + 85)):
-                if ins[i]["opcode"] in NUMERIC or ins[i]["opcode"].startswith("if"):
-                    chosen.update(range(max(0, i - 1), min(len(ins), i + 2)))
-    ensure(len(chosen) <= 315, "JVM extraction exceeds bounded clean-room limit")
+    chosen = set(range(min(3, len(ins))))
+    chosen.update(range(max(0, len(ins) - 3), len(ins)))
+    if direct_solar and len(ins) > 40:
+        # Solar's inventory callback can be short: copying its whole JVM body
+        # would exceed our clean-room interoperability needs. Capture only
+        # decisive branch opcodes and immediate guard/side-effect operands.
+        keys = (
+            "SOLAR", "enchantLevel", "getUseItem", "Object.equals",
+            "isClientSide", "getCharge", "nextFloat", "float 0.02f",
+            "blockPosition", "BlockPos.above", "canSeeSky", "isDay",
+            "dimensionType", "hasFixedTime", "sunAboveHorizon",
+            "setCharge", "setUseTime", "PrevUseTime", "UseTime",
+            "getOrCreateTag", "setTag",
+        )
+        hits = [i for i, row in enumerate(ins) if
+                any(k in row["symbol"] for k in keys)]
+        for i in hits:
+            chosen.update(range(max(0, i - 1), min(len(ins), i + 2)))
+        # Every branch is included as an offset/target witness, not an
+        # editable copy of the original provider control-flow graph.
+        chosen.update(i for i, row in enumerate(ins)
+                      if row["opcode"].startswith("if") or row["opcode"] == "goto")
+        ensure(len(chosen) <= 85, "Solar discovery window too broad")
+    else:
+        matches = [i for i, row in enumerate(ins) if
+                   any(k in row["symbol"] for k in SYMBOLS)]
+        for i in matches[:45]:
+            chosen.update(range(max(0, i - 2), min(len(ins), i + 3)))
+    ensure(len(chosen) <= 220, "JVM extraction exceeds bounded clean-room limit")
     return [{k: ins[i][k] for k in ("offset", "opcode", "operand", "symbol")}
             for i in sorted(chosen)]
 
@@ -98,10 +114,17 @@ def method_evidence(method: dict, previous_digests: dict) -> dict:
     }
 
 
-def discover(jar: Path, java_bin: str, control_path: Path = CONTROL) -> dict:
+def discover(jar: Path, java_bin: str, control_path: Path = CONTROL,
+             prior_path: Path = PRIOR) -> dict:
     ensure(sha_file(jar) == (SHA1, SHA256, SIZE), "publisher/JAR identity mismatch")
     control_bytes = control_path.read_bytes()
     control = json.loads(control_bytes)
+    prior_bytes = prior_path.read_bytes()
+    prior = json.loads(prior_bytes)
+    ensure(prior["artifact_sha256"] == SHA256 and
+           prior["classes"][COMPAT]["sha256"] ==
+           "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+           "prior sun-angle helper identity drift")
     ensure(control["class_path"] == RAYGUN and
            control["class_sha256"] == KNOWN_RAYGUN_SHA and
            control["artifact"]["sha256"] == SHA256,
@@ -138,6 +161,8 @@ def discover(jar: Path, java_bin: str, control_path: Path = CONTROL) -> dict:
         hashes = {p: digest(z.read(p)) for p in
                   (REG, RAYGUN, TICK_MIXIN, TICK_IFACE, COMPAT)}
         ensure(hashes[RAYGUN] == KNOWN_RAYGUN_SHA, "Raygun compiled class drift")
+        ensure(hashes[COMPAT] == prior["classes"][COMPAT]["sha256"],
+               "sun-angle compiled helper drift")
     raygun_methods = parse_methods(javap(java_bin, jar, RAYGUN[:-6].replace("/", ".")))
     ensure(15 <= len(raygun_methods) <= 60, "unexpected declared Raygun methods")
     direct_methods = [m for m in raygun_methods if
@@ -157,10 +182,29 @@ def discover(jar: Path, java_bin: str, control_path: Path = CONTROL) -> dict:
                    any("acInventoryTick" in row["symbol"] for row in m["instructions"])]
     ensure(mixin_calls, "no ItemStackTickMixin dispatch found")
     mixin_evidence = [method_evidence(m, {}) for m in mixin_calls if m["instructions"]]
+    helper_methods = parse_methods(javap(
+        java_bin, jar, COMPAT[:-6].replace("/", ".")))
+    helper_candidates = [m for m in helper_methods if
+                         name_of(m) == "sunAboveHorizon" and m["instructions"]]
+    ensure(len(helper_candidates) == 1, "ambiguous sunAboveHorizon helper")
+    helper = helper_candidates[0]
+    references = [m for m in prior["classes"][COMPAT]["methods"] if
+                  m["name"] == "sunAboveHorizon" and
+                  m["descriptor"] == helper["descriptor"]]
+    ensure(len(references) == 1, "prior sun-angle method proof missing")
+    by_offset = {ins["offset"]: ins for ins in helper["instructions"]}
+    for anchor in references[0]["anchors"]:
+        row = by_offset.get(anchor["offset"])
+        ensure(row is not None and
+               all(row[k] == anchor[k] for k in ("opcode", "operand", "symbol")),
+               "sun-angle exact JVM operand drift")
+    helper_evidence = method_evidence(helper, {})
+    helper_evidence["independent_prior_anchors_checked"] = len(references[0]["anchors"])
     output = {
         "schema_version": 1, "scope": "SOLAR_1010_READONLY_JAR_DISCOVERY",
         "artifact": {"sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE},
         "prior_raygun_control_sha256": digest(control_bytes),
+        "prior_technical_contract_sha256": digest(prior_bytes),
         "class_census": {"classes_scanned": len(classes), "solar_token_hits": hits},
         "class_sha256": hashes, "resources": resources,
         "solar_enchantment_json": json_enchant,
@@ -169,6 +213,7 @@ def discover(jar: Path, java_bin: str, control_path: Path = CONTROL) -> dict:
         "raygun_method_count": len(raygun_methods),
         "raygun_methods": method_evidences,
         "tick_dispatch": mixin_evidence,
+        "sun_above_horizon_helper": helper_evidence,
         "limits": {"provider_closed": False, "mutating_hook": "NOT_VERIFIED",
                    "physical_qa": "NOT_TESTED", "mutation": "NO_MUTATION",
                    "loaded_datapacks": "NOT_VERIFIED",
