@@ -1,6 +1,6 @@
 # Sightless — controle do Totem of Possession sem requisito de olhar direto (1.0.10)
 
-**Estado: ⚠️ em auditoria de contrato técnico estático individual na PR #1060.** Identidade, métodos e condições são derivados do JAR publisher real; promoção para ✅ somente após selo, regressões e CI. **`mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`.** O efeito é um modificador do [Totem of Possession](../actions/totem-possession-remote-control.md), não uma ação/cast mágico independente.
+**Estado: ✅ contrato técnico estático individual SHA-exato, com auditoria do JAR, selo reproduzível e regressões semânticas verificadas na PR #1060.** A integração à `main` permanece condicionada à CI geral da revisão. **`mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`.** O efeito é um modificador do [Totem of Possession](../actions/totem-possession-remote-control.md), não uma ação/cast mágico independente.
 
 ## 1. Identidade e proveniência
 
