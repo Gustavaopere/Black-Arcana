@@ -13,7 +13,7 @@ def row(off,op="nop",symbol="",operand=""):
 
 
 def method(name,ins):
-    return {"header":name,"descriptor":"()V","instructions":ins}
+    return {"header":"public void "+name+"();","descriptor":"()V","instructions":ins}
 
 
 class TaxingBellowStaticTests(unittest.TestCase):
@@ -33,7 +33,7 @@ class TaxingBellowStaticTests(unittest.TestCase):
         self.assertIsNone(require(True,"unused"))
 
     def test_consumer_method_uniqueness(self):
-        self.assertEqual(choose([method("releaseUsing", [row(0)])],"releaseUsing")["header"],"releaseUsing")
+        self.assertEqual(choose([method("releaseUsing", [row(0)])],"releaseUsing")["header"],"public void releaseUsing();")
         with self.assertRaisesRegex(ValueError,"ambiguous"):
             choose([method("releaseUsing",[row(0)]),method("releaseUsing",[row(0)])],"releaseUsing")
 
