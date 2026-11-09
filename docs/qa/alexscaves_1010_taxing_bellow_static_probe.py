@@ -184,6 +184,24 @@ def verify_cfg(consumers: dict[str,dict[str,dict]]) -> dict:
         302:("areturn",None,None),
         303:("aconst_null",None,None),
     })
+    # Persisted world-level reputation is the actual clamped consumer, not
+    # the visual reaction nor the item-durability argument.
+    world_get=consumers[WORLD]["getDeepOneReputation"]
+    check(world_get,{
+        9:("getfield","deepOneReputations:",None),
+        13:("iconst_0",None,None),
+        17:("invokeinterface","Map.getOrDefault:",None),
+        28:("ireturn",None,None),
+    })
+    world_set=consumers[WORLD]["setDeepOneReputation"]
+    check(world_set,{
+        1:("getfield","deepOneReputations:",None),
+        6:("bipush",None,"-100"),
+        8:("bipush",None,"100"),
+        10:("invokestatic","Mth.clamp:",None),
+        16:("invokeinterface","Map.put:",None),
+        22:("return",None,None),
+    })
     return {
         "physical_JAR":"SHA_EXACT_1.0.10_ONLY",
         "enchantment":"TAXING_BELLOW_level_positive",
