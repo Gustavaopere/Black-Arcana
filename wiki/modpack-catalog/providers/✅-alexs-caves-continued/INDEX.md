@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 54/76.**
+**Fichas catalogadas (somente fichas detectadas): 55/77.**
 
-**Barra das fichas catalogadas:** `██████████████░░░░░░ 71.1%`
+**Barra das fichas catalogadas:** `██████████████░░░░░░ 71.4%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 54/76.**
+**Homologadas para perks (somente fichas detectadas): 55/77.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 71.1%`
+**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 71.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -97,6 +97,7 @@
 | ✅ | Swiftwood | [enchantments/swiftwood.md](enchantments/swiftwood.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Targeted Ricochet | [enchantments/targeted-ricochet.md](enchantments/targeted-ricochet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Taxing Bellow | [enchantments/taxing-bellow.md](enchantments/taxing-bellow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Triple Splash | [enchantments/triple-splash.md](enchantments/triple-splash.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Desolate Dagger | [equipment/desolate-dagger.md](equipment/desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dreadbow | [equipment/dreadbow.md](equipment/dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -108,7 +109,7 @@
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
 | ⚠️ | Damage Types | 9/11 (81.8%) | 9 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
-| ⚠️ | Enchantments | 26/46 (56.5%) | 26 | [Abrir índice](enchantments/INDEX.md) |
+| ⚠️ | Enchantments | 27/47 (57.4%) | 27 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
 
 ## Critério do ✅

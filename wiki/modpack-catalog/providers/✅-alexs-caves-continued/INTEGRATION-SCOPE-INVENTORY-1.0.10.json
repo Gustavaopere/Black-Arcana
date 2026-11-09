@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Nineteen individual enchantment static contracts (Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless); twenty other individual enchantment dossiers remain partial.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Twenty-seven individual enchantment static contracts (Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash); twenty other individual enchantment dossiers remain partial.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -345,9 +345,9 @@
     },
     "enchantments": {
       "identified_objects": 51,
-      "individual_dossiers": 39,
+      "individual_dossiers": 47,
       "partial_dossiers": 20,
-      "documented_static_contracts": 19,
+      "documented_static_contracts": 27,
       "cards": [
         "enchantments/heavy-slam.md",
         "enchantments/herd-phalanx.md",
@@ -367,9 +367,17 @@
         "enchantments/seekcandy.md",
         "enchantments/shaded-respite.md",
         "enchantments/sharp-cane.md",
-        "enchantments/sightless.md"
+        "enchantments/sightless.md",
+        "enchantments/soak-seeking.md",
+        "enchantments/solar.md",
+        "enchantments/spell-lasting.md",
+        "enchantments/straight-hook.md",
+        "enchantments/swiftwood.md",
+        "enchantments/targeted-ricochet.md",
+        "enchantments/taxing-bellow.md",
+        "enchantments/triple-splash.md"
       ],
-      "evidence": "EXACT-SIGHTLESS-STATIC-1.0.10.md",
+      "evidence": "EXACT-TRIPLE-SPLASH-CONTRACT-1.0.10.md",
       "family_universe_closed": false,
       "related_evidence": [
         "EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md",
@@ -389,7 +397,16 @@
         "EXACT-SEEKCANDY-STATIC-1.0.10.md",
         "EXACT-SEAPAIRING-CONTRACT-1.0.10.md",
         "EXACT-SHADED-RESPITE-CONTRACT-1.0.10.md",
-        "EXACT-SHARP-CANE-CONTRACT-1.0.10.md"
+        "EXACT-SHARP-CANE-CONTRACT-1.0.10.md",
+        "EXACT-SIGHTLESS-STATIC-1.0.10.md",
+        "EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.md",
+        "EXACT-1.0.10-ARTIFACT-AUDIT.md",
+        "EXACT-SOLAR-STATIC-1.0.10.md",
+        "EXACT-SPELL-LASTING-STATIC-1.0.10.md",
+        "EXACT-STRAIGHT-HOOK-STATIC-1.0.10.md",
+        "EXACT-SWIFTWOOD-STATIC-1.0.10.md",
+        "EXACT-TARGETED-RICOCHET-STATIC-1.0.10.md",
+        "EXACT-TAXING-BELLOW-STATIC-1.0.10.md"
       ]
     }
   }
