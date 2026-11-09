@@ -7819,6 +7819,46 @@
           "reason": "Read-only SHA-exact physical publisher 1.0.10 audit across 4 classes and 13 method signatures with CFG assertions, bounded windows and synthetic negative tests; discovery workflow 42545396083 succeeded; final sealed test is CI gate. No physical world, hook or modpack QA."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/triple-splash.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual de Triple Splash e sua quantidade solicitada no Sea Staff; não conclui CFG integral de métodos parciais, aceitação de spawn/dano, encantamentos irmãos, hooks, QA física ou provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-splash.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, JSON, registro/chave, tag Sea Staff, idiomas e aquisição empacotada selados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-splash.md",
+          "reason": "Nível positivo escolhe três tentativas de Water Bolt, caso contrário uma, sem escala adicional por nível positivo. Parâmetros e geometria nativos são configurados em cada instância antes do pedido de spawn."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-splash.md",
+          "reason": "JSON, nível máximo, custos e slots próprios documentados; quantidade solicitada 1/3 distinta de inserções, hits ou DPS. Dano, homing e ricochete conservam consumidores próprios."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-splash.md",
+          "reason": "Aquisição nativa por helper e alvo compartilhado com os bolts iniciais; seleção, colisão, alcance físico, ataque e aceitação de dano são fronteiras distintas, sem multiplicar alvos ou autoridade por inferência."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-splash.md",
+          "reason": "Desgaste de um ponto por cast no ramo nativo !instabuild posterior ao loop, sem novo débito por cada bolt ou hit; custos do encantamento separados de munição, mana e Mastery."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-splash.md",
+          "reason": "Owner, alvo, lifecycle, ricochete e NBT continuam provider-native. Não duplica cast, dano ou XP; novos setters/parâmetros não são hooks autorizados, NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-splash.md",
+          "reason": "Manifesto individual com 5 classes, 11 recursos, 33 métodos e 1063 âncoras; corpos completos e janelas locais delimitados, auditoria real e regressões sem ampliar budgets ou promover QA física."
+        }
+      }
     }
   },
   "providers": {},
