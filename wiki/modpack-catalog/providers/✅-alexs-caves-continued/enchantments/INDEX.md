@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 25/45.**
+**Fichas catalogadas (somente fichas detectadas): 26/46.**
 
-**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 55.6%`
+**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 56.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 25/45.**
+**Homologadas para perks (somente fichas detectadas): 26/46.**
 
-**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 55.6%`
+**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 56.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -65,6 +65,7 @@
 | ✅ | Straight Hook | [ficha/straight-hook.md](straight-hook.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Swiftwood | [ficha/swiftwood.md](swiftwood.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Targeted Ricochet | [ficha/targeted-ricochet.md](targeted-ricochet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Taxing Bellow | [ficha/taxing-bellow.md](taxing-bellow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
