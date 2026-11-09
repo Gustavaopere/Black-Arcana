@@ -7739,6 +7739,46 @@
           "reason": "SHA-exact 1.0.10 read-only JAR probe, PrimitiveClubItem and ACCompat method SHA+JVM bounded witnesses with synthetic negative tamper checks. GitHub Actions 42534407134 passed. Hooks and physical modpack QA not claimed."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/targeted-ricochet.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Targeted Ricochet level I sets TARGETS_ON_BOUNCE=true in Gumball via ShotGumItem, then bounceFromDirection may choose nearest eligible LivingEntity in eye-centered +/-10D AABB, excluding owner, owner allies and prior hitEntityIds; redirected normalized velocity scale 0.800000011920929D, server bounce counter/discard and native reflection fallback. Explosive early-return may suppress targeting; Triple Split is exclusive in JSON but split children could copy flag under altered data and have no own setOwner call. No additional damage/cast, no mutating hook, physical QA, inherited persistence or provider universe closure; NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/targeted-ricochet.md",
+          "reason": "Publisher physical 1.0.10 JAR SHA1/SHA256 and exact 422-byte targeted_ricochet JSON with max level I, exclusive_set triple_split, 1.0.10 registry, Shot Gum tag and English locale; 1555 class direct token census."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/targeted-ricochet.md",
+          "reason": "ShotGumItem.acInventoryTick 285-instruction producer, positive enchant level gate and setTargetsOnBounce; GumballEntity.bounceFromDirection 198-instruction selected nearest target, explosive terminal branch, server bounce count/discard and reflection fallback."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/targeted-ricochet.md",
+          "reason": "Exact AABB eye centered +/-10D per axis; nearest LivingEntity by Entity.distanceTo; normalized target eye minus projectile position scale 0.800000011920929D; max bounces from Shot Gum 4+2×BouncyBall, not Targeted Ricochet."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/targeted-ricochet.md",
+          "reason": "Candidate exclusions against owner, candidate.isAlliedTo(owner) and hitEntityIds; no explicit LOS or alive in consumer; onHit block/entity paths, child copies targets flag under split; hitIds not universal damage dedup. Owner child not proven."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/targeted-ricochet.md",
+          "reason": "max level 1, weight 2, min cost 1, max cost 41, anvil cost 4, mainhand and exclusive_set triple_split; no own mana, stamina, shots, damage bonus, duration or per-bounce cooldown; Shot Gum charges provider-native."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/targeted-ricochet.md",
+          "reason": "Synched flag initially false; own NBT overrides only serialize Color. Hook mutation and physical multiplayer/reload/claims unverified; no double cast/damage/XP and no fabricated Mastery; NO_MUTATION/fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TARGETED-RICOCHET-STATIC-1.0.10.md",
+          "reason": "Individual SHA-exact 1.0.10 resource/class/method seal and CFG assertions across ShotGumItem and GumballEntity, synthetic negative tests, workflow 42537721876 success; no real-world hit, pipeline acceptance or hook QA."
+        }
+      }
     }
   },
   "providers": {},
