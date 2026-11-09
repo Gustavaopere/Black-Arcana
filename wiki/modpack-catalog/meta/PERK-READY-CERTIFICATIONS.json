@@ -7779,6 +7779,46 @@
           "reason": "Individual SHA-exact 1.0.10 resource/class/method seal and CFG assertions across ShotGumItem and GumballEntity, synthetic negative tests, workflow 42537721876 success; no real-world hit, pipeline acceptance or hook QA."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/taxing-bellow.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Taxing Bellow I (Magic Conch) makes a mutually exclusive static wear branch: for release charge>25 and level>0 it requests ItemStack.setDamageValue(Math.min(0,damage−1)) and flags reputation debit instead of hurtAndBreakUsedHand(1); after native server summon loops, when last non-null summoned entity exists, calls addReputation(summonerUUID,-2) only once. ACWorldData.getDeepOneReputation uses Map.getOrDefault(...,0), setter clamps to [-100,100]; returning nonnull summon ignores addFreshEntity boolean. Does not verify final ItemStack negative damage effect, world-data save/dirty tracking, runtime mutations, accepted spawn or QA. NO_MUTATION/fail closed.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/taxing-bellow.md",
+          "reason": "Exact publisher 1.0.10 JAR SHA1/SHA256/size; 443-byte taxing_bellow JSON with max_level I, mainhand Conch tag, exclusive_set Unbreaking/Mending; registered Taxing Bellow field; classfile census 1555 and English locale."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/taxing-bellow.md",
+          "reason": "SHA-exact MagicConchItem.releaseUsing 211 instructions: charge>25, positive TAXING_BELLOW level, Math.min damage setter, mutually exclusive wear1 and conditional one-time lastNonNullSummon.addReputation(UUID,-2) after server summon loops."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/taxing-bellow.md",
+          "reason": "Durability setter input Math.min(0,currentDamage-1), including -1 at damage 0; WorldData reputation getOrDefault 0 and Mth.clamp -100..100; duration and item cooldown remain 1200+400×LastingMorale; no quantity/damage/range bonus from this enchant."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/taxing-bellow.md",
+          "reason": "Penalty targets summoner UUID in shared ACWorldData, not combat victim or each summoned mob; last non-null DeepOneBaseEntity provides write bridge even though addFreshEntity boolean was ignored. Summon targeting/placement/AI remain Magic Conch root."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/taxing-bellow.md",
+          "reason": "Enchant metadata weight2, I, min cost1, max cost41, anvil4; exclusive_set Unbreaking and Mending. Alternative single item damage branch vs normal one durability, conditional reputation -2, same native cooldown. No extra mana, hunger or cast cost."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/taxing-bellow.md",
+          "reason": "DeepOneBaseEntity.getReputationOf/setReputationOf bridge to ACWorldData is server gated; clamp and reaction/advancement branches audited; setDeepOneReputation has no direct setDirty call, so save/reload unverified. Mutating hook and real gameplay QA absent; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TAXING-BELLOW-STATIC-1.0.10.md",
+          "reason": "Read-only SHA-exact physical publisher 1.0.10 audit across 4 classes and 13 method signatures with CFG assertions, bounded windows and synthetic negative tests; discovery workflow 42545396083 succeeded; final sealed test is CI gate. No physical world, hook or modpack QA."
+        }
+      }
     }
   },
   "providers": {},
