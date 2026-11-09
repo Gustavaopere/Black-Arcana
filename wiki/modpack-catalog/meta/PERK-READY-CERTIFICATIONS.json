@@ -7859,6 +7859,46 @@
           "reason": "Manifesto individual com 5 classes, 11 recursos, 33 métodos e 1063 âncoras; corpos completos e janelas locais delimitados, auditoria real e regressões sem ampliar budgets ou promover QA física."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/triple-split.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual de Triple Split, snapshot e divisão do Gumball; não conclui CFG integral de métodos parciais, autoria sob hooks externos, inserção/dano aceitos, encantamentos irmãos, hooks, QA física ou provider integral.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-split.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, JSON, registro/chave, tag Shot Gum, idiomas, receita, aquisição e exclusão reversa declarada selados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-split.md",
+          "reason": "Flag de divisão capturado por nível positivo no disparo T5; split de três filhos no callback após tentativa de hurt ou seu salto por owner/aliança, salvo saída friendly-fire anterior. onHit chama super antes dos filtros locais."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-split.md",
+          "reason": "JSON/custos/slots próprios e booleano sem escala por nível positivo; três tentativas por callback, geometria pela direção atual e olhos da vítima, split false nos filhos, sem equivaler a hits/DPS ou recursão garantida sob mutação externa."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-split.md",
+          "reason": "Split usa vítima do callback e movimento do pai, sem nova busca própria. Filtros de dano, IDs usados por Targeted Ricochet, colisão, aceitação de dano e criação de filhos são superfícies distintas."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-split.md",
+          "reason": "Débito nativo de uma carga no fim do disparo elegível, com exceção creative, separado de aceitação de spawn; divisão não acrescenta munição, mana, durabilidade ou XP próprios por filho/hit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-split.md",
+          "reason": "Factory de filhos não recebe nem escreve owner nesse laço; copia valores correntes do pai, incluindo máximo total de bounces, sem recibo de spawn. NBT próprio Color+super não comprova persistência herdada dos demais parâmetros; NO_MUTATION e Mastery pendente."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/triple-split.md",
+          "reason": "Manifesto individual com 7 classes, 11 recursos, 59 métodos e 1452 âncoras; corpos completos e janelas locais delimitados, auditoria real e regressões sem ampliar budgets ou promover QA física."
+        }
+      }
     }
   },
   "providers": {},
