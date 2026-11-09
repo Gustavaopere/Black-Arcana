@@ -9,9 +9,9 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=24/51
+individual_full_enchantment_dossiers=25/51
 individual_partial_enchantment_dossiers=20/51
-individual_existing_enchantment_dossiers=44/51
+individual_existing_enchantment_dossiers=45/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -19,15 +19,17 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `█████████░░░░░░░░░░░ 47.1% (24/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `██████████░░░░░░░░░░ 49.0% (25/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `█████████████████░░░ 86.3% (44/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook e Swiftwood possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `██████████████████░░ 88.2% (45/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood e Targeted Ricochet possuem contratos estáticos individuais certificados.
 
 **Sea Swing (✅ contrato estático):** [ficha individual](enchantments/sea-swing.md), [manifesto exato](EXACT-SEA-SWING-STATIC-1.0.10.json) e [prova de métodos e NBT](EXACT-SEA-SWING-STATIC-1.0.10.md) comprovam produtor Ortholance e 20 métodos completos + dois construtores nativos, incluindo owner, parâmetros, alvo, dano solicitado e descarte. Hook mutador e QA física continuam **NOT_VERIFIED/NOT_TESTED**; fonte 1.1.1 é corroboração sem paridade alegada.
 
 **Sharp Cane:** [ficha estática](enchantments/sharp-cane.md) e [prova reproduzível](EXACT-SHARP-CANE-CONTRACT-1.0.10.md) distinguem snapshot `3F×L`, busca de alvo no tick, atribuição de UUID e pedido de dano com retorno descartado. `onHitEntity` não chama hurt nesse corpo; tick integral, persistência herdada e engine conservam fronteiras próprias. Não homologa hook ou QA física.
 
 **Shaded Respite:** [ficha estática](enchantments/shaded-respite.md) e [prova reproduzível](EXACT-SHADED-RESPITE-CONTRACT-1.0.10.md) distinguem luz calculada abaixo de 11, desgaste dispensado e isenção de munição somente para `Items.ARROW`. O início de uso ainda exige munição ou creative; release e callback Relentless têm custos próprios. Não homologa factories externas, hook ou QA física.
+
+**Targeted Ricochet:** [ficha individual](enchantments/targeted-ricochet.md) e [prova SHA-exata](EXACT-TARGETED-RICOCHET-STATIC-1.0.10.md) certificam gatilho no Shot Gum, AABB de ±10D no Gumball, seleção nearest com exclusões de owner/aliança/hitIds, vetor de magnitude 0.8D, retorno à reflexão sem alvo e limite de bounce. `triple_split` é exclusive_set declarativo, embora o código possa copiar flag a filhos se split ocorrer. Sem hooks ou QA física.
 
 **Swiftwood:** [ficha individual](enchantments/swiftwood.md) e [prova 1.0.10](EXACT-SWIFTWOOD-STATIC-1.0.10.md) certificam o modificador MAINHAND ATTACK_SPEED `min(0F,-3.75F+0.15F×L)` e o clamp `0..3` na stack, com ATTACK_DAMAGE `+8D` constante do clube e não causado pelo encantamento. A montagem dinâmica por `ACCompat.itemAttributes` estática não homologa hooks nem velocidade efetiva em jogo.
 
@@ -121,7 +123,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:spell_lasting` | [Ficha técnica individual](enchantments/spell-lasting.md) · [manifesto SHA-exato](EXACT-SPELL-LASTING-STATIC-1.0.10.json) · [prova reprodutível](EXACT-SPELL-LASTING-STATIC-1.0.10.md) · lifespan da Hex; hooks e QA física pendentes |
 | ✅ | `alexscaves:straight_hook` | [Contrato estático individual](enchantments/straight-hook.md) · [manifesto SHA-exato](EXACT-STRAIGHT-HOOK-STATIC-1.0.10.json) · [prova de CFG/gravidade](EXACT-STRAIGHT-HOOK-STATIC-1.0.10.md) · hooks e QA física pendentes |
 | ✅ | `alexscaves:swiftwood` | [Contrato estático individual](enchantments/swiftwood.md) · [manifesto JVM SHA-exato](EXACT-SWIFTWOOD-STATIC-1.0.10.json) · [prova de atributos](EXACT-SWIFTWOOD-STATIC-1.0.10.md) · hooks e QA física pendentes |
-| ⚠️ | `alexscaves:targeted_ricochet` | [`EXACT-GUMBALL-CONTRACTS-1.0.10.json`](EXACT-GUMBALL-CONTRACTS-1.0.10.json) |
+| ✅ | `alexscaves:targeted_ricochet` | [Contrato estático individual](enchantments/targeted-ricochet.md) · [manifesto SHA-exato](EXACT-TARGETED-RICOCHET-STATIC-1.0.10.json) · [prova JVM e filtros](EXACT-TARGETED-RICOCHET-STATIC-1.0.10.md) · hooks e QA física pendentes |
 | ⚠️ | `alexscaves:taxing_bellow` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:triple_splash` | [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:triple_split` | [`EXACT-GUMBALL-CONTRACTS-1.0.10.json`](EXACT-GUMBALL-CONTRACTS-1.0.10.json) |
@@ -139,4 +141,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:targeted_ricochet`; Sightless é modificador de controle do Totem e não cria raiz semântica nova. Sharp Cane, Shaded Respite e os demais contratos anteriores permanecem documentados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **52/74 contratos estáticos entre fichas observadas**, incluindo 44 fichas de encantamentos. Esses 74 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
+A **próxima identidade em ordem alfabética** sem contrato estático individual concluído é `alexscaves:taxing_bellow` (ficha parcial); a próxima sem ficha individual é `alexscaves:tsunami`; Sightless é modificador de controle do Totem e não cria raiz semântica nova. Sharp Cane, Shaded Respite e os demais contratos anteriores permanecem documentados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **53/75 contratos estáticos entre fichas observadas**, incluindo 45 fichas de encantamentos. Esses 75 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
