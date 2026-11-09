@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 27/47.**
+**Fichas catalogadas (somente fichas detectadas): 28/48.**
 
-**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 57.4%`
+**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 58.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 27/47.**
+**Homologadas para perks (somente fichas detectadas): 28/48.**
 
-**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 57.4%`
+**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 58.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -67,6 +67,7 @@
 | ✅ | Targeted Ricochet | [ficha/targeted-ricochet.md](targeted-ricochet.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Taxing Bellow | [ficha/taxing-bellow.md](taxing-bellow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Triple Splash | [ficha/triple-splash.md](triple-splash.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Triple Split | [ficha/triple-split.md](triple-split.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
