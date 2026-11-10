@@ -52,7 +52,7 @@ jobs:
             }
           }
           GRADLE
-          ./gradlew --no-daemon --init-script build/arrow-classpath.init.gradle exportArrowCompileClasspath
+          ./gradlew --no-daemon --no-configuration-cache --init-script build/arrow-classpath.init.gradle exportArrowCompileClasspath
           test -s build/arrow-compile-classpath.txt
       - name: Download exact publisher Alex's Caves Continued 1.0.10 JAR
         run: |
