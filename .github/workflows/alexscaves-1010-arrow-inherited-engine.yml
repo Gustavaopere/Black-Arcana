@@ -37,6 +37,23 @@ jobs:
           python3 docs/qa/alexscaves_1010_arrow_inherited_engine_probe_test.py -v
       - name: Resolve pinned Minecraft 1.21.1 and NeoForge 21.1.248 build dependencies
         run: ./gradlew --no-daemon compileJava
+      - name: Export actual Gradle compileClasspath files
+        run: |
+          mkdir -p build
+          cat > build/arrow-classpath.init.gradle <<'GRADLE'
+          gradle.projectsEvaluated {
+            rootProject.tasks.register('exportArrowCompileClasspath') {
+              doLast {
+                def out = new File(rootProject.projectDir, 'build/arrow-compile-classpath.txt')
+                out.parentFile.mkdirs()
+                out.text = rootProject.sourceSets.main.compileClasspath.files
+                  .collect { it.absolutePath }.join('\\n') + '\\n'
+              }
+            }
+          }
+          GRADLE
+          ./gradlew --no-daemon --init-script build/arrow-classpath.init.gradle exportArrowCompileClasspath
+          test -s build/arrow-compile-classpath.txt
       - name: Download exact publisher Alex's Caves Continued 1.0.10 JAR
         run: |
           mkdir -p build/alexscaves-arrow-1010
@@ -49,13 +66,15 @@ jobs:
           SEAL='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARROW-INDUCTING-INHERITED-ENGINE-1.0.10.json'
           if test -f "$SEAL"; then
             python3 docs/qa/alexscaves_1010_arrow_inherited_engine_probe.py \
-              --project . --provider build/alexscaves-arrow-1010/alexscaves-1.0.10.jar \
+              --project . --classpath-file build/arrow-compile-classpath.txt \
+              --provider build/alexscaves-arrow-1010/alexscaves-1.0.10.jar \
               --javap "$JAVA_HOME/bin/javap" --seal "$SEAL" \
               --output build/alexscaves-arrow-1010/inherited-engine-discovery.json
           else
             echo 'UNSEALED_DISCOVERY: engine caching is not proof of transformed runtime'
             python3 docs/qa/alexscaves_1010_arrow_inherited_engine_probe.py \
-              --project . --provider build/alexscaves-arrow-1010/alexscaves-1.0.10.jar \
+              --project . --classpath-file build/arrow-compile-classpath.txt \
+              --provider build/alexscaves-arrow-1010/alexscaves-1.0.10.jar \
               --javap "$JAVA_HOME/bin/javap" --print-summary \
               --output build/alexscaves-arrow-1010/inherited-engine-discovery.json
           fi

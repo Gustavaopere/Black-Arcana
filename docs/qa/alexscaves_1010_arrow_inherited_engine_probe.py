@@ -36,11 +36,11 @@ RELEVANT = {
         "addAdditionalSaveData", "readAdditionalSaveData", "tick"
     },
 }
-REF_KEYS = (
+REF_KEYS = tuple(token.lower() for token in (
     "damage", "hurt", "owner", "hit", "arrow", "projectile", "save",
     "load", "getEntity", "discard", "setBaseDamage", "getBaseDamage",
     "isClientSide", "getData", "enchantment", "getPickupItem"
-)
+))
 MAX_VISITED = 20000
 MAX_CANDIDATES = 16
 MAX_METHODS = 60
@@ -105,6 +105,25 @@ def unique_candidates(candidates):
     return [group[0] for _,group in sorted(
         grouped.items(),key=lambda x:tuple(x[0]))]
 
+def select_from_compile_classpath(candidates, classpath_file: Path):
+    require(classpath_file.is_file(), "Gradle compileClasspath export missing")
+    raw_paths=[line.strip() for line in
+               classpath_file.read_text(encoding="utf8").splitlines() if line.strip()]
+    require(raw_paths and len(raw_paths)<4000, "invalid compileClasspath export")
+    resolved={Path(line).resolve() for line in raw_paths}
+    for obj in candidates:
+        is_compiler_input=obj["path"].resolve() in resolved
+        print("ENGINE_CANDIDATE",str(obj["path"]),
+              "compile_classpath",is_compiler_input,
+              "abstract_arrow_sha256",obj["class_digests"]["abstract_arrow"],
+              "projectile_sha256",obj["class_digests"]["projectile"])
+    selected=[obj for obj in candidates if obj["path"].resolve() in resolved]
+    require(selected, "no Minecraft engine class artifact on effective compileClasspath")
+    unique=unique_candidates(selected)
+    require(len(unique)==1,
+            "multiple distinct Minecraft bytecodes on effective compileClasspath")
+    return unique[0]
+
 def method_evidence(method):
     ins=method["instructions"]
     require(len(ins)<=MAX_INS,"oversized Minecraft method; no partial promotion")
@@ -150,16 +169,13 @@ def inspect(jar: Path, javap_bin: str, pins):
             "engine_archive_size":jar.stat().st_size,
             "classes":names,"pins":pins}
 
-def audit(provider: Path, project_root: Path, javap_bin: str):
+def audit(provider: Path, project_root: Path, javap_bin: str, classpath_file: Path):
     require(sha_file(provider)==(SHA1,SHA256,SIZE),
             "wrong SHA-exact Alex's Caves 1.0.10 JAR")
     pins=pin_build_files(project_root)
     candidates,scanned=find_candidates(project_root)
     require(candidates,"no mapped Minecraft engine class artifact in Gradle caches")
-    uniques=unique_candidates(candidates)
-    require(len(uniques)==1,
-            "multiple distinct Minecraft engine bytecodes; cannot select blindly")
-    chosen=uniques[0]
+    chosen=select_from_compile_classpath(candidates,classpath_file)
     data=inspect(chosen["path"],javap_bin,pins)
     require(all(data["classes"][k]["class_sha256"]==chosen["class_digests"][k]
                 for k in CLASSES),"engine class digest mismatch")
@@ -169,10 +185,9 @@ def audit(provider: Path, project_root: Path, javap_bin: str):
             "platform_pins":pins,
             "engine":data,
             "provenance":{
-                "engine_archive_origin":"GRADLE_CACHE_DISCOVERY_NOT_MODLAUNCHER_RUNTIME",
-                "jar_candidates_scanned":scanned,
-                "same_bytecode_jar_candidates":len(candidates),
-                "distinct_engine_class_sets":len(uniques)
+                "engine_archive_origin":"PINNED_GRADLE_COMPILE_CLASSPATH_NOT_MODLAUNCHER_RUNTIME",
+                "compile_classpath_selection":"UNIQUE_CLASS_BYTECODE_SET",
+                "cache_scan_budget":MAX_VISITED
             },
             "limits":{
                 "direct_engine_bytecode":"FOUND_IN_GRADLE_CACHE",
@@ -189,13 +204,14 @@ def audit(provider: Path, project_root: Path, javap_bin: str):
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--provider",required=True,type=Path)
+    p.add_argument("--classpath-file",required=True,type=Path)
     p.add_argument("--project",type=Path,default=Path("."))
     p.add_argument("--javap",default="javap")
     p.add_argument("--output",type=Path)
     p.add_argument("--seal",type=Path)
     p.add_argument("--print-summary",action="store_true")
     args=p.parse_args()
-    data=audit(args.provider,args.project,args.javap)
+    data=audit(args.provider,args.project,args.javap,args.classpath_file)
     if args.seal:
         expected=json.loads(args.seal.read_text(encoding="utf8"))
         require(data==expected,"inherited-engine manifest drift")

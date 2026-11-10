@@ -42,6 +42,25 @@ class Tests(unittest.TestCase):
         c={"path":Path("z.jar"),"class_digests":{"abstract_arrow":"c","projectile":"b"}}
         self.assertEqual(len(unique_candidates([a,b,c])),2)
 
+    def test_classpath_disambiguation(self):
+        from alexscaves_1010_arrow_inherited_engine_probe import select_from_compile_classpath
+        with TemporaryDirectory() as d:
+            p=Path(d)
+            a=p/"a.jar"
+            b=p/"b.jar"
+            a.touch()
+            b.touch()
+            values=[
+                {"path":a,"class_digests":{"abstract_arrow":"a","projectile":"a"}},
+                {"path":b,"class_digests":{"abstract_arrow":"b","projectile":"b"}}
+            ]
+            (p/"compile.txt").write_text(str(a)+"\\n",encoding="utf8")
+            selected=select_from_compile_classpath(values,p/"compile.txt")
+            self.assertEqual(selected["class_digests"]["abstract_arrow"],"a")
+            (p/"compile.txt").write_text(str(a)+"\\n"+str(b)+"\\n",encoding="utf8")
+            with self.assertRaisesRegex(ValueError,"multiple distinct"):
+                select_from_compile_classpath(values,p/"compile.txt")
+
     def test_gradle_pins_exact(self):
         with TemporaryDirectory() as d:
             p=Path(d)
