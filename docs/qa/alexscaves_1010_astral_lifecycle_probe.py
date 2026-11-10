@@ -184,6 +184,8 @@ def main():
           separators=(",",":"),ensure_ascii=False))
     print("ASTRAL_LIFECYCLE_TRANSFER="+json.dumps(data["astral_transfer_region"],
           separators=(",",":"),ensure_ascii=False))
+    if not args.snapshot:
+        print("ASTRAL_LIFECYCLE_DISCOVERY_JSON="+json.dumps(data,separators=(",",":"),ensure_ascii=False))
     print("ASTRAL_LIFECYCLE_SEAL","VERIFIED" if args.snapshot else "DISCOVERY",
           "METHODS",len(data["methods"]),"NO_MUTATION")
 if __name__=="__main__":
