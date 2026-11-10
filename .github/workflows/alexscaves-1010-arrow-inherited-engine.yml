@@ -47,7 +47,7 @@ jobs:
                 def out = new File(rootProject.projectDir, 'build/arrow-compile-classpath.txt')
                 out.parentFile.mkdirs()
                 out.text = rootProject.sourceSets.main.compileClasspath.files
-                  .collect { it.absolutePath }.join('\\n') + '\\n'
+                  .collect { it.absolutePath }.join('\n') + '\n'
               }
             }
           }

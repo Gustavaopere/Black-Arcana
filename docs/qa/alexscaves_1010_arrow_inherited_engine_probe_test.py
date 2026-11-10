@@ -54,10 +54,10 @@ class Tests(unittest.TestCase):
                 {"path":a,"class_digests":{"abstract_arrow":"a","projectile":"a"}},
                 {"path":b,"class_digests":{"abstract_arrow":"b","projectile":"b"}}
             ]
-            (p/"compile.txt").write_text(str(a)+"\\n",encoding="utf8")
+            (p/"compile.txt").write_text(str(a)+"\n",encoding="utf8")
             selected=select_from_compile_classpath(values,p/"compile.txt")
             self.assertEqual(selected["class_digests"]["abstract_arrow"],"a")
-            (p/"compile.txt").write_text(str(a)+"\\n"+str(b)+"\\n",encoding="utf8")
+            (p/"compile.txt").write_text(str(a)+"\n"+str(b)+"\n",encoding="utf8")
             with self.assertRaisesRegex(ValueError,"multiple distinct"):
                 select_from_compile_classpath(values,p/"compile.txt")
 
