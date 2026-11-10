@@ -10,8 +10,8 @@ artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
 individual_full_enchantment_dossiers=29/51
-individual_partial_enchantment_dossiers=20/51
-individual_existing_enchantment_dossiers=49/51
+individual_partial_enchantment_dossiers=21/51
+individual_existing_enchantment_dossiers=50/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
 physical_qa=NOT_TESTED
@@ -21,7 +21,7 @@ executable_perk_certification=NOT_CERTIFIED
 
 **Barra dos contratos técnicos estáticos dos 51 encantamentos:** `███████████░░░░░░░░░ 56.9% (29/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `███████████████████░ 96.1% (49/51)`; destes, vinte permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split e Tsunami possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `███████████████████░ 98.0% (50/51)`; destes, vinte e uma permanecem parciais, enquanto Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split e Tsunami possuem contratos estáticos individuais certificados.
 
 **Sea Swing (✅ contrato estático):** [ficha individual](enchantments/sea-swing.md), [manifesto exato](EXACT-SEA-SWING-STATIC-1.0.10.json) e [prova de métodos e NBT](EXACT-SEA-SWING-STATIC-1.0.10.md) comprovam produtor Ortholance e 20 métodos completos + dois construtores nativos, incluindo owner, parâmetros, alvo, dano solicitado e descarte. Hook mutador e QA física continuam **NOT_VERIFIED/NOT_TESTED**; fonte 1.1.1 é corroboração sem paridade alegada.
 
@@ -137,7 +137,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:triple_split` | [Contrato técnico estático](enchantments/triple-split.md) · [selo individual](EXACT-TRIPLE-SPLIT-CONTRACT-1.0.10.json) · snapshot, filhos e autoria delimitados; hooks e QA física pendentes |
 | ✅ | `alexscaves:tsunami` | [Contrato técnico estático](enchantments/tsunami.md) · [selo individual](EXACT-TSUNAMI-CONTRACT-1.0.10.json) · onda, ataque direto e persistência delimitados; hooks e QA física pendentes |
 | ⚠️ | `alexscaves:twilight_perfection` | [`EXACT-DREADBOW-CONTRACTS-1.0.10.json`](EXACT-DREADBOW-CONTRACTS-1.0.10.json) |
-| ⚠️ | `alexscaves:x_ray` | [`EXACT-RAYGUN-CONTROL-1.0.10.json`](EXACT-RAYGUN-CONTROL-1.0.10.json) |
+| ⚠️ | `alexscaves:x_ray` | [Ficha técnica individual parcial](enchantments/x-ray.md) · [janelas JVM de targeting](EXACT-RAYGUN-XRAY-TARGET-1.0.10.json) · [consumidores de branches](EXACT-RAYGUN-BRANCH-CONSUMERS-1.0.10.json) |
 
 ## Consumidores selecionados que já possuem evidência causal parcial
 
@@ -149,4 +149,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:twilight_perfection`; Tsunami preserva o release Ortholance e a Wave nativos, sem criar raiz semântica nova. Os contratos anteriores permanecem documentados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **57/79 contratos estáticos entre fichas observadas**, incluindo 49 fichas de encantamentos. Esses 79 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
+A **próxima identidade em ordem alfabética** sem ficha individual é `alexscaves:twilight_perfection`; Tsunami preserva o release Ortholance e a Wave nativos, sem criar raiz semântica nova. Os contratos anteriores permanecem documentados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem agora **57/80 contratos estáticos entre fichas observadas**, incluindo 50 fichas de encantamentos. Esses 79 objetos observados do provider não são o mesmo universo dos 51 recursos de encantamento.
