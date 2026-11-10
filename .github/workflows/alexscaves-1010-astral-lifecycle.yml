@@ -1,0 +1,75 @@
+name: Alex's Caves 1.0.10 Astral Transferring 22-method lifecycle
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-astral-lifecycle.yml'
+      - 'docs/qa/alexscaves_1010_astral_lifecycle_probe.py'
+      - 'docs/qa/alexscaves_1010_astral_lifecycle_probe_test.py'
+      - 'docs/qa/alexscaves_1010_astral_lifecycle_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ASTRAL-TRANSFERRING-LIFECYCLE-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/astral-transferring.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-astral-lifecycle.yml'
+      - 'docs/qa/alexscaves_1010_astral_lifecycle_probe.py'
+      - 'docs/qa/alexscaves_1010_astral_lifecycle_probe_test.py'
+      - 'docs/qa/alexscaves_1010_astral_lifecycle_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ASTRAL-TRANSFERRING-LIFECYCLE-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/astral-transferring.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
+permissions:
+  contents: read
+jobs:
+  exact_astral_lifecycle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Parse and synthetic negative tests
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_astral_lifecycle_probe.py docs/qa/alexscaves_1010_astral_lifecycle_probe_test.py
+          python3 docs/qa/alexscaves_1010_astral_lifecycle_probe_test.py -v
+          python3 -m py_compile docs/qa/alexscaves_1010_astral_lifecycle_cards_test.py
+          python3 docs/qa/alexscaves_1010_astral_lifecycle_cards_test.py -v
+      - name: Download pinned 1.0.10 publisher artifact
+        run: |
+          mkdir -p build/alexscaves-astral-lifecycle
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-astral-lifecycle/alexscaves-1.0.10.jar
+      - name: Verify all Totem JVM method identities and bounded transfer branch evidence
+        run: |
+          SNAP='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ASTRAL-TRANSFERRING-LIFECYCLE-1.0.10.json'
+          if test -f "$SNAP"; then
+            python3 docs/qa/alexscaves_1010_astral_lifecycle_probe.py \
+              --jar build/alexscaves-astral-lifecycle/alexscaves-1.0.10.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ASTRAL-TRANSFERRING-1.0.10.json' \
+              --snapshot "$SNAP" \
+              --output build/alexscaves-astral-lifecycle/lifecycle.json
+          else
+            python3 docs/qa/alexscaves_1010_astral_lifecycle_probe.py \
+              --jar build/alexscaves-astral-lifecycle/alexscaves-1.0.10.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ASTRAL-TRANSFERRING-1.0.10.json' \
+              --output build/alexscaves-astral-lifecycle/lifecycle.json
+          fi
+      - name: Index consistency
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: astral-1.0.10-totem-lifecycle
+          path: build/alexscaves-astral-lifecycle/lifecycle.json
+          if-no-files-found: ignore
+          retention-days: 14

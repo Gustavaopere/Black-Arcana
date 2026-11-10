@@ -71,6 +71,38 @@ O contrato de controle geral interrompe o uso quando o alvo deixa de existir ou 
 
 A autoria do runtime de possessão pertence ao provider. O Black Arcana não deve reexecutar a transferência ou o dano para aplicar uma perk; o RPG Skill Tree é apenas authority de progressão/Mastery/gates sob contrato real.
 
+## Ciclo de vida do Totem — auditoria ampliada de 22 métodos (2026-11-10)
+
+A [prova técnica complementar](../EXACT-ASTRAL-TRANSFERRING-LIFECYCLE-1.0.10.json) inventaria **todos os 22 métodos declarados** de `TotemOfPossessionItem.class` no JAR físico exato **1.0.10**, verificando SHA-1/SHA-256 do JAR, SHA-256 da classe e digest `4d366c998c89884f53bc9554f52c6477c5c6bbb8e6aea1bf0f93867dc1b41d39` do `onUseTick` contra o [manifesto anterior](../EXACT-ASTRAL-TRANSFERRING-1.0.10.json). A [sonda read-only](../../../../../docs/qa/alexscaves_1010_astral_lifecycle_probe.py) registra nomes, descritores JVM, número de instruções, SHA-256 de *parse* de cada método, referências simbólicas, branches e respectivos destinos. **Digest do parse JVM não é hash do classfile**. O escopo é um censo de métodos nativos e arestas selecionadas de controle, **não** a reconstrução integral do CFG interprocedural/exceções ou uma sessão de jogo.
+
+| Consumidor / método | Instruções / branches | Prova e fronteira |
+|---|---:|---|
+| `acHurtEnemy(ItemStack,LivingEntity,LivingEntity)Z` | **64 / 5** | Vínculo inicial usa tag de resistência `@7`, configuração de Player `@26` e `setPossessed @71`; grava UUID/tag no stack (`ACCompat.setTag @135`) |
+| `use(Level,Player,InteractionHand)` | **66 / 10** | Chama `updateEntityIdFromServer @32`, `getControlledEntity @39` e `setPossessed @75` em ramo de limpeza; valida gates do uso |
+| `onUseTick(Level,LivingEntity,ItemStack,int)V` | **478 / 59** | Encerramento, desgaste, movimento, consulta de candidatos, troca Astral e processamento de ataques |
+| `releaseUsing(ItemStack,Level,LivingEntity,int)V` | **29 / 3** | Consulta `getControlledEntity @3`; não executa o ramo de transferência Astral nesse corpo |
+| `resetBound(ItemStack)V` | **16 / 0** | Atualiza `ACCompat.setTag @28`; limpar item não comprova limpeza do marcador persistente da entidade |
+| `getBoundEntityUUID(ItemStack)` | **17 / 3** | Lê `ACCompat.getTag @1` e `ACCompat.getUUID @23` |
+| `getControlledEntity(Level,ItemStack)` | **44 / 8** | Cliente usa `ControllingEntityID` e `Level.getEntity(int) @51`; servidor usa `getBoundEntityUUID @68` e `ServerLevel.getEntity(UUID) @85` |
+| `updateEntityIdFromServer(ServerLevel,Player,ItemStack)` | **49 / 6** | Resolve UUID no servidor `@45`, grava tag `@79` e pode publicar `UpdateItemTagMessage @98–101` |
+| `setPossessed(Entity,boolean)V` | **16 / 3** | Usa `ACCompat.getPersistentData` para alternar `TotemPossessed` na entidade recebida; não percorre os donos anteriores |
+
+### Estrutura do loop e sequência de substituição
+
+O `onUseTick` contém **59 instruções de desvio**; a região `@700–1100` possui 69 referências/branches/literais selecionados no selo. Após os filtros iniciais, o ramo `Mob.setTarget @871` / `setLastHurtByMob @878` antecede os gates `timeUsing % 4 == 0 @883–885`, **vida atual estritamente superior** (`getHealth @890/@895`, `fcmpl @898`, rejeição `ifle @899 → 1081`), tag `RESISTS_TOTEM_OF_POSSESSION @910–916` e nível positivo de `ASTRAL_TRANSFERRING @920–926`.
+
+A transferência chama `setPossessed(candidate,true) @931–932`, grava `BoundEntityUUID @943–951`, serializa a nova entidade `@956`, persiste `BoundEntityTag @987–999`, solicita som e, condicionalmente, atualização do ID no servidor `@1048`. O trecho retorna ao **loop de candidatos por salto retroativo `@1081 → @766`**: não existe `break` equivalente após o primeiro candidato transferido nesse corpo. Isso não garante que dois candidatos reais sejam aceitos; demonstra que a iteração não é encerrada pela mera primeira atualização.
+
+Entre `@929` e `@1051` a **única chamada direta** a `setPossessed` recebe `true` (`iconst_1 @931`). Não há nesse intervalo uma chamada direta equivalente para remover `TotemPossessed` da entidade anteriormente vinculada. Existem caminhos de `setPossessed @109` no início de `onUseTick` e `setPossessed @75` em `use`, mas **não constituem prova de transação atômica `unset(old) → set(new)` no ramo Astral**. Persistência simultânea de marcadores é **risco técnico inferido**, não bug reproduzido nem demonstração de ausência de limpeza por outro mod/callback.
+
+### Authority, owner, sincronização e riscos para perks
+
+A consulta `getControlledEntity` usa **ID numérico de entidade no cliente** e **UUID resolvido por `ServerLevel` no servidor**. O `updateEntityIdFromServer` atualiza uma tag e possui caminho para mensagem a clientes, mas nenhum dos 22 métodos auditados comprova entrega, autenticação/replay, ordem de rede, resolução de entidades descarregadas ou recuperação correta depois de reload/troca de dimensão. `resetBound` pertence ao estado **do ItemStack**; `setPossessed` pertence ao dado persistente **da entidade**. Perks não podem misturar essas authorities ou assumir que um reset do item remove o estado da entidade anterior.
+
+A verificação de Player/config é conhecida na aquisição inicial, mas a **janela Astral selecionada** usa resistência e nível do encantamento; não se comprovou nela um novo gate independente da config. O gate geral em ticks posteriores não substitui uma autorização transacional. Testes físicos com Player, proteção/PvP, múltiplos candidatos, dois totems, unload, save/reload e versões transformadas por mixins continuam pendentes.
+
+**Conclusão da etapa:** evidência de **22/22 métodos declarados do classfile** e 69 âncoras locais, mas **não** do universo integral do provider ou de um CFG executado. `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`; **contrato individual permanece ⚠️ parcial**, **+0 certificados estáticos, +0 raízes mágicas, +0 providers concluídos**.
+
 ## Certificação e próximos testes
 
 **Identidade/JSON:** `VERIFIED_EXACT_BINARY`. **Guardas e referências do consumidor:** `VERIFIED_EXACT_BINARY_SELECTED_WINDOWS`; o grafo de controle completo, o estado efetivo de datapack e a cadeia de autoridade de servidor **não** foram certificados integralmente. **Hook mutador:** `NOT_VERIFIED`. **QA físico:** `NOT_TESTED`. **Mutação:** `NO_MUTATION`. **Certificação para perk:** `NOT_CERTIFIED`.
