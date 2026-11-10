@@ -117,8 +117,22 @@ def select_from_compile_classpath(candidates, classpath_file: Path):
               "compile_classpath",is_compiler_input,
               "abstract_arrow_sha256",obj["class_digests"]["abstract_arrow"],
               "projectile_sha256",obj["class_digests"]["projectile"])
-    selected=[obj for obj in candidates if obj["path"].resolve() in resolved]
-    require(selected, "no Minecraft engine class artifact on effective compileClasspath")
+    selected=[]
+    for path in sorted(resolved):
+        if not path.is_file() or path.suffix.lower()!=".jar":
+            continue
+        try:
+            with zipfile.ZipFile(path) as z:
+                if not all(n in z.NameToInfo for n in CLASSES.values()):
+                    continue
+                digests={key:digest(z.read(member)) for key,member in CLASSES.items()}
+            selected.append({"path":path,"class_digests":digests})
+            print("ENGINE_COMPILE_CLASSPATH",str(path),
+                  "abstract_arrow_sha256",digests["abstract_arrow"],
+                  "projectile_sha256",digests["projectile"])
+        except (OSError, zipfile.BadZipFile,PermissionError):
+            continue
+    require(selected, "no Minecraft engine classes in effective compileClasspath JARs")
     unique=unique_candidates(selected)
     require(len(unique)==1,
             "multiple distinct Minecraft bytecodes on effective compileClasspath")

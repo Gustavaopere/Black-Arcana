@@ -48,15 +48,18 @@ class Tests(unittest.TestCase):
             p=Path(d)
             a=p/"a.jar"
             b=p/"b.jar"
-            a.touch()
-            b.touch()
-            values=[
-                {"path":a,"class_digests":{"abstract_arrow":"a","projectile":"a"}},
-                {"path":b,"class_digests":{"abstract_arrow":"b","projectile":"b"}}
-            ]
+            from zipfile import ZipFile
+            from alexscaves_1010_arrow_inherited_engine_probe import CLASSES
+            for path,byte in ((a,b"a"),(b,b"b")):
+                with ZipFile(path,"w") as z:
+                    for member in CLASSES.values():
+                        z.writestr(member,byte)
+            values=[]
             (p/"compile.txt").write_text(str(a)+"\n",encoding="utf8")
             selected=select_from_compile_classpath(values,p/"compile.txt")
-            self.assertEqual(selected["class_digests"]["abstract_arrow"],"a")
+            import hashlib
+            self.assertEqual(selected["class_digests"]["abstract_arrow"],
+                             hashlib.sha256(b"a").hexdigest())
             (p/"compile.txt").write_text(str(a)+"\n"+str(b)+"\n",encoding="utf8")
             with self.assertRaisesRegex(ValueError,"multiple distinct"):
                 select_from_compile_classpath(values,p/"compile.txt")
