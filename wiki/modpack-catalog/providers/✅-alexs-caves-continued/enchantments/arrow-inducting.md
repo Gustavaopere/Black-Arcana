@@ -73,7 +73,24 @@ Na região compilada observada, o fluxo consulta o `DamageSource.getDirectEntity
 
 Não há autorização para adaptar `LivingIncomingDamageEvent` com interceptação mutadora apenas porque o método foi localizado; verificar fase lógica, precedência de handlers, cancelamento, progressão, identidade e prevenção de duplo processamento. O RPG Skill Tree continua responsável por perks/Mastery, e o Black Arcana não assume o cálculo nativo deste encantamento.
 
-## 6. Validação, pendências e conclusão desta etapa
+## 6. Auditoria adicional — roster nativo SHA-exato de ciclo de vida (2026-11-10)
+
+A inspeção read-only do JAR físico **1.0.10** ampliou a cobertura de `SeekingArrowEntity.class` de `tick()` para **todos os 12 métodos declarados** (incluindo três construtores), mantendo o consumidor `CommonEvents.acLivingAttack` com digest e offsets já fixados. O [manifesto de roster](../EXACT-ARROW-INDUCTING-LIFECYCLE-ROSTER-1.0.10.json) é gerado das provas publicadas no workflow e verificado novamente pela [sonda de ciclo de vida](../../../../../docs/qa/alexscaves_1010_arrow_inducting_lifecycle_probe.py). A auditoria original continua independente.
+
+| Categoria observada | Membros declarados verificados na classe 1.0.10 | Limite |
+|---|---|---|
+| Construção e autoria inicial | `SeekingArrowEntity(EntityType,Level)` (5 instruções), `SeekingArrowEntity(Level,double,double,double)` (17) e `SeekingArrowEntity(Level,LivingEntity)` (15) | O construtor usado pelo evento é o terceiro; **transferência/atribuição final de owner deve ser auditada no corpo/engine** |
+| Targeting e movimento | `tick()` (185), `lambda$tick$0(SeekingArrowEntity,Entity)` (4), `getArcTowardsID()` (7), `setArcTowardsID(int)` (7) | O predicado e o setter possuem provas de presença; seleção efetiva, sincronização e retarget completo exigem CFG e testes |
+| Rede / estado sincronizado | `defineSynchedData(Builder)` (10), `getAddEntityPacket(ServerEntity)` (4) | Somente membros declarados e fingerprints; conteúdo de pacote, autoridade e save/load reais **não estão certificados** |
+| Impacto | `doPostHurtEffects(LivingEntity)` (4), `getDefaultHitGroundSoundEvent()` (4), `getDefaultPickupItem()` (7) | O método pós-hit existe, mas hit aceito, dano/tipo e consequências não foram certificados |
+
+**Ausência delimitada na classe:** nenhum método **declarado** denominado `onHitEntity`, `onHitBlock`, `addAdditionalSaveData` ou `readAdditionalSaveData` consta do roster compilado de 12 membros. Isso **não prova ausência desses comportamentos** no runtime: callbacks de impacto e serialização herdados de `AbstractArrow`, mixins, dados sincronizados e outros consumers continuam fora desta inspeção.
+
+O contrato antigo conserva `Level.addFreshEntity` seguido de descarte da flecha inicial, mesmo sem checagem do retorno do spawn; a prova nova **não** altera essa conclusão. Nenhum método registrado no roster autoriza por si só um hook mutador, uma mudança de dano, um credit de XP/Mastery ou a conclusão da ficha.
+
+**Estado:** ⚠️ `NOT_CERTIFIED` para o contrato individual completo. **Prova da expansão da auditoria:** 1 consumidor de evento + 12 membros declarados de projétil fixados por hashes do JAR; 7 testes sintéticos novos executados na auditoria inicial; sem QA física. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Pendências seguintes: dissecar execução dos construtores e `doPostHurtEffects`; reconstruir CFG de `tick` e predicate; validar persistência, filtros, spoofing e sucesso de dano/spawn.
+
+## 7. Validação, pendências e conclusão desta etapa
 
 - ✅ **Verificado:** SHA-exato do JAR publisher, JSON de identidade e configuração, dois classfiles, descriptors, hashes de métodos e chamadas/operandos delimitados; sonda read-only.
 - ✅ **Reproduzível pela CI:** `docs/qa/alexscaves_1010_arrow_inducting_probe.py --jar <JAR exato> --javap <JDK21/javap> --seal <manifesto>`; o gate compara integralmente o manifesto ao resultado observado.

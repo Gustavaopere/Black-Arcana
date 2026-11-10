@@ -7,7 +7,10 @@ on:
       - '.github/workflows/alexscaves-1010-arrow-inducting.yml'
       - 'docs/qa/alexscaves_1010_arrow_inducting_probe.py'
       - 'docs/qa/alexscaves_1010_arrow_inducting_probe_test.py'
+      - 'docs/qa/alexscaves_1010_arrow_inducting_lifecycle_probe.py'
+      - 'docs/qa/alexscaves_1010_arrow_inducting_lifecycle_probe_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARROW-INDUCTING-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARROW-INDUCTING-LIFECYCLE-ROSTER-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/arrow-inducting.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
   push:
@@ -16,7 +19,10 @@ on:
       - '.github/workflows/alexscaves-1010-arrow-inducting.yml'
       - 'docs/qa/alexscaves_1010_arrow_inducting_probe.py'
       - 'docs/qa/alexscaves_1010_arrow_inducting_probe_test.py'
+      - 'docs/qa/alexscaves_1010_arrow_inducting_lifecycle_probe.py'
+      - 'docs/qa/alexscaves_1010_arrow_inducting_lifecycle_probe_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARROW-INDUCTING-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARROW-INDUCTING-LIFECYCLE-ROSTER-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/arrow-inducting.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
 
@@ -37,6 +43,8 @@ jobs:
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_arrow_inducting_probe.py docs/qa/alexscaves_1010_arrow_inducting_probe_test.py
           python3 docs/qa/alexscaves_1010_arrow_inducting_probe_test.py -v
+          python3 -m py_compile docs/qa/alexscaves_1010_arrow_inducting_lifecycle_probe.py docs/qa/alexscaves_1010_arrow_inducting_lifecycle_probe_test.py
+          python3 docs/qa/alexscaves_1010_arrow_inducting_lifecycle_probe_test.py -v
       - name: Download SHA-exact publisher 1.0.10 JAR
         run: |
           mkdir -p build/alexscaves-arrow-1010
@@ -59,6 +67,13 @@ jobs:
               --javap "$JAVA_HOME/bin/javap" \
               --output build/alexscaves-arrow-1010/arrow-inducting-evidence.json
           fi
+      - name: Inspect exact native SeekingArrow lifecycle
+        run: |
+          python3 docs/qa/alexscaves_1010_arrow_inducting_lifecycle_probe.py \
+            --jar build/alexscaves-arrow-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --roster-seal "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARROW-INDUCTING-LIFECYCLE-ROSTER-1.0.10.json" \
+            --output build/alexscaves-arrow-1010/arrow-lifecycle-discovery.json
       - name: Check canonical generated indexes without rewriting
         run: |
           python3 scripts/catalog/check_perk_ready_indexes.py
@@ -68,6 +83,8 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: alexscaves-1010-arrow-inducting-evidence
-          path: build/alexscaves-arrow-1010/arrow-inducting-evidence.json
+          path: |
+            build/alexscaves-arrow-1010/arrow-inducting-evidence.json
+            build/alexscaves-arrow-1010/arrow-lifecycle-discovery.json
           if-no-files-found: ignore
           retention-days: 14
