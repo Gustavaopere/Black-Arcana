@@ -120,9 +120,21 @@ class SatedBladeContract(unittest.TestCase):
         present = {p.stem.replace("-", "_") for p in (P / "enchantments").glob("*.md")
                    if p.name not in ("INDEX.md", "README.md")}
         missing = sorted(ids - present)
-        self.assertTrue(missing)
-        self.assertIn("A **próxima identidade em ordem alfabética** sem ficha individual é "
-                      + f"`alexscaves:{missing[0]}`;", crosswalk)
+        if missing:
+            # While dossier creation is incomplete, the public queue must
+            # point to the actual next missing publisher identity.
+            self.assertIn("A **próxima identidade em ordem alfabética** sem ficha individual é "
+                          + f"`alexscaves:{missing[0]}`;", crosswalk)
+        else:
+            # Having one card per JSON does not certify those cards, the
+            # complete provider universe, mutating hooks or physical QA.
+            self.assertEqual(len(ids), 51)
+            self.assertTrue(ids <= present)
+            self.assertIn("individual_existing_enchantment_dossiers=51/51", crosswalk)
+            self.assertIn("whole_provider_catalog_closed=false", crosswalk)
+            self.assertIn("mutating_hook=NOT_VERIFIED", crosswalk)
+            self.assertIn("physical_qa=NOT_TESTED", crosswalk)
+            self.assertIn("mutation=NO_MUTATION", crosswalk)
 
 
 if __name__ == "__main__":

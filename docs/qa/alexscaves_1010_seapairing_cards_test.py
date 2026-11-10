@@ -211,11 +211,21 @@ class SeapairingContract(unittest.TestCase):
         self.assertIn("seapairing", ids)
         self.assertIn("seapairing", present)
         missing = sorted(ids - present)
-        self.assertTrue(missing)
         crosswalk = (P / "ENCHANTMENT-PERK-CROSSWALK-1.0.10.md").read_text()
         self.assertIn("| ✅ | `alexscaves:seapairing`", crosswalk)
-        self.assertIn("A **próxima identidade em ordem alfabética** sem ficha individual é "
-                      + f"`alexscaves:{missing[0]}`;", crosswalk)
+        if missing:
+            self.assertIn("A **próxima identidade em ordem alfabética** sem ficha individual é "
+                          + f"`alexscaves:{missing[0]}`;", crosswalk)
+        else:
+            # A complete dossier roster is NOT a full provider runtime or
+            # mutating-hook certification. Preserve the independent boundaries.
+            self.assertEqual(len(ids), 51)
+            self.assertTrue(ids <= present)
+            self.assertIn("individual_existing_enchantment_dossiers=51/51", crosswalk)
+            self.assertIn("whole_provider_catalog_closed=false", crosswalk)
+            self.assertIn("mutating_hook=NOT_VERIFIED", crosswalk)
+            self.assertIn("physical_qa=NOT_TESTED", crosswalk)
+            self.assertIn("mutation=NO_MUTATION", crosswalk)
 
 
 if __name__ == "__main__":
