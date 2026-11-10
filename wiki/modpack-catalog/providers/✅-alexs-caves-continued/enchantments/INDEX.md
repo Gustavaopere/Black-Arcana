@@ -68,7 +68,8 @@
 | ✅ | Taxing Bellow | [ficha/taxing-bellow.md](taxing-bellow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Triple Splash | [ficha/triple-splash.md](triple-splash.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Triple Split | [ficha/triple-split.md](triple-split.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ✅ | Tsunami | [ficha/tsunami.md](tsunami.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado || ⚠️ | X Ray | [ficha/x-ray.md](x-ray.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Tsunami | [ficha/tsunami.md](tsunami.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | X Ray | [ficha/x-ray.md](x-ray.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
