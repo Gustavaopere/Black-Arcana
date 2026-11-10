@@ -6,6 +6,7 @@ on:
       - '.github/workflows/alexscaves-1010-astral-lifecycle.yml'
       - 'docs/qa/alexscaves_1010_astral_lifecycle_probe.py'
       - 'docs/qa/alexscaves_1010_astral_lifecycle_probe_test.py'
+      - 'docs/qa/alexscaves_1010_astral_lifecycle_cards_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ASTRAL-TRANSFERRING-LIFECYCLE-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/astral-transferring.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
@@ -15,6 +16,7 @@ on:
       - '.github/workflows/alexscaves-1010-astral-lifecycle.yml'
       - 'docs/qa/alexscaves_1010_astral_lifecycle_probe.py'
       - 'docs/qa/alexscaves_1010_astral_lifecycle_probe_test.py'
+      - 'docs/qa/alexscaves_1010_astral_lifecycle_cards_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ASTRAL-TRANSFERRING-LIFECYCLE-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/astral-transferring.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
@@ -34,6 +36,8 @@ jobs:
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_astral_lifecycle_probe.py docs/qa/alexscaves_1010_astral_lifecycle_probe_test.py
           python3 docs/qa/alexscaves_1010_astral_lifecycle_probe_test.py -v
+          python3 -m py_compile docs/qa/alexscaves_1010_astral_lifecycle_cards_test.py
+          python3 docs/qa/alexscaves_1010_astral_lifecycle_cards_test.py -v
       - name: Download pinned 1.0.10 publisher artifact
         run: |
           mkdir -p build/alexscaves-astral-lifecycle
