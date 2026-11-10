@@ -79,7 +79,7 @@ A inspeção read-only do JAR físico **1.0.10** ampliou a cobertura de `Seeking
 
 | Categoria observada | Membros declarados verificados na classe 1.0.10 | Limite |
 |---|---|---|
-| Construção e autoria inicial | `SeekingArrowEntity(EntityType,Level)` (5 instruções), `SeekingArrowEntity(Level,double,double,double)` (17) e `SeekingArrowEntity(Level,LivingEntity)` (15) | O construtor usado pelo evento é o terceiro; **transferência/atribuição final de owner deve ser auditada no corpo/engine** |
+| Construção e autoria inicial | `SeekingArrowEntity(EntityType,Level)` (5 instruções), `SeekingArrowEntity(Level,double,double,double)` (17) e `SeekingArrowEntity(Level,LivingEntity)` (15) | O construtor usado pelo evento é o terceiro; a chamada herdada a `setOwner` foi verificada no binário de compilação (seção 8), mas o runtime transformado e as regras de crédito continuam pendentes |
 | Targeting e movimento | `tick()` (185), `lambda$tick$0(SeekingArrowEntity,Entity)` (4), `getArcTowardsID()` (7), `setArcTowardsID(int)` (7) | O predicado e o setter possuem provas de presença; seleção efetiva, sincronização e retarget completo exigem CFG e testes |
 | Rede / estado sincronizado | `defineSynchedData(Builder)` (10), `getAddEntityPacket(ServerEntity)` (4) | Somente membros declarados e fingerprints; conteúdo de pacote, autoridade e save/load reais **não estão certificados** |
 | Impacto | `doPostHurtEffects(LivingEntity)` (4), `getDefaultHitGroundSoundEvent()` (4), `getDefaultPickupItem()` (7) | O método pós-hit existe, mas hit aceito, dano/tipo e consequências não foram certificados |
@@ -102,7 +102,7 @@ Na região de substituição, a classe instancia `SeekingArrowEntity(Level,Livin
 
 ### 7.2. Autoria: sequência de construtores
 
-O construtor exato `SeekingArrowEntity(Level,LivingEntity)` possui **15 instruções** e delega em `@33` a `AbstractArrow.<init>(EntityType,LivingEntity,Level,ItemStack,ItemStack)`, passando `ACEntityRegistry.SEEKING_ARROW` e `ACItemRegistry.SEEKING_ARROW` como referências do objeto nativo. A chamada do evento fornece o defensor como `LivingEntity`. **Conclusão delimitada:** a autoria inicial é encaminhada pela rota do construtor de `AbstractArrow` com uma entidade viva, mas o setter interno, sua preservação até o impacto, save/load e a aceitação de um kill/XP/Mastery **não foram auditados**.
+O construtor exato `SeekingArrowEntity(Level,LivingEntity)` possui **15 instruções** e delega em `@33` a `AbstractArrow.<init>(EntityType,LivingEntity,Level,ItemStack,ItemStack)`, passando `ACEntityRegistry.SEEKING_ARROW` e `ACItemRegistry.SEEKING_ARROW` como referências do objeto nativo. A chamada do evento fornece o defensor como `LivingEntity`. **Conclusão delimitada:** a autoria inicial é encaminhada pela rota do construtor de `AbstractArrow` com uma entidade viva, e o setter interno foi agora identificado em `Projectile` no **binário de compilação**, incluindo `ownerUUID` e `cachedOwner` (seção 8); a persistência efetiva no runtime transformado, o crédito de kill/XP/Mastery e a QA física **não foram auditados**.
 
 O overload `SeekingArrowEntity(Level,DDD)` (17 instruções) delega a `AbstractArrow.<init>(EntityType,DDD,Level,ItemStack,ItemStack)` em `@37`, **sem parâmetro LivingEntity** nessa assinatura. Não presumir equivalência automática de owner entre construtores nem atribuir proc de perk com base apenas em `getOwner`.
 
@@ -120,7 +120,40 @@ O overload `SeekingArrowEntity(Level,DDD)` (17 instruções) delega a `AbstractA
 
 **Fronteira de perks:** não alterar alvo, owner, `ARC_TOWARDS_ENTITY_ID`, `stopSeeking`, velocidade, lifetime, colisão, impacto ou Mastery por simples manipulação do campo. Exigir hook estável pré-efeito, autorização do servidor, prevenção de dupla atribuição, prova de persistência e QA física. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. **A nova evidência aprofunda a ficha ⚠️ parcial; não incrementa contratos estáticos certificados, providers nem raízes de cast.**
 
-## 8. Validação, pendências e conclusão desta etapa
+## 8. Contrato de herança — `AbstractArrow` / `Projectile` no artefato de compilação (2026-11-10)
+
+**Escopo e autoridade:** [manifesto de bytecode herdado](../EXACT-ARROW-INDUCTING-INHERITED-ENGINE-1.0.10.json) e [sonda de proveniência](../../../../../docs/qa/alexscaves_1010_arrow_inherited_engine_probe.py), executados na CI sobre o **classpath efetivo de compilação** de Minecraft `1.21.1`, NeoForge `21.1.248` e ModDevGradle `2.0.144`, em paralelo à validação SHA-exata do JAR publisher Alex's Caves Continued `1.0.10`. O arquivo do motor escolhido possui SHA-256 `fd58bb47e9ebbeefaa42871888e113b0bd1e643babc6877a237b6c8713a7a1c4`, tamanho `22.702.897` bytes. Os classfiles mapeados têm hashes `AbstractArrow=2cc85f8cb1bacba5c59c462c636f7bfad754db859253b75900a55f9888acccef` e `Projectile=42e5b3a088bd4446abab0fe8cd2e61368095fe664aa38d6b256ab0424625326d`.
+
+**Diferenciação obrigatória:** o cache de desenvolvimento também contém variantes `rename`, `binaryPatch`, `copyUnpatchedClasses`, `binaryWithNeoForge` e `applyDevTransforms` com **hashes de classe diferentes**. A prova seleciona o JAR presente no classpath do compilador, não a primeira entrada do cache. Esta é evidência do **binário de desenvolvimento compilável**, **não** prova do código final transformado por ModLauncher/mixins na instalação física com todos os mods ativos.
+
+### 8.1. Caminho de impacto e solicitação de dano
+
+| Fronteira compilada | Evidência JVM na build fixada | Conclusão e limite |
+|---|---|---|
+| `Projectile.onHit(HitResult)` | 69 instruções; chamadas virtuais `onHitEntity @72` e `onHitBlock @111` | Existe encaminhamento por categoria do hit, com ramos de deflexão; não demonstra que um hit determinado foi aceito |
+| `AbstractArrow.onHitEntity(EntityHitResult)` | 323 instruções; `DamageSources.arrow @47`, `EnchantmentHelper.modifyDamage @92`, `Entity.hurt @298`, ramo `ifeq @301 → 609` | Há solicitação de dano por fonte de flecha e processamento de retorno; a quantidade efetiva não pode ser reduzida ao `baseDamage` e depende do pipeline do jogo |
+| Callback pós-impacto | `AbstractArrow.onHitEntity` invoca virtualmente `doPostHurtEffects(LivingEntity) @397`; o override em `SeekingArrowEntity` fixa `stopSeeking=true` | A chamada está num trecho que segue a checagem de retorno `@301`, com outros guardas entre os pontos; não afirmar execução incondicional em todo hit |
+| Dano inicial do tipo base | `AbstractArrow(EntityType,Level)`: `baseDamage=2.0D @14–17`; `setBaseDamage(D)` e `getBaseDamage()` declarados | Valor inicial do **tipo base** no binário de compilação, não valor final, fixo ou aceito de cada Seeking Arrow; velocidade, encantamentos e engine ainda alteram o envelope |
+
+Os hashes individuais dos métodos (e seus descriptors, branch targets e referências simbólicas) estão selados no manifesto, sem reprodução de implementação proprietária.
+
+### 8.2. Autoria do defensor e resolução após carregamento
+
+A cadeia agora é comprovada **no binário de compilação**: o evento `CommonEvents.acLivingAttack` passa o defensor para `SeekingArrowEntity(Level,LivingEntity)`; o construtor do provider delega a `AbstractArrow(EntityType,LivingEntity,Level,ItemStack,ItemStack)`; este chama `setOwner(Entity) @28`. O setter em `Projectile` grava `ownerUUID @9` e `cachedOwner @14`. `Projectile.getOwner()` consulta `ownerUUID` e a entidade de `ServerLevel.getEntity(UUID) @52` para repor o cache quando aplicável.
+
+O armazenamento base usa `Projectile.addAdditionalSaveData` e `readAdditionalSaveData`, com os nomes NBT publisher-independent `Owner`, `LeftOwner` e `HasBeenShot`. `AbstractArrow` delega essas operações e acrescenta campos como `life`, `inGround`, `damage`, `pickup`, `crit`, `PierceLevel`, `item` e `weapon` (conforme constantes e referências dos métodos compilados). Isso comprova **uma rota de persistência herdada do owner** na base, não que toda resolução sobreviva a unload, cross-dimension, ausência do owner ou conflito com mixins.
+
+Os estados próprios do provider `stopSeeking` e `ARC_TOWARDS_ENTITY_ID` **não possuem overrides de leitura/escrita NBT declarados** em `SeekingArrowEntity` na versão auditada. Não presumir salvamento de `stopSeeking` ou ID de alvo a partir de `SynchedEntityData`; também não inferir perda efetiva/reprodução física sem testar save/restart e transformações adicionais.
+
+### 8.3. Consequências para targeting, perks e Mastery
+
+`AbstractArrow.canHitEntity` delega a `Projectile.canHitEntity` com filtros próprios; `Projectile.onHit` contém ramos envolvendo deflexão e encaminhamento `EntityHitResult`/ `BlockHitResult`. Isso reforça que **mudar a busca do `tick` não é igual a modificar a elegibilidade de colisão**, e que converter o projétil pode alterar owner e credit de combate nativos.
+
+Para qualquer perk candidata, requerer: prova do hit realmente aplicado, owner válido no servidor no momento da liquidação, prevenção de dano duplicado, respeito a proteção/PvP/claims e comportamento após save/reload. Nenhuma chamada virtual ou campo deste manifesto equivale a um **hook mutador estável**. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`, `perk_certification=NOT_CERTIFIED`.
+
+**Status desta etapa:** ⚠️ auditoria da herança **ampliada e verificável no binário de compilação**, mas contrato estático integral do encantamento continua parcial. Permanecem pendentes transformação efetiva ModLauncher/pack, cálculo final e aceitação de dano, variantes de colisão e deflexão, serialização dos campos específicos, datapacks/atributos e QA física. **+0** certificados estáticos, **+0** novas raízes de cast e **+0** providers concluídos.
+
+## 9. Validação, pendências e conclusão desta etapa
 
 - ✅ **Verificado:** SHA-exato do JAR publisher, JSON de identidade e configuração, dois classfiles, descriptors, hashes de métodos e chamadas/operandos delimitados; sonda read-only.
 - ✅ **Reproduzível pela CI:** `docs/qa/alexscaves_1010_arrow_inducting_probe.py --jar <JAR exato> --javap <JDK21/javap> --seal <manifesto>`; o gate compara integralmente o manifesto ao resultado observado.

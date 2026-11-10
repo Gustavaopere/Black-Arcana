@@ -1,0 +1,92 @@
+name: Alex's Caves 1.0.10 Arrow Inducting inherited Minecraft engine discovery
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-arrow-inherited-engine.yml'
+      - 'docs/qa/alexscaves_1010_arrow_inherited_engine_probe.py'
+      - 'docs/qa/alexscaves_1010_arrow_inherited_engine_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARROW-INDUCTING-INHERITED-ENGINE-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/arrow-inducting.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-arrow-inherited-engine.yml'
+      - 'docs/qa/alexscaves_1010_arrow_inherited_engine_probe.py'
+      - 'docs/qa/alexscaves_1010_arrow_inherited_engine_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARROW-INDUCTING-INHERITED-ENGINE-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/arrow-inducting.md'
+
+permissions:
+  contents: read
+
+jobs:
+  arrow_inherited_engine:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Negative probe tests
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_arrow_inherited_engine_probe.py docs/qa/alexscaves_1010_arrow_inherited_engine_probe_test.py
+          python3 docs/qa/alexscaves_1010_arrow_inherited_engine_probe_test.py -v
+      - name: Resolve pinned Minecraft 1.21.1 and NeoForge 21.1.248 build dependencies
+        run: ./gradlew --no-daemon compileJava
+      - name: Export actual Gradle compileClasspath files
+        run: |
+          mkdir -p build
+          cat > build/arrow-classpath.init.gradle <<'GRADLE'
+          gradle.projectsEvaluated {
+            rootProject.tasks.register('exportArrowCompileClasspath') {
+              doLast {
+                def out = new File(rootProject.projectDir, 'build/arrow-compile-classpath.txt')
+                out.parentFile.mkdirs()
+                out.text = rootProject.sourceSets.main.compileClasspath.files
+                  .collect { it.absolutePath }.join('\n') + '\n'
+              }
+            }
+          }
+          GRADLE
+          ./gradlew --no-daemon --no-configuration-cache --init-script build/arrow-classpath.init.gradle exportArrowCompileClasspath
+          test -s build/arrow-compile-classpath.txt
+      - name: Download exact publisher Alex's Caves Continued 1.0.10 JAR
+        run: |
+          mkdir -p build/alexscaves-arrow-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-arrow-1010/alexscaves-1.0.10.jar
+      - name: Discover inherited native Arrow collision and owner pipeline
+        run: |
+          SEAL='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARROW-INDUCTING-INHERITED-ENGINE-1.0.10.json'
+          if test -f "$SEAL"; then
+            python3 docs/qa/alexscaves_1010_arrow_inherited_engine_probe.py \
+              --project . --classpath-file build/arrow-compile-classpath.txt \
+              --provider build/alexscaves-arrow-1010/alexscaves-1.0.10.jar \
+              --javap "$JAVA_HOME/bin/javap" --seal "$SEAL" \
+              --output build/alexscaves-arrow-1010/inherited-engine-discovery.json
+          else
+            echo 'UNSEALED_DISCOVERY: engine caching is not proof of transformed runtime'
+            python3 docs/qa/alexscaves_1010_arrow_inherited_engine_probe.py \
+              --project . --classpath-file build/arrow-compile-classpath.txt \
+              --provider build/alexscaves-arrow-1010/alexscaves-1.0.10.jar \
+              --javap "$JAVA_HOME/bin/javap" --print-summary \
+              --output build/alexscaves-arrow-1010/inherited-engine-discovery.json
+          fi
+      - name: Index consistency (no writes)
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - name: Archive read-only engine evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-arrow-inherited-engine-evidence
+          path: build/alexscaves-arrow-1010/inherited-engine-discovery.json
+          if-no-files-found: ignore
+          retention-days: 14

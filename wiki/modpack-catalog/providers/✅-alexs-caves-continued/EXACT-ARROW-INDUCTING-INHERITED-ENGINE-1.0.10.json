@@ -1,0 +1,2292 @@
+{
+  "schema_version": 1,
+  "scope": "ALEXSCAVES_1010_SEEKING_ARROW_INHERITED_ENGINE_STATIC_DISCOVERY",
+  "provider_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+  "platform_pins": {
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.248",
+    "moddevgradle": "2.0.144"
+  },
+  "engine": {
+    "engine_archive_sha256": "fd58bb47e9ebbeefaa42871888e113b0bd1e643babc6877a237b6c8713a7a1c4",
+    "engine_archive_size": 22702897,
+    "classes": {
+      "abstract_arrow": {
+        "class_sha256": "2cc85f8cb1bacba5c59c462c636f7bfad754db859253b75900a55f9888acccef",
+        "class_bytes": 33242,
+        "declared_method_count": 54,
+        "inspected_methods": [
+          {
+            "name": "AbstractArrow",
+            "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+            "method_sha256": "005849300e8b09b55503208f643c533706dbdf9514bb3c99233374fcbb36c9ec",
+            "instruction_count": 22,
+            "total_symbolic_refs": 9,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 3,
+                "opcode": "invokespecial",
+                "symbol": "Method net/minecraft/world/entity/projectile/Projectile.\"<init>\":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V"
+              },
+              {
+                "offset": 7,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/entity/projectile/AbstractArrow$Pickup.DISALLOWED:Lnet/minecraft/world/entity/projectile/AbstractArrow$Pickup;"
+              },
+              {
+                "offset": 10,
+                "opcode": "putfield",
+                "symbol": "Field pickup:Lnet/minecraft/world/entity/projectile/AbstractArrow$Pickup;"
+              },
+              {
+                "offset": 17,
+                "opcode": "putfield",
+                "symbol": "Field baseDamage:D"
+              },
+              {
+                "offset": 22,
+                "opcode": "invokevirtual",
+                "symbol": "Method getDefaultHitGroundSoundEvent:()Lnet/minecraft/sounds/SoundEvent;"
+              }
+            ],
+            "branches": [],
+            "branch_count": 0,
+            "numeric_operands": [
+              {
+                "offset": 14,
+                "opcode": "ldc2_w",
+                "operand": "#18",
+                "symbol": "double 2.0d"
+              }
+            ],
+            "numeric_operand_count": 1
+          },
+          {
+            "name": "AbstractArrow",
+            "descriptor": "(Lnet/minecraft/world/entity/EntityType;DDDLnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V",
+            "method_sha256": "78a1eca5ab736c2dfb74b72e280092d8b329af0cc967ae2669d8f656ae1f98de",
+            "instruction_count": 68,
+            "total_symbolic_refs": 20,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 33,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/core/component/DataComponents.INTANGIBLE_PROJECTILE:Lnet/minecraft/core/component/DataComponentType;"
+              },
+              {
+                "offset": 50,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/entity/projectile/AbstractArrow$Pickup.CREATIVE_ONLY:Lnet/minecraft/world/entity/projectile/AbstractArrow$Pickup;"
+              },
+              {
+                "offset": 53,
+                "opcode": "putfield",
+                "symbol": "Field pickup:Lnet/minecraft/world/entity/projectile/AbstractArrow$Pickup;"
+              },
+              {
+                "offset": 120,
+                "opcode": "invokestatic",
+                "symbol": "Method net/minecraft/world/item/enchantment/EnchantmentHelper.getPiercingCount:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)I"
+              },
+              {
+                "offset": 143,
+                "opcode": "invokedynamic",
+                "symbol": "InvokeDynamic #0:accept:(Lnet/minecraft/world/entity/projectile/AbstractArrow;)Ljava/util/function/Consumer;"
+              },
+              {
+                "offset": 148,
+                "opcode": "invokestatic",
+                "symbol": "Method net/minecraft/world/item/enchantment/EnchantmentHelper.onProjectileSpawned:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/projectile/AbstractArrow;Ljava/util/function/Consumer;)V"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 46,
+                "opcode": "ifnull",
+                "target": "56"
+              },
+              {
+                "offset": 67,
+                "opcode": "ifnull",
+                "target": "151"
+              },
+              {
+                "offset": 75,
+                "opcode": "ifeq",
+                "target": "151"
+              },
+              {
+                "offset": 90,
+                "opcode": "ifeq",
+                "target": "103"
+              },
+              {
+                "offset": 127,
+                "opcode": "ifle",
+                "target": "137"
+              }
+            ],
+            "branch_count": 5,
+            "numeric_operands": [
+              {
+                "offset": 97,
+                "opcode": "ldc",
+                "operand": "#88",
+                "symbol": "String Invalid weapon firing an arrow"
+              }
+            ],
+            "numeric_operand_count": 1
+          },
+          {
+            "name": "AbstractArrow",
+            "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V",
+            "method_sha256": "296ecab4a26ed4fd51302192d33c899f451fb7eaddba2c21f83af3248346243c",
+            "instruction_count": 18,
+            "total_symbolic_refs": 5,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 28,
+                "opcode": "invokevirtual",
+                "symbol": "Method setOwner:(Lnet/minecraft/world/entity/Entity;)V"
+              }
+            ],
+            "branches": [],
+            "branch_count": 0,
+            "numeric_operands": [
+              {
+                "offset": 10,
+                "opcode": "ldc2_w",
+                "operand": "#120",
+                "symbol": "double 0.10000000149011612d"
+              }
+            ],
+            "numeric_operand_count": 1
+          },
+          {
+            "name": "tick",
+            "descriptor": "()V",
+            "method_sha256": "e13b02338c12b388bbb75f4c916e317c57640d1fa199a07eaa9bb0188f548eee",
+            "instruction_count": 438,
+            "total_symbolic_refs": 114,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 1,
+                "opcode": "invokespecial",
+                "symbol": "Method net/minecraft/world/entity/projectile/Projectile.tick:()V"
+              },
+              {
+                "offset": 247,
+                "opcode": "invokedynamic",
+                "symbol": "InvokeDynamic #1:test:(Lnet/minecraft/world/entity/projectile/AbstractArrow;)Ljava/util/function/BiPredicate;"
+              },
+              {
+                "offset": 300,
+                "opcode": "getfield",
+                "symbol": "Field net/minecraft/world/level/Level.isClientSide:Z"
+              },
+              {
+                "offset": 364,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/level/Level.clip:(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;"
+              },
+              {
+                "offset": 371,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/HitResult.getType:()Lnet/minecraft/world/phys/HitResult$Type;"
+              },
+              {
+                "offset": 374,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/phys/HitResult$Type.MISS:Lnet/minecraft/world/phys/HitResult$Type;"
+              },
+              {
+                "offset": 382,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/HitResult.getLocation:()Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 399,
+                "opcode": "invokevirtual",
+                "symbol": "Method findHitEntity:(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/EntityHitResult;"
+              },
+              {
+                "offset": 420,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/HitResult.getType:()Lnet/minecraft/world/phys/HitResult$Type;"
+              },
+              {
+                "offset": 423,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/phys/HitResult$Type.ENTITY:Lnet/minecraft/world/phys/HitResult$Type;"
+              },
+              {
+                "offset": 434,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/EntityHitResult.getEntity:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 440,
+                "opcode": "invokevirtual",
+                "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 490,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/HitResult.getType:()Lnet/minecraft/world/phys/HitResult$Type;"
+              },
+              {
+                "offset": 493,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/phys/HitResult$Type.MISS:Lnet/minecraft/world/phys/HitResult$Type;"
+              },
+              {
+                "offset": 506,
+                "opcode": "invokestatic",
+                "symbol": "Method net/neoforged/neoforge/event/EventHooks.onProjectileImpact:(Lnet/minecraft/world/entity/projectile/Projectile;Lnet/minecraft/world/phys/HitResult;)Z"
+              },
+              {
+                "offset": 518,
+                "opcode": "invokevirtual",
+                "symbol": "Method hitTargetOrDeflectSelf:(Lnet/minecraft/world/phys/HitResult;)Lnet/minecraft/world/entity/projectile/ProjectileDeflection;"
+              },
+              {
+                "offset": 530,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/entity/projectile/ProjectileDeflection.NONE:Lnet/minecraft/world/entity/projectile/ProjectileDeflection;"
+              },
+              {
+                "offset": 584,
+                "opcode": "invokevirtual",
+                "symbol": "Method isCritArrow:()Z"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 20,
+                "opcode": "ifne",
+                "target": "98"
+              },
+              {
+                "offset": 29,
+                "opcode": "ifne",
+                "target": "98"
+              },
+              {
+                "offset": 118,
+                "opcode": "ifne",
+                "target": "210"
+              },
+              {
+                "offset": 122,
+                "opcode": "ifne",
+                "target": "210"
+              },
+              {
+                "offset": 142,
+                "opcode": "ifne",
+                "target": "210"
+              },
+              {
+                "offset": 170,
+                "opcode": "ifeq",
+                "target": "210"
+              },
+              {
+                "offset": 196,
+                "opcode": "ifeq",
+                "target": "207"
+              },
+              {
+                "offset": 204,
+                "opcode": "goto",
+                "target": "210"
+              },
+              {
+                "offset": 207,
+                "opcode": "goto",
+                "target": "163"
+              },
+              {
+                "offset": 214,
+                "opcode": "ifle",
+                "target": "227"
+              },
+              {
+                "offset": 231,
+                "opcode": "ifne",
+                "target": "258"
+              },
+              {
+                "offset": 242,
+                "opcode": "ifne",
+                "target": "258"
+              },
+              {
+                "offset": 255,
+                "opcode": "ifeq",
+                "target": "262"
+              },
+              {
+                "offset": 266,
+                "opcode": "ifeq",
+                "target": "323"
+              },
+              {
+                "offset": 270,
+                "opcode": "ifne",
+                "target": "323"
+              },
+              {
+                "offset": 279,
+                "opcode": "if_acmpeq",
+                "target": "296"
+              },
+              {
+                "offset": 286,
+                "opcode": "ifeq",
+                "target": "296"
+              },
+              {
+                "offset": 293,
+                "opcode": "goto",
+                "target": "310"
+              },
+              {
+                "offset": 303,
+                "opcode": "ifne",
+                "target": "310"
+              },
+              {
+                "offset": 320,
+                "opcode": "goto",
+                "target": "919"
+              },
+              {
+                "offset": 377,
+                "opcode": "if_acmpeq",
+                "target": "387"
+              },
+              {
+                "offset": 391,
+                "opcode": "ifne",
+                "target": "560"
+              },
+              {
+                "offset": 406,
+                "opcode": "ifnull",
+                "target": "413"
+              },
+              {
+                "offset": 415,
+                "opcode": "ifnull",
+                "target": "483"
+              },
+              {
+                "offset": 426,
+                "opcode": "if_acmpne",
+                "target": "483"
+              },
+              {
+                "offset": 450,
+                "opcode": "ifeq",
+                "target": "483"
+              },
+              {
+                "offset": 458,
+                "opcode": "ifeq",
+                "target": "483"
+              },
+              {
+                "offset": 474,
+                "opcode": "ifne",
+                "target": "483"
+              },
+              {
+                "offset": 485,
+                "opcode": "ifnull",
+                "target": "539"
+              },
+              {
+                "offset": 496,
+                "opcode": "if_acmpeq",
+                "target": "539"
+              },
+              {
+                "offset": 500,
+                "opcode": "ifne",
+                "target": "539"
+              },
+              {
+                "offset": 509,
+                "opcode": "ifeq",
+                "target": "515"
+              },
+              {
+                "offset": 512,
+                "opcode": "goto",
+                "target": "560"
+              },
+              {
+                "offset": 533,
+                "opcode": "if_acmpeq",
+                "target": "539"
+              },
+              {
+                "offset": 536,
+                "opcode": "goto",
+                "target": "560"
+              },
+              {
+                "offset": 541,
+                "opcode": "ifnull",
+                "target": "560"
+              },
+              {
+                "offset": 548,
+                "opcode": "ifgt",
+                "target": "554"
+              },
+              {
+                "offset": 551,
+                "opcode": "goto",
+                "target": "560"
+              },
+              {
+                "offset": 557,
+                "opcode": "goto",
+                "target": "387"
+              },
+              {
+                "offset": 587,
+                "opcode": "ifeq",
+                "target": "673"
+              },
+              {
+                "offset": 596,
+                "opcode": "if_icmpge",
+                "target": "673"
+              },
+              {
+                "offset": 670,
+                "opcode": "goto",
+                "target": "593"
+              },
+              {
+                "offset": 707,
+                "opcode": "ifeq",
+                "target": "735"
+              },
+              {
+                "offset": 732,
+                "opcode": "goto",
+                "target": "755"
+              },
+              {
+                "offset": 814,
+                "opcode": "ifeq",
+                "target": "886"
+              },
+              {
+                "offset": 823,
+                "opcode": "if_icmpge",
+                "target": "880"
+              },
+              {
+                "offset": 877,
+                "opcode": "goto",
+                "target": "820"
+              },
+              {
+                "offset": 898,
+                "opcode": "ifne",
+                "target": "905"
+              }
+            ],
+            "branch_count": 48,
+            "numeric_operands": [
+              {
+                "offset": 18,
+                "opcode": "fconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 27,
+                "opcode": "fconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 49,
+                "opcode": "ldc2_w",
+                "operand": "#223",
+                "symbol": "double 180.0d"
+              },
+              {
+                "offset": 53,
+                "opcode": "ldc2_w",
+                "operand": "#227",
+                "symbol": "double 3.1415927410125732d"
+              },
+              {
+                "offset": 70,
+                "opcode": "ldc2_w",
+                "operand": "#223",
+                "symbol": "double 180.0d"
+              },
+              {
+                "offset": 74,
+                "opcode": "ldc2_w",
+                "operand": "#227",
+                "symbol": "double 3.1415927410125732d"
+              },
+              {
+                "offset": 200,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 222,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 315,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 324,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 524,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 590,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 595,
+                "opcode": "iconst_4",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 616,
+                "opcode": "ldc2_w",
+                "operand": "#449",
+                "symbol": "double 4.0d"
+              },
+              {
+                "offset": 631,
+                "opcode": "ldc2_w",
+                "operand": "#449",
+                "symbol": "double 4.0d"
+              },
+              {
+                "offset": 646,
+                "opcode": "ldc2_w",
+                "operand": "#449",
+                "symbol": "double 4.0d"
+              },
+              {
+                "offset": 657,
+                "opcode": "ldc2_w",
+                "operand": "#455",
+                "symbol": "double 0.2d"
+              },
+              {
+                "offset": 720,
+                "opcode": "ldc2_w",
+                "operand": "#223",
+                "symbol": "double 180.0d"
+              },
+              {
+                "offset": 724,
+                "opcode": "ldc2_w",
+                "operand": "#227",
+                "symbol": "double 3.1415927410125732d"
+              },
+              {
+                "offset": 743,
+                "opcode": "ldc2_w",
+                "operand": "#223",
+                "symbol": "double 180.0d"
+              },
+              {
+                "offset": 747,
+                "opcode": "ldc2_w",
+                "operand": "#227",
+                "symbol": "double 3.1415927410125732d"
+              },
+              {
+                "offset": 763,
+                "opcode": "ldc2_w",
+                "operand": "#223",
+                "symbol": "double 180.0d"
+              },
+              {
+                "offset": 767,
+                "opcode": "ldc2_w",
+                "operand": "#227",
+                "symbol": "double 3.1415927410125732d"
+              },
+              {
+                "offset": 805,
+                "opcode": "ldc_w",
+                "operand": "#465",
+                "symbol": "float 0.99f"
+              },
+              {
+                "offset": 817,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 822,
+                "opcode": "iconst_4",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 826,
+                "opcode": "ldc_w",
+                "operand": "#469",
+                "symbol": "float 0.25f"
+              },
+              {
+                "offset": 842,
+                "opcode": "ldc2_w",
+                "operand": "#473",
+                "symbol": "double 0.25d"
+              },
+              {
+                "offset": 851,
+                "opcode": "ldc2_w",
+                "operand": "#473",
+                "symbol": "double 0.25d"
+              },
+              {
+                "offset": 860,
+                "opcode": "ldc2_w",
+                "operand": "#473",
+                "symbol": "double 0.25d"
+              }
+            ],
+            "numeric_operand_count": 30
+          },
+          {
+            "name": "onHitEntity",
+            "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+            "method_sha256": "532d9df2e60a39c1a9b906a742ad726946b1dfaa0bc06f865f95d10e01a01ab7",
+            "instruction_count": 323,
+            "total_symbolic_refs": 92,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 2,
+                "opcode": "invokespecial",
+                "symbol": "Method net/minecraft/world/entity/projectile/Projectile.onHitEntity:(Lnet/minecraft/world/phys/EntityHitResult;)V"
+              },
+              {
+                "offset": 6,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/EntityHitResult.getEntity:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 20,
+                "opcode": "getfield",
+                "symbol": "Field baseDamage:D"
+              },
+              {
+                "offset": 26,
+                "opcode": "invokevirtual",
+                "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 32,
+                "opcode": "invokevirtual",
+                "symbol": "Method damageSources:()Lnet/minecraft/world/damagesource/DamageSources;"
+              },
+              {
+                "offset": 47,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/damagesource/DamageSources.arrow:(Lnet/minecraft/world/entity/projectile/AbstractArrow;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+              },
+              {
+                "offset": 92,
+                "opcode": "invokestatic",
+                "symbol": "Method net/minecraft/world/item/enchantment/EnchantmentHelper.modifyDamage:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)F"
+              },
+              {
+                "offset": 173,
+                "opcode": "invokevirtual",
+                "symbol": "Method discard:()V"
+              },
+              {
+                "offset": 190,
+                "opcode": "invokevirtual",
+                "symbol": "Method isCritArrow:()Z"
+              },
+              {
+                "offset": 247,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/entity/LivingEntity.setLastHurtMob:(Lnet/minecraft/world/entity/Entity;)V"
+              },
+              {
+                "offset": 298,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/entity/Entity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+              },
+              {
+                "offset": 327,
+                "opcode": "getfield",
+                "symbol": "Field net/minecraft/world/level/Level.isClientSide:Z"
+              },
+              {
+                "offset": 344,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/entity/LivingEntity.getArrowCount:()I"
+              },
+              {
+                "offset": 349,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/entity/LivingEntity.setArrowCount:(I)V"
+              },
+              {
+                "offset": 357,
+                "opcode": "invokevirtual",
+                "symbol": "Method doKnockback:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;)V"
+              },
+              {
+                "offset": 391,
+                "opcode": "invokestatic",
+                "symbol": "Method net/minecraft/world/item/enchantment/EnchantmentHelper.doPostAttackEffectsWithItemSource:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/item/ItemStack;)V"
+              },
+              {
+                "offset": 397,
+                "opcode": "invokevirtual",
+                "symbol": "Method doPostHurtEffects:(Lnet/minecraft/world/entity/LivingEntity;)V"
+              },
+              {
+                "offset": 442,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/network/protocol/game/ClientboundGameEventPacket.ARROW_HIT_PLAYER:Lnet/minecraft/network/protocol/game/ClientboundGameEventPacket$Type;"
+              },
+              {
+                "offset": 482,
+                "opcode": "getfield",
+                "symbol": "Field net/minecraft/world/level/Level.isClientSide:Z"
+              },
+              {
+                "offset": 603,
+                "opcode": "invokevirtual",
+                "symbol": "Method discard:()V"
+              },
+              {
+                "offset": 616,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/entity/projectile/ProjectileDeflection.REVERSE:Lnet/minecraft/world/entity/projectile/ProjectileDeflection;"
+              },
+              {
+                "offset": 621,
+                "opcode": "invokevirtual",
+                "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 625,
+                "opcode": "invokevirtual",
+                "symbol": "Method deflect:(Lnet/minecraft/world/entity/projectile/ProjectileDeflection;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Z)Z"
+              },
+              {
+                "offset": 647,
+                "opcode": "getfield",
+                "symbol": "Field net/minecraft/world/level/Level.isClientSide:Z"
+              },
+              {
+                "offset": 668,
+                "opcode": "getfield",
+                "symbol": "Field pickup:Lnet/minecraft/world/entity/projectile/AbstractArrow$Pickup;"
+              },
+              {
+                "offset": 671,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/entity/projectile/AbstractArrow$Pickup.ALLOWED:Lnet/minecraft/world/entity/projectile/AbstractArrow$Pickup;"
+              },
+              {
+                "offset": 679,
+                "opcode": "invokevirtual",
+                "symbol": "Method getPickupItem:()Lnet/minecraft/world/item/ItemStack;"
+              },
+              {
+                "offset": 690,
+                "opcode": "invokevirtual",
+                "symbol": "Method discard:()V"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 38,
+                "opcode": "ifnull",
+                "target": "46"
+              },
+              {
+                "offset": 43,
+                "opcode": "goto",
+                "target": "47"
+              },
+              {
+                "offset": 56,
+                "opcode": "ifnull",
+                "target": "98"
+              },
+              {
+                "offset": 70,
+                "opcode": "ifeq",
+                "target": "98"
+              },
+              {
+                "offset": 119,
+                "opcode": "ifle",
+                "target": "189"
+              },
+              {
+                "offset": 126,
+                "opcode": "ifnonnull",
+                "target": "141"
+              },
+              {
+                "offset": 145,
+                "opcode": "ifnonnull",
+                "target": "156"
+              },
+              {
+                "offset": 169,
+                "opcode": "if_icmplt",
+                "target": "177"
+              },
+              {
+                "offset": 193,
+                "opcode": "ifeq",
+                "target": "229"
+              },
+              {
+                "offset": 234,
+                "opcode": "ifeq",
+                "target": "250"
+              },
+              {
+                "offset": 257,
+                "opcode": "if_acmpne",
+                "target": "264"
+              },
+              {
+                "offset": 261,
+                "opcode": "goto",
+                "target": "265"
+              },
+              {
+                "offset": 277,
+                "opcode": "ifeq",
+                "target": "292"
+              },
+              {
+                "offset": 282,
+                "opcode": "ifne",
+                "target": "292"
+              },
+              {
+                "offset": 301,
+                "opcode": "ifeq",
+                "target": "609"
+              },
+              {
+                "offset": 306,
+                "opcode": "ifeq",
+                "target": "310"
+              },
+              {
+                "offset": 314,
+                "opcode": "ifeq",
+                "target": "565"
+              },
+              {
+                "offset": 330,
+                "opcode": "ifne",
+                "target": "352"
+              },
+              {
+                "offset": 337,
+                "opcode": "ifgt",
+                "target": "352"
+              },
+              {
+                "offset": 371,
+                "opcode": "ifeq",
+                "target": "394"
+              },
+              {
+                "offset": 404,
+                "opcode": "if_acmpeq",
+                "target": "452"
+              },
+              {
+                "offset": 412,
+                "opcode": "ifeq",
+                "target": "452"
+              },
+              {
+                "offset": 420,
+                "opcode": "ifeq",
+                "target": "452"
+              },
+              {
+                "offset": 427,
+                "opcode": "ifne",
+                "target": "452"
+              },
+              {
+                "offset": 456,
+                "opcode": "ifne",
+                "target": "478"
+              },
+              {
+                "offset": 463,
+                "opcode": "ifnull",
+                "target": "478"
+              },
+              {
+                "offset": 485,
+                "opcode": "ifne",
+                "target": "565"
+              },
+              {
+                "offset": 493,
+                "opcode": "ifeq",
+                "target": "565"
+              },
+              {
+                "offset": 507,
+                "opcode": "ifnull",
+                "target": "532"
+              },
+              {
+                "offset": 514,
+                "opcode": "ifeq",
+                "target": "532"
+              },
+              {
+                "offset": 529,
+                "opcode": "goto",
+                "target": "565"
+              },
+              {
+                "offset": 536,
+                "opcode": "ifne",
+                "target": "565"
+              },
+              {
+                "offset": 543,
+                "opcode": "ifeq",
+                "target": "565"
+              },
+              {
+                "offset": 599,
+                "opcode": "ifgt",
+                "target": "693"
+              },
+              {
+                "offset": 606,
+                "opcode": "goto",
+                "target": "693"
+              },
+              {
+                "offset": 650,
+                "opcode": "ifne",
+                "target": "693"
+              },
+              {
+                "offset": 664,
+                "opcode": "ifge",
+                "target": "693"
+              },
+              {
+                "offset": 674,
+                "opcode": "if_acmpne",
+                "target": "689"
+              }
+            ],
+            "branch_count": 38,
+            "numeric_operands": [
+              {
+                "offset": 103,
+                "opcode": "dconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 104,
+                "opcode": "ldc2_w",
+                "operand": "#571",
+                "symbol": "double 2.147483647E9d"
+              },
+              {
+                "offset": 134,
+                "opcode": "iconst_5",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 149,
+                "opcode": "iconst_5",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 167,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 202,
+                "opcode": "iconst_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 204,
+                "opcode": "iconst_2",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 220,
+                "opcode": "ldc2_w",
+                "operand": "#606",
+                "symbol": "long 2147483647l"
+              },
+              {
+                "offset": 260,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 264,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 286,
+                "opcode": "ldc_w",
+                "operand": "#630",
+                "symbol": "float 5.0f"
+              },
+              {
+                "offset": 347,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 445,
+                "opcode": "fconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 551,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 556,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 570,
+                "opcode": "fconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 571,
+                "opcode": "ldc_w",
+                "operand": "#707",
+                "symbol": "float 1.2f"
+              },
+              {
+                "offset": 583,
+                "opcode": "ldc_w",
+                "operand": "#516",
+                "symbol": "float 0.2f"
+              },
+              {
+                "offset": 587,
+                "opcode": "ldc_w",
+                "operand": "#708",
+                "symbol": "float 0.9f"
+              },
+              {
+                "offset": 624,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 634,
+                "opcode": "ldc2_w",
+                "operand": "#455",
+                "symbol": "double 0.2d"
+              },
+              {
+                "offset": 660,
+                "opcode": "ldc2_w",
+                "operand": "#726",
+                "symbol": "double 1.0E-7d"
+              },
+              {
+                "offset": 682,
+                "opcode": "ldc_w",
+                "operand": "#734",
+                "symbol": "float 0.1f"
+              }
+            ],
+            "numeric_operand_count": 23
+          },
+          {
+            "name": "onHitBlock",
+            "descriptor": "(Lnet/minecraft/world/phys/BlockHitResult;)V",
+            "method_sha256": "9ebd7989553270681ddef50a0ed5c993712c135c771eb3c0c6e7162cbbee3421",
+            "instruction_count": 96,
+            "total_symbolic_refs": 34,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 6,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/BlockHitResult.getBlockPos:()Lnet/minecraft/core/BlockPos;"
+              },
+              {
+                "offset": 17,
+                "opcode": "invokespecial",
+                "symbol": "Method net/minecraft/world/entity/projectile/Projectile.onHitBlock:(Lnet/minecraft/world/phys/BlockHitResult;)V"
+              },
+              {
+                "offset": 21,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/BlockHitResult.getLocation:()Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 80,
+                "opcode": "invokevirtual",
+                "symbol": "Method hitBlockEnchantmentEffects:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/item/ItemStack;)V"
+              },
+              {
+                "offset": 131,
+                "opcode": "invokevirtual",
+                "symbol": "Method getHitGroundSoundEvent:()Lnet/minecraft/sounds/SoundEvent;"
+              },
+              {
+                "offset": 172,
+                "opcode": "invokevirtual",
+                "symbol": "Method setCritArrow:(Z)V"
+              },
+              {
+                "offset": 181,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/sounds/SoundEvents.ARROW_HIT:Lnet/minecraft/sounds/SoundEvent;"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 61,
+                "opcode": "ifeq",
+                "target": "83"
+              },
+              {
+                "offset": 72,
+                "opcode": "ifnull",
+                "target": "83"
+              }
+            ],
+            "branch_count": 2,
+            "numeric_operands": [
+              {
+                "offset": 87,
+                "opcode": "ldc2_w",
+                "operand": "#782",
+                "symbol": "double 0.05000000074505806d"
+              },
+              {
+                "offset": 134,
+                "opcode": "fconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 135,
+                "opcode": "ldc_w",
+                "operand": "#707",
+                "symbol": "float 1.2f"
+              },
+              {
+                "offset": 147,
+                "opcode": "ldc_w",
+                "operand": "#516",
+                "symbol": "float 0.2f"
+              },
+              {
+                "offset": 151,
+                "opcode": "ldc_w",
+                "operand": "#708",
+                "symbol": "float 0.9f"
+              },
+              {
+                "offset": 160,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 165,
+                "opcode": "bipush",
+                "operand": "7",
+                "symbol": ""
+              },
+              {
+                "offset": 171,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 176,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              }
+            ],
+            "numeric_operand_count": 9
+          },
+          {
+            "name": "doPostHurtEffects",
+            "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+            "method_sha256": "60eee9f85f6d33953d8c4ab9855ac519ce7e3c12a32db49b1397ddc7f27d1f56",
+            "instruction_count": 1,
+            "total_symbolic_refs": 0,
+            "relevant_symbolic_refs": [],
+            "branches": [],
+            "branch_count": 0,
+            "numeric_operands": [],
+            "numeric_operand_count": 0
+          },
+          {
+            "name": "canHitEntity",
+            "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+            "method_sha256": "59bc4e6c364877658d9f8dd1e2204ba4b220781da2a07768499a3655edace81e",
+            "instruction_count": 17,
+            "total_symbolic_refs": 5,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 2,
+                "opcode": "invokespecial",
+                "symbol": "Method net/minecraft/world/entity/projectile/Projectile.canHitEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 5,
+                "opcode": "ifeq",
+                "target": "33"
+              },
+              {
+                "offset": 12,
+                "opcode": "ifnull",
+                "target": "29"
+              },
+              {
+                "offset": 26,
+                "opcode": "ifne",
+                "target": "33"
+              },
+              {
+                "offset": 30,
+                "opcode": "goto",
+                "target": "34"
+              }
+            ],
+            "branch_count": 4,
+            "numeric_operands": [
+              {
+                "offset": 29,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 33,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              }
+            ],
+            "numeric_operand_count": 2
+          },
+          {
+            "name": "addAdditionalSaveData",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+            "method_sha256": "65577fda4def46015f4dbab1d91f37c9ca7c124bad9542a0480b19884c1389ba",
+            "instruction_count": 85,
+            "total_symbolic_refs": 35,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 2,
+                "opcode": "invokespecial",
+                "symbol": "Method net/minecraft/world/entity/projectile/Projectile.addAdditionalSaveData:(Lnet/minecraft/nbt/CompoundTag;)V"
+              },
+              {
+                "offset": 67,
+                "opcode": "getfield",
+                "symbol": "Field pickup:Lnet/minecraft/world/entity/projectile/AbstractArrow$Pickup;"
+              },
+              {
+                "offset": 70,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/entity/projectile/AbstractArrow$Pickup.ordinal:()I"
+              },
+              {
+                "offset": 82,
+                "opcode": "getfield",
+                "symbol": "Field baseDamage:D"
+              },
+              {
+                "offset": 93,
+                "opcode": "invokevirtual",
+                "symbol": "Method isCritArrow:()Z"
+              },
+              {
+                "offset": 144,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/item/ItemStack.save:(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/Tag;"
+              },
+              {
+                "offset": 177,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/item/ItemStack.save:(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 21,
+                "opcode": "ifnull",
+                "target": "39"
+              },
+              {
+                "offset": 155,
+                "opcode": "ifnull",
+                "target": "184"
+              }
+            ],
+            "branch_count": 2,
+            "numeric_operands": [
+              {
+                "offset": 6,
+                "opcode": "ldc_w",
+                "operand": "#839",
+                "symbol": "String life"
+              },
+              {
+                "offset": 25,
+                "opcode": "ldc_w",
+                "operand": "#846",
+                "symbol": "String inBlockState"
+              },
+              {
+                "offset": 40,
+                "opcode": "ldc_w",
+                "operand": "#858",
+                "symbol": "String shake"
+              },
+              {
+                "offset": 52,
+                "opcode": "ldc_w",
+                "operand": "#864",
+                "symbol": "String inGround"
+              },
+              {
+                "offset": 63,
+                "opcode": "ldc_w",
+                "operand": "#869",
+                "symbol": "String pickup"
+              },
+              {
+                "offset": 78,
+                "opcode": "ldc_w",
+                "operand": "#873",
+                "symbol": "String damage"
+              },
+              {
+                "offset": 89,
+                "opcode": "ldc_w",
+                "operand": "#879",
+                "symbol": "String crit"
+              },
+              {
+                "offset": 100,
+                "opcode": "ldc_w",
+                "operand": "#881",
+                "symbol": "String PierceLevel"
+              },
+              {
+                "offset": 111,
+                "opcode": "ldc_w",
+                "operand": "#883",
+                "symbol": "String SoundEvent"
+              },
+              {
+                "offset": 133,
+                "opcode": "ldc_w",
+                "operand": "#907",
+                "symbol": "String item"
+              },
+              {
+                "offset": 159,
+                "opcode": "ldc_w",
+                "operand": "#917",
+                "symbol": "String weapon"
+              }
+            ],
+            "numeric_operand_count": 11
+          },
+          {
+            "name": "readAdditionalSaveData",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+            "method_sha256": "f464e562d9e8bdcc839b72dc32fee03d948b26bdc5e0ef3b6c4570b2e06a93a3",
+            "instruction_count": 121,
+            "total_symbolic_refs": 48,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 2,
+                "opcode": "invokespecial",
+                "symbol": "Method net/minecraft/world/entity/projectile/Projectile.readAdditionalSaveData:(Lnet/minecraft/nbt/CompoundTag;)V"
+              },
+              {
+                "offset": 98,
+                "opcode": "putfield",
+                "symbol": "Field baseDamage:D"
+              },
+              {
+                "offset": 109,
+                "opcode": "invokestatic",
+                "symbol": "Method net/minecraft/world/entity/projectile/AbstractArrow$Pickup.byOrdinal:(I)Lnet/minecraft/world/entity/projectile/AbstractArrow$Pickup;"
+              },
+              {
+                "offset": 112,
+                "opcode": "putfield",
+                "symbol": "Field pickup:Lnet/minecraft/world/entity/projectile/AbstractArrow$Pickup;"
+              },
+              {
+                "offset": 123,
+                "opcode": "invokevirtual",
+                "symbol": "Method setCritArrow:(Z)V"
+              },
+              {
+                "offset": 169,
+                "opcode": "invokevirtual",
+                "symbol": "Method getDefaultHitGroundSoundEvent:()Lnet/minecraft/sounds/SoundEvent;"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 25,
+                "opcode": "ifeq",
+                "target": "52"
+              },
+              {
+                "offset": 87,
+                "opcode": "ifeq",
+                "target": "101"
+              },
+              {
+                "offset": 146,
+                "opcode": "ifeq",
+                "target": "181"
+              },
+              {
+                "offset": 190,
+                "opcode": "ifeq",
+                "target": "224"
+              },
+              {
+                "offset": 221,
+                "opcode": "goto",
+                "target": "232"
+              },
+              {
+                "offset": 241,
+                "opcode": "ifeq",
+                "target": "272"
+              },
+              {
+                "offset": 269,
+                "opcode": "goto",
+                "target": "277"
+              }
+            ],
+            "branch_count": 7,
+            "numeric_operands": [
+              {
+                "offset": 7,
+                "opcode": "ldc_w",
+                "operand": "#839",
+                "symbol": "String life"
+              },
+              {
+                "offset": 17,
+                "opcode": "ldc_w",
+                "operand": "#846",
+                "symbol": "String inBlockState"
+              },
+              {
+                "offset": 20,
+                "opcode": "bipush",
+                "operand": "10",
+                "symbol": ""
+              },
+              {
+                "offset": 40,
+                "opcode": "ldc_w",
+                "operand": "#846",
+                "symbol": "String inBlockState"
+              },
+              {
+                "offset": 54,
+                "opcode": "ldc_w",
+                "operand": "#858",
+                "symbol": "String shake"
+              },
+              {
+                "offset": 60,
+                "opcode": "sipush",
+                "operand": "255",
+                "symbol": ""
+              },
+              {
+                "offset": 69,
+                "opcode": "ldc_w",
+                "operand": "#864",
+                "symbol": "String inGround"
+              },
+              {
+                "offset": 79,
+                "opcode": "ldc_w",
+                "operand": "#873",
+                "symbol": "String damage"
+              },
+              {
+                "offset": 82,
+                "opcode": "bipush",
+                "operand": "99",
+                "symbol": ""
+              },
+              {
+                "offset": 92,
+                "opcode": "ldc_w",
+                "operand": "#873",
+                "symbol": "String damage"
+              },
+              {
+                "offset": 103,
+                "opcode": "ldc_w",
+                "operand": "#869",
+                "symbol": "String pickup"
+              },
+              {
+                "offset": 117,
+                "opcode": "ldc_w",
+                "operand": "#879",
+                "symbol": "String crit"
+              },
+              {
+                "offset": 128,
+                "opcode": "ldc_w",
+                "operand": "#881",
+                "symbol": "String PierceLevel"
+              },
+              {
+                "offset": 138,
+                "opcode": "ldc_w",
+                "operand": "#883",
+                "symbol": "String SoundEvent"
+              },
+              {
+                "offset": 141,
+                "opcode": "bipush",
+                "operand": "8",
+                "symbol": ""
+              },
+              {
+                "offset": 154,
+                "opcode": "ldc_w",
+                "operand": "#883",
+                "symbol": "String SoundEvent"
+              },
+              {
+                "offset": 182,
+                "opcode": "ldc_w",
+                "operand": "#907",
+                "symbol": "String item"
+              },
+              {
+                "offset": 185,
+                "opcode": "bipush",
+                "operand": "10",
+                "symbol": ""
+              },
+              {
+                "offset": 199,
+                "opcode": "ldc_w",
+                "operand": "#907",
+                "symbol": "String item"
+              },
+              {
+                "offset": 233,
+                "opcode": "ldc_w",
+                "operand": "#917",
+                "symbol": "String weapon"
+              },
+              {
+                "offset": 236,
+                "opcode": "bipush",
+                "operand": "10",
+                "symbol": ""
+              },
+              {
+                "offset": 250,
+                "opcode": "ldc_w",
+                "operand": "#917",
+                "symbol": "String weapon"
+              }
+            ],
+            "numeric_operand_count": 22
+          },
+          {
+            "name": "getPickupItem",
+            "descriptor": "()Lnet/minecraft/world/item/ItemStack;",
+            "method_sha256": "43d03ffbf28e113c656ba50bd5b3335836e98b4d88175ecd94c898d3fbab5a24",
+            "instruction_count": 4,
+            "total_symbolic_refs": 2,
+            "relevant_symbolic_refs": [],
+            "branches": [],
+            "branch_count": 0,
+            "numeric_operands": [],
+            "numeric_operand_count": 0
+          },
+          {
+            "name": "setBaseDamage",
+            "descriptor": "(D)V",
+            "method_sha256": "e8c8bc0b8c7202ed043c43fd101e36659d15a8f225f4bf71661ade75acdf2411",
+            "instruction_count": 4,
+            "total_symbolic_refs": 1,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 2,
+                "opcode": "putfield",
+                "symbol": "Field baseDamage:D"
+              }
+            ],
+            "branches": [],
+            "branch_count": 0,
+            "numeric_operands": [],
+            "numeric_operand_count": 0
+          },
+          {
+            "name": "getBaseDamage",
+            "descriptor": "()D",
+            "method_sha256": "94be288ceab3999db178e24162c6fcfb4e65b53a70e6b83ae2835a239ef8fbd4",
+            "instruction_count": 3,
+            "total_symbolic_refs": 1,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 1,
+                "opcode": "getfield",
+                "symbol": "Field baseDamage:D"
+              }
+            ],
+            "branches": [],
+            "branch_count": 0,
+            "numeric_operands": [],
+            "numeric_operand_count": 0
+          }
+        ]
+      },
+      "projectile": {
+        "class_sha256": "42e5b3a088bd4446abab0fe8cd2e61368095fe664aa38d6b256ab0424625326d",
+        "class_bytes": 15337,
+        "declared_method_count": 31,
+        "inspected_methods": [
+          {
+            "name": "Projectile",
+            "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+            "method_sha256": "bda59774a701538f9a42a66312c291a1821eb2342ed233fa657c973570740820",
+            "instruction_count": 5,
+            "total_symbolic_refs": 1,
+            "relevant_symbolic_refs": [],
+            "branches": [],
+            "branch_count": 0,
+            "numeric_operands": [],
+            "numeric_operand_count": 0
+          },
+          {
+            "name": "setOwner",
+            "descriptor": "(Lnet/minecraft/world/entity/Entity;)V",
+            "method_sha256": "7bd7ea67d0b64fbe946f6daeda69491cf54735ef1528cdd113f070e9ca2f7156",
+            "instruction_count": 10,
+            "total_symbolic_refs": 3,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 9,
+                "opcode": "putfield",
+                "symbol": "Field ownerUUID:Ljava/util/UUID;"
+              },
+              {
+                "offset": 14,
+                "opcode": "putfield",
+                "symbol": "Field cachedOwner:Lnet/minecraft/world/entity/Entity;"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 1,
+                "opcode": "ifnull",
+                "target": "17"
+              }
+            ],
+            "branch_count": 1,
+            "numeric_operands": [],
+            "numeric_operand_count": 0
+          },
+          {
+            "name": "getOwner",
+            "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+            "method_sha256": "5765c85bae1adfa17784fcf55b196bffe24054379a17bd01578f4a97b25d027b",
+            "instruction_count": 33,
+            "total_symbolic_refs": 10,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 1,
+                "opcode": "getfield",
+                "symbol": "Field cachedOwner:Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 8,
+                "opcode": "getfield",
+                "symbol": "Field cachedOwner:Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 18,
+                "opcode": "getfield",
+                "symbol": "Field cachedOwner:Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 23,
+                "opcode": "getfield",
+                "symbol": "Field ownerUUID:Ljava/util/UUID;"
+              },
+              {
+                "offset": 49,
+                "opcode": "getfield",
+                "symbol": "Field ownerUUID:Ljava/util/UUID;"
+              },
+              {
+                "offset": 52,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/server/level/ServerLevel.getEntity:(Ljava/util/UUID;)Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 55,
+                "opcode": "putfield",
+                "symbol": "Field cachedOwner:Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 59,
+                "opcode": "getfield",
+                "symbol": "Field cachedOwner:Lnet/minecraft/world/entity/Entity;"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 4,
+                "opcode": "ifnull",
+                "target": "22"
+              },
+              {
+                "offset": 14,
+                "opcode": "ifne",
+                "target": "22"
+              },
+              {
+                "offset": 26,
+                "opcode": "ifnull",
+                "target": "63"
+              },
+              {
+                "offset": 38,
+                "opcode": "ifeq",
+                "target": "63"
+              }
+            ],
+            "branch_count": 4,
+            "numeric_operands": [],
+            "numeric_operand_count": 0
+          },
+          {
+            "name": "addAdditionalSaveData",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+            "method_sha256": "c011ceb7f3144ea2655bedf0504e9e3cecd3e619e5dd657eaf846d603408a800",
+            "instruction_count": 21,
+            "total_symbolic_refs": 7,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 1,
+                "opcode": "getfield",
+                "symbol": "Field ownerUUID:Ljava/util/UUID;"
+              },
+              {
+                "offset": 11,
+                "opcode": "getfield",
+                "symbol": "Field ownerUUID:Ljava/util/UUID;"
+              },
+              {
+                "offset": 18,
+                "opcode": "getfield",
+                "symbol": "Field leftOwner:Z"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 4,
+                "opcode": "ifnull",
+                "target": "17"
+              },
+              {
+                "offset": 21,
+                "opcode": "ifeq",
+                "target": "31"
+              }
+            ],
+            "branch_count": 2,
+            "numeric_operands": [
+              {
+                "offset": 8,
+                "opcode": "ldc",
+                "operand": "#95",
+                "symbol": "String Owner"
+              },
+              {
+                "offset": 25,
+                "opcode": "ldc",
+                "operand": "#105",
+                "symbol": "String LeftOwner"
+              },
+              {
+                "offset": 27,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 32,
+                "opcode": "ldc",
+                "operand": "#111",
+                "symbol": "String HasBeenShot"
+              }
+            ],
+            "numeric_operand_count": 4
+          },
+          {
+            "name": "readAdditionalSaveData",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+            "method_sha256": "2ce6f4db0b2a242f716b5ee119d3e2905f7f6bb01b5e46455dea6d2f6468452d",
+            "instruction_count": 23,
+            "total_symbolic_refs": 8,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 16,
+                "opcode": "putfield",
+                "symbol": "Field ownerUUID:Ljava/util/UUID;"
+              },
+              {
+                "offset": 21,
+                "opcode": "putfield",
+                "symbol": "Field cachedOwner:Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 31,
+                "opcode": "putfield",
+                "symbol": "Field leftOwner:Z"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 6,
+                "opcode": "ifeq",
+                "target": "24"
+              }
+            ],
+            "branch_count": 1,
+            "numeric_operands": [
+              {
+                "offset": 1,
+                "opcode": "ldc",
+                "operand": "#95",
+                "symbol": "String Owner"
+              },
+              {
+                "offset": 11,
+                "opcode": "ldc",
+                "operand": "#95",
+                "symbol": "String Owner"
+              },
+              {
+                "offset": 26,
+                "opcode": "ldc",
+                "operand": "#105",
+                "symbol": "String LeftOwner"
+              },
+              {
+                "offset": 36,
+                "opcode": "ldc",
+                "operand": "#111",
+                "symbol": "String HasBeenShot"
+              }
+            ],
+            "numeric_operand_count": 4
+          },
+          {
+            "name": "tick",
+            "descriptor": "()V",
+            "method_sha256": "a52c08dd9031cf1584b8001308049715165792ca4676a9d9317b2cc04379049a",
+            "instruction_count": 21,
+            "total_symbolic_refs": 9,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 8,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/level/gameevent/GameEvent.PROJECTILE_SHOOT:Lnet/minecraft/core/Holder$Reference;"
+              },
+              {
+                "offset": 12,
+                "opcode": "invokevirtual",
+                "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 24,
+                "opcode": "getfield",
+                "symbol": "Field leftOwner:Z"
+              },
+              {
+                "offset": 32,
+                "opcode": "invokevirtual",
+                "symbol": "Method checkLeftOwner:()Z"
+              },
+              {
+                "offset": 35,
+                "opcode": "putfield",
+                "symbol": "Field leftOwner:Z"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 4,
+                "opcode": "ifne",
+                "target": "23"
+              },
+              {
+                "offset": 27,
+                "opcode": "ifne",
+                "target": "38"
+              }
+            ],
+            "branch_count": 2,
+            "numeric_operands": [
+              {
+                "offset": 19,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              }
+            ],
+            "numeric_operand_count": 1
+          },
+          {
+            "name": "onHit",
+            "descriptor": "(Lnet/minecraft/world/phys/HitResult;)V",
+            "method_sha256": "4f571cf4bb7739f1acecd7620608ddc8e84b7580e122dd7586a9cbad0e6a4bf4",
+            "instruction_count": 69,
+            "total_symbolic_refs": 25,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 1,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/HitResult.getType:()Lnet/minecraft/world/phys/HitResult$Type;"
+              },
+              {
+                "offset": 6,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/phys/HitResult$Type.ENTITY:Lnet/minecraft/world/phys/HitResult$Type;"
+              },
+              {
+                "offset": 18,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/EntityHitResult.getEntity:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 28,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/tags/EntityTypeTags.REDIRECTABLE_PROJECTILE:Lnet/minecraft/tags/TagKey;"
+              },
+              {
+                "offset": 54,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/entity/projectile/ProjectileDeflection.AIM_DEFLECT:Lnet/minecraft/world/entity/projectile/ProjectileDeflection;"
+              },
+              {
+                "offset": 58,
+                "opcode": "invokevirtual",
+                "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 62,
+                "opcode": "invokevirtual",
+                "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 66,
+                "opcode": "invokevirtual",
+                "symbol": "Method deflect:(Lnet/minecraft/world/entity/projectile/ProjectileDeflection;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Z)Z"
+              },
+              {
+                "offset": 72,
+                "opcode": "invokevirtual",
+                "symbol": "Method onHitEntity:(Lnet/minecraft/world/phys/EntityHitResult;)V"
+              },
+              {
+                "offset": 79,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/level/gameevent/GameEvent.PROJECTILE_LAND:Lnet/minecraft/core/Holder$Reference;"
+              },
+              {
+                "offset": 83,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/HitResult.getLocation:()Lnet/minecraft/world/phys/Vec3;"
+              },
+              {
+                "offset": 98,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/phys/HitResult$Type.BLOCK:Lnet/minecraft/world/phys/HitResult$Type;"
+              },
+              {
+                "offset": 111,
+                "opcode": "invokevirtual",
+                "symbol": "Method onHitBlock:(Lnet/minecraft/world/phys/BlockHitResult;)V"
+              },
+              {
+                "offset": 115,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/BlockHitResult.getBlockPos:()Lnet/minecraft/core/BlockPos;"
+              },
+              {
+                "offset": 124,
+                "opcode": "getstatic",
+                "symbol": "Field net/minecraft/world/level/gameevent/GameEvent.PROJECTILE_LAND:Lnet/minecraft/core/Holder$Reference;"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 9,
+                "opcode": "if_acmpne",
+                "target": "97"
+              },
+              {
+                "offset": 34,
+                "opcode": "ifeq",
+                "target": "70"
+              },
+              {
+                "offset": 42,
+                "opcode": "ifeq",
+                "target": "70"
+              },
+              {
+                "offset": 94,
+                "opcode": "goto",
+                "target": "145"
+              },
+              {
+                "offset": 101,
+                "opcode": "if_acmpne",
+                "target": "145"
+              }
+            ],
+            "branch_count": 5,
+            "numeric_operands": [
+              {
+                "offset": 65,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              }
+            ],
+            "numeric_operand_count": 1
+          },
+          {
+            "name": "onHitEntity",
+            "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+            "method_sha256": "fa962b1efcc2fb7b7a7556a1026760209badc5d5b307871e78dc0f1a39376b0f",
+            "instruction_count": 1,
+            "total_symbolic_refs": 0,
+            "relevant_symbolic_refs": [],
+            "branches": [],
+            "branch_count": 0,
+            "numeric_operands": [],
+            "numeric_operand_count": 0
+          },
+          {
+            "name": "onHitBlock",
+            "descriptor": "(Lnet/minecraft/world/phys/BlockHitResult;)V",
+            "method_sha256": "91aaafdb21b8dac9c08ab041bc042ba29b93ff9696ff888f8e00da8b983179e7",
+            "instruction_count": 14,
+            "total_symbolic_refs": 5,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 5,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/phys/BlockHitResult.getBlockPos:()Lnet/minecraft/core/BlockPos;"
+              },
+              {
+                "offset": 20,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/level/block/state/BlockState.onProjectileHit:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/entity/projectile/Projectile;)V"
+              }
+            ],
+            "branches": [],
+            "branch_count": 0,
+            "numeric_operands": [],
+            "numeric_operand_count": 0
+          },
+          {
+            "name": "canHitEntity",
+            "descriptor": "(Lnet/minecraft/world/entity/Entity;)Z",
+            "method_sha256": "228ead279e0662a3dfea0023ce1d290ca2a6a4fca28e3036ca50195a96526a34",
+            "instruction_count": 21,
+            "total_symbolic_refs": 4,
+            "relevant_symbolic_refs": [
+              {
+                "offset": 1,
+                "opcode": "invokevirtual",
+                "symbol": "Method net/minecraft/world/entity/Entity.canBeHitByProjectile:()Z"
+              },
+              {
+                "offset": 10,
+                "opcode": "invokevirtual",
+                "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+              },
+              {
+                "offset": 19,
+                "opcode": "getfield",
+                "symbol": "Field leftOwner:Z"
+              }
+            ],
+            "branches": [
+              {
+                "offset": 4,
+                "opcode": "ifne",
+                "target": "9"
+              },
+              {
+                "offset": 15,
+                "opcode": "ifnull",
+                "target": "33"
+              },
+              {
+                "offset": 22,
+                "opcode": "ifne",
+                "target": "33"
+              },
+              {
+                "offset": 30,
+                "opcode": "ifne",
+                "target": "37"
+              },
+              {
+                "offset": 34,
+                "opcode": "goto",
+                "target": "38"
+              }
+            ],
+            "branch_count": 5,
+            "numeric_operands": [
+              {
+                "offset": 7,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 33,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 37,
+                "opcode": "iconst_0",
+                "operand": "",
+                "symbol": ""
+              }
+            ],
+            "numeric_operand_count": 3
+          }
+        ]
+      }
+    },
+    "pins": {
+      "minecraft": "1.21.1",
+      "neoforge": "21.1.248",
+      "moddevgradle": "2.0.144"
+    }
+  },
+  "provenance": {
+    "engine_archive_origin": "PINNED_GRADLE_COMPILE_CLASSPATH_NOT_MODLAUNCHER_RUNTIME",
+    "compile_classpath_selection": "UNIQUE_CLASS_BYTECODE_SET",
+    "cache_scan_budget": 20000
+  },
+  "limits": {
+    "direct_engine_bytecode": "FOUND_IN_GRADLE_CACHE",
+    "modlauncher_transformed_runtime": "NOT_VERIFIED",
+    "on_hit_damage_settlement": "NOT_CERTIFIED",
+    "player_attribution_and_mastery": "NOT_VERIFIED",
+    "actual_datapacks_and_mixins": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  }
+}
