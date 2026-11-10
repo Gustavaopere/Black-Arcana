@@ -86,14 +86,55 @@ def audit(jar,javap_bin):
                 "methods":[summarize(m) for m in select(ms,path)]}
     return result
 
+
+def roster(data):
+    """Small exact-JAR proof projection; no vendor implementation is copied."""
+    return {
+        "schema_version": 1,
+        "scope": "EXACT_ARROW_INDUCTING_1010_DECLARED_METHOD_ROSTER_ONLY",
+        "artifact_sha1": SHA1,
+        "artifact_sha256": SHA256,
+        "artifact_size_bytes": SIZE,
+        "enchantment_resource": RESOURCE,
+        "enchantment_sha256": RESOURCE_HASH,
+        "classes": {
+            path: {
+                "class_sha256": block["class_sha256"],
+                "parsed_method_count": block["parsed_method_count"],
+                "methods": [
+                    {key: m[key] for key in ("name", "descriptor", "instruction_count", "method_sha256")}
+                    for m in block["methods"]
+                ],
+            }
+            for path, block in data["classes"].items()
+        },
+        "limits": {
+            "direct_event_method_count": 1,
+            "declared_seeking_arrow_methods": 12,
+            "static_roster_only": True,
+            "inherited_abstract_arrow_behavior": "NOT_AUDITED",
+            "event_exception_cfg": "NOT_RECONSTRUCTED",
+            "owner_hit_damage_acceptance": "NOT_VERIFIED",
+            "serialized_entity_data": "NOT_VERIFIED",
+            "safe_mutating_hook": "NOT_VERIFIED",
+            "physical_qa": "NOT_TESTED",
+            "perk_certification": "NOT_CERTIFIED",
+            "mutation": "NO_MUTATION",
+        },
+    }
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--jar",required=True,type=Path)
     p.add_argument("--javap",default="javap")
     p.add_argument("--output",type=Path)
     p.add_argument("--seal",type=Path)
+    p.add_argument("--roster-seal",type=Path)
     a=p.parse_args()
     data=audit(a.jar,a.javap)
+    if a.roster_seal:
+        require(roster(data)==json.loads(a.roster_seal.read_text(encoding="utf8")),
+                "Arrow Inducting exact declared method roster drift")
     if a.seal:
         require(data==json.loads(a.seal.read_text(encoding="utf8")),
                 "lifecycle manifest drift")

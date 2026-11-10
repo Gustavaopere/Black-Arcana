@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "scope": "EXACT_ARROW_INDUCTING_1010_DECLARED_METHOD_ROSTER_ONLY",
+  "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+  "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+  "artifact_size_bytes": 75279314,
+  "enchantment_resource": "data/alexscaves/enchantment/arrow_inducting.json",
+  "enchantment_sha256": "80d52e42318ad732b32ba6118dea8f5b315b8d2d702da32d202ff95246a973e5",
+  "classes": {
+    "com/github/alexmodguy/alexscaves/server/event/CommonEvents.class": {
+      "class_sha256": "d132caad67ecab68844091ee396d37fecc4860440d338dcd82384f1555f8ad43",
+      "parsed_method_count": 34,
+      "methods": [
+        {
+          "name": "acLivingAttack",
+          "descriptor": "(Lnet/neoforged/neoforge/event/entity/living/LivingIncomingDamageEvent;)Z",
+          "instruction_count": 91,
+          "method_sha256": "3b6a9d9699a101ff2c4aa61dc08308857a1480fdd11f711c5ce04e2638244368"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/entity/item/SeekingArrowEntity.class": {
+      "class_sha256": "1102754436829c3dcadb1450d6ab15efb354a3f4e58a2a262a78c5013d7f0e25",
+      "parsed_method_count": 12,
+      "methods": [
+        {
+          "name": "SeekingArrowEntity",
+          "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "instruction_count": 5,
+          "method_sha256": "bf0cf5e3e205d2f2344cf39c6a514a0dd2f63d537e7baac7949d929db6e63cd6"
+        },
+        {
+          "name": "SeekingArrowEntity",
+          "descriptor": "(Lnet/minecraft/world/level/Level;DDD)V",
+          "instruction_count": 17,
+          "method_sha256": "330168c91c17d78ffbc08532566a13d801e84cbce3350d3305b7167912dd00ea"
+        },
+        {
+          "name": "SeekingArrowEntity",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "instruction_count": 15,
+          "method_sha256": "adea77c80f1d0cb6544e04d0d8017d31ad0a336554de37d7934a2d85aa139458"
+        },
+        {
+          "name": "defineSynchedData",
+          "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+          "instruction_count": 10,
+          "method_sha256": "e062deb8bedb4205c31347c22714d8c0f96b028a3be98e977caa6a0180613a39"
+        },
+        {
+          "name": "doPostHurtEffects",
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "instruction_count": 4,
+          "method_sha256": "8ef192734624f890f50cb66ac14f37e4aa3c137508e5313ee1537fc6588a7280"
+        },
+        {
+          "name": "getAddEntityPacket",
+          "descriptor": "(Lnet/minecraft/server/level/ServerEntity;)Lnet/minecraft/network/protocol/Packet;",
+          "instruction_count": 4,
+          "method_sha256": "d7d926f3fec52a498c1defadde4c03695c395ffc365dda63d9af952090d6f801"
+        },
+        {
+          "name": "getArcTowardsID",
+          "descriptor": "()I",
+          "instruction_count": 7,
+          "method_sha256": "39ea47b28a5a0719adf9456a8b4a8ea9006e007dc802cabaa110b1c763e4be6b"
+        },
+        {
+          "name": "getDefaultHitGroundSoundEvent",
+          "descriptor": "()Lnet/minecraft/sounds/SoundEvent;",
+          "instruction_count": 4,
+          "method_sha256": "ccdfbc51ea13962ffed9423cbeda31c1e6c90e998291050a346099062a44bc81"
+        },
+        {
+          "name": "getDefaultPickupItem",
+          "descriptor": "()Lnet/minecraft/world/item/ItemStack;",
+          "instruction_count": 7,
+          "method_sha256": "19b7a480ce43f29d96ebe01dac134f4322ec28c366b0fa3dfb2e8b6799041d10"
+        },
+        {
+          "name": "lambda$tick$0",
+          "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/entity/item/SeekingArrowEntity;Lnet/minecraft/world/entity/Entity;)Z",
+          "instruction_count": 4,
+          "method_sha256": "9f54b681bf11489864d228eab92560b472e57186c42b5c63283d06642ba1f994"
+        },
+        {
+          "name": "setArcTowardsID",
+          "descriptor": "(I)V",
+          "instruction_count": 7,
+          "method_sha256": "fc20968f0294f9015b4bcc462020390c6cde03e343308c314064ee07bcc540e3"
+        },
+        {
+          "name": "tick",
+          "descriptor": "()V",
+          "instruction_count": 185,
+          "method_sha256": "eb936d76c3fbdcf1be042312dd7dba664af91244529443c7806aa6a4a2c7e152"
+        }
+      ]
+    }
+  },
+  "limits": {
+    "direct_event_method_count": 1,
+    "declared_seeking_arrow_methods": 12,
+    "static_roster_only": true,
+    "inherited_abstract_arrow_behavior": "NOT_AUDITED",
+    "event_exception_cfg": "NOT_RECONSTRUCTED",
+    "owner_hit_damage_acceptance": "NOT_VERIFIED",
+    "serialized_entity_data": "NOT_VERIFIED",
+    "safe_mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION"
+  }
+}
