@@ -27,5 +27,11 @@ class Tests(unittest.TestCase):
         self.assertEqual(len(x["refs"]),1)
         self.assertEqual(len(x["branch_edges"]),1)
         self.assertEqual(len(x["numeric_operands"]),1)
+    def test_instruction_budget_fail_closed(self):
+        with self.assertRaisesRegex(ValueError,"bounds"):
+            summarize(m("oversized",[r(i) for i in range(1201)]))
+    def test_numeric_budget_fail_closed(self):
+        with self.assertRaisesRegex(ValueError,"unbounded"):
+            summarize(m("many_constants",[r(i,"bipush") for i in range(181)]))
 if __name__=="__main__":
     unittest.main()
