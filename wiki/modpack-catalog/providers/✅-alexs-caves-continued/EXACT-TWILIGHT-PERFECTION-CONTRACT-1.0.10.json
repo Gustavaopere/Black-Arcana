@@ -1,0 +1,608 @@
+{
+  "schema_version": 1,
+  "scope": "TWILIGHT_PERFECTION_SHA_EXACT_PUBLISHER_AND_NATIVE_BRANCH_CONTRACT",
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "enchantment_id": "alexscaves:twilight_perfection",
+  "resource": {
+    "path": "data/alexscaves/enchantment/twilight_perfection.json",
+    "sha256": "82a8e06c07b66be33a330bdbeb1bc867d03ce13a49ab2505fa06504fe5f044e1",
+    "size_bytes": 367,
+    "json": {
+      "description": {
+        "translate": "enchantment.alexscaves.twilight_perfection"
+      },
+      "supported_items": "#alexscaves:enchantable/dreadbow",
+      "weight": 2,
+      "max_level": 3,
+      "min_cost": {
+        "base": 1,
+        "per_level_above_first": 7
+      },
+      "max_cost": {
+        "base": 41,
+        "per_level_above_first": 10
+      },
+      "anvil_cost": 4,
+      "slots": [
+        "mainhand"
+      ]
+    }
+  },
+  "item_tag": {
+    "path": "data/alexscaves/tags/item/enchantable/dreadbow.json",
+    "sha256": "f22db4f6335af0cc185f0478c482c3c666a86afa430f06bdabc78ccc662076d5",
+    "json": {
+      "values": [
+        "alexscaves:dreadbow"
+      ]
+    }
+  },
+  "english_translations": {
+    "enchantment.alexscaves.twilight_perfection": "Twilight Perfection",
+    "enchantment.alexscaves.twilight_perfection.desc": "Dreadbow arrows glow red and deal double damage if fired at the precise bow charge time"
+  },
+  "neighbor_exclusion": {
+    "path": "data/alexscaves/enchantment/relentless_darkness.json",
+    "sha256": "94edb103571eba0d0ca503b8a9455d4643a0f414c758b4ca79d49bbcdf9f473e",
+    "exclusive_set": [
+      "alexscaves:precise_volley",
+      "alexscaves:dark_nock",
+      "alexscaves:twilight_perfection"
+    ]
+  },
+  "class_hashes": {
+    "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class": "b9cd6e843f923877775e38b89214e8649c10d4d5be704ed9dd377900439d44ae",
+    "com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.class": "089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad",
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32",
+    "com/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage.class": "bda52d12e8cce7e010b3d4cd2db7d83000e78b35657c55773a8ba91a070478c8",
+    "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class": "18e350579f407c7c9509e230aa17b68b1113c166352e812482934ec3fdc1bd7e"
+  },
+  "parent_manifest": {
+    "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DREADBOW-CONTRACTS-1.0.10.json",
+    "artifact_sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "evidence": [
+    {
+      "class_sha256": "b9cd6e843f923877775e38b89214e8649c10d4d5be704ed9dd377900439d44ae",
+      "method": "acInventoryTick",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+      "parent_method_anchors_sha256": "46cc455b60815859546cff8d6ba3c8c356480eed3f7b3dc1b2e87c0f147ac05c",
+      "parent_anchor_count": 115,
+      "verified_pivots": 29,
+      "pivots": [
+        {
+          "offset": 39,
+          "opcode": "invokevirtual",
+          "operand": "#170",
+          "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+        },
+        {
+          "offset": 42,
+          "opcode": "ifeq",
+          "operand": "400",
+          "symbol": ""
+        },
+        {
+          "offset": 91,
+          "opcode": "invokestatic",
+          "operand": "#187",
+          "symbol": "Method getPerfectShotTicks:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 94,
+          "opcode": "ifle",
+          "operand": "122",
+          "symbol": ""
+        },
+        {
+          "offset": 99,
+          "opcode": "invokestatic",
+          "operand": "#187",
+          "symbol": "Method getPerfectShotTicks:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 103,
+          "opcode": "isub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 104,
+          "opcode": "invokestatic",
+          "operand": "#190",
+          "symbol": "Method setPerfectShotTicks:(Lnet/minecraft/world/item/ItemStack;I)V"
+        },
+        {
+          "offset": 119,
+          "opcode": "invokestatic",
+          "operand": "#205",
+          "symbol": "Method com/github/alexmodguy/alexscaves/AlexsCaves.sendMSGToServer:(Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 140,
+          "opcode": "getstatic",
+          "operand": "#218",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TWILIGHT_PERFECTION:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 143,
+          "opcode": "invokestatic",
+          "operand": "#214",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 149,
+          "opcode": "invokestatic",
+          "operand": "#221",
+          "symbol": "Method getMaxLoadTime:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 156,
+          "opcode": "ifeq",
+          "operand": "256",
+          "symbol": ""
+        },
+        {
+          "offset": 163,
+          "opcode": "if_icmpge",
+          "operand": "256",
+          "symbol": ""
+        },
+        {
+          "offset": 184,
+          "opcode": "invokestatic",
+          "operand": "#224",
+          "symbol": "Method setUseTime:(Lnet/minecraft/world/item/ItemStack;I)V"
+        },
+        {
+          "offset": 189,
+          "opcode": "ifle",
+          "operand": "256",
+          "symbol": ""
+        },
+        {
+          "offset": 196,
+          "opcode": "if_icmplt",
+          "operand": "236",
+          "symbol": ""
+        },
+        {
+          "offset": 203,
+          "opcode": "if_icmpgt",
+          "operand": "236",
+          "symbol": ""
+        },
+        {
+          "offset": 207,
+          "opcode": "iconst_4",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 210,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 211,
+          "opcode": "isub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 212,
+          "opcode": "iconst_3",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 214,
+          "opcode": "iadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 215,
+          "opcode": "invokestatic",
+          "operand": "#190",
+          "symbol": "Method setPerfectShotTicks:(Lnet/minecraft/world/item/ItemStack;I)V"
+        },
+        {
+          "offset": 230,
+          "opcode": "invokestatic",
+          "operand": "#205",
+          "symbol": "Method com/github/alexmodguy/alexscaves/AlexsCaves.sendMSGToServer:(Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 237,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 238,
+          "opcode": "invokestatic",
+          "operand": "#190",
+          "symbol": "Method setPerfectShotTicks:(Lnet/minecraft/world/item/ItemStack;I)V"
+        },
+        {
+          "offset": 253,
+          "opcode": "invokestatic",
+          "operand": "#205",
+          "symbol": "Method com/github/alexmodguy/alexscaves/AlexsCaves.sendMSGToServer:(Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 300,
+          "opcode": "invokestatic",
+          "operand": "#224",
+          "symbol": "Method setUseTime:(Lnet/minecraft/world/item/ItemStack;I)V"
+        },
+        {
+          "offset": 305,
+          "opcode": "invokestatic",
+          "operand": "#190",
+          "symbol": "Method setPerfectShotTicks:(Lnet/minecraft/world/item/ItemStack;I)V"
+        }
+      ]
+    },
+    {
+      "class_sha256": "b9cd6e843f923877775e38b89214e8649c10d4d5be704ed9dd377900439d44ae",
+      "method": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "parent_method_anchors_sha256": "06b37b5e17c2b7364b18d75d646bba8ea896a4a60c8626980053420fb294f7d2",
+      "parent_anchor_count": 236,
+      "verified_pivots": 21,
+      "pivots": [
+        {
+          "offset": 14,
+          "opcode": "getstatic",
+          "operand": "#208",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.RELENTLESS_DARKNESS:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 20,
+          "opcode": "ifgt",
+          "operand": "899",
+          "symbol": ""
+        },
+        {
+          "offset": 87,
+          "opcode": "getstatic",
+          "operand": "#218",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TWILIGHT_PERFECTION:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 90,
+          "opcode": "invokestatic",
+          "operand": "#214",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 93,
+          "opcode": "ifle",
+          "operand": "107",
+          "symbol": ""
+        },
+        {
+          "offset": 97,
+          "opcode": "invokestatic",
+          "operand": "#187",
+          "symbol": "Method getPerfectShotTicks:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 100,
+          "opcode": "ifle",
+          "operand": "107",
+          "symbol": ""
+        },
+        {
+          "offset": 103,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 107,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 108,
+          "opcode": "istore",
+          "operand": "10",
+          "symbol": ""
+        },
+        {
+          "offset": 117,
+          "opcode": "ifle",
+          "operand": "899",
+          "symbol": ""
+        },
+        {
+          "offset": 402,
+          "opcode": "invokevirtual",
+          "operand": "#427",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setShadowArrowDamage:(F)V"
+        },
+        {
+          "offset": 407,
+          "opcode": "iload",
+          "operand": "10",
+          "symbol": ""
+        },
+        {
+          "offset": 409,
+          "opcode": "invokevirtual",
+          "operand": "#431",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/DarkArrowEntity.setPerfectShot:(Z)V"
+        },
+        {
+          "offset": 421,
+          "opcode": "ifeq",
+          "operand": "443",
+          "symbol": ""
+        },
+        {
+          "offset": 431,
+          "opcode": "invokeinterface",
+          "operand": "#437, 1",
+          "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/mixin/AbstractArrowAccessor.ac$getBaseDamage:()D"
+        },
+        {
+          "offset": 436,
+          "opcode": "ldc2_w",
+          "operand": "#440",
+          "symbol": "double 2.0d"
+        },
+        {
+          "offset": 439,
+          "opcode": "dmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 440,
+          "opcode": "invokevirtual",
+          "operand": "#442",
+          "symbol": "Method net/minecraft/world/entity/projectile/AbstractArrow.setBaseDamage:(D)V"
+        },
+        {
+          "offset": 775,
+          "opcode": "invokevirtual",
+          "operand": "#481",
+          "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+        },
+        {
+          "offset": 874,
+          "opcode": "invokestatic",
+          "operand": "#500",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurtAndBreakUsedHand:(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V"
+        }
+      ]
+    },
+    {
+      "class_sha256": "b9cd6e843f923877775e38b89214e8649c10d4d5be704ed9dd377900439d44ae",
+      "method": "getPerfectShotTicks",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+      "parent_method_anchors_sha256": "c432dfbf4de04a0aa0b6d3588356b75b5537570a247f4074a745d477c0361e6a",
+      "parent_anchor_count": 8,
+      "verified_pivots": 1,
+      "pivots": [
+        {
+          "offset": 10,
+          "opcode": "ldc_w",
+          "operand": "#297",
+          "symbol": "String PerfectShotTicks"
+        }
+      ]
+    },
+    {
+      "class_sha256": "b9cd6e843f923877775e38b89214e8649c10d4d5be704ed9dd377900439d44ae",
+      "method": "setPerfectShotTicks",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;I)V",
+      "parent_method_anchors_sha256": "da51166924a3801aed3b6a52364b6c91e53a49189d6fd16adf93deddf83fe6e3",
+      "parent_anchor_count": 6,
+      "verified_pivots": 1,
+      "pivots": [
+        {
+          "offset": 6,
+          "opcode": "ldc_w",
+          "operand": "#297",
+          "symbol": "String PerfectShotTicks"
+        }
+      ]
+    },
+    {
+      "class_sha256": "089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad",
+      "method": "onHitEntity",
+      "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+      "parent_method_anchors_sha256": "f27fbef4866ae329b113f33862968f1a55276a939ea0b1e2c4bf3795496630ee",
+      "parent_anchor_count": 48,
+      "verified_pivots": 12,
+      "pivots": [
+        {
+          "offset": 11,
+          "opcode": "invokevirtual",
+          "operand": "#131",
+          "symbol": "Method getShadowArrowDamage:()F"
+        },
+        {
+          "offset": 17,
+          "opcode": "invokevirtual",
+          "operand": "#110",
+          "symbol": "Method isPerfectShot:()Z"
+        },
+        {
+          "offset": 20,
+          "opcode": "ifeq",
+          "operand": "29",
+          "symbol": ""
+        },
+        {
+          "offset": 25,
+          "opcode": "fconst_2",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 26,
+          "opcode": "fmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 37,
+          "opcode": "invokestatic",
+          "operand": "#147",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeDarkArrowDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+        },
+        {
+          "offset": 51,
+          "opcode": "ifne",
+          "operand": "93",
+          "symbol": ""
+        },
+        {
+          "offset": 59,
+          "opcode": "ifne",
+          "operand": "93",
+          "symbol": ""
+        },
+        {
+          "offset": 67,
+          "opcode": "ifne",
+          "operand": "93",
+          "symbol": ""
+        },
+        {
+          "offset": 74,
+          "opcode": "ifne",
+          "operand": "93",
+          "symbol": ""
+        },
+        {
+          "offset": 82,
+          "opcode": "invokestatic",
+          "operand": "#160",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+        },
+        {
+          "offset": 85,
+          "opcode": "ifeq",
+          "operand": "93",
+          "symbol": ""
+        }
+      ]
+    },
+    {
+      "class_sha256": "089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad",
+      "method": "setPerfectShot",
+      "descriptor": "(Z)V",
+      "parent_method_anchors_sha256": "a85b83c979c31b67f85ec4d6deb7470d9129963445da3ca466eab29fbaaf9543",
+      "parent_anchor_count": 7,
+      "verified_pivots": 0,
+      "pivots": []
+    },
+    {
+      "class_sha256": "089f0a65444078ca42fc1da2d5023384314ef5f5283ddf3fe8484bf31d4136ad",
+      "method": "isPerfectShot",
+      "descriptor": "()Z",
+      "parent_method_anchors_sha256": "1c37f9ea1a7dafa114d331b6bc654752dcba0ee0f4638e0da7881ef0f074415d",
+      "parent_anchor_count": 7,
+      "verified_pivots": 0,
+      "pivots": []
+    },
+    {
+      "class_sha256": "bda52d12e8cce7e010b3d4cd2db7d83000e78b35657c55773a8ba91a070478c8",
+      "method": "handle",
+      "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage;Lcom/github/alexmodguy/alexscaves/server/message/ACNetworkContext;)V",
+      "parent_method_anchors_sha256": "498d08d0ac9389d5699b59d61eb388a131114711f0fd06dcef7eb33628af4f3b",
+      "parent_anchor_count": 41,
+      "verified_pivots": 8,
+      "pivots": [
+        {
+          "offset": 8,
+          "opcode": "invokeinterface",
+          "operand": "#46, 1",
+          "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/message/ACNetworkContext.getSender:()Lnet/minecraft/server/level/ServerPlayer;"
+        },
+        {
+          "offset": 15,
+          "opcode": "invokeinterface",
+          "operand": "#50, 1",
+          "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/message/ACNetworkContext.isClientSide:()Z"
+        },
+        {
+          "offset": 39,
+          "opcode": "getfield",
+          "operand": "#7",
+          "symbol": "Field entityId:I"
+        },
+        {
+          "offset": 42,
+          "opcode": "invokevirtual",
+          "operand": "#72",
+          "symbol": "Method net/minecraft/world/level/Level.getEntity:(I)Lnet/minecraft/world/entity/Entity;"
+        },
+        {
+          "offset": 81,
+          "opcode": "invokevirtual",
+          "operand": "#96",
+          "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+        },
+        {
+          "offset": 113,
+          "opcode": "invokevirtual",
+          "operand": "#96",
+          "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+        },
+        {
+          "offset": 143,
+          "opcode": "instanceof",
+          "operand": "#103",
+          "symbol": "class com/github/alexmodguy/alexscaves/server/item/UpdatesStackTags"
+        },
+        {
+          "offset": 174,
+          "opcode": "invokeinterface",
+          "operand": "#111, 4",
+          "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/item/UpdatesStackTags.updateTagFromServer:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+        }
+      ]
+    },
+    {
+      "class_sha256": "18e350579f407c7c9509e230aa17b68b1113c166352e812482934ec3fdc1bd7e",
+      "method": "renderByItem",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+      "parent_method_anchors_sha256": "6c1660b5ca24f1ce607c715df0710eacbacb7f8e40a4c11780f3eea0bbbd69aa",
+      "parent_anchor_count": 26,
+      "verified_pivots": 1,
+      "pivots": [
+        {
+          "offset": 3191,
+          "opcode": "invokestatic",
+          "operand": "#625",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/item/DreadbowItem.getPerfectShotTicks:(Lnet/minecraft/world/item/ItemStack;)I"
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "full_runtime_cfg": "NOT_RECONSTRUCTED",
+    "client_to_server_tag_authority": "NOT_VERIFIED",
+    "physical_damage_acceptance": "NOT_TESTED",
+    "datapack_enchantments": "NOT_VERIFIED",
+    "safe_mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "mutation": "NO_MUTATION"
+  }
+}

@@ -7939,6 +7939,46 @@
           "reason": "Manifesto individual com 6 classes, 11 recursos, 51 métodos e 901 âncoras; corpos completos e janelas parciais declarados, auditoria publisher real e regressões sem ampliar budgets ou promover QA física."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/twilight-perfection.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Twilight Perfection somente no Dreadbow publisher 1.0.10: janela visual cliente 4/7/10, flag na Dark Arrow ou ×2 ao baseDamage para factory não conversível; não certifica trust do pacote, impacto efetivo, hook de perk, multiplayer ou universo integral do mod.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/twilight-perfection.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, JSON twilight_perfection de 367 bytes, tag dreadbow, tradução en_us, exclusividade declarada por Relentless, registry e cinco classfiles pinados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/twilight-perfection.md",
+          "reason": "Mixin ACTickingItem chama acInventoryTick; ramo client-only gera W=4+3(L-1), decai e sincroniza tag; releaseUsing requer Twilight>0, contador>0, jogador e bypass Relentless."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/twilight-perfection.md",
+          "reason": "Níveis I–III peso2, anvil4, custo mínimo1/8/15 e máximo41/51/61; janela4/7/10 ticks, DarkArrow 3F/2F×2 se perfect, outras factories baseDamage×2D."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/twilight-perfection.md",
+          "reason": "Twilight não altera raycast 128p/fallback42p, jitter 16×4×16, salvas ceil(30p)/ceil(8p), velocidade 0.5+1.5r e regras nativas de colisão/owner."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/twilight-perfection.md",
+          "reason": "Nenhum mana/cooldown extra do encantamento; custo base normal por salvo 1 desgaste+1 munição exceto creative/Shaded Respite, sem débito independente por perfect ou por seta."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/twilight-perfection.md",
+          "reason": "Tags cliente→servidor via UpdateItemTagMessage.handle sem reconstrução de contador autoritativo; múltiplos caminhos de munição e renderer não legitimam proc, Mastery ou mutação de dano; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/twilight-perfection.md",
+          "reason": "Sonda individual e CI verificam recurso/tag/tradução/exclusão, hashes dos cinco classfiles e nove consumers por offsets e digest de âncoras parent SHA-exato; física, mixins efetivos, PvP e trust não testados."
+        }
+      }
     }
   },
   "providers": {},
