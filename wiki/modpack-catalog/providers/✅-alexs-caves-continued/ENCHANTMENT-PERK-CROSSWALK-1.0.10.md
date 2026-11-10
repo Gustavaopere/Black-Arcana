@@ -87,7 +87,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 | Estado | ID do recurso JSON / encantamento | Referência nominal SHA-exata já disponível |
 |---|---|---|
-| ⚠️ | `alexscaves:arrow_inducting` | [Ficha técnica parcial](enchantments/arrow-inducting.md) · [JAR 1.0.10 selado](EXACT-ARROW-INDUCTING-1.0.10.json) · [roster do ciclo de vida](EXACT-ARROW-INDUCTING-LIFECYCLE-ROSTER-1.0.10.json) — não certificado |
+| ⚠️ | `alexscaves:arrow_inducting` | [Ficha técnica parcial](enchantments/arrow-inducting.md) · [JAR 1.0.10 selado](EXACT-ARROW-INDUCTING-1.0.10.json) · [roster do ciclo de vida](EXACT-ARROW-INDUCTING-LIFECYCLE-ROSTER-1.0.10.json) · [âncoras causais exatas](EXACT-ARROW-INDUCTING-CAUSAL-FLOW-1.0.10.json) — não certificado |
 | ⚠️ | `alexscaves:astral_transferring` | [Ficha técnica parcial](enchantments/astral-transferring.md) · [JAR 1.0.10 selado](EXACT-ASTRAL-TRANSFERRING-1.0.10.json) · [ação Totem](actions/totem-possession-remote-control.md) |
 | ⚠️ | `alexscaves:bonking` | [Ficha técnica parcial](enchantments/bonking.md) · [JAR 1.0.10 selado](EXACT-BONKING-1.0.10.json) |
 | ⚠️ | `alexscaves:bouncing_bolt` | [Ficha técnica parcial](enchantments/bouncing-bolt.md) · [JAR 1.0.10 selado](EXACT-BOUNCING-BOLT-1.0.10.json) · [ação Sea Staff](actions/sea-staff-water-bolt.md) |

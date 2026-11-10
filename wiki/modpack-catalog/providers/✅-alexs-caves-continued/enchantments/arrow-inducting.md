@@ -90,7 +90,37 @@ O contrato antigo conserva `Level.addFreshEntity` seguido de descarte da flecha 
 
 **Estado:** ⚠️ `NOT_CERTIFIED` para o contrato individual completo. **Prova da expansão da auditoria:** 1 consumidor de evento + 12 membros declarados de projétil fixados por hashes do JAR; 7 testes sintéticos novos executados na auditoria inicial; sem QA física. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Pendências seguintes: dissecar execução dos construtores e `doPostHurtEffects`; reconstruir CFG de `tick` e predicate; validar persistência, filtros, spoofing e sucesso de dano/spawn.
 
-## 7. Validação, pendências e conclusão desta etapa
+## 7. Auditoria causal aprofundada — guardas, autoria e estado do projétil (2026-11-10)
+
+**Fonte estática exata:** [manifesto de referências, desvios e constantes do JAR 1.0.10](../EXACT-ARROW-INDUCTING-CAUSAL-FLOW-1.0.10.json), reproduzido pela [sonda read-only](../../../../../docs/qa/alexscaves_1010_arrow_causal_flow_probe.py). O manifesto guarda, para **1 método do evento e os 12 métodos declarados da flecha**, descriptor, digest do método, referências simbólicas com offsets, saltos com destinos JVM e operandos numéricos. Complementa o roster anterior, sem alegar recuperação de toda a CFG, corpos herdados ou resultado físico.
+
+### 7.1. Gates de conversão no evento
+
+Em `CommonEvents.acLivingAttack(LivingIncomingDamageEvent)Z`, **cinco guardas convergem para o offset `@158`**: `ifeq @12`, `ifeq @27`, `ifeq @51`, `ifle @69` e `if_acmpeq @84`. As chamadas adjacentes atestam a origem `DamageSource.getDirectEntity @4`, o teste `LivingEntity.isBlocking @24`, o item efetivamente usado `getUseItem @34/@58`, o nível do encantamento via `ACCompat.enchantLevel @66` e a exclusão do tipo nativo `SEEKING_ARROW @76–84`. Os desvios **não** autorizam declarar o resultado final do evento de dano, o cancelamento efetivo do hit, o comportamento de outros handlers ou o lado lógico do evento como um todo.
+
+Na região de substituição, a classe instancia `SeekingArrowEntity(Level,LivingEntity)` a partir do **defensor** (`@92–102`), reaproveita posição `@110`, aplica fator `-0.4D` à velocidade `@119–125`, soma `180F` à rotação `@134–138`, chama `addFreshEntity @150` e descarta o projétil original `@155`. O booleano do spawn segue descartado em `@153`; trata-se de risco de substituição **sem confirmação de criação**, não prova de que todo spawn falhe ou de que o dano tenha sido negado.
+
+### 7.2. Autoria: sequência de construtores
+
+O construtor exato `SeekingArrowEntity(Level,LivingEntity)` possui **15 instruções** e delega em `@33` a `AbstractArrow.<init>(EntityType,LivingEntity,Level,ItemStack,ItemStack)`, passando `ACEntityRegistry.SEEKING_ARROW` e `ACItemRegistry.SEEKING_ARROW` como referências do objeto nativo. A chamada do evento fornece o defensor como `LivingEntity`. **Conclusão delimitada:** a autoria inicial é encaminhada pela rota do construtor de `AbstractArrow` com uma entidade viva, mas o setter interno, sua preservação até o impacto, save/load e a aceitação de um kill/XP/Mastery **não foram auditados**.
+
+O overload `SeekingArrowEntity(Level,DDD)` (17 instruções) delega a `AbstractArrow.<init>(EntityType,DDD,Level,ItemStack,ItemStack)` em `@37`, **sem parâmetro LivingEntity** nessa assinatura. Não presumir equivalência automática de owner entre construtores nem atribuir proc de perk com base apenas em `getOwner`.
+
+### 7.3. Targeting, sincronização e fim da busca
+
+- `defineSynchedData(Builder)` (10 instruções) chama a implementação herdada em `@2` e registra `ARC_TOWARDS_ENTITY_ID` por `Builder.define @13`, com **sentinela inteira `-1` em `@9`**. `getArcTowardsID()` usa `SynchedEntityData.get @7`; `setArcTowardsID(int)` usa `SynchedEntityData.set @11`. Isto comprova **dado de entidade sincronizado**, **não** persistência em NBT ou estabilidade do ID entre mundos/restarts.
+- `tick()` testa `inGround @10` com desvio `@13 → 272` e `stopSeeking @17` com `@20 → 272`. O teste `Level.isClientSide @32` precede `@35 → 272`, delimitando o caminho de seleção observado; há outro `isClientSide @276`, ligado a segmento posterior da rotina. Não inferir que toda a entidade só executa no servidor.
+- `doPostHurtEffects(LivingEntity)` (4 instruções) grava **`stopSeeking=true`** por `iconst_1 @1` / `putfield @2`. O ramo do `tick @20` permite relacionar esse flag ao desvio da etapa de busca **quando o callback pós-hit é efetivamente chamado**. O método declarado **não contém chamada própria de `hurt`**, efeito de status nem fórmula de dano. O impacto e dano herdados de `AbstractArrow` permanecem **não certificados**.
+- `tick @82` consulta candidatos por `Level.getEntities`; `ownedBy @136` e `Entity.isAlliedTo @149` são chamadas compiladas no recorte; `setArcTowardsID @188` registra um ID, e `Level.getEntity(int) @199` resolve a referência durante o seguimento. Sua duração válida, filtros de entidades injetados, colisão e reatribuição do ID após reload ainda exigem análise causal completa.
+- Na perseguição, `setDeltaMovement @269` recebe a combinação vetorial com as constantes `0.3000000119D` e `0.6999999881D` (offsets `@250/@260`), conforme as chamadas adjacentes do método. Essa interpolação **não representa** dano, radius de AoE ou multiplicador de tamanho. O recorte inclui `5.0F @177`, `0.65F @212` e `0.5F @315/@328/@341`, mas **não** os promove a parâmetros de perk sem associação integral de operandos e caminhos.
+
+### 7.4. Elementos auxiliares e limites
+
+`getDefaultPickupItem()` referencia `ACItemRegistry.SEEKING_ARROW @4`, e `getDefaultHitGroundSoundEvent()` referencia `ACSoundRegistry.SEEKING_ARROW_HIT @0`. São recursos nativos associados a pickup/som, **não comprovação** de drop, hit/dano aceito ou recuperação física da flecha. A classe continua sem overrides **declarados** de `onHitEntity`, `onHitBlock`, `addAdditionalSaveData` ou `readAdditionalSaveData`; não excluir callbacks herdados, componentes base ou transformações por mixin.
+
+**Fronteira de perks:** não alterar alvo, owner, `ARC_TOWARDS_ENTITY_ID`, `stopSeeking`, velocidade, lifetime, colisão, impacto ou Mastery por simples manipulação do campo. Exigir hook estável pré-efeito, autorização do servidor, prevenção de dupla atribuição, prova de persistência e QA física. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. **A nova evidência aprofunda a ficha ⚠️ parcial; não incrementa contratos estáticos certificados, providers nem raízes de cast.**
+
+## 8. Validação, pendências e conclusão desta etapa
 
 - ✅ **Verificado:** SHA-exato do JAR publisher, JSON de identidade e configuração, dois classfiles, descriptors, hashes de métodos e chamadas/operandos delimitados; sonda read-only.
 - ✅ **Reproduzível pela CI:** `docs/qa/alexscaves_1010_arrow_inducting_probe.py --jar <JAR exato> --javap <JDK21/javap> --seal <manifesto>`; o gate compara integralmente o manifesto ao resultado observado.
