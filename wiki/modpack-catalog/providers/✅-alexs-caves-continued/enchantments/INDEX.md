@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 28/48.**
+**Fichas catalogadas (somente fichas detectadas): 29/49.**
 
-**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 58.3%`
+**Barra das fichas catalogadas:** `███████████░░░░░░░░░ 59.2%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 28/48.**
+**Homologadas para perks (somente fichas detectadas): 29/49.**
 
-**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 58.3%`
+**Barra dos contratos técnicos estáticos:** `███████████░░░░░░░░░ 59.2%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -68,6 +68,7 @@
 | ✅ | Taxing Bellow | [ficha/taxing-bellow.md](taxing-bellow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Triple Splash | [ficha/triple-splash.md](triple-splash.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Triple Split | [ficha/triple-split.md](triple-split.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Tsunami | [ficha/tsunami.md](tsunami.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
