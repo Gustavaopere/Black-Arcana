@@ -7899,6 +7899,46 @@
           "reason": "Manifesto individual com 7 classes, 11 recursos, 59 métodos e 1452 âncoras; corpos completos e janelas locais delimitados, auditoria real e regressões sem ampliar budgets ou promover QA física."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/tsunami.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Contrato estático individual Tsunami: produtor Ortholance e consumidor Wave delimitados; não conclui CFG integral dos métodos parciais, arma integral, encantamentos irmãos, spawn/dano aceitos, persistência física, hooks, QA física ou universo integral do provider.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/tsunami.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, JSON, registro/chave, tag Ortholance, idiomas, aquisição e exclusão reversa por Second Wave selados."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/tsunami.md",
+          "reason": "Flag de nível positivo no release, carga mínima 10 e servidor produzem uma tentativa de Wave escala 5, lifespan 20 e espera 2; salto 244→705 pula a consulta Second Wave, alcançando ataque direto separado."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/tsunami.md",
+          "reason": "Nível I declarativo; nível positivo externo também vira booleano sem escala adicional. Origem, heading, dimensões, charge e Flinging, escala, progressos de slam, limiares de lifetime e aceleração mantêm unidades e limites próprios."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/tsunami.md",
+          "reason": "Ataque direto usa AABB até posição+V×5, LOS e mobAttack; onda usa AABB própria inflada, exclusões Deep One/owner/alianças e mobProjectile, dano e knockback derivados de escala e slam; hurt descartado não comprova hit."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/tsunami.md",
+          "reason": "Um pedido de desgaste de 1 no release elegível precede spawn e não depende de sua aceitação. Custos de aquisição são separados; engine conserva aplicação de durabilidade/creative e não há cobrança própria por onda, tick ou vítima."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/tsunami.md",
+          "reason": "Owner inicial explícito; consumidor da onda lê campo direto enquanto getter pode resolver UUID sob demanda. NBT próprio Owner/Lifespan não certifica persistência de escala/espera/yaw/progresso; NO_MUTATION, sem novo cast/raiz, Mastery pendente."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/tsunami.md",
+          "reason": "Manifesto individual com 6 classes, 11 recursos, 51 métodos e 901 âncoras; corpos completos e janelas parciais declarados, auditoria publisher real e regressões sem ampliar budgets ou promover QA física."
+        }
+      }
     }
   },
   "providers": {},

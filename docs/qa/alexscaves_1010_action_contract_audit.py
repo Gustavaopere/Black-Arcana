@@ -62,6 +62,7 @@ SHADED_RESPITE = frozenset(("enchantments/shaded-respite.md",))
 SHARP_CANE = frozenset(("enchantments/sharp-cane.md",))
 TRIPLE_SPLASH = frozenset(("enchantments/triple-splash.md",))
 TRIPLE_SPLIT = frozenset(("enchantments/triple-split.md",))
+TSUNAMI = frozenset(("enchantments/tsunami.md",))
 SCOPE = {"schema_version": 1, "version": "1.0.10",
          "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
          "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR", "mutating_hook": "NOT_VERIFIED",
@@ -89,6 +90,7 @@ SHADED_RESPITE_SCOPE = {**SCOPE, "catalog_family": "SHADED_RESPITE_ENCHANTMENT_C
 SHARP_CANE_SCOPE = {**SCOPE, "catalog_family": "SHARP_CANE_ENCHANTMENT_CONTRACT"}
 TRIPLE_SPLASH_SCOPE = {**SCOPE, "catalog_family": "TRIPLE_SPLASH_ENCHANTMENT_CONTRACT"}
 TRIPLE_SPLIT_SCOPE = {**SCOPE, "catalog_family": "TRIPLE_SPLIT_ENCHANTMENT_CONTRACT"}
+TSUNAMI_SCOPE = {**SCOPE, "catalog_family": "TSUNAMI_ENCHANTMENT_CONTRACT"}
 ADJACENT_SOURCE = {"repository": "Codx-org/AlexsCavesContinued",
                    "revision": "523308608422ab8e31974befa7111ecdf495dd37",
                    "declared_version": "1.1.1",
@@ -106,7 +108,7 @@ def require(condition, message):
 
 def profile_spec(profile):
     """Select a literal family without changing the existing action contract."""
-    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade", "seapairing", "shaded_respite", "sharp_cane", "triple_splash", "triple_split"), "unknown catalog profile")
+    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade", "seapairing", "shaded_respite", "sharp_cane", "triple_splash", "triple_split", "tsunami"), "unknown catalog profile")
     if profile == "effects":
         return EFFECT_SCOPE, EFFECTS, "effect_evidence"
     if profile == "dreadbow":
@@ -149,6 +151,8 @@ def profile_spec(profile):
         return TRIPLE_SPLASH_SCOPE, TRIPLE_SPLASH, "contract_evidence"
     if profile == "triple_split":
         return TRIPLE_SPLIT_SCOPE, TRIPLE_SPLIT, "contract_evidence"
+    if profile == "tsunami":
+        return TSUNAMI_SCOPE, TSUNAMI, "contract_evidence"
     return SCOPE, ACTIONS, "action_evidence"
 
 
@@ -363,7 +367,7 @@ def main(argv=None):
     for flag in ("jar", "manifest", "provider-root", "javap"):
         parser.add_argument("--" + flag, required=True, type=Path)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade", "seapairing", "shaded_respite", "sharp_cane", "triple_splash", "triple_split"), default="actions")
+    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade", "seapairing", "shaded_respite", "sharp_cane", "triple_splash", "triple_split", "tsunami"), default="actions")
     args = parser.parse_args(argv)
     try:
         report = audit(args.jar, load_manifest(args.manifest), args.provider_root, args.javap,
