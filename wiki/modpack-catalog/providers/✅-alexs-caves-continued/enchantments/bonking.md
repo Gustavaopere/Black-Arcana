@@ -74,6 +74,33 @@ O arquivo `PrimitiveClubItem.class` SHA-256 `92bfb58cb5ed2c84dd6f989afad22c98209
 
 O **Black Arcana** só poderá observar resultados confirmados do provider, sem reproduzir a chamada de loot ou simular outro Creeper. O **RPG Skill Tree** permanece provider de progressão, atributos, Mastery e gates por contratos reais, não a autoridade desse evento. Modificação que exija hook de loot/causalidade deve falhar fechado enquanto não houver contrato e testes de compatibilidade.
 
+## Auditoria causal ampliada de Bonking — evento, loops de loot e Mixin (11/11/2026)
+
+A [prova complementar SHA-exata](../EXACT-BONKING-CAUSAL-1.0.10.json), gerada pela [sonda JVM read-only](../../../../../docs/qa/alexscaves_1010_bonking_causal_probe.py), compara o **JAR físico 1.0.10** (SHA-1/SHA-256/tamanho) com o [manifesto anterior](../EXACT-BONKING-1.0.10.json), incluindo hashes dos classfiles `CommonEvents` e `MobMixin`. O método `CommonEvents.livingDie(LivingDeathEvent)V` tem **229 instruções JVM**, digest de parse `03c56101acdb5aa18c6d253f49b914bef1c1f2723aa5de548b126d4d864020dd`, **21 desvios** no método inteiro e os callsites abaixo. Os destinos/arestas incluem fallthrough explícito para branches condicionais. O método não contém `tableswitch`/`lookupswitch` ou outros primitivos de controle não suportados pela sonda.
+
+**Cuidado de escopo:** 21 é o total de desvios de `livingDie`, **não** 21 condições exclusivas de Bonking. Os offsets após `@432` contêm consumidores independentes do mesmo evento (como `GREEN_SOYLENT` e `STINKY_FISH`) que **não** são atribuídos a este encantamento.
+
+| Porta compilada | Aresta / callsite SHA-exato | Significado limitado |
+|---|---|---|
+| Elegibilidade prévia de morte, lado e item | branches `@83`, `@97`, `@110`, `@127`, `@157` → `432` quando reprovados | Mortes ou agentes fora das condições de tipo, lado ou item não entram no corpo de loot; a rotina usa `DamageSource.getDirectEntity @117`, não autoria indireta do golpe |
+| Encantamento | `BONKING @167`, `ACCompat.enchantLevel @170`, `ifle @173 → 432` | Exige nível positivo no Primitive Club da mão principal |
+| Probabilidade da tentativa | `RandomSource.nextFloat @186`, limite `0.33F @191`, `ifge @194 → 432` | Guard de **33% nominal** por oportunidade elegível; não é a chance final de crânio concedido ou spawn aceito |
+| Origem fictícia para loot | `ACCompat.createEntity(CREEPER) @204`; `ifnull @214 → 432`; `LIGHTNING_BOLT @241–246`, `setVisualOnly @262` e `thunderHit @271` condicionais | Instancia entidades auxiliares para o caminho de loot; não comprova spawn de raio no mundo nem prêmio final |
+| Fonte de dano encaminhada | `DamageSources.mobAttack(fakeCreeper) @283` | Fonte de dano usada pelo callback de loot, não prova de segunda aplicação de dano à vítima |
+| Primeira iteração dos slots | `EquipmentSlot.values @303`; `if_icmpge @320 → 366`; `ac_getEquipmentDropChance @338`, `HashMap.put @346`, `ac_setDropChance(0F) @355`; `goto @363 → 316` | Guarda chances de equipamento por slot e tenta zerá-las antes do loot customizado |
+| Callback nativo de loot | `ac_dropCustomDeathLoot @372` com argumentos compilados `0` e `false` (`@370–371`) | Chama a bridge de loot do provider, que delega ao pipeline vanilla; não comprova itens produzidos |
+| Segunda iteração dos slots | `EquipmentSlot.values @377`; `if_icmpge @394 → 432`; `HashMap.get @412`, `Float.floatValue @418`, `ac_setDropChance @421`; `goto @429 → 390` | Tenta restaurar os valores de equipamento salvos após a chamada de loot; não há garantia de resultado sob exceção |
+
+**Metadados de exceções:** `javap -c -p -s` do método compilado expõe **zero entradas na tabela JVM de handlers de exceção**. Assim, a auditoria **não identificou um `try/finally` compilado** protegendo a passagem entre o ajuste de chances (`@355`), a chamada de loot (`@372`) e a restauração (`@421`). Se algum callback lançar uma exceção, o retorno normal e o caminho de restauração podem ser interrompidos; isso é **um risco condicional, não uma falha reproduzida**. A prova não avalia handlers de outros métodos, reentrância, tratamento externo nem alternativas de rollback em outros mods.
+
+**Proveniência de Mixin:** o recurso publisher `alexscaves.mixins.json`, SHA-256 `6e120e2d2cf226a25cbe3d0605968a184384194354eac0b1153108f74632c140`, declara `MobMixin` no grupo `mixins` com package `com.github.alexmodguy.alexscaves.mixin`. A classe compilada expõe `ac_getEquipmentDropChance` (4 instruções), `ac_setDropChance` (5) e `ac_dropCustomDeathLoot` (8), com digests fixados no manifesto. **Presença na configuração e no classfile não prova aplicação/ordem do Mixin no runtime transformado nem resultado efetivo de loot.**
+
+### Interoperabilidade, autoria e pendências após a auditoria
+
+Para futuras perks de loot, não atribuir drops a `alexscaves:bonking` só porque houve `LivingDeathEvent`, porque o RNG passou ou porque o código chamou `ac_dropCustomDeathLoot`. O proprietário do pipeline nativo continua sendo o provider e o jogo, com loot tables, regras de morte e outros listeners efetivos. O RPG Skill Tree pode consumir **apenas eventos resultantes autoritativos e deduplicados**, nunca reexecutar `dropCustomDeathLoot` ou alterar temporariamente chance de equipamento sem hook real de servidor.
+
+**Limites explícitos:** sem prova de CFG interprocedural executado, ordem de listeners, evento cancelado, compatibilidade de mixins, queda real de crânio, porcentagem final, item coletado, quantidade de loot, restauração sob exceção, client/servidor multiplayer, PvP/claims ou save/reload. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Estado permanece **⚠️ parcial**, **+0 contratos estáticos certificados**, **+0 novas ações mágicas**, **+0 providers encerrados**.
+
 ## Limites de prova e aceite futuro
 
 - **Identidade/JSON publisher:** `VERIFIED_EXACT_BINARY`.

@@ -1,0 +1,440 @@
+{
+  "schema_version": 1,
+  "scope": "BONKING_FULL_NATIVE_DEATH_HANDLER_BRANCHES_AND_LOOT_BRIDGE",
+  "source": "EXACT_INSTALLED_ALEXSCAVES_CONTINUED_1.0.10",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "classes": {
+    "com/github/alexmodguy/alexscaves/server/event/CommonEvents.class": "d132caad67ecab68844091ee396d37fecc4860440d338dcd82384f1555f8ad43",
+    "com/github/alexmodguy/alexscaves/mixin/MobMixin.class": "38381f9b5b3908e813711f031161a1e25b46e68d220ed34c137948e6b59dac3e"
+  },
+  "parent_manifest_sha256": "120704b8168411c0b5278a017e117b42f030317c326765b15a235db2a6732583",
+  "method": {
+    "class": "com/github/alexmodguy/alexscaves/server/event/CommonEvents.class",
+    "name": "livingDie",
+    "descriptor": "(Lnet/neoforged/neoforge/event/entity/living/LivingDeathEvent;)V",
+    "parsed_method_sha256": "03c56101acdb5aa18c6d253f49b914bef1c1f2723aa5de548b126d4d864020dd",
+    "instruction_count": 229,
+    "total_declared_event_methods": 34,
+    "all_branch_edges": [
+      {
+        "offset": 10,
+        "opcode": "if_acmpne",
+        "target": 73,
+        "back_edge": false,
+        "fallthrough": 13
+      },
+      {
+        "offset": 17,
+        "opcode": "ifnull",
+        "target": 73,
+        "back_edge": false,
+        "fallthrough": 20
+      },
+      {
+        "offset": 32,
+        "opcode": "ifeq",
+        "target": 73,
+        "back_edge": false,
+        "fallthrough": 35
+      },
+      {
+        "offset": 44,
+        "opcode": "ifeq",
+        "target": 73,
+        "back_edge": false,
+        "fallthrough": 47
+      },
+      {
+        "offset": 83,
+        "opcode": "ifne",
+        "target": 432,
+        "back_edge": false,
+        "fallthrough": 86
+      },
+      {
+        "offset": 97,
+        "opcode": "ifeq",
+        "target": 432,
+        "back_edge": false,
+        "fallthrough": 100
+      },
+      {
+        "offset": 110,
+        "opcode": "ifnull",
+        "target": 432,
+        "back_edge": false,
+        "fallthrough": 113
+      },
+      {
+        "offset": 127,
+        "opcode": "ifeq",
+        "target": 432,
+        "back_edge": false,
+        "fallthrough": 130
+      },
+      {
+        "offset": 157,
+        "opcode": "ifeq",
+        "target": 432,
+        "back_edge": false,
+        "fallthrough": 160
+      },
+      {
+        "offset": 173,
+        "opcode": "ifle",
+        "target": 432,
+        "back_edge": false,
+        "fallthrough": 176
+      },
+      {
+        "offset": 194,
+        "opcode": "ifge",
+        "target": 432,
+        "back_edge": false,
+        "fallthrough": 197
+      },
+      {
+        "offset": 214,
+        "opcode": "ifnull",
+        "target": 432,
+        "back_edge": false,
+        "fallthrough": 217
+      },
+      {
+        "offset": 231,
+        "opcode": "ifeq",
+        "target": 274,
+        "back_edge": false,
+        "fallthrough": 234
+      },
+      {
+        "offset": 256,
+        "opcode": "ifnull",
+        "target": 274,
+        "back_edge": false,
+        "fallthrough": 259
+      },
+      {
+        "offset": 320,
+        "opcode": "if_icmpge",
+        "target": 366,
+        "back_edge": false,
+        "fallthrough": 323
+      },
+      {
+        "offset": 363,
+        "opcode": "goto",
+        "target": 316,
+        "back_edge": true
+      },
+      {
+        "offset": 394,
+        "opcode": "if_icmpge",
+        "target": 432,
+        "back_edge": false,
+        "fallthrough": 397
+      },
+      {
+        "offset": 429,
+        "opcode": "goto",
+        "target": 390,
+        "back_edge": true
+      },
+      {
+        "offset": 439,
+        "opcode": "ifeq",
+        "target": 547,
+        "back_edge": false,
+        "fallthrough": 442
+      },
+      {
+        "offset": 457,
+        "opcode": "ifeq",
+        "target": 502,
+        "back_edge": false,
+        "fallthrough": 460
+      },
+      {
+        "offset": 517,
+        "opcode": "ifeq",
+        "target": 547,
+        "back_edge": false,
+        "fallthrough": 520
+      }
+    ],
+    "selected_bonking_pivots": [
+      {
+        "offset": 97,
+        "opcode": "ifeq",
+        "operand": "432",
+        "symbol": ""
+      },
+      {
+        "offset": 110,
+        "opcode": "ifnull",
+        "operand": "432",
+        "symbol": ""
+      },
+      {
+        "offset": 117,
+        "opcode": "invokevirtual",
+        "operand": "#91",
+        "symbol": "Method net/minecraft/world/damagesource/DamageSource.getDirectEntity:()Lnet/minecraft/world/entity/Entity;"
+      },
+      {
+        "offset": 127,
+        "opcode": "ifeq",
+        "operand": "432",
+        "symbol": ""
+      },
+      {
+        "offset": 143,
+        "opcode": "getstatic",
+        "operand": "#104",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.PRIMITIVE_CLUB:Ljava/util/function/Supplier;"
+      },
+      {
+        "offset": 157,
+        "opcode": "ifeq",
+        "operand": "432",
+        "symbol": ""
+      },
+      {
+        "offset": 167,
+        "opcode": "getstatic",
+        "operand": "#115",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.BONKING:Lnet/minecraft/resources/ResourceKey;"
+      },
+      {
+        "offset": 170,
+        "opcode": "invokestatic",
+        "operand": "#121",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+      },
+      {
+        "offset": 173,
+        "opcode": "ifle",
+        "operand": "432",
+        "symbol": ""
+      },
+      {
+        "offset": 183,
+        "opcode": "invokevirtual",
+        "operand": "#125",
+        "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+      },
+      {
+        "offset": 186,
+        "opcode": "invokeinterface",
+        "operand": "#129,  1",
+        "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+      },
+      {
+        "offset": 191,
+        "opcode": "ldc",
+        "operand": "#135",
+        "symbol": "float 0.33f"
+      },
+      {
+        "offset": 194,
+        "opcode": "ifge",
+        "operand": "432",
+        "symbol": ""
+      },
+      {
+        "offset": 197,
+        "opcode": "getstatic",
+        "operand": "#136",
+        "symbol": "Field net/minecraft/world/entity/EntityType.CREEPER:Lnet/minecraft/world/entity/EntityType;"
+      },
+      {
+        "offset": 204,
+        "opcode": "invokestatic",
+        "operand": "#140",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.createEntity:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;"
+      },
+      {
+        "offset": 214,
+        "opcode": "ifnull",
+        "operand": "432",
+        "symbol": ""
+      },
+      {
+        "offset": 231,
+        "opcode": "ifeq",
+        "operand": "274",
+        "symbol": ""
+      },
+      {
+        "offset": 241,
+        "opcode": "getstatic",
+        "operand": "#148",
+        "symbol": "Field net/minecraft/world/entity/EntityType.LIGHTNING_BOLT:Lnet/minecraft/world/entity/EntityType;"
+      },
+      {
+        "offset": 246,
+        "opcode": "invokestatic",
+        "operand": "#140",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.createEntity:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;"
+      },
+      {
+        "offset": 256,
+        "opcode": "ifnull",
+        "operand": "274",
+        "symbol": ""
+      },
+      {
+        "offset": 262,
+        "opcode": "invokevirtual",
+        "operand": "#153",
+        "symbol": "Method net/minecraft/world/entity/LightningBolt.setVisualOnly:(Z)V"
+      },
+      {
+        "offset": 271,
+        "opcode": "invokevirtual",
+        "operand": "#157",
+        "symbol": "Method net/minecraft/world/entity/monster/Creeper.thunderHit:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LightningBolt;)V"
+      },
+      {
+        "offset": 283,
+        "opcode": "invokevirtual",
+        "operand": "#165",
+        "symbol": "Method net/minecraft/world/damagesource/DamageSources.mobAttack:(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;"
+      },
+      {
+        "offset": 303,
+        "opcode": "invokestatic",
+        "operand": "#176",
+        "symbol": "Method net/minecraft/world/entity/EquipmentSlot.values:()[Lnet/minecraft/world/entity/EquipmentSlot;"
+      },
+      {
+        "offset": 320,
+        "opcode": "if_icmpge",
+        "operand": "366",
+        "symbol": ""
+      },
+      {
+        "offset": 338,
+        "opcode": "invokeinterface",
+        "operand": "#182,  2",
+        "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/entity/util/EntityDropChanceAccessor.ac_getEquipmentDropChance:(Lnet/minecraft/world/entity/EquipmentSlot;)F"
+      },
+      {
+        "offset": 346,
+        "opcode": "invokevirtual",
+        "operand": "#192",
+        "symbol": "Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
+      },
+      {
+        "offset": 354,
+        "opcode": "fconst_0",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 355,
+        "opcode": "invokeinterface",
+        "operand": "#196,  3",
+        "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/entity/util/EntityDropChanceAccessor.ac_setDropChance:(Lnet/minecraft/world/entity/EquipmentSlot;F)V"
+      },
+      {
+        "offset": 363,
+        "opcode": "goto",
+        "operand": "316",
+        "symbol": ""
+      },
+      {
+        "offset": 372,
+        "opcode": "invokeinterface",
+        "operand": "#200,  4",
+        "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/entity/util/EntityDropChanceAccessor.ac_dropCustomDeathLoot:(Lnet/minecraft/world/damagesource/DamageSource;IZ)V"
+      },
+      {
+        "offset": 377,
+        "opcode": "invokestatic",
+        "operand": "#176",
+        "symbol": "Method net/minecraft/world/entity/EquipmentSlot.values:()[Lnet/minecraft/world/entity/EquipmentSlot;"
+      },
+      {
+        "offset": 394,
+        "opcode": "if_icmpge",
+        "operand": "432",
+        "symbol": ""
+      },
+      {
+        "offset": 412,
+        "opcode": "invokevirtual",
+        "operand": "#204",
+        "symbol": "Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;"
+      },
+      {
+        "offset": 418,
+        "opcode": "invokevirtual",
+        "operand": "#207",
+        "symbol": "Method java/lang/Float.floatValue:()F"
+      },
+      {
+        "offset": 421,
+        "opcode": "invokeinterface",
+        "operand": "#196,  3",
+        "symbol": "InterfaceMethod com/github/alexmodguy/alexscaves/server/entity/util/EntityDropChanceAccessor.ac_setDropChance:(Lnet/minecraft/world/entity/EquipmentSlot;F)V"
+      },
+      {
+        "offset": 429,
+        "opcode": "goto",
+        "operand": "390",
+        "symbol": ""
+      }
+    ],
+    "exception_table": {
+      "declared_exception_handlers": 0,
+      "entries": []
+    },
+    "post_bonking_region": "@432+ includes independent death event consumers; NOT_ATTRIBUTED_TO_BONKING"
+  },
+  "mixin_declarations": [
+    {
+      "path": "alexscaves.mixins.json",
+      "sha256": "6e120e2d2cf226a25cbe3d0605968a184384194354eac0b1153108f74632c140",
+      "package": "com.github.alexmodguy.alexscaves.mixin",
+      "entries_in": [
+        "mixins"
+      ]
+    }
+  ],
+  "loot_bridge": [
+    {
+      "name": "ac_getEquipmentDropChance",
+      "descriptor": "(Lnet/minecraft/world/entity/EquipmentSlot;)F",
+      "method_sha256": "9c004cd74e9b2aa09c5a1033e467f5dbf48ccd182f66123d839a19778f2b22b7",
+      "instruction_count": 4
+    },
+    {
+      "name": "ac_setDropChance",
+      "descriptor": "(Lnet/minecraft/world/entity/EquipmentSlot;F)V",
+      "method_sha256": "1b5000cb0d36f76808d2563f07a1649e72f7994d84a8b774fd97aea62d75c40b",
+      "instruction_count": 5
+    },
+    {
+      "name": "ac_dropCustomDeathLoot",
+      "descriptor": "(Lnet/minecraft/world/damagesource/DamageSource;IZ)V",
+      "method_sha256": "f020a1c8aee5b8524c287cbb7bdabc4434b5ded87f0d114fd902d58553e70ca2",
+      "instruction_count": 8
+    }
+  ],
+  "limits": {
+    "reconstructed_executed_cfg": "NOT_VERIFIED",
+    "damage_source_acceptance": "NOT_VERIFIED",
+    "live_mixin_application_order": "NOT_VERIFIED",
+    "drop_probabilities_and_loot_tables": "NOT_CERTIFIED",
+    "equipment_drop_chance_exception_safety": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "safe_mutating_hook": "NOT_VERIFIED",
+    "static_certification": "PARTIAL",
+    "mutation": "NO_MUTATION"
+  }
+}
