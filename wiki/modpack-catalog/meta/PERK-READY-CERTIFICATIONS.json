@@ -7979,6 +7979,47 @@
           "reason": "Sonda individual e CI verificam recurso/tag/tradução/exclusão, hashes dos cinco classfiles e nove consumers por offsets e digest de âncoras parent SHA-exato; física, mixins efetivos, PvP e trust não testados."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/arrow-inducting.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutation": "NO_MUTATION",
+      "scope_note": "Arrow Inducting somente no contrato técnico estático publisher 1.0.10: conversão, guardas, busca/movimento, custo do escudo separado da conversão, estado e fronteiras herdadas; não certifica spawn/dano aceitos, código transformado, hook mutador, Mastery, QA física nem universo integral do provider. NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/arrow-inducting.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, JSON arrow_inducting, tag Resistor Shield, traduções, aquisição/exclusividade declaradas e registros ligados a 8 classfiles e 11 recursos selados; fonte 1.1.1 somente corroboração."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/arrow-inducting.md",
+          "reason": "Conversão condicionada no evento de bloqueio: flecha direta, escudo em uso, nível positivo e exclusão de Seeking Arrow; nova entidade usa defensor, copia posição, aplica velocidade −0.4 e yaw+180, tenta spawn sem verificar retorno e descarta original. Wrapper e retorno do helper delimitam cancelamento; não certifica dano evitado nem inserção aceita."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/arrow-inducting.md",
+          "reason": "Nível máximo I, peso 2, custo mínimo 1/máximo 41 e anvil 4; busca min(10,3+tickCount/4), movimento 0.3×vetor anterior+0.7×direção normalizada e mira a 0.65F da altura; registro 0.5×0.5. Dano/fonte/impacto herdados pertencem ao binário de compilação, sem fórmula física final."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/arrow-inducting.md",
+          "reason": "Tick integral e predicado selados: seleção no servidor com sentinela −1, elegível mais próximo sob canHitEntity herdado/ownedBy/aliança; seguimento do ID armazenado sem reaquisição automática demonstrada. Expansão da AABB não é AoE, hitbox nem alcance máximo."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/arrow-inducting.md",
+          "reason": "JSON distingue custo de aquisição/anvil de ativação; conversão, 12 membros comportamentais e inicializador estático da flecha não adicionam débito por conversão, cooldown nem setter de duração. No escudo, onUseTick solicita 1 de desgaste somente no servidor em t==10, com t=getUseDuration−remainingUseTicks; é custo de uso nativo, sem débito por flecha convertida. Bloqueio herdado, aplicação do desgaste e vida/descarte mantêm fronteiras próprias."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/arrow-inducting.md",
+          "reason": "Defensor encaminhado ao construtor; herança de compilação grava ownerUUID/cachedOwner e NBT base, enquanto stopSeeking/ID próprio não têm overrides NBT declarados. Callback pós-hurt apenas fixa stopSeeking; spawn, cancelamento, colisão, dano aceito, PvP/claims, runtime transformado e XP/Mastery não viram hook. NO_MUTATION; provider permanece aberto."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/arrow-inducting.md",
+          "reason": "Sonda/CI individuais verificam o selo da ficha e 11 recursos, 8 classfiles, 49 métodos e 947 âncoras no JAR SHA-exato; quatro manifestos Arrow históricos e a herança do classpath são preservados. Hook NOT_VERIFIED e QA física NOT_TESTED, sem equivalência alegada ao runtime ModLauncher."
+        }
+      }
     }
   },
   "providers": {},

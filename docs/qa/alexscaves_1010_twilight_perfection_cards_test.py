@@ -54,9 +54,21 @@ class Tests(unittest.TestCase):
                        "ACCompat.hurt","UpdateItemTagMessage",
                        "128F","42F","NO_MUTATION","NOT_TESTED","NOT_VERIFIED"):
             self.assertIn(phrase,self.card)
-        self.assertIn("individual_full_enchantment_dossiers=30/51",self.cross)
-        self.assertIn("individual_partial_enchantment_dossiers=21/51",self.cross)
-        self.assertIn("individual_existing_enchantment_dossiers=51/51",self.cross)
+        inventory=json.loads((PROV/"INTEGRATION-SCOPE-INVENTORY-1.0.10.json").read_text(encoding="utf8"))
+        native_ids=set(inventory["remaining_family_inventory"]["enchantment_ids"])
+        present_ids={path.stem.replace("-","_") for path in (PROV/"enchantments").glob("*.md")
+                     if path.name not in ("INDEX.md","README.md")}
+        prefix="✅-alexs-caves-continued/enchantments/"
+        certified_ids={Path(key).stem.replace("-","_") for key in self.ledger["objects"]
+                       if key.startswith(prefix)}
+        self.assertEqual(len(native_ids),51)
+        self.assertTrue(native_ids <= present_ids)
+        self.assertTrue(certified_ids <= native_ids)
+        observed=present_ids & native_ids
+        for field,count in (("full",len(certified_ids)),
+                            ("partial",len(observed-certified_ids)),
+                            ("existing",len(observed))):
+            self.assertIn(f"individual_{field}_enchantment_dossiers={count}/{len(native_ids)}",self.cross)
 
     def test_no_accidental_runtime_certificate(self):
         for phrase in ("provider_universe_closed=false","NO_MUTATION",
