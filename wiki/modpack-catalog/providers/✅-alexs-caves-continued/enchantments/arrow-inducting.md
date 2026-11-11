@@ -1,165 +1,131 @@
-# Arrow Inducting — encantamento do Resistor Shield (1.0.10)
+# Arrow Inducting — `alexscaves:arrow_inducting` (1.0.10)
 
-**Estado:** ⚠️ catalogação técnica **parcial/condicionada**; identidade, JSON publisher e consumidor JVM selecionado conferidos. **Não certificado integralmente para perks.** Sem reprodução física de combate: `physical_qa=NOT_TESTED`; `mutating_hook=NOT_VERIFIED`; `NO_MUTATION`; `NOT_CERTIFIED`.
+**Contrato técnico individual:** ✅ `STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`. A ficha conclui o recurso publisher, a conversão no evento e o comportamento próprio da Seeking Arrow no recorte estático descrito. **Hook mutador:** `NOT_VERIFIED`; **QA física:** `NOT_TESTED`; **integração:** `NO_MUTATION`. A herança da engine tem proveniência de compilação separada; o runtime transformado do modpack continua não verificado. Nenhuma perk executável ou nova raiz de cast resulta desta conclusão.
 
-## 1. Identidade reproduzível
+## 1. Identidade e proveniência
 
-- **Provider / ID:** Alex's Caves Continued / `alexscaves:arrow_inducting`.
-- **Tipo:** encantamento passivo reativo em escudo; **não** é nova raiz de cast, magia ou projétil independente do inventário semântico.
-- **Versão:** Minecraft 1.21.1 / NeoForge / JAR publisher `alexscaves-1.0.10-neoforge+1.21.1.jar`.
-- **JAR:** 75.279.314 bytes; SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`; SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
-- **Recurso:** `data/alexscaves/enchantment/arrow_inducting.json`; SHA-256 `80d52e42318ad732b32ba6118dea8f5b315b8d2d702da32d202ff95246a973e5`.
-- **Prova delimitada:** [manifesto exato e selado](../EXACT-ARROW-INDUCTING-1.0.10.json); [sonda read-only](../../../../../docs/qa/alexscaves_1010_arrow_inducting_probe.py); [workflow](../../../../../.github/workflows/alexscaves-1010-arrow-inducting.yml).
-- **Fonte adjacente:** [Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37](https://github.com/Codx-org/AlexsCavesContinued/tree/523308608422ab8e31974befa7111ecdf495dd37) declara **1.1.1**, logo **não** determina os valores nem a implementação da release 1.0.10. Os parâmetros abaixo vêm do JAR auditado.
+- **Provider / ID:** Alex's Caves Continued / `alexscaves:arrow_inducting`; encantamento passivo reativo do **Resistor Shield** (`alexscaves:resistor_shield`).
+- **Publisher:** `alexscaves-1.0.10-neoforge+1.21.1.jar`, CurseForge projeto `1645389`, arquivo `8856293`, **75.279.314 bytes**. O `META-INF/neoforge.mods.toml` declara `modId=alexscaves`, versão `1.0.10`, Minecraft `[1.21.1]`, NeoForge e dependência obrigatória `codxlib >=1.3.6`.
+- **JAR SHA-1:** `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`; **SHA-256:** `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
+- **Recurso:** `data/alexscaves/enchantment/arrow_inducting.json`, SHA-256 `80d52e42318ad732b32ba6118dea8f5b315b8d2d702da32d202ff95246a973e5`.
+- **Descrição literal em `en_us.json`:** “Resistor Shield transforms any deflected arrows into seeking arrows”. O nome publicado é “Arrow Inducting”; o `pt_br.json` da mesma release não contém nome nem descrição para este ID. A frase do provider resume a intenção; as guardas compiladas abaixo determinam o contrato técnico.
+- **Prova atual:** [manifesto consolidado SHA-exato](../EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.json) e [regressão semântica da ficha](../../../../../docs/qa/alexscaves_1010_arrow_inducting_cards_test.py). Hashes da ficha, recursos e classes, além das âncoras dos métodos, ficam no manifesto.
 
-A descrição literal para jogador não foi validada em arquivo de idioma da release exata. O resumo comportamental adiante é interpretação das chamadas estáticas selecionadas, sem reproduzir a redação do provider.
+A fonte adjacente [Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37](https://github.com/Codx-org/AlexsCavesContinued/tree/523308608422ab8e31974befa7111ecdf495dd37) declara **1.1.1**. Serve de contexto, sem autoridade sobre os valores do publisher **1.0.10** auditado aqui.
 
-## 2. Dados reais do encantamento (JSON 1.0.10)
+## 2. Configuração, aplicação e aquisição
 
-| Campo | Valor publicado | Limite |
+| Campo | Valor publisher 1.0.10 | Significado delimitado |
 |---|---|---|
-| `description.translate` | `enchantment.alexscaves.arrow_inducting` | Chave de tradução, não descrição textual do jogador |
-| `supported_items` | `#alexscaves:enchantable/resistor_shield` | Conteúdo efetivo da tag e alterações por datapack não observados |
-| `weight` | `2` | Peso de configuração de encantamento; não chance observada |
-| `max_level` | `1` | Limite declarado no recurso publisher |
-| `min_cost` | `base=1`, `per_level_above_first=18` | Valores do recurso, sem assumir mecânica externa de aquisição |
-| `max_cost` | `base=41`, `per_level_above_first=10` | Idem |
-| `anvil_cost` | `4` | Valor do JSON, não consumo de mana nem durabilidade |
-| `slots` | `mainhand`, `offhand` | Referência de slot do encantamento; equipagem efetiva depende do jogo/pack |
+| `description.translate` | `enchantment.alexscaves.arrow_inducting` | Chave de tradução |
+| `supported_items` | `#alexscaves:enchantable/resistor_shield` | Tag empacotada contém somente `alexscaves:resistor_shield` |
+| `weight` | `2` | Peso de configuração, sem probabilidade observada |
+| `max_level` | `1` | Nível nativo I; o leitor Java não aplica clamp local |
+| `min_cost` | `base=1`, `per_level_above_first=18` | Para I: 1 |
+| `max_cost` | `base=41`, `per_level_above_first=10` | Para I: 41 |
+| `anvil_cost` | `4` | Campo de encantamento, sem relação com mana ou dano |
+| `slots` | `mainhand`, `offhand` | Slots declarados; o evento lê a stack efetivamente usada |
 
-A auditoria **não** conferiu tiers de loot, disponibilidade em Survival, relações de exclusividade vindas de outros tags, nem restrições reais dos datapacks carregados.
+O JSON não declara `effects` nem `exclusive_set`; a conversão está no consumidor Java. A varredura dos recursos nativos não encontrou exclusão de Arrow Inducting em outro `exclusive_set`; as únicas tags nativas de encantamento empacotadas são as quatro de aquisição abaixo. Isso fecha as **exclusões declaradas neste publisher**, sem garantir compatibilidade com datapacks ou outros mods.
 
-## 3. Ingresso e condições de aplicação — consumidor compilado
+O ID está explicitamente nas tags `minecraft:in_enchanting_table`, `minecraft:non_treasure`, `minecraft:on_random_loot` e `minecraft:tradeable`. São declarações de disponibilidade; resolução final das tags e chances reais de mesa, loot e trade dependem do jogo e dos datapacks ativos. A tag de item tem SHA-256 `2b5d57ffc709293f994b472c07cd44ed34647efec41106b819621c060366f3e0`; as quatro tags de aquisição compartilham SHA-256 `6472c976d755f1481506f3f113368081aa487eaff3ce977a1f7c93a400f39bb1`.
 
-**Owner:** `com/github/alexmodguy/alexscaves/server/event/CommonEvents.class`, SHA-256 `d132caad67ecab68844091ee396d37fecc4860440d338dcd82384f1555f8ad43`.
+A receita shaped do escudo é `SSS` / ` H ` / `AAA`: três `scarlet_neodymium_ingot`, um `heart_of_iron` e três `azure_neodymium_ingot`; o resultado é `alexscaves:resistor_shield`, com `count` omitido no JSON. O item declara stack máxima **1**, durabilidade **1000**, raridade **UNCOMMON**, `getEnchantmentValue=1` e `isEnchantable(stack)` somente quando `stack.count==1`. A raridade é do item; o encantamento conserva o peso numérico 2.
 
-**Método selecionado:** `acLivingAttack(Lnet/neoforged/neoforge/event/entity/living/LivingIncomingDamageEvent;)Z`, digest do parse `3b6a9d9699a101ff2c4aa61dc08308857a1480fdd11f711c5ce04e2638244368`, **91 instruções**.
+## 3. Ingresso completo e substituição da flecha
 
-Na região compilada observada, o fluxo consulta o `DamageSource.getDirectEntity`, o `LivingEntity.isBlocking`, o `LivingEntity.getUseItem` e a igualdade do item com `ACItemRegistry.RESISTOR_SHIELD`. Em seguida:
+**Classe:** `server/event/CommonEvents.class`, SHA-256 `d132caad67ecab68844091ee396d37fecc4860440d338dcd82384f1555f8ad43`. O helper completo `acLivingAttack(LivingIncomingDamageEvent)Z` tem **91 instruções**, digest `3b6a9d9699a101ff2c4aa61dc08308857a1480fdd11f711c5ce04e2638244368`. Seu caller `livingAttack` tem **8 instruções** e só chama `event.setCanceled(true) @10` se o helper retornar true.
 
-1. Lê `ACEnchantmentRegistry.ARROW_INDUCTING @63` e chama `ACCompat.enchantLevel @66`. O ramo `ifle @69 → 158` desvia se o nível não for positivo.
-2. Compara o tipo do projétil com `ACEntityRegistry.SEEKING_ARROW @76`. O ramo `if_acmpeq @84 → 158` evita converter a própria flecha buscadora nessa região.
-3. Instancia `SeekingArrowEntity @87–102`, passando a entidade defensora como argumento ao construtor `(Level,LivingEntity)`; copia a posição da flecha original em `@110`.
-4. Lê a velocidade original, aplica `Vec3.scale(-0.4D) @119–125`; lê `YRot` e acrescenta `180F @131–138`.
-5. Chama `Level.addFreshEntity @150`, **descarta o booleano de retorno em `@153`** e chama `AbstractArrow.discard @155`. Não há, nesse segmento, confirmação de sucesso do novo spawn antes do descarte do projétil anterior.
+As cinco guardas da região de Arrow convergem para `@158` quando falham:
 
-**Limites do fluxo:** a sonda reconhece janelas JVM selecionadas e símbolos, não reconstitui todas as arestas do grafo de controle ou os handlers terceiros do evento. Não afirmar cancelamento de dano ao defensor, autenticação do evento, sucesso do spawn, reversão de autoria de todos os tipos de flecha, preservação de NBT/enchantments do projétil anterior ou execução apenas no servidor a partir desses offsets.
+1. `event.getSource().getDirectEntity()` precisa ser uma **`AbstractArrow`** (`instanceof @9`, desvio `@12`). Outros projéteis não entram por essa guarda.
+2. A entidade defensora precisa estar bloqueando (`isBlocking @24`, desvio `@27`).
+3. Sua stack de uso precisa ser exatamente **`ACItemRegistry.RESISTOR_SHIELD`** (`getUseItem @34`, `ItemStack.is @48`, desvio `@51`). Estar apenas equipado em um slot não satisfaz essa leitura.
+4. `ACCompat.enchantLevel(stack, ARROW_INDUCTING) @66` precisa ser **positivo** (`ifle @69`). O helper devolve o primeiro valor armazenado cujo Holder corresponde à ResourceKey, ou zero; não limita a leitura a `max_level=1`. Um nível positivo não nativo passa pela mesma conversão, sem escala adicional por nível nesse ramo.
+5. O tipo da flecha original precisa ser diferente de **`ACEntityRegistry.SEEKING_ARROW`** (`if_acmpeq @84`). Essa exclusão evita reconverter o próprio tipo nativo; não é um cooldown por jogador.
 
-## 4. Seleção de alvo e movimento posterior
+`isBlocking` é o flag consultado: o helper não testa direção do escudo, deflexão efetivamente aceita, piercing ou bypass de escudo. A descrição de “deflected arrows” não acrescenta essas guardas ao binário.
 
-**Owner:** `server/entity/item/SeekingArrowEntity.class`, SHA-256 `1102754436829c3dcadb1450d6ab15efb354a3f4e58a2a262a78c5013d7f0e25`.
+Se todas passam, o helper cria **uma nova** `SeekingArrowEntity(Level,LivingEntity)` com o **defensor** como entidade viva (`@92–102`); copia a posição da flecha original (`@110`); aplica `velocidadeOriginal × -0.4D` (`@119–125`) e `YRotOriginal + 180F` (`@134–138`). Em seguida solicita `Level.addFreshEntity @150`, **descarta seu booleano em `@153`** e chama `original.discard @155`. O descarte não é condicionado ao sucesso do spawn. Essa sequência não copia NBT, efeitos, dano, piercing, item ou encantamentos da flecha original; o projétil novo segue seus construtores nativos.
 
-**Método:** `tick()V`, digest do parse `eb936d76c3fbdcf1be042312dd7dba664af91244529443c7806aa6a4a2c7e152`, **185 instruções**.
+**Cancelamento delimitado:** a região Arrow não chama `setCanceled`, não retorna true e não garante negar o hit no defensor. Ela continua no trecho `@158–211`; o único resultado true do helper pertence ao ramo posterior cuja entidade direta é uma **`LivingEntity` com `STUNNED`** (`hasEffect @200`, `@203`, true em `@206`). Esse ramo distinto pode levar o caller ao cancelamento. Não transferir esse true à conversão Arrow nem concluir o resultado global do dano a partir do descarte da flecha. Não há guarda própria de lado lógico na conversão; execução e autoridade efetivas do evento dependem da engine e dos handlers carregados.
 
-- O trecho `@45–59` compila `min(10, 3 + tickCount / 4)` e `@73` o passa a `AABB.inflate` para busca de entidades (`Level.getEntities @82`). É **expansão da caixa de busca**, não hitbox do projétil, dano em área nem alcance máximo do disparo.
-- Existem consultas de `getOwner @41`, `ownedBy @136`, `Entity.isAlliedTo @149` e `Entity.distanceTo @121/@126`. A lista completa de exclusões, a seleção em todos os caminhos e os overrides de terceiros **não** foram certificados.
-- A região `getEntity(id) @199`/geometria `@208–237` precede `setDeltaMovement @269`. O trecho compilado `@247–269` aplica escala de aproximadamente `0.3` à velocidade atual e `0.7` à direção normalizada do alvo, somando os vetores sob condições não integralmente reconstituídas.
-- `setArcTowardsID @188` indica armazenamento do ID do alvo. Não foi certificado o comportamento de sincronização/serialização após desconexão, save/load ou reatribuição do ID a outro objeto.
-- Partículas e outros visuais (`addParticle @391`) não demonstram colisão, dano ou atribuição de kill.
+## 4. Busca, alvo e trajetória próprios
 
-**Não auditados:** dano solicitado/aceito no impacto, intervalo e número de hits, lifetime total, persistência de `stopSeeking`, retenção da autoria, PvP/claims, proteção por chunks, limites de carga, canHitEntity/colisão efetivos e implicações de mixins ModLauncher.
+**Classe:** `server/entity/item/SeekingArrowEntity.class`, SHA-256 `1102754436829c3dcadb1450d6ab15efb354a3f4e58a2a262a78c5013d7f0e25`. `tick()V` completo: **185 instruções**, digest `eb936d76c3fbdcf1be042312dd7dba664af91244529443c7806aa6a4a2c7e152`.
 
-## 5. Eixos de perks e decisões de integração
+O método chama primeiro `AbstractArrow.tick @1`. Só depois lê o ID de alvo e considera a busca própria; `inGround` (`@10–13`) ou `stopSeeking` (`@17–20`) desviam essa etapa para `@272`. Portanto o flag desliga o steering próprio, sem interromper a física herdada do tick.
 
-| Eixo | Evidência estática útil | Limite para alteração |
+| Caminho | Contrato completo do método próprio |
+|---|---|
+| **Aquisição: ID `-1`** | Executa somente quando `!level.isClientSide()` (`@29–35`). Consulta entidades na AABB da flecha expandida em `r = min(10, 3 + tickCount / 4)` (`@45–82`), com divisão inteira. O predicado `lambda$tick$0` delega a `canHitEntity` herdado; não é uma lista incondicional de LivingEntities. |
+| **Escolha** | Conserva o candidato elegível estritamente mais próximo (`distanceTo @121/@126`, `ifge @130`). Rejeita `ownedBy(candidato) @136` e, quando há owner, `candidato.isAlliedTo(owner) @149`. Distâncias iguais conservam o primeiro elegível da lista. O candidato é uma `Entity`; não há exigência própria de LivingEntity ou hostilidade, seleção obrigatória do atirador original, busca de menor HP ou filtro próprio adicional de LOS nesse laço. |
+| **Lock** | Se houve candidato, pede `SEEKING_ARROW_LOCKON` com volume **5F** e pitch **1F** (`@166–180`) e grava seu ID (`setArcTowardsID @188`). O salto `@191 → 272` faz a aquisição terminar **sem steering no mesmo tick**. Se não houve candidato, o ID permanece `-1` e outra aquisição pode ocorrer no tick seguinte. |
+| **Seguimento: ID diferente de `-1`** | Resolve `level.getEntity(id) @199`. Esse ramo não repete a guarda de servidor, `canHitEntity`, `ownedBy` ou aliança. Se a resolução for null (`@204 → 272`), não limpa o ID e não readquire outro alvo; ticks seguintes continuam usando o ID armazenado. |
+| **Geometria e movimento** | Mira em `alvo.position + (0, 0.65F × alvo.getBbHeight(), 0)` (`@208–228`). Só faz steering quando o comprimento desse deslocamento é **maior que a largura do alvo** (`@233–242`). Aplica `vNova = vAtual × 0.30000001192092896D + normalize(deslocamento) × 0.699999988079071D` (`@247–269`), sem normalizar novamente a soma. Não é velocidade constante garantida, teleporte, alcance máximo ou raio de dano. |
+
+A expansão `r` vale 3 antes de `tickCount=4`, cresce em passos de quatro ticks e satura em 10 a partir de `tickCount=28` no valor lido pelo método. Ela expande a **caixa de busca atual**; não fixa a distância total de voo nem cria AoE. A consulta herdada de colisão continua distinta do armazenamento e seguimento de um alvo.
+
+Após a etapa de busca, o trecho cliente exige `isClientSide && !inGround` (`@276–286`) e pede partículas `SCARLET_SHIELD_LIGHTNING @391`. Partículas e som não demonstram hit, dano elétrico ou aceitação de spawn.
+
+## 5. Ciclo de vida, dimensões, recursos e persistência
+
+O manifesto atual sela os **12 membros comportamentais declarados** que já compunham o roster histórico e o **inicializador estático `<clinit>()V` de 5 instruções** que define o accessor de sincronização. A cobertura própria não depende só da presença de nomes:
+
+| Membro próprio | Corpo / consequência estática |
+|---|---|
+| Construtor `(EntityType,Level)` — 5 instruções | Delega ao construtor base de `AbstractArrow`; usado pela factory registrada. |
+| Construtor `(Level,DDD)` — 17 | Usa o tipo e a stack `SEEKING_ARROW`; a assinatura não recebe LivingEntity nem fornece owner por esse parâmetro. |
+| Construtor `(Level,LivingEntity)` — 15 | Usado pela conversão; passa o defensor, tipo e stack `SEEKING_ARROW` para `AbstractArrow`. Não copia o projétil anterior. |
+| `defineSynchedData` — 10 | Chama a base e define `ARC_TOWARDS_ENTITY_ID` com sentinela **`-1`**. |
+| `getArcTowardsID` / `setArcTowardsID` — 7 / 7 | Leem/escrevem o inteiro por `SynchedEntityData.get/set`; não são serialização NBT. |
+| `tick` / `lambda$tick$0` — 185 / 4 | Fluxos completos de aquisição/seguimento acima; lambda delega à elegibilidade herdada. |
+| `doPostHurtEffects(LivingEntity)` — 4 | Só grava **`stopSeeking=true`**. Não chama super, `hurt`, efeito de status ou descarte; a chamada pelo impacto é herdada e condicionada. |
+| `getAddEntityPacket` — 4 | Delega a `ACPlatform.getEntitySpawningPacket(entity,serverEntity)`; não comprova autenticação ou entrega física da rede. |
+| `getDefaultHitGroundSoundEvent` / `getDefaultPickupItem` — 4 / 7 | Retornam `SEEKING_ARROW_HIT` e nova stack `SEEKING_ARROW`; isso não garante pickup/drop ou hit aceito. |
+
+A binding de `ACEntityRegistry.SEEKING_ARROW` resolve `lambda$static$11`: categoria **MISC**, dimensões registradas **`0.5F × 0.5F`**, intervalo de atualização **1** e `setShouldReceiveVelocityUpdates(true)`. Sua factory aponta ao construtor `(EntityType,Level)`. São dimensões e parâmetros de rede nativos; o encantamento não possui multiplicador próprio de tamanho, dano em área ou escala visual, e a hitbox efetiva após transformações não foi testada.
+
+**Custo de uso:** a região de conversão e os corpos próprios da flecha não debitam mana, stamina, Soul Energy, munição adicional, durabilidade extra por conversão nem cooldown próprio. Isso não torna o bloqueio gratuito: o Resistor Shield tem durabilidade e o jogo pode cobrar o bloqueio. O uso nativo do item chama `startUsingItem(hand)`; quando agachado troca a polaridade, solicita som e retorna `ACCompat.useConsume`, que é `InteractionResultHolder.consume` **sem shrink da stack**. O ramo próprio de uso do escudo solicita **1** de durabilidade em `t==10 && !level.isClientSide()`, com `t=getUseDuration(stack,null)-remainingUseTicks`; esse custo pertence ao uso do escudo, sem contador de flechas convertidas. Criativo, Unbreaking, quebra efetiva e custos herdados do bloqueio não estão liquidados por esta prova.
+
+A prova desse custo usa a região delimitada `ResistorShieldItem.onUseTick @584–601`; o método tem **276 instruções** e não é declarado integralmente coberto nesta ficha. Essa janela de contexto não substitui a prova completa do ramo de conversão e dos membros próprios da flecha.
+
+Não há método próprio de lifetime, `onHitEntity`, `onHitBlock`, `addAdditionalSaveData` ou `readAdditionalSaveData`, nem reset próprio do ID de alvo. O provider não serializa `stopSeeking` e `ARC_TOWARDS_ENTITY_ID` por esses overrides; sincronização de entidade não demonstra persistência em NBT. A física, colisão, despawn e parte da persistência são herdados. Ausência de override não significa duração infinita ou ausência de dano.
+
+O item também não declara override de duração de uso ou animação/ação de bloqueio. Esses comportamentos de `ShieldItem` são herdados e ficam fora da prova de metadados do publisher; o valor `t` acima não fixa a duração total da Seeking Arrow.
+
+## 6. Herança: evidência de compilação separada do publisher
+
+A cadeia abaixo vem do [manifesto herdado já reproduzido](../EXACT-ARROW-INDUCTING-INHERITED-ENGINE-1.0.10.json) e da [sonda de proveniência da engine](../../../../../docs/qa/alexscaves_1010_arrow_inherited_engine_probe.py): classpath **efetivo de compilação** de Minecraft **1.21.1**, NeoForge **21.1.248**, ModDevGradle **2.0.144**. O JAR de engine selecionado tem **22.702.897 bytes**, SHA-256 `fd58bb47e9ebbeefaa42871888e113b0bd1e643babc6877a237b6c8713a7a1c4`; classes `AbstractArrow=2cc85f8cb1bacba5c59c462c636f7bfad754db859253b75900a55f9888acccef` e `Projectile=42e5b3a088bd4446abab0fe8cd2e61368095fe664aa38d6b256ab0424625326d`.
+
+Variantes do cache `rename`, `binaryPatch`, `copyUnpatchedClasses`, `binaryWithNeoForge` e `applyDevTransforms` têm classfiles diferentes. A seleção acima corresponde ao compilador; **não é o código final transformado por ModLauncher/mixins do pack instalado**. Os hashes do provider não transferem sua autoridade SHA-exata ao runtime da engine.
+
+| Eixo herdado | Evidência delimitada no binário de compilação |
+|---|---|
+| **Dano / tipo** | O construtor base inicia `baseDamage=2.0D`. `Projectile.onHit` despacha hits de entidade/bloco e contém deflexão; `AbstractArrow.onHitEntity` tem 323 instruções no manifesto de compilação, solicita fonte por `DamageSources.arrow @47`, passa por `EnchantmentHelper.modifyDamage @92`, chama `Entity.hurt @298` e trata o booleano em `@301`. **2.0D é o estado inicial da base**, sem promessa de dano pedido, dano aceito, HP final ou número de hits da Seeking Arrow. |
+| **Pós-hit** | A chamada virtual `doPostHurtEffects @397` fica depois da checagem de retorno do `hurt` e de outros guardas. Quando alcança o override do provider, fixa `stopSeeking=true`; não afirmar que toda colisão executa o callback. |
+| **Autoria** | `SeekingArrow(Level,LivingEntity)` delega ao construtor de `AbstractArrow` que chama `setOwner @28`; `Projectile.setOwner` grava `ownerUUID @9` e `cachedOwner @14`. Assim o defensor é encaminhado à autoria inicial por essa cadeia de compilação. `getOwner` pode resolver o UUID em `ServerLevel.getEntity(UUID) @52`; isso não garante crédito de kill, XP ou Mastery. |
+| **Persistência** | A base grava/lê `Owner`, `LeftOwner`, `HasBeenShot`; `AbstractArrow` acrescenta campos como `life`, `inGround`, `damage`, `pickup`, `crit`, `PierceLevel`, `item` e `weapon`. É uma rota herdada de persistência, sem garantia de resolução de owner ausente, unload, cross-dimension, ID reutilizado ou save/reload do pack transformado. |
+| **Colisão / elegibilidade** | `AbstractArrow.canHitEntity` delega a `Projectile.canHitEntity`, com filtros adicionais da base. Essa rota alimenta o predicado de aquisição, mas a perseguição de um ID já gravado não refaz os filtros no método próprio. Proteção PvP, claims, eventos terceiros e aceitação real permanecem fronteiras externas. |
+
+## 7. Sete eixos do contrato e fronteiras de perks
+
+| Eixo | Contrato estático consolidado | Fronteira de integração |
 |---|---|---|
-| **Targeting** | Expansão da AABB, consulta de owner/aliados e `setArcTowardsID` | ⛔ **Sem hook seguro confirmado** para mudar filtro/alvo antes da escolha nativa |
-| **Range / área** | `min(10,3+tickCount/4)` para busca, não dano em área | ⛔ Não reinterpretar como raio de ataque nem alterar range por perk |
-| **Velocidade/direção** | Inversão inicial `-0.4D`; ajuste posterior `0.3/0.7` | ⛔ Sem ponto mutador pré-settlement por jogador validado |
-| **Projétil/tamanho** | Nova entidade `SeekingArrowEntity` gerada | ⛔ Escala visual, hitbox e colisão não certificados; sem redimensionamento |
-| **Dano/tipo** | Encantamento reage ao evento; dano do novo projétil não auditado | ⛔ Não duplicar `hurt`, alterar `DamageSource` ou inventar dano |
-| **Duração/recursos** | Janela condicionada por evento; JSON tem custo de encantamento | ⛔ Sem prova de cooldown, gasto, lifetime ou transação por ativação |
-| **Autoria, proteção e procs** | Defensor passado no construtor; consultas de owner/aliados na busca | ⛔ Não atribuir proc/XP/Mastery de volta ao usuário sem cadeia nativa e testes |
+| **1. Targeting** | Conversão de `AbstractArrow` com cinco guardas; aquisição do elegível mais próximo, exclusão do owner e de candidato aliado ao owner; seguimento por ID sem rechecagem | Não tratar alvo armazenado como permissão contínua, origem do disparo ou settlement de proc |
+| **2. Range / área** | AABB atual expandida em `min(10,3+tickCount/4)` para aquisição; nenhum AoE próprio | Caixa de busca não autoriza perk de alcance total, dano radial ou hit garantido |
+| **3. Velocidade / direção** | Inversão inicial `-0.4D`, YRot `+180F`; steering `0.30000001192092896D / 0.699999988079071D`, geometria de altura/largura; não normaliza a soma | Alterar vetor exige boundary própria e autoridade; não duplicar tick nem assumir velocidade constante |
+| **4. Projétil / tamanho** | Uma nova Seeking Arrow, registro `0.5F × 0.5F`, update 1; spawn sem checagem seguido do descarte original | Sem autorização para mudar hitbox, escala, quantidade ou preservar automaticamente payload da flecha original |
+| **5. Dano / tipo** | Provider não define dano próprio no override pós-hit; herança compilada oferece pipeline de flecha e `baseDamage` inicial 2.0D | Não criar DamageType elétrico/mágico, duplicar `hurt` ou promover baseDamage a HP final |
+| **6. Duração / recursos** | Sem lifetime/cooldown/custo adicional próprios por conversão; `stopSeeking` desliga somente busca; durabilidade e tempo de uso pertencem ao escudo/base | Não usar custo de mesa/bigorna como recurso de cast nem tomar silêncio do provider por gratuidade do bloqueio |
+| **7. Autoria / proteção / procs** | Defensor entra no construtor; owner/persistência base têm prova de compilação; ID ausente fica armazenado sem retarget | Crédito de kill/XP/Mastery, deduplicação, PvP/claims e reload requerem verificação específica; nenhum proc presumido |
 
-Não há autorização para adaptar `LivingIncomingDamageEvent` com interceptação mutadora apenas porque o método foi localizado; verificar fase lógica, precedência de handlers, cancelamento, progressão, identidade e prevenção de duplo processamento. O RPG Skill Tree continua responsável por perks/Mastery, e o Black Arcana não assume o cálculo nativo deste encantamento.
+O RPG Skill Tree conserva a responsabilidade por perks/Mastery e o Black Arcana preserva o processamento nativo. Callback, descriptor JVM, setter de campo ou tag não constituem hook mutador seguro. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`: esta ficha documenta o comportamento e não implementa adapter, perk, dano adicional ou mudança de Stage.
 
-## 6. Auditoria adicional — roster nativo SHA-exato de ciclo de vida (2026-11-10)
+## 8. Provas, histórico e conclusão delimitada
 
-A inspeção read-only do JAR físico **1.0.10** ampliou a cobertura de `SeekingArrowEntity.class` de `tick()` para **todos os 12 métodos declarados** (incluindo três construtores), mantendo o consumidor `CommonEvents.acLivingAttack` com digest e offsets já fixados. O [manifesto de roster](../EXACT-ARROW-INDUCTING-LIFECYCLE-ROSTER-1.0.10.json) é gerado das provas publicadas no workflow e verificado novamente pela [sonda de ciclo de vida](../../../../../docs/qa/alexscaves_1010_arrow_inducting_lifecycle_probe.py). A auditoria original continua independente.
+A [prova consolidada atual](../EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.json) fecha o contrato estático individual com recursos, corpos nativos completos do caller de evento **8**, helper **91**, `tick` **185**, demais membros próprios da flecha, inicializador estático e helpers selecionados, além de bindings de registro e da janela delimitada de custo do escudo. A [regressão semântica](../../../../../docs/qa/alexscaves_1010_arrow_inducting_cards_test.py) protege guardas, retorno/cancelamento, spawn sem confirmação, aquisição/seguimento, geometria, custo e limites de herança. As verificações comparam o publisher SHA-exato e os selos; não são uma sessão física de Minecraft.
 
-| Categoria observada | Membros declarados verificados na classe 1.0.10 | Limite |
-|---|---|---|
-| Construção e autoria inicial | `SeekingArrowEntity(EntityType,Level)` (5 instruções), `SeekingArrowEntity(Level,double,double,double)` (17) e `SeekingArrowEntity(Level,LivingEntity)` (15) | O construtor usado pelo evento é o terceiro; a chamada herdada a `setOwner` foi verificada no binário de compilação (seção 8), mas o runtime transformado e as regras de crédito continuam pendentes |
-| Targeting e movimento | `tick()` (185), `lambda$tick$0(SeekingArrowEntity,Entity)` (4), `getArcTowardsID()` (7), `setArcTowardsID(int)` (7) | O predicado e o setter possuem provas de presença; seleção efetiva, sincronização e retarget completo exigem CFG e testes |
-| Rede / estado sincronizado | `defineSynchedData(Builder)` (10), `getAddEntityPacket(ServerEntity)` (4) | Somente membros declarados e fingerprints; conteúdo de pacote, autoridade e save/load reais **não estão certificados** |
-| Impacto | `doPostHurtEffects(LivingEntity)` (4), `getDefaultHitGroundSoundEvent()` (4), `getDefaultPickupItem()` (7) | O método pós-hit existe, mas hit aceito, dano/tipo e consequências não foram certificados |
+A trilha anterior permanece disponível como evidência histórica, com os limites de cada etapa: [identidade e primeiras janelas](../EXACT-ARROW-INDUCTING-1.0.10.json) / [sonda original](../../../../../docs/qa/alexscaves_1010_arrow_inducting_probe.py), [roster de ciclo de vida](../EXACT-ARROW-INDUCTING-LIFECYCLE-ROSTER-1.0.10.json) / [sonda de roster](../../../../../docs/qa/alexscaves_1010_arrow_inducting_lifecycle_probe.py), [âncoras causais](../EXACT-ARROW-INDUCTING-CAUSAL-FLOW-1.0.10.json) / [sonda causal](../../../../../docs/qa/alexscaves_1010_arrow_causal_flow_probe.py) e [herança de compilação](../EXACT-ARROW-INDUCTING-INHERITED-ENGINE-1.0.10.json). As antigas lacunas de tradução, conteúdo da tag, seleção completa e callback próprio estão resolvidas acima; o grau parcial dessas etapas não é o estado atual desta ficha.
 
-**Ausência delimitada na classe:** nenhum método **declarado** denominado `onHitEntity`, `onHitBlock`, `addAdditionalSaveData` ou `readAdditionalSaveData` consta do roster compilado de 12 membros. Isso **não prova ausência desses comportamentos** no runtime: callbacks de impacto e serialização herdados de `AbstractArrow`, mixins, dados sincronizados e outros consumers continuam fora desta inspeção.
-
-O contrato antigo conserva `Level.addFreshEntity` seguido de descarte da flecha inicial, mesmo sem checagem do retorno do spawn; a prova nova **não** altera essa conclusão. Nenhum método registrado no roster autoriza por si só um hook mutador, uma mudança de dano, um credit de XP/Mastery ou a conclusão da ficha.
-
-**Estado:** ⚠️ `NOT_CERTIFIED` para o contrato individual completo. **Prova da expansão da auditoria:** 1 consumidor de evento + 12 membros declarados de projétil fixados por hashes do JAR; 7 testes sintéticos novos executados na auditoria inicial; sem QA física. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Pendências seguintes: dissecar execução dos construtores e `doPostHurtEffects`; reconstruir CFG de `tick` e predicate; validar persistência, filtros, spoofing e sucesso de dano/spawn.
-
-## 7. Auditoria causal aprofundada — guardas, autoria e estado do projétil (2026-11-10)
-
-**Fonte estática exata:** [manifesto de referências, desvios e constantes do JAR 1.0.10](../EXACT-ARROW-INDUCTING-CAUSAL-FLOW-1.0.10.json), reproduzido pela [sonda read-only](../../../../../docs/qa/alexscaves_1010_arrow_causal_flow_probe.py). O manifesto guarda, para **1 método do evento e os 12 métodos declarados da flecha**, descriptor, digest do método, referências simbólicas com offsets, saltos com destinos JVM e operandos numéricos. Complementa o roster anterior, sem alegar recuperação de toda a CFG, corpos herdados ou resultado físico.
-
-### 7.1. Gates de conversão no evento
-
-Em `CommonEvents.acLivingAttack(LivingIncomingDamageEvent)Z`, **cinco guardas convergem para o offset `@158`**: `ifeq @12`, `ifeq @27`, `ifeq @51`, `ifle @69` e `if_acmpeq @84`. As chamadas adjacentes atestam a origem `DamageSource.getDirectEntity @4`, o teste `LivingEntity.isBlocking @24`, o item efetivamente usado `getUseItem @34/@58`, o nível do encantamento via `ACCompat.enchantLevel @66` e a exclusão do tipo nativo `SEEKING_ARROW @76–84`. Os desvios **não** autorizam declarar o resultado final do evento de dano, o cancelamento efetivo do hit, o comportamento de outros handlers ou o lado lógico do evento como um todo.
-
-Na região de substituição, a classe instancia `SeekingArrowEntity(Level,LivingEntity)` a partir do **defensor** (`@92–102`), reaproveita posição `@110`, aplica fator `-0.4D` à velocidade `@119–125`, soma `180F` à rotação `@134–138`, chama `addFreshEntity @150` e descarta o projétil original `@155`. O booleano do spawn segue descartado em `@153`; trata-se de risco de substituição **sem confirmação de criação**, não prova de que todo spawn falhe ou de que o dano tenha sido negado.
-
-### 7.2. Autoria: sequência de construtores
-
-O construtor exato `SeekingArrowEntity(Level,LivingEntity)` possui **15 instruções** e delega em `@33` a `AbstractArrow.<init>(EntityType,LivingEntity,Level,ItemStack,ItemStack)`, passando `ACEntityRegistry.SEEKING_ARROW` e `ACItemRegistry.SEEKING_ARROW` como referências do objeto nativo. A chamada do evento fornece o defensor como `LivingEntity`. **Conclusão delimitada:** a autoria inicial é encaminhada pela rota do construtor de `AbstractArrow` com uma entidade viva, e o setter interno foi agora identificado em `Projectile` no **binário de compilação**, incluindo `ownerUUID` e `cachedOwner` (seção 8); a persistência efetiva no runtime transformado, o crédito de kill/XP/Mastery e a QA física **não foram auditados**.
-
-O overload `SeekingArrowEntity(Level,DDD)` (17 instruções) delega a `AbstractArrow.<init>(EntityType,DDD,Level,ItemStack,ItemStack)` em `@37`, **sem parâmetro LivingEntity** nessa assinatura. Não presumir equivalência automática de owner entre construtores nem atribuir proc de perk com base apenas em `getOwner`.
-
-### 7.3. Targeting, sincronização e fim da busca
-
-- `defineSynchedData(Builder)` (10 instruções) chama a implementação herdada em `@2` e registra `ARC_TOWARDS_ENTITY_ID` por `Builder.define @13`, com **sentinela inteira `-1` em `@9`**. `getArcTowardsID()` usa `SynchedEntityData.get @7`; `setArcTowardsID(int)` usa `SynchedEntityData.set @11`. Isto comprova **dado de entidade sincronizado**, **não** persistência em NBT ou estabilidade do ID entre mundos/restarts.
-- `tick()` testa `inGround @10` com desvio `@13 → 272` e `stopSeeking @17` com `@20 → 272`. O teste `Level.isClientSide @32` precede `@35 → 272`, delimitando o caminho de seleção observado; há outro `isClientSide @276`, ligado a segmento posterior da rotina. Não inferir que toda a entidade só executa no servidor.
-- `doPostHurtEffects(LivingEntity)` (4 instruções) grava **`stopSeeking=true`** por `iconst_1 @1` / `putfield @2`. O ramo do `tick @20` permite relacionar esse flag ao desvio da etapa de busca **quando o callback pós-hit é efetivamente chamado**. O método declarado **não contém chamada própria de `hurt`**, efeito de status nem fórmula de dano. O impacto e dano herdados de `AbstractArrow` permanecem **não certificados**.
-- `tick @82` consulta candidatos por `Level.getEntities`; `ownedBy @136` e `Entity.isAlliedTo @149` são chamadas compiladas no recorte; `setArcTowardsID @188` registra um ID, e `Level.getEntity(int) @199` resolve a referência durante o seguimento. Sua duração válida, filtros de entidades injetados, colisão e reatribuição do ID após reload ainda exigem análise causal completa.
-- Na perseguição, `setDeltaMovement @269` recebe a combinação vetorial com as constantes `0.3000000119D` e `0.6999999881D` (offsets `@250/@260`), conforme as chamadas adjacentes do método. Essa interpolação **não representa** dano, radius de AoE ou multiplicador de tamanho. O recorte inclui `5.0F @177`, `0.65F @212` e `0.5F @315/@328/@341`, mas **não** os promove a parâmetros de perk sem associação integral de operandos e caminhos.
-
-### 7.4. Elementos auxiliares e limites
-
-`getDefaultPickupItem()` referencia `ACItemRegistry.SEEKING_ARROW @4`, e `getDefaultHitGroundSoundEvent()` referencia `ACSoundRegistry.SEEKING_ARROW_HIT @0`. São recursos nativos associados a pickup/som, **não comprovação** de drop, hit/dano aceito ou recuperação física da flecha. A classe continua sem overrides **declarados** de `onHitEntity`, `onHitBlock`, `addAdditionalSaveData` ou `readAdditionalSaveData`; não excluir callbacks herdados, componentes base ou transformações por mixin.
-
-**Fronteira de perks:** não alterar alvo, owner, `ARC_TOWARDS_ENTITY_ID`, `stopSeeking`, velocidade, lifetime, colisão, impacto ou Mastery por simples manipulação do campo. Exigir hook estável pré-efeito, autorização do servidor, prevenção de dupla atribuição, prova de persistência e QA física. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. **A nova evidência aprofunda a ficha ⚠️ parcial; não incrementa contratos estáticos certificados, providers nem raízes de cast.**
-
-## 8. Contrato de herança — `AbstractArrow` / `Projectile` no artefato de compilação (2026-11-10)
-
-**Escopo e autoridade:** [manifesto de bytecode herdado](../EXACT-ARROW-INDUCTING-INHERITED-ENGINE-1.0.10.json) e [sonda de proveniência](../../../../../docs/qa/alexscaves_1010_arrow_inherited_engine_probe.py), executados na CI sobre o **classpath efetivo de compilação** de Minecraft `1.21.1`, NeoForge `21.1.248` e ModDevGradle `2.0.144`, em paralelo à validação SHA-exata do JAR publisher Alex's Caves Continued `1.0.10`. O arquivo do motor escolhido possui SHA-256 `fd58bb47e9ebbeefaa42871888e113b0bd1e643babc6877a237b6c8713a7a1c4`, tamanho `22.702.897` bytes. Os classfiles mapeados têm hashes `AbstractArrow=2cc85f8cb1bacba5c59c462c636f7bfad754db859253b75900a55f9888acccef` e `Projectile=42e5b3a088bd4446abab0fe8cd2e61368095fe664aa38d6b256ab0424625326d`.
-
-**Diferenciação obrigatória:** o cache de desenvolvimento também contém variantes `rename`, `binaryPatch`, `copyUnpatchedClasses`, `binaryWithNeoForge` e `applyDevTransforms` com **hashes de classe diferentes**. A prova seleciona o JAR presente no classpath do compilador, não a primeira entrada do cache. Esta é evidência do **binário de desenvolvimento compilável**, **não** prova do código final transformado por ModLauncher/mixins na instalação física com todos os mods ativos.
-
-### 8.1. Caminho de impacto e solicitação de dano
-
-| Fronteira compilada | Evidência JVM na build fixada | Conclusão e limite |
-|---|---|---|
-| `Projectile.onHit(HitResult)` | 69 instruções; chamadas virtuais `onHitEntity @72` e `onHitBlock @111` | Existe encaminhamento por categoria do hit, com ramos de deflexão; não demonstra que um hit determinado foi aceito |
-| `AbstractArrow.onHitEntity(EntityHitResult)` | 323 instruções; `DamageSources.arrow @47`, `EnchantmentHelper.modifyDamage @92`, `Entity.hurt @298`, ramo `ifeq @301 → 609` | Há solicitação de dano por fonte de flecha e processamento de retorno; a quantidade efetiva não pode ser reduzida ao `baseDamage` e depende do pipeline do jogo |
-| Callback pós-impacto | `AbstractArrow.onHitEntity` invoca virtualmente `doPostHurtEffects(LivingEntity) @397`; o override em `SeekingArrowEntity` fixa `stopSeeking=true` | A chamada está num trecho que segue a checagem de retorno `@301`, com outros guardas entre os pontos; não afirmar execução incondicional em todo hit |
-| Dano inicial do tipo base | `AbstractArrow(EntityType,Level)`: `baseDamage=2.0D @14–17`; `setBaseDamage(D)` e `getBaseDamage()` declarados | Valor inicial do **tipo base** no binário de compilação, não valor final, fixo ou aceito de cada Seeking Arrow; velocidade, encantamentos e engine ainda alteram o envelope |
-
-Os hashes individuais dos métodos (e seus descriptors, branch targets e referências simbólicas) estão selados no manifesto, sem reprodução de implementação proprietária.
-
-### 8.2. Autoria do defensor e resolução após carregamento
-
-A cadeia agora é comprovada **no binário de compilação**: o evento `CommonEvents.acLivingAttack` passa o defensor para `SeekingArrowEntity(Level,LivingEntity)`; o construtor do provider delega a `AbstractArrow(EntityType,LivingEntity,Level,ItemStack,ItemStack)`; este chama `setOwner(Entity) @28`. O setter em `Projectile` grava `ownerUUID @9` e `cachedOwner @14`. `Projectile.getOwner()` consulta `ownerUUID` e a entidade de `ServerLevel.getEntity(UUID) @52` para repor o cache quando aplicável.
-
-O armazenamento base usa `Projectile.addAdditionalSaveData` e `readAdditionalSaveData`, com os nomes NBT publisher-independent `Owner`, `LeftOwner` e `HasBeenShot`. `AbstractArrow` delega essas operações e acrescenta campos como `life`, `inGround`, `damage`, `pickup`, `crit`, `PierceLevel`, `item` e `weapon` (conforme constantes e referências dos métodos compilados). Isso comprova **uma rota de persistência herdada do owner** na base, não que toda resolução sobreviva a unload, cross-dimension, ausência do owner ou conflito com mixins.
-
-Os estados próprios do provider `stopSeeking` e `ARC_TOWARDS_ENTITY_ID` **não possuem overrides de leitura/escrita NBT declarados** em `SeekingArrowEntity` na versão auditada. Não presumir salvamento de `stopSeeking` ou ID de alvo a partir de `SynchedEntityData`; também não inferir perda efetiva/reprodução física sem testar save/restart e transformações adicionais.
-
-### 8.3. Consequências para targeting, perks e Mastery
-
-`AbstractArrow.canHitEntity` delega a `Projectile.canHitEntity` com filtros próprios; `Projectile.onHit` contém ramos envolvendo deflexão e encaminhamento `EntityHitResult`/ `BlockHitResult`. Isso reforça que **mudar a busca do `tick` não é igual a modificar a elegibilidade de colisão**, e que converter o projétil pode alterar owner e credit de combate nativos.
-
-Para qualquer perk candidata, requerer: prova do hit realmente aplicado, owner válido no servidor no momento da liquidação, prevenção de dano duplicado, respeito a proteção/PvP/claims e comportamento após save/reload. Nenhuma chamada virtual ou campo deste manifesto equivale a um **hook mutador estável**. `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`, `perk_certification=NOT_CERTIFIED`.
-
-**Status desta etapa:** ⚠️ auditoria da herança **ampliada e verificável no binário de compilação**, mas contrato estático integral do encantamento continua parcial. Permanecem pendentes transformação efetiva ModLauncher/pack, cálculo final e aceitação de dano, variantes de colisão e deflexão, serialização dos campos específicos, datapacks/atributos e QA física. **+0** certificados estáticos, **+0** novas raízes de cast e **+0** providers concluídos.
-
-## 9. Validação, pendências e conclusão desta etapa
-
-- ✅ **Verificado:** SHA-exato do JAR publisher, JSON de identidade e configuração, dois classfiles, descriptors, hashes de métodos e chamadas/operandos delimitados; sonda read-only.
-- ✅ **Reproduzível pela CI:** `docs/qa/alexscaves_1010_arrow_inducting_probe.py --jar <JAR exato> --javap <JDK21/javap> --seal <manifesto>`; o gate compara integralmente o manifesto ao resultado observado.
-- ⚠️ **Pendente:** CFG/guardas completos, comportamento de impacto/dano, salvamento do alvo, autorização de servidor, datapacks, mods concorrentes e potencial de hook.
-- ⛔ **Bloqueadas:** perks mutadoras de alcance, tipo de alvo, dano, tamanho, cooldown, velocidade e afins sem API/contrato e QA adequados.
-- ⚠️ **QA física:** `NOT_TESTED`. CI de bytecode não é sessão de jogo.
-- **Contabilidade:** uma nova ficha técnica parcial do encantamento; **+0 contratos estáticos certificados, +0 raízes mágicas e +0 providers concluídos**. A cobertura global por ficheiros detectados pode aumentar seu denominador, sem presumir que os demais 50 encantamentos estejam fora do trabalho.
-
-**Próximo item alfabético:** `alexscaves:astral_transferring` (referências nominais existentes; ficha individual ainda não auditada). A fila global permanece em Alex's Caves Continued.
+**Conclusão:** uma ficha individual concluída **somente** em `STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`; **+0 raízes mágicas novas**, **+0 providers integrais concluídos**. O universo integral do provider permanece aberto. Hooks mutadores continuam `NOT_VERIFIED`, QA física `NOT_TESTED`, política `NO_MUTATION`; transformação ModLauncher/pack, hit/dano efetivamente aceitos, crédito de combate, proteção, rede, datapacks ativos e save/reload reais continuam sem certificação física. O próximo contrato parcial alfabético é `alexscaves:astral_transferring`.

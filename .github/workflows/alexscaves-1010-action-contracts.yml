@@ -31,6 +31,7 @@ on:
       - 'docs/qa/alexscaves_1010_precise_volley_cards_test.py'
       - 'docs/qa/alexscaves_1010_rapid_possession_cards_test.py'
       - 'docs/qa/alexscaves_1010_humungous_hex_cards_test.py'
+      - 'docs/qa/alexscaves_1010_arrow_inducting_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   push:
     branches: [main]
@@ -62,6 +63,7 @@ on:
       - 'docs/qa/alexscaves_1010_precise_volley_cards_test.py'
       - 'docs/qa/alexscaves_1010_rapid_possession_cards_test.py'
       - 'docs/qa/alexscaves_1010_humungous_hex_cards_test.py'
+      - 'docs/qa/alexscaves_1010_arrow_inducting_cards_test.py'
       - '.github/workflows/alexscaves-1010-action-contracts.yml'
   workflow_dispatch:
 
@@ -72,6 +74,8 @@ jobs:
   exact_action_static_contracts:
     runs-on: ubuntu-24.04
     timeout-minutes: 8
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v5
@@ -104,6 +108,7 @@ jobs:
           python3 docs/qa/alexscaves_1010_precise_volley_cards_test.py -v
           python3 docs/qa/alexscaves_1010_rapid_possession_cards_test.py -v
           python3 docs/qa/alexscaves_1010_humungous_hex_cards_test.py -v
+          python3 docs/qa/alexscaves_1010_arrow_inducting_cards_test.py -v
       - name: Download the exact publisher artifact
         run: |
           mkdir -p build/alexscaves-1010
@@ -317,6 +322,15 @@ jobs:
             --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/alexscaves-1010/tsunami-evidence.json
+      - name: Verify the sealed Arrow Inducting enchantment and native projectile contract
+        run: |
+          python3 docs/qa/alexscaves_1010_action_contract_audit.py \
+            --profile arrow_inducting \
+            --jar build/alexscaves-1010/alexscaves-1.0.10.jar \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.json' \
+            --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued' \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/alexscaves-1010/arrow-inducting-evidence.json
       - name: Export bounded JSON evidence only
         uses: actions/upload-artifact@v7
         with:
@@ -345,5 +359,6 @@ jobs:
             build/alexscaves-1010/triple-splash-evidence.json
             build/alexscaves-1010/triple-split-evidence.json
             build/alexscaves-1010/tsunami-evidence.json
+            build/alexscaves-1010/arrow-inducting-evidence.json
           if-no-files-found: error
           retention-days: 14
