@@ -1,112 +1,151 @@
-# Astral Transferring — transferência do vínculo do Totem (1.0.10)
+# Astral Transferring — `alexscaves:astral_transferring` (1.0.10)
 
-**Estado:** ⚠️ ficha técnica individual **parcial / condicionada**. Identidade, dados publisher e trecho compilado do consumidor confirmados no artefato instalado. **Contrato mutador não verificado; QA físico não executado; nenhuma homologação integral de perk.** Este encantamento modifica o controle nativo já catalogado como [Totem of Possession — Possession / Remote Control](../actions/totem-possession-remote-control.md), **não acrescenta uma nona ação mágica**.
+**Contrato técnico individual:** ✅ `STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`. A ficha conclui a identidade publisher, o ramo nativo de transferência e seus helpers de vínculo, custo e sincronização no recorte estático descrito. **Hook mutador:** `NOT_VERIFIED`; **QA física:** `NOT_TESTED`; **integração:** `NO_MUTATION`. O runtime transformado do pack permanece não verificado. O encantamento modifica a [ação nativa do Totem of Possession](../actions/totem-possession-remote-control.md): **+0 raízes mágicas**, nenhuma nova ação de cast e nenhuma perk executável.
 
-## Identidade, versão e prova
+## 1. Identidade, registro e proveniência
 
-- **Provider:** Alex's Caves Continued; mod ID `alexscaves`.
-- **Enchantment:** `alexscaves:astral_transferring`; tradução publisher referenciada pela chave `enchantment.alexscaves.astral_transferring`. Nenhum texto de tooltip da versão instalada foi certificado nesta análise.
-- **Item:** `alexscaves:totem_of_possession`; item elegível conforme `#alexscaves:enchantable/totem_of_possession`.
-- **Binário:** `alexscaves-1.0.10-neoforge+1.21.1.jar`; 75.279.314 bytes; SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`; SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
-- **Evidência estática selada:** [recursos e janelas JVM 1.0.10](../EXACT-ASTRAL-TRANSFERRING-1.0.10.json), reproduzidos por [sonda read-only](../../../../../docs/qa/alexscaves_1010_astral_transfer_probe.py) e [CI específica](../../../../../.github/workflows/alexscaves-1010-astral-transfer.yml).
-- **Evidência de ação existente:** [contratos SHA-exatos das oito ações](../EXACT-TECHNICAL-CONTRACTS-1.0.10.md) e [ficha do Totem](../actions/totem-possession-remote-control.md).
-- **Fonte pública adjacente:** `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` declara **1.1.1**, não sendo autoridade dos valores da release física 1.0.10.
+- **Provider / ID:** Alex's Caves Continued / `alexscaves:astral_transferring`; encantamento do `alexscaves:totem_of_possession`.
+- **Publisher:** `alexscaves-1.0.10-neoforge+1.21.1.jar`, CurseForge projeto `1645389`, arquivo `8856293`, **75.279.314 bytes**. O `META-INF/neoforge.mods.toml` declara mod ID `alexscaves`, versão `1.0.10`, Minecraft `[1.21.1]`, NeoForge e dependência obrigatória `codxlib >=1.3.6`; a análise usa Java 21.
+- **JAR SHA-1:** `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`; **SHA-256:** `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
+- **Classe principal:** `com/github/alexmodguy/alexscaves/server/item/TotemOfPossessionItem.class`, SHA-256 `bad9dd8b88eb621b558d1ede477d2b4ba6a21befdec31b4a0233adcac701773e`.
+- **Nome / descrição literais em `en_us.json`:** “Astral Transferring” / “Mobs possessed by the Totem of Possession can swap possessed status with other, healthier mobs they fight”. O `pt_br.json` contém “Totem de Possessão” para o item, mas **não contém nome nem descrição deste encantamento**. O texto técnico em português nesta ficha é uma paráfrase; a descrição inglesa não substitui os predicados compilados.
+- **Prova atual:** [manifesto individual SHA-exato](../EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.json), [contrato técnico consolidado](../EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.md) e [regressão semântica da ficha](../../../../../docs/qa/alexscaves_1010_astral_transferring_cards_test.py). O manifesto sela recursos, classes, âncoras e a ficha final.
 
-A classe `com/github/alexmodguy/alexscaves/server/item/TotemOfPossessionItem.class` possui SHA-256 `bad9dd8b88eb621b558d1ede477d2b4ba6a21befdec31b4a0233adcac701773e`, idêntico ao contrato estático anterior. O `onUseTick(Level,LivingEntity,ItemStack,int)V` possui **478 instruções** e digest do parse JVM `4d366c998c89884f53bc9554f52c6477c5c6bbb8e6aea1bf0f93867dc1b41d39`. Os offsets abaixo pertencem **somente** a esse método e JAR.
+O inicializador de `ACEnchantmentRegistry` liga o literal `astral_transferring @347` a `key @350` e ao campo `ASTRAL_TRANSFERRING @353`; `key(String)` completo constrói a ResourceKey em `Registries.ENCHANTMENT` com namespace `alexscaves`. O registro de item liga `totem_of_possession @2313` ao supplier de bootstrap **131**; seu handle resolve `lambda$static$126`, cujo corpo completo cria `TotemOfPossessionItem`.
 
-## Definição publisher: custo e elegibilidade
+O censo de Fieldrefs da chave exata encontra a escrita de registro e **um leitor direto**, `TotemOfPossessionItem.onUseTick @920`. A descoberta por constantes brutas só apontou essas duas classes; ela não é, isoladamente, prova de leitura nem exclui consumidores indiretos, reflexão ou transformações de runtime. O censo separado do marcador `TotemPossessed` inclui os dois mixins descritos abaixo.
 
-| Campo do recurso `data/alexscaves/enchantment/astral_transferring.json` | Valor exato |
-|---|---|
-| SHA-256 do JSON | `41133c10af9c9e8d5e33d1b8339b734f81547b141f83fc0144aa9cf89f1f04c2` |
-| `supported_items` | `#alexscaves:enchantable/totem_of_possession` |
-| `weight` | `2` |
-| `max_level` | `1` |
-| `min_cost.base` / `per_level_above_first` | `1` / `12` |
-| `max_cost.base` / `per_level_above_first` | `41` / `10` |
-| `anvil_cost` | `4` |
-| `slots` | `mainhand` |
+A fonte pública [Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37](https://github.com/Codx-org/AlexsCavesContinued/tree/523308608422ab8e31974befa7111ecdf495dd37) declara **1.1.1** e serve somente de contexto adjacente. Os valores e os offsets desta ficha têm autoridade no publisher **1.0.10**.
 
-O item tag publisher `data/alexscaves/tags/item/enchantable/totem_of_possession.json` contém `alexscaves:totem_of_possession` (SHA-256 `185a085206993877d91ca6d8c697273c14f945b1d55cb6179e3236c138c357cf`). O JSON de `detonating_death` declara `exclusive_set: ["alexscaves:astral_transferring"]` (SHA-256 `8402461954ff5b249ae675b51d7dcc23d933b2b06c494b327bf608371298646e`). A exclusividade declarada não comprova comportamento sob mods de encantamento não convencionais, edições de datapack ou níveis fora do padrão.
+## 2. Configuração, aplicação e aquisição
 
-**Esses são custos de encantamento do jogo, não mana/custo por cast**. O controle do Totem tem durabilidade declarada 1.000 e lógica de desgaste própria (com pendência relevante de autoridade do desgaste em cliente/servidor): não equiparar o peso, custo de bigorna ou `min_cost` a consumo por transferência. Valores e exclusividades efetivos após datapacks/mods continuam `NOT_VERIFIED`.
-
-## Predicados e efeito da transferência
-
-O consumidor compilado `TotemOfPossessionItem.onUseTick` identifica `ACEnchantmentRegistry.ASTRAL_TRANSFERRING @920` e chama `ACCompat.enchantLevel @923`, seguido por `ifle @926 → 1081`. Isso exige nível **positivo** no stack do Totem para entrar no trecho subsequente.
-
-A cadeia local comprovada é:
-
-1. O caminho de ataque do **Mob já controlado** usa `Mob.setTarget @871` e `Mob.setLastHurtByMob @878` para candidatos da consulta ao redor da entidade controlada. A seleção inicial, guardas de amizade e exclusões são detalhados na [ficha do Totem](../actions/totem-possession-remote-control.md). O encantamento **não** cria uma nova busca global de alvos.
-2. O contador de uso é dividido por quatro: `iconst_4 @883`, `irem @884`, `ifne @885 → 1081`; apenas a iteração de resto zero prossegue no ramo local. Não equivale a cooldown persistido de quatro ticks, nem a limite de quatro segundos.
-3. Lê `LivingEntity.getHealth @890` do candidato e `Mob.getHealth @895` do controlado; `fcmpl @898` e `ifle @899 → 1081` exigem **vida atual estritamente maior** para prosseguir (em valores normais finitos). É comparação de vida atual, **não** da vida máxima nem de nível, atributos ou raridade.
-4. Consulta o tipo de entidade e `ACTagRegistry.RESISTS_TOTEM_OF_POSSESSION @910`; `Holder.is @913` seguido por `ifne @916 → 1081` bloqueia a transferência para o alvo resistente.
-5. Exige nível do encantamento `>0`, depois chama `setPossessed(candidate,true) @932`, lê `BoundEntityUUID @943`, `getUUID @948` e `ACCompat.putUUID @951`.
-6. Serializa o novo candidato com `ACPlatform.serializeEntity @956`, adiciona o ID do tipo ao `CompoundTag` (`"id" @963`), grava `BoundEntityTag @987–992` e persiste via `ACCompat.setTag @999`. Em seguida solicita o som `TOTEM_OF_POSSESSION_USE @1002–1014`.
-7. O ramo específico de atualização `@1017–1048` chama `updateEntityIdFromServer(ServerLevel,Player,ItemStack)` quando as verificações de tipos alcançam a chamada. O helper lê o vínculo UUID, resolve o ID da entidade pelo `ServerLevel`, atualiza tag e pode enviar `UpdateItemTagMessage` para sincronização. Não prova entrega, autenticação de pacote ou save/reload efetivo.
-
-O helper `setPossessed(Entity,boolean)` apresenta 16 instruções e alterna a marca persistente `TotemPossessed` no alvo selecionado; o `updateEntityIdFromServer` possui 49 instruções. Ambos têm hashes de método registrados no [manifesto selado](../EXACT-ASTRAL-TRANSFERRING-1.0.10.json).
-
-## Área de busca, restrições e lifecycle
-
-Na [ação Totem](../actions/totem-possession-remote-control.md), a seleção de candidatos para ataques usa a **bounding box do controlado inflada em 3 blocos por eixo**, com filtros para entidades `LivingEntity` aptas à colisão de projéteis, usuário, aliados, alvo atual e passageiros. Não se deve equiparar isso a um raio de dano mágico de três blocos, nem ao raio do look gate do usuário. O comando de navegação tem outro parâmetro, `32 × ramp`, que **não define** o alcance de Astral Transferring.
-
-O JSON exato da tag `data/alexscaves/tags/entity_type/resists_totem_of_possession.json` (SHA-256 `6ae5d98cd4b12739d3d1d7dc78d37053b2e5b0eb3b1093e3f8a9a6d9768df209`) declara, como defaults publisher: `#c:bosses`, `minecraft:warden`, `minecraft:armor_stand`, `alexscaves:hullbreaker`, `alexscaves:forsaken`, `alexscaves:atlatitan` e `alexscaves:tremorzilla`. O conjunto **efetivo** varia conforme a resolução do tag `#c:bosses` e datapacks carregados; não afirmar que essa lista é exaustiva no modpack.
-
-**Riscos de estado já identificados:** no recorte de transferência, `setPossessed(new,true)` e a atualização do novo vínculo não exibem uma limpeza equivalente do marcador persistente do alvo anterior. O loop de candidatos da ação também não executa `break` após uma transferência bem-sucedida. Assim, múltiplos candidatos em uma iteração podem provocar novas sobrescritas; não afirmar um único novo alvo escolhido pela proximidade ou transação atômica. O comportamento de limpeza posterior, unload, troca de dimensão, duas cópias do item, morte/respawn e reconciliação de dados persistidos necessita de QA adicional.
-
-O contrato de controle geral interrompe o uso quando o alvo deixa de existir ou quando o item se esgota, ou quando falham os gates de visão/posse; a transferência não substitui essas condições. O ramo local da transferência não comprova uma checagem independente de `totem_of_possession_works_on_players`; uma transferência para `Player` sob configuração proibitiva não deve ser considerada segura somente pela exclusão de mobs resistentes, pois o gate do próximo tick pode encerrar o uso.
-
-## Fronteira de integração com perks
-
-| Eixo de perk | Fato reutilizável do provider | Condição para implementação |
+| Campo de `data/alexscaves/enchantment/astral_transferring.json` | Valor publisher 1.0.10 | Significado delimitado |
 |---|---|---|
-| Alvos / seletor | Alvo próximo ao controlado; filtros da ação; vida atual maior; tag de resistência | ⛔ Sem ponto seguro verificado para modificar elegibilidade ou escolher alvo; preservar owner, allies, Player gate e ordem do loop |
-| Range / AoE | Busca na AABB inflada por 3; comando visual a `32×ramp` | ⛔ Não usar alcance de comando como alcance de transferência nem estender box sem API estável |
-| Taxa de proc / cooldown | Predicado `contador % 4 == 0` | ⛔ Sem hook para mudar intervalo ou impor cooldown transacional sem reexecutar o processamento |
-| Dano / tipo de dano | `Mob.setTarget` / `setLastHurtByMob`; ataques normais do controlado | ⛔ Sem dano próprio de Astral Transferring evidenciado; não duplicar `hurt` nem alterar `DamageSource` |
-| Estado / duração / ownership | UUID, `BoundEntityTag`, `TotemPossessed`, `ControllingEntityID` | ⛔ Não escrever tags de outro provider nem tomar controle do vínculo por perk sem resolver concorrência, restart e autorização |
-| Custo / Mastery | JSON de encantamento e durabilidade nativa do Totem | ⛔ Não converter custos do enchanting em mana por uso nem emitir proc/XP por cada novo candidato sem cadeia nativa verificada |
-| Cliente, PvP, claims | Helper de sincronização e resolução de UUID no `ServerLevel` | ⛔ Exige prova de autoridade do lado servidor, atualização do destinatário, proteção de jogadores e replay before any adapter |
+| SHA-256 | `41133c10af9c9e8d5e33d1b8339b734f81547b141f83fc0144aa9cf89f1f04c2` | Recurso de 379 bytes |
+| `description.translate` | `enchantment.alexscaves.astral_transferring` | Chave de tradução |
+| `supported_items` | `#alexscaves:enchantable/totem_of_possession` | Tag nativa contém somente `alexscaves:totem_of_possession` |
+| `weight` / `max_level` | `2` / `1` | Peso declarativo e nível nativo I |
+| `min_cost` | `base=1`, `per_level_above_first=12` | `1 + 12 × (L−1)`; para I: **1** |
+| `max_cost` | `base=41`, `per_level_above_first=10` | `41 + 10 × (L−1)`; para I: **41** |
+| `anvil_cost` / `slots` | `4` / `mainhand` | Dados de aplicação; o consumidor lê a stack em uso |
 
-A autoria do runtime de possessão pertence ao provider. O Black Arcana não deve reexecutar a transferência ou o dano para aplicar uma perk; o RPG Skill Tree é apenas authority de progressão/Mastery/gates sob contrato real.
+O JSON não declara `effects` nem `exclusive_set`; a troca é implementada em Java. A varredura das **51 definições nativas de encantamento** encontra uma única exclusão reversa deste ID: `detonating_death.json` declara `exclusive_set: ["alexscaves:astral_transferring"]`, SHA-256 `8402461954ff5b249ae675b51d7dcc23d933b2b06c494b327bf608371298646e`. Isso fecha as exclusões declaradas no publisher; não certifica datapacks ou modos de aplicação não convencionais.
 
-## Ciclo de vida do Totem — auditoria ampliada de 22 métodos (2026-11-10)
+Astral aparece explicitamente nas quatro tags nativas `minecraft:in_enchanting_table`, `minecraft:non_treasure`, `minecraft:on_random_loot` e `minecraft:tradeable`; cada arquivo tem 1.631 bytes e SHA-256 `6472c976d755f1481506f3f113368081aa487eaff3ce977a1f7c93a400f39bb1`. São dados de disponibilidade, sem chance observada de mesa, loot ou trade. A tag de item tem 59 bytes, SHA-256 `185a085206993877d91ca6d8c697273c14f945b1d55cb6179e3236c138c357cf`. A resolução final de tags e encantamentos depende dos datapacks ativos.
 
-A [prova técnica complementar](../EXACT-ASTRAL-TRANSFERRING-LIFECYCLE-1.0.10.json) inventaria **todos os 22 métodos declarados** de `TotemOfPossessionItem.class` no JAR físico exato **1.0.10**, verificando SHA-1/SHA-256 do JAR, SHA-256 da classe e digest `4d366c998c89884f53bc9554f52c6477c5c6bbb8e6aea1bf0f93867dc1b41d39` do `onUseTick` contra o [manifesto anterior](../EXACT-ASTRAL-TRANSFERRING-1.0.10.json). A [sonda read-only](../../../../../docs/qa/alexscaves_1010_astral_lifecycle_probe.py) registra nomes, descritores JVM, número de instruções, SHA-256 de *parse* de cada método, referências simbólicas, branches e respectivos destinos. **Digest do parse JVM não é hash do classfile**. O escopo é um censo de métodos nativos e arestas selecionadas de controle, **não** a reconstrução integral do CFG interprocedural/exceções ou uma sessão de jogo.
+A receita shaped do Totem é `DED` / `DBD` / `DBD`: **seis `moth_dust`, dois `thornwood_branch` e um `occult_gem`**, resultado `alexscaves:totem_of_possession`, com `count` omitido (uma unidade por padrão da receita). O recurso tem 415 bytes, SHA-256 `66abfc1425daee7e89b87f145c4148747a00a29fd45b96222869783e42ed710b`. A receita fabrica o equipamento; não é custo de ativação de Astral.
 
-| Consumidor / método | Instruções / branches | Prova e fronteira |
-|---|---:|---|
-| `acHurtEnemy(ItemStack,LivingEntity,LivingEntity)Z` | **64 / 5** | Vínculo inicial usa tag de resistência `@7`, configuração de Player `@26` e `setPossessed @71`; grava UUID/tag no stack (`ACCompat.setTag @135`) |
-| `use(Level,Player,InteractionHand)` | **66 / 10** | Chama `updateEntityIdFromServer @32`, `getControlledEntity @39` e `setPossessed @75` em ramo de limpeza; valida gates do uso |
-| `onUseTick(Level,LivingEntity,ItemStack,int)V` | **478 / 59** | Encerramento, desgaste, movimento, consulta de candidatos, troca Astral e processamento de ataques |
-| `releaseUsing(ItemStack,Level,LivingEntity,int)V` | **29 / 3** | Consulta `getControlledEntity @3`; não executa o ramo de transferência Astral nesse corpo |
-| `resetBound(ItemStack)V` | **16 / 0** | Atualiza `ACCompat.setTag @28`; limpar item não comprova limpeza do marcador persistente da entidade |
-| `getBoundEntityUUID(ItemStack)` | **17 / 3** | Lê `ACCompat.getTag @1` e `ACCompat.getUUID @23` |
-| `getControlledEntity(Level,ItemStack)` | **44 / 8** | Cliente usa `ControllingEntityID` e `Level.getEntity(int) @51`; servidor usa `getBoundEntityUUID @68` e `ServerLevel.getEntity(UUID) @85` |
-| `updateEntityIdFromServer(ServerLevel,Player,ItemStack)` | **49 / 6** | Resolve UUID no servidor `@45`, grava tag `@79` e pode publicar `UpdateItemTagMessage @98–101` |
-| `setPossessed(Entity,boolean)V` | **16 / 3** | Usa `ACCompat.getPersistentData` para alternar `TotemPossessed` na entidade recebida; não percorre os donos anteriores |
+`ACCompat.enchantLevel` completo retorna o primeiro nível armazenado cujo Holder corresponde à ResourceKey, ou zero. Não aplica clamp próprio de nível máximo, slot ou tag de item. O ramo Astral exige **nível >0**; níveis positivos forçados passam pelo mesmo predicado, **sem escala por nível ou chance aleatória própria de transferência** nesse ramo. O nível zero ou negativo o rejeita.
 
-### Estrutura do loop e sequência de substituição
+## 3. Entrada, duração e seleção de candidatos
 
-O `onUseTick` contém **59 instruções de desvio**; a região `@700–1100` possui 69 referências/branches/literais selecionados no selo. Após os filtros iniciais, o ramo `Mob.setTarget @871` / `setLastHurtByMob @878` antecede os gates `timeUsing % 4 == 0 @883–885`, **vida atual estritamente superior** (`getHealth @890/@895`, `fcmpl @898`, rejeição `ifle @899 → 1081`), tag `RESISTS_TOTEM_OF_POSSESSION @910–916` e nível positivo de `ASTRAL_TRANSFERRING @920–926`.
+O `onUseTick(Level,LivingEntity,ItemStack,int)V` tem **478 instruções / 59 branches**, digest do parse JVM `4d366c998c89884f53bc9554f52c6477c5c6bbb8e6aea1bf0f93867dc1b41d39`. Digest de parse não é hash do classfile. Todos os offsets desta seção e da próxima pertencem a esse método exato.
 
-A transferência chama `setPossessed(candidate,true) @931–932`, grava `BoundEntityUUID @943–951`, serializa a nova entidade `@956`, persiste `BoundEntityTag @987–999`, solicita som e, condicionalmente, atualização do ID no servidor `@1048`. O trecho retorna ao **loop de candidatos por salto retroativo `@1081 → @766`**: não existe `break` equivalente após o primeiro candidato transferido nesse corpo. Isso não garante que dois candidatos reais sejam aceitos; demonstra que a iteração não é encerrada pela mera primeira atualização.
+O método resolve a entidade controlada **uma vez**, em `getControlledEntity @3`, conservando-a na **local 5 @6**. As guardas iniciais consultam vínculo, existência/vida e dano máximo do item. O caminho de encerramento chama `setPossessed(entity,false) @109`, `resetBound @113` e `stopUsingItem @117`; no cliente pode enviar `UpdateItemTagMessage`. O corpo contém antes disso um ramo de **Detonating Death**, explicitamente fora das janelas atuais. A prova não atribui essa explosão a Astral.
 
-Entre `@929` e `@1051` a **única chamada direta** a `setPossessed` recebe `true` (`iconst_1 @931`). Não há nesse intervalo uma chamada direta equivalente para remover `TotemPossessed` da entidade anteriormente vinculada. Existem caminhos de `setPossessed @109` no início de `onUseTick` e `setPossessed @75` em `use`, mas **não constituem prova de transação atômica `unset(old) → set(new)` no ramo Astral**. Persistência simultânea de marcadores é **risco técnico inferido**, não bug reproduzido nem demonstração de ausência de limpeza por outro mod/callback.
+A continuação exige vínculo resolvido e o helper `isEntityLookingAt(user,controlled,5D)` ou Sightless. O helper completo usa o parâmetro ajustado por `1 + 0.1 × distância`, produto escalar entre vetores normalizados, limiar dependente da distância até o alvo e `hasLineOfSight`; **`5D` não é raio de cinco blocos**. Um Player controlado também passa pela configuração geral em `@177–203`; quando ela é falsa, esse caminho interrompe o uso. O valor lido da configuração do pack permanece desconhecido.
 
-### Authority, owner, sincronização e riscos para perks
+`getUseDuration` retorna **72.000 ticks** e `getUseAnimation` retorna **BLOCK**. Em `@275–284`, a local 6 recebe **`elapsed = 72000 − timeLeft`**, onde `timeLeft` é o argumento inteiro da chamada. Esse valor define a cadência Astral; não é um cooldown persistido nem garantia de uma possessão durante 72.000 ticks. Navegação/movimento e sua rampa pertencem a outro trecho nativo, omitido do selo atual; não fornecem um alcance novo para Astral.
 
-A consulta `getControlledEntity` usa **ID numérico de entidade no cliente** e **UUID resolvido por `ServerLevel` no servidor**. O `updateEntityIdFromServer` atualiza uma tag e possui caminho para mensagem a clientes, mas nenhum dos 22 métodos auditados comprova entrega, autenticação/replay, ordem de rede, resolução de entidades descarregadas ou recuperação correta depois de reload/troca de dimensão. `resetBound` pertence ao estado **do ItemStack**; `setPossessed` pertence ao dado persistente **da entidade**. Perks não podem misturar essas authorities ou assumir que um reset do item remove o estado da entidade anterior.
+**Guarda de lado:** `Level.isClientSide @652; ifeq @655 → 717` entra na consulta somente pelo ramo servidor. O caminho cliente de partículas sai por `goto @714 → 1084`. Portanto o ramo nativo de candidatos/ataque/transferência abaixo está atrás da guarda de servidor. Isso não certifica autenticação de pacotes, transformações por outros mods ou settlement efetivo.
 
-A verificação de Player/config é conhecida na aquisição inicial, mas a **janela Astral selecionada** usa resistência e nível do encantamento; não se comprovou nela um novo gate independente da config. O gate geral em ticks posteriores não substitui uma autorização transacional. Testes físicos com Player, proteção/PvP, múltiplos candidatos, dois totems, unload, save/reload e versões transformadas por mixins continuam pendentes.
+| Etapa do seletor servidor | Predicado nativo completo nas janelas |
+|---|---|
+| Área | `controlled.getBoundingBox @719`, inflada em **3 por eixo** (`@722–725`); é uma AABB, sem raio esférico ou AoE de dano declarado |
+| Tipo do controlado | Precisa ser `Player` ou `Mob` (`@730–743`) para entrar na iteração |
+| Consulta | `Level.getEntities(controlled,box,predicate) @756` exclui a entidade fornecida; bootstrap **1** do predicado resolve diretamente `Entity.canBeHitByProjectile()Z` |
+| Filtros do loop | Rejeita identidade com o controlado, `controlled.isAlliedTo(candidate)`, identidade com o usuário, `candidate.isAlliedTo(controlled)`, veículo compartilhado e candidato que não seja `LivingEntity` (`@788–850`) |
+| Ramo Mob | `controlled instanceof Mob @854` chama `Mob.setTarget(candidate) @871` e `setLastHurtByMob(candidate) @878`, depois avalia Astral |
+| Ramo Player | A alternativa `@1054–1078` pede `Player.attack(candidate)` e reseta o attack ticker; **não entra no ramo Astral** |
 
-**Conclusão da etapa:** evidência de **22/22 métodos declarados do classfile** e 69 âncoras locais, mas **não** do universo integral do provider ou de um CFG executado. `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`; **contrato individual permanece ⚠️ parcial**, **+0 certificados estáticos, +0 raízes mágicas, +0 providers concluídos**.
+Apesar do texto publisher dizer “mobs”, o candidato exigido pelo ramo é **LivingEntity**, podendo incluir **Player** sujeito aos demais predicados; quem precisa ser **Mob** para Astral é o controlado original.
 
-## Certificação e próximos testes
+O bootstrap **0** é distinto: resolve `lambda$onUseTick$0`, que combina `canBeHitByProjectile` com diferença em relação à entidade capturada, para a consulta de visão/movimento fora das janelas atuais. Não substituir o predicado da AABB por esse lambda nem importar a geometria de navegação para a transferência.
 
-**Identidade/JSON:** `VERIFIED_EXACT_BINARY`. **Guardas e referências do consumidor:** `VERIFIED_EXACT_BINARY_SELECTED_WINDOWS`; o grafo de controle completo, o estado efetivo de datapack e a cadeia de autoridade de servidor **não** foram certificados integralmente. **Hook mutador:** `NOT_VERIFIED`. **QA físico:** `NOT_TESTED`. **Mutação:** `NO_MUTATION`. **Certificação para perk:** `NOT_CERTIFIED`.
+## 4. Cadência, comparação e sequência da transferência
 
-Para homologar futuras modificações, testar em jogo real: cada cadência de quatro ticks, comparação de vida atual, filtros de owner/aliados e tags reais, configuração de Player, múltiplos alvos, persistência de `TotemPossessed`, vínculo antigo, competição entre totems, recarregamento/teleporte e comportamento PvP; correlacionar eventos do cliente e servidor antes de admitir qualquer mutação.
+Para cada candidato que passou pelos filtros e pelo ramo do **Mob originalmente controlado**, a sequência é:
 
-**Contagem:** adiciona **uma ficha individual parcial de encantamento** ao universo observado; **zero** novos contratos estáticos certificados; **zero** novas raízes mágicas; **zero** providers concluídos. A próxima identidade em ordem alfabética é `alexscaves:bonking`.
+1. **Cadência:** `elapsed % 4 == 0` (`@881–885`); resto diferente de zero volta ao loop. Isso permite a avaliação em ticks de uso múltiplos de quatro, sem cooldown próprio gravado e sem interpretação de quatro segundos.
+2. **Saúde:** lê `candidate.getHealth @890` e `originalMob.getHealth @895`; `fcmpl @898` e `ifle @899 → 1081` exigem **vida atual do candidato estritamente maior** em valores normais finitos. Não compara vida máxima, nível, raridade ou porcentagem de saúde.
+3. **Resistência:** `RESISTS_TOTEM_OF_POSSESSION @910`, `Holder.is @913` e `ifne @916` rejeitam o tipo resistente.
+4. **Nível:** `ASTRAL_TRANSFERRING @920`, `enchantLevel @923`, `ifle @926` exigem nível positivo na stack.
+5. **Marcador e vínculo:** `setPossessed(candidate,true) @932`; obtém cópia/tag nova do item, escreve o UUID do candidato em `BoundEntityUUID @951` e serializa o candidato por `ACPlatform.serializeEntity @956`.
+6. **Snapshot do item:** inclui o ID do tipo em `"id" @982`, põe o composto serializado em `BoundEntityTag @992` e comita via `ACCompat.setTag @999`. Solicita `TOTEM_OF_POSSESSION_USE @1002–1014`.
+7. **Sincronização condicional:** somente com `Level instanceof ServerLevel` e usuário `instanceof Player` chama `updateEntityIdFromServer @1048`.
+
+A tag publisher de resistência tem 287 bytes, SHA-256 `6ae5d98cd4b12739d3d1d7dc78d37053b2e5b0eb3b1093e3f8a9a6d9768df209`, e lista `#c:bosses`, `minecraft:warden`, `minecraft:armor_stand`, `alexscaves:hullbreaker`, `alexscaves:forsaken`, `alexscaves:atlatitan` e `alexscaves:tremorzilla`. O conjunto resolvido, especialmente `#c:bosses`, depende do pack; a lista não é exaustiva de todos os alvos resistentes efetivos.
+
+**A iteração continua:** `goto @1081 → 766` retoma `hasNext`. Não existe comparação de distância para escolher o mais próximo nem `break` depois de uma troca. As gravações no UUID **não reatribuem a local 5**: candidatos posteriores no mesmo tick continuam sendo comparados ao **Mob original**, inclusive sua vida e relações. Múltiplas sobrescritas do vínculo são possíveis nesse fluxo compilado; múltiplas transferências efetivamente aceitas no pack **não foram testadas**.
+
+O intervalo `@929–1051` tem uma única chamada a `setPossessed`, com argumento `true`. Ele **não limpa ali o marcador do controlado anterior**. Os caminhos de limpeza em `use` e no início de `onUseTick` não demonstram a transação `unset(old) → set(new)` dentro de Astral. Isso delimita o código local; não demonstra ausência de limpeza externa, nem um bug reproduzido.
+
+Na aquisição inicial, `acHurtEnemy` verifica resistência e a configuração de Player (`@7–38`). O construtor de `ACServerConfig` define `totem_of_possession_works_on_players` com padrão **true** (`@675–686`); configuração ativa continua `NOT_VERIFIED`. A continuação geral reavalia essa configuração para Player controlado, mas o ramo de candidato Astral **não repete um teste independente dela antes de escrever o novo vínculo**. Esse gate posterior não é autorização transacional de transferência para Player.
+
+## 5. Custo do equipamento e fronteiras de dados/rede
+
+O construtor completo declara **durabilidade 1.000**, raridade **UNCOMMON** e modificadores de equipamento **+2 de attack damage** e **−2.4000000953674316 de attack speed**. `acModifiers` fornece a tabela no `MAINHAND`; o despacho de atributos chama o helper de compatibilidade. Esses valores são defaults de equipamento, sem dano mágico próprio de Astral. O item declara `getEnchantmentValue=1` e `isEnchantable(stack)` quando `stack.count==1`.
+
+**Desgaste nativo observado:** `onUseTick @230–272` incrementa o damage da stack em **1** quando **`timeLeft % 2 == 0` e `Level.isClientSide == true`**. Um usuário `Player` criativo pula esse incremento; outros usuários seguem a condição de lado/tempo. A instrução é **cliente**, não uma cobrança de durabilidade no servidor demonstrada por esta prova, e não conta transferências Astral. O ramo de transferência não contém débito próprio de mana, munição, durabilidade, cooldown ou chamada direta a `hurt`. Custos de mesa, bigorna e receita não são recurso por cast.
+
+`releaseUsing` completo resolve a entidade atual, remove seu glowing quando não nula, envia mensagem cliente→servidor no cliente e chama **`shrink(1)` quando damage ≥ maxDamage**. Esse corpo não chama `resetBound` nem `setPossessed(false)`; soltar o item não comprova remoção do vínculo ou do marcador. Quebra real, Unbreaking, concorrência e settlement aceito de desgaste exigem QA de cliente/servidor.
+
+| Estado / helper completo | Semântica e limite |
+|---|---|
+| `ACCompat.getTag` / `getOrCreateTag` | Leem `DataComponents.CUSTOM_DATA` e devolvem **cópia** por `CustomData.copyTag`, ou null/novo composto. Alterar a cópia não comita a stack |
+| `ACCompat.setTag` | Grava `CustomData.of(tag)` no componente; argumento null remove `CUSTOM_DATA` |
+| `setPossessed(Entity,boolean)` — 16 instruções | Obtém `Entity.getPersistentData` pelo helper; true grava `TotemPossessed=true`, false remove a chave; entidade null retorna. Não percorre donos anteriores |
+| `resetBound(ItemStack)` — 16 | Remove **do item** `BoundEntityTag`, `BoundEntityUUID`, `ControllingEntityID` e comita; não limpa por si o marcador persistente de outra entidade |
+| `ACPlatform.serializeEntity` — 5 | Delega a `Entity.serializeNBT(entity.registryAccess())`; o retorno é snapshot, não spawn, remoção ou save em disco confirmado |
+| `getControlledEntity` — 44 | Cliente resolve o **ID numérico** `ControllingEntityID` por `Level.getEntity(int)`; servidor resolve `BoundEntityUUID` no **ServerLevel atual**. Ausência/sentinela `−1` pode retornar null |
+| `updateEntityIdFromServer` — 49 | Resolve o UUID, grava ID ou **−1**, comita e envia `UpdateItemTagMessage` para todos **somente quando ID antigo e novo diferem**. Não envia apenas porque o snapshot/UUID mudou |
+| `appendHoverText` — 37 | Lê `BoundEntityTag`, resolve o tipo e acrescenta sua descrição em cinza quando disponível; não demonstra entidade viva ou vínculo resolvido |
+
+`UpdateItemTagMessage` sela construtor, leitura, escrita e handler completos. Transporta um ID de entidade e uma ItemStack; os codecs da stack são delegados a `PacketBufferUtils`, fora deste contrato. O handler usa o sender ou, no cliente, o Player local para obter o nível; resolve ali a entidade pelo **ID fornecido**, exige `LivingEntity` e procura uma stack do **mesmo tipo de item** nas mãos. **Mainhand tem prioridade sobre offhand**. Se o item implementa `UpdatesStackTags` e a tag recebida não é null, chama `updateTagFromServer`.
+
+O Totem herda a implementação default completa de quatro instruções de `UpdatesStackTags`, que delega a `ACCompat.setTag`. O handler inspecionado não contém teste explícito **`entityId == sender.id`**, nem identidade da mesma stack além do tipo de item. Essa é uma observação local do método; não certifica vulnerabilidade explorável, registro/direção da rede, autenticação global, destinatário, ordem, replay, proteção ou cobrança aceita pelo servidor. Mensagem enviada, tag escrita e UUID resolvido não são recibo de ação ou crédito de combate.
+
+## 6. Consumidores do marcador e contexto de targeting
+
+`alexscaves.mixins.json` lista `IllagerMixin` e `LivingEntityMixin`; os classfiles e anotações relevantes estão selados. Eles leem **`TotemPossessed`**, sem ler diretamente o encantamento:
+
+- `IllagerMixin.ac_isAlliedTo` completo, **14 instruções**, injeta em **HEAD** de `isAlliedTo(Entity)Z`, `cancellable=true`. Define retorno false se o próprio Illager ou o outro não nulo estiver possuído. Seu `isPossessed` completo tem cinco instruções e lê o marcador persistente.
+- `LivingEntityMixin.ac_onSetLastHurtByMob` completo, **28 instruções**, injeta em **TAIL** de `setLastHurtByMob`. Se o argumento é um **Raider possuído**, o receptor é Raider ou AbstractIllager e também Mob, solicita `Mob.setTarget(argumento)`. Seu helper de cinco instruções lê o mesmo marcador.
+
+Esses consumidores publicados contextualizam as duas direções de aliança e a chamada a `setLastHurtByMob` do loop. Não é suficiente presumir somente a implementação original da engine para explicar a seleção. Aplicação e ordem reais dos mixins, eventos de outros mods, PvP e claims continuam não verificados. As chaves `BoundEntity*` também aparecem em Holocoder/Hologram; ocorrências de `CommonEvents` inspecionadas são condicionadas a **HOLOCODER**, sem expandir o contrato de Astral para esses sistemas.
+
+## 7. Sete eixos e fronteira de integração
+
+| Eixo de perk | Contrato estático individual | Fronteira de integração |
+|---|---|---|
+| **1. Targeting** | Ramo servidor de Mob controlado, candidato LivingEntity, filtros nas duas direções de aliança, saúde atual estritamente maior, resistência e nível positivo; Player controlado tem ramo de ataque separado | Não escolher alvo por proximidade presumida, importar Player/config como autorização transacional ou ignorar consumidores do marcador |
+| **2. Range / área** | AABB do controlado inflada em 3 por eixo; look helper usa ângulo/distância e LOS | Não converter box em raio de dano nem parâmetro de visão/navegação em alcance de transferência |
+| **3. Velocidade / direção** | Transferência troca dados de vínculo; não declara vetor, teleporte ou velocidade próprios. Movimento/rampa do Totem estão fora das janelas atuais | Não reexecutar movimento ou ampliar navegação por um suposto multiplicador de Astral |
+| **4. Projétil / tamanho** | Não cria projétil ou entidade no ramo de troca; serialização e consulta não são spawn. `canBeHitByProjectile` é um predicado de elegibilidade | Não presumir hit de projétil, quantidade, escala ou nova hitbox |
+| **5. Dano / tipo** | Mob recebe target/last-hurt; não há `hurt` ou DamageType próprio no ramo Astral. Player usa `attack` na alternativa sem transferência | Pedido de target/ataque não prova dano aceito; não duplicar dano nem criar tipo mágico/elétrico |
+| **6. Duração / recursos** | `elapsed=72000−timeLeft`, `%4==0`; nível positivo sem escala/chance própria. Desgaste cliente par, exceção criativo, shrink ao liberar gasto; custos de enchanting separados | Sem hook seguro para intervalo, custo ou duração; cobrança servidor e quebra efetiva permanecem sem QA física |
+| **7. Autoria / proteção / procs** | Item guarda UUID/snapshot/ID; entidade guarda marcador. Original permanece local no tick, loop continua e não limpa marcador anterior nesse trecho | Tags não constituem owner autenticado, permissão, transação ou recibo único de kill/XP/Mastery; sincronização não certifica destinatário/replay |
+
+A possessão, o ataque e seu ciclo de vida pertencem ao provider. O Black Arcana preserva esse processamento nativo; o RPG Skill Tree mantém progressão/Mastery/gates sob contrato real. Setter, tag NBT, método chamável ou descriptor JVM observado **não é API mutadora estável**. Esta conclusão estática não autoriza adapter, transferência/dano reexecutados, proc ou recibo de RPG Mastery. `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`.
+
+## 8. Cobertura da prova, histórico e validação
+
+O [manifesto individual atual](../EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.json) sela **10 classes, 50 métodos selecionados e 1.045 âncoras**, além dos 13 recursos relevantes: metadados TOML, as duas locales, definições Astral/Detonating, tags de item/resistência, receita, quatro tags de aquisição e configuração de mixins. Separa hashes de classfile, digests de parse, censo de leitores, varredura das 51 definições e a cobertura de instruções selecionadas.
+
+| Corpo / janela | Cobertura atual declarada |
+|---|---|
+| `onUseTick` | **254/478 instruções — PARTIAL**: `@0–39` (19), `@106–284` (83), `@651–655` (3), `@714–1084` (149) |
+| Omissões de `onUseTick` | **224 instruções omitidas**: `@41–103` Detonating Death; `@286–648` rampa/navegação/movimento; `@658–711` partículas. A fronteira de seleção `@39` / `@106` omite inclusive `ifnull @41 → 106`; não é uma sequência linear selada |
+| Outros 21 métodos do Totem | **Corpos completos**, total **502 instruções**; incluem construtor, encantabilidade, use/release, animação/duração, atributos e lambda, tooltip, vínculo/resolução/sync, look helper, aquisição, marcador e predicado lambda |
+| Helpers e consumidores selecionados | Corpos completos de cópia/escrita/leitura de dados, leitor de encantamento, serialização, mensagem/default interface e consumidores/helpers de marcador; completude desses corpos não significa classe inteira auditada |
+| Inicializadores compartilhados e config | Janelas **PARTIAL** de `ACEnchantmentRegistry.<clinit> @347–353`, `ACItemRegistry.<clinit> @2310–2324` e construtor `ACServerConfig @668–686`; `key` e supplier selecionado completos, bindings de bootstrap selados |
+
+São **quatro corpos com seleção PARTIAL**, incluindo `onUseTick`. A cobertura fecha os caminhos e helpers necessários ao **contrato estático individual de Astral**, com fronteiras explícitas para os ramos omitidos. Não se declara `onUseTick` integralmente coberto, CFG executado, engine-base reauditada ou provider integral certificado. As 59 branches e o roster anterior auxiliam o cruzamento de destinos; não promovem 254 âncoras a 478 instruções observadas no selo atual.
+
+A [prova histórica inicial](../EXACT-ASTRAL-TRANSFERRING-1.0.10.json) e a [prova histórica de lifecycle](../EXACT-ASTRAL-TRANSFERRING-LIFECYCLE-1.0.10.json), com suas [sonda inicial](../../../../../docs/qa/alexscaves_1010_astral_transfer_probe.py) e [sonda de lifecycle](../../../../../docs/qa/alexscaves_1010_astral_lifecycle_probe.py), conservam seus limites **PARTIAL**, hashes e bytes. O roster de 22/22 métodos e as 69 âncoras daquela etapa eram insuficientes para o contrato atual; não equivalem à prova consolidada. O estado parcial histórico não é o estado atual desta ficha.
+
+A regressão atual exige o publisher SHA-exato e protege guardas, elapsed/módulo/saúde, continuidade do loop e local original, lado do desgaste, dados copiados, ID/UUID, mensagem, mixins e limites de integração. Testes estáticos e mutações negativas verificam o contrato documental; não executam Minecraft nem homologam hooks.
+
+QA física continua **NOT_TESTED**: níveis 0/I/forçados, datapacks/config reais, cliente e servidor dedicado, desgaste aceito, Player/PvP/claims, visão/LOS/Sightless, alianças/ordem dos mixins, múltiplos candidatos e local original, limpeza do marcador anterior, totems duplicados, sender/destinatário/replay, unload/reload/morte/dimensões, resolução de UUID/ID, dano aceito e crédito único de kill/XP/Mastery. Esses limites de runtime não são lacunas ocultas de identidade ou do ramo estático fechado.
+
+**Conclusão delimitada:** uma ficha individual concluída em `STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`, **+0 raízes mágicas** e **+0 providers integrais concluídos**. O provider e os contratos de Stage/equipamento permanecem abertos; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. O próximo encantamento parcial alfabético é `alexscaves:bonking`.
