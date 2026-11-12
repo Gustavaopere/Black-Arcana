@@ -44,17 +44,25 @@ class Tests(unittest.TestCase):
                             for x in m["relevant_references"]))
         self.assertTrue(any("ServerLevel.getEntity:(Ljava/util/UUID;)" in x["symbol"]
                             for x in m["relevant_references"]))
-    def test_static_partial_never_mutates(self):
+    def test_historical_partial_and_current_static_certificate_never_mutate(self):
         key="✅-alexs-caves-continued/enchantments/astral-transferring.md"
         objects=json.loads(LEDGER.read_text(encoding="utf8"))["objects"]
-        self.assertNotIn(key,objects)
+        cert=objects[key]
+        self.assertEqual(cert["claim_scope"],"STATIC_TECHNICAL_CATALOG_ONLY")
+        self.assertEqual(cert["evidence_grade"],"SHA_EXACT_BINARY_BEHAVIOR")
+        self.assertEqual(cert["mutating_hook"],"NOT_VERIFIED")
+        self.assertEqual(cert["physical_qa"],"NOT_TESTED")
+        self.assertEqual(set(cert["evidence"]),
+                         {"identity","behavior","parameters","targeting",
+                          "costs","integration","validation"})
         for k,v in (("certification","PARTIAL"),("mutating_hook","NOT_VERIFIED"),
                     ("physical_qa","NOT_TESTED"),("mutation","NO_MUTATION")):
             self.assertEqual(self.d["limits"][k],v)
         card=CARD.read_text(encoding="utf8")
         self.assertIn("EXACT-ASTRAL-TRANSFERRING-LIFECYCLE-1.0.10.json",card)
+        self.assertIn("EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.json",card)
         self.assertIn("NO_MUTATION",card)
-        self.assertIn("| ⚠️ | `alexscaves:astral_transferring`",
+        self.assertIn("| ✅ | `alexscaves:astral_transferring`",
                       CROSS.read_text(encoding="utf8"))
 if __name__=="__main__":
     unittest.main()

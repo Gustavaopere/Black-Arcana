@@ -8020,6 +8020,47 @@
           "reason": "Sonda/CI individuais verificam o selo da ficha e 11 recursos, 8 classfiles, 49 métodos e 947 âncoras no JAR SHA-exato; quatro manifestos Arrow históricos e a herança do classpath são preservados. Hook NOT_VERIFIED e QA física NOT_TESTED, sem equivalência alegada ao runtime ModLauncher."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/astral-transferring.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutation": "NO_MUTATION",
+      "scope_note": "Contrato estático individual Astral Transferring: transferência nativa, filtros, custos, estado, rede e marcadores selecionados; onUseTick/registries/config parciais permanecem delimitados. Não conclui Totem integral, modpack transformado, autorização/settlement aceitos, hooks, QA física, provider ou Stage. +0 raízes mágicas.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/astral-transferring.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, recurso Astral, registro, tag Totem, idiomas, receita, aquisição e exclusão reversa Detonating Death; fonte1.1.1 adjacente sem paridade alegada."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/astral-transferring.md",
+          "reason": "Ramo de servidor para Mob controlado: elapsedUse=72000−timeLeft, módulo4, saúde atual maior e nível positivo; laço conserva o controlado original local e pode escrever para vários candidatos. Marcador anterior não é removido por essa sequência local."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/astral-transferring.md",
+          "reason": "MáximoI, peso2, custos1+12×(L−1)/41+10×(L−1), bigorna4; nívelpositivo sem escala extra. AABB do controlado inflada3 e tolerância angular do helper não são raio universal ou alcance físico garantido. Duração de uso72000 não é duração garantida da posse."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/astral-transferring.md",
+          "reason": "Predicados nativos e bootstrap, filtros de identidade, alianças nos dois sentidos, veículo e LivingEntity; transferência no caminho Mob, alternativa Player separada. Tags/config e mixins de marcador têm autoridade declarada própria; não há seleção nearest ou break no laço de candidatos."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/astral-transferring.md",
+          "reason": "Custos de aquisição separados de ativação. Desgaste+1 em timeLeft par é ramo cliente, com exceção creative, sem comprovar débito servidor ou preço por transferência; release pode reduzir stack após dano máximo. Sem cobrança própria de mana, munição ou XP no ramo Astral."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/astral-transferring.md",
+          "reason": "TotemPossessed persistente de entidade, CUSTOM_DATA da stack, UUID servidor e ID cliente são superfícies distintas. Serialização de entidade e mensagens não são spawn nem recibo de settlement; handler verifica tipo de item, não autenticação completa. NO_MUTATION e Mastery pendente; aplicação efetiva de mixins/QA não promovida."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/astral-transferring.md",
+          "reason": "Manifesto individual com 10 classes,13 recursos,50 métodos e 1045 âncoras; métodos/janelas parciais explícitos, CLI publisher e regressões reproduzíveis preservando provas anteriores e budgets256/8192/8min."
+        }
+      }
     }
   },
   "providers": {},
