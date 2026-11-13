@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import zipfile
 from pathlib import Path
 
@@ -17,7 +18,7 @@ from alexscaves_1010_bouncy_ball_probe import (
     SHOT, BALL, GUMBEEPER, CLASSES, require, method as unique_method,
 )
 from alexscaves_1010_damage_consumer_probe import (
-    SHA1, SHA256, SIZE, sha_file, javap, parse_methods,
+    SHA1, SHA256, SIZE, sha_file, javap, parse_methods, METHOD_LINE, CODE_LINE,
 )
 from alexscaves_1010_gumball_state_probe import name_of
 from alexscaves_1010_raygun_local_flow_probe import digest_method
@@ -27,7 +28,9 @@ EXPECTED_METHOD_COUNT = {SHOT: 25, BALL: 28, GUMBEEPER: 36}
 EXPECTED_BRANCH_COUNT = {"acInventoryTick": 40,
                          "bounceFromDirection": 22,
                          "shootGumball": 12}
-UNSUPPORTED = frozenset(("tableswitch", "lookupswitch", "jsr", "jsr_w", "ret"))
+UNSUPPORTED = frozenset(("jsr", "jsr_w", "ret"))
+SWITCH_OPS = frozenset(("tableswitch", "lookupswitch"))
+CASE = re.compile(r"^\s*(default|-?\d+):\s*(-?\d+)\s*$")
 MAIN_METHODS = ("acInventoryTick", "bounceFromDirection", "shootGumball")
 REQUIRED_PRODUCER = (
     (190, "BOUNCY_BALL"), (193, "enchantLevel"),
@@ -49,13 +52,62 @@ def pairs_unique(items):
 def digest(contents: bytes) -> str:
     return hashlib.sha256(contents).hexdigest()
 
-def branch_edges(method):
-    """Validate full direct bytecode conditional/goto destinations, fail closed."""
+def method_switch_tables(method, javap_text):
+    """Read javap case/default destinations omitted by parse_methods."""
+    lines = javap_text.splitlines()
+    heading = "  " + method["header"] + ";"
+    matches = [i for i, line in enumerate(lines) if line.rstrip() == heading]
+    require(len(matches) == 1, "missing or ambiguous JVM method heading")
+    begin = matches[0] + 1
+    end = begin
+    while end < len(lines):
+        declaration = METHOD_LINE.match(lines[end])
+        if declaration and "(" in declaration.group(1):
+            break
+        end += 1
+    tables = []
+    for i in range(begin, end):
+        match = CODE_LINE.match(lines[i])
+        if not match or match.group(2) not in SWITCH_OPS:
+            continue
+        offset, opcode = int(match.group(1)), match.group(2)
+        entries = []
+        j = i + 1
+        while j < end and lines[j].strip() != "}":
+            row = CASE.match(lines[j])
+            require(row is not None, "malformed javap switch case row")
+            entries.append({"case": row.group(1),
+                            "target": int(row.group(2))})
+            j += 1
+        require(j < end and 2 <= len(entries) <= 120,
+                "unclosed or out-of-bounds javap switch table")
+        tables.append({"offset": offset, "opcode": opcode, "cases": entries})
+    require(len(tables) <= 8, "unexpected native switch table count")
+    return tables
+
+def branch_edges(method, switches=None):
+    """Validate all direct if/goto destinations and separately parsed switches."""
     rows = method["instructions"]
     positions = [r["offset"] for r in rows]
     require(1 <= len(rows) <= 2200 and positions == sorted(set(positions)),
             "non-canonical method offsets")
     valid = set(positions)
+    switches = [] if switches is None else switches
+    by_offset = {s["offset"]: s for s in switches}
+    require(len(by_offset) == len(switches), "duplicate switch offset")
+    expected_switch_offsets = {
+        r["offset"] for r in rows if r["opcode"] in SWITCH_OPS}
+    require(set(by_offset) == expected_switch_offsets,
+            "unsupported switch without verified case map")
+    for item in switches:
+        row = next(r for r in rows if r["offset"] == item["offset"])
+        require(row["opcode"] == item["opcode"], "switch opcode mismatch")
+        cases = item["cases"]
+        labels = [entry["case"] for entry in cases]
+        require(len(labels) == len(set(labels)) and labels.count("default") == 1,
+                "invalid switch case/default population")
+        require(all(entry["target"] in valid for entry in cases),
+                "invalid switch branch target")
     edges = []
     for pos, row in enumerate(rows):
         op = row["opcode"]
@@ -123,8 +175,10 @@ def audit(jar: Path, parent_path: Path, state_path: Path, javap_bin: str):
     published = {c["class_path"]: c for c in state["classes"]}
     require(set(published) == set(OWNERS), "Gumball state owner mismatch")
     method_cache = {}
+    raw_cache = {}
     for owner in OWNERS:
-        rows = parse_methods(javap(javap_bin, jar, owner[:-6].replace("/", ".")))
+        raw_cache[owner] = javap(javap_bin, jar, owner[:-6].replace("/", "."))
+        rows = parse_methods(raw_cache[owner])
         require(len(rows) == EXPECTED_METHOD_COUNT[owner] ==
                 published[owner]["declared_method_count"],
                 "declared class method census drift")
@@ -145,7 +199,8 @@ def audit(jar: Path, parent_path: Path, state_path: Path, javap_bin: str):
         require(len(current["instructions"]) == native["instruction_count"] and
                 digest_method(current) == native["parsed_method_sha256"],
                 "Bouncy Ball selected method digest drift")
-        actual_edges = branch_edges(current)
+        switch_tables = method_switch_tables(current, raw_cache[owner])
+        actual_edges = branch_edges(current, switch_tables)
         require(actual_edges == native["selected_branches"],
                 "sealed branch inventory does not match complete parsed method")
         if native["name"] in EXPECTED_BRANCH_COUNT:
@@ -158,7 +213,8 @@ def audit(jar: Path, parent_path: Path, state_path: Path, javap_bin: str):
         consumers.append({"owner": owner, "name": native["name"],
                           "descriptor": native["descriptor"],
                           "instructions": len(current["instructions"]),
-                          "branches": len(actual_edges),
+                          "conditional_and_goto_branches": len(actual_edges),
+                          "verified_switch_tables": switch_tables,
                           "parsed_method_sha256": digest_method(current)})
     require(len(consumers) == 7 and
             {m["name"] for m in consumers if m["name"] in MAIN_METHODS}
@@ -182,6 +238,7 @@ def audit(jar: Path, parent_path: Path, state_path: Path, javap_bin: str):
         },
         "limits": {
             "interprocedural_exception_flow": "NOT_RECONSTRUCTED",
+            "direct_switch_case_destinations": "VERIFIED_EXACT_JAVAP",
             "effective_world_replay_and_reload": "NOT_VERIFIED",
             "external_mixins_and_other_jar_consumers": "NOT_VERIFIED",
             "unusual_enchant_levels_and_datapacks": "NOT_VERIFIED",
