@@ -164,6 +164,16 @@ def method_roster(methods):
         key=(name,method["descriptor"])
         require(key not in keys,"duplicate method descriptor in owner class")
         keys.add(key)
+        # Abstract/native declarations have descriptors but no Code attribute.
+        # Never pretend those declarations have an executable bytecode body.
+        if not method["instructions"]:
+            require(" abstract " in " "+method["header"]+" " or
+                    " native " in " "+method["header"]+" ",
+                    "method declaration without Code but not abstract/native: "+name)
+            out.append({"name":name,"descriptor":method["descriptor"],
+                        "instruction_count":0,"declaration_only":True,
+                        "parsed_method_sha256":digest_method(method)})
+            continue
         rows=strict_method(method)
         out.append({"name":name,"descriptor":method["descriptor"],
                     "instruction_count":len(rows),
