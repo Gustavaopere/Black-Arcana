@@ -8182,6 +8182,46 @@
           "reason": "Original SHA-exact Bouncy Ball and Gumball-state manifests are reconciled by dedicated causal audit and its exact 1.0.10 JAR workflow, including twelve synthetic tests, switch-target validation and 544 index checks; actual gameplay QA, inherited reload persistence and external mixins remain unverified."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/charting-call.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Charting Call modifies the existing Magic Conch Deep One group summon. Its 1.0.10 native JVM uses max(L-1,2), max(L-2,0), max(L-3,0) as bounded RNG arguments, with static zero-bound risk at enchantment levels I-III. Direct 4-consumer CFG: 74 branches; two owner classes with 81 methods, three abstract; native summon, target and NBT helpers inspected. No separate cast, damage or XP. Runtime exception/crash, consumed costs on failure, successful entity insertion, external mixins, provider hook and physical QA NOT VERIFIED/TESTED. NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/charting-call.md",
+          "reason": "Publisher 1.0.10 JAR SHA1/SHA256/size, `charting_call.json`, Magic Conch item tag and the two owner classfile fingerprints; title/ID/level IV are pinned."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/charting-call.md",
+          "reason": "Original manifest and exact causal seal prove server-only Charting Call count branch, 81 declared owner methods, 74 validated direct JVM branches, six releaseUsing bounded RNG callsites and placement handoff."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/charting-call.md",
+          "reason": "Exact levels I-IV, max(L-1,2), max(L-2,0), max(L-3,0), base 3/2/1 requested summon limits, up to 99 position attempts per family, summon time inherited from Lasting Morale and documented zero-bound hazard."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/charting-call.md",
+          "reason": "The Conch's summonDeepOne routine sets owner/lifetime, tries X/Z offsets from -10 through +9, checks spawn obstruction, calls addFreshEntity and copyTarget; native DeepOne ally/last-hurt exclusions are documented."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/charting-call.md",
+          "reason": "Release checks charge >25, applies durability or Taxing Bellow before the server branch, then initiates native stat/cooldown after loops; a zero-bound RNG exception can prevent subsequent work. No independent Charting Call debit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/charting-call.md",
+          "reason": "DeepOneBaseEntity stores ConchSummoned/ConchUUID/ConchTime in own NBT and settles entity AI/expiration; Black Arcana must not spawn extra members, mutate RNG bounds or duplicate cast, costs, damage or RPG Mastery without verified hook."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/charting-call.md",
+          "reason": "Read-only Java 21 javap and SHA-exact publisher release; prior sealed Charting Call manifest, causal 81-method/74-branch manifest, explicit three RNG sequences, synthetic fail-closed tests, index checks and CI. Physical failure/QA remains NOT_TESTED."
+        }
+      }
     }
   },
   "providers": {},
