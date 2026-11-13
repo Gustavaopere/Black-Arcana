@@ -571,8 +571,11 @@ class BonkingContract(unittest.TestCase):
         missing = sorted(ids - present)
         self.assertIn('bonking', full)
         self.assertNotIn('bonking', partial)
-        self.assertEqual(partial[0], 'bouncing_bolt')
-        self.assertEqual((len(full), len(partial), len(present & ids), len(ids)), (33, 18, 51, 51))
+        # Dossier promotions advance the alphabetic queue; do not freeze it
+        # at the provider's state when the Bonking certificate was authored.
+        self.assertGreaterEqual(len(full), 33)
+        self.assertEqual((len(full) + len(partial), len(present & ids), len(ids)),
+                         (51, 51, 51))
         crosswalk = (P / 'ENCHANTMENT-PERK-CROSSWALK-1.0.10.md').read_text()
         self.assertIn('| ✅ | `alexscaves:bonking`', crosswalk)
         for name, count in (('full', len(full)), ('partial', len(partial)), ('existing', len(present & ids))):
