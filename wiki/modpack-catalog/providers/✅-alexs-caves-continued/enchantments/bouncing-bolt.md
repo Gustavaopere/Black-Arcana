@@ -1,8 +1,8 @@
 # Bouncing Bolt — ricochete nativo do Sea Staff (1.0.10)
 
-**Estado:** ⚠️ ficha técnica **parcial/condicionada**; identidade, JSON publisher, produtores e consumidores selecionados comprovados pelo binário exato. **Não** é uma nova magia/cast independente. O comportamento modifica a mesma ação [Sea Staff — Water Bolt](../actions/sea-staff-water-bolt.md).
+**Estado:** ✅ **contrato técnico estático individual certificado** (`STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`) no escopo do comportamento compilado do publisher 1.0.10. Identidade, parâmetros, consumidores, lifecycle e limites foram analisados com hashes e desvios JVM exatos. **Não** é uma nova magia/cast independente. O comportamento modifica a mesma ação [Sea Staff — Water Bolt](../actions/sea-staff-water-bolt.md).
 
-**Integração:** `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `perk_certification=NOT_CERTIFIED`, `NO_MUTATION`. A certificação do contrato estático da *ação* Sea Staff não homologa automaticamente o encantamento para perks mutadoras.
+**Integração:** `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `perk_certification=STATIC_TECHNICAL_CATALOG_ONLY`, `NO_MUTATION`. A certificação estática do encantamento não homologa perks mutadoras, execução em modpack, QA física ou novo cast.
 
 ## 1. Identidade, versão e autoridade
 
@@ -91,14 +91,35 @@ A busca do ricochete não possui chamada própria de linha de visão no método 
 
 Black Arcana mantém seu runtime mágico próprio e **não** assume o settlement nativo do Sea Staff. RPG Skill Tree é apenas sibling/provider de progressão, perks, atributos e Mastery via boundary real. Se uma perk exigir um ponto mutador seguro para modificar range/alvo/velocidade, manter **fail-closed** até haver API/hook sustentado por evidência e testes no modpack.
 
-## 7. Limites, testes e contabilização
+## 7. Certificação estática individual — causalidade, autoria e integridade
 
-**Comprovado:** identidade e JSON do JAR 1.0.10, exclusividade declarada, bytes de duas classes e SHA-256, três métodos com descritores, hashes JVM, offsets e janelas delimitadas, testes de parser/fail-closed e reconciliação com ação Sea Staff já certificada.
+O [selo causal SHA-exato](../EXACT-BOUNCING-BOLT-CAUSAL-1.0.10.json) e a [sonda de auditoria](../../../../../docs/qa/alexscaves_1010_bouncing_bolt_causal_probe.py) reutilizam o [manifesto publisher anterior](../EXACT-BOUNCING-BOLT-1.0.10.json) e a ação [Sea Staff](../actions/sea-staff-water-bolt.md). A inspeção cobre **7 métodos declarados** em `SeaStaffItem` e **21 métodos declarados** em `WaterBoltEntity`, registrando nome, descritor, SHA-256 do parse JVM, campos/chamadas relevantes e hashes dos classfiles originais. O digest de um método é do **parse**, não um hash de arquivo class individual.
 
-**Ainda não comprovado:** grafo de controle total; taxas efetivas de acerto; danos aceitos, número real de hits; spawn aceito; persistência de owner/alvo no reload; concorrência de múltiplos hits; acesso servidor/cliente sob todos os eventos; proteção PvP/claims; datapacks efetivos; aplicabilidade de mixins/hook externo; QA física de combate.
+| Método completo e SHA-exato | Instruções | Branches | Escopo |
+|---|---:|---:|---|
+| `SeaStaffItem.use` | **189** | **17** | Verifica `BOUNCING_BOLT @299`, `enchantLevel @302` e `ifle @305 → 314`, grava `ricochet=true @310–311` no bolt primário |
+| `WaterBoltEntity.damageMobs` | **105** | **14** | Itera candidatos `@216 → @68`, pede `ACCompat.hurt @139`, verifica retorno `@142`, consome a flag `@220–233` e invoca `onRicochetHit @239` |
+| `WaterBoltEntity.onRicochetHit` | **122** | **13** | Itera candidatos `@151 → @42`, seleciona destino e tenta gerar filho via `Level.addFreshEntity @266` |
 
-**Estados:** `VERIFIED_EXACT_BINARY_SELECTED_WINDOWS` para os fatos estáticos; `NOT_VERIFIED` para hook mutador; `NOT_TESTED` para QA em jogo; `NOT_CERTIFIED` para homologação integral de perk; `NO_MUTATION`.
+São **44 desvios JVM** nos três consumidores, com targets e fallthrough (para ramos condicionais) fixados no manifesto. O loop de `SeaStaffItem.use @352 → @116` pertence ao número de bolts do cast original, **não** é um loop de ricochetes. Em `damageMobs`, a referência de candidato é retida antes de `ACCompat.hurt @139` e o ramo `ifeq @142 → @216` governa efeitos posteriores; portanto, o handoff após o loop **não certifica que a vítima tenha perdido HP**. Há guardas `getfield ricochet @220`, `ifeq @223 → 242` e `ifnull @228 → 242`; o método escreve `ricochet=false @232–233` **antes** da chamada `onRicochetHit @239`. Esse consumo evita rearmar o mesmo projétil pelo caminho auditado, sem prometer spawn aceito.
 
-Para eventual homologação, executar cenário real em servidor + cliente: cast com/sem Bouncing Bolt, Triple Splash em stack convencional e modificado, alvo único e múltiplo, tipos aliados/resistentes, hits negados, impacto em bloco/entidade, valores de ricochete sob ameaça, persistência/reload, chunks, owner desconectado, proteção PvP, custo/durabilidade e duplicação de Mastery. Repetir com outros mods que interceptam projéteis.
+`onRicochetHit` consulta a AABB da entidade atingida inflada em **32D por eixo** (`@9–18`) e `LivingEntity` em `@32`, com os filtros de aliança (`@67/@106`), exclusão de `DeepOneBaseEntity` e da entidade já atingida, e distância **estritamente maior que 3D** (`@115–123`) para selecionar o candidato elegível mais próximo da entidade de impacto (`@128–144`). O desvio `ifnull @156 → 270` exige candidato, e `ifeq @163 → 270` exige que o owner seja `LivingEntity`. O filho é instanciado `@182` com esse owner, copia posição `@190` e flag visual `Bubbling @254–257`, aponta para UUID do destino `@200` e solicita movimento `@248`. `addFreshEntity @266` **não comprova** spawn efetivo, acerto, dano ou recompensa.
 
-**Contabilidade desta ficha:** **+1 ficha individual parcial de encantamento**, **+0 contratos estáticos certificados**, **+0 raízes mágicas**, **+0 providers encerrados**. O próximo recurso alfabético a abordar é `alexscaves:bouncy_ball`.
+### Constructors, flags e lifecycle dos bolts
+
+O construtor base `WaterBoltEntity(EntityType,Level)` contém **27 instruções** e atribui `dieIn=-1`, `ricochet=false` e `seekAmount=0.3F`. O segundo construtor `WaterBoltEntity(Level,LivingEntity)` contém **28 instruções** e chama `setOwner @52`. O corpo de `onRicochetHit` não copia nem rearma `ricochet` e não atribui o bônus de `SOAK_SEEKING` ao filho. Isso delimita o encadeamento nativo: **no máximo uma tentativa de handoff por flag**; não prova aceitação de spawn nem inexistência de hooks alheios.
+
+O censo inclui `tick` (362 instruções), `onHitEntity` (37), `onHitBlock` (28), `getArcingTowards` (19), `readAdditionalSaveData` (6) e `addAdditionalSaveData` (6). Os dois overrides de NBT próprios fazem referência apenas a `Bubbling`, sem persistir `ricochet`, `seekAmount`, `dieIn` ou alvo UUID **nesses métodos**. Consequências após reload, mixins e dados herdados permanecem `NOT_VERIFIED`; ausência local de campo não equivale a falha física reproduzida.
+
+### Matriz de escopos para perks e Mastery
+
+- **Identidade, ativação, custo:** nível I, peso 2, custo de encantamento 1–41, bigorna 4, `mainhand` e exclusividade declarada com Triple Splash. O Sea Staff paga seu custo nativo de **1 durabilidade por cast** fora `instabuild`, não por ricochete. Nenhum custo de mana, cooldown ou dano adicional de Bouncing Bolt está presente nos consumers.
+- **Dano/área/target:** `damageMobs` solicita **3F** usando `mobProjectile` numa AABB do bolt inflada **2D**; `onRicochetHit` seleciona um destino de pesquisa **32D por eixo**, com distância `>3D`, filtros nativos e impulso dirigido ao alvo. Essas três grandezas **não** são um raio de dano, alcance máximo do projétil nem hitbox aumentada.
+- **Owner e persistência:** o construtor com `LivingEntity` define owner do filho; a busca depende desse owner e do UUID da nova entidade. A flag de ricochete não é rearmada nem serializada pelos overrides próprios. Não inferir aceitação de hit, owner após reload ou replay de pacote.
+- **Autoridade:** Black Arcana não multiplica damage settlement, não gera outro Water Bolt e não credita Mastery/XP por tentativa de ricochete. O RPG Skill Tree é somente provider de perks/atributos via boundaries verificadas. **`mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`/fail-closed**.
+
+### Prova reproduzível e limites
+
+`docs/qa/alexscaves_1010_bouncing_bolt_causal_probe.py` exige JAR SHA-1/SHA-256/tamanho e classes da mesma build, comprova os três digests do selo anterior, asserta os offsets de producer, flag e spawn e enumera as **28 assinaturas**. A CI recompõe o manifesto a partir do JAR e compara o JSON exato; testes negativos rejeitam targets inexistentes, offsets duplicados, switch não modelado e pivots incorretos. Isso fecha **o contrato técnico estático delimitado do encantamento**, reutilizando a ação-base Sea Staff já certificada.
+
+Não são alegadas reconstrução de CFG interprocedural/exceções, execução no modpack transformado, proveniência de mixins de terceiros, spawn realmente aceito, dano confirmado, proteção PvP/claims, datapacks ou QA física. **Certificado:** ✅ `STATIC_TECHNICAL_CATALOG_ONLY`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. **Contabilidade:** +1 contrato estático individual, +0 raízes de cast, +0 providers integralmente encerrados. Próximo encantamento parcial: `alexscaves:bouncy_ball`.

@@ -8102,6 +8102,46 @@
           "reason": "Manifesto individual com 6 classes com métodos e 1 interface selada, 11 recursos,26 métodos e 678 âncoras; corpos completos e registries parciais delimitados, CLI publisher/selos/regressões, provas anteriores preservadas e budgets256/8192/8min."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/bouncing-bolt.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Bouncing Bolt (Sea Staff) sets the ricochet flag on the parent bolt if enchantment level>0; damageMobs consumes it after candidate selection even if the hurt result was denied. onRicochetHit searches LivingEntity candidates in the hit entity AABB inflated 32D/axis, requires distance>3D and a LivingEntity owner, copies target UUID/position/Bubbling, and attempts one child spawn with default ricochet=false and seekAmount=0.3F. No independently applied damage, new cast or cost; native 3F damage and inflate2D hit AABB belong to Sea Staff action. Publisher 1.0.10 static-only; no mutating hook, physical QA, owner persistence or live spawn success proof; NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bouncing-bolt.md",
+          "reason": "SHA1/SHA256/size exact publisher 1.0.10 JAR, bouncing_bolt JSON and Sea Staff tag/exclusion Triple Splash, both classfile SHA256s and enchant registry callsite."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bouncing-bolt.md",
+          "reason": "7 SeaStaffItem and 21 WaterBoltEntity native method roster with individual JVM parse digests; use 189/17 branches sets flag; damageMobs 105/14 branches consumes flag; onRicochetHit 122/13 branches selects and attempts child spawn."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bouncing-bolt.md",
+          "reason": "Max level I, weight2, base min/max1/41, anvil4, mainhand; impact inflate2D, ricochet search inflate32D axes, distance>3D, native 3F requested damage, child default seekAmount0.3F, no added standalone duration, mana or cooldown."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bouncing-bolt.md",
+          "reason": "Full direct ricochet JVM branches validate owner/ally/DeepOne filters, excluded hit entity, nearest eligible candidate and owner LivingEntity gate, child target UUID; no own LOS or guaranteed hit."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bouncing-bolt.md",
+          "reason": "Sea Staff parent cast pays one ordinary durability outside instabuild; Boncing Bolt adds no separate debit or second cast. Enchanting metadata is acquisition cost, not per-proc resource."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bouncing-bolt.md",
+          "reason": "WaterBolt constructor initializes ricochet false and owner via setOwner; child creation only copies Bubbling and target UUID, not ricochet or enchanted seek amount; own NBT methods serialize Bubbling only; hooks and physical QA unverified; fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bouncing-bolt.md",
+          "reason": "Pinned publisher JAR SHA and parent exact seal, 28-method two-class census, all 44 branch edges and exact callsite probes plus read-only CI/tests and indexes; no physical hit/spawn/claims/network QA. See EXACT-BOUNCING-BOLT-CAUSAL-1.0.10.json for the immutable binary manifest."
+        }
+      }
     }
   },
   "providers": {},
