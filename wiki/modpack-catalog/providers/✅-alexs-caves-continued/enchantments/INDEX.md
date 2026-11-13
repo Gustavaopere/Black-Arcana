@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 35/51.**
+**Fichas catalogadas (somente fichas detectadas): 36/51.**
 
-**Barra das fichas catalogadas:** `█████████████░░░░░░░ 68.6%`
+**Barra das fichas catalogadas:** `██████████████░░░░░░ 70.6%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 35/51.**
+**Homologadas para perks (somente fichas detectadas): 36/51.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 68.6%`
+**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 70.6%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -25,7 +25,7 @@
 | ✅ | Bonking | [ficha/bonking.md](bonking.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Bouncing Bolt | [ficha/bouncing-bolt.md](bouncing-bolt.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Bouncy Ball | [ficha/bouncy-ball.md](bouncy-ball.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Charting Call | [ficha/charting-call.md](charting-call.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Charting Call | [ficha/charting-call.md](charting-call.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Chomping Spirit | [ficha/chomping-spirit.md](chomping-spirit.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Crystallization | [ficha/crystallization.md](crystallization.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Dark Nock | [ficha/dark-nock.md](dark-nock.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
