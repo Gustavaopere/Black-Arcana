@@ -204,7 +204,7 @@ def audit(jar:Path,manifest:Path,javap_bin:str):
                       "actual_datapacks_and_pvp_claims":"NOT_VERIFIED",
                       "mutating_hook":"NOT_VERIFIED",
                       "physical_qa":"NOT_TESTED",
-                      "certification":"PARTIAL",
+                      "certification":"STATIC_TECHNICAL_CATALOG_ONLY",
                       "mutation":"NO_MUTATION"}}
 
 def main():

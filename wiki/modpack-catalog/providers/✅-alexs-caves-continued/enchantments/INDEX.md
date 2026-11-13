@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 33/51.**
+**Fichas catalogadas (somente fichas detectadas): 34/51.**
 
-**Barra das fichas catalogadas:** `████████████░░░░░░░░ 64.7%`
+**Barra das fichas catalogadas:** `█████████████░░░░░░░ 66.7%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 33/51.**
+**Homologadas para perks (somente fichas detectadas): 34/51.**
 
-**Barra dos contratos técnicos estáticos:** `████████████░░░░░░░░ 64.7%`
+**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 66.7%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -23,7 +23,7 @@
 | ✅ | Arrow Inducting | [ficha/arrow-inducting.md](arrow-inducting.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Astral Transferring | [ficha/astral-transferring.md](astral-transferring.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Bonking | [ficha/bonking.md](bonking.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Bouncing Bolt | [ficha/bouncing-bolt.md](bouncing-bolt.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Bouncing Bolt | [ficha/bouncing-bolt.md](bouncing-bolt.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Bouncy Ball | [ficha/bouncy-ball.md](bouncy-ball.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Charting Call | [ficha/charting-call.md](charting-call.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Chomping Spirit | [ficha/chomping-spirit.md](chomping-spirit.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

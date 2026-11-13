@@ -1,0 +1,2158 @@
+{
+  "schema_version": 1,
+  "scope": "BOUNCING_BOLT_NATIVE_RICOCHET_FULL_METHOD_BRANCHES_AND_CLASS_ROSTERS",
+  "authority": "EXACT_PUBLISHER_1.0.10_READ_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "parent_manifest_sha256": "b3b47cd7e02e2d88fa848bdf1fae94c7170919ec2db02432dccefe917146af88",
+  "classes": [
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/item/SeaStaffItem.class",
+      "sha256": "cb3153a35e7f4c3ab23e68693aec110edf03ecd050c3b485e35ccbb257b4bbc6",
+      "declared_method_count": 7,
+      "methods": [
+        {
+          "name": "SeaStaffItem",
+          "descriptor": "(Lnet/minecraft/world/item/Item$Properties;)V",
+          "instruction_count": 4,
+          "parsed_method_sha256": "4babdbb5b29367ab04f2b34563527ca48911acda416b73c64a6834f613b7ee0f",
+          "relevant_symbolic_refs": []
+        },
+        {
+          "name": "initializeClient",
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "instruction_count": 6,
+          "parsed_method_sha256": "05c71e287ad5b4bb063de918259102f6ca4e9b41e673ac635ec084dc4116e88f",
+          "relevant_symbolic_refs": []
+        },
+        {
+          "name": "use",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "instruction_count": 189,
+          "parsed_method_sha256": "fc071fd36310ddb6a082d46113930b78fa89d1f0b4a1a9bfc749d2bd11c1ba7c",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 2,
+              "opcode": "invokevirtual",
+              "operand": "#27",
+              "symbol": "Method net/minecraft/world/entity/player/Player.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+            },
+            {
+              "offset": 65,
+              "opcode": "getstatic",
+              "operand": "#85",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.SOAK_SEEKING:Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "offset": 97,
+              "opcode": "getstatic",
+              "operand": "#109",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TRIPLE_SPLASH:Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "offset": 274,
+              "opcode": "getstatic",
+              "operand": "#167",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.ENVELOPING_BUBBLE:Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "offset": 294,
+              "opcode": "invokevirtual",
+              "operand": "#174",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.setBubbling:(Z)V"
+            },
+            {
+              "offset": 299,
+              "opcode": "getstatic",
+              "operand": "#178",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.BOUNCING_BOLT:Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "offset": 311,
+              "opcode": "putfield",
+              "operand": "#181",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.ricochet:Z"
+            },
+            {
+              "offset": 324,
+              "opcode": "putfield",
+              "operand": "#187",
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.seekAmount:F"
+            },
+            {
+              "offset": 339,
+              "opcode": "invokevirtual",
+              "operand": "#196",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.setArcingTowards:(Ljava/util/UUID;)V"
+            },
+            {
+              "offset": 345,
+              "opcode": "invokevirtual",
+              "operand": "#200",
+              "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 381,
+              "opcode": "invokestatic",
+              "operand": "#228",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurtAndBreak:(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)V"
+            }
+          ]
+        },
+        {
+          "name": "getClosestLookingAtEntityFor",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/Entity;",
+          "instruction_count": 119,
+          "parsed_method_sha256": "9c5f594f399ca3ace5b9d65ad5f4db7f53ddd5e01d1c4654bd951bdaf1a04306",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 75,
+              "opcode": "invokevirtual",
+              "operand": "#285",
+              "symbol": "Method net/minecraft/world/entity/player/Player.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 84,
+              "opcode": "invokevirtual",
+              "operand": "#288",
+              "symbol": "Method net/minecraft/world/entity/Entity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 174,
+              "opcode": "invokevirtual",
+              "operand": "#319",
+              "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+            },
+            {
+              "offset": 218,
+              "opcode": "invokevirtual",
+              "operand": "#285",
+              "symbol": "Method net/minecraft/world/entity/player/Player.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 227,
+              "opcode": "invokevirtual",
+              "operand": "#288",
+              "symbol": "Method net/minecraft/world/entity/Entity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            }
+          ]
+        },
+        {
+          "name": "getEnchantmentValue",
+          "descriptor": "()I",
+          "instruction_count": 2,
+          "parsed_method_sha256": "798e4edaf36fade21f22743e4675e918297e30c52b2df68b1dd4d56d821664ca",
+          "relevant_symbolic_refs": []
+        },
+        {
+          "name": "isEnchantable",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "instruction_count": 8,
+          "parsed_method_sha256": "861106d3637c3fceeb44988416199a36eacafe14c1d20c277a2d7f310af63108",
+          "relevant_symbolic_refs": []
+        },
+        {
+          "name": "acInventoryTick",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "instruction_count": 42,
+          "parsed_method_sha256": "ba400cf053a367bbd133f63ccda6fb93c32c7e89162a51b5cb123be7b50cc891",
+          "relevant_symbolic_refs": []
+        }
+      ]
+    },
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.class",
+      "sha256": "342c011b0178e1f65cd2e6ef315fe6bad49bd5ead237b2274e822560e2eac401",
+      "declared_method_count": 21,
+      "methods": [
+        {
+          "name": "WaterBoltEntity",
+          "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "instruction_count": 27,
+          "parsed_method_sha256": "4a6fe9dcf0e316cbeb5ccf02ddc509289d1a6a104117de9d924788144c3f7aeb",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 3,
+              "opcode": "invokespecial",
+              "operand": "#1",
+              "symbol": "Method net/minecraft/world/entity/projectile/Projectile.\"<init>\":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V"
+            },
+            {
+              "offset": 32,
+              "opcode": "putfield",
+              "operand": "#26",
+              "symbol": "Field dieIn:I"
+            },
+            {
+              "offset": 37,
+              "opcode": "putfield",
+              "operand": "#29",
+              "symbol": "Field ricochet:Z"
+            },
+            {
+              "offset": 43,
+              "opcode": "putfield",
+              "operand": "#33",
+              "symbol": "Field seekAmount:F"
+            }
+          ]
+        },
+        {
+          "name": "WaterBoltEntity",
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "instruction_count": 28,
+          "parsed_method_sha256": "757e63f3d7f87d8459945190e87aecdf9241cd67b1a084ec8d591dad5a8bf5d9",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 13,
+              "opcode": "invokespecial",
+              "operand": "#51",
+              "symbol": "Method \"<init>\":(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V"
+            },
+            {
+              "offset": 52,
+              "opcode": "invokevirtual",
+              "operand": "#71",
+              "symbol": "Method setOwner:(Lnet/minecraft/world/entity/Entity;)V"
+            }
+          ]
+        },
+        {
+          "name": "getAddEntityPacket",
+          "descriptor": "(Lnet/minecraft/server/level/ServerEntity;)Lnet/minecraft/network/protocol/Packet;",
+          "instruction_count": 4,
+          "parsed_method_sha256": "6d6d8a4f09c511244f4d7add1f9618dca5b26212fa1eb41f2c02d390d0d81414",
+          "relevant_symbolic_refs": []
+        },
+        {
+          "name": "defineSynchedData",
+          "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+          "instruction_count": 12,
+          "parsed_method_sha256": "83d515f1b17a726376cac11d5d8fcc5b933e0f41411269f229a82f0f66564a49",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 1,
+              "opcode": "getstatic",
+              "operand": "#81",
+              "symbol": "Field BUBBLING:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            }
+          ]
+        },
+        {
+          "name": "tick",
+          "descriptor": "()V",
+          "instruction_count": 362,
+          "parsed_method_sha256": "1739f6c4c86a4e1d753243ed087cfdc3033e6bf2c90bafc2ed7771c0195d5082",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 15,
+              "opcode": "invokevirtual",
+              "operand": "#120",
+              "symbol": "Method getArcingTowards:()Lnet/minecraft/world/entity/Entity;"
+            },
+            {
+              "offset": 24,
+              "opcode": "getfield",
+              "operand": "#124",
+              "symbol": "Field tickCount:I"
+            },
+            {
+              "offset": 32,
+              "opcode": "getfield",
+              "operand": "#33",
+              "symbol": "Field seekAmount:F"
+            },
+            {
+              "offset": 44,
+              "opcode": "getfield",
+              "operand": "#26",
+              "symbol": "Field dieIn:I"
+            },
+            {
+              "offset": 63,
+              "opcode": "getfield",
+              "operand": "#124",
+              "symbol": "Field tickCount:I"
+            },
+            {
+              "offset": 72,
+              "opcode": "getfield",
+              "operand": "#33",
+              "symbol": "Field seekAmount:F"
+            },
+            {
+              "offset": 84,
+              "opcode": "getfield",
+              "operand": "#124",
+              "symbol": "Field tickCount:I"
+            },
+            {
+              "offset": 122,
+              "opcode": "getfield",
+              "operand": "#33",
+              "symbol": "Field seekAmount:F"
+            },
+            {
+              "offset": 145,
+              "opcode": "getfield",
+              "operand": "#33",
+              "symbol": "Field seekAmount:F"
+            },
+            {
+              "offset": 155,
+              "opcode": "invokevirtual",
+              "operand": "#166",
+              "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+            },
+            {
+              "offset": 191,
+              "opcode": "invokevirtual",
+              "operand": "#186",
+              "symbol": "Method isBubbling:()Z"
+            },
+            {
+              "offset": 376,
+              "opcode": "invokevirtual",
+              "operand": "#166",
+              "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+            },
+            {
+              "offset": 399,
+              "opcode": "invokevirtual",
+              "operand": "#166",
+              "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+            },
+            {
+              "offset": 681,
+              "opcode": "invokestatic",
+              "operand": "#338",
+              "symbol": "Method net/neoforged/neoforge/event/EventHooks.onProjectileImpact:(Lnet/minecraft/world/entity/projectile/Projectile;Lnet/minecraft/world/phys/HitResult;)Z"
+            },
+            {
+              "offset": 694,
+              "opcode": "getfield",
+              "operand": "#26",
+              "symbol": "Field dieIn:I"
+            },
+            {
+              "offset": 702,
+              "opcode": "getfield",
+              "operand": "#26",
+              "symbol": "Field dieIn:I"
+            },
+            {
+              "offset": 707,
+              "opcode": "putfield",
+              "operand": "#26",
+              "symbol": "Field dieIn:I"
+            },
+            {
+              "offset": 711,
+              "opcode": "getfield",
+              "operand": "#26",
+              "symbol": "Field dieIn:I"
+            }
+          ]
+        },
+        {
+          "name": "remove",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "instruction_count": 59,
+          "parsed_method_sha256": "a931cd7ae1e7ccab11e0caf9f3aae9565c2f4c268a4bac1f7870738eece65b48",
+          "relevant_symbolic_refs": []
+        },
+        {
+          "name": "getTrailPosition",
+          "descriptor": "(IF)Lnet/minecraft/world/phys/Vec3;",
+          "instruction_count": 40,
+          "parsed_method_sha256": "f017852a2c365ebf912f845ad58826d37c8761a56deea3b8b66d4c180fc24944",
+          "relevant_symbolic_refs": []
+        },
+        {
+          "name": "lerpTo",
+          "descriptor": "(DDDFFI)V",
+          "instruction_count": 29,
+          "parsed_method_sha256": "1597c3b7f07bfbca5e84f9d24b93b26557e5095ff8adbe95fe207944bbf76ddc",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 49,
+              "opcode": "invokevirtual",
+              "operand": "#401",
+              "symbol": "Method setDeltaMovement:(DDD)V"
+            }
+          ]
+        },
+        {
+          "name": "lerpMotion",
+          "descriptor": "(DDD)V",
+          "instruction_count": 18,
+          "parsed_method_sha256": "133cc7f96170b16f44a2111031321572c9b3f2bda91d2d673ee13767f0256954",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 29,
+              "opcode": "invokevirtual",
+              "operand": "#401",
+              "symbol": "Method setDeltaMovement:(DDD)V"
+            }
+          ]
+        },
+        {
+          "name": "onHitEntity",
+          "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+          "instruction_count": 37,
+          "parsed_method_sha256": "c12e680882fa7a48879fb0dedb297522355b2e2049e4b67289915583f4c656fe",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 2,
+              "opcode": "invokespecial",
+              "operand": "#403",
+              "symbol": "Method net/minecraft/world/entity/projectile/Projectile.onHitEntity:(Lnet/minecraft/world/phys/EntityHitResult;)V"
+            },
+            {
+              "offset": 54,
+              "opcode": "getfield",
+              "operand": "#124",
+              "symbol": "Field tickCount:I"
+            },
+            {
+              "offset": 62,
+              "opcode": "invokevirtual",
+              "operand": "#421",
+              "symbol": "Method damageMobs:()V"
+            },
+            {
+              "offset": 66,
+              "opcode": "getfield",
+              "operand": "#26",
+              "symbol": "Field dieIn:I"
+            },
+            {
+              "offset": 75,
+              "opcode": "putfield",
+              "operand": "#26",
+              "symbol": "Field dieIn:I"
+            }
+          ]
+        },
+        {
+          "name": "damageMobs",
+          "descriptor": "()V",
+          "instruction_count": 105,
+          "parsed_method_sha256": "5a74cbf8fa1793ffeb6f0107be742e82cf2035d27f96f238e0a672ce005e653d",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 1,
+              "opcode": "invokevirtual",
+              "operand": "#424",
+              "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+            },
+            {
+              "offset": 58,
+              "opcode": "invokevirtual",
+              "operand": "#445",
+              "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+            },
+            {
+              "offset": 93,
+              "opcode": "invokevirtual",
+              "operand": "#463",
+              "symbol": "Method isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 123,
+              "opcode": "invokevirtual",
+              "operand": "#471",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 139,
+              "opcode": "invokestatic",
+              "operand": "#473",
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+            },
+            {
+              "offset": 146,
+              "opcode": "invokevirtual",
+              "operand": "#186",
+              "symbol": "Method isBubbling:()Z"
+            },
+            {
+              "offset": 220,
+              "opcode": "getfield",
+              "operand": "#29",
+              "symbol": "Field ricochet:Z"
+            },
+            {
+              "offset": 233,
+              "opcode": "putfield",
+              "operand": "#29",
+              "symbol": "Field ricochet:Z"
+            },
+            {
+              "offset": 239,
+              "opcode": "invokevirtual",
+              "operand": "#513",
+              "symbol": "Method onRicochetHit:(Lnet/minecraft/world/entity/Entity;)V"
+            }
+          ]
+        },
+        {
+          "name": "onRicochetHit",
+          "descriptor": "(Lnet/minecraft/world/entity/Entity;)V",
+          "instruction_count": 122,
+          "parsed_method_sha256": "5b9bcc73dc65afc1e728f864f733cb297af322e6bba32bc1f9988a19a7ac3fad",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 1,
+              "opcode": "invokevirtual",
+              "operand": "#424",
+              "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+            },
+            {
+              "offset": 32,
+              "opcode": "invokevirtual",
+              "operand": "#445",
+              "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+            },
+            {
+              "offset": 67,
+              "opcode": "invokevirtual",
+              "operand": "#463",
+              "symbol": "Method isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 106,
+              "opcode": "invokevirtual",
+              "operand": "#471",
+              "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+            },
+            {
+              "offset": 190,
+              "opcode": "invokevirtual",
+              "operand": "#526",
+              "symbol": "Method copyPosition:(Lnet/minecraft/world/entity/Entity;)V"
+            },
+            {
+              "offset": 200,
+              "opcode": "invokevirtual",
+              "operand": "#533",
+              "symbol": "Method setArcingTowards:(Ljava/util/UUID;)V"
+            },
+            {
+              "offset": 248,
+              "opcode": "invokevirtual",
+              "operand": "#166",
+              "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+            },
+            {
+              "offset": 254,
+              "opcode": "invokevirtual",
+              "operand": "#186",
+              "symbol": "Method isBubbling:()Z"
+            },
+            {
+              "offset": 257,
+              "opcode": "invokevirtual",
+              "operand": "#537",
+              "symbol": "Method setBubbling:(Z)V"
+            },
+            {
+              "offset": 266,
+              "opcode": "invokevirtual",
+              "operand": "#541",
+              "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+            }
+          ]
+        },
+        {
+          "name": "isBubbling",
+          "descriptor": "()Z",
+          "instruction_count": 7,
+          "parsed_method_sha256": "6302d79593639a91c918f4c46434fcbcdd561e2cebf3e5ebd60b11ab94738c5e",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 4,
+              "opcode": "getstatic",
+              "operand": "#81",
+              "symbol": "Field BUBBLING:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            }
+          ]
+        },
+        {
+          "name": "setBubbling",
+          "descriptor": "(Z)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "d9e89de4fec52b7893a3502b65b2e9945fb744429afc1f8eb3b1143bfab8df0a",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 4,
+              "opcode": "getstatic",
+              "operand": "#81",
+              "symbol": "Field BUBBLING:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+            }
+          ]
+        },
+        {
+          "name": "onHitBlock",
+          "descriptor": "(Lnet/minecraft/world/phys/BlockHitResult;)V",
+          "instruction_count": 28,
+          "parsed_method_sha256": "f098dbd8de2ce10bc309be359fac45937a57be4695683337576f7b60cabb951b",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 2,
+              "opcode": "invokespecial",
+              "operand": "#560",
+              "symbol": "Method net/minecraft/world/entity/projectile/Projectile.onHitBlock:(Lnet/minecraft/world/phys/BlockHitResult;)V"
+            },
+            {
+              "offset": 43,
+              "opcode": "invokevirtual",
+              "operand": "#421",
+              "symbol": "Method damageMobs:()V"
+            },
+            {
+              "offset": 47,
+              "opcode": "getfield",
+              "operand": "#26",
+              "symbol": "Field dieIn:I"
+            },
+            {
+              "offset": 56,
+              "opcode": "putfield",
+              "operand": "#26",
+              "symbol": "Field dieIn:I"
+            }
+          ]
+        },
+        {
+          "name": "getArcingTowards",
+          "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+          "instruction_count": 19,
+          "parsed_method_sha256": "b28023991e870c12f3f90cd0baa8bf5965ec1314147fcbb5116e14f3ad9bdaa9",
+          "relevant_symbolic_refs": []
+        },
+        {
+          "name": "readAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "instruction_count": 6,
+          "parsed_method_sha256": "63ef941e3b6f9ee4ae713e566adfa86b0a3772ddb9b92ac3203863ce9bef3ebc",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 8,
+              "opcode": "invokevirtual",
+              "operand": "#537",
+              "symbol": "Method setBubbling:(Z)V"
+            }
+          ]
+        },
+        {
+          "name": "addAdditionalSaveData",
+          "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "instruction_count": 6,
+          "parsed_method_sha256": "f2303c94f8f5b8a924eb892807056936ff64d781bd9e8f1ec9a177f10c1fa7dc",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 5,
+              "opcode": "invokevirtual",
+              "operand": "#186",
+              "symbol": "Method isBubbling:()Z"
+            }
+          ]
+        },
+        {
+          "name": "setArcingTowards",
+          "descriptor": "(Ljava/util/UUID;)V",
+          "instruction_count": 7,
+          "parsed_method_sha256": "a2c804f2beedf267477486f1e9c06df60ecb16fa80a64d8626a09ddd6abaa3d6",
+          "relevant_symbolic_refs": []
+        },
+        {
+          "name": "hasTrail",
+          "descriptor": "()Z",
+          "instruction_count": 8,
+          "parsed_method_sha256": "c6e4b7ce2aef4bb83b9b784c343b452c6ea9eb0fea2d231efcb70198752b022b",
+          "relevant_symbolic_refs": []
+        },
+        {
+          "name": "lambda$tick$0",
+          "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity;Lnet/minecraft/world/entity/Entity;)Z",
+          "instruction_count": 4,
+          "parsed_method_sha256": "e84763f2a2ded58de2a3cac28e229fc78529944fa1b21825186a46e480447b26",
+          "relevant_symbolic_refs": [
+            {
+              "offset": 2,
+              "opcode": "invokevirtual",
+              "operand": "#589",
+              "symbol": "Method canHitEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "consumers": [
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/SeaStaffItem.class",
+      "name": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "parsed_method_sha256": "fc071fd36310ddb6a082d46113930b78fa89d1f0b4a1a9bfc749d2bd11c1ba7c",
+      "instruction_count": 189,
+      "all_branch_edges": [
+        {
+          "offset": 78,
+          "opcode": "ifne",
+          "target": 355,
+          "back_edge": false,
+          "fallthrough": 81
+        },
+        {
+          "offset": 103,
+          "opcode": "ifle",
+          "target": 110,
+          "back_edge": false,
+          "fallthrough": 106
+        },
+        {
+          "offset": 107,
+          "opcode": "goto",
+          "target": 111,
+          "back_edge": false
+        },
+        {
+          "offset": 120,
+          "opcode": "if_icmpge",
+          "target": 355,
+          "back_edge": false,
+          "fallthrough": 123
+        },
+        {
+          "offset": 125,
+          "opcode": "ifne",
+          "target": 132,
+          "back_edge": false,
+          "fallthrough": 128
+        },
+        {
+          "offset": 129,
+          "opcode": "goto",
+          "target": 145,
+          "back_edge": false
+        },
+        {
+          "offset": 135,
+          "opcode": "if_icmpne",
+          "target": 143,
+          "back_edge": false,
+          "fallthrough": 138
+        },
+        {
+          "offset": 140,
+          "opcode": "goto",
+          "target": 145,
+          "back_edge": false
+        },
+        {
+          "offset": 166,
+          "opcode": "if_acmpne",
+          "target": 174,
+          "back_edge": false,
+          "fallthrough": 169
+        },
+        {
+          "offset": 171,
+          "opcode": "goto",
+          "target": 176,
+          "back_edge": false
+        },
+        {
+          "offset": 259,
+          "opcode": "ifle",
+          "target": 266,
+          "back_edge": false,
+          "fallthrough": 262
+        },
+        {
+          "offset": 263,
+          "opcode": "goto",
+          "target": 267,
+          "back_edge": false
+        },
+        {
+          "offset": 280,
+          "opcode": "ifle",
+          "target": 297,
+          "back_edge": false,
+          "fallthrough": 283
+        },
+        {
+          "offset": 305,
+          "opcode": "ifle",
+          "target": 314,
+          "back_edge": false,
+          "fallthrough": 308
+        },
+        {
+          "offset": 329,
+          "opcode": "ifnull",
+          "target": 342,
+          "back_edge": false,
+          "fallthrough": 332
+        },
+        {
+          "offset": 352,
+          "opcode": "goto",
+          "target": 116,
+          "back_edge": true
+        },
+        {
+          "offset": 373,
+          "opcode": "ifne",
+          "target": 384,
+          "back_edge": false,
+          "fallthrough": 376
+        }
+      ],
+      "all_symbolic_calls_and_fields": [
+        {
+          "offset": 2,
+          "opcode": "invokevirtual",
+          "operand": "#27",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getItemInHand:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+        },
+        {
+          "offset": 13,
+          "opcode": "invokevirtual",
+          "operand": "#33",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getX:()D"
+        },
+        {
+          "offset": 17,
+          "opcode": "invokevirtual",
+          "operand": "#37",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getY:()D"
+        },
+        {
+          "offset": 21,
+          "opcode": "invokevirtual",
+          "operand": "#40",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getZ:()D"
+        },
+        {
+          "offset": 24,
+          "opcode": "getstatic",
+          "operand": "#43",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.SEA_STAFF_CAST:Ljava/util/function/Supplier;"
+        },
+        {
+          "offset": 27,
+          "opcode": "invokeinterface",
+          "operand": "#49,  1",
+          "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+        },
+        {
+          "offset": 35,
+          "opcode": "getstatic",
+          "operand": "#56",
+          "symbol": "Field net/minecraft/sounds/SoundSource.PLAYERS:Lnet/minecraft/sounds/SoundSource;"
+        },
+        {
+          "offset": 41,
+          "opcode": "invokevirtual",
+          "operand": "#63",
+          "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+        },
+        {
+          "offset": 44,
+          "opcode": "invokeinterface",
+          "operand": "#69,  1",
+          "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+        },
+        {
+          "offset": 55,
+          "opcode": "invokevirtual",
+          "operand": "#77",
+          "symbol": "Method net/minecraft/world/level/Level.playSound:(Lnet/minecraft/world/entity/player/Player;DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V"
+        },
+        {
+          "offset": 60,
+          "opcode": "invokevirtual",
+          "operand": "#81",
+          "symbol": "Method net/minecraft/world/entity/player/Player.swing:(Lnet/minecraft/world/InteractionHand;)V"
+        },
+        {
+          "offset": 65,
+          "opcode": "getstatic",
+          "operand": "#85",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.SOAK_SEEKING:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 68,
+          "opcode": "invokestatic",
+          "operand": "#91",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 75,
+          "opcode": "invokevirtual",
+          "operand": "#97",
+          "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+        },
+        {
+          "offset": 90,
+          "opcode": "invokestatic",
+          "operand": "#103",
+          "symbol": "Method getClosestLookingAtEntityFor:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/Entity;"
+        },
+        {
+          "offset": 97,
+          "opcode": "getstatic",
+          "operand": "#109",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.TRIPLE_SPLASH:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 100,
+          "opcode": "invokestatic",
+          "operand": "#91",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 153,
+          "opcode": "invokespecial",
+          "operand": "#116",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.\"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+        },
+        {
+          "offset": 159,
+          "opcode": "getfield",
+          "operand": "#119",
+          "symbol": "Field net/minecraft/world/entity/player/Player.yHeadRot:F"
+        },
+        {
+          "offset": 163,
+          "opcode": "getstatic",
+          "operand": "#123",
+          "symbol": "Field net/minecraft/world/InteractionHand.MAIN_HAND:Lnet/minecraft/world/InteractionHand;"
+        },
+        {
+          "offset": 183,
+          "opcode": "invokevirtual",
+          "operand": "#33",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getX:()D"
+        },
+        {
+          "offset": 187,
+          "opcode": "invokevirtual",
+          "operand": "#129",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getBbWidth:()F"
+        },
+        {
+          "offset": 200,
+          "opcode": "invokestatic",
+          "operand": "#137",
+          "symbol": "Method net/minecraft/util/Mth.sin:(F)F"
+        },
+        {
+          "offset": 207,
+          "opcode": "invokevirtual",
+          "operand": "#143",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getEyeY:()D"
+        },
+        {
+          "offset": 215,
+          "opcode": "invokevirtual",
+          "operand": "#40",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getZ:()D"
+        },
+        {
+          "offset": 219,
+          "opcode": "invokevirtual",
+          "operand": "#129",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getBbWidth:()F"
+        },
+        {
+          "offset": 232,
+          "opcode": "invokestatic",
+          "operand": "#148",
+          "symbol": "Method net/minecraft/util/Mth.cos:(F)F"
+        },
+        {
+          "offset": 238,
+          "opcode": "invokevirtual",
+          "operand": "#151",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.setPos:(DDD)V"
+        },
+        {
+          "offset": 245,
+          "opcode": "invokevirtual",
+          "operand": "#155",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getXRot:()F"
+        },
+        {
+          "offset": 249,
+          "opcode": "invokevirtual",
+          "operand": "#158",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getYRot:()F"
+        },
+        {
+          "offset": 269,
+          "opcode": "invokevirtual",
+          "operand": "#163",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.shootFromRotation:(Lnet/minecraft/world/entity/Entity;FFFFF)V"
+        },
+        {
+          "offset": 274,
+          "opcode": "getstatic",
+          "operand": "#167",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.ENVELOPING_BUBBLE:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 277,
+          "opcode": "invokestatic",
+          "operand": "#91",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 286,
+          "opcode": "invokevirtual",
+          "operand": "#170",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getRandom:()Lnet/minecraft/util/RandomSource;"
+        },
+        {
+          "offset": 289,
+          "opcode": "invokeinterface",
+          "operand": "#171,  1",
+          "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextBoolean:()Z"
+        },
+        {
+          "offset": 294,
+          "opcode": "invokevirtual",
+          "operand": "#174",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.setBubbling:(Z)V"
+        },
+        {
+          "offset": 299,
+          "opcode": "getstatic",
+          "operand": "#178",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.BOUNCING_BOLT:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 302,
+          "opcode": "invokestatic",
+          "operand": "#91",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 311,
+          "opcode": "putfield",
+          "operand": "#181",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.ricochet:Z"
+        },
+        {
+          "offset": 324,
+          "opcode": "putfield",
+          "operand": "#187",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.seekAmount:F"
+        },
+        {
+          "offset": 336,
+          "opcode": "invokevirtual",
+          "operand": "#190",
+          "symbol": "Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;"
+        },
+        {
+          "offset": 339,
+          "opcode": "invokevirtual",
+          "operand": "#196",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.setArcingTowards:(Ljava/util/UUID;)V"
+        },
+        {
+          "offset": 345,
+          "opcode": "invokevirtual",
+          "operand": "#200",
+          "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+        },
+        {
+          "offset": 356,
+          "opcode": "getstatic",
+          "operand": "#204",
+          "symbol": "Field net/minecraft/stats/Stats.ITEM_USED:Lnet/minecraft/stats/StatType;"
+        },
+        {
+          "offset": 360,
+          "opcode": "invokevirtual",
+          "operand": "#210",
+          "symbol": "Method net/minecraft/stats/StatType.get:(Ljava/lang/Object;)Lnet/minecraft/stats/Stat;"
+        },
+        {
+          "offset": 363,
+          "opcode": "invokevirtual",
+          "operand": "#215",
+          "symbol": "Method net/minecraft/world/entity/player/Player.awardStat:(Lnet/minecraft/stats/Stat;)V"
+        },
+        {
+          "offset": 367,
+          "opcode": "invokevirtual",
+          "operand": "#219",
+          "symbol": "Method net/minecraft/world/entity/player/Player.getAbilities:()Lnet/minecraft/world/entity/player/Abilities;"
+        },
+        {
+          "offset": 370,
+          "opcode": "getfield",
+          "operand": "#223",
+          "symbol": "Field net/minecraft/world/entity/player/Abilities.instabuild:Z"
+        },
+        {
+          "offset": 381,
+          "opcode": "invokestatic",
+          "operand": "#228",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurtAndBreak:(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)V"
+        },
+        {
+          "offset": 387,
+          "opcode": "invokevirtual",
+          "operand": "#97",
+          "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+        },
+        {
+          "offset": 390,
+          "opcode": "invokestatic",
+          "operand": "#232",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.useSidedSuccess:(Lnet/minecraft/world/item/ItemStack;Z)Lnet/minecraft/world/InteractionResultHolder;"
+        }
+      ],
+      "all_literal_operands": [
+        {
+          "offset": 38,
+          "opcode": "ldc",
+          "operand": "#62",
+          "symbol": "float 0.5f"
+        },
+        {
+          "offset": 49,
+          "opcode": "ldc",
+          "operand": "#75",
+          "symbol": "float 0.45f"
+        },
+        {
+          "offset": 52,
+          "opcode": "ldc",
+          "operand": "#76",
+          "symbol": "float 0.75f"
+        },
+        {
+          "offset": 81,
+          "opcode": "ldc2_w",
+          "operand": "#101",
+          "symbol": "double 128.0d"
+        },
+        {
+          "offset": 106,
+          "opcode": "iconst_3",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 110,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 113,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 128,
+          "opcode": "fconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 134,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 138,
+          "opcode": "ldc",
+          "operand": "#112",
+          "symbol": "float -50.0f"
+        },
+        {
+          "offset": 143,
+          "opcode": "ldc",
+          "operand": "#113",
+          "symbol": "float 50.0f"
+        },
+        {
+          "offset": 169,
+          "opcode": "bipush",
+          "operand": "45",
+          "symbol": ""
+        },
+        {
+          "offset": 174,
+          "opcode": "bipush",
+          "operand": "-45",
+          "symbol": ""
+        },
+        {
+          "offset": 191,
+          "opcode": "ldc2_w",
+          "operand": "#132",
+          "symbol": "double 1.100000023841858d"
+        },
+        {
+          "offset": 197,
+          "opcode": "ldc",
+          "operand": "#136",
+          "symbol": "float 0.017453292f"
+        },
+        {
+          "offset": 210,
+          "opcode": "ldc2_w",
+          "operand": "#146",
+          "symbol": "double 0.4000000059604645d"
+        },
+        {
+          "offset": 223,
+          "opcode": "ldc2_w",
+          "operand": "#132",
+          "symbol": "double 1.100000023841858d"
+        },
+        {
+          "offset": 229,
+          "opcode": "ldc",
+          "operand": "#136",
+          "symbol": "float 0.017453292f"
+        },
+        {
+          "offset": 255,
+          "opcode": "ldc",
+          "operand": "#161",
+          "symbol": "float -20.0f"
+        },
+        {
+          "offset": 262,
+          "opcode": "fconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 266,
+          "opcode": "fconst_2",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 267,
+          "opcode": "ldc",
+          "operand": "#162",
+          "symbol": "float 12.0f"
+        },
+        {
+          "offset": 310,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 316,
+          "opcode": "ldc",
+          "operand": "#185",
+          "symbol": "float 0.3f"
+        },
+        {
+          "offset": 320,
+          "opcode": "ldc",
+          "operand": "#186",
+          "symbol": "float 0.2f"
+        },
+        {
+          "offset": 378,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "verified_pivots": [
+        {
+          "offset": 299,
+          "opcode": "getstatic",
+          "operand": "#178",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.BOUNCING_BOLT:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 302,
+          "opcode": "invokestatic",
+          "operand": "#91",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 305,
+          "opcode": "ifle",
+          "operand": "314",
+          "symbol": ""
+        },
+        {
+          "offset": 310,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 311,
+          "opcode": "putfield",
+          "operand": "#181",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.ricochet:Z"
+        }
+      ]
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.class",
+      "name": "damageMobs",
+      "descriptor": "()V",
+      "parsed_method_sha256": "5a74cbf8fa1793ffeb6f0107be742e82cf2035d27f96f238e0a672ce005e653d",
+      "instruction_count": 105,
+      "all_branch_edges": [
+        {
+          "offset": 14,
+          "opcode": "ifeq",
+          "target": 26,
+          "back_edge": false,
+          "fallthrough": 17
+        },
+        {
+          "offset": 23,
+          "opcode": "goto",
+          "target": 27,
+          "back_edge": false
+        },
+        {
+          "offset": 75,
+          "opcode": "ifeq",
+          "target": 219,
+          "back_edge": false,
+          "fallthrough": 78
+        },
+        {
+          "offset": 96,
+          "opcode": "ifne",
+          "target": 216,
+          "back_edge": false,
+          "fallthrough": 99
+        },
+        {
+          "offset": 104,
+          "opcode": "ifne",
+          "target": 216,
+          "back_edge": false,
+          "fallthrough": 107
+        },
+        {
+          "offset": 108,
+          "opcode": "ifnull",
+          "target": 129,
+          "back_edge": false,
+          "fallthrough": 111
+        },
+        {
+          "offset": 117,
+          "opcode": "ifne",
+          "target": 216,
+          "back_edge": false,
+          "fallthrough": 120
+        },
+        {
+          "offset": 126,
+          "opcode": "ifne",
+          "target": 216,
+          "back_edge": false,
+          "fallthrough": 129
+        },
+        {
+          "offset": 142,
+          "opcode": "ifeq",
+          "target": 216,
+          "back_edge": false,
+          "fallthrough": 145
+        },
+        {
+          "offset": 149,
+          "opcode": "ifeq",
+          "target": 216,
+          "back_edge": false,
+          "fallthrough": 152
+        },
+        {
+          "offset": 190,
+          "opcode": "ifne",
+          "target": 216,
+          "back_edge": false,
+          "fallthrough": 193
+        },
+        {
+          "offset": 216,
+          "opcode": "goto",
+          "target": 68,
+          "back_edge": true
+        },
+        {
+          "offset": 223,
+          "opcode": "ifeq",
+          "target": 242,
+          "back_edge": false,
+          "fallthrough": 226
+        },
+        {
+          "offset": 228,
+          "opcode": "ifnull",
+          "target": 242,
+          "back_edge": false,
+          "fallthrough": 231
+        }
+      ],
+      "all_symbolic_calls_and_fields": [
+        {
+          "offset": 1,
+          "opcode": "invokevirtual",
+          "operand": "#424",
+          "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+        },
+        {
+          "offset": 6,
+          "opcode": "invokevirtual",
+          "operand": "#427",
+          "symbol": "Method damageSources:()Lnet/minecraft/world/damagesource/DamageSources;"
+        },
+        {
+          "offset": 27,
+          "opcode": "invokevirtual",
+          "operand": "#431",
+          "symbol": "Method net/minecraft/world/damagesource/DamageSources.mobProjectile:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;"
+        },
+        {
+          "offset": 32,
+          "opcode": "invokevirtual",
+          "operand": "#251",
+          "symbol": "Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;"
+        },
+        {
+          "offset": 44,
+          "opcode": "invokevirtual",
+          "operand": "#439",
+          "symbol": "Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;"
+        },
+        {
+          "offset": 52,
+          "opcode": "invokevirtual",
+          "operand": "#110",
+          "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+        },
+        {
+          "offset": 58,
+          "opcode": "invokevirtual",
+          "operand": "#445",
+          "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+        },
+        {
+          "offset": 61,
+          "opcode": "invokeinterface",
+          "operand": "#449,  1",
+          "symbol": "InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;"
+        },
+        {
+          "offset": 70,
+          "opcode": "invokeinterface",
+          "operand": "#455,  1",
+          "symbol": "InterfaceMethod java/util/Iterator.hasNext:()Z"
+        },
+        {
+          "offset": 80,
+          "opcode": "invokeinterface",
+          "operand": "#460,  1",
+          "symbol": "InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;"
+        },
+        {
+          "offset": 93,
+          "opcode": "invokevirtual",
+          "operand": "#463",
+          "symbol": "Method isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+        },
+        {
+          "offset": 114,
+          "opcode": "invokevirtual",
+          "operand": "#468",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.is:(Lnet/minecraft/world/entity/Entity;)Z"
+        },
+        {
+          "offset": 123,
+          "opcode": "invokevirtual",
+          "operand": "#471",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+        },
+        {
+          "offset": 139,
+          "opcode": "invokestatic",
+          "operand": "#473",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+        },
+        {
+          "offset": 146,
+          "opcode": "invokevirtual",
+          "operand": "#186",
+          "symbol": "Method isBubbling:()Z"
+        },
+        {
+          "offset": 158,
+          "opcode": "getstatic",
+          "operand": "#479",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.BUBBLED:Ljava/util/function/Supplier;"
+        },
+        {
+          "offset": 161,
+          "opcode": "invokeinterface",
+          "operand": "#43,  1",
+          "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+        },
+        {
+          "offset": 169,
+          "opcode": "invokestatic",
+          "operand": "#486",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.effect:(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/core/Holder;"
+        },
+        {
+          "offset": 175,
+          "opcode": "invokespecial",
+          "operand": "#490",
+          "symbol": "Method net/minecraft/world/effect/MobEffectInstance.\"<init>\":(Lnet/minecraft/core/Holder;I)V"
+        },
+        {
+          "offset": 178,
+          "opcode": "invokevirtual",
+          "operand": "#493",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.addEffect:(Lnet/minecraft/world/effect/MobEffectInstance;)Z"
+        },
+        {
+          "offset": 184,
+          "opcode": "invokevirtual",
+          "operand": "#497",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;"
+        },
+        {
+          "offset": 187,
+          "opcode": "invokevirtual",
+          "operand": "#114",
+          "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+        },
+        {
+          "offset": 199,
+          "opcode": "invokevirtual",
+          "operand": "#500",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.getId:()I"
+        },
+        {
+          "offset": 203,
+          "opcode": "invokevirtual",
+          "operand": "#503",
+          "symbol": "Method getId:()I"
+        },
+        {
+          "offset": 210,
+          "opcode": "invokespecial",
+          "operand": "#504",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/message/UpdateEffectVisualityEntityMessage.\"<init>\":(IIII)V"
+        },
+        {
+          "offset": 213,
+          "opcode": "invokestatic",
+          "operand": "#507",
+          "symbol": "Method com/github/alexmodguy/alexscaves/AlexsCaves.sendMSGToAll:(Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 220,
+          "opcode": "getfield",
+          "operand": "#29",
+          "symbol": "Field ricochet:Z"
+        },
+        {
+          "offset": 233,
+          "opcode": "putfield",
+          "operand": "#29",
+          "symbol": "Field ricochet:Z"
+        },
+        {
+          "offset": 239,
+          "opcode": "invokevirtual",
+          "operand": "#513",
+          "symbol": "Method onRicochetHit:(Lnet/minecraft/world/entity/Entity;)V"
+        }
+      ],
+      "all_literal_operands": [
+        {
+          "offset": 35,
+          "opcode": "ldc2_w",
+          "operand": "#437",
+          "symbol": "double 2.0d"
+        },
+        {
+          "offset": 38,
+          "opcode": "ldc2_w",
+          "operand": "#437",
+          "symbol": "double 2.0d"
+        },
+        {
+          "offset": 41,
+          "opcode": "ldc2_w",
+          "operand": "#437",
+          "symbol": "double 2.0d"
+        },
+        {
+          "offset": 55,
+          "opcode": "ldc",
+          "operand": "#56",
+          "symbol": "class net/minecraft/world/entity/LivingEntity"
+        },
+        {
+          "offset": 136,
+          "opcode": "ldc_w",
+          "operand": "#472",
+          "symbol": "float 3.0f"
+        },
+        {
+          "offset": 172,
+          "opcode": "sipush",
+          "operand": "200",
+          "symbol": ""
+        },
+        {
+          "offset": 206,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 207,
+          "opcode": "sipush",
+          "operand": "200",
+          "symbol": ""
+        },
+        {
+          "offset": 232,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "verified_pivots": [
+        {
+          "offset": 139,
+          "opcode": "invokestatic",
+          "operand": "#473",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+        },
+        {
+          "offset": 142,
+          "opcode": "ifeq",
+          "operand": "216",
+          "symbol": ""
+        },
+        {
+          "offset": 220,
+          "opcode": "getfield",
+          "operand": "#29",
+          "symbol": "Field ricochet:Z"
+        },
+        {
+          "offset": 223,
+          "opcode": "ifeq",
+          "operand": "242",
+          "symbol": ""
+        },
+        {
+          "offset": 233,
+          "opcode": "putfield",
+          "operand": "#29",
+          "symbol": "Field ricochet:Z"
+        },
+        {
+          "offset": 239,
+          "opcode": "invokevirtual",
+          "operand": "#513",
+          "symbol": "Method onRicochetHit:(Lnet/minecraft/world/entity/Entity;)V"
+        }
+      ]
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.class",
+      "name": "onRicochetHit",
+      "descriptor": "(Lnet/minecraft/world/entity/Entity;)V",
+      "parsed_method_sha256": "5b9bcc73dc65afc1e728f864f733cb297af322e6bba32bc1f9988a19a7ac3fad",
+      "instruction_count": 122,
+      "all_branch_edges": [
+        {
+          "offset": 49,
+          "opcode": "ifeq",
+          "target": 154,
+          "back_edge": false,
+          "fallthrough": 52
+        },
+        {
+          "offset": 70,
+          "opcode": "ifne",
+          "target": 151,
+          "back_edge": false,
+          "fallthrough": 73
+        },
+        {
+          "offset": 78,
+          "opcode": "ifne",
+          "target": 151,
+          "back_edge": false,
+          "fallthrough": 81
+        },
+        {
+          "offset": 87,
+          "opcode": "ifne",
+          "target": 151,
+          "back_edge": false,
+          "fallthrough": 90
+        },
+        {
+          "offset": 91,
+          "opcode": "ifnull",
+          "target": 112,
+          "back_edge": false,
+          "fallthrough": 94
+        },
+        {
+          "offset": 100,
+          "opcode": "ifne",
+          "target": 151,
+          "back_edge": false,
+          "fallthrough": 103
+        },
+        {
+          "offset": 109,
+          "opcode": "ifne",
+          "target": 151,
+          "back_edge": false,
+          "fallthrough": 112
+        },
+        {
+          "offset": 123,
+          "opcode": "ifle",
+          "target": 151,
+          "back_edge": false,
+          "fallthrough": 126
+        },
+        {
+          "offset": 128,
+          "opcode": "ifnull",
+          "target": 147,
+          "back_edge": false,
+          "fallthrough": 131
+        },
+        {
+          "offset": 144,
+          "opcode": "ifle",
+          "target": 151,
+          "back_edge": false,
+          "fallthrough": 147
+        },
+        {
+          "offset": 151,
+          "opcode": "goto",
+          "target": 42,
+          "back_edge": true
+        },
+        {
+          "offset": 156,
+          "opcode": "ifnull",
+          "target": 270,
+          "back_edge": false,
+          "fallthrough": 159
+        },
+        {
+          "offset": 163,
+          "opcode": "ifeq",
+          "target": 270,
+          "back_edge": false,
+          "fallthrough": 166
+        }
+      ],
+      "all_symbolic_calls_and_fields": [
+        {
+          "offset": 1,
+          "opcode": "invokevirtual",
+          "operand": "#424",
+          "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+        },
+        {
+          "offset": 6,
+          "opcode": "invokevirtual",
+          "operand": "#516",
+          "symbol": "Method net/minecraft/world/entity/Entity.getBoundingBox:()Lnet/minecraft/world/phys/AABB;"
+        },
+        {
+          "offset": 18,
+          "opcode": "invokevirtual",
+          "operand": "#439",
+          "symbol": "Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;"
+        },
+        {
+          "offset": 26,
+          "opcode": "invokevirtual",
+          "operand": "#110",
+          "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+        },
+        {
+          "offset": 32,
+          "opcode": "invokevirtual",
+          "operand": "#445",
+          "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+        },
+        {
+          "offset": 35,
+          "opcode": "invokeinterface",
+          "operand": "#449,  1",
+          "symbol": "InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;"
+        },
+        {
+          "offset": 44,
+          "opcode": "invokeinterface",
+          "operand": "#455,  1",
+          "symbol": "InterfaceMethod java/util/Iterator.hasNext:()Z"
+        },
+        {
+          "offset": 54,
+          "opcode": "invokeinterface",
+          "operand": "#460,  1",
+          "symbol": "InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;"
+        },
+        {
+          "offset": 67,
+          "opcode": "invokevirtual",
+          "operand": "#463",
+          "symbol": "Method isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+        },
+        {
+          "offset": 84,
+          "opcode": "invokevirtual",
+          "operand": "#468",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.is:(Lnet/minecraft/world/entity/Entity;)Z"
+        },
+        {
+          "offset": 97,
+          "opcode": "invokevirtual",
+          "operand": "#468",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.is:(Lnet/minecraft/world/entity/Entity;)Z"
+        },
+        {
+          "offset": 106,
+          "opcode": "invokevirtual",
+          "operand": "#471",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+        },
+        {
+          "offset": 115,
+          "opcode": "invokevirtual",
+          "operand": "#519",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+        },
+        {
+          "offset": 134,
+          "opcode": "invokevirtual",
+          "operand": "#522",
+          "symbol": "Method net/minecraft/world/entity/Entity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+        },
+        {
+          "offset": 140,
+          "opcode": "invokevirtual",
+          "operand": "#519",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+        },
+        {
+          "offset": 177,
+          "opcode": "invokevirtual",
+          "operand": "#110",
+          "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+        },
+        {
+          "offset": 182,
+          "opcode": "invokespecial",
+          "operand": "#523",
+          "symbol": "Method \"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+        },
+        {
+          "offset": 190,
+          "opcode": "invokevirtual",
+          "operand": "#526",
+          "symbol": "Method copyPosition:(Lnet/minecraft/world/entity/Entity;)V"
+        },
+        {
+          "offset": 197,
+          "opcode": "invokevirtual",
+          "operand": "#529",
+          "symbol": "Method net/minecraft/world/entity/Entity.getUUID:()Ljava/util/UUID;"
+        },
+        {
+          "offset": 200,
+          "opcode": "invokevirtual",
+          "operand": "#533",
+          "symbol": "Method setArcingTowards:(Ljava/util/UUID;)V"
+        },
+        {
+          "offset": 205,
+          "opcode": "invokevirtual",
+          "operand": "#134",
+          "symbol": "Method net/minecraft/world/entity/Entity.position:()Lnet/minecraft/world/phys/Vec3;"
+        },
+        {
+          "offset": 214,
+          "opcode": "invokevirtual",
+          "operand": "#141",
+          "symbol": "Method net/minecraft/world/entity/Entity.getBbHeight:()F"
+        },
+        {
+          "offset": 221,
+          "opcode": "invokevirtual",
+          "operand": "#145",
+          "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+        },
+        {
+          "offset": 225,
+          "opcode": "invokevirtual",
+          "operand": "#149",
+          "symbol": "Method position:()Lnet/minecraft/world/phys/Vec3;"
+        },
+        {
+          "offset": 228,
+          "opcode": "invokevirtual",
+          "operand": "#150",
+          "symbol": "Method net/minecraft/world/phys/Vec3.subtract:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+        },
+        {
+          "offset": 231,
+          "opcode": "invokevirtual",
+          "operand": "#154",
+          "symbol": "Method net/minecraft/world/phys/Vec3.normalize:()Lnet/minecraft/world/phys/Vec3;"
+        },
+        {
+          "offset": 240,
+          "opcode": "invokevirtual",
+          "operand": "#157",
+          "symbol": "Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+        },
+        {
+          "offset": 245,
+          "opcode": "invokevirtual",
+          "operand": "#164",
+          "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+        },
+        {
+          "offset": 248,
+          "opcode": "invokevirtual",
+          "operand": "#166",
+          "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+        },
+        {
+          "offset": 254,
+          "opcode": "invokevirtual",
+          "operand": "#186",
+          "symbol": "Method isBubbling:()Z"
+        },
+        {
+          "offset": 257,
+          "opcode": "invokevirtual",
+          "operand": "#537",
+          "symbol": "Method setBubbling:(Z)V"
+        },
+        {
+          "offset": 261,
+          "opcode": "invokevirtual",
+          "operand": "#110",
+          "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+        },
+        {
+          "offset": 266,
+          "opcode": "invokevirtual",
+          "operand": "#541",
+          "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+        }
+      ],
+      "all_literal_operands": [
+        {
+          "offset": 9,
+          "opcode": "ldc2_w",
+          "operand": "#517",
+          "symbol": "double 32.0d"
+        },
+        {
+          "offset": 12,
+          "opcode": "ldc2_w",
+          "operand": "#517",
+          "symbol": "double 32.0d"
+        },
+        {
+          "offset": 15,
+          "opcode": "ldc2_w",
+          "operand": "#517",
+          "symbol": "double 32.0d"
+        },
+        {
+          "offset": 29,
+          "opcode": "ldc",
+          "operand": "#56",
+          "symbol": "class net/minecraft/world/entity/LivingEntity"
+        },
+        {
+          "offset": 119,
+          "opcode": "ldc2_w",
+          "operand": "#520",
+          "symbol": "double 3.0d"
+        },
+        {
+          "offset": 208,
+          "opcode": "dconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 209,
+          "opcode": "ldc",
+          "operand": "#32",
+          "symbol": "float 0.3f"
+        },
+        {
+          "offset": 211,
+          "opcode": "fconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 220,
+          "opcode": "dconst_0",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "verified_pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokevirtual",
+          "operand": "#424",
+          "symbol": "Method getOwner:()Lnet/minecraft/world/entity/Entity;"
+        },
+        {
+          "offset": 9,
+          "opcode": "ldc2_w",
+          "operand": "#517",
+          "symbol": "double 32.0d"
+        },
+        {
+          "offset": 12,
+          "opcode": "ldc2_w",
+          "operand": "#517",
+          "symbol": "double 32.0d"
+        },
+        {
+          "offset": 15,
+          "opcode": "ldc2_w",
+          "operand": "#517",
+          "symbol": "double 32.0d"
+        },
+        {
+          "offset": 32,
+          "opcode": "invokevirtual",
+          "operand": "#445",
+          "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+        },
+        {
+          "offset": 119,
+          "opcode": "ldc2_w",
+          "operand": "#520",
+          "symbol": "double 3.0d"
+        },
+        {
+          "offset": 156,
+          "opcode": "ifnull",
+          "operand": "270",
+          "symbol": ""
+        },
+        {
+          "offset": 163,
+          "opcode": "ifeq",
+          "operand": "270",
+          "symbol": ""
+        },
+        {
+          "offset": 182,
+          "opcode": "invokespecial",
+          "operand": "#523",
+          "symbol": "Method \"<init>\":(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V"
+        },
+        {
+          "offset": 190,
+          "opcode": "invokevirtual",
+          "operand": "#526",
+          "symbol": "Method copyPosition:(Lnet/minecraft/world/entity/Entity;)V"
+        },
+        {
+          "offset": 200,
+          "opcode": "invokevirtual",
+          "operand": "#533",
+          "symbol": "Method setArcingTowards:(Ljava/util/UUID;)V"
+        },
+        {
+          "offset": 209,
+          "opcode": "ldc",
+          "operand": "#32",
+          "symbol": "float 0.3f"
+        },
+        {
+          "offset": 248,
+          "opcode": "invokevirtual",
+          "operand": "#166",
+          "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+        },
+        {
+          "offset": 254,
+          "opcode": "invokevirtual",
+          "operand": "#186",
+          "symbol": "Method isBubbling:()Z"
+        },
+        {
+          "offset": 257,
+          "opcode": "invokevirtual",
+          "operand": "#537",
+          "symbol": "Method setBubbling:(Z)V"
+        },
+        {
+          "offset": 266,
+          "opcode": "invokevirtual",
+          "operand": "#541",
+          "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "full_interprocedural_cfg_and_exceptions": "NOT_RECONSTRUCTED",
+    "external_mixin_and_cross_jar_consumers": "NOT_VERIFIED",
+    "live_damage_acceptance": "NOT_VERIFIED",
+    "child_spawn_success": "NOT_TESTED",
+    "owner_reload_persistence": "NOT_VERIFIED",
+    "actual_datapacks_and_pvp_claims": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "certification": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "mutation": "NO_MUTATION"
+  }
+}
