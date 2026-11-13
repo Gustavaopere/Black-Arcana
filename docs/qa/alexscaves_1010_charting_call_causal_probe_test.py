@@ -25,6 +25,17 @@ class ChartingCallCausalTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"duplicate method descriptor"):
             method_roster([meth("tick",rows),meth("tick",rows)])
 
+    def test_abstract_zero_code_counted_not_executed(self):
+        method={"header":"public abstract void getDeepOneAnimation()",
+                "descriptor":"()V","instructions":[]}
+        roster=method_roster([method,meth("tick",[op(0),op(1),op(2)])])
+        self.assertEqual(roster[0]["instruction_count"],0)
+        self.assertTrue(roster[0]["declaration_only"])
+
+    def test_nonabstract_zero_code_rejected(self):
+        with self.assertRaisesRegex(ValueError,"not abstract/native"):
+            method_roster([meth("use",[])])
+
     def test_bad_method_offset_rejected(self):
         with self.assertRaisesRegex(ValueError,"unsorted, duplicate"):
             strict_method(meth("tick",[op(0),op(0),op(2)]))
