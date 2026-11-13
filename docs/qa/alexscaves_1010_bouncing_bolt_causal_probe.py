@@ -54,7 +54,7 @@ REQUIRED={
                     119:("ldc2_w","3.0"),
                     156:("ifnull","270"),
                     163:("ifeq","270"),
-                    182:("invokespecial","WaterBoltEntity"),
+                    182:("invokespecial","<init>"),
                     190:("invokevirtual","copyPosition"),
                     200:("invokevirtual","setArcingTowards"),
                     209:("ldc","0.3"),
