@@ -8138,8 +8138,8 @@
           "reason": "WaterBolt constructor initializes ricochet false and owner via setOwner; child creation only copies Bubbling and target UUID, not ricochet or enchanted seek amount; own NBT methods serialize Bubbling only; hooks and physical QA unverified; fail-closed."
         },
         "validation": {
-          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOUNCING-BOLT-CAUSAL-1.0.10.json",
-          "reason": "Pinned publisher JAR SHA and parent exact seal, 28-method two-class census, all 44 branch edges and exact callsite probes plus read-only CI/tests and indexes; no physical hit/spawn/claims/network QA."
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bouncing-bolt.md",
+          "reason": "Pinned publisher JAR SHA and parent exact seal, 28-method two-class census, all 44 branch edges and exact callsite probes plus read-only CI/tests and indexes; no physical hit/spawn/claims/network QA. See EXACT-BOUNCING-BOLT-CAUSAL-1.0.10.json for the immutable binary manifest."
         }
       }
     }
