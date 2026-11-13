@@ -1,0 +1,72 @@
+name: Alex's Caves 1.0.10 Bouncing Bolt complete method causal discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-bouncing-bolt-causal.yml'
+      - 'docs/qa/alexscaves_1010_bouncing_bolt_causal_probe.py'
+      - 'docs/qa/alexscaves_1010_bouncing_bolt_causal_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOUNCING-BOLT-CAUSAL-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bouncing-bolt.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**/INDEX.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-bouncing-bolt-causal.yml'
+      - 'docs/qa/alexscaves_1010_bouncing_bolt_causal_probe.py'
+      - 'docs/qa/alexscaves_1010_bouncing_bolt_causal_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOUNCING-BOLT-CAUSAL-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bouncing-bolt.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**/INDEX.md'
+permissions:
+  contents: read
+jobs:
+  bouncing_bolt_causal:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify fail-closed regressions
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_bouncing_bolt_causal_probe.py docs/qa/alexscaves_1010_bouncing_bolt_causal_probe_test.py
+          python3 docs/qa/alexscaves_1010_bouncing_bolt_causal_probe_test.py -v
+      - name: Download SHA-exact installed publisher 1.0.10
+        run: |
+          mkdir -p build/bouncing-bolt-causal
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/bouncing-bolt-causal/alexscaves-1.0.10.jar
+      - name: Audit class method rosters, ricochet CFG edges, state and child spawn
+        run: |
+          SNAP='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOUNCING-BOLT-CAUSAL-1.0.10.json'
+          if test -f "$SNAP"; then
+            python3 docs/qa/alexscaves_1010_bouncing_bolt_causal_probe.py \
+              --jar build/bouncing-bolt-causal/alexscaves-1.0.10.jar \
+              --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOUNCING-BOLT-1.0.10.json' --javap "$JAVA_HOME/bin/javap" \
+              --snapshot "$SNAP" --output build/bouncing-bolt-causal/evidence.json
+          else
+            python3 docs/qa/alexscaves_1010_bouncing_bolt_causal_probe.py \
+              --jar build/bouncing-bolt-causal/alexscaves-1.0.10.jar \
+              --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BOUNCING-BOLT-1.0.10.json' --javap "$JAVA_HOME/bin/javap" \
+              --output build/bouncing-bolt-causal/evidence.json
+          fi
+      - name: Check canonical generated indexes
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: bouncing-bolt-causal-readonly
+          path: build/bouncing-bolt-causal/evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
