@@ -9,8 +9,8 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=32/51
-individual_partial_enchantment_dossiers=19/51
+individual_full_enchantment_dossiers=33/51
+individual_partial_enchantment_dossiers=18/51
 individual_existing_enchantment_dossiers=51/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
@@ -19,11 +19,13 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `████████████░░░░░░░░ 62.7% (32/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `████████████░░░░░░░░ 64.7% (33/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `████████████████████ 100.0% (51/51)`; destes, dezenove permanecem parciais, enquanto Arrow Inducting, Astral Transferring, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `████████████████████ 100.0% (51/51)`; destes, dezoito permanecem parciais, enquanto Arrow Inducting, Astral Transferring, Bonking, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection possuem contratos estáticos individuais certificados.
 
 **Astral Transferring (✅ contrato estático):** [ficha individual](enchantments/astral-transferring.md), [selo](EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.json) e [prova](EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.md) separam transferência no servidor, custo cliente, laço/saúde/UUID e marcadores. Sem novo cast, hook ou QA física homologados.
+
+**Bonking (✅ contrato estático):** [ficha individual](enchantments/bonking.md), [selo](EXACT-BONKING-CONTRACT-1.0.10.json) e [prova](EXACT-BONKING-CONTRACT-1.0.10.md) documentam ator direto/mainhand, RNG e criação temporária sem spawn; callback/loot/coleta/recibo ficam separados. Sem novo cast, hook ou QA física homologados.
 
 **Arrow Inducting (✅ contrato estático):** [ficha individual](enchantments/arrow-inducting.md), [prova consolidada](EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.md) e [selo SHA-exato](EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.json) documentam conversão condicionada, busca/seguimento, movimento, custos e estado; distinguem dano/owner herdados no classpath de resultados efetivos. Spawn, cancelamento, código transformado, hooks e QA física conservam limites próprios. `NO_MUTATION`.
 
@@ -83,7 +85,7 @@ executable_perk_certification=NOT_CERTIFIED
 
 ## Leitura dos estados
 
-- ✅ **Contrato técnico estático concluído:** Arrow Inducting, Astral Transferring, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
+- ✅ **Contrato técnico estático concluído:** Arrow Inducting, Astral Transferring, Bonking, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection, sustentados por certificados individuais, hashes e auditoria do JAR. Não significa integração mutadora ou teste físico aprovado.
 - ⚠️ **Referência histórica/parcial:** o objeto tem evidências nominais ou consumidor em outro recorte; vários ainda não têm ficha própria. Não promover conclusão por associação a outro equipamento/ação.
 - ❌ **Sem ficha individual no checkpoint histórico:** preserva a pendência existente; não prova inexistência do recurso, ausência de referências ou comportamento.
 
@@ -95,7 +97,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 |---|---|---|
 | ✅ | `alexscaves:arrow_inducting` | [Contrato técnico estático](enchantments/arrow-inducting.md) · [JAR 1.0.10 selado](EXACT-ARROW-INDUCTING-1.0.10.json) · [roster do ciclo de vida](EXACT-ARROW-INDUCTING-LIFECYCLE-ROSTER-1.0.10.json) · [âncoras causais exatas](EXACT-ARROW-INDUCTING-CAUSAL-FLOW-1.0.10.json) · [herança AbstractArrow/Projectile no classpath](EXACT-ARROW-INDUCTING-INHERITED-ENGINE-1.0.10.json) · [contrato consolidado](EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.md) · [selo individual](EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.json) · hook/QA física pendentes |
 | ✅ | `alexscaves:astral_transferring` | [Contrato técnico estático](enchantments/astral-transferring.md) · [JAR 1.0.10 selado](EXACT-ASTRAL-TRANSFERRING-1.0.10.json) · [censo 22 métodos/loops](EXACT-ASTRAL-TRANSFERRING-LIFECYCLE-1.0.10.json) · [ação Totem](actions/totem-possession-remote-control.md)  · [selo individual](EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.json) · [prova consolidada](EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.md); hook/QA física pendentes |
-| ⚠️ | `alexscaves:bonking` | [Ficha técnica parcial](enchantments/bonking.md) · [JAR 1.0.10 selado](EXACT-BONKING-1.0.10.json) · [branches/loops e Mixin](EXACT-BONKING-CAUSAL-1.0.10.json) |
+| ✅ | `alexscaves:bonking` | [Contrato técnico estático](enchantments/bonking.md) · [JAR 1.0.10 selado](EXACT-BONKING-1.0.10.json) · [branches/loops e Mixin](EXACT-BONKING-CAUSAL-1.0.10.json)  · [selo individual](EXACT-BONKING-CONTRACT-1.0.10.json) · [prova consolidada](EXACT-BONKING-CONTRACT-1.0.10.md); hook/QA física pendentes |
 | ⚠️ | `alexscaves:bouncing_bolt` | [Ficha técnica parcial](enchantments/bouncing-bolt.md) · [JAR 1.0.10 selado](EXACT-BOUNCING-BOLT-1.0.10.json) · [ação Sea Staff](actions/sea-staff-water-bolt.md) |
 | ⚠️ | `alexscaves:bouncy_ball` | [Ficha técnica parcial](enchantments/bouncy-ball.md) · [JAR 1.0.10 selado](EXACT-BOUNCY-BALL-1.0.10.json) · [equipamento Shot Gum](equipment/shot-gum.md) · [dano Gumball](damage-types/gumball.md) |
 | ⚠️ | `alexscaves:charting_call` | [Ficha técnica parcial](enchantments/charting-call.md) · [JAR 1.0.10 selado](EXACT-CHARTING-CALL-1.0.10.json) · [ação Magic Conch](actions/magic-conch-summon-deep-ones.md) |
@@ -155,4 +157,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-**Todas as 51 identidades de encantamento publisher possuem agora ficha individual:** 32 contratos técnicos estáticos certificados e 19 fichas ⚠️ parciais. O próximo trabalho é aprofundar os contratos ainda parciais, começando por `alexscaves:bonking`, sem refazer os já certificados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem **60/81 contratos estáticos entre fichas observadas**, incluindo 51 fichas de encantamentos. Esses 81 objetos documentais observados não equivalem ao universo integral do provider.
+**Todas as 51 identidades de encantamento publisher possuem agora ficha individual:** 33 contratos técnicos estáticos certificados e 18 fichas ⚠️ parciais. O próximo trabalho é aprofundar os contratos ainda parciais, começando por `alexscaves:bouncing_bolt`, sem refazer os já certificados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem **61/81 contratos estáticos entre fichas observadas**, incluindo 51 fichas de encantamentos. Esses 81 objetos documentais observados não equivalem ao universo integral do provider.

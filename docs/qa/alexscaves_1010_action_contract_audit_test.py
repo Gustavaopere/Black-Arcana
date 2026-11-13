@@ -5069,5 +5069,112 @@ class ContractAuditTests(unittest.TestCase):
             with self.subTest(mode=mode), self.assertRaises(ValueError): self.inspect(doc)
 
 
+
+class BonkingProfileTests(unittest.TestCase):
+    """Bonking extends the dispatcher without changing historical profile policy."""
+    @classmethod
+    def setUpClass(cls):
+        cls.provider = Path(__file__).resolve().parents[2] / 'wiki/modpack-catalog/providers/✅-alexs-caves-continued'
+        cls.manifest = audit.load_manifest(cls.provider / 'EXACT-BONKING-CONTRACT-1.0.10.json')
+
+    def reject(self, edit):
+        document = copy.deepcopy(self.manifest)
+        edit(document)
+        with self.assertRaises(audit.AuditError):
+            audit.validate_structure(document, profile='bonking')
+
+    def test_bonking_is_one_explicit_static_family(self):
+        self.assertEqual(audit.profile_spec('bonking'),
+                         (audit.BONKING_SCOPE, frozenset({'enchantments/bonking.md'}), 'contract_evidence'))
+        audit.validate_structure(self.manifest, profile='bonking')
+        self.assertEqual(audit.profile_spec('actions'), (audit.SCOPE, audit.ACTIONS, 'action_evidence'))
+
+    def test_old_profiles_reject_bonking_native_metadata(self):
+        for profile in ('actions', 'effects', 'radiation', 'astral_transferring'):
+            with self.subTest(profile=profile), self.assertRaises(audit.AuditError):
+                audit.validate_structure(self.manifest, profile=profile)
+
+    def test_native_metadata_is_required_and_closed(self):
+        self.reject(lambda d: d.pop('native_metadata'))
+        self.reject(lambda d: d['native_metadata'].update(unsealed_claim=True))
+        self.reject(lambda d: d['native_metadata'].pop('interface'))
+
+    def test_interface_is_separate_from_executable_anchor_policy(self):
+        self.assertNotIn(audit.BONKING_INTERFACE, self.manifest['classes'])
+        self.assertEqual(self.manifest['native_metadata']['interface']['path'], audit.BONKING_INTERFACE)
+        def abstract_anchor(d):
+            method = next(iter(d['classes'].values()))['methods'][0]
+            method['anchors'] = []
+        self.reject(abstract_anchor)
+
+    def test_full_body_anchor_deletion_and_stale_fingerprint_fail(self):
+        self.reject(lambda d: d['classes'][audit.BONKING_PREFIX + 'server/event/CommonEvents.class']['methods'][0]['anchors'].pop())
+        self.reject(lambda d: d['native_metadata']['method_coverage'][0].update(parsed_method_sha256='0' * 64))
+
+    def test_full_body_branch_metadata_cannot_omit_a_target(self):
+        def remove(d):
+            record = next(r for r in d['native_metadata']['method_coverage'] if r['name'] == 'livingDie')
+            record['branch_edges'].pop()
+        self.reject(remove)
+
+    def test_partial_registries_cannot_be_relabelled_complete(self):
+        def relabel(d):
+            record = next(r for r in d['native_metadata']['method_coverage'] if r['name'] == '<clinit>')
+            record['coverage'] = 'FULL_BODY'
+        self.reject(relabel)
+
+    def test_partial_registry_window_cannot_move(self):
+        def move(d):
+            selected = next(m for m in d['classes'][audit.BONKING_PREFIX + 'server/enchantment/ACEnchantmentRegistry.class']['methods'] if m['name'] == '<clinit>')
+            selected['anchors'][0]['offset'] = 131
+        self.reject(move)
+
+    def test_coverage_cannot_duplicate_or_replace_a_method(self):
+        def duplicate(d):
+            d['native_metadata']['method_coverage'][1] = copy.deepcopy(d['native_metadata']['method_coverage'][0])
+        self.reject(duplicate)
+        def replace(d):
+            d['native_metadata']['method_coverage'][0]['name'] = 'unsealed_method'
+        self.reject(replace)
+
+    def test_existing_256_instruction_budget_still_applies_to_bonking(self):
+        def exceed(d):
+            method = next(iter(d['classes'].values()))['methods'][0]
+            method['anchors'] = [dict(offset=i, opcode='nop', operand='', symbol='') for i in range(257)]
+        self.reject(exceed)
+
+    def test_declaration_reader_preserves_abstract_abi_and_annotation_arguments(self):
+        def u2(n): return n.to_bytes(2, 'big')
+        def utf8(s):
+            value = s.encode()
+            return b'\x01' + u2(len(value)) + value
+        # Minimal synthetic Java 21 interface: no executable Code attribute.
+        constants = [utf8('test/Accessor'), b'\x07' + u2(1), utf8('java/lang/Object'),
+                     b'\x07' + u2(3), utf8('bridge'), utf8('()V'),
+                     utf8('RuntimeVisibleAnnotations'), utf8('Ltest/Marker;')]
+        annotation = u2(1) + u2(8) + u2(0)
+        member = u2(0x0401) + u2(5) + u2(6) + u2(1) + u2(7) + len(annotation).to_bytes(4, 'big') + annotation
+        raw = b'\xca\xfe\xba\xbe\x00\x00\x00A' + u2(9) + b''.join(constants)
+        raw += u2(0x0601) + u2(2) + u2(4) + u2(0) + u2(0) + u2(1) + member + u2(0)
+        declaration = audit.class_metadata(raw)
+        self.assertEqual(declaration['name'], 'test/Accessor')
+        method = declaration['methods'][0]
+        self.assertEqual((method['name'], method['descriptor']), ('bridge', '()V'))
+        self.assertEqual(method['annotations'], [dict(visibility='RuntimeVisibleAnnotations', type='Ltest/Marker;', values={})])
+        self.assertNotIn('exception_handlers', method)
+        for broken in (raw[:-1], raw + b'bad', raw[:6] + b'\x00=' + raw[8:]):
+            with self.subTest(broken=broken[-5:]), self.assertRaises(audit.AuditError):
+                audit.class_metadata(broken)
+
+    def test_current_card_seal_rejects_modified_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            relative = 'enchantments/bonking.md'
+            (root / 'enchantments').mkdir()
+            (root / relative).write_bytes((self.provider / relative).read_bytes() + b'changed\n')
+            with self.assertRaises(audit.AuditError):
+                audit.validate_cards(self.manifest, root, profile='bonking')
+
+
 if __name__ == "__main__":
     unittest.main()

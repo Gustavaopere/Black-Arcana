@@ -8061,6 +8061,47 @@
           "reason": "Manifesto individual com 10 classes,13 recursos,50 métodos e 1045 âncoras; métodos/janelas parciais explícitos, CLI publisher e regressões reproduzíveis preservando provas anteriores e budgets256/8192/8min."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/bonking.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutation": "NO_MUTATION",
+      "scope_note": "Contrato estático individual Bonking: gates/evento, ator/stack, RNG e ponte de loot; não conclui resultados físicos, mixins efetivos, restauração após exceção, arma integral, hooks, crédito ou provider. +0 raízes mágicas.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bonking.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, recurso Bonking, registro/chave, tag PrimitiveClub, idiomas, receita, aquisição e exclusões declaradas; fonte 1.1.1 adjacente sem paridade alegada."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bonking.md",
+          "reason": "LivingDie completo delimita vítima Mob no servidor e ator direto LivingEntity, leitura atual mainhand duas vezes, PrimitiveClub, nível positivo e RNG nextFloat<0.33F; entidades temporárias criam contexto sintético de loot sem spawn nem segundo hurt."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bonking.md",
+          "reason": "Máximo I/peso 1, custos1+18×(L−1)/41+10×(L−1), bigorna8; nívelpositivo sem escala extra. RNG é oportunidade nominal, não chance medida de cabeça. Range, área, projétil e duração próprios N/A no ramo de loot."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bonking.md",
+          "reason": "Elegibilidade vem do evento/vítima/ator direto e arma atual, sem busca espacial, filtro Player ou snapshot da arma do golpe. Creeper nulo pula loot; ausência de ServerLevel ou lightning nulo pula somente charging e continua para a preparação do contexto de loot. Fonte sintética não identifica por si só o beneficiário final."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bonking.md",
+          "reason": "Aquisição separada de ativação; callbacks do club solicitam desgaste 1 em hit e 2 em mineração apropriada, sem cobrança Bonking por proc. Loop faz backup/zero/restore normal das chances de equipamento; callback e resultados de loot são delegados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bonking.md",
+          "reason": "MobMixin e interface fazem ponte do loot; argumento int do bridge não é lido. Ausência de handlers locais não garante restauração se callback lançar exceção. Sem marcador de recibo/deduplicação local, spawn/loot/coleta/XP/Mastery continuam distintos. Hooks e QA física não promovidos; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/bonking.md",
+          "reason": "Manifesto individual com 6 classes com métodos e 1 interface selada, 11 recursos,26 métodos e 678 âncoras; corpos completos e registries parciais delimitados, CLI publisher/selos/regressões, provas anteriores preservadas e budgets256/8192/8min."
+        }
+      }
     }
   },
   "providers": {},

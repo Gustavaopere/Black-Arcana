@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Thirty-two individual enchantment static contracts (Arrow Inducting, Astral Transferring, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection); nineteen other individual enchantment dossiers remain partial. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Thirty-three individual enchantment static contracts (Arrow Inducting, Astral Transferring, Bonking, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection); eighteen other individual enchantment dossiers remain partial. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -346,11 +346,12 @@
     "enchantments": {
       "identified_objects": 51,
       "individual_dossiers": 51,
-      "partial_dossiers": 19,
-      "documented_static_contracts": 32,
+      "partial_dossiers": 18,
+      "documented_static_contracts": 33,
       "cards": [
         "enchantments/arrow-inducting.md",
         "enchantments/astral-transferring.md",
+        "enchantments/bonking.md",
         "enchantments/heavy-slam.md",
         "enchantments/herd-phalanx.md",
         "enchantments/humungous-hex.md",
@@ -382,7 +383,7 @@
         "enchantments/tsunami.md",
         "enchantments/twilight-perfection.md"
       ],
-      "evidence": "EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.md",
+      "evidence": "EXACT-BONKING-CONTRACT-1.0.10.md",
       "family_universe_closed": false,
       "related_evidence": [
         "EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md",
@@ -421,7 +422,8 @@
         "EXACT-ARROW-INDUCTING-CAUSAL-FLOW-1.0.10.json",
         "EXACT-ARROW-INDUCTING-INHERITED-ENGINE-1.0.10.json",
         "EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.json",
-        "EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.md"
+        "EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.md",
+        "EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.md"
       ]
     }
   }

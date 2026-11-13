@@ -43,14 +43,22 @@ class Tests(unittest.TestCase):
         self.assertEqual(configs[0]["path"],"alexscaves.mixins.json")
         self.assertIn("mixins",configs[0]["entries_in"])
         self.assertEqual(len(self.data["loot_bridge"]),3)
-    def test_partial_and_no_mutation(self):
+    def test_historical_partial_and_current_static_certificate_never_mutate(self):
         key="✅-alexs-caves-continued/enchantments/bonking.md"
-        self.assertNotIn(key,json.loads(LEDGER.read_text(encoding="utf8"))["objects"])
+        cert=json.loads(LEDGER.read_text(encoding="utf8"))["objects"][key]
+        self.assertEqual(cert["claim_scope"],"STATIC_TECHNICAL_CATALOG_ONLY")
+        self.assertEqual(cert["evidence_grade"],"SHA_EXACT_BINARY_BEHAVIOR")
+        self.assertEqual(cert["mutating_hook"],"NOT_VERIFIED")
+        self.assertEqual(cert["physical_qa"],"NOT_TESTED")
+        self.assertEqual(set(cert["evidence"]),
+                         {"identity","behavior","parameters","targeting",
+                          "costs","integration","validation"})
         self.assertEqual(self.data["limits"]["static_certification"],"PARTIAL")
         self.assertEqual(self.data["limits"]["mutation"],"NO_MUTATION")
         self.assertEqual(self.data["limits"]["physical_qa"],"NOT_TESTED")
         self.assertEqual(self.data["limits"]["safe_mutating_hook"],"NOT_VERIFIED")
         self.assertIn("EXACT-BONKING-CAUSAL-1.0.10.json",CARD.read_text(encoding="utf8"))
-        self.assertIn("| ⚠️ | `alexscaves:bonking`",CROSS.read_text(encoding="utf8"))
+        self.assertIn("EXACT-BONKING-CONTRACT-1.0.10.json",CARD.read_text(encoding="utf8"))
+        self.assertIn("| ✅ | `alexscaves:bonking`",CROSS.read_text(encoding="utf8"))
 if __name__=="__main__":
     unittest.main()
