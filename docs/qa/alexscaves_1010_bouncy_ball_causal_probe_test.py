@@ -2,7 +2,7 @@
 """Fail-closed synthetic coverage for SHA-exact Bouncy Ball causal audit."""
 import unittest
 from alexscaves_1010_bouncy_ball_causal_probe import (
-    branch_edges, pivots, pairs_unique, check_nbt_color_only
+    branch_edges, pivots, pairs_unique, check_nbt_color_only, method_switch_tables
 )
 
 def instruction(offset, opcode, operand="", symbol=""):
@@ -29,6 +29,52 @@ class BouncyBallCausalTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unsupported"):
             branch_edges(method([instruction(0, "tableswitch"),
                                  instruction(3, "return")]))
+
+
+    def test_verified_switch_targets(self):
+        rows = [instruction(0, "tableswitch"), instruction(10, "return"),
+                instruction(20, "return")]
+        tabs = [{"offset": 0, "opcode": "tableswitch",
+                 "cases": [{"case": "0", "target": 10},
+                           {"case": "default", "target": 20}]}]
+        self.assertEqual(branch_edges(method(rows), tabs), [])
+
+    def test_switch_invalid_case_target_fails(self):
+        rows = [instruction(0, "tableswitch"), instruction(10, "return")]
+        tabs = [{"offset": 0, "opcode": "tableswitch",
+                 "cases": [{"case": "0", "target": 40},
+                           {"case": "default", "target": 10}]}]
+        with self.assertRaisesRegex(ValueError, "switch branch target"):
+            branch_edges(method(rows), tabs)
+
+    def test_javap_switch_decoder_with_default(self):
+        native = {"header": "public void test()", "descriptor": "()V",
+                  "instructions": [instruction(0, "tableswitch"),
+                                   instruction(10, "return"),
+                                   instruction(20, "return")]}
+        raw = "\n".join([
+            "public class Example {",
+            "  public void test();",
+            "    descriptor: ()V",
+            "    Code:",
+            "       0: tableswitch   { // 0 to 0",
+            "                     0: 10",
+            "               default: 20",
+            "          }",
+            "      10: return",
+            "      20: return",
+            "  public void other();",
+            "    descriptor: ()V",
+            "    Code:",
+            "       0: return",
+            "}",
+        ])
+        tables = method_switch_tables(native, raw)
+        self.assertEqual(tables[0]["cases"], [
+            {"case": "0", "target": 10},
+            {"case": "default", "target": 20},
+        ])
+        self.assertEqual(branch_edges(native, tables), [])
 
     def test_duplicate_jvm_offset_fails_closed(self):
         with self.assertRaisesRegex(ValueError, "non-canonical"):
