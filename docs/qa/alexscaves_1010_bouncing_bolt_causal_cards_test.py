@@ -56,8 +56,10 @@ class Tests(unittest.TestCase):
         for t in ("NO_MUTATION","NOT_VERIFIED","NOT_TESTED","32D","3D",
                   "ricochet=false","EXACT-BOUNCING-BOLT-CAUSAL-1.0.10.json"):
             self.assertIn(t,card)
-        self.assertIn("individual_full_enchantment_dossiers=34/51",cross)
-        self.assertIn("individual_partial_enchantment_dossiers=17/51",cross)
+        certified=sum(k.startswith("✅-alexs-caves-continued/enchantments/")
+                      for k in self.ledger["objects"])
+        self.assertIn(f"individual_full_enchantment_dossiers={certified}/51",cross)
+        self.assertIn(f"individual_partial_enchantment_dossiers={51-certified}/51",cross)
         self.assertIn("| ✅ | `alexscaves:bouncing_bolt`",cross)
 if __name__=="__main__":
     unittest.main()

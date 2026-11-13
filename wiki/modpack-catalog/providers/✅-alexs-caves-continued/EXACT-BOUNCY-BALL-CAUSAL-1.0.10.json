@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "scope": "BOUNCY_BALL_FULL_DECLARED_METHOD_ROSTERS_AND_DIRECT_JVM_BRANCHES",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "parent_manifest_sha256": "619653d7f2bbb131aba89e37a89f86dc69520ef24b5c28a41a4ced5386da43c5",
+  "state_manifest_sha256": "e2c74f0e2999e8b7286f21f89494cd84b8c0aafee4dcbb7c6ec190610a19a0e1",
+  "classes": [
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/item/ShotGumItem.class",
+      "sha256": "08aa8b9aa1781f2ead7d899e4fde758ea44bc527a2ee5968997e5b3ffdd32238",
+      "declared_method_count": 25
+    },
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "sha256": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535",
+      "declared_method_count": 28
+    },
+    {
+      "path": "com/github/alexmodguy/alexscaves/server/entity/living/GumbeeperEntity.class",
+      "sha256": "6a24f05a730218352a083da32f233c3d48fb5f85a6f24f1ba45d78c422b0266c",
+      "declared_method_count": 36
+    }
+  ],
+  "selected_consumers": [
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/ShotGumItem.class",
+      "name": "acInventoryTick",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+      "instructions": 285,
+      "conditional_and_goto_branches": 40,
+      "verified_switch_tables": [],
+      "parsed_method_sha256": "6f9325406aaf142af4b415bff94b9123882b72a2ab981370d9be30a5e7c18093"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "name": "bounceFromDirection",
+      "descriptor": "(Lnet/minecraft/core/Direction;)V",
+      "instructions": 198,
+      "conditional_and_goto_branches": 22,
+      "verified_switch_tables": [
+        {
+          "offset": 355,
+          "opcode": "tableswitch",
+          "cases": [
+            {
+              "case": "1",
+              "target": 380
+            },
+            {
+              "case": "2",
+              "target": 392
+            },
+            {
+              "case": "3",
+              "target": 404
+            },
+            {
+              "case": "default",
+              "target": 413
+            }
+          ]
+        }
+      ],
+      "parsed_method_sha256": "0f687d784c92e2b8e7eebfc3cc9a85041b5fdfb37c6c5e4a32aaa2489df66282"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "name": "getMaximumBounces",
+      "descriptor": "()I",
+      "instructions": 7,
+      "conditional_and_goto_branches": 0,
+      "verified_switch_tables": [],
+      "parsed_method_sha256": "c45e92256a3739bc4614241d9d6cc8e814632cbc8950109980a57495046d1573"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "name": "setMaximumBounces",
+      "descriptor": "(I)V",
+      "instructions": 7,
+      "conditional_and_goto_branches": 0,
+      "verified_switch_tables": [],
+      "parsed_method_sha256": "6ccec525f7d55393d30907d20a4d3fe5e48583df2c41f70fa87be0e214808da9"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "name": "getBounces",
+      "descriptor": "()I",
+      "instructions": 7,
+      "conditional_and_goto_branches": 0,
+      "verified_switch_tables": [],
+      "parsed_method_sha256": "488ed41f84103d4051d2c48c6aa77a5ac84d2e3c67e7ed53406b9513b5a49bee"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class",
+      "name": "setBounces",
+      "descriptor": "(I)V",
+      "instructions": 7,
+      "conditional_and_goto_branches": 0,
+      "verified_switch_tables": [],
+      "parsed_method_sha256": "7fba6225bafcf93d7c5ff4065c547d3ccd80e05348cc823070db4a45992593bc"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/living/GumbeeperEntity.class",
+      "name": "shootGumball",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+      "instructions": 198,
+      "conditional_and_goto_branches": 12,
+      "verified_switch_tables": [],
+      "parsed_method_sha256": "26380c4830c57381fa6d39220234305da5b408e7ad11bf56878e061b6e45ecb2"
+    }
+  ],
+  "gumball_own_nbt": {
+    "write_method_sha256": "71d94d6babff7eb6ec1b9ff66f035c970ed9cfd4bf428cfbde1e6dfc9e7a52cf",
+    "read_method_sha256": "6ab17f1d19425646dc4e5bf69274f479ff3634b7f552c005af6041c408c765e5",
+    "bounce_state_in_own_overrides": false,
+    "inherited_engine_persistence": "NOT_VERIFIED"
+  },
+  "limits": {
+    "interprocedural_exception_flow": "NOT_RECONSTRUCTED",
+    "direct_switch_case_destinations": "VERIFIED_EXACT_JAVAP",
+    "effective_world_replay_and_reload": "NOT_VERIFIED",
+    "external_mixins_and_other_jar_consumers": "NOT_VERIFIED",
+    "unusual_enchant_levels_and_datapacks": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "certification": "STATIC_TECHNICAL_CATALOG_ONLY"
+  }
+}

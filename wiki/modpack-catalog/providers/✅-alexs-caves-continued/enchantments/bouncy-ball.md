@@ -1,6 +1,6 @@
 # Bouncy Ball — limite de ricochetes do Shot Gum (1.0.10)
 
-**Estado:** ⚠️ ficha individual técnica **parcial/condicionada** de encantamento. Os recursos publisher e janelas de bytecode da versão instalada estão verificados; **não** há certificação integral para perks, nem QA físico, nem hook mutador seguro. `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`.
+**Estado:** ✅ **contrato técnico estático individual certificado** (`STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`) no recorte nativo do publisher 1.0.10. Evidências de identidade, fórmula, produtores, consumidores, branches/tableswitch, parâmetros, persistência própria e custos foram reconciliadas com o JAR. **Não** há hook mutador seguro ou QA física certificada. `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`.
 
 O encantamento é um parâmetro do **Shot Gum** e de seus projéteis **Gumball**, não uma nova magia deliberada ou uma nova raiz de casting. Reutilizar os contratos técnicos já catalogados de [Shot Gum](../equipment/shot-gum.md) e [Gumball](../damage-types/gumball.md), evitando contagem e execução duplicadas.
 
@@ -12,6 +12,7 @@ O encantamento é um parâmetro do **Shot Gum** e de seus projéteis **Gumball**
 - **JAR físico publisher 1.0.10:** `alexscaves-1.0.10-neoforge+1.21.1.jar`, **75.279.314 bytes**, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
 - **Manifesto individual SHA-exato:** [EXACT-BOUNCY-BALL-1.0.10.json](../EXACT-BOUNCY-BALL-1.0.10.json), reproduzido por [sonda JVM somente leitura](../../../../../docs/qa/alexscaves_1010_bouncy_ball_probe.py), [9 regressões sintéticas](../../../../../docs/qa/alexscaves_1010_bouncy_ball_probe_test.py) e [CI dedicada](../../../../../.github/workflows/alexscaves-1010-bouncy-ball.yml).
 - **Evidência estática anterior independente:** [EXACT-GUMBALL-STATE-1.0.10.json](../EXACT-GUMBALL-STATE-1.0.10.json) e [EXACT-GUMBALL-CONTRACTS-1.0.10.json](../EXACT-GUMBALL-CONTRACTS-1.0.10.json).
+- **Fechamento causal SHA-exato:** [EXACT-BOUNCY-BALL-CAUSAL-1.0.10.json](../EXACT-BOUNCY-BALL-CAUSAL-1.0.10.json), [sonda read-only](../../../../../docs/qa/alexscaves_1010_bouncy_ball_causal_probe.py), [12 regressões sintéticas](../../../../../docs/qa/alexscaves_1010_bouncy_ball_causal_probe_test.py) e [workflow de validação real do JAR](../../../../../.github/workflows/alexscaves-1010-bouncy-ball-causal.yml).
 - **Clean-room:** um checkout público de `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` declara **1.1.1**, portanto não pode certificar os parâmetros do JAR 1.0.10. A prova abaixo deriva diretamente dos recursos e JVM compilada SHA-verificados, sem copiar classes do provider.
 
 ## 2. Parâmetros publisher de encantamento
@@ -97,13 +98,29 @@ A contagem `BOUNCES`, seleção de vítimas, efeitos, owner, split, explosão e 
 
 **Fronteira:** o runtime mágico Black Arcana mantém casting e segurança próprios. O RPG Skill Tree é apenas sibling/provider de progressão, Mastery, atributos e gates mediante contratos reais. Um projeto de perk que modifique um atributo nativo do Shot Gum precisa de contrato explícito, seguro, server-authoritative e verificável; sem isso, **fail-closed**. Não introduzir wrappers que dobrem o dano, consumam munição novamente ou transformem cada ricochete em novo cast.
 
-## 7. Certificação, QA futura e contagem
+## 7. Fechamento causal JVM, persistência e limites
+
+O JAR exato de 1.0.10 confirmou **89 métodos declarados** nas três classes produtoras/consumidoras: `ShotGumItem` (25), `GumballEntity` (28) e `GumbeeperEntity` (36). A sonda compara os digests de cada método selecionado do inventário Gumball já selado e dos sete consumidores da ficha original.
+
+| Consumidor nativo | Instruções | Desvios `if`/`goto` | Tabela de salto |
+|---|---:|---:|---|
+| `ShotGumItem.acInventoryTick` | 285 | 40 | nenhuma |
+| `GumballEntity.bounceFromDirection` | 198 | 22 | `tableswitch @355`: caso `1→380`, `2→392`, `3→404`, `default→413` |
+| `GumbeeperEntity.shootGumball` | 198 | 12 | nenhuma |
+
+São **74 desvios condicionais/goto** e **uma tabela com quatro destinos** conferidos contra `javap`; offsets ordenados, destinos válidos e `default` único são exigidos. Os getters/setters `getMaximumBounces`, `setMaximumBounces`, `getBounces` e `setBounces` têm sete instruções cada, sem branches diretos. Esses contadores cobrem **as classes e os métodos selecionados**, não a totalidade de consumidores possíveis em outros JARs.
+
+Os overrides compilados `GumballEntity.addAdditionalSaveData` e `readAdditionalSaveData` têm nove instruções cada. Em seus próprios corpos JVM, somente `Color` é serializado/restaurado; não há gravação/leitura explícita de `MAXIMUM_BOUNCES` ou `BOUNCES` nesses overrides. **Persistência herdada não foi verificada**: o resultado não prova perda nem preservação do contador após save/reload. Isso impede projetar perks de duração/reload sobre esses accessors sem investigação adicional.
+
+Para este encantamento, o contrato estático cobre exatamente: `M=4+2×L` no Shot Gum; transmissão de M ao Gumball; comparação/incremento de B; trajetórias de homing opcionais, reflexão e descarte, com as diferenças explosivas documentadas acima; e a distinção entre dados sincronizados e persistência própria. O efeito do enchant não introduz cast ou dano independente, não determina hitbox, não garante impacto e não equivale a um hook. CFG de exceções/interprocedural, mixins, datapacks efetivos, owner/replay e QA física continuam `NOT_VERIFIED`/`NOT_TESTED`.
+
+## 8. Certificação, QA futura e contagem
 
 - **Identidade/JSON/slots e dados publisher:** `VERIFIED_EXACT_BINARY`.
-- **Produtor e consumidores delimitados, hashes/descriptors/offsets:** `VERIFIED_EXACT_BINARY_SELECTED_WINDOWS`; o CFG completo e todos os outros hooks de ambiente não foram reconstruídos.
+- **Produtor, consumidores, hashes, descriptors, branches e tableswitch:** `VERIFIED_EXACT_BINARY_DIRECT_CONTROL_FLOW`; o CFG interprocedural e de exceções, e hooks externos de ambiente não foram reconstruídos.
 - **Enchanting/drops/loot de datapacks, slots efetivos, PvP/claims, proteção de chunks, interações de mods, side, replay, ownership dos descendentes e hits realmente aceitos:** `NOT_VERIFIED`.
-- **Hook mutador:** `NOT_VERIFIED`; **QA física:** `NOT_TESTED`; **perk individual:** `NOT_CERTIFIED`; **mutação:** `NO_MUTATION`.
+- **Hook mutador:** `NOT_VERIFIED`; **QA física:** `NOT_TESTED`; **contrato estático individual:** `COMPLETE_PERK_READY` sob `STATIC_TECHNICAL_CATALOG_ONLY`; **mutação:** `NO_MUTATION`. O nome do certificado não significa autorização de perk executável.
 
 Para futura validação física, testar L=0/1/2/3 com tiros isolados, obstáculos X/Y/Z, ricochetes com e sem Targeted Ricochet, split, explosivo, múltiplos donos, alvo imune/aliado, colisões repetidas, mods que cancelam hit, limites de chunk, persistência/reload, sons, munição, distância e contagem B real versus M configurado. Registrar telemetria do cliente e servidor e diferenciar `setMaximumBounces` de ricochetes observados.
 
-**Contabilidade nesta rodada:** **+1 ficha individual parcial**, **+0 contratos estáticos certificados**, **+0 raízes mágicas**, **+0 providers concluídos**, sem promoção de Stage. O próximo recurso na ordem alfabética é `alexscaves:charting_call`.
+**Contabilidade nesta certificação:** **+0 fichas novas**, **+1 contrato estático certificado**, **+0 raízes mágicas**, **+0 providers concluídos** e nenhuma promoção de Stage. No recorte observado: **35/51 encantamentos** e **63/81 objetos** com contratos estáticos certificados; o universo integral de Alex's Caves não está comprovado. Próxima ficha parcial por ordem alfabética: `alexscaves:charting_call`.
