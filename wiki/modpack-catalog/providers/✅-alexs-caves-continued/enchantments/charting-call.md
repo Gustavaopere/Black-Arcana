@@ -1,6 +1,6 @@
 # Charting Call — ampliação condicionada das invocações Magic Conch (1.0.10)
 
-**Estado:** ⚠️ ficha individual de encantamento **parcial/condicionada**; recurso publisher, consumidor JVM e bridges de invocação/lifetime selecionados verificados no JAR físico. **Falha de RNG com limites zero:** risco estático identificado; `physical_qa=NOT_TESTED`; nenhuma reprodução real de exceção, crash ou invocação foi feita. `mutating_hook=NOT_VERIFIED` · `perk_certification=NOT_CERTIFIED` · `NO_MUTATION`.
+**Estado:** ✅ **contrato técnico estático individual certificado** (`STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`) para Charting Call no publisher 1.0.10. Identidade, gatilho, famílias, limites de RNG, branches JVM, consumidores, custos, autoria, NBT e riscos foram reconciliados com o JAR. **O potencial erro de `nextInt(0)` permanece um risco estático, não um crash reproduzido.** `physical_qa=NOT_TESTED` · `mutating_hook=NOT_VERIFIED` · `NO_MUTATION`.
 
 Este encantamento modifica o comportamento da única ação semântica [Magic Conch — Summon Deep Ones](../actions/magic-conch-summon-deep-ones.md). Não inaugura spell root, mana, tipo de dano nem runtime próprios; Deep One, Knight e Mage são participantes/variantes da mesma invocação provider-native.
 
@@ -12,6 +12,7 @@ Este encantamento modifica o comportamento da única ação semântica [Magic Co
 - **JAR publisher exato da modlist:** `alexscaves-1.0.10-neoforge+1.21.1.jar`, **75.279.314 bytes**, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
 - **Manifesto desta ficha:** [EXACT-CHARTING-CALL-1.0.10.json](../EXACT-CHARTING-CALL-1.0.10.json), selado pela [sonda somente leitura](../../../../../docs/qa/alexscaves_1010_charting_call_probe.py), [8 regressões sintéticas](../../../../../docs/qa/alexscaves_1010_charting_call_probe_test.py) e [workflow publisher](../../../../../.github/workflows/alexscaves-1010-charting-call.yml).
 - **Provas anteriores reutilizadas:** [EXACT-TECHNICAL-CONTRACTS-1.0.10.json](../EXACT-TECHNICAL-CONTRACTS-1.0.10.json) e a ficha de Magic Conch; esta ficha individual não replica a certificação da raiz.
+- **Certificado causal SHA-exato:** [EXACT-CHARTING-CALL-CAUSAL-1.0.10.json](../EXACT-CHARTING-CALL-CAUSAL-1.0.10.json), gerado pela [sonda read-only JVM](../../../../../docs/qa/alexscaves_1010_charting_call_causal_probe.py), [testes sintéticos fail-closed](../../../../../docs/qa/alexscaves_1010_charting_call_causal_probe_test.py) e [workflow dedicado](../../../../../.github/workflows/alexscaves-1010-charting-call-causal.yml). O manifesto exige o JAR publisher, os hashes dos classfiles e os digests do selo anterior.
 - **Clean-room:** `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` declara **1.1.1** e não substitui o JAR 1.0.10. Os dados e offsets abaixo vêm do binário 1.0.10 e não são código proprietário incorporado ao Black Arcana.
 
 ## 2. Definição do encantamento — dados exatos do publisher
@@ -97,12 +98,31 @@ A reputação `−2` do ramo de `Taxing Bellow` e os custos de durabilidade são
 
 O **Black Arcana** conserva autoridade sobre seu casting, policies, hazards, persistência e segurança. O **RPG Skill Tree** é somente provider/sibling de progressão, Mastery, atributos e gates conforme contrato explícito. Não introduzir novos handlers em release/cast nem interceptar `RandomSource` por suposição.
 
-## 7. Prova, pendências e contabilização
+## 7. Reconciliação JVM causal e inventário de consumidores
 
-**Confirmado no exato 1.0.10:** hashes publisher, JSON/limites de enchanting, tags físicas, classfiles, descritores, método `releaseUsing` e seus seis `nextInt`, três `Math.max`, 3 consumidores de summon, rotinas selecionadas de criação, owner e lifetime. As janelas JVM no manifesto são **delimitadas** e não certificam todo o CFG, toda a IA ou efeitos de terceiros.
+A auditoria específica no JAR exato conferiu **81 métodos declarados** em duas classes: `MagicConchItem` (**9 métodos**) e `DeepOneBaseEntity` (**72 métodos**, incluindo **três declarações abstratas sem bytecode**, registradas como tais e nunca tratadas como métodos executáveis). O classfile `CHARTING_CALL` aparece diretamente no `ACEnchantmentRegistry` e no `MagicConchItem`; esse censo de tokens entre classfiles do artefato não cobre reflection, mixins de outros JARs ou interceptações externas.
+
+| Método nativo principal | Instruções JVM | Branches diretos (`if`/`goto`) | Switches |
+|---|---:|---:|---:|
+| `MagicConchItem.releaseUsing` | 211 | 20 | 0 |
+| `MagicConchItem.summonDeepOne` | 134 | 8 | 0 |
+| `DeepOneBaseEntity.setSummonedBy` | 11 | 0 | 0 |
+| `DeepOneBaseEntity.tick` | 360 | 46 | 0 |
+
+Os **74 branches diretos** tiveram destinos validados na tabela de offsets do método correspondente. Os hashes e descritores dos quatro métodos foram confrontados com `EXACT-CHARTING-CALL-1.0.10.json`; sete métodos auxiliares (`use`, `getUseDuration`, `copyTarget`, `isAlliedTo`, `getReactionTo` e os dois overrides de NBT) também têm fingerprints individuais e referências relevantes no manifesto causal.
+
+O fluxo de `releaseUsing` mostra a guarda de charge em `@41`, a verificação de servidor em `@104–107`, a leitura de `CHARTING_CALL @111–114`, os três pedidos base `nextInt(1) @126/138/150`, o salto de `L<=0` em `@160` e **três cadeias `Math.max`→`nextInt` em `@172–175`, `@192–195`, `@212–215`**. A sonda verifica também as instruções exatas `isub`, os constantes `2/0/0` e as somas aos limites de pedido. Assim, os argumentos zero para Knights (L=I–II) e Mages (L=I–III) são *contratos estáticos do bytecode*, não resultados de gameplay. Não há evidência de um clamp protetor adicional do consumidor antes dessas chamadas.
+
+A rotina de posicionamento liga `setSummonedBy @234`, `finalizeSpawn @268`, `checkSpawnObstruction @278`, `addFreshEntity @290` e `copyTarget @297`. A entidade salva e lê em seus métodos próprios os campos `ConchSummoned`, `ConchUUID` e `ConchTime`; os respectivos métodos têm **56 e 62 instruções**, hashes `706bb7abc272442901c913e02c65076edce56946458c453dcb59601457df396a` e `8a25d29425e8ee5480ce5c04bb03c534f1ed205cd629c9d2f9a936c94ba30408`. Isso comprova as rotas locais de serialização, mas **não valida fisicamente** reload, atribuição de autoria após retorno ao mundo, aceitação de spawn ou comportamento pós-crash.
+
+**Escopo de certificação:** o contrato estático individual é fechado no recorte observado, inclusive o risco de limites zero. A exceção efetiva do RNG, o encerramento do cast, a aplicação de desgaste/cooldown em casos excepcionais, o comportamento de engines/mixins externos e a QA física continuam não verificados. O risco torna a **mutação de quantidade bloqueada**; não alterar a implementação nativa, contadores, níveis ou parâmetros sem uma API segura e evidências próprias.
+
+## 8. Prova, pendências e contabilização
+
+**Confirmado no exato 1.0.10:** hashes publisher, JSON/limites de enchanting, tags físicas, classfiles, descritores, método `releaseUsing` e seus seis `nextInt`, três `Math.max`, 3 consumidores de summon, rotinas selecionadas de criação, owner e lifetime. O manifesto inicial contém janelas JVM delimitadas; a reconciliação causal adicional certifica os **branches diretos dos quatro métodos selecionados e o inventário de 81 métodos declarados**, mas não reconstrói o CFG interprocedural/de exceções, toda a IA ou os efeitos de terceiros.
 
 **Pendente:** gameplay com Charting Call 0/I/II/III/IV e logs de exceções/RNG, inventário/loot após datapacks, validação de custo/durabilidade/cooldown nos ramos excepcionais, falha de entidade, chunks/bioma, estado por cliente/servidor, PvP/claims, reputação, persistência, múltiplos usuários, dedup de XP, hook/ABI mutadora, colisões e integração com perks. Nada disso foi marcado como `PASS`.
 
-**Estados:** identidade/contratos selecionados `VERIFIED_EXACT_BINARY_SELECTED_WINDOWS`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `perk_certification=NOT_CERTIFIED`; `NO_MUTATION`. Não promover Stage por aumentar o catálogo.
+**Estados:** contrato técnico estático individual `COMPLETE_PERK_READY` sob `STATIC_TECHNICAL_CATALOG_ONLY`; JVM/recursos `VERIFIED_EXACT_BINARY_DIRECT_CFG`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. A denominação do certificado **não** autoriza perk mutadora, não resolve o risco de RNG e não promove Stage.
 
-**Contabilidade:** **+1 ficha individual parcial**, **+0 contratos estáticos certificados**, **+0 raízes mágicas novas**, **+0 providers concluídos**. Próximo ID alfabético: `alexscaves:chomping_spirit`.
+**Contabilidade desta certificação:** **+0 novas fichas**, **+1 contrato técnico estático certificado**, **+0 raízes mágicas**, **+0 providers concluídos**. No recorte observado de Alex’s Caves, **36/51 encantamentos** e **64/81 objetos** têm contrato estático certificado; o universo integral do provider continua não comprovado. Próxima ficha parcial na ordem alfabética: `alexscaves:chomping_spirit`.

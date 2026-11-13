@@ -1,0 +1,86 @@
+name: Alex's Caves 1.0.10 Charting Call native causal audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-charting-call-causal.yml'
+      - 'docs/qa/alexscaves_1010_charting_call_causal_probe.py'
+      - 'docs/qa/alexscaves_1010_charting_call_causal_probe_test.py'
+      - 'docs/qa/alexscaves_1010_charting_call_causal_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CHARTING-CALL-CAUSAL-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/charting-call.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**/INDEX.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-charting-call-causal.yml'
+      - 'docs/qa/alexscaves_1010_charting_call_causal_probe.py'
+      - 'docs/qa/alexscaves_1010_charting_call_causal_probe_test.py'
+      - 'docs/qa/alexscaves_1010_charting_call_causal_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CHARTING-CALL-CAUSAL-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/charting-call.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**/INDEX.md'
+permissions:
+  contents: read
+jobs:
+  charting_call_causal:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 19
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Run synthetic fail-closed assertions
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_charting_call_causal_probe.py docs/qa/alexscaves_1010_charting_call_causal_probe_test.py
+          python3 docs/qa/alexscaves_1010_charting_call_causal_probe_test.py -v
+          if test -f docs/qa/alexscaves_1010_charting_call_causal_cards_test.py; then
+            python3 docs/qa/alexscaves_1010_charting_call_causal_cards_test.py -v
+          fi
+      - name: Download pinned publisher JAR 1.0.10
+        run: |
+          mkdir -p build/charting-call-causal
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/charting-call-causal/alexscaves-1.0.10.jar
+      - name: Reproduce original Charting Call SHA-exact seal
+        run: |
+          python3 docs/qa/alexscaves_1010_charting_call_probe.py \
+            --jar build/charting-call-causal/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CHARTING-CALL-1.0.10.json' \
+            --output build/charting-call-causal/parent.json > /dev/null
+      - name: Verify direct JVM branches, RNG bounds and summoned entity state
+        run: |
+          SEAL='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CHARTING-CALL-CAUSAL-1.0.10.json'
+          if test -f "$SEAL"; then
+            python3 docs/qa/alexscaves_1010_charting_call_causal_probe.py \
+              --jar build/charting-call-causal/alexscaves-1.0.10.jar \
+              --parent 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CHARTING-CALL-1.0.10.json' \
+              --javap "$JAVA_HOME/bin/javap" \
+              --snapshot "$SEAL" --output build/charting-call-causal/causal.json
+          else
+            python3 docs/qa/alexscaves_1010_charting_call_causal_probe.py \
+              --jar build/charting-call-causal/alexscaves-1.0.10.jar \
+              --parent 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CHARTING-CALL-1.0.10.json' \
+              --javap "$JAVA_HOME/bin/javap" \
+              --output build/charting-call-causal/causal.json
+          fi
+      - name: Validate canonical catalog indexes
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: alexscaves-1010-charting-call-causal
+          path: build/charting-call-causal/causal.json
+          if-no-files-found: ignore
+          retention-days: 14
