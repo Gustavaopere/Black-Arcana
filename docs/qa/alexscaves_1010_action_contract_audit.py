@@ -65,6 +65,7 @@ TRIPLE_SPLIT = frozenset(("enchantments/triple-split.md",))
 TSUNAMI = frozenset(("enchantments/tsunami.md",))
 ARROW_INDUCTING = frozenset(("enchantments/arrow-inducting.md",))
 ASTRAL_TRANSFERRING = frozenset(("enchantments/astral-transferring.md",))
+BONKING = frozenset(("enchantments/bonking.md",))
 SCOPE = {"schema_version": 1, "version": "1.0.10",
          "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
          "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR", "mutating_hook": "NOT_VERIFIED",
@@ -95,6 +96,7 @@ TRIPLE_SPLIT_SCOPE = {**SCOPE, "catalog_family": "TRIPLE_SPLIT_ENCHANTMENT_CONTR
 TSUNAMI_SCOPE = {**SCOPE, "catalog_family": "TSUNAMI_ENCHANTMENT_CONTRACT"}
 ARROW_INDUCTING_SCOPE = {**SCOPE, "catalog_family": "ARROW_INDUCTING_ENCHANTMENT_CONTRACT"}
 ASTRAL_TRANSFERRING_SCOPE = {**SCOPE, "catalog_family": "ASTRAL_TRANSFERRING_ENCHANTMENT_CONTRACT"}
+BONKING_SCOPE = {**SCOPE, "catalog_family": "BONKING_ENCHANTMENT_CONTRACT"}
 ADJACENT_SOURCE = {"repository": "Codx-org/AlexsCavesContinued",
                    "revision": "523308608422ab8e31974befa7111ecdf495dd37",
                    "declared_version": "1.1.1",
@@ -112,7 +114,7 @@ def require(condition, message):
 
 def profile_spec(profile):
     """Select a literal family without changing the existing action contract."""
-    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade", "seapairing", "shaded_respite", "sharp_cane", "triple_splash", "triple_split", "tsunami", "arrow_inducting", "astral_transferring"), "unknown catalog profile")
+    require(profile in ("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade", "seapairing", "shaded_respite", "sharp_cane", "triple_splash", "triple_split", "tsunami", "arrow_inducting", "astral_transferring", "bonking"), "unknown catalog profile")
     if profile == "effects":
         return EFFECT_SCOPE, EFFECTS, "effect_evidence"
     if profile == "dreadbow":
@@ -161,6 +163,8 @@ def profile_spec(profile):
         return ARROW_INDUCTING_SCOPE, ARROW_INDUCTING, "contract_evidence"
     if profile == "astral_transferring":
         return ASTRAL_TRANSFERRING_SCOPE, ASTRAL_TRANSFERRING, "contract_evidence"
+    if profile == "bonking":
+        return BONKING_SCOPE, BONKING, "contract_evidence"
     return SCOPE, ACTIONS, "action_evidence"
 
 
@@ -225,10 +229,247 @@ def parse_javap(raw, owner):
     return methods
 
 
+# Bonking's declarations are separate evidence, never zero-instruction anchors.
+BONKING_PREFIX = 'com/github/alexmodguy/alexscaves/'
+BONKING_OWNERS = (
+    'server/event/CommonEvents', 'server/item/PrimitiveClubItem', 'server/misc/ACCompat',
+    'mixin/MobMixin', 'server/enchantment/ACEnchantmentRegistry', 'server/item/ACItemRegistry')
+BONKING_INTERFACE = BONKING_PREFIX + 'server/entity/util/EntityDropChanceAccessor.class'
+BONKING_RESOURCES = frozenset((
+    'META-INF/neoforge.mods.toml', 'assets/alexscaves/lang/en_us.json',
+    'assets/alexscaves/lang/pt_br.json', 'alexscaves.mixins.json',
+    'data/alexscaves/enchantment/bonking.json',
+    'data/alexscaves/tags/item/enchantable/primitive_club.json',
+    'data/alexscaves/recipe/primitive_club.json',
+    *('data/minecraft/tags/enchantment/' + name + '.json' for name in (
+        'in_enchanting_table', 'non_treasure', 'on_random_loot', 'tradeable'))))
+
+
+def class_metadata(raw):
+    """Read Java 21 declarations, annotations, bootstrap handles and Code handlers.
+
+    Instructions remain the responsibility of the existing javap parser. This
+    reader never turns an abstract declaration into an executable method.
+    """
+    require(raw[:4] == b'\xca\xfe\xba\xbe' and raw[6:8] == b'\x00A',
+            'metadata class is not Java 21')
+    position = 8
+    def take(size):
+        nonlocal position
+        require(position + size <= len(raw), 'truncated metadata class')
+        value = raw[position:position + size]
+        position += size
+        return value
+    def number(size=2):
+        return int.from_bytes(take(size), 'big')
+    pool, index, count = {}, 1, number()
+    while index < count:
+        tag = number(1)
+        if tag == 1:
+            value = take(number()).decode('utf8', errors='replace')
+        elif tag in (7, 8, 16, 19, 20):
+            value = number()
+        elif tag in (9, 10, 11, 12, 17, 18):
+            value = (number(), number())
+        elif tag == 15:
+            value = (number(1), number())
+        elif tag in (3, 4, 5, 6):
+            value = take(8 if tag in (5, 6) else 4).hex()
+        else:
+            raise AuditError('unknown metadata constant-pool tag')
+        pool[index] = (tag, value)
+        index += 2 if tag in (5, 6) else 1
+    def resolve(index):
+        tag, value = pool[index]
+        if tag == 1:
+            return value
+        if tag in (7, 8, 16, 19, 20):
+            return resolve(value)
+        if tag in (9, 10, 11, 12, 17, 18):
+            return [tag, *(resolve(i) if tag not in (17, 18) or j else i
+                            for j, i in enumerate(value))]
+        if tag == 15:
+            return {'reference_kind': value[0], 'reference': resolve(value[1])}
+        return {'constant_tag': tag, 'hex': value}
+    def annotation():
+        kind, values = resolve(number()), {}
+        for _ in range(number()):
+            key = resolve(number())
+            values[key] = element()
+        return {'type': kind, 'values': values}
+    def element():
+        tag = chr(number(1))
+        if tag == '@':
+            return {'annotation': annotation()}
+        if tag == '[':
+            return [element() for _ in range(number())]
+        if tag == 'e':
+            return {'enum': [resolve(number()), resolve(number())]}
+        if tag == 'c':
+            return {'class': resolve(number())}
+        require(tag in 'BCDFIJSZs', 'invalid annotation element')
+        return {'tag': tag, 'constant': resolve(number())}
+    def attributes():
+        nonlocal position
+        result = {'annotations': []}
+        for _ in range(number()):
+            name, size = resolve(number()), number(4)
+            end = position + size
+            require(end <= len(raw), 'truncated metadata attribute')
+            if name in ('RuntimeVisibleAnnotations', 'RuntimeInvisibleAnnotations'):
+                result['annotations'].extend({'visibility': name, **annotation()}
+                                             for _ in range(number()))
+            elif name == 'Code':
+                number(); number(); take(number(4))
+                handlers = []
+                for _ in range(number()):
+                    start, stop, target, catch = number(), number(), number(), number()
+                    handlers.append({'start': start, 'end': stop, 'handler': target,
+                                     'catch': resolve(catch) if catch else None})
+                result['exception_handlers'] = handlers
+            elif name == 'BootstrapMethods':
+                result['bootstrap_methods'] = [
+                    {'handle': resolve(number()),
+                     'arguments': [resolve(number()) for _ in range(number())]}
+                    for _ in range(number())]
+            position = end
+        return result
+    access, name, parent = number(), resolve(number()), number()
+    result = {'access': access, 'name': name, 'super': resolve(parent) if parent else None,
+              'interfaces': [resolve(number()) for _ in range(number())]}
+    for kind in ('fields', 'methods'):
+        result[kind] = []
+        for _ in range(number()):
+            flags, member, desc = number(), resolve(number()), resolve(number())
+            result[kind].append({'access': flags, 'name': member, 'descriptor': desc,
+                                 **attributes()})
+    result.update(attributes())
+    require(position == len(raw), 'trailing metadata class bytes')
+    return result
+
+
+def instruction_fingerprint(path, method, body):
+    instructions = [dict(offset=o, opcode=v[0], operand=v[1], symbol=v[2])
+                    for o, v in sorted(body.items())]
+    document = dict(owner=path, name=method['name'], descriptor=method['descriptor'],
+                    instructions=instructions)
+    return hashlib.sha256(json.dumps(document, ensure_ascii=False, sort_keys=True,
+                                    separators=(',', ':')).encode()).hexdigest()
+
+
+def bonking_native_metadata(archive, classes, parsed):
+    """Derive declaration and complete-body evidence directly from this archive."""
+    declarations = {path: class_metadata(archive.read(path)) for path in classes}
+    interface_raw = archive.read(BONKING_INTERFACE)
+    event_path, _, _, mixin_path, _, item_path = (
+        BONKING_PREFIX + owner + '.class' for owner in BONKING_OWNERS)
+    event = next(m for m in declarations[event_path]['methods'] if m['name'] == 'livingDie')
+    mixin = declarations[mixin_path]
+    shadow = 'Lorg/spongepowered/asm/mixin/Shadow;'
+    coverage = []
+    for path, entry in classes.items():
+        for method in entry['methods']:
+            key = (method['name'], method['descriptor'])
+            body = parsed[path][key]
+            declaration = next(m for m in declarations[path]['methods']
+                               if (m['name'], m['descriptor']) == key)
+            coverage.append(dict(owner=path, name=key[0], descriptor=key[1],
+                coverage='PARTIAL_REGISTRY_WINDOW' if key[0] == '<clinit>' else 'FULL_BODY',
+                instruction_count=len(body), selected_anchors=len(method['anchors']),
+                parsed_method_sha256=instruction_fingerprint(path, method, body),
+                branch_edges=[{'offset': o, 'opcode': v[0], 'target': int(v[1])}
+                              for o, v in sorted(body.items())
+                              if v[0].startswith('if') or v[0] in ('goto', 'goto_w', 'jsr', 'jsr_w')],
+                exception_handlers=declaration['exception_handlers']))
+    return {
+        'interface': {'path': BONKING_INTERFACE,
+                      'sha256': hashlib.sha256(interface_raw).hexdigest(),
+                      'declaration': class_metadata(interface_raw)},
+        'living_die_annotations': event['annotations'],
+        'mixin': {key: mixin[key] for key in ('access', 'name', 'super', 'interfaces', 'annotations')} | {
+            'shadows': [m for kind in ('fields', 'methods') for m in mixin[kind]
+                        if any(a['type'] == shadow for a in m['annotations'])]},
+        'item_bootstrap_52': declarations[item_path]['bootstrap_methods'][52],
+        'method_coverage': sorted(coverage, key=lambda m: (m['owner'], m['name'], m['descriptor']))}
+
+
+def validate_bonking_structure(manifest):
+    classes, native = manifest['classes'], manifest['native_metadata']
+    expected = {BONKING_PREFIX + owner + '.class' for owner in BONKING_OWNERS}
+    require(set(classes) == expected and set(manifest['resources']) == BONKING_RESOURCES,
+            'bonking exact class/resource roster drift')
+    require(isinstance(native, dict) and set(native) == {
+        'interface', 'living_die_annotations', 'mixin', 'item_bootstrap_52', 'method_coverage'},
+        'invalid bonking native metadata')
+    interface = native['interface']
+    require(isinstance(interface, dict) and set(interface) == {'path', 'sha256', 'declaration'}
+            and interface['path'] == BONKING_INTERFACE and digest(interface['sha256']),
+            'invalid bonking interface declaration seal')
+    methods = {(path, m['name'], m['descriptor']): m
+               for path, entry in classes.items() for m in entry['methods']}
+    require(len(methods) == 26 and sum(len(m['anchors']) for m in methods.values()) == 678,
+            'bonking bounded method/anchor roster drift')
+    expected_methods = (
+        {'livingDie': 229},
+        {'<init>': 22, 'getStatsForEnchantmentLevel': 33, 'getEnchantmentValue': 2,
+         'isEnchantable': 8, 'hurtEnemy': 6, 'acHurtEnemy': 171, 'mineBlock': 15,
+         'acExtraRepairMaterials': 9, 'isValidRepairItem': 13, 'acModifiers': 17,
+         'getDefaultAttributeModifiers': 8, 'initializeClient': 6, 'onLeftClickEntity': 16,
+         'onEntitySwing': 24, 'acInventoryTick': 27, 'lambda$getDefaultAttributeModifiers$0': 4},
+        {'enchantLevel': 24, 'createEntity': 4},
+        {'ac_getEquipmentDropChance': 4, 'ac_setDropChance': 5, 'ac_dropCustomDeathLoot': 8},
+        {'key': 6, '<clinit>': 3}, {'<clinit>': 5, 'lambda$static$40': 9})
+    for owner, expected_counts in zip(BONKING_OWNERS, expected_methods):
+        selected = classes[BONKING_PREFIX + owner + '.class']['methods']
+        require({m['name']: len(m['anchors']) for m in selected} == expected_counts
+                and len(selected) == len(expected_counts), 'bonking exact method selection drift: ' + owner)
+    for owner, expected_offsets in ((BONKING_OWNERS[4], [132, 134, 137]),
+                                    (BONKING_OWNERS[5], [967, 970, 973, 978, 981])):
+        selected = next(m for m in classes[BONKING_PREFIX + owner + '.class']['methods']
+                        if m['name'] == '<clinit>')
+        require([a['offset'] for a in selected['anchors']] == expected_offsets,
+                'bonking partial registry offsets drift')
+    coverage = native['method_coverage']
+    require(isinstance(coverage, list) and len(coverage) == len(methods),
+            'bonking method coverage roster drift')
+    seen = set()
+    for record in coverage:
+        require(isinstance(record, dict) and set(record) == {
+            'owner', 'name', 'descriptor', 'coverage', 'instruction_count', 'selected_anchors',
+            'parsed_method_sha256', 'branch_edges', 'exception_handlers'}, 'invalid bonking coverage record')
+        key = (record['owner'], record['name'], record['descriptor'])
+        require(key in methods and key not in seen, 'unknown/duplicate bonking coverage method')
+        seen.add(key)
+        method = methods[key]
+        require(type(record['instruction_count']) is int and record['instruction_count'] >= len(method['anchors'])
+                and type(record['selected_anchors']) is int and record['selected_anchors'] == len(method['anchors'])
+                and digest(record['parsed_method_sha256']) and isinstance(record['branch_edges'], list)
+                and isinstance(record['exception_handlers'], list), 'invalid bonking body fingerprint')
+        if key[1] == '<clinit>':
+            require(record['coverage'] == 'PARTIAL_REGISTRY_WINDOW'
+                    and record['instruction_count'] > record['selected_anchors'],
+                    'bonking registry must remain partial')
+        else:
+            body = {a['offset']: (a['opcode'], a['operand'], a['symbol']) for a in method['anchors']}
+            require(record['coverage'] == 'FULL_BODY' and record['instruction_count'] == len(body)
+                    and record['parsed_method_sha256'] == instruction_fingerprint(key[0], method, body),
+                    'bonking full-body fingerprint/anchor drift')
+            branches = [{'offset': o, 'opcode': v[0], 'target': int(v[1])}
+                        for o, v in sorted(body.items())
+                        if v[0].startswith('if') or v[0] in ('goto', 'goto_w', 'jsr', 'jsr_w')]
+            require(record['branch_edges'] == branches, 'bonking branch target metadata drift')
+    living = [r for r in coverage if r['name'] == 'livingDie']
+    require(len(living) == 1 and living[0]['instruction_count'] == 229
+            and len(living[0]['branch_edges']) == 21 and living[0]['exception_handlers'] == [],
+            'bonking livingDie complete flow drift')
+
+
+
 def validate_structure(manifest, *, profile="actions"):
     scope, roster, evidence_key = profile_spec(profile)
     require(isinstance(manifest, dict), "manifest must be an object")
-    require(set(manifest) == set(scope) | {"adjacent_source", "cards", evidence_key, "classes", "resources"},
+    extra = {"native_metadata"} if profile == "bonking" else set()
+    require(set(manifest) == set(scope) | {"adjacent_source", "cards", evidence_key, "classes", "resources"} | extra,
             "unexpected or missing manifest fields")
     for key, value in scope.items():
         require(type(manifest[key]) is type(value) and manifest[key] == value, "scope/identity mismatch: " + key)
@@ -290,6 +531,8 @@ def validate_structure(manifest, *, profile="actions"):
             referenced.update(paths)
         require(set(record["classes"]) & method_classes, "card lacks an anchored class: " + card)
     require(referenced_classes == set(classes) and referenced_resources == set(resources), "unreferenced class/resource evidence")
+    if profile == "bonking":
+        validate_bonking_structure(manifest)
 
 
 def validate_cards(manifest, providerroot, *, profile="actions"):
@@ -326,6 +569,7 @@ def audit(jar, manifest, providerroot, javap, *, expected_identity=None, profile
     require(observed == (expected_identity or pinned_identity)(), "exact publisher artifact identity mismatch")
     initial_stat = jar.stat()
     checked_methods = checked_anchors = 0
+    bonking_parsed = {}
     with zipfile.ZipFile(jar) as archive:
         names = archive.namelist()
         require(len(names) == len(set(names)), "duplicate ZIP member names")
@@ -345,6 +589,8 @@ def audit(jar, manifest, providerroot, javap, *, expected_identity=None, profile
                                     capture_output=True, text=True, check=False, timeout=60)
             require(result.returncode == 0, "javap failed for " + owner)
             parsed = parse_javap(result.stdout, owner)
+            if profile == "bonking":
+                bonking_parsed[path] = parsed
             for method in entry["methods"]:
                 key = (method["name"], method["descriptor"])
                 require(key in parsed, "method ABI missing: " + owner + "." + str(key))
@@ -354,6 +600,10 @@ def audit(jar, manifest, providerroot, javap, *, expected_identity=None, profile
                             "instruction anchor mismatch: " + owner + "." + method["name"] + "@" + str(anchor["offset"]))
                     checked_anchors += 1
                 checked_methods += 1
+        if profile == "bonking":
+            require(BONKING_INTERFACE in names, "missing bonking accessor interface")
+            observed_metadata = bonking_native_metadata(archive, manifest["classes"], bonking_parsed)
+            require(observed_metadata == manifest["native_metadata"], "bonking native metadata mismatch")
     final_stat = jar.stat()
     require(all(getattr(initial_stat, field) == getattr(final_stat, field)
                 for field in ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns"))
@@ -365,6 +615,11 @@ def audit(jar, manifest, providerroot, javap, *, expected_identity=None, profile
             "semantic_magic_roots": 8, "cards_checked": len(roster), "classes_checked": len(manifest["classes"]),
             "resources_checked": len(manifest["resources"]), "methods_checked": checked_methods,
             "instruction_anchors_checked": checked_anchors}
+    if profile == "bonking":
+        report["declaration_classes_checked"] = 1
+        report["complete_method_bodies_checked"] = 24
+        report["partial_registry_windows_checked"] = 2
+        report["native_metadata_checked"] = True
     if "catalog_family" in scope:
         report["catalog_family"] = scope["catalog_family"]
     return report
@@ -375,7 +630,7 @@ def main(argv=None):
     for flag in ("jar", "manifest", "provider-root", "javap"):
         parser.add_argument("--" + flag, required=True, type=Path)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade", "seapairing", "shaded_respite", "sharp_cane", "triple_splash", "triple_split", "tsunami", "arrow_inducting", "astral_transferring"), default="actions")
+    parser.add_argument("--profile", choices=("actions", "effects", "dreadbow", "acid", "desolate_dagger", "forsaken", "gumball", "radiation", "nuclear", "spirit_dinosaur", "heavy_slam", "herd_phalanx", "impending_stab", "lasting_morale", "multiple_mint", "relentless_darkness", "sated_blade", "seapairing", "shaded_respite", "sharp_cane", "triple_splash", "triple_split", "tsunami", "arrow_inducting", "astral_transferring", "bonking"), default="actions")
     args = parser.parse_args(argv)
     try:
         report = audit(args.jar, load_manifest(args.manifest), args.provider_root, args.javap,

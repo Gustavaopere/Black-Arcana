@@ -1,113 +1,142 @@
-# Bonking — loot extra por morte com Primitive Club (1.0.10)
+# Bonking — `alexscaves:bonking` (1.0.10)
 
-**Estado:** ⚠️ **ficha técnica individual parcial/condicionada**. Identidade, JSON e referências/branches delimitados no JAR físico publisher **verificados**. `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `perk_certification=NOT_CERTIFIED`; `NO_MUTATION`. Não cria uma raiz de cast nem representa uma magia de dano, stun ou projétil.
+**Contrato técnico individual:** ✅ `STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`. A ficha conclui a identidade publisher, o ramo nativo de morte/loot e as fronteiras dos helpers e do Primitive Club no recorte estático descrito. **Hook mutador:** `NOT_VERIFIED`; **QA física:** `NOT_TESTED`; **integração:** `NO_MUTATION`. O runtime transformado do pack permanece não verificado. Bonking é um modificador de loot do equipamento: **+0 raízes mágicas**, nenhuma nova ação de cast e nenhuma perk executável.
 
-## Identidade e fonte exata
+## 1. Identidade, registro e proveniência
 
-- **Mod/provider:** Alex's Caves Continued, `alexscaves`, Minecraft 1.21.1 / NeoForge.
-- **Encantamento:** `alexscaves:bonking`; `description.translate=enchantment.alexscaves.bonking` (nenhum texto de tooltip da versão instalada foi certificado).
-- **Item elegível:** `alexscaves:primitive_club`, dentro da tag publisher `#alexscaves:enchantable/primitive_club`.
-- **Artefato:** `alexscaves-1.0.10-neoforge+1.21.1.jar` do publisher, 75.279.314 bytes, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
-- **Manifesto selado:** [EXACT-BONKING-1.0.10.json](../EXACT-BONKING-1.0.10.json), reproduzível pela [sonda de leitura JVM](../../../../../docs/qa/alexscaves_1010_bonking_probe.py), [testes sintéticos](../../../../../docs/qa/alexscaves_1010_bonking_probe_test.py) e [CI publisher](../../../../../.github/workflows/alexscaves-1010-bonking.yml).
-- **Autoridade:** dados e bytes JAR 1.0.10; a árvore pública `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` declara **1.1.1**, usada somente como pista para localizar consumidores, não para atribuir números à build 1.0.10.
+- **Provider / ID:** Alex's Caves Continued / `alexscaves:bonking`; encantamento do `alexscaves:primitive_club`.
+- **Publisher:** `alexscaves-1.0.10-neoforge+1.21.1.jar`, CurseForge projeto `1645389`, arquivo `8856293`, **75.279.314 bytes**. O `META-INF/neoforge.mods.toml` declara mod ID `alexscaves`, versão `1.0.10`, Minecraft `[1.21.1]`, NeoForge e dependência obrigatória `codxlib >=1.3.6`; a análise usa Java 21.
+- **JAR SHA-1:** `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`; **SHA-256:** `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
+- **Consumer:** `com/github/alexmodguy/alexscaves/server/event/CommonEvents.class`, SHA-256 `d132caad67ecab68844091ee396d37fecc4860440d338dcd82384f1555f8ad43`.
+- **Equipamento:** `com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem.class`, SHA-256 `92bfb58cb5ed2c84dd6f989afad22c98209542889e30b6214c502dbff42fa1ac`.
+- **Nome / descrição literais em `en_us.json`:** “Bonking” / “Primitive Club has a chance to drop heads from slain mobs, as if a charged Creeper killed them”. O `pt_br.json` contém “Porrete Primitivo” para o item, mas **não contém nome nem descrição de Bonking**. Paráfrase técnica em português: o porrete pode solicitar loot da vítima com contexto de Creeper eletrificado; o resultado depende do caminho nativo de loot. Essa paráfrase não é uma tradução oficial nem uma garantia de cabeças.
+- **Prova atual:** [manifesto individual SHA-exato](../EXACT-BONKING-CONTRACT-1.0.10.json), [contrato técnico consolidado](../EXACT-BONKING-CONTRACT-1.0.10.md) e [regressão semântica da ficha](../../../../../docs/qa/alexscaves_1010_bonking_cards_test.py). O manifesto sela recursos, classes, âncoras e a ficha final.
 
-## Definição do encantamento (recurso publisher 1.0.10)
+O inicializador de `ACEnchantmentRegistry` liga `bonking @132` a `key @134` e ao campo `BONKING @137`; `key(String)` completo constrói a ResourceKey em `Registries.ENCHANTMENT` com namespace `alexscaves`. O registro do item em `ACItemRegistry.<clinit> @967–981` liga `primitive_club @970` ao supplier de bootstrap **52**. Seu handle resolve `lambda$static$40`, cujo corpo completo de **9 instruções** cria `PrimitiveClubItem` com **durabilidade 120**.
 
-| Campo | Valor estático confirmado |
-|---|---|
-| Recurso | `data/alexscaves/enchantment/bonking.json` |
-| SHA-256 do JSON | `f03c4e8c2f8b00b3668b8d7bf14276647b3e0324c159c6336b189a258571a86a` |
-| `supported_items` | `#alexscaves:enchantable/primitive_club` |
-| `weight` | `1` — peso de encantamento, **não** chance de ativação |
-| `max_level` | `1` |
-| `min_cost` | `base=1`, `per_level_above_first=18` |
-| `max_cost` | `base=41`, `per_level_above_first=10` |
-| `anvil_cost` | `8` |
-| `slots` | `mainhand` |
+O censo de Fieldrefs com owner, nome `BONKING` e descriptor `Lnet/minecraft/resources/ResourceKey;` exatos percorre **1.555 classfiles** e encontra somente `ACEnchantmentRegistry` e `CommonEvents`. O primeiro registra a chave; `livingDie` é o leitor direto identificado. O Primitive Club não contém essa referência direta. O censo não exclui reflexão, consumidores indiretos, transformações ou mods externos.
 
-A tag publisher `data/alexscaves/tags/item/enchantable/primitive_club.json`, SHA-256 `71829c384be93b8cef1e090b6afafa621dcd4eeb520c7a66ab0e6524e8a6ae43`, lista o único item `alexscaves:primitive_club`. A resolução de tags e disponibilidade de enchanting no pack podem diferir por datapacks/mods. Custo de bigorna e valores da tabela **não** correspondem a mana, durabilidade por proc nem cooldown.
+A fonte pública [Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37](https://github.com/Codx-org/AlexsCavesContinued/tree/523308608422ab8e31974befa7111ecdf495dd37) declara **1.1.1** e serve somente de contexto adjacente. Valores, offsets e predicados desta ficha têm autoridade no publisher **1.0.10**.
 
-## Gatilho e processamento na morte
+## 2. Definição, aquisição e aplicação
 
-**Consumer SHA-exato:** `com/github/alexmodguy/alexscaves/server/event/CommonEvents.class`, SHA-256 `d132caad67ecab68844091ee396d37fecc4860440d338dcd82384f1555f8ad43`.
-
-**Método:** `livingDie(Lnet/neoforged/neoforge/event/entity/living/LivingDeathEvent;)V`, **229 instruções**, digest do parse `03c56101acdb5aa18c6d253f49b914bef1c1f2723aa5de548b126d4d864020dd`. Os offsets a seguir são do bytecode da versão exata, não nomes de API prometida.
-
-A região auditada verifica `LivingDeathEvent.getSource`, `DamageSource.getDirectEntity @117`, mão principal do atacante direto `@137–157` e tipo de item `ACItemRegistry.PRIMITIVE_CLUB @143`. O caminho superior da rotina exige morte de um `Mob` e lado não cliente, conforme os testes compilados que desembocam na condição de item. Um atacante direto pode ser `LivingEntity`; **não** foi certificado requisito explícito de `Player` no ramo de Bonking. Não confundir `getDirectEntity` com `DamageSource.getEntity` nem assumir autoria de outro projétil.
-
-1. `ACEnchantmentRegistry.BONKING @167`; `ACCompat.enchantLevel @170`; `ifle @173 → 432`: exige nível positivo no stack atualmente consultado.
-2. RNG do mundo: `Level.getRandom @183`, `nextFloat @186`, `ldc 0.33F @191`, `fcmpg @193`, `ifge @194 → 432`: **a condição de entrada é aproximadamente 33% por oportunidade elegível**, se a fonte produzir uma distribuição uniforme. Não é prova de chance final de crânio, drop em inventário ou recompensa confirmada.
-3. Tenta construir `EntityType.CREEPER` por `ACCompat.createEntity @197–204`; uma referência nula evita o caminho posterior (`ifnull @214 → 432`). Isso não prova a criação de um creeper no mundo.
-4. Quando o nível é `ServerLevel`, tenta construir `EntityType.LIGHTNING_BOLT @241–246`, testa referência nula, marca `LightningBolt.setVisualOnly(true) @262` e chama `Creeper.thunderHit @271` no Creeper temporário. O uso de raio visual **não comprova raio lançado ou dano elétrico ao alvo**.
-5. Cria uma origem de dano do tipo `DamageSources.mobAttack(fakeCreeper) @283` para a rotina de loot, sem alterar por si a `DamageSource` que encerrou a vida da vítima.
-6. Para cada slot de `EquipmentSlot.values @303`, salva a chance anterior de drop com `ac_getEquipmentDropChance @338` e `HashMap.put @346`, depois ajusta a chance de equipamento para `0F` por `ac_setDropChance @355`.
-7. Invoca uma chamada específica de loot `EntityDropChanceAccessor.ac_dropCustomDeathLoot(fakeCreeperDamage,0,false) @372`. Na sequência, `EquipmentSlot.values @377`, `HashMap.get @412`, `Float.floatValue @418` e `ac_setDropChance @421` descrevem a **tentativa de restaurar as chances de equipamento previamente capturadas**.
-
-Esse caminho busca um efeito de loot semelhante ao cenário de morte por Creeper eletrificado, mas **o contrato estático não certifica um crânio garantido, tipo de drop específico, porcentagem real de sucesso, quantidade, dupla execução, ordenação com outros mods de loot ou comportamento sob exceções**. O RNG em `0.33F` é apenas um guard do código nativo. A leitura não demonstra uma transação atômica ou um bloco `finally` protegendo a restauração do estado.
-
-## Bridge de loot e fronteira de mixins
-
-A ponte usada pelo consumer é `com/github/alexmodguy/alexscaves/server/entity/util/EntityDropChanceAccessor`; o classfile `com/github/alexmodguy/alexscaves/mixin/MobMixin.class` tem SHA-256 `38381f9b5b3908e813711f031161a1e25b46e68d220ed34c137948e6b59dac3e`.
-
-| Método do bridge compilado | Evidência delimitada |
-|---|---|
-| `ac_getEquipmentDropChance(EquipmentSlot)F` | 4 instruções; delega ao `getEquipmentDropChance` nativo; digest `9c004cd74e9b2aa09c5a1033e467f5dbf48ccd182f66123d839a19778f2b22b7` |
-| `ac_setDropChance(EquipmentSlot,F)V` | 5 instruções; delega a `setDropChance`; digest `1b5000cb0d36f76808d2563f07a1649e72f7994d84a8b774fd97aea62d75c40b` |
-| `ac_dropCustomDeathLoot(DamageSource,int,boolean)V` | 8 instruções; invoca `dropCustomDeathLoot(ServerLevel,DamageSource,boolean)` após consulta ao nível; digest `f020a1c8aee5b8524c287cbb7bdabc4434b5ded87f0d114fd902d58553e70ca2` |
-
-O JAR contém essas classes e métodos, mas a sonda **não certifica que o Mixin foi aplicado com sucesso na instância efetiva, nem seu posicionamento no pipeline de outros mods**. Alterações paralelas em loot, cancelamento da morte, entidades de outros mods, datapacks e proteções de servidor exigem teste real.
-
-O arquivo `PrimitiveClubItem.class` SHA-256 `92bfb58cb5ed2c84dd6f989afad22c98209542889e30b6214c502dbff42fa1ac` possui 16 métodos parseados; **não há referência direta a `ACEnchantmentRegistry.BONKING` nesses métodos**, segundo a busca de símbolos realizada no classfile exato. O stun básico do Primitive Club e `Dazing Sweep` são mecânicas distintas e não devem ser atribuídos a Bonking. A sonda não enumera todos os possíveis consumidores adicionais de mods externos.
-
-## Parâmetros de perks e limites
-
-| Eixo | Evidência observada | Status de modificação |
+| Campo de `data/alexscaves/enchantment/bonking.json` | Valor publisher 1.0.10 | Significado delimitado |
 |---|---|---|
-| **Chance / proc** | Guard `nextFloat() < 0.33F` no death handler | ⛔ Sem hook estável para mudar probabilidade; não interceptar/reexecutar evento e duplicar loot |
-| **Alvo / tipo** | Vítima `Mob`, atacante direto `LivingEntity` com Primitive Club na mão principal | ⛔ Sem alteração segura de categoria, autoria de kill ou regras de arma |
-| **Quantidade / tipo de loot** | Chamada nativa `ac_dropCustomDeathLoot` e hipótese Creeper eletrificado | ⛔ Resultado e tabela efetiva não certificados; não conceder drops diretamente |
-| **Área / alcance / projétil** | Não são operações de alcance, AoE, nem de projétil de Bonking no consumer auditado | N/A para parâmetros próprios; **não** inferir que a arma não tenha outros efeitos |
-| **Dano / tipo de dano** | `mobAttack(fakeCreeper)` é origem simulada usada na rotina de loot | ⛔ Não mudar dano do golpe real nem associar dano extra a esse encantamento |
-| **Tempo / cooldown** | Evento de morte; não há cooldown próprio no trecho auditado | ⚠️ Ausência de cooldown no trecho não certifica todo o runtime |
-| **Custo / equipamento** | Dados de enchanting, item `primitive_club`, slot principal; chances de drop temporariamente alteradas | ⛔ Sem contrato para converter custos de encantamento em mana/durabilidade, nem para editar drop-chances de mobs |
-| **Mastery / XP / duplicidade** | Causalidade: evento nativo de morte e tentativa de gerar loot próprio | ⛔ Não emitir proc de perícia/XP sem prova de concessão e deduplicação |
+| Recurso / SHA-256 | 362 bytes / `f03c4e8c2f8b00b3668b8d7bf14276647b3e0324c159c6336b189a258571a86a` | Identidade da definição |
+| `description.translate` | `enchantment.alexscaves.bonking` | Chave de tradução |
+| `supported_items` | `#alexscaves:enchantable/primitive_club` | Tag publisher contém somente `alexscaves:primitive_club` |
+| `weight` / `max_level` | `1` / `1` | Peso declarativo e nível nativo I; peso não é chance de proc |
+| `min_cost` | `base=1`, `per_level_above_first=18` | `1 + 18 × (L−1)`; para I: **1** |
+| `max_cost` | `base=41`, `per_level_above_first=10` | `41 + 10 × (L−1)`; para I: **41** |
+| `anvil_cost` / `slots` | `8` / `mainhand` | Dados de aplicação, sem custo por tentativa de loot |
 
-O **Black Arcana** só poderá observar resultados confirmados do provider, sem reproduzir a chamada de loot ou simular outro Creeper. O **RPG Skill Tree** permanece provider de progressão, atributos, Mastery e gates por contratos reais, não a autoridade desse evento. Modificação que exija hook de loot/causalidade deve falhar fechado enquanto não houver contrato e testes de compatibilidade.
+O JSON não declara `effects` nem `exclusive_set`; a implementação está em Java. A varredura das **51 definições nativas de encantamento** não encontra `exclusive_set` reverso mencionando Bonking. Isso fecha as exclusões declaradas no publisher; compatibilidade efetiva e aplicação por datapacks permanecem dependentes do pack.
 
-## Auditoria causal ampliada de Bonking — evento, loops de loot e Mixin (11/11/2026)
+A tag de suporte `data/alexscaves/tags/item/enchantable/primitive_club.json` tem **54 bytes**, SHA-256 `71829c384be93b8cef1e090b6afafa621dcd4eeb520c7a66ab0e6524e8a6ae43`. Bonking aparece nas quatro tags nativas `minecraft:in_enchanting_table`, `minecraft:non_treasure`, `minecraft:on_random_loot` e `minecraft:tradeable`; cada arquivo tem **1.631 bytes**, SHA-256 `6472c976d755f1481506f3f113368081aa487eaff3ce977a1f7c93a400f39bb1`. São dados de disponibilidade, sem probabilidade observada de mesa, loot ou trade.
 
-A [prova complementar SHA-exata](../EXACT-BONKING-CAUSAL-1.0.10.json), gerada pela [sonda JVM read-only](../../../../../docs/qa/alexscaves_1010_bonking_causal_probe.py), compara o **JAR físico 1.0.10** (SHA-1/SHA-256/tamanho) com o [manifesto anterior](../EXACT-BONKING-1.0.10.json), incluindo hashes dos classfiles `CommonEvents` e `MobMixin`. O método `CommonEvents.livingDie(LivingDeathEvent)V` tem **229 instruções JVM**, digest de parse `03c56101acdb5aa18c6d253f49b914bef1c1f2723aa5de548b126d4d864020dd`, **21 desvios** no método inteiro e os callsites abaixo. Os destinos/arestas incluem fallthrough explícito para branches condicionais. O método não contém `tableswitch`/`lookupswitch` ou outros primitivos de controle não suportados pela sonda.
+A receita shaped `data/alexscaves/recipe/primitive_club.json` usa o padrão diagonal `  C` / ` C ` / `B  `: **dois `alexscaves:cycad` e um `alexscaves:heavy_bone`**, resultado `alexscaves:primitive_club`, com `count` omitido. O recurso tem **330 bytes**, SHA-256 `b93f005c5632388ca6f34e3a114a8e0a4cf1c2ae99ae9bb0ed2edc2c73dddcc0`. A receita fabrica a arma; mesa, bigorna e materiais não são débitos de mana, XP ou durabilidade por proc.
 
-**Cuidado de escopo:** 21 é o total de desvios de `livingDie`, **não** 21 condições exclusivas de Bonking. Os offsets após `@432` contêm consumidores independentes do mesmo evento (como `GREEN_SOYLENT` e `STINKY_FISH`) que **não** são atribuídos a este encantamento.
+## 3. Evento, vítima, ator direto e stack atual
 
-| Porta compilada | Aresta / callsite SHA-exato | Significado limitado |
+`CommonEvents.livingDie(Lnet/neoforged/neoforge/event/entity/living/LivingDeathEvent;)V` completo contém **229 instruções JVM**, **21 branches no método inteiro** e **zero handlers de exceção**. O digest do parser histórico é `03c56101acdb5aa18c6d253f49b914bef1c1f2723aa5de548b126d4d864020dd`; ele não é hash do classfile nem substitui o fingerprint do normalizador do manifesto atual. A anotação nativa é `net.neoforged.bus.api.SubscribeEvent`, sem argumentos explícitos. Isso não certifica registro do listener, prioridade, política para evento cancelado ou ordem efetiva do dispatch.
+
+O prefixo `@0–72` trata o caso independente de Frog primordial/Magma Cube; `@432+` contém `GREEN_SOYLENT` e `STINKY_FISH`. Esses trechos compõem a identidade do método completo, mas seus spawns e regras não pertencem a Bonking. Os offsets abaixo pertencem ao ramo `@73–429`.
+
+| Porta de entrada | Evidência nativa | Consequência delimitada |
 |---|---|---|
-| Elegibilidade prévia de morte, lado e item | branches `@83`, `@97`, `@110`, `@127`, `@157` → `432` quando reprovados | Mortes ou agentes fora das condições de tipo, lado ou item não entram no corpo de loot; a rotina usa `DamageSource.getDirectEntity @117`, não autoria indireta do golpe |
-| Encantamento | `BONKING @167`, `ACCompat.enchantLevel @170`, `ifle @173 → 432` | Exige nível positivo no Primitive Club da mão principal |
-| Probabilidade da tentativa | `RandomSource.nextFloat @186`, limite `0.33F @191`, `ifge @194 → 432` | Guard de **33% nominal** por oportunidade elegível; não é a chance final de crânio concedido ou spawn aceito |
-| Origem fictícia para loot | `ACCompat.createEntity(CREEPER) @204`; `ifnull @214 → 432`; `LIGHTNING_BOLT @241–246`, `setVisualOnly @262` e `thunderHit @271` condicionais | Instancia entidades auxiliares para o caminho de loot; não comprova spawn de raio no mundo nem prêmio final |
-| Fonte de dano encaminhada | `DamageSources.mobAttack(fakeCreeper) @283` | Fonte de dano usada pelo callback de loot, não prova de segunda aplicação de dano à vítima |
-| Primeira iteração dos slots | `EquipmentSlot.values @303`; `if_icmpge @320 → 366`; `ac_getEquipmentDropChance @338`, `HashMap.put @346`, `ac_setDropChance(0F) @355`; `goto @363 → 316` | Guarda chances de equipamento por slot e tenta zerá-las antes do loot customizado |
-| Callback nativo de loot | `ac_dropCustomDeathLoot @372` com argumentos compilados `0` e `false` (`@370–371`) | Chama a bridge de loot do provider, que delega ao pipeline vanilla; não comprova itens produzidos |
-| Segunda iteração dos slots | `EquipmentSlot.values @377`; `if_icmpge @394 → 432`; `HashMap.get @412`, `Float.floatValue @418`, `ac_setDropChance @421`; `goto @429 → 390` | Tenta restaurar os valores de equipamento salvos após a chamada de loot; não há garantia de resultado sob exceção |
+| Lado da vítima | `victim.level().isClientSide @80`; `ifne @83 → 432` | O ramo exige nível não cliente |
+| Tipo da vítima | `instanceof Mob @94`; `ifeq @97 → 432`; `astore_2 @105` | Conserva a **vítima original Mob na local 2**; Player não satisfaz esse tipo |
+| Fonte | `getSource @107`; `ifnull @110 → 432` | Fonte ausente rejeitada |
+| Ator direto | `DamageSource.getDirectEntity @117`; `instanceof LivingEntity @124`; `ifeq @127 → 432`; `astore_3 @135` | Ator direto **LivingEntity na local 3**; não exige explicitamente Player |
+| Item da mão principal | `getItemInHand(MAIN_HAND) @140`; `ItemStack.is(PRIMITIVE_CLUB) @154`; `ifeq @157 → 432` | Testa o item concreto da mão principal atual |
+| Encantamento da mão principal | **Segunda leitura** `getItemInHand(MAIN_HAND) @164`; `BONKING @167`; `enchantLevel @170`; `ifle @173 → 432` | Exige nível positivo na stack obtida nessa segunda leitura |
 
-**Metadados de exceções:** `javap -c -p -s` do método compilado expõe **zero entradas na tabela JVM de handlers de exceção**. Assim, a auditoria **não identificou um `try/finally` compilado** protegendo a passagem entre o ajuste de chances (`@355`), a chamada de loot (`@372`) e a restauração (`@421`). Se algum callback lançar uma exceção, o retorno normal e o caminho de restauração podem ser interrompidos; isso é **um risco condicional, não uma falha reproduzida**. A prova não avalia handlers de outros métodos, reentrância, tratamento externo nem alternativas de rollback em outros mods.
+São **duas leituras da mão principal atual**, não uma stack salva do golpe original ou um snapshot imutável da arma da kill. O código conserva o ator, mas não guarda a primeira stack para a consulta de nível. A elegibilidade vem da fonte do evento; o ramo não troca `getDirectEntity` por `getEntity`, não resolve dono de projétil e não demonstra autoria indireta. Não há allowlist própria de espécies além de `Mob`, teste de proximidade, LOS, aliado, claim ou requisito explícito de Player nesse ramo. Isso não garante que todo Mob produza cabeça nem que uma morte tenha sido aceita pelo pipeline final.
 
-**Proveniência de Mixin:** o recurso publisher `alexscaves.mixins.json`, SHA-256 `6e120e2d2cf226a25cbe3d0605968a184384194354eac0b1153108f74632c140`, declara `MobMixin` no grupo `mixins` com package `com.github.alexmodguy.alexscaves.mixin`. A classe compilada expõe `ac_getEquipmentDropChance` (4 instruções), `ac_setDropChance` (5) e `ac_dropCustomDeathLoot` (8), com digests fixados no manifesto. **Presença na configuração e no classfile não prova aplicação/ordem do Mixin no runtime transformado nem resultado efetivo de loot.**
+`ACCompat.enchantLevel(ItemStack,ResourceKey)I` completo tem **24 instruções**: percorre os encantamentos, retorna o primeiro nível cujo Holder corresponde à chave, ou zero. Não aplica clamp próprio de máximo, tag ou slot. Bonking testa somente **nível >0**: I e níveis positivos forçados seguem a mesma condição, **sem escala por nível**; zero ou negativo são rejeitados.
 
-### Interoperabilidade, autoria e pendências após a auditoria
+## 4. RNG, entidades temporárias e fonte sintética
 
-Para futuras perks de loot, não atribuir drops a `alexscaves:bonking` só porque houve `LivingDeathEvent`, porque o RNG passou ou porque o código chamou `ac_dropCustomDeathLoot`. O proprietário do pipeline nativo continua sendo o provider e o jogo, com loot tables, regras de morte e outros listeners efetivos. O RPG Skill Tree pode consumir **apenas eventos resultantes autoritativos e deduplicados**, nunca reexecutar `dropCustomDeathLoot` ou alterar temporariamente chance de equipamento sem hook real de servidor.
+Após as guardas, a rotina lê o RNG do nível da vítima (`getRandom @183`, `nextFloat @186`) e exige **`nextFloat() < 0.33F`** (`ldc @191`, `fcmpg @193`, `ifge @194 → 432`). É um guard nominal de tentativa de aproximadamente 33% com RNG uniforme; não é a probabilidade final de cabeça, spawn aceito, item coletado ou crédito de recompensa. Não há multiplicador por nível.
 
-**Limites explícitos:** sem prova de CFG interprocedural executado, ordem de listeners, evento cancelado, compatibilidade de mixins, queda real de crânio, porcentagem final, item coletado, quantidade de loot, restauração sob exceção, client/servidor multiplayer, PvP/claims ou save/reload. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Estado permanece **⚠️ parcial**, **+0 contratos estáticos certificados**, **+0 novas ações mágicas**, **+0 providers encerrados**.
+1. `EntityType.CREEPER @197` e `ACCompat.createEntity @204` constroem uma referência temporária de Creeper, guardada na **local 4 @210**. Se for null, `ifnull @214 → 432` pula todo o callback de Bonking.
+2. A rotina testa `level instanceof ServerLevel @228`; se falhar (`@231 → 274`), segue sem o preparo por raio. Quando passa, tenta `EntityType.LIGHTNING_BOLT @241` / `createEntity @246`. Raio null (`@256 → 274`) também pula somente esse preparo e continua no caminho de loot.
+3. Com ambas as referências válidas e ServerLevel, marca `LightningBolt.setVisualOnly(true) @262` e solicita `fakeCreeper.thunderHit(serverLevel,fakeThunder) @271`. Isso prepara o contexto semelhante a Creeper eletrificado, sem certificar a execução interna da engine ou seu resultado transformado.
+4. `DamageSources.mobAttack(fakeCreeper) @283` cria a **fonte sintética na local 5 @286**. Essa fonte é passada somente ao callback de loot descrito abaixo. Não reatribui a fonte original do evento nem chama um segundo ataque/dano contra a vítima.
 
-## Limites de prova e aceite futuro
+`ACCompat.createEntity(EntityType,Level)Entity` completo tem **4 instruções** e delega a `EntityType.create(Level)`. Nem esse helper nem o ramo de Bonking contém `addFreshEntity` ou inserção equivalente das referências temporárias no mundo. Portanto o Creeper e o raio são contexto auxiliar de loot, sem projétil de Bonking, trajetória, tamanho/hitbox próprio ou summon persistente certificado. `setVisualOnly(true)` não comprova um raio visível lançado no mundo, dano elétrico ou morte por raio.
 
-- **Identidade/JSON publisher:** `VERIFIED_EXACT_BINARY`.
-- **Consumer e bridges selecionados:** `VERIFIED_EXACT_BINARY_SELECTED_WINDOWS`.
-- **CFG completo, exceções, odds finais, loot aceito, Mixin em execução, interação com loot tables de terceiros, datapacks e PvP/claims:** `NOT_CERTIFIED` / `NOT_VERIFIED`, conforme o tópico.
-- **Mutação:** `NO_MUTATION`, hook `NOT_VERIFIED`. **QA física:** `NOT_TESTED`. **Perk completa:** `NOT_CERTIFIED`.
+## 5. Backup, chamada de loot e restauração normal
 
-Para avançar, executar teste real com kills de tipos de mobs elegíveis e não elegíveis, atacante direto vs projéteis, DeathEvent cancelado, mão principal alterada, morte múltipla, drop normal vs extra, interação com `MobMixin` e outros mods de loot, resultados de loot para Creeper eletrificado, equipamentos com chances customizadas antes/depois, exceções, carregamento de chunks e múltiplos jogadores. Não marcar `PASS` sem evidências.
+A vítima continua sendo o **Mob original da local 2**. `checkcast EntityDropChanceAccessor @298` cria a referência de bridge na **local 7 @301**; não substitui a vítima pelo Creeper. Um `HashMap` temporário é guardado na **local 6 @295** para backup das chances de equipamento.
 
-**Contabilidade:** uma nova ficha individual **parcial**; **+0** contratos estáticos certificados; **+0** novas ações mágicas; **+0** providers encerrados. Próximo ID alfabético do roster: `alexscaves:bouncing_bolt`.
+| Sequência do ramo | Evidência completa | Efeito local demonstrado |
+|---|---|---|
+| Primeiro loop | `EquipmentSlot.values @303`; teste `@320 → 366`; retorno `goto @363 → 316` | Percorre todos os slots retornados |
+| Backup por slot | `ac_getEquipmentDropChance @338`; `Float.valueOf @343`; `HashMap.put @346` | Salva a chance anterior do slot na local 6 |
+| Zero temporário | `fconst_0 @354`; `ac_setDropChance @355` | Solicita chance de equipamento `0F` antes do callback |
+| Callback de loot | `ac_dropCustomDeathLoot @372`, sobre a vítima, com fonte sintética e argumentos compilados **`0,false`** (`@370–371`) | Solicita loot customizado da vítima com o novo contexto de fonte |
+| Segundo loop | `EquipmentSlot.values @377`; teste `@394 → 432`; retorno `goto @429 → 390` | Percorre os slots novamente após retorno normal do callback |
+| Restauração | `HashMap.get @412`; `Float.floatValue @418`; `ac_setDropChance @421` | Reaplica as chances capturadas no backup no fluxo normal |
+
+É uma chamada adicional à rotina de loot da vítima, não prova de segunda morte, de execução original anterior, de tabela dedicada a Bonking ou de equipamento definitivamente suprimido. A prova não reauditou o despacho vanilla de loot: tipo da vítima, loot tables, dados, regras de morte e outros mods continuam sendo fronteiras delegadas.
+
+**Exceções:** há **zero entradas na tabela JVM de handlers** de `livingDie`; não há `try/finally` compilado protegendo `backup → zero → callback → restauração`. Se um callback lançar exceção após algum zero e antes da restauração correspondente, poderá interromper esse fluxo normal. Trata-se de **observação estática condicional de exception-safety**, não de bug físico reproduzido, corrupção permanente demonstrada ou ausência provada de rollback/tratamento externo. Tampouco a ausência de reprodução autoriza mutação segura desse estado.
+
+## 6. Bridge de Mob e aplicação do Mixin
+
+`EntityDropChanceAccessor` declara as três operações de chance/loot. O publisher `alexscaves.mixins.json`, SHA-256 `6e120e2d2cf226a25cbe3d0605968a184384194354eac0b1153108f74632c140`, declara `MobMixin` no grupo `mixins`, package `com.github.alexmodguy.alexscaves.mixin`. `MobMixin.class`, SHA-256 `38381f9b5b3908e813711f031161a1e25b46e68d220ed34c137948e6b59dac3e`, implementa a interface, declara target `net.minecraft.world.entity.Mob` e shadows das operações delegadas.
+
+| Corpo completo | Instruções | Delegação e limite |
+|---|---:|---|
+| `ac_getEquipmentDropChance(EquipmentSlot)F` | 4 | Chama `getEquipmentDropChance(slot)` e retorna o float |
+| `ac_setDropChance(EquipmentSlot,float)V` | 5 | Chama `setDropChance(slot,chance)` |
+| `ac_dropCustomDeathLoot(DamageSource,int,boolean)V` | 8 | Obtém seu próprio `level()`, faz cast para `ServerLevel` e chama `dropCustomDeathLoot(ServerLevel,DamageSource,boolean)` |
+
+A bridge de loot **ignora o argumento int**: não carrega sua local 2; encaminha a fonte e `iload_3`, o boolean. O `0` compilado no callsite não é, por isso, um parâmetro efetivo de looting demonstrado. O cast para ServerLevel pertence ao corpo da bridge; a guarda anterior de nível não cliente não prova por si esse cast nem sua aceitação no runtime.
+
+Declaração de target, shadows, configuração e corpos são evidências estáticas do publisher. **Aplicação e ordem do Mixin no runtime transformado:** `NOT_VERIFIED`. Não se certificam prioridade entre listeners, cancelamento da morte, proteção, alterações de loot por terceiros ou execução bem-sucedida dos shadows.
+
+## 7. Mecânicas do Primitive Club separadas de Bonking
+
+O selo atual cobre **todos os 16 corpos / 381 instruções** do `PrimitiveClubItem`, inclusive `hurtEnemy` (**6**) e `acHurtEnemy` (**171**), para separar a arma do modificador de loot. Nenhum desses corpos lê diretamente `BONKING`.
+
+- **Atributos da arma:** `getStatsForEnchantmentLevel` declara **+8 ATTACK_DAMAGE**, `ADD_VALUE`, e modificador de attack speed `Math.min(0F,-3.75F+0.15F×L)`. `acModifiers` seleciona `L` a partir de **Swiftwood**, limitado a `0..3`, somente em `MAINHAND`. São contribuições da arma/Swiftwood, sem dano ou velocidade escalados por Bonking; não são dano final ou DPS certificado.
+- **Desgaste ao acertar:** `hurtEnemy` delega a `acHurtEnemy`; `acHurtEnemy @0–6` solicita **1 de durabilidade** via `ACCompat.hurtAndBreak(stack,1,actor,MAINHAND)` **antes** da guarda servidor do stun. É um callback da arma, não um débito por tentativa de Bonking nem prova de desgaste final aceito.
+- **Mineração:** `mineBlock` solicita **2 de durabilidade** quando `getDestroySpeed` é diferente de zero. É outro callback da arma, independente do RNG e do loot de Bonking.
+- **Stun / Dazing Sweep:** o ramo servidor de `acHurtEnemy` tem sua própria guarda RNG `0.8F`, aplicação de STUNNED e consulta `DAZING_SWEEP`; o caminho de sweep contém sua própria área e chamada `hurt(...,1F)`. Esses efeitos, mensagens e sons não pertencem ao ramo de Bonking. Não importar seu alcance, duração, dano ou chance para Bonking.
+- **Outras superfícies:** callbacks de swing/ataque/inventário, reparo por `HEAVY_BONE`, enchanting e apresentação cliente pertencem ao equipamento. `getEnchantmentValue=1` e `isEnchantable(stack)` com `count==1` são dados da arma, sem garantia de aquisição efetiva.
+
+Durabilidade 120, receita e custos de enchanting descrevem o equipamento/aplicação. No ramo de Bonking não aparece débito próprio de mana, XP, munição, durabilidade, charges ou cooldown por proc. A engine e os helpers de desgaste permanecem fronteiras delegadas; não se certificam Unbreaking, quebra, reembolso ou cobrança autoritativa no pack.
+
+## 8. Sete eixos do contrato estático individual
+
+| Eixo | Contrato nativo consolidado | Limite para perks |
+|---|---|---|
+| **Targeting** | Vítima Mob original, lado não cliente, fonte existente, ator direto LivingEntity; item concreto na primeira leitura de mão principal, nível positivo na segunda, depois RNG | Não transforma autoria indireta em kill de Player nem certifica morte aceita, allowlist final de cabeças ou proteção |
+| **Range / area** | **N/A como parâmetro próprio:** o ramo recebe a vítima do evento e não executa busca espacial, distância, LOS ou área | Alcance do ataque e área de Dazing Sweep pertencem a outras mecânicas |
+| **Speed / direction** | **N/A:** nenhum movimento, steering, vetor ou velocidade é calculado no ramo de loot | Swing/attack speed da arma e Swiftwood não são parâmetros de Bonking |
+| **Projectile / size** | **N/A como projétil/hitbox próprio:** Creeper e raio são referências temporárias; não há inserção no mundo nesse ramo/helper | Não autoriza spawn, summon, trajetória ou área de raio de Bonking |
+| **Damage / type** | Fonte sintética `mobAttack(fakeCreeper)` somente para o callback; nenhuma segunda aplicação de dano demonstrada | Sem fórmula nova de dano, stun, eletricidade ou autorização para alterar o golpe original |
+| **Duration / resources** | Oportunidade no evento de morte; nível positivo sem escala; guard `<0.33F`; backup/zero/restauração normal por slot. **N/A para duração/cooldown próprio:** não há buff temporizado ou contador nesse ramo | Custos de aquisição e desgaste da arma separados; cleanup sob exceção e débitos efetivos não certificados |
+| **Authorship / protection / procs** | Ator direto, vítima original e Creeper sintético são papéis distintos; stack atual consultada duas vezes; nenhum recibo persistente local de Bonking | Callback, loot, spawn, coleta e XP/Mastery exigem resultados autoritativos e deduplicados; proteção e replay permanecem não verificados |
+
+## 9. Resultado, autoria e limites de integração
+
+As etapas **callback invocado → loot avaliado → ItemEntity inserido no mundo → item coletado → XP/Mastery creditados** são resultados distintos. A prova fecha o callsite e sua delegação; não fornece confirmação das etapas posteriores, porcentagem final, quantidade/tipo de cabeça ou concessão em inventário. O evento de morte, o guard RNG e a fonte de Creeper fictício não autenticam uma recompensa final de Bonking.
+
+Não há escrita local de recibo de loot, ID de proc, marcador persistente dedicado ou deduplicação no ramo de Bonking. O HashMap é um backup transitório por slot, não um recibo. Isso não prova ausência de mecanismos externos, mas impede tratar este ramo como hook idempotente, seguro para replay ou reentrada. **Não reexecutar** o evento/callback, simular outro Creeper, editar drop-chances ou conceder cabeças diretamente para implementar uma perk.
+
+O **Black Arcana** só poderá observar resultados confirmados por um contrato real do provider. O **RPG Skill Tree** continua responsável por progressão, atributos, Mastery e gates; não passa a ser autoridade da morte ou do loot. Crédito de kill/XP/Mastery exige correlação com ator autorizado, resultado aceito e concessão única. Vida terminando, callback solicitado ou fonte sintética não são esse recibo. PvP, claims, alianças, cancelamento, outros mods de loot e ordem dos mixins permanecem `NOT_VERIFIED`; integração fica `NO_MUTATION`, com comportamento fail-closed.
+
+## 10. Cobertura, provas históricas e pendências físicas
+
+A prova atual sela o método `livingDie` **inteiro**, os **16 corpos inteiros** do Primitive Club, `ACCompat.enchantLevel` e `createEntity`, as três bridges de Mob, `ACEnchantmentRegistry.key` e o supplier do clube. Os inicializadores compartilhados de registro têm apenas as janelas **PARTIAL** `ACEnchantmentRegistry.<clinit> @132–137` e `ACItemRegistry.<clinit> @967–981`; não se declara fechamento dessas classes ou de todo o provider. As 21 branches de `livingDie` incluem regiões independentes e não representam 21 condições exclusivas de Bonking.
+
+A [prova histórica inicial](../EXACT-BONKING-1.0.10.json) e a [prova causal histórica](../EXACT-BONKING-CAUSAL-1.0.10.json), com a [sonda inicial](../../../../../docs/qa/alexscaves_1010_bonking_probe.py) e a [sonda causal](../../../../../docs/qa/alexscaves_1010_bonking_causal_probe.py), conservam seus bytes, hashes e limites **PARTIAL**. Seus selected windows, roster e metadados de branches não são relabelados como selo completo; o novo contrato individual tem manifesto próprio. O estado parcial dessas provas históricas não é o estado atual desta ficha.
+
+A regressão estática atual e suas mutações negativas protegem identidade, recursos, corpos/âncoras e os limites semânticos desta ficha. Não executam Minecraft, CFG interprocedural ou loot real. Não há reauditoria da engine-base ou autenticação de um hook de runtime. A conclusão estática independe de reproduzir uma cabeça física ou uma exceção em jogo; afirmações físicas exigem evidência própria.
+
+**QA física continua `NOT_TESTED`:** níveis 0/I/forçados; mão principal atual versus arma do golpe; ator direto versus dono de projétil; tipos de Mob e cabeças elegíveis; evento cancelado e ordem dos listeners; nulls e entidades temporárias; Mixin aplicado; loot normal versus chamada adicional; chances customizadas de equipamento antes/depois; exceções e tratamento externo; reentrada/replay; datapacks e mods de loot; cliente/servidor dedicado, multiplayer, PvP/claims; unload/reload; itens aceitos, coleta e crédito único de XP/Mastery. São limites de runtime, não lacunas ocultas do contrato estático documentado.
+
+**Contabilidade:** uma ficha individual concluída em `STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`; **+1 contrato estático individual**, **+0 raízes mágicas** e **+0 providers integrais concluídos**. Provider e contratos de Stage/equipamento permanecem abertos; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Próximo encantamento parcial alfabético: `alexscaves:bouncing_bolt`.

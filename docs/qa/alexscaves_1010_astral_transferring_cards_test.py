@@ -629,7 +629,6 @@ class AstralTransferringContract(unittest.TestCase):
         self.assertIn('astral_transferring', full)
         self.assertIn('astral_transferring', ids)
         self.assertNotIn('astral_transferring', partial)
-        self.assertEqual(partial[0], 'bonking')
         crosswalk = (P / 'ENCHANTMENT-PERK-CROSSWALK-1.0.10.md').read_text()
         self.assertIn('| ✅ | `alexscaves:astral_transferring`', crosswalk)
         for name, count in (('full', len(full)), ('partial', len(partial)),
