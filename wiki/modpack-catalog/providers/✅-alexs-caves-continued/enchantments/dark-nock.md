@@ -1,6 +1,6 @@
 # Dark Nock — aceleração condicionada da carga do Dreadbow (publisher 1.0.10)
 
-**Estado:** ⚠️ ficha individual **parcial/condicionada** de `alexscaves:dark_nock`. Definição, proprietário JVM e fórmulas de carga têm prova SHA-exata **já existente**; a análise abaixo reaproveita essa prova, sem recatalogar o Dreadbow ou criar root semântico adicional. `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED` · `mutation=NO_MUTATION`.
+**Estado:** ✅ **contrato técnico estático individual certificado**, escopo `STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`, exclusivamente para `alexscaves:dark_nock` no publisher 1.0.10. O selo causal SHA-exato valida os 13 métodos nativos pertinentes e dois classfiles com referência direta, reproduzindo o relatório completo a partir do JAR. A identidade do Dreadbow/Arrow continua compartilhada, não configura uma nova raiz de magia. `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `mutation=NO_MUTATION` · **perks mutadores não autorizados**.
 
 **Efeito:** reduz o denominador da carga do **Dreadbow** de `40 ticks` (sem o encantamento) para **32 / 24 / 16 ticks** nos níveis **I / II / III**, respectivamente. O tempo ajusta **a função de potência do disparo normal e o progresso visual**, fazendo com que a mesma quantidade de ticks de uso produza potência maior. **Não** é um multiplicador independente de velocidade da flecha, raio de área, hitbox, dano base ou quantidade fixa de projéteis.
 
@@ -123,6 +123,24 @@ O `p` alimenta outros métodos do disparo normal, já documentados no [contrato 
 
 **QA pendente:** gatilhos nos níveis 0/I/II/III e diferença entre 3/4/5/6 ticks; flechas normais e modificadas; comportamento no cliente vs dedicado; efeitos de Relentless em stacks forçadas, níveis inválidos, combinações de encantamentos e datapacks; limites reais de busca/shot count, aceitação de spawn, custo e desgaste; situações sem munição, Perfect Shot com latência, perda/reload da stack, PvP/claims e dedupe de Mastery. Nenhuma dessas observações foi promovida a `PASS`.
 
-**Fechamento:** `resource_and_selected_JVM_evidence=SHA_EXACT_EXISTING`; `individual_full_certification=NOT_CERTIFIED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. A ficha aumenta o denominador observado do catálogo em uma entrada parcial, sem incrementar contratos estáticos certificados, provider integral ou raízes mágicas.
+## 7. Certificação causal individual — reprodução do JAR 1.0.10
+
+**Selo canônico:** [EXACT-DARK-NOCK-CAUSAL-1.0.10.json](../EXACT-DARK-NOCK-CAUSAL-1.0.10.json). A [sonda SHA-exata](../../../../../docs/qa/alexscaves_1010_dark_nock_causal_probe.py), seus [7 testes de regressão](../../../../../docs/qa/alexscaves_1010_dark_nock_causal_probe_test.py) e o [workflow CI dedicado](../../../../../.github/workflows/alexscaves-1010-dark-nock-causal.yml) verificam, no publisher instalado, a igualdade do JAR (SHA-1, SHA-256, tamanho), os SHA-256 de todos os classfiles do manifesto Dreadbow, a identidade dos JSONs e tags, a presença dos dois owners diretos de `DARK_NOCK`, as janelas JVM originais e as instruções/arestas diretas dos consumidores. O snapshot ainda exige que o **relatório completo regenerado** tenha SHA-256 `f19e0377f1388f81f34aea4514800d3be4a602ae07ad46dba4e8d47579f55f28`. A execução inicial de descoberta no GitHub Actions confirmou esse relatório; certificação final exige também execução com `--seal`.
+
+**Cobertura delimitada:** os classfiles com token binário `DARK_NOCK` são somente `ACEnchantmentRegistry` e `DreadbowItem` no JAR examinado. O primeiro registra identidade; o segundo consome nível e carga. Foram reconciliados **13 métodos nativos de DreadbowItem, 938 instruções JVM parseadas e 99 branches diretos com destino válido**; não são 13 magias ou casts, nem uma prova global de ausência de consumidores indiretos. O manifesto pai SHA-256 `88cf1e305688ed82cd08559ec9bcb35bc1745116be88ffc435593184e8e07e89` mantém as dependências de Dreadbow e Dark Arrow, sem duplicá-las.
+
+| Eixo do contrato | Resultado da prova estática | Limite conservado |
+|---|---|---|
+| Identidade | JAR e `dark_nock.json` SHA-exatos; `max_level=3` e tag `#alexscaves:enchantable/dreadbow` | Config/datapack ativo não aferido |
+| Comportamento e condições | Ramo Relentless sobrepõe o seletor, caso contrário `M=40−8L`; `releaseUsing` consome `getPowerForTime` e gate `p>0,1` | Níveis inválidos podem causar denominador não positivo |
+| Parâmetros | `40/32/24/16` ticks e primeiros limiares nominais `6/5/4/3`, junto da aritmética visual/servidor e ramo de disparo existentes | Sem aumento direto de dano, raio, hitbox ou multiplicador de velocidade |
+| Targeting | `ProjectileUtil`, factories, arco e flecha no ramo de release nativo, sem novo alvo associado a Dark Nock | Aceitação efetiva de entidades, PvP/claims e engine desconhecidos |
+| Custos | Encantamento `1/11/21` a `41/51/61`, bigorna `4`; débitos de uso e munição pertencem ao Dreadbow | Não representa novo custo de mana ou desconto de durabilidade |
+| Integração | Alterações possíveis de UX/atributos somente como proposta; nenhum hook seguro provado para alterar `M` ou o release | `NO_MUTATION`, sem Mastery/perk mutador |
+| Validação | Selo SHA-exato, censo JVM completo dos métodos delimitados, testes fail-closed, CI de leitura do JAR | `physical_qa=NOT_TESTED`, sincronização de tags não homologada |
+
+**Comando reprodutível:** `python3 docs/qa/alexscaves_1010_dark_nock_causal_probe.py --jar <publisher-1.0.10.jar> --javap <jdk21>/bin/javap --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DREADBOW-CONTRACTS-1.0.10.json' --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARK-NOCK-CAUSAL-1.0.10.json' --output <relatorio.json>`. A sonda compara os dados com o selo sem executar o mod. O resultado do relatório verifica o **contrato técnico estático**, não execução física ou permissão para mutar o provider.
+
+**Fechamento:** `resource_and_native_JVM_evidence=SHA_EXACT`; `individual_full_certification=STATIC_TECHNICAL_CATALOG_ONLY`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. Dark Nock conta como **um contrato estático individual**, mas não encerra o provider, não certifica hook nem acrescenta nova raiz mágica.
 
 **Próxima identidade alfabética:** `alexscaves:dazing_sweep`.
