@@ -1,0 +1,63 @@
+name: Alex's Caves 1.0.10 Dark Nock causal read-only discovery
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-dark-nock-causal.yml'
+      - 'docs/qa/alexscaves_1010_dark_nock_causal_probe.py'
+      - 'docs/qa/alexscaves_1010_dark_nock_causal_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/dark-nock.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARK-NOCK-CAUSAL-1.0.10.json'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/**/INDEX.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-dark-nock-causal.yml'
+      - 'docs/qa/alexscaves_1010_dark_nock_causal_probe.py'
+      - 'docs/qa/alexscaves_1010_dark_nock_causal_probe_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/dark-nock.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARK-NOCK-CAUSAL-1.0.10.json'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/**/INDEX.md'
+permissions:
+  contents: read
+jobs:
+  dark_nock_causal:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fail-closed synthetic regression and manifest card gates
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_dark_nock_causal_probe.py docs/qa/alexscaves_1010_dark_nock_causal_probe_test.py
+          python3 docs/qa/alexscaves_1010_dark_nock_causal_probe_test.py -v
+      - name: Download and hash exact installed publisher JAR
+        run: |
+          mkdir -p build/alexscaves-dark-nock
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-dark-nock/alexscaves-1.0.10.jar
+      - name: Verify individual Dark Nock resource and JVM causal chain
+        run: |
+          python3 docs/qa/alexscaves_1010_dark_nock_causal_probe.py \
+            --jar build/alexscaves-dark-nock/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DREADBOW-CONTRACTS-1.0.10.json' \
+            --output build/alexscaves-dark-nock/causal-discovery.json
+      - name: Check all canonical provider indexes
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: alexscaves-1010-dark-nock-discovery
+          path: build/alexscaves-dark-nock/causal-discovery.json
+          if-no-files-found: ignore
+          retention-days: 14
