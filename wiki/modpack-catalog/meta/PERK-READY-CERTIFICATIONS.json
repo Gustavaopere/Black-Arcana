@@ -8382,6 +8382,46 @@
           "reason": "EXACT-DAZING-SWEEP-CAUSAL-1.0.10.json SHA-exact: previous effects manifest SHA256 4aa87c312a4c35d5ab6aa126bd8c47f08e842b7f5e1844ad359b6a220443626b and full report SHA256 482459c63770efb81317f4e50000b66053c0c70cc372284e5da15def6324cf4e, 2 direct token owners, 5 native consumers, 363 instructions, 29 direct branches, tableswitch 6 destinations, negative/arithmetic test suite, GitHub Actions. No physical QA or mutation."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/detonating-death.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Detonating Death is a native conditional Totem of Possession termination explosion, not a new cast. Publisher 1.0.10 exact physical binary, resource and class identity validated; 3 complete JVM methods with 1013 instructions, 100 direct branches, 50 prior anchors, full-report SHA256 8a90445bd7e3b32569c3d81896970df064f2cbf217b9ca9beb9b20233545db9b. Radius reference depends on controlled width, external exposure and requested damage; native KEEP and exclusions, no independent casting resource or cooldown. No explicit isClientSide check in detonation branch; provider-native engine, actual damage, claims/PvP, authoritative mastery, at-most-once, hooks and physical QA unverified; NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/detonating-death.md",
+          "reason": "Installed publisher Alex's Caves Continued 1.0.10 (Minecraft 1.21.1 NeoForge), exact SHA1/SHA256, 75,279,314 bytes, Detonating Death enchantment JSON/tag and the two exact owner classfiles. Item tag Totem, mainhand, L=1, weight2 and exclusive array Astral Transferring."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/detonating-death.md",
+          "reason": "TotemOfPossessionItem.onUseTick conditional bound entity / end-of-use handoff instantiates native TotemExplosion, calls explode then finalizeExplosion(true); getControlledEntity resolves UUID on ServerLevel; no independent cast. Three complete JVM methods inspected, compiled token owners and 100 direct CFG branches checked."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/detonating-death.md",
+          "reason": "One-level enchantment, explosion radius reference R=2+floor(controlledEntity.getBbWidth()), exposure b=(1-distance/(2R))*exposure and requested damage floor(((b^2+b)/2)*7*(2R)+1), native knockback. Runtime acceptance and physical scales not certified."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/detonating-death.md",
+          "reason": "Explosion origin at controlled entity position; owner omitted from victims, native ACPlatform.ignoreExplosion and Luxtructosaurus exclusions. Native TotemExplosion targeting differs from normal possession attack, with no verified PvP/claim/ally safety."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/detonating-death.md",
+          "reason": "Publisher min enchanting base1 step11, max base41 step10, anvil4, weight2. Explosion depends on native Totem durability/binding lifecycle and has no proved extra mana or standalone cooldown; durability settlement on server remains untested."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/detonating-death.md",
+          "reason": "One provider-native possession root; no safe mutating adapter or authoritative Mastery settlement, no alternate explosion, PvP/claim policy and at-most-once receipt. NO_MUTATION fail-closed; Black Arcana magic authority separated from RPG Skill Tree progression."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/detonating-death.md",
+          "reason": "EXACT-DETONATING-DEATH-CAUSAL-1.0.10.json and exact 1.0.10 workflow: 3 complete JVM methods, 1013 instructions, 100 direct branches, 50 historical SHA-exact anchors; parent manifest sha256 3af3efd097dc60f2877211604a49543275f6d2b9ac24d1e9050ed175fe0382ef; full report SHA256 8a90445bd7e3b32569c3d81896970df064f2cbf217b9ca9beb9b20233545db9b. Six negative tests and CI binary reproduction, physical QA NOT_TESTED, no client/server detonation guard found."
+        }
+      }
     }
   },
   "providers": {},
