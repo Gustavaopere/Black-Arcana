@@ -234,6 +234,10 @@ def main():
             "previous_anchors": m["previous_anchors_verified"]
         } for name, m in methods.items()}
         for owner, methods in report["native"].items()}, sort_keys=True))
+    print("parent_manifest_sha256=" + report["parent_manifest_sha256"])
+    print("causal_calls=" + json.dumps({
+        owner: {name: m["invocations"] for name, m in methods.items()}
+        for owner, methods in report["native"].items()}, sort_keys=True))
     print("report_sha256=" + sha(data.encode("utf8")))
     print("STATIC_PROBE_ONLY PENDING_CERTIFICATION NO_MUTATION NOT_TESTED")
 
