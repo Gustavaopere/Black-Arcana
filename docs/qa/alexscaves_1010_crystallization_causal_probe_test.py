@@ -63,11 +63,15 @@ class CrystallizationCausalTests(unittest.TestCase):
             causal_pivots(method("use",[row(0),row(1),row(2)]),GAUNTLET)
 
     def test_wrong_native_aabb_constant_fails(self):
-        ins=[row(off,op,sym="") for off,op in []]
-        self.assertEqual(len(ins),0)
-        # Exact AABB constants must not be silently accepted if changed.
-        self.assertEqual(len([x for x in PIVOTS[(GAUNTLET,"onUseTick")]
-                              if x in (112,115,118)]),3)
+        pivot=PIVOTS[(GAUNTLET,"onUseTick")]
+        items=[row(off,opcode,symbol=(token if token else "double 64.0d"))
+               for off,(opcode,token) in pivot.items()]
+        self.assertEqual(len(causal_pivots(method("onUseTick",items),GAUNTLET)),
+                         len(pivot))
+        for item in items:
+            if item["offset"]==112:item["symbol"]="double 63.0d"
+        with self.assertRaisesRegex(ValueError,"AABB expansion"):
+            causal_pivots(method("onUseTick",items),GAUNTLET)
 
     def test_own_nbt_methods_require_explicit_keys(self):
         a=method("addAdditionalSaveData",[row(0,"ldc_w",symbol="String WeaponStack"),
