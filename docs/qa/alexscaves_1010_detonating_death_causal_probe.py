@@ -155,6 +155,7 @@ def audit(jar: Path, manifest: Path, javap_bin: str):
                 "unexpected/missing compiled Detonating Death token owners")
 
     native = {}
+    chosen = {}
     for owner, requested in METHODS.items():
         source = javap(javap_bin, jar, owner[:-6].replace("/", "."))
         declared = parse_methods(source)
@@ -162,6 +163,7 @@ def audit(jar: Path, manifest: Path, javap_bin: str):
         per_method = {}
         for name, descriptor in requested.items():
             method = choose(declared, name, descriptor)
+            chosen[(owner, name)] = method
             prior = [m for m in recorded if m["name"] == name and
                      m["descriptor"] == descriptor]
             require(len(prior) == 1, "parent method missing/ambiguous " + name)
@@ -190,6 +192,24 @@ def audit(jar: Path, manifest: Path, javap_bin: str):
                 ],
             }
         native[owner] = per_method
+    item_tick = chosen[(TOTEM, "onUseTick")]["instructions"]
+    explosion_tick = chosen[(EXPLOSION, "explode")]["instructions"]
+    count_symbol = lambda rows, fragment: sum(fragment in r["symbol"] for r in rows)
+    require(count_symbol(item_tick, "ACEnchantmentRegistry.DETONATING_DEATH") == 1,
+            "missing or duplicated enchantment gate token")
+    for fragment in ("TotemExplosion.explode:", "TotemExplosion.finalizeExplosion:",
+                     'TotemExplosion."<init>":'):
+        require(count_symbol(item_tick, fragment) == 1,
+                "missing or duplicated native explosion handoff " + fragment)
+    require(count_symbol(explosion_tick, "ACPlatform.ignoreExplosion:") == 1,
+            "missing native explosion immunity boundary")
+    require(count_symbol(explosion_tick, "Entity.hurt:") == 1 and
+            count_symbol(explosion_tick, "Entity.setDeltaMovement:") == 1,
+            "unexpected native damage / knockback consumer")
+    no_direct_side_guard = not any(
+        "Level.isClientSide:" in r["symbol"] for r in item_tick if r["offset"] <= 108)
+    require(no_direct_side_guard,
+            "detonation branch has a new side guard: re-audit before certification")
     return {
         "schema_version": 1,
         "scope": "INDIVIDUAL_STATIC_DETONATING_DEATH_CAUSAL_PROBE",
@@ -210,7 +230,8 @@ def audit(jar: Path, manifest: Path, javap_bin: str):
             "individual_static_certificate": "PENDING_SEAL_AND_REVIEW",
             "world_claims_pvp": "NOT_VERIFIED",
             "engine_damage_acceptance": "NOT_TESTED",
-            "side_effect_and_authority": "NEEDS_CAUSAL_REVIEW",
+            "side_effect_and_authority": "EXTERNAL_ENGINE_AND_LIVE_SETTLEMENT_NOT_VERIFIED",
+            "detonation_branch_no_direct_side_guard": no_direct_side_guard,
         },
     }
 
