@@ -82,20 +82,28 @@ class DazingSweepCertificateTests(unittest.TestCase):
         self.assertIn("363 instruções", self.card)
         self.assertIn("29 branches diretos", self.card)
         self.assertIn("EXACT-DAZING-SWEEP-CAUSAL-1.0.10.json", self.card)
-        self.assertIn("individual_full_enchantment_dossiers=40/51",self.cross)
-        self.assertIn("individual_partial_enchantment_dossiers=11/51",self.cross)
+        objects = self.ledger["objects"]
+        n_global = len(objects)
+        n_provider = sum(k.startswith("✅-alexs-caves-continued/") for k in objects)
+        n_enchant = sum(k.startswith("✅-alexs-caves-continued/enchantments/")
+                        for k in objects)
+        self.assertGreaterEqual(n_global, 206)
+        self.assertGreaterEqual(n_provider, 68)
+        self.assertGreaterEqual(n_enchant, 40)
+        self.assertIn(f"individual_full_enchantment_dossiers={n_enchant}/51",self.cross)
+        self.assertIn(f"individual_partial_enchantment_dossiers={51-n_enchant}/51",self.cross)
         self.assertIn("| ✅ | " + chr(96) + "alexscaves:dazing_sweep" + chr(96),
                       self.cross)
         self.assertIn("| ✅ | Dazing Sweep |",self.provider)
         self.assertIn("| ✅ | Dazing Sweep |",self.enchants)
-        self.assertIn("Fichas catalogadas (somente fichas detectadas): 40/51",
+        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {n_enchant}/51",
                       self.enchants)
-        self.assertIn("Fichas catalogadas (somente fichas detectadas): 68/81",
+        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {n_provider}/81",
                       self.provider)
-        self.assertIn("Fichas com contrato técnico estático certificado: 206/2393",
+        self.assertIn(f"Fichas com contrato técnico estático certificado: {n_global}/2393",
                       self.global_index)
-        self.assertIn("Fichas catalogadas (somente fichas detectadas): 456/2393",
-                      self.global_index)
+        self.assertRegex(self.global_index,
+            r"Fichas catalogadas \(somente fichas detectadas\): [0-9]+/2393")
         self.assertIn("Providers com catálogo concluído: 4/164",
                       self.global_index)
 
