@@ -40,7 +40,7 @@ class DazingSweepNativeTests(unittest.TestCase):
             {"offset":0,"opcode":"ifeq","operand":"5","symbol":""},
             {"offset":3,"opcode":"return","operand":"","symbol":""},
         ]}
-        with self.assertRaisesRegex(ValueError, "bad direct branch"):
+        with self.assertRaisesRegex(ValueError, "invalid JVM branch target"):
             check_direct_cfg(method)
 
     def test_native_pivot_drift_rejected(self):
@@ -91,7 +91,7 @@ class DazingSweepNativeTests(unittest.TestCase):
                       "80–159", "150–299", "NO_MUTATION",
                       RES_SHA, TAG_SHA, "NOT_TESTED"):
             self.assertIn(token, card)
-        self.assertNotIn("novo cast", "feitiço próprio por nível")  # no automatic new casts
+        self.assertIn("Não é um cast adicional", card)  # native club proc, no new cast
 
 if __name__ == "__main__":
     unittest.main()
