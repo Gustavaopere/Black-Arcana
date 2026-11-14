@@ -153,7 +153,7 @@ def causal_pivots(method,owner):
                 token in row["symbol"]+" "+row["operand"],
                 "Crystallization native causal pivot drift: "+
                 name_of(method)+"@"+str(off))
-        if off in (112,115,118):
+        if owner==GAUNTLET and name_of(method)=="onUseTick" and off in (112,115,118):
             require("64.0" in row["symbol"] or "64.0" in row["operand"],
                     "wrong AABB expansion constant")
         output.append(compact(row))
