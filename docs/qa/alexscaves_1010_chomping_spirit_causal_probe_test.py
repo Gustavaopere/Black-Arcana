@@ -3,7 +3,7 @@
 import unittest
 from alexscaves_1010_chomping_spirit_causal_probe import (
     SPEAR, SPIRIT, PIVOTS, exact_anchors, causal_pivots, local_nbt,
-    selected, require, SAVE_KEYS, NON_SAVE_FIELDS
+    selected, require, SAVE_KEYS, NON_SAVE_FIELDS, read_native_methods, native_name
 )
 from alexscaves_1010_bouncy_ball_causal_probe import branch_edges
 
@@ -15,6 +15,33 @@ def method(name,rows,desc="()V"):
             "descriptor":desc,"instructions":rows}
 
 class ChompingSpiritCausalProbeTests(unittest.TestCase):
+    def test_static_initializer_sealed_separately(self):
+        raw="\n".join([
+            "public class X {",
+            "  public X();",
+            "    descriptor: ()V",
+            "    Code:",
+            "       0: aload_0",
+            "       1: return",
+            "  static {};",
+            "    descriptor: ()V",
+            "    Code:",
+            "       0: iconst_1",
+            "       1: putstatic     #1 // Field FLAGS:I",
+            "       4: return",
+            "}",
+        ])
+        rows=read_native_methods(raw)
+        self.assertEqual(len(rows),2)
+        self.assertEqual(native_name(rows[-1],"example/X.class"),"<clinit>")
+        self.assertEqual([x["offset"] for x in rows[-1]["instructions"]],
+                         [0,1,4])
+
+    def test_static_initializer_requires_descriptor(self):
+        raw="public class X {\n  static {};\n    Code:\n       0: return\n}"
+        with self.assertRaisesRegex(ValueError,"static initializer JVM descriptor"):
+            read_native_methods(raw)
+
     def test_previous_exact_anchors_match(self):
         rows=[inst(0,"aload_0"),inst(3,"nop"),inst(6,"return")]
         record={"name":"acHurtEnemy","descriptor":"()V","anchors":[rows[0],rows[2]]}
