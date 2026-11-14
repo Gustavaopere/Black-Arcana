@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "parent_manifest_sha256": "4aa87c312a4c35d5ab6aa126bd8c47f08e842b7f5e1844ad359b6a220443626b",
+  "full_report_sha256": "482459c63770efb81317f4e50000b66053c0c70cc372284e5da15def6324cf4e",
+  "resource_sha256": "c86a7aceb5dfec02083dabc93ab51dc5253fbeb616c013a5f33f343656c26318",
+  "tag_sha256": "71829c384be93b8cef1e090b6afafa621dcd4eeb520c7a66ab0e6524e8a6ae43",
+  "native_DAZING_SWEEP_class_tokens": [
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem.class"
+  ],
+  "class_sha256": {
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem.class": "92bfb58cb5ed2c84dd6f989afad22c98209542889e30b6214c502dbff42fa1ac",
+    "com/github/alexmodguy/alexscaves/server/message/UpdateEffectVisualityEntityMessage.class": "4fb1a0200619ce7597470ebd500d6da12bd190a32910bde7ebbc6ac9e9298280",
+    "com/github/alexmodguy/alexscaves/server/potion/StunnedEffect.class": "1ca7aea9ca512e10f2c06da58093e6197c57645ce2d32fc03cce0869d21a0a9e"
+  },
+  "consumer_method_sha256": {
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem.class": {
+      "acHurtEnemy": "6338d400b3200842607d4ad75d5757f317665cb126f42e29bfa199dcdcf868f1",
+      "hurtEnemy": "8b0171f7acfab03a99f61fa9b59e9269617af4c36e945251098e0a3ccc7833de"
+    },
+    "com/github/alexmodguy/alexscaves/server/message/UpdateEffectVisualityEntityMessage.class": {
+      "handle": "ef42e2746781a2f3f3321cc1846378ed3780651acf3ac9fa99566f9b08771061"
+    },
+    "com/github/alexmodguy/alexscaves/server/potion/StunnedEffect.class": {
+      "shouldTick": "535c2e5569660bbf67f31e21ee9f60e8a141fa424eb51b9057575bcba1554314",
+      "tick": "9b32ef2f94b65f7daa248f18d7561586a82205da5e625b6ed990f179e2d50779"
+    }
+  },
+  "consumer_instruction_counts": {
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem.class": {
+      "acHurtEnemy": 171,
+      "hurtEnemy": 6
+    },
+    "com/github/alexmodguy/alexscaves/server/message/UpdateEffectVisualityEntityMessage.class": {
+      "handle": 101
+    },
+    "com/github/alexmodguy/alexscaves/server/potion/StunnedEffect.class": {
+      "shouldTick": 6,
+      "tick": 79
+    }
+  },
+  "consumer_direct_branch_counts": {
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem.class": {
+      "acHurtEnemy": 11,
+      "hurtEnemy": 0
+    },
+    "com/github/alexmodguy/alexscaves/server/message/UpdateEffectVisualityEntityMessage.class": {
+      "handle": 12
+    },
+    "com/github/alexmodguy/alexscaves/server/potion/StunnedEffect.class": {
+      "shouldTick": 2,
+      "tick": 4
+    }
+  },
+  "consumer_validated_switch_tables": {
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem.class": {
+      "acHurtEnemy": [],
+      "hurtEnemy": []
+    },
+    "com/github/alexmodguy/alexscaves/server/message/UpdateEffectVisualityEntityMessage.class": {
+      "handle": [
+        {
+          "cases": [
+            {
+              "case": "0",
+              "target": 136
+            },
+            {
+              "case": "1",
+              "target": 152
+            },
+            {
+              "case": "2",
+              "target": 183
+            },
+            {
+              "case": "3",
+              "target": 199
+            },
+            {
+              "case": "4",
+              "target": 215
+            },
+            {
+              "case": "default",
+              "target": 231
+            }
+          ],
+          "offset": 100,
+          "opcode": "tableswitch"
+        }
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/server/potion/StunnedEffect.class": {
+      "shouldTick": [],
+      "tick": []
+    }
+  },
+  "nominal_geometry": [
+    {
+      "aabb_half_side": 1.1,
+      "aabb_side": 2.2,
+      "distance_filter": 2.2,
+      "level": 1
+    },
+    {
+      "aabb_half_side": 1.6,
+      "aabb_side": 3.2,
+      "distance_filter": 3.2,
+      "level": 2
+    }
+  ],
+  "limits": {
+    "external_classpath_and_engine": "NOT_VERIFIED",
+    "invalid_level_behavior": "NOT_TESTED",
+    "mastery_settlement_and_dedupe": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "physical_qa": "NOT_TESTED",
+    "server_effect_acceptance": "NOT_TESTED",
+    "whole_provider_closed": false,
+    "world_claim_and_pvp": "NOT_VERIFIED"
+  }
+}
