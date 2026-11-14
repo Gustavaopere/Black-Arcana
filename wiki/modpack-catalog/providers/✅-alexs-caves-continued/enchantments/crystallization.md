@@ -1,6 +1,6 @@
 # Crystallization — elegibilidade expandida da Galena Gauntlet (publisher 1.0.10)
 
-**Estado:** ⚠️ ficha individual **parcial/condicionada**, com recursos publisher e consumidores JVM selecionados SHA-exatos. `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`. Nenhuma mutação de targeting, inventário, dano, cooldown ou mineração do provider está autorizada por esta ficha.
+**Estado:** ✅ **contrato técnico estático individual certificado** para Crystallization no publisher 1.0.10: `STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`. Recursos, identidade, elegibilidade, gatilhos, custos, controle de item, branches JVM, consumidores e persistência nativa delimitada foram reconciliados com o JAR físico. `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. **Nenhuma mutação de targeting, inventário, dano, cooldown ou mineração é autorizada** por este certificado.
 
 **Identidade semântica:** `alexscaves:crystallization` **não converte materiais em cristal**, não cria novo projétil nem uma magia independente. Ele permite que a **Galena Gauntlet** escolha um conjunto mais amplo de itens na **outra mão** para o mecanismo já existente de arma/item magnético controlado pelo jogador. O ataque, a mineração, o retorno do item e os modificadores de alcance pertencem à entidade nativa `MagneticWeaponEntity` e não são poderes exclusivos de Crystallization.
 
@@ -9,7 +9,8 @@
 - **Provider:** Alex's Caves Continued (`alexscaves`), Minecraft **1.21.1 / NeoForge**.
 - **JAR publisher exato:** `alexscaves-1.0.10-neoforge+1.21.1.jar`, **75.279.314 bytes**, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
 - **Recurso publisher:** `data/alexscaves/enchantment/crystallization.json`, SHA-256 `b2394e226f7d31843e6d459ef48e21bb955be3d174b3d63eb7ef0a66f0fee3da`, **386 bytes**.
-- **Prova técnica:** [manifesto exato](../EXACT-CRYSTALLIZATION-1.0.10.json), [sonda somente leitura](../../../../../docs/qa/alexscaves_1010_crystallization_probe.py), [regressões sintéticas](../../../../../docs/qa/alexscaves_1010_crystallization_probe_test.py) e [workflow dedicado](../../../../../.github/workflows/alexscaves-1010-crystallization.yml).
+- **Prova técnica original:** [manifesto exato](../EXACT-CRYSTALLIZATION-1.0.10.json), [sonda somente leitura](../../../../../docs/qa/alexscaves_1010_crystallization_probe.py), [regressões sintéticas](../../../../../docs/qa/alexscaves_1010_crystallization_probe_test.py) e [workflow dedicado](../../../../../.github/workflows/alexscaves-1010-crystallization.yml).
+- **Certificação causal individual:** [EXACT-CRYSTALLIZATION-CAUSAL-1.0.10.json](../EXACT-CRYSTALLIZATION-CAUSAL-1.0.10.json), gerado pela [sonda completa de controle direto/estado](../../../../../docs/qa/alexscaves_1010_crystallization_causal_probe.py), [testes fail-closed](../../../../../docs/qa/alexscaves_1010_crystallization_causal_probe_test.py) e [workflow SHA-exato](../../../../../.github/workflows/alexscaves-1010-crystallization-causal.yml). O selo compacto inclui SHA-256 do relatório reproduzível completo: `8927e0f12b8b20922008a20c8ed000d1f8b2d6516b7f87abd58e339501ca86ba`. Somente a igualdade exata do JAR, métodos e relatório permite aceitar o selo.
 - **Fonte pública adjacente:** `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` declara versão **1.1.1**. A descrição textual e o fluxo de referência ajudam a interpretar o efeito, mas **somente os hashes, os recursos e as janelas JVM extraídos do publisher 1.0.10** são prova dos parâmetros desta ficha. Não presumir paridade automática entre essas versões.
 - **Clean-room:** não foi adicionado nenhum código, asset, runtime externo ou implementação proprietária ao Black Arcana; o manifesto armazena dados declarativos e janelas limitadas de interop.
 
@@ -105,12 +106,40 @@ A entidade mantém também rotas nativas para atacar, minerar, retornar à mão 
 
 **Fronteiras:** Black Arcana controla seu próprio runtime mágico e segurança do mundo. RPG Skill Tree fornece progressão, atributos, Mastery, perks e gates **através de contratos reais**. Crystallization continua sendo um efeito provider-native de **seleção de item**, não um novo cast nem um runtime de magia independente.
 
-## 8. Limites da certificação e contadores
+## 8. Reconciliação de controle JVM, consumidores e NBT (versão física 1.0.10)
 
-**Comprovado no JAR 1.0.10:** hash do publisher; quatro recursos declarativos/tag e seus hashes; identity/level/slots/custos; seleção das tags; consulta em AABB 64; transferência de stack por cópia com limpeza anterior ao spawn; player UUID; cooldown solicitado; owners/classes e digests; janelas delimitadas de consumo da arma magnética, alvo, dano, mineração, retorno/persistência.
+A sonda causal auditou as classes `GalenaGauntletItem` (**17 métodos declarados**) e `MagneticWeaponEntity` (**23 métodos declarados**) a partir do JAR SHA-exato. O inventário de **40 métodos declarados** inclui 11 consumidores individualmente vinculados por digests e janelas reproduzidas do manifesto anterior. Seus desvios JVM diretos foram validados quanto à existência dos offsets de destino; **134 branches `if/goto`**, nenhum `tableswitch`/`lookupswitch` nesses 11 corpos. O recorte não equivale à enumeração integral do provider nem substitui o grafo interprocedural e as exceções.
+
+| Consumidor JVM | Instruções | Branches diretos verificados |
+|---|---:|---:|
+| `GalenaGauntletItem.use` | 47 | 8 |
+| `GalenaGauntletItem.onUseTick` | 120 | 15 |
+| `GalenaGauntletItem.releaseUsing` | 25 | 1 |
+| `MagneticWeaponEntity.tick` | 744 | 82 |
+| `MagneticWeaponEntity.hurtEntity` | 141 | 10 |
+| `MagneticWeaponEntity.getController` | 34 | 5 |
+| `MagneticWeaponEntity.getTarget` | 17 | 2 |
+| `MagneticWeaponEntity.isOwnerWearingGauntlet` | 26 | 5 |
+| `MagneticWeaponEntity.plopItem` | 19 | 2 |
+| `MagneticWeaponEntity.addAdditionalSaveData` | 23 | 2 |
+| `MagneticWeaponEntity.readAdditionalSaveData` | 23 | 2 |
+
+O token `CRYSTALLIZATION` aparece diretamente em **três classfiles** do JAR observado: `ACEnchantmentRegistry`, `ACTagRegistry` e `GalenaGauntletItem`. A busca por token não demonstra ausência de reflexão, referência indireta ou consumidores de outros mods. O próprio `MagneticWeaponEntity.tick` apresenta `FERROUS_HASTE` e `FIELD_EXTENSION`, **outros** encantamentos com parâmetros próprios, não escalas de Crystallization.
+
+**Transação e ordem de efeitos:** `use` confere o nível por `enchantLevel`, seleciona entre as tags magnética e de cristalização, exige `ItemStack.is`, solicita desgaste de 1 ponto da Gauntlet para jogador não criativo e inicia o uso. `onUseTick` faz a consulta AABB `inflate(64D,64D,64D)`, copia a stack `@193`, solicita `setCount(0) @201`, cria `MagneticWeaponEntity @216`, atribui cópia e owner UUID `@228/@252` e chama `addFreshEntity @258`, descartando seu booleano `@261`. Esse caminho é evidência estática de **risco de conservação de inventário quando spawn falha**, não confirmação física de perda ou prova de ausência de fallback em camadas externas. `releaseUsing` continua delegando o cooldown nativo de cinco ticks.
+
+**Dano e mundo:** `tick` da arma magnética possui dois callsites `hurtEntity` em ramos distintos e dois `Level.destroyBlock`; o consumidor de combate solicita `ACCompat.hurt`, efeitos pós-ataque e dano ao item conforme suas guardas. Esses efeitos pertencem à entidade magnética; Crystallization é o **seletor de itens elegíveis**. Por isso, dano fixo, `DamageType` exclusivo, raio de ataque, alcance de raycast, chance, velocidade e AOE próprios de Crystallization são **N/A no recorte causal**. O alcance efetivo da entidade e modificadores de `FIELD_EXTENSION`/outros providers continuam fora da certificação individual deste encantamento.
+
+**Autoria/persistência:** os dois métodos próprios de NBT da entidade possuem **23 instruções cada**, com chaves explícitas `WeaponStack` e `ControllerUUID`. `getController`, `getTarget` e `plopItem` têm contratos JVM individuais. Esses dados não confirmam restauração correta do inventário, dono e destino após descarregamento/restart, aceitação de target/hit, nem atribuição de XP/Mastery; `engine_inherited_persistence=NOT_VERIFIED`, `physical_qa=NOT_TESTED`.
+
+**Fronteira de segurança:** ainda não existe hook mutador comprovado para alterar tags durante uso, transação de inventário, tentativa de spawn, scan, dano, mineração, retorno do item ou cooldown. Permanece `NO_MUTATION`/`fail-closed`; nenhuma nova magia/raiz foi criada.
+
+## 9. Limites da certificação e contadores
+
+**Comprovado no JAR 1.0.10:** hash do publisher; quatro recursos declarativos/tag e seus hashes; identidade/nível/slots/custos; seleção das tags; consulta em AABB 64; transferência de stack por cópia com limpeza anterior ao spawn; owner UUID; cooldown solicitado; dois classfiles executáveis com 40 métodos declarados e 11 consumidores SHA-exatos, digests, 134 branches diretos e todos os destinos verificados, além das janelas completas previamente seladas; consumidores nativos de alvo, dano, mineração, retorno/persistência.
 
 **Não testado/verificado:** funcionamento real do encantamento I nos dois slots; datapacks e tags resolvidas; controle com cada item da lista; acesso a inventários e transferência em negação de spawn; crash/restart; itens perdidos; client/server side; permissões; proteção de chunks; PvP; alvos, tiro e mineração reais; uso simultâneo; Mastery e atribuição de kills; mutating hooks e testes de integração no modpack. Nenhuma linha física recebe `PASS` por causa da CI.
 
-**Estados:** `VERIFIED_EXACT_BINARY_SELECTED_WINDOWS`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `perk_certification=NOT_CERTIFIED`; `NO_MUTATION`.
+**Estados:** ✅ `COMPLETE_PERK_READY` **somente como contrato técnico estático** `STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR` dos consumidores identificados. `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. Não confundir esse status com autorização para perk funcional, teste físico ou fechamento do universo do provider.
 
-**Contabilidade:** **+1 ficha individual parcial**; **+0 certificado estático novo no ledger**; **+0 raízes mágicas próprias**; **+0 providers com catálogo encerrado**. Próxima entrada alfabética: `alexscaves:dark_nock`.
+**Contabilidade da certificação:** +0 fichas novas; **+1 contrato estático individual certificado**; +0 raízes semânticas; +0 providers inteiramente catalogados. O recorte observado de Alex’s Caves passa a **66/81** objetos com contrato estático certificado, dos quais **38/51 encantamentos**; faltam **13/51** contratos de encantamentos. O universo integral do provider segue não comprovado. Próxima ficha parcial em ordem alfabética: `alexscaves:dark_nock`.
