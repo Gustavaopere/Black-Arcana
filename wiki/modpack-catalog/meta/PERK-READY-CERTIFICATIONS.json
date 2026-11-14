@@ -8338,7 +8338,7 @@
           "reason": "No verified mutation hook for M, projectiles, damage, PvP or Mastery. Black Arcana runtime magic and RPG Skill Tree progression stay separate, NO_MUTATION/fail-closed."
         },
         "validation": {
-          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARK-NOCK-CAUSAL-1.0.10.json",
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/dark-nock.md",
           "reason": "13 method SHA digests, 938 instructions, 99 direct branches and 2 compiled direct token owners captured on exact JAR; report SHA256 f19e0377f1388f81f34aea4514800d3be4a602ae07ad46dba4e8d47579f55f28, previous Dreadbow manifest SHA256 88cf1e305688ed82cd08559ec9bcb35bc1745116be88ffc435593184e8e07e89, 7 synthetic negative tests, CI reproducibility. Physical QA NOT_TESTED."
         }
       }
