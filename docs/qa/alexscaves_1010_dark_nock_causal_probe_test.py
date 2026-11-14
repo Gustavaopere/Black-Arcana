@@ -93,5 +93,45 @@ class DarkNockCausalProbeTests(unittest.TestCase):
                       "NOT_VERIFIED", "⚠️"):
             self.assertIn(token, card)
 
+    def test_causal_seal_ledger_and_canonical_indexes(self):
+        seal = json.loads((P / "EXACT-DARK-NOCK-CAUSAL-1.0.10.json").read_text())
+        ledger = json.loads((ROOT /
+            "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text())
+        key = "✅-alexs-caves-continued/enchantments/dark-nock.md"
+        cert = ledger["objects"][key]
+        self.assertEqual(cert["claim_scope"], "STATIC_TECHNICAL_CATALOG_ONLY")
+        self.assertEqual(cert["status"], "COMPLETE_PERK_READY")
+        self.assertEqual(cert["evidence_grade"], "SHA_EXACT_BINARY_BEHAVIOR")
+        self.assertEqual(set(cert["evidence"]), {
+            "identity", "behavior", "parameters", "targeting",
+            "costs", "integration", "validation"})
+        self.assertEqual(cert["mutating_hook"], "NOT_VERIFIED")
+        self.assertEqual(cert["physical_qa"], "NOT_TESTED")
+        self.assertEqual(seal["full_report_sha256"],
+            "f19e0377f1388f81f34aea4514800d3be4a602ae07ad46dba4e8d47579f55f28")
+        self.assertEqual(seal["claim_scope"], "STATIC_TECHNICAL_CATALOG_ONLY")
+        self.assertEqual(seal["limits"]["mutation"], "NO_MUTATION")
+        self.assertEqual(len(seal["method_sha256"]), 13)
+        self.assertEqual(sum(seal["instruction_counts"].values()), 938)
+        self.assertEqual(sum(seal["direct_branch_counts"].values()), 99)
+        self.assertEqual(len(seal["direct_DARK_NOCK_class_token_owners"]), 2)
+        self.assertEqual(len(ledger["objects"]), 205)
+        card = CARD.read_text()
+        self.assertIn("contrato técnico estático individual certificado",card)
+        self.assertIn("938 instruções", card)
+        self.assertIn("EXACT-DARK-NOCK-CAUSAL-1.0.10.json", card)
+        self.assertIn("NO_MUTATION", card)
+        cross = (P / "ENCHANTMENT-PERK-CROSSWALK-1.0.10.md").read_text()
+        self.assertIn("individual_full_enchantment_dossiers=39/51",cross)
+        self.assertIn("individual_partial_enchantment_dossiers=12/51",cross)
+        self.assertIn("| ✅ | `alexscaves:dark_nock`",cross)
+        sub = (P / "enchantments/INDEX.md").read_text()
+        prov = (P / "INDEX.md").read_text()
+        global_index = (ROOT / "wiki/modpack-catalog/providers/INDEX.md").read_text()
+        self.assertIn("Fichas catalogadas (somente fichas detectadas): 39/51",sub)
+        self.assertIn("Fichas catalogadas (somente fichas detectadas): 67/81",prov)
+        self.assertIn("Fichas com contrato técnico estático certificado: 205/2393",global_index)
+        self.assertIn("Providers com catálogo concluído: 4/164",global_index)
+
 if __name__ == "__main__":
     unittest.main()
