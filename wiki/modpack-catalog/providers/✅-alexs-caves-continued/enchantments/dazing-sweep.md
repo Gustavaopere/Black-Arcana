@@ -1,6 +1,6 @@
 # Dazing Sweep — atordoamento secundário do Primitive Club (publisher 1.0.10)
 
-**Estado da ficha individual:** ⚠️ **parcial/condicionado**. O recurso do encantamento, a tag, o classfile produtor e os pontos JVM relevantes **já estão cobertos pelo contrato de efeitos SHA-exato**. Esta ficha consolida somente o consumidor de Dazing Sweep: `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED` · `NO_MUTATION`. Nenhum runtime/provider, hook, Stage ou certificado foi alterado.
+**Estado da ficha individual:** ✅ **contrato técnico estático individual certificado**, exclusivamente para o publisher `alexscaves` **1.0.10**, com `claim_scope=STATIC_TECHNICAL_CATALOG_ONLY` / `evidence_grade=SHA_EXACT_BINARY_BEHAVIOR`. Evidência do JAR, JSON/tag e cinco métodos nativos foi reproduzida e selada individualmente, sem promover o lifecycle do efeito ou reconhecer um cast novo. **Hooks mutadores `NOT_VERIFIED`, QA física `NOT_TESTED` e `NO_MUTATION`**; nenhuma implementação, modificação de gameplay, atributo, perk ou Mastery foi autorizada.
 
 **Identidade funcional:** `alexscaves:dazing_sweep` modifica o **Primitive Club**: depois de um ataque que consegue aplicar `Stunned` ao alvo principal, o encantamento pode atingir outras entidades dentro de uma região delimitada, solicitar **1 ponto de dano corpo a corpo** por secundário elegível e tentar aplicar **Stunned por 80–159 ticks**. Não é um cast adicional, um novo `DamageType`, um projétil ou um atordoamento automático a cada ataque. O `Stunned` e suas consequências são do [efeito já catalogado](../effects/stunned.md).
 
@@ -18,7 +18,7 @@
 | Efeito `server/potion/StunnedEffect.class` | SHA-256 `1ca7aea9ca512e10f2c06da58093e6197c57645ce2d32fc03cce0869d21a0a9e` |
 | Mensagem de apresentação `server/message/UpdateEffectVisualityEntityMessage.class` | SHA-256 `4fb1a0200619ce7597470ebd500d6da12bd190a32910bde7ebbc6ac9e9298280` |
 
-**Evidência canônica reutilizada, sem nova sonda ou download do JAR:** [`EXACT-EFFECT-CONTRACTS-1.0.10.json`](../EXACT-EFFECT-CONTRACTS-1.0.10.json) e [memorial do contrato](../EXACT-EFFECT-CONTRACTS-1.0.10.md), especialmente a ficha técnica [Stunned](../effects/stunned.md). O manifesto existente inclui o caminho e o SHA-256 do JSON Dazing Sweep, da tag e dos classfiles, além dos offsets compilados de `PrimitiveClubItem.acHurtEnemy`. O código deste encantamento já estava auditado como **consumidor do efeito**, mas faltava a ficha individual.
+**Evidência histórica reutilizada e revalidada com nova auditoria read-only do JAR:** [`EXACT-EFFECT-CONTRACTS-1.0.10.json`](../EXACT-EFFECT-CONTRACTS-1.0.10.json) e [memorial do contrato](../EXACT-EFFECT-CONTRACTS-1.0.10.md), especialmente a ficha técnica [Stunned](../effects/stunned.md). O manifesto existente inclui o caminho e o SHA-256 do JSON Dazing Sweep, da tag e dos classfiles, além dos offsets compilados de `PrimitiveClubItem.acHurtEnemy`. A ficha individual parcial já existia; a nova certificação acrescenta reprodução integral dos métodos pertinentes, arestas JVM e limites de integração, sem duplicar o certificado do efeito Stunned.
 
 O repositório público adjacente `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` declara versão **1.1.1** e não é autoridade para o bytecode 1.0.10. Os **bytes específicos** de `dazing_sweep.json` (367 bytes) e da tag `primitive_club.json` (54 bytes) desse snapshot produzem, independentemente, os **mesmos SHA-256** selados no manifesto 1.0.10. Essa identidade vale **só para esses dois recursos**: não estabelece paridade de métodos, parâmetros binários de outras classes ou comportamento físico entre releases.
 
@@ -111,6 +111,28 @@ A mensagem `UpdateEffectVisualityEntityMessage` do provider sinaliza a apresenta
 
 **Não comprovado por teste físico:** taxas reais de stun; necessidade de ataque completamente carregado; modificação de vanilla/Forge event handling; ordem client/server no pack; proteção PvP/claims; hitboxes e alvos de outros mods; efeitos já ativos/Immunity; expiração e remoção; número de vítimas, rede de mensagens e duplicações; sincronização entre mãos; duração efetiva em baixa TPS; estabilidade de níveis inválidos; efeitos de Mastery e hooks de perks.
 
-**Estados finais desta entrada:** `resource_and_consumer_evidence=EXACT_BINARY_EXISTING`; `individual_partial_dossier=YES`; `individual_full_certification=NO`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `perk_certification=NOT_CERTIFIED`; `NO_MUTATION`. A ficha adiciona **uma entrada documental parcial** ao denominador de fichas observadas, **zero** contratos estáticos certificados, **zero** novas raízes mágicas, **zero** providers concluídos.
+## 8. Selo individual SHA-exato e verificação de fluxo nativo
+
+**Prova reproduzível:** [EXACT-DAZING-SWEEP-CAUSAL-1.0.10.json](../EXACT-DAZING-SWEEP-CAUSAL-1.0.10.json) identifica a versão física e exige igualdade SHA-256 de todo o relatório de auditoria: `482459c63770efb81317f4e50000b66053c0c70cc372284e5da15def6324cf4e`. O manifesto histórico `EXACT-EFFECT-CONTRACTS-1.0.10.json` também está ancorado pelo SHA-256 `4aa87c312a4c35d5ab6aa126bd8c47f08e842b7f5e1844ad359b6a220443626b`. A [sonda](../../../../../docs/qa/alexscaves_1010_dazing_sweep_causal_probe.py), os [testes negativos e aritméticos](../../../../../docs/qa/alexscaves_1010_dazing_sweep_causal_probe_test.py) e o [workflow dedicado](../../../../../.github/workflows/alexscaves-1010-dazing-sweep-causal.yml) verificam o JAR publisher 1.0.10 contra esses artefatos, de modo read-only.
+
+O censo SHA-exato localizou **dois classfiles** contendo a referência binária direta `DAZING_SWEEP`: `ACEnchantmentRegistry.class` (registro) e `PrimitiveClubItem.class` (consumo). Foram reconciliados **5 métodos JVM completos, 363 instruções e 29 branches diretos**, com destinos válidos:
+
+| Owner nativo | Método | Instruções | Branches diretos | Papel |
+|---|---|---:|---:|---|
+| `PrimitiveClubItem` | `hurtEnemy` | 6 | 0 | Entrada e encaminhamento ao ataque interno |
+| `PrimitiveClubItem` | `acHurtEnemy` | 171 | 11 | Gate principal, encantamento, varredura, dano/status secundário |
+| `StunnedEffect` | `shouldTick` | 6 | 2 | Consumidor do efeito, sem root exclusivo deste encantamento |
+| `StunnedEffect` | `tick` | 79 | 4 | Consequências posteriores do estado de Stunned |
+| `UpdateEffectVisualityEntityMessage` | `handle` | 101 | 12 | Tratamento do pacote de apresentação, sem prova de autoridade mutadora |
+
+A auditoria do método de mensagem também validou **uma `tableswitch` com cinco casos e destino `default`** (6 destinos em `@100`), além dos branches diretos. Os destinos e assinaturas são offsets deste classfile específico, não uma ABI pública estável. Não houve cópia de implementação proprietária para o Black Arcana.
+
+A ordem **`LivingEntity.hurt(...,1F) @319 → pop @322 → LivingEntity.addEffect @327`** comprova que o retorno do pedido de dano secundário é descartado antes da tentativa de aplicar `Stunned`; o segundo resultado é testado antes da notificação visual. A varredura é condicionada à aceitação prévia do efeito principal e a `L>0`. O alvo inicial usa a chance nominal `0,8` apenas no ramo do alvo principal, sem novo sorteio de chance para cada secundário. O encantamento continua sem alvo, projétil ou dano mágico próprios.
+
+**Comando de reprodução:** `python3 docs/qa/alexscaves_1010_dazing_sweep_causal_probe.py --jar <publisher-1.0.10.jar> --javap <Java21>/bin/javap --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-EFFECT-CONTRACTS-1.0.10.json' --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DAZING-SWEEP-CAUSAL-1.0.10.json' --output <relatorio.json>`.
+
+**Gates ainda não homologados:** aplicação/aceitação efetiva de dano e Stunned em jogo, resistências, sincronização cliente-servidor, resultado de mensagens, PvP e proteção territorial, interação com efeitos já ativos, limites de entidades, invalid levels, reload/engine, compatibilidade com outros mods, extensão mutadora, Mastery e dedupe. A busca AABB é local, mas não possui teto numérico próprio de candidatos; uma perk de expansão precisa de cap e budget seguro. Não há seam provado para sobrescrever `DAZING_SWEEP`, `StunnedEffect` ou o pipeline de melee.
+
+**Estados finais:** `resource_and_consumer_evidence=SHA_EXACT_CAUSAL`; `individual_full_certification=STATIC_TECHNICAL_CATALOG_ONLY`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. Conta **uma única ficha técnica estática individual certificada**, **zero** novas raízes mágicas e **zero** novos providers integralmente encerrados.
 
 **Próxima entrada alfabética:** `alexscaves:detonating_death`.
