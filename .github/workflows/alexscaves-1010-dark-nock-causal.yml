@@ -49,6 +49,7 @@ jobs:
             --jar build/alexscaves-dark-nock/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DREADBOW-CONTRACTS-1.0.10.json' \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DARK-NOCK-CAUSAL-1.0.10.json' \
             --output build/alexscaves-dark-nock/causal-discovery.json
       - name: Check all canonical provider indexes
         run: |
