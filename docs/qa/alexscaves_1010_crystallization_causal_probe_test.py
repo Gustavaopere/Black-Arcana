@@ -73,6 +73,13 @@ class CrystallizationCausalTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"AABB expansion"):
             causal_pivots(method("onUseTick",items),GAUNTLET)
 
+    def test_hurt_entity_offset_115_is_not_aabb_constant(self):
+        expected=PIVOTS[(WEAPON,"hurtEntity")]
+        rows=[row(off,opcode,symbol=token)
+              for off,(opcode,token) in expected.items()]
+        self.assertEqual(len(causal_pivots(method("hurtEntity",rows),WEAPON)),
+                         len(expected))
+
     def test_own_nbt_methods_require_explicit_keys(self):
         a=method("addAdditionalSaveData",[row(0,"ldc_w",symbol="String WeaponStack"),
             row(3,"ldc_w",symbol="String ControllerUUID"),row(6,"return")])
