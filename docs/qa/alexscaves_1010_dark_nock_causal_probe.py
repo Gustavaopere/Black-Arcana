@@ -272,11 +272,40 @@ def main():
     p.add_argument("--manifest", type=Path, required=True)
     p.add_argument("--javap", required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--seal", type=Path)
     args = p.parse_args()
     output = audit(args.jar, args.manifest, args.javap)
+    report_bytes = (json.dumps(output, indent=2, sort_keys=True,
+                               ensure_ascii=False) + "\n").encode("utf8")
+    if args.seal is not None:
+        seal = json.loads(args.seal.read_text(encoding="utf8"),
+                          object_pairs_hook=strict_pairs)
+        expected = {
+            "artifact": output["artifact"],
+            "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+            "direct_DARK_NOCK_class_token_owners":
+                output["direct_DARK_NOCK_class_token_owners"],
+            "direct_branch_counts": {
+                k:v["direct_branches"]
+                for k,v in output["native_method_census"].items()},
+            "full_report_sha256": sha(report_bytes),
+            "instruction_counts": {
+                k:v["instruction_count"]
+                for k,v in output["native_method_census"].items()},
+            "item_class_sha256": output["item_class_sha256"],
+            "limits": output["limits"],
+            "method_sha256": {
+                k:v["complete_parsed_method_sha256"]
+                for k,v in output["native_method_census"].items()},
+            "nominal_unmodified_charge": output["nominal_unmodified_charge"],
+            "parent_manifest_sha256": output["parent_manifest_sha256"],
+            "report_claim_scope": output["claim_scope"],
+            "resource_sha256": output["resource_sha256"],
+            "schema_version": 1,
+        }
+        require(seal == expected, "tracked SHA-exact Dark Nock causal seal drift")
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(output, indent=2, sort_keys=True,
-                                     ensure_ascii=False) + "\n", encoding="utf8")
+    args.output.write_bytes(report_bytes)
     print("DARK_NOCK_SHA_EXACT_DISCOVERY")
     print("direct_class_tokens=" +
           json.dumps(output["direct_DARK_NOCK_class_token_owners"]))
