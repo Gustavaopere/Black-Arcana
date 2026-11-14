@@ -15,7 +15,7 @@ import zipfile
 from pathlib import Path
 
 from alexscaves_1010_damage_consumer_probe import (
-    SHA1, SHA256, SIZE, sha_file, javap, parse_methods,
+    SHA1, SHA256, SIZE, sha_file, javap, parse_methods, CODE_LINE, METHOD_LINE,
 )
 from alexscaves_1010_gumball_state_probe import name_of
 from alexscaves_1010_raygun_local_flow_probe import digest_method
@@ -126,6 +126,49 @@ def require(ok, reason):
 
 def digest(b: bytes):
     return hashlib.sha256(b).hexdigest()
+
+def read_native_methods(raw):
+    """Supplement shared method parser's intentional exclusion of '<clinit>'.
+
+    Original parser skips the static initializer so it cannot be accidentally
+    attached to a preceding damage factory. This audit must compare it because
+    the earlier Spirit Dinosaur manifest intentionally seals its exact offsets.
+    """
+    methods=parse_methods(raw)
+    lines=raw.splitlines()
+    starts=[i for i,line in enumerate(lines) if line.strip()=="static {};"]
+    require(len(starts)<=1,"duplicate native JVM static initializer")
+    if not starts:
+        return methods
+    start=starts[0]+1
+    next_header=len(lines)
+    for i in range(start,len(lines)):
+        if lines[i]=="}":
+            next_header=i
+            break
+        match=METHOD_LINE.match(lines[i])
+        if match and "(" in match.group(1):
+            next_header=i
+            break
+    section=lines[start:next_header]
+    descriptor=[line.strip().split("descriptor:",1)[1].strip()
+                for line in section if line.strip().startswith("descriptor:")]
+    require(descriptor==["()V"],
+            "missing exact static initializer JVM descriptor")
+    rows=[]
+    for line in section:
+        match=CODE_LINE.match(line)
+        if not match:
+            continue
+        offset,opcode,operand,symbol=match.groups()
+        rows.append({"offset":int(offset),"opcode":opcode,
+                     "operand":operand.strip(),"symbol":(symbol or "").strip()})
+    require(1<=len(rows)<=3000 and
+            [x["offset"] for x in rows]==sorted({x["offset"] for x in rows}),
+            "malformed native static initializer Code block")
+    methods.append({"header":"static {};","descriptor":"()V","instructions":rows})
+    return methods
+
 
 def native_name(method, owner):
     """Normalize javap source headings to JVM constructor/initializer names."""
@@ -263,7 +306,7 @@ def analyze(jar: Path, parent_path: Path, javap_bin: str):
     all_selected={}
     for owner in OWNERS:
         raw=javap(javap_bin,jar,owner[:-6].replace("/","."))
-        methods=parse_methods(raw)
+        methods=read_native_methods(raw)
         rows=method_roster(methods)
         require(len(rows)==len(methods) and len(rows)>=4,
                 "unexpected or duplicate native method roster")
