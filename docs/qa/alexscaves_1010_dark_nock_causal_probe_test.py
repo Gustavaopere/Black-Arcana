@@ -61,7 +61,7 @@ class DarkNockCausalProbeTests(unittest.TestCase):
             check_pivots(method, {1: ("invokestatic", "DARK_NOCK")})
 
     def test_exact_previous_anchor_rejects_truncation(self):
-        method = {"instructions": [
+        method = {"header": "testMethod()", "instructions": [
             {"offset": 1, "opcode": "getstatic", "operand": "#2",
              "symbol": "Field X.DARK_NOCK:ResourceKey"},
         ]}
