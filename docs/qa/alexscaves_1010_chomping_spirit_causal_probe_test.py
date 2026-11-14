@@ -20,6 +20,24 @@ class ChompingSpiritCausalProbeTests(unittest.TestCase):
         record={"name":"acHurtEnemy","descriptor":"()V","anchors":[rows[0],rows[2]]}
         self.assertEqual(exact_anchors(method("acHurtEnemy",rows),record,SPEAR),2)
 
+    def test_javap_whitespace_only_difference_allowed(self):
+        rows=[inst(0,"aload_0"),
+              inst(9,"invokeinterface","#83,  1",
+                   "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;")]
+        prior={"name":"acHurtEnemy","descriptor":"()V",
+               "anchors":[inst(9,"invokeinterface","#83, 1",
+                        "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;")]}
+        self.assertEqual(exact_anchors(method("acHurtEnemy",rows),prior,SPEAR),1)
+
+    def test_operand_drift_rejected_despite_whitespace_normalization(self):
+        rows=[inst(0,"aload_0"),inst(9,"invokeinterface","#83, 2",
+                   "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;")]
+        prior={"name":"acHurtEnemy","descriptor":"()V",
+               "anchors":[inst(9,"invokeinterface","#83, 1",
+                        "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;")]}
+        with self.assertRaisesRegex(ValueError,"selected JVM anchor drift"):
+            exact_anchors(method("acHurtEnemy",rows),prior,SPEAR)
+
     def test_previous_anchor_opcode_drift_fails_closed(self):
         rows=[inst(0,"aload_0"),inst(3,"return")]
         record={"name":"acHurtEnemy","descriptor":"()V",
