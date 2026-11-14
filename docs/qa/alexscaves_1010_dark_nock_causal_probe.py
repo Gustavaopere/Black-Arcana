@@ -140,9 +140,11 @@ def canonical_anchors(method: dict, anchors: list[dict]) -> int:
         off = anchor["offset"]
         require(off not in offsets and off in rows, "missing/duplicate parent offset")
         offsets.add(off)
-        require(all(rows[off][field] == anchor[field]
-                    for field in ("opcode", "operand", "symbol")),
-                "SHA-exact previous Dreadbow anchor drift")
+        for field in ("opcode", "operand", "symbol"):
+            require(rows[off][field] == anchor[field],
+                    "SHA-exact Dreadbow anchor drift in " + method["header"] +
+                    " @" + str(off) + " " + field + ": parent=" +
+                    repr(anchor[field]) + " observed=" + repr(rows[off][field]))
     return len(anchors)
 
 def power(ticks: int, maximum: int) -> float:
