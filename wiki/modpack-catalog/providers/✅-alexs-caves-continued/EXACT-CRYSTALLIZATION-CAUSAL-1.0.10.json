@@ -1,0 +1,398 @@
+{
+  "schema_version": 1,
+  "scope": "CRYSTALLIZATION_1010_NATIVE_GAUNTLET_INVENTORY_MAGNETIC_WEAPON_CFG",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "parent_manifest_sha256": "838a766abc352242af9d02fb39437eebc78c7c639e5f3e6622b51cbca0e37898",
+  "full_report_sha256": "8927e0f12b8b20922008a20c8ed000d1f8b2d6516b7f87abd58e339501ca86ba",
+  "resources_sha256": {
+    "enchantment": "b2394e226f7d31843e6d459ef48e21bb955be3d174b3d63eb7ef0a66f0fee3da",
+    "gauntlet": "5f8a2dfe1222c6631122855a11ab011d916bea83d285d6ecd886a177c058c4cb",
+    "crystallization": "a66bc2d0071dac61445130165f3acbd050694a8613113d47293237557167fd05",
+    "ferromagnetic": "d56b9514fe890d6b4eb1e256fd418683e7ec9aeb7032592168671f6851548dbf"
+  },
+  "direct_CRYSTALLIZATION_class_tokens": [
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+    "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem.class",
+    "com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.class"
+  ],
+  "owner_method_counts": {
+    "GalenaGauntletItem.class": 17,
+    "MagneticWeaponEntity.class": 23
+  },
+  "consumer_method_sha256": {
+    "GalenaGauntletItem.use": "14afa5ada8379f8f6706aa4cc713055fb43d5b154465ef5351f3c4f6e8fb8ac1",
+    "GalenaGauntletItem.onUseTick": "fa87f2565ad1df622d3fe09b806541663f1bb787d84caec4e7b5e949e2781523",
+    "GalenaGauntletItem.releaseUsing": "f955156370b46a5319ec67b325a149136682c5e4b23a564c5c8ed639d0b5bbf0",
+    "MagneticWeaponEntity.tick": "b68e9174310dc32ea5ce7bbe627955d18e92db9e1c087d741a63cfb4ea251f41",
+    "MagneticWeaponEntity.hurtEntity": "81ce00054738e5b73fac709f467f51156ff6868c9d0098b7e96cc2b27318c193",
+    "MagneticWeaponEntity.getController": "4fffb40a928b5b2ac381dfd60cddfce43551ae3b064f9f81a5f6f48ab76169bd",
+    "MagneticWeaponEntity.getTarget": "8057ae056c4f46ea485047967eda6a4ab09962ee9d17bb3c9ff8e6796318bb69",
+    "MagneticWeaponEntity.isOwnerWearingGauntlet": "96200d696cef10e398dd9c890aba331336e85d945fb15a66f4dfccf1caad8406",
+    "MagneticWeaponEntity.plopItem": "7bfcbfdfde6853227ff8b62e961f9764c81f31cf963b432de6c9e87ebcaaab76",
+    "MagneticWeaponEntity.addAdditionalSaveData": "78b5dd00489f3dc00c5656a96ee11a3a21ea6734b9145eca13620e929ae02567",
+    "MagneticWeaponEntity.readAdditionalSaveData": "bd4cec33193e919616b454add567a63d4411d79fd8edcc7654bba8d339c337e8"
+  },
+  "consumer_instruction_counts": {
+    "GalenaGauntletItem.use": 47,
+    "GalenaGauntletItem.onUseTick": 120,
+    "GalenaGauntletItem.releaseUsing": 25,
+    "MagneticWeaponEntity.tick": 744,
+    "MagneticWeaponEntity.hurtEntity": 141,
+    "MagneticWeaponEntity.getController": 34,
+    "MagneticWeaponEntity.getTarget": 17,
+    "MagneticWeaponEntity.isOwnerWearingGauntlet": 26,
+    "MagneticWeaponEntity.plopItem": 19,
+    "MagneticWeaponEntity.addAdditionalSaveData": 23,
+    "MagneticWeaponEntity.readAdditionalSaveData": 23
+  },
+  "consumer_direct_branch_counts": {
+    "GalenaGauntletItem.use": 8,
+    "GalenaGauntletItem.onUseTick": 15,
+    "GalenaGauntletItem.releaseUsing": 1,
+    "MagneticWeaponEntity.tick": 82,
+    "MagneticWeaponEntity.hurtEntity": 10,
+    "MagneticWeaponEntity.getController": 5,
+    "MagneticWeaponEntity.getTarget": 2,
+    "MagneticWeaponEntity.isOwnerWearingGauntlet": 5,
+    "MagneticWeaponEntity.plopItem": 2,
+    "MagneticWeaponEntity.addAdditionalSaveData": 2,
+    "MagneticWeaponEntity.readAdditionalSaveData": 2
+  },
+  "consumer_switch_tables": {},
+  "consumer_pivots": {
+    "GalenaGauntletItem.use": [
+      {
+        "offset": 35,
+        "opcode": "getstatic",
+        "operand": "#64",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.CRYSTALLIZATION:Lnet/minecraft/resources/ResourceKey;"
+      },
+      {
+        "offset": 38,
+        "opcode": "invokestatic",
+        "operand": "#70",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+      },
+      {
+        "offset": 58,
+        "opcode": "getstatic",
+        "operand": "#76",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.GALENA_GAUNTLET_CRYSTALLIZATION_ITEMS:Lnet/minecraft/tags/TagKey;"
+      },
+      {
+        "offset": 64,
+        "opcode": "getstatic",
+        "operand": "#82",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.MAGNETIC_ITEMS:Lnet/minecraft/tags/TagKey;"
+      },
+      {
+        "offset": 67,
+        "opcode": "invokevirtual",
+        "operand": "#85",
+        "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/tags/TagKey;)Z"
+      },
+      {
+        "offset": 84,
+        "opcode": "invokestatic",
+        "operand": "#95",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurtAndBreakUsedHand:(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V"
+      },
+      {
+        "offset": 89,
+        "opcode": "invokevirtual",
+        "operand": "#99",
+        "symbol": "Method net/minecraft/world/entity/player/Player.startUsingItem:(Lnet/minecraft/world/InteractionHand;)V"
+      },
+      {
+        "offset": 94,
+        "opcode": "invokestatic",
+        "operand": "#103",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.useConsume:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;"
+      },
+      {
+        "offset": 100,
+        "opcode": "invokestatic",
+        "operand": "#107",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.useFail:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;"
+      }
+    ],
+    "GalenaGauntletItem.onUseTick": [
+      {
+        "offset": 67,
+        "opcode": "getstatic",
+        "operand": "#64",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.CRYSTALLIZATION:Lnet/minecraft/resources/ResourceKey;"
+      },
+      {
+        "offset": 90,
+        "opcode": "getstatic",
+        "operand": "#76",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.GALENA_GAUNTLET_CRYSTALLIZATION_ITEMS:Lnet/minecraft/tags/TagKey;"
+      },
+      {
+        "offset": 96,
+        "opcode": "getstatic",
+        "operand": "#82",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.MAGNETIC_ITEMS:Lnet/minecraft/tags/TagKey;"
+      },
+      {
+        "offset": 112,
+        "opcode": "ldc2_w",
+        "operand": "#188",
+        "symbol": "double 64.0d"
+      },
+      {
+        "offset": 115,
+        "opcode": "ldc2_w",
+        "operand": "#188",
+        "symbol": "double 64.0d"
+      },
+      {
+        "offset": 118,
+        "opcode": "ldc2_w",
+        "operand": "#188",
+        "symbol": "double 64.0d"
+      },
+      {
+        "offset": 121,
+        "opcode": "invokevirtual",
+        "operand": "#190",
+        "symbol": "Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;"
+      },
+      {
+        "offset": 124,
+        "opcode": "invokevirtual",
+        "operand": "#196",
+        "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+      },
+      {
+        "offset": 193,
+        "opcode": "invokevirtual",
+        "operand": "#225",
+        "symbol": "Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;"
+      },
+      {
+        "offset": 201,
+        "opcode": "invokevirtual",
+        "operand": "#229",
+        "symbol": "Method net/minecraft/world/item/ItemStack.setCount:(I)V"
+      },
+      {
+        "offset": 216,
+        "opcode": "invokestatic",
+        "operand": "#240",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.createEntity:(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;"
+      },
+      {
+        "offset": 228,
+        "opcode": "invokevirtual",
+        "operand": "#244",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.setItemStack:(Lnet/minecraft/world/item/ItemStack;)V"
+      },
+      {
+        "offset": 252,
+        "opcode": "invokevirtual",
+        "operand": "#266",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.setControllerUUID:(Ljava/util/UUID;)V"
+      },
+      {
+        "offset": 258,
+        "opcode": "invokevirtual",
+        "operand": "#270",
+        "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+      },
+      {
+        "offset": 261,
+        "opcode": "pop",
+        "operand": "",
+        "symbol": ""
+      }
+    ],
+    "GalenaGauntletItem.releaseUsing": [
+      {
+        "offset": 26,
+        "opcode": "invokestatic",
+        "operand": "#141",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.addCooldown:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;I)V"
+      }
+    ],
+    "MagneticWeaponEntity.tick": [
+      {
+        "offset": 109,
+        "opcode": "invokevirtual",
+        "operand": "#137",
+        "symbol": "Method plopItem:()V"
+      },
+      {
+        "offset": 382,
+        "opcode": "invokevirtual",
+        "operand": "#208",
+        "symbol": "Method hurtEntity:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V"
+      },
+      {
+        "offset": 608,
+        "opcode": "getstatic",
+        "operand": "#256",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.FERROUS_HASTE:Lnet/minecraft/resources/ResourceKey;"
+      },
+      {
+        "offset": 626,
+        "opcode": "getstatic",
+        "operand": "#268",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.FIELD_EXTENSION:Lnet/minecraft/resources/ResourceKey;"
+      },
+      {
+        "offset": 659,
+        "opcode": "invokestatic",
+        "operand": "#276",
+        "symbol": "Method net/minecraft/world/entity/projectile/ProjectileUtil.getHitResultOnViewVector:(Lnet/minecraft/world/entity/Entity;Ljava/util/function/Predicate;D)Lnet/minecraft/world/phys/HitResult;"
+      },
+      {
+        "offset": 771,
+        "opcode": "invokevirtual",
+        "operand": "#208",
+        "symbol": "Method hurtEntity:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V"
+      },
+      {
+        "offset": 1290,
+        "opcode": "invokevirtual",
+        "operand": "#461",
+        "symbol": "Method net/minecraft/world/level/Level.destroyBlock:(Lnet/minecraft/core/BlockPos;Z)Z"
+      },
+      {
+        "offset": 1329,
+        "opcode": "invokevirtual",
+        "operand": "#461",
+        "symbol": "Method net/minecraft/world/level/Level.destroyBlock:(Lnet/minecraft/core/BlockPos;Z)Z"
+      }
+    ],
+    "MagneticWeaponEntity.hurtEntity": [
+      {
+        "offset": 99,
+        "opcode": "invokestatic",
+        "operand": "#658",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+      },
+      {
+        "offset": 115,
+        "opcode": "invokestatic",
+        "operand": "#662",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.postAttackEffects:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;)V"
+      },
+      {
+        "offset": 120,
+        "opcode": "invokevirtual",
+        "operand": "#419",
+        "symbol": "Method damageItem:(I)V"
+      },
+      {
+        "offset": 239,
+        "opcode": "invokevirtual",
+        "operand": "#690",
+        "symbol": "Method net/minecraft/world/item/ItemStack.hurtEnemy:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/player/Player;)Z"
+      }
+    ],
+    "MagneticWeaponEntity.getController": [
+      {
+        "offset": 11,
+        "opcode": "invokevirtual",
+        "operand": "#801",
+        "symbol": "Method getControllerUUID:()Ljava/util/UUID;"
+      }
+    ],
+    "MagneticWeaponEntity.getTarget": [
+      {
+        "offset": 4,
+        "opcode": "getstatic",
+        "operand": "#74",
+        "symbol": "Field TARGET_ID:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+      }
+    ],
+    "MagneticWeaponEntity.isOwnerWearingGauntlet": [
+      {
+        "offset": 21,
+        "opcode": "getstatic",
+        "operand": "#238",
+        "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.GALENA_GAUNTLET:Ljava/util/function/Supplier;"
+      }
+    ],
+    "MagneticWeaponEntity.plopItem": [
+      {
+        "offset": 17,
+        "opcode": "invokestatic",
+        "operand": "#529",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.spawnAtLocation:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"
+      }
+    ],
+    "MagneticWeaponEntity.addAdditionalSaveData": [
+      {
+        "offset": 11,
+        "opcode": "ldc_w",
+        "operand": "#754",
+        "symbol": "String WeaponStack"
+      },
+      {
+        "offset": 40,
+        "opcode": "ldc_w",
+        "operand": "#778",
+        "symbol": "String ControllerUUID"
+      }
+    ],
+    "MagneticWeaponEntity.readAdditionalSaveData": [
+      {
+        "offset": 1,
+        "opcode": "ldc_w",
+        "operand": "#754",
+        "symbol": "String WeaponStack"
+      },
+      {
+        "offset": 32,
+        "opcode": "ldc_w",
+        "operand": "#778",
+        "symbol": "String ControllerUUID"
+      }
+    ]
+  },
+  "own_magnetic_weapon_nbt_overrides": {
+    "addAdditionalSaveData": {
+      "parsed_method_sha256": "78b5dd00489f3dc00c5656a96ee11a3a21ea6734b9145eca13620e929ae02567",
+      "instruction_count": 23,
+      "explicit_keys": [
+        "WeaponStack",
+        "ControllerUUID"
+      ],
+      "inherited_engine_state": "NOT_VERIFIED",
+      "actual_inventory_restoration": "NOT_TESTED"
+    },
+    "readAdditionalSaveData": {
+      "parsed_method_sha256": "bd4cec33193e919616b454add567a63d4411d79fd8edcc7654bba8d339c337e8",
+      "instruction_count": 23,
+      "explicit_keys": [
+        "WeaponStack",
+        "ControllerUUID"
+      ],
+      "inherited_engine_state": "NOT_VERIFIED",
+      "actual_inventory_restoration": "NOT_TESTED"
+    }
+  },
+  "limits": {
+    "enchantment_semantic_root": "NATIVE_GALENA_GAUNTLET_ITEM_ELIGIBILITY_NOT_NEW_CAST",
+    "effective_tag_resolution": "NOT_VERIFIED",
+    "other_mod_tags_and_item_compatibility": "NOT_VERIFIED",
+    "spawn_acceptance_after_setCount0": "NOT_TESTED",
+    "inventory_transaction_rollback": "NOT_VERIFIED",
+    "real_melee_hit_and_mining": "NOT_TESTED",
+    "controller_identity_reload": "NOT_TESTED",
+    "engine_inherited_persistence": "NOT_VERIFIED",
+    "external_mixins_and_datapacks": "NOT_VERIFIED",
+    "interprocedural_exception_cfg": "NOT_RECONSTRUCTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY"
+  }
+}
