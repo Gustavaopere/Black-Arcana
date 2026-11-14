@@ -141,7 +141,15 @@ def canonical_anchors(method: dict, anchors: list[dict]) -> int:
         require(off not in offsets and off in rows, "missing/duplicate parent offset")
         offsets.add(off)
         for field in ("opcode", "operand", "symbol"):
-            require(rows[off][field] == anchor[field],
+            expected = anchor[field]
+            observed = rows[off][field]
+            # javap's invokeinterface operand pretty-printer may vary solely in
+            # spaces after the comma (#241, 1 vs #241,  1); the operand token
+            # sequence, opcode, symbol and exact physical class hash still gate.
+            if field == "operand":
+                expected = " ".join(expected.split())
+                observed = " ".join(observed.split())
+            require(observed == expected,
                     "SHA-exact Dreadbow anchor drift in " + method["header"] +
                     " @" + str(off) + " " + field + ": parent=" +
                     repr(anchor[field]) + " observed=" + repr(rows[off][field]))
