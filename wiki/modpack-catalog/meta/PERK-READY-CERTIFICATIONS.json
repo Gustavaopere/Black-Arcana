@@ -8262,6 +8262,46 @@
           "reason": "SHA-exact 1.0.10 classfile, resource and all old selected anchor reconciliation; 71 native methods across four owner classes, 38 direct branches, verified dinosaur tableswitch and compact manifest with full report SHA256; synthetic tests/CI. Gameplay, runtime damage acceptance, reload persistence, additional mixins and physical QA remain unverified."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/crystallization.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Crystallization is a single-level native Galena Gauntlet magnetic off-hand item eligibility selector, not a new cast, crystallization projectile or damage type. Publisher SHA1/SHA256/size and four physical item/enchantment resources, tags and four classfiles pinned. 40 JVM methods in GalenaGauntletItem/MagneticWeaponEntity; 11 selected consumers with digests, 134 verified if/goto targets, no selected switch. Native activation selects crystallization vs magnetic tag; AABB 64 axes query, copy -> setCount(0) -> createEntity -> setItemStack/setControllerUUID -> addFreshEntity with discarded boolean. Risk of failed spawn inventory conservation is STATIC ONLY; no gameplay loss proven. MagneticWeaponEntity's damage/mining/range belong to provider native shared weapon, not Crystallization. Explicit NBT WeaponStack and ControllerUUID; real reload, client/server, item return, damage acceptance, tags and hooks remain unverified. NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/crystallization.md",
+          "reason": "Exact publisher 1.0.10 JAR SHA1/SHA256/size, ACEnchantmentRegistry.CRYSTALLIZATION, resource JSON level I, tag galena_gauntlet, and physical classfiles/resource SHA256, with old manifest and new causal seal."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/crystallization.md",
+          "reason": "GalenaGauntletItem.use and onUseTick both resolve E>0 and select crystallization vs magnetic offhand tag; onUseTick checks same-controller MagneticWeaponEntity in AABB, copies item and transfers native owner stack into spawned controlled weapon. Eleven native consumers, 134 direct branches, no selected switch, SHA exact fingerprints."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/crystallization.md",
+          "reason": "Publisher single-level E>0 selector, 10 declared crystallization tag entries incl basic ferromagnetic tag, 82 declared base entries (not resolved totals); AABB 64D per axis for native duplicate scan; one requested Gauntlet wear for non-creative and native release cooldown parameter 5. No independent Crystallization damage/range/AoE/velocity."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/crystallization.md",
+          "reason": "Target is eligible other-hand ItemStack checked via ItemStack.is(TagKey); entity getController/getTarget and native magnetic weapon raycast/hurt/mining are separately audited consumers, not independent Crystallization targeting. Actual resolved tag set/targets unknown."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/crystallization.md",
+          "reason": "use requests ACCompat.hurtAndBreakUsedHand(...,1) for noncreative; releaseUsing calls ACCompat.addCooldown(player,stack,5); onUseTick sets source ItemStack count 0 before entity insertion and discards addFreshEntity result. No evidenced refund/atomic rollback or new mana debit."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/crystallization.md",
+          "reason": "MagneticWeaponEntity own NBT handles WeaponStack and ControllerUUID, retains getTarget/plopItem native paths; FIELD_EXTENSION/FERROUS_HASTE are separate enchantments. A failed spawn creates a static risk; no hook proven for modifying inventory, duplication, hit, mining or Mastery. Black Arcana NO_MUTATION/fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/crystallization.md",
+          "reason": "JAR publisher read-only Java 21 javap: original EXACT-CRYSTALLIZATION-1.0.10.json 11 method digests and all old windows reproduced, new EXACT-CRYSTALLIZATION-CAUSAL-1.0.10.json bound to full report SHA256 8927e0f12b8b20922008a20c8ed000d1f8b2d6516b7f87abd58e339501ca86ba; validated direct JVM CFG, synthetic negative tests and index CI. Physical QA, inherited state, other mods and full interprocedural exception CFG unverified."
+        }
+      }
     }
   },
   "providers": {},
