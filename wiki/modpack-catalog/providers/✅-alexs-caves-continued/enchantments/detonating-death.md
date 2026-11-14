@@ -1,6 +1,6 @@
 # Detonating Death — explosão de encerramento da possessão (publisher 1.0.10)
 
-**Estado:** ⚠️ **ficha individual parcial/condicionada** de `alexscaves:detonating_death`. O recurso, o consumidor `TotemOfPossessionItem` e a entidade de explosão `TotemExplosion` já possuem evidência de JAR SHA-exata no contrato existente da ação de possessão. Esta ficha detalha o encantamento e suas implicações para perks; **não promove certificado técnico individual, hook, Stage nem QA física**. `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED` · `NO_MUTATION`.
+**Estado:** ✅ **contrato técnico estático individual certificado**, apenas no escopo publisher `alexscaves` **1.0.10**, `claim_scope=STATIC_TECHNICAL_CATALOG_ONLY` / `evidence_grade=SHA_EXACT_BINARY_BEHAVIOR`. O recurso, o consumidor `TotemOfPossessionItem` e a entidade `TotemExplosion` foram reconciliados contra a versão física, com três corpos JVM completos, branches e selo SHA-exato individual. A certificação **não** homologa hook, modificação de perks, Stage ou QA física. `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `executable_perk_certification=NOT_CERTIFIED` · `NO_MUTATION`.
 
 **Descrição funcional:** quando o Totem of Possession entra no caminho de encerramento por perda/morte do alvo vinculado **ou esgotamento da durabilidade**, o encantamento pode detonar uma explosão na posição da entidade controlada, **se a entidade ainda for resolvida pelo código**. A explosão é atribuída ao usuário, escala seu raio pela **largura** do controlado, produz dano e knockback próprios e solicita `BlockInteraction.KEEP`. Isso é uma ramificação da **mesma ação provider-native de possessão**, não um cast autônomo nem uma nova raiz mágica.
 
@@ -17,7 +17,7 @@
 | Consumer compilado | `server/item/TotemOfPossessionItem.class`; SHA-256 `bad9dd8b88eb621b558d1ede477d2b4ba6a21befdec31b4a0233adcac701773e` |
 | Explosão compilada | `server/entity/util/TotemExplosion.class`; SHA-256 `b798d95de5adf72f517a224331675da78277e0ae0e03435b2c8ac72f799cd815` |
 
-O JAR foi auditado anteriormente e suas provas permanecem em [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](../EXACT-TECHNICAL-CONTRACTS-1.0.10.json), [memorial do contrato](../EXACT-TECHNICAL-CONTRACTS-1.0.10.md) e na ação [Totem of Possession — Possession / Remote Control](../actions/totem-possession-remote-control.md). Esta ficha usa **os mesmos classfiles, offsets e semântica auditados**, sem baixar/decompilar novamente o JAR nem copiar a implementação do provider.
+O contrato histórico permanece em [`EXACT-TECHNICAL-CONTRACTS-1.0.10.json`](../EXACT-TECHNICAL-CONTRACTS-1.0.10.json), [memorial](../EXACT-TECHNICAL-CONTRACTS-1.0.10.md) e na ação [Totem of Possession — Possession / Remote Control](../actions/totem-possession-remote-control.md). A **nova auditoria individual** baixa novamente o JAR publisher, valida seu SHA-1/SHA-256/tamanho, o JSON/tag e os classfiles e reproduz com JDK 21 os três métodos completos (e seus branches) contra as **50 âncoras anteriores**, sem copiar implementação do provider. Ver [sonda](../../../../docs/qa/alexscaves_1010_detonating_death_causal_probe.py), [testes negativos](../../../../docs/qa/alexscaves_1010_detonating_death_causal_probe_test.py) e [selo](../EXACT-DETONATING-DEATH-CAUSAL-1.0.10.json).
 
 A fonte pública adjacente `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` declara **1.1.1**, não a versão instalada. Ela não deve ser usada para atribuir parâmetros ao binário 1.0.10 sem igualdade de bytes comprovada. A documentação abaixo distingue o contrato estático SHA-exato de resultados em gameplay ainda desconhecidos.
 
@@ -33,7 +33,7 @@ A fonte pública adjacente `Codx-org/AlexsCavesContinued@523308608422ab8e31974be
 | `max_cost` | `base=41`, `per_level_above_first=10` |
 | `anvil_cost` | `4` |
 | `slots` | `mainhand` |
-| `exclusive_set` | `alexscaves:astral_transferring` |
+| `exclusive_set` | `['alexscaves:astral_transferring']` (array JSON) |
 
 Os custos de enchanting para o **único nível declarado** são **1–41**. Os coeficientes `per_level_above_first` não autorizam níveis II+; não se transformam em mana, durabilidade por explosão, probabilidade de proc ou alcance.
 
@@ -113,12 +113,32 @@ Uma perk que altere explosão, raio, dano, tipo de alvo, chance, knockback, dura
 
 **Fronteira de arquitetura:** Black Arcana é autoridade de seu próprio casting, hazards, persistência e políticas de mundo. RPG Skill Tree é sibling/provider de **progressão, atributos, Mastery, perks e gates** mediante contratos reais; não assume o runtime do Totem. `minecraft-mod-factory` é uma possível referência de tooling futura, **não** uma autorização para portar métodos ou assets do provider.
 
-## 7. Estados e verificação pendente
+## 7. Reprodução, evidência individual e limites
+
+**Censo JVM SHA-exato reproduzido na CI:** `TotemOfPossessionItem.onUseTick` (**478 instruções, 59 branches diretos**), `getControlledEntity` (**44 instruções, 8 branches diretos**) e `TotemExplosion.explode` (**491 instruções, 33 branches diretos**), somando **1.013 instruções, 100 branches e 50 âncoras históricas reconciliadas**. A sonda exige a ocorrência única do token do encantamento em `onUseTick`, do construtor da explosão, `explode()`, `finalizeExplosion(true)`, e as chamadas próprias de imunidade, dano e knockback. Valida os offsets dos saltos diretos; a integridade dos métodos inteiros é registrada por SHA-256 do parse JVM. Esses fatos **não** são resultado de teste de comportamento em jogo.
+
+**Hashes dos métodos parseados:** `onUseTick=4d366c998c89884f53bc9554f52c6477c5c6bbb8e6aea1bf0f93867dc1b41d39`; `getControlledEntity=eec3e7482771787aa302b22eaefacb0d5321f438493dd5cef79a0ce01578dd83`; `explode=b78bd39e16c2db2228b4027dda4aa6e845854015822916ff9bb26d50abd5d669`. Manifesto pai SHA-256 `3af3efd097dc60f2877211604a49543275f6d2b9ac24d1e9050ed175fe0382ef`; os hashes do relatório e do selo estão vinculados em [`EXACT-DETONATING-DEATH-CAUSAL-1.0.10.json`](../EXACT-DETONATING-DEATH-CAUSAL-1.0.10.json).
+
+**Reprodução local read-only (Java 21):**
+
+```sh
+python3 docs/qa/alexscaves_1010_detonating_death_causal_probe_test.py -v
+python3 docs/qa/alexscaves_1010_detonating_death_causal_probe.py \
+  --jar /caminho/alexscaves-1.0.10-neoforge+1.21.1.jar \
+  --javap /caminho/jdk-21/bin/javap \
+  --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TECHNICAL-CONTRACTS-1.0.10.json' \
+  --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DETONATING-DEATH-CAUSAL-1.0.10.json' \
+  --output /tmp/detonating-death-causal.json
+```
+
+A auditoria constatou **ausência de guarda direta `Level.isClientSide()` antes do callsite de detonação**, sem provar duplicação física, execução remota ou idempotência. A identidade de `DamageSource`, aceitação real de `hurt`, autorizações externas e interações de engine não são promovidas além daquilo que os binários do provider demonstram. Isso preserva o limite de **sem hook mutador seguro**.
+
+## 8. Estados e verificação pendente
 
 **Comprovado estaticamente no publisher 1.0.10:** ID e JSON, item suportado e exclusão, nível/custos, owner classfile e offsets de encerramento, seleção da posição/raio, `KEEP`, criação/finalização, fórmula do dano e filtros nativos descritos no contrato da ação.
 
 **Não verificado fisicamente:** morte natural e combate, esgotamento da durabilidade, entidade morta mas resolvida, entidade descarregada ou em outra dimensão, null e fallback, ambos os lados do runtime, zero/uma/múltiplas detonações, aliados/PvP, proteção de claims, exposições/knockback/dano real, passivos/efeitos de mods, coexistência com Astral, custos/XP/loot, crash/reload e multiplayer.
 
-**Resultado atual:** `resource_and_selected_JVM_evidence=EXACT_EXISTING`; `individual_static_certification=NOT_CERTIFIED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `provider_catalog_closed=false`; `perk_certification=NOT_CERTIFIED`; `NO_MUTATION`.
+**Resultado atual:** `individual_static_certification=STATIC_TECHNICAL_CATALOG_ONLY`; `evidence_grade=SHA_EXACT_BINARY_BEHAVIOR`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `provider_catalog_closed=false`; `executable_perk_certification=NOT_CERTIFIED`; `NO_MUTATION`.
 
-**Contabilidade desta ficha:** **+1 documento individual parcial**, **+0 contratos estáticos novos certificados**, **+0 raízes de magia**, **+0 providers concluídos**. Próximo recurso em ordem alfabética: **`alexscaves:double_stab`**.
+**Contabilidade da nova certificação:** **+0 fichas criadas**, **+1 contrato estático individual certificado**, **+0 raízes de magia**, **+0 providers integralmente concluídos**. Próxima ficha parcial alfabética: **`alexscaves:double_stab`**.

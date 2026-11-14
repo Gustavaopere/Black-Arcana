@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 40/51.**
+**Fichas catalogadas (somente fichas detectadas): 41/51.**
 
-**Barra das fichas catalogadas:** `███████████████░░░░░ 78.4%`
+**Barra das fichas catalogadas:** `████████████████░░░░ 80.4%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 40/51.**
+**Homologadas para perks (somente fichas detectadas): 41/51.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 78.4%`
+**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 80.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -30,7 +30,7 @@
 | ✅ | Crystallization | [ficha/crystallization.md](crystallization.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dark Nock | [ficha/dark-nock.md](dark-nock.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dazing Sweep | [ficha/dazing-sweep.md](dazing-sweep.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Detonating Death | [ficha/detonating-death.md](detonating-death.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Detonating Death | [ficha/detonating-death.md](detonating-death.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Double Stab | [ficha/double-stab.md](double-stab.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Energy Efficiency | [ficha/energy-efficiency.md](energy-efficiency.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Enveloping Bubble | [ficha/enveloping-bubble.md](enveloping-bubble.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

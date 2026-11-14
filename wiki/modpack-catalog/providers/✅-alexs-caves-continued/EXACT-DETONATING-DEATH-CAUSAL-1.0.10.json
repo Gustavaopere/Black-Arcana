@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "parent_manifest_sha256": "3af3efd097dc60f2877211604a49543275f6d2b9ac24d1e9050ed175fe0382ef",
+  "full_report_sha256": "8a90445bd7e3b32569c3d81896970df064f2cbf217b9ca9beb9b20233545db9b",
+  "class_sha256": {
+    "com/github/alexmodguy/alexscaves/server/item/TotemOfPossessionItem.class": "bad9dd8b88eb621b558d1ede477d2b4ba6a21befdec31b4a0233adcac701773e",
+    "com/github/alexmodguy/alexscaves/server/entity/util/TotemExplosion.class": "b798d95de5adf72f517a224331675da78277e0ae0e03435b2c8ac72f799cd815"
+  },
+  "resource_sha256": {
+    "data/alexscaves/enchantment/detonating_death.json": "8402461954ff5b249ae675b51d7dcc23d933b2b06c494b327bf608371298646e",
+    "data/alexscaves/tags/item/enchantable/totem_of_possession.json": "185a085206993877d91ca6d8c697273c14f945b1d55cb6179e3236c138c357cf"
+  },
+  "compiled_token_owners": [
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+    "com/github/alexmodguy/alexscaves/server/item/TotemOfPossessionItem.class"
+  ],
+  "native_method_sha256": {
+    "com/github/alexmodguy/alexscaves/server/item/TotemOfPossessionItem.class": {
+      "onUseTick": "4d366c998c89884f53bc9554f52c6477c5c6bbb8e6aea1bf0f93867dc1b41d39",
+      "getControlledEntity": "eec3e7482771787aa302b22eaefacb0d5321f438493dd5cef79a0ce01578dd83"
+    },
+    "com/github/alexmodguy/alexscaves/server/entity/util/TotemExplosion.class": {
+      "explode": "b78bd39e16c2db2228b4027dda4aa6e845854015822916ff9bb26d50abd5d669"
+    }
+  },
+  "native_instruction_counts": {
+    "com/github/alexmodguy/alexscaves/server/item/TotemOfPossessionItem.class": {
+      "onUseTick": 478,
+      "getControlledEntity": 44
+    },
+    "com/github/alexmodguy/alexscaves/server/entity/util/TotemExplosion.class": {
+      "explode": 491
+    }
+  },
+  "native_direct_branch_counts": {
+    "com/github/alexmodguy/alexscaves/server/item/TotemOfPossessionItem.class": {
+      "onUseTick": 59,
+      "getControlledEntity": 8
+    },
+    "com/github/alexmodguy/alexscaves/server/entity/util/TotemExplosion.class": {
+      "explode": 33
+    }
+  },
+  "limits": {
+    "single_native_possession_root": true,
+    "new_spell_root": false,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "individual_static_certificate": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "world_claims_pvp": "NOT_VERIFIED",
+    "engine_damage_acceptance": "NOT_TESTED",
+    "side_effect_and_authority": "EXTERNAL_ENGINE_AND_LIVE_SETTLEMENT_NOT_VERIFIED",
+    "detonation_branch_no_direct_side_guard": true
+  }
+}
