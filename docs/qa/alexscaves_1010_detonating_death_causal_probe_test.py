@@ -34,7 +34,7 @@ class DetonatingDeathProbeTests(unittest.TestCase):
             "description": {"translate": "enchantment.alexscaves.detonating_death"},
             "supported_items": "#alexscaves:enchantable/totem_of_possession",
             "weight": 2, "max_level": 1, "anvil_cost": 4, "slots": ["mainhand"],
-            "exclusive_set": "alexscaves:astral_transferring",
+            "exclusive_set": ["alexscaves:astral_transferring"],
             "min_cost": {"base": 1, "per_level_above_first": 11},
             "max_cost": {"base": 41, "per_level_above_first": 10}
         }
