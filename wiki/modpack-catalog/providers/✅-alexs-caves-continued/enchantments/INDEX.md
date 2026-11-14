@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 37/51.**
+**Fichas catalogadas (somente fichas detectadas): 38/51.**
 
-**Barra das fichas catalogadas:** `██████████████░░░░░░ 72.5%`
+**Barra das fichas catalogadas:** `██████████████░░░░░░ 74.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 37/51.**
+**Homologadas para perks (somente fichas detectadas): 38/51.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 72.5%`
+**Barra dos contratos técnicos estáticos:** `██████████████░░░░░░ 74.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -27,7 +27,7 @@
 | ✅ | Bouncy Ball | [ficha/bouncy-ball.md](bouncy-ball.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Charting Call | [ficha/charting-call.md](charting-call.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Chomping Spirit | [ficha/chomping-spirit.md](chomping-spirit.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Crystallization | [ficha/crystallization.md](crystallization.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Crystallization | [ficha/crystallization.md](crystallization.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Dark Nock | [ficha/dark-nock.md](dark-nock.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Dazing Sweep | [ficha/dazing-sweep.md](dazing-sweep.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Detonating Death | [ficha/detonating-death.md](detonating-death.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
