@@ -9,8 +9,8 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=38/51
-individual_partial_enchantment_dossiers=13/51
+individual_full_enchantment_dossiers=39/51
+individual_partial_enchantment_dossiers=12/51
 individual_existing_enchantment_dossiers=51/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
@@ -19,13 +19,13 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `██████████████░░░░░░ 74.5% (38/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `███████████████░░░░░ 76.5% (39/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `████████████████████ 100.0% (51/51)`; destes, dezessete permanecem parciais, enquanto Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `████████████████████ 100.0% (51/51)`; destes, doze permanecem parciais, enquanto Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Dark Nock, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection possuem contratos estáticos individuais certificados.
 
 **Astral Transferring (✅ contrato estático):** [ficha individual](enchantments/astral-transferring.md), [selo](EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.json) e [prova](EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.md) separam transferência no servidor, custo cliente, laço/saúde/UUID e marcadores. Sem novo cast, hook ou QA física homologados.
 
-**Bouncing Bolt (✅ contrato estático):** [ficha individual](enchantments/bouncing-bolt.md) e [selo causal](EXACT-BOUNCING-BOLT-CAUSAL-1.0.10.json) fixam flags, filtro/target, novo bolt, persistência própria e boundaries de Mastery; sem hook, QA física ou novo cast. `NO_MUTATION`.
+**Dark Nock (✅ contrato estático):** [ficha individual](enchantments/dark-nock.md), [selo causal](EXACT-DARK-NOCK-CAUSAL-1.0.10.json) e [workflow reprodutível](../../../../.github/workflows/alexscaves-1010-dark-nock-causal.yml) fixam a versão física e o censo de dois classfiles tokenizados, 13 métodos nativos, 938 instruções e 99 branches diretos. `M=40−8L` altera a carga/potência do Dreadbow com consequências indiretas sobre disparos; não é nova magia, targeting próprio, bônus de dano ou hook mutador. `NO_MUTATION` / `NOT_TESTED`.\n\n**Bouncing Bolt (✅ contrato estático):** [ficha individual](enchantments/bouncing-bolt.md) e [selo causal](EXACT-BOUNCING-BOLT-CAUSAL-1.0.10.json) fixam flags, filtro/target, novo bolt, persistência própria e boundaries de Mastery; sem hook, QA física ou novo cast. `NO_MUTATION`.
 
 **Bonking (✅ contrato estático):** [ficha individual](enchantments/bonking.md), [selo](EXACT-BONKING-CONTRACT-1.0.10.json) e [prova](EXACT-BONKING-CONTRACT-1.0.10.md) documentam ator direto/mainhand, RNG e criação temporária sem spawn; callback/loot/coleta/recibo ficam separados. Sem novo cast, hook ou QA física homologados.
 
@@ -105,7 +105,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:charting_call` | [Contrato estático individual](enchantments/charting-call.md) · [JAR 1.0.10 selado](EXACT-CHARTING-CALL-1.0.10.json) · [reconciliação causal JVM](EXACT-CHARTING-CALL-CAUSAL-1.0.10.json) · [ação Magic Conch](actions/magic-conch-summon-deep-ones.md) · zero-bound RNG bloqueia mutação; QA física pendente |
 | ✅ | `alexscaves:chomping_spirit` | [Contrato estático individual](enchantments/chomping-spirit.md) · [JAR 1.0.10 / consumidor](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) · [selo causal JVM](EXACT-CHOMPING-SPIRIT-CAUSAL-1.0.10.json) · [dano Spirit Dinosaur](damage-types/spirit-dinosaur.md) · sem hook mutador nem QA física |
 | ✅ | `alexscaves:crystallization` | [Contrato estático individual](enchantments/crystallization.md) · [publisher 1.0.10 e consumidor](EXACT-CRYSTALLIZATION-1.0.10.json) · [CFG e NBT causal SHA-exatos](EXACT-CRYSTALLIZATION-CAUSAL-1.0.10.json) · `NO_MUTATION`; nenhuma QA física |
-| ⚠️ | `alexscaves:dark_nock` | [Ficha técnica parcial](enchantments/dark-nock.md) · [contrato JAR 1.0.10 já selado](EXACT-DREADBOW-CONTRACTS-1.0.10.json) · [equipamento Dreadbow](equipment/dreadbow.md) |
+| ✅ | `alexscaves:dark_nock` | [Ficha técnica estática certificada](enchantments/dark-nock.md) · [selo causal SHA-exato](EXACT-DARK-NOCK-CAUSAL-1.0.10.json) · [contrato nativo Dreadbow](EXACT-DREADBOW-CONTRACTS-1.0.10.json); `NO_MUTATION`, sem hook ou QA física |
 | ⚠️ | `alexscaves:dazing_sweep` | [Ficha técnica parcial](enchantments/dazing-sweep.md) · [consumer e recurso SHA-exatos já selados](EXACT-EFFECT-CONTRACTS-1.0.10.json) · [efeito Stunned](effects/stunned.md) |
 | ⚠️ | `alexscaves:detonating_death` | [Ficha técnica parcial](enchantments/detonating-death.md) · [JAR 1.0.10 e explosão já selados](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) · [ação Totem of Possession](actions/totem-possession-remote-control.md) |
 | ⚠️ | `alexscaves:double_stab` | [Ficha técnica parcial](enchantments/double-stab.md) · [JAR 1.0.10 e quantidade de dagas](EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) · [equipamento Desolate Dagger](equipment/desolate-dagger.md) |
@@ -159,4 +159,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-**Todas as 51 identidades de encantamento publisher possuem agora ficha individual:** 38 contratos técnicos estáticos certificados e 13 fichas ⚠️ parciais. O próximo trabalho é aprofundar os contratos ainda parciais, começando por `alexscaves:dark_nock`, sem refazer os já certificados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem **66/81 contratos estáticos entre fichas observadas**, incluindo 51 fichas de encantamentos. Esses 81 objetos documentais observados não equivalem ao universo integral do provider.
+**Todas as 51 identidades de encantamento publisher possuem agora ficha individual:** 38 contratos técnicos estáticos certificados e 13 fichas ⚠️ parciais. O próximo trabalho é aprofundar os contratos ainda parciais, começando por `alexscaves:dazing_sweep`, sem refazer os já certificados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem **67/81 contratos estáticos entre fichas observadas**, incluindo 51 fichas de encantamentos. Esses 81 objetos documentais observados não equivalem ao universo integral do provider.

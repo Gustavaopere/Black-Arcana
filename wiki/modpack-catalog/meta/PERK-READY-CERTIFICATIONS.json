@@ -8302,6 +8302,46 @@
           "reason": "JAR publisher read-only Java 21 javap: original EXACT-CRYSTALLIZATION-1.0.10.json 11 method digests and all old windows reproduced, new EXACT-CRYSTALLIZATION-CAUSAL-1.0.10.json bound to full report SHA256 8927e0f12b8b20922008a20c8ed000d1f8b2d6516b7f87abd58e339501ca86ba; validated direct JVM CFG, synthetic negative tests and index CI. Physical QA, inherited state, other mods and full interprocedural exception CFG unverified."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/dark-nock.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Dark Nock decreases the native Dreadbow charge denominator M=40-8L at levels I-III; it is not a separate cast, damage type or projectile. Installed publisher 1.0.10 SHA-exact JAR, Dreadbow class/resource, 2 direct DARK_NOCK token owners, 13 native method digests, 938 JVM instructions/99 direct branches, full report SHA256 f19e0377f1388f81f34aea4514800d3be4a602ae07ad46dba4e8d47579f55f28 verified read-only. Shared Dreadbow/DarkArrow resolve targeting, cost, damage, spawn. Relentless precedence and invalid-level denominator are distinguished. Hooks, actual gameplay, PvP, client tag trust and physical QA remain NOT_VERIFIED/NOT_TESTED. NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/dark-nock.md",
+          "reason": "SHA exact publisher 1.0.10, Dark Nock resource and DreadbowItem class, ACEnchantmentRegistry, level III, weight 2, eligibility tag and enchantment costs."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/dark-nock.md",
+          "reason": "13 native DreadbowItem consumers and direct branches checked. getMaxLoadTime selects Relentless M=5 else 40-8L; getPowerForTime and getPullingAmount use M; client visual tags and releaseSeparated."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/dark-nock.md",
+          "reason": "M=40/32/24/16 ticks, first nominal p>0.1 gate at t=6/5/4/3. p=((t/M)^2+2t/M)/3 upper-clamped at 1. Other range/area/damage/arrow-count parameters belong to native Dreadbow and arrows."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/dark-nock.md",
+          "reason": "No independent targeting or homing; native Dreadbow release uses view-vector raycasts and DarkArrow resolves hits. World safety and real targets remain untested."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/dark-nock.md",
+          "reason": "Declared level costs min 1/11/21 and max 41/51/61, anvil 4. Usage durability/ammunition native to Dreadbow; no independently demonstrated mana or cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/dark-nock.md",
+          "reason": "No verified mutation hook for M, projectiles, damage, PvP or Mastery. Black Arcana runtime magic and RPG Skill Tree progression stay separate, NO_MUTATION/fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/dark-nock.md",
+          "reason": "13 method SHA digests, 938 instructions, 99 direct branches and 2 compiled direct token owners captured on exact JAR; report SHA256 f19e0377f1388f81f34aea4514800d3be4a602ae07ad46dba4e8d47579f55f28, previous Dreadbow manifest SHA256 88cf1e305688ed82cd08559ec9bcb35bc1745116be88ffc435593184e8e07e89, 7 synthetic negative tests, CI reproducibility. Physical QA NOT_TESTED."
+        }
+      }
     }
   },
   "providers": {},
