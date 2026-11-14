@@ -227,7 +227,7 @@ def audit(jar: Path, manifest: Path, javap_bin: str):
             "mutating_hook": "NOT_VERIFIED",
             "physical_qa": "NOT_TESTED",
             "mutation": "NO_MUTATION",
-            "individual_static_certificate": "PENDING_SEAL_AND_REVIEW",
+            "individual_static_certificate": "STATIC_TECHNICAL_CATALOG_ONLY",
             "world_claims_pvp": "NOT_VERIFIED",
             "engine_damage_acceptance": "NOT_TESTED",
             "side_effect_and_authority": "EXTERNAL_ENGINE_AND_LIVE_SETTLEMENT_NOT_VERIFIED",
@@ -241,10 +241,35 @@ def main():
     p.add_argument("--manifest", type=Path, required=True)
     p.add_argument("--javap", required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--seal", type=Path)
     args = p.parse_args()
     report = audit(args.jar, args.manifest, args.javap)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     data = (json.dumps(report, ensure_ascii=False, sort_keys=True, indent=2) + "\n")
+    if args.seal:
+        sealed = json.loads(args.seal.read_text(encoding="utf8"),
+                            object_pairs_hook=unique_pairs)
+        expected = {
+            "schema_version": 1,
+            "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+            "artifact": report["artifact"],
+            "parent_manifest_sha256": report["parent_manifest_sha256"],
+            "full_report_sha256": sha(data.encode("utf8")),
+            "class_sha256": report["class_sha256"],
+            "resource_sha256": report["resource_sha256"],
+            "compiled_token_owners": report["compiled_token_owners"],
+            "native_method_sha256": {
+                owner: {name: entry["parsed_sha256"] for name, entry in methods.items()}
+                for owner, methods in report["native"].items()},
+            "native_instruction_counts": {
+                owner: {name: entry["instructions"] for name, entry in methods.items()}
+                for owner, methods in report["native"].items()},
+            "native_direct_branch_counts": {
+                owner: {name: entry["direct_branches"] for name, entry in methods.items()}
+                for owner, methods in report["native"].items()},
+            "limits": report["limits"],
+        }
+        require(sealed == expected, "individual Detonating Death full report seal drift")
     args.output.write_text(data, encoding="utf8")
     print("DETONATING_DEATH_1010_CAUSAL_PROBE")
     print("compiled_token_owners=" + json.dumps(report["compiled_token_owners"]))
@@ -260,7 +285,7 @@ def main():
         owner: {name: m["invocations"] for name, m in methods.items()}
         for owner, methods in report["native"].items()}, sort_keys=True))
     print("report_sha256=" + sha(data.encode("utf8")))
-    print("STATIC_PROBE_ONLY PENDING_CERTIFICATION NO_MUTATION NOT_TESTED")
+    print("STATIC_ONLY NO_MUTATION NOT_TESTED")
 
 if __name__ == "__main__":
     main()
