@@ -150,7 +150,7 @@ def exact_anchors(method, old, owner):
     """Reconcile *all* previously sealed selected JVM anchors for this method."""
     rows={x["offset"]:x for x in strict_method(method)}
     require(old["descriptor"]==method["descriptor"] and
-            old["name"]==name_of(method), "prior method descriptor drift")
+            old["name"]==native_name(method,owner), "prior method descriptor drift")
     anchors=old["anchors"]
     require(1<=len(anchors)<=280, "unbounded parent selected anchors")
     require(len(anchors)==len({a["offset"] for a in anchors}),
