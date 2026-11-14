@@ -127,6 +127,17 @@ def require(ok, reason):
 def digest(b: bytes):
     return hashlib.sha256(b).hexdigest()
 
+def native_name(method, owner):
+    """Normalize javap source headings to JVM constructor/initializer names."""
+    header=method["header"].strip()
+    name=name_of(method)
+    short=owner.rsplit("/",1)[-1].removesuffix(".class")
+    if name==short or name==short.rsplit("$",1)[-1]:
+        return "<init>"
+    if header.startswith("static {}") or header.startswith("static {};"):
+        return "<clinit>"
+    return name
+
 def selected(m):
     rows=strict_method(m)
     result=[{k:x[k] for k in ("offset","opcode","operand","symbol")}
@@ -254,7 +265,7 @@ def analyze(jar: Path, parent_path: Path, javap_bin: str):
         raws[owner]=raw
         rosters.append({"owner":owner,"class_sha256":previous[owner]["sha256"],
                         "declared_method_count":len(rows),"methods":rows})
-        bysig={(name_of(m),m["descriptor"]):m for m in methods}
+        bysig={(native_name(m,owner),m["descriptor"]):m for m in methods}
         for sealed in previous[owner]["methods"]:
             name,desc=sealed["name"],sealed["descriptor"]
             require((name,desc) in bysig,
