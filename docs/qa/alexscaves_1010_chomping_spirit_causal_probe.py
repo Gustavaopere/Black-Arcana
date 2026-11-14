@@ -157,9 +157,15 @@ def exact_anchors(method, old, owner):
             "duplicate parent JVM anchor")
     for anchor in anchors:
         current=rows.get(anchor["offset"])
+        # The older sealed probe normalizes javap's invokeinterface
+        # "#83,  1" spacing differently from the shared parser. Preserve
+        # opcode, offsets and semantic operand/symbol tokens, not whitespace.
+        normalize=lambda value: " ".join(str(value).split())
         require(current is not None and
-                all(current[key]==anchor[key] for key in
-                    ("offset","opcode","operand","symbol")),
+                current["offset"]==anchor["offset"] and
+                current["opcode"]==anchor["opcode"] and
+                normalize(current["operand"])==normalize(anchor["operand"]) and
+                normalize(current["symbol"])==normalize(anchor["symbol"]),
                 "parent SHA-exact selected JVM anchor drift "
                 +owner+"."+name_of(method)+"@"+str(anchor["offset"]))
     return len(anchors)
