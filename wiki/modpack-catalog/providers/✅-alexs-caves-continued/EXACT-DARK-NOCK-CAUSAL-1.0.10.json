@@ -1,0 +1,96 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "direct_DARK_NOCK_class_token_owners": [
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+    "com/github/alexmodguy/alexscaves/server/item/DreadbowItem.class"
+  ],
+  "direct_branch_counts": {
+    "acInventoryTick": 23,
+    "getLerpedUseTime": 4,
+    "getMaxLoadTime": 1,
+    "getPerfectShotTicks": 2,
+    "getPowerForTime": 1,
+    "getPullingAmount": 0,
+    "getUseDuration": 0,
+    "getUseTime": 2,
+    "onUseTick": 17,
+    "releaseUsing": 45,
+    "setPerfectShotTicks": 0,
+    "setUseTime": 0,
+    "use": 4
+  },
+  "full_report_sha256": "f19e0377f1388f81f34aea4514800d3be4a602ae07ad46dba4e8d47579f55f28",
+  "instruction_counts": {
+    "acInventoryTick": 192,
+    "getLerpedUseTime": 29,
+    "getMaxLoadTime": 14,
+    "getPerfectShotTicks": 11,
+    "getPowerForTime": 25,
+    "getPullingAmount": 10,
+    "getUseDuration": 2,
+    "getUseTime": 11,
+    "onUseTick": 175,
+    "releaseUsing": 391,
+    "setPerfectShotTicks": 11,
+    "setUseTime": 16,
+    "use": 51
+  },
+  "item_class_sha256": "b9cd6e843f923877775e38b89214e8649c10d4d5be704ed9dd377900439d44ae",
+  "limits": {
+    "data_pack_actual_config": "NOT_VERIFIED",
+    "invalid_enchantment_levels": "UNSAFE_UNCERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "physical_qa": "NOT_TESTED",
+    "projectile_spawn_acceptance": "NOT_TESTED",
+    "pvp_claims_mastery": "NOT_VERIFIED",
+    "runtime_server_charge_validation": "NOT_VERIFIED",
+    "whole_provider_catalog_closed": false
+  },
+  "method_sha256": {
+    "acInventoryTick": "b1bdfdd322c239775bf111e06f9380fe9d4d513e69839e15409bdccbe20106e9",
+    "getLerpedUseTime": "5e3038f2eb1123ddd69c5782ebb0bbfcae693d9d6bf7a27dd38821e49fb092dd",
+    "getMaxLoadTime": "62674833b5db1e6939b4779053703a3900deca71f59e2eb2f5afe7f947a6d3f5",
+    "getPerfectShotTicks": "e8f26b6172745c89197a435872793db442f876eb895e72dbc6cf5d9a9f00de62",
+    "getPowerForTime": "fed541b6d042d2c442c2c64e7cc3625a6bb91210312eae1b08dba8ef83d5c817",
+    "getPullingAmount": "aecaa4ae66a90205c9ba6fe82da0e114c117ee3462bd4c0f6fdc46f02882bec7",
+    "getUseDuration": "55f74641c0c393a7598d68f54a5ce518a7ba34fa4cc4e27282bec25c62bf10ea",
+    "getUseTime": "816c51005ee308ac43a3158bea458cdff7a50a2ffa0cda42238723744e61f981",
+    "onUseTick": "377ba9047604044c07dcffcc1ada989e83c4074b0140481588e958dc9fb5db18",
+    "releaseUsing": "5d4e8c88df5b5c0442c67f6d7f81e0a674a223d87e6d7b1b75894e34fe4742aa",
+    "setPerfectShotTicks": "06b28ca80bdf5e03f6439e32c08627e46986d24ff14db5e086739b232efec1ab",
+    "setUseTime": "5af580175be7c314a0243a247fd524a7fe4122dd857ef12ace308f59034a709d",
+    "use": "0adf9e07e1711c4f57c4828a9e82b52f88b12b3d540beff92123251beba8276c"
+  },
+  "nominal_unmodified_charge": [
+    {
+      "first_nominal_valid_release_tick": 6,
+      "level": 0,
+      "max_load_ticks": 40
+    },
+    {
+      "first_nominal_valid_release_tick": 5,
+      "level": 1,
+      "max_load_ticks": 32
+    },
+    {
+      "first_nominal_valid_release_tick": 4,
+      "level": 2,
+      "max_load_ticks": 24
+    },
+    {
+      "first_nominal_valid_release_tick": 3,
+      "level": 3,
+      "max_load_ticks": 16
+    }
+  ],
+  "parent_manifest_sha256": "88cf1e305688ed82cd08559ec9bcb35bc1745116be88ffc435593184e8e07e89",
+  "report_claim_scope": "INDIVIDUAL_STATIC_DARK_NOCK_DISCOVERY_ONLY",
+  "resource_sha256": "569cb5857db11189b2eb8a1163d53a440587ab02e2f14bc8296aaaf91dcd8033",
+  "schema_version": 1
+}
