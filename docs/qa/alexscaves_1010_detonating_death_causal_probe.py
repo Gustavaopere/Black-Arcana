@@ -83,7 +83,7 @@ def verify_config(metadata):
     require(metadata.get("weight") == 2 and metadata.get("max_level") == 1
             and metadata.get("anvil_cost") == 4
             and metadata.get("slots") == ["mainhand"]
-            and metadata.get("exclusive_set") == "alexscaves:astral_transferring",
+            and metadata.get("exclusive_set") == ["alexscaves:astral_transferring"],
             "metadata settings drift: " + json.dumps(metadata, sort_keys=True))
     require(metadata.get("min_cost") ==
             {"base": 1, "per_level_above_first": 11}, "min-cost drift")
