@@ -19,6 +19,9 @@ from alexscaves_1010_damage_consumer_probe import (
     SHA1, SHA256, SIZE, sha_file, javap, parse_methods
 )
 from alexscaves_1010_dreadbow_decision_probe import method_digest
+from alexscaves_1010_bouncy_ball_causal_probe import (
+    method_switch_tables, branch_edges,
+)
 
 BASE = "com/github/alexmodguy/alexscaves/"
 CLUB = BASE + "server/item/PrimitiveClubItem.class"
@@ -140,18 +143,17 @@ def check_pivots(method, expected):
                 token in (row["operand"] + " " + row["symbol"]),
                 "native Dazing Sweep pivot drift: " + method["header"] + " @" + str(offset))
 
-def check_direct_cfg(method):
-    by = {r["offset"] for r in method["instructions"]}
-    branches = [r for r in method["instructions"]
-                if r["opcode"].startswith("if") or r["opcode"] in ("goto", "goto_w")]
-    for r in branches:
-        require(r["operand"].isdecimal() and int(r["operand"]) in by,
-                "bad direct branch destination " + method["header"] +
-                " @" + str(r["offset"]))
-    # Switch tables require a dedicated parser; fail-closed if present.
-    require(all(r["opcode"] not in ("tableswitch", "lookupswitch")
-                for r in method["instructions"]), "unhandled JVM switch")
-    return len(branches)
+def check_direct_cfg(method, javap_text=None):
+    """Reconstruct native if/goto and every javap switch case/default edge."""
+    if javap_text is None:
+        require(not any(r["opcode"] in ("tableswitch", "lookupswitch")
+                        for r in method["instructions"]),
+                "unhandled JVM switch without method disassembly")
+        switches = []
+    else:
+        switches = method_switch_tables(method, javap_text)
+    edges = branch_edges(method, switches)
+    return len(edges), switches
 
 def select_declared(methods, name, descriptor):
     matches = [m for m in methods
@@ -209,7 +211,8 @@ def audit(jar: Path, manifest_path: Path, javap_bin: str):
                 "compiled Dazing Sweep predicate bootstrap constant absent")
     native = {}
     for owner, names in METHODS.items():
-        compiled = parse_methods(javap(javap_bin, jar, owner[:-6].replace("/", ".")))
+        disassembly = javap(javap_bin, jar, owner[:-6].replace("/", "."))
+        compiled = parse_methods(disassembly)
         from_parent = prior["classes"][owner]["methods"]
         covered = {}
         for name in names:
@@ -219,12 +222,13 @@ def audit(jar: Path, manifest_path: Path, javap_bin: str):
             method = select_declared(compiled, name, old["descriptor"])
             count = match_previous(method, old["anchors"])
             check_pivots(method, PIVOTS.get((owner, name), {}))
-            branch_count = check_direct_cfg(method)
+            branch_count, switches = check_direct_cfg(method, disassembly)
             covered[name] = {
                 "descriptor": old["descriptor"],
                 "full_method_parsed_sha256": method_digest(method),
                 "instruction_count": count,
                 "direct_branch_count": branch_count,
+                "validated_switch_tables": switches,
                 "prior_anchor_count": len(old["anchors"]),
             }
         native[owner] = covered
@@ -303,6 +307,10 @@ def main():
                 for owner, methods in obj["consumer_methods"].items()},
             "consumer_direct_branch_counts": {
                 owner: {name: data["direct_branch_count"]
+                        for name, data in methods.items()}
+                for owner, methods in obj["consumer_methods"].items()},
+            "consumer_validated_switch_tables": {
+                owner: {name: data["validated_switch_tables"]
                         for name, data in methods.items()}
                 for owner, methods in obj["consumer_methods"].items()},
             "nominal_geometry": obj["nominal_geometry"],
