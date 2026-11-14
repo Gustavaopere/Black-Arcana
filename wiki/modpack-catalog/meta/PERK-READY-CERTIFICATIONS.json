@@ -8222,6 +8222,46 @@
           "reason": "Read-only Java 21 javap and SHA-exact publisher release; prior sealed Charting Call manifest, causal 81-method/74-branch manifest, explicit three RNG sequences, synthetic fail-closed tests, index checks and CI. Physical failure/QA remains NOT_TESTED."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/chomping-spirit.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Chomping Spirit modifies the existing Extinction Spear melee Spirit Dinosaur/TREMORSAURUS damage consumer, not a new cast. The 1.0.10 producer transfers enchantment level E to a synchronized native entity; damage request is float(3+2E), with published max level II. Four owner classes/71 declared methods, five principal native consumers/38 direct branches and one four-target JVM switch were reconciled against SHA-exact prior Spirit Dinosaur contracts and a compact causal seal bound to the full deterministic report hash. Native entity own NBT persists UsingPlayerUUID and DinosaurType but not explicit enchantment level or target ID; inherited reload behavior unknown. No independent additional hit, mana, AoE, hook or Mastery proc. NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/chomping-spirit.md",
+          "reason": "Exact publisher JAR 1.0.10 SHA1/SHA256/size, byte-identical enchantment JSON, extinction spear item tag, registered CHOMPING_SPIRIT resource, and four classfile SHA256s."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/chomping-spirit.md",
+          "reason": "ExtinctionSpearItem.acHurtEnemy installs a TREMORSAURUS spirit on native melee impact, sets owner UUID, enchant level, target entity ID and delay; native tick dispatches to tickTremorsaurus. Full 71-method owner census and 38 direct JVM branches validated against exact prior anchors."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/chomping-spirit.md",
+          "reason": "Publisher max level II and acquisition metadata. Native damage request is float(3+2E), 3/5/7 at E=0/I/II; initial 5-tick delay, width+3.5D distance threshold, 5F ability progress and bounded native fading/duration. No additive AoE, projectile count or spell mana."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/chomping-spirit.md",
+          "reason": "Melee producer carries victim entity ID and attacker UUID, requiring Player resolution during spirit tick; tickTremorsaurus uses getAttackingEntity and distanceTo(target) < target.getBbWidth()+3.5D, not a general AoE or new raycast."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/chomping-spirit.md",
+          "reason": "ExtinctionSpearItem delegates its existing melee cost to SpearItem.acHurtEnemy/hurtAndBreak after attempted entity insertion, with addFreshEntity boolean discarded; no separate Chomping Spirit resource/cooldown. Enchantment table/anvil costs are acquisition metadata."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/chomping-spirit.md",
+          "reason": "Spirit synchronized state vs own NBT keys UsingPlayerUUID and DinosaurType; enchantment level and victim ID not saved by own NBT overrides. Throwing spear uses separate native ACDamageTypes callsite, not an extra Chomping hit. Avoid owner, XP/Mastery, per-attempt and double-hit mutation; hook NOT_VERIFIED."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/chomping-spirit.md",
+          "reason": "SHA-exact 1.0.10 classfile, resource and all old selected anchor reconciliation; 71 native methods across four owner classes, 38 direct branches, verified dinosaur tableswitch and compact manifest with full report SHA256; synthetic tests/CI. Gameplay, runtime damage acceptance, reload persistence, additional mixins and physical QA remain unverified."
+        }
+      }
     }
   },
   "providers": {},
