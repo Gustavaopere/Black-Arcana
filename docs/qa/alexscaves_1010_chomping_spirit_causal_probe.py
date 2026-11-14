@@ -385,6 +385,41 @@ def analyze(jar: Path, parent_path: Path, javap_bin: str):
         },
     }
 
+
+def compact_seal(report):
+    """Durable digest-bound summary; full report is reproducible CI evidence.
+
+    This compact seal preserves exact identities, per-consumer method hashes,
+    branch populations and NBT boundaries. SHA256 also binds every unabridged
+    symbolic ref, owner method roster, branch destination and resource byte
+    from the full deterministic read-only report.
+    """
+    core=report["core_consumers"]
+    def key(entry):
+        return entry["owner"].rsplit("/",1)[-1].removesuffix(".class")+"."+entry["name"]
+    tick=next(x for x in core
+              if x["owner"]==SPIRIT and x["name"]=="tick")
+    return {
+        "schema_version":report["schema_version"],
+        "scope":report["scope"],
+        "artifact":report["artifact"],
+        "parent_manifest_sha256":report["parent_manifest_sha256"],
+        "full_report_sha256":digest(json.dumps(
+            report,ensure_ascii=False,sort_keys=True,
+            separators=(",",":")).encode("utf-8")),
+        "owner_method_counts":{
+            x["owner"].rsplit("/",1)[-1]:x["declared_method_count"]
+            for x in report["owner_method_rosters"]},
+        "core_method_sha256":{key(x):x["parsed_method_sha256"] for x in core},
+        "core_direct_branch_counts":{
+            key(x):len(x["verified_direct_branches"]) for x in core},
+        "dispatcher_switch_cases":tick["verified_switch_tables"],
+        "direct_class_token_CHOMPING_SPIRIT":
+            report["direct_class_token_CHOMPING_SPIRIT"],
+        "spirit_own_nbt_overrides":report["spirit_own_nbt_overrides"],
+        "limits":report["limits"],
+    }
+
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--jar",type=Path,required=True)
@@ -396,7 +431,7 @@ def main():
     result=analyze(args.jar,args.parent,args.javap)
     if args.snapshot:
         sealed=json.loads(args.snapshot.read_bytes(),object_pairs_hook=unique_pairs)
-        require(result==sealed,"Chomping Spirit causal snapshot drift")
+        require(compact_seal(result)==sealed,"Chomping Spirit causal snapshot drift")
     if args.output:
         args.output.parent.mkdir(parents=True,exist_ok=True)
         args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
