@@ -1,6 +1,6 @@
 # Chomping Spirit — dano do espírito Tremorsaurus da Extinction Spear (1.0.10)
 
-**Estado:** ⚠️ ficha individual técnica **parcial/condicionada** baseada no JAR publisher SHA-exato, no manifesto previamente integrado de Spirit Dinosaur e no JSON cuja igualdade byte a byte foi confirmada pelo SHA-256. `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED`. Não há homologação de uma perk que altere a entidade, o dano, a área ou o fluxo de ataque.
+**Estado:** ✅ **contrato técnico estático individual certificado** (`STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`) no recorte nativo do JAR publisher 1.0.10. Verificações de identidade, nível, produtores, targeting, fluxo de dano, branches JVM, autoria, NBT, custos e limites estão ligadas ao manifesto causal individual e à prova já certificada de Spirit Dinosaur. `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. **Não** há homologação de uma perk que altere a entidade, o dano, a área ou o fluxo de ataque.
 
 O encantamento **não constitui um novo feitiço ou cast**. É um modificador consumido pela ação nativa de **acerto corpo a corpo com a Extinction Spear**: transfere seu nível a um `DinosaurSpiritEntity` de tipo `TREMORSAURUS`. O ataque do espírito pode solicitar dano `alexscaves:spirit_dinosaur`. Não confundir essa variante com os espíritos `SUBTERRANODON` (lançamento/impacto, `plummeting_flight`) e `GROTTOCERATOPS` (`herd_phalanx`, uso sustentado). A [ficha raiz já certificada](../damage-types/spirit-dinosaur.md) documenta a causalidade comum e deve ser reutilizada, sem contabilizar três novos casts.
 
@@ -10,6 +10,7 @@ O encantamento **não constitui um novo feitiço ou cast**. É um modificador co
 - **Identidade:** `alexscaves:chomping_spirit`; chave `enchantment.alexscaves.chomping_spirit`.
 - **Publisher físico:** `alexscaves-1.0.10-neoforge+1.21.1.jar`, **75.279.314 bytes**, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
 - **Manifesto binário reutilizado:** [EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json](../EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json); nele, o `data/alexscaves/enchantment/chomping_spirit.json` físico tem SHA-256 **`f0fb73c3e1c564831375009736264848190a6a6edd126b36bb3802ff356fa6e7`**.
+- **Revalidação causal individual:** [EXACT-CHOMPING-SPIRIT-CAUSAL-1.0.10.json](../EXACT-CHOMPING-SPIRIT-CAUSAL-1.0.10.json), selo compacto com SHA-256 de relatório JVM completo, reproduzido pela [sonda read-only](../../../../../docs/qa/alexscaves_1010_chomping_spirit_causal_probe.py), [regressões sintéticas](../../../../../docs/qa/alexscaves_1010_chomping_spirit_causal_probe_test.py) e [workflow dedicado ao JAR 1.0.10](../../../../../.github/workflows/alexscaves-1010-chomping-spirit-causal.yml). Selo do relatório completo: `44e8552ba4a803a2c8735fe78803795f37c63ac66e56624acc519167d29ab814` (hash sobre JSON canônico ordenado).
 - **Verificação adicional de conteúdo:** o JSON público do [commit fonte fixado](https://github.com/Codx-org/AlexsCavesContinued/blob/523308608422ab8e31974befa7111ecdf495dd37/src/main/resources/data/alexscaves/enchantment/chomping_spirit.json) tem **372 bytes** e SHA-256 **`f0fb73c3e1c564831375009736264848190a6a6edd126b36bb3802ff356fa6e7`**, idêntico ao hash do membro do JAR 1.0.10 já selado. Portanto, **somente o conteúdo deste recurso específico** pode ser tratado como byte-idêntico; a árvore fonte adjacente declara versão **1.1.1** e não certifica os outros métodos da versão 1.0.10.
 - **Limite clean-room:** descrição original própria, sem incorporar classes, trechos de código, assets ou efeitos proprietários ao Black Arcana.
 
@@ -80,12 +81,34 @@ Esses valores **não** são HP removidos garantidamente nem números de hits, e 
 
 **Autoridade:** Black Arcana mantém casting, efeitos próprios, world safety, Arcane Danger e persistência; RPG Skill Tree fornece progressão/atributos/Mastery/perks/gates somente através de boundaries comprovadas. O fluxo de espíritos e dano da Extinction Spear continua inteiramente provider-native. Aplicar `NO_MUTATION` e fail-closed na ausência de contrato de hook.
 
-## 6. Evidência, limitações e contabilidade
+## 6. Reconciliação causal completa no recorte de classes do JAR
+
+A sonda comparou o SHA-1, SHA-256 e tamanho do artefato físico, os hashes de classfiles/recursos e **todos os anchors de bytecode publicados no manifesto técnico anterior** para quatro classes relevantes. O relatório completo de auditoria é reproduzido deterministamente pelo workflow e vinculado por SHA-256 ao novo selo compacto; não contém implementação copiada de outro mod.
+
+| Classe / método produtor ou consumidor | Instruções JVM | Branches diretos `if/goto` | Switch nativo |
+|---|---:|---:|---|
+| `ExtinctionSpearItem.acHurtEnemy` | 64 | 0 | nenhum |
+| `SpearItem.acHurtEnemy` (custo herdado da lança) | 7 | 0 | nenhum |
+| `DinosaurSpiritEntity.tick` | 230 | 20 | `tableswitch @279` |
+| `DinosaurSpiritEntity.tickTremorsaurus` | 96 | 10 | nenhum |
+| `ExtinctionSpearEntity.onHitEntity` (trajetória distinta da lança arremessada) | 140 | 8 | nenhum |
+
+São **38 desvios condicionais/goto** e a tabela de `tick` possui quatro destinos diretos validados: ordinal `0 → 304` (Subterranodon), `1 → 312` (Grottoceratops), `2 → 320` (Tremorsaurus) e `default → 325`. O inventário observado possui **71 métodos declarados** entre `ExtinctionSpearItem` (9), `SpearItem` (12), `DinosaurSpiritEntity` (32, incluindo o inicializador estático) e `ExtinctionSpearEntity` (18). Essa contagem é apenas dessas quatro classes, não do universo do provider.
+
+O caminho `acHurtEnemy` não faz branches diretos próprios no corpo compilado: solicita ignição da vítima, criação do espírito, tipo `TREMORSAURUS`, UUID do atacante, nível `CHOMPING_SPIRIT`, ID da vítima e atraso inicial de cinco ticks. `addFreshEntity` em `@131` tem seu retorno booleano descartado por `pop @134`; em seguida o método delega o desgaste ao `SpearItem`. Portanto, **spawn e dano bem-sucedidos não são pressupostos**.
+
+O dispatcher `tick` só encaminha `TREMORSAURUS` após resolver um `Player` do UUID de autoria; `tickTremorsaurus` lê a entidade-alvo, exige contato geométrico e progresso de habilidade, e passa `(float)(3+2E)` com `ACDamageTypes.causeSpiritDinosaurDamage` a `ACCompat.hurt`. Se o helper retorna `true`, marca `dealtDamage=true`; a rotina solicita `fading` conforme o fluxo original. A chamada de dano de `ExtinctionSpearEntity.onHitEntity` é um **emissor causal distinto** da variante melee de Chomping Spirit e não justifica atribuir dois hits ao mesmo efeito.
+
+**Persistência importante para perks:** os overrides `DinosaurSpiritEntity.addAdditionalSaveData` e `readAdditionalSaveData` possuem **15 instruções cada** e gravam/leem `UsingPlayerUUID` e `DinosaurType`. Não serializam explicitamente nesses próprios corpos `ENCHANTMENT_LEVEL`, `ATTACKING_ENTITY_ID` ou `DELAY_SPAWN`; campos sincronizados não se tornam automaticamente campos de NBT. Isso **não comprova perda de estado após reload**, já que persistência herdada, reconstrução por pacotes e ciclo físico de descarregamento/recarregamento permanecem `NOT_VERIFIED` / `NOT_TESTED`.
+
+O token binário direto `CHOMPING_SPIRIT` ocorre em `ACEnchantmentRegistry.class` e `ExtinctionSpearItem.class` no JAR observado; pesquisas por token não excluem reflexão, transformações/mixins ou consumidores de outros JARs. A validação cobre os branches intramétodo selecionados, não todo CFG interprocedural/exceções. Nenhum hook mutador foi encontrado e homologado. `NO_MUTATION` e `fail-closed` continuam obrigatórios.
+
+## 7. Evidência, limitações e contabilidade
 
 **Verificado:** membro JSON com hash idêntico ao JAR 1.0.10; campo de nível e registry; métodos `acHurtEnemy`, `tick` e `tickTremorsaurus` com offsets/operandos JVM selados no manifesto preexistente; fórmula inteira de dano solicitado, origem de owner/alvo, delays, limiar de contato e ordem das solicitações.
 
 **Não verificado:** execução em cliente/dedicated server com níveis 0/I/II; real chance de spawn e acerto, custos líquidos, comportamento quando `getUsingPlayer()==null`, loader + mixins, level/claim/PvP, gameplay simultâneo, dados modificados por datapacks, persistência/reconnect, empilhamento com outros efeitos, hooks versionados, atribuição de kills/Mastery, igualdade de `Entity.hurt` com dano líquido e aceitação física. Nenhum desses campos é marcado `PASS`.
 
-**Estado final:** `VERIFIED_EXACT_BINARY_SELECTED_CONSUMERS` para o recorte; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `perk_certification=NOT_CERTIFIED`, `NO_MUTATION`. Não promover Stage 06, não homologar perks mutadoras nem inventar integração.
+**Estado final:** ✅ **contrato técnico estático individual** `COMPLETE_PERK_READY` / `STATIC_TECHNICAL_CATALOG_ONLY`, com manifestos SHA-exatos e branches diretos certificados no recorte selecionado; `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Este status do ledger não certifica perk executável, não comprova reload nem permite avançar Stage 06.
 
-**Contabilidade:** +1 **ficha individual parcial** de encantamento; +0 contratos estáticos certificados pelo ledger; +0 raízes mágicas; +0 providers com catálogo encerrado. Próximo recurso alfabético: `alexscaves:crystallization`.
+**Contabilidade do fechamento:** +0 fichas novas; **+1 contrato técnico estático individual certificado**, +0 raízes mágicas e +0 providers integralmente catalogados. Encantamentos identificados: **37/51 certificados**, **14 parciais**, nenhuma identidade sem ficha individual. Contratos estáticos do provider no recorte observado: **65/81**; o universo completo ainda não foi comprovado. Próximo objeto parcial em ordem alfabética: `alexscaves:crystallization`.

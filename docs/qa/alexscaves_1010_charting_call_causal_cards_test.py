@@ -95,7 +95,7 @@ class ChartingCallCausalCardsTests(unittest.TestCase):
             self.assertIn(token,self.card)
         n=sum(k.startswith("✅-alexs-caves-continued/enchantments/")
               for k in self.ledger["objects"])
-        self.assertEqual(n,36)
+        self.assertGreaterEqual(n,36)  # Historical floor; later enchantments legitimately advance the ledger
         self.assertIn(f"individual_full_enchantment_dossiers={n}/51",self.cross)
         self.assertIn(f"individual_partial_enchantment_dossiers={51-n}/51",self.cross)
         self.assertIn("| ✅ | "+chr(96)+"alexscaves:charting_call",self.cross)

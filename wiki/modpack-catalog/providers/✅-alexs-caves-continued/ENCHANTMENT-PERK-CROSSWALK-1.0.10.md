@@ -9,8 +9,8 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=36/51
-individual_partial_enchantment_dossiers=15/51
+individual_full_enchantment_dossiers=37/51
+individual_partial_enchantment_dossiers=14/51
 individual_existing_enchantment_dossiers=51/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
@@ -19,7 +19,7 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `██████████████░░░░░░ 70.6% (36/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `██████████████░░░░░░ 72.5% (37/51)`.
 
 **Barra de dossiers individuais existentes, completos ou parciais:** `████████████████████ 100.0% (51/51)`; destes, dezessete permanecem parciais, enquanto Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection possuem contratos estáticos individuais certificados.
 
@@ -103,7 +103,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:bouncing_bolt` | [Contrato estático individual](enchantments/bouncing-bolt.md) · [selo causal SHA-exato](EXACT-BOUNCING-BOLT-CAUSAL-1.0.10.json) · [selo publisher](EXACT-BOUNCING-BOLT-1.0.10.json) · [ação Sea Staff](actions/sea-staff-water-bolt.md); hooks/QA pendentes |
 | ✅ | `alexscaves:bouncy_ball` | [Contrato técnico estático individual](enchantments/bouncy-ball.md) · [JAR 1.0.10 selado](EXACT-BOUNCY-BALL-1.0.10.json) · [reconciliação JVM causal](EXACT-BOUNCY-BALL-CAUSAL-1.0.10.json) · [Shot Gum](equipment/shot-gum.md) · [Gumball](damage-types/gumball.md) · sem hooks mutadores ou QA física |
 | ✅ | `alexscaves:charting_call` | [Contrato estático individual](enchantments/charting-call.md) · [JAR 1.0.10 selado](EXACT-CHARTING-CALL-1.0.10.json) · [reconciliação causal JVM](EXACT-CHARTING-CALL-CAUSAL-1.0.10.json) · [ação Magic Conch](actions/magic-conch-summon-deep-ones.md) · zero-bound RNG bloqueia mutação; QA física pendente |
-| ⚠️ | `alexscaves:chomping_spirit` | [Ficha técnica parcial](enchantments/chomping-spirit.md) · [JAR 1.0.10 / consumidor](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) · [dano Spirit Dinosaur](damage-types/spirit-dinosaur.md) |
+| ✅ | `alexscaves:chomping_spirit` | [Contrato estático individual](enchantments/chomping-spirit.md) · [JAR 1.0.10 / consumidor](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) · [selo causal JVM](EXACT-CHOMPING-SPIRIT-CAUSAL-1.0.10.json) · [dano Spirit Dinosaur](damage-types/spirit-dinosaur.md) · sem hook mutador nem QA física |
 | ⚠️ | `alexscaves:crystallization` | [Ficha técnica parcial](enchantments/crystallization.md) · [publisher 1.0.10 e consumidor](EXACT-CRYSTALLIZATION-1.0.10.json) |
 | ⚠️ | `alexscaves:dark_nock` | [Ficha técnica parcial](enchantments/dark-nock.md) · [contrato JAR 1.0.10 já selado](EXACT-DREADBOW-CONTRACTS-1.0.10.json) · [equipamento Dreadbow](equipment/dreadbow.md) |
 | ⚠️ | `alexscaves:dazing_sweep` | [Ficha técnica parcial](enchantments/dazing-sweep.md) · [consumer e recurso SHA-exatos já selados](EXACT-EFFECT-CONTRACTS-1.0.10.json) · [efeito Stunned](effects/stunned.md) |
@@ -159,4 +159,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-**Todas as 51 identidades de encantamento publisher possuem agora ficha individual:** 36 contratos técnicos estáticos certificados e 15 fichas ⚠️ parciais. O próximo trabalho é aprofundar os contratos ainda parciais, começando por `alexscaves:chomping_spirit`, sem refazer os já certificados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem **64/81 contratos estáticos entre fichas observadas**, incluindo 51 fichas de encantamentos. Esses 81 objetos documentais observados não equivalem ao universo integral do provider.
+**Todas as 51 identidades de encantamento publisher possuem agora ficha individual:** 37 contratos técnicos estáticos certificados e 14 fichas ⚠️ parciais. O próximo trabalho é aprofundar os contratos ainda parciais, começando por `alexscaves:crystallization`, sem refazer os já certificados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem **65/81 contratos estáticos entre fichas observadas**, incluindo 51 fichas de encantamentos. Esses 81 objetos documentais observados não equivalem ao universo integral do provider.
