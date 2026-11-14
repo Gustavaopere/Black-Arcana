@@ -6,7 +6,7 @@
 
 **Barra dos providers catalogados:** `░░░░░░░░░░░░░░░░░░░░ 2.4%`
 
-**Fichas catalogadas (somente fichas detectadas): 456/2393.**
+**Fichas catalogadas (somente fichas detectadas): 457/2393.**
 
 **Barra das fichas catalogadas:** `███░░░░░░░░░░░░░░░░░ 19.1%`
 
