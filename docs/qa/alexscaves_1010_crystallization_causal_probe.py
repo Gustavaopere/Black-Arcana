@@ -83,9 +83,9 @@ PIVOTS={
     (WEAPON,"getController"):{11:("invokevirtual","getControllerUUID:")},
     (WEAPON,"getTarget"):{4:("getstatic","TARGET_ID:")},
     (WEAPON,"isOwnerWearingGauntlet"):{21:("getstatic","GALENA_GAUNTLET:")},
-    (WEAPON,"plopItem"):{17:("invokevirtual","spawnAtLocation:")},
+    (WEAPON,"plopItem"):{17:("invokestatic","spawnAtLocation:")},
     (WEAPON,"addAdditionalSaveData"):{
-        11:("ldc_w","WeaponStack"),33:("ldc_w","ControllerUUID"),
+        11:("ldc_w","WeaponStack"),40:("ldc_w","ControllerUUID"),
     },
     (WEAPON,"readAdditionalSaveData"):{
         1:("ldc_w","WeaponStack"),32:("ldc_w","ControllerUUID"),
