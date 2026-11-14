@@ -59,7 +59,7 @@ class DazingSweepCertificateTests(unittest.TestCase):
              "distance_filter":3.2}])
         for token in ("L+1.2F", "150–299", "80–159",
                       "1.0F", "AABB.ofSize", "mobAttack",
-                      "return", "NO_MUTATION"):
+                      "pop @322", "NO_MUTATION"):
             self.assertIn(token, self.card)
 
     def test_seven_axes_and_no_physical_qa(self):
