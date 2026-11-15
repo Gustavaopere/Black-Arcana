@@ -9,8 +9,8 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=42/51
-individual_partial_enchantment_dossiers=9/51
+individual_full_enchantment_dossiers=43/51
+individual_partial_enchantment_dossiers=8/51
 individual_existing_enchantment_dossiers=51/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
@@ -19,13 +19,15 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `████████████████░░░░ 82.4% (42/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `████████████████░░░░ 84.3% (43/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `████████████████████ 100.0% (51/51)`; destes, nove permanecem parciais, enquanto Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `████████████████████ 100.0% (51/51)`; destes, oito permanecem parciais, enquanto Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection possuem contratos estáticos individuais certificados.
 
 **Astral Transferring (✅ contrato estático):** [ficha individual](enchantments/astral-transferring.md), [selo](EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.json) e [prova](EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.md) separam transferência no servidor, custo cliente, laço/saúde/UUID e marcadores. Sem novo cast, hook ou QA física homologados.
 
 **Dazing Sweep (✅ contrato estático):** [ficha](enchantments/dazing-sweep.md) e [selo causal SHA-exato](EXACT-DAZING-SWEEP-CAUSAL-1.0.10.json) verificam cinco métodos nativos (363 instruções, 29 branches diretos e tableswitch com 6 destinos). O sucesso do Stunned primário é gate obrigatório do sweep; nível I/II usa AABB de lado `L+1.2F`, nunca raio esférico. `mobAttack` secundário solicita 1F e descarta o booleano antes de tentar novo Stunned. Sem novo cast, hook, QA física ou Mastery; `NO_MUTATION`.
+
+**Energy Efficiency (✅ contrato estático):** [ficha individual](enchantments/energy-efficiency.md) e [selo SHA-exato 1.0.10](EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json) verificam o JSON físico, a tag Raygun e os quatro métodos do equipamento, com `onUseTick` de **523 instruções/57 branches diretos**. O caminho cliente, após 15 ticks, solicita `ChargeUsed=min(ChargeUsed+1,1000)` quando `elapsed % (2+floor(1.5L))=0` (2/3/5/6 ticks em L=0/I/II/III) e usuário não é Player criativo. Segurança C2S, hooks e QA física continuam pendentes; níveis negativos podem produzir divisor zero. `NO_MUTATION`.
 
 **Detonating Death (✅ contrato estático):** [ficha individual](enchantments/detonating-death.md) e [selo SHA-exato](EXACT-DETONATING-DEATH-CAUSAL-1.0.10.json) reconciliam três métodos nativos da possessão/explosão, **1.013 instruções JVM, 100 branches diretos e 50 âncoras históricas**. O raio de referência depende de `2+floor(width)`; dano pedido, exposição, imunidades e knockback pertencem ao `TotemExplosion`. Não há guarda direta `isClientSide` na região de detonação; sem prova de idempotência, PvP ou hook seguro, permanece `NO_MUTATION` e `physical_qa=NOT_TESTED`.
 
@@ -115,7 +117,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:dazing_sweep` | [Ficha técnica estática individual certificada](enchantments/dazing-sweep.md) · [selo causal publisher 1.0.10](EXACT-DAZING-SWEEP-CAUSAL-1.0.10.json) · [efeito compartilhado Stunned](effects/stunned.md). Sem hook e sem QA física; `NO_MUTATION` |
 | ✅ | `alexscaves:detonating_death` | [Ficha estática individual certificada](enchantments/detonating-death.md) · [selo SHA-exato 1.0.10](EXACT-DETONATING-DEATH-CAUSAL-1.0.10.json) · [ação Totem of Possession](actions/totem-possession-remote-control.md) · `NO_MUTATION`, QA física pendente |
 | ✅ | `alexscaves:double_stab` | [Ficha técnica estática individual](enchantments/double-stab.md) · [selo causal SHA-exato](EXACT-DOUBLE-STAB-CAUSAL-1.0.10.json) · [Desolate Dagger](equipment/desolate-dagger.md) · `NO_MUTATION`, QA física pendente |
-| ⚠️ | `alexscaves:energy_efficiency` | [Ficha técnica parcial](enchantments/energy-efficiency.md) · [referência SHA-exata do Raygun](EXACT-RAYGUN-CONTROL-1.0.10.json) · [limites de charge/rede](damage-types/raygun.md) |
+| ✅ | `alexscaves:energy_efficiency` | [Ficha técnica estática individual](enchantments/energy-efficiency.md) · [selo causal publisher SHA-exato](EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json) · [contratos Raygun](EXACT-RAYGUN-CONTROL-1.0.10.json) · `NO_MUTATION`, QA física pendente |
 | ⚠️ | `alexscaves:enveloping_bubble` | [Ficha técnica parcial](enchantments/enveloping-bubble.md) · [ação Sea Staff](actions/sea-staff-water-bolt.md) · [efeito Bubbled](effects/bubbled.md) · [manifesto SHA-exato](EXACT-TECHNICAL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:explosive_flavor` | [Ficha técnica parcial](enchantments/explosive-flavor.md) · [Shot Gum](equipment/shot-gum.md) · [Gumball](damage-types/gumball.md) · [manifesto SHA-exato](EXACT-GUMBALL-CONTRACTS-1.0.10.json) |
 | ⚠️ | `alexscaves:far_flung` | [Ficha técnica parcial](enchantments/far-flung.md) · [manifesto SHA-exato 1.0.10](EXACT-FAR-FLUNG-1.0.10.json) · [sonda read-only](../../../../docs/qa/alexscaves_1010_far_flung_probe.py) |
@@ -165,4 +167,4 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-**Todas as 51 identidades de encantamento publisher possuem agora ficha individual:** 42 contratos técnicos estáticos certificados e 9 fichas ⚠️ parciais. O próximo trabalho é aprofundar os contratos ainda parciais, começando por `alexscaves:energy_efficiency`, sem refazer os já certificados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem **70/81 contratos estáticos entre fichas observadas**, incluindo 51 fichas de encantamentos. Esses 81 objetos documentais observados não equivalem ao universo integral do provider.
+**Todas as 51 identidades de encantamento publisher possuem agora ficha individual:** 43 contratos técnicos estáticos certificados e 8 fichas ⚠️ parciais. O próximo trabalho é aprofundar os contratos ainda parciais, começando por `alexscaves:enveloping_bubble`, sem refazer os já certificados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem **71/81 contratos estáticos entre fichas observadas**, incluindo 51 fichas de encantamentos. Esses 81 objetos documentais observados não equivalem ao universo integral do provider.
