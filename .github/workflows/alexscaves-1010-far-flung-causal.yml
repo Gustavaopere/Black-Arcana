@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-far-flung-causal.yml'
       - 'docs/qa/alexscaves_1010_far_flung_causal_audit.py'
+      - 'docs/qa/alexscaves_1010_far_flung_causal_cards_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FAR-FLUNG-CAUSAL-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/far-flung.md'
       - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
@@ -15,6 +16,7 @@ on:
     paths:
       - '.github/workflows/alexscaves-1010-far-flung-causal.yml'
       - 'docs/qa/alexscaves_1010_far_flung_causal_audit.py'
+      - 'docs/qa/alexscaves_1010_far_flung_causal_cards_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FAR-FLUNG-CAUSAL-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/far-flung.md'
       - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
@@ -33,6 +35,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      - name: Verify individual static seal and negative causal regressions
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_far_flung_causal_audit.py docs/qa/alexscaves_1010_far_flung_causal_cards_test.py
+          python3 docs/qa/alexscaves_1010_far_flung_causal_cards_test.py -v
       - name: Download publisher 1.0.10 JAR
         run: |
           set -euo pipefail
@@ -46,11 +52,9 @@ jobs:
             'build/far-flung-causal/alexscaves-1.0.10.jar' | sha256sum -c -
       - name: Validate exact 17 native method bodies and causal pivots
         run: |
-          python3 -m py_compile docs/qa/alexscaves_1010_far_flung_causal_audit.py
           python3 docs/qa/alexscaves_1010_far_flung_causal_audit.py \
             --jar build/far-flung-causal/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
-            --inspect \
             --output build/far-flung-causal/report.json
       - name: Validate independent static certificate and generated indexes
         run: |
