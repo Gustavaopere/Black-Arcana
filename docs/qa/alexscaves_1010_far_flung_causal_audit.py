@@ -277,7 +277,9 @@ def physical_audit(jar: Path, javap_bin="javap", inspect=False):
         for method, start, end, label in [
             (launch, 215, 358, "CONSTRUCTOR_VECTOR"),
             (canlaunch, 0, 123, "LAUNCH_ADMISSION"),
-            (tick, 320, 550, "TICK_TARGETING"),
+            (tick, 0, 220, "TICK_SERVER_AUTHORITY"),
+            (tick, 320, 650, "TICK_TARGETING_AND_DAMAGE"),
+            (tick, 850, 1250, "TICK_MOVEMENT_CLEANUP"),
             (fling, 0, 180, "FLING"),
         ]:
             print("=== " + label + " (" + str(len(method["instructions"])) + " instructions total) ===")
