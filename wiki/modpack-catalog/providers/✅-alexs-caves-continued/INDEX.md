@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 69/81.**
+**Fichas catalogadas (somente fichas detectadas): 70/81.**
 
-**Barra das fichas catalogadas:** `█████████████████░░░ 85.2%`
+**Barra das fichas catalogadas:** `█████████████████░░░ 86.4%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 69/81.**
+**Homologadas para perks (somente fichas detectadas): 70/81.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 85.2%`
+**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 86.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -62,7 +62,7 @@
 | ✅ | Dark Nock | [enchantments/dark-nock.md](enchantments/dark-nock.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dazing Sweep | [enchantments/dazing-sweep.md](enchantments/dazing-sweep.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Detonating Death | [enchantments/detonating-death.md](enchantments/detonating-death.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Double Stab | [enchantments/double-stab.md](enchantments/double-stab.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Double Stab | [enchantments/double-stab.md](enchantments/double-stab.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Energy Efficiency | [enchantments/energy-efficiency.md](enchantments/energy-efficiency.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Enveloping Bubble | [enchantments/enveloping-bubble.md](enchantments/enveloping-bubble.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Explosive Flavor | [enchantments/explosive-flavor.md](enchantments/explosive-flavor.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -113,7 +113,7 @@
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
 | ⚠️ | Damage Types | 9/11 (81.8%) | 9 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
-| ⚠️ | Enchantments | 41/51 (80.4%) | 41 | [Abrir índice](enchantments/INDEX.md) |
+| ⚠️ | Enchantments | 42/51 (82.4%) | 42 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
 
 ## Critério do ✅
