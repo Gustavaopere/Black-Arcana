@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 73/81.**
+**Fichas catalogadas (somente fichas detectadas): 74/81.**
 
-**Barra das fichas catalogadas:** `██████████████████░░ 90.1%`
+**Barra das fichas catalogadas:** `██████████████████░░ 91.4%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 73/81.**
+**Homologadas para perks (somente fichas detectadas): 74/81.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████████░░ 90.1%`
+**Barra dos contratos técnicos estáticos:** `██████████████████░░ 91.4%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -66,7 +66,7 @@
 | ✅ | Energy Efficiency | [enchantments/energy-efficiency.md](enchantments/energy-efficiency.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Enveloping Bubble | [enchantments/enveloping-bubble.md](enchantments/enveloping-bubble.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Explosive Flavor | [enchantments/explosive-flavor.md](enchantments/explosive-flavor.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Far Flung | [enchantments/far-flung.md](enchantments/far-flung.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Far Flung | [enchantments/far-flung.md](enchantments/far-flung.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Ferrous Haste | [enchantments/ferrous-haste.md](enchantments/ferrous-haste.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Field Extension | [enchantments/field-extension.md](enchantments/field-extension.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Flinging | [enchantments/flinging.md](enchantments/flinging.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
@@ -113,7 +113,7 @@
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
 | ⚠️ | Damage Types | 9/11 (81.8%) | 9 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
-| ⚠️ | Enchantments | 45/51 (88.2%) | 45 | [Abrir índice](enchantments/INDEX.md) |
+| ⚠️ | Enchantments | 46/51 (90.2%) | 46 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
 
 ## Critério do ✅
