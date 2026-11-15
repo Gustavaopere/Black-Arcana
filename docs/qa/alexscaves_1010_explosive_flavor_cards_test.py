@@ -255,7 +255,7 @@ class ExplosiveFlavorStaticContract(unittest.TestCase):
             (317, "invokevirtual", "setExplosive:"),
             (326, "invokevirtual", "setMaximumBounces:"),
             (335, "invokevirtual", "Level.addFreshEntity:"),
-            (345, "invokevirtual", "discard:"),
+            (345, "aload_0", ""), (346, "invokevirtual", "discard:"),
         ):
             self.check(GUMBALL, "onHitEntity", off, op, frag)
         source = method(self.m, GUMBALL, "onHitEntity")["anchors"]
