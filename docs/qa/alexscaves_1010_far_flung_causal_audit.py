@@ -12,6 +12,7 @@ import argparse
 import hashlib
 import json
 import re
+import subprocess
 import zipfile
 from pathlib import Path
 
@@ -141,9 +142,25 @@ def physical_audit(jar: Path, javap_bin="javap", inspect=False):
         owners = sorted(name for name in names if name.endswith(".class")
                         and name.startswith(BASE)
                         and b"FAR_FLUNG" in z.read(name))
-    require(REGISTRY in owners and HOOK in owners,
-            "registry or constructor missing FAR_FLUNG literal")
-    require(len(owners) <= 12, "unbounded additional FAR_FLUNG consumers")
+    require(owners == sorted([REGISTRY, HOOK]),
+            "unexpected FAR_FLUNG class token owners: " + repr(owners))
+    bootstrap_raw = subprocess.run(
+        [str(javap_bin), "-classpath", str(jar), "-v", "-p",
+         HOOK[:-6].replace("/", ".")],
+        capture_output=True, text=True, timeout=45, check=True,
+    ).stdout
+    require(len(bootstrap_raw) < 3_500_000, "unbounded verbose bytecode")
+    bootstrap_match = re.search(
+        r"BootstrapMethods:\s*\n\s*0:.*?(?=\n\s*1:|\nInnerClasses:|\Z)",
+        bootstrap_raw, re.S,
+    )
+    require(bootstrap_match is not None, "missing invokedynamic bootstrap #0")
+    boot = bootstrap_match.group(0)
+    if inspect:
+        print("=== BOOTSTRAP_LIVE_ENTITY_PREDICATE ===")
+        print(boot[:2000])
+    require("net/minecraft/world/entity/Entity.isAlive:()Z" in boot,
+            "Entity::isAlive bootstrap not established for getEntities")
 
     inspected = {}
     method_report = []
@@ -155,6 +172,11 @@ def physical_audit(jar: Path, javap_bin="javap", inspect=False):
             javap(javap_bin, jar, owner[:-6].replace("/", "."))))
         require(len(native) == group["own_method_count"],
                 "owner own method population changed")
+        if inspect:
+            print("=== METHOD_ROSTER " + owner + " ===")
+            print(json.dumps([(name, desc, len(method["instructions"]))
+                              for (name, desc), method in native.items()],
+                             ensure_ascii=False))
         require(len(group["methods"]) >= 7, "missing selected owner methods")
         for previous in group["methods"]:
             ident = (previous["name"], previous["descriptor"])
@@ -213,7 +235,21 @@ def physical_audit(jar: Path, javap_bin="javap", inspect=False):
         (265, "i2d", ""), (266, "ldc2_w", "double 0.2d"),
         (269, "dmul", ""), (270, "dadd", ""), (271, "dstore", "22"),
         (273, "aload", "19"), (275, "dload", "22"),
-        (277, "dload", "20"), (352, "invokevirtual", "setDeltaMovement:"),
+        (277, "dload", "20"),
+        (279, "ddiv", ""), (280, "ldc2_w", "double 0.5d"),
+        (283, "dadd", ""), (288, "invokeinterface", "RandomSource.nextGaussian:"),
+        (293, "ldc2_w", "double 0.0045d"),
+        (296, "dmul", ""), (297, "dadd", ""),
+        (302, "ddiv", ""), (303, "ldc2_w", "double 0.5d"),
+        (306, "dadd", ""), (311, "invokeinterface", "RandomSource.nextGaussian:"),
+        (316, "ldc2_w", "double 0.0045d"),
+        (319, "dmul", ""), (320, "dadd", ""),
+        (325, "ddiv", ""), (326, "ldc2_w", "double 0.5d"),
+        (329, "dadd", ""), (334, "invokeinterface", "RandomSource.nextGaussian:"),
+        (339, "ldc2_w", "double 0.0045d"),
+        (342, "dmul", ""), (343, "dadd", ""),
+        (344, "invokevirtual", "Vec3.multiply:"),
+        (352, "invokevirtual", "setDeltaMovement:"),
         (423, "getstatic", "SHARP_CANE:"),
         (426, "invokestatic", "ACCompat.enchantLevel:"),
         (433, "invokevirtual", "setDamage:"),
@@ -228,18 +264,43 @@ def physical_audit(jar: Path, javap_bin="javap", inspect=False):
         (78, "invokevirtual", "getOwner:"),
     ])
     check_pivots(tick, [
+        (23, "invokevirtual", "Level.isClientSide:"),
+        (26, "ifne", "607"),
         (5, "invokevirtual", "getOwner:"),
         (10, "invokevirtual", "getHookedEntity:"),
         (111, "invokevirtual", "setReeling:"),
         (128, "invokevirtual", "setReeling:"),
         (201, "invokevirtual", "discard:"),
         (214, "invokevirtual", "discard:"),
+        (360, "invokevirtual", "AABB.inflate:"),
+        (375, "invokedynamic", "test:"),
         (380, "invokevirtual", "getEntities:"),
+        (417, "ifeq", "435"), (429, "invokevirtual", "getHeadEntity:"),
+        (449, "ifne", "514"), (457, "ifne", "514"),
+        (467, "invokevirtual", "Entity.is:"),
+        (481, "invokevirtual", "distanceTo:"),
+        (487, "invokevirtual", "distanceTo:"),
+        (496, "instanceof", "GumWormEntity"),
+        (504, "instanceof", "GumWormEntity"),
+        (525, "invokevirtual", "getUUID:"),
+        (528, "invokevirtual", "setHookedEntityUUID:"),
+        (532, "invokevirtual", "getDamage:"),
+        (537, "ifeq", "563"),
+        (546, "invokevirtual", "DamageSources.thrown:"),
+        (559, "invokevirtual", "Entity.hurt:"), (562, "pop", ""),
+        (1099, "invokevirtual", "move:"),
+        (1123, "invokevirtual", "Vec3.scale:"),
+        (1136, "invokevirtual", "setDeltaMovement:"),
+        (1170, "invokevirtual", "fling:"),
     ])
     check_pivots(fling, [
         (1, "invokevirtual", "getHookedPosition:"),
         (79, "invokevirtual", "setDeltaMovement:"),
         (147, "invokevirtual", "setDeltaMovement:"),
+        (50, "ifle", "61"), (55, "dconst_1", ""),
+        (56, "invokevirtual", "Vec3.scale:"),
+        (118, "ifle", "129"), (123, "dconst_1", ""),
+        (124, "invokevirtual", "Vec3.scale:"),
     ])
     for name, descriptor in [
         ("readAdditionalSaveData", "(Lnet/minecraft/nbt/CompoundTag;)V"),
@@ -265,6 +326,7 @@ def physical_audit(jar: Path, javap_bin="javap", inspect=False):
         "instructions_checked": total_ins,
         "direct_branches_checked": total_branches,
         "compiled_far_flung_owners": owners,
+        "alive_predicate_bootstrap_sha256": sha256(boot.encode("utf8")),
         "method_census": method_report,
         "limits": {
             "mutating_hook": "NOT_VERIFIED", "physical_qa": "NOT_TESTED",
