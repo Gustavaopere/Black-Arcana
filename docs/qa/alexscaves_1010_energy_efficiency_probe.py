@@ -129,6 +129,8 @@ def audit(jar: Path, javap_bin: str):
             for name,m in selected.items()},
         "onUseTick_direct_branches":len(branches),
         "onUseTick_charge_window":charge_window,
+        "onUseTick_entry_window":[{k:r[k] for k in ("offset","opcode","operand","symbol")} for r in ins if r["offset"]<=85],
+        "onUseTick_precharge_window":[{k:r[k] for k in ("offset","opcode","operand","symbol")} for r in ins if 132<=r["offset"]<=216],
         "limits":LIMITS,
     }
 
@@ -147,8 +149,10 @@ def main():
     print("resource_hashes="+json.dumps(result["resources"],sort_keys=True))
     print("token_owners="+json.dumps(result["token_owners"]))
     print("onUseTick_branches="+str(result["onUseTick_direct_branches"]))
-    for row in result["onUseTick_charge_window"]:
-        print("@%d %s %s %s"%(row["offset"],row["opcode"],row["operand"],row["symbol"]))
+    for label in ("onUseTick_entry_window","onUseTick_precharge_window","onUseTick_charge_window"):
+        print("JVM_WINDOW="+label)
+        for row in result[label]:
+            print("@%d %s %s %s"%(row["offset"],row["opcode"],row["operand"],row["symbol"]))
     print("report_sha256="+digest(data.encode("utf8")))
     print("DISCOVERY_ONLY NO_MUTATION NOT_TESTED NO_STATIC_CERTIFICATE")
 
