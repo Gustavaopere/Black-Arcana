@@ -41,7 +41,7 @@ def synthetic_report(seal):
         "methods_checked": census["expected_methods_checked"],
         "instructions_checked": census["expected_instructions_checked"],
         "direct_branches_checked": census["expected_direct_branches_checked"],
-        "compiled_far_flung_owners": seal["compiled_far_flung_token_owners"],
+        "compiled_far_flung_owners": list(seal["compiled_far_flung_token_owners"]),
         "method_census": core + other,
         "limits": {
             "mutating_hook": "NOT_VERIFIED",
