@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "version": "1.0.10",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "enchantment": "alexscaves:enveloping_bubble",
+  "semantic_role": "SEA_STAFF_WATER_BOLT_MODIFIER_NOT_NEW_CAST",
+  "resource_sha256": {
+    "data/alexscaves/enchantment/enveloping_bubble.json": "d984c8cc3f8d72bffa2fce0972a2449b393907f7686626cc6135bf2a8260ed5a",
+    "data/alexscaves/tags/item/enchantable/sea_staff.json": "22e45ab74b71d7152ccc531a633e5149df9c12eece40464c85c50f5a600fd80e"
+  },
+  "compiled_sha256": {
+    "com/github/alexmodguy/alexscaves/server/item/SeaStaffItem.class": "cb3153a35e7f4c3ab23e68693aec110edf03ecd050c3b485e35ccbb257b4bbc6",
+    "com/github/alexmodguy/alexscaves/server/entity/item/WaterBoltEntity.class": "342c011b0178e1f65cd2e6ef315fe6bad49bd5ead237b2274e822560e2eac401",
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32"
+  },
+  "seal_sources": [
+    "EXACT-TECHNICAL-CONTRACTS-1.0.10.json",
+    "EXACT-TRIPLE-SPLASH-CONTRACT-1.0.10.json",
+    "EXACT-EFFECT-CONTRACTS-1.0.10.json"
+  ],
+  "static_contract": {
+    "level_max": 1,
+    "weight": 2,
+    "anvil_cost": 4,
+    "mainhand_tag": "alexscaves:sea_staff",
+    "producer": "SeaStaffItem.use",
+    "rng": "RandomSource.nextBoolean per enchanted bolt when level > 0",
+    "bolts": "one baseline or three with Triple Splash; enchantment creates no additional bolt",
+    "impact_requested_damage": 3,
+    "damage_source": "minecraft:mob_projectile",
+    "victim_search": "WaterBolt AABB inflated 2.0 on each axis, LivingEntity with owner/allied/DeepOne exclusions",
+    "debuff_effect": "alexscaves:bubbled",
+    "debuff_duration_ticks": 200,
+    "apply_gate": "ACCompat.hurt(target, source, 3F) true AND isBubbling() true; addEffect result popped",
+    "ricochet": "native child copies Bubbling flag only",
+    "persistence": "WaterBolt overrides serialize Bubbling; full launch state not certified",
+    "additional_resource_per_cast": "not observed; base Sea Staff non-instabuild wear 1",
+    "mutation": "NO_MUTATION"
+  },
+  "limits": {
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "native_damage_acceptance": "NOT_TESTED",
+    "status_effect_acceptance": "NOT_TESTED",
+    "multiplayer_packet_authorization": "NOT_VERIFIED",
+    "datapack_overrides": "NOT_VERIFIED",
+    "provider_universe_closed": false
+  }
+}

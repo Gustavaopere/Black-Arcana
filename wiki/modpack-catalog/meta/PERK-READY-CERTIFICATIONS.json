@@ -8502,6 +8502,46 @@
           "reason": "Exact publisher JAR and class registry checked, two token owners and Raygun four method SHA256 digests pinned, 523 onUseTick instructions and 57 direct CFG branch targets, 60+ causal pivots, exact JSON and tag SHA256. Individual full-report SHA256 0bb9e77b51908adaf6b679f483c484d5b4da5169cd4cb440e0c7a31b9c6dcfb3 in EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json, reproducible negative tests, native QA NOT_TESTED, hooks NOT_VERIFIED."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/enveloping-bubble.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Publisher 1.0.10 Enveloping Bubble is a Sea Staff Water Bolt modifier, NOT another cast. Exact enchantment JSON/tag, individual RNG nextBoolean per enchanted bolt, BUBBLED flag, accepted 3F mobProjectile damage gate and 200-tick effect request; bolt AABB inflation 2D, filtering, child ricochet flag, NBT and Bubbled downstream effects. Three preexisting SHA-exact publisher manifests reconciled under individual seal; CI reruns exact JAR. No successful spawn/hurt/addEffect assumed, hook NOT_VERIFIED, QA NOT_TESTED, mutation NO_MUTATION, no provider-universe closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/enveloping-bubble.md",
+          "reason": "Installed Alex's Caves Continued 1.0.10, exact publisher SHA-1/SHA-256 and size, full enchantment resource/tag SHA-256; Registry ENVELOPING_BUBBLE and mainhand Sea Staff eligibility, with source 1.1.1 explicitly nonauthoritative."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/enveloping-bubble.md",
+          "reason": "The server SeaStaffItem.use loop resolves level positive and invokes RandomSource.nextBoolean once per spawned Water Bolt attempt, storing flag Bubbling; accepted ACCompat.hurt(target, mobProjectile, 3F) and flag gate nominal 200-tick Bubbled addEffect request. Spawn and effect returns are not guarantees."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/enveloping-bubble.md",
+          "reason": "Exactly 1 level max, weight 2, min cost base 1 increment 13, max cost base 41 increment 10, anvil 4. Native base action generates 1 bolt or 3 with Triple Splash, velocity 2F center/1F lateral, nominal Bubbled 200 ticks and 3F requested impact damage. No enchantment-owned separate projectile or cooldown."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/enveloping-bubble.md",
+          "reason": "WaterBoltEntity.damageMobs uses bolt AABB.inflate(2D) and LivingEntity candidates; owner, same-team, owner allies, DeepOneBaseEntity excluded. MobProjectile source, no invented spherical AoE or homing radius; effect requires accepted damage and bubbling; full external PvP/claim enforcement unverified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/enveloping-bubble.md",
+          "reason": "JSON enchanting costs are separate from casting; ordinary Sea Staff action requests 1 durability after loop outside instabuild, no native additional mana, per-bolt enchantment charge or cooldown demonstrated. No duplicate resource settlement authorized."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/enveloping-bubble.md",
+          "reason": "Enchant modifier of Sea Staff one canonical Water Bolt root and downstream BubbledEffect, with native RNG, hit, effect, packet and ricochet boundaries. No mutating event timing, authority, dedup or hook certified. Black Arcana owns only its magic runtime; sibling RPG Skill Tree grants perks only through safe contracts. NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/enveloping-bubble.md",
+          "reason": "Individual bounded causal seal EXACT-ENVELOPING-BUBBLE-CAUSAL-1.0.10.json, exhaustive prior SHA-exact publisher action, Triple Splash and Bubbled effect manifests, new negative drift and causal tests, dedicated GitHub Actions physical JAR replay. Hook NOT_VERIFIED and live QA NOT_TESTED; provider-wide universe remains open."
+        }
+      }
     }
   },
   "providers": {},

@@ -1,0 +1,65 @@
+name: Alex's Caves 1.0.10 Enveloping Bubble static contract
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-enveloping-bubble.yml'
+      - 'docs/qa/alexscaves_1010_enveloping_bubble_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENVELOPING-BUBBLE-CAUSAL-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/enveloping-bubble.md'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/**/INDEX.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-enveloping-bubble.yml'
+      - 'docs/qa/alexscaves_1010_enveloping_bubble_cards_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENVELOPING-BUBBLE-CAUSAL-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/enveloping-bubble.md'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/**/INDEX.md'
+
+permissions:
+  contents: read
+
+jobs:
+  enveloping_bubble_static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Validate causal crosswalk and negative drift
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_enveloping_bubble_cards_test.py
+          python3 docs/qa/alexscaves_1010_enveloping_bubble_cards_test.py -v
+      - name: Retrieve physical 1.0.10 publisher JAR and verify SHA
+        run: |
+          mkdir -p build/enveloping-bubble
+          curl --fail --silent --show-error --location --retry 3             --connect-timeout 20 --max-time 180             'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar'             --output build/enveloping-bubble/alexscaves-1.0.10.jar
+          printf '%s  %s\n'             '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c'             'build/enveloping-bubble/alexscaves-1.0.10.jar' | sha256sum -c -
+      - name: Replay SHA-exact producer and consumer method manifests
+        run: |
+          for profile in actions triple_splash effects; do
+            case "$profile" in
+              actions) manifest="EXACT-TECHNICAL-CONTRACTS-1.0.10.json";;
+              triple_splash) manifest="EXACT-TRIPLE-SPLASH-CONTRACT-1.0.10.json";;
+              effects) manifest="EXACT-EFFECT-CONTRACTS-1.0.10.json";;
+            esac
+            python3 docs/qa/alexscaves_1010_action_contract_audit.py               --profile "$profile"               --jar build/enveloping-bubble/alexscaves-1.0.10.jar               --manifest "wiki/modpack-catalog/providers/✅-alexs-caves-continued/$manifest"               --provider-root 'wiki/modpack-catalog/providers/✅-alexs-caves-continued'               --javap "$JAVA_HOME/bin/javap"               --output "build/enveloping-bubble/$profile-report.json"
+          done
+      - name: Validate index and independent static certificate ledger
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: enveloping-bubble-1010-static-reports
+          path: build/enveloping-bubble/*-report.json
+          if-no-files-found: ignore
+          retention-days: 14
