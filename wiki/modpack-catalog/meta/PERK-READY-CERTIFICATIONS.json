@@ -8462,6 +8462,46 @@
           "reason": "Publisher SHA-exact full report seal EXACT-DOUBLE-STAB-CAUSAL-1.0.10.json, parent Desolate Dagger manifest sha256 e9f23c323fb9a04af9ac215b1e589de5933d99e70d9e8b96c91a4e7421d58ff1, full report sha256 7b9dfd24d8af0f89cd96adddcf1a95ed7bfde71adbcfba2275be17f0891d05b0; 12 native JVM methods, 507 parsed instructions, 32 direct branches, 391 reconciled historical anchors. Synthetic negative tests and Actions read-only; physical QA NOT_TESTED."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/energy-efficiency.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Publisher 1.0.10 Raygun Energy Efficiency cost periodicity proven from 523 JVM instructions and 57 direct branches in native onUseTick; client-only path after 15 ticks, period 2+floor(1.5*L) -> 2/3/5/6 normal, ChargeUsed=min(previous+1,1000) with Creative exemption and explicit no server cost authorization claim. JSON/tag SHA-exact and 4 Raygun method hashes sealed by report 0bb9e77b51908adaf6b679f483c484d5b4da5169cd4cb440e0c7a31b9c6dcfb3. Negative L=-1 can produce zero divisor if accepted abnormally. No new spell root; no safe mutating hook/QA, C2S authority unresolved; NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/energy-efficiency.md",
+          "reason": "Provider Alex's Caves Continued 1.0.10 installed in Minecraft 1.21.1 NeoForge, exact SHA1 6960b299a39a039ac8a5eb9b07be4ad0e3e0a570, SHA256 36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c, energy_efficiency.json and enchantable/raygun tag verified in publisher JAR. Normal levels 1..3, mainhand, Raygun ID."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/energy-efficiency.md",
+          "reason": "RaygunItem.onUseTick computes elapsed from getUseDuration - remaining ticks, performs hasCharge and returns when spent >=1000. Client-only consumption path (Level.isClientSide @211-214) checks 15 tick warm-up, elapsed modulo computed divisor and noncreative user, then requests setCharge. Full onUseTick parsed SHA pinned with 57 direct branches."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/energy-efficiency.md",
+          "reason": "Divisor period P=2+floor(1.5*L), normal L0..3 gives 2/3/5/6 ticks for attempts to increment ChargeUsed, only after 15 tick warm-up. Saturating update min(getCharge+1,1000), no lower bound, negative anomalous L=-1 gives zero divisor. getUseDuration=72000 is native maximum use time, not cooldown or magic cast duration."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/energy-efficiency.md",
+          "reason": "Energy Efficiency controls only Raygun charge-use frequency. Raygun X_RAY, GAMMA_RAY, ProjectileUtil ray traces, AABB, damage and allied/entity selection are provider native elsewhere, not expanded or altered by this enchantment. No new projectile, caster root, AoE, target or damage type. External PvP and claim authorization remain unverified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/energy-efficiency.md",
+          "reason": "Publisher JSON level max3, weight10, min enchanting base1 step5, max base41 step10, anvil1, mainhand, no exclusive_set declared; tag includes only raygun. ChargeUsed is spent charge with native cap1000 and recharge URANIUM_ROD in other flow; not a mana pool, no new per-shot resource cost, server acceptance untested."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/energy-efficiency.md",
+          "reason": "Native client-side write and separate UpdateItemTagMessage network boundary, no verified authenticated server-cost or safe hook to mutate ChargeUsed/period. Black Arcana retains authority over its own runtime; RPG Skill Tree remains progression/Mastery/perks/gates sibling. No tick-based Mastery grant or duplicate cast. NO_MUTATION fail-closed, packet replay and data sanitization not certified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/energy-efficiency.md",
+          "reason": "Exact publisher JAR and class registry checked, two token owners and Raygun four method SHA256 digests pinned, 523 onUseTick instructions and 57 direct CFG branch targets, 60+ causal pivots, exact JSON and tag SHA256. Individual full-report SHA256 0bb9e77b51908adaf6b679f483c484d5b4da5169cd4cb440e0c7a31b9c6dcfb3 in EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json, reproducible negative tests, native QA NOT_TESTED, hooks NOT_VERIFIED."
+        }
+      }
     }
   },
   "providers": {},

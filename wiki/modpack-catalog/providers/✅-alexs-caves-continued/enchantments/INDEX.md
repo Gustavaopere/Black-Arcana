@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 42/51.**
+**Fichas catalogadas (somente fichas detectadas): 43/51.**
 
-**Barra das fichas catalogadas:** `████████████████░░░░ 82.4%`
+**Barra das fichas catalogadas:** `████████████████░░░░ 84.3%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 42/51.**
+**Homologadas para perks (somente fichas detectadas): 43/51.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 82.4%`
+**Barra dos contratos técnicos estáticos:** `████████████████░░░░ 84.3%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -32,7 +32,7 @@
 | ✅ | Dazing Sweep | [ficha/dazing-sweep.md](dazing-sweep.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Detonating Death | [ficha/detonating-death.md](detonating-death.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Double Stab | [ficha/double-stab.md](double-stab.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Energy Efficiency | [ficha/energy-efficiency.md](energy-efficiency.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Energy Efficiency | [ficha/energy-efficiency.md](energy-efficiency.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Enveloping Bubble | [ficha/enveloping-bubble.md](enveloping-bubble.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Explosive Flavor | [ficha/explosive-flavor.md](explosive-flavor.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Far Flung | [ficha/far-flung.md](far-flung.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

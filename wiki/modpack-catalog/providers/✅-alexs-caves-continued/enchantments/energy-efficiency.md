@@ -1,8 +1,8 @@
 # Energy Efficiency — consumo de carga do Raygun (publisher 1.0.10)
 
-**Estado:** ⚠️ **ficha individual parcial/condicionada** para `alexscaves:energy_efficiency`. O ID está no inventário dos 51 recursos da versão publisher 1.0.10, e a referência ao encantamento aparece no `RaygunItem.onUseTick` compilado. O controle de carga foi rastreado em manifestos SHA-exatos **parciais**, mas a expressão completa, o JSON físico de encantamento e a validação em jogo **não** foram fechados para esta ficha. `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED` · `NO_MUTATION`.
+**Estado:** ✅ **contrato técnico estático individual certificado** de `alexscaves:energy_efficiency` no publisher **1.0.10**, `claim_scope=STATIC_TECHNICAL_CATALOG_ONLY`, `evidence_grade=SHA_EXACT_BINARY_BEHAVIOR`. A auditoria individual reproduziu o JSON/tag físicos, os quatro métodos relevantes do `RaygunItem` e o CFG direto do `onUseTick`, preservando a distinção entre escrita de charge no cliente e autoridade de rede/servidor. **Sem hook mutador ou QA física homologada:** `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `executable_perk_certification=NOT_CERTIFIED` · `NO_MUTATION`.
 
-**Descrição funcional, com limite de prova:** o encantamento é consultado durante o uso contínuo do **Raygun** em uma região que também calcula e atualiza a carga usada do item. Sua intenção aparente é alterar o consumo/intervalo de gasto de energia. **Não** há evidência suficiente para atribuir à build 1.0.10 a fórmula completa ou percentuais de economia por nível. O encantamento não constitui uma nova magia, novo tipo de dano ou projétil independente: é um modificador do fluxo do equipamento nativo.
+**Descrição funcional verificada estaticamente:** Energy Efficiency aumenta o intervalo entre tentativas de incrementar o indicador de **carga usada** (`ChargeUsed`) durante o uso sustentado do Raygun, conforme `P(L)=2+floor(1.5×L)`. Após o aquecimento de 15 ticks, o consumidor calcula no **ramo cliente** a periodicidade e solicita `setCharge(stack,min(ChargeUsed+1,1000))` nas iterações elegíveis. Não é uma nova magia, novo tipo de dano nem um projétil separado; integração mutadora e consumo realmente aceito pelo servidor continuam sem homologação.
 
 ## 1. Versão instalada, identidade e fontes
 
@@ -17,46 +17,51 @@
 | Método selecionado | `onUseTick(Level,LivingEntity,ItemStack,int)V`; digest de parse `b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5` |
 | Manifestos canônicos reutilizados | [Controle Raygun](../EXACT-RAYGUN-CONTROL-1.0.10.json), [rede](../EXACT-RAYGUN-NETWORK-ABI-1.0.10.json), [pacote e munição](../EXACT-RAYGUN-PACKET-AMMO-1.0.10.json), [receptor](../EXACT-RAYGUN-RECEIVER-1.0.10.json), [ficha de dano](../damage-types/raygun.md) |
 
-Esses manifestos já haviam sido gerados a partir do JAR publisher e validados pelos workflows relacionados. **Nesta revisão não houve nova leitura binária completa do método.** A tentativa de obter novamente o JAR por `edge.forgecdn.net` falhou por resolução DNS no ambiente de trabalho; portanto, não se eleva a precisão das conclusões existentes. Hashes de métodos e offsets são **reutilização de evidência histórica selada**, não resultado de um novo probe.
+Os manifestos anteriores permanecem intactos. **Nesta certificação houve nova execução do JAR publisher exato em GitHub Actions**, com revalidação do SHA-1, SHA-256, tamanho, hash do `RaygunItem` e registry, leitura de `energy_efficiency.json` e `enchantable/raygun.json`, métodos JVM, 57 branches diretos e selo individual [Energy Efficiency](../EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json). A inspeção local fora da CI tem bloqueio DNS, sem prejuízo do resultado reproduzível da CI. Nenhum teste físico do modpack foi executado.
 
-## 2. Dados declarativos: conhecido versus ainda não equiparado ao publisher
+## 2. JSON físico e elegibilidade — publisher 1.0.10
 
-**Confirmado para o publisher 1.0.10:** o inventário exato enumera o recurso `energy_efficiency`; o método `RaygunItem.onUseTick` contém referência simbólica ao campo `ACEnchantmentRegistry.ENERGY_EFFICIENCY` em `@246`. A enumeração de nomes e um callsite **não verificam o JSON físico completo, sua exclusividade, os slots resolvidos ou a disponibilidade efetiva em mesa/bigorna**.
+O ZIP exato possui o recurso `data/alexscaves/enchantment/energy_efficiency.json`, SHA-256 `c5771a00e6dd2dd0a693369a110a943354b074dde27b9f3c9d1dcb4a8440cf3a`; e `data/alexscaves/tags/item/enchantable/raygun.json`, SHA-256 `8e7cb71ff2c706004fba0493f2237e96da3af53dea6e3ae414542b5150cc012d`. A tag física declara somente `alexscaves:raygun`. O varrimento de classfiles pelo token compilado `ENERGY_EFFICIENCY` identificou `ACEnchantmentRegistry.class` e `RaygunItem.class`; caminhos por reflexão ou mixins externos não foram excluídos.
 
-**Fonte pública adjacente, apenas para investigação:** `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` declara **1.1.1**, não a versão instalada. Nessa fonte, `src/main/resources/data/alexscaves/enchantment/energy_efficiency.json` contém:
-
-| Campo na fonte **1.1.1** | Valor adjacente — **não certificado para 1.0.10** |
+| Campo do publisher | Valor estático verificado |
 |---|---|
 | `description.translate` | `enchantment.alexscaves.energy_efficiency` |
 | `supported_items` | `#alexscaves:enchantable/raygun` |
-| `weight` | 10 |
-| `max_level` | 3 |
-| `min_cost` | `base=1`, `per_level_above_first=5` |
-| `max_cost` | `base=41`, `per_level_above_first=10` |
-| `anvil_cost` | 1 |
+| `weight` | `10`, peso declarativo; não probabilidade de gasto |
+| `max_level` | `3` (I/II/III) |
+| `min_cost` | `base=1`, `per_level_above_first=5` (1/6/11) |
+| `max_cost` | `base=41`, `per_level_above_first=10` (41/51/61) |
+| `anvil_cost` | `1` |
 | `slots` | `mainhand` |
-| `exclusive_set` | Não declarado nesse JSON adjacente |
+| `exclusive_set` | **Ausente** no JSON específico |
 
-**Não importar esses valores ao contrato do publisher** sem conferir o ZIP `data/alexscaves/enchantment/energy_efficiency.json`, a tag `enchantable/raygun`, seus hashes e a resolução de dados. Peso/custos de encantamento não constituem custo por tick, combustível consumido, mana ou limite de charge.
+Esses custos são do sistema de encantamento, não de mana, combustível ou custo por disparo. A resolução final de tags, encantamento em bigorna, datapacks e níveis forçados não foi validada em jogo. A fonte pública 1.1.1 permanece referência não autoritativa para a versão física 1.0.10.
 
-## 3. Fluxo nativo observado no binário 1.0.10
+## 3. Causalidade JVM completa do consumo do Raygun
 
-**Owner:** `RaygunItem.onUseTick`, descritor JVM `(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V`. A [auditoria de controle](../EXACT-RAYGUN-CONTROL-1.0.10.json) registrou 26 métodos declarados no classfile, 18 selecionados e o digest do método acima.
+**Classe:** `com/github/alexmodguy/alexscaves/server/item/RaygunItem.class`, SHA-256 `3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c`. O método `onUseTick(Level,LivingEntity,ItemStack,int)V` possui **523 instruções JVM** e **57 branches diretos** com alvos verificados; SHA-256 canônico do parse `b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5`. Foram reconciliados os métodos `hasCharge`, `getCharge` e `setCharge` pelos digests já publicados.
 
-| Região / método | Evidência delimitada da versão exata | O que não comprova |
-|---|---|---|
-| `onUseTick @246` | Consulta simbólica a `ACEnchantmentRegistry.ENERGY_EFFICIENCY`, com `ACCompat.enchantLevel` na região de consumo | Valor do nível ativo, máximo efetivo, fórmula completa ou execução por tick |
-| `onUseTick @246–319` | Região já inventariada com `Math.floor`, `Math.min`, `getCharge`, `setCharge`, limite **1000** e literal **1.5F** | Ordem de todas as condições, taxa de descarga por nível e garantias de lado/autoridade |
-| `hasCharge(ItemStack)Z @4` | Compara o valor de `getCharge` com **1000**, deixando de considerar carga disponível no limite observado | Que `ChargeUsed` mede energia restante; a semântica observada é **carga usada** |
-| `getCharge` / `setCharge` | Lêem/escrevem `ChargeUsed` via componente/tag do `ItemStack`; leitura ausente tem fallback zero | Persistência, autorização do servidor ou validação de valores anômalos |
-| `getUseDuration` | Valor compilado **72000 ticks** | Taxa de consumo, cooldown de arma ou duração obrigatória de ataque |
-| `use` / `findAmmo` | Recarga nativa envolve `URANIUM_ROD`, guardas de Creative e possível `shrink(1)`; `setCharge(...,0)` em caminho de recarga | Consumo de uma unidade a cada disparo, recarga incondicional ou custo de mana |
+**Entrada e aquecimento:** `onUseTick @0–9` calcula `elapsed=getUseDuration(stack,null)-remainingUseTicks`, armazenado no local inteiro 5. Em `@11–33`, o progresso `f7` é `elapsed/15F` enquanto `elapsed<15`, e **1F** caso contrário. O valor não tem clamp inferior próprio nesse trecho; `getUseDuration` retorna o literal **72000 ticks**. Distância do raio (outros branches) não deve ser confundida com o contador de consumo.
 
-**Sequência causal parcial:** a verificação de carga e os caminhos de `use`/recarga pertencem ao **Raygun**. Energy Efficiency é consultado dentro de `onUseTick`; após esse trecho seguem caminhos próprios de targeting, dano e `GAMMA_RAY`. O método só deve ser interpretado como **equipamento com consumo nativo**, não como `ArcanaCast` com custos transacionais inventados. O literal 1000 é o limite observado do estado `ChargeUsed`; 72000 é a duração máxima do item em uso, **não** um intervalo de consumo.
+**Guardas anteriores ao débito:** `@139–143` executa `hasCharge(stack)`; o helper retorna verdadeiro enquanto `getCharge(stack)<1000`. Se a carga usada já ultrapassou ou atingiu o limite, o ramo `@146–209` solicita, **no cliente**, `UpdateItemTagMessage` por `sendMSGToServer`, chama `stopUsingItem`, pede som de esgotamento e retorna. Um pacote enviado não certifica identidade do remetente, valor autorizado nem aceitação do estado no servidor.
 
-### Pista da fonte 1.1.1, explicitamente não certificada
+**Ramo que solicita o gasto:** `@210–214` testa `Level.isClientSide()` e salta diretamente para `@322` no servidor. Assim, toda a sequência `@245–319` de atualização de `ChargeUsed` é **client-side nesse método**. No cliente:
 
-O `RaygunItem.java` público na mesma revisão 1.1.1 sugere, **apenas como hipótese para comparação de bytecode**, uma periodicidade candidata `divisor = 2 + floor(level * 1.5)` para uma condição de atualização de `ChargeUsed`, com filtros de tempo de uso e jogador Creative. Naquela **fonte adjacente**, o incremento é limitado ao teto com `Math.min`. Embora a estrutura explique por que `Math.floor`, `1.5F` e `Math.min` aparecem no recorte exato, **coincidência de operandos não certifica expressão, branch, periodicidade, lado de execução ou percentuais na versão publisher 1.0.10**. Proibido usar a fórmula candidata para parametrizar uma perk sem CFG/validação específica do binário instalado.
+1. `@245–268` lê `ACCompat.enchantLevel(stack,ENERGY_EFFICIENCY)` e calcula, sem clamp próprio, `P(L)=2+floor(1.5F×L)`.
+2. `@270–274` exige `f7 >= 1F` (para o fluxo normal: **15 ticks de uso**). `@277–282` exige `elapsed % P(L) == 0`; se não, salta sobre a escrita.
+3. `@285–299` ignora o gasto se o usuário for `Player` em Criativo. Entidades `LivingEntity` não-Player não recebem essa isenção no ramo próprio.
+4. `@302–319` lê `ChargeUsed`, soma **1**, usa `Math.min(valor+1,1000)` e solicita `setCharge`. O método não prova aceitação/autorização remota desse valor.
+
+| `L` lido do stack | `P(L)`: periodicidade nominal após o aquecimento | Condição de débito |
+|---|---:|---|
+| 0 — sem encantamento | 2 ticks | `elapsed % 2 == 0` |
+| I | 3 ticks | `elapsed % 3 == 0` |
+| II | 5 ticks | `elapsed % 5 == 0` |
+| III | 6 ticks | `elapsed % 6 == 0` |
+
+**Casos anômalos e riscos:** o JSON limita níveis normais a III, mas `ACCompat.enchantLevel` lê um inteiro sem clamp demonstrado nesse consumidor. Para `L=-1`, a expressão dá `P=0` e a operação `irem @281` pode lançar divisão por zero **se** o caminho cliente alcançar a condição após o aquecimento. Para níveis extraordinários, podem surgir valores inesperados/overflow; não reinterpretar a tabela normal como extrapolação livre. `Math.min(used+1,1000)` aplica apenas teto, não piso zero. A ficha não aprova injeção de níveis nem reescrita desse contador.
+
+**Não é fórmula de dano:** `GAMMA_RAY` é lido mais adiante (começando `@332`); `X_RAY` e ray traces possuem consumidores distintos, incluindo `ProjectileUtil` e `ACCompat.hurt`. O número `1.5F` aqui pertence à multiplicação do **intervalo de gasto**, enquanto outro `1.5F` posterior pode ser operando de dano Raygun, sem relação causal com Energy Efficiency.
 
 ## 4. Rede, autoria e autoridade de charge
 
@@ -66,26 +71,40 @@ Os guards compilados do receptor conferem entidade, tipo de item, mão e presen�
 
 O indicador visual do Raygun usa referência a **13** e **1000** em `getBarWidth`; essa barra mede uma representação local do estado do item, não concede autoridade sobre mana ou balanceamento Black Arcana. `PrevUseTime` e `UseTime` pertencem ao estado/animação do equipamento; sua presença não prova uma taxa de gasto.
 
-## 5. Targeting, dano e demais eixos de perks
+## 5. Targeting, efeitos e matriz de interoperabilidade
 
-| Eixo | Papel observado do Energy Efficiency | Boundary para perks |
+Energy Efficiency não produz uma nova entidade, impacto, hitbox, AOE, escola ou `DamageType` no método auditado. O Raygun é a ação base, com ray traces, seleção e dano nativos. `X_RAY` e `GAMMA_RAY` são encantamentos adjacentes e não devem ter seus parâmetros atribuídos a Energy Efficiency. A ficha [Raygun](../damage-types/raygun.md) mantém **⚠️ partial** para seus próprios eixos ainda não fechados; certificar esta fórmula de consumo não a certifica automaticamente.
+
+| Eixo para perks/Mastery | Contrato da versão 1.0.10 | Boundary e risco |
 |---|---|---|
-| **Consumo / eficiência / frequência** | Referência ao encantamento junto de `floor`, `min` e `ChargeUsed`; fórmula 1.0.10 incompleta | ⛔ Não aplicar multiplicador externo nem alterar `ChargeUsed` sem hook verificado |
-| **Mana / combustível / durabilidade** | `URANIUM_ROD` e charge do Raygun são recursos nativos; não há segunda mana no consumidor observado | ⛔ Não introduzir novo settlement ou cobrança duplicada por tick |
-| **Alvo / range / área / LOS** | Não foi demonstrado que Energy Efficiency altere os ramos `X_RAY`, ray trace, AABB ou filtros de aliados | ⛔ Manter filtros nativos; qualquer expansão exige auditoria própria |
-| **Dano / tipo de dano** | `causeRaygunDamage` e `ACCompat.hurt` aparecem mais tarde em `onUseTick`; `GAMMA_RAY` tem outro ramo | ⛔ Não atribuir 1.5F de eficiência como dano; não duplicar hits nem reclassificar `raygun` |
-| **Projétil / hitbox / trajetória** | Raygun usa caminhos de trace e consulta de entidades; não há tamanho/projétil próprio comprovado para este encantamento | N/A na região auditada; ⛔ sem mutação externa |
-| **Duração / cooldown** | `getUseDuration=72000`; condição de gasto dependente de uso ainda incompleta | ⛔ Não inferir cooldown, tempo de tiro ou taxa efetiva do consumo |
-| **Mastery / perks / autoria** | O Raygun continua produtor do efeito; recepção de estado por rede carece de homologação de autorização | ⛔ Não emitir XP ou proc repetido a cada tick, pacote ou atualização de HUD |
+| Intervalo de consumo | `2+floor(1.5×L)`, após 15 ticks; normal 2/3/5/6 | ⛔ Sem mutação de nível/intervalo sem seam real, caps, side e autorização |
+| Carga/custos | `ChargeUsed` é **carga usada**, limite comparado 1000; escrita cliente `min(used+1,1000)` | ⛔ Não duplicar gasto, refund, combustível ou segunda mana |
+| Duração e cooldown | `getUseDuration=72000` é limite do item em uso, não cooldown de cast | ⛔ Não inventar cooldown/custo por tiro |
+| Targeting/range/LOS/AOE | Não alterados pelo ramo de eficiência; caminho nativo do Raygun usa outros controles | ⛔ Não mudar filtros, claims, aliados ou PvP a partir do custo |
+| Dano/tipo | `ACDamageTypes.causeRaygunDamage`/`ACCompat.hurt` em consumidor separado; `GAMMA_RAY` participa de ramo próprio | ⛔ O 1.5 de periodicidade não é dano ou multiplicador de dano |
+| Projéteis, tamanho, velocidade | Nenhum projétil do encantamento isolado; valores de raio/render do Raygun são externos ao ramo | N/A para Energy Efficiency; downstream do item continua provider-owned |
+| Autoria/rede/persistência | ItemStack e `UpdateItemTagMessage`, lado cliente de charge; autorização de receptor não homologada | ⛔ Sem hook mutador seguro e recibo idempotente; bloqueio de replay/pacote |
+| Mastery / XP | Atualizações de charge podem se repetir durante um mesmo uso | ⛔ Não contabilizar cada tick/pacote como cast, proc ou vitória confirmada |
 
-**Causalidade:** os registros de dano, `Irradiated`, `X_RAY` e `GAMMA_RAY` pertencem ao mesmo item, mas são **consumidores distintos**. Energy Efficiency não é uma segunda arma/cast nem uma origem nova de `DamageType`. A ficha [Raygun](../damage-types/raygun.md) continua ⚠️ parcial para dano, targeting, rede e autorização, sem promoção automática pela catalogação deste encantamento.
+**Autoridade:** Alex's Caves mantém o consumo e os efeitos Raygun. Black Arcana continua autoritativo sobre sua própria magia. RPG Skill Tree fornece progressão, atributos, Mastery, perks e gates apenas por adapters/contratos reais, não recebe automaticamente o estado `ChargeUsed`. **`NO_MUTATION` / fail-closed** para qualquer proposta de alteração de eficiência.
 
-## 6. Pendências e critérios de aceite
+## 6. Selo individual, reprodução e pendências
 
-1. Obter o **JAR publisher 1.0.10** pelos fingerprints já registrados e extrair `energy_efficiency.json` e a tag real `enchantable/raygun`; registrar hashes, nível máximo, peso, custos, slots e exclusividades de **1.0.10**.
-2. Selar **janela completa e CFG de `onUseTick`** em torno de `@246–319`, incluindo pilha, locais, comparações, frequência, restrição de lado, Creative, valores negativos/anômalos e branches que evitam débito. Não confundir hipótese 1.1.1 com contrato real.
-3. Testar nativamente em servidor dedicado/modpack níveis permitidos, nível 0, combinações com `GAMMA_RAY`/`X_RAY`, alteração de stack/mão, recarga, interrupção, save/reload, lag e reconexão; aferir consumo real e aceitação dos pacotes.
-4. Homologar **autorização e integridade C2S**, caps de `ChargeUsed`, deduplicação de eventos/XP e coexistência de outros mods antes de permitir alteração por perks.
-5. Exigir boundary provider-native, proteção contra replay e respeito à autoridade de cada sistema. Black Arcana continua dono do seu runtime mágico; RPG Skill Tree fornece progressão/Mastery/perks/gates somente por contratos verificados; Enshrouded não recebe controle implícito do item.
+**Contrato estático certificado:** há prova física SHA-exata do JAR, hash de JSON e tag, dois classfiles tokenizados, quatro métodos Raygun com digests e a sequência integral de operandos da região de charge. O selo [`EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json`](../EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json) fixa o SHA-256 do relatório canônico `0bb9e77b51908adaf6b679f483c484d5b4da5169cd4cb440e0c7a31b9c6dcfb3`, 57 branches e projeção da fórmula em quatro níveis normais. Ver [sonda SHA-exata](../../../../docs/qa/alexscaves_1010_energy_efficiency_probe.py), [testes negativos](../../../../docs/qa/alexscaves_1010_energy_efficiency_probe_test.py) e workflow `alexscaves-1010-energy-efficiency-causal.yml`.
 
-**Estado final desta ficha:** `RESOURCE_ID_IN_EXACT_INVENTORY` + `SHA_EXACT_SELECTED_CONSUMER_REFERENCES` + `ADJACENT_SOURCE_NOT_VERSION_EQUIVALENT`. **Sem** fechamento de JSON/CFG integral, hooks mutadores, teste físico, certificação perk-ready, novo spell, Stage promotion ou alteração do JAR. **Contabilidade:** +1 ficha individual **parcial**, +0 fichas certificadas, +0 raízes mágicas, +0 providers fechados. **Próximo recurso alfabético:** `alexscaves:enveloping_bubble`.
+**Reprodução local, somente read-only, Java 21:**
+
+```sh
+python3 docs/qa/alexscaves_1010_energy_efficiency_probe_test.py -v
+python3 docs/qa/alexscaves_1010_energy_efficiency_probe.py \
+  --jar /caminho/alexscaves-1.0.10-neoforge+1.21.1.jar \
+  --javap /caminho/jdk-21/bin/javap \
+  --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json' \
+  --output /tmp/alexscaves-energy-efficiency.json
+```
+
+**QA física `NOT_TESTED`:** intervalos medidos no cliente/servidor real, inventário Creative/Survival, carga negativa/excedente, nível anômalo, disponibilidade/recarga com `URANIUM_ROD`, troca de mãos, interrupções e tick delay, divergência C2S, replays, save/reload, sincronização após morte/desconexão, outros mods, `GAMMA_RAY` e `X_RAY`, proteção PvP e claims. Não testar se o receptor valida semanticamente `ChargeUsed` a partir do corpo de `RaygunItem`; isso pertence a outro contrato. Nenhuma linha de QA foi promovida por CI estática.
+
+**Estados:** `individual_static_certification=STATIC_TECHNICAL_CATALOG_ONLY`, `evidence_grade=SHA_EXACT_BINARY_BEHAVIOR`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `network_authorization=NOT_VERIFIED`, `NO_MUTATION`, `provider_universe_closed=false`.
+
+**Contabilidade:** +0 fichas novas, **+1 contrato técnico estático individual certificado**, +0 raízes mágicas, +0 hooks validados, +0 QA física e +0 providers integralmente concluídos. Próximo encantamento **parcial** alfabético: `alexscaves:enveloping_bubble`.

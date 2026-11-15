@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class": {
+    "path": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+    "sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c"
+  },
+  "resource_sha256": {
+    "data/alexscaves/enchantment/energy_efficiency.json": "c5771a00e6dd2dd0a693369a110a943354b074dde27b9f3c9d1dcb4a8440cf3a",
+    "data/alexscaves/tags/item/enchantable/raygun.json": "8e7cb71ff2c706004fba0493f2237e96da3af53dea6e3ae414542b5150cc012d"
+  },
+  "compiled_token_owners": [
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+    "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class"
+  ],
+  "onUseTick_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+  "method_sha256": {
+    "onUseTick": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+    "hasCharge": "0b89217b97ca4f3d1c155c01b4170d1f0cb9141e4ee854ccf0c72892cd3b1db7",
+    "getCharge": "c69c154524dbe4b4e46ed589438f7548cc39658305072a59b7c6a7dc9ec25baa",
+    "setCharge": "cedf012dbfb8edf1ca2171c57001dc8937f2982e3755a156da058a74d260993e"
+  },
+  "onUseTick_direct_branches": 57,
+  "energy_consumption_contract": {
+    "side": "CLIENT_BRANCH_IN_THIS_METHOD",
+    "use_ticks_local": "getUseDuration(stack,null)-remainingUseTicks",
+    "warmup_ticks": 15,
+    "period_formula": "2+floor(1.5*enchantLevel)",
+    "periods_0_to_3": {
+      "0": 2,
+      "1": 3,
+      "2": 5,
+      "3": 6
+    },
+    "event_guard": "use_ticks/15 >= 1; use_ticks % period == 0; noncreative Player or non-Player",
+    "write": "setCharge(stack, min(getCharge(stack)+1, 1000))",
+    "negative_level_minus_one_zero_divisor": true,
+    "client_update_message_authorization": "NOT_VERIFIED"
+  },
+  "full_report_sha256": "0bb9e77b51908adaf6b679f483c484d5b4da5169cd4cb440e0c7a31b9c6dcfb3",
+  "limits": {
+    "individual_static_certificate": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "artifact": "EXACT_PUBLISHER_1.0.10",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "effective_world_state": "NOT_TESTED",
+    "network_authorization": "NOT_VERIFIED",
+    "effective_charge_settlement": "NOT_TESTED"
+  }
+}
