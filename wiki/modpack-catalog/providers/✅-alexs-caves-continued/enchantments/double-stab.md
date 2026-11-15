@@ -1,6 +1,6 @@
 # Double Stab — multiplicação de dagas do Desolate Dagger (publisher 1.0.10)
 
-**Estado:** ⚠️ ficha individual **parcial/condicionada** para `alexscaves:double_stab`. A identidade do recurso, o registro e o consumidor compilado já foram documentados na auditoria SHA-exata do Desolate Dagger. Esta ficha faz o crosswalk do encantamento para perks sem criar um novo certificado individual, hook ou runtime. **`claim_scope=EXISTING_SHA_EXACT_CONTRACT_REUSE` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `perk_certification=NOT_CERTIFIED` · `NO_MUTATION`.**
+**Estado:** ✅ **contrato técnico estático individual certificado** para `alexscaves:double_stab` na versão física publisher **1.0.10**, `claim_scope=STATIC_TECHNICAL_CATALOG_ONLY`, `evidence_grade=SHA_EXACT_BINARY_BEHAVIOR`. O comportamento do encantamento foi reproduzido contra o JAR exato, suas definições JSON e 12 métodos completos com validação causal, CFG e selo individual. Não certifica hooks mutadores, permissão de perks executáveis, compatibilidade física ou execução no modpack. `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `executable_perk_certification=NOT_CERTIFIED` · `NO_MUTATION`.
 
 **Comportamento delimitado:** Double Stab altera a **quantidade de tentativas de criar entidades Desolate Dagger** depois que o callback de ataque da arma passa no gate nativo. Sem encantamento, o loop tenta uma entidade; com o nível I normal, tenta duas. Cada entidade recebe o **mesmo ID de alvo** e seu próprio contador inicial de órbita. Não há segunda ação/cast, mudança automática no dano individual, nem garantia de dois spawns ou dois hits aceitos.
 
@@ -18,7 +18,7 @@
 | Producer compilado | `server/item/DesolateDaggerItem.class`; SHA-256 `ca020279666b45f5d8ede7082ba20c026a870989a6d90166fd1587af921a95ef` |
 | Entidade consumidora | `server/entity/item/DesolateDaggerEntity.class`; SHA-256 `f82a3f5f1cc05bbe52dfb7e3742f33c2289cbc37810b069a53b45002cfeb4351` |
 
-Fontes de autoridade reutilizadas: [manifesto binário exato](../EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json), [memorial e reprodução](../EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md), [equipamento/produtor](../equipment/desolate-dagger.md) e [entidade/dano](../damage-types/desolate-dagger.md). A fonte pública `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` declara **1.1.1**; seus métodos **não** foram equiparados ao JAR 1.0.10. Esta inclusão reutiliza provas seladas e **não afirma ter reaberto ou executado novamente o JAR**.
+Fontes de autoridade reutilizadas: [manifesto binário exato](../EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json), [memorial e reprodução](../EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.md), [equipamento/produtor](../equipment/desolate-dagger.md) e [entidade/dano](../damage-types/desolate-dagger.md). A fonte pública `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37` declara **1.1.1**; seus métodos **não** foram equiparados ao JAR 1.0.10. Além dos contratos previamente selados, esta certificação executa **nova auditoria read-only do JAR 1.0.10** pelo GitHub Actions, validando os métodos JVM completos e um selo individual reproduzível. Não executa o mod no Minecraft.
 
 ## 2. Definição do encantamento e disponibilidade
 
@@ -84,10 +84,37 @@ Em caso de dano aceito, `SATED_BLADE` pode solicitar ganho de saturação **some
 
 **Boundary:** Alex's Caves é dono de ataque, criação, temporizadores, dano, desgaste e efeitos. Black Arcana não deve assumir esse runtime; RPG Skill Tree é provider de progressão/atributos/Mastery/perks/gates apenas por boundary real; Enshrouded não ganha automaticamente controle do consumidor. Sem hook seguro, **fail-closed** para mutações. Observar uma saída confirmada, caso futuramente exista evento estável e teste de autoria, é diferente de reproduzir o hit ou reexecutar spawn.
 
-## 6. Verificação restante e contabilização
+## 6. Certificação estática individual e reprodução
 
-**Evidência já selada:** JSON com seus hashes e metadados, tag, registro da chave, `acSpawnDaggers @0–115`, `hurtEnemy @0–20`, helper `ACCompat.enchantLevel`, entidade e dano downstream. Não há nova inspeção física do JAR nesta ficha; o documento consolida **provas previamente existentes**, não certifica bytecode de classes fora do manifesto.
+**Evidência publisher verificada:** hash do JAR, JSON do encantamento e exclusividade assimétrica de `Impending Stab`, tag, registros, produtor `acSpawnDaggers @0–115` / `hurtEnemy @0–20`, resolução de nível `ACCompat.enchantLevel`, entidade alvo, persistência local e pedido de dano. O [selo individual SHA-exato](../EXACT-DOUBLE-STAB-CAUSAL-1.0.10.json) vincula os métodos ao [manifesto pai](../EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json) e à CI.
+
+A auditoria lê integralmente os corpos de **12 métodos JVM** dos quatro owners técnicos principais, validando **507 instruções**, **32 branches diretos** e **391 âncoras** do manifesto anterior, incluindo três classes executoras do fluxo e a factory de dano:
+
+| Consumer | Métodos completos | Instruções JVM / branches diretos |
+|---|---|---:|
+| `DesolateDaggerItem` | `hurtEnemy`, `acSpawnDaggers` | 66 / 5 |
+| `DesolateDaggerEntity` | `tick`, `getTargetEntity`, `getPlayer`, `setItemStack`, `addAdditionalSaveData`, `readAdditionalSaveData` | 395 / 24 |
+| `ACCompat` | `enchantLevel`, `createEntity`, `hurt` | 33 / 3 |
+| `ACDamageTypes` | `causeDesolateDaggerDamage` | 13 / 0 |
+
+A verificação compara hashes dos classfiles e dados do JAR, descritores, fingerprints do parse completo dos métodos, offsets, branch targets e tokens compilados de `DOUBLE_STAB` (registry e item). Confirma que `hurtEnemy` chama o callback de criação uma vez após retorno verdadeiro do método-base; que o **limite `1+L` é lido em cada teste do loop**, há **um único callsite de tentativa `addFreshEntity`**, retorno booleano descartado, e que `DesolateDaggerEntity.tick` não consulta `DOUBLE_STAB` para multiplicar seu próprio dano. Sem `setPlayerId` ou guarda de lado no producer examinado, autoria e política de servidor não são inferidas.
+
+**Selo:** manifesto anterior SHA-256 `e9f23c323fb9a04af9ac215b1e589de5933d99e70d9e8b96c91a4e7421d58ff1`; relatório completo SHA-256 `7b9dfd24d8af0f89cd96adddcf1a95ed7bfde71adbcfba2275be17f0891d05b0`. A auditoria não reimplementa o provider nem autoriza geração extra de dagas.
+
+**Reprodução read-only com Java 21:**
+
+```sh
+python3 docs/qa/alexscaves_1010_double_stab_causal_probe_test.py -v
+python3 docs/qa/alexscaves_1010_double_stab_causal_probe.py \
+  --jar /caminho/alexscaves-1.0.10-neoforge+1.21.1.jar \
+  --manifest 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DESOLATE-DAGGER-CONTRACTS-1.0.10.json' \
+  --javap /caminho/jdk-21/bin/javap \
+  --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DOUBLE-STAB-CAUSAL-1.0.10.json' \
+  --output /tmp/double-stab-causal.json
+```
+
+## 7. Pendências de integração e QA física
 
 **QA física ainda `NOT_TESTED`:** enchanting/bigorna e exclusividade real; ataque vanilla vs Epic Fight/Better Combat; servidor dedicado e cliente; nível alterado no loop; spawn recusado ou factory nula; alvo morto/descarregado/trocado; divergência de dimensão; stack atualizado durante a órbita; i-frames e dano recusado; eventos/procs de duas entidades; custo efetivo, PvP/claims, save/reload e lag em multiplayer. Verificar proteção e deduplicação no sistema que efetivamente possui autoridade antes de habilitar qualquer perk.
 
-**Contabilidade:** +1 ficha individual **parcial** de encantamento; +0 contratos estáticos individuais certificados; +0 raízes mágicas; +0 providers encerrados; +0 hooks validados; +0 testes físicos realizados. Próximo encantamento alfabético: `alexscaves:energy_efficiency`.
+**Contabilidade desta certificação:** +0 fichas novas; **+1 contrato técnico estático individual certificado**; +0 raízes mágicas; +0 providers encerrados; +0 hooks validados; +0 testes físicos realizados. Próximo encantamento parcial alfabético: `alexscaves:energy_efficiency`.
