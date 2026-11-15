@@ -31,6 +31,16 @@ REGISTRY = BASE + "server/enchantment/ACEnchantmentRegistry.class"
 ENCHANT = "data/alexscaves/enchantment/far_flung.json"
 TAG = "data/alexscaves/tags/item/enchantable/candy_cane_hook.json"
 SEAL = "EXACT-FAR-FLUNG-1.0.10.json"
+EXTRA_METHODS = {
+    ITEM: (
+        "isHookLaunchedInWorld", "isActive", "getLaunchedHookUUID",
+        "isReelingIn",
+    ),
+    HOOK: (
+        "isOwnerHoldingHook", "postReel", "getHookedEntity",
+        "getPlayerOwner", "getDefaultGravity", "defineSynchedData",
+    ),
+}
 
 class FarFlungAuditError(ValueError):
     pass
@@ -197,6 +207,30 @@ def physical_audit(jar: Path, javap_bin="javap", inspect=False):
             total_ins += len(m["instructions"])
             total_branches += nbranch
             inspected[(owner, ident)] = m
+        for name in EXTRA_METHODS[owner]:
+            candidates = [((nm, desc), method)
+                          for (nm, desc), method in native.items()
+                          if nm == name]
+            require(len(candidates) == 1, "missing/ambiguous adjacent method " + name)
+            ident, native_method = candidates[0]
+            require((owner, ident) not in inspected,
+                    "duplicate core/adjacent method " + name)
+            nbranch = direct_branch_count(native_method)
+            method_report.append({
+                "owner": owner, "method": name,
+                "descriptor": ident[1], "instructions": len(native_method["instructions"]),
+                "direct_branches": nbranch,
+                "full_parsed_method_sha256": digest_method(native_method),
+                "evidence_role": "ADJACENT_CONSUMER_FULL_BODY",
+            })
+            total_ins += len(native_method["instructions"])
+            total_branches += nbranch
+            inspected[(owner, ident)] = native_method
+            if inspect:
+                print("=== ADJACENT_METHOD " + owner + "." + name + " ===")
+                for ins in native_method["instructions"]:
+                    print(str(ins["offset"]) + ": " + ins["opcode"]
+                          + " " + ins["operand"] + " // " + ins["symbol"])
 
     def m(owner, name, descriptor=None):
         values = [obj for (path, (nm, desc)), obj in inspected.items()
@@ -302,6 +336,15 @@ def physical_audit(jar: Path, javap_bin="javap", inspect=False):
         (118, "ifle", "129"), (123, "dconst_1", ""),
         (124, "invokevirtual", "Vec3.scale:"),
     ])
+    require(any("getLaunchedHookUUID:" in r["symbol"] for r in
+                m(HOOK, "isOwnerHoldingHook")["instructions"]),
+            "holding-hook identity not derived from stack UUID")
+    require(any("CandyCaneHookItem.setLastLaunchedHookUUID:" in r["symbol"]
+                for r in m(HOOK, "postReel")["instructions"]),
+            "post-reel stack UUID cleanup absent")
+    require(any("ServerLevel.getEntity:" in r["symbol"]
+                for r in m(HOOK, "getHookedEntity")["instructions"]),
+            "server-hooked-entity UUID lookup absent")
     for name, descriptor in [
         ("readAdditionalSaveData", "(Lnet/minecraft/nbt/CompoundTag;)V"),
         ("addAdditionalSaveData", "(Lnet/minecraft/nbt/CompoundTag;)V"),
