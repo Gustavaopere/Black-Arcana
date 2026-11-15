@@ -128,7 +128,7 @@ class EnvelopingBubbleStaticContract(unittest.TestCase):
         anchor(m, BOLT, "damageMobs", 178, opcode="invokevirtual", fragment="LivingEntity.addEffect:")
         anchor(m, BOLT, "damageMobs", 181, opcode="pop")
         anchor(m, BOLT, "damageMobs", 213, opcode="invokestatic", fragment="sendMSGToAll:")
-        self.assertEqual(self.seal["static_contract"]["debff_duration_ticks"], 200)
+        self.assertEqual(self.seal["static_contract"]["debuff_duration_ticks"], 200)
 
     def test_sync_nbt_and_child_copy_are_downstream_of_same_cast(self):
         m = self.manifests["triple"]
