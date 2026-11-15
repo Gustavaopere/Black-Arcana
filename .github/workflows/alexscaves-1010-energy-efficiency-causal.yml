@@ -1,0 +1,65 @@
+name: Alex's Caves 1.0.10 Energy Efficiency charge causal audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-energy-efficiency-causal.yml'
+      - 'docs/qa/alexscaves_1010_energy_efficiency_probe*.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/energy-efficiency.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/**/INDEX.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-energy-efficiency-causal.yml'
+      - 'docs/qa/alexscaves_1010_energy_efficiency_probe*.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/energy-efficiency.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/ENCHANTMENT-PERK-CROSSWALK-1.0.10.md'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'wiki/modpack-catalog/providers/**/INDEX.md'
+
+permissions:
+  contents: read
+
+jobs:
+  energy_efficiency_static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Negative tests / fail-closed audit harness
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_energy_efficiency_probe.py docs/qa/alexscaves_1010_energy_efficiency_probe_test.py
+          python3 docs/qa/alexscaves_1010_energy_efficiency_probe_test.py -v
+      - name: Fetch SHA-pinned publisher JAR
+        run: |
+          mkdir -p build/alexscaves-energy-efficiency
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/alexscaves-energy-efficiency/alexscaves-1.0.10.jar
+      - name: Inspect publisher energy JSON and complete onUseTick native method
+        run: |
+          python3 docs/qa/alexscaves_1010_energy_efficiency_probe.py \
+            --jar build/alexscaves-energy-efficiency/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/alexscaves-energy-efficiency/discovery.json
+      - name: Verify no unintended index drift
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: alexscaves-1010-energy-efficiency-discovery
+          path: build/alexscaves-energy-efficiency/discovery.json
+          if-no-files-found: ignore
+          retention-days: 14
