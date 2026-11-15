@@ -1,8 +1,8 @@
 # Enveloping Bubble — Water Bolt com aplicação de Bubbled (1.0.10)
 
-**Estado individual:** ⚠️ **parcial/condicionado para perks**; identidade do JSON, campos declarativos, produtor, flag, solicitação de dano e efeito downstream rastreados com evidência estática do **JAR publisher exato 1.0.10**. **Não** é uma magia autônoma nem uma nova raiz de casting: altera a ação `sea-staff-water-bolt` do `alexscaves:sea_staff`.
+**Estado individual:** ✅ **contrato técnico estático individual certificado no escopo publisher 1.0.10**; JSON, registro, leitura do encantamento, RNG por bolt, produtor, filtros, aceitação de dano, pedido de status, ricochete, sincronização do campo e consumidores downstream reconciliados por três manifestos SHA-exatos, selo individual e teste de pivôs. **Isto não certifica perk executável.** **Não** é uma magia autônoma nem uma nova raiz de casting: altera a ação `sea-staff-water-bolt` do `alexscaves:sea_staff`.
 
-**Certificação de integração:** `perk_certification=NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `mutation=NO_MUTATION`. Os contratos estáticos certificados da ação **não certificam automaticamente um novo hook de perk** ou observação real no modpack.
+**Certificação estática:** `claim_scope=STATIC_TECHNICAL_CATALOG_ONLY` · `evidence_grade=SHA_EXACT_BINARY_BEHAVIOR` · **Integração executável:** `perk_certification=NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `mutation=NO_MUTATION`. Os contratos estáticos certificados da ação **não certificam automaticamente um novo hook de perk** ou observação real no modpack.
 
 ## 1. Identidade e proveniência física
 
@@ -19,7 +19,7 @@
 | Tag embarcada | `data/alexscaves/tags/item/enchantable/sea_staff.json`, SHA-256 `22e45ab74b71d7152ccc531a633e5149df9c12eece40464c85c50f5a600fd80e` |
 | Efeito downstream | `alexscaves:bubbled`, implementado por `BubbledEffect` |
 
-Fontes internas: [manifesto SHA-exato de ações e recursos](../EXACT-TECHNICAL-CONTRACTS-1.0.10.json), [ação Sea Staff — Water Bolt](../actions/sea-staff-water-bolt.md), [efeito Bubbled](../effects/bubbled.md), [inventário dos 51 encantamentos](../INTEGRATION-SCOPE-INVENTORY-1.0.10.json).
+Fontes internas: [manifesto SHA-exato de ações e recursos](../EXACT-TECHNICAL-CONTRACTS-1.0.10.json), [ação Sea Staff — Water Bolt](../actions/sea-staff-water-bolt.md), [efeito Bubbled](../effects/bubbled.md), [inventário dos 51 encantamentos](../INTEGRATION-SCOPE-INVENTORY-1.0.10.json). **Selo individual**: [EXACT-ENVELOPING-BUBBLE-CAUSAL-1.0.10.json](../EXACT-ENVELOPING-BUBBLE-CAUSAL-1.0.10.json). O teste read-only [alexscaves_1010_enveloping_bubble_cards_test.py](../../../../docs/qa/alexscaves_1010_enveloping_bubble_cards_test.py) vincula os offsets de `SeaStaffItem.use`, `WaterBoltEntity.damageMobs`, Ricochet/NBT, `ACCompat.enchantLevel` e o contrato do efeito aos manifestos físicos anteriormente auditados. A [CI dedicada](../../../../.github/workflows/alexscaves-1010-enveloping-bubble.yml) exige reproduzir esses três manifestos no publisher JAR antes de merge.
 
 **Comparação externa restrita e verificável:** o texto UTF-8 de **367 bytes** em `Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37`, caminho `src/main/resources/data/alexscaves/enchantment/enveloping_bubble.json`, apresenta **o mesmo SHA-256 `d984…0ed5a` do recurso publisher selado**. Portanto, **os bytes desse JSON declarativo coincidem** com a identidade física registrada para o publisher 1.0.10. O repositório público declara versão **1.1.1**: a correspondência do **arquivo JSON específico** não torna classes Java, lógica de execução, tags de terceiros ou build 1.1.1 equivalentes à 1.0.10. Os valores Java abaixo vêm do manifesto do binário instalado, não dessa fonte adjacente.
 
@@ -104,10 +104,10 @@ O dano de afogamento solicitado pelo efeito é **um caminho posterior distinto**
 
 ## 7. Critérios pendentes de aceitação
 
-1. Fechar contrato de acesso ao nível do encantamento, configuração/datapacks, exclusividades efetivas, e o caminho de `ACCompat.enchantLevel` em runtime da versão instalada.
+1. O acesso compilado `ACCompat.enchantLevel` e a chamada no produtor possuem âncoras SHA-exatas. Permanecem condicionais a configuração/datapacks, resolução de tags, exclusividades efetivas e comportamento de níveis inválidos no modpack físico.
 2. Validar ordem e domínio de execução da decisão RNG, aceite de `hurt`, `addEffect`, atribuição do owner e do debuff, mutadores/handlers coexistentes e efeitos de múltiplos bolts/ricochetes.
 3. Executar QA físico no modpack real 1.0.10: cast sem/ com encantamento I; Triple Splash, Bouncing Bolt e outras combinações; aliados, criaturas aquáticas e resistentes, Water Breathing, jogador Creative, PvP, proteção de claims, dano cancelado, servidor dedicado, multiplayer e baixa TPS.
 4. Testar `Bubbling` sincronizado, NBT save/reload, entrada em fluido, expiração prematura, instâncias repetidas, handler `UpdateEffectVisualityEntityMessage`, antirreplay e ausência de XP/procs duplicados.
 5. Identificar hook provider-native realmente seguro, com ordem de processamento, caps/budgets, autorização do servidor e lifecycle. Não marcar `COMPLETE_PERK_READY` apenas por existir o encantamento ou por a ação Sea Staff já possuir contrato estático certificado.
 
-**Resultado desta ficha:** `JSON_SHA_EXACT_RESOURCE_MATCH` + `SHA_EXACT_SEA_STAFF_PRODUCER` + `SHA_EXACT_WATER_BOLT_CONSUMER` + `SHA_EXACT_BUBBLED_EFFECT`; **escopo técnico estático documentado**, certificação para **perk mutadora pendente**. **Contabilidade:** +1 ficha parcial, +0 certificados adicionais, +0 novas raízes mágicas, +0 providers concluídos, +0 avanço de Stage. **Próxima identidade alfabética:** `alexscaves:explosive_flavor`.
+**Resultado desta ficha:** `STATIC_TECHNICAL_CATALOG_ONLY` / `SHA_EXACT_BINARY_BEHAVIOR`; sela identidade, produtor, impacto, efeito e consumidores da **mesma raiz Sea Staff Water Bolt**, reutilizando os três manifestos publisher e a CI SHA-exata. **Contabilidade proposta da branch (sujeita aos gates de CI):** +1 certificado técnico estático, −1 ficha parcial, +0 novas raízes mágicas, +0 providers integralmente encerrados, +0 hooks mutadores, +0 QA física, +0 avanço de Stage. **Próxima identidade alfabética:** `alexscaves:explosive_flavor`.
