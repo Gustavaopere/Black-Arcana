@@ -378,6 +378,7 @@ def physical_audit(jar: Path, javap_bin="javap", inspect=False):
             "server_mutation_authority": "NOT_VERIFIED",
         },
     }
+    validate_individual_seal(result)
     if inspect:
         for method, start, end, label in [
             (launch, 215, 358, "CONSTRUCTOR_VECTOR"),
@@ -394,6 +395,99 @@ def physical_audit(jar: Path, javap_bin="javap", inspect=False):
                           + r["operand"] + " // " + r["symbol"])
     return result
 
+
+
+def validate_individual_seal(report, *, seal_override=None):
+    """Require independent per-object seal, never promote its runtime boundaries."""
+    path = PROVIDER / "EXACT-FAR-FLUNG-CAUSAL-1.0.10.json"
+    cert = (seal_override if seal_override is not None else
+            json.loads(path.read_text(encoding="utf8"), object_pairs_hook=unique_pairs))
+    history = load_history()
+    require(cert["enchantment"] == report["enchantment"] ==
+            "alexscaves:far_flung", "individual enchantment mismatch")
+    require(cert["version"] == report["release"] == "1.0.10",
+            "version mismatch")
+    require(cert["claim_scope"] == report["claim_scope"] ==
+            "STATIC_TECHNICAL_CATALOG_ONLY", "unscoped certification")
+    require(cert["evidence_grade"] == report["evidence_grade"] ==
+            "SHA_EXACT_BINARY_BEHAVIOR", "unsupported evidence grade")
+    require(cert["artifact"] == history["artifact"],
+            "individual publisher identity drift")
+    expected_resources = {
+        ENCHANT: history["enchantment"]["resource_sha256"],
+        TAG: history["item_tag"]["evidence"]["sha256"],
+    }
+    require(cert["resources"] == expected_resources,
+            "individual resource digest drift")
+    require(cert["classes"] == history["classes"], "individual class drift")
+    require(cert["compiled_far_flung_token_owners"] ==
+            report["compiled_far_flung_owners"],
+            "unexpected native consumer universe")
+    census = cert["individual_method_census"]
+    require((census["expected_methods_checked"],
+             census["expected_instructions_checked"],
+             census["expected_direct_branches_checked"]) ==
+            (report["methods_checked"], report["instructions_checked"],
+             report["direct_branches_checked"]),
+            "census evidence drift")
+    owners = {g["owner"]: g for g in history["consumers"]}
+    require(census["expected_declared_owner_methods"] ==
+            {o: group["own_method_count"] for o, group in owners.items()},
+            "declared owner scope drift")
+    expected_core = [
+        {
+            "owner": group["owner"],
+            "name": entry["name"],
+            "descriptor": entry["descriptor"],
+            "instruction_count": entry["instruction_count"],
+            "parsed_method_sha256": entry["parsed_method_sha256"],
+        }
+        for group in history["consumers"] for entry in group["methods"]
+    ]
+    require(census["core_sha_locked_methods"] == expected_core,
+            "core full-method seal drift")
+    expected_rest = {
+        owner: {name: len(native["instructions"])
+                for name in EXTRA_METHODS[owner]
+                for native in [next(
+                    (record for record in report["method_census"]
+                     if record["owner"] == owner and record["method"] == name),
+                    None
+                )]
+                if native is not None}
+        for owner in (ITEM, HOOK)
+    }
+    require(census["supplemental_full_class_sha_locked_methods"] ==
+            expected_rest,
+            "adjacent full-method roster drift")
+    pairs = {
+        (m["owner"], m["method"], m["descriptor"]): m
+        for m in report["method_census"]
+    }
+    require(len(pairs) == report["methods_checked"],
+            "duplicate observed native methods")
+    for entry in expected_core:
+        key = (entry["owner"], entry["name"], entry["descriptor"])
+        item = pairs.get(key)
+        require(item is not None and
+                item["full_parsed_method_sha256"] ==
+                entry["parsed_method_sha256"] and
+                item["instructions"] == entry["instruction_count"],
+                "individual full body drift " + repr(key))
+    require(cert["costs_and_limits"]["no_new_magic_root"] is True,
+            "unscoped extra magic root")
+    require(cert["safety"]["mutating_hook"] ==
+            report["limits"]["mutating_hook"] == "NOT_VERIFIED",
+            "hook promoted without QA")
+    require(cert["safety"]["physical_qa"] ==
+            report["limits"]["physical_qa"] == "NOT_TESTED",
+            "physical QA promoted without evidence")
+    require(cert["safety"]["mutation"] ==
+            report["limits"]["mutation"] == "NO_MUTATION",
+            "unsafe mutation promotion")
+    require(cert["safety"]["provider_universe_closed"] is False,
+            "provider universe not closed")
+    return cert
 
 def main():
     parser = argparse.ArgumentParser()
