@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "parent_manifest_sha256": "e9f23c323fb9a04af9ac215b1e589de5933d99e70d9e8b96c91a4e7421d58ff1",
+  "full_report_sha256": "7b9dfd24d8af0f89cd96adddcf1a95ed7bfde71adbcfba2275be17f0891d05b0",
+  "class_sha256": {
+    "com/github/alexmodguy/alexscaves/server/item/DesolateDaggerItem.class": "ca020279666b45f5d8ede7082ba20c026a870989a6d90166fd1587af921a95ef",
+    "com/github/alexmodguy/alexscaves/server/entity/item/DesolateDaggerEntity.class": "f82a3f5f1cc05bbe52dfb7e3742f33c2289cbc37810b069a53b45002cfeb4351",
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+    "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class": "389fb88f8d6e1515e3dfe7f401a728bb33629666bd2319ae7e25668f710e4ef6",
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32"
+  },
+  "resource_sha256": {
+    "data/alexscaves/enchantment/double_stab.json": "554b3d0fb8e157ef912716cba8180b43cae340f01ee64ca931465b1d2884ff71",
+    "data/alexscaves/tags/item/enchantable/desolate_dagger.json": "c350c3e59d1bbff4d9fd24fa54c96e5fa075682f862c9eba0081c4ef2b97b264",
+    "data/alexscaves/enchantment/impending_stab.json": "bb3918b0fdf897ad70897952d15094e04d8af905b3e2f2db0d2159b762f5ffbc"
+  },
+  "compiled_token_owners": [
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+    "com/github/alexmodguy/alexscaves/server/item/DesolateDaggerItem.class"
+  ],
+  "native_method_sha256": {
+    "com/github/alexmodguy/alexscaves/server/entity/item/DesolateDaggerEntity.class": {
+      "addAdditionalSaveData": "a4a3bf6821c7770ae910d9cfd0647136141aa547b1a64a53b2be120055a73ff5",
+      "getPlayer": "03e3b8a3754a5cfaef18ef6fb2603ac59e06a26a7481fbf7b152efb0aaeaf5af",
+      "getTargetEntity": "89c84de2dd10f777053021a79d0299339a3b406d14cb3502754d75e0c503851e",
+      "readAdditionalSaveData": "90242459fc9e1a3273047eea27d9100fa60120bdd1330b55cdab03bde572847a",
+      "setItemStack": "edb27fad0e5216b1d419188230b3f8c0e15c34615a798f26be89f846b0301e41",
+      "tick": "86b8a9b6831bf179710d06128a324cf7c0e5423b81402c598310d5cd32caf165"
+    },
+    "com/github/alexmodguy/alexscaves/server/item/DesolateDaggerItem.class": {
+      "acSpawnDaggers": "e0dd34391401c5794681af190285f62a591a35868e62914c9ddf491f633c9914",
+      "hurtEnemy": "d9f7259a454dca1cc8cde781522b72cb759425978e4b1ad59c10fe872d1e0ed0"
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class": {
+      "createEntity": "5c615940bdddde55326bc71b0e8858a4956b72f5db2b405093e51d6027f10c11",
+      "enchantLevel": "775387837bd0e7dbbd2fd04cd5de0375a6ccd2813de5db375fd152f8b63ad8dc",
+      "hurt": "77997f2089224cd768dc079fb789bc5ffa96c8647bf5c0cabe932b8c3a3702b5"
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class": {
+      "causeDesolateDaggerDamage": "3d6d14de9a43d8d27406b9aacabf13178b50b0c147c2fbdd7c317f57ceae6a83"
+    }
+  },
+  "native_instruction_counts": {
+    "com/github/alexmodguy/alexscaves/server/entity/item/DesolateDaggerEntity.class": {
+      "addAdditionalSaveData": 1,
+      "getPlayer": 13,
+      "getTargetEntity": 13,
+      "readAdditionalSaveData": 1,
+      "setItemStack": 6,
+      "tick": 361
+    },
+    "com/github/alexmodguy/alexscaves/server/item/DesolateDaggerItem.class": {
+      "acSpawnDaggers": 51,
+      "hurtEnemy": 15
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class": {
+      "createEntity": 4,
+      "enchantLevel": 24,
+      "hurt": 5
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class": {
+      "causeDesolateDaggerDamage": 13
+    }
+  },
+  "native_direct_branch_counts": {
+    "com/github/alexmodguy/alexscaves/server/entity/item/DesolateDaggerEntity.class": {
+      "addAdditionalSaveData": 0,
+      "getPlayer": 2,
+      "getTargetEntity": 2,
+      "readAdditionalSaveData": 0,
+      "setItemStack": 0,
+      "tick": 20
+    },
+    "com/github/alexmodguy/alexscaves/server/item/DesolateDaggerItem.class": {
+      "acSpawnDaggers": 4,
+      "hurtEnemy": 1
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class": {
+      "createEntity": 0,
+      "enchantLevel": 3,
+      "hurt": 0
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class": {
+      "causeDesolateDaggerDamage": 0
+    }
+  },
+  "native_historical_anchor_counts": {
+    "com/github/alexmodguy/alexscaves/server/entity/item/DesolateDaggerEntity.class": {
+      "addAdditionalSaveData": 1,
+      "getPlayer": 13,
+      "getTargetEntity": 13,
+      "readAdditionalSaveData": 1,
+      "setItemStack": 6,
+      "tick": 245
+    },
+    "com/github/alexmodguy/alexscaves/server/item/DesolateDaggerItem.class": {
+      "acSpawnDaggers": 51,
+      "hurtEnemy": 15
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class": {
+      "createEntity": 4,
+      "enchantLevel": 24,
+      "hurt": 5
+    },
+    "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class": {
+      "causeDesolateDaggerDamage": 13
+    }
+  },
+  "nominal_spawn_attempts": {
+    "no_enchant": 1,
+    "level_1": 2,
+    "conditional_formula": "1+L re-read per iteration",
+    "accepted_spawns": "NOT_VERIFIED"
+  },
+  "limits": {
+    "single_native_melee_root": true,
+    "new_spell_root": false,
+    "independent_projectile_spell": false,
+    "server_side_spawn_guard_in_item": "ABSENT_IN_EXAMINED_METHOD",
+    "factory_null_guard_in_item": "ABSENT_IN_EXAMINED_METHOD",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "world_claim_and_pvp": "NOT_VERIFIED",
+    "damage_acceptance": "NOT_TESTED",
+    "mastery_receipt_and_dedupe": "NOT_VERIFIED",
+    "provider_universe_closed": false
+  }
+}
