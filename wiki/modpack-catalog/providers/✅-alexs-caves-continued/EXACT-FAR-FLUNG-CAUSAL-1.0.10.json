@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "version": "1.0.10",
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "enchantment": "alexscaves:far_flung",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "legacy_sha_exact_manifest": "EXACT-FAR-FLUNG-1.0.10.json",
+  "resources": {
+    "data/alexscaves/enchantment/far_flung.json": "a7f48d6ad8eca7a883b3d930313d6962334b0b43a0d6722cb2e60831e9ed8e8c",
+    "data/alexscaves/tags/item/enchantable/candy_cane_hook.json": "b1d1990dd02fec11c14976f0f0a893e30b6c25e443efc013428cbdd4ef334310"
+  },
+  "classes": {
+    "com/github/alexmodguy/alexscaves/server/item/CandyCaneHookItem.class": "d999251e494c45420e58881181e9d67757247b6865dc4a547bf0da8a46cf8e44",
+    "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class": "e590bb67ea2b594861a30b05a5099fbd5eafe2920ff867883aaa6fd7cec478f8",
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32"
+  },
+  "individual_method_census": {
+    "core_sha_locked_methods": [
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/CandyCaneHookItem.class",
+        "name": "use",
+        "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+        "instruction_count": 188,
+        "parsed_method_sha256": "da640e79836e9b591ebd5e9835ff7c4133ffbb7a299506d5b34d8964d341ba32"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/CandyCaneHookItem.class",
+        "name": "acInventoryTick",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+        "instruction_count": 39,
+        "parsed_method_sha256": "92e4e8db5ac05294c4b42f0a1c1f0d8a248a8020af02cf38089741eb557a4c30"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/CandyCaneHookItem.class",
+        "name": "setLastLaunchedHookUUID",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Ljava/util/UUID;)V",
+        "instruction_count": 17,
+        "parsed_method_sha256": "bee529208ed7361b23617595bc9932bea84ad5b4ad9fa463cf18bb18f52f4cfb"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/CandyCaneHookItem.class",
+        "name": "setReelingIn",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Z)V",
+        "instruction_count": 11,
+        "parsed_method_sha256": "2e8df242d8cfbe012f78b177375f7833c0e010d4cf5acf9a984f9a4102dd65c5"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/CandyCaneHookItem.class",
+        "name": "canLaunchHook",
+        "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;ZLnet/minecraft/world/InteractionHand;)Z",
+        "instruction_count": 54,
+        "parsed_method_sha256": "171e8a953eb7c7b951a1684cfe6081c95be59d15d9762423ef903af343a1e4cb"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/CandyCaneHookItem.class",
+        "name": "getEnchantmentValue",
+        "descriptor": "()I",
+        "instruction_count": 2,
+        "parsed_method_sha256": "798e4edaf36fade21f22743e4675e918297e30c52b2df68b1dd4d56d821664ca"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/CandyCaneHookItem.class",
+        "name": "isEnchantable",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+        "instruction_count": 8,
+        "parsed_method_sha256": "681b833a41696ab300c80434518d0069a2d35c68916d92dbf205a4a97542ae78"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class",
+        "name": "CandyCaneHookEntity",
+        "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+        "instruction_count": 8,
+        "parsed_method_sha256": "685babf49b4377d56cfdf73fd63ed5b24989a5a469f4c29477a86ee5e7ad21d1"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class",
+        "name": "CandyCaneHookEntity",
+        "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Z)V",
+        "instruction_count": 231,
+        "parsed_method_sha256": "7a0daa960e96a3a43a051b1cde2e3129701e5581ce44657bd9d283712e402322"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class",
+        "name": "tick",
+        "descriptor": "()V",
+        "instruction_count": 546,
+        "parsed_method_sha256": "41e79aad7c4f92de6184a41fe580967a4dd1d081d1a28ec0454e8b7c1c67ed33"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class",
+        "name": "fling",
+        "descriptor": "()V",
+        "instruction_count": 73,
+        "parsed_method_sha256": "80e9ba2152580a151a0960c1ee506093a7ed9a97f2869819542a05176ed93c24"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class",
+        "name": "onHitEntity",
+        "descriptor": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+        "instruction_count": 24,
+        "parsed_method_sha256": "4907f846dd001bc5ce40c8abe778609c4b68016a34339e3ca58a26246e5af777"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class",
+        "name": "onHitBlock",
+        "descriptor": "(Lnet/minecraft/world/phys/BlockHitResult;)V",
+        "instruction_count": 25,
+        "parsed_method_sha256": "eec6a4f0a054495919bde915f567df6ef98b20ce0f39e4326a0a7ab51abd2529"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class",
+        "name": "getOwner",
+        "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+        "instruction_count": 23,
+        "parsed_method_sha256": "4e7cbfdd6cd6f317c95e4e3f991fb06a8266fa9ad982635c8a8f744433d66207"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class",
+        "name": "setOwner",
+        "descriptor": "(Lnet/minecraft/world/entity/Entity;)V",
+        "instruction_count": 15,
+        "parsed_method_sha256": "25fbdce2b1eb6d3eea5e2b835d4f2d80aeb089deff953539c304aaed250ef5ed"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class",
+        "name": "readAdditionalSaveData",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+        "instruction_count": 23,
+        "parsed_method_sha256": "a966bd56e3200a56706339f5b199755dc9191cb674f00100bac8a12f67040da5"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class",
+        "name": "addAdditionalSaveData",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+        "instruction_count": 22,
+        "parsed_method_sha256": "34fd0bb19ce7c3f31dec1f582edfc9ed5e2c62d195151047837fe20f0fbef91a"
+      }
+    ],
+    "supplemental_full_class_sha_locked_methods": {
+      "com/github/alexmodguy/alexscaves/server/item/CandyCaneHookItem.class": {
+        "isHookLaunchedInWorld": 44,
+        "isActive": 13,
+        "getLaunchedHookUUID": 15,
+        "isReelingIn": 16
+      },
+      "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class": {
+        "isOwnerHoldingHook": 39,
+        "postReel": 22,
+        "getHookedEntity": 34,
+        "getPlayerOwner": 41,
+        "getDefaultGravity": 20,
+        "defineSynchedData": 47
+      }
+    },
+    "expected_declared_owner_methods": {
+      "com/github/alexmodguy/alexscaves/server/item/CandyCaneHookItem.class": 13,
+      "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class": 33
+    },
+    "expected_methods_checked": 27,
+    "expected_instructions_checked": 1600,
+    "expected_direct_branches_checked": 182,
+    "full_method_hash_check": "legacy SHA of every core method + physical SHA of both complete classfiles, with supplemental full-method parse and direct-branch validation"
+  },
+  "compiled_far_flung_token_owners": [
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+    "com/github/alexmodguy/alexscaves/server/entity/item/CandyCaneHookEntity.class"
+  ],
+  "launch": {
+    "producer": "CandyCaneHookItem.use; canLaunchHook gate; only Level.addFreshEntity server path; spawn result popped; setOwner and LastLaunchedHookUUID stored",
+    "consumer": "CandyCaneHookEntity.<init>(Player,Level,ItemStack,boolean)",
+    "base_vector": "vec0 = (-f3, Mth.clamp(-f5/f4, -5F, 5F), -f2)",
+    "magnitude": "d3=Vec3.length(vec0)",
+    "per_level_scalar": "S(L)=0.5D+0.2D*ACCompat.enchantLevel(stack,FAR_FLUNG)",
+    "levels": {
+      "0": 0.5,
+      "1": 0.7,
+      "2": 0.9,
+      "3": 1.1
+    },
+    "per_component_velocity": "delta_i=vec0_i * (S(L)/d3 + 0.5D + 0.0045D * RandomSource.nextGaussian_i()); three separate Gaussian calls, then Vec3.multiply(DDD), setDeltaMovement",
+    "native_offsets": "init@217-352; FAR_FLUNG @259; S @255-271; magnitude divisions @279/302/325; Gaussian @288/311/334; Vec3.multiply @344; setDeltaMovement @352",
+    "limits": "No evidence of max range/tether length from S; no 0-length divisor guard in audited local interval, anomalous levels and degenerate vec0 not assessed for reachability"
+  },
+  "targeting": {
+    "region": "server tick: getBoundingBox().inflate(1D) -> Level.getEntities(projectile, box, Entity::isAlive), bootstrap #0 for Entity.isAlive",
+    "selection": "GumWormSegmentEntity resolves head; skip null, CandyCaneHookEntity, Projectile, owner; choose nearest Entity.distanceTo with GumWormEntity preference",
+    "native_offsets": "tick@355-562; AABB.inflate @360, getEntities @380, exclude hook @449, exclude projectile @457, owner check @467, distance @481/487, GumWorm priority @496/504, target UUID @528",
+    "damage": "target UUID written before optional hurt. If getDamage()!=0, damageSources.thrown(hook,owner) and Entity.hurt(getDamage), return popped; SHARP_CANE level independently sets 3F*L in constructor @423-433, Far Flung does not increase damage",
+    "limitations": "No native owner/ally/PvP/claim filtering certified beyond explicit local guards; no guaranteed accepted damage, hit or gameplay reach"
+  },
+  "reeling_and_state": {
+    "server": "tick isClientSide -> skip server mutation @23-26; synch OWNER_ID and HOOKED_ENTITY_ID, reeling and owner-held hook checks",
+    "control": "canLaunchHook uses server LastLaunchedHookUUID, entity alive, same owner and selected hand; isOwnerHoldingHook tests Player holding CandyCaneHookItem with matching UUID",
+    "cleanup": "postReel checks held CandyCaneHookItem and calls setLastLaunchedHookUUID(...,null); removal/reconnect/dimension cross-mod QA not verified",
+    "movement": "tick applies friction scale 0.5D onGround or 0.8999999761581421D air for moving state; otherwise Vec3.ZERO; fling called at reeling transition when isOwnerHoldingHook(true)",
+    "fling": "owner/target pull uses displacement scaled by 0.20000000298023224D, adds +0.2D vertical and preexisting delta; condition length>1 executes Vec3.scale(1.0D), not a normalization/clamp",
+    "persistence": "CUSTOM_DATA LastLaunchedHookUUID/Reeling; hook NBT Reeling, HookedEntityUUID conditional, Offhand; synced entity IDs/position/damage and server-vs-client lookup; full physics and persistence not QA verified"
+  },
+  "costs_and_limits": {
+    "enchant_json": {
+      "weight": 10,
+      "max_level": 3,
+      "min_base": 1,
+      "min_step": 6,
+      "max_base": 41,
+      "max_step": 10,
+      "anvil_cost": 1,
+      "slot": "mainhand",
+      "item_tag": "#alexscaves:enchantable/candy_cane_hook"
+    },
+    "durability": "CandyCaneHookItem.use contains two context-dependent ACCompat.hurtAndBreak callsites at @299 and @328; do not charge as per Far Flung cast/tick",
+    "mana": "No Far Flung-own Black Arcana mana or stamina cost; not a new spell",
+    "cooldown": "No independent Far Flung cooldown proven; native launch/reeling admission controls must be preserved",
+    "no_new_magic_root": true
+  },
+  "safety": {
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "server_security": "NOT_VERIFIED",
+    "pvp_claims": "NOT_VERIFIED",
+    "multiplayer_reconnect": "NOT_TESTED",
+    "forged_item_data": "NOT_VERIFIED",
+    "effective_range": "NOT_TESTED",
+    "normalized_mastery_credit": "NOT_VERIFIED",
+    "native_timing_outcome": "NOT_TESTED"
+  }
+}
