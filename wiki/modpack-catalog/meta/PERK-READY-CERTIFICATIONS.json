@@ -8422,6 +8422,46 @@
           "reason": "EXACT-DETONATING-DEATH-CAUSAL-1.0.10.json and exact 1.0.10 workflow: 3 complete JVM methods, 1013 instructions, 100 direct branches, 50 historical SHA-exact anchors; parent manifest sha256 3af3efd097dc60f2877211604a49543275f6d2b9ac24d1e9050ed175fe0382ef; full report SHA256 8a90445bd7e3b32569c3d81896970df064f2cbf217b9ca9beb9b20233545db9b. Six negative tests and CI binary reproduction, physical QA NOT_TESTED, no client/server detonation guard found."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/double-stab.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Double Stab changes native Desolate Dagger producer's attempts from 1 to 2 at publisher maximum L1 (i<1+enchantLevel), with no guarantee of successful spawn/damage. Item hurtEnemy invokes super once; stack and victim target ID propagate to separately ticked dagger entities, whose requested damage is controlled by Impending Stab, not Double Stab. SHA-pinned 1.0.10 JAR, 12 complete JVM methods, 507 instructions, 32 branches, 391 parent anchors and full report sha256 7b9dfd24d8af0f89cd96adddcf1a95ed7bfde71adbcfba2275be17f0891d05b0 verified. Native producer has no own side guard/player ID assignment, doesn't check null factory and discards spawn boolean. Hook, owner settlement, PvP/claims, actual hits, Mastery and physical QA unverified; NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/double-stab.md",
+          "reason": "Exact publisher Alex's Caves Continued 1.0.10 / NeoForge 1.21.1 JAR, sha1 6960b299a39a039ac8a5eb9b07be4ad0e3e0a570, 75,279,314 bytes, double_stab JSON SHA256 554b3d0fb8e157ef912716cba8180b43cae340f01ee64ca931465b1d2884ff71, Desolate Dagger tag, registry binding, normal maximum I and eligibility."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/double-stab.md",
+          "reason": "DesolateDaggerItem.hurtEnemy delegates first to SwordItem.hurtEnemy; on true calls acSpawnDaggers once. Native producer performs i<1+enchantLevel(DOUBLE_STAB) test at each loop iteration and requests one entity per iteration. DesolateDaggerEntity.tick handles orbit, target and later damage independently. Full JVM digests and direct CFG verified."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/double-stab.md",
+          "reason": "At stable Double Stab L=0/1, one/two spawn attempts. Loop has no native level clamp and re-reads enchantment per iteration. Native orbitFor 20+nextInt(10) unless cached Impending>0 then 40+nextInt(10), subsequent stab requests 2F+2F*ImpendingLevel per entity. Entity dimensions 0.6x0.6 are not Double Stab range or AOE. No standalone cast duration or mana cost."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/double-stab.md",
+          "reason": "Producer records original victim's integer entity ID and copies attacker position. No independent AoE, LOS or ally targeting gate; native entity resolves target ID in current Level, server handles damage separately. Spawn boolean discarded, no guarantee of accepted entities/hits, no PvP/claims acceptance verified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/double-stab.md",
+          "reason": "Publisher weight2, max_level1, min_cost base1 step12, max_cost base41 step10, anvil4, mainhand; Double Stab resource itself lacks exclusive_set while Impending Stab declares exclusive_set array [alexscaves:double_stab]. Enchanting costs are not runtime mana/durability; SwordItem.hurtEnemy runs once before entity attempts, settlement unknown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/double-stab.md",
+          "reason": "Existing native melee action, not new cast/independent attack. Do not duplicate native addFreshEntity, damage, durability or Mastery; no owner Player assignment in producer, no native producer isClientSide guard and no safe per-player hook. Black Arcana and sibling RPG Skill Tree remain separated. NO_MUTATION fail-closed, world claims and at-most-once unresolved."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/double-stab.md",
+          "reason": "Publisher SHA-exact full report seal EXACT-DOUBLE-STAB-CAUSAL-1.0.10.json, parent Desolate Dagger manifest sha256 e9f23c323fb9a04af9ac215b1e589de5933d99e70d9e8b96c91a4e7421d58ff1, full report sha256 7b9dfd24d8af0f89cd96adddcf1a95ed7bfde71adbcfba2275be17f0891d05b0; 12 native JVM methods, 507 parsed instructions, 32 direct branches, 391 reconciled historical anchors. Synthetic negative tests and Actions read-only; physical QA NOT_TESTED."
+        }
+      }
     }
   },
   "providers": {},
