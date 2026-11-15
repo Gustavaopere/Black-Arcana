@@ -447,7 +447,7 @@ def validate_individual_seal(report, *, seal_override=None):
     require(census["core_sha_locked_methods"] == expected_core,
             "core full-method seal drift")
     expected_rest = {
-        owner: {name: len(native["instructions"])
+        owner: {name: native["instructions"]
                 for name in EXTRA_METHODS[owner]
                 for native in [next(
                     (record for record in report["method_census"]
