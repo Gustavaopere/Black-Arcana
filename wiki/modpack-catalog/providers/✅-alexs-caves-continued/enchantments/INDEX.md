@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 45/51.**
+**Fichas catalogadas (somente fichas detectadas): 46/51.**
 
-**Barra das fichas catalogadas:** `█████████████████░░░ 88.2%`
+**Barra das fichas catalogadas:** `██████████████████░░ 90.2%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 45/51.**
+**Homologadas para perks (somente fichas detectadas): 46/51.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████████░░░ 88.2%`
+**Barra dos contratos técnicos estáticos:** `██████████████████░░ 90.2%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -35,7 +35,7 @@
 | ✅ | Energy Efficiency | [ficha/energy-efficiency.md](energy-efficiency.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Enveloping Bubble | [ficha/enveloping-bubble.md](enveloping-bubble.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Explosive Flavor | [ficha/explosive-flavor.md](explosive-flavor.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Far Flung | [ficha/far-flung.md](far-flung.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Far Flung | [ficha/far-flung.md](far-flung.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Ferrous Haste | [ficha/ferrous-haste.md](ferrous-haste.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Field Extension | [ficha/field-extension.md](field-extension.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Flinging | [ficha/flinging.md](flinging.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |

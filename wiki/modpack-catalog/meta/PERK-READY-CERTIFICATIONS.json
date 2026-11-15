@@ -8582,6 +8582,46 @@
           "reason": "Individual causal SHA-exact seal reconciled with complete existing Gumball producer/consumer manifest and native offset tests, negative pivot/JSON drift tests and CI publisher JAR sha/resource/bytecode replay. Mixin transform, PvP/claims, packet authorization, spawn/impact/explosion effects and QA physical remain explicitly NOT_VERIFIED/NOT_TESTED."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/far-flung.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "1.0.10 Far Flung modifies only Candy Cane Hook initial vector, not duration/range/damage root. Full exact publisher causal replay: 27 complete methods, 1600 instructions, 182 direct branches, bootstrap Entity::isAlive, triple Gaussian jitter, owner/reeling lifecycle, nearest/GumWorm targeting, Sharp Cane separate damage and no real scale(1D) pull clamp. Unknown range, abnormal vector and PvP/claims remain unapproved. Hook NOT_VERIFIED, QA NOT_TESTED, NO_MUTATION, no new cast and no provider universe closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/far-flung.md",
+          "reason": "Alex's Caves Continued publisher 1.0.10 native SHA1 6960b299a39a039ac8a5eb9b07be4ad0e3e0a570, SHA256 36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c, size 75279314. Enchantment far_flung JSON/tag hashes, max level 3, registry field and Candy Cane Hook class bytes sealed; 1.1.1 code not treated as same release."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/far-flung.md",
+          "reason": "CandyCaneHookItem.use server spawn, setOwner, LastLaunchedHookUUID and two conditional hurtAndBreak references; native constructor Far Flung level produces the exact normalized-ish vector with three independent Gaussian calls. Native tick handles owner, reeling, collision/targeting and motion; hook type does not add spell root."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/far-flung.md",
+          "reason": "Native S(L)=0.5D+0.2D*L, levels 0/1/2/3 -> 0.5/0.7/0.9/1.1; per-axis v_i=base_i*(S(L)/base_length+0.5D+0.0045D*nextGaussian_i). AABB.inflate(1D) for local acquisition separate from launch scalar, ground 0.5D / air approx 0.9D movement friction; not fixed range, radius or lifetime. No zero-length guard demonstrated for anomalous bases."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/far-flung.md",
+          "reason": "Server-side Entity.isAlive bootstrap of getEntities with own AABB inflate 1D, GumWormSegment head transformation, excludes null, hooks, projectiles and owner; nearest distance with GumWorm priority. HookedEntityUUID set before getDamage gate; separate SHARP_CANE sets 3F*level damage, DamageSources.thrown(hook,owner) -> hurt result discarded. Native own path has no demonstrated ally/PvP/LOS/claim filter."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/far-flung.md",
+          "reason": "Enchant metadata level1..3 weight10, min cost base1 step6, max base41 step10, anvil1, mainhand Candy Cane Hook tag. No Far Flung own mana, charge, cooldown or extra durability; native use has two reeling-context ACCompat.hurtAndBreak callsites. Do not add cost on projectile/tick or confuse item enchant costs."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/far-flung.md",
+          "reason": "Only two compiled FAR_FLUNG token owners (enchantment registry and CandyCaneHookEntity). Hook native source controls launch, same-item UUID, reeling, fling, NBT, synced owner IDs; Black Arcana runtime authority separate, RPG Skill Tree sibling progression/perks/Mastery only. No verified mutation entrypoint, external PvP/world safety or Mastery receipt. NO_MUTATION fail-closed."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/far-flung.md",
+          "reason": "Individual publisher SHA-exact causal audit verifies full bodies of 27 key methods, 1600 JVM instructions and 182 direct CFG targets, 17 previously pinned method digests plus 10 adjacent methods with class SHA-pinned and all body branches, Entity.isAlive bootstrap #0, concrete vector and targeting/damage pivots; synthetic negative mutation tests and dedicated GitHub Actions. No physical Minecraft client/modpack QA, no hook certification, no provider universe closure."
+        }
+      }
     }
   },
   "providers": {},
