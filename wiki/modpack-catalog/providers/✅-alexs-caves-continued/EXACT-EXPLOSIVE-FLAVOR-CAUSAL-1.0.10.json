@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "version": "1.0.10",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "enchantment": "alexscaves:explosive_flavor",
+  "semantic_role": "SHOT_GUM_GUMBALL_MODIFIER_NOT_NEW_CAST",
+  "resource_sha256": {
+    "data/alexscaves/enchantment/explosive_flavor.json": "2da6cbf1a482c69cb268a65667a4b25ea402bc3d9c7b055ef2bd7e5d8f2d08e8",
+    "data/alexscaves/tags/item/enchantable/shot_gum.json": "3ccaf9482a8187e3c99f45ff7d5a28c7c73fe39c1840daef13f294821301e31d"
+  },
+  "compiled_sha256": {
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32",
+    "com/github/alexmodguy/alexscaves/server/item/ShotGumItem.class": "08aa8b9aa1781f2ead7d899e4fde758ea44bc527a2ee5968997e5b3ffdd32238",
+    "com/github/alexmodguy/alexscaves/server/entity/item/GumballEntity.class": "343cc816bcb545241205a6dd1f94c34c37990273aa360bfc82c9fb9485f0f535"
+  },
+  "reuse_exact_manifest": "EXACT-GUMBALL-CONTRACTS-1.0.10.json",
+  "static_contract": {
+    "level_max": 1,
+    "weight": 1,
+    "min_cost_base": 1,
+    "min_cost_step": 16,
+    "max_cost_base": 41,
+    "max_cost_step": 10,
+    "anvil_cost": 8,
+    "item_tag": "alexscaves:shot_gum",
+    "slot": "mainhand",
+    "trigger": "ACTickingItem via ItemStackTickMixin -> ShotGumItem.acInventoryTick; isShooting and getShootTime == 5; positive enchantment level",
+    "primary_gumball_attempts_explosive": 1,
+    "primary_gumball_attempts_baseline": 2,
+    "primary_speed_explosive": 0.5,
+    "primary_speed_baseline": 1.5,
+    "inaccuracy": 5,
+    "initial_hit_damage_request": 4,
+    "maximum_bounces": "4+2*level(BOUNCY_BALL); independent of EXPLOSIVE_FLAVOR",
+    "stop_gate": "getBounces()>getMaximumBounces()-1 AND isExplosive; movement ZERO and bounces set to maximum",
+    "explosion_gate": "isExplosive AND getBounces()>=getMaximumBounces() AND explodeProgress>20F",
+    "explosion_progress": "when <=20F increment by 1F per eligible tick; from zero 21 increments then next eligible tick can request explosion",
+    "explosion": "server Level.explode(getOwner(), x, y+0.5, z, 2F, false, ExplosionInteraction.NONE); then discard",
+    "ricochet_target_search": "AABB relative eye position ±10D; not explosion AoE",
+    "split": "onHitEntity can attempt three children; native children copy EXPLOSIVE, DAMAGE, MAXIMUM_BOUNCES, TARGETS_ON_BOUNCE; SPLITS_ON_HIT false; child factory does not directly setOwner",
+    "cost": "ShotGumItem.acInventoryTick one Gumballs charge debit when eligible, outside projectile iteration; reload one gumball_pile -> 4 charges according to native guards",
+    "persistence": "GumballEntity own NBT overrides persist only Color and invoke superclass; EXPLOSIVE and owner/children full restoration not certified",
+    "mutation": "NO_MUTATION"
+  },
+  "limits": {
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "source_parity": "ONLY_EXPLOSIVE_FLAVOR_JSON_EXACT",
+    "spawn_acceptance": "NOT_TESTED",
+    "impact_damage_effective": "NOT_TESTED",
+    "explosion_world_effects": "NOT_TESTED",
+    "mastery_owner_dedupe": "NOT_VERIFIED",
+    "network_authorization": "NOT_VERIFIED",
+    "provider_universe_closed": false
+  }
+}

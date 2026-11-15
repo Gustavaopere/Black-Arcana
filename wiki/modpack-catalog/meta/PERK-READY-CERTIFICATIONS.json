@@ -8542,6 +8542,46 @@
           "reason": "Individual bounded causal seal EXACT-ENVELOPING-BUBBLE-CAUSAL-1.0.10.json, exhaustive prior SHA-exact publisher action, Triple Splash and Bubbled effect manifests, new negative drift and causal tests, dedicated GitHub Actions physical JAR replay. Hook NOT_VERIFIED and live QA NOT_TESTED; provider-wide universe remains open."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/explosive-flavor.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Explosive Flavor 1.0.10 is a native Shot Gum Gumball modifier, no additional casting root. Positive level changes 2 ordinary projectile attempts to 1 explosive with 0.5F vs 1.5F speed, requests 4F impact and 1 charge per shot. Gumball native ricochet stop at B>=M and gated delayed server Level.explode(getOwner(), y+0.5, 2F, false, NONE). Split children propagate EXPLOSIVE without explicit owner setter. Enchant JSON/tag/class SHA-256 verified in exact publisher; one full Gumball JVM manifest and individual causal negative tests. NO_MUTATION; no safe hook, actual damage/claims, physical QA or provider-universe closure certified.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/explosive-flavor.md",
+          "reason": "Publisher 1.0.10 SHA-1, SHA-256 and 75,279,314-byte artifact; exact explosive_flavor.json, Shot Gum item tag, enchantment registry field and compiled ShotGum/Gumball class SHA-256; level I, mainhand and release-source 1.1.1 boundary."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/explosive-flavor.md",
+          "reason": "Native ShotGumItem.acInventoryTick requires shooting and ShootTime 5, resolves EXPLOSIVE_FLAVOR positive and sets EXPLOSIVE on GumballEntity in its emission loop; Gumball bounce limit triggers stop and delayed tick progresses until server Level.explode followed by discard."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/explosive-flavor.md",
+          "reason": "With positive enchantment level, one gumball attempt with 0.5F initial speed instead of two at 1.5F; 5F imprecision, primary impact damage requested 4F. Bounces M=4+2*BOUNCY_BALL level. Explosion requires B>=M and >20F progress; force 2F, y+0.5D, fire false, ExplosionInteraction.NONE."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/explosive-flavor.md",
+          "reason": "Shot Gum does not perform direct target acquisition; ricochet GumballEntity uses an AABB of ±10 around eye position for candidate LivingEntity and native owner/allied/history gates, distinct from explosion geometry. Splits can attempt three children, with EXPLOSIVE inherited but child ownership not directly set by factory."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/explosive-flavor.md",
+          "reason": "Enchantment metadata: weight1, max_level1, min_cost 1+16(L-1), max_cost 41+10(L-1), anvil8, mainhand. Native Shot Gum uses one charge per shot callback outside per-gumball loop; one Gumball Pile can refill four charges under native eligibility. No second per-child or per-explosion resource settlement."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/explosive-flavor.md",
+          "reason": "GumballEntity and Level.explode remain native provider/engine authority; Black Arcana cannot replay impact or explosion or infer WorldEffectPolicy ownership. RPG Skill Tree is sibling for attribute/perk/Mastery gates by actual contract only. No verified safe hooks, server authorization or dedup; fail-closed NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/explosive-flavor.md",
+          "reason": "Individual causal SHA-exact seal reconciled with complete existing Gumball producer/consumer manifest and native offset tests, negative pivot/JSON drift tests and CI publisher JAR sha/resource/bytecode replay. Mixin transform, PvP/claims, packet authorization, spawn/impact/explosion effects and QA physical remain explicitly NOT_VERIFIED/NOT_TESTED."
+        }
+      }
     }
   },
   "providers": {},
