@@ -42,28 +42,52 @@ CALLERS = {
     "stompEffect": [357],
 }
 DAMAGE_ANCHORS = {
+    29: ("iload", "7", ""),
+    31: ("ifeq", "60", ""),
     65: ("ifeq", "82", ""),
     76: ("invokestatic", "", "causeTremorzillaBeamDamage:"),
     87: ("invokevirtual", "", "DamageSources.mobAttack:"),
     101: ("getstatic", "", "NO_CREATIVE_OR_SPECTATOR"),
     104: ("invokevirtual", "", "getEntitiesOfClass:"),
     139: ("invokevirtual", "", "LivingEntity.is:"),
+    142: ("ifne", "352", ""),
     148: ("invokevirtual", "", "isAlliedTo:"),
+    151: ("ifne", "352", ""),
+    163: ("if_acmpeq", "352", ""),
     193: ("invokevirtual", "", "distanceToSqr:"),
+    197: ("fload_2", "", ""),
+    198: ("fmul", "", ""),
+    201: ("ifgt", "352", ""),
+    204: ("iload", "5", ""),
+    206: ("ifeq", "219", ""),
     213: ("invokevirtual", "", "canEntityBeHurtByBeam:"),
+    216: ("ifeq", "352", ""),
+    219: ("iload", "6", ""),
+    221: ("ifne", "232", ""),
     226: ("instanceof", "", "KaijuMob"),
+    229: ("ifne", "352", ""),
+    236: ("fload_3", "", ""),
     237: ("invokestatic", "", "ACCompat.hurt:"),
     240: ("ifeq", "352", ""),
+    243: ("iconst_1", "", ""),
+    274: ("instanceof", "", "KaijuMob"),
+    277: ("ifne", "284", ""),
     285: ("invokevirtual", "", "knockbackTarget:"),
+    288: ("iload", "5", ""),
+    290: ("ifeq", "352", ""),
     295: ("invokevirtual", "", "getHealth:"),
+    300: ("ifgt", "321", ""),
     305: ("instanceof", "", "monster/Enemy"),
+    308: ("ifeq", "321", ""),
     318: ("putfield", "", "killCountFromBeam"),
     327: ("getstatic", "", "IRRADIATED"),
     341: ("sipush", "6000", ""),
     344: ("iconst_2", "", ""),
     345: ("invokespecial", "", "MobEffectInstance"),
     348: ("invokevirtual", "", "addEffect:"),
-    352: ("goto", "114", "")
+    351: ("pop", "", ""),
+    352: ("goto", "114", ""),
+    357: ("ireturn", "", ""),
 }
 # Damage/targeting and block-world producer sites are distinct, not one cast.
 BREATH = {
@@ -225,9 +249,26 @@ def audit(jar, javap_bin, inspect=False):
     require(len(damage["instructions"])==169,
             "native beam damage helper instruction drift")
     anchors(damage,DAMAGE_ANCHORS,triples=True)
-    anchors(method(indexed,"tickBreath"),BREATH)
-    anchors(method(indexed,"canEntityBeHurtByBeam"),LOS)
-    anchors(method(indexed,"breakBlocksAround"),BLOCK)
+    breath_method=method(indexed,"tickBreath")
+    anchors(breath_method,BREATH)
+    at(breath_method,422,"ifne","","624")
+    at(breath_method,545,"ldc_w","float 20.0f")
+    at(breath_method,571,"ldc_w","float 20.0f")
+    at(breath_method,555,"pop")
+    at(breath_method,581,"pop")
+    at(breath_method,607,"ifne","","624")
+    los_method=method(indexed,"canEntityBeHurtByBeam")
+    anchors(los_method,LOS)
+    at(los_method,43,"getstatic","HitResult$Type.MISS")
+    at(los_method,46,"if_acmpne","","53")
+    at(los_method,49,"iconst_1")
+    at(los_method,53,"iconst_0")
+    at(los_method,54,"ireturn")
+    block_method=method(indexed,"breakBlocksAround")
+    anchors(block_method,BLOCK)
+    at(block_method,4,"ifne","","28")
+    at(block_method,15,"ifeq","","28")
+    at(block_method,25,"ifeq","","30")
     callers={}
     for name,offsets in CALLERS.items():
         m=method(indexed,name)
@@ -247,7 +288,7 @@ def audit(jar, javap_bin, inspect=False):
     factory=factory_audit(jar,javap_bin)
     report={
       "schema_version":1,
-      "claim_scope":"STATIC_DAMAGE_TYPE_EVIDENCE_CANDIDATE_ONLY",
+      "claim_scope":"STATIC_TECHNICAL_CATALOG_ONLY",
       "enchantment":"alexscaves:tremorzilla_beam",
       "artifact":identity,
       "class_sha256":{CLASS:CLASS_SHA, FACTORY:FACTORY_SHA},

@@ -17,7 +17,7 @@ def fake_rows(anchors):
 class TremorzillaBeamStaticTests(unittest.TestCase):
     def test_contract_shape(self):
         self.assertEqual(len(EXPECTED),12)
-        self.assertEqual(len(DAMAGE_ANCHORS),22)
+        self.assertEqual(len(DAMAGE_ANCHORS),46)
         self.assertEqual(sum(len(x) for x in CALLERS.values()),10)
 
     def test_strict_pairs(self):
