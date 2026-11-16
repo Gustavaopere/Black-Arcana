@@ -141,11 +141,13 @@ def audit(jar, javap_bin, inspect=False):
 
     method_rows = []
     native = {}
+    verbose_code = {}
     for group in history["consumers"]:
         owner = group["owner"]
         require(owner in (GAUNTLET, WEAPON), "unrecognized owner")
-        parsed = index_methods(parse_methods(
-            javap(javap_bin, jar, owner[:-6].replace("/", "."))))
+        compiled_text = javap(javap_bin, jar, owner[:-6].replace("/", "."))
+        verbose_code[owner] = compiled_text
+        parsed = index_methods(parse_methods(compiled_text))
         require(len(parsed) == group["method_count"],
                 "method population drift " + owner)
         for historical in group["methods"]:
@@ -192,23 +194,37 @@ def audit(jar, javap_bin, inspect=False):
         (683, "ifne", "802"),
         (771, "invokevirtual", "hurtEntity:"),
         (775, "iload", "7"),
+        (777, "ifeq", "784"), (780, "iconst_3", ""),
+        (784, "iconst_5", ""), (789, "iconst_5", ""),
+        (790, "invokeinterface", "RandomSource.nextInt:"),
+        (795, "iadd", ""),
         (796, "putfield", "playerUseCooldown:"),
         (1013, "invokevirtual", "BlockState.getDestroySpeed:"),
         (1025, "invokevirtual", "getDigSpeed:"),
         (1034, "ifle", "1413"),
+        (1118, "fdiv", ""), (1121, "ifeq", "1129"),
+        (1124, "bipush", "8"), (1129, "bipush", "10"),
+        (1131, "i2f", ""), (1132, "fdiv", ""),
         (1143, "putfield", "destroyBlockProgress:"),
         (1168, "invokevirtual", "Level.destroyBlockProgress:"),
         (1177, "iflt", "1413"),
         (1187, "ifne", "1413"),
+        (1192, "invokevirtual", "damageItem:"),
         (1213, "invokevirtual", "ItemStack.mineBlock:"),
         (1290, "invokevirtual", "Level.destroyBlock:"),
         (1329, "invokevirtual", "Level.destroyBlock:"),
+        (1332, "istore", "20"),
+        (1360, "invokevirtual", "Block.playerDestroy:"),
+        (1365, "ifeq", "1408"),
+        (1405, "invokevirtual", "Block.popExperience:"),
     ])
     check_pivots(method(WEAPON, "hurtEntity"), [
         (99, "invokestatic", "ACCompat.hurt:"),
+        (102, "ifeq", "194"),
         (115, "invokestatic", "postAttackEffects:"),
         (120, "invokevirtual", "damageItem:"),
         (239, "invokevirtual", "ItemStack.hurtEnemy:"),
+        (242, "pop", ""),
     ])
     check_pivots(method(GAUNTLET, "onUseTick"), [
         (124, "invokevirtual", "getEntitiesOfClass:"),
@@ -224,11 +240,30 @@ def audit(jar, javap_bin, inspect=False):
         (183, "invokestatic", "getBreakSpeed:"),
     ])
 
+    raw_weapon = verbose_code[WEAPON]
+    match_switch = re.search(
+        r"(?m)^\s*77:\s+tableswitch\s+\{[^\n]*\n"
+        r"(?P<cases>(?:\s*(?:[0-9]+|default):\s*[0-9]+\s*\n)+)"
+        r"\s*\}",
+        raw_weapon,
+    )
+    require(match_switch is not None,
+            "mining fatigue tableswitch case table not parsed")
+    switch_pairs = re.findall(r"(?m)^\s*([0-9]+|default):\s*([0-9]+)\s*$",
+                              match_switch.group("cases"))
+    require([k for k, v in switch_pairs] ==
+            ["0", "1", "2", "3", "default"],
+            "unexpected mining fatigue switch labels")
+    dig_offsets = {r["offset"] for r in method(WEAPON, "getDigSpeed")["instructions"]}
+    require(all(int(v) in dig_offsets for k, v in switch_pairs),
+            "mining fatigue switch destination absent")
     if inspect:
+        print("=== DIG_SPEED_SWITCH === " + json.dumps(switch_pairs))
         for selected, lo, hi, title in [
             (tick, 0, 220, "TICK_COOLDOWN_AND_STATE"),
             (tick, 555, 850, "TICK_ATTACK_GATE"),
             (tick, 890, 1430, "TICK_MINING"),
+            (tick, 1420, 1700, "TICK_COOLDOWN_DECREMENT_AND_RETURN"),
             (method(WEAPON,"hurtEntity"), 0, 270, "DAMAGE_AND_COST"),
             (method(WEAPON,"getDigSpeed"), 0, 210, "DIG_SPEED"),
             (method(GAUNTLET,"onUseTick"), 60, 300, "SPAWN"),
@@ -250,6 +285,7 @@ def audit(jar, javap_bin, inspect=False):
         "instructions_checked": sum(x["instructions"] for x in method_rows),
         "direct_branches_checked": sum(x["direct_branches"] for x in method_rows),
         "switches": [x for x in method_rows if x["switch_offsets"]],
+        "dig_speed_switch_targets": switch_pairs,
         "method_census": method_rows,
         "safety": {
             "mutating_hook": "NOT_VERIFIED", "physical_qa": "NOT_TESTED",
