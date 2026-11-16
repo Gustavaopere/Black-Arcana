@@ -249,8 +249,10 @@ def audit(jar, javap_bin, inspect=False):
     )
     require(match_switch is not None,
             "mining fatigue tableswitch case table not parsed")
-    switch_pairs = re.findall(r"(?m)^\s*([0-9]+|default):\s*([0-9]+)\s*$",
-                              match_switch.group("cases"))
+    switch_pairs = [list(pair) for pair in re.findall(
+        r"(?m)^\s*([0-9]+|default):\s*([0-9]+)\s*$",
+        match_switch.group("cases")
+    )]
     require([k for k, v in switch_pairs] ==
             ["0", "1", "2", "3", "default"],
             "unexpected mining fatigue switch labels")
