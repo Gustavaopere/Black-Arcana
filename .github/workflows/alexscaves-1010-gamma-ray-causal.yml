@@ -1,0 +1,68 @@
+name: Alex's Caves 1.0.10 Gamma Ray static causal contract
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-gamma-ray-causal.yml'
+      - 'docs/qa/alexscaves_1010_*.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'scripts/catalog/*perk_ready_indexes*.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-gamma-ray-causal.yml'
+      - 'docs/qa/alexscaves_1010_*.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'scripts/catalog/*perk_ready_indexes*.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gamma_ray_static_causal:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      AC_GAMMA_JAR: '${{ github.workspace }}/build/gamma-ray-1010/alexscaves-1.0.10.jar'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch and fingerprint exact publisher artifact
+        run: |
+          mkdir -p build/gamma-ray-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output "$AC_GAMMA_JAR"
+          echo '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c  build/gamma-ray-1010/alexscaves-1.0.10.jar' | sha256sum --check --strict
+      - name: Native negative regressions, physical CLI idempotence and semantic cards
+        run: |
+          export AC_GAMMA_JAVAP="$JAVA_HOME/bin/javap"
+          python3 docs/qa/alexscaves_1010_gamma_ray_causal_audit_test.py -v
+          python3 docs/qa/alexscaves_1010_gamma_ray_causal_cards_test.py -v
+      - name: Verify mandatory Gamma native seal against publisher JAR
+        run: |
+          python3 docs/qa/alexscaves_1010_gamma_ray_causal_audit.py \
+            --jar "$AC_GAMMA_JAR" --javap "$JAVA_HOME/bin/javap" \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-GAMMA-RAY-CAUSAL-1.0.10.json' \
+            --output build/gamma-ray-1010/gamma-ray-native-evidence.json
+      - name: Verify canonical catalog indexes
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - name: Archive bounded static evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-gamma-ray-static-causal
+          path: build/gamma-ray-1010/gamma-ray-native-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14

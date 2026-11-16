@@ -8743,6 +8743,47 @@
           "reason": "EXACT-FLINGING-CAUSAL-1.0.10.json/Markdown, auditor reproduzível, testes negativos e workflow verificam corpos completos, hashes, branches e pivôs do JAR exato. Provas históricas selecionadas preservadas. Nenhum hook mutador, datapack efetivo, QA física ou fechamento integral do provider promovido."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/gamma-ray.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutation": "NO_MUTATION",
+      "scope_note": "Individual Gamma Ray static contract: exact enchantment definition, native damage/status/visual selection and independent charge/targeting gates. Does not certify accepted outcomes, C2S authorization, mutating hooks, actual gameplay or the whole Raygun/provider. +0 semantic magic roots.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/gamma-ray.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, JSON Gamma Ray e X-Ray, tag Raygun, resistência à radiação, registry e helpers nativos. Exclusão consta do JSON X-Ray, não do Gamma. Fonte pública 1.1.1 permanece apenas adjacente."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/gamma-ray.md",
+          "reason": "RaygunItem.onUseTick integral conserva a seleção booleana Gamma e seus consumidores de dano solicitado 2F/1.5F, amplifier4/0 e variantes visuais. Dano, status e feedback são etapas distintas; não existe novo cast ou projétil de Gamma. Os quatro owners literais são dispostos; textura do item e encaminhamento visual do feixe têm pivôs próprios de cliente, separados dos métodos causais de dano."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/gamma-ray.md",
+          "reason": "JSON máximo I/peso2, custos1+18*(L-1)/41+10*(L-1), bigorna4 e mainhand. Solicitação Irradiated800ticks com amplifier4 ou0; nível positivo seleciona variante, sem escala adicional por nível comprovada."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/gamma-ray.md",
+          "reason": "Gamma não aumenta o range nativo 25F*p nem a caixa local de busca. Servidor e (elapsed-15)%3==0 governam tentativas de dano sem gate adicional elapsed>=15; aliados/veículo e condições nativas são preservados. Tremorzilla pode contornar hurt antes da flag local, e a resistência à radiação continua filtrando status."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/gamma-ray.md",
+          "reason": "ChargeUsed, limite1000, Energy Efficiency, aquecimento cliente e recarga pertencem à Raygun; custos JSON são de encantamento. Gamma não declara débito extra nem desconto próprio. Não inferir consumo servidor autorizado a partir da mensagem do cliente ou atribuir dano líquido/cadência efetiva de hits."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/gamma-ray.md",
+          "reason": "Fonte Raygun atribui o caster pelo helper nativo; hurt/addEffect/feedback e persistência própria de carga têm limites separados. Black Arcana mantém seu runtime, RPG Skill Tree fornece perks somente via boundary real. Sem hook mutador, autorização C2S, claims/PvP ou recibo de Mastery homologados; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/gamma-ray.md",
+          "reason": "Selo individual EXACT-GAMMA-RAY-CAUSAL-1.0.10.json e prova Markdown compõem evidências SHA-exatas reutilizadas e novos recursos/pivôs, com auditor, regressões negativas e workflow reproduzíveis. Não promovem o contrato integral da Raygun, datapacks efetivos, QA física ou universo do provider."
+        }
+      }
     }
   },
   "providers": {},
