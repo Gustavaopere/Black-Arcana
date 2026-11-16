@@ -53,7 +53,7 @@ Essas são **entradas textuais diretas** dos seis arquivos `data/*/tags/damage_t
 
 O *provider* mantém autoridade sobre a criação, classificação e aplicação de dano. Black Arcana não altera `DamageSource`, escola, dano, tags ou projéteis sem evidência dos consumidores Java e hooks seguros. O RPG Skill Tree fornece perks/atributos somente através de boundary verificada, sem double-processing. **Fail-closed:** `NO_MUTATION` até a auditoria dos consumidores e a validação específica.
 
-**Contabilidade do checkpoint histórico de recursos:** 1/11 na auditoria inicial; o número atual consta do INDEX.md. Nenhuma raiz mágica nova. Este objeto não recebe status `COMPLETE_PERK_READY` apenas por existir como JSON.
+**Contabilidade do checkpoint histórico de recursos:** 1/11 na auditoria inicial; o número atual consta do INDEX.md. **+0 raízes mágicas novas**. Este objeto não recebe status `COMPLETE_PERK_READY` apenas por existir como JSON.
 
 ## Evidência compilada 1.0.10 — factory e consumidores diretos
 
