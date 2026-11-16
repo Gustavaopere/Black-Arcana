@@ -350,3 +350,11 @@ A [auditoria SHA-exata dos guards](../../../../../docs/qa/alexscaves-1010-raygun
 O JSON publisher `resists_radiation.json`, SHA-256 `1bb63c275f31f6744c071cda8ced3e1225401c5aa1dff2ea7fa3c7949e46a6c4`, contém **Nucleeper, Radgill, Brainiac, Gammaroach, Raycat e Tremorzilla**. É tag padrão sujeita a datapacks, não a lista autoritativa do mundo em execução.
 
 **Limites de integração:** não usar esses branches para sobrepor a resistência, amplificar/dilatar o efeito ou duplicar efeitos nativos; o Black Arcana preserva casting/authority do servidor, `WorldEffectPolicy` e gates de PvP/claims. **⚠️ parcial/condicionado; `NO_MUTATION`, `NOT_CERTIFIED`, `physical_qa=NOT_TESTED`**. O catálogo continua 28/30, sem promoção de perks ou Stage 06.
+
+## Raygun 1.0.10 — contrato de ativação/recarga selecionado (PR #1101)
+
+A [auditoria SHA-exata do fluxo](../../../../../docs/qa/alexscaves-1010-raygun-charge-ammo-flow-handoff.md) e o [manifesto JVM](../EXACT-RAYGUN-CHARGE-AMMO-FLOW-1.0.10.json) cobrem **8 métodos nativos, 168 instruções e 15 branches diretos** do JAR publisher 1.0.10, confrontados com o selo anterior de 26 métodos.
+
+`hasCharge` seleciona `ChargeUsed < 1000`. `use` direciona carga esgotada para a busca de munição por `findAmmo`, que consulta o inventário e usa o predicado nativo de `URANIUM_ROD.asItem`. Na via elegível, `ItemStack.shrink(1) @65` debita munição e `setCharge(...,0) @79` reinicia a marca de carga; criativo tem ramo separado. `getCharge` tem fallback zero quando a tag inexiste; `setCharge` escreve o inteiro por `ACCompat.setTag` sem clamp próprio visível. `getUseDuration` devolve 72000 e não determina o cooldown. `releaseUsing` envia `UpdateItemTagMessage` somente pela via cliente; nada disso demonstra aceite, autorização de pacote ou saneamento server-side.
+
+**Estado ⚠️ parcial, sem promoção de contadores:** falta fechamento de custos por tick, targeting/efeitos, autorização C2S, ownership, persistência real e hooks. `static_perk_contract=NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`.
