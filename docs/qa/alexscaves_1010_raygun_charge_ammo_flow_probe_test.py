@@ -21,6 +21,9 @@ class ChargeAmmoJVMRegression(unittest.TestCase):
         ])
         obs=method_site(m)
         self.assertEqual(obs["direct_branch_edges"],[[6,11]])
+        self.assertEqual(obs["branch_context"][0]["opcode"], "ifeq")
+        self.assertEqual(obs["branch_context"][0]["fallthrough"], 9)
+        self.assertEqual([x["opcode"] for x in obs["branch_context"][0]["stack_predecessors"][-2:]], ["getstatic", "invokevirtual"])
         self.assertEqual([r["offset"] for r in obs["selected_references_and_constants"]],[0,3])
 
     def test_unknown_target_fails_closed(self):
