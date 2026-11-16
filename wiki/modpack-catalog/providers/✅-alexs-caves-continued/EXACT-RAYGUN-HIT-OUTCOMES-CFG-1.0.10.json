@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_RAYGUN_HIT_OUTCOMES_BOUNDED_NORMAL_CFG_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_path": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+  "class_sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c",
+  "method": "onUseTick (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+  "method_parsed_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+  "method_instructions": 523,
+  "method_direct_branches": 57,
+  "graph_method_instructions": 523,
+  "observations": {
+    "bounded_offsets": [
+      953,
+      1157
+    ],
+    "slice_instruction_count": 82,
+    "normal_edges_entering_slice_from_outside": 2,
+    "normal_edges_exiting_slice": 10,
+    "head_reachability": {
+      "1044": true,
+      "1088": true,
+      "1119": true,
+      "1122": true,
+      "1154": true
+    },
+    "conditional_outcome_paths": [
+      {
+        "guard_offset": 1044,
+        "guard_opcode": "ifeq",
+        "outcomes": {
+          "branch_taken": {
+            "successor_offset": 1051,
+            "downstream": {
+              "1119": {
+                "reachable_in_same_bounded_iteration": true,
+                "shortest_normal_edge_count": 26,
+                "conditional_gate_offsets_on_one_shortest_path": [
+                  1056,
+                  1064,
+                  1088
+                ]
+              },
+              "1154": {
+                "reachable_in_same_bounded_iteration": true,
+                "shortest_normal_edge_count": 39,
+                "conditional_gate_offsets_on_one_shortest_path": [
+                  1056,
+                  1064,
+                  1088,
+                  1122,
+                  1140
+                ]
+              }
+            }
+          },
+          "fallthrough": {
+            "successor_offset": 1047,
+            "downstream": {
+              "1119": {
+                "reachable_in_same_bounded_iteration": true,
+                "shortest_normal_edge_count": 27,
+                "conditional_gate_offsets_on_one_shortest_path": [
+                  1056,
+                  1064,
+                  1088
+                ]
+              },
+              "1154": {
+                "reachable_in_same_bounded_iteration": true,
+                "shortest_normal_edge_count": 40,
+                "conditional_gate_offsets_on_one_shortest_path": [
+                  1056,
+                  1064,
+                  1088,
+                  1122,
+                  1140
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "guard_offset": 1088,
+        "guard_opcode": "ifne",
+        "outcomes": {
+          "branch_taken": {
+            "successor_offset": 1157,
+            "downstream": {
+              "1119": {
+                "reachable_in_same_bounded_iteration": false,
+                "shortest_normal_edge_count": null,
+                "conditional_gate_offsets_on_one_shortest_path": []
+              },
+              "1154": {
+                "reachable_in_same_bounded_iteration": false,
+                "shortest_normal_edge_count": null,
+                "conditional_gate_offsets_on_one_shortest_path": []
+              }
+            }
+          },
+          "fallthrough": {
+            "successor_offset": 1091,
+            "downstream": {
+              "1119": {
+                "reachable_in_same_bounded_iteration": true,
+                "shortest_normal_edge_count": 10,
+                "conditional_gate_offsets_on_one_shortest_path": []
+              },
+              "1154": {
+                "reachable_in_same_bounded_iteration": true,
+                "shortest_normal_edge_count": 23,
+                "conditional_gate_offsets_on_one_shortest_path": [
+                  1122,
+                  1140
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "guard_offset": 1122,
+        "guard_opcode": "ifeq",
+        "outcomes": {
+          "branch_taken": {
+            "successor_offset": 1157,
+            "downstream": {
+              "1119": {
+                "reachable_in_same_bounded_iteration": false,
+                "shortest_normal_edge_count": null,
+                "conditional_gate_offsets_on_one_shortest_path": []
+              },
+              "1154": {
+                "reachable_in_same_bounded_iteration": false,
+                "shortest_normal_edge_count": null,
+                "conditional_gate_offsets_on_one_shortest_path": []
+              }
+            }
+          },
+          "fallthrough": {
+            "successor_offset": 1125,
+            "downstream": {
+              "1119": {
+                "reachable_in_same_bounded_iteration": false,
+                "shortest_normal_edge_count": null,
+                "conditional_gate_offsets_on_one_shortest_path": []
+              },
+              "1154": {
+                "reachable_in_same_bounded_iteration": true,
+                "shortest_normal_edge_count": 11,
+                "conditional_gate_offsets_on_one_shortest_path": [
+                  1140
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "limits": {
+    "graph": "NORMAL_EDGES_ONLY_NO_EXCEPTIONAL_OR_DYNAMIC_DISPATCH",
+    "trace": "INTRA_ITERATION_REACHABILITY_NOT_EXECUTION_OR_EFFECT_ACCEPTANCE",
+    "local_slots_and_reaching_definitions": "NOT_RECONSTRUCTED",
+    "cross_iteration_consequences": "NOT_CERTIFIED",
+    "server_authority_and_C2S": "NOT_VERIFIED",
+    "world_protection_PvP_claims": "NOT_VERIFIED",
+    "perk_static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION"
+  }
+}
