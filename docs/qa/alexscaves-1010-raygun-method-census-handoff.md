@@ -9,6 +9,16 @@
 - Classe: `com/github/alexmodguy/alexscaves/server/item/RaygunItem.class`, SHA-256 `3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c`, JVM major 65 (Java 21).
 - Fonte primária já certificada para o censo seletivo: [EXACT-RAYGUN-CONTROL-1.0.10.json](../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTROL-1.0.10.json): 26 métodos declarados, **8** digests completos previamente selados, e 18 métodos selecionados para referências. **18 selecionados não são 18 digests integralmente certificados**.
 
+## Resultado da execução física SHA-exata na PR #1099
+
+- **Publisher SHA-256:** `OK` na CI.
+- **Métodos declarados:** `26` corpos JVM completos inventariados; **8 hashes** confrontados com o selo anterior; **18 métodos** receberam digest na descoberta, ainda sem selo individual promovido.
+- **Instruções JVM nos 26 corpos:** **1.111**.
+- **Branches diretos com destino válido:** **107**.
+- **Teste sintético:** **9 testes aprovados**.
+- **Índices gerados:** **544 índices**, **2.393 fichas candidatas**, **zero divergências**.
+- A saída `DISCOVERY_PASS_NOT_CERTIFIED` preserva a distinção entre o relatório gerado e certificação técnica estática. O resultado não reclassifica o Raygun; as inspeções de alvo e rede ainda têm pendências próprias.
+
 ## Nova auditoria e limites
 
 O auditor [alexscaves_1010_raygun_method_census_probe.py](alexscaves_1010_raygun_method_census_probe.py) examina a versão exata usando `javap -c -p -s`, confronta os oito digests prévios, verifica a integridade de todos os destinos de branches diretos e emite o **roster dos 26 métodos** com assinatura JVM, contagem de instruções e branches, offsets de switches e hash SHA-256 do parse. Não exporta implementação compilada, disassembly integral ou código alheio. O método `onUseTick` deve conservar suas 523 instruções previamente registradas.
