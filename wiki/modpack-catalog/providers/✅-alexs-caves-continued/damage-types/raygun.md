@@ -361,7 +361,7 @@ A [auditoria SHA-exata do fluxo](../../../../../docs/qa/alexscaves-1010-raygun-c
 
 ## Fluxo intra-iteração de resultado de dano e Irradiated — grafo normal 1.0.10
 
-**Escopo adicional:** `SHA_EXACT_1010_RAYGUN_HIT_OUTCOMES_BOUNDED_NORMAL_CFG_ONLY`. [Manifesto normal-CFG](../EXACT-RAYGUN-HIT-OUTCOMES-CFG-1.0.10.json) · [sonda read-only](../../../../docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe.py) · [relatório detalhado](../../../../docs/qa/alexscaves-1010-raygun-hit-outcomes-cfg-handoff.md) · [execução CI de descoberta](https://github.com/Gustavaopere/Black-Arcana/actions/runs/43974401894).
+**Escopo adicional:** `SHA_EXACT_1010_RAYGUN_HIT_OUTCOMES_BOUNDED_NORMAL_CFG_ONLY`. [Manifesto normal-CFG](../EXACT-RAYGUN-HIT-OUTCOMES-CFG-1.0.10.json) · [sonda read-only](../../../../../docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe.py) · [relatório detalhado](../../../../../docs/qa/alexscaves-1010-raygun-hit-outcomes-cfg-handoff.md) · [execução CI de descoberta](https://github.com/Gustavaopere/Black-Arcana/actions/runs/43974401894).
 
 O JAR publisher SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c` foi revalidado; os 26 métodos da classe mantiveram seus fingerprints anteriores, inclusive `onUseTick` com 523 instruções, 57 branches e digest `b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5`. Na janela `[953,1157)`, 82 instruções formam o grafo de **um ciclo normal delimitado** (duas entradas externas e dez arestas de saída, sem tratar exceções).
 
