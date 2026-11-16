@@ -212,16 +212,16 @@ def audit(jar, javap_bin, inspect=False):
     ])
     check_pivots(method(GAUNTLET, "onUseTick"), [
         (124, "invokevirtual", "getEntitiesOfClass:"),
-        (216, "invokevirtual", "createEntity:"),
+        (216, "invokestatic", "createEntity:"),
         (228, "invokevirtual", "setItemStack:"),
         (252, "invokevirtual", "setControllerUUID:"),
         (258, "invokevirtual", "addFreshEntity:"),
     ])
     check_pivots(method(WEAPON, "getDigSpeed"), [
         (9, "invokevirtual", "getDestroySpeed:"),
-        (26, "invokevirtual", "miningEfficiencyBonus:"),
-        (157, "invokevirtual", "submergedMiningFactor:"),
-        (183, "invokevirtual", "getBreakSpeed:"),
+        (26, "invokestatic", "miningEfficiencyBonus:"),
+        (157, "invokestatic", "submergedMiningFactor:"),
+        (183, "invokestatic", "getBreakSpeed:"),
     ])
 
     if inspect:
