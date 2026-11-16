@@ -7,6 +7,9 @@ on:
       - '.github/workflows/alexscaves-1010-raygun-method-census.yml'
       - 'docs/qa/alexscaves_1010_raygun_method_census_probe.py'
       - 'docs/qa/alexscaves_1010_raygun_method_census_probe_test.py'
+      - 'docs/qa/alexscaves_1010_raygun_all_method_seal.py'
+      - 'docs/qa/alexscaves_1010_raygun_all_method_seal_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-ALL-METHODS-1.0.10.json'
       - 'docs/qa/alexscaves-1010-raygun-method-census-handoff.md'
   push:
     branches: [main]
@@ -14,6 +17,9 @@ on:
       - '.github/workflows/alexscaves-1010-raygun-method-census.yml'
       - 'docs/qa/alexscaves_1010_raygun_method_census_probe.py'
       - 'docs/qa/alexscaves_1010_raygun_method_census_probe_test.py'
+      - 'docs/qa/alexscaves_1010_raygun_all_method_seal.py'
+      - 'docs/qa/alexscaves_1010_raygun_all_method_seal_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-ALL-METHODS-1.0.10.json'
       - 'docs/qa/alexscaves-1010-raygun-method-census-handoff.md'
 
 permissions:
@@ -33,6 +39,7 @@ jobs:
         run: |
           python3 -m py_compile docs/qa/alexscaves_1010_raygun_method_census_probe.py docs/qa/alexscaves_1010_raygun_method_census_probe_test.py
           python3 docs/qa/alexscaves_1010_raygun_method_census_probe_test.py -v
+          python3 docs/qa/alexscaves_1010_raygun_all_method_seal_test.py -v
       - name: Fetch exact publisher JAR and SHA-256 verify
         run: |
           set -euo pipefail
@@ -50,6 +57,11 @@ jobs:
             --jar build/raygun-native-census/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/raygun-native-census/evidence.json
+      - name: Inspect all method fingerprints and prepare exact seal
+        run: |
+          python3 docs/qa/alexscaves_1010_raygun_all_method_seal.py \
+            --report build/raygun-native-census/evidence.json \
+            --print-candidate
       - name: Ensure catalog indexes unchanged
         run: |
           python3 scripts/catalog/check_perk_ready_indexes.py
