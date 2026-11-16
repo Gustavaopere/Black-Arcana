@@ -4,6 +4,7 @@ import unittest
 
 from alexscaves_1010_raygun_charge_ammo_flow_probe import method_site
 from alexscaves_1010_ferrous_haste_causal_audit import AuditError
+from alexscaves_1010_raygun_method_census_probe import CensusError
 
 def ins(offset, opcode, operand="", symbol=""):
     return {"offset":offset,"opcode":opcode,"operand":operand,"symbol":symbol}
@@ -27,19 +28,19 @@ class ChargeAmmoJVMRegression(unittest.TestCase):
             method_site(method([ins(0,"ifeq","999"),ins(3,"return")]))
 
     def test_duplicate_offsets_rejected(self):
-        with self.assertRaisesRegex(AuditError,"invalid method instruction order"):
+        with self.assertRaisesRegex(CensusError,"invalid method instruction order"):
             method_site(method([ins(0,"return"),ins(0,"return")]))
 
     def test_empty_method_rejected(self):
-        with self.assertRaisesRegex(AuditError,"empty method"):
+        with self.assertRaisesRegex(CensusError,"empty method"):
             method_site(method([]))
 
     def test_switch_instruction_rejected(self):
-        with self.assertRaisesRegex(AuditError,"unexpected JVM switch"):
+        with self.assertRaisesRegex(CensusError,"unexpected JVM switch"):
             method_site(method([ins(0,"tableswitch","{"),ins(3,"return")]))
 
     def test_selected_sites_are_bounded(self):
-        with self.assertRaisesRegex(AuditError,"budget exceeded"):
+        with self.assertRaisesRegex(CensusError,"budget exceeded"):
             method_site(method([ins(i*3,"invokestatic","#1","Method Example.x:()V")
                                 for i in range(86)]))
 
