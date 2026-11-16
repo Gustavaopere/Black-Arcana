@@ -1,0 +1,681 @@
+{
+  "schema_version": 1,
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "version": "1.0.10",
+  "enchantment": "alexscaves:field_extension",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "legacy_seal": "EXACT-FIELD-EXTENSION-1.0.10.json",
+  "prior_full_roster": "EXACT-FERROUS-HASTE-CAUSAL-1.0.10.json",
+  "resources": {
+    "data/alexscaves/enchantment/field_extension.json": "c0f2998a08abbefc53a67447ad9e899cdb43bf8a0144a38d53d5fde2b90eb43e",
+    "data/alexscaves/tags/item/enchantable/galena_gauntlet.json": "5f8a2dfe1222c6631122855a11ab011d916bea83d285d6ecd886a177c058c4cb"
+  },
+  "resource_json": {
+    "description": {
+      "translate": "enchantment.alexscaves.field_extension"
+    },
+    "supported_items": "#alexscaves:enchantable/galena_gauntlet",
+    "weight": 10,
+    "max_level": 4,
+    "min_cost": {
+      "base": 1,
+      "per_level_above_first": 6
+    },
+    "max_cost": {
+      "base": 41,
+      "per_level_above_first": 10
+    },
+    "anvil_cost": 1,
+    "slots": [
+      "mainhand",
+      "offhand"
+    ]
+  },
+  "supported_item_tag": {
+    "values": [
+      "alexscaves:galena_gauntlet"
+    ]
+  },
+  "class_sha256": {
+    "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class": "a26794c9eba89c554e812078886beda6129d5298219f685f6d0e2be315fbf071",
+    "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem.class": "5a74328a7130704a4e2dca9e607bed4dc3a468b8bbcb6d4e238b4d2d962573b0",
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32"
+  },
+  "compiled_field_extension_token_owners": [
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+    "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class"
+  ],
+  "census": {
+    "methods_checked": 13,
+    "instructions_checked": 1387,
+    "direct_branches_checked": 147,
+    "method_census": [
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem.class",
+        "name": "use",
+        "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+        "instructions": 47,
+        "parsed_method_sha256": "14afa5ada8379f8f6706aa4cc713055fb43d5b154465ef5351f3c4f6e8fb8ac1"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem.class",
+        "name": "onUseTick",
+        "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+        "instructions": 120,
+        "parsed_method_sha256": "fa87f2565ad1df622d3fe09b806541663f1bb787d84caec4e7b5e949e2781523"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem.class",
+        "name": "releaseUsing",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+        "instructions": 25,
+        "parsed_method_sha256": "f955156370b46a5319ec67b325a149136682c5e4b23a564c5c8ed639d0b5bbf0"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "tick",
+        "descriptor": "()V",
+        "instructions": 744,
+        "parsed_method_sha256": "b68e9174310dc32ea5ce7bbe627955d18e92db9e1c087d741a63cfb4ea251f41"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "hurtEntity",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V",
+        "instructions": 141,
+        "parsed_method_sha256": "81ce00054738e5b73fac709f467f51156ff6868c9d0098b7e96cc2b27318c193"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "getDigSpeed",
+        "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)F",
+        "instructions": 80,
+        "parsed_method_sha256": "fc64f50af1df090a8af266346de31ffe25a897616fdcb7ef112c44bd14c05913"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "damageItem",
+        "descriptor": "(I)V",
+        "instructions": 37,
+        "parsed_method_sha256": "1b3f7570f960ea46d85a0531ca474a5c5126b03c047a1d854491213e3feb1bfc"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "directMovementTowards",
+        "descriptor": "(Lnet/minecraft/world/phys/Vec3;F)V",
+        "instructions": 68,
+        "parsed_method_sha256": "9e5d7cf9259a7efa76f9f2eccf794f223dbd9325c52d2fb28b8e92caace34351"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "isOwnerWearingGauntlet",
+        "descriptor": "()Z",
+        "instructions": 26,
+        "parsed_method_sha256": "96200d696cef10e398dd9c890aba331336e85d945fb15a66f4dfccf1caad8406"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "getController",
+        "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+        "instructions": 34,
+        "parsed_method_sha256": "4fffb40a928b5b2ac381dfd60cddfce43551ae3b064f9f81a5f6f48ab76169bd"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "addAdditionalSaveData",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+        "instructions": 23,
+        "parsed_method_sha256": "78b5dd00489f3dc00c5656a96ee11a3a21ea6734b9145eca13620e929ae02567"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "readAdditionalSaveData",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+        "instructions": 23,
+        "parsed_method_sha256": "bd4cec33193e919616b454add567a63d4411d79fd8edcc7654bba8d339c337e8"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "plopItem",
+        "descriptor": "()V",
+        "instructions": 19,
+        "parsed_method_sha256": "7bfcbfdfde6853227ff8b62e961f9764c81f31cf963b432de6c9e87ebcaaab76"
+      }
+    ]
+  },
+  "pivots": [
+    {
+      "offset": 519,
+      "opcode": "invokevirtual",
+      "operand": "#229",
+      "symbol": "Method isOwnerWearingGauntlet:()Z"
+    },
+    {
+      "offset": 522,
+      "opcode": "ifne",
+      "operand": "529",
+      "symbol": ""
+    },
+    {
+      "offset": 530,
+      "opcode": "putfield",
+      "operand": "#13",
+      "symbol": "Field comingBack:Z"
+    },
+    {
+      "offset": 541,
+      "opcode": "invokevirtual",
+      "operand": "#229",
+      "symbol": "Method isOwnerWearingGauntlet:()Z"
+    },
+    {
+      "offset": 544,
+      "opcode": "ifeq",
+      "operand": "1416",
+      "symbol": ""
+    },
+    {
+      "offset": 552,
+      "opcode": "ldc",
+      "operand": "#232",
+      "symbol": "float 30.0f"
+    },
+    {
+      "offset": 554,
+      "opcode": "fstore",
+      "operand": "8",
+      "symbol": ""
+    },
+    {
+      "offset": 557,
+      "opcode": "invokevirtual",
+      "operand": "#102",
+      "symbol": "Method getController:()Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "offset": 564,
+      "opcode": "instanceof",
+      "operand": "#233",
+      "symbol": "class net/minecraft/world/entity/LivingEntity"
+    },
+    {
+      "offset": 567,
+      "opcode": "ifeq",
+      "operand": "646",
+      "symbol": ""
+    },
+    {
+      "offset": 579,
+      "opcode": "invokevirtual",
+      "operand": "#235",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getUseItem:()Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "offset": 582,
+      "opcode": "getstatic",
+      "operand": "#238",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.GALENA_GAUNTLET:Ljava/util/function/Supplier;"
+    },
+    {
+      "offset": 593,
+      "opcode": "invokevirtual",
+      "operand": "#252",
+      "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+    },
+    {
+      "offset": 596,
+      "opcode": "ifeq",
+      "operand": "646",
+      "symbol": ""
+    },
+    {
+      "offset": 601,
+      "opcode": "invokevirtual",
+      "operand": "#235",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getUseItem:()Lnet/minecraft/world/item/ItemStack;"
+    },
+    {
+      "offset": 608,
+      "opcode": "getstatic",
+      "operand": "#256",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.FERROUS_HASTE:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "offset": 611,
+      "opcode": "invokestatic",
+      "operand": "#262",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "offset": 614,
+      "opcode": "ifle",
+      "operand": "621",
+      "symbol": ""
+    },
+    {
+      "offset": 626,
+      "opcode": "getstatic",
+      "operand": "#268",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.FIELD_EXTENSION:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "offset": 629,
+      "opcode": "invokestatic",
+      "operand": "#262",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "offset": 632,
+      "opcode": "istore",
+      "operand": "11",
+      "symbol": ""
+    },
+    {
+      "offset": 634,
+      "opcode": "fload",
+      "operand": "8",
+      "symbol": ""
+    },
+    {
+      "offset": 636,
+      "opcode": "iload",
+      "operand": "11",
+      "symbol": ""
+    },
+    {
+      "offset": 638,
+      "opcode": "i2f",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 639,
+      "opcode": "ldc_w",
+      "operand": "#271",
+      "symbol": "float 5.0f"
+    },
+    {
+      "offset": 642,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 643,
+      "opcode": "fadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 644,
+      "opcode": "fstore",
+      "operand": "8",
+      "symbol": ""
+    },
+    {
+      "offset": 651,
+      "opcode": "invokedynamic",
+      "operand": "#272,  0",
+      "symbol": "InvokeDynamic #0:test:()Ljava/util/function/Predicate;"
+    },
+    {
+      "offset": 656,
+      "opcode": "fload",
+      "operand": "8",
+      "symbol": ""
+    },
+    {
+      "offset": 658,
+      "opcode": "f2d",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 659,
+      "opcode": "invokestatic",
+      "operand": "#276",
+      "symbol": "Method net/minecraft/world/entity/projectile/ProjectileUtil.getHitResultOnViewVector:(Lnet/minecraft/world/entity/Entity;Ljava/util/function/Predicate;D)Lnet/minecraft/world/phys/HitResult;"
+    },
+    {
+      "offset": 666,
+      "opcode": "instanceof",
+      "operand": "#282",
+      "symbol": "class net/minecraft/world/phys/EntityHitResult"
+    },
+    {
+      "offset": 669,
+      "opcode": "ifeq",
+      "operand": "802",
+      "symbol": ""
+    },
+    {
+      "offset": 680,
+      "opcode": "getfield",
+      "operand": "#7",
+      "symbol": "Field playerUseCooldown:I"
+    },
+    {
+      "offset": 683,
+      "opcode": "ifne",
+      "operand": "802",
+      "symbol": ""
+    },
+    {
+      "offset": 688,
+      "opcode": "invokevirtual",
+      "operand": "#284",
+      "symbol": "Method net/minecraft/world/phys/EntityHitResult.getEntity:()Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "offset": 713,
+      "opcode": "astore",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "offset": 715,
+      "opcode": "ldc_w",
+      "operand": "#296",
+      "symbol": "float 0.2f"
+    },
+    {
+      "offset": 718,
+      "opcode": "fstore",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "offset": 723,
+      "opcode": "invokevirtual",
+      "operand": "#218",
+      "symbol": "Method distanceTo:(Lnet/minecraft/world/entity/Entity;)F"
+    },
+    {
+      "offset": 728,
+      "opcode": "invokevirtual",
+      "operand": "#203",
+      "symbol": "Method net/minecraft/world/entity/Entity.getBbWidth:()F"
+    },
+    {
+      "offset": 731,
+      "opcode": "ldc_w",
+      "operand": "#297",
+      "symbol": "float 1.5f"
+    },
+    {
+      "offset": 734,
+      "opcode": "fadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 736,
+      "opcode": "ifge",
+      "operand": "799",
+      "symbol": ""
+    },
+    {
+      "offset": 740,
+      "opcode": "getfield",
+      "operand": "#89",
+      "symbol": "Field strikeProgress:F"
+    },
+    {
+      "offset": 745,
+      "opcode": "ifge",
+      "operand": "766",
+      "symbol": ""
+    },
+    {
+      "offset": 754,
+      "opcode": "ldc",
+      "operand": "#207",
+      "symbol": "float 0.35f"
+    },
+    {
+      "offset": 760,
+      "opcode": "putfield",
+      "operand": "#89",
+      "symbol": "Field strikeProgress:F"
+    },
+    {
+      "offset": 766,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 771,
+      "opcode": "invokevirtual",
+      "operand": "#208",
+      "symbol": "Method hurtEntity:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V"
+    },
+    {
+      "offset": 775,
+      "opcode": "iload",
+      "operand": "7",
+      "symbol": ""
+    },
+    {
+      "offset": 777,
+      "opcode": "ifeq",
+      "operand": "784",
+      "symbol": ""
+    },
+    {
+      "offset": 780,
+      "opcode": "iconst_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 784,
+      "opcode": "iconst_5",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 790,
+      "opcode": "invokeinterface",
+      "operand": "#302,  2",
+      "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextInt:(I)I"
+    },
+    {
+      "offset": 796,
+      "opcode": "putfield",
+      "operand": "#7",
+      "symbol": "Field playerUseCooldown:I"
+    },
+    {
+      "offset": 799,
+      "opcode": "goto",
+      "operand": "928",
+      "symbol": ""
+    },
+    {
+      "offset": 804,
+      "opcode": "invokevirtual",
+      "operand": "#308",
+      "symbol": "Method net/minecraft/world/entity/player/Player.getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "offset": 810,
+      "opcode": "invokevirtual",
+      "operand": "#309",
+      "symbol": "Method net/minecraft/world/entity/player/Player.getViewVector:(F)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "offset": 813,
+      "opcode": "fload",
+      "operand": "8",
+      "symbol": ""
+    },
+    {
+      "offset": 815,
+      "opcode": "ldc_w",
+      "operand": "#313",
+      "symbol": "float 20.0f"
+    },
+    {
+      "offset": 818,
+      "opcode": "fsub",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 820,
+      "opcode": "invokevirtual",
+      "operand": "#314",
+      "symbol": "Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "offset": 823,
+      "opcode": "invokevirtual",
+      "operand": "#318",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "offset": 826,
+      "opcode": "astore",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "offset": 833,
+      "opcode": "getstatic",
+      "operand": "#326",
+      "symbol": "Field net/minecraft/world/phys/HitResult$Type.BLOCK:Lnet/minecraft/world/phys/HitResult$Type;"
+    },
+    {
+      "offset": 836,
+      "opcode": "if_acmpeq",
+      "operand": "862",
+      "symbol": ""
+    },
+    {
+      "offset": 855,
+      "opcode": "fload",
+      "operand": "8",
+      "symbol": ""
+    },
+    {
+      "offset": 858,
+      "opcode": "dcmpg",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 859,
+      "opcode": "ifge",
+      "operand": "928",
+      "symbol": ""
+    },
+    {
+      "offset": 864,
+      "opcode": "instanceof",
+      "operand": "#335",
+      "symbol": "class net/minecraft/world/phys/BlockHitResult"
+    },
+    {
+      "offset": 867,
+      "opcode": "ifeq",
+      "operand": "928",
+      "symbol": ""
+    },
+    {
+      "offset": 883,
+      "opcode": "invokestatic",
+      "operand": "#341",
+      "symbol": "Method net/minecraft/world/phys/Vec3.atCenterOf:(Lnet/minecraft/core/Vec3i;)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "offset": 886,
+      "opcode": "invokevirtual",
+      "operand": "#345",
+      "symbol": "Method distanceToSqr:(Lnet/minecraft/world/phys/Vec3;)D"
+    },
+    {
+      "offset": 889,
+      "opcode": "ldc2_w",
+      "operand": "#349",
+      "symbol": "double 2.25d"
+    },
+    {
+      "offset": 892,
+      "opcode": "dcmpg",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "offset": 893,
+      "opcode": "ifge",
+      "operand": "903",
+      "symbol": ""
+    },
+    {
+      "offset": 898,
+      "opcode": "invokevirtual",
+      "operand": "#337",
+      "symbol": "Method net/minecraft/world/phys/BlockHitResult.getBlockPos:()Lnet/minecraft/core/BlockPos;"
+    },
+    {
+      "offset": 901,
+      "opcode": "astore",
+      "operand": "9",
+      "symbol": ""
+    },
+    {
+      "offset": 912,
+      "opcode": "invokevirtual",
+      "operand": "#351",
+      "symbol": "Method net/minecraft/world/level/Level.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"
+    },
+    {
+      "offset": 915,
+      "opcode": "invokevirtual",
+      "operand": "#355",
+      "symbol": "Method net/minecraft/world/level/block/state/BlockState.isAir:()Z"
+    },
+    {
+      "offset": 918,
+      "opcode": "ifne",
+      "operand": "928",
+      "symbol": ""
+    },
+    {
+      "offset": 926,
+      "opcode": "astore",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "offset": 930,
+      "opcode": "ifnull",
+      "operand": "1413",
+      "symbol": ""
+    }
+  ],
+  "contract": {
+    "activation": "isOwnerWearingGauntlet @541, LivingEntity.getUseItem()==GALENA_GAUNTLET @579-596; otherwise skip enchant addition, base still 30F if tick owner branch active",
+    "range": "raycast requested 30F + 5F * ACCompat.enchantLevel(useItem,FIELD_EXTENSION) at @626-659; JSON max level IV, declared 30/35/40/45/50",
+    "fallback": "when entity attack route not selected, eye position plus view vector scaled (distance-20F) @804-826; alternative BlockHitResult may replace selected destination",
+    "target": "EntityHitResult and playerUseCooldown==0 @666-683, then victim width+1.5F @723-736 and strikeProgress @740-771 before hurtEntity; Field Extension does not directly change attack damage",
+    "block": "BlockHitResult, weapon-to-block-centre distance squared <2.25D @864-901, non-air block @912-918, selected block and downstream native mining; Field Extension not block-break or claim permission",
+    "other": "Ferrous Haste independent attack/mining selectors; movement scalar 0.2F on entity target; JSON weight/anvil/enchanting costs not mana/cooldown; owner, NBT and damage consumers under provider"
+  },
+  "safety": {
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "gameplay_reach": "NOT_TESTED",
+    "pvp_claims_los": "NOT_CERTIFIED",
+    "accepted_damage_or_block_break": "NOT_CERTIFIED",
+    "datapack_loaded": "NOT_VERIFIED"
+  }
+}
