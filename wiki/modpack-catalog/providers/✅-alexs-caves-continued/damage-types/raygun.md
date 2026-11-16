@@ -372,3 +372,13 @@ Em contraste, tomar `ifne @1088 → 1157` na verificação `RESISTS_RADIATION` i
 **Consequências para perks/Mastery:** não derivar `Irradiated` exclusivamente de um callback hipotético de “dano aceito”; não inferir aceitação do status de um pacote visual; preservar os filtros nativos e evitar segundo processamento de damage/status/XP. A sonda **não** resolve o significado de todos os guards, execução concreta, exceções, authoritativeness do `ChargeUsed`, antirreplay C2S, PvP/claims ou efeitos após datapacks. Esses continuam pendentes de auditoria própria e QA física.
 
 **Estado inalterado:** ⚠️ `NOT_CERTIFIED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. Nenhum aumento dos contadores de cobertura ou autorização de runtime.
+
+## Selo do guard de resultado de dano — follow-up SHA-exato 1.0.10
+
+**Evidência individual adicional:** [manifesto de quatro guards](../EXACT-RAYGUN-POST-HIT-GUARDS-1.0.10.json) · [relatório de QA estática](../../../../../docs/qa/alexscaves-1010-raygun-post-hit-guards-handoff.md) · [CI com JAR publisher](https://github.com/Gustavaopere/Black-Arcana/actions/runs/43980081699).
+
+A janela JVM `[1013,1091)`, com **32 instruções**, contém os desvios `@1044`, `@1056`, `@1064` e `@1088`. O segundo guarda elimina o **falso positivo** de executabilidade documentado no grafo anterior: retorno **falso** de `ACCompat.hurt @1041` entra em `@1051 iconst_0`, grava no local 26 (`@1052`), lê o mesmo slot (`@1054`) e toma `ifeq @1056 → 1157`; `LivingEntity.addEffect @1119` não pertence a essa rota normal da mesma iteração.
+
+O retorno **verdadeiro** cria a flag 1 via `@1047–1052`, ultrapassa `@1056`, mas ainda precisa do teste `instanceof LivingEntity @1061` (saída em `@1064`) e do filtro `RESISTS_RADIATION` (`@1088`) antes da tentativa de status. São condições do produtor nativo compilado, não hooks suportados para reescrever `damage`, `target`, `amplifier` ou atribuição de proc.
+
+**Limites:** esse recorte não demonstra o resultado de `addEffect` em modpack, exceptions/indirect calls, aceitação pelo servidor, persistência, datapack efetivo, claims/PvP, owner/XP ou integração segura. Continuam `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; **não aumentar 79/81** por uma correção delimitada.
