@@ -1,0 +1,73 @@
+name: Alex's Caves 1.0.10 Raygun bounded hit outcome normal CFG
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-raygun-hit-outcomes-cfg.yml'
+      - 'docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe.py'
+      - 'docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-hit-outcomes-cfg-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-HIT-OUTCOMES-CFG-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-raygun-hit-outcomes-cfg.yml'
+      - 'docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe.py'
+      - 'docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-hit-outcomes-cfg-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-HIT-OUTCOMES-CFG-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+permissions:
+  contents: read
+jobs:
+  raygun_hit_outcomes_cfg:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Check Python syntax and synthetic negative regressions
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe.py docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe_test.py
+          python3 docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe_test.py -v
+      - name: Fetch hash-pinned publisher artifact
+        run: |
+          set -euo pipefail
+          mkdir -p build/raygun-hit-outcomes
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/raygun-hit-outcomes/alexscaves-1.0.10.jar
+          printf '%s  %s\n' '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c' \
+            'build/raygun-hit-outcomes/alexscaves-1.0.10.jar' | sha256sum -c -
+      - name: Extract bounded normal-CFG evidence (discovery until seal exists)
+        run: |
+          set -euo pipefail
+          SNAPSHOT='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-HIT-OUTCOMES-CFG-1.0.10.json'
+          if [[ -f "$SNAPSHOT" ]]; then
+            python3 docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe.py \
+              --jar build/raygun-hit-outcomes/alexscaves-1.0.10.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --snapshot "$SNAPSHOT" \
+              --output build/raygun-hit-outcomes/report.json
+          else
+            python3 docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe.py \
+              --jar build/raygun-hit-outcomes/alexscaves-1.0.10.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --output build/raygun-hit-outcomes/report.json \
+              --print-candidate
+          fi
+      - name: Verify generated catalog index invariants
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: raygun-1010-hit-outcomes-bounded-cfg
+          path: build/raygun-hit-outcomes/report.json
+          if-no-files-found: ignore
+          retention-days: 14
