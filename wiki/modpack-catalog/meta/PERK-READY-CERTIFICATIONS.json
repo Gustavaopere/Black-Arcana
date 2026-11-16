@@ -8662,6 +8662,46 @@
           "reason": "Individual JAR replay checks 13 full method body digests, 1387 JVM instructions, 147 direct branches, five-case getDigSpeed tableswitch, two compiled FERROUS_HASTE literal owners, exact resources/classes with SHA and targeted gate pivots. Synthetic negative tests reject method/resource/publisher drift, switches and unsafe hook/QA promotions. No proof of gameplay DPS, accepted damage/drops, multiplayer world policy, reload or provider universe closure."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/field-extension.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Field Extension alone changes eligible Galena Gauntlet native raycast query distance 30F+5F×L (JSON max IV); movement fallback uses range−20F; attack, block target, owner, durability and damage remain independently gated. JAR 1.0.10 SHA exact, 13 full methods, 1387 instructions, 147 direct branches, 85 pivots; no mutating hook, no real multiplayer QA, no effective LOS/claim/perk certification, no new cast/root, NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/field-extension.md",
+          "reason": "O JAR publisher 1.0.10 SHA1 6960b299a39a039ac8a5eb9b07be4ad0e3e0a570, SHA256 36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c, 75.279.314 bytes, JSON do encantamento, tag e três classes compiladas coincidem; fonte 1.1.1 não prova 1.0.10."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/field-extension.md",
+          "reason": "MagneticWeaponEntity.tick usa GalenaGauntletItem/Controller e somente soma nível de FIELD_EXTENSION com gauntlet ativa: local range = 30F+5F×L, consumido por ProjectileUtil.getHitResultOnViewVector. Sem cast separado ou mutation."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/field-extension.md",
+          "reason": "Max IV declarado, peso 10, min_cost base 1 passo 6, max_cost base 41 passo 10, anvil_cost 1, slots mão principal/secundária. Raycast L 0/I/II/III/IV 30/35/40/45/50; fallback para posição desejada range−20F, sem alterar 0.2F do ramo de ataque."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/field-extension.md",
+          "reason": "Raycast depende de Predicate do provider; EntityHitResult com playerUseCooldown=0, proximidade < width+1.5F e strikeProgress antes de hurtEntity. BlockHitResult requer distância quadrática da arma ao bloco <2.25D, não ar e guards; PvP/LOS/claims efetivos não certificados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/field-extension.md",
+          "reason": "Custos do JSON são metadados de encantamento, não mana/desgaste adicional. Gauntlet e MagneticWeaponEntity detêm cooldown, durabilidade, acesso ao mundo, dano solicitado, mineração e NBT de ControllerUUID/WeaponStack, sem autorização de double-spend ou XP duplicado."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/field-extension.md",
+          "reason": "13 métodos completos SHA-exatos e 85 pivôs de interação distinguidos de Ferrous Haste e Crystallization; Black Arcana autoritativo para seu runtime e RPG Skill Tree para perks somente através de boundaries verificados. Sem hook mutador, NO_MUTATION e fail-closed para alterar range/targeting."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/field-extension.md",
+          "reason": "Certificado individual EXACT-FIELD-EXTENSION-CAUSAL-1.0.10.json, auditor read-only, 9 testes sintéticos negativos e workflow SHA-exato: 13 corpos, 1.387 instruções JVM, 147 branches, 85 pivôs PASS; não autoriza cliente/servidor real, QA física, datapacks ou universo integral do provider."
+        }
+      }
     }
   },
   "providers": {},
