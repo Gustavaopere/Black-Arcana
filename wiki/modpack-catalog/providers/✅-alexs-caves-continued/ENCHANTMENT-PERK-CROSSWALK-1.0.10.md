@@ -9,8 +9,8 @@ version=1.0.10
 artifact_sha1=6960b299a39a039ac8a5eb9b07be4ad0e3e0a570
 artifact_sha256=36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c
 identity_resources_seen=51/51
-individual_full_enchantment_dossiers=48/51
-individual_partial_enchantment_dossiers=3/51
+individual_full_enchantment_dossiers=49/51
+individual_partial_enchantment_dossiers=2/51
 individual_existing_enchantment_dossiers=51/51
 whole_provider_catalog_closed=false
 mutating_hook=NOT_VERIFIED
@@ -19,9 +19,9 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `██████████████████░░ 94.1% (48/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `███████████████████░ 96.1% (49/51)`.
 
-**Barra de dossiers individuais existentes, completos ou parciais:** `████████████████████ 100.0% (51/51)`; destes, três permanecem parciais, enquanto Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection possuem contratos estáticos individuais certificados.
+**Barra de dossiers individuais existentes, completos ou parciais:** `████████████████████ 100.0% (51/51)`; destes, duas permanecem parciais, enquanto Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection possuem contratos estáticos individuais certificados.
 
 **Astral Transferring (✅ contrato estático):** [ficha individual](enchantments/astral-transferring.md), [selo](EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.json) e [prova](EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.md) separam transferência no servidor, custo cliente, laço/saúde/UUID e marcadores. Sem novo cast, hook ou QA física homologados.
 
@@ -133,7 +133,7 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 | ✅ | `alexscaves:far_flung` | [Contrato estático individual](enchantments/far-flung.md) · [selo causal físico 1.0.10](EXACT-FAR-FLUNG-CAUSAL-1.0.10.json) · [auditoria de 27 métodos/1.600 instruções/182 branches](../../../../docs/qa/alexscaves_1010_far_flung_causal_audit.py) · vetor com 3 Gaussian, AABB e gating owner/reeling, dano separado Sharp Cane e `fling` sem clamp efetivo; sem novo cast, hook ou QA física · `NO_MUTATION` |
 | ✅ | `alexscaves:ferrous_haste` | [Ficha estática individual](enchantments/ferrous-haste.md) · [selo causal 1.0.10](EXACT-FERROUS-HASTE-CAUSAL-1.0.10.json) · [auditoria física 13 métodos/1.387 JVM/147 branches e switch](../../../../docs/qa/alexscaves_1010_ferrous_haste_causal_audit.py) · booleano positivo, cooldown `3` versus `5+nextInt(5)` com decremento no mesmo tick, progresso por divisor `8/10`, dano/drops condicionados e Field Extension distinto · `NO_MUTATION` |
 | ✅ | `alexscaves:field_extension` | [Contrato estático individual](enchantments/field-extension.md) · [manifesto de janelas 1.0.10](EXACT-FIELD-EXTENSION-1.0.10.json) · [certificado causal SHA-exato de 13 métodos/1.387 instruções/147 branches/85 pivôs](EXACT-FIELD-EXTENSION-CAUSAL-1.0.10.json) · mira `30+5×L`, fallback `range−20`, hit/mineração/owner provider-native · `NO_MUTATION` · QA física pendente |
-| ⚠️ | `alexscaves:flinging` | [Ficha técnica parcial](enchantments/flinging.md) · [manifesto SHA-exato 1.0.10](EXACT-FLINGING-1.0.10.json) |
+| ✅ | `alexscaves:flinging` | [Contrato estático individual](enchantments/flinging.md) · [selo causal](EXACT-FLINGING-CAUSAL-1.0.10.json) · [prova](EXACT-FLINGING-CAUSAL-1.0.10.md) · [evidência histórica selecionada](EXACT-FLINGING-1.0.10.json); impulso, AABB e side gates separados; hook/QA física pendentes |
 | ⚠️ | `alexscaves:gamma_ray` | [Ficha técnica parcial](enchantments/gamma-ray.md) · [Raygun 1.0.10](EXACT-RAYGUN-CONTROL-1.0.10.json) · [branches Gamma](EXACT-RAYGUN-CONDITION-BRANCHES-1.0.10.json) · [consumidores](EXACT-RAYGUN-BRANCH-CONSUMERS-1.0.10.json) |
 | ✅ | `alexscaves:heavy_slam` | [Contrato técnico estático](enchantments/heavy-slam.md) · [JSON/consumidor selados](EXACT-HEAVY-SLAM-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
 | ✅ | `alexscaves:herd_phalanx` | [Contrato técnico estático](enchantments/herd-phalanx.md) · [selo individual](EXACT-HERD-PHALANX-CONTRACT-1.0.10.json) · [consumidor Spirit Dinosaur](EXACT-SPIRIT-DINOSAUR-CONTRACT-1.0.10.json) · hooks e QA física pendentes |
@@ -177,4 +177,6 @@ Os percentuais antigos de rastreio nominal eram checkpoints de recortes selecion
 
 Para receber ✅ **na coluna de contrato técnico estático**, verificar no JAR 1.0.10: identidade/JSON/registro; comportamento e consumidores; parâmetros/custos/slots; targeting, dano e tempo; recursos e consequências; fronteiras de integração/autoria/servidor; evidência reproduzível e estado de validação explícito. `N/A` exige justificativa. O certificado estático deve manter os estados de hook e QA separados: `mutating_hook=NOT_VERIFIED` e `physical_qa=NOT_TESTED` não são convertidos em aprovações de runtime. Sem hook e aceitação física próprios, **⛔ NO_MUTATION** continua aplicável às perks que alteram o pipeline.
 
-**Todas as 51 identidades de encantamento publisher possuem agora ficha individual:** 48 contratos técnicos estáticos certificados e 3 fichas ⚠️ parciais. O próximo trabalho é aprofundar os contratos ainda parciais, começando por `alexscaves:flinging`, sem refazer os já certificados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem **76/81 contratos estáticos entre fichas observadas**, incluindo 51 fichas de encantamentos. Esses 81 objetos documentais observados não equivalem ao universo integral do provider.
+**Todas as 51 identidades de encantamento publisher possuem agora ficha individual:** 49 contratos técnicos estáticos certificados e 2 fichas ⚠️ parciais. O próximo trabalho é aprofundar os contratos ainda parciais, começando por `alexscaves:gamma_ray`, sem refazer os já certificados. A fila global permanece em **Alex's Caves Continued**. Raygun e Tremorzilla Beam continuam parciais; o provider tem **77/81 contratos estáticos entre fichas observadas**, incluindo 51 fichas de encantamentos. Esses 81 objetos documentais observados não equivalem ao universo integral do provider.
+
+**Flinging (✅ contrato estático):** [ficha](enchantments/flinging.md) e [selo/prova](EXACT-FLINGING-CAUSAL-1.0.10.md) documentam a carga, o vetor, a AABB e os gates distintos de movimento/dano/desgaste. `NO_MUTATION`; hooks mutadores e QA física pendentes.

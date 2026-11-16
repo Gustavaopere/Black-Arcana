@@ -1,0 +1,4888 @@
+{
+  "version": "1.0.10",
+  "enchantment": "alexscaves:flinging",
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "legacy_seal": "EXACT-FLINGING-1.0.10.json",
+  "legacy_seal_sha256": "bfd013357139a53a42408905470a152e8d82d67aec7c081f946dec1e1d48209b",
+  "class_sha256": {
+    "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class": "996b208a60f2c26c275e60e5d0e3a2fd0090cfb0ba1687907cac242de9a17d09",
+    "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class": "93fdaee0239cc4985b351a6c2ac1edd23a51cf0088cb1172f983d0f869d9e42e",
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32"
+  },
+  "resources": {
+    "data/alexscaves/enchantment/flinging.json": {
+      "sha256": "0680721d1687f85991e11ee33908b67aa8b720339e7b09eeaaaf92cf604356f2",
+      "size_bytes": 359
+    },
+    "data/alexscaves/tags/item/enchantable/ortholance.json": {
+      "sha256": "1c96a26e08800182b9c4b3b2f5ba4043389fe1bec0dcd5b12f1e5392cc28a5ac",
+      "size_bytes": 50
+    },
+    "data/alexscaves/enchantment/tsunami.json": {
+      "sha256": "37f1f8c3f8b98084b73b23aa2ec49ba9a925bb9a37089f622cf992234a086242",
+      "size_bytes": 358
+    },
+    "data/alexscaves/enchantment/second_wave.json": {
+      "sha256": "68d843242cc39b33eb952142b168fa8e72a2695bfa8adea6de3e4bba6febb97c",
+      "size_bytes": 413
+    },
+    "data/minecraft/tags/enchantment/in_enchanting_table.json": {
+      "sha256": "6472c976d755f1481506f3f113368081aa487eaff3ce977a1f7c93a400f39bb1",
+      "size_bytes": 1631
+    },
+    "data/minecraft/tags/enchantment/non_treasure.json": {
+      "sha256": "6472c976d755f1481506f3f113368081aa487eaff3ce977a1f7c93a400f39bb1",
+      "size_bytes": 1631
+    },
+    "data/minecraft/tags/enchantment/on_random_loot.json": {
+      "sha256": "6472c976d755f1481506f3f113368081aa487eaff3ce977a1f7c93a400f39bb1",
+      "size_bytes": 1631
+    },
+    "data/minecraft/tags/enchantment/tradeable.json": {
+      "sha256": "6472c976d755f1481506f3f113368081aa487eaff3ce977a1f7c93a400f39bb1",
+      "size_bytes": 1631
+    },
+    "assets/alexscaves/lang/en_us.json": {
+      "sha256": "a2a3fab567b07ec10b3d946d4e4ce3e65417b6f9348bd49478d8a253a4232d1f",
+      "size_bytes": 121372
+    },
+    "assets/alexscaves/lang/pt_br.json": {
+      "sha256": "080bfaf05b6d710383579dfd0d3c01443f9fa873b0c697f5e6ee0740931018a7",
+      "size_bytes": 84238
+    }
+  },
+  "resource_json": {
+    "description": {
+      "translate": "enchantment.alexscaves.flinging"
+    },
+    "supported_items": "#alexscaves:enchantable/ortholance",
+    "weight": 10,
+    "max_level": 3,
+    "min_cost": {
+      "base": 1,
+      "per_level_above_first": 8
+    },
+    "max_cost": {
+      "base": 41,
+      "per_level_above_first": 10
+    },
+    "anvil_cost": 1,
+    "slots": [
+      "mainhand"
+    ]
+  },
+  "supported_item_tag": {
+    "values": [
+      "alexscaves:ortholance"
+    ]
+  },
+  "publisher_acquisition_tags": {
+    "data/minecraft/tags/enchantment/in_enchanting_table.json": true,
+    "data/minecraft/tags/enchantment/non_treasure.json": true,
+    "data/minecraft/tags/enchantment/on_random_loot.json": true,
+    "data/minecraft/tags/enchantment/tradeable.json": true
+  },
+  "locales": {
+    "assets/alexscaves/lang/en_us.json": {
+      "enchantment.alexscaves.flinging": "Flinging",
+      "enchantment.alexscaves.flinging.desc": "Ortholance launch moves the player much further"
+    },
+    "assets/alexscaves/lang/pt_br.json": {
+      "enchantment.alexscaves.flinging": null,
+      "enchantment.alexscaves.flinging.desc": null
+    }
+  },
+  "publisher_enchantment_census": [
+    {
+      "path": "data/alexscaves/enchantment/arrow_inducting.json",
+      "sha256": "80d52e42318ad732b32ba6118dea8f5b315b8d2d702da32d202ff95246a973e5",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/astral_transferring.json",
+      "sha256": "41133c10af9c9e8d5e33d1b8339b734f81547b141f83fc0144aa9cf89f1f04c2",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/bonking.json",
+      "sha256": "f03c4e8c2f8b00b3668b8d7bf14276647b3e0324c159c6336b189a258571a86a",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/bouncing_bolt.json",
+      "sha256": "bc103328ad554dd97348becf898d5ecedd2867385d1ffbd756cf04ec302d24e7",
+      "exclusive_set": [
+        "alexscaves:triple_splash"
+      ]
+    },
+    {
+      "path": "data/alexscaves/enchantment/bouncy_ball.json",
+      "sha256": "003c602b45f66154304a0cabdff36b71450da876b071bd355ad604e2cab632ca",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/charting_call.json",
+      "sha256": "352ec52d0e21298a921cc10fe5253b0484c0b273adf3fc5713bce046758ccacd",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/chomping_spirit.json",
+      "sha256": "f0fb73c3e1c564831375009736264848190a6a6edd126b36bb3802ff356fa6e7",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/crystallization.json",
+      "sha256": "b2394e226f7d31843e6d459ef48e21bb955be3d174b3d63eb7ef0a66f0fee3da",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/dark_nock.json",
+      "sha256": "569cb5857db11189b2eb8a1163d53a440587ab02e2f14bc8296aaaf91dcd8033",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/dazing_sweep.json",
+      "sha256": "c86a7aceb5dfec02083dabc93ab51dc5253fbeb616c013a5f33f343656c26318",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/detonating_death.json",
+      "sha256": "8402461954ff5b249ae675b51d7dcc23d933b2b06c494b327bf608371298646e",
+      "exclusive_set": [
+        "alexscaves:astral_transferring"
+      ]
+    },
+    {
+      "path": "data/alexscaves/enchantment/double_stab.json",
+      "sha256": "554b3d0fb8e157ef912716cba8180b43cae340f01ee64ca931465b1d2884ff71",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/energy_efficiency.json",
+      "sha256": "c5771a00e6dd2dd0a693369a110a943354b074dde27b9f3c9d1dcb4a8440cf3a",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/enveloping_bubble.json",
+      "sha256": "d984c8cc3f8d72bffa2fce0972a2449b393907f7686626cc6135bf2a8260ed5a",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/explosive_flavor.json",
+      "sha256": "2da6cbf1a482c69cb268a65667a4b25ea402bc3d9c7b055ef2bd7e5d8f2d08e8",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/far_flung.json",
+      "sha256": "a7f48d6ad8eca7a883b3d930313d6962334b0b43a0d6722cb2e60831e9ed8e8c",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/ferrous_haste.json",
+      "sha256": "38db83ed098b276532ad99d652f0614a4ec85b23c1dacb1f17d614a9a3d2f819",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/field_extension.json",
+      "sha256": "c0f2998a08abbefc53a67447ad9e899cdb43bf8a0144a38d53d5fde2b90eb43e",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/flinging.json",
+      "sha256": "0680721d1687f85991e11ee33908b67aa8b720339e7b09eeaaaf92cf604356f2",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/gamma_ray.json",
+      "sha256": "4873ef951ef2afff56e8734740e68c0e4bec4b2d69e893632a9f97dc317630fd",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/heavy_slam.json",
+      "sha256": "927532341a9a53ac73c081f99d7f9b4703f9fa3245c1fdafb609dfdba7733c8a",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/herd_phalanx.json",
+      "sha256": "294818f10b6327c0ca06ef4510d599bba0a61a6c47ffc044236268411ccc0616",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/humungous_hex.json",
+      "sha256": "8c45ec4c64e1ed5e258ce1a8d6a27b7693275336b76b91d108521fb91a015cc0",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/impending_stab.json",
+      "sha256": "bb3918b0fdf897ad70897952d15094e04d8af905b3e2f2db0d2159b762f5ffbc",
+      "exclusive_set": [
+        "alexscaves:double_stab"
+      ]
+    },
+    {
+      "path": "data/alexscaves/enchantment/lasting_morale.json",
+      "sha256": "8c662fb7f68987d8e564ec053ebccdd9232593e5961d2213bbbed037b270232f",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/multiple_mint.json",
+      "sha256": "e7357f60b417fa10f5c64518dc51ab61365dca1a410c342ef2aa0604de40af03",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/peppermint_punting.json",
+      "sha256": "ebe5a66b3d69d1d4384149959893712a7458ed9acfcc9064fa58fd16e8ba412b",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/plummeting_flight.json",
+      "sha256": "163b032e37c716f0ef172a37b739a6d61340dab7c629c070698f8543999ec830",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/precise_volley.json",
+      "sha256": "59efc44222dcd59530e13a50cb413a2db0c875213ced1a2ac9de2ef982615f53",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/rapid_possession.json",
+      "sha256": "449eda001a6bb6507ef4e43cc18e601659d970e8bd7d43967aff32dfed07288a",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/relentless_darkness.json",
+      "sha256": "94edb103571eba0d0ca503b8a9455d4643a0f414c758b4ca79d49bbcdf9f473e",
+      "exclusive_set": [
+        "alexscaves:precise_volley",
+        "alexscaves:dark_nock",
+        "alexscaves:twilight_perfection"
+      ]
+    },
+    {
+      "path": "data/alexscaves/enchantment/sated_blade.json",
+      "sha256": "9f9857ce8d742c377ae7a88a1e4261825c3359a90311f5bfaa3d1a3c792fa86b",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/sea_swing.json",
+      "sha256": "f5e7985f7941b02a47966fa1135f3fc3ceff05b60d9eee015cbb6b33c7eb9c3a",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/seapairing.json",
+      "sha256": "e814c593b935bca5a9b84f2ae3aa56d137d9bd099a9e7334b7d4a47fcccfbc57",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/second_wave.json",
+      "sha256": "68d843242cc39b33eb952142b168fa8e72a2695bfa8adea6de3e4bba6febb97c",
+      "exclusive_set": [
+        "alexscaves:tsunami"
+      ]
+    },
+    {
+      "path": "data/alexscaves/enchantment/seekcandy.json",
+      "sha256": "7e564925928b90368d9042f1b722f89464bfbd708abf69ced0d785b5871f0a74",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/shaded_respite.json",
+      "sha256": "0c5bc4a73c8779c7bc0da2eb47a59e1263ac6c2ef6dead0cbfe5223c73e05872",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/sharp_cane.json",
+      "sha256": "d9d75a98966a4881b93ea877d2e8d9be15539dc7a162ba32de5dce112b41c181",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/sightless.json",
+      "sha256": "1e7d093a0d459e2e6a29b40cd625b4fb1f990285343b53e4421c8f3727b2ecb9",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/soak_seeking.json",
+      "sha256": "cfec967d084e9dc3870b90bc05d62375524af447ae280aa7fea63458e644b66b",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/solar.json",
+      "sha256": "6b89d32889d8da9adfad072c534ae76627b1c620d489951bf1095f1805809b80",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/spell_lasting.json",
+      "sha256": "839c95095540d2c40624575ad74aada2df482d7b4364d86fd8ebc238593a47dc",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/straight_hook.json",
+      "sha256": "75508b5c035e6e240a17ca3e31a4757838cb03e6b7f444e2ece49df284cc3b6f",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/swiftwood.json",
+      "sha256": "3d19fac156679ac53f49424b9bb828ad44a003d3d33a8b14dda303d50fc17551",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/targeted_ricochet.json",
+      "sha256": "adb5dfde437fbe38910045b6ec593103c43224224c8ab3a0101dec522a5ebb1e",
+      "exclusive_set": [
+        "alexscaves:triple_split"
+      ]
+    },
+    {
+      "path": "data/alexscaves/enchantment/taxing_bellow.json",
+      "sha256": "275b7ef42207724ae8ee2048097d3f16dbdfc60796f06a98eb77356ddb744df1",
+      "exclusive_set": [
+        "minecraft:unbreaking",
+        "minecraft:mending"
+      ]
+    },
+    {
+      "path": "data/alexscaves/enchantment/triple_splash.json",
+      "sha256": "6946e2d21814f3e398925f2886a6284b140032b255a05f9598c8e00e2bc315be",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/triple_split.json",
+      "sha256": "fd4f773c48969b4c2537f443cc80d91e1385d545763be78feaefc5816ac551a0",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/tsunami.json",
+      "sha256": "37f1f8c3f8b98084b73b23aa2ec49ba9a925bb9a37089f622cf992234a086242",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/twilight_perfection.json",
+      "sha256": "82a8e06c07b66be33a330bdbeb1bc867d03ce13a49ab2505fa06504fe5f044e1",
+      "exclusive_set": []
+    },
+    {
+      "path": "data/alexscaves/enchantment/x_ray.json",
+      "sha256": "612b1f7b126cea12085dea00736115b05fd4789bf9fc9ff6c4344a427135b0f8",
+      "exclusive_set": [
+        "alexscaves:gamma_ray"
+      ]
+    }
+  ],
+  "reverse_exclusive_set": [],
+  "compiled_flinging_token_owners": [
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+    "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class"
+  ],
+  "owner_method_populations": {
+    "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class": 13,
+    "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class": 29,
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class": 200,
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": 5
+  },
+  "methods_checked": 55,
+  "instructions_checked": 1662,
+  "direct_branches_checked": 75,
+  "method_census": [
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "OrtholanceItem",
+      "descriptor": "(Lnet/minecraft/world/item/Item$Properties;)V",
+      "instructions": 30,
+      "body_sha256": "1e2685a56450e444da9149bdaccdf9cd18bc17bddd34a022761b0e20f0639213",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "getUseAnimation",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/UseAnim;",
+      "instructions": 2,
+      "body_sha256": "ee18e75633339e9759d82bff7f889c9b5072e55c2069b9cdce6e2245a8d6a8f1",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "acModifiers",
+      "descriptor": "(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)Lcom/google/common/collect/Multimap;",
+      "instructions": 8,
+      "body_sha256": "25941ed3955478c41d6e552220f5502ab65e60908710329966474c94b71f1383",
+      "direct_branches": 2,
+      "branch_edges": [
+        [
+          4,
+          14
+        ],
+        [
+          11,
+          15
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "getDefaultAttributeModifiers",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+      "instructions": 8,
+      "body_sha256": "803cb7ccf4aaebe9c08af122339e0c6e34611b8c17836e69c9752aa400ae5c07",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "getEnchantmentValue",
+      "descriptor": "()I",
+      "instructions": 2,
+      "body_sha256": "798e4edaf36fade21f22743e4675e918297e30c52b2df68b1dd4d56d821664ca",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "getUseDuration",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I",
+      "instructions": 2,
+      "body_sha256": "261037fd2f1d7d62e027c38d2a96af9ccc45a0a01783f1784d1f1b36ce2bbd2f",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "instructions": 435,
+      "body_sha256": "00705e7177cb6fe2914531158bd978b64d497ca4c8262f8e7634c1b4ec9ef7ae",
+      "direct_branches": 19,
+      "branch_edges": [
+        [
+          33,
+          40
+        ],
+        [
+          37,
+          41
+        ],
+        [
+          45,
+          869
+        ],
+        [
+          99,
+          836
+        ],
+        [
+          106,
+          836
+        ],
+        [
+          146,
+          247
+        ],
+        [
+          244,
+          705
+        ],
+        [
+          254,
+          459
+        ],
+        [
+          456,
+          250
+        ],
+        [
+          466,
+          705
+        ],
+        [
+          486,
+          705
+        ],
+        [
+          702,
+          482
+        ],
+        [
+          775,
+          836
+        ],
+        [
+          796,
+          833
+        ],
+        [
+          805,
+          833
+        ],
+        [
+          814,
+          833
+        ],
+        [
+          833,
+          768
+        ],
+        [
+          844,
+          853
+        ],
+        [
+          850,
+          854
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "use",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "instructions": 20,
+      "body_sha256": "3cced1da49821d3f4add491a5351b4ec455d1ea67bdc4d635900e1f3414176a0",
+      "direct_branches": 1,
+      "branch_edges": [
+        [
+          19,
+          28
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "hurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "instructions": 6,
+      "body_sha256": "ba907d63d48d071a3c07a612248643a1d515e6ce90f2542235f8dfe57e5f6c81",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "acHurtEnemy",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "instructions": 49,
+      "body_sha256": "7da3fd607d1275f0410f54f3bc713ae1242dd13ba33fb1e78d5d942a05a62c93",
+      "direct_branches": 1,
+      "branch_edges": [
+        [
+          23,
+          97
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "instructions": 15,
+      "body_sha256": "b20af2ec341c120fe943fe4be72ac69999c167b99beaae4ccc090ca653e2f45d",
+      "direct_branches": 1,
+      "branch_edges": [
+        [
+          10,
+          23
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "initializeClient",
+      "descriptor": "(Ljava/util/function/Consumer;)V",
+      "instructions": 6,
+      "body_sha256": "529dfe744342009a1bb1b84040761130b3aedf6cb4be28fad4807b7532d18f44",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "lambda$getDefaultAttributeModifiers$0",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+      "instructions": 4,
+      "body_sha256": "58b9ae56c1af7d24467649bcd751a1247c8b4bf0e489af0b83081c261e12c607",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "WaveEntity",
+      "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+      "instructions": 5,
+      "body_sha256": "b4f10dcd568a389063c6e1fd5f9ce0bbb9c5cbfdf14b5651bb3ab5a76f87dc89",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "maxUpStep",
+      "descriptor": "()F",
+      "instructions": 2,
+      "body_sha256": "4d6bf2295b029d0909a76462f94c05f04d715cf9dcbdaa4670745f2e3fa8e9ce",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "WaveEntity",
+      "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)V",
+      "instructions": 10,
+      "body_sha256": "38280f450616f8266da7c775d9cd1df94f7a1d518b404bd0b000988da10e84ef",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+      "instructions": 12,
+      "body_sha256": "35f16858fcf932d0f7383155eb72be1083581d9fd415a9019d2652c4e9305852",
+      "direct_branches": 2,
+      "branch_edges": [
+        [
+          7,
+          14
+        ],
+        [
+          11,
+          18
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "descriptor": "()Lnet/minecraft/world/entity/LivingEntity;",
+      "instructions": 27,
+      "body_sha256": "151e62a22a2d16abcd344f2913a9fd2e1461a3d8610c2e8ccb19b30a80a56483",
+      "direct_branches": 4,
+      "branch_edges": [
+        [
+          4,
+          54
+        ],
+        [
+          11,
+          54
+        ],
+        [
+          21,
+          54
+        ],
+        [
+          43,
+          54
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "defineSynchedData",
+      "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+      "instructions": 31,
+      "body_sha256": "03da8b33ea1cb598e6915f4e71360309c43314a55a67d4a531025266a6615486",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getAddEntityPacket",
+      "descriptor": "(Lnet/minecraft/server/level/ServerEntity;)Lnet/minecraft/network/protocol/Packet;",
+      "instructions": 4,
+      "body_sha256": "9401f9906009558f59af813a5a7692b6820f360c59e1015b0664dce9db0eeea0",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getSlamAmount",
+      "descriptor": "(F)F",
+      "instructions": 13,
+      "body_sha256": "80ffcb5e0021e1f6749ab79ed6c8d7c799f79baee84e2921b0304948edb84c1d",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "instructions": 19,
+      "body_sha256": "bd24ec73f465c5284aa909b1e9b47b9106ddf9e260e051824c655b66be58dc72",
+      "direct_branches": 2,
+      "branch_edges": [
+        [
+          6,
+          19
+        ],
+        [
+          25,
+          38
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+      "instructions": 14,
+      "body_sha256": "ddec0df06356e462eaa084f84a2ea90c8944306df5a13e8957ee9a3aa114c4ec",
+      "direct_branches": 1,
+      "branch_edges": [
+        [
+          4,
+          17
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getYRot",
+      "descriptor": "()F",
+      "instructions": 7,
+      "body_sha256": "ae13e2c99593e1685f9d3f399f372f66ff51b6351a73e5c54af756757dd4f25e",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setYRot",
+      "descriptor": "(F)V",
+      "instructions": 7,
+      "body_sha256": "bc13e03404a1a7c165cb1ed551fbe56e3a3294977fb10618ca555a4c64854391",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getLifespan",
+      "descriptor": "()I",
+      "instructions": 7,
+      "body_sha256": "bf8e58b4c4d33a0106fdd7fe197844c7d0f39d9118ecffcbf1eb40da5897392e",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setLifespan",
+      "descriptor": "(I)V",
+      "instructions": 7,
+      "body_sha256": "75f527d36843c8602164785cb18f73a3a7969e3ef27e3562034f77e9cdaa160c",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getWaitingTicks",
+      "descriptor": "()I",
+      "instructions": 7,
+      "body_sha256": "e9cce072cde2d6b93ba8cfff9e94ffb5288dbbc05a3dfee7760ff9182b1b3d66",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setWaitingTicks",
+      "descriptor": "(I)V",
+      "instructions": 7,
+      "body_sha256": "d64377fac3d252904654a3e7226f56aa031b1d287d022c5be15accea041af9bb",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "isSlamming",
+      "descriptor": "()Z",
+      "instructions": 7,
+      "body_sha256": "863c121f2fb5616499945d27b87c0b55df0d10f696d9cbaf81c16492a6a51b73",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setSlamming",
+      "descriptor": "(Z)V",
+      "instructions": 7,
+      "body_sha256": "ec977a0089c8b059038265c1e813e5087a9defc7a0e7f2d9e310ec154bb39c55",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getWaveScale",
+      "descriptor": "()F",
+      "instructions": 7,
+      "body_sha256": "a69e78cd9063c26cee351c8f88d07b1b28582798e96944384c545ea3a7ee9e1c",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setWaveScale",
+      "descriptor": "(F)V",
+      "instructions": 7,
+      "body_sha256": "6109cb018ce1aacc521cb1fbdb6623803c0b7cbc5e7af293eef145791c0cb8d8",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "spawnParticleAt",
+      "descriptor": "(FFFLnet/minecraft/core/particles/ParticleOptions;)V",
+      "instructions": 44,
+      "body_sha256": "542278bc1e91750d333290b82b184cc123c4b2a4db983cc781999dba0faf6385",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "playStepSound",
+      "descriptor": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+      "instructions": 1,
+      "body_sha256": "0a66c5694ac4045b6215e7d04cb5af14138609a90dae237b28726fe7fa371f11",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "descriptor": "()V",
+      "instructions": 318,
+      "body_sha256": "d018fb4b1c90bd6104a52f875e097b9ef3818e36d038045f3668d75c6e120765",
+      "direct_branches": 21,
+      "branch_edges": [
+        [
+          16,
+          45
+        ],
+        [
+          26,
+          39
+        ],
+        [
+          49,
+          57
+        ],
+        [
+          61,
+          84
+        ],
+        [
+          71,
+          84
+        ],
+        [
+          88,
+          105
+        ],
+        [
+          98,
+          105
+        ],
+        [
+          109,
+          135
+        ],
+        [
+          116,
+          135
+        ],
+        [
+          186,
+          486
+        ],
+        [
+          193,
+          321
+        ],
+        [
+          318,
+          325
+        ],
+        [
+          334,
+          483
+        ],
+        [
+          343,
+          477
+        ],
+        [
+          474,
+          340
+        ],
+        [
+          480,
+          327
+        ],
+        [
+          483,
+          502
+        ],
+        [
+          509,
+          530
+        ],
+        [
+          578,
+          604
+        ],
+        [
+          587,
+          609
+        ],
+        [
+          601,
+          609
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "descriptor": "(F)V",
+      "instructions": 81,
+      "body_sha256": "f7d6b5c19cec219a1cbfa24ada582b81631528236fd459af40aa8e41196cb6e8",
+      "direct_branches": 7,
+      "branch_edges": [
+        [
+          54,
+          175
+        ],
+        [
+          75,
+          172
+        ],
+        [
+          83,
+          172
+        ],
+        [
+          90,
+          117
+        ],
+        [
+          102,
+          172
+        ],
+        [
+          114,
+          172
+        ],
+        [
+          172,
+          47
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "onSyncedDataUpdated",
+      "descriptor": "(Lnet/minecraft/network/syncher/EntityDataAccessor;)V",
+      "instructions": 10,
+      "body_sha256": "a8ec5e012ab9967193622ecc36c612fe2d7a15617fcf6ec36e48aafec2b6a710",
+      "direct_branches": 1,
+      "branch_edges": [
+        [
+          7,
+          14
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getDimensions",
+      "descriptor": "(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;",
+      "instructions": 7,
+      "body_sha256": "ee062dfd5e5d7e2147210350049886ff687625e55bac11f5bf766d691767fdc3",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "lerpTo",
+      "descriptor": "(DDDFFI)V",
+      "instructions": 29,
+      "body_sha256": "f4d314bb220768143c8b75d9023d979b38f5ee5479dd424b3e6627830a4e12fd",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "lerpMotion",
+      "descriptor": "(DDD)V",
+      "instructions": 18,
+      "body_sha256": "cb52b2074a2be5557cc9fee31ee746c7c6fc38b6e8a0ef06dadecee17b8da87e",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "__class_init__",
+      "descriptor": "()V",
+      "instructions": 21,
+      "body_sha256": "572a39604848bcd998edea12d6d33ba28d90a51122f666588e525a188db1ea3f",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "hurtAndBreak",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;)V",
+      "instructions": 6,
+      "body_sha256": "5a104fec24d6b0d4324a3bc8b154a39cfc58f9555db7963ada277fa680fcf8e4",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "hurtAndBreak",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)V",
+      "instructions": 7,
+      "body_sha256": "84ad256a82d706fe440efc341f29159e5fdd3fcbc108c66627f811153058fd8c",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "hurtAndBreakUsedHand",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V",
+      "instructions": 8,
+      "body_sha256": "5349ce0a59e4ce10c8a3b252dd3ea8c200f4da735c1e56fb5a6b316c768c5496",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "slotOf",
+      "descriptor": "(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/entity/EquipmentSlot;",
+      "instructions": 7,
+      "body_sha256": "7d6b1447d36e293bc288b6a94e574632fac7ba5647a93f969199f5807d85488a",
+      "direct_branches": 2,
+      "branch_edges": [
+        [
+          4,
+          13
+        ],
+        [
+          10,
+          16
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "enchantLevel",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I",
+      "instructions": 24,
+      "body_sha256": "775387837bd0e7dbbd2fd04cd5de0375a6ccd2813de5db375fd152f8b63ad8dc",
+      "direct_branches": 3,
+      "branch_edges": [
+        [
+          19,
+          60
+        ],
+        [
+          47,
+          57
+        ],
+        [
+          57,
+          13
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "itemAttributes",
+      "descriptor": "(Lcom/google/common/collect/Multimap;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/util/function/Supplier;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+      "instructions": 19,
+      "body_sha256": "78458bf90e03969ad9054e041a356e40482bc3dc27f54edd4e278f264d331f09",
+      "direct_branches": 1,
+      "branch_edges": [
+        [
+          1,
+          14
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "itemAttributes",
+      "descriptor": "(Ljava/util/function/BiFunction;Lnet/minecraft/world/item/ItemStack;Ljava/util/function/Supplier;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+      "instructions": 48,
+      "body_sha256": "75e48e223681347822ad84fd6ac8a6f545d6368457be30608b5928d1fac40809",
+      "direct_branches": 6,
+      "branch_edges": [
+        [
+          24,
+          87
+        ],
+        [
+          50,
+          56
+        ],
+        [
+          53,
+          81
+        ],
+        [
+          84,
+          20
+        ],
+        [
+          89,
+          99
+        ],
+        [
+          96,
+          108
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)D",
+      "instructions": 12,
+      "body_sha256": "ce63fc4907d1760c5afef512a19375b946fd25f99dca020398cdfc45afeaf2ab",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "useConsume",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+      "instructions": 3,
+      "body_sha256": "4e56528e4b49186c24167a81a3c4415d778c5cfb59a61baacb1a6cc8ea98f2a7",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "useFail",
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;",
+      "instructions": 3,
+      "body_sha256": "de8e3981936f026c4e37d59179ac394f351e30b0ebf3e8e4d679635470645e95",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "descriptor": "([DLnet/minecraft/core/Holder;Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+      "instructions": 14,
+      "body_sha256": "7657a3346470dfc64627146970a5cb10a4c0fde324c87450bf922f714e69723e",
+      "direct_branches": 1,
+      "branch_edges": [
+        [
+          14,
+          27
+        ]
+      ],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "name": "key",
+      "descriptor": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceKey;",
+      "instructions": 6,
+      "body_sha256": "40210390d9ab29d32b359bd02dbf74e41083d829b341905ca272bbc6b681a9f1",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "name": "__class_init__",
+      "descriptor": "()V",
+      "instructions": 182,
+      "body_sha256": "0f71f1a3a87ad7f0b97b367c1120e2be7456900c9093bde7a5529d2e1206b2ae",
+      "direct_branches": 0,
+      "branch_edges": [],
+      "switch_offsets": [],
+      "exception_table": []
+    }
+  ],
+  "pivots": [
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "OrtholanceItem",
+      "offset": 13,
+      "opcode": "new",
+      "operand": "#19",
+      "symbol": "class net/minecraft/world/entity/ai/attributes/AttributeModifier"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "OrtholanceItem",
+      "offset": 16,
+      "opcode": "dup",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "getUseDuration",
+      "offset": 0,
+      "opcode": "ldc",
+      "operand": "#86",
+      "symbol": "int 72000"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "getUseDuration",
+      "offset": 2,
+      "opcode": "ireturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 3,
+      "opcode": "invokevirtual",
+      "operand": "#87",
+      "symbol": "Method getUseDuration:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 8,
+      "opcode": "isub",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 10,
+      "opcode": "bipush",
+      "operand": "60",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 12,
+      "opcode": "invokestatic",
+      "operand": "#91",
+      "symbol": "Method net/minecraft/util/Mth.clamp:(III)I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 18,
+      "opcode": "getstatic",
+      "operand": "#97",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.FLINGING:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 21,
+      "opcode": "invokestatic",
+      "operand": "#103",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 43,
+      "opcode": "iload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 45,
+      "opcode": "ifle",
+      "operand": "869",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 48,
+      "opcode": "ldc",
+      "operand": "#110",
+      "symbol": "float 0.1f"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 53,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 54,
+      "opcode": "iload",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 57,
+      "opcode": "ldc",
+      "operand": "#110",
+      "symbol": "float 0.1f"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 59,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 60,
+      "opcode": "fadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 64,
+      "opcode": "invokevirtual",
+      "operand": "#111",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 69,
+      "opcode": "invokevirtual",
+      "operand": "#117",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getViewVector:(F)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 72,
+      "opcode": "invokevirtual",
+      "operand": "#121",
+      "symbol": "Method net/minecraft/world/phys/Vec3.normalize:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 75,
+      "opcode": "fload",
+      "operand": "8",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 80,
+      "opcode": "ldc",
+      "operand": "#126",
+      "symbol": "float 0.15f"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 82,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 87,
+      "opcode": "invokevirtual",
+      "operand": "#127",
+      "symbol": "Method net/minecraft/world/phys/Vec3.multiply:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 90,
+      "opcode": "invokevirtual",
+      "operand": "#131",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 93,
+      "opcode": "astore",
+      "operand": "9",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 95,
+      "opcode": "iload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 97,
+      "opcode": "bipush",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 99,
+      "opcode": "if_icmplt",
+      "operand": "836",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 103,
+      "opcode": "invokevirtual",
+      "operand": "#135",
+      "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 106,
+      "opcode": "ifne",
+      "operand": "836",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 135,
+      "opcode": "invokestatic",
+      "operand": "#165",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurtAndBreakUsedHand:(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 138,
+      "opcode": "iload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 140,
+      "opcode": "iconst_5",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 141,
+      "opcode": "idiv",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 142,
+      "opcode": "istore",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 146,
+      "opcode": "ifeq",
+      "operand": "247",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 149,
+      "opcode": "iconst_5",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 150,
+      "opcode": "istore",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 240,
+      "opcode": "invokevirtual",
+      "operand": "#215",
+      "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 243,
+      "opcode": "pop",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 244,
+      "opcode": "goto",
+      "operand": "705",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 460,
+      "opcode": "getstatic",
+      "operand": "#225",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.SECOND_WAVE:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 463,
+      "opcode": "invokestatic",
+      "operand": "#103",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 466,
+      "opcode": "ifle",
+      "operand": "705",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 469,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 470,
+      "opcode": "iload",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 472,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 473,
+      "opcode": "isub",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 474,
+      "opcode": "invokestatic",
+      "operand": "#228",
+      "symbol": "Method java/lang/Math.max:(II)I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 477,
+      "opcode": "istore",
+      "operand": "11",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 484,
+      "opcode": "iload",
+      "operand": "11",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 486,
+      "opcode": "if_icmpge",
+      "operand": "705",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 610,
+      "opcode": "invokevirtual",
+      "operand": "#215",
+      "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 613,
+      "opcode": "pop",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 695,
+      "opcode": "invokevirtual",
+      "operand": "#215",
+      "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 698,
+      "opcode": "pop",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 705,
+      "opcode": "new",
+      "operand": "#232",
+      "symbol": "class net/minecraft/world/phys/AABB"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 710,
+      "opcode": "invokevirtual",
+      "operand": "#169",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.position:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 714,
+      "opcode": "invokevirtual",
+      "operand": "#169",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.position:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 717,
+      "opcode": "aload",
+      "operand": "9",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 719,
+      "opcode": "iload",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 721,
+      "opcode": "i2d",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 722,
+      "opcode": "invokevirtual",
+      "operand": "#220",
+      "symbol": "Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 725,
+      "opcode": "invokevirtual",
+      "operand": "#131",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 728,
+      "opcode": "invokespecial",
+      "operand": "#234",
+      "symbol": "Method net/minecraft/world/phys/AABB.\"<init>\":(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 731,
+      "opcode": "dconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 732,
+      "opcode": "invokevirtual",
+      "operand": "#237",
+      "symbol": "Method net/minecraft/world/phys/AABB.inflate:(D)Lnet/minecraft/world/phys/AABB;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 742,
+      "opcode": "invokevirtual",
+      "operand": "#245",
+      "symbol": "Method net/minecraft/world/damagesource/DamageSources.mobAttack:(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 748,
+      "opcode": "invokestatic",
+      "operand": "#251",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.attackDamageBonus:(Lnet/minecraft/world/item/ItemStack;)D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 758,
+      "opcode": "invokevirtual",
+      "operand": "#255",
+      "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 793,
+      "opcode": "invokevirtual",
+      "operand": "#273",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 796,
+      "opcode": "ifne",
+      "operand": "833",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 802,
+      "opcode": "invokevirtual",
+      "operand": "#276",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.equals:(Ljava/lang/Object;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 805,
+      "opcode": "ifne",
+      "operand": "833",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 811,
+      "opcode": "invokevirtual",
+      "operand": "#280",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.hasLineOfSight:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 814,
+      "opcode": "ifeq",
+      "operand": "833",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 824,
+      "opcode": "invokevirtual",
+      "operand": "#283",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 827,
+      "opcode": "pop",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 830,
+      "opcode": "invokevirtual",
+      "operand": "#287",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.stopRiding:()V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 841,
+      "opcode": "invokevirtual",
+      "operand": "#291",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.onGround:()Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 844,
+      "opcode": "ifeq",
+      "operand": "853",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 847,
+      "opcode": "ldc_w",
+      "operand": "#294",
+      "symbol": "float 0.2f"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 850,
+      "opcode": "goto",
+      "operand": "854",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 853,
+      "opcode": "fconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 854,
+      "opcode": "iload",
+      "operand": "6",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 857,
+      "opcode": "ldc",
+      "operand": "#110",
+      "symbol": "float 0.1f"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 859,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 860,
+      "opcode": "fadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 863,
+      "opcode": "invokevirtual",
+      "operand": "#295",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "releaseUsing",
+      "offset": 866,
+      "opcode": "invokevirtual",
+      "operand": "#297",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "use",
+      "offset": 9,
+      "opcode": "invokevirtual",
+      "operand": "#307",
+      "symbol": "Method net/minecraft/world/item/ItemStack.getDamageValue:()I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "use",
+      "offset": 14,
+      "opcode": "invokevirtual",
+      "operand": "#313",
+      "symbol": "Method net/minecraft/world/item/ItemStack.getMaxDamage:()I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "use",
+      "offset": 17,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "use",
+      "offset": 18,
+      "opcode": "isub",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "use",
+      "offset": 19,
+      "opcode": "if_icmplt",
+      "operand": "28",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "use",
+      "offset": 24,
+      "opcode": "invokestatic",
+      "operand": "#316",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.useFail:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "use",
+      "offset": 30,
+      "opcode": "invokevirtual",
+      "operand": "#320",
+      "symbol": "Method net/minecraft/world/entity/player/Player.startUsingItem:(Lnet/minecraft/world/InteractionHand;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "use",
+      "offset": 35,
+      "opcode": "invokestatic",
+      "operand": "#324",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.useConsume:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 0,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 1,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 2,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 4,
+      "opcode": "invokevirtual",
+      "operand": "#348",
+      "symbol": "Method net/minecraft/world/level/block/state/BlockState.getDestroySpeed:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 7,
+      "opcode": "f2d",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 8,
+      "opcode": "dconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 9,
+      "opcode": "dcmpl",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 10,
+      "opcode": "ifeq",
+      "operand": "23",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 13,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 14,
+      "opcode": "iconst_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 15,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 17,
+      "opcode": "getstatic",
+      "operand": "#66",
+      "symbol": "Field net/minecraft/world/entity/EquipmentSlot.MAINHAND:Lnet/minecraft/world/entity/EquipmentSlot;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 20,
+      "opcode": "invokestatic",
+      "operand": "#331",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurtAndBreak:(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 23,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem.class",
+      "name": "mineBlock",
+      "offset": 24,
+      "opcode": "ireturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 1,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 2,
+      "opcode": "putfield",
+      "operand": "#28",
+      "symbol": "Field owner:Lnet/minecraft/world/entity/LivingEntity;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 5,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 6,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 7,
+      "opcode": "ifnonnull",
+      "operand": "14",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 10,
+      "opcode": "aconst_null",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 11,
+      "opcode": "goto",
+      "operand": "18",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 14,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 15,
+      "opcode": "invokevirtual",
+      "operand": "#32",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getUUID:()Ljava/util/UUID;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 18,
+      "opcode": "putfield",
+      "operand": "#38",
+      "symbol": "Field ownerUUID:Ljava/util/UUID;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "setOwner",
+      "offset": 21,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 1,
+      "opcode": "getfield",
+      "operand": "#28",
+      "symbol": "Field owner:Lnet/minecraft/world/entity/LivingEntity;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 4,
+      "opcode": "ifnonnull",
+      "operand": "54",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 8,
+      "opcode": "getfield",
+      "operand": "#38",
+      "symbol": "Field ownerUUID:Ljava/util/UUID;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 11,
+      "opcode": "ifnull",
+      "operand": "54",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 15,
+      "opcode": "invokevirtual",
+      "operand": "#42",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 21,
+      "opcode": "ifeq",
+      "operand": "54",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 25,
+      "opcode": "invokevirtual",
+      "operand": "#42",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 32,
+      "opcode": "getfield",
+      "operand": "#38",
+      "symbol": "Field ownerUUID:Ljava/util/UUID;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 35,
+      "opcode": "invokevirtual",
+      "operand": "#48",
+      "symbol": "Method net/minecraft/server/level/ServerLevel.getEntity:(Ljava/util/UUID;)Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 43,
+      "opcode": "ifeq",
+      "operand": "54",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 51,
+      "opcode": "putfield",
+      "operand": "#28",
+      "symbol": "Field owner:Lnet/minecraft/world/entity/LivingEntity;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getOwner",
+      "offset": 55,
+      "opcode": "getfield",
+      "operand": "#28",
+      "symbol": "Field owner:Lnet/minecraft/world/entity/LivingEntity;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "defineSynchedData",
+      "offset": 1,
+      "opcode": "getstatic",
+      "operand": "#52",
+      "symbol": "Field SLAMMING:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "defineSynchedData",
+      "offset": 4,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "defineSynchedData",
+      "offset": 13,
+      "opcode": "getstatic",
+      "operand": "#68",
+      "symbol": "Field LIFESPAN:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "defineSynchedData",
+      "offset": 16,
+      "opcode": "bipush",
+      "operand": "10",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "defineSynchedData",
+      "offset": 26,
+      "opcode": "getstatic",
+      "operand": "#76",
+      "symbol": "Field WAITING_TICKS:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "defineSynchedData",
+      "offset": 29,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "defineSynchedData",
+      "offset": 38,
+      "opcode": "getstatic",
+      "operand": "#79",
+      "symbol": "Field Y_ROT:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "defineSynchedData",
+      "offset": 41,
+      "opcode": "fconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "defineSynchedData",
+      "offset": 50,
+      "opcode": "getstatic",
+      "operand": "#87",
+      "symbol": "Field WAVE_SCALE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "defineSynchedData",
+      "offset": 53,
+      "opcode": "fconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 0,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 1,
+      "opcode": "ldc",
+      "operand": "#104",
+      "symbol": "String Owner"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 3,
+      "opcode": "invokestatic",
+      "operand": "#106",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hasUUID:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 6,
+      "opcode": "ifeq",
+      "operand": "19",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 9,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 10,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 11,
+      "opcode": "ldc",
+      "operand": "#104",
+      "symbol": "String Owner"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 13,
+      "opcode": "invokestatic",
+      "operand": "#112",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getUUID:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Ljava/util/UUID;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 16,
+      "opcode": "putfield",
+      "operand": "#38",
+      "symbol": "Field ownerUUID:Ljava/util/UUID;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 19,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 20,
+      "opcode": "ldc",
+      "operand": "#115",
+      "symbol": "String Lifespan"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 22,
+      "opcode": "invokevirtual",
+      "operand": "#117",
+      "symbol": "Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 25,
+      "opcode": "ifeq",
+      "operand": "38",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 28,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 29,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 30,
+      "opcode": "ldc",
+      "operand": "#115",
+      "symbol": "String Lifespan"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 32,
+      "opcode": "invokestatic",
+      "operand": "#123",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getInt:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 35,
+      "opcode": "invokevirtual",
+      "operand": "#127",
+      "symbol": "Method setLifespan:(I)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "readAdditionalSaveData",
+      "offset": 38,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 1,
+      "opcode": "getfield",
+      "operand": "#38",
+      "symbol": "Field ownerUUID:Ljava/util/UUID;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 4,
+      "opcode": "ifnull",
+      "operand": "17",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 7,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 8,
+      "opcode": "ldc",
+      "operand": "#104",
+      "symbol": "String Owner"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 10,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 11,
+      "opcode": "getfield",
+      "operand": "#38",
+      "symbol": "Field ownerUUID:Ljava/util/UUID;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 14,
+      "opcode": "invokestatic",
+      "operand": "#131",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.putUUID:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;Ljava/util/UUID;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 17,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 18,
+      "opcode": "ldc",
+      "operand": "#115",
+      "symbol": "String Lifespan"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 20,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 21,
+      "opcode": "invokevirtual",
+      "operand": "#135",
+      "symbol": "Method getLifespan:()I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 24,
+      "opcode": "invokevirtual",
+      "operand": "#139",
+      "symbol": "Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "addAdditionalSaveData",
+      "offset": 27,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 1,
+      "opcode": "invokespecial",
+      "operand": "#217",
+      "symbol": "Method net/minecraft/world/entity/Entity.tick:()V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 6,
+      "opcode": "getfield",
+      "operand": "#100",
+      "symbol": "Field slamProgress:F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 9,
+      "opcode": "putfield",
+      "operand": "#96",
+      "symbol": "Field prevSlamProgress:F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 13,
+      "opcode": "invokevirtual",
+      "operand": "#221",
+      "symbol": "Method getWaitingTicks:()I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 16,
+      "opcode": "ifle",
+      "operand": "45",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 20,
+      "opcode": "invokevirtual",
+      "operand": "#42",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 23,
+      "opcode": "invokevirtual",
+      "operand": "#224",
+      "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 26,
+      "opcode": "ifne",
+      "operand": "39",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 31,
+      "opcode": "invokevirtual",
+      "operand": "#221",
+      "symbol": "Method getWaitingTicks:()I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 36,
+      "opcode": "invokevirtual",
+      "operand": "#227",
+      "symbol": "Method setWaitingTicks:(I)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 41,
+      "opcode": "invokevirtual",
+      "operand": "#230",
+      "symbol": "Method setInvisible:(Z)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 46,
+      "opcode": "invokevirtual",
+      "operand": "#234",
+      "symbol": "Method isInvisible:()Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 49,
+      "opcode": "ifeq",
+      "operand": "57",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 54,
+      "opcode": "invokevirtual",
+      "operand": "#230",
+      "symbol": "Method setInvisible:(Z)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 58,
+      "opcode": "invokevirtual",
+      "operand": "#237",
+      "symbol": "Method isSlamming:()Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 61,
+      "opcode": "ifeq",
+      "operand": "84",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 65,
+      "opcode": "getfield",
+      "operand": "#100",
+      "symbol": "Field slamProgress:F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 71,
+      "opcode": "ifge",
+      "operand": "84",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 76,
+      "opcode": "getfield",
+      "operand": "#100",
+      "symbol": "Field slamProgress:F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 81,
+      "opcode": "putfield",
+      "operand": "#100",
+      "symbol": "Field slamProgress:F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 85,
+      "opcode": "invokevirtual",
+      "operand": "#237",
+      "symbol": "Method isSlamming:()Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 88,
+      "opcode": "ifeq",
+      "operand": "105",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 92,
+      "opcode": "getfield",
+      "operand": "#100",
+      "symbol": "Field slamProgress:F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 98,
+      "opcode": "ifne",
+      "operand": "105",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 102,
+      "opcode": "invokevirtual",
+      "operand": "#241",
+      "symbol": "Method discard:()V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 106,
+      "opcode": "invokevirtual",
+      "operand": "#244",
+      "symbol": "Method isNoGravity:()Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 109,
+      "opcode": "ifne",
+      "operand": "135",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 113,
+      "opcode": "invokestatic",
+      "operand": "#247",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.isInWaterOrBubble:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 116,
+      "opcode": "ifne",
+      "operand": "135",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 121,
+      "opcode": "invokevirtual",
+      "operand": "#205",
+      "symbol": "Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 129,
+      "opcode": "invokevirtual",
+      "operand": "#253",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 132,
+      "opcode": "invokevirtual",
+      "operand": "#257",
+      "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 136,
+      "opcode": "getfield",
+      "operand": "#261",
+      "symbol": "Field activeWaveTicks:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 144,
+      "opcode": "invokestatic",
+      "operand": "#265",
+      "symbol": "Method java/lang/Math.min:(FF)F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 162,
+      "opcode": "invokespecial",
+      "operand": "#169",
+      "symbol": "Method net/minecraft/world/phys/Vec3.\"<init>\":(DDD)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 166,
+      "opcode": "invokevirtual",
+      "operand": "#172",
+      "symbol": "Method getYRot:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 171,
+      "opcode": "invokestatic",
+      "operand": "#175",
+      "symbol": "Method java/lang/Math.toRadians:(D)D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 175,
+      "opcode": "invokevirtual",
+      "operand": "#181",
+      "symbol": "Method net/minecraft/world/phys/Vec3.yRot:(F)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 180,
+      "opcode": "invokevirtual",
+      "operand": "#42",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 183,
+      "opcode": "invokevirtual",
+      "operand": "#224",
+      "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 186,
+      "opcode": "ifeq",
+      "operand": "486",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 190,
+      "opcode": "getfield",
+      "operand": "#270",
+      "symbol": "Field lSteps:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 193,
+      "opcode": "ifle",
+      "operand": "321",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 197,
+      "opcode": "invokevirtual",
+      "operand": "#185",
+      "symbol": "Method getX:()D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 201,
+      "opcode": "getfield",
+      "operand": "#273",
+      "symbol": "Field lx:D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 205,
+      "opcode": "invokevirtual",
+      "operand": "#185",
+      "symbol": "Method getX:()D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 210,
+      "opcode": "getfield",
+      "operand": "#270",
+      "symbol": "Field lSteps:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 218,
+      "opcode": "invokevirtual",
+      "operand": "#193",
+      "symbol": "Method getY:()D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 222,
+      "opcode": "getfield",
+      "operand": "#276",
+      "symbol": "Field ly:D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 226,
+      "opcode": "invokevirtual",
+      "operand": "#193",
+      "symbol": "Method getY:()D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 231,
+      "opcode": "getfield",
+      "operand": "#270",
+      "symbol": "Field lSteps:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 240,
+      "opcode": "invokevirtual",
+      "operand": "#199",
+      "symbol": "Method getZ:()D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 244,
+      "opcode": "getfield",
+      "operand": "#279",
+      "symbol": "Field lz:D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 248,
+      "opcode": "invokevirtual",
+      "operand": "#199",
+      "symbol": "Method getZ:()D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 253,
+      "opcode": "getfield",
+      "operand": "#270",
+      "symbol": "Field lSteps:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 263,
+      "opcode": "getfield",
+      "operand": "#282",
+      "symbol": "Field lyr:D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 267,
+      "opcode": "invokestatic",
+      "operand": "#285",
+      "symbol": "Method net/minecraft/util/Mth.wrapDegrees:(F)F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 270,
+      "opcode": "invokevirtual",
+      "operand": "#291",
+      "symbol": "Method setYRot:(F)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 275,
+      "opcode": "invokevirtual",
+      "operand": "#295",
+      "symbol": "Method getXRot:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 279,
+      "opcode": "getfield",
+      "operand": "#298",
+      "symbol": "Field lxr:D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 283,
+      "opcode": "invokevirtual",
+      "operand": "#295",
+      "symbol": "Method getXRot:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 290,
+      "opcode": "getfield",
+      "operand": "#270",
+      "symbol": "Field lSteps:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 296,
+      "opcode": "invokevirtual",
+      "operand": "#301",
+      "symbol": "Method setXRot:(F)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 301,
+      "opcode": "getfield",
+      "operand": "#270",
+      "symbol": "Field lSteps:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 306,
+      "opcode": "putfield",
+      "operand": "#270",
+      "symbol": "Field lSteps:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 315,
+      "opcode": "invokevirtual",
+      "operand": "#304",
+      "symbol": "Method setPos:(DDD)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 322,
+      "opcode": "invokevirtual",
+      "operand": "#307",
+      "symbol": "Method reapplyPosition:()V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 330,
+      "opcode": "invokevirtual",
+      "operand": "#310",
+      "symbol": "Method getWaveScale:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 334,
+      "opcode": "ifge",
+      "operand": "483",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 343,
+      "opcode": "if_icmpgt",
+      "operand": "477",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 358,
+      "opcode": "getfield",
+      "operand": "#315",
+      "symbol": "Field random:Lnet/minecraft/util/RandomSource;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 361,
+      "opcode": "invokeinterface",
+      "operand": "#319,  1",
+      "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 382,
+      "opcode": "getfield",
+      "operand": "#315",
+      "symbol": "Field random:Lnet/minecraft/util/RandomSource;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 385,
+      "opcode": "invokeinterface",
+      "operand": "#319,  1",
+      "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 396,
+      "opcode": "invokevirtual",
+      "operand": "#310",
+      "symbol": "Method getWaveScale:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 410,
+      "opcode": "invokevirtual",
+      "operand": "#310",
+      "symbol": "Method getWaveScale:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 414,
+      "opcode": "getstatic",
+      "operand": "#325",
+      "symbol": "Field com/github/alexmodguy/alexscaves/client/particle/ACParticleRegistry.WATER_FOAM:Ljava/util/function/Supplier;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 417,
+      "opcode": "invokeinterface",
+      "operand": "#13,  1",
+      "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 425,
+      "opcode": "invokevirtual",
+      "operand": "#332",
+      "symbol": "Method spawnParticleAt:(FFFLnet/minecraft/core/particles/ParticleOptions;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 433,
+      "opcode": "getfield",
+      "operand": "#315",
+      "symbol": "Field random:Lnet/minecraft/util/RandomSource;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 436,
+      "opcode": "invokeinterface",
+      "operand": "#319,  1",
+      "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 447,
+      "opcode": "invokevirtual",
+      "operand": "#310",
+      "symbol": "Method getWaveScale:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 461,
+      "opcode": "invokevirtual",
+      "operand": "#310",
+      "symbol": "Method getWaveScale:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 465,
+      "opcode": "getstatic",
+      "operand": "#338",
+      "symbol": "Field net/minecraft/core/particles/ParticleTypes.SPLASH:Lnet/minecraft/core/particles/SimpleParticleType;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 468,
+      "opcode": "invokevirtual",
+      "operand": "#332",
+      "symbol": "Method spawnParticleAt:(FFFLnet/minecraft/core/particles/ParticleOptions;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 487,
+      "opcode": "invokevirtual",
+      "operand": "#307",
+      "symbol": "Method reapplyPosition:()V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 492,
+      "opcode": "invokevirtual",
+      "operand": "#172",
+      "symbol": "Method getYRot:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 496,
+      "opcode": "invokevirtual",
+      "operand": "#295",
+      "symbol": "Method getXRot:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 499,
+      "opcode": "invokevirtual",
+      "operand": "#344",
+      "symbol": "Method setRot:(FF)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 503,
+      "opcode": "invokevirtual",
+      "operand": "#42",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 506,
+      "opcode": "invokevirtual",
+      "operand": "#224",
+      "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 509,
+      "opcode": "ifne",
+      "operand": "530",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 515,
+      "opcode": "invokevirtual",
+      "operand": "#348",
+      "symbol": "Method getSlamAmount:(F)F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 523,
+      "opcode": "invokevirtual",
+      "operand": "#310",
+      "symbol": "Method getWaveScale:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 527,
+      "opcode": "invokevirtual",
+      "operand": "#351",
+      "symbol": "Method attackEntities:(F)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 531,
+      "opcode": "invokevirtual",
+      "operand": "#205",
+      "symbol": "Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 537,
+      "opcode": "invokevirtual",
+      "operand": "#356",
+      "symbol": "Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 541,
+      "opcode": "invokevirtual",
+      "operand": "#360",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 546,
+      "opcode": "getstatic",
+      "operand": "#363",
+      "symbol": "Field net/minecraft/world/entity/MoverType.SELF:Lnet/minecraft/world/entity/MoverType;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 550,
+      "opcode": "invokevirtual",
+      "operand": "#369",
+      "symbol": "Method move:(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 564,
+      "opcode": "invokevirtual",
+      "operand": "#377",
+      "symbol": "Method net/minecraft/world/phys/Vec3.multiply:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 567,
+      "opcode": "invokevirtual",
+      "operand": "#257",
+      "symbol": "Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 571,
+      "opcode": "getfield",
+      "operand": "#261",
+      "symbol": "Field activeWaveTicks:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 575,
+      "opcode": "invokevirtual",
+      "operand": "#135",
+      "symbol": "Method getLifespan:()I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 578,
+      "opcode": "if_icmpgt",
+      "operand": "604",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 582,
+      "opcode": "getfield",
+      "operand": "#261",
+      "symbol": "Field activeWaveTicks:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 587,
+      "opcode": "if_icmple",
+      "operand": "609",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 591,
+      "opcode": "invokevirtual",
+      "operand": "#205",
+      "symbol": "Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 594,
+      "opcode": "invokevirtual",
+      "operand": "#380",
+      "symbol": "Method net/minecraft/world/phys/Vec3.horizontalDistance:()D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 601,
+      "opcode": "ifge",
+      "operand": "609",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 606,
+      "opcode": "invokevirtual",
+      "operand": "#385",
+      "symbol": "Method setSlamming:(Z)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 611,
+      "opcode": "getfield",
+      "operand": "#261",
+      "symbol": "Field activeWaveTicks:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "tick",
+      "offset": 616,
+      "opcode": "putfield",
+      "operand": "#261",
+      "symbol": "Field activeWaveTicks:I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "#388",
+      "symbol": "Method getBoundingBox:()Lnet/minecraft/world/phys/AABB;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 4,
+      "opcode": "ldc2_w",
+      "operand": "#392",
+      "symbol": "double 0.5d"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 7,
+      "opcode": "ldc2_w",
+      "operand": "#392",
+      "symbol": "double 0.5d"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 10,
+      "opcode": "ldc2_w",
+      "operand": "#392",
+      "symbol": "double 0.5d"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 13,
+      "opcode": "invokevirtual",
+      "operand": "#394",
+      "symbol": "Method net/minecraft/world/phys/AABB.inflate:(DDD)Lnet/minecraft/world/phys/AABB;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 16,
+      "opcode": "astore_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 17,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 18,
+      "opcode": "invokevirtual",
+      "operand": "#400",
+      "symbol": "Method damageSources:()Lnet/minecraft/world/damagesource/DamageSources;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 21,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 22,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 23,
+      "opcode": "getfield",
+      "operand": "#28",
+      "symbol": "Field owner:Lnet/minecraft/world/entity/LivingEntity;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 26,
+      "opcode": "invokevirtual",
+      "operand": "#404",
+      "symbol": "Method net/minecraft/world/damagesource/DamageSources.mobProjectile:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/damagesource/DamageSource;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 29,
+      "opcode": "astore_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 30,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 31,
+      "opcode": "invokevirtual",
+      "operand": "#42",
+      "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 34,
+      "opcode": "ldc",
+      "operand": "#33",
+      "symbol": "class net/minecraft/world/entity/LivingEntity"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 36,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 37,
+      "opcode": "invokevirtual",
+      "operand": "#410",
+      "symbol": "Method net/minecraft/world/level/Level.getEntitiesOfClass:(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 40,
+      "opcode": "invokeinterface",
+      "operand": "#414,  1",
+      "symbol": "InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 45,
+      "opcode": "astore",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 47,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 49,
+      "opcode": "invokeinterface",
+      "operand": "#420,  1",
+      "symbol": "InterfaceMethod java/util/Iterator.hasNext:()Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 54,
+      "opcode": "ifeq",
+      "operand": "175",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 57,
+      "opcode": "aload",
+      "operand": "4",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 59,
+      "opcode": "invokeinterface",
+      "operand": "#425,  1",
+      "symbol": "InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 64,
+      "opcode": "checkcast",
+      "operand": "#33",
+      "symbol": "class net/minecraft/world/entity/LivingEntity"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 67,
+      "opcode": "astore",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 69,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 70,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 72,
+      "opcode": "invokevirtual",
+      "operand": "#428",
+      "symbol": "Method isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 75,
+      "opcode": "ifne",
+      "operand": "172",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 78,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 80,
+      "opcode": "instanceof",
+      "operand": "#431",
+      "symbol": "class com/github/alexmodguy/alexscaves/server/entity/living/DeepOneBaseEntity"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 83,
+      "opcode": "ifne",
+      "operand": "172",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 86,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 87,
+      "opcode": "getfield",
+      "operand": "#28",
+      "symbol": "Field owner:Lnet/minecraft/world/entity/LivingEntity;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 90,
+      "opcode": "ifnull",
+      "operand": "117",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 93,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 94,
+      "opcode": "getfield",
+      "operand": "#28",
+      "symbol": "Field owner:Lnet/minecraft/world/entity/LivingEntity;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 97,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 99,
+      "opcode": "invokevirtual",
+      "operand": "#433",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.equals:(Ljava/lang/Object;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 102,
+      "opcode": "ifne",
+      "operand": "172",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 105,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 106,
+      "opcode": "getfield",
+      "operand": "#28",
+      "symbol": "Field owner:Lnet/minecraft/world/entity/LivingEntity;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 109,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 111,
+      "opcode": "invokevirtual",
+      "operand": "#437",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.isAlliedTo:(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 114,
+      "opcode": "ifne",
+      "operand": "172",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 117,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 119,
+      "opcode": "aload_3",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 120,
+      "opcode": "fload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 121,
+      "opcode": "fconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 122,
+      "opcode": "fadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 123,
+      "opcode": "invokevirtual",
+      "operand": "#438",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 126,
+      "opcode": "pop",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 127,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 128,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 129,
+      "opcode": "invokevirtual",
+      "operand": "#385",
+      "symbol": "Method setSlamming:(Z)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 132,
+      "opcode": "aload",
+      "operand": "5",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 134,
+      "opcode": "ldc2_w",
+      "operand": "#442",
+      "symbol": "double 0.1d"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 137,
+      "opcode": "ldc2_w",
+      "operand": "#392",
+      "symbol": "double 0.5d"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 140,
+      "opcode": "fload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 141,
+      "opcode": "f2d",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 142,
+      "opcode": "dmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 143,
+      "opcode": "dadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 144,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 145,
+      "opcode": "invokevirtual",
+      "operand": "#172",
+      "symbol": "Method getYRot:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 148,
+      "opcode": "ldc_w",
+      "operand": "#444",
+      "symbol": "float 0.017453292f"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 151,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 152,
+      "opcode": "invokestatic",
+      "operand": "#445",
+      "symbol": "Method net/minecraft/util/Mth.sin:(F)F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 155,
+      "opcode": "f2d",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 156,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 157,
+      "opcode": "invokevirtual",
+      "operand": "#172",
+      "symbol": "Method getYRot:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 160,
+      "opcode": "ldc_w",
+      "operand": "#444",
+      "symbol": "float 0.017453292f"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 163,
+      "opcode": "fmul",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 164,
+      "opcode": "invokestatic",
+      "operand": "#448",
+      "symbol": "Method net/minecraft/util/Mth.cos:(F)F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 167,
+      "opcode": "fneg",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 168,
+      "opcode": "f2d",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 169,
+      "opcode": "invokestatic",
+      "operand": "#451",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.knockback:(Lnet/minecraft/world/entity/LivingEntity;DDD)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 172,
+      "opcode": "goto",
+      "operand": "47",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "attackEntities",
+      "offset": 175,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getDimensions",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getDimensions",
+      "offset": 1,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getDimensions",
+      "offset": 2,
+      "opcode": "invokespecial",
+      "operand": "#465",
+      "symbol": "Method net/minecraft/world/entity/Entity.getDimensions:(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getDimensions",
+      "offset": 5,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getDimensions",
+      "offset": 6,
+      "opcode": "invokevirtual",
+      "operand": "#310",
+      "symbol": "Method getWaveScale:()F"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getDimensions",
+      "offset": 9,
+      "opcode": "invokevirtual",
+      "operand": "#469",
+      "symbol": "Method net/minecraft/world/entity/EntityDimensions.scale:(F)Lnet/minecraft/world/entity/EntityDimensions;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/WaveEntity.class",
+      "name": "getDimensions",
+      "offset": 12,
+      "opcode": "areturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "hurtAndBreakUsedHand",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "hurtAndBreakUsedHand",
+      "offset": 1,
+      "opcode": "iload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "hurtAndBreakUsedHand",
+      "offset": 2,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "hurtAndBreakUsedHand",
+      "offset": 3,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "hurtAndBreakUsedHand",
+      "offset": 4,
+      "opcode": "invokevirtual",
+      "operand": "#62",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getUsedItemHand:()Lnet/minecraft/world/InteractionHand;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "hurtAndBreakUsedHand",
+      "offset": 7,
+      "opcode": "invokestatic",
+      "operand": "#56",
+      "symbol": "Method slotOf:(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/entity/EquipmentSlot;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "hurtAndBreakUsedHand",
+      "offset": 10,
+      "opcode": "invokevirtual",
+      "operand": "#52",
+      "symbol": "Method net/minecraft/world/item/ItemStack.hurtAndBreak:(ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "hurtAndBreakUsedHand",
+      "offset": 13,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "slotOf",
+      "offset": 0,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "slotOf",
+      "offset": 1,
+      "opcode": "getstatic",
+      "operand": "#68",
+      "symbol": "Field net/minecraft/world/InteractionHand.MAIN_HAND:Lnet/minecraft/world/InteractionHand;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "slotOf",
+      "offset": 4,
+      "opcode": "if_acmpne",
+      "operand": "13",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "slotOf",
+      "offset": 7,
+      "opcode": "getstatic",
+      "operand": "#74",
+      "symbol": "Field net/minecraft/world/entity/EquipmentSlot.MAINHAND:Lnet/minecraft/world/entity/EquipmentSlot;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "slotOf",
+      "offset": 10,
+      "opcode": "goto",
+      "operand": "16",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "slotOf",
+      "offset": 13,
+      "opcode": "getstatic",
+      "operand": "#80",
+      "symbol": "Field net/minecraft/world/entity/EquipmentSlot.OFFHAND:Lnet/minecraft/world/entity/EquipmentSlot;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "slotOf",
+      "offset": 16,
+      "opcode": "areturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "enchantLevel",
+      "offset": 1,
+      "opcode": "invokevirtual",
+      "operand": "#150",
+      "symbol": "Method net/minecraft/world/item/ItemStack.getEnchantments:()Lnet/minecraft/world/item/enchantment/ItemEnchantments;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "enchantLevel",
+      "offset": 4,
+      "opcode": "invokevirtual",
+      "operand": "#154",
+      "symbol": "Method net/minecraft/world/item/enchantment/ItemEnchantments.entrySet:()Ljava/util/Set;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "enchantLevel",
+      "offset": 7,
+      "opcode": "invokeinterface",
+      "operand": "#160,  1",
+      "symbol": "InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "enchantLevel",
+      "offset": 14,
+      "opcode": "invokeinterface",
+      "operand": "#166,  1",
+      "symbol": "InterfaceMethod java/util/Iterator.hasNext:()Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "enchantLevel",
+      "offset": 19,
+      "opcode": "ifeq",
+      "operand": "60",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "enchantLevel",
+      "offset": 23,
+      "opcode": "invokeinterface",
+      "operand": "#171,  1",
+      "symbol": "InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "enchantLevel",
+      "offset": 33,
+      "opcode": "invokeinterface",
+      "operand": "#176,  1",
+      "symbol": "InterfaceMethod it/unimi/dsi/fastutil/objects/Object2IntMap$Entry.getKey:()Ljava/lang/Object;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "enchantLevel",
+      "offset": 42,
+      "opcode": "invokeinterface",
+      "operand": "#179,  2",
+      "symbol": "InterfaceMethod net/minecraft/core/Holder.is:(Lnet/minecraft/resources/ResourceKey;)Z"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "enchantLevel",
+      "offset": 47,
+      "opcode": "ifeq",
+      "operand": "57",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "enchantLevel",
+      "offset": 51,
+      "opcode": "invokeinterface",
+      "operand": "#182,  1",
+      "symbol": "InterfaceMethod it/unimi/dsi/fastutil/objects/Object2IntMap$Entry.getIntValue:()I"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 0,
+      "opcode": "iconst_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 1,
+      "opcode": "newarray",
+      "operand": "double",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 3,
+      "opcode": "astore_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 4,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 5,
+      "opcode": "getstatic",
+      "operand": "#74",
+      "symbol": "Field net/minecraft/world/entity/EquipmentSlot.MAINHAND:Lnet/minecraft/world/entity/EquipmentSlot;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 8,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 9,
+      "opcode": "invokedynamic",
+      "operand": "#325,  0",
+      "symbol": "InvokeDynamic #2:accept:([D)Ljava/util/function/BiConsumer;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 14,
+      "opcode": "invokevirtual",
+      "operand": "#328",
+      "symbol": "Method net/minecraft/world/item/ItemStack.forEachModifier:(Lnet/minecraft/world/entity/EquipmentSlot;Ljava/util/function/BiConsumer;)V"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 17,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 18,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 19,
+      "opcode": "daload",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "attackDamageBonus",
+      "offset": 20,
+      "opcode": "dreturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 0,
+      "opcode": "aload_1",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 1,
+      "opcode": "invokeinterface",
+      "operand": "#98,  1",
+      "symbol": "InterfaceMethod net/minecraft/core/Holder.value:()Ljava/lang/Object;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 6,
+      "opcode": "getstatic",
+      "operand": "#1202",
+      "symbol": "Field net/minecraft/world/entity/ai/attributes/Attributes.ATTACK_DAMAGE:Lnet/minecraft/core/Holder;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 9,
+      "opcode": "invokeinterface",
+      "operand": "#98,  1",
+      "symbol": "InterfaceMethod net/minecraft/core/Holder.value:()Ljava/lang/Object;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 14,
+      "opcode": "if_acmpne",
+      "operand": "27",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 17,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 18,
+      "opcode": "iconst_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 19,
+      "opcode": "dup2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 20,
+      "opcode": "daload",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 21,
+      "opcode": "aload_2",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 22,
+      "opcode": "invokevirtual",
+      "operand": "#272",
+      "symbol": "Method net/minecraft/world/entity/ai/attributes/AttributeModifier.amount:()D"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 25,
+      "opcode": "dadd",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 26,
+      "opcode": "dastore",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "name": "lambda$attackDamageBonus$2",
+      "offset": 27,
+      "opcode": "return",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "name": "key",
+      "offset": 0,
+      "opcode": "getstatic",
+      "operand": "#7",
+      "symbol": "Field net/minecraft/core/registries/Registries.ENCHANTMENT:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "name": "key",
+      "offset": 3,
+      "opcode": "ldc",
+      "operand": "#15",
+      "symbol": "String alexscaves"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "name": "key",
+      "offset": 5,
+      "opcode": "aload_0",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "name": "key",
+      "offset": 6,
+      "opcode": "invokestatic",
+      "operand": "#17",
+      "symbol": "Method net/minecraft/resources/ResourceLocation.fromNamespaceAndPath:(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "name": "key",
+      "offset": 9,
+      "opcode": "invokestatic",
+      "operand": "#23",
+      "symbol": "Method net/minecraft/resources/ResourceKey.create:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "name": "key",
+      "offset": 12,
+      "opcode": "areturn",
+      "operand": "",
+      "symbol": ""
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "name": "__class_init__",
+      "offset": 221,
+      "opcode": "ldc_w",
+      "operand": "#305",
+      "symbol": "String flinging"
+    },
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "name": "__class_init__",
+      "offset": 227,
+      "opcode": "putstatic",
+      "operand": "#307",
+      "symbol": "Field FLINGING:Lnet/minecraft/resources/ResourceKey;"
+    }
+  ],
+  "bootstrap_bindings": [
+    {
+      "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class",
+      "index": 2,
+      "callback": "lambda$attackDamageBonus$2",
+      "section_sha256": "bef18232e1739523923d08936a418a6134fdc6407dbfe8ece19bd7a02fd2c295"
+    }
+  ],
+  "safety": {
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "effective_displacement": "NOT_TESTED",
+    "accepted_damage_or_spawn": "NOT_CERTIFIED",
+    "pvp_claims_external_callbacks": "NOT_VERIFIED",
+    "runtime_packet_authority": "NOT_CERTIFIED",
+    "datapacks_effective": "NOT_VERIFIED",
+    "mastery_proc_credit": "NOT_CERTIFIED"
+  },
+  "contract": {
+    "charge": "C=clamp(72000-useTime,0,60); only C>0 changes requested velocity",
+    "impulse": "f=0.1F*C+0.1F*F; V9=oldDelta+normalize(view)*(f,0.15F*f,f)",
+    "vertical": "requestedDelta=V9+(0,(onGround?0.2F:0)+0.1F*F,0)",
+    "server_gate": "C>=10 and !isClientSide gate waves, wear and AABB hit iteration; final movement has no local side gate",
+    "cost": "one hurtAndBreakUsedHand(stack,1,actor) request in server C>=10 branch; no separate Flinging debit",
+    "geometry": "B=C/5 integer normal; B=5 with Tsunami; AABB(P,P+V9*B).inflate(1D), before final vertical bonus",
+    "target": "LivingEntity candidates; reject actor-allied, self and failed hasLineOfSight; hurt return discarded; stopRiding follows",
+    "damage": "mobAttack(actor), float attackDamageBonus(stack); F has no independent damage coefficient",
+    "waves": "normal 2*B spawn requests; Second Wave adds 2*max(1,B-1) delayed requests only in normal branch; Tsunami one and skips Second Wave; addFreshEntity return discarded",
+    "persistence": "Wave stores Owner UUID and Lifespan; waiting/scale/yaw/slam and activeWaveTicks not saved by own NBT overrides",
+    "ownership": "Wave owner reference+UUID; getOwner server lookup resolves only LivingEntity; tick/attackEntities use raw owner with no getOwner call; not guaranteed postreload recovery or credit/dedup receipt",
+    "cooldown": "getUseDuration=72000; no dedicated Flinging cooldown set in complete item bodies; external lifecycle unverified"
+  }
+}
