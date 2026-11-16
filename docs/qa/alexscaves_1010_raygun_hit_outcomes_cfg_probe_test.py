@@ -38,7 +38,7 @@ class RaygunHitOutcomeCFGTests(unittest.TestCase):
             normal_graph(meth([]))
 
     def test_duplicate_offsets_are_rejected(self):
-        with self.assertRaisesRegex(AuditError, "non-unique/unsorted"):
+        with self.assertRaisesRegex(FlowError, "invalid JVM offsets"):
             normal_graph(meth([ins(0,"return"), ins(0,"return")]))
 
     def test_missing_jump_destination_is_rejected(self):
