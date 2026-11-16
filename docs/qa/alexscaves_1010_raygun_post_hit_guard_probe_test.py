@@ -18,12 +18,17 @@ def fake_method():
         i(953, "aload_0"),
         i(1013, "invokestatic", "#1", "Method Example.fake:()V"),
         i(1044, "ifeq", "1051"),
-        i(1047, "goto", "1051"),
-        i(1051, "aload_0"),
-        i(1056, "ifne", "1088"),
-        i(1059, "iconst_0"),
-        i(1064, "ifeq", "1088"),
-        i(1067, "aload_0"),
+        i(1047, "iconst_1"),
+        i(1048, "goto", "1052"),
+        i(1051, "iconst_0"),
+        i(1052, "istore", "26"),
+        i(1054, "iload", "26"),
+        i(1056, "ifeq", "1157"),
+        i(1059, "aload", "25"),
+        i(1061, "instanceof", "#2", "class net/minecraft/world/entity/LivingEntity"),
+        i(1064, "ifeq", "1157"),
+        i(1067, "aload", "25"),
+        i(1069, "checkcast", "#2", "class net/minecraft/world/entity/LivingEntity"),
         i(1088, "ifne", "1157"),
         i(1091, "aload_0"),
         i(1119, "invokevirtual", "#2", "Method Example.addEffect:()Z"),
@@ -43,12 +48,12 @@ class RaygunPostHitGuardTests(unittest.TestCase):
         out = project(fake_method())
         self.assertEqual([x["offset"] for x in out["guard_observations"]], list(GUARDS))
         self.assertEqual(out["guard_count"], 4)
-        self.assertEqual(out["window_instruction_count"], 9)
+        self.assertEqual(out["window_instruction_count"], 14)
         self.assertEqual([x["offset"] for x in out["invocation_sites_in_window"]],[1013])
 
     def test_taken_and_fallthrough_are_distinct(self):
         g = project(fake_method())["guard_observations"][1]
-        self.assertEqual(g["destination"],1088)
+        self.assertEqual(g["destination"],1157)
         self.assertEqual(g["fallthrough"],1059)
         self.assertEqual([x["outcome"] for x in g["outcomes"]], ["taken","fallthrough"])
 
@@ -89,6 +94,29 @@ class RaygunPostHitGuardTests(unittest.TestCase):
         graph[1056] = (1088,)
         with self.assertRaisesRegex(FlowError,"expected post-hurt conditional"):
             guard_projection(rows,graph)
+
+
+    def test_hurt_false_locally_zeroes_gate_and_exits(self):
+        p=project(fake_method())["immediate_hit_boolean_proof"]
+        self.assertFalse(p["hurt_false"]["reaches_addEffect_in_same_iteration"])
+        self.assertTrue(p["hurt_true"]["reaches_living_entity_guard"])
+        self.assertFalse(p["hurt_true"]["reaches_addEffect_unconditionally"])
+
+    def test_tampered_zero_constant_is_rejected(self):
+        rows=[i(1051,"iconst_1") if x["offset"]==1051 else x for x in fake_method()]
+        with self.assertRaisesRegex(FlowError,"hit-gate JVM opcode drift @1051"):
+            project(rows)
+
+    def test_tampered_local_slot_is_rejected(self):
+        rows=[i(1054,"iload","25") if x["offset"]==1054 else x for x in fake_method()]
+        with self.assertRaisesRegex(FlowError,"hit-gate operand drift @1054"):
+            project(rows)
+
+    def test_tampered_instanceof_class_is_rejected(self):
+        rows=[i(1061,"instanceof","#2","class Example/OtherEntity")
+              if x["offset"]==1061 else x for x in fake_method()]
+        with self.assertRaisesRegex(FlowError,"hit-gate class predicate drift @1061"):
+            project(rows)
 
     def test_report_snapshot_drift_fails_closed(self):
         a={"scope":"demo","guards":4,"limits":{"mutation":"NO_MUTATION"}}
