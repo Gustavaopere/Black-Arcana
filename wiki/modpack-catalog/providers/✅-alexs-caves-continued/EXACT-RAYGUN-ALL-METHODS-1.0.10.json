@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_RAYGUN_26_METHOD_BODY_FINGERPRINTS_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_path": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+  "class_sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c",
+  "declared_methods": 26,
+  "historically_pinned_method_digests": 8,
+  "newly_pinned_method_digests": 18,
+  "instruction_total": 1111,
+  "direct_branch_total": 107,
+  "methods": [
+    {
+      "method": "RaygunItem ()V",
+      "instructions": 8,
+      "parsed_method_sha256": "7db047e29e2b847d8a240b68f00860b232ff872cadbaa1f55e3b61f1560d7db8",
+      "direct_branches": 0,
+      "switch_offsets": []
+    },
+    {
+      "method": "initializeClient (Ljava/util/function/Consumer;)V",
+      "instructions": 6,
+      "parsed_method_sha256": "9fd7a87f1a94d6048983ac699c41f3c257b914b2097a6820b2cdf10e6e8d0cac",
+      "direct_branches": 0,
+      "switch_offsets": []
+    },
+    {
+      "method": "getEnchantmentValue ()I",
+      "instructions": 2,
+      "parsed_method_sha256": "798e4edaf36fade21f22743e4675e918297e30c52b2df68b1dd4d56d821664ca",
+      "direct_branches": 0,
+      "switch_offsets": []
+    },
+    {
+      "method": "isEnchantable (Lnet/minecraft/world/item/ItemStack;)Z",
+      "instructions": 8,
+      "parsed_method_sha256": "3da27aa2c9511978adabb8e4412a86212b59cf4219fd291b860652ae3873efed",
+      "direct_branches": 2,
+      "switch_offsets": []
+    },
+    {
+      "method": "hasCharge (Lnet/minecraft/world/item/ItemStack;)Z",
+      "instructions": 8,
+      "parsed_method_sha256": "0b89217b97ca4f3d1c155c01b4170d1f0cb9141e4ee854ccf0c72892cd3b1db7",
+      "direct_branches": 2,
+      "switch_offsets": []
+    },
+    {
+      "method": "use (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "instructions": 78,
+      "parsed_method_sha256": "65629e7c194dc7524f3541722f3000a3cf4dab67941beaccd48059dbdfeb5e92",
+      "direct_branches": 4,
+      "switch_offsets": []
+    },
+    {
+      "method": "findAmmo (Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/world/item/ItemStack;",
+      "instructions": 27,
+      "parsed_method_sha256": "f74a490d7a2bff7997296a6cea080321929a45ea01078e886d0f3d6c8a2a87fe",
+      "direct_branches": 4,
+      "switch_offsets": []
+    },
+    {
+      "method": "getUseAnimation (Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/UseAnim;",
+      "instructions": 2,
+      "parsed_method_sha256": "2862bec8008b05b25624951888fdb41c6c3ebd942a815dacda8e2df423f4916f",
+      "direct_branches": 0,
+      "switch_offsets": []
+    },
+    {
+      "method": "getUseDuration (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I",
+      "instructions": 2,
+      "parsed_method_sha256": "bb2ee4b8612b95dcd731c412eca3c7c8c059d5d41af844ef633c28f71b13a986",
+      "direct_branches": 0,
+      "switch_offsets": []
+    },
+    {
+      "method": "acInventoryTick (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+      "instructions": 109,
+      "parsed_method_sha256": "7dd6613ef567ab79f0065253788e6ee9156bb86908b63907808599d5e3b560d2",
+      "direct_branches": 18,
+      "switch_offsets": []
+    },
+    {
+      "method": "onUseTick (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "instructions": 523,
+      "parsed_method_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+      "direct_branches": 57,
+      "switch_offsets": []
+    },
+    {
+      "method": "setUseTime (Lnet/minecraft/world/item/ItemStack;I)V",
+      "instructions": 16,
+      "parsed_method_sha256": "fe1d1d6ef26a3d9dc18211e6e3fede38bb3c0bcde6b84047fd1a932335155821",
+      "direct_branches": 0,
+      "switch_offsets": []
+    },
+    {
+      "method": "setRayPosition (Lnet/minecraft/world/item/ItemStack;DDD)V",
+      "instructions": 37,
+      "parsed_method_sha256": "7050bc4b5a10975d2e5dc7ef56b07aadc1440fa7da3906bc1d62097eaa2d19db",
+      "direct_branches": 0,
+      "switch_offsets": []
+    },
+    {
+      "method": "getUseTime (Lnet/minecraft/world/item/ItemStack;)I",
+      "instructions": 11,
+      "parsed_method_sha256": "41133ccb2cd68f903db46bf2a439dfd4c394a1eaba99df6ad0c1f84a50104948",
+      "direct_branches": 2,
+      "switch_offsets": []
+    },
+    {
+      "method": "getCharge (Lnet/minecraft/world/item/ItemStack;)I",
+      "instructions": 11,
+      "parsed_method_sha256": "c69c154524dbe4b4e46ed589438f7548cc39658305072a59b7c6a7dc9ec25baa",
+      "direct_branches": 2,
+      "switch_offsets": []
+    },
+    {
+      "method": "setCharge (Lnet/minecraft/world/item/ItemStack;I)V",
+      "instructions": 11,
+      "parsed_method_sha256": "cedf012dbfb8edf1ca2171c57001dc8937f2982e3755a156da058a74d260993e",
+      "direct_branches": 0,
+      "switch_offsets": []
+    },
+    {
+      "method": "getRayPosition (Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/phys/Vec3;",
+      "instructions": 24,
+      "parsed_method_sha256": "aad78dff1406d4ee47f1ff486f36a023c8c3ba019300524ca254e7f314af3f1c",
+      "direct_branches": 2,
+      "switch_offsets": []
+    },
+    {
+      "method": "getLerpedUseTime (Lnet/minecraft/world/item/ItemStack;F)F",
+      "instructions": 29,
+      "parsed_method_sha256": "4bccb0488844f8475ff7c2dff778c7a8797e0a68ff8e932514df899e4d0e8cc0",
+      "direct_branches": 4,
+      "switch_offsets": []
+    },
+    {
+      "method": "getLerpedRayPosition (Lnet/minecraft/world/item/ItemStack;F)Lnet/minecraft/world/phys/Vec3;",
+      "instructions": 71,
+      "parsed_method_sha256": "dad86710eb11c2120c774b315ee3a217c12a004ae9a53d001f0e813bac7d78ff",
+      "direct_branches": 1,
+      "switch_offsets": []
+    },
+    {
+      "method": "releaseUsing (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "instructions": 20,
+      "parsed_method_sha256": "fe123ab0d8ef0e4049d6f51c086b2ec5ca9aa8926a25d6ebae795d583caa677e",
+      "direct_branches": 1,
+      "switch_offsets": []
+    },
+    {
+      "method": "isBarVisible (Lnet/minecraft/world/item/ItemStack;)Z",
+      "instructions": 7,
+      "parsed_method_sha256": "b6fe7a73b89cd710e808f00f7764bb6afa60f2b181ace641e7d3b0e8bc75d9a2",
+      "direct_branches": 2,
+      "switch_offsets": []
+    },
+    {
+      "method": "getBarWidth (Lnet/minecraft/world/item/ItemStack;)I",
+      "instructions": 11,
+      "parsed_method_sha256": "f21db88b48cb16a4895027c83f9438e2191df97b3241db630a813224d3ec12f5",
+      "direct_branches": 0,
+      "switch_offsets": []
+    },
+    {
+      "method": "getBarColor (Lnet/minecraft/world/item/ItemStack;)I",
+      "instructions": 35,
+      "parsed_method_sha256": "4ee9ebc8f89d7f90066f24af38def483c379f75cb5e41e6c821cfa4cc8ea65d6",
+      "direct_branches": 0,
+      "switch_offsets": []
+    },
+    {
+      "method": "appendHoverText (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+      "instructions": 28,
+      "parsed_method_sha256": "4c0ae6dbc6406399257ff37ac013308dcb010b199554f4c803c6682cfeea21fb",
+      "direct_branches": 1,
+      "switch_offsets": []
+    },
+    {
+      "method": "shouldCauseReequipAnimation (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Z)Z",
+      "instructions": 16,
+      "parsed_method_sha256": "f7c132ce976b060d313d652743c0b295d5dda82715d4dcf82d19ac5fee18f200",
+      "direct_branches": 3,
+      "switch_offsets": []
+    },
+    {
+      "method": "lambda$static$0 (Lnet/minecraft/world/item/ItemStack;)Z",
+      "instructions": 11,
+      "parsed_method_sha256": "eff11132e73674eadf28ee9e970b4d28046777f0c6bb44cd8de8f609f090aac6",
+      "direct_branches": 2,
+      "switch_offsets": []
+    }
+  ],
+  "limits": {
+    "claim_scope": "METHOD_FINGERPRINTS_NOT_COMPLETE_STATIC_PERK_CONTRACT",
+    "method_roster": "JAR_1010_ONLY",
+    "cross_method_reaching_definitions": "NOT_RECONSTRUCTED",
+    "exception_cfg": "NOT_RECONSTRUCTED",
+    "source_version_1_1_1": "NON_AUTHORITATIVE",
+    "damage_and_status_acceptance": "NOT_CERTIFIED",
+    "packet_sender_authorization": "NOT_VERIFIED",
+    "pvp_los_claims": "NOT_VERIFIED",
+    "provider_universe_closed": false,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION"
+  }
+}
