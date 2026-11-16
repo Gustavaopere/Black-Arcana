@@ -27,7 +27,7 @@ Esse grafo contém exclusivamente **arestas normais, estáticas e intramétodo**
 
 A [primeira auditoria física SHA-exata do artefato](https://github.com/Gustavaopere/Black-Arcana/actions/runs/43974401894) executou **12/12 testes sintéticos** e confirmou o JAR publisher, a classe, os **26 métodos SHA-selados**, os 523 comandos JVM e 57 branches de `onUseTick`. O [manifesto observado](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-HIT-OUTCOMES-CFG-1.0.10.json) foi gerado diretamente do relatório de CI, não preenchido por antecipação. A extração cobriu **82 instruções** em `[953,1157)`; há **duas entradas normais no recorte a partir de fora** e **dez arestas normais de saída**.
 
-| Teste do sucessor de branch | `addEffect @1119` alcançável? | `sendMSGToAll @1154` alcançável? |
+| Aresta estrutural, ignorando valores de operandos | `addEffect @1119` alcançável por grafo? | `sendMSGToAll @1154` alcançável por grafo? |
 |---|---|---|
 | `hurt`/booleano `ifeq @1044`, destino tomado `@1051` | **SIM**, caminho mínimo de 26 arestas | **SIM**, caminho mínimo de 39 arestas |
 | `hurt`/booleano `ifeq @1044`, fallthrough `@1047` | **SIM**, caminho mínimo de 27 arestas | **SIM**, caminho mínimo de 40 arestas |
@@ -36,7 +36,7 @@ A [primeira auditoria física SHA-exata do artefato](https://github.com/Gustavao
 | `addEffect`/booleano `ifeq @1122`, destino tomado `@1157` | **NÃO**, não retorna ao pedido na mesma janela | **NÃO**, encerra a janela do ciclo |
 | `addEffect`/booleano `ifeq @1122`, fallthrough `@1125` | **NÃO**, pedido já ocorreu antes desse ponto | **SIM**, 11 arestas |
 
-**Achado causal delimitado:** o desvio tomado após retorno falso de `ACCompat.hurt` em `@1044` **não é uma barreira estática suficiente** para alcançar `LivingEntity.addEffect @1119`. Há outros predicados em `@1056`, `@1064` e `@1088` nos caminhos mínimos registrados; por isso a possibilidade de chegar ao pedido de status não equivale à sua execução garantida, ao êxito de aplicar `Irradiated` ou à associação a um hit aceito. Também não caracteriza um bug de gameplay sem teste físico.
+**Retificação causal posterior — PR #1103:** o resultado desta tabela é **somente alcançabilidade de arestas**, não uma trajetória com os valores dos operandos JVM preservados. O branch `ifeq @1044 → 1051` após retorno falso de `ACCompat.hurt` conduz a `iconst_0 @1051`, `istore 26 @1052`, `iload 26 @1054` e `ifeq @1056 → 1157`, encerrando a iteração **antes de `LivingEntity.addEffect @1119`**. Portanto, a interpretação anterior de que a falha de dano poderia prosseguir para a solicitação de irradiação era um falso positivo da busca de caminhos, que não rastreava os valores de stack/slots. O ramo de sucesso grava `1` por `iconst_1 @1047; goto @1048 → 1052` e prossegue apenas se os guards de `LivingEntity @1061–1064` e resistência `@1088` permitirem. O recorte continua sem comprovar execução real, status aceito ou resultado de servidor. Ver [auditoria corretiva](alexscaves-1010-raygun-post-hit-guards-handoff.md) e manifesto SHA-exato complementar.
 
 Para perks, não assumir uma regra inventada `damage_success -> status_success`. Não duplicar `ACCompat.hurt`, `LivingEntity.addEffect` nem recompensas/XP com base em observação visual. Os métodos nativos e os guards continuam com autoridade do provider; **`NO_MUTATION`**.
 
