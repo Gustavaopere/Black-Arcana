@@ -274,7 +274,7 @@ def audit(jar, javap_bin, inspect=False):
                     print(str(i["offset"]) + ": " + i["opcode"] + " "
                           + i["operand"] + " // " + i["symbol"])
 
-    return {
+    result = {
         "schema_version": 1,
         "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
         "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
@@ -294,6 +294,96 @@ def audit(jar, javap_bin, inspect=False):
             "multiplayer_world_policy": "NOT_VERIFIED",
         },
     }
+    validate_individual_seal(result)
+    return result
+
+
+def validate_individual_seal(report, cert=None):
+    """Require exact individual documentary contract without promoting runtime hooks."""
+    if cert is None:
+        cert = json.loads(
+            (ROOT / "EXACT-FERROUS-HASTE-CAUSAL-1.0.10.json").read_text(encoding="utf8"),
+            object_pairs_hook=strict_pairs
+        )
+    prior = load_history()
+    require(cert["enchantment"] == report["enchantment"] ==
+            "alexscaves:ferrous_haste", "individual enchantment mismatch")
+    require(cert["version"] == "1.0.10", "individual version mismatch")
+    require(cert["claim_scope"] == report["claim_scope"] ==
+            "STATIC_TECHNICAL_CATALOG_ONLY", "invalid claim scope")
+    require(cert["evidence_grade"] == report["evidence_grade"] ==
+            "SHA_EXACT_BINARY_BEHAVIOR", "invalid static evidence grade")
+    require(cert["artifact"] == report["artifact"] == prior["artifact"],
+            "exact publisher identity drift")
+    require(cert["class_hashes"] == prior["classes"], "native class digest drift")
+    require(cert["resources"] == {
+        ENCHANT: prior["enchantment"]["sha256"],
+        TAG: prior["tag"]["sha256"],
+    }, "native resources digest drift")
+    require(cert["enchantment_json"] == prior["enchantment"]["json"] and
+            cert["supported_item_tag"] == prior["tag"]["json"],
+            "individual enchantment metadata drift")
+    require(cert["compiled_ferrous_haste_token_owners"] ==
+            report["compiled_ferrous_haste_token_owners"],
+            "compiled enchantment token consumers mismatch")
+    census = cert["full_method_census"]
+    require([census["methods_checked"], census["instructions_checked"],
+             census["direct_branches_checked"]] ==
+            [report["methods_checked"], report["instructions_checked"],
+             report["direct_branches_checked"]],
+            "individual static counts drift")
+    require(census["expected_owner_method_counts"] ==
+            {g["owner"]:g["method_count"] for g in prior["consumers"]},
+            "expected owner method roster drift")
+    expected_core = [
+        {"owner": g["owner"], "name": m["name"], "descriptor": m["descriptor"],
+         "instructions": m["instruction_count"],
+         "parsed_method_sha256": m["parsed_method_sha256"]}
+        for g in prior["consumers"] for m in g["methods"]
+    ]
+    require(census["prior_sha_locked_methods"] == expected_core,
+            "individual full method list drift")
+    actual = {(m["owner"], m["name"], m["descriptor"]):m
+              for m in report["method_census"]}
+    require(len(actual) == report["methods_checked"],
+            "duplicate native method identity")
+    for m in expected_core:
+        found = actual.get((m["owner"], m["name"], m["descriptor"]))
+        require(found is not None and
+                found["body_sha256"] == m["parsed_method_sha256"] and
+                found["instructions"] == m["instructions"],
+                "full method body certificate drift " + m["name"])
+    require(census["fatigue_switch"]["cases"] ==
+            report["dig_speed_switch_targets"],
+            "dig speed switch cases drift")
+    require(census["fatigue_switch"]["offset"] == 77,
+            "unsupported switch offset")
+    require(len(report["switches"]) == 1 and
+            report["switches"][0]["name"] == "getDigSpeed" and
+            report["switches"][0]["switch_offsets"] == [77],
+            "extra/unverified JVM switch topology")
+    contract = cert["consumer_contract"]
+    require(contract["activation"]["levels"].startswith("JSON only level I"),
+            "level scaling contract drift")
+    require("3" in contract["attack"]["cooldown"] and
+            "5+" in contract["attack"]["cooldown"],
+            "attack cooldown branch contract drift")
+    require("8F:10F" in contract["mining"]["increment"],
+            "mining 8/10 divisor contract drift")
+    require("10/8=1.25" in contract["mining"]["ratio"],
+            "mining percentage contract drift")
+    require("FIELD_EXTENSION" in contract["targeting"]["separate_field_extension"],
+            "Field Extension falsely attributed to Ferrous Haste")
+    safety = cert["safety"]
+    require(safety["mutating_hook"] == report["safety"]["mutating_hook"] ==
+            "NOT_VERIFIED", "unsafe mutation hook promotion")
+    require(safety["physical_qa"] == report["safety"]["physical_qa"] ==
+            "NOT_TESTED", "unsupported physical QA promotion")
+    require(safety["mutation"] == report["safety"]["mutation"] ==
+            "NO_MUTATION", "unsafe mutation activation")
+    require(safety["provider_universe_closed"] is False,
+            "unsupported provider universe closure")
+    return cert
 
 
 def main():
