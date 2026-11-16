@@ -35,6 +35,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      - name: Individual seal regression and negative safeguards
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_ferrous_haste_causal_audit.py docs/qa/alexscaves_1010_ferrous_haste_causal_cards_test.py
+          python3 docs/qa/alexscaves_1010_ferrous_haste_causal_cards_test.py -v
       - name: Download publisher 1.0.10 JAR and verify SHA
         run: |
           set -euo pipefail
@@ -48,11 +52,9 @@ jobs:
             'build/ferrous-haste-causal/alexscaves-1.0.10.jar' | sha256sum -c -
       - name: Verify full JVM native bodies and attack/mining pivots
         run: |
-          python3 -m py_compile docs/qa/alexscaves_1010_ferrous_haste_causal_audit.py
           python3 docs/qa/alexscaves_1010_ferrous_haste_causal_audit.py \
             --jar build/ferrous-haste-causal/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
-            --inspect \
             --output build/ferrous-haste-causal/report.json
       - name: Canonical ledger and provider indexes
         run: |
