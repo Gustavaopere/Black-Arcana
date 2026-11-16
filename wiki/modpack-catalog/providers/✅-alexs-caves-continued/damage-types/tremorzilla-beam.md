@@ -1,6 +1,14 @@
 # Tremorzilla Beam — tipo de dano `alexscaves:tremorzilla_beam` (1.0.10)
 
-**Estado de catalogação:** ⚠️ `RESOURCE_JSON_VERIFIED + SHA_EXACT_SELECTED_BYTECODE_OBSERVED` (recorte parcial, sem certificação). **Contrato técnico estático para perks:** ⚠️ `NOT_CERTIFIED`. **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`.
+**Estado de catalogação:** ✅ contrato técnico estático individual certificado no escopo do tipo de dano alexscaves:tremorzilla_beam, com factory, 12 métodos nativos íntegros SHA-exatos e controles de targeting/efeitos. **Hook mutador:** NOT_VERIFIED. **QA física:** NOT_TESTED. **Integração:** NO_MUTATION. **Universo do provider:** não encerrado.
+
+## Certificação técnica estática individual — fechamento do DamageType
+
+A [prova completa da versão publisher 1.0.10](../EXACT-TREMORZILLA-BEAM-STATIC-1.0.10.md) e seu [selo JSON](../EXACT-TREMORZILLA-BEAM-STATIC-1.0.10.json) integram as evidências dos manifestos anteriores. São **12 métodos completos, 2.808 instruções JVM**, factory SHA-exata de **13 instruções**, **46 pivôs causais** e dez callsites de hurtEntitiesAround, dos quais apenas os dois de tickBreath solicitam o tipo de dano do feixe. O [auditor individual](https://github.com/Gustavaopere/Black-Arcana/blob/main/docs/qa/alexscaves_1010_tremorzilla_beam_static_audit.py) e seus [testes negativos](https://github.com/Gustavaopere/Black-Arcana/blob/main/docs/qa/alexscaves_1010_tremorzilla_beam_static_audit_test.py) reproduzem o resultado no JAR SHA-exato.
+
+O método tickBreath exige servidor, endpoint de feixe e um gate beamTime % 3 para as amostras observadas; solicita 20.0F de dano nos dois locais e descarta os booleanos retornados. O helper seleciona AABB e filtros de alvo, submete o LOS a Block.COLLIDER / Fluid.NONE e exige MISS no predicado do feixe; só após ACCompat.hurt positivo solicita knockback e, no ramo beam, Irradiated por 6000 ticks (amplifier 2). Isso não certifica hit, efeito aplicado, kill, PvP ou XP/Mastery. A destruição de blocos, charge e cooldown são caminhos nativos separados e permanecem sem autorização de mutação.
+
+**Boundary:** o ✅ certifica apenas o contrato estático individual do DamageType. Não homologa hooks, WorldEffectPolicy, claims, datapacks ativos, física de multiplayer, o feixe como spell ou o universo completo do provider. Permanecem mutating_hook=NOT_VERIFIED, physical_qa=NOT_TESTED, mutation=NO_MUTATION. As demais seções preservam checkpoints históricos: registros NOT_CERTIFIED anteriores à presente prova não representam o novo estado do contrato estático.
 
 ## Proveniência e identidade
 
@@ -45,7 +53,7 @@ Essas são **entradas textuais diretas** dos seis arquivos `data/*/tags/damage_t
 
 O *provider* mantém autoridade sobre a criação, classificação e aplicação de dano. Black Arcana não altera `DamageSource`, escola, dano, tags ou projéteis sem evidência dos consumidores Java e hooks seguros. O RPG Skill Tree fornece perks/atributos somente através de boundary verificada, sem double-processing. **Fail-closed:** `NO_MUTATION` até a auditoria dos consumidores e a validação específica.
 
-**Contabilidade:** 1/11 recursos de tipo de dano documentados; **+0 raízes mágicas novas**. Este objeto não recebe status `COMPLETE_PERK_READY` apenas por existir como JSON.
+**Contabilidade do checkpoint histórico de recursos:** 1/11 na auditoria inicial; o número atual consta do INDEX.md. Nenhuma raiz mágica nova. Este objeto não recebe status `COMPLETE_PERK_READY` apenas por existir como JSON.
 
 ## Evidência compilada 1.0.10 — factory e consumidores diretos
 
@@ -183,4 +191,4 @@ O conjunto examinado é pertinente a **ignição/propagação de fogo** e **cál
 | Aumentar tempo/nível de Irradiated | `hurtEntitiesAround` pós-`ACCompat.hurt` e `Irradiated` nativo | Não duplicar efeito, contagem ou eventos de XP; duração da instância não é cooldown. |
 | Ampliar destruição | `tickBreath`, `devastatingTremorzillaBeam`, alteração de blocos e mundo | ⛔ Sem aprovação `WorldEffectPolicy` e verificação de claims. |
 
-**Status mantido:** ⚠️ `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. **+0 raízes e +0 fichas certificadas**; não promover `COMPLETE_PERK_READY`, índices, estágios ou integração RPG Skill Tree. Próxima etapa: mapear integralmente o CFG dos guards de raycast, tick/charge, grieffing e persistência, depois validar servidor/client modpack exato.
+**Status atual:** ✅ contrato estático individual de DamageType (STATIC_TECHNICAL_CATALOG_ONLY). Hooks mutadores NOT_VERIFIED, QA física NOT_TESTED, NO_MUTATION e universo integral não encerrado. Os estados parciais citados acima pertencem aos checkpoints históricos de investigação; proteção de mundo e runtime executável seguem pendentes., `NO_MUTATION`. **+0 raízes e +0 fichas certificadas**; não promover `COMPLETE_PERK_READY`, índices, estágios ou integração RPG Skill Tree. Próxima etapa: mapear integralmente o CFG dos guards de raycast, tick/charge, grieffing e persistência, depois validar servidor/client modpack exato.
