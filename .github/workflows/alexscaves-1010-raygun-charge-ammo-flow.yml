@@ -45,13 +45,13 @@ jobs:
             --output build/raygun-charge-ammo/alexscaves-1.0.10.jar
           printf '%s  %s\n' '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c' \
             'build/raygun-charge-ammo/alexscaves-1.0.10.jar' | sha256sum -c -
-      - name: Replay charge and ammo native CFG sites
+      - name: Replay SHA-exact charge and ammo native JVM branch seal
         run: |
           python3 docs/qa/alexscaves_1010_raygun_charge_ammo_flow_probe.py \
             --jar build/raygun-charge-ammo/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/raygun-charge-ammo/report.json \
-            --print-candidate
+            --snapshot 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CHARGE-AMMO-FLOW-1.0.10.json'
       - name: Verify canonical index invariants
         run: |
           python3 scripts/catalog/check_perk_ready_indexes.py

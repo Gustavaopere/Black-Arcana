@@ -2,7 +2,7 @@
 """Read-only Raygun 1.0.10 charging/ammo JVM evidence synthetic regressions."""
 import unittest
 
-from alexscaves_1010_raygun_charge_ammo_flow_probe import method_site
+from alexscaves_1010_raygun_charge_ammo_flow_probe import method_site, verify_snapshot
 from alexscaves_1010_ferrous_haste_causal_audit import AuditError
 from alexscaves_1010_raygun_method_census_probe import CensusError
 
@@ -46,6 +46,22 @@ class ChargeAmmoJVMRegression(unittest.TestCase):
         with self.assertRaisesRegex(CensusError,"budget exceeded"):
             method_site(method([ins(i*3,"invokestatic","#1","Method Example.x:()V")
                                 for i in range(86)]))
+
+    def test_snapshot_rejects_tampered_branch_destination(self):
+        observed = method_site(method([
+            ins(0,"ifeq","5"),ins(3,"return"),ins(5,"return")
+        ]))
+        report = {"selected_methods":[observed],"safety":{"mutation":"NO_MUTATION"}}
+        copy_method = dict(observed)
+        copy_method["direct_branch_edges"] = [[0,3]]
+        frozen = {"selected_methods":[copy_method],"safety":{"mutation":"NO_MUTATION"}}
+        from alexscaves_1010_raygun_method_census_probe import CensusError
+        with self.assertRaisesRegex(CensusError,"branch seal drift"):
+            verify_snapshot(report, frozen)
+
+    def test_snapshot_accepts_identical_evidence(self):
+        report = {"selected_methods":[],"safety":{"mutation":"NO_MUTATION"}}
+        self.assertIs(verify_snapshot(report, report), report)
 
 if __name__ == "__main__":
     unittest.main()

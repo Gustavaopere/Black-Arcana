@@ -157,24 +157,33 @@ def audit(jar: Path, javap_bin: str):
             "bounded evidence output budget")
     return report
 
+def verify_snapshot(report, snapshot):
+    """Exact re-extraction of the SHA-locked selected JVM sites."""
+    require(report == snapshot, "Raygun exact charge/ammo branch seal drift")
+    return report
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--jar", type=Path, required=True)
     parser.add_argument("--javap", default="javap")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--print-candidate", action="store_true")
+    parser.add_argument("--snapshot", type=Path)
     args = parser.parse_args()
     report = audit(args.jar, args.javap)
     if args.output:
         args.output.parent.mkdir(parents=True,exist_ok=True)
         args.output.write_text(json.dumps(report,indent=2,ensure_ascii=False)+"\n",
                                encoding="utf8")
+    if args.snapshot:
+        verify_snapshot(report, load(args.snapshot))
     if args.print_candidate:
         print("RAYGUN_CHARGE_AMMO_FLOW_BEGIN")
         print(json.dumps(report,indent=2,ensure_ascii=False))
         print("RAYGUN_CHARGE_AMMO_FLOW_END")
     print(json.dumps({
-        "status": "DISCOVERY_PASS_NOT_CERTIFIED",
+        "status": ("SHA_EXACT_SELECTED_FLOW_SEAL_VERIFIED" if args.snapshot
+                   else "DISCOVERY_PASS_NOT_CERTIFIED"),
         "methods": len(report["selected_methods"]),
         "instructions": report["selected_instruction_total"],
         "direct_branches": report["selected_branch_total"],
