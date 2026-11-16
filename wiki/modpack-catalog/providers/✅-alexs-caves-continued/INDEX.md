@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 78/81.**
+**Fichas catalogadas (somente fichas detectadas): 79/81.**
 
-**Barra das fichas catalogadas:** `███████████████████░ 96.3%`
+**Barra das fichas catalogadas:** `███████████████████░ 97.5%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 78/81.**
+**Homologadas para perks (somente fichas detectadas): 79/81.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████████░ 96.3%`
+**Barra dos contratos técnicos estáticos:** `███████████████████░ 97.5%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -42,7 +42,7 @@
 | ✅ | Radiation | [damage-types/radiation.md](damage-types/radiation.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Raygun | [damage-types/raygun.md](damage-types/raygun.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Spirit Dinosaur | [damage-types/spirit-dinosaur.md](damage-types/spirit-dinosaur.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Tremorzilla Beam | [damage-types/tremorzilla-beam.md](damage-types/tremorzilla-beam.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Tremorzilla Beam | [damage-types/tremorzilla-beam.md](damage-types/tremorzilla-beam.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Bubbled | [effects/bubbled.md](effects/bubbled.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Darkness Incarnate | [effects/darkness-incarnate.md](effects/darkness-incarnate.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Deepsight | [effects/deepsight.md](effects/deepsight.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -111,7 +111,7 @@
 | Catálogo | Subpasta | Fichas catalogadas / observadas | Contratos estáticos | Índice |
 |---|---|---:|---:|---|
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
-| ⚠️ | Damage Types | 9/11 (81.8%) | 9 | [Abrir índice](damage-types/INDEX.md) |
+| ⚠️ | Damage Types | 10/11 (90.9%) | 10 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ⚠️ | Enchantments | 50/51 (98.0%) | 50 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
