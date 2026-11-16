@@ -8702,6 +8702,47 @@
           "reason": "Certificado individual EXACT-FIELD-EXTENSION-CAUSAL-1.0.10.json, auditor read-only, 9 testes sintéticos negativos e workflow SHA-exato: 13 corpos, 1.387 instruções JVM, 147 branches, 85 pivôs PASS; não autoriza cliente/servidor real, QA física, datapacks ou universo integral do provider."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/flinging.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutation": "NO_MUTATION",
+      "scope_note": "Flinging individual static launch contract: charge, requested movement, indirect AABB geometry, costs and downstream native waves. No guarantee of travelled range, accepted damage/spawn, safe mutator, runtime integration or physical QA; +0 semantic magic roots.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/flinging.md",
+          "reason": "Recurso Flinging, tag Ortholance e classes do JAR publisher 1.0.10 SHA-exato; registry, helpers e definição com versão/proveniência explícitas. Fonte pública 1.1.1 permanece adjacente, sem paridade presumida."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/flinging.md",
+          "reason": "releaseUsing integral: C=clamp(getUseDuration-useTime,0,60); C>0 calcula P=0.1F*C+0.1F*L e V=velocidade prévia+view normalizado vezes (P,0.15F*P,P). Acréscimo vertical final separado; nenhuma nova raiz ou cast."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/flinging.md",
+          "reason": "JSON máximo III/peso10, min_cost1+8*(L-1), max_cost41+10*(L-1), bigorna1 e mainhand. Impulso, carga e componentes horizontal/vertical separados; vetor solicitado não é distância final em blocos ou duração de voo."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/flinging.md",
+          "reason": "C>=10 e servidor governam ondas e ataque: AABB entre posição e posição+V*B, inflada1D, B=C/5 ou5Tsunami; exclui usuário e aliados e requer hasLineOfSight. mobAttack solicita attackDamageBonus e descarta retorno antes de stopRiding; Flinging não define bônus direto de dano."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/flinging.md",
+          "reason": "Desgaste1 solicitado no ramo servidor elegível da liberação, sem cobrança própria por nível/onda; custos de encantamento e callbacks de mineração/hit são separados. C1-9 pode solicitar movimento sem entrar no ramo de dano/ondas/custo; dano/spawn aceitos não certificados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/flinging.md",
+          "reason": "Item, movimento e ondas pertencem ao provider; owner, tempo, persistência, efeitos e filtros nativos estão documentados. Mutação de impulso ou geometria, recibo e crédito de Mastery exigem boundary próprio. Black Arcana mantém seu runtime e RPG Skill Tree sua progressão; NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/flinging.md",
+          "reason": "EXACT-FLINGING-CAUSAL-1.0.10.json/Markdown, auditor reproduzível, testes negativos e workflow verificam corpos completos, hashes, branches e pivôs do JAR exato. Provas históricas selecionadas preservadas. Nenhum hook mutador, datapack efetivo, QA física ou fechamento integral do provider promovido."
+        }
+      }
     }
   },
   "providers": {},

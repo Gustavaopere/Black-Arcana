@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 48/51.**
+**Fichas catalogadas (somente fichas detectadas): 49/51.**
 
-**Barra das fichas catalogadas:** `██████████████████░░ 94.1%`
+**Barra das fichas catalogadas:** `███████████████████░ 96.1%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 48/51.**
+**Homologadas para perks (somente fichas detectadas): 49/51.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████████░░ 94.1%`
+**Barra dos contratos técnicos estáticos:** `███████████████████░ 96.1%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -38,7 +38,7 @@
 | ✅ | Far Flung | [ficha/far-flung.md](far-flung.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Ferrous Haste | [ficha/ferrous-haste.md](ferrous-haste.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Field Extension | [ficha/field-extension.md](field-extension.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Flinging | [ficha/flinging.md](flinging.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Flinging | [ficha/flinging.md](flinging.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Gamma Ray | [ficha/gamma-ray.md](gamma-ray.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Heavy Slam | [ficha/heavy-slam.md](heavy-slam.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Herd Phalanx | [ficha/herd-phalanx.md](herd-phalanx.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |

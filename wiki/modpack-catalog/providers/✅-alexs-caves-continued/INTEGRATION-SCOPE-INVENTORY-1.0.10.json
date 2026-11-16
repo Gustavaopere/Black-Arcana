@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. Thirty-three individual enchantment static contracts (Arrow Inducting, Astral Transferring, Bonking, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection); eighteen other individual enchantment dossiers remain partial. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. 49 individual enchantment static contracts (Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection); two other individual enchantment dossiers remain partial. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -346,12 +346,28 @@
     "enchantments": {
       "identified_objects": 51,
       "individual_dossiers": 51,
-      "partial_dossiers": 18,
-      "documented_static_contracts": 33,
+      "partial_dossiers": 2,
+      "documented_static_contracts": 49,
       "cards": [
         "enchantments/arrow-inducting.md",
         "enchantments/astral-transferring.md",
         "enchantments/bonking.md",
+        "enchantments/bouncing-bolt.md",
+        "enchantments/bouncy-ball.md",
+        "enchantments/charting-call.md",
+        "enchantments/chomping-spirit.md",
+        "enchantments/crystallization.md",
+        "enchantments/dark-nock.md",
+        "enchantments/dazing-sweep.md",
+        "enchantments/detonating-death.md",
+        "enchantments/double-stab.md",
+        "enchantments/energy-efficiency.md",
+        "enchantments/enveloping-bubble.md",
+        "enchantments/explosive-flavor.md",
+        "enchantments/far-flung.md",
+        "enchantments/ferrous-haste.md",
+        "enchantments/field-extension.md",
+        "enchantments/flinging.md",
         "enchantments/heavy-slam.md",
         "enchantments/herd-phalanx.md",
         "enchantments/humungous-hex.md",
@@ -383,7 +399,7 @@
         "enchantments/tsunami.md",
         "enchantments/twilight-perfection.md"
       ],
-      "evidence": "EXACT-BONKING-CONTRACT-1.0.10.md",
+      "evidence": "EXACT-FLINGING-CAUSAL-1.0.10.md",
       "family_universe_closed": false,
       "related_evidence": [
         "EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md",
@@ -423,7 +439,8 @@
         "EXACT-ARROW-INDUCTING-INHERITED-ENGINE-1.0.10.json",
         "EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.json",
         "EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.md",
-        "EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.md"
+        "EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.md",
+        "EXACT-BONKING-CONTRACT-1.0.10.md"
       ]
     }
   }
