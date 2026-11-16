@@ -8622,6 +8622,46 @@
           "reason": "Individual publisher SHA-exact causal audit verifies full bodies of 27 key methods, 1600 JVM instructions and 182 direct CFG targets, 17 previously pinned method digests plus 10 adjacent methods with class SHA-pinned and all body branches, Entity.isAlive bootstrap #0, concrete vector and targeting/damage pivots; synthetic negative mutation tests and dedicated GitHub Actions. No physical Minecraft client/modpack QA, no hook certification, no provider universe closure."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/ferrous-haste.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Ferrous Haste only toggles native MagneticWeaponEntity attack (assigned cooldown 3 vs 5..9 then end-of-tick decrement) and mining divisor (8 vs 10). Verifiable 13 complete methods, 1387 instructions, 147 direct branches, 5 switch destinations, source artifact 1.0.10 SHA exact. Field Extension, Crystallization and item/controller/engine permissions separate. No new spell/cast/root, runtime mutation, safe hook, physical QA, PvP/claims validation or provider universe closure. NO_MUTATION.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/ferrous-haste.md",
+          "reason": "Publisher Alex's Caves Continued alexscaves-1.0.10-neoforge+1.21.1.jar SHA1 6960b299a39a039ac8a5eb9b07be4ad0e3e0a570 SHA256 36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c size 75,279,314. Exact embedded ferrous_haste JSON, Galena Gauntlet tag, class hashes for gauntlet/weapon/registry; 1.1.1 public code non-authoritative."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/ferrous-haste.md",
+          "reason": "Native GalenaGauntletItem.use/onUseTick launches MagneticWeaponEntity controller with item stack and UUID. MagneticWeaponEntity.tick checks active getUseItem()==GALENA_GAUNTLET and reads FERROUS_HASTE enchantLevel>0 into a boolean. Changes attack retry cooldown and block-breaking progress divisor, not an independent cast/root."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/ferrous-haste.md",
+          "reason": "JSON max_level I, weight 2, min_cost base1 step15, max_cost base41 step10, anvil_cost 4, slots mainhand/offhand. Attack cooldown assigned 3 vs 5+nextInt(5) 5..9, tick decrements positive cooldown at @1555-1568 on the same tick. Mining increment=(toolDigSpeed/blockHardness)/(haste?8:10), conditional 10/8=1.25, with durability and break settlement separate. Mining Fatigue switch 0..3/default verified (targets 108/116/124/132/132)."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/ferrous-haste.md",
+          "reason": "EntityHitResult from ProjectileUtil.getHitResultOnViewVector only when player control branch; FIELD_EXTENSION separately adds 5F*level to query range; actual strike requires no cooldown, distanceTo less than victim width+1.5F, strikeProgress and native hit path. Mining uses selected BlockPos and lastSelectedBlock reset; Ferrous Haste itself doesn't alter range/AOE/targets. PvP, claims and LOS outcome not certified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/ferrous-haste.md",
+          "reason": "ACCompat.hurt -> true gates postAttackEffects and native damageItem(1), while ItemStack.hurtEnemy call after branch has its own Player/LivingEntity condition. Mining threshold on server triggers damageItem(1), ItemStack.mineBlock, Level.destroyBlock with Shulker flag true vs normal flag false; returned bool gates XP, but Block.playerDestroy occurs before that bool condition in ordinary branch. No extra Ferrous Haste mana, ammunition or independent cooldown."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/ferrous-haste.md",
+          "reason": "ControllerUUID and WeaponStack NBT and held-use state are provider native; gauntlet onUseTick searches magnetic entities within AABB inflated 64D and discards addFreshEntity boolean. MagneticWeaponEntity uses EventHooks.getBreakSpeed and server-side break gate, not proven safe external perk mutation. Black Arcana owns its own magic; RPG Skill Tree may supply progression/Mastery only through verified boundary. NO_MUTATION; hook NOT_VERIFIED, physical QA NOT_TESTED."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/ferrous-haste.md",
+          "reason": "Individual JAR replay checks 13 full method body digests, 1387 JVM instructions, 147 direct branches, five-case getDigSpeed tableswitch, two compiled FERROUS_HASTE literal owners, exact resources/classes with SHA and targeted gate pivots. Synthetic negative tests reject method/resource/publisher drift, switches and unsafe hook/QA promotions. No proof of gameplay DPS, accepted damage/drops, multiplayer world policy, reload or provider universe closure."
+        }
+      }
     }
   },
   "providers": {},
