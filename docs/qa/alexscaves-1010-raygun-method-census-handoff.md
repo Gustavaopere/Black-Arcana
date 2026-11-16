@@ -7,7 +7,7 @@
 - Modlist física do RPG Skill Tree, item 019: `alexscaves-1.0.10-neoforge+1.21.1.jar`.
 - Artefato publisher: **75.279.314 bytes**, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
 - Classe: `com/github/alexmodguy/alexscaves/server/item/RaygunItem.class`, SHA-256 `3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c`, JVM major 65 (Java 21).
-- Fonte primária já certificada para o censo seletivo: [EXACT-RAYGUN-CONTROL-1.0.10.json](../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTROL-1.0.10.json): 26 métodos declarados, **8** digests completos previamente selados, e 18 métodos selecionados para referências. **18 selecionados não são 18 digests integralmente certificados**.
+- Fonte primária já certificada para o censo seletivo: [EXACT-RAYGUN-CONTROL-1.0.10.json](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTROL-1.0.10.json): 26 métodos declarados, **8** digests completos previamente selados, e 18 métodos selecionados para referências. **18 selecionados não são 18 digests integralmente certificados**.
 
 ## Resultado da execução física SHA-exata na PR #1099
 
@@ -24,6 +24,14 @@
 O auditor [alexscaves_1010_raygun_method_census_probe.py](alexscaves_1010_raygun_method_census_probe.py) examina a versão exata usando `javap -c -p -s`, confronta os oito digests prévios, verifica a integridade de todos os destinos de branches diretos e emite o **roster dos 26 métodos** com assinatura JVM, contagem de instruções e branches, offsets de switches e hash SHA-256 do parse. Não exporta implementação compilada, disassembly integral ou código alheio. O método `onUseTick` deve conservar suas 523 instruções previamente registradas.
 
 A [suíte de testes sintéticos](alexscaves_1010_raygun_method_census_probe_test.py) cobre ausência/duplicação de métodos, hashes anteriores alterados, branch inválido e JSON ambíguo. O [workflow](../../.github/workflows/alexscaves-1010-raygun-method-census.yml) valida o JAR exato e arquiva a evidência. **Os hashes dos métodos novos ainda não são selo histórico**: uma execução da CI nesta etapa é descoberta reproduzível, não certificação automática. O relatório precisa passar por revisão causal individual antes de promover Raygun.
+
+## Selo individual do censo JVM — PR #1100
+
+O [manifesto SHA-exato dos 26 métodos](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-ALL-METHODS-1.0.10.json) foi transcrito da saída textual do job `raygun_all_method_census` do JAR publisher de versão **1.0.10**. A auditoria [de selo](alexscaves_1010_raygun_all_method_seal.py) reproduz todos os `parsed_method_sha256`, descritores JVM, contagens e offsets de switch a partir do JAR físico e falha se qualquer entrada divergir. O inventário contém **26 identidades**, **1.111 instruções**, **107 branches diretos**, **8 digests históricos previamente confrontados** e **18 novas impressões digitais agora congeladas**.
+
+O novo artefato é um **selo técnico de identidade de métodos, não certificado causal completo do Raygun**. O JAR/classe tem SHA-1/SHA-256/tamanho idênticos à PR #1099; a reprodução no HEAD final deve obter CI aprovada separadamente. A suíte inclui testes negativos para deriva de método/contagem/digest e promoções inseguras. Sem exportação de bodies ou implementação do provider.
+
+**Boundary:** `claim_scope=METHOD_FINGERPRINTS_NOT_COMPLETE_STATIC_PERK_CONTRACT`; `static_perk_contract=NOT_CERTIFIED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `mutation=NO_MUTATION`. Não reivindicar que hash, CFG normal ou verificação de recurso equivalem a autorização de rede, targeting real, efeitos aceitos, claims/PvP ou hook seguro. Sem promoção do ledger, índices e Stage.
 
 ## Próxima análise antes de certificado estático
 
