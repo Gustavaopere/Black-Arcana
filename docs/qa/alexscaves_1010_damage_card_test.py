@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check exact resources and nine separately sealed static damage contracts."""
+"""Check exact damage resource cards, nine prior static seals and new beam seal."""
 import hashlib
 import json
 import re
@@ -68,6 +68,8 @@ STATIC_CONTRACTS = {
     },
 }
 
+
+NEW_DAMAGE_TYPE_STATIC = frozenset({"tremorzilla_beam"})
 
 FORSAKEN_PRIOR_MANIFEST_SHA256 = {
     'EXACT-FORSAKEN-SONIC-1.0.10.json': '56c82085ba92270a4058fce09b7e8ccd3cfc7fdd72a2e2e92d92395d8e9709de',
@@ -166,7 +168,7 @@ class DamageTypeCards(unittest.TestCase):
                     self.assertIn("- `" + tag + "`", text)
                 for deny in ("NOT_VERIFIED", "NOT_TESTED"):
                     self.assertIn(deny, text)
-                self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if id in STATIC_CONTRACTS else "NOT_CERTIFIED", text)
+                self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if id in STATIC_CONTRACTS or id in NEW_DAMAGE_TYPE_STATIC else "NOT_CERTIFIED", text)
                 self.assertIn("**+0 raízes mágicas novas**", text)
 
     def test_nine_static_certificates_have_sealed_cards_and_runtime_limits(self):
@@ -175,14 +177,57 @@ class DamageTypeCards(unittest.TestCase):
             with self.subTest(id=id):
                 assert_sealed_damage_contract(self, id)
 
-    def test_other_two_damage_types_remain_uncertified(self):
-        ledger = json.loads((ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text())
-        remaining = set(self.manifest["damage_types"]) - set(STATIC_CONTRACTS)
-        self.assertEqual(len(remaining), 2)
-        for id in remaining:
-            with self.subTest(id=id):
-                relative = FAMILY.parent.name + "/damage-types/" + id.replace("_", "-") + ".md"
-                self.assertNotIn(relative, ledger["objects"])
+    def test_tremorzilla_beam_individual_static_seal_and_runtime_boundaries(self):
+        provider = FAMILY.parent
+        path = provider / "EXACT-TREMORZILLA-BEAM-STATIC-1.0.10.json"
+        cert = json.loads(path.read_text(encoding="utf-8"))
+        ledger = json.loads(
+            (ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text()
+        )
+        relative = provider.name + "/damage-types/tremorzilla-beam.md"
+        entry = ledger["objects"][relative]
+        self.assertEqual(cert["claim_scope"], "STATIC_TECHNICAL_CATALOG_ONLY")
+        self.assertEqual(cert["enchantment"], "alexscaves:tremorzilla_beam")
+        self.assertEqual(cert["artifact"]["sha1"],
+                         self.manifest["artifact"]["sha1"])
+        resource = cert["resource"]["data/alexscaves/damage_type/tremorzilla_beam.json"]
+        self.assertEqual(resource["sha256"],
+                         self.manifest["damage_types"]["tremorzilla_beam"]["sha256"])
+        self.assertEqual(len(cert["native_full_method_census"]), 12)
+        self.assertEqual(sum(m["instruction_count"]
+                             for m in cert["native_full_method_census"]), 2808)
+        self.assertEqual(cert["native_damage_factory"]["instructions"], 13)
+        self.assertEqual(cert["damage_helper_opcode_pivots"], 46)
+        self.assertEqual(cert["producer_calls"]["tickBreath"], [552, 578])
+        self.assertEqual(len(cert["producer_calls"]["tick"]), 7)
+        self.assertEqual(cert["producer_calls"]["stompEffect"], [357])
+        self.assertEqual(cert["direct_damage_tags_in_publisher"], [])
+        self.assertEqual(entry["status"], "COMPLETE_PERK_READY")
+        self.assertEqual(entry["claim_scope"], "STATIC_TECHNICAL_CATALOG_ONLY")
+        self.assertEqual(entry["evidence_grade"], "SHA_EXACT_BINARY_BEHAVIOR")
+        self.assertEqual(entry["artifact_sha1"], self.manifest["artifact"]["sha1"])
+        self.assertEqual(entry["mutating_hook"], "NOT_VERIFIED")
+        self.assertEqual(entry["physical_qa"], "NOT_TESTED")
+        self.assertEqual(set(entry["evidence"]),
+                         {"identity","behavior","parameters","targeting",
+                          "costs","integration","validation"})
+        for proof in entry["evidence"].values():
+            self.assertTrue((ROOT / proof["path"]).is_file())
+            self.assertGreaterEqual(len(proof["reason"].strip()), 18)
+        self.assertEqual(cert["safety"]["mutation"], "NO_MUTATION")
+        self.assertEqual(cert["safety"]["world_effect_policy"], "NOT_VERIFIED")
+        self.assertEqual(cert["safety"]["physical_qa"], "NOT_TESTED")
+        self.assertFalse(cert["safety"]["provider_universe_closed"])
+
+    def test_last_damage_type_raygun_remains_uncertified(self):
+        ledger = json.loads(
+            (ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text()
+        )
+        remaining = set(self.manifest["damage_types"]) - set(STATIC_CONTRACTS) - NEW_DAMAGE_TYPE_STATIC
+        self.assertEqual(remaining, {"raygun"})
+        for damage_id in remaining:
+            relative = FAMILY.parent.name + "/damage-types/" + damage_id.replace("_", "-") + ".md"
+            self.assertNotIn(relative, ledger["objects"])
 
     def test_dark_arrow_ambiguity_is_retained(self):
         a = self.manifest["damage_types"]["dark_arrow"]

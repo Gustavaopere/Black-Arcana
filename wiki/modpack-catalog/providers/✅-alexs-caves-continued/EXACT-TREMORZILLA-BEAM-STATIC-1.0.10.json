@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "enchantment": "alexscaves:tremorzilla_beam",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_sha256": {
+    "com/github/alexmodguy/alexscaves/server/entity/living/TremorzillaEntity.class": "e1ac60a8005f9414dde1d25a92a2110df65cef145c3225e9c2557c96672fe8dc",
+    "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class": "389fb88f8d6e1515e3dfe7f401a728bb33629666bd2319ae7e25668f710e4ef6"
+  },
+  "resource": {
+    "data/alexscaves/damage_type/tremorzilla_beam.json": {
+      "sha256": "a059d2c010509db8d56f984d6d403a8901d1442d0ba47eff2f009c6998b58e9a",
+      "json": {
+        "exhaustion": 0.3,
+        "message_id": "tremorzilla_beam",
+        "scaling": "never"
+      }
+    }
+  },
+  "declared_methods": 116,
+  "native_full_method_census": [
+    {
+      "name": "breakBlocksAround",
+      "descriptor": "(Lnet/minecraft/world/phys/Vec3;FZZF)Z",
+      "instruction_count": 166,
+      "method_sha256": "1212f9fdad485fe769e934ef7048ae21cf022edbce480e7b795089b2bbb39371"
+    },
+    {
+      "name": "canEntityBeHurtByBeam",
+      "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/phys/Vec3;)Z",
+      "instruction_count": 27,
+      "method_sha256": "13e05b91afaf21aee584377aab719dfa8b3d18b8096dce18797d259910af854c"
+    },
+    {
+      "name": "createInitialBeamVec",
+      "descriptor": "()Lnet/minecraft/world/phys/Vec3;",
+      "instruction_count": 106,
+      "method_sha256": "6aec2c99a9a6d6e801ac3c5b97749f31e8a88bc34d24294882fe04a851449369"
+    },
+    {
+      "name": "getBeamShootFrom",
+      "descriptor": "(F)Lnet/minecraft/world/phys/Vec3;",
+      "instruction_count": 12,
+      "method_sha256": "29d55ede44466a692114dc59311c5c7e8f6390bbe8fee6e914fb54ad273118f8"
+    },
+    {
+      "name": "getCharge",
+      "descriptor": "()I",
+      "instruction_count": 7,
+      "method_sha256": "9b465425e46bf94d86c1d2536fac1d2161aaccd353997e8510e3c2da0f6c4465"
+    },
+    {
+      "name": "getMaxBeamBreakLength",
+      "descriptor": "()D",
+      "instruction_count": 8,
+      "method_sha256": "130e8f64129e414ac5f9b98889d09a7b70d945f8ab24b97c2c0c3b1d7f4b780b"
+    },
+    {
+      "name": "hurtEntitiesAround",
+      "descriptor": "(Lnet/minecraft/world/phys/Vec3;FFFZZZ)Z",
+      "instruction_count": 169,
+      "method_sha256": "4010320a94f570e9c29818b0935cde665b49f04cac86e55d44d80cf8fe984498"
+    },
+    {
+      "name": "setMaxBeamBreakLength",
+      "descriptor": "(F)V",
+      "instruction_count": 7,
+      "method_sha256": "3d7f1fe47bc38b70008d786d9326b219a72966851c89af396970efbd08063371"
+    },
+    {
+      "name": "stompEffect",
+      "descriptor": "(ZFFFF)V",
+      "instruction_count": 176,
+      "method_sha256": "1d5415a47f86ce1335a9265d14800f934f9415f663e475a9e371ac5c2229aa31"
+    },
+    {
+      "name": "tick",
+      "descriptor": "()V",
+      "instruction_count": 1664,
+      "method_sha256": "5bfa4b6d3e067c7fd67ef8c0562c4f27e17d06e7e86e751710c3de49dc301eca"
+    },
+    {
+      "name": "tickBeamTargeting",
+      "descriptor": "()V",
+      "instruction_count": 160,
+      "method_sha256": "e30e73ce799d7266d51b0a8d218a92d6bf2d18f168bf90b3cd8c921809f5f90f"
+    },
+    {
+      "name": "tickBreath",
+      "descriptor": "()V",
+      "instruction_count": 306,
+      "method_sha256": "22d4de159e1a792b620bd117ffdfca70ef3a42e1395cbb4216ae6e480cd2eeec"
+    }
+  ],
+  "native_damage_factory": {
+    "owner": "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class",
+    "name": "causeTremorzillaBeamDamage",
+    "descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+    "parsed_method_sha256": "4be31969b91f514afc0624e4dbc28af58a360ba3fdd6def9e9ba86fe03d759b6",
+    "instructions": 13,
+    "reference_tokens": [
+      "class com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages",
+      "Field TREMORZILLA_BEAM:Lnet/minecraft/resources/ResourceKey;",
+      "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V"
+    ]
+  },
+  "producer_calls": {
+    "tick": [
+      1455,
+      1537,
+      1558,
+      1579,
+      1599,
+      1619,
+      1863
+    ],
+    "tickBreath": [
+      552,
+      578
+    ],
+    "stompEffect": [
+      357
+    ]
+  },
+  "damage_helper_opcode_pivots": 46,
+  "direct_damage_tags_in_publisher": [],
+  "safety": {
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "gameplay_hit_damage": "NOT_CERTIFIED",
+    "pvp_claims": "NOT_VERIFIED",
+    "world_effect_policy": "NOT_VERIFIED",
+    "effective_datapack_tags": "NOT_VERIFIED"
+  }
+}

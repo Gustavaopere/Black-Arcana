@@ -6780,6 +6780,46 @@
         }
       }
     },
+    "✅-alexs-caves-continued/damage-types/tremorzilla-beam.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "scope_note": "Tremorzilla Beam DamageType only: SHA-exact 1.0.10 full 12 native methods / 2808 JVM instructions, 13-instruction factory, 46 helper pivots and ten callers with only two actual beam producers. 20F requested damage, guarded LOS, knockback and Irradiated; charge, casting cadence, world grief and entity AI provider-native. No hooks, physical gameplay or PvP/claims permission. NO_MUTATION; no new spell/root or provider universe closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/tremorzilla-beam.md",
+          "reason": "Publisher 1.0.10 exact JAR SHA1 6960b299a39a039ac8a5eb9b07be4ad0e3e0a570 and SHA256 36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c. DamageType JSON, factory, entity and class digests physically matched; not inferred from adjacent source."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-BEAM-STATIC-1.0.10.md",
+          "reason": "TremorzillaEntity.hurtEntitiesAround first boolean chooses causeTremorzillaBeamDamage versus mobAttack. Only tickBreath 552 and 578 are beam producers among ten direct calls. 12 full method bodies plus native damage factory locked to JAR SHA."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-BEAM-STATIC-1.0.10.md",
+          "reason": "Resource message_id tremorzilla_beam, scaling never, exhaustion 0.3; two beam producers request 20F damage and endpoint radius 6F. beamTime modulo three gating and conditional 6000-tick Irradiated amplifier two are distinguished from effective outcomes."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-BEAM-STATIC-1.0.10.md",
+          "reason": "Native AABB, optional vertical extension, NO_CREATIVE_OR_SPECTATOR, self/ally/same-type filters, squared-distance check, KaijuMob gate, and beam-only Block.COLLIDER Fluid.NONE raycast requiring MISS. No claim that PvP or claims are permitted."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-BEAM-STATIC-1.0.10.md",
+          "reason": "DamageType has no autonomous spell, level, ammo, mana or cooldown. TremorzillaEntity owns beamTime, charge, SynchedEntityData MAX_BEAM_BREAK_LENGTH, helper states and world damage; exhaustion is damage metadata, not spell resource."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-BEAM-STATIC-1.0.10.md",
+          "reason": "WorldEffectPolicy, ownership, XP/Mastery deduplication, PvP/claims and physical server remain unverified. Do not mutate native targeting, damage, effect, AoE, charge or world grief without safe boundary; NO_MUTATION and provider autonomy are preserved."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TREMORZILLA-BEAM-STATIC-1.0.10.md",
+          "reason": "SHA-exact GitHub Actions reads publisher JAR, verifies 12 complete method hashes totalling 2808 JVM instructions plus 13-instruction factory, 46 causal opcodes and ten consumers. Seven synthetic negative tests and 544-index validator; no real physical gameplay or mutation certification."
+        }
+      }
+    },
     "✅-alexs-caves-continued/enchantments/heavy-slam.md": {
       "status": "COMPLETE_PERK_READY",
       "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",

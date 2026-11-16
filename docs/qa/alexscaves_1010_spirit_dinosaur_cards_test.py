@@ -72,7 +72,7 @@ class SpiritDinosaurContract(unittest.TestCase):
         self.assertEqual(d['physical_qa'],'NOT_TESTED')
         self.assertFalse(d['provider_universe_closed'])
 
-    def test_scope_inventory_matches_certificates_without_provider_closure(self):
+    def test_historical_inventory_preserved_plus_individual_beam_certification(self):
         inventory=json.loads((P/'INTEGRATION-SCOPE-INVENTORY-1.0.10.json').read_text())
         ledger=json.loads((ROOT/'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json').read_text())
         self.assertFalse(inventory['whole_provider_catalog_closed'])
@@ -80,7 +80,16 @@ class SpiritDinosaurContract(unittest.TestCase):
             status=inventory['family_catalog_status'][family]
             certified={key[len(P.name)+1:] for key,value in ledger['objects'].items()
                        if key.startswith(P.name+'/'+directory+'/') and value['status']=='COMPLETE_PERK_READY'}
-            self.assertEqual(set(status['cards']),certified)
-            self.assertEqual(status['documented_static_contracts'],len(certified))
+            historical=set(status['cards'])
+            self.assertTrue(historical <= certified,
+                            'a previous static inventory cannot lose certified cards')
+            self.assertEqual(status['documented_static_contracts'],len(historical))
+            # This is a frozen catalog checkpoint, not the current ledger:
+            # Tremorzilla Beam later earned its own SHA-exact static certificate.
+            new_individual=certified-historical
+            if family == 'damage_types':
+                self.assertEqual(new_individual, {'damage-types/tremorzilla-beam.md'})
+            else:
+                self.assertFalse(new_individual)
 
 if __name__=='__main__':unittest.main()
