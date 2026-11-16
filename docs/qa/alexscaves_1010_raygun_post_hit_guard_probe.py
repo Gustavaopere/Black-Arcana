@@ -39,6 +39,51 @@ def site(row):
         "symbol": row["symbol"][:240],
     }
 
+def prove_immediate_hit_gate(rows):
+    """Exact straight-line local-26 propagation after the native hurt boolean.
+
+    This is a bounded, pinned JVM operand observation, not general dataflow,
+    exceptional-path proof, or a statement about other damage producers.
+    """
+    by_offset = {x["offset"]:x for x in rows}
+    require(len(by_offset) == len(rows), "duplicate JVM offsets in hit gate")
+    pins = {
+        1044: ("ifeq", "1051", ""),
+        1047: ("iconst_1", "", ""),
+        1048: ("goto", "1052", ""),
+        1051: ("iconst_0", "", ""),
+        1052: ("istore", "26", ""),
+        1054: ("iload", "26", ""),
+        1056: ("ifeq", "1157", ""),
+        1059: ("aload", "25", ""),
+        1061: ("instanceof", None, "net/minecraft/world/entity/LivingEntity"),
+        1064: ("ifeq", "1157", ""),
+    }
+    for offset, (op, operand, symbol) in pins.items():
+        require(offset in by_offset, "missing hit-gate JVM offset " + str(offset))
+        row=by_offset[offset]
+        require(row["opcode"] == op, "hit-gate JVM opcode drift @" + str(offset))
+        if operand is not None:
+            require(row["operand"] == operand, "hit-gate operand drift @" + str(offset))
+        if symbol:
+            require(symbol in row["symbol"], "hit-gate class predicate drift @" + str(offset))
+    return {
+        "bounded_proof": "STRAIGHT_LINE_LOCAL_26_AFTER_HURT_BOOLEAN",
+        "hurt_false": {
+            "path": "1044 taken -> 1051 iconst_0 -> 1052 istore 26 -> 1054 iload 26 -> 1056 ifeq taken -> 1157",
+            "reaches_addEffect_in_same_iteration": False,
+            "reason": "JVM conditional branch on local 26 containing literal zero",
+        },
+        "hurt_true": {
+            "path": "1044 fallthrough -> 1047 iconst_1 -> 1048 goto 1052 -> 1052 istore 26 -> 1054 iload 26 -> 1056 ifeq fallthrough -> 1059",
+            "reaches_living_entity_guard": True,
+            "reaches_addEffect_unconditionally": False,
+            "reason": "1059 aload 25; 1061 instanceof LivingEntity; 1064 ifeq 1157",
+        },
+        "further_gate": "1088 ifne 1157 excludes resistant entity types before addEffect 1119",
+        "limits": "INTRAMETHOD_NORMAL_FLOW_NO_EXCEPTIONAL_EDGES_NO_GAMEPLAY_ASSERTION",
+    }
+
 def guard_projection(rows, graph):
     """Project only bounded native guard windows and reachability."""
     positions = {row["offset"]: i for i, row in enumerate(rows)}
@@ -86,6 +131,7 @@ def guard_projection(rows, graph):
         "observed_window": [WINDOW_START, WINDOW_END],
         "window_instruction_count": sum(WINDOW_START <= row["offset"] < WINDOW_END for row in rows),
         "guard_count": len(guard_rows),
+        "immediate_hit_boolean_proof": prove_immediate_hit_gate(rows),
         "guard_observations": guard_rows,
         "invocation_sites_in_window": calls,
     }
