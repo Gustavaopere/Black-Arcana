@@ -19,7 +19,7 @@ mutation=NO_MUTATION
 executable_perk_certification=NOT_CERTIFIED
 ```
 
-**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `███████████████████░ 92.2% (47/51)`.
+**Barra dos contratos técnicos estáticos dos 51 encantamentos:** `██████████████████░░ 92.2% (47/51)`.
 
 **Barra de dossiers individuais existentes, completos ou parciais:** `████████████████████ 100.0% (51/51)`; destes, quatro permanecem parciais, enquanto Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami e Twilight Perfection possuem contratos estáticos individuais certificados.
 
