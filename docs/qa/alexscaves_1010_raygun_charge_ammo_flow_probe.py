@@ -50,17 +50,35 @@ def method_site(method):
     require(not switches, "unexpected JVM switch in charge/ammo subset")
     sites = []
     for row in ins:
-        if row["opcode"].startswith("invoke") or row["opcode"] in SELECTED_OPS:
+        if row["opcode"].startswith(("invoke", "iconst_", "fconst_", "dconst_", "lconst_")) or row["opcode"] in SELECTED_OPS:
             sites.append({
                 "offset": row["offset"], "opcode": row["opcode"],
                 "operand": row["operand"][:100], "symbol": row["symbol"][:450],
             })
     require(len(sites) <= 85, "method symbolic evidence budget exceeded")
+    by_offset = {row["offset"]: i for i, row in enumerate(ins)}
+    branch_context = []
+    for offset, dest in edge_pairs:
+        ix = by_offset[offset]
+        source = ins[ix]
+        next_offset = ins[ix + 1]["offset"] if ix + 1 < len(ins) else None
+        prev = ins[max(0, ix - 3):ix]
+        branch_context.append({
+            "offset": offset, "opcode": source["opcode"],
+            "destination": dest,
+            "fallthrough": next_offset if source["opcode"].startswith("if") else None,
+            "stack_predecessors": [
+                {"offset": p["offset"], "opcode": p["opcode"],
+                 "operand": p["operand"][:100], "symbol": p["symbol"][:200]}
+                for p in prev
+            ],
+        })
     return {
         "method": name_of(method) + " " + method["descriptor"],
         "instructions": len(ins),
         "parsed_method_sha256": digest_method(method),
         "direct_branch_edges": edge_pairs,
+        "branch_context": branch_context,
         "selected_references_and_constants": sites,
     }
 
