@@ -1,0 +1,71 @@
+name: Alex's Caves 1.0.10 Raygun post-hurt guard windows
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-raygun-post-hit-guards.yml'
+      - 'docs/qa/alexscaves_1010_raygun_post_hit_guard_probe.py'
+      - 'docs/qa/alexscaves_1010_raygun_post_hit_guard_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-post-hit-guards-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-POST-HIT-GUARDS-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-raygun-post-hit-guards.yml'
+      - 'docs/qa/alexscaves_1010_raygun_post_hit_guard_probe.py'
+      - 'docs/qa/alexscaves_1010_raygun_post_hit_guard_probe_test.py'
+      - 'docs/qa/alexscaves-1010-raygun-post-hit-guards-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-POST-HIT-GUARDS-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/damage-types/raygun.md'
+permissions:
+  contents: read
+jobs:
+  raygun_post_hit_guards:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Syntax and fail-closed synthetic tests
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_raygun_post_hit_guard_probe.py docs/qa/alexscaves_1010_raygun_post_hit_guard_probe_test.py
+          python3 docs/qa/alexscaves_1010_raygun_post_hit_guard_probe_test.py -v
+      - name: Fetch publisher JAR with exact SHA
+        run: |
+          set -euo pipefail
+          mkdir -p build/raygun-post-hit
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/raygun-post-hit/alexscaves-1.0.10.jar
+          printf '%s  %s\n' '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c' \
+            'build/raygun-post-hit/alexscaves-1.0.10.jar' | sha256sum -c -
+      - name: Replay source JAR fingerprints and post-hurt guard paths
+        run: |
+          set -euo pipefail
+          SNAPSHOT='wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-POST-HIT-GUARDS-1.0.10.json'
+          if [[ -f "$SNAPSHOT" ]]; then
+            python3 docs/qa/alexscaves_1010_raygun_post_hit_guard_probe.py \
+              --jar build/raygun-post-hit/alexscaves-1.0.10.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --snapshot "$SNAPSHOT" --output build/raygun-post-hit/report.json
+          else
+            python3 docs/qa/alexscaves_1010_raygun_post_hit_guard_probe.py \
+              --jar build/raygun-post-hit/alexscaves-1.0.10.jar \
+              --javap "$JAVA_HOME/bin/javap" \
+              --output build/raygun-post-hit/report.json --print-candidate
+          fi
+      - name: Catalog index consistency
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: raygun-1010-post-hurt-guards
+          path: build/raygun-post-hit/report.json
+          if-no-files-found: ignore
+          retention-days: 14

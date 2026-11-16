@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_1010_RAYGUN_POST_HURT_CONDITION_GUARD_WINDOWS_ONLY",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_path": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+  "class_sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c",
+  "method_descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+  "method_parsed_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+  "upstream_hit_outcomes_manifest": "EXACT-RAYGUN-HIT-OUTCOMES-CFG-1.0.10.json",
+  "observations": {
+    "observed_window": [
+      1013,
+      1091
+    ],
+    "window_instruction_count": 32,
+    "guard_count": 4,
+    "immediate_hit_boolean_proof": {
+      "bounded_proof": "STRAIGHT_LINE_LOCAL_26_AFTER_HURT_BOOLEAN",
+      "hurt_false": {
+        "path": "1044 taken -> 1051 iconst_0 -> 1052 istore 26 -> 1054 iload 26 -> 1056 ifeq taken -> 1157",
+        "reaches_addEffect_in_same_iteration": false,
+        "reason": "JVM conditional branch on local 26 containing literal zero"
+      },
+      "hurt_true": {
+        "path": "1044 fallthrough -> 1047 iconst_1 -> 1048 goto 1052 -> 1052 istore 26 -> 1054 iload 26 -> 1056 ifeq fallthrough -> 1059",
+        "reaches_living_entity_guard": true,
+        "reaches_addEffect_unconditionally": false,
+        "reason": "1059 aload 25; 1061 instanceof LivingEntity; 1064 ifeq 1157"
+      },
+      "further_gate": "1088 ifne 1157 excludes resistant entity types before addEffect 1119",
+      "limits": "INTRAMETHOD_NORMAL_FLOW_NO_EXCEPTIONAL_EDGES_NO_GAMEPLAY_ASSERTION"
+    },
+    "guard_observations": [
+      {
+        "offset": 1044,
+        "opcode": "ifeq",
+        "destination": 1051,
+        "fallthrough": 1047,
+        "predecessor_window": [
+          {
+            "offset": 1031,
+            "opcode": "ifeq",
+            "operand": "1038",
+            "symbol": ""
+          },
+          {
+            "offset": 1034,
+            "opcode": "fconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1035,
+            "opcode": "goto",
+            "operand": "1041",
+            "symbol": ""
+          },
+          {
+            "offset": 1038,
+            "opcode": "ldc_w",
+            "operand": "#348",
+            "symbol": "float 1.5f"
+          },
+          {
+            "offset": 1041,
+            "opcode": "invokestatic",
+            "operand": "#509",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+          }
+        ],
+        "following_window": [
+          {
+            "offset": 1047,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1048,
+            "opcode": "goto",
+            "operand": "1052",
+            "symbol": ""
+          }
+        ],
+        "outcomes": [
+          {
+            "outcome": "taken",
+            "successor": 1051,
+            "downstream": {
+              "1088": {
+                "reachable": true,
+                "shortest_normal_edges": 15
+              },
+              "1119": {
+                "reachable": true,
+                "shortest_normal_edges": 26
+              },
+              "1154": {
+                "reachable": true,
+                "shortest_normal_edges": 39
+              }
+            }
+          },
+          {
+            "outcome": "fallthrough",
+            "successor": 1047,
+            "downstream": {
+              "1088": {
+                "reachable": true,
+                "shortest_normal_edges": 16
+              },
+              "1119": {
+                "reachable": true,
+                "shortest_normal_edges": 27
+              },
+              "1154": {
+                "reachable": true,
+                "shortest_normal_edges": 40
+              }
+            }
+          }
+        ]
+      },
+      {
+        "offset": 1056,
+        "opcode": "ifeq",
+        "destination": 1157,
+        "fallthrough": 1059,
+        "predecessor_window": [
+          {
+            "offset": 1047,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1048,
+            "opcode": "goto",
+            "operand": "1052",
+            "symbol": ""
+          },
+          {
+            "offset": 1051,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1052,
+            "opcode": "istore",
+            "operand": "26",
+            "symbol": ""
+          },
+          {
+            "offset": 1054,
+            "opcode": "iload",
+            "operand": "26",
+            "symbol": ""
+          }
+        ],
+        "following_window": [
+          {
+            "offset": 1059,
+            "opcode": "aload",
+            "operand": "25",
+            "symbol": ""
+          },
+          {
+            "offset": 1061,
+            "opcode": "instanceof",
+            "operand": "#170",
+            "symbol": "class net/minecraft/world/entity/LivingEntity"
+          }
+        ],
+        "outcomes": [
+          {
+            "outcome": "taken",
+            "successor": 1157,
+            "downstream": {
+              "1088": {
+                "reachable": false,
+                "shortest_normal_edges": null
+              },
+              "1119": {
+                "reachable": false,
+                "shortest_normal_edges": null
+              },
+              "1154": {
+                "reachable": false,
+                "shortest_normal_edges": null
+              }
+            }
+          },
+          {
+            "outcome": "fallthrough",
+            "successor": 1059,
+            "downstream": {
+              "1088": {
+                "reachable": true,
+                "shortest_normal_edges": 11
+              },
+              "1119": {
+                "reachable": true,
+                "shortest_normal_edges": 22
+              },
+              "1154": {
+                "reachable": true,
+                "shortest_normal_edges": 35
+              }
+            }
+          }
+        ]
+      },
+      {
+        "offset": 1064,
+        "opcode": "ifeq",
+        "destination": 1157,
+        "fallthrough": 1067,
+        "predecessor_window": [
+          {
+            "offset": 1052,
+            "opcode": "istore",
+            "operand": "26",
+            "symbol": ""
+          },
+          {
+            "offset": 1054,
+            "opcode": "iload",
+            "operand": "26",
+            "symbol": ""
+          },
+          {
+            "offset": 1056,
+            "opcode": "ifeq",
+            "operand": "1157",
+            "symbol": ""
+          },
+          {
+            "offset": 1059,
+            "opcode": "aload",
+            "operand": "25",
+            "symbol": ""
+          },
+          {
+            "offset": 1061,
+            "opcode": "instanceof",
+            "operand": "#170",
+            "symbol": "class net/minecraft/world/entity/LivingEntity"
+          }
+        ],
+        "following_window": [
+          {
+            "offset": 1067,
+            "opcode": "aload",
+            "operand": "25",
+            "symbol": ""
+          },
+          {
+            "offset": 1069,
+            "opcode": "checkcast",
+            "operand": "#170",
+            "symbol": "class net/minecraft/world/entity/LivingEntity"
+          }
+        ],
+        "outcomes": [
+          {
+            "outcome": "taken",
+            "successor": 1157,
+            "downstream": {
+              "1088": {
+                "reachable": false,
+                "shortest_normal_edges": null
+              },
+              "1119": {
+                "reachable": false,
+                "shortest_normal_edges": null
+              },
+              "1154": {
+                "reachable": false,
+                "shortest_normal_edges": null
+              }
+            }
+          },
+          {
+            "outcome": "fallthrough",
+            "successor": 1067,
+            "downstream": {
+              "1088": {
+                "reachable": true,
+                "shortest_normal_edges": 8
+              },
+              "1119": {
+                "reachable": true,
+                "shortest_normal_edges": 19
+              },
+              "1154": {
+                "reachable": true,
+                "shortest_normal_edges": 32
+              }
+            }
+          }
+        ]
+      },
+      {
+        "offset": 1088,
+        "opcode": "ifne",
+        "destination": 1157,
+        "fallthrough": 1091,
+        "predecessor_window": [
+          {
+            "offset": 1074,
+            "opcode": "aload",
+            "operand": "27",
+            "symbol": ""
+          },
+          {
+            "offset": 1076,
+            "opcode": "invokevirtual",
+            "operand": "#513",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+          },
+          {
+            "offset": 1079,
+            "opcode": "invokevirtual",
+            "operand": "#517",
+            "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+          },
+          {
+            "offset": 1082,
+            "opcode": "getstatic",
+            "operand": "#523",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACTagRegistry.RESISTS_RADIATION:Lnet/minecraft/tags/TagKey;"
+          },
+          {
+            "offset": 1085,
+            "opcode": "invokevirtual",
+            "operand": "#529",
+            "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+          }
+        ],
+        "following_window": [
+          {
+            "offset": 1091,
+            "opcode": "aload",
+            "operand": "27",
+            "symbol": ""
+          },
+          {
+            "offset": 1093,
+            "opcode": "new",
+            "operand": "#534",
+            "symbol": "class net/minecraft/world/effect/MobEffectInstance"
+          }
+        ],
+        "outcomes": [
+          {
+            "outcome": "taken",
+            "successor": 1157,
+            "downstream": {
+              "1088": {
+                "reachable": false,
+                "shortest_normal_edges": null
+              },
+              "1119": {
+                "reachable": false,
+                "shortest_normal_edges": null
+              },
+              "1154": {
+                "reachable": false,
+                "shortest_normal_edges": null
+              }
+            }
+          },
+          {
+            "outcome": "fallthrough",
+            "successor": 1091,
+            "downstream": {
+              "1088": {
+                "reachable": false,
+                "shortest_normal_edges": null
+              },
+              "1119": {
+                "reachable": true,
+                "shortest_normal_edges": 10
+              },
+              "1154": {
+                "reachable": true,
+                "shortest_normal_edges": 23
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "invocation_sites_in_window": [
+      {
+        "offset": 1022,
+        "opcode": "invokevirtual",
+        "operand": "#499",
+        "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+      },
+      {
+        "offset": 1026,
+        "opcode": "invokestatic",
+        "operand": "#503",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeRaygunDamage:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;"
+      },
+      {
+        "offset": 1041,
+        "opcode": "invokestatic",
+        "operand": "#509",
+        "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.hurt:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+      },
+      {
+        "offset": 1076,
+        "opcode": "invokevirtual",
+        "operand": "#513",
+        "symbol": "Method net/minecraft/world/entity/LivingEntity.getType:()Lnet/minecraft/world/entity/EntityType;"
+      },
+      {
+        "offset": 1079,
+        "opcode": "invokevirtual",
+        "operand": "#517",
+        "symbol": "Method net/minecraft/world/entity/EntityType.builtInRegistryHolder:()Lnet/minecraft/core/Holder$Reference;"
+      },
+      {
+        "offset": 1085,
+        "opcode": "invokevirtual",
+        "operand": "#529",
+        "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+      }
+    ]
+  },
+  "limits": {
+    "predicate_reaching_definitions": "NOT_RECONSTRUCTED",
+    "stack_dataflow": "NOT_RECONSTRUCTED",
+    "exception_edges_and_dynamic_dispatch": "NOT_RECONSTRUCTED",
+    "normal_path_reachability": "POSSIBLE_NOT_EXECUTION_PROOF",
+    "damage_success_versus_status_success": "NOT_VERIFIED_IN_GAME",
+    "server_authority_and_c2s": "NOT_VERIFIED",
+    "pvp_claims_and_effective_datapack": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "static_perk_contract": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false
+  }
+}
