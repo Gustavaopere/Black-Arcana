@@ -39,12 +39,10 @@ def site(row):
         "symbol": row["symbol"][:240],
     }
 
-def analyze(method):
-    graph, branches = normal_graph(method)
-    require(len(method["instructions"]) == 523 and len(branches) == 57,
-            "Raygun onUseTick method topology drift")
-    rows = method["instructions"]
+def guard_projection(rows, graph):
+    """Project only bounded native guard windows and reachability."""
     positions = {row["offset"]: i for i, row in enumerate(rows)}
+    require(len(positions) == len(rows), "duplicate JVM offsets in guard projection")
     require(all(offset in positions for offset in GUARDS + GOALS),
             "missing post-hurt JVM sites")
     guard_rows = []
@@ -92,6 +90,12 @@ def analyze(method):
         "invocation_sites_in_window": calls,
     }
     return summary
+
+def analyze(method):
+    graph, branches = normal_graph(method)
+    require(len(method["instructions"]) == 523 and len(branches) == 57,
+            "Raygun onUseTick method topology drift")
+    return guard_projection(method["instructions"], graph)
 
 def audit(jar: Path, javap_bin: str):
     # Re-run the entire publisher/JAR/class/26-method seal from PR #1102.
