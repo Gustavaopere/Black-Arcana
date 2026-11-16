@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "version": "1.0.10",
+  "enchantment": "alexscaves:ferrous_haste",
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "legacy_seal": "EXACT-FERROUS-HASTE-1.0.10.json",
+  "resources": {
+    "data/alexscaves/enchantment/ferrous_haste.json": "38db83ed098b276532ad99d652f0614a4ec85b23c1dacb1f17d614a9a3d2f819",
+    "data/alexscaves/tags/item/enchantable/galena_gauntlet.json": "5f8a2dfe1222c6631122855a11ab011d916bea83d285d6ecd886a177c058c4cb"
+  },
+  "class_hashes": {
+    "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem.class": "5a74328a7130704a4e2dca9e607bed4dc3a468b8bbcb6d4e238b4d2d962573b0",
+    "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class": "a26794c9eba89c554e812078886beda6129d5298219f685f6d0e2be315fbf071",
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32"
+  },
+  "compiled_ferrous_haste_token_owners": [
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+    "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class"
+  ],
+  "full_method_census": {
+    "prior_sha_locked_methods": [
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem.class",
+        "name": "use",
+        "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+        "instructions": 47,
+        "parsed_method_sha256": "14afa5ada8379f8f6706aa4cc713055fb43d5b154465ef5351f3c4f6e8fb8ac1"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem.class",
+        "name": "onUseTick",
+        "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+        "instructions": 120,
+        "parsed_method_sha256": "fa87f2565ad1df622d3fe09b806541663f1bb787d84caec4e7b5e949e2781523"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem.class",
+        "name": "releaseUsing",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+        "instructions": 25,
+        "parsed_method_sha256": "f955156370b46a5319ec67b325a149136682c5e4b23a564c5c8ed639d0b5bbf0"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "tick",
+        "descriptor": "()V",
+        "instructions": 744,
+        "parsed_method_sha256": "b68e9174310dc32ea5ce7bbe627955d18e92db9e1c087d741a63cfb4ea251f41"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "hurtEntity",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V",
+        "instructions": 141,
+        "parsed_method_sha256": "81ce00054738e5b73fac709f467f51156ff6868c9d0098b7e96cc2b27318c193"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "getDigSpeed",
+        "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)F",
+        "instructions": 80,
+        "parsed_method_sha256": "fc64f50af1df090a8af266346de31ffe25a897616fdcb7ef112c44bd14c05913"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "damageItem",
+        "descriptor": "(I)V",
+        "instructions": 37,
+        "parsed_method_sha256": "1b3f7570f960ea46d85a0531ca474a5c5126b03c047a1d854491213e3feb1bfc"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "directMovementTowards",
+        "descriptor": "(Lnet/minecraft/world/phys/Vec3;F)V",
+        "instructions": 68,
+        "parsed_method_sha256": "9e5d7cf9259a7efa76f9f2eccf794f223dbd9325c52d2fb28b8e92caace34351"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "isOwnerWearingGauntlet",
+        "descriptor": "()Z",
+        "instructions": 26,
+        "parsed_method_sha256": "96200d696cef10e398dd9c890aba331336e85d945fb15a66f4dfccf1caad8406"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "getController",
+        "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+        "instructions": 34,
+        "parsed_method_sha256": "4fffb40a928b5b2ac381dfd60cddfce43551ae3b064f9f81a5f6f48ab76169bd"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "addAdditionalSaveData",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+        "instructions": 23,
+        "parsed_method_sha256": "78b5dd00489f3dc00c5656a96ee11a3a21ea6734b9145eca13620e929ae02567"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "readAdditionalSaveData",
+        "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+        "instructions": 23,
+        "parsed_method_sha256": "bd4cec33193e919616b454add567a63d4411d79fd8edcc7654bba8d339c337e8"
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+        "name": "plopItem",
+        "descriptor": "()V",
+        "instructions": 19,
+        "parsed_method_sha256": "7bfcbfdfde6853227ff8b62e961f9764c81f31cf963b432de6c9e87ebcaaab76"
+      }
+    ],
+    "expected_owner_method_counts": {
+      "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem.class": 17,
+      "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class": 23
+    },
+    "methods_checked": 13,
+    "instructions_checked": 1387,
+    "direct_branches_checked": 147,
+    "fatigue_switch": {
+      "owner": "com/github/alexmodguy/alexscaves/server/entity/item/MagneticWeaponEntity.class",
+      "method": "getDigSpeed",
+      "offset": 77,
+      "cases": [
+        [
+          "0",
+          "108"
+        ],
+        [
+          "1",
+          "116"
+        ],
+        [
+          "2",
+          "124"
+        ],
+        [
+          "3",
+          "132"
+        ],
+        [
+          "default",
+          "132"
+        ]
+      ]
+    },
+    "binary_verify": "17 native GalenaGauntletItem declared methods; 23 native MagneticWeaponEntity declared methods; exact 13 full parsed method digests plus class and JSON SHA; five tableswitch targets confirmed in getDigSpeed"
+  },
+  "enchantment_json": {
+    "description": {
+      "translate": "enchantment.alexscaves.ferrous_haste"
+    },
+    "supported_items": "#alexscaves:enchantable/galena_gauntlet",
+    "weight": 2,
+    "max_level": 1,
+    "min_cost": {
+      "base": 1,
+      "per_level_above_first": 15
+    },
+    "max_cost": {
+      "base": 41,
+      "per_level_above_first": 10
+    },
+    "anvil_cost": 4,
+    "slots": [
+      "mainhand",
+      "offhand"
+    ]
+  },
+  "supported_item_tag": {
+    "values": [
+      "alexscaves:galena_gauntlet"
+    ]
+  },
+  "consumer_contract": {
+    "activation": {
+      "source": "GalenaGauntletItem.use starts active use, onUseTick native weapon entity creation and controller binding",
+      "requires": "MagneticWeaponEntity.tick player-controller branch; LivingEntity.getUseItem().is(GALENA_GAUNTLET); enchantLevel(active_use_stack,FERROUS_HASTE)>0 sets local boolean flag",
+      "binary": "tick @557-646; getUseItem @579/@601; GALENA_GAUNTLET @582; FERROUS_HASTE @608, ACCompat.enchantLevel @611, ifle @614, boolean stored @622",
+      "levels": "JSON only level I; any positive level returns true; no progressive effect for levels above I and no explicit clamp on anomalous enchant data"
+    },
+    "attack": {
+      "selection": "ProjectileUtil.getHitResultOnViewVector with separate Field Extension range; entity hit, playerUseCooldown==0, distanceTo(target)<target.getBbWidth()+1.5F and strikeProgress threshold",
+      "strike": "When strikeProgress<1F, request Math.max(0F,strikeProgress+0.35F); otherwise request hurtEntity(player,target); result is void",
+      "cooldown": "after attempted hurtEntity, haste true -> set playerUseCooldown=3; false -> 5+RandomSource.nextInt(5) in 5..9 inclusive",
+      "offsets": "tick @659, @666-669, @680-683, @720-771, @775-796; playerUseCooldown decremented if >0 at end of same tick @1555-1568",
+      "limits": "3 is stored before end-of-tick decrement; not absolute attack period or DPS; no duplicated proc, no per-level linear attack speed; combat gate and physical TPS remain provider/engine",
+      "damage": "hurtEntity assembles player ATTACK_DAMAGE + item damage + applicable bonus, requests mobAttack via ACCompat.hurt @99. On true postAttackEffects @115 and damageItem(1) @120 plus optional knockback. ItemStack.hurtEnemy @239 and lastHurtByPlayer remain in a later Player/LivingEntity path, not wholly controlled by ACCompat.hurt return. No additional Ferrous Haste damage or damage type.",
+      "attack_effects": "FIRE_ASPECT and KNOCKBACK independent; downstream hit return and Player attribution distinct; user-facing effective damage and Mastery receipts unverified"
+    },
+    "mining": {
+      "selection": "selected BlockPos, previous block change resets destroyBlockProgress; getDestroySpeed obtains block hardness f; getDigSpeed(player,state,pos) returns item speed modified by efficiency, Haste, Mining Fatigue switch, underwater, airborne and NeoForge EventHooks.getBreakSpeed",
+      "increment": "if itemDestroySpeed>1F, increment=(itemDestroySpeed / blockState.getDestroySpeed) / (haste?8F:10F) at tick @1114-1133; accumulate destroyBlockProgress @1135-1143",
+      "ratio": "If both denominators positive and everything else fixed, 10/8=1.25 progress per eligible iteration vs native no-enchant case; not guaranteed 25% less completion time",
+      "render": "Level.destroyBlockProgress displays floor(progress*10F) at @1160-1168; not guaranteed block break",
+      "completion": "when destroyBlockProgress>=1F and server side @1171-1187, native path damageItem(1) @1192, ItemStack.mineBlock @1213, Fortune/Silk Touch and drop logic; Level.destroyBlock @1290 for Shulker, @1329 other; boolean influences XP @1363-1405; ItemStack.mineBlock and Block.playerDestroy may be invoked before independent success is known",
+      "reset": "lastSelectedBlock reset progress when target changes; completion may reset progress at @1408-1410; item/owner return path native",
+      "switch": "getDigSpeed has tableswitch @77 for DIG_SLOWDOWN amplifier 0..3; case 0/1/2/3 -> factors 0.3/0.09/0.0027/0.00081; default -> factor 0.00081; exact targets 108/116/124/132/132",
+      "warning": "No physical proof of breaking protected blocks or effective drops; no guards for hardness<=0 established in local formula; nonfinite/negative values remain unverified"
+    },
+    "targeting": {
+      "separate_field_extension": "FIELD_EXTENSION level read @626-629 adds 5F*level to view-vector query range @659; Ferrous Haste does not directly extend this range",
+      "weapon_control_scan": "GalenaGauntletItem.onUseTick enumerates MagneticWeaponEntity in AABB.inflate(64D,64D,64D) and requires controller matching, then may createEntity and set stack/controller UUID; returned Level.addFreshEntity boolean discarded",
+      "native_limits": "No new Ferrous Haste AOE, projectile, damage type, cast, independent targeting filter or tooltip range; claims/PvP/LOS authority not verified"
+    },
+    "costs_ownership_state": {
+      "enchant_cost": "weight 2, max level I, min cost base1 step15, max cost base41 step10, anvil 4, mainhand/offhand Galena Gauntlet tag",
+      "damage_and_durability": "damageItem on accepted attack @120 and mining-threshold path @1192; ItemStack.hurtEnemy @239 path can run independent of accepted ACCompat.hurt; other native gauntlet release cooldown 5 exists separately",
+      "owner": "MagneticWeaponEntity controller UUID and WeaponStack are persisted in native NBT; ownership, hand swaps, restoration, server permissions, removal and return path partly native and not physically QA tested",
+      "mana": "No Ferrous Haste-owned mana, stamina or new cast; no double charge allowed",
+      "server": "Block destruction gate explicitly server-side; entity attack invoked in native tick control and effective PvP checks belong to provider/engine hooks; not proof of safe external mutation"
+    }
+  },
+  "safety": {
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "complete_physical_cfg_world_effects": "NOT_TESTED",
+    "world_claim_permission": "NOT_VERIFIED",
+    "multiplayer_reconnect": "NOT_TESTED",
+    "mastery_receipts": "NOT_VERIFIED",
+    "perk_integration": "NOT_CERTIFIED"
+  }
+}
