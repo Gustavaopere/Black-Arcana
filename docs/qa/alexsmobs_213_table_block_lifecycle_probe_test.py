@@ -10,7 +10,7 @@ from alexsmobs_213_transmutation_c2s_probe import (
 )
 from alexsmobs_213_table_block_lifecycle_probe import (
     BLOCK, MENU, TILE, INPUT_CONTAINER, INPUT_SLOT,
-    choose, project, sealed_classfiles, verify_lock,
+    choose, project, exact_edge, native_owner_path, sealed_classfiles, verify_lock,
 )
 
 
@@ -107,12 +107,47 @@ class TableBlockProbeTests(unittest.TestCase):
         with self.assertRaises(TransmuteProbeError):
             sealed_classfiles(changed)
 
+
+    def test_broadcast_uses_native_owner_method_not_shared_context_guess(self):
+        m = project(method("amUse", [
+            ins(83, "invokestatic", "#7",
+                "Method com/github/alexthe666/alexsmobs/AlexsMobs.sendMSGToAll:(Ljava/lang/Object;)V"),
+            ins(86, "areturn"),
+        ]))
+        site = exact_edge(m, 83, "invokestatic", "sendMSGToAll:")
+        self.assertEqual(site["offset"], 83)
+
+    def test_explosion_strength_literal_operators_recorded(self):
+        m = project(method("explodeOnDestroy", [
+            ins(0, "fconst_2"),
+            ins(1, "iconst_0"),
+            ins(2, "return"),
+        ]))
+        self.assertEqual([r["opcode"] for r in m["literal_operators"]],
+                         ["fconst_2", "iconst_0"])
+
+    def test_incorrect_owner_opcode_or_offset_fails_closed(self):
+        m = project(method("amUse", [
+            ins(0, "invokevirtual", "#1", "Method Player.openMenu:()V"),
+            ins(3, "return"),
+        ]))
+        with self.assertRaises(TransmuteProbeError):
+            exact_edge(m, 0, "invokestatic", "Player.openMenu:")
+        with self.assertRaises(TransmuteProbeError):
+            exact_edge(m, 19, "invokevirtual", "Player.openMenu:")
+
+    def test_owner_path_missing_required_method_fails_closed(self):
+        by = {BLOCK: {"selected_methods": []}}
+        with self.assertRaises(TransmuteProbeError):
+            native_owner_path(by)
+
     def test_mutation_lock_rejected_and_digest_checked(self):
         report = {
             "artifact": {"sha256": SHA256},
             "classes": [{}, {}, {}, {}, {}],
             "binary_consumer_candidates": [{}],
             "static_signals": {"block_direct_dirty_calls": 0},
+            "exact_owner_path": {"sample": "STATIC"},
             "limitations": {"mutation": "NO_MUTATION"},
         }
         raw = (json.dumps(report, indent=2, ensure_ascii=False)
@@ -123,6 +158,10 @@ class TableBlockProbeTests(unittest.TestCase):
             "publisher_sha256": SHA256,
             "class_count": 5, "candidate_count": 1,
             "static_signals": {"block_direct_dirty_calls": 0},
+            "owner_path_sha256": hashlib.sha256(
+                json.dumps(report["exact_owner_path"], sort_keys=True,
+                           ensure_ascii=False).encode("utf-8")
+            ).hexdigest(),
             "mutation": "NO_MUTATION",
         }
         verify_lock(report, lock)
