@@ -300,7 +300,28 @@ def audit(jar, javap_bin, sealed):
 
 
 def verify_snapshot(report, expected):
-    require(report == expected, "publisher settlement snapshot drift")
+    if "report_sha256" not in expected:
+        require(report == expected, "publisher settlement snapshot drift")
+        return
+    raw = (json.dumps(report, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+    require(expected.get("report_sha256") == hashlib.sha256(raw).hexdigest(),
+            "SHA-locked publisher settlement report drift")
+    require(expected.get("report_bytes") == len(raw),
+            "publisher settlement report length drift")
+    require(expected.get("publisher_sha256") == report["artifact"]["sha256"],
+            "publisher SHA mismatch in settlement lock")
+    require(expected.get("selected_methods") ==
+            sum(len(c["selected_methods"]) for c in report["classes"]),
+            "native method coverage drift")
+    require(expected.get("settlement_offsets") ==
+            report["settlement"]["observed_order"],
+            "settlement callsite order drift")
+    require(expected.get("missing_player_reroll_disposition") ==
+            report["reroll_lifecycle"]["missing_player_branch_bypasses_randomize"],
+            "reroll tick branch disposition drift")
+    require(expected.get("mutation") == "NO_MUTATION" and
+            report["limitations"]["mutation"] == "NO_MUTATION",
+            "mutating lock not allowed")
 
 
 def main():
