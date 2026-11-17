@@ -34,6 +34,14 @@ MAX_REFS_PER_METHOD = 90
 MAX_METHODS_PER_CLASS = 45
 MAX_BOOTSTRAP = 30
 MAX_REPORT_BYTES = 300000
+NETWORK = BASE + "message/AMNeoNetwork.class"
+ADAPTER = BASE + "message/AMNeoNetwork$1.class"
+REGISTRATION = BASE + "message/AMNeoNetwork$Registration.class"
+BRIDGE_NAMES = {
+    NETWORK: {"adapt", "handle", "onRegisterPayloads", "registerMessage", "register"},
+    ADAPTER: {"getSender", "isClientSide", "enqueueWork", "setPacketHandled"},
+    REGISTRATION: {"handle"},
+}
 
 
 def class_candidates(archive):
@@ -96,6 +104,26 @@ def method_projection(method):
     }
 
 
+def bridge_windows(path, methods):
+    """Bounded receiver/adapter/registration operand evidence only."""
+    if path not in BRIDGE_NAMES:
+        return []
+    chosen = []
+    for method in methods:
+        if method_name(method) not in BRIDGE_NAMES[path]:
+            continue
+        rows = method["instructions"]
+        require(len(rows) <= 65, "bridge method exceeds bounded bytecode audit window")
+        chosen.append({
+            "method": method_name(method),
+            "descriptor": method["descriptor"],
+            "body_sha256": fingerprint(method),
+            "instructions": [item(row) for row in rows],
+        })
+    require(len(chosen) <= 10, "unbounded selected concrete bridge methods")
+    return chosen
+
+
 def bootstrap_candidates(verbose):
     """Select only bootstrap handles plausibly related to setup; no linkage claim."""
     tail = verbose.split("BootstrapMethods:", 1)
@@ -136,6 +164,12 @@ def audit(jar, javap_bin):
             "class_sha256": class_sha,
             "direct_amnetcontext_implementation": is_direct_implementer(disassembly),
             "declared_methods": len(methods),
+            "bridge_roster": [
+                {"method": method_name(m), "descriptor": m["descriptor"],
+                 "instruction_count": len(m["instructions"])}
+                for m in methods
+            ] if path in BRIDGE_NAMES else [],
+            "bridge_operator_windows": bridge_windows(path, methods),
             "selected_methods": selected,
         })
     require(any(c["class_path"] == REGISTER_OWNER for c in classes),
