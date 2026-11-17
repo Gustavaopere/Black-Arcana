@@ -5,7 +5,7 @@ import unittest
 
 from alexsmobs_213_carver_portal_lifecycle_probe import (
     CARVER, PORTAL, MAX_METHODS, MAX_REFS_METHOD, PortalProbeError,
-    projection, selected_method, verify_snapshot,
+    projection, selected_method, bounded_operator_window, verify_snapshot,
 )
 
 def ins(offset, opcode, operand="", symbol=""):
@@ -103,6 +103,19 @@ class PortalLifecycleProbeTests(unittest.TestCase):
                    for i in range(MAX_METHODS+1)]
         with self.assertRaisesRegex(PortalProbeError,"unbounded selected"):
             projection(d)
+
+    def test_bounded_operator_window_filters_unrelated_bytecode(self):
+        m=method("tick",[ins(0,"iload_1"),ins(1,"iconst_1"),
+                         ins(2,"isub"),ins(3,"nop"),
+                         ins(4,"invokevirtual","#2","Method getLifespan:()I"),
+                         ins(7,"ifgt","11"),ins(10,"return"),ins(11,"return")])
+        self.assertEqual([r["opcode"] for r in bounded_operator_window(m,0,12)],
+                         ["iload_1","iconst_1","isub","invokevirtual","ifgt"])
+
+    def test_oversize_operator_window_fails_closed(self):
+        m=method("tick",[ins(0,"return")])
+        with self.assertRaisesRegex(PortalProbeError,"unbounded lifecycle"):
+            bounded_operator_window(m,0,200)
 
     def test_snapshot_is_strict_and_non_promotional(self):
         a={"scope":"read-only","static_perk_contract":"NOT_CERTIFIED",
