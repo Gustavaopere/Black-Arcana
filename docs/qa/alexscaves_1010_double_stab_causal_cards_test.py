@@ -86,9 +86,16 @@ class DoubleStabStaticCertificateTests(unittest.TestCase):
             self.assertIn(token,self.card)
 
     def test_individual_counts_derive_from_canonical_ledger(self):
+        import sys
+        sys.path.insert(0, str(ROOT / "scripts/catalog"))
+        import check_perk_ready_indexes as canonical
+        provider_cards = [card for card in P.rglob("*.md")
+                          if canonical.is_card(card)]
+        global_cards = [card for card in canonical.PROVIDERS.rglob("*.md")
+                        if canonical.is_card(card)]
         keys=self.ledger["objects"]
-        all_count=len(keys)
-        mod_count=sum(k.startswith("✅-alexs-caves-continued/") for k in keys)
+        all_count=sum(canonical.certified(card, self.ledger) for card in global_cards)
+        mod_count=sum(canonical.certified(card, self.ledger) for card in provider_cards)
         enchant_count=sum(k.startswith("✅-alexs-caves-continued/enchantments/")
                           for k in keys)
         self.assertGreaterEqual(all_count,208)
@@ -99,9 +106,9 @@ class DoubleStabStaticCertificateTests(unittest.TestCase):
         self.assertIn("| ✅ | "+chr(96)+"alexscaves:double_stab",self.cross)
         self.assertIn("| ✅ | Double Stab |",self.enchants)
         self.assertIn("| ✅ | Double Stab |",self.provider)
-        self.assertIn("Fichas catalogadas (somente fichas detectadas): "+str(mod_count)+"/81",self.provider)
+        self.assertIn("Fichas catalogadas (somente fichas detectadas): "+str(mod_count)+"/"+str(len(provider_cards)),self.provider)
         self.assertIn("Fichas catalogadas (somente fichas detectadas): "+str(enchant_count)+"/51",self.enchants)
-        self.assertIn("Fichas com contrato técnico estático certificado: "+str(all_count)+"/2393",self.global_index)
+        self.assertIn("Fichas com contrato técnico estático certificado: "+str(all_count)+"/"+str(len(global_cards)),self.global_index)
         self.assertIn("Providers com catálogo concluído: 4/164",self.global_index)
         self.assertIn("Mods com escopo integral certificado: 0/164",self.global_index)
 

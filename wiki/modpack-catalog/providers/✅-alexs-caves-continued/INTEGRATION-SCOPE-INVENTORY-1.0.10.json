@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine historical damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. 51 individual enchantment static contracts (Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging, Gamma Ray, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection, X Ray); no publisher enchantment JSON dossier remains partial. This completes only the bounded 51-resource publisher static catalog, not the whole provider/runtime universe. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root. Tremorzilla Beam and Raygun add two separately certified damage-type contracts; the current ledger therefore has eleven certified damage cards (11/11 publisher damage JSONs, 100%) while damage_types.cards and documented_static_contracts preserve the nine-card historical checkpoint. The 81 currently observed provider cards have 81 individual static contracts (100% of that observed scope); the full provider integration universe remains OPEN, with server/item/ACArmorMaterial then server/item/ACArmorTickItem next in the alphabetical uncovered inventory.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine historical damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. 51 individual enchantment static contracts (Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging, Gamma Ray, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection, X Ray); no publisher enchantment JSON dossier remains partial. This completes only the bounded 51-resource publisher static catalog, not the whole provider/runtime universe. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root. Tremorzilla Beam and Raygun add two separately certified damage-type contracts; the current ledger therefore has eleven certified damage cards (11/11 publisher damage JSONs, 100%) while damage_types.cards and documented_static_contracts preserve the nine-card historical checkpoint. The historical Raygun checkpoint had 81/81 observed provider cards. ACArmorMaterial now adds one separately certified integration-support card, bringing the current observed cards to 82/82 individual static contracts (100% of that observed scope); ACArmorTickItem is an empty-marker support disposition only and adds zero cards or independent abilities. The full provider integration universe remains OPEN, with server/item/ACClientExtensionItem next in the alphabetical uncovered inventory. This adds one support candidate and zero semantic magic roots; it does not certify complete armor items, per-player mutation hooks or physical gameplay.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -477,7 +477,63 @@
       ],
       "publisher_json_static_catalog_complete": true,
       "publisher_json_static_catalog_scope": "Exactly 51 data/alexscaves/enchantment/*.json resources in the SHA-exact publisher 1.0.10 artifact and 51 individual static contracts; not a whole-provider/runtime universe closure."
+    },
+    "integration_support": {
+      "documented_static_contracts": 1,
+      "cards": [
+        "systems/armor-material.md"
+      ],
+      "evidence": "EXACT-ARMOR-MATERIAL-1.0.10.md",
+      "manifest": "EXACT-ARMOR-MATERIAL-1.0.10.json",
+      "family_universe_closed": false,
+      "support_exceptions": [
+        {
+          "class": "server/item/ACArmorTickItem",
+          "disposition": "EMPTY_MARKER_SUPPORT_ONLY",
+          "additional_cards": 0,
+          "independent_ability": false,
+          "evidence": "EXACT-ARMOR-MATERIAL-1.0.10.md",
+          "scope_note": "Empty marker with no declared API, dispatcher or calls in the typed 1555-class census; DarknessArmorItem uses ACTickingItem.acInventoryTick and its private acArmorTick, not marker API."
+        }
+      ],
+      "semantic_magic_roots_added": 0,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutation": "NO_MUTATION"
     }
   },
-  "next_alphabetical_uncovered_scope": "server/item/ACArmorMaterial"
+  "next_alphabetical_uncovered_scope": "server/item/ACClientExtensionItem",
+  "integration_support_inventory": {
+    "source_inventory": "remaining_family_inventory.item_outer_classes",
+    "scope": "REVIEWED_ALPHABETICAL_PREFIX_OF_PHYSICAL_ITEM_OUTER_CLASSES",
+    "reviewed_prefix": [
+      {
+        "class": "server/item/ACArmorMaterial",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": "systems/armor-material.md",
+        "evidence": "EXACT-ARMOR-MATERIAL-1.0.10.md",
+        "manifest": "EXACT-ARMOR-MATERIAL-1.0.10.json",
+        "additional_cards": 1,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "Support material class, its two constructors, seven API methods and separate static initializer, six material bindings and five direct repair bindings. Does not certify complete armor-item behavior or a safe per-player hook."
+      },
+      {
+        "class": "server/item/ACArmorTickItem",
+        "disposition": "EMPTY_MARKER_SUPPORT_ONLY",
+        "card": null,
+        "evidence": "EXACT-ARMOR-MATERIAL-1.0.10.md",
+        "manifest": "EXACT-ARMOR-MATERIAL-1.0.10.json",
+        "additional_cards": 0,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "Empty interface, not an independent ability. Typed constant-pool census over all 1555 artifact classes finds only its own class and the implements declaration in DarknessArmorItem; no marker dispatcher or calls. DarknessArmorItem.acInventoryTick reaches private acArmorTick through the distinct ACTickingItem route."
+      }
+    ],
+    "next_alphabetical_uncovered_scope": "server/item/ACClientExtensionItem",
+    "family_universe_closed": false,
+    "remaining_family_inventory_preserved": true,
+    "typed_constant_pool_class_count": 1555,
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION"
+  }
 }

@@ -98,20 +98,27 @@ class ChompingSpiritStaticCardsTests(unittest.TestCase):
         self.assertIn("distint",self.card.lower())
 
     def test_indexes_follow_ledger_without_rewriting(self):
+        import sys
+        sys.path.insert(0, str(ROOT / "scripts/catalog"))
+        import check_perk_ready_indexes as canonical
+        provider_cards = [card for card in PROVIDER.rglob("*.md")
+                          if canonical.is_card(card)]
+        global_cards = [card for card in canonical.PROVIDERS.rglob("*.md")
+                        if canonical.is_card(card)]
         all_objects=self.ledger["objects"]
         enchantments=sum(k.startswith("✅-alexs-caves-continued/enchantments/")
                          for k in all_objects)
-        alex=sum(k.startswith("✅-alexs-caves-continued/")
-                 for k in all_objects)
+        alex=sum(canonical.certified(card, self.ledger) for card in provider_cards)
+        all_certified=sum(canonical.certified(card, self.ledger) for card in global_cards)
         self.assertGreaterEqual(enchantments,37)
         self.assertIn(f"individual_full_enchantment_dossiers={enchantments}/51",
                       self.cross)
         self.assertIn(f"individual_partial_enchantment_dossiers={51-enchantments}/51",
                       self.cross)
         self.assertIn("| ✅ | "+chr(96)+"alexscaves:chomping_spirit",self.cross)
-        self.assertIn(f"Fichas com contrato técnico estático certificado: {len(all_objects)}/",
+        self.assertIn(f"Fichas com contrato técnico estático certificado: {all_certified}/{len(global_cards)}",
                       self.global_index)
-        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {alex}/81",
+        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {alex}/{len(provider_cards)}",
                       self.mod_index)
 
 if __name__=="__main__":

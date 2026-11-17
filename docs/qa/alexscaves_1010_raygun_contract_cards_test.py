@@ -159,7 +159,14 @@ class RaygunContractCards(unittest.TestCase):
         self.assertIn('**Catálogo desta árvore:** ✅', child)
         self.assertIn('11/11', child); self.assertIn('100.0%', child)
         provider_index = (PROVIDER / 'INDEX.md').read_text()
-        self.assertIn('81/81', provider_index); self.assertIn('100.0%', provider_index)
+        import sys
+        sys.path.insert(0, str(ROOT / 'scripts/catalog'))
+        import check_perk_ready_indexes as canonical
+        provider_cards = [p for p in PROVIDER.rglob('*.md') if canonical.is_card(p)]
+        certified_count = sum(PROVIDER.name + '/' + p.relative_to(PROVIDER).as_posix()
+                              in self.ledger['objects'] for p in provider_cards)
+        self.assertIn(f'{certified_count}/{len(provider_cards)}', provider_index)
+        self.assertIn('100.0%', provider_index)
         self.assertIn('**Catálogo desta árvore:** ⚠️', provider_index)
         self.assertNotIn(PROVIDER.name, self.ledger['providers'])
 
