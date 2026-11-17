@@ -101,6 +101,10 @@ def projection(methods):
         })
     return {
         "selected_methods": output,
+        "onUseTick_elapsed_ticks_window":
+            selected_instruction_window(onuse, 0, 55),
+        "acInventoryTick_initial_gates_window":
+            selected_instruction_window(by_name["acInventoryTick"], 0, 60),
         "onUseTick_energy_efficiency_operator_window":
             selected_instruction_window(onuse, 222, 295),
         "onUseTick_activation_operator_window":
