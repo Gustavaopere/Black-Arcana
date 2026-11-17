@@ -270,7 +270,7 @@ def audit(jar, javap_bin):
         }
         require(CONTEXT in names, "missing packet context interface")
         raw_context = archive.read(CONTEXT)
-        require(raw_context[:4] == b"\\xca\\xfe\\xba\\xbe"
+        require(raw_context[:4] == b"\xca\xfe\xba\xbe"
                 and int.from_bytes(raw_context[6:8], "big") == 65,
                 "unexpected packet context classfile version")
         context_sha = hashlib.sha256(raw_context).hexdigest()
