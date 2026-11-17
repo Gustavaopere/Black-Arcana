@@ -6,7 +6,7 @@
 
 As PRs #1109–#1112 documentaram receptor C2S, contexto NeoForge, settlement e reroll diferido, `TransmutationData`, NBT e opções de display. Esta etapa investiga **o bloco dono da mesa e sua relação com o menu/slots/tile**, sem redescobrir as mesmas classes como se fossem novas magias.
 
-Autoridade histórica: `alexsmobs-2.1.13-neoforge+1.21.1.jar` (mod ID `alexsmobs`), SHA-1 `50ddafdf3d12b33331e4eecb4ab514ae451baadd`, SHA-256 `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8`, 27.452.738 bytes, CurseForge `1635121/8856498`. **Não está reconfirmado que a modlist atual possui esse mod/versionamento; o estudo não homologa compatibilidade com o pack atual.**
+Autoridade histórica: `alexsmobs-2.1.13-neoforge+1.21.1.jar` (mod ID `alexsmobs`), SHA-1 `50ddafdf3d12b33331e4eecb4ab514ae451baadd`, SHA-256 `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8`, 27.452.738 bytes, CurseForge `1635121/8856498`. A [modlist do sibling @55d8baa](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/55d8baa166cc3660f529f912d7a735623ab40a32/PROJECT-INSTRUCTIONS/modlist/Mobs/%E2%9C%85-alexs-mobs-continued%20v2.1.13.md) reconfirma o nome e o SHA-1 do JAR 2.1.13 como **versão documentada na modlist do GitHub**. Isso não equivale a abrir o diretório de mods do usuário, carregar o modpack, capturar configs nem aprovar QA física.
 
 ## Fontes e plano reproduzível
 
@@ -78,4 +78,4 @@ Nos métodos inspecionados do `BlockTransmutationTable` e da `TileEntityTransmut
 - Negativos pendentes: menu aberto com block entity nula/alterada, janela e table stale, click com item blacklist, input não stackável, múltiplos jogadores, dois packets em sequência, duplicação de output/XP, replay, fechar menu antes de receber callback, destruir mesa com config ligada/desligada e claims/World Safety.
 - `AMC-T01..T03`, config e datapack do pack, dedicated client/server, dimensão, unloaded chunk e persistência real ainda `NOT_TESTED`.
 
-**Sem promoção:** `static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; 0/3 contratos estáticos integrais certificados no recorte observado de Alex's Mobs; modlist física atual não reconfirmada; Stage 06 e RPG Skill Tree intocados.
+**Sem promoção:** `static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; 0/3 contratos estáticos integrais certificados no recorte observado de Alex's Mobs; modlist atual do sibling registra 2.1.13 (sem QA física); Stage 06 e RPG Skill Tree intocados.
