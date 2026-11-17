@@ -7,7 +7,7 @@ from alexsmobs_213_transmutation_c2s_probe import (
     MENU, MESSAGE, TILE, SHA1, SHA256, SIZE, TransmuteProbeError, fingerprint,
 )
 from alexsmobs_213_transmutation_settlement_probe import (
-    projected_method, settlement_sequence, select_method,
+    projected_method, settlement_sequence, reroll_lifecycle, select_method,
     validate_against_sealed_snapshot, verify_snapshot,
 )
 
@@ -30,6 +30,34 @@ def ordered_native_effects():
         op(149, "invokevirtual", "#4", "Method com/github/alexthe666/alexsmobs/tileentity/TileEntityTransmutationTable.postTransmute:(Lnet/minecraft/world/entity/player/Player;)V"),
         op(152, "return"),
     ])
+
+
+def reroll_methods():
+    return [
+        method("postTransmute", [
+            op(50, "invokevirtual", "#1", "Method TransmutationData.onTransmuteItem:()V"),
+            op(79, "putfield", "#2", "Field totalTransmuteCount:I"),
+            op(114, "invokevirtual", "#3", "Method setRerollPlayerUUID:(Ljava/util/UUID;)V"),
+            op(117, "return"),
+        ]),
+        method("tick", [
+            op(14, "ifnull", "87"),
+            op(25, "invokevirtual", "#4", "Method net/minecraft/world/level/Level.getPlayerByUUID:(Ljava/util/UUID;)Lnet/minecraft/world/entity/player/Player;"),
+            op(30, "ifnull", "82"),
+            op(79, "invokevirtual", "#5", "Method randomizeResults:(Lnet/minecraft/world/entity/player/Player;)V"),
+            op(82, "aload_0"),
+            op(84, "putfield", "#6", "Field rerollPlayerUUID:Ljava/util/UUID;"),
+            op(87, "return"),
+        ]),
+        method("loadAdditional", [op(0, "return")]),
+        method("saveAdditional", [op(0, "return")]),
+        method("randomizeResults", [
+            op(3, "invokevirtual", "#7", "Method rollPossiblity:(I)V"),
+            op(9, "invokevirtual", "#7", "Method rollPossiblity:(I)V"),
+            op(15, "invokevirtual", "#7", "Method rollPossiblity:(I)V"),
+            op(18, "return"),
+        ]),
+    ]
 
 
 class SettlementProbeTests(unittest.TestCase):
@@ -134,6 +162,38 @@ class SettlementProbeTests(unittest.TestCase):
         corrupted[MENU][0]["instructions"][0]["opcode"] = "aconst_null"
         with self.assertRaises(TransmuteProbeError):
             validate_against_sealed_snapshot(corrupted, snapshot)
+
+    def test_deferred_reroll_branch_remains_fail_closed(self):
+        observed = reroll_lifecycle(reroll_methods())
+        self.assertTrue(observed["missing_player_branch_bypasses_randomize"])
+        self.assertEqual(
+            observed["anchors"]["tick_missing_player_skips_reroll"]["operand"], "82",
+        )
+        self.assertFalse(observed["serialization"][
+            "saveAdditional_directly_references_reroll_uuid"
+        ])
+
+    def test_new_direct_nbt_persistence_requires_audit_revision(self):
+        altered = reroll_methods()
+        altered[3]["instructions"].append(
+            op(2, "getfield", "#8", "Field rerollPlayerUUID:Ljava/util/UUID;")
+        )
+        with self.assertRaises(TransmuteProbeError):
+            reroll_lifecycle(altered)
+
+    def test_missing_player_branch_drift_requires_audit_revision(self):
+        altered = reroll_methods()
+        altered[1]["instructions"][2]["operand"] = "79"
+        with self.assertRaises(TransmuteProbeError):
+            reroll_lifecycle(altered)
+
+    def test_immediate_reroll_changes_deferred_contract(self):
+        altered = reroll_methods()
+        altered[0]["instructions"].insert(
+            1, op(53, "invokevirtual", "#9", "Method randomizeResults:()V")
+        )
+        with self.assertRaises(TransmuteProbeError):
+            reroll_lifecycle(altered)
 
     def test_new_snapshot_must_match_exactly(self):
         before = {"scope": "read-only", "mutation": "NO_MUTATION"}
