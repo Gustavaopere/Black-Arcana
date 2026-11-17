@@ -5,7 +5,7 @@ import unittest
 
 from alexsmobs_213_transmutation_c2s_probe import (
     MESSAGE, MENU, TILE, MAX_REFS_PER, TransmuteProbeError,
-    projection, project_method, verify_snapshot,
+    projection, project_method, parse_class_initializer, verify_snapshot,
 )
 
 
@@ -136,6 +136,23 @@ class TransmutationC2STests(unittest.TestCase):
         del d[MESSAGE]
         with self.assertRaisesRegex(TransmuteProbeError,"missing transmutation class"):
             projection(d)
+
+    def test_class_initializer_parser_preserves_bytecode_registration(self):
+        body=("Compiled from \"Registration.java\"\n"
+              "public class Example {\n"
+              "  static {};\n"
+              "    descriptor: ()V\n"
+              "    Code:\n"
+              "       0: ldc_w #10 // class MessageTransmuteFromMenu\n"
+              "       3: return\n"
+              "}\n")
+        m=parse_class_initializer(body)
+        self.assertIsNotNone(m)
+        self.assertEqual(len(m["instructions"]),2)
+        self.assertEqual(m["instructions"][0]["opcode"],"ldc_w")
+
+    def test_class_initializer_parser_returns_none_without_static_code(self):
+        self.assertIsNone(parse_class_initializer("public class A {\n}\n"))
 
     def test_snapshot_rejects_changed_authorization(self):
         a={"limits":{"mutation":"NO_MUTATION","sender":"NOT_VERIFIED"}}
