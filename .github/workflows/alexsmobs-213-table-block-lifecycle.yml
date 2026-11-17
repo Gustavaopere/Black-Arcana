@@ -9,6 +9,7 @@ on:
       - 'docs/qa/alexsmobs-213-table-block-lifecycle-handoff.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-TABLE-BLOCK-LIFECYCLE-2.1.13.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/actions/item-transmutation.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-ARTIFACT-PERK-QA-GATES-2.1.13.md'
   push:
     branches: [main]
     paths:
@@ -18,6 +19,7 @@ on:
       - 'docs/qa/alexsmobs-213-table-block-lifecycle-handoff.md'
       - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-TABLE-BLOCK-LIFECYCLE-2.1.13.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/actions/item-transmutation.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-ARTIFACT-PERK-QA-GATES-2.1.13.md'
 permissions:
   contents: read
 jobs:
