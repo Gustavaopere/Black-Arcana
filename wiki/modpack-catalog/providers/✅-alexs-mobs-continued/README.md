@@ -1,10 +1,10 @@
 # Alex's Mobs Continued — 2.1.13
 
-Status: `✅ CATALOGED / EXACT PHYSICAL=PUBLISHER ARTIFACT / 26 ITEM + 11 BLOCK ACTIVATION CLASSES DISPOSITIONED / 3 SUPERNATURAL ROOTS / 1 COUNTED_EXACT + 2 CONDITIONAL / RUNTIME QA SEPARATE`
+Status: `⚠️ HISTORICAL PUBLISHER SCOPE DOCUMENTED / CURRENT PHYSICAL MODLIST PRESENCE NOT RECONFIRMED / 3 SUPERNATURAL ROOTS IN OBSERVED ARTIFACT / 0 OF 3 STATIC CONTRACTS CERTIFIED / NO_MUTATION`
 
-## Current physical identity
+## Identidade física historicamente conferida
 
-Current sibling physical authority:
+Publisher 2.1.13 previously matched to a sibling physical modlist (not reverified against current sibling `main`):
 
 - physical row: **#21**;
 - JAR: `alexsmobs-2.1.13-neoforge+1.21.1.jar`;
@@ -15,6 +15,12 @@ Current sibling physical authority:
 - required dependency in the pack: CodxLib 1.6.0+.
 
 Alex's Mobs Continued is cross-domain for the magic catalog: the sibling classifies it as a mobs/exploration provider, but the exact installed artifact exposes one deliberate transmutation action, one Void Worm summoning action and one dimensional-portal action.
+
+## Provência atual e contrato estático (17/11/2026)
+
+A árvore `Gustavaopere/neoforge-rpg-skilltree/main` consultada nesta tranche **não possui uma entrada nominal de Alex's Mobs na modlist**. Os hashes e o JAR 2.1.13 documentados abaixo continuam evidência válida do *publisher historicamente auditado*, mas não provam presença nem versão no pack contemporâneo. Esta ressalva deve acompanhar quaisquer afirmações de compatibilidade ou integração.
+
+O índice individual [INDEX.md](INDEX.md) permanece em **0/3 contratos técnicos estáticos certificados** no recorte semântico observado; o universo integral do mod e as configurações físicas atuais não estão homologados. A auditoria adicional [TransmutationData/NBT/display](../../../../docs/qa/alexsmobs-213-transmutation-data-handoff.md) certifica somente referências estáticas e seus limites, **não** valida perks, hooks ou QA física. `NO_MUTATION` até prova de boundary real.
 
 ## Exact publisher-artifact closure
 
