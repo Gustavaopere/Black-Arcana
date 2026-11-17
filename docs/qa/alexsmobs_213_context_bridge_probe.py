@@ -37,10 +37,13 @@ MAX_REPORT_BYTES = 300000
 NETWORK = BASE + "message/AMNeoNetwork.class"
 ADAPTER = BASE + "message/AMNeoNetwork$1.class"
 REGISTRATION = BASE + "message/AMNeoNetwork$Registration.class"
+SEND = BASE + "message/AMNeoSend.class"
 BRIDGE_NAMES = {
-    NETWORK: {"adapt", "handle", "onRegisterPayloads", "registerMessage", "register"},
+    NETWORK: {"adapt", "handle", "onRegisterPayloads", "registerMessage", "register",
+              "decodePayload", "encodePayload", "wrap", "sendToServer"},
     ADAPTER: {"getSender", "isClientSide", "enqueueWork", "setPacketHandled"},
     REGISTRATION: {"handle"},
+    SEND: {"registerPlay"},
 }
 
 
@@ -49,12 +52,12 @@ def class_candidates(archive):
     require(len(names) == len(set(names)), "duplicate JAR members")
     members = sorted(n for n in names if n.startswith(BASE) and n.endswith(".class"))
     require(1100 <= len(members) <= 1700, "unexpected physical provider class population")
-    require(all(p in names for p in (CONTEXT, HANDLER, MESSAGE, MENU, REGISTER_OWNER)),
+    require(all(p in names for p in (CONTEXT, HANDLER, MESSAGE, MENU, REGISTER_OWNER, SEND)),
             "required native context/handler/registration classes missing")
     found = {}
     for path in members:
         data = archive.read(path)
-        if b"AMNetContext" not in data and path != REGISTER_OWNER:
+        if b"AMNetContext" not in data and path not in (REGISTER_OWNER, SEND):
             continue
         require(data[:4] == b"\xca\xfe\xba\xbe" and
                 int.from_bytes(data[6:8], "big") == 65,
