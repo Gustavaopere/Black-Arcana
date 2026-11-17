@@ -1,0 +1,2679 @@
+{
+  "anvil_delegate": {
+    "body_sha256": "74a7160262a0260c9b2ce77df27ecbc8765bf94c32e124a2da01feee14718376",
+    "class_sha256": {
+      "com/github/alexmodguy/alexscaves/server/event/CommonEvents.class": "d132caad67ecab68844091ee396d37fecc4860440d338dcd82384f1555f8ad43",
+      "com/github/alexmodguy/alexscaves/server/item/AlwaysCombinableOnAnvil.class": "d6d9ba639692a4e2964eca9163842f2fdfbfc98584b2d1b07155a4c780edf13c"
+    },
+    "descriptor": "(Lnet/neoforged/neoforge/event/AnvilUpdateEvent;)V",
+    "facts": "Marker plus same item identity and both enchantment sets nonempty gates a left-stack copy, enchantment merge capped at max level, event cost and output writes. Compatibility local5 is initialized true once before the outer loop; an incompatible pair sets it false and it is not reset for later enchantments. This method has no setCharge/setUseTime/setDamageValue/shrink call; no charge refill or uranium durability repair is inferred.",
+    "instructions": 147,
+    "limits": {
+      "actual_event_execution": "NOT_TESTED",
+      "complete_anvil_cfg": "NOT_RECONSTRUCTED"
+    },
+    "marker_declared_methods": 0,
+    "name": "onUpdateAnvil",
+    "owner": "com/github/alexmodguy/alexscaves/server/event/CommonEvents.class",
+    "pivots": [
+      {
+        "offset": 7,
+        "opcode": "instanceof",
+        "operand": "#1275",
+        "symbol": "class com/github/alexmodguy/alexscaves/server/item/AlwaysCombinableOnAnvil"
+      },
+      {
+        "offset": 10,
+        "opcode": "ifeq",
+        "operand": "395",
+        "symbol": ""
+      },
+      {
+        "offset": 27,
+        "opcode": "if_acmpne",
+        "operand": "395",
+        "symbol": ""
+      },
+      {
+        "offset": 34,
+        "opcode": "invokestatic",
+        "operand": "#1280",
+        "symbol": "Method net/minecraft/world/item/enchantment/EnchantmentHelper.getEnchantmentsForCrafting:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/enchantment/ItemEnchantments;"
+      },
+      {
+        "offset": 40,
+        "opcode": "ifne",
+        "operand": "395",
+        "symbol": ""
+      },
+      {
+        "offset": 47,
+        "opcode": "invokestatic",
+        "operand": "#1280",
+        "symbol": "Method net/minecraft/world/item/enchantment/EnchantmentHelper.getEnchantmentsForCrafting:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/enchantment/ItemEnchantments;"
+      },
+      {
+        "offset": 53,
+        "opcode": "ifne",
+        "operand": "395",
+        "symbol": ""
+      },
+      {
+        "offset": 60,
+        "opcode": "invokevirtual",
+        "operand": "#1289",
+        "symbol": "Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;"
+      },
+      {
+        "offset": 85,
+        "opcode": "iconst_1",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 86,
+        "opcode": "istore",
+        "operand": "5",
+        "symbol": ""
+      },
+      {
+        "offset": 163,
+        "opcode": "if_icmpne",
+        "operand": "173",
+        "symbol": ""
+      },
+      {
+        "offset": 169,
+        "opcode": "iadd",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 177,
+        "opcode": "invokestatic",
+        "operand": "#1307",
+        "symbol": "Method java/lang/Math.max:(II)I"
+      },
+      {
+        "offset": 231,
+        "opcode": "invokestatic",
+        "operand": "#1313",
+        "symbol": "Method net/minecraft/world/item/enchantment/Enchantment.areCompatible:(Lnet/minecraft/core/Holder;Lnet/minecraft/core/Holder;)Z"
+      },
+      {
+        "offset": 237,
+        "opcode": "iconst_0",
+        "operand": "",
+        "symbol": ""
+      },
+      {
+        "offset": 238,
+        "opcode": "istore",
+        "operand": "5",
+        "symbol": ""
+      },
+      {
+        "offset": 248,
+        "opcode": "ifeq",
+        "operand": "372",
+        "symbol": ""
+      },
+      {
+        "offset": 255,
+        "opcode": "invokevirtual",
+        "operand": "#1317",
+        "symbol": "Method net/minecraft/world/item/enchantment/Enchantment.getMaxLevel:()I"
+      },
+      {
+        "offset": 258,
+        "opcode": "if_icmple",
+        "operand": "268",
+        "symbol": ""
+      },
+      {
+        "offset": 273,
+        "opcode": "invokevirtual",
+        "operand": "#1320",
+        "symbol": "Method net/minecraft/world/item/enchantment/ItemEnchantments$Mutable.set:(Lnet/minecraft/core/Holder;I)V"
+      },
+      {
+        "offset": 284,
+        "opcode": "tableswitch",
+        "operand": "{",
+        "symbol": "1 to 10"
+      },
+      {
+        "offset": 379,
+        "opcode": "invokevirtual",
+        "operand": "#1327",
+        "symbol": "Method net/neoforged/neoforge/event/AnvilUpdateEvent.setCost:(J)V"
+      },
+      {
+        "offset": 387,
+        "opcode": "invokestatic",
+        "operand": "#1335",
+        "symbol": "Method net/minecraft/world/item/enchantment/EnchantmentHelper.setEnchantments:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/enchantment/ItemEnchantments;)V"
+      },
+      {
+        "offset": 392,
+        "opcode": "invokevirtual",
+        "operand": "#1339",
+        "symbol": "Method net/neoforged/neoforge/event/AnvilUpdateEvent.setOutput:(Lnet/minecraft/world/item/ItemStack;)V"
+      }
+    ],
+    "scope": "SELECTED_NATIVE_ANVIL_COMBINATION_CONSUMER_ONLY"
+  },
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "census": {
+    "declared_methods": 26,
+    "direct_branch_total": 107,
+    "instruction_total": 1111
+  },
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "class_path": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+  "class_sha256": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c",
+  "composed_evidence": {
+    "composed_energy_report_sha256": "0bb9e77b51908adaf6b679f483c484d5b4da5169cd4cb440e0c7a31b9c6dcfb3",
+    "composed_gamma_report_sha256": "cf36a14f33464b6bd75f476b03dc654f11b9fb0f9676ec6337cc442c7c1e2b7c",
+    "composed_xray_report_sha256": "158f03ac7f0369f0a5d90113493ff41314e3d55ea0388a903bd47caf3355aaff",
+    "historical_probe_scopes": {
+      "EXACT-RAYGUN-CHARGE-AMMO-FLOW-1.0.10.json": "SHA_EXACT_1010_RAYGUN_CHARGE_AMMO_USE_SELECTED_CFG_DISCOVERY_ONLY",
+      "EXACT-RAYGUN-CHARGE-COST-1.0.10.json": "SHA_EXACT_1010_RAYGUN_USE_TICK_CHARGE_CONSUMER_DISCOVERY_ONLY",
+      "EXACT-RAYGUN-HIT-OUTCOMES-CFG-1.0.10.json": "SHA_EXACT_1010_RAYGUN_HIT_OUTCOMES_BOUNDED_NORMAL_CFG_ONLY",
+      "EXACT-RAYGUN-POST-HIT-GUARDS-1.0.10.json": "SHA_EXACT_1010_RAYGUN_POST_HURT_CONDITION_GUARD_WINDOWS_ONLY",
+      "EXACT-RAYGUN-RECEIVER-1.0.10.json": "SHA_EXACT_1010_RAYGUN_C2S_RECEIVER_JVM_DISPATCH_ONLY",
+      "EXACT-RAYGUN-RECEIVER-CFG-1.0.10.json": "SHA_EXACT_1010_RAYGUN_RECEIVER_NORMAL_CFG_AND_PACKET_FIELDS_ONLY"
+    },
+    "prior_seal_sha256": {
+      "EXACT-GAMMA-RAY-CAUSAL-1.0.10.json": "cf36a14f33464b6bd75f476b03dc654f11b9fb0f9676ec6337cc442c7c1e2b7c",
+      "EXACT-RAYGUN-ALL-METHODS-1.0.10.json": "324cc3b3c31806516dd77a7c5876de12b471d9d82cb4cf1e6bd83705729a9c82",
+      "EXACT-RAYGUN-CHARGE-AMMO-FLOW-1.0.10.json": "19ec9ad9f9c5d6a05526dcfdfdbf4ac49e377b25e9450b40546946b39175e3fe",
+      "EXACT-RAYGUN-CHARGE-COST-1.0.10.json": "6547f72877aa6a59102ed1bd17c01eafe61c63dd0f92532ea0536db6fb1e1989",
+      "EXACT-RAYGUN-HIT-OUTCOMES-CFG-1.0.10.json": "48bcbc54ae95b500670de056c340d22f5a0e3b40e5c3e23cbbd514e890a3c1c0",
+      "EXACT-RAYGUN-POST-HIT-GUARDS-1.0.10.json": "2deb54234a8832e337ce3b0e1350ded242f3e3fbe675160bcd81018054636b4c",
+      "EXACT-RAYGUN-RECEIVER-1.0.10.json": "fce345cdfcddf73435f3224296a7cb39cfed7b9f595bade34805659f40b110ae",
+      "EXACT-RAYGUN-RECEIVER-CFG-1.0.10.json": "819f9d27b56da6364622dc478984e8166b419f3ed173a2406cff92007287155d",
+      "EXACT-RAYGUN-RECEIVER-IDENTITY-1.0.10.json": "cac61bf80f18ef05290841820293ac976d7358d603acf9ee4a2cf070f82f64b4",
+      "EXACT-XRAY-CAUSAL-1.0.10.json": "158f03ac7f0369f0a5d90113493ff41314e3d55ea0388a903bd47caf3355aaff"
+    },
+    "replayed_report_sha256": {
+      "EXACT-RAYGUN-CHARGE-AMMO-FLOW-1.0.10.json": "d24f90e95cf0a3da4f938520dd67a22d1e1ca6e4f11f52b7751f3db54ad5630a",
+      "EXACT-RAYGUN-CHARGE-COST-1.0.10.json": "f9190992dec94d88a353441ad373b42366792937328e71911876bfdfd528456d",
+      "EXACT-RAYGUN-HIT-OUTCOMES-CFG-1.0.10.json": "c26462a3afa6d38b00f85c08cf2dbeabf66dfb377d24203587776151ac17affa",
+      "EXACT-RAYGUN-POST-HIT-GUARDS-1.0.10.json": "3207caa5a1fa89eb65153b73a8315eed525e388b85c95d7a3cc4b754ff31a110",
+      "EXACT-RAYGUN-RECEIVER-1.0.10.json": "a9620e9646ccd8eee1a6c3453f248f135dd1dc3cb01d552f550cf0d919bb763c",
+      "EXACT-RAYGUN-RECEIVER-CFG-1.0.10.json": "a51865771a14767cd3494d8d08b672e8de994c89e6bc7a8f5b85665a87f145c2"
+    },
+    "scope_rule": "Historical discovery scopes remain unchanged; consolidated bounded semantic interpretation is additional evidence, not retrospective runtime promotion."
+  },
+  "damage_type": "alexscaves:raygun",
+  "direct_damage_type_tags": {
+    "count": 3,
+    "json": {
+      "data/minecraft/tags/damage_type/bypasses_cooldown.json": {
+        "replace": false,
+        "values": [
+          "alexscaves:nuke",
+          "alexscaves:raygun",
+          "alexscaves:desolate_dagger",
+          "alexscaves:dark_arrow",
+          "alexscaves:spirit_dinosaur"
+        ]
+      },
+      "data/minecraft/tags/damage_type/is_explosion.json": {
+        "replace": false,
+        "values": [
+          "alexscaves:raygun",
+          "alexscaves:nuke"
+        ]
+      },
+      "data/minecraft/tags/damage_type/is_projectile.json": {
+        "replace": false,
+        "values": [
+          "alexscaves:raygun",
+          "alexscaves:dark_arrow"
+        ]
+      }
+    },
+    "limits": "Effective datapack tags and inherited/nested vanilla tag resolution NOT_VERIFIED.",
+    "resource_sha256": {
+      "data/minecraft/tags/damage_type/bypasses_cooldown.json": "0bc51535f4e629ac4f0654411d218781a2474a4560728c6f107bd233ed021990",
+      "data/minecraft/tags/damage_type/is_explosion.json": "15bd614968d8b1876e9759243cc20f09e9cbda75bfa288e221fdf45a1c5c20f5",
+      "data/minecraft/tags/damage_type/is_projectile.json": "bd2df4b9538f61ab6cd1c4405397983ae4108c8fed073c7ffc726845f7d82e9e"
+    },
+    "scope": "EXACT_PUBLISHER_DIRECT_MEMBERSHIPS_ONLY"
+  },
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "method_dispositions": [
+    {
+      "direct_branches": 0,
+      "disposition": "ITEM_LIFECYCLE",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Constructs Item.Properties.stacksTo(1); no durability property is requested by this constructor.",
+      "instructions": 8,
+      "method": "RaygunItem ()V",
+      "parsed_method_sha256": "7db047e29e2b847d8a240b68f00860b232ff872cadbaa1f55e3b61f1560d7db8",
+      "pivots": [
+        {
+          "offset": 8,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 9,
+          "opcode": "invokevirtual",
+          "operand": "#7",
+          "symbol": "Method net/minecraft/world/item/Item$Properties.stacksTo:(I)Lnet/minecraft/world/item/Item$Properties;"
+        },
+        {
+          "offset": 12,
+          "opcode": "invokespecial",
+          "operand": "#11",
+          "symbol": "Method net/minecraft/world/item/Item.\"<init>\":(Lnet/minecraft/world/item/Item$Properties;)V"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 0,
+      "disposition": "CLIENT_DELEGATE",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Passes PROXY.getISTERProperties() as IClientItemExtensions to Consumer.accept; downstream rendering remains the bounded Gamma visual delegate.",
+      "instructions": 6,
+      "method": "initializeClient (Ljava/util/function/Consumer;)V",
+      "parsed_method_sha256": "9fd7a87f1a94d6048983ac699c41f3c257b914b2097a6820b2cdf10e6e8d0cac",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "getstatic",
+          "operand": "#16",
+          "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+        },
+        {
+          "offset": 4,
+          "opcode": "invokevirtual",
+          "operand": "#22",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+        },
+        {
+          "offset": 10,
+          "opcode": "invokeinterface",
+          "operand": "#30,  2",
+          "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 0,
+      "disposition": "ENCHANTING_PARAMETER",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Returns 1.",
+      "instructions": 2,
+      "method": "getEnchantmentValue ()I",
+      "parsed_method_sha256": "798e4edaf36fade21f22743e4675e918297e30c52b2df68b1dd4d56d821664ca",
+      "pivots": [
+        {
+          "offset": 0,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 1,
+          "opcode": "ireturn",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 2,
+      "disposition": "ENCHANTING_PREDICATE",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Returns stack.getCount()==1.",
+      "instructions": 8,
+      "method": "isEnchantable (Lnet/minecraft/world/item/ItemStack;)Z",
+      "parsed_method_sha256": "3da27aa2c9511978adabb8e4412a86212b59cf4219fd291b860652ae3873efed",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokevirtual",
+          "operand": "#36",
+          "symbol": "Method net/minecraft/world/item/ItemStack.getCount:()I"
+        },
+        {
+          "offset": 4,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 5,
+          "opcode": "if_icmpne",
+          "operand": "12",
+          "symbol": ""
+        },
+        {
+          "offset": 8,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 12,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 2,
+      "disposition": "CHARGE_PREDICATE",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Returns getCharge(stack)<1000; ChargeUsed is expenditure, not remaining charge.",
+      "instructions": 8,
+      "method": "hasCharge (Lnet/minecraft/world/item/ItemStack;)Z",
+      "parsed_method_sha256": "0b89217b97ca4f3d1c155c01b4170d1f0cb9141e4ee854ccf0c72892cd3b1db7",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "operand": "#42",
+          "symbol": "Method getCharge:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 4,
+          "opcode": "sipush",
+          "operand": "1000",
+          "symbol": ""
+        },
+        {
+          "offset": 7,
+          "opcode": "if_icmpge",
+          "operand": "14",
+          "symbol": ""
+        },
+        {
+          "offset": 10,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 14,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 4,
+      "disposition": "ACTIVATION_AND_AMMO",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Loaded use starts using the hand, requests RAYGUN_START and useConsume; exhausted use finds ammo, shrinks one nonempty ammo stack, sets ChargeUsed=0 when ammo or Creative, requests reload/empty sound, then returns useFail even after reload. No immediate start on the reload branch.",
+      "instructions": 78,
+      "method": "use (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+      "parsed_method_sha256": "65629e7c194dc7524f3541722f3000a3cf4dab67941beaccd48059dbdfeb5e92",
+      "pivots": [
+        {
+          "offset": 9,
+          "opcode": "invokestatic",
+          "operand": "#54",
+          "symbol": "Method hasCharge:(Lnet/minecraft/world/item/ItemStack;)Z"
+        },
+        {
+          "offset": 12,
+          "opcode": "ifeq",
+          "operand": "41",
+          "symbol": ""
+        },
+        {
+          "offset": 17,
+          "opcode": "invokevirtual",
+          "operand": "#58",
+          "symbol": "Method net/minecraft/world/entity/player/Player.startUsingItem:(Lnet/minecraft/world/InteractionHand;)V"
+        },
+        {
+          "offset": 21,
+          "opcode": "getstatic",
+          "operand": "#62",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.RAYGUN_START:Ljava/util/function/Supplier;"
+        },
+        {
+          "offset": 37,
+          "opcode": "invokestatic",
+          "operand": "#79",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.useConsume:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;"
+        },
+        {
+          "offset": 43,
+          "opcode": "invokevirtual",
+          "operand": "#85",
+          "symbol": "Method findAmmo:(Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/world/item/ItemStack;"
+        },
+        {
+          "offset": 49,
+          "opcode": "invokevirtual",
+          "operand": "#89",
+          "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+        },
+        {
+          "offset": 59,
+          "opcode": "ifne",
+          "operand": "71",
+          "symbol": ""
+        },
+        {
+          "offset": 64,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 65,
+          "opcode": "invokevirtual",
+          "operand": "#96",
+          "symbol": "Method net/minecraft/world/item/ItemStack.shrink:(I)V"
+        },
+        {
+          "offset": 73,
+          "opcode": "ifeq",
+          "operand": "125",
+          "symbol": ""
+        },
+        {
+          "offset": 78,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 79,
+          "opcode": "invokestatic",
+          "operand": "#100",
+          "symbol": "Method setCharge:(Lnet/minecraft/world/item/ItemStack;I)V"
+        },
+        {
+          "offset": 102,
+          "opcode": "getstatic",
+          "operand": "#118",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.RAYGUN_RELOAD:Ljava/util/function/Supplier;"
+        },
+        {
+          "offset": 145,
+          "opcode": "getstatic",
+          "operand": "#130",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/misc/ACSoundRegistry.RAYGUN_EMPTY:Ljava/util/function/Supplier;"
+        },
+        {
+          "offset": 167,
+          "opcode": "invokestatic",
+          "operand": "#133",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.useFail:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/InteractionResultHolder;"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 4,
+      "disposition": "AMMO_SELECTION",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Creative returns EMPTY; otherwise scans inventory slots in increasing order and returns the first AMMO match or EMPTY.",
+      "instructions": 27,
+      "method": "findAmmo (Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/world/item/ItemStack;",
+      "parsed_method_sha256": "f74a490d7a2bff7997296a6cea080321929a45ea01078e886d0f3d6c8a2a87fe",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokevirtual",
+          "operand": "#89",
+          "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+        },
+        {
+          "offset": 4,
+          "opcode": "ifeq",
+          "operand": "11",
+          "symbol": ""
+        },
+        {
+          "offset": 7,
+          "opcode": "getstatic",
+          "operand": "#136",
+          "symbol": "Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;"
+        },
+        {
+          "offset": 18,
+          "opcode": "invokevirtual",
+          "operand": "#144",
+          "symbol": "Method net/minecraft/world/entity/player/Inventory.getContainerSize:()I"
+        },
+        {
+          "offset": 21,
+          "opcode": "if_icmpge",
+          "operand": "53",
+          "symbol": ""
+        },
+        {
+          "offset": 29,
+          "opcode": "invokevirtual",
+          "operand": "#149",
+          "symbol": "Method net/minecraft/world/entity/player/Inventory.getItem:(I)Lnet/minecraft/world/item/ItemStack;"
+        },
+        {
+          "offset": 33,
+          "opcode": "getstatic",
+          "operand": "#153",
+          "symbol": "Field AMMO:Ljava/util/function/Predicate;"
+        },
+        {
+          "offset": 37,
+          "opcode": "invokeinterface",
+          "operand": "#157,  2",
+          "symbol": "InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z"
+        },
+        {
+          "offset": 42,
+          "opcode": "ifeq",
+          "operand": "47",
+          "symbol": ""
+        },
+        {
+          "offset": 50,
+          "opcode": "goto",
+          "operand": "13",
+          "symbol": ""
+        },
+        {
+          "offset": 53,
+          "opcode": "getstatic",
+          "operand": "#136",
+          "symbol": "Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 0,
+      "disposition": "UI_ONLY",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Returns UseAnim.NONE; no damage/cost operation.",
+      "instructions": 2,
+      "method": "getUseAnimation (Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/UseAnim;",
+      "parsed_method_sha256": "2862bec8008b05b25624951888fdb41c6c3ebd942a815dacda8e2df423f4916f",
+      "pivots": [
+        {
+          "offset": 0,
+          "opcode": "getstatic",
+          "operand": "#163",
+          "symbol": "Field net/minecraft/world/item/UseAnim.NONE:Lnet/minecraft/world/item/UseAnim;"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 0,
+      "disposition": "USE_PARAMETER",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Returns 72000 ticks.",
+      "instructions": 2,
+      "method": "getUseDuration (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I",
+      "parsed_method_sha256": "bb2ee4b8612b95dcd731c412eca3c7c8c059d5d41af844ef633c28f71b13a986",
+      "pivots": [
+        {
+          "offset": 0,
+          "opcode": "ldc",
+          "operand": "#169",
+          "symbol": "int 72000"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 18,
+      "disposition": "INVENTORY_AND_SOLAR",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Server Solar recovery requires level>0, idle stack, ChargeUsed>0, randomFloat<0.02, sky above holder, day, no fixed time and sunAboveHorizon; decrements expenditure by1 and writes UseTime0. Client copies changed PrevUseTime and increments UseTime while using below5 or decrements it while idle above0.",
+      "instructions": 109,
+      "method": "acInventoryTick (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+      "parsed_method_sha256": "7dd6613ef567ab79f0065253788e6ee9156bb86908b63907808599d5e3b560d2",
+      "pivots": [
+        {
+          "offset": 15,
+          "opcode": "invokevirtual",
+          "operand": "#172",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.getUseItem:()Lnet/minecraft/world/item/ItemStack;"
+        },
+        {
+          "offset": 19,
+          "opcode": "invokevirtual",
+          "operand": "#176",
+          "symbol": "Method java/lang/Object.equals:(Ljava/lang/Object;)Z"
+        },
+        {
+          "offset": 22,
+          "opcode": "ifeq",
+          "operand": "29",
+          "symbol": ""
+        },
+        {
+          "offset": 30,
+          "opcode": "istore",
+          "operand": "5",
+          "symbol": ""
+        },
+        {
+          "offset": 33,
+          "opcode": "invokestatic",
+          "operand": "#181",
+          "symbol": "Method getUseTime:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 39,
+          "opcode": "invokevirtual",
+          "operand": "#184",
+          "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+        },
+        {
+          "offset": 42,
+          "opcode": "ifne",
+          "operand": "146",
+          "symbol": ""
+        },
+        {
+          "offset": 46,
+          "opcode": "getstatic",
+          "operand": "#187",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.SOLAR:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 49,
+          "opcode": "invokestatic",
+          "operand": "#193",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+        },
+        {
+          "offset": 52,
+          "opcode": "ifle",
+          "operand": "230",
+          "symbol": ""
+        },
+        {
+          "offset": 57,
+          "opcode": "ifne",
+          "operand": "230",
+          "symbol": ""
+        },
+        {
+          "offset": 61,
+          "opcode": "invokestatic",
+          "operand": "#42",
+          "symbol": "Method getCharge:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 68,
+          "opcode": "ifle",
+          "operand": "143",
+          "symbol": ""
+        },
+        {
+          "offset": 75,
+          "opcode": "invokeinterface",
+          "operand": "#201,  1",
+          "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+        },
+        {
+          "offset": 80,
+          "opcode": "ldc",
+          "operand": "#207",
+          "symbol": "float 0.02f"
+        },
+        {
+          "offset": 83,
+          "opcode": "ifge",
+          "operand": "143",
+          "symbol": ""
+        },
+        {
+          "offset": 87,
+          "opcode": "invokevirtual",
+          "operand": "#208",
+          "symbol": "Method net/minecraft/world/entity/Entity.blockPosition:()Lnet/minecraft/core/BlockPos;"
+        },
+        {
+          "offset": 90,
+          "opcode": "invokevirtual",
+          "operand": "#214",
+          "symbol": "Method net/minecraft/core/BlockPos.above:()Lnet/minecraft/core/BlockPos;"
+        },
+        {
+          "offset": 98,
+          "opcode": "invokevirtual",
+          "operand": "#219",
+          "symbol": "Method net/minecraft/world/level/Level.canSeeSky:(Lnet/minecraft/core/BlockPos;)Z"
+        },
+        {
+          "offset": 101,
+          "opcode": "ifeq",
+          "operand": "143",
+          "symbol": ""
+        },
+        {
+          "offset": 105,
+          "opcode": "invokevirtual",
+          "operand": "#223",
+          "symbol": "Method net/minecraft/world/level/Level.isDay:()Z"
+        },
+        {
+          "offset": 108,
+          "opcode": "ifeq",
+          "operand": "143",
+          "symbol": ""
+        },
+        {
+          "offset": 115,
+          "opcode": "invokevirtual",
+          "operand": "#230",
+          "symbol": "Method net/minecraft/world/level/dimension/DimensionType.hasFixedTime:()Z"
+        },
+        {
+          "offset": 118,
+          "opcode": "ifne",
+          "operand": "143",
+          "symbol": ""
+        },
+        {
+          "offset": 124,
+          "opcode": "invokestatic",
+          "operand": "#235",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.sunAboveHorizon:(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z"
+        },
+        {
+          "offset": 127,
+          "opcode": "ifeq",
+          "operand": "143",
+          "symbol": ""
+        },
+        {
+          "offset": 133,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 134,
+          "opcode": "isub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 135,
+          "opcode": "invokestatic",
+          "operand": "#100",
+          "symbol": "Method setCharge:(Lnet/minecraft/world/item/ItemStack;I)V"
+        },
+        {
+          "offset": 139,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 140,
+          "opcode": "invokestatic",
+          "operand": "#239",
+          "symbol": "Method setUseTime:(Lnet/minecraft/world/item/ItemStack;I)V"
+        },
+        {
+          "offset": 154,
+          "opcode": "ldc",
+          "operand": "#246",
+          "symbol": "String PrevUseTime"
+        },
+        {
+          "offset": 161,
+          "opcode": "ldc",
+          "operand": "#252",
+          "symbol": "String UseTime"
+        },
+        {
+          "offset": 166,
+          "opcode": "if_icmpeq",
+          "operand": "180",
+          "symbol": ""
+        },
+        {
+          "offset": 177,
+          "opcode": "invokevirtual",
+          "operand": "#254",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V"
+        },
+        {
+          "offset": 183,
+          "opcode": "invokestatic",
+          "operand": "#260",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.setTag:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+        },
+        {
+          "offset": 188,
+          "opcode": "ifeq",
+          "operand": "209",
+          "symbol": ""
+        },
+        {
+          "offset": 194,
+          "opcode": "ldc_w",
+          "operand": "#264",
+          "symbol": "float 5.0f"
+        },
+        {
+          "offset": 198,
+          "opcode": "ifge",
+          "operand": "209",
+          "symbol": ""
+        },
+        {
+          "offset": 205,
+          "opcode": "iadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 206,
+          "opcode": "invokestatic",
+          "operand": "#239",
+          "symbol": "Method setUseTime:(Lnet/minecraft/world/item/ItemStack;I)V"
+        },
+        {
+          "offset": 211,
+          "opcode": "ifne",
+          "operand": "230",
+          "symbol": ""
+        },
+        {
+          "offset": 219,
+          "opcode": "ifle",
+          "operand": "230",
+          "symbol": ""
+        },
+        {
+          "offset": 226,
+          "opcode": "isub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 227,
+          "opcode": "invokestatic",
+          "operand": "#239",
+          "symbol": "Method setUseTime:(Lnet/minecraft/world/item/ItemStack;I)V"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 57,
+      "disposition": "COMPOSED_NATIVE_PIPELINE",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Replayed X-Ray/Gamma/Energy contracts cover warmup, endpoints, client cost, server AoE, filters, damage/status and selected visuals; replayed post-hit and hit-CFG probes preserve independent bounded outcome guards. Depletion stops using and returns before these branches.",
+      "instructions": 523,
+      "method": "onUseTick (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+      "parsed_method_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+      "pivots": [
+        {
+          "offset": 140,
+          "opcode": "invokestatic",
+          "operand": "#54",
+          "symbol": "Method hasCharge:(Lnet/minecraft/world/item/ItemStack;)Z"
+        },
+        {
+          "offset": 143,
+          "opcode": "ifne",
+          "operand": "210",
+          "symbol": ""
+        },
+        {
+          "offset": 169,
+          "opcode": "invokevirtual",
+          "operand": "#320",
+          "symbol": "Method net/minecraft/world/entity/LivingEntity.stopUsingItem:()V"
+        },
+        {
+          "offset": 209,
+          "opcode": "return",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 214,
+          "opcode": "ifeq",
+          "operand": "322",
+          "symbol": ""
+        },
+        {
+          "offset": 246,
+          "opcode": "getstatic",
+          "operand": "#345",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.ENERGY_EFFICIENCY:Lnet/minecraft/resources/ResourceKey;"
+        },
+        {
+          "offset": 274,
+          "opcode": "iflt",
+          "operand": "322",
+          "symbol": ""
+        },
+        {
+          "offset": 282,
+          "opcode": "ifne",
+          "operand": "322",
+          "symbol": ""
+        },
+        {
+          "offset": 299,
+          "opcode": "ifne",
+          "operand": "322",
+          "symbol": ""
+        },
+        {
+          "offset": 313,
+          "opcode": "sipush",
+          "operand": "1000",
+          "symbol": ""
+        },
+        {
+          "offset": 316,
+          "opcode": "invokestatic",
+          "operand": "#355",
+          "symbol": "Method java/lang/Math.min:(II)I"
+        },
+        {
+          "offset": 319,
+          "opcode": "invokestatic",
+          "operand": "#100",
+          "symbol": "Method setCharge:(Lnet/minecraft/world/item/ItemStack;I)V"
+        },
+        {
+          "offset": 875,
+          "opcode": "invokevirtual",
+          "operand": "#184",
+          "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+        },
+        {
+          "offset": 878,
+          "opcode": "ifne",
+          "operand": "1160",
+          "symbol": ""
+        },
+        {
+          "offset": 885,
+          "opcode": "isub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 886,
+          "opcode": "iconst_3",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 887,
+          "opcode": "irem",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 888,
+          "opcode": "ifne",
+          "operand": "1160",
+          "symbol": ""
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 0,
+      "disposition": "RENDER_STATE_WRITE",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Copies previous getUseTime into PrevUseTime then stores raw argument in UseTime through setTag; no clamp.",
+      "instructions": 16,
+      "method": "setUseTime (Lnet/minecraft/world/item/ItemStack;I)V",
+      "parsed_method_sha256": "fe1d1d6ef26a3d9dc18211e6e3fede38bb3c0bcde6b84047fd1a932335155821",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "operand": "#242",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getOrCreateTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 6,
+          "opcode": "ldc",
+          "operand": "#246",
+          "symbol": "String PrevUseTime"
+        },
+        {
+          "offset": 9,
+          "opcode": "invokestatic",
+          "operand": "#181",
+          "symbol": "Method getUseTime:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 12,
+          "opcode": "invokevirtual",
+          "operand": "#254",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V"
+        },
+        {
+          "offset": 16,
+          "opcode": "ldc",
+          "operand": "#252",
+          "symbol": "String UseTime"
+        },
+        {
+          "offset": 18,
+          "opcode": "iload_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 19,
+          "opcode": "invokevirtual",
+          "operand": "#254",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V"
+        },
+        {
+          "offset": 24,
+          "opcode": "invokestatic",
+          "operand": "#260",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.setTag:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 0,
+      "disposition": "RENDER_STATE_WRITE",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Copies current getRayPosition into PrevRayX/Y/Z then stores raw argument doubles in RayX/Y/Z through setTag; no position authorization is established.",
+      "instructions": 37,
+      "method": "setRayPosition (Lnet/minecraft/world/item/ItemStack;DDD)V",
+      "parsed_method_sha256": "7050bc4b5a10975d2e5dc7ef56b07aadc1440fa7da3906bc1d62097eaa2d19db",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "operand": "#242",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getOrCreateTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 7,
+          "opcode": "invokestatic",
+          "operand": "#563",
+          "symbol": "Method getRayPosition:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/phys/Vec3;"
+        },
+        {
+          "offset": 14,
+          "opcode": "ldc_w",
+          "operand": "#567",
+          "symbol": "String PrevRayX"
+        },
+        {
+          "offset": 27,
+          "opcode": "ldc_w",
+          "operand": "#573",
+          "symbol": "String PrevRayY"
+        },
+        {
+          "offset": 40,
+          "opcode": "ldc_w",
+          "operand": "#575",
+          "symbol": "String PrevRayZ"
+        },
+        {
+          "offset": 53,
+          "opcode": "ldc_w",
+          "operand": "#577",
+          "symbol": "String RayX"
+        },
+        {
+          "offset": 56,
+          "opcode": "dload_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 62,
+          "opcode": "ldc_w",
+          "operand": "#579",
+          "symbol": "String RayY"
+        },
+        {
+          "offset": 65,
+          "opcode": "dload_3",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 71,
+          "opcode": "ldc_w",
+          "operand": "#581",
+          "symbol": "String RayZ"
+        },
+        {
+          "offset": 74,
+          "opcode": "dload",
+          "operand": "5",
+          "symbol": ""
+        },
+        {
+          "offset": 82,
+          "opcode": "invokestatic",
+          "operand": "#260",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.setTag:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 2,
+      "disposition": "RENDER_STATE_READ",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Reads UseTime via ACCompat.getInt or returns0 when tag absent.",
+      "instructions": 11,
+      "method": "getUseTime (Lnet/minecraft/world/item/ItemStack;)I",
+      "parsed_method_sha256": "41133ccb2cd68f903db46bf2a439dfd4c394a1eaba99df6ad0c1f84a50104948",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "operand": "#583",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 6,
+          "opcode": "ifnull",
+          "operand": "18",
+          "symbol": ""
+        },
+        {
+          "offset": 10,
+          "opcode": "ldc",
+          "operand": "#252",
+          "symbol": "String UseTime"
+        },
+        {
+          "offset": 12,
+          "opcode": "invokestatic",
+          "operand": "#248",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getInt:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I"
+        },
+        {
+          "offset": 18,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 2,
+      "disposition": "CHARGE_STATE_READ",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Reads ChargeUsed via ACCompat.getInt or returns0 when tag absent.",
+      "instructions": 11,
+      "method": "getCharge (Lnet/minecraft/world/item/ItemStack;)I",
+      "parsed_method_sha256": "c69c154524dbe4b4e46ed589438f7548cc39658305072a59b7c6a7dc9ec25baa",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "operand": "#583",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 6,
+          "opcode": "ifnull",
+          "operand": "19",
+          "symbol": ""
+        },
+        {
+          "offset": 10,
+          "opcode": "ldc_w",
+          "operand": "#586",
+          "symbol": "String ChargeUsed"
+        },
+        {
+          "offset": 13,
+          "opcode": "invokestatic",
+          "operand": "#248",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getInt:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I"
+        },
+        {
+          "offset": 19,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 0,
+      "disposition": "CHARGE_STATE_WRITE",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Writes raw integer argument to ChargeUsed through setTag; this setter does not clamp or authorize it.",
+      "instructions": 11,
+      "method": "setCharge (Lnet/minecraft/world/item/ItemStack;I)V",
+      "parsed_method_sha256": "cedf012dbfb8edf1ca2171c57001dc8937f2982e3755a156da058a74d260993e",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "operand": "#242",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getOrCreateTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 6,
+          "opcode": "ldc_w",
+          "operand": "#586",
+          "symbol": "String ChargeUsed"
+        },
+        {
+          "offset": 9,
+          "opcode": "iload_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 10,
+          "opcode": "invokevirtual",
+          "operand": "#254",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V"
+        },
+        {
+          "offset": 15,
+          "opcode": "invokestatic",
+          "operand": "#260",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.setTag:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/nbt/CompoundTag;)V"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 2,
+      "disposition": "RENDER_STATE_READ",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Returns Vec3(RayX,RayY,RayZ) only with nonnull tag containing RayX, otherwise Vec3.ZERO; only RayX presence is checked.",
+      "instructions": 24,
+      "method": "getRayPosition (Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/phys/Vec3;",
+      "parsed_method_sha256": "aad78dff1406d4ee47f1ff486f36a023c8c3ba019300524ca254e7f314af3f1c",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "operand": "#583",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getTag:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/nbt/CompoundTag;"
+        },
+        {
+          "offset": 6,
+          "opcode": "ifnull",
+          "operand": "48",
+          "symbol": ""
+        },
+        {
+          "offset": 10,
+          "opcode": "ldc_w",
+          "operand": "#577",
+          "symbol": "String RayX"
+        },
+        {
+          "offset": 13,
+          "opcode": "invokevirtual",
+          "operand": "#588",
+          "symbol": "Method net/minecraft/nbt/CompoundTag.contains:(Ljava/lang/String;)Z"
+        },
+        {
+          "offset": 16,
+          "opcode": "ifeq",
+          "operand": "48",
+          "symbol": ""
+        },
+        {
+          "offset": 24,
+          "opcode": "ldc_w",
+          "operand": "#577",
+          "symbol": "String RayX"
+        },
+        {
+          "offset": 27,
+          "opcode": "invokestatic",
+          "operand": "#592",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getDouble:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)D"
+        },
+        {
+          "offset": 31,
+          "opcode": "ldc_w",
+          "operand": "#579",
+          "symbol": "String RayY"
+        },
+        {
+          "offset": 34,
+          "opcode": "invokestatic",
+          "operand": "#592",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getDouble:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)D"
+        },
+        {
+          "offset": 38,
+          "opcode": "ldc_w",
+          "operand": "#581",
+          "symbol": "String RayZ"
+        },
+        {
+          "offset": 41,
+          "opcode": "invokestatic",
+          "operand": "#592",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.getDouble:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)D"
+        },
+        {
+          "offset": 44,
+          "opcode": "invokespecial",
+          "operand": "#596",
+          "symbol": "Method net/minecraft/world/phys/Vec3.\"<init>\":(DDD)V"
+        },
+        {
+          "offset": 48,
+          "opcode": "getstatic",
+          "operand": "#599",
+          "symbol": "Field net/minecraft/world/phys/Vec3.ZERO:Lnet/minecraft/world/phys/Vec3;"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 4,
+      "disposition": "UI_ONLY",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Returns prev+partial*(current-prev) from PrevUseTime/UseTime, using0 defaults for absent tag; no clamp or damage operation.",
+      "instructions": 29,
+      "method": "getLerpedUseTime (Lnet/minecraft/world/item/ItemStack;F)F",
+      "parsed_method_sha256": "4bccb0488844f8475ff7c2dff778c7a8797e0a68ff8e932514df899e4d0e8cc0",
+      "pivots": [
+        {
+          "offset": 6,
+          "opcode": "ifnull",
+          "operand": "19",
+          "symbol": ""
+        },
+        {
+          "offset": 10,
+          "opcode": "ldc",
+          "operand": "#246",
+          "symbol": "String PrevUseTime"
+        },
+        {
+          "offset": 19,
+          "opcode": "fconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 22,
+          "opcode": "ifnull",
+          "operand": "35",
+          "symbol": ""
+        },
+        {
+          "offset": 26,
+          "opcode": "ldc",
+          "operand": "#252",
+          "symbol": "String UseTime"
+        },
+        {
+          "offset": 35,
+          "opcode": "fconst_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 43,
+          "opcode": "fsub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 44,
+          "opcode": "fmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 45,
+          "opcode": "fadd",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 1,
+      "disposition": "UI_ONLY",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "With nonnull tag, each previous/current double coordinate narrows through float then widens to double before prev+partial*(current-prev); absent tag returns null. No damage operation.",
+      "instructions": 71,
+      "method": "getLerpedRayPosition (Lnet/minecraft/world/item/ItemStack;F)Lnet/minecraft/world/phys/Vec3;",
+      "parsed_method_sha256": "dad86710eb11c2120c774b315ee3a217c12a004ae9a53d001f0e813bac7d78ff",
+      "pivots": [
+        {
+          "offset": 6,
+          "opcode": "ifnull",
+          "operand": "113",
+          "symbol": ""
+        },
+        {
+          "offset": 10,
+          "opcode": "ldc_w",
+          "operand": "#567",
+          "symbol": "String PrevRayX"
+        },
+        {
+          "offset": 16,
+          "opcode": "d2f",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 17,
+          "opcode": "f2d",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 20,
+          "opcode": "ldc_w",
+          "operand": "#577",
+          "symbol": "String RayX"
+        },
+        {
+          "offset": 26,
+          "opcode": "d2f",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 27,
+          "opcode": "f2d",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 31,
+          "opcode": "ldc_w",
+          "operand": "#573",
+          "symbol": "String PrevRayY"
+        },
+        {
+          "offset": 37,
+          "opcode": "d2f",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 38,
+          "opcode": "f2d",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 42,
+          "opcode": "ldc_w",
+          "operand": "#579",
+          "symbol": "String RayY"
+        },
+        {
+          "offset": 48,
+          "opcode": "d2f",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 49,
+          "opcode": "f2d",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 53,
+          "opcode": "ldc_w",
+          "operand": "#575",
+          "symbol": "String PrevRayZ"
+        },
+        {
+          "offset": 59,
+          "opcode": "d2f",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 60,
+          "opcode": "f2d",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 64,
+          "opcode": "ldc_w",
+          "operand": "#581",
+          "symbol": "String RayZ"
+        },
+        {
+          "offset": 70,
+          "opcode": "d2f",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 71,
+          "opcode": "f2d",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 84,
+          "opcode": "dsub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 85,
+          "opcode": "dmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 86,
+          "opcode": "dadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 95,
+          "opcode": "dsub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 96,
+          "opcode": "dmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 97,
+          "opcode": "dadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 106,
+          "opcode": "dsub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 107,
+          "opcode": "dmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 108,
+          "opcode": "dadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 113,
+          "opcode": "aconst_null",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 1,
+      "disposition": "RELEASE_AND_NETWORK_DELEGATE",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Calls Item.releaseUsing, sends UpdateItemTagMessage only client-side and clears proxy sound cache; no own charge or UseTime reset.",
+      "instructions": 20,
+      "method": "releaseUsing (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+      "parsed_method_sha256": "fe123ab0d8ef0e4049d6f51c086b2ec5ca9aa8926a25d6ebae795d583caa677e",
+      "pivots": [
+        {
+          "offset": 6,
+          "opcode": "invokespecial",
+          "operand": "#603",
+          "symbol": "Method net/minecraft/world/item/Item.releaseUsing:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V"
+        },
+        {
+          "offset": 10,
+          "opcode": "invokevirtual",
+          "operand": "#184",
+          "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+        },
+        {
+          "offset": 13,
+          "opcode": "ifeq",
+          "operand": "31",
+          "symbol": ""
+        },
+        {
+          "offset": 25,
+          "opcode": "invokespecial",
+          "operand": "#314",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/message/UpdateItemTagMessage.\"<init>\":(ILnet/minecraft/world/item/ItemStack;)V"
+        },
+        {
+          "offset": 28,
+          "opcode": "invokestatic",
+          "operand": "#317",
+          "symbol": "Method com/github/alexmodguy/alexscaves/AlexsCaves.sendMSGToServer:(Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 35,
+          "opcode": "invokevirtual",
+          "operand": "#607",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.clearSoundCacheFor:(Lnet/minecraft/world/entity/Entity;)V"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 2,
+      "disposition": "UI_ONLY",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Returns getCharge()!=0; no damage/cost operation.",
+      "instructions": 7,
+      "method": "isBarVisible (Lnet/minecraft/world/item/ItemStack;)Z",
+      "parsed_method_sha256": "b6fe7a73b89cd710e808f00f7764bb6afa60f2b181ace641e7d3b0e8bc75d9a2",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "operand": "#42",
+          "symbol": "Method getCharge:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 4,
+          "opcode": "ifeq",
+          "operand": "11",
+          "symbol": ""
+        },
+        {
+          "offset": 7,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 11,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 0,
+      "disposition": "UI_ONLY",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Returns Math.round(13F-getCharge()*13F/1000F), with no own clamp.",
+      "instructions": 11,
+      "method": "getBarWidth (Lnet/minecraft/world/item/ItemStack;)I",
+      "parsed_method_sha256": "f21db88b48cb16a4895027c83f9438e2191df97b3241db630a813224d3ec12f5",
+      "pivots": [
+        {
+          "offset": 0,
+          "opcode": "ldc_w",
+          "operand": "#611",
+          "symbol": "float 13.0f"
+        },
+        {
+          "offset": 4,
+          "opcode": "invokestatic",
+          "operand": "#42",
+          "symbol": "Method getCharge:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 8,
+          "opcode": "ldc_w",
+          "operand": "#611",
+          "symbol": "float 13.0f"
+        },
+        {
+          "offset": 11,
+          "opcode": "fmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 12,
+          "opcode": "ldc_w",
+          "operand": "#612",
+          "symbol": "float 1000.0f"
+        },
+        {
+          "offset": 15,
+          "opcode": "fdiv",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 16,
+          "opcode": "fsub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 17,
+          "opcode": "invokestatic",
+          "operand": "#613",
+          "symbol": "Method java/lang/Math.round:(F)I"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 0,
+      "disposition": "UI_ONLY",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "HSV uses hue0.3, value1, saturation0.2+0.6*(0.5*(1+sin((playerTime+partialTicks)*(2*ChargeUsed/1000)))); no damage/cost operation.",
+      "instructions": 35,
+      "method": "getBarColor (Lnet/minecraft/world/item/ItemStack;)I",
+      "parsed_method_sha256": "4ee9ebc8f89d7f90066f24af38def483c379f75cb5e41e6c821cfa4cc8ea65d6",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "operand": "#42",
+          "symbol": "Method getCharge:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 5,
+          "opcode": "ldc_w",
+          "operand": "#612",
+          "symbol": "float 1000.0f"
+        },
+        {
+          "offset": 8,
+          "opcode": "fdiv",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 9,
+          "opcode": "fconst_2",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 10,
+          "opcode": "fmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 15,
+          "opcode": "invokevirtual",
+          "operand": "#617",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getPlayerTime:()I"
+        },
+        {
+          "offset": 22,
+          "opcode": "invokevirtual",
+          "operand": "#620",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getPartialTicks:()F"
+        },
+        {
+          "offset": 25,
+          "opcode": "fadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 27,
+          "opcode": "ldc_w",
+          "operand": "#381",
+          "symbol": "float 0.5f"
+        },
+        {
+          "offset": 33,
+          "opcode": "fmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 35,
+          "opcode": "invokestatic",
+          "operand": "#623",
+          "symbol": "Method java/lang/Math.sin:(D)D"
+        },
+        {
+          "offset": 38,
+          "opcode": "dadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 40,
+          "opcode": "fmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 43,
+          "opcode": "ldc_w",
+          "operand": "#626",
+          "symbol": "float 0.3f"
+        },
+        {
+          "offset": 48,
+          "opcode": "ldc_w",
+          "operand": "#627",
+          "symbol": "float 0.6f"
+        },
+        {
+          "offset": 51,
+          "opcode": "fmul",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 52,
+          "opcode": "ldc_w",
+          "operand": "#382",
+          "symbol": "float 0.2f"
+        },
+        {
+          "offset": 55,
+          "opcode": "fadd",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 56,
+          "opcode": "fconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 57,
+          "opcode": "invokestatic",
+          "operand": "#628",
+          "symbol": "Method net/minecraft/util/Mth.hsvToRgb:(FFF)I"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 1,
+      "disposition": "UI_ONLY",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "When ChargeUsed!=0, adds green translatable item.alexscaves.raygun.charge with remaining1000-ChargeUsed and max1000; no own clamp.",
+      "instructions": 28,
+      "method": "appendHoverText (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+      "parsed_method_sha256": "4c0ae6dbc6406399257ff37ac013308dcb010b199554f4c803c6682cfeea21fb",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokestatic",
+          "operand": "#42",
+          "symbol": "Method getCharge:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 4,
+          "opcode": "ifeq",
+          "operand": "59",
+          "symbol": ""
+        },
+        {
+          "offset": 7,
+          "opcode": "sipush",
+          "operand": "1000",
+          "symbol": ""
+        },
+        {
+          "offset": 11,
+          "opcode": "invokestatic",
+          "operand": "#42",
+          "symbol": "Method getCharge:(Lnet/minecraft/world/item/ItemStack;)I"
+        },
+        {
+          "offset": 14,
+          "opcode": "isub",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 23,
+          "opcode": "ldc_w",
+          "operand": "#638",
+          "symbol": "String item.alexscaves.raygun.charge"
+        },
+        {
+          "offset": 37,
+          "opcode": "sipush",
+          "operand": "1000",
+          "symbol": ""
+        },
+        {
+          "offset": 47,
+          "opcode": "getstatic",
+          "operand": "#652",
+          "symbol": "Field net/minecraft/ChatFormatting.GREEN:Lnet/minecraft/ChatFormatting;"
+        },
+        {
+          "offset": 53,
+          "opcode": "invokeinterface",
+          "operand": "#664,  2",
+          "symbol": "InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z"
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 3,
+      "disposition": "UI_ONLY",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Returns false exactly when both old and new stack are RAYGUN; otherwise true. Third argument is unused; no damage/cost operation.",
+      "instructions": 16,
+      "method": "shouldCauseReequipAnimation (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Z)Z",
+      "parsed_method_sha256": "f7c132ce976b060d313d652743c0b295d5dda82715d4dcf82d19ac5fee18f200",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "getstatic",
+          "operand": "#666",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.RAYGUN:Ljava/util/function/Supplier;"
+        },
+        {
+          "offset": 12,
+          "opcode": "invokevirtual",
+          "operand": "#671",
+          "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+        },
+        {
+          "offset": 15,
+          "opcode": "ifeq",
+          "operand": "36",
+          "symbol": ""
+        },
+        {
+          "offset": 19,
+          "opcode": "getstatic",
+          "operand": "#666",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.RAYGUN:Ljava/util/function/Supplier;"
+        },
+        {
+          "offset": 30,
+          "opcode": "invokevirtual",
+          "operand": "#671",
+          "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+        },
+        {
+          "offset": 33,
+          "opcode": "ifne",
+          "operand": "40",
+          "symbol": ""
+        },
+        {
+          "offset": 36,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 40,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "switch_offsets": []
+    },
+    {
+      "direct_branches": 2,
+      "disposition": "AMMO_PREDICATE",
+      "evidence": "WHOLE_BODY_IDENTITY_PLUS_BOUNDED_SEMANTIC_PIVOTS",
+      "facts": "Tests ItemStack.getItem identity against URANIUM_ROD.get().asItem(); this is reload ammunition, not a declared durability repair ingredient.",
+      "instructions": 11,
+      "method": "lambda$static$0 (Lnet/minecraft/world/item/ItemStack;)Z",
+      "parsed_method_sha256": "eff11132e73674eadf28ee9e970b4d28046777f0c6bb44cd8de8f609f090aac6",
+      "pivots": [
+        {
+          "offset": 1,
+          "opcode": "invokevirtual",
+          "operand": "#674",
+          "symbol": "Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;"
+        },
+        {
+          "offset": 4,
+          "opcode": "getstatic",
+          "operand": "#677",
+          "symbol": "Field com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry.URANIUM_ROD:Ljava/util/function/Supplier;"
+        },
+        {
+          "offset": 15,
+          "opcode": "invokevirtual",
+          "operand": "#684",
+          "symbol": "Method net/minecraft/world/level/block/Block.asItem:()Lnet/minecraft/world/item/Item;"
+        },
+        {
+          "offset": 18,
+          "opcode": "if_acmpne",
+          "operand": "25",
+          "symbol": ""
+        },
+        {
+          "offset": 21,
+          "opcode": "iconst_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 25,
+          "opcode": "iconst_0",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "switch_offsets": []
+    }
+  ],
+  "primary_resource": {
+    "json": {
+      "exhaustion": 0.3,
+      "message_id": "raygun",
+      "scaling": "never"
+    },
+    "path": "data/alexscaves/damage_type/raygun.json",
+    "sha256": "dc1095e92e0695b302100993af8fafd72c8d6b948d90717e667a6ced2ae1bc35"
+  },
+  "safety": {
+    "accepted_damage_and_effects": "NOT_TESTED",
+    "claims_and_pvp": "NOT_VERIFIED",
+    "codec_and_packet_delivery": "NOT_VERIFIED",
+    "complete_rendering_cfg": "NOT_RECONSTRUCTED",
+    "effective_charge_settlement": "NOT_TESTED",
+    "effective_world_datapack": "NOT_VERIFIED",
+    "exception_edges_and_transformed_runtime": "NOT_RECONSTRUCTED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "network_authorization": "NOT_VERIFIED",
+    "network_replay_protection": "NOT_VERIFIED",
+    "network_sanitization": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "unaccounted_native_roots": 0
+  },
+  "schema_version": 1,
+  "static_contract": {
+    "behavior": {
+      "activation": "Loaded use starts using the hand, requests RAYGUN_START and useConsume; exhausted use finds ammo, shrinks one nonempty ammo stack, sets ChargeUsed=0 when ammo or Creative, requests reload/empty sound, then returns useFail even after reload. No immediate start on the reload branch.",
+      "depletion": "hasCharge false: client sends item tag message, stops using, requests empty sound and returns; release calls superclass, sends client message and clears proxy sound cache.",
+      "inventory": "Server Solar recovery requires level>0, idle stack, ChargeUsed>0, randomFloat<0.02, sky above holder, day, no fixed time and sunAboveHorizon; decrements expenditure by1 and writes UseTime0. Client copies changed PrevUseTime and increments UseTime while using below5 or decrements it while idle above0.",
+      "render_state": "UseTime/PrevUseTime and Ray/PrevRay keys are separately inventoried; interpolation accessors are UI-only, not accepted-hit evidence."
+    },
+    "costs": {
+      "anvil": "Marker plus same item identity and both enchantment sets nonempty gates a left-stack copy, enchantment merge capped at max level, event cost and output writes. Compatibility local5 is initialized true once before the outer loop; an incompatible pair sets it false and it is not reset for later enchantments. This method has no setCharge/setUseTime/setDamageValue/shrink call; no charge refill or uranium durability repair is inferred.",
+      "charge_meaning": "ChargeUsed defaults0 and hasCharge iff<1000; raw setter is unclamped.",
+      "client_expenditure": "Client only, warmup>=1 and elapsed%(2+floor(1.5F*EnergyEfficiencyLevel))==0 and noncreative: ChargeUsed=min(ChargeUsed+1,1000); this cadence is separate from server damage cadence.",
+      "reload": "First inventory uranium-rod item, shrink1, reset expenditure0; Creative findAmmo EMPTY yet reset branch succeeds; reload attempt returns useFail.",
+      "solar": "Server Solar recovery requires level>0, idle stack, ChargeUsed>0, randomFloat<0.02, sky above holder, day, no fixed time and sunAboveHorizon; decrements expenditure by1 and writes UseTime0. Client copies changed PrevUseTime and increments UseTime while using below5 or decrements it while idle above0."
+    },
+    "identity": {
+      "damage_type": {
+        "exhaustion": 0.3,
+        "message_id": "raygun",
+        "scaling": "never"
+      },
+      "direct_default_tags": [
+        "minecraft:bypasses_cooldown",
+        "minecraft:is_explosion",
+        "minecraft:is_projectile"
+      ],
+      "source_factory": "causeRaygunDamage(registryAccess,shooter) resolves RAYGUN and constructs DamageSourceRandomMessages(holder,shooter,1); constructor forwards holder+entity to DamageSource. Reused SHA-exact Gamma helper proof."
+    },
+    "integration": {
+      "gamma": {
+        "charge_reference": "EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json; client charge write and message authorization remain separate",
+        "damage_request": {
+          "gamma_false": 1.5,
+          "gamma_true": 2.0,
+          "source": "causeRaygunDamage(registryAccess,shooter)"
+        },
+        "effect_request": {
+          "duration_ticks": 800,
+          "gamma_false_amplifier": 0,
+          "gamma_true_amplifier": 4
+        },
+        "exclusion": "Gamma JSON has no exclusive_set; X-Ray JSON explicitly lists gamma_ray; publisher default only",
+        "irradiated_reference": "effects/irradiated.md; amplifier0 has no periodic tick; amplifier4 nominal shouldTick divisor50; periodic radiation factory has no shooter argument; Mastery credit NOT_VERIFIED",
+        "particle_variants": [
+          "RAYGUN_EXPLOSION/BLUE_RAYGUN_EXPLOSION",
+          "HAZMAT_BREATHE/BLUE_HAZMAT_BREATHE"
+        ],
+        "range": "25.0F*warmup_progress; Gamma does not alter range",
+        "server_damage_gate": "!level.isClientSide() && (elapsed-15)%3==0; no extra elapsed>=15 guard",
+        "status_gate": "(Tremorzilla || ACCompat.hurt returns true) && LivingEntity && !RESISTS_RADIATION",
+        "target_filters": [
+          "projectile hit predicate",
+          "not shooter identity",
+          "not allied in either direction",
+          "not passenger of same vehicle"
+        ],
+        "target_volume": "AABB(local14+(-1D,-1D,-1D),local14+(1D,1D,1D))",
+        "visual_gate": "LivingEntity.addEffect returns true",
+        "visual_variants": [
+          0,
+          4
+        ]
+      },
+      "network_boundary": {
+        "authorization": "NOT_VERIFIED",
+        "claim": "CONDITIONAL_CLIENT_INPUT_TAG_WRITE_ONLY",
+        "codec_and_delivery": "NOT_VERIFIED",
+        "conditional_receiver": "Historical native handle resolves packet entityId, requires LivingEntity, chooses matching main/offhand ItemStack item identity, checks UpdatesStackTags and nonnull incoming tag, then invokes default updateTagFromServer; default delegates ACCompat.setTag, which removes or sets DataComponents.CUSTOM_DATA.",
+        "replay_protection": "NOT_VERIFIED",
+        "sanitization": "NOT_VERIFIED",
+        "senders": [
+          "onUseTick exhausted client branch@165",
+          "releaseUsing client branch@28"
+        ]
+      },
+      "visual_consumers": {
+        "class_sha256": {
+          "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class": "18e350579f407c7c9509e230aa17b68b1113c166352e812482934ec3fdc1bd7e",
+          "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class": "bade390453dfd0749302c3ea1a1b6a7840bc24dbd0cdb44897b1bc2495eaaadc"
+        },
+        "limits": {
+          "actual_pixels_and_delivery": "NOT_TESTED",
+          "complete_rendering_cfg": "NOT_RECONSTRUCTED",
+          "downstream_renderRay_implementation": "NOT_VERIFIED",
+          "mutating_hook": "NOT_VERIFIED",
+          "mutation": "NO_MUTATION"
+        },
+        "method_census": [
+          {
+            "body_sha256": "b409b1c334dae2bcf0ed11c0327dd36850adf755fd88c7b434f169bad8197f87",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+            "instructions": 1771,
+            "name": "renderByItem",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class"
+          },
+          {
+            "body_sha256": "2862f26fbb27c44fdd180a77f64a8bf1165e98619d083063157f52ef99ae3eae",
+            "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/phys/Vec3;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;FZI)V",
+            "instructions": 209,
+            "name": "renderRaysFor",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class"
+          }
+        ],
+        "pivots": [
+          {
+            "name": "renderByItem",
+            "offset": 1967,
+            "opcode": "aload_1",
+            "operand": "",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1968,
+            "opcode": "getstatic",
+            "operand": "#457",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.GAMMA_RAY:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1971,
+            "opcode": "invokestatic",
+            "operand": "#463",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1974,
+            "opcode": "ifle",
+            "operand": "1981",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1977,
+            "opcode": "iconst_1",
+            "operand": "",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1978,
+            "opcode": "goto",
+            "operand": "1982",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1981,
+            "opcode": "iconst_0",
+            "operand": "",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1982,
+            "opcode": "istore",
+            "operand": "14",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1984,
+            "opcode": "iload",
+            "operand": "14",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1986,
+            "opcode": "ifeq",
+            "operand": "1995",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1989,
+            "opcode": "getstatic",
+            "operand": "#467",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": "Field RAYGUN_BLUE_TEXTURE:Lnet/minecraft/resources/ResourceLocation;"
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1992,
+            "opcode": "goto",
+            "operand": "1998",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1995,
+            "opcode": "getstatic",
+            "operand": "#470",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": "Field RAYGUN_TEXTURE:Lnet/minecraft/resources/ResourceLocation;"
+          },
+          {
+            "name": "renderByItem",
+            "offset": 1998,
+            "opcode": "astore",
+            "operand": "15",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 2000,
+            "opcode": "iload",
+            "operand": "14",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 2002,
+            "opcode": "ifeq",
+            "operand": "2011",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 2005,
+            "opcode": "getstatic",
+            "operand": "#473",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": "Field RAYGUN_BLUE_ACTIVE_TEXTURE:Lnet/minecraft/resources/ResourceLocation;"
+          },
+          {
+            "name": "renderByItem",
+            "offset": 2008,
+            "opcode": "goto",
+            "operand": "2014",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderByItem",
+            "offset": 2011,
+            "opcode": "getstatic",
+            "operand": "#476",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": "Field RAYGUN_ACTIVE_TEXTURE:Lnet/minecraft/resources/ResourceLocation;"
+          },
+          {
+            "name": "renderByItem",
+            "offset": 2014,
+            "opcode": "astore",
+            "operand": "16",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 62,
+            "opcode": "aload",
+            "operand": "7",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 64,
+            "opcode": "getstatic",
+            "operand": "#185",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.GAMMA_RAY:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 67,
+            "opcode": "invokestatic",
+            "operand": "#191",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 70,
+            "opcode": "ifle",
+            "operand": "77",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 73,
+            "opcode": "iconst_1",
+            "operand": "",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 74,
+            "opcode": "goto",
+            "operand": "78",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 77,
+            "opcode": "iconst_0",
+            "operand": "",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 78,
+            "opcode": "istore",
+            "operand": "11",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 178,
+            "opcode": "iload",
+            "operand": "11",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 180,
+            "opcode": "invokestatic",
+            "operand": "#222",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": "Method renderRay:(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/phys/Vec3;FFZZ)V"
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 221,
+            "opcode": "iload",
+            "operand": "11",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 223,
+            "opcode": "invokestatic",
+            "operand": "#222",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": "Method renderRay:(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/phys/Vec3;FFZZ)V"
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 292,
+            "opcode": "aload",
+            "operand": "7",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 294,
+            "opcode": "getstatic",
+            "operand": "#185",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.GAMMA_RAY:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 297,
+            "opcode": "invokestatic",
+            "operand": "#191",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 300,
+            "opcode": "ifle",
+            "operand": "307",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 303,
+            "opcode": "iconst_1",
+            "operand": "",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 304,
+            "opcode": "goto",
+            "operand": "308",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 307,
+            "opcode": "iconst_0",
+            "operand": "",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 308,
+            "opcode": "istore",
+            "operand": "11",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 408,
+            "opcode": "iload",
+            "operand": "11",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 410,
+            "opcode": "invokestatic",
+            "operand": "#222",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": "Method renderRay:(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/phys/Vec3;FFZZ)V"
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 433,
+            "opcode": "iload",
+            "operand": "11",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": ""
+          },
+          {
+            "name": "renderRaysFor",
+            "offset": 435,
+            "opcode": "invokestatic",
+            "operand": "#222",
+            "owner": "com/github/alexmodguy/alexscaves/client/render/item/RaygunRenderHelper.class",
+            "symbol": "Method renderRay:(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/phys/Vec3;FFZZ)V"
+          }
+        ],
+        "ray_forwarding": "renderRaysFor: positive Gamma booleans at local11 writes78/308 are passed as final renderRay argument at178/221/408/433",
+        "scope": "SELECTED_NATIVE_CLIENT_VISUAL_CONSUMERS_ONLY",
+        "texture_selection": "renderByItem: enchantLevel>0 selects RAYGUN_BLUE_TEXTURE and RAYGUN_BLUE_ACTIVE_TEXTURE; otherwise RAYGUN_TEXTURE and RAYGUN_ACTIVE_TEXTURE",
+        "whole_method_sha256_role": "IDENTITY_AND_DRIFT_ONLY_NOT_FULL_RENDERING_CFG"
+      },
+      "xray": {
+        "damage_status": "X-Ray changes endpoint/scan geometry; no separate damage/status bonus. Gamma toggles 1.5F/2F requests and amplifier0/4.",
+        "exclusion": "publisher X-Ray JSON exclusive_set=[alexscaves:gamma_ray]; Gamma JSON has no exclusive_set; effective datapack NOT_VERIFIED",
+        "range": "25.0F*warmup_progress; X-Ray does not increase local8"
+      }
+    },
+    "parameters": {
+      "damage_request": {
+        "gamma_false": 1.5,
+        "gamma_true": 2.0,
+        "source": "causeRaygunDamage(registryAccess,shooter)"
+      },
+      "duration_ticks": 72000,
+      "gamma_false_amplifier": 0,
+      "gamma_true_amplifier": 4,
+      "max_charge_expenditure": 1000,
+      "range": "25F*(elapsed<15 ? elapsed/15F : 1F)",
+      "server_damage_gate": "!level.isClientSide() && (elapsed-15)%3==0; no extra elapsed>=15 guard",
+      "status_duration_ticks": 800,
+      "warmup_ticks": 15
+    },
+    "targeting": {
+      "block_sturdy": "only X-Ray false branch@669: BlockHitResult and !isAir and isFaceSturdy(level,blockPos,direction)@721 set impact local21; this branch does not replace damage endpoint14; X-Ray skips@666->734",
+      "entity_endpoint": "EntityHitResult after either branch -> entity.position()@754 -> impact21 and damage14@766; direction20=UP",
+      "full_endpoint": "eyePosition+getViewVector(0F)*local8 -> local12@103",
+      "impact_and_damage_separation": "local21 null@770 or elapsed%2!=0@777 skips only impact visuals to874; server cadence/AABB query follows independently, so a non-entity result retains the initially chosen local14 geometry without proving an accepted hit",
+      "initial_endpoints": "local13@120 and local14@137 independently choose local12 when X-Ray, otherwise local11=LivingEntity.pick(local8,0F,false).getLocation()",
+      "native_pipeline_reference": "frozen Gamma contract: server !isClientSide && (elapsed-15)%3==0; target filters exclude shooter, alliances both ways and same vehicle; X-Ray has no damage/status boolean read or separate bonus",
+      "scan_aabb": "shooter.getBoundingBox().inflate((double)local8) -> local22@584; expansion equals local8 on each axis",
+      "scan_break": "first nonnull segment result -> local10@652; break@654->666->734; no explicit global nearest-distance comparison; helper internals NOT_VERIFIED",
+      "scan_first_segment": "eye+viewVector(1F) to eye+2*viewVector(1F); initial eye-to-eye+view segment is not added by this supplemental loop",
+      "scan_loop": "float23=1F; local24=eye; while(float23<local8): local24+=getViewVector(1F); local25=local24+getViewVector(1F); getEntityHitResult(level,shooter,local24,local25,local22,predicatebootstrap0)@640; null increments float23 by1F",
+      "scan_no_hit": "initial local10 from getHitResultOnViewVector@69 remains unchanged if no supplemental result",
+      "target_volume": "AABB(local14+(-1D,-1D,-1D),local14+(1D,1D,1D))@891-917"
+    },
+    "validation": {
+      "charge_ammo_subset": {
+        "direct_branches": 15,
+        "instructions": 168,
+        "methods": 8
+      },
+      "mutating_hook": "NOT_VERIFIED",
+      "native_item_methods_dispositioned": 26,
+      "onUseTick": {
+        "direct_branches": 57,
+        "instructions": 523
+      },
+      "physical_qa": "NOT_TESTED",
+      "static_initializer_additional_instructions": 3,
+      "unaccounted_native_roots": 0,
+      "whole_provider_discovery": false
+    }
+  },
+  "static_initialization": {
+    "body_sha256": "fd18bc1bb2b03c686c305ad4a10ba90c06a2f525aa231845338e082b5ec3812d",
+    "bootstrap": {
+      "field": "AMMO",
+      "implementation": "REF_invokeStatic RaygunItem.lambda$static$0:(Lnet/minecraft/world/item/ItemStack;)Z",
+      "index": 2
+    },
+    "instructions": 3,
+    "pivots": [
+      {
+        "offset": 0,
+        "opcode": "invokedynamic",
+        "operand": "#687,  0",
+        "symbol": "InvokeDynamic #2:test:()Ljava/util/function/Predicate;"
+      },
+      {
+        "offset": 5,
+        "opcode": "putstatic",
+        "operand": "#153",
+        "symbol": "Field AMMO:Ljava/util/function/Predicate;"
+      },
+      {
+        "offset": 8,
+        "opcode": "return",
+        "operand": "",
+        "symbol": ""
+      }
+    ],
+    "scope": "ADDITIONAL_STATIC_INITIALIZER_NOT_IN_26_METHOD_PARSER_CENSUS"
+  },
+  "version": "1.0.10"
+}

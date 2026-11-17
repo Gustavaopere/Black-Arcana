@@ -2,21 +2,21 @@
 
 > Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
 
-**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+**Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 10/11.**
+**Fichas catalogadas (somente fichas detectadas): 11/11.**
 
-**Barra das fichas catalogadas:** `██████████████████░░ 90.9%`
+**Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 10/11.**
+**Homologadas para perks (somente fichas detectadas): 11/11.**
 
-**Barra dos contratos técnicos estáticos:** `██████████████████░░ 90.9%`
+**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
-**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+**Contratos desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
@@ -28,7 +28,7 @@
 | ✅ | Intentional Game Design | [ficha/intentional-game-design.md](intentional-game-design.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Nuke | [ficha/nuke.md](nuke.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Radiation | [ficha/radiation.md](radiation.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Raygun | [ficha/raygun.md](raygun.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Raygun | [ficha/raygun.md](raygun.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Spirit Dinosaur | [ficha/spirit-dinosaur.md](spirit-dinosaur.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Tremorzilla Beam | [ficha/tremorzilla-beam.md](tremorzilla-beam.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 

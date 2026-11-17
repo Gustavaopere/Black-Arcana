@@ -1,400 +1,197 @@
-# Raygun — tipo de dano `alexscaves:raygun` (1.0.10)
+# Raygun — tipo de dano `alexscaves:raygun` e contrato nativo do item (1.0.10)
 
-**Estado de catalogação:** ⚠️ `RESOURCE_JSON_VERIFIED + SHA_EXACT_SELECTED_BYTECODE_OBSERVED` (escopo parcial). **Contrato técnico estático para perks:** ⚠️ `NOT_CERTIFIED`. **Hooks mutadores:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`.
+**Estado de catalogação:** ✅ contrato técnico estático individual certificado nos **sete eixos**, com recurso, factory e comportamento dos **26 métodos declarados de `RaygunItem`**. **Escopo:** `STATIC_TECHNICAL_CATALOG_ONLY`. **Hook mutador:** `NOT_VERIFIED`. **QA física:** `NOT_TESTED`. **Certificação de perks executáveis:** `NOT_CERTIFIED`. **Integração:** `NO_MUTATION`. **Universo do provider:** aberto.
 
-## Proveniência e identidade
+A Raygun é um item de uso mantido que calcula traces e consulta candidatos para dano; esta ficha reúne seu DamageType, carga, munição, lifecycle, targeting, efeitos, animação e UI. O [selo individual](../EXACT-RAYGUN-CONTRACT-1.0.10.json), a [prova reproduzível](../EXACT-RAYGUN-CONTRACT-1.0.10.md) e o [auditor](../../../../../docs/qa/alexscaves_1010_raygun_contract_audit.py) compõem os contratos já certificados de [Energy Efficiency](../enchantments/energy-efficiency.md), [Solar](../enchantments/solar.md), [Gamma Ray](../enchantments/gamma-ray.md) e [X-Ray](../enchantments/x-ray.md). Fingerprints identificam corpos; as relações causais e os limites descritos abaixo constituem o contrato estático.
 
-- **Provider / mod ID:** `Alex's Caves Continued` / `alexscaves`.
-- **Versão do artefato:** `alexscaves-1.0.10-neoforge+1.21.1.jar` (Minecraft 1.21.1).
-- **JAR SHA-1:** `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`.
-- **JAR SHA-256:** `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`.
-- **Resource ID exato:** `alexscaves:raygun`.
-- **Caminho ZIP:** `data/alexscaves/damage_type/raygun.json`.
-- **SHA-256 do JSON:** `dc1095e92e0695b302100993af8fafd72c8d6b948d90717e667a6ced2ae1bc35`.
-- **Manifesto verificável:** [snapshot dos recursos](EXACT-RESOURCE-MANIFEST-1.0.10.json) e [auditoria da CI](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40985275338).
+O [arquivo histórico da ficha](EXACT-RAYGUN-HISTORICAL-CARD-1.0.10.md) preserva, sem reescrita, os checkpoints parciais anteriores: SHA-256 `75f033bc9c27195c85ca952e0b70bc18ff00f5f1aba1955e58242c98c11e0f87`. Seus estados e contadores registram aquela etapa. O presente contrato substitui a conclusão parcial para o recorte estático individual, sem promover hooks, QA física ou o provider integral.
 
-## Campos JSON confirmados no artefato
+## 1. Identidade, recurso e fonte de dano
 
-| Campo | Valor literal do recurso | Limite de interpretação |
-|---|---|---|
-| `message_id` | `raygun` | Chave de mensagem; não é sinônimo do registro nem classe de implementação |
-| `scaling` | `never` | Campo `scaling` do tipo de dano; não fixa dano causado nem curva de perks |
-| `exhaustion` | `0.3` | Valor do campo `exhaustion`; **não** é mana, stamina, custo do feitiço ou dano |
-
-## Tags de tipo de dano declaradas diretamente
-
-- `minecraft:bypasses_cooldown`
-- `minecraft:is_explosion`
-- `minecraft:is_projectile`
-
-Essas são **entradas textuais diretas** dos seis arquivos `data/*/tags/damage_type/*.json` encontrados no JAR. Elas não comprovam as tags finais resolvidas depois de datapacks, outras dependências ou overrides. Uma referência a tag não prova que o ataque usado no jogo produza este `DamageSource`.
-O tag `minecraft:bypasses_cooldown` corresponde à classificação de tipo de dano do Minecraft, **não** demonstra redução/bypass do cooldown de lançamento de magias.
-
-
-## Superfícies necessárias para perks — ainda não auditadas
-
-| Capacidade pretendida | Situação |
+| Campo | Identidade publisher auditada |
 |---|---|
-| Factory de `DamageSource` / chamadas JVM | ✅ localizadas estaticamente; comportamento e caminhos efetivos `NÃO VERIFICADO` |
-| Origem, atacante, owner, attribution e condições de PvP | ⚠️ argumento caster observado em `causeRaygunDamage`; atribuição final/kill/PvP ainda não verificados |
-| Fórmula de dano, mitigação, críticos e resistências | ⚠️ `ACCompat.hurt` recebe 1,5f ou 2,0f conforme flag local; causa e aceitação líquida ainda abertas |
-| Alvos elegíveis, tipo target/área, alcance, raio e filtros | ⚠️ ray trace, AABB, exclusões de aliados/mesmo veículo observados; alcance/volume efetivos pendentes |
-| Entidades/projéteis, tamanho, velocidade, colisão e homing | ⚠️ seletores por ray trace e entidades; nenhum spawn direto observado em `onUseTick`, mas indiretos não descartados |
-| Duração, intervalo de hits, custo de ação e cooldown de casting | ⚠️ `getUseDuration=72000`, `ChargeUsed` e 800 ticks de status observados; fórmula de custo/intervalos/cooldown pendentes |
-| Persistência, ordenação de eventos, server authority e deduplicação | ⚠️ tags `ChargeUsed`/`UseTime` e `UpdateItemTagMessage` observadas; handler, reload e antirreplay não testados |
-| Hook de mutação seguro na versão instalada | `NOT_VERIFIED` |
-| QA real em modpack/multiplayer | `NOT_TESTED` |
+| Provider / mod ID | Alex's Caves Continued / `alexscaves` |
+| Runtime | Minecraft **1.21.1**, NeoForge, Java **21** |
+| JAR da modlist | `alexscaves-1.0.10-neoforge+1.21.1.jar`; CurseForge arquivo **8856293**; **75.279.314 bytes** |
+| JAR SHA-1 | `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570` |
+| JAR SHA-256 | `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c` |
+| DamageType / item | `alexscaves:raygun`; registros de tipos diferentes com o mesmo ID textual |
+| Recurso do DamageType | `data/alexscaves/damage_type/raygun.json` |
+| JSON SHA-256 | `dc1095e92e0695b302100993af8fafd72c8d6b948d90717e667a6ced2ae1bc35` |
+| Classe do item | `com/github/alexmodguy/alexscaves/server/item/RaygunItem.class` |
+| Classe do item SHA-256 | `3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c` |
+| Classe da factory SHA-256 | `ACDamageTypes.class`: `389fb88f8d6e1515e3dfe7f401a728bb33629666bd2319ae7e25668f710e4ef6` |
+| Universo de métodos próprios | **26 métodos**, **1.111 instruções JVM**, **107 branches diretos**; `onUseTick` contém 523 instruções e 57 branches |
 
-## Boundary / decisão provisória
+A fonte pública [Codx-org/AlexsCavesContinued@523308608422ab8e31974befa7111ecdf495dd37](https://github.com/Codx-org/AlexsCavesContinued/tree/523308608422ab8e31974befa7111ecdf495dd37) declara **1.1.1** e serve somente como referência adjacente. Os valores desta ficha vêm do binário publisher **1.0.10** SHA-exato; não se presume equivalência entre versões.
 
-O *provider* mantém autoridade sobre a criação, classificação e aplicação de dano. Black Arcana não altera `DamageSource`, escola, dano, tags ou projéteis sem evidência dos consumidores Java e hooks seguros. O RPG Skill Tree fornece perks/atributos somente através de boundary verificada, sem double-processing. **Fail-closed:** `NO_MUTATION` até a auditoria dos consumidores e a validação específica.
-
-**Contabilidade:** 1/11 recursos de tipo de dano documentados; **+0 raízes mágicas novas**. Este objeto não recebe status `COMPLETE_PERK_READY` apenas por existir como JSON.
-
-## Evidência compilada 1.0.10 — factory e consumidores diretos
-
-**Escopo:** `SHA_EXACT_STATIC_FACTORY_AND_DIRECT_CALLSITE_ONLY`. [Manifesto dos consumidores](EXACT-CONSUMERS-1.0.10.json) · [CI da auditoria](https://github.com/Gustavaopere/Black-Arcana/actions/runs/40993193816).
-
-- **Classe de fábrica:** `com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class`, SHA-256 `389fb88f8d6e1515e3dfe7f401a728bb33629666bd2319ae7e25668f710e4ef6`.
-- **Método:** `ACDamageTypes.causeRaygunDamage`.
-- **Descritor JVM:** `(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;`.
-- **Campo de DamageType lido:** `RAYGUN` (offset `19`).
-- **Construtor de DamageSource referenciado:** `Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages."<init>":(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V`.
-- **Parâmetros da factory:** `RegistryAccess` e `Entity` — não comprova autoria final.
-- **Referências `invokestatic` encontradas:** 1 em 1 classes. Isso não representa quantidade de hits por ataque.
-
-| Classe chamadora | Método chamador | Descritor JVM | Offset | Opcode |
-|---|---|---|---:|---|
-| `com/github/alexmodguy/alexscaves/server/item/RaygunItem.class` | `public void onUseTick(net.minecraft.world.level.Level, net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, int)` | `(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V` | 1026 | `invokestatic` |
-
-**Limites:** as invocações são referências estáticas no bytecode exato; não demonstram execução, alcance, área, cooldown, fórmula de dano, filtros de alvo, persistência, autoridade/attribution, proteção PvP nem segurança de intercepção. Chamadas indiretas, mixins, reflexão, datapacks e comportamento do modpack não estão comprovados. **`mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NOT_CERTIFIED`**. Black Arcana e RPG Skill Tree devem preservar o settlement nativo, evitando processamento duplicado e aplicando `NO_MUTATION` sem contrato seguro.
-
-## Auditoria de controle nativo — `RaygunItem` compilado 1.0.10
-
-**Recorte novo:** `SHA_EXACT_1010_RAYGUN_SELECTED_METHOD_REFERENCES_AND_NUMERIC_OPERANDS_ONLY`. [Manifesto imutável de parâmetros e métodos](../EXACT-RAYGUN-CONTROL-1.0.10.json) · [probe e testes da PR #985](https://github.com/Gustavaopere/Black-Arcana/pull/985) · [workflow de evidência](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41256261358).
-
-A inspeção automatizada baixou e validou a versão publisher **1.0.10** do JAR pelos SHA-1/SHA-256 e tamanho físico registrados acima, verificou a classe compilada `server/item/RaygunItem.class` (SHA-256 `3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c`), inspecionou **26 métodos declarados** e exportou **18 métodos selecionados**. O manifesto fixa digest de oito métodos e 14 âncoras numéricas/simbólicas; o resultado da CI não é teste de gameplay nem reconstrução completa do CFG.
-
-### Alvo, range e geometria — não confundir conceitos
-
-| Método e offset compilado | Evidência estática exata | Limite para perks |
+| Campo literal do JSON | Valor | Significado delimitado |
 |---|---|---|
-| `onUseTick @11` | Calcula tempo utilizado a partir de `getUseDuration - remainingUseTicks` e inicializa um valor inteiro **15** no início de uma sequência de comparação/proporção. | `15` é um operando do cálculo de uso; não anunciar como alcance ou cooldown sem rastrear o resultado. |
-| `onUseTick @35` | Literal **25.0f** em uma região inicial; mais adiante `getHitResultOnViewVector @69` e `LivingEntity.pick @80` recebem distâncias calculadas. | Há caminhos de ray trace distintos. O literal não basta para certificar o alcance efetivo de cada modo ou um parâmetro público modificável. |
-| `onUseTick @44–50` | Consulta `ACEnchantmentRegistry.X_RAY` via `ACCompat.enchantLevel`. | Enchantment nativo participa da escolha dos caminhos; efeito sobre oclusão/alcance efetivo ainda não está completamente certificado. |
-| `onUseTick @575–640` | Obtém a bounding box do usuário, executa `AABB.inflate` e usa `ProjectileUtil.getEntityHitResult` com vetores e predicado. | AABB de busca, distância do raio e vítima realmente elegível são medidas distintas; não converter caixa em raio circular ou área de dano. |
-| `onUseTick @875–943` | Consulta `Level.isClientSide` e, no caminho de servidor observado, usa `Level.getEntities(source, AABB, Predicate)` para enumerar alvos. | Há um segundo domínio de seleção por entidades. Sem CFG/medidas completas, não declarar cone, número máximo de hits, LOS universal ou tamanho de hitbox. |
-| `onUseTick @978–1008` | Verificações `Entity.is`, `Entity.isAlliedTo`, `LivingEntity.isAlliedTo` e `isPassengerOfSameVehicle`, com saídas de ramo antes de solicitar dano. | Não permitir que uma perk elimine exclusões de autocausação, aliados ou passageiros. Proteção/PvP externa permanece sem teste. |
+| `message_id` | `raygun` | Identificador da mensagem de morte |
+| `scaling` | `never` | Política declarativa do DamageType; não fixa dano, críticos ou curva de perks |
+| `exhaustion` | `0.3` | Exaustão do tipo de dano; não é mana, stamina ou custo do item |
+| Tags diretas | `minecraft:bypasses_cooldown`, `minecraft:is_explosion`, `minecraft:is_projectile` | Entradas textuais publisher; não certificam tags finais resolvidas por datapacks |
 
-O recorte de `onUseTick` exportado não mostra chamada simbólica direta a `Level.addFreshEntity`; os caminhos observados recorrem a ray traces, seleção de entidades e partículas. Isso **não** prova ausência de entidades em todos os caminhos indiretos, variantes ou interações com outros mods.
+`bypasses_cooldown` classifica o dano no Minecraft; não configura cooldown de casting. `is_projectile` e `is_explosion` não instanciam projétil ou explosão de mundo. O [manifesto de recursos](EXACT-RESOURCE-MANIFEST-1.0.10.json) e o [manifesto de consumidores](EXACT-CONSUMERS-1.0.10.json) preservam a origem desses dados.
 
-### Charge, uso e encantamentos
+`ACDamageTypes.causeRaygunDamage(RegistryAccess,Entity)` obtém o registro `DAMAGE_TYPE`, resolve o holder de `RAYGUN` (`@19–22`) e constrói `DamageSourceRandomMessages(holder,entity,1)` (`@27–29`). O construtor com entidade delega ao `DamageSource(Holder,Entity)` e armazena a quantidade de variantes de mensagem. Em `RaygunItem.onUseTick @1026`, o argumento Entity é o **usuário do item**. O censo do binário localiza um callsite direto dessa factory, em uma classe; isso não conta hits por uso. Crédito final de kill, PvP, procs e Mastery dependem dos consumidores e do modpack. O descritor JVM da factory é `(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;`; o caller direto selado é `com/github/alexmodguy/alexscaves/server/item/RaygunItem.class`.
 
-| Superfície exata | Dado identificado | Condição de integração |
+## 2. Comportamento dos 26 métodos próprios
+
+`RaygunItem` estende `Item` e implementa `UpdatesStackTags`, `AlwaysCombinableOnAnvil`, `ACClientExtensionItem`, `ACEnchantableItem` e `ACTickingItem`. Métodos de interfaces, engine, proxy e eventos mantêm seus owners. O [selo de identidade dos 26 corpos](../EXACT-RAYGUN-ALL-METHODS-1.0.10.json) é reutilizado pelo selo atual; a tabela dá uma disposição comportamental a **cada** método, sem tratar seus hashes isolados como prova de gameplay.
+
+| Método próprio | Papel e contrato estático |
+|---|---|
+| `RaygunItem()` | Cria `Item.Properties().stacksTo(1)` e chama o construtor de `Item`; nenhuma reserva própria de mana ou timer é inicializada |
+| `initializeClient(Consumer)` | Entrega ao consumer as propriedades de renderer obtidas por `PROXY.getISTERProperties()`; delegação visual |
+| `getEnchantmentValue()` | Retorna **1**, valor nativo de encantabilidade |
+| `isEnchantable(ItemStack)` | Retorna verdadeiro quando `stack.getCount()==1` |
+| `hasCharge(ItemStack)` | Retorna `getCharge(stack)<1000`, sem clamp inferior próprio |
+| `use(Level,Player,Hand)` | Inicia uso quando há carga; esgotado, tenta recarga criativa/munição, sons e retorno de falha da interação; detalhado abaixo |
+| `findAmmo(Player)` | Creative retorna `EMPTY`; nos demais casos percorre o inventário e retorna a primeira stack aceita por `AMMO`, ou `EMPTY` |
+| `getUseAnimation(ItemStack)` | Retorna `UseAnim.NONE`; render/animação próprios usam os campos e helpers abaixo |
+| `getUseDuration(ItemStack,LivingEntity)` | Retorna **72000 ticks**, limite declarado de uso mantido |
+| `acInventoryTick(ItemStack,Level,Entity,boolean)` | Servidor: recuperação Solar condicionada. Cliente: atualização de `PrevUseTime` e subida/descida de `UseTime` |
+| `onUseTick(Level,LivingEntity,ItemStack,int)` | Calcula progresso/distância, bloqueia carga esgotada, atualiza estado/consumo cliente, seleciona targeting e solicita dano/status no servidor |
+| `setUseTime(ItemStack,int)` | Copia o `UseTime` anterior para `PrevUseTime`, grava o inteiro recebido e reaplica a tag; sem clamp próprio |
+| `setRayPosition(ItemStack,double,double,double)` | Copia a posição anterior para `PrevRayX/Y/Z`, grava `RayX/Y/Z` recebidos e reaplica a tag; sem clamp de coordenadas próprio |
+| `getUseTime(ItemStack)` | Lê `UseTime`; tag ausente retorna **0** |
+| `getCharge(ItemStack)` | Lê `ChargeUsed`; tag ausente retorna **0** |
+| `setCharge(ItemStack,int)` | Grava o inteiro recebido em `ChargeUsed` e reaplica a tag; sem clamp próprio |
+| `getRayPosition(ItemStack)` | Com tag e chave `RayX`, lê o vetor `RayX/Y/Z`; nos outros caminhos retorna `Vec3.ZERO` |
+| `getLerpedUseTime(ItemStack,float)` | Retorna `prev+partial×(current−prev)`; valores ausentes usam zero; não limita `partial` neste corpo |
+| `getLerpedRayPosition(ItemStack,float)` | Sem tag retorna **null**; com tag interpola cada coordenada anterior/atual, após estreitamento **double→float→double** dos valores lidos |
+| `releaseUsing(ItemStack,Level,LivingEntity,int)` | Chama `Item.releaseUsing`; no cliente envia atualização de tags; limpa o cache de som pelo proxy. Não zera charge, tempos ou posição neste corpo |
+| `isBarVisible(ItemStack)` | Mostra a barra quando `ChargeUsed!=0`, inclusive para valores forçados fora da faixa normal |
+| `getBarWidth(ItemStack)` | Retorna `round(13F−ChargeUsed×13F/1000F)`; sem clamp próprio da largura |
+| `getBarColor(ItemStack)` | Calcula cor HSV pulsante com charge e tempo do proxy; é feedback de UI, sem gasto ou dano |
+| `appendHoverText(...)` | Para charge diferente de zero adiciona `item.alexscaves.raygun.charge`, verde, com valores **1000−ChargeUsed** e **1000** |
+| `shouldCauseReequipAnimation(old,new,slotChanged)` | Retorna falso quando ambas as stacks são o item Raygun; retorna verdadeiro nos demais casos. `slotChanged` não participa da decisão própria |
+| `lambda$static$0(ItemStack)` | Compara o item da stack com `URANIUM_ROD.asItem()`; predicado de identidade da munição |
+
+O censo soma **26 métodos próprios**, incluindo construtor e predicado sintético; **exclui o inicializador `static {}`**. Esse inicializador instala o predicado em `AMMO`, sem criar reserva de carga ou contador por stack, e recebe prova separada em `static_initialization`. Os descritores, corpos selados e pivôs dos 26 métodos estão em `method_dispositions` do [contrato JSON](../EXACT-RAYGUN-CONTRACT-1.0.10.json).
+
+## 3. Uso, carga, munição e encerramento
+
+Defina **D=`ChargeUsed`**, o consumo acumulado da stack. D=0 representa a posição lógica de carga plena; `hasCharge` aceita **D<1000**. Os setters nativos gravam valores brutos: a invariância `0≤D≤1000` não é garantida por `setCharge` isolado. Não transferir essa responsabilidade a uma perk nem anunciar saneamento universal do estado.
+
+| Caminho de `use` | Sequência causal |
+|---|---|
+| Há carga, `@7–40` | `hasCharge=true` → `startUsingItem(hand)` → som `RAYGUN_START` → `ACCompat.useConsume(stack)` |
+| Esgotado, `@41–79` | Busca `findAmmo`; inicializa elegibilidade com `Player.isCreative`; uma stack não vazia sofre `shrink(1)` e torna a recarga elegível; elegível solicita `setCharge(stack,0)` |
+| Recarga elegível, `@82–122` | Solicita som `RAYGUN_RELOAD`; não chama `startUsingItem` nesse ramo |
+| Sem recarga, `@125–162` | Solicita som `RAYGUN_EMPTY` |
+| Saída de ambos os ramos de recarga, `@165–170` | Retorna `ACCompat.useFail(stack)`, inclusive após o reset de carga; não começa automaticamente o disparo nesse callback |
+
+`findAmmo` procura em ordem de índices de `Inventory.getContainerSize/getItem`; o primeiro predicado positivo é o item de **`URANIUM_ROD`**, não combustível genérico. No modo Creative o helper retorna vazio, mas a flag separada em `use` permite resetar a carga sem consumir rod. O débito de **uma unidade** é da recarga elegível, não de cada callback, alvo ou hit. Esse corpo não acrescenta um gate próprio de lado lógico; a execução e aceitação reais da interação continuam dependentes do dispatcher.
+
+Em `onUseTick @139–209`, a falta de carga leva, no cliente, ao envio de `UpdateItemTagMessage`; em seguida o fluxo solicita `stopUsingItem`, som de vazio e retorna antes do restante da ação. `releaseUsing` chama a implementação de `Item`, envia a mensagem somente no cliente (`@13–28`) e chama `PROXY.clearSoundCacheFor(usuario) @35`. Não há reset local explícito de `ChargeUsed`, `UseTime` ou `RayX/Y/Z` na liberação. O decaimento visual ocioso pertence ao callback de inventário, não a um novo timer de spell.
+
+**Uso máximo de 72000 ticks, recarga, consumo e cadência de dano são superfícies separadas.** Nenhum dos corpos próprios declara cooldown de casting, custo de mana/stamina, vida de projétil, contador de casts ou custo adicional por Gamma/X-Ray. Acesso a um método público não constitui hook mutador seguro.
+
+### Consumo durante uso — Energy Efficiency
+
+Em `onUseTick`, **T=`getUseDuration(stack,null)−remainingUseTicks`**. O progresso **p=T/15F se T<15; caso contrário p=1F** (`@11–33`) não tem clamp inferior próprio. A distância calculada é **r=25F×p** (`@35–41`). A rampa de 15 ticks controla o progresso e o gate de gasto; não impõe sozinha um atraso mínimo ao dano do servidor.
+
+O ramo de custo é **cliente** (`@210–319`). Com nível `L` de Energy Efficiency, calcula **I=2+floor(1.5F×L)**. Para níveis normais não negativos 0/1/2/3/4, os intervalos aritméticos são **2/3/5/6/8 ticks**. Só solicita gasto com **p≥1**, **T%I==0** e usuário que não seja Player Creative. A escrita desse caminho é **D'=min(D+1,1000)**: há clamp superior no consumidor, sem alterar o caráter bruto de `setCharge`.
+
+O intervalo é uma oportunidade de débito condicionada aos guards; não é intervalo de dano ou prova de cobrança autenticada no servidor. O [contrato causal de Energy Efficiency](../EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json) e o [selo de charge/cost](../EXACT-RAYGUN-CHARGE-COST-1.0.10.json) preservam fórmula e branches, incluindo a independência da cadência ofensiva.
+
+### Inventário e recuperação Solar
+
+`acInventoryTick` calcula `usingThisStack`: para LivingEntity compara `living.getUseItem().equals(stack)`; para outro Entity usa falso. O parâmetro `selected` não é usado como guarda própria. O despacho `ItemStackTickMixin` → `ACTickingItem` e o helper solar são selados no [contrato Solar](../EXACT-SOLAR-STATIC-1.0.10.json).
+
+No **servidor** (`@38–143`), a recuperação exige cumulativamente: Solar de nível positivo, stack fora do uso calculado, **D>0**, `nextFloat()<0.02F`, `canSeeSky(entity.blockPosition().above())`, `isDay()`, dimensão sem horário fixo e `ACCompat.sunAboveHorizon`. O proc solicita **D'=D−1** e **`setUseTime(stack,0)`**. O helper solar testa `getTimeOfDay(1F)<0.259F` ou `>0.74F`; isso não substitui o gate separado de dia. A chance é por callback elegível, sem taxa física garantida em segundos ou escala pelo nível.
+
+No **cliente** (`@146–230`), o callback sincroniza o marcador anterior e eleva `UseTime` de uma unidade enquanto a stack é a de uso e o tempo lido é menor que **5**; fora de uso, diminui uma unidade quando o tempo é positivo. Esses guards operam sobre o estado lido; não são saneamento universal de valores forçados. Solar não cria novo ataque, mana, spell, projétil ou recibo de Mastery.
+
+## 4. Targeting, geometria e cadência ofensiva
+
+O [contrato causal X-Ray](../EXACT-XRAY-CAUSAL-1.0.10.json) fecha os ramos compartilhados de targeting. **X-Ray positivo** é um booleano transitório no local 9, relido da stack por callback; nível acima de I não multiplica r nesse corpo. O recurso publisher de X-Ray exclui Gamma, mas o código não impõe essa exclusão a uma stack cuja coexistência tenha sido forçada.
+
+| Etapa de `onUseTick` | Seleção estática |
+|---|---|
+| Trace inicial, `@60–83` | Local 10 recebe `ProjectileUtil.getHitResultOnViewVector(usuario,predicate,r)`; local 11 recebe **outro** resultado, `usuario.pick(r,0F,false)` |
+| Extremo geométrico, `@85–103` | Local 12=`eyePosition+getViewVector(0F)×r` |
+| Extremos iniciais, `@105–137` | Locais 13 e 14 recebem local 12 com X-Ray; sem X-Ray recebem **local11.getLocation()** |
+| Extremo visual, `@217–233` | Cliente escreve o local 13 em `setRayPosition`; isso ocorre antes da busca segmentada e não confirma o centro final do dano |
+| Busca X-Ray, `@569–666` | Caixa do usuário inflada por r; contador **float** inicia em 1F e continua enquanto `<r`; avança a posição por `getViewVector(1F)` e consulta o segmento até posição+outro vetor de visão |
+| Saída do laço | Primeiro retorno não nulo substitui local 10 e encerra a busca; se todos forem nulos, conserva o resultado inicial de `@69` |
+| Bloco sem X-Ray, `@669–732` | `BlockHitResult`, bloco não ar e face sturdy preparam posição/direção de impacto visual. Não reescrevem o local 14 nesse ramo |
+| Resultado de entidade, `@734–766` | Usa **`getEntity().position()`**, define direção `UP` e substitui local 14 pela posição da entidade; não é necessariamente o ponto de interseção do trace |
+| Consulta final, `@891–951` | `AABB(local14−(1,1,1),local14+(1,1,1))`: **cubo de lado 2**; consulta `Level.getEntities(usuario,box,Entity.canBeHitByProjectile)` |
+| Filtros por candidato, `@975–1008` | Exclui identidade do usuário, aliança alvo→usuário, aliança usuário→alvo e mesmo veículo |
+
+O primeiro segmento adicional X-Ray começa em olho+view(1F), até esse ponto+view(1F); o laço não adiciona um primeiro segmento olho→olho+view. Para r=25F, o caminho sem retorno não nulo pode consultar contadores 1F…24F; **24 consultas não são 24 hits**. Com r≤1F o corpo do laço não executa. A seleção não compara por conta própria uma entidade globalmente mais próxima entre todos os segmentos. Os internos de `ProjectileUtil`, a ordem de resultados e a penetração física de materiais específicos permanecem fora desse corpo.
+
+O cubo final, a caixa de busca inflada, r e o extremo visual são medidas distintas. A consulta pode enumerar vários candidatos; não há quota literal de vítimas nesse laço. Não se deduz esfera, cone, largura de feixe, hitbox de projétil ou alcance físico universal do literal 25. O predicado e os filtros descritos não homologam proteção de PvP/claims ou tags finais do mundo.
+
+**Gate servidor de dano:** `!isClientSide && (T−15)%3==0` (`@874–888`). **Não existe condição adicional T≥15 nesse gate.** A congruência admite oportunidades em **0/3/6/9/12**, além de 15 e seguintes, se o callback e os demais gates forem alcançados. Não anunciar “15 ticks sem dano” nem derivar DPS garantido: consulta, tentativa, dano aceito e número de candidatos são resultados separados.
+
+## 5. Dano direto, Irradiated, Gamma e feedback
+
+| Etapa por candidato | Contrato estático |
+|---|---|
+| Fonte direta, `@1026` | `causeRaygunDamage(registryAccess,usuario)` com o usuário do item |
+| Dano solicitado, `@1029–1041` | **1.5F sem Gamma positivo; 2F com Gamma positivo**, passados a `ACCompat.hurt` |
+| Exceção Tremorzilla, `@1013–1052` | `TremorzillaEntity` pula `hurt` e seleciona verdadeiro para a continuação; para outros alvos, `hurt=false` bloqueia essa continuação na mesma iteração |
+| Guardas de status, `@1054–1088` | Continuação verdadeira, alvo `LivingEntity` e tipo fora da tag resolvida `RESISTS_RADIATION` |
+| Efeito solicitado, `@1091–1119` | `Irradiated` por **800 ticks**, amplifier **0 sem Gamma / 4 com Gamma** |
+| Confirmação do status, `@1122` | `addEffect=false` bloqueia o pacote visual |
+| Feedback, `@1125–1154` | `UpdateEffectVisualityEntityMessage(targetId,usuarioId,4/0,800)` enviado somente após `addEffect=true` |
+
+Os branches de Gamma consultam nível positivo; RNG visual não decide a presença de Gamma ou a seleção de 1.5F/2F. A tag publisher `resists_radiation` inclui **Tremorzilla, Nucleeper, Radgill, Brainiac, Gammaroach e Raycat**. Assim, o desvio de `hurt` não basta para aplicar Irradiated à Tremorzilla com os dados empacotados. O runtime consulta a tag resolvida; overrides não foram testados.
+
+O [contrato Gamma](../EXACT-GAMMA-RAY-CAUSAL-1.0.10.json), o [selo pós-hurt](../EXACT-RAYGUN-POST-HIT-GUARDS-1.0.10.json) e as [guardas de radiação](../EXACT-RAYGUN-RADIATION-GUARDS-1.0.10.json) distinguem tentativa de dano, retorno de `hurt`, resistência, retorno de `addEffect` e envio visual. Mitigação, críticos, imunidades da engine, duração efetiva e entrega de mensagens não são aprovados por esses argumentos de chamada.
+
+**DoT tem outro contrato e outra fonte.** [Irradiated](../effects/irradiated.md) usa [Radiation](radiation.md), cuja factory `causeRadiationDamage(RegistryAccess)` não recebe caster. No tick próprio de Irradiated, amplifier a≤0 não executa o efeito periódico; para a>0 calcula j=200/a inteiro e usa fase `duration%j==j/2` quando j>1, ou todos os ticks quando j≤1. Gamma solicita a=4, portanto j=50 e fase 25, ainda sujeito a Hazmat, exclusão Raycat e RNG. A presença de amplifier 0 pode ter outros consumidores. Não transferir automaticamente o caster direto a kill, lifesteal, XP ou Mastery do dano periódico.
+
+### Animação, partículas e UI
+
+`initializeClient` delega o renderer ao proxy. Os campos `UseTime/PrevUseTime` e `RayX/Y/Z/PrevRayX/Y/Z` alimentam interpolação visual, com os fallbacks da tabela de métodos. O contrato Gamma sela também os consumidores compartilhados `ACItemstackRenderer.renderByItem` e `RaygunRenderHelper.renderRaysFor`: variantes azuis de textura/feixe pertencem à seleção Gamma. A ficha não certifica pixels ou toda a implementação gráfica desses owners.
+
+`onUseTick @348–566` seleciona partículas por Gamma, sorteio e progresso; chama `Level.addParticle` com o extremo visual e offsets próprios. `@768–871` solicita `RAYGUN_BLAST` quando existe posição de impacto e T é par, deslocado na direção por `0.05F+nextFloat()×0.09F`. A ausência dessa posição pula o feedback, **não bloqueia a consulta final de dano**. Partícula de explosão não é chamada de explosão de mundo ou recibo de hit. O proxy recebe `playWorldSound(usuario,8)` no ramo cliente.
+
+A barra usa largura `round(13F−D×13F/1000F)`. Na cor, define f=2F×D/1000F e tempo do proxy t=`playerTime+partialTicks`; o pulso é `0.5F×(1+sin(t×f))`, passado a `hsvToRgb(0.3F,0.2F+0.6F×pulso,1F)`. Tooltip apresenta 1000−D sobre 1000 quando D≠0. São leituras de UI sem clamp próprio para estados forçados; não são setters de capacidade ou confirmação de carga remota.
+
+### Anvil e reparo
+
+`AlwaysCombinableOnAnvil` é um marcador vazio, implementado pela Raygun; não é um dos 26 métodos próprios. O consumidor delimitado `CommonEvents.onUpdateAnvil` testa o marcador, mesmo item e ambos os itens encantados antes do caminho que copia a stack esquerda e combina encantamentos. Essa delegação não contém chamada de reposição de carga da Raygun no caminho selado. **Combinação de encantamentos em anvil, recarga por Uranium Rod e reparo de durabilidade são contratos distintos.** A Raygun não declara método próprio de reparo nem consumo de durabilidade nos corpos auditados; não anunciar Uranium Rod como reparo de durabilidade ou converter `anvil_cost` de encantamentos em custo de disparo. Regras completas de reparo da engine e overrides de mods permanecem externas.
+
+## 6. Estado persistível, rede e fronteira de integração
+
+As chaves nativas são `ChargeUsed`, `UseTime`, `PrevUseTime`, `RayX/Y/Z` e `PrevRayX/Y/Z`. Os setters passam por `ACCompat.getOrCreateTag` e `ACCompat.setTag`, cuja delegação usa `DataComponents.CUSTOM_DATA`. Esse caminho identifica o recipiente persistível; não prova conservação, ordenação de escritas, rollback, reconciliação ou cleanup físico após morte, troca de mão/slot, unload, dimensão, reconnect ou save/reload.
+
+| Boundary já auditada | Resultado estático e limite conservado |
+|---|---|
+| Sender de tags | `onUseTick @162/165` no esgotamento cliente e `releaseUsing @25/28` constroem/enviam `UpdateItemTagMessage(entityId,stack)` |
+| Receiver | Há resolução por entityId, seleção de mãos por igualdade de item e chamada condicionada de `UpdatesStackTags.updateTagFromServer`; ter um destino identificado não autentica o remetente |
+| Interface e callback default | Raygun implementa diretamente `UpdatesStackTags`, sem override próprio; o método default encaminha a tag a `ACCompat.setTag`, que grava/remove `CUSTOM_DATA` |
+| Codec | Leitura/escrita de entityId e ItemStack encaminhadas pelos helpers identificados; limites efetivos dos codecs Minecraft e aceitação do payload completo continuam delegados/sem homologação |
+| Autoridade real | `network_authorization=NOT_VERIFIED`: vínculo remetente/entityId, autorização de mãos, saneamento por chave, antirreplay/rate-limit e resultados do mundo não são certificados |
+
+As provas de [receptor](../EXACT-RAYGUN-RECEIVER-1.0.10.json), [identidade](../EXACT-RAYGUN-RECEIVER-IDENTITY-1.0.10.json), [CFG condicional do receptor](../EXACT-RAYGUN-RECEIVER-CFG-1.0.10.json), [ABI de rede](../EXACT-RAYGUN-NETWORK-ABI-1.0.10.json), [codec](../EXACT-RAYGUN-PACKET-CODEC-1.0.10.json) e [helper ItemStack](../EXACT-RAYGUN-ITEMSTACK-HELPER-1.0.10.json) preservam seus escopos. O contrato estático registra essa delegação conhecida; não reabre a auditoria integral da rede nem infere vulnerabilidade ou autorização segura. Carga enviada pelo cliente não é recibo autenticado de custo.
+
+**Campos próprios N/A:** entidade de projétil, quantidade/velocidade/homing/dimensões/vida de projétil; summon/familiar; cura; mana/stamina; cooldown de casting; timer autônomo de spell; mutação de blocos e explosão de mundo nos métodos próprios auditados. O feixe usa traces e consultas, sem spawn próprio de projétil nesse conjunto. `is_projectile`/`is_explosion` são classificações do DamageType. Uso de 72000 ticks, rampa de 15, cadência de 3, animação até 5 e status de 800 pertencem a sistemas diferentes e não preenchem esses campos por analogia.
+
+Alex's Caves conserva o settlement nativo de uso, charge, targeting, fonte, aceitação, status e visuais. Black Arcana governa seu runtime mágico; RPG Skill Tree integra atributos, perks e Mastery por contratos reais no projeto dono. Distância calculada, volume da consulta, predicado, dano solicitado, período EE e chance Solar são parâmetros documentados, **sem seam mutador homologado**. Nenhum setter público autoriza adapter imaginário, reemissão de pacote, segunda cobrança ou double-processing. Callback, candidato, segmento, partícula, tentativa de hurt e pacote não representam um cast/hit/kill único para XP.
+
+## 7. Sete eixos, reprodução e limites finais
+
+| Eixo da rubrica | Contrato técnico estático certificado | Fronteira preservada |
 |---|---|---|
-| `getUseDuration(ItemStack,LivingEntity)` | Retorna literal inteiro **72000 ticks**. | Tempo máximo declarado para uso mantido, **não cooldown** nem duração obrigatória de cada disparo. |
-| `getCharge / setCharge` | Armazenam/lêem tag de `ItemStack` **`ChargeUsed`**, com fallback de leitura zero quando não há tag. | Unidade de estado do item; não é mana Black Arcana. Persistência/migração real precisa de QA. |
-| `hasCharge` | Compara `getCharge` com **1000** (`if_icmpge` salta para o falso). | O predicado indica elegibilidade enquanto `ChargeUsed < 1000` no método examinado. Não confundir valor gasto com energia disponível. |
-| `use` | Consulta `hasCharge`, depois `findAmmo`, `Player.isCreative`, `ItemStack.isEmpty`, `ItemStack.shrink(1)` e `setCharge`, além de sons de início/recarga/sem munição. | Recarga nativa pode consumir item conforme os guards; não autorizar custo adicional em segundo pipeline. Tipo exato de munição e cada branch de consumo ainda requerem a auditoria do helper `findAmmo`. |
-| `onUseTick @246–319` | Consulta `ENERGY_EFFICIENCY` e usa `Math.floor`, `Math.min`, `getCharge`, `setCharge`, o limite **1000** e literal **1.5f**. | Essa é a região de custo/consumo por tick; a fórmula completa e todos os guards ainda não estão selados para mudança de eficiência. |
-| `onUseTick @332–352` | Consulta `GAMMA_RAY` via nível do encantamento e um sorteio booleano. | Não converter presença de encantamento em mudança garantida de dano/status; conferir branches e valores dos modos. |
-| `setUseTime` | Tags `PrevUseTime` e `UseTime`. | Dados de animação/timing do item; não presumir que replicação ou salvamento prove autoridade do cliente. |
-| `getBarWidth` | Usa literais **13.0f** e **1000.0f** junto de `getCharge`. | Escala do indicador visual, não alcance ou tamanho da colisão. |
+| **Identidade** | Recurso/tags diretas, item, factory, JAR e classes SHA-exatos | Fonte 1.1.1 adjacente; tags/datapacks efetivos sem QA |
+| **Comportamento** | Disposição dos 26 métodos; lifecycle de uso/recarga/liberação; callbacks Solar e visuais; fonte e status | Dispatch externo e resultados físicos não são inferidos dos fingerprints |
+| **Parâmetros** | D<1000, uso72000, p/r, EE, Solar, dano/status, interpolação/UI e campos próprios N/A | Valores são argumentos/cálculos nativos, sem hook mutador ou clamps globais presumidos |
+| **Targeting** | Traces distintos, X-Ray primeiro retorno/fallback, centro local14, cubo±1, predicado e filtros | Alcance físico, nearest global, materiais, LOS, PvP e claims sem homologação |
+| **Custos/tempo** | Recarga por uma rod/Creative, charge cliente sob EE, recuperação Solar servidor; cadência ofensiva independente | Sem mana extra, cooldown inventado, cobrança duplicada ou carga C2S autenticada |
+| **Integração** | Owners item/factory/efeito/UI/anvil/rede delimitados; Raygun direta e Radiation periódica separadas | `NO_MUTATION`; autoria de kill/XP/Mastery e deduplicação executável não certificadas |
+| **Validação** | Extração do JAR, censo26/1111/107, pivôs por método e composição dos contratos EE/Solar/Gamma/X-Ray | `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `perk_certification=NOT_CERTIFIED`; provider aberto |
 
-Em `onUseTick` e `releaseUsing` são encontradas mensagens `UpdateItemTagMessage` enviadas por `sendMSGToServer`. A inspeção do **sender** não comprova autenticação no handler, integridade de `ChargeUsed`, antirreplay, autorização do ID de entidade nem enforcement de custos no servidor. Nenhuma perk pode tratar o pacote enviado como fonte autoritativa sem prova do receptor.
+A [prova individual](../EXACT-RAYGUN-CONTRACT-1.0.10.md) registra os resultados efetivamente executados. O [auditor de contrato](../../../../../docs/qa/alexscaves_1010_raygun_contract_audit.py) e o [workflow dedicado](../../../../../.github/workflows/alexscaves-1010-raygun-contract.yml) confrontam o JAR exato, recurso, classe, todos os métodos e disposições/pivôs, compondo os selos anteriores em seus escopos. O [fluxo de charge/munição](../EXACT-RAYGUN-CHARGE-AMMO-FLOW-1.0.10.json) fixa oito métodos, 168 instruções e 15 branches; o contrato atual dá contexto causal ao conjunto de 26, sem contar corpos compartilhados em duplicidade. Uma execução local ou da CI valida a prova estática, não combate em jogo.
 
-### Dano, owner e efeito secundário
+**QA física pendente (`NOT_TESTED`):** Survival/Creative; carga0/999/1000 e valores forçados; recarga e nova interação; tempo antes/depois15 e diferentes níveis EE; Solar fora/em uso, céu/dimensão e concorrência com gasto; X-Ray primeiro segmento/fallback, obstáculos, extremos e entidades de tamanhos diversos; múltiplos candidatos, aliados e veículos; Gamma e coexistência forçada; Tremorzilla/resistência publisher e override; `hurt=false`, `addEffect=false`, status anterior e Hazmat; troca de mão/slot, liberação e cache de som; cliente/servidor dedicado, latência, mensagens, reconnect, morte, unload, dimensão e save/reload; datapacks, PvP/claims e crédito único de kill/XP/Mastery. Nenhum cenário recebe PASS por inspeção estática.
 
-- `RaygunItem.onUseTick @1013–1047` distingue `TremorzillaEntity` num ramo próprio, chama `ACDamageTypes.causeRaygunDamage(registryAccess, caster)` em `@1026` e solicita `ACCompat.hurt(target, damageSource, amount)` em `@1041`. Na decisão local imediatamente anterior a `hurt`, os operandos possíveis são **`2.0f`** e **`1.5f`**, condicionados a flag local `iload 18`. A origem completa da flag, o resultado de mitigação e a aceitação de cada hit não são certificados por esses números.
-- O `DamageSource` recebe o *caster* como argumento da factory no trecho inspecionado; isso não garante crédito de kill, procs, Mastery ou políticas de PvP de mods externos. O retorno booleano de `ACCompat.hurt` participa dos guards posteriores; um evento visual ou um alvo dentro da AABB não certifica dano aceito.
-- `onUseTick @1076–1119` verifica `ACTagRegistry.RESISTS_RADIATION`, referencia `ACEffectRegistry.IRRADIATED` e, em ramo condicionado, solicita `LivingEntity.addEffect` com `MobEffectInstance(..., **800 ticks**, amplifier local)`. Os 800 ticks são a duração **solicitada ao aplicar o efeito**, não duração universal do DamageType e nem prova de sucesso para todo hit. A ficha [Irradiated](../effects/irradiated.md) conserva o contrato de tick, exaustão e redução Hazmat.
-- `onUseTick @1125–1154` monta `UpdateEffectVisualityEntityMessage`. Esse tráfego é downstream visual e não deve gerar um segundo proc de ataque ou ser usado como confirmação de aplicação do status.
+**Estados finais:** `static_technical_contract=CERTIFIED_STATIC_7_AXES`, `claim_scope=STATIC_TECHNICAL_CATALOG_ONLY`, `evidence_grade=SHA_EXACT_BINARY_BEHAVIOR`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `perk_certification=NOT_CERTIFIED`, `network_authorization=NOT_VERIFIED`, `mutation=NO_MUTATION`, `provider_universe_closed=false`.
 
-### Requisitos antes de perks mutadoras
-
-1. Fechar CFG e limites efetivos de distância/área, distinguir `X_RAY`, `GAMMA_RAY` e `ENERGY_EFFICIENCY` e os predicados usados nas buscas; não sobrescrever `ProjectileUtil` ou a filtragem de aliados.
-2. Identificar `findAmmo`, custo completo de `ChargeUsed`, servidor autoritativo de tags e validação do `UpdateItemTagMessage`. Não duplicar recarga ou cobrança por feitiço.
-3. Confirmar `ACCompat.hurt`, critérios de sucesso, hits múltiplos/por-tick, atribuição causal, escala de dano, imunidades, `Irradiated` e deduplicação de XP/procs.
-4. Executar cliente/servidor dedicados com casos de níveis de enchantment, alvos aliados/mesmo veículo, Tremorzilla, resistência à radiação, `ItemStack` duplicado, save/reload e proteção de claims.
-
-**Decisão:** a ficha continua `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; nenhum `COMPLETE_PERK_READY`, avanço de 24/30, nova raiz mágica ou promoção de Stage. Os parâmetros acima são **observações estáticas compiladas**, não contratos de intervenção seguros.
-
-## Emissão C2S e recarga — auditoria do receiver no JAR 1.0.10
-
-**Escopo estrito:** `SHA_EXACT_1010_RAYGUN_AMMO_AND_UPDATE_ITEM_TAG_C2S_SELECTED_BYTECODE`. A [evidência selada](../EXACT-RAYGUN-PACKET-AMMO-1.0.10.json) fixa a identidade do JAR, SHA-256 de `RaygunItem.class` e `UpdateItemTagMessage.class`, **13 métodos selecionados** (nove do item e quatro da mensagem) e os offsets dos dois envios. [PR do probe, testes e CI](https://github.com/Gustavaopere/Black-Arcana/pull/986). A auditoria não distribui implementações completas nem valida um cliente real.
-
-### Munição / recharge
-
-- `RaygunItem.findAmmo(Player)` percorre `Inventory.getContainerSize` e `Inventory.getItem`, testando `RaygunItem.AMMO` nos stacks. O predicado é preenchido pelo método compilado `lambda$static$0(ItemStack)`: compara o item com `ACBlockRegistry.URANIUM_ROD` convertido via `Block.asItem()`. **Identidade do insumo nativo:** item de `URANIUM_ROD`, não combustível genérico nem nova mana.
-- `findAmmo` possui um ramo próprio para `Player.isCreative` e retorna `ItemStack.EMPTY` nesse ramo. Portanto, distinguir modo criativo do fluxo de procura/consumo; o retorno vazio do helper **não prova** falha automática da recarga criativa.
-- `RaygunItem.use` consulta `hasCharge`, `findAmmo`, `isCreative`, `isEmpty`; contém `ItemStack.shrink(1) @65` e `setCharge(ItemStack,int) @79`. O literal `1` é o débito potencial de **uma unidade de munição no ramo correspondente**, não cobrança por cada tick de raio. O `0` passado ao setter no caminho de recarga é distinto do limite **1000** de `hasCharge`.
-- `hasCharge` compara `ChargeUsed` com `1000` (`if_icmpge`) e `getCharge/setCharge` usam a tag `ChargeUsed`. A relação exata entre `ENERGY_EFFICIENCY`, custo por tick e todas as transições do item continua exigindo análise completa do fluxo de `onUseTick`.
-
-### Transporte e dispatcher: quem pode ser alterado?
-
-| Local compilado | Relação demonstrada | Limite |
-|---|---|---|
-| `onUseTick @162 / @165` | Constrói `UpdateItemTagMessage(entityId, itemStack)` e invoca `AlexsCaves.sendMSGToServer(Object)`. | O client envia dados, não prova que eles foram aceitos nem tratados como autoridade. |
-| `releaseUsing @25 / @28` | Mesmo par construtor/envio, sob ramo que consulta `Level.isClientSide`. | Não equiparar mensagem enviada a liquidação de custo, dano ou cooldown. |
-| `UpdateItemTagMessage.read/write` | Serializam `entityId` como inteiro e `itemStackFrom` via `PacketBufferUtils.readItemStack/writeItemStack`. | A serialização não valida semântica, propriedade da entidade, cooldown ou direitos do jogador. |
-| `UpdateItemTagMessage.handle` | Consulta `ACNetworkContext.getSender` e `isClientSide`, com seleção de nível/contexto; usa `Level.getEntity(entityId)`, verifica tipo do item nas mãos MAIN_HAND/OFF_HAND e alcança `UpdatesStackTags.updateTagFromServer`. | **Não foi homologado** o vínculo de `entityId` com o remetente, o tipo concreto de item autorizado, a sanitização das tags ou o escopo de atualizações. |
-| `handle @158 / @171 / @174` | Obtém tags de `ItemStack` por `ACCompat.getTag` e chama `UpdatesStackTags.updateTagFromServer(Entity, ItemStack, CompoundTag)`. | O efeito real depende da implementação de `UpdatesStackTags` do item selecionado e de guards prévios; não presumir cópia irrestrita de NBT sem provar o consumidor. |
-
-**Distinção revisada na PR #990:** o `RaygunItem` **implementa diretamente** `UpdatesStackTags` (JAR 1.0.10); entre seus 26 métodos declarados não há override de `updateTagFromServer`, mas a interface fornece uma **implementação `default` compilada**. O método padrão chama `ACCompat.setTag`, que grava ou remove `DataComponents.CUSTOM_DATA`. O destino estático está identificado; autorização do pacote, limites de atualização e efeitos físicos permanecem `NOT_VERIFIED`.
-
-### Fronteira de segurança e pending QA
-
-A evidência de referência da mensagem confirma *resolução por ID de entidade* e *seleção de mão por igualdade de item*, mas não substitui revisão de seu fluxo de controle, da identidade do remetente, do código do implementador de `UpdatesStackTags`, das regras de rede e do resultado em servidor. **Não há vulnerabilidade demonstrada, tampouco garantia demonstrada de autorização segura.** Nenhuma perk deve confiar no `ItemStack` recebido como estado de carga autoritativo.
-
-Próxima auditoria obrigatória: identificar a hierarquia concreta do `RaygunItem`, quem implementa `UpdatesStackTags`, quais tags o callback admite, origem de `entityId` e política real de rate-limit/replay; depois executar no modpack exato cliente manipulado/servidor dedicado, mãos distintas, troca de item em trânsito, entityId de outro jogador, reconnect e reload. O Black Arcana não deve alterar esse pacote nem introduzir segundo pipeline de recarga.
-
-**Estado após a auditoria:** `raygun` ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Sem atualização dos índices, contagem de 24/30, Stage ou homologação global.
-
-## Contrato SHA-exato — receiver real, interface e `CUSTOM_DATA` (PR #990)
-
-**Escopo:** `SHA_EXACT_1010_RAYGUN_C2S_RECEIVER_JVM_DISPATCH_ONLY`. [Manifesto de quatro classes](../EXACT-RAYGUN-RECEIVER-1.0.10.json) · [PR #990](https://github.com/Gustavaopere/Black-Arcana/pull/990) · [workflow JDK 21](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-raygun-receiver.yml). O manifesto fixa o JAR publisher 1.0.10 por SHA-1/SHA-256/tamanho, quatro SHA-256 de classes, cinco descritores/digests de métodos e 13 anchors de emissão/recepção. Os dados são de bytecode compilado — não observação de cliente ou autorização de servidor.
-
-### Implementação que recebe a atualização
-
-- `RaygunItem.class` — SHA-256 `3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c`. Declaração JVM: estende diretamente `net.minecraft.world.item.Item` e **implementa `com.github.alexmodguy.alexscaves.server.item.UpdatesStackTags`**, além de outras interfaces. Os 26 métodos declarados não sobrescrevem `updateTagFromServer`.
-- `UpdatesStackTags.class` — SHA-256 `1ba03e1d244a0a6ad49a888cb406bf518858c52988b4210db204c0bbd1e6e0ad`. Seu único método declarado é **`public default void updateTagFromServer(Entity,ItemStack,CompoundTag)`**, cuja implementação compilada chama `ACCompat.setTag(ItemStack,CompoundTag)` em `@2`. Isto resolve a rota herdada pelo Raygun sem inventar um override no item.
-- `ACCompat.class` — SHA-256 `333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b`. `setTag(ItemStack,CompoundTag)` usa `DataComponents.CUSTOM_DATA`: com tag nula, invoca `ItemStack.remove(CUSTOM_DATA) @8`; com tag presente, constrói `CustomData.of(tag) @20` e invoca `ItemStack.set(CUSTOM_DATA,value) @23`. Trata-se de escrita em dados do item, **não** da aplicação de dano, mana, status ou cooldown.
-
-### Gates observados no pacote
-
-| Offset em `UpdateItemTagMessage.handle` | Decisão / referência compilada | Limitação |
-|---|---|---|
-| `@8`, `@15`, `@20–31` | Consulta `ACNetworkContext.getSender`, `isClientSide` e, no ramo cliente, `PROXY.getClientSidePlayer`; sai caso não exista jogador | Ter um sender/contexto é diferente de verificar a autoria de cada `entityId` recebido |
-| `@39–50` | Resolve `entityId` via `Level.getEntity(int)` no nível do jogador; exige `LivingEntity` | Não foi comprovado vínculo obrigatório entre remetente e entidade escolhida |
-| `@70–129` | Compara o tipo do item do payload com o item da mão principal e, se necessário, secundária; escolhe o `ItemStack` correspondente | Igualdade de tipo do item não certifica que o stack e seu `CUSTOM_DATA` foram originados do servidor |
-| `@131–161` | Exige stack de mão não nulo, `instanceof UpdatesStackTags` e `ACCompat.getTag(payloadStack) != null` | O guard aceita um `CompoundTag` presente, mas não demonstra validação semântica dos campos `ChargeUsed`/`UseTime` |
-| `@171–174` | Extrai a tag do payload e chama `UpdatesStackTags.updateTagFromServer(entity,heldStack,tag)` | O método `default` repassa essa tag ao setter de `CUSTOM_DATA` do stack selecionado, sujeito aos caminhos anteriores |
-
-**Distinção de autoridade:** a cadeia de referências `RaygunItem.onUseTick/releaseUsing → UpdateItemTagMessage → handle → UpdatesStackTags.default → ACCompat.setTag → DataComponents.CUSTOM_DATA` está confirmada estaticamente para a versão 1.0.10. Isso não comprova que o servidor aceite qualquer mensagem arbitrária, pois o registro/validação do canal, sua direção, os checks de autorização fora do handler e o resultado em sessão real **não foram auditados integralmente**. Também não comprova que os valores de carga ou de tempo estejam saneados por outros consumidores. Não declarar exploit nem segurança demonstrada a partir de uma inspeção local.
-
-**Pontos de QA / perks:** investigar política de rede e vínculo remetente-`entityId`, alteração de mão ou stack durante trânsito, validação de `ChargeUsed` e `UseTime`, persistência de `CUSTOM_DATA`, replay, efeitos de encantamentos, proteção em PvP e origem de XP/Mastery. Qualquer perk de custo ou duração deve operar via boundary nativa comprovada e server-authoritative; nenhuma modificação do pacote fica autorizada por esse manifesto.
-
-**Status:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Contador de Alex's Caves Continued **24/30 (80%)**, sem promoção de objetos, hooks ou Stage. O suporte de `UpdatesStackTags` é um contrato de atualização de estado de item, não uma nova magia.
-
-## Registro nativo C2S — descoberta delimitada sem certificação
-
-Nova trilha independente de [inspeção do registro do pacote e aceitação](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md), com [probe read-only](../../../../../docs/qa/alexscaves_1010_raygun_registration_probe.py) e [CI JAR SHA-exata](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-raygun-registration.yml).
-
-O recorte busca classes candidatas que referenciam `UpdateItemTagMessage` ou `ACNetworkContext` no binário exato. Esses tokens e callsites não demonstram, por si, registro do canal, direção da mensagem, validação de `entityId`, pertencimento do `ItemStack` ou sanitização de `CUSTOM_DATA`. A associação causal do dano com o caster deve continuar condicionada à aceitação nativa de `ACCompat.hurt` e aos guards de alvo do provider. O novo probe não reimplementa as funções nem substitui os três manifestos Raygun existentes.
-
-**Estado inalterado:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Sem novo contrato estático ou alteração de contadores/Stage.
-
-## Registro nativo verificado por ABI — ACNetwork 1.0.10
-
-O manifesto SHA-exato [EXACT-RAYGUN-NETWORK-ABI-1.0.10.json](../EXACT-RAYGUN-NETWORK-ABI-1.0.10.json) acrescenta aos recortes de sender/receiver as entradas do registro de rede nativo do provider, extraídas do JAR publisher 1.0.10 (classe `ACNetwork.class`, SHA-256 `8544a3436444be3248f9176bbcdee5fa30ee45ec2fbcf7a35a5e4fe4d9d88482`). O [probe e seus testes](../../../../../docs/qa/alexscaves_1010_raygun_network_abi_probe.py) selam três métodos, descritores, digests, offsets e sete âncoras. Evidência de execução SHA-exata: [Actions 41333495556](https://github.com/Gustavaopere/Black-Arcana/actions/runs/41333495556).
-
-| Entrada real | Contrato ABI observado | Limite de uso por perks |
-| --- | --- | --- |
-| `ACNetwork.registerMessages()` | `ldc UpdateItemTagMessage @151`; `register(Class,BiConsumer,Function,BiConsumer) @168` | Entrada da mensagem na tabela interna; não é prova isolada de autorização de `entityId` |
-| `ACNetwork.registerPayloads(RegisterPayloadHandlersEvent)` | `registerMessages @0`; `registrar @12`; `PayloadRegistrar.playBidirectional @22` | O **envelope/payload comum** usa registro bidirecional NeoForge; não foi observado registro exclusivo de `UpdateItemTagMessage` como payload separado |
-| `ACNetwork.lambda$registerPayloads$0(ACPayload,IPayloadContext)` | `ACNetwork$NeoForgeContext.<init> @24`; `ACNetwork$Entry.handle @27` | Callback encaminha via entrada interna, sem prova de validação de autoria, alvo, mão, `ChargeUsed` ou `UseTime` |
-
-**Boundary:** os opcodes acima não autorizam modificar `DataComponents.CUSTOM_DATA`, duplicar consumo nativo, nem alterar seleção/dano do Raygun. Os guards do receiver não comprovam vínculo sender–`entityId`, limites semânticos de payload, replay protection ou QA física. `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`; sem mudanças em contadores/Stage.
-
-## Identidade do contexto do pacote — JAR 1.0.10
-
-O [manifesto do contexto e guardas JVM](../EXACT-RAYGUN-RECEIVER-IDENTITY-1.0.10.json) fixa quatro SHA-256 de classes, seis digests de métodos, nove branch targets e sete símbolos nativos; 14 testes sintéticos e auditoria do JAR exato passaram no [workflow da PR #995](https://github.com/Gustavaopere/Black-Arcana/actions/workflows/alexscaves-1010-raygun-receiver-identity.yml).
-
-A auditoria [PR #995](https://github.com/Gustavaopere/Black-Arcana/pull/995) acrescenta o contexto da mensagem e seu dispatch (sem alterar o runtime). O contrato binário SHA-exato de `UpdateItemTagMessage.handle` foi confrontado com `ACNetwork$NeoForgeContext` e `ACNetwork$Entry`.
-
-- `ACNetwork$NeoForgeContext.getSender` consulta `IPayloadContext.player` e exige `ServerPlayer`; isso identifica a origem de um jogador no contexto, **não** demonstra vínculo automático entre o remetente e o `entityId` buscado pelo handler.
-- `ACNetwork$NeoForgeContext.isClientSide` usa `IPayloadContext.flow` e `PacketFlow.isClientbound`; direcionalidade do envelope já havia sido observada no registro nativo, mas o lado lógico não saneia `CUSTOM_DATA`.
-- `ACNetwork$Entry.handle` chama `BiConsumer.accept`; o handler efetivo contém nove desvios compilados relacionados à resolução de entidade, mão e tag. A presença de branches não estabelece resultado físico, ownership, replay protection nem verificação de `ChargeUsed` / `UseTime`.
-
-Ver a [matriz de evidências e requisitos RN-03/RN-04](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md). **Fail-closed:** `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`. Nenhum novo certificado, hook, objeto, contador ou Stage.
-
-## Entradas do pacote e CFG normal seladas — 1.0.10
-
-A [trilha de controle e campos do receptor](../EXACT-RAYGUN-RECEIVER-CFG-1.0.10.json) fixa, no mesmo método SHA-exato `UpdateItemTagMessage.handle`, os acessos JVM `entityId @39` e `itemStackFrom @60`, o lookup `Level.getEntity @42`, a confirmação de `LivingEntity @47`, as verificações de **tipo** de item das mãos `ItemStack.is @81/@113` e o dispatch de atualização `UpdatesStackTags.updateTagFromServer @174`.
-
-**Origem e destino de `CUSTOM_DATA` no receiver:** a
-stack proveniente do campo `itemStackFrom` do
-pacote ocupa o slot JVM local **5** (`getfield @60 → astore @63`).
-A stack da mão selecionada na entidade ocupa o slot **6**
-(`astore @95` na mão principal ou
-`astore @127` na secundária).
-A interface de atualização em `@174` recebe
-**slot 6 como stack de destino** e o
-`CompoundTag` derivado de
-`ACCompat.getTag(slot 5) @171`.
-Os offsets de origem e seleção estão selados no manifesto;
-nenhum saneamento de valores é presumido.
-
-**Contrato condicional para perks:** o fluxo normal exige passagem pelos checks compilados, mas não oferece contrato demonstrado de autorização do `entityId` pelo remetente, equivalência do `ItemStack` informado, validação de `CUSTOM_DATA` ou antirreplay. Há distinção entre mão principal e secundária; nenhum desses métodos é evidência de hook seguro para alterar `ChargeUsed`, `UseTime` ou dano. O [protocolo de auditoria RN-04](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md) continua condicionado; execução e resultados de QA física **não foram comprovados**.
-
-Status mantido: ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Sem alteração de certificados, índices globais ou Stage.
-
-## Codec nativo do pacote — identidade e campos na versão 1.0.10
-
-O [manifesto SHA-exato de serialização](../EXACT-RAYGUN-PACKET-CODEC-1.0.10.json) sela os quatro métodos de `UpdateItemTagMessage` e nove referências JVM da construção, leitura e escrita dos campos. O `entityId` é lido por `FriendlyByteBuf.readInt @5` e escrito por `FriendlyByteBuf.writeInt @5`; o `itemStackFrom` é lido por `PacketBufferUtils.readItemStack @9` e escrito por `PacketBufferUtils.writeItemStack @14`. O construtor preenche esses campos nos offsets `@6` e `@11`.
-
-O formato transporta um identificador e uma stack, mas **não** verifica autorização do identificador pela sessão de rede, identidade/posse da stack, saneamento de `CompoundTag` ou `ChargeUsed`/`UseTime`. A análise se limita ao ABI do pacote, com QA física ainda não executada. Veja a [matriz RN-04](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md).
-
-**Estado:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`; nenhum hook, certificado ou Stage promovido.
-
-## Limites do helper de ItemStack — codec nativo 1.0.10
-
-O [manifesto do helper sombreado de Citadel](../EXACT-RAYGUN-ITEMSTACK-HELPER-1.0.10.json) confirma que `PacketBufferUtils.readItemStack(ByteBuf)` utiliza `ItemStack.OPTIONAL_STREAM_CODEC`, faz cast para `RegistryFriendlyByteBuf` e chama `StreamCodec.decode`; `writeItemStack(ByteBuf,ItemStack)` usa o mesmo codec e chama `StreamCodec.encode`. O helper tem **dois métodos pertinentes de seis instruções cada**, sem desvios locais, com sete âncoras ABI seladas por JAR.
-
-Isso determina a **fronteira de delegação ao Minecraft**. O tamanho máximo do `ItemStack`, os limites de NBT/componentes e os controles internos do codec **não foram demonstrados** pela inspeção do helper. Tampouco há evidência de validação server-side dos campos do Raygun, autorização de `entityId`, replay protection ou hooks de perk. Consulte a [matriz RN-04](../../../../../docs/qa/alexscaves-1010-raygun-network-handoff.md).
-
-**Estado preservado:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Nenhum certificado, contador ou Stage promovido.
-
-## ItemStack.OPTIONAL_STREAM_CODEC — corroboração Mojang 1.21.1
-
-O [manifesto vanilla 1.21.1](../EXACT-MOJANG-1211-ITEMSTACK-STREAM-ABI.json) acrescenta uma **autoridade binária separada** da versão instalada de NeoForge: `ItemStack` obfuscada como `cuq.class` e `OPTIONAL_STREAM_CODEC` em campo `h`, inicializado com `cuq$1 @120/@127`. No caminho de leitura desse codec vanilla, há comparação `ifgt @6` do valor numérico lido e um ramo `ItemStack.EMPTY`; o outro ramo delega a leitura de item/holder (`StreamCodec.decode @17`) e do patch de componentes (`DataComponentPatch` codificado como `kn.c`, `StreamCodec.decode @30`). No caminho de escrita há um ramo `ifeq @4` e delegações de item e patch (`StreamCodec.encode @31/@47`).
-
-**Escopo do selo:** vanilla **Minecraft 1.21.1 oficial** (cliente/mapping por hashes Mojang), não a classe Minecraft transformada no **NeoForge 21.1.248**. Não prova limites efetivos de NBT, tamanho de item, quantidade máxima, validação server-side do `entityId` e `CUSTOM_DATA`, autorização de charge/tempo nem testes físicos. A [matriz de aceite VC-01…VC-06](../../../../../docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md) mantém esses gates bloqueados.
-
-**Estado preservado:** ⚠️ `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`; sem novo certificado estático, mutação, indicador global ou promoção de Stage.
-
-## NeoForge 21.1.248 — ItemStack do servidor distribuído
-
-A [auditoria da distribuição oficial NeoForge 21.1.248](../../../../../docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md) acrescenta classfiles SHA-exatos de `net.minecraft.world.item.ItemStack` e `ItemStack$1` ao dossiê Raygun. O [manifesto do codec de servidor](../EXACT-NEOFORGE-211248-ITEMSTACK-SERVER-ABI.json) fixa 15 referências JVM, incluindo `readVarInt`, `ITEM_STREAM_CODEC`, `DataComponentPatch.STREAM_CODEC` e o ramo de stack vazia. Essa evidência complementa o codec Mojang vanilla sem presumir equivalência binária.
-
-**Escopo restrito:** trata-se do classfile fornecido pelo instalador oficial de servidor; a versão efetivamente carregada pelo ModLauncher com os mods do pack não foi observada. Não foram auditados limites internos do patch de componentes nem homologados campos `CUSTOM_DATA`, `ChargeUsed`/`UseTime`, `entityId` ou ownership. **VC-01 ainda parcial.** `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`.
-
-## DataComponentPatch.STREAM_CODEC — limites do contador e capacidade
-
-Na distribuição oficial NeoForge 21.1.248, o [manifesto SHA-exato de `DataComponentPatch$1`](../EXACT-NEOFORGE-211248-COMPONENT-PATCH-ABI.json) observa duas contagens `readVarInt @1/@6`, laços de componentes acrescentados e removidos, e leitura dos valores por codecs específicos de `DataComponentType`. O literal **65.536** (`ldc @33`) é usado como **capacidade inicial** via `Math.min @35` para construir um `Reference2ObjectArrayMap`; **não é uma validação comprovada do número máximo de componentes aceitos**.
-
-Isso esclarece a rota de desserialização do pacote Raygun, mas não prova tamanho máximo/níveis de NBT, whitelist de `CUSTOM_DATA`, vínculo com o remetente, hooks mutadores ou QA física. [Matriz VC-02](../../../../../docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md). **Estado: ⚠️ parcial/condicionado; `NOT_CERTIFIED`, `NO_MUTATION`, `physical_qa=NOT_TESTED`.**
-
-
-## CUSTOM_DATA / NBT — seleção de codecs na distribuição NeoForge 21.1.248
-
-A [auditoria dirigida de delegação SRG + overlay](../../../../../docs/qa/alexscaves-1010-raygun-vanilla-codec-acceptance.md)
-e seu [manifesto SHA-exato](../EXACT-NEOFORGE-211248-CUSTOM-DATA-DELEGATE-ABI.json)
-registram `CustomData.class` e `DataComponents.class` no JAR SRG
-oficial instalado, e `ByteBufCodecs.class` no overlay NeoForge.
-Foram observadas a referência `CUSTOM_DATA` em
-`DataComponents.bootstrap @0` e quatro funções de `ByteBufCodecs`
-que passam `2097152L` (2 MiB) a `NbtAccounter.create(J)`.
-
-**Limite crucial:** os quatro literais são argumentos compilados de
-factories NBT; não certificam limite máximo de bytes/profundidade do
-`ItemStack` recebido, nem estabelecem que a mensagem do Raygun use
-essas quatro funções. A autorização do `entityId`, o saneamento de
-`ChargeUsed`/`UseTime`, a compatibilidade ModLauncher e os testes
-físicos continuam sem demonstração.
-
-**Estado:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` ·
-`mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`.
-
-
-## Targeting Raygun 1.0.10 — operandos e desvios `X_RAY` SHA-exatos (PR #1015)
-
-A [auditoria complementar de seis janelas compiladas](../../../../../docs/qa/alexscaves-1010-raygun-xray-target-handoff.md) e seu [manifesto SHA-exato](../EXACT-RAYGUN-XRAY-TARGET-1.0.10.json) reinspecionaram `RaygunItem.onUseTick(Level,LivingEntity,ItemStack,int)` (digest `b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5`), no publisher JAR 1.0.10. Não foi recontado como nova ficha.
-
-- O cálculo local inicial usa **`25.0f × local float 7`** (`ldc_w @35`, `fload @38`, `fmul @40`, `fstore 8 @41`). O nível de `X_RAY` é lido separadamente em `@44–58`, gerando `local int 9` após `ACCompat.enchantLevel`. O significado completo da variável `7` e a atuação posterior de `local 9` precisam de CFG restante: **25 não é alcance final certificado**.
-- `ProjectileUtil.getHitResultOnViewVector @69` e `LivingEntity.pick @80` recebem a distância calculada `local float 8`; em outra região `ProjectileUtil.getEntityHitResult @640` usa uma caixa AABB/predicado com branch `ifnull @647`. A chamada `Level.getEntities @943` abre uma enumeração adicional, com iterador e teste de saída em `@960`. Não declarar cone, alcance máximo por modo ou número total de hits a partir dessas superfícies distintas.
-- Existem exclusões por `isAlliedTo @987/@996` e `isPassengerOfSameVehicle @1005`, além do ramo `instanceof TremorzillaEntity @1013`. Um pedido de dano `causeRaygunDamage @1026 → ACCompat.hurt @1041` seleciona **`2.0f` ou `1.5f`** por `local 18` (`@1029–1038`), e testa o retorno `ifeq @1044`. Esses são operandos de dano **solicitado** e não equivalem a dano aceito, crescimento por perk ou efeito de `X_RAY`.
-
-**Estado e gates:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Faltam CFG completo e dataflow dos locais `7/9/18`, bloqueios de alvo/LOS, limites efetivos, autenticação de estado de item/rede, custo server-owned e QA real. Não converter essas evidências estáticas em aumento de range/target/área/dano e não alterar contadores ou Stage 06.
-
-
-## Censo de slots locais do Raygun 1.0.10 — condições de targeting e dano (PR #1016)
-
-A [sonda JVM SHA-exata](../../../../../docs/qa/alexscaves-1010-raygun-local-flow-handoff.md) e o [manifesto de acessos a slots](../EXACT-RAYGUN-LOCAL-FLOW-1.0.10.json) complementam os seis pontos de ray trace da PR #1015, com evidência do publisher JAR 1.0.10. A sonda conferiu a mesma classe `RaygunItem.class` e o digest exato de `onUseTick`, **sem exportar o corpo integral do método**.
-
-O recorte identifica **quatro slots JVM** com a seguinte relação de escrita e leituras:
-
-| Slot | Escrita compilada | Leituras selecionadas | Implicação para perks |
-|---|---|---|---|
-| `float 7` | `fstore @33` | `@38/@270/@360` | Usado por `25.0f × local 7` em `@35–41`, mas a entrada do local passa por divisão/alternativa `1.0f` com branch anterior |
-| `float 8` | `fstore @41` | `@66/@75/@90/@578/@597` | Distância calculada alimenta múltiplas regiões de trace/seleção; não prova valor final de range ou intervenção segura |
-| `int 9` | `istore @58` | `@105/@122/@569` | Flag 0/1 derivada da leitura `X_RAY` (`enchantLevel @47`, `ifle @50`); falta controlar os desvios subsequentes |
-| `int 18` | `istore @346` | `@367/@402/@922/@1029/@1138` | Flag 0/1 atribuída após a região `GAMMA_RAY @332`, e consumida em `@1029` para escolher `2.0f/1.5f` antes de `ACCompat.hurt`. A relação de causalidade e de reachability integral ainda requer CFG |
-
-A observação **não autoriza identificar cada leitura como uma única definição em todos os caminhos**, pois slot JVM não equivale a variável SSA. Tampouco documenta range externo, dano efetivo, penetração através de blocos, número de alvos, segurança de claims, procs de Mastery ou hooks mutadores.
-
-**Estado preservado:** ⚠️ `NOT_CERTIFIED` · `NO_MUTATION` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`. Não promover contadores 28/30, índices, Stage 06 ou `COMPLETE_PERK_READY`. A auditoria deve ser selada por CI final antes de incorporar o resultado.
-
-
-## Desvios reais de `X_RAY` e `GAMMA_RAY` no Raygun 1.0.10 (PR #1017)
-
-A [auditoria dirigida de branches JVM](../../../../../docs/qa/alexscaves-1010-raygun-condition-branches-handoff.md) e seu [manifesto SHA-exato](../EXACT-RAYGUN-CONDITION-BRANCHES-1.0.10.json) completam a documentação dos oito consumidores já conhecidos dos slots `9` e `18`, sem reconstruir o CFG global nem permitir alteração de runtime.
-
-**X_RAY — flag JVM slot 9**, atribuída em `@58` após `ACCompat.enchantLevel(X_RAY) @47` e `ifle @50`: `iload 9 @105 → ifeq @107` escolhe as referências de `HitResult` (fallthrough `@110` versus destino `@115`), e `iload @122 → ifeq @124` faz segunda escolha (`@127` versus `@132`). `iload @569 → ifeq @571` desvia para `@669` quando zero, ou entra no recorte de `LivingEntity.getBoundingBox @575` e `fload 8 @578` quando não zero. Isso ancora um **branch distinto de seleção/consulta**, mas não certifica penetração universal por blocos, range efetivo, entidade atingida ou permissão territorial.
-
-**GAMMA_RAY — flag JVM slot 18**, atribuída em `@346` após `ACCompat.enchantLevel(GAMMA_RAY) @335` e `ifle @338`: `iload @367 → ifeq @369` seleciona a região de partícula `BLUE_RAYGUN_EXPLOSION`; `@402 → ifeq @404` seleciona a região de `BLUE_HAZMAT_BREATHE`. `@922 → ifeq @924` escolhe `4/0` no caminho observado. **`@1029 → ifeq @1031` escolhe `2.0f` (não zero) ou `1.5f` (zero) antes de `ACCompat.hurt @1041`**. `@1138 → ifeq @1140` seleciona `4/0` para outro caminho. Não interpretar os literais `4/0` como acertos ou amplificador de efeito sem examinar o consumidor posterior.
-
-Esta é evidência de **seleções condicionais estáticas** na versão publisher 1.0.10, não garantia da aplicação de dano, alcance real, cobertura de claims/PvP ou contrato de hook para perks. **⚠️ parcial/condicionado · `NO_MUTATION` · `NOT_CERTIFIED` · `physical_qa=NOT_TESTED`**. A QA física do modpack e validação de `WorldEffectPolicy`, owner e server authorization permanecem pendentes. Contadores 28/30, homologação e Stage 06 não avançam.
-
-
-## Raygun 1.0.10 — consumidores nativos dos ramos `X_RAY`/`GAMMA_RAY` (PR #1018)
-
-O [handoff de consumidores SHA-exatos](../../../../../docs/qa/alexscaves-1010-raygun-branch-consumers-handoff.md) e [manifesto do JAR 1.0.10](../EXACT-RAYGUN-BRANCH-CONSUMERS-1.0.10.json) ampliam a PR #1017 sem atribuir ao Black Arcana hooks mutadores não implementados.
-
-- **X_RAY e targeting:** no ramo onde `slot 9 != 0`, o bloco `@569–669` contém `getBoundingBox`, `AABB.inflate`, posição dos olhos, vetores de direção e `ProjectileUtil.getEntityHitResult @640`, com `ifnull` e um loop que incrementa o slot float 23 (`@657–663`). É um caminho condicional compilado de seleção de entidade. Não fornece alcance final certificado, exclusões completas, LOS nem permissão para contornar claims.
-- **GAMMA_RAY e amplitude de status:** `slot 18` seleciona `iconst_4` ou `iconst_0` em `@927/@931`, armazenando no **slot int 23 @932**. Em uma região posterior `sipush 800 @1111` e `iload 23 @1114` precedem `MobEffectInstance.<init>(Holder,int,int) @1116` e `LivingEntity.addEffect @1119`. A chamada solicita um **efeito de 800 ticks, com amplifier vindo do slot 23** (4/0 nos ramos observados), não garante aplicação nem que todo hit seja irradiado; a imunidade `RESISTS_RADIATION` permanece condicionante.
-- **GAMMA_RAY e tráfego visual:** outra escolha `4/0` em `@1143/@1147` e `800 @1148` precede `UpdateEffectVisualityEntityMessage.<init>(IIII) @1151` e `sendMSGToAll @1154`. Pacote visual não certifica estado, dano, hit ou permissão de alterar status.
-- **Reutilização de slot JVM:** o mesmo índice `23` foi usado anteriormente como `float` na região de busca `@587–661` e referência de objeto `@689–858`, antes do `int` usado pelo status. Tratar esses valores como a mesma variável seria erro de semântica JVM.
-
-Esta documentação é **evidência estática do método 1.0.10**, sem teste físico com claims, resistência, C2S e mutabilidade de perks. **⚠️ parcial/condicionado · `NO_MUTATION` · `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED`**. Manter Raygun pendente e Alex's Caves Continued em **28/30**; não promover Stage 06.
-
-
-## Raygun 1.0.10 — guards de resistência à radiação e aceite de Irradiated (PR #1019)
-
-A [auditoria SHA-exata dos guards](../../../../../docs/qa/alexscaves-1010-raygun-radiation-guard-handoff.md) e o [manifesto do provider](../EXACT-RAYGUN-RADIATION-GUARDS-1.0.10.json) verificam, no JAR publisher 1.0.10, os saltos compilados que envolvem o status **`alexscaves:irradiated`**:
-
-- `ACCompat.hurt @1041 → ifeq @1044`: a chamada de dano tem retorno booleano consultado pelo método, mas isso não reconstitui seu CFG inteiro.
-- `ACTagRegistry.RESISTS_RADIATION @1082 → Holder$Reference.is(TagKey) @1085 → ifne @1088`: o teste de resistência verdadeiro salta para `@1157`, antes da solicitação nativa de status. No ramo contrário o código alcança a região de `ACEffectRegistry.IRRADIATED @1097`.
-- `MobEffectInstance(..., 800 ticks, amplifier do slot 23) @1116 → LivingEntity.addEffect @1119 → ifeq @1122`: o resultado falso de `addEffect` salta a `@1157`; somente o caminho de retorno verdadeiro prossegue para a região visual, que inclui `sendMSGToAll @1154`. **Solicitar status e ter retorno verdadeiro não equivalem a garantir entrega de pacote visual ou imunidade de todos os produtores de radiação.**
-
-O JSON publisher `resists_radiation.json`, SHA-256 `1bb63c275f31f6744c071cda8ced3e1225401c5aa1dff2ea7fa3c7949e46a6c4`, contém **Nucleeper, Radgill, Brainiac, Gammaroach, Raycat e Tremorzilla**. É tag padrão sujeita a datapacks, não a lista autoritativa do mundo em execução.
-
-**Limites de integração:** não usar esses branches para sobrepor a resistência, amplificar/dilatar o efeito ou duplicar efeitos nativos; o Black Arcana preserva casting/authority do servidor, `WorldEffectPolicy` e gates de PvP/claims. **⚠️ parcial/condicionado; `NO_MUTATION`, `NOT_CERTIFIED`, `physical_qa=NOT_TESTED`**. O catálogo continua 28/30, sem promoção de perks ou Stage 06.
-
-## Raygun 1.0.10 — contrato de ativação/recarga selecionado (PR #1101)
-
-A [auditoria SHA-exata do fluxo](../../../../../docs/qa/alexscaves-1010-raygun-charge-ammo-flow-handoff.md) e o [manifesto JVM](../EXACT-RAYGUN-CHARGE-AMMO-FLOW-1.0.10.json) cobrem **8 métodos nativos, 168 instruções e 15 branches diretos** do JAR publisher 1.0.10, confrontados com o selo anterior de 26 métodos.
-
-`hasCharge` seleciona `ChargeUsed < 1000`. `use` direciona carga esgotada para a busca de munição por `findAmmo`, que consulta o inventário e usa o predicado nativo de `URANIUM_ROD.asItem`. Na via elegível, `ItemStack.shrink(1) @65` debita munição e `setCharge(...,0) @79` reinicia a marca de carga; criativo tem ramo separado. `getCharge` tem fallback zero quando a tag inexiste; `setCharge` escreve o inteiro por `ACCompat.setTag` sem clamp próprio visível. `getUseDuration` devolve 72000 e não determina o cooldown. `releaseUsing` envia `UpdateItemTagMessage` somente pela via cliente; nada disso demonstra aceite, autorização de pacote ou saneamento server-side.
-
-**Estado ⚠️ parcial, sem promoção de contadores:** falta fechamento de custos por tick, targeting/efeitos, autorização C2S, ownership, persistência real e hooks. `static_perk_contract=NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`.
-
-## Fluxo intra-iteração de resultado de dano e Irradiated — grafo normal 1.0.10
-
-**Escopo adicional:** `SHA_EXACT_1010_RAYGUN_HIT_OUTCOMES_BOUNDED_NORMAL_CFG_ONLY`. [Manifesto normal-CFG](../EXACT-RAYGUN-HIT-OUTCOMES-CFG-1.0.10.json) · [sonda read-only](../../../../../docs/qa/alexscaves_1010_raygun_hit_outcomes_cfg_probe.py) · [relatório detalhado](../../../../../docs/qa/alexscaves-1010-raygun-hit-outcomes-cfg-handoff.md) · [execução CI de descoberta](https://github.com/Gustavaopere/Black-Arcana/actions/runs/43974401894).
-
-O JAR publisher SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c` foi revalidado; os 26 métodos da classe mantiveram seus fingerprints anteriores, inclusive `onUseTick` com 523 instruções, 57 branches e digest `b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5`. Na janela `[953,1157)`, 82 instruções formam o grafo de **um ciclo normal delimitado** (duas entradas externas e dez arestas de saída, sem tratar exceções).
-
-**Correção causal (auditoria posterior de operands, PR #1103):** a busca de caminhos da PR #1102 apresentou um **falso positivo de alcançabilidade executável** para a via de retorno falso de `ACCompat.hurt @1041`: `ifeq @1044 → 1051` conduz a `iconst_0 @1051`, `istore 26 @1052`, `iload 26 @1054` e `ifeq @1056 → 1157`, encerrando a iteração antes de `LivingEntity.addEffect @1119`. O caminho de 26 arestas até `addEffect` existe **apenas no grafo sem restrições sobre valores locais**, pois exigiria fallthrough em `@1056` após carregar o inteiro zero. No ramo de retorno verdadeiro, `iconst_1 @1047; goto @1048 → 1052` grava um e permite passar `@1056`, mas os guardas `instanceof LivingEntity @1061–1064` e `RESISTS_RADIATION @1088` ainda condicionam a solicitação de status. Nem sucesso de dano nem passagem desses predicados garantem aceitação efetiva de `Irradiated` em gameplay.
-
-Em contraste, tomar `ifne @1088 → 1157` na verificação `RESISTS_RADIATION` interrompe o caminho para `addEffect` e `sendMSGToAll` na janela. Após o pedido de status, o retorno falso de `addEffect` toma `ifeq @1122 → 1157` e não alcança a notificação visual nessa iteração, enquanto o fallthrough `@1125` ainda pode alcançar `@1154` (11 arestas mínimas).
-
-**Consequências para perks/Mastery:** não derivar `Irradiated` exclusivamente de um callback hipotético de “dano aceito”; não inferir aceitação do status de um pacote visual; preservar os filtros nativos e evitar segundo processamento de damage/status/XP. A sonda **não** resolve o significado de todos os guards, execução concreta, exceções, authoritativeness do `ChargeUsed`, antirreplay C2S, PvP/claims ou efeitos após datapacks. Esses continuam pendentes de auditoria própria e QA física.
-
-**Estado inalterado:** ⚠️ `NOT_CERTIFIED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. Nenhum aumento dos contadores de cobertura ou autorização de runtime.
-
-## Selo do guard de resultado de dano — follow-up SHA-exato 1.0.10
-
-**Evidência individual adicional:** [manifesto de quatro guards](../EXACT-RAYGUN-POST-HIT-GUARDS-1.0.10.json) · [relatório de QA estática](../../../../../docs/qa/alexscaves-1010-raygun-post-hit-guards-handoff.md) · [CI com JAR publisher](https://github.com/Gustavaopere/Black-Arcana/actions/runs/43980081699).
-
-A janela JVM `[1013,1091)`, com **32 instruções**, contém os desvios `@1044`, `@1056`, `@1064` e `@1088`. O segundo guarda elimina o **falso positivo** de executabilidade documentado no grafo anterior: retorno **falso** de `ACCompat.hurt @1041` entra em `@1051 iconst_0`, grava no local 26 (`@1052`), lê o mesmo slot (`@1054`) e toma `ifeq @1056 → 1157`; `LivingEntity.addEffect @1119` não pertence a essa rota normal da mesma iteração.
-
-O retorno **verdadeiro** cria a flag 1 via `@1047–1052`, ultrapassa `@1056`, mas ainda precisa do teste `instanceof LivingEntity @1061` (saída em `@1064`) e do filtro `RESISTS_RADIATION` (`@1088`) antes da tentativa de status. São condições do produtor nativo compilado, não hooks suportados para reescrever `damage`, `target`, `amplifier` ou atribuição de proc.
-
-**Limites:** esse recorte não demonstra o resultado de `addEffect` em modpack, exceptions/indirect calls, aceitação pelo servidor, persistência, datapack efetivo, claims/PvP, owner/XP ou integração segura. Continuam `NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; **não aumentar 79/81** por uma correção delimitada.
-
-## Custo por tick e recuperação Solar — análise da versão 1.0.10
-
-**Prova SHA-exata suplementar:** [manifesto do JAR 1.0.10](../EXACT-RAYGUN-CHARGE-COST-1.0.10.json) · [relatório com offset/branch e critérios](../../../../../docs/qa/alexscaves-1010-raygun-charge-cost-handoff.md) · [workflow de reprodução](../../../../../.github/workflows/alexscaves-1010-raygun-charge-cost.yml). O JAR publisher permanece SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`; os 26 métodos da classe e o manifesto histórico da PR #1102 são revalidados antes dessa inspeção.
-
-**Estado de uso:** `onUseTick` calcula tempo transcorrido `T = getUseDuration - remainingUseTicks` em `@3–9`, com `getUseDuration=72000` como limite declarado de uso, **não cooldown**. A rampa `float local7` é `T/15` quando `T < 15`, e `1.0f` no ramo de `T >= 15` (`@11–33`). O caminho de custo em `@270–274` não prossegue enquanto o valor estiver abaixo de 1.
-
-**Energy Efficiency:** `ACEnchantmentRegistry.ENERGY_EFFICIENCY @246`, `ACCompat.enchantLevel @249`, `Math.floor @263` e `d2i/iadd @266–267` produzem o intervalo de oportunidade `I = 2 + floor(1.5 × nível do enchantment)` em `local int 16 @268`, assumindo nível não negativo. O código testa `T % I == 0` em `@277–282`; para níveis 0, 1, 2, 3, 4, os intervalos aritméticos são 2, 3, 5, 6 e 8 ticks. Isso **não** é cooldown próprio do Black Arcana nem garante que toda oportunidade resulte em escrita da tag.
-
-**Débito solicitado:** após os guards, `getCharge @303`, `iconst_1/iadd @311–312`, `Math.min(...,1000) @316` e `setCharge @319` impõem nesse ramo `ChargeUsed' = min(ChargeUsed + 1,1000)`. A consulta `Player.isCreative @296` e `ifne @299 →322` evita esse débito no ramo criativo observado. `ChargeUsed` denota **carga consumida** (quanto maior, menos carga disponível), não energia adicionada nem mana. A validação de autoridade do estado e dos pacotes C2S continua independente e não certificada.
-
-**Recuperação solar nativa:** `acInventoryTick` é um segundo consumidor: lado não cliente (`isClientSide @39; ifne @42`), presença de encantamento `SOLAR` (`enchantLevel @49; ifle @52`), flag JVM de uso igual a 0 (`iload 5 @55; ifne @57`) e `ChargeUsed > 0` (`@61–68`). Depois há sorteio `RandomSource.nextFloat() < 0.02f` (`@72–83`), `canSeeSky`, `isDay`, negação de `hasFixedTime` e `sunAboveHorizon` (`@98–127`). Se as condições de saída não são tomadas, `setCharge @135` grava **`ChargeUsed' = ChargeUsed - 1`**, junto de `setUseTime(...,0) @140`. É um caminho distinto da recarga ativa com `URANIUM_ROD` já documentada.
-
-**Estado temporal:** `getUseTime`/ `setUseTime` manipulam os campos `UseTime` e `PrevUseTime` do item. Há chamadas condicionadas de `setUseTime(...,+1/-1)` no método de inventário, sem inferir que a tag recebida do cliente é automaticamente legítima.
-
-**Projetos de perk possíveis, NÃO autorizados:** intervalos de uso, recuperação Solar e custos são candidatos conceituais a modificadores, mas o fornecedor não expôs neste recorte um hook mutador seguro e server-authoritative. Não substituir a escrita nativa, nem duplicar débito, recarga, som, hit ou XP. Pendências: normal/exceptional CFG completo dos consumidores, C2S/sender, persistência/modpack real e gates de world safety. Manter **⚠️ parcial · `NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`**. O numerador do catálogo permanece inalterado.
+**Contabilidade:** **+1 contrato técnico estático individual**, **+0 fichas novas**, **+0 raízes mágicas**, **+0 hooks homologados**, **+0 QA física**, **+0 providers encerrados**, **+0 promoção de Stage**. O recorte de encantamentos publisher permanece **51/51**; o recorte observado do provider alcança **81/81 fichas certificadas**. Outras famílias do inventário ainda não foram individualizadas: o universo integral permanece **OPEN**, sem avanço automático para o próximo provider alfabético.
