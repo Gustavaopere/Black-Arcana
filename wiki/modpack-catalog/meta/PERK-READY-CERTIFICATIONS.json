@@ -8948,6 +8948,50 @@
           "reason": "Selo EXACT-ARMOR-MATERIAL-1.0.10.json, prova Markdown e auditoria SHA-exata reproduzível fixam corpos, bindings e censo tipado de todas as 1555 classes. Certifica somente a nova ficha estática de suporte, com zero raízes mágicas adicionais, mutating_hook NOT_VERIFIED, physical_qa NOT_TESTED e NO_MUTATION."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/client-extension.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "registration_execution": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Individual ACClientExtensionItem integration-support static contract: declared ABI and all 19 direct implementer initializeClient bodies, 18 native and one relocated Citadel, with bounded client-extension outputs. Typed census covers all 1555 artifact classes and finds 20 target-reference owners including self; no native Methodref/InterfaceMethodref named initializeClient exists. Does not certify registration execution, event/bootstrap reachability, reflective/external invocation, complete implementing items or renderers, safe per-player hooks, accepted gameplay, physical QA, perks or whole-provider closure. Adds one support candidate and zero semantic magic roots.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CLIENT-EXTENSION-1.0.10.md",
+          "reason": "JAR publisher Alex's Caves Continued 1.0.10 SHA-exato, SHA-1 6960b299a39a039ac8a5eb9b07be4ad0e3e0a570; ABI de ACClientExtensionItem e censo tipado de todas as 1555 classes identificam a própria interface e 19 implementadores diretos, 18 nativos e um Citadel realocado. Fonte pública 1.1.1 permanece adjacente."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CLIENT-EXTENSION-1.0.10.md",
+          "reason": "Contrato da ABI declarada e dos 19 corpos initializeClient completos, com disposição dos outputs de extensão cliente. Não há Methodref ou InterfaceMethodref chamado initializeClient no artefato, independentemente de owner ou descriptor; o censo não prova registro, execução, desuso global ou incompatibilidade em runtime."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CLIENT-EXTENSION-1.0.10.md",
+          "reason": "Descritores, assinaturas, instruções e parâmetros dos 19 inicializadores delimitam o Consumer e as extensões finitas produzidas. Referências a classes de renderização e extensões não certificam todo o comportamento dos renderers, dos itens implementadores ou das APIs externas."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CLIENT-EXTENSION-1.0.10.md",
+          "reason": "A interface de suporte e seus inicializadores não definem seleção de entidade, alcance, área, projétil ou política de combate próprios. Outputs cliente e sua apresentação não homologam targeting, dano ou comportamento servidor dos itens implementadores."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CLIENT-EXTENSION-1.0.10.md",
+          "reason": "A ABI e os corpos de inicialização de extensões cliente não estabelecem mana, cooldown, custo de cast, durabilidade, aquisição ou consumo de recursos próprios. Não se transferem custos dos itens implementadores para esta interface de suporte nem se infere execução física das extensões."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CLIENT-EXTENSION-1.0.10.md",
+          "reason": "Sem consumidor nativo initializeClient localizado, bootstrap, evento de registro e execução permanecem NOT_VERIFIED, assim como rotas externas ou reflexivas. A superfície estática não é hook seguro de perks por jogador e não permite duplicar renderização, procs, dano ou crédito Mastery. NO_MUTATION; não certifica os itens completos, o runtime Black Arcana/RPG Skill Tree ou o universo integral do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-CLIENT-EXTENSION-1.0.10.md",
+          "reason": "Selo EXACT-CLIENT-EXTENSION-1.0.10.json, prova Markdown e auditoria reproduzível vinculam ABI, 19 corpos e censo tipado de 1555 classes ao JAR publisher SHA-exato. Certifica somente a nova ficha técnica estática de suporte, com +1 candidato e +0 raízes mágicas; registration_execution NOT_VERIFIED, mutating_hook NOT_VERIFIED, physical_qa NOT_TESTED, perk_certification NOT_CERTIFIED e NO_MUTATION."
+        }
+      }
     }
   },
   "providers": {},

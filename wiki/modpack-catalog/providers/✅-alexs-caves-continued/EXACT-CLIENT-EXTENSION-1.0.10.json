@@ -1,0 +1,4629 @@
+{
+  "artifact": {
+    "mod_id": "alexscaves",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "version": "1.0.10"
+  },
+  "axes": {
+    "behavior": "Nineteen direct implementer callbacks delegate to a proxy getter, cast the result and invoke Consumer.accept once; finite property renderer/model outputs only.",
+    "costs": "Not applicable: no mana, cast, durability settlement or gameplay cooldown in the selected callback/property methods. Object allocations and model baking are presentation work, not certified gameplay costs.",
+    "identity": "Publisher 1.0.10 SHA-1/SHA-256/size; Java21 class identity, one abstract erased Consumer ABI and generic IClientItemExtensions declaration.",
+    "integration": "Static callback declarations and finite CommonProxy/ClientProxy and relocated Citadel property outputs; zero publisher initializeClient member references. External engine dispatch, proxy selection, registration execution and perks are unverified.",
+    "parameters": "Twelve native item-render callbacks, six native armor callbacks and one relocated Citadel callback; exact operands, property/renderer lifetimes, six model selection branches and supplied fallback.",
+    "targeting": "Not applicable: these selected methods configure client presentation and model selection; no target query, damage request, projectile or gameplay effect application is present.",
+    "validation": "Typed 1555-class census, member-reference/declaration separation, complete selected bodies and hashes, explicit pivots, negative checks and deterministic exact-JAR CLI reproduction; physical client execution is NOT_TESTED."
+  },
+  "callbacks": [
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "32493adb1d39e7fc5481bcae045b358ebc6e2c8c869139db10952b3dcdb19fe5",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#7",
+            "symbol": "Field com/github/alexmodguy/alexscaves/citadel/Citadel.PROXY:Lcom/github/alexmodguy/alexscaves/citadel/CitadelProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#13",
+            "symbol": "Method com/github/alexmodguy/alexscaves/citadel/CitadelProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#19",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#21, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/citadel/Citadel.PROXY:Lcom/github/alexmodguy/alexscaves/citadel/CitadelProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/citadel/CitadelProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/citadel/item/ItemCustomRender",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/citadel/Citadel",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/citadel/CitadelProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "3bf8d93fe26dfc810a00c8e99aed13e6fc07afe0e44da002879da4a97d408e4f",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#7",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#13",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#19",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#21, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "3bf8d93fe26dfc810a00c8e99aed13e6fc07afe0e44da002879da4a97d408e4f",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#7",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#13",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#19",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#21, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/CaveMapItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ARMOR_MODEL",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "8feea315dd287ffc9f561fc045ac5cc30f5cb395ebeae02eb795c06f44eb4a9f",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "b4914985fb6d053a9c64ef710f4b6dd26a0846cce7abff41128b8a10b0084389",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#136",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#140",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#145",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#147, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getArmorProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ARMOR_MODEL",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "9f3118d96b8957ec4744b35c55e1ce18381783303d8934a4375b363fefdc227c",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "540d6476a4f073ec87793afeaf705353ae925da19f54cca16029a9d32e185c33",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#127",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#133",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#139",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#141, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getArmorProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "b02f9ebde61c43e897abbc812aa747511e0f2669a43934350b35eabeb30a4f01",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "fe85f02a3a843af8ca99d7cfe3eb89a9698b8cfe968c14c3e2405d312b3aef59",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#64",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#70",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#76",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#78, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "ab25a13fc141e9c68e695fdce843d4563c474d551d77359cefa387da179e2a9a",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "3a6c2d33865c1d1707dcbd93e1f9e0bd3bd706c9817ddb988b4e0589ebb14cf4",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#29",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#35",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#41",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#43, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ARMOR_MODEL",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "b8c47826161500ed87bc5adf9d9f8c880f2be565109ee49e0c0cf6500d299c2f",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "1bbd25dc9fd7e396c606c055345c31e2833ddec3b66253cfc9b01bee53b8ed68",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#134",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#140",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#146",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#148, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getArmorProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ARMOR_MODEL",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "6137614bc90b8903055da75a0cc17c846a23868cdafb9789ddc11abb0bc64d72",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "241b312ebd6ff1e8ab0719a7fcbfd71c956258d303ba94e3a602770053402fa8",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#22",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#28",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#34",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#36, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getArmorProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "e5b472f09c165b99fddb1ca278e23b470a76c5387449ced55e02919ea752a6c3",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "5a8dd8d4ec527f16fb436eb98122234d37bf31dd73a8bfa231352ac292ff6833",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#354",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#360",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#365",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#367, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "c8d0b31b2bcc9dc0cc0163ca26fe176a53a2229a95d6f45c91748c001627062e",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "2e8d40130e4999ebe0802a86b9d6a4b17a4b1c92a7621a7655d709aebba4fe38",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#304",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#308",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#313",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#315, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ARMOR_MODEL",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "6137614bc90b8903055da75a0cc17c846a23868cdafb9789ddc11abb0bc64d72",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "241b312ebd6ff1e8ab0719a7fcbfd71c956258d303ba94e3a602770053402fa8",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#22",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#28",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#34",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#36, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getArmorProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ARMOR_MODEL",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "6137614bc90b8903055da75a0cc17c846a23868cdafb9789ddc11abb0bc64d72",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "241b312ebd6ff1e8ab0719a7fcbfd71c956258d303ba94e3a602770053402fa8",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#22",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#28",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#34",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#36, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getArmorProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getArmorProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "144711b99740d3708eef2b7046ebc5ea16154a57c55f0d47c2f95fbabd15e985",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "b9468ae09c9ff27208a8a5267509be57ed66979d24b7eac590e99b2d2ee23439",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#16",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#22",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#28",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#30, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "ab25a13fc141e9c68e695fdce843d4563c474d551d77359cefa387da179e2a9a",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "3a6c2d33865c1d1707dcbd93e1f9e0bd3bd706c9817ddb988b4e0589ebb14cf4",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#29",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#35",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#41",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#43, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "3bf8d93fe26dfc810a00c8e99aed13e6fc07afe0e44da002879da4a97d408e4f",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#7",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#13",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#19",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#21, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/SeaStaffItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "144711b99740d3708eef2b7046ebc5ea16154a57c55f0d47c2f95fbabd15e985",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "b9468ae09c9ff27208a8a5267509be57ed66979d24b7eac590e99b2d2ee23439",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#16",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#22",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#28",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#30, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/ShotGumItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "5bd9dd3a009f057948becf069fe9e1294ca74f597b236e49dbb765e7ba693676",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "4f3be032720e69d4fd3ba255020d1b1ebc9142df6854373f0956fa786fb3959c",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#92",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#98",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#104",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#106, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/SpearItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    },
+    {
+      "extension_family": "ITEM_RENDERER",
+      "method": {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "3bf8d93fe26dfc810a00c8e99aed13e6fc07afe0e44da002879da4a97d408e4f",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#7",
+            "symbol": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokevirtual",
+            "operand": "#13",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#19",
+            "symbol": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+          },
+          {
+            "offset": 10,
+            "opcode": "invokeinterface",
+            "operand": "#21, 2",
+            "symbol": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeClient",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "Field com/github/alexmodguy/alexscaves/AlexsCaves.PROXY:Lcom/github/alexmodguy/alexscaves/server/CommonProxy;",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.getISTERProperties:()Ljava/lang/Object;",
+            "offset": 4,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "class net/neoforged/neoforge/client/extensions/common/IClientItemExtensions",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V",
+            "offset": 10,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "",
+            "offset": 15,
+            "opcode": "return"
+          }
+        ]
+      },
+      "owner": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem",
+      "proxy_field_owner": "com/github/alexmodguy/alexscaves/AlexsCaves",
+      "proxy_getter": "getISTERProperties",
+      "proxy_getter_owner": "com/github/alexmodguy/alexscaves/server/CommonProxy"
+    }
+  ],
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0,
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES"
+  },
+  "class_sha256": {
+    "com/github/alexmodguy/alexscaves/citadel/CitadelClientProxy": "5a01a3ee88133e43ae82a693d82d18d084883d795d8054e7457e844bae1ab803",
+    "com/github/alexmodguy/alexscaves/citadel/CitadelProxy": "53d833e9824cbfd3812ad9d7d15fccb19d5fc77a34d9b2403226b2224e333788",
+    "com/github/alexmodguy/alexscaves/citadel/client/CitadelItemRenderProperties": "a4c13bc836c2e68c8ab4cc24c807f35e85cafbe1ff88f5c79c1baee2b9735810",
+    "com/github/alexmodguy/alexscaves/citadel/item/ItemCustomRender": "d4975e479609394047f52fb174499cb4f936a81132d617e683b2a586c8a07529",
+    "com/github/alexmodguy/alexscaves/client/ClientProxy": "a3d0eb9e19511f13f4155f994fe5486a51b3d5e645ffcfe8ab58440d790e1a69",
+    "com/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties": "bcb780ec718c8f07cabe34d2f054ff546eb7d5529d3f0d7fa7a11aaaad08f729",
+    "com/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties": "bcbab08290ba3ad6edd2b1ac941cd8c68cd347f5c727d85c14d037b16b8d4319",
+    "com/github/alexmodguy/alexscaves/server/CommonProxy": "c017d8c6dbf2ff7e8f680fb50b90e537b248b165c67cd1b7c77f299baf2bb7cd",
+    "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem": "d3139782c378b7b8eee0b580c912f36095675e31db98310475fbe1b60f5a0362",
+    "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER": "68428e70b3a16af8189a8cca24d49a1c234122a8456fb196ce5840b23f40a4ab",
+    "com/github/alexmodguy/alexscaves/server/item/CaveMapItem": "949abbb18960cc013ab5a1b9c73c643005792c214ddbd0c927c96843f73f2b01",
+    "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem": "872fc610bac5be6010e3981b001c4088c7227e9cffe7938381c34c2f456c4e9a",
+    "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem": "6c4ea04559e2e2425bbc842f02cb9a89a2ea9009b7f43e2d71d05c336c64c334",
+    "com/github/alexmodguy/alexscaves/server/item/DreadbowItem": "b9cd6e843f923877775e38b89214e8649c10d4d5be704ed9dd377900439d44ae",
+    "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem": "846709940e9e400c4d6e894ec07887b762598b0d8f116fff951fa5585245bfd8",
+    "com/github/alexmodguy/alexscaves/server/item/FrostmintSpearItem": "0156bc79eb7c6bc48229c6811a3d5907e05f74b548fba4c1c467369b22a8f0be",
+    "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem": "5a74328a7130704a4e2dca9e607bed4dc3a468b8bbcb6d4e238b4d2d962573b0",
+    "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem": "918cc76cd122605e6ba7aa2e8d26e1f4891b3ad8f26554b960e9b07412884a27",
+    "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem": "289395b93a1a223f2e66a02528ccb4ce3a1a659dd9c82ac071a5b63c32b1c7cb",
+    "com/github/alexmodguy/alexscaves/server/item/LimestoneSpearItem": "1f068faf0b5829d4c63ab56a09a6c9fc2de6b57c030ae58c6d3211ffacd86510",
+    "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem": "996b208a60f2c26c275e60e5d0e3a2fd0090cfb0ba1687907cac242de9a17d09",
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem": "92bfb58cb5ed2c84dd6f989afad22c98209542889e30b6214c502dbff42fa1ac",
+    "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem": "8833c162d1507aba795b1ff809f5a6f6ddb846da308d809795cf80e69be5d09e",
+    "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem": "12809966af8256aa5c55e56b54d49f5be66e9785d6616ffa934c376f3d6d31bd",
+    "com/github/alexmodguy/alexscaves/server/item/RaygunItem": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c",
+    "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem": "ffd3fddd74f8d44049886e9013de2e3d67cbd2a721015369175e8442c5044741",
+    "com/github/alexmodguy/alexscaves/server/item/SeaStaffItem": "cb3153a35e7f4c3ab23e68693aec110edf03ecd050c3b485e35ccbb257b4bbc6",
+    "com/github/alexmodguy/alexscaves/server/item/ShotGumItem": "08aa8b9aa1781f2ead7d899e4fde758ea44bc527a2ee5968997e5b3ffdd32238",
+    "com/github/alexmodguy/alexscaves/server/item/SpearItem": "37b96d1b7936408c0dbd92f0a0715af8400ef55d452c196527e912c3eaf10583",
+    "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem": "d670f887debdfb95f93a52b0c58b3033154a9aa20777fb8bd2a1673ee1407c3f"
+  },
+  "extension_outputs": {
+    "armor_animation_boundary": "Null entity returns supplied selected model. Primordial/Hazmat/Darkness model instances invoke corresponding withAnimations; other models pass through. Those model bodies and rendering internals are excluded.",
+    "armor_initialization": "getACArmorModelBase calls initializeModels only while init is false; initializeModels sets mutable static init=true before six Minecraft layer bakes/model allocations. No exception handlers; runtime bake success and recovery are not established.",
+    "armor_model_roster": [
+      {
+        "item_owner": "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem",
+        "layer_field": "PRIMORDIAL_ARMOR",
+        "model_field": "PRIMORDIAL_ARMOR_MODEL",
+        "model_owner": "com/github/alexmodguy/alexscaves/client/model/layered/PrimordialArmorModel"
+      },
+      {
+        "item_owner": "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem",
+        "layer_field": "HAZMAT_ARMOR",
+        "model_field": "HAZMAT_ARMOR_MODEL",
+        "model_owner": "com/github/alexmodguy/alexscaves/client/model/layered/HazmatArmorModel"
+      },
+      {
+        "item_owner": "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem",
+        "layer_field": "DIVING_ARMOR",
+        "model_field": "DIVING_ARMOR_MODEL",
+        "model_owner": "com/github/alexmodguy/alexscaves/client/model/layered/DivingArmorModel"
+      },
+      {
+        "item_owner": "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem",
+        "layer_field": "DARKNESS_ARMOR",
+        "model_field": "DARKNESS_ARMOR_MODEL",
+        "model_owner": "com/github/alexmodguy/alexscaves/client/model/layered/DarknessArmorModel"
+      },
+      {
+        "item_owner": "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem",
+        "layer_field": "RAINBOUNCE_ARMOR",
+        "model_field": "RAINBOUNCE_ARMOR_MODEL",
+        "model_owner": "com/github/alexmodguy/alexscaves/client/model/layered/RainbounceArmorModel"
+      },
+      {
+        "item_owner": "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem",
+        "layer_field": "GINGERBREAD_ARMOR",
+        "model_field": "GINGERBREAD_ARMOR_MODEL",
+        "model_owner": "com/github/alexmodguy/alexscaves/client/model/layered/GingerbreadArmorModel"
+      }
+    ],
+    "armor_model_selection": "getHumanoidArmorModel ignores EquipmentSlot, passes entity/stack/supplied model to getACArmorModel, casts result to HumanoidModel; six ordered instanceof item branches return mutable public static model fields; unmatched stack returns supplied fallback model.",
+    "citadel_properties_lifetime": "CitadelClientProxy.getISTERProperties creates fresh CitadelItemRenderProperties each call; its constructor stores one private final CitadelItemstackRenderer and getCustomRenderer returns that renderer.",
+    "common_proxy_returns": "CommonProxy both getters and CitadelProxy.getISTERProperties return null; a successful client proxy selection or non-null registration is not inferred.",
+    "native_item_renderer_lifetime": "ACItemRenderProperties.getCustomRenderer creates a fresh ACItemstackRenderer on every call; no renderer cache is declared in this properties class.",
+    "native_properties_lifetime": "ClientProxy constructor creates one ACItemRenderProperties and one ACArmorRenderProperties, stores private final fields; getters return those fields per proxy instance.",
+    "slot_argument_used": false
+  },
+  "interface_contract": {
+    "access": 1537,
+    "declared_methods": [
+      {
+        "access": 1025,
+        "descriptor": "(Ljava/util/function/Consumer;)V",
+        "name": "initializeClient"
+      }
+    ],
+    "executable_code": false,
+    "fields": [],
+    "generic_declaration": "public abstract void initializeClient(java.util.function.Consumer<net.neoforged.neoforge.client.extensions.common.IClientItemExtensions>);",
+    "generic_signature": "(Ljava/util/function/Consumer<Lnet/neoforged/neoforge/client/extensions/common/IClientItemExtensions;>;)V",
+    "interfaces": [],
+    "owner": "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem"
+  },
+  "native_methods": {
+    "com/github/alexmodguy/alexscaves/citadel/CitadelClientProxy": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "df56020c393a206e259b87d0ea9c3bd4109706b53d7cbe632807f94bc750e21e",
+        "code_size": 8,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Ljava/lang/Object;",
+        "exception_handlers": [],
+        "instruction_count": 4,
+        "instruction_sha256": "05122ebb91fa8d72e8aab9892f3fcd72ad0d955c773624bc1c70ef26b7902e45",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "new",
+            "operand": "#95",
+            "symbol": "class com/github/alexmodguy/alexscaves/citadel/client/CitadelItemRenderProperties"
+          },
+          {
+            "offset": 3,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "invokespecial",
+            "operand": "#97",
+            "symbol": "Method com/github/alexmodguy/alexscaves/citadel/client/CitadelItemRenderProperties.\"<init>\":()V"
+          },
+          {
+            "offset": 7,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getISTERProperties",
+        "pivots": [
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/citadel/client/CitadelItemRenderProperties",
+            "offset": 0,
+            "opcode": "new"
+          },
+          {
+            "contains": "com/github/alexmodguy/alexscaves/citadel/client/CitadelItemRenderProperties.\"<init>\":()V",
+            "offset": 4,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "",
+            "offset": 7,
+            "opcode": "areturn"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/citadel/CitadelProxy": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "146cb1bd5c639e50589db67598e4a3f423eb736f7911d3b8329f72e0f5cd5fac",
+        "code_size": 2,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Ljava/lang/Object;",
+        "exception_handlers": [],
+        "instruction_count": 2,
+        "instruction_sha256": "136048e46e2f8943298d04aa6dcd85e43449d9960e57ca2951dd887e77dccb1d",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aconst_null",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getISTERProperties",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aconst_null"
+          },
+          {
+            "contains": "",
+            "offset": 1,
+            "opcode": "areturn"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/citadel/client/CitadelItemRenderProperties": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "da3b7ff91a27f4acac104b1fb0c959ff8d3b3ec1b1d092da46de4c1866d84fba",
+        "code_size": 16,
+        "coverage": "FULL_BODY",
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "instruction_count": 8,
+        "instruction_sha256": "6b8c2bbff189487d323dfca02cfe58a5973840b5036c6503d12924cee90b7a9e",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "invokespecial",
+            "operand": "#1",
+            "symbol": "Method java/lang/Object.\"<init>\":()V"
+          },
+          {
+            "offset": 4,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "new",
+            "operand": "#7",
+            "symbol": "class com/github/alexmodguy/alexscaves/citadel/client/CitadelItemstackRenderer"
+          },
+          {
+            "offset": 8,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 9,
+            "opcode": "invokespecial",
+            "operand": "#9",
+            "symbol": "Method com/github/alexmodguy/alexscaves/citadel/client/CitadelItemstackRenderer.\"<init>\":()V"
+          },
+          {
+            "offset": 12,
+            "opcode": "putfield",
+            "operand": "#10",
+            "symbol": "Field renderer:Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;"
+          },
+          {
+            "offset": 15,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/citadel/client/CitadelItemstackRenderer",
+            "offset": 5,
+            "opcode": "new"
+          },
+          {
+            "contains": "com/github/alexmodguy/alexscaves/citadel/client/CitadelItemstackRenderer.\"<init>\":()V",
+            "offset": 9,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field renderer:",
+            "offset": 12,
+            "opcode": "putfield"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "82ee7056b04c640a38c7cc175235331dde4a32bc219c075e81f79d2aaa90b4db",
+        "code_size": 5,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+        "exception_handlers": [],
+        "instruction_count": 3,
+        "instruction_sha256": "1eff5ceb3e1b7206868c825d73bfcac237ac201e90f6745c79ede88ae52b89f1",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#10",
+            "symbol": "Field renderer:Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;"
+          },
+          {
+            "offset": 4,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getCustomRenderer",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_0"
+          },
+          {
+            "contains": "Field renderer:",
+            "offset": 1,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "",
+            "offset": 4,
+            "opcode": "areturn"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/client/ClientProxy": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "dc54885c3714c974992e4f27bbf2682ec075f3e2d2a00487e5ba80105654afe5",
+        "code_size": 27,
+        "coverage": "FULL_BODY",
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "instruction_count": 13,
+        "instruction_sha256": "d44ea7b8b8df7987ea5d18eedbdc72cda39afce3de92490f35ff0d1303514a06",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "invokespecial",
+            "operand": "#1",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/CommonProxy.\"<init>\":()V"
+          },
+          {
+            "offset": 4,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "new",
+            "operand": "#7",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties"
+          },
+          {
+            "offset": 8,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 9,
+            "opcode": "invokespecial",
+            "operand": "#9",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties.\"<init>\":()V"
+          },
+          {
+            "offset": 12,
+            "opcode": "putfield",
+            "operand": "#10",
+            "symbol": "Field isterProperties:Lcom/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties;"
+          },
+          {
+            "offset": 15,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 16,
+            "opcode": "new",
+            "operand": "#16",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties"
+          },
+          {
+            "offset": 19,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 20,
+            "opcode": "invokespecial",
+            "operand": "#18",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties.\"<init>\":()V"
+          },
+          {
+            "offset": 23,
+            "opcode": "putfield",
+            "operand": "#19",
+            "symbol": "Field armorProperties:Lcom/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties;"
+          },
+          {
+            "offset": 26,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties",
+            "offset": 5,
+            "opcode": "new"
+          },
+          {
+            "contains": "com/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties.\"<init>\":()V",
+            "offset": 9,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "isterProperties:Lcom/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties;",
+            "offset": 12,
+            "opcode": "putfield"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties",
+            "offset": 16,
+            "opcode": "new"
+          },
+          {
+            "contains": "com/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties.\"<init>\":()V",
+            "offset": 20,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "armorProperties:Lcom/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties;",
+            "offset": 23,
+            "opcode": "putfield"
+          },
+          {
+            "contains": "",
+            "offset": 26,
+            "opcode": "return"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "215514a3ba98d8863bce9e3203285417c77ecd99a4bbfb9b8e6245b3f27a5c82",
+        "code_size": 5,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Ljava/lang/Object;",
+        "exception_handlers": [],
+        "instruction_count": 3,
+        "instruction_sha256": "f2b7d4f1e7beb9abbebf4e2f1c20754b5a7d1448e6fdf2fcd4ecfec1dafbe94c",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#19",
+            "symbol": "Field armorProperties:Lcom/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties;"
+          },
+          {
+            "offset": 4,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getArmorProperties",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_0"
+          },
+          {
+            "contains": "Field armorProperties:Lcom/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties;",
+            "offset": 1,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "",
+            "offset": 4,
+            "opcode": "areturn"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "82ee7056b04c640a38c7cc175235331dde4a32bc219c075e81f79d2aaa90b4db",
+        "code_size": 5,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Ljava/lang/Object;",
+        "exception_handlers": [],
+        "instruction_count": 3,
+        "instruction_sha256": "45d0033df9bd09ad99786f1c50ec99979f7d3cb3f49fc2d597c32732d3c250fc",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#10",
+            "symbol": "Field isterProperties:Lcom/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties;"
+          },
+          {
+            "offset": 4,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getISTERProperties",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_0"
+          },
+          {
+            "contains": "Field isterProperties:Lcom/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties;",
+            "offset": 1,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "",
+            "offset": 4,
+            "opcode": "areturn"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "d6f7264189858f154b120ac2e9b76f4b4dae9ddb629e4ec627af7810207e1a24",
+        "code_size": 5,
+        "coverage": "FULL_BODY",
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "instruction_count": 3,
+        "instruction_sha256": "a4e909f6fbb3424695cfd8081458c1db352953a8b4021610a41ca8bcbc874b14",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "invokespecial",
+            "operand": "#1",
+            "symbol": "Method java/lang/Object.\"<init>\":()V"
+          },
+          {
+            "offset": 4,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<init>",
+        "pivots": []
+      },
+      {
+        "access": 9,
+        "branches": [
+          {
+            "offset": 1,
+            "opcode": "ifnonnull",
+            "target": 6
+          },
+          {
+            "offset": 10,
+            "opcode": "ifeq",
+            "target": 24
+          },
+          {
+            "offset": 28,
+            "opcode": "ifeq",
+            "target": 42
+          },
+          {
+            "offset": 46,
+            "opcode": "ifeq",
+            "target": 60
+          }
+        ],
+        "code_sha256": "f85af1352bfd1b82e44f04b2192ffdd8eefe672599cfc14a3cf77b8ca2223bee",
+        "code_size": 62,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+        "exception_handlers": [],
+        "instruction_count": 36,
+        "instruction_sha256": "3d4259c486e62c9d00e43496d8bead180c227487cb3abdb5b5463104535f8c0b",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "ifnonnull",
+            "operand": "6",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 6,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 7,
+            "opcode": "instanceof",
+            "operand": "#13",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/PrimordialArmorModel"
+          },
+          {
+            "offset": 10,
+            "opcode": "ifeq",
+            "operand": "24",
+            "symbol": ""
+          },
+          {
+            "offset": 13,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 14,
+            "opcode": "checkcast",
+            "operand": "#13",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/PrimordialArmorModel"
+          },
+          {
+            "offset": 17,
+            "opcode": "astore_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 18,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 19,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 20,
+            "opcode": "invokevirtual",
+            "operand": "#129",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/model/layered/PrimordialArmorModel.withAnimations:(Lnet/minecraft/world/entity/LivingEntity;)Lcom/github/alexmodguy/alexscaves/client/model/layered/PrimordialArmorModel;"
+          },
+          {
+            "offset": 23,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 24,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 25,
+            "opcode": "instanceof",
+            "operand": "#44",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/HazmatArmorModel"
+          },
+          {
+            "offset": 28,
+            "opcode": "ifeq",
+            "operand": "42",
+            "symbol": ""
+          },
+          {
+            "offset": 31,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 32,
+            "opcode": "checkcast",
+            "operand": "#44",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/HazmatArmorModel"
+          },
+          {
+            "offset": 35,
+            "opcode": "astore_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 36,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 37,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 38,
+            "opcode": "invokevirtual",
+            "operand": "#133",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/model/layered/HazmatArmorModel.withAnimations:(Lnet/minecraft/world/entity/LivingEntity;)Lcom/github/alexmodguy/alexscaves/client/model/layered/HazmatArmorModel;"
+          },
+          {
+            "offset": 41,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 42,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 43,
+            "opcode": "instanceof",
+            "operand": "#64",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/DarknessArmorModel"
+          },
+          {
+            "offset": 46,
+            "opcode": "ifeq",
+            "operand": "60",
+            "symbol": ""
+          },
+          {
+            "offset": 49,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 50,
+            "opcode": "checkcast",
+            "operand": "#64",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/DarknessArmorModel"
+          },
+          {
+            "offset": 53,
+            "opcode": "astore_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 54,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 55,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 56,
+            "opcode": "invokevirtual",
+            "operand": "#136",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/model/layered/DarknessArmorModel.withAnimations:(Lnet/minecraft/world/entity/LivingEntity;)Lcom/github/alexmodguy/alexscaves/client/model/layered/DarknessArmorModel;"
+          },
+          {
+            "offset": 59,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 60,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 61,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "applyACArmorAnimations",
+        "pivots": [
+          {
+            "contains": "6",
+            "offset": 1,
+            "opcode": "ifnonnull"
+          },
+          {
+            "contains": "",
+            "offset": 4,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "",
+            "offset": 5,
+            "opcode": "areturn"
+          },
+          {
+            "contains": "PrimordialArmorModel",
+            "offset": 7,
+            "opcode": "instanceof"
+          },
+          {
+            "contains": "24",
+            "offset": 10,
+            "opcode": "ifeq"
+          },
+          {
+            "contains": "PrimordialArmorModel.withAnimations:",
+            "offset": 20,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "HazmatArmorModel",
+            "offset": 25,
+            "opcode": "instanceof"
+          },
+          {
+            "contains": "42",
+            "offset": 28,
+            "opcode": "ifeq"
+          },
+          {
+            "contains": "HazmatArmorModel.withAnimations:",
+            "offset": 38,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "DarknessArmorModel",
+            "offset": 43,
+            "opcode": "instanceof"
+          },
+          {
+            "contains": "60",
+            "offset": 46,
+            "opcode": "ifeq"
+          },
+          {
+            "contains": "DarknessArmorModel.withAnimations:",
+            "offset": 56,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "",
+            "offset": 60,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "",
+            "offset": 61,
+            "opcode": "areturn"
+          }
+        ]
+      },
+      {
+        "access": 9,
+        "branches": [],
+        "code_sha256": "c3ecb1cd041dd68c5d9ec1c40e2384e567e778e7b9b8497df55fa72a4050b68c",
+        "code_size": 10,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "c9ed8537c5bcac6e6acfd6980999f5ba0474ae95d9de07eac49d61c3fc6bc526",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "invokestatic",
+            "operand": "#100",
+            "symbol": "Method getACArmorModelBase:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;"
+          },
+          {
+            "offset": 6,
+            "opcode": "invokestatic",
+            "operand": "#104",
+            "symbol": "Method applyACArmorAnimations:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;"
+          },
+          {
+            "offset": 9,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getACArmorModel",
+        "pivots": [
+          {
+            "contains": "Method getACArmorModelBase:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+            "offset": 3,
+            "opcode": "invokestatic"
+          },
+          {
+            "contains": "Method applyACArmorAnimations:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+            "offset": 6,
+            "opcode": "invokestatic"
+          },
+          {
+            "contains": "",
+            "offset": 9,
+            "opcode": "areturn"
+          }
+        ]
+      },
+      {
+        "access": 9,
+        "branches": [
+          {
+            "offset": 3,
+            "opcode": "ifne",
+            "target": 9
+          },
+          {
+            "offset": 16,
+            "opcode": "ifeq",
+            "target": 23
+          },
+          {
+            "offset": 30,
+            "opcode": "ifeq",
+            "target": 37
+          },
+          {
+            "offset": 44,
+            "opcode": "ifeq",
+            "target": 51
+          },
+          {
+            "offset": 58,
+            "opcode": "ifeq",
+            "target": 65
+          },
+          {
+            "offset": 72,
+            "opcode": "ifeq",
+            "target": 79
+          },
+          {
+            "offset": 86,
+            "opcode": "ifeq",
+            "target": 93
+          }
+        ],
+        "code_sha256": "f65f0c8195d252849ce0829005a6e211586d1da146abd4eee7253e5514dd8eec",
+        "code_size": 95,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+        "exception_handlers": [],
+        "instruction_count": 41,
+        "instruction_sha256": "869cf27339be87b5b132d627ad041fe1781ae4a6f64b4923cd9616871a4c4886",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "getstatic",
+            "operand": "#7",
+            "symbol": "Field init:Z"
+          },
+          {
+            "offset": 3,
+            "opcode": "ifne",
+            "operand": "9",
+            "symbol": ""
+          },
+          {
+            "offset": 6,
+            "opcode": "invokestatic",
+            "operand": "#108",
+            "symbol": "Method initializeModels:()V"
+          },
+          {
+            "offset": 9,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 10,
+            "opcode": "invokevirtual",
+            "operand": "#111",
+            "symbol": "Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;"
+          },
+          {
+            "offset": 13,
+            "opcode": "instanceof",
+            "operand": "#117",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem"
+          },
+          {
+            "offset": 16,
+            "opcode": "ifeq",
+            "operand": "23",
+            "symbol": ""
+          },
+          {
+            "offset": 19,
+            "opcode": "getstatic",
+            "operand": "#40",
+            "symbol": "Field PRIMORDIAL_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/PrimordialArmorModel;"
+          },
+          {
+            "offset": 22,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 23,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 24,
+            "opcode": "invokevirtual",
+            "operand": "#111",
+            "symbol": "Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;"
+          },
+          {
+            "offset": 27,
+            "opcode": "instanceof",
+            "operand": "#119",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem"
+          },
+          {
+            "offset": 30,
+            "opcode": "ifeq",
+            "operand": "37",
+            "symbol": ""
+          },
+          {
+            "offset": 33,
+            "opcode": "getstatic",
+            "operand": "#50",
+            "symbol": "Field HAZMAT_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/HazmatArmorModel;"
+          },
+          {
+            "offset": 36,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 37,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 38,
+            "opcode": "invokevirtual",
+            "operand": "#111",
+            "symbol": "Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;"
+          },
+          {
+            "offset": 41,
+            "opcode": "instanceof",
+            "operand": "#121",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/item/DivingArmorItem"
+          },
+          {
+            "offset": 44,
+            "opcode": "ifeq",
+            "operand": "51",
+            "symbol": ""
+          },
+          {
+            "offset": 47,
+            "opcode": "getstatic",
+            "operand": "#60",
+            "symbol": "Field DIVING_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/DivingArmorModel;"
+          },
+          {
+            "offset": 50,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 51,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 52,
+            "opcode": "invokevirtual",
+            "operand": "#111",
+            "symbol": "Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;"
+          },
+          {
+            "offset": 55,
+            "opcode": "instanceof",
+            "operand": "#123",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem"
+          },
+          {
+            "offset": 58,
+            "opcode": "ifeq",
+            "operand": "65",
+            "symbol": ""
+          },
+          {
+            "offset": 61,
+            "opcode": "getstatic",
+            "operand": "#70",
+            "symbol": "Field DARKNESS_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/DarknessArmorModel;"
+          },
+          {
+            "offset": 64,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 65,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 66,
+            "opcode": "invokevirtual",
+            "operand": "#111",
+            "symbol": "Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;"
+          },
+          {
+            "offset": 69,
+            "opcode": "instanceof",
+            "operand": "#125",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem"
+          },
+          {
+            "offset": 72,
+            "opcode": "ifeq",
+            "operand": "79",
+            "symbol": ""
+          },
+          {
+            "offset": 75,
+            "opcode": "getstatic",
+            "operand": "#80",
+            "symbol": "Field RAINBOUNCE_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/RainbounceArmorModel;"
+          },
+          {
+            "offset": 78,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 79,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 80,
+            "opcode": "invokevirtual",
+            "operand": "#111",
+            "symbol": "Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;"
+          },
+          {
+            "offset": 83,
+            "opcode": "instanceof",
+            "operand": "#127",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem"
+          },
+          {
+            "offset": 86,
+            "opcode": "ifeq",
+            "operand": "93",
+            "symbol": ""
+          },
+          {
+            "offset": 89,
+            "opcode": "getstatic",
+            "operand": "#90",
+            "symbol": "Field GINGERBREAD_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/GingerbreadArmorModel;"
+          },
+          {
+            "offset": 92,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 93,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 94,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getACArmorModelBase",
+        "pivots": [
+          {
+            "contains": "Field init:Z",
+            "offset": 0,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "9",
+            "offset": 3,
+            "opcode": "ifne"
+          },
+          {
+            "contains": "Method initializeModels:()V",
+            "offset": 6,
+            "opcode": "invokestatic"
+          },
+          {
+            "contains": "",
+            "offset": 93,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "",
+            "offset": 94,
+            "opcode": "areturn"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem",
+            "offset": 13,
+            "opcode": "instanceof"
+          },
+          {
+            "contains": "23",
+            "offset": 16,
+            "opcode": "ifeq"
+          },
+          {
+            "contains": "Field PRIMORDIAL_ARMOR_MODEL:",
+            "offset": 19,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "",
+            "offset": 22,
+            "opcode": "areturn"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem",
+            "offset": 27,
+            "opcode": "instanceof"
+          },
+          {
+            "contains": "37",
+            "offset": 30,
+            "opcode": "ifeq"
+          },
+          {
+            "contains": "Field HAZMAT_ARMOR_MODEL:",
+            "offset": 33,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "",
+            "offset": 36,
+            "opcode": "areturn"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/DivingArmorItem",
+            "offset": 41,
+            "opcode": "instanceof"
+          },
+          {
+            "contains": "51",
+            "offset": 44,
+            "opcode": "ifeq"
+          },
+          {
+            "contains": "Field DIVING_ARMOR_MODEL:",
+            "offset": 47,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "",
+            "offset": 50,
+            "opcode": "areturn"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem",
+            "offset": 55,
+            "opcode": "instanceof"
+          },
+          {
+            "contains": "65",
+            "offset": 58,
+            "opcode": "ifeq"
+          },
+          {
+            "contains": "Field DARKNESS_ARMOR_MODEL:",
+            "offset": 61,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "",
+            "offset": 64,
+            "opcode": "areturn"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem",
+            "offset": 69,
+            "opcode": "instanceof"
+          },
+          {
+            "contains": "79",
+            "offset": 72,
+            "opcode": "ifeq"
+          },
+          {
+            "contains": "Field RAINBOUNCE_ARMOR_MODEL:",
+            "offset": 75,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "",
+            "offset": 78,
+            "opcode": "areturn"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem",
+            "offset": 83,
+            "opcode": "instanceof"
+          },
+          {
+            "contains": "93",
+            "offset": 86,
+            "opcode": "ifeq"
+          },
+          {
+            "contains": "Field GINGERBREAD_ARMOR_MODEL:",
+            "offset": 89,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "",
+            "offset": 92,
+            "opcode": "areturn"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "7ac83f1b452c8b52a0ee1dc5246caaba0b899c412201e29cc19922f5b5fca8cf",
+        "code_size": 11,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/client/model/HumanoidModel;)Lnet/minecraft/client/model/HumanoidModel;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "c87e8fad670e617f6c2b75a0273b972b463bc0eaf49efdda0d3aee16739e3d0f",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "aload",
+            "operand": "4",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "invokestatic",
+            "operand": "#94",
+            "symbol": "Method getACArmorModel:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;"
+          },
+          {
+            "offset": 7,
+            "opcode": "checkcast",
+            "operand": "#98",
+            "symbol": "class net/minecraft/client/model/HumanoidModel"
+          },
+          {
+            "offset": 10,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getHumanoidArmorModel",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "",
+            "offset": 1,
+            "opcode": "aload_2"
+          },
+          {
+            "contains": "4",
+            "offset": 2,
+            "opcode": "aload"
+          },
+          {
+            "contains": "Method getACArmorModel:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+            "offset": 4,
+            "opcode": "invokestatic"
+          },
+          {
+            "contains": "class net/minecraft/client/model/HumanoidModel",
+            "offset": 7,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "",
+            "offset": 10,
+            "opcode": "areturn"
+          }
+        ]
+      },
+      {
+        "access": 9,
+        "branches": [],
+        "code_sha256": "fa22d5a675a8a19abcd5b40ec570fe63dc6cc8e918bb04bbd7fd84f4c51d2927",
+        "code_size": 137,
+        "coverage": "FULL_BODY",
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "instruction_count": 51,
+        "instruction_sha256": "f70a2347aef08fface803751619b8a3c48f888e0a0d9e9599ea749545ca4e9c1",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "putstatic",
+            "operand": "#7",
+            "symbol": "Field init:Z"
+          },
+          {
+            "offset": 4,
+            "opcode": "new",
+            "operand": "#13",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/PrimordialArmorModel"
+          },
+          {
+            "offset": 7,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 8,
+            "opcode": "invokestatic",
+            "operand": "#15",
+            "symbol": "Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;"
+          },
+          {
+            "offset": 11,
+            "opcode": "invokevirtual",
+            "operand": "#21",
+            "symbol": "Method net/minecraft/client/Minecraft.getEntityModels:()Lnet/minecraft/client/model/geom/EntityModelSet;"
+          },
+          {
+            "offset": 14,
+            "opcode": "getstatic",
+            "operand": "#25",
+            "symbol": "Field com/github/alexmodguy/alexscaves/client/model/layered/ACModelLayers.PRIMORDIAL_ARMOR:Lnet/minecraft/client/model/geom/ModelLayerLocation;"
+          },
+          {
+            "offset": 17,
+            "opcode": "invokevirtual",
+            "operand": "#31",
+            "symbol": "Method net/minecraft/client/model/geom/EntityModelSet.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;"
+          },
+          {
+            "offset": 20,
+            "opcode": "invokespecial",
+            "operand": "#37",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/model/layered/PrimordialArmorModel.\"<init>\":(Lnet/minecraft/client/model/geom/ModelPart;)V"
+          },
+          {
+            "offset": 23,
+            "opcode": "putstatic",
+            "operand": "#40",
+            "symbol": "Field PRIMORDIAL_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/PrimordialArmorModel;"
+          },
+          {
+            "offset": 26,
+            "opcode": "new",
+            "operand": "#44",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/HazmatArmorModel"
+          },
+          {
+            "offset": 29,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 30,
+            "opcode": "invokestatic",
+            "operand": "#15",
+            "symbol": "Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;"
+          },
+          {
+            "offset": 33,
+            "opcode": "invokevirtual",
+            "operand": "#21",
+            "symbol": "Method net/minecraft/client/Minecraft.getEntityModels:()Lnet/minecraft/client/model/geom/EntityModelSet;"
+          },
+          {
+            "offset": 36,
+            "opcode": "getstatic",
+            "operand": "#46",
+            "symbol": "Field com/github/alexmodguy/alexscaves/client/model/layered/ACModelLayers.HAZMAT_ARMOR:Lnet/minecraft/client/model/geom/ModelLayerLocation;"
+          },
+          {
+            "offset": 39,
+            "opcode": "invokevirtual",
+            "operand": "#31",
+            "symbol": "Method net/minecraft/client/model/geom/EntityModelSet.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;"
+          },
+          {
+            "offset": 42,
+            "opcode": "invokespecial",
+            "operand": "#49",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/model/layered/HazmatArmorModel.\"<init>\":(Lnet/minecraft/client/model/geom/ModelPart;)V"
+          },
+          {
+            "offset": 45,
+            "opcode": "putstatic",
+            "operand": "#50",
+            "symbol": "Field HAZMAT_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/HazmatArmorModel;"
+          },
+          {
+            "offset": 48,
+            "opcode": "new",
+            "operand": "#54",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/DivingArmorModel"
+          },
+          {
+            "offset": 51,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 52,
+            "opcode": "invokestatic",
+            "operand": "#15",
+            "symbol": "Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;"
+          },
+          {
+            "offset": 55,
+            "opcode": "invokevirtual",
+            "operand": "#21",
+            "symbol": "Method net/minecraft/client/Minecraft.getEntityModels:()Lnet/minecraft/client/model/geom/EntityModelSet;"
+          },
+          {
+            "offset": 58,
+            "opcode": "getstatic",
+            "operand": "#56",
+            "symbol": "Field com/github/alexmodguy/alexscaves/client/model/layered/ACModelLayers.DIVING_ARMOR:Lnet/minecraft/client/model/geom/ModelLayerLocation;"
+          },
+          {
+            "offset": 61,
+            "opcode": "invokevirtual",
+            "operand": "#31",
+            "symbol": "Method net/minecraft/client/model/geom/EntityModelSet.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;"
+          },
+          {
+            "offset": 64,
+            "opcode": "invokespecial",
+            "operand": "#59",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/model/layered/DivingArmorModel.\"<init>\":(Lnet/minecraft/client/model/geom/ModelPart;)V"
+          },
+          {
+            "offset": 67,
+            "opcode": "putstatic",
+            "operand": "#60",
+            "symbol": "Field DIVING_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/DivingArmorModel;"
+          },
+          {
+            "offset": 70,
+            "opcode": "new",
+            "operand": "#64",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/DarknessArmorModel"
+          },
+          {
+            "offset": 73,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 74,
+            "opcode": "invokestatic",
+            "operand": "#15",
+            "symbol": "Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;"
+          },
+          {
+            "offset": 77,
+            "opcode": "invokevirtual",
+            "operand": "#21",
+            "symbol": "Method net/minecraft/client/Minecraft.getEntityModels:()Lnet/minecraft/client/model/geom/EntityModelSet;"
+          },
+          {
+            "offset": 80,
+            "opcode": "getstatic",
+            "operand": "#66",
+            "symbol": "Field com/github/alexmodguy/alexscaves/client/model/layered/ACModelLayers.DARKNESS_ARMOR:Lnet/minecraft/client/model/geom/ModelLayerLocation;"
+          },
+          {
+            "offset": 83,
+            "opcode": "invokevirtual",
+            "operand": "#31",
+            "symbol": "Method net/minecraft/client/model/geom/EntityModelSet.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;"
+          },
+          {
+            "offset": 86,
+            "opcode": "invokespecial",
+            "operand": "#69",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/model/layered/DarknessArmorModel.\"<init>\":(Lnet/minecraft/client/model/geom/ModelPart;)V"
+          },
+          {
+            "offset": 89,
+            "opcode": "putstatic",
+            "operand": "#70",
+            "symbol": "Field DARKNESS_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/DarknessArmorModel;"
+          },
+          {
+            "offset": 92,
+            "opcode": "new",
+            "operand": "#74",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/RainbounceArmorModel"
+          },
+          {
+            "offset": 95,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 96,
+            "opcode": "invokestatic",
+            "operand": "#15",
+            "symbol": "Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;"
+          },
+          {
+            "offset": 99,
+            "opcode": "invokevirtual",
+            "operand": "#21",
+            "symbol": "Method net/minecraft/client/Minecraft.getEntityModels:()Lnet/minecraft/client/model/geom/EntityModelSet;"
+          },
+          {
+            "offset": 102,
+            "opcode": "getstatic",
+            "operand": "#76",
+            "symbol": "Field com/github/alexmodguy/alexscaves/client/model/layered/ACModelLayers.RAINBOUNCE_ARMOR:Lnet/minecraft/client/model/geom/ModelLayerLocation;"
+          },
+          {
+            "offset": 105,
+            "opcode": "invokevirtual",
+            "operand": "#31",
+            "symbol": "Method net/minecraft/client/model/geom/EntityModelSet.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;"
+          },
+          {
+            "offset": 108,
+            "opcode": "invokespecial",
+            "operand": "#79",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/model/layered/RainbounceArmorModel.\"<init>\":(Lnet/minecraft/client/model/geom/ModelPart;)V"
+          },
+          {
+            "offset": 111,
+            "opcode": "putstatic",
+            "operand": "#80",
+            "symbol": "Field RAINBOUNCE_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/RainbounceArmorModel;"
+          },
+          {
+            "offset": 114,
+            "opcode": "new",
+            "operand": "#84",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/model/layered/GingerbreadArmorModel"
+          },
+          {
+            "offset": 117,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 118,
+            "opcode": "invokestatic",
+            "operand": "#15",
+            "symbol": "Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;"
+          },
+          {
+            "offset": 121,
+            "opcode": "invokevirtual",
+            "operand": "#21",
+            "symbol": "Method net/minecraft/client/Minecraft.getEntityModels:()Lnet/minecraft/client/model/geom/EntityModelSet;"
+          },
+          {
+            "offset": 124,
+            "opcode": "getstatic",
+            "operand": "#86",
+            "symbol": "Field com/github/alexmodguy/alexscaves/client/model/layered/ACModelLayers.GINGERBREAD_ARMOR:Lnet/minecraft/client/model/geom/ModelLayerLocation;"
+          },
+          {
+            "offset": 127,
+            "opcode": "invokevirtual",
+            "operand": "#31",
+            "symbol": "Method net/minecraft/client/model/geom/EntityModelSet.bakeLayer:(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;"
+          },
+          {
+            "offset": 130,
+            "opcode": "invokespecial",
+            "operand": "#89",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/model/layered/GingerbreadArmorModel.\"<init>\":(Lnet/minecraft/client/model/geom/ModelPart;)V"
+          },
+          {
+            "offset": 133,
+            "opcode": "putstatic",
+            "operand": "#90",
+            "symbol": "Field GINGERBREAD_ARMOR_MODEL:Lcom/github/alexmodguy/alexscaves/client/model/layered/GingerbreadArmorModel;"
+          },
+          {
+            "offset": 136,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "initializeModels",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "iconst_1"
+          },
+          {
+            "contains": "Field init:Z",
+            "offset": 1,
+            "opcode": "putstatic"
+          },
+          {
+            "contains": "",
+            "offset": 136,
+            "opcode": "return"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/client/model/layered/PrimordialArmorModel",
+            "offset": 4,
+            "opcode": "new"
+          },
+          {
+            "contains": "ACModelLayers.PRIMORDIAL_ARMOR:",
+            "offset": 14,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "EntityModelSet.bakeLayer:",
+            "offset": 17,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "PrimordialArmorModel.\"<init>\":",
+            "offset": 20,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field PRIMORDIAL_ARMOR_MODEL:",
+            "offset": 23,
+            "opcode": "putstatic"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/client/model/layered/HazmatArmorModel",
+            "offset": 26,
+            "opcode": "new"
+          },
+          {
+            "contains": "ACModelLayers.HAZMAT_ARMOR:",
+            "offset": 36,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "EntityModelSet.bakeLayer:",
+            "offset": 39,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "HazmatArmorModel.\"<init>\":",
+            "offset": 42,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field HAZMAT_ARMOR_MODEL:",
+            "offset": 45,
+            "opcode": "putstatic"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/client/model/layered/DivingArmorModel",
+            "offset": 48,
+            "opcode": "new"
+          },
+          {
+            "contains": "ACModelLayers.DIVING_ARMOR:",
+            "offset": 58,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "EntityModelSet.bakeLayer:",
+            "offset": 61,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "DivingArmorModel.\"<init>\":",
+            "offset": 64,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field DIVING_ARMOR_MODEL:",
+            "offset": 67,
+            "opcode": "putstatic"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/client/model/layered/DarknessArmorModel",
+            "offset": 70,
+            "opcode": "new"
+          },
+          {
+            "contains": "ACModelLayers.DARKNESS_ARMOR:",
+            "offset": 80,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "EntityModelSet.bakeLayer:",
+            "offset": 83,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "DarknessArmorModel.\"<init>\":",
+            "offset": 86,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field DARKNESS_ARMOR_MODEL:",
+            "offset": 89,
+            "opcode": "putstatic"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/client/model/layered/RainbounceArmorModel",
+            "offset": 92,
+            "opcode": "new"
+          },
+          {
+            "contains": "ACModelLayers.RAINBOUNCE_ARMOR:",
+            "offset": 102,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "EntityModelSet.bakeLayer:",
+            "offset": 105,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "RainbounceArmorModel.\"<init>\":",
+            "offset": 108,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field RAINBOUNCE_ARMOR_MODEL:",
+            "offset": 111,
+            "opcode": "putstatic"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/client/model/layered/GingerbreadArmorModel",
+            "offset": 114,
+            "opcode": "new"
+          },
+          {
+            "contains": "ACModelLayers.GINGERBREAD_ARMOR:",
+            "offset": 124,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "EntityModelSet.bakeLayer:",
+            "offset": 127,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "GingerbreadArmorModel.\"<init>\":",
+            "offset": 130,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field GINGERBREAD_ARMOR_MODEL:",
+            "offset": 133,
+            "opcode": "putstatic"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "d6f7264189858f154b120ac2e9b76f4b4dae9ddb629e4ec627af7810207e1a24",
+        "code_size": 5,
+        "coverage": "FULL_BODY",
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "instruction_count": 3,
+        "instruction_sha256": "a4e909f6fbb3424695cfd8081458c1db352953a8b4021610a41ca8bcbc874b14",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "invokespecial",
+            "operand": "#1",
+            "symbol": "Method java/lang/Object.\"<init>\":()V"
+          },
+          {
+            "offset": 4,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<init>",
+        "pivots": []
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "73e40e814ff7272e1b735faea0e40f8009d2c8a4abd92a228bdb0575518d8e75",
+        "code_size": 8,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+        "exception_handlers": [],
+        "instruction_count": 4,
+        "instruction_sha256": "f32bd82d2c08c62315f99ce83a9bfbcc7e7fb27bfaee182a997556183a8d8edb",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "new",
+            "operand": "#7",
+            "symbol": "class com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer"
+          },
+          {
+            "offset": 3,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "invokespecial",
+            "operand": "#9",
+            "symbol": "Method com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.\"<init>\":()V"
+          },
+          {
+            "offset": 7,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getCustomRenderer",
+        "pivots": [
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer",
+            "offset": 0,
+            "opcode": "new"
+          },
+          {
+            "contains": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer.\"<init>\":()V",
+            "offset": 4,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "",
+            "offset": 7,
+            "opcode": "areturn"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/CommonProxy": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "146cb1bd5c639e50589db67598e4a3f423eb736f7911d3b8329f72e0f5cd5fac",
+        "code_size": 2,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Ljava/lang/Object;",
+        "exception_handlers": [],
+        "instruction_count": 2,
+        "instruction_sha256": "136048e46e2f8943298d04aa6dcd85e43449d9960e57ca2951dd887e77dccb1d",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aconst_null",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getArmorProperties",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aconst_null"
+          },
+          {
+            "contains": "",
+            "offset": 1,
+            "opcode": "areturn"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "146cb1bd5c639e50589db67598e4a3f423eb736f7911d3b8329f72e0f5cd5fac",
+        "code_size": 2,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Ljava/lang/Object;",
+        "exception_handlers": [],
+        "instruction_count": 2,
+        "instruction_sha256": "136048e46e2f8943298d04aa6dcd85e43449d9960e57ca2951dd887e77dccb1d",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aconst_null",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getISTERProperties",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "aconst_null"
+          },
+          {
+            "contains": "",
+            "offset": 1,
+            "opcode": "areturn"
+          }
+        ]
+      }
+    ]
+  },
+  "property_declarations": {
+    "com/github/alexmodguy/alexscaves/citadel/client/CitadelItemRenderProperties": {
+      "declared_methods": [
+        {
+          "access": 1,
+          "descriptor": "()V",
+          "name": "<init>"
+        },
+        {
+          "access": 1,
+          "descriptor": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "name": "getCustomRenderer"
+        }
+      ],
+      "fields": [
+        {
+          "access": 18,
+          "descriptor": "Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "name": "renderer"
+        }
+      ],
+      "interfaces": [
+        "net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/client/render/item/ACArmorRenderProperties": {
+      "declared_methods": [
+        {
+          "access": 1,
+          "descriptor": "()V",
+          "name": "<init>"
+        },
+        {
+          "access": 9,
+          "descriptor": "()V",
+          "name": "initializeModels"
+        },
+        {
+          "access": 1,
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/client/model/HumanoidModel;)Lnet/minecraft/client/model/HumanoidModel;",
+          "name": "getHumanoidArmorModel"
+        },
+        {
+          "access": 9,
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+          "name": "getACArmorModel"
+        },
+        {
+          "access": 9,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+          "name": "getACArmorModelBase"
+        },
+        {
+          "access": 9,
+          "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/model/Model;)Lnet/minecraft/client/model/Model;",
+          "name": "applyACArmorAnimations"
+        },
+        {
+          "access": 9,
+          "descriptor": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item;Lnet/minecraft/client/model/Model;ZLnet/minecraft/resources/ResourceLocation;)V",
+          "name": "renderCustomArmor"
+        },
+        {
+          "access": 8,
+          "descriptor": "()V",
+          "name": "<clinit>"
+        }
+      ],
+      "fields": [
+        {
+          "access": 26,
+          "descriptor": "Lnet/minecraft/resources/ResourceLocation;",
+          "name": "DARKNESS_ARMOR_GLOW"
+        },
+        {
+          "access": 10,
+          "descriptor": "Z",
+          "name": "init"
+        },
+        {
+          "access": 9,
+          "descriptor": "Lcom/github/alexmodguy/alexscaves/client/model/layered/PrimordialArmorModel;",
+          "name": "PRIMORDIAL_ARMOR_MODEL"
+        },
+        {
+          "access": 9,
+          "descriptor": "Lcom/github/alexmodguy/alexscaves/client/model/layered/HazmatArmorModel;",
+          "name": "HAZMAT_ARMOR_MODEL"
+        },
+        {
+          "access": 9,
+          "descriptor": "Lcom/github/alexmodguy/alexscaves/client/model/layered/DivingArmorModel;",
+          "name": "DIVING_ARMOR_MODEL"
+        },
+        {
+          "access": 9,
+          "descriptor": "Lcom/github/alexmodguy/alexscaves/client/model/layered/DarknessArmorModel;",
+          "name": "DARKNESS_ARMOR_MODEL"
+        },
+        {
+          "access": 9,
+          "descriptor": "Lcom/github/alexmodguy/alexscaves/client/model/layered/RainbounceArmorModel;",
+          "name": "RAINBOUNCE_ARMOR_MODEL"
+        },
+        {
+          "access": 9,
+          "descriptor": "Lcom/github/alexmodguy/alexscaves/client/model/layered/GingerbreadArmorModel;",
+          "name": "GINGERBREAD_ARMOR_MODEL"
+        }
+      ],
+      "interfaces": [
+        "net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+      ]
+    },
+    "com/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties": {
+      "declared_methods": [
+        {
+          "access": 1,
+          "descriptor": "()V",
+          "name": "<init>"
+        },
+        {
+          "access": 1,
+          "descriptor": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "name": "getCustomRenderer"
+        }
+      ],
+      "fields": [],
+      "interfaces": [
+        "net/neoforged/neoforge/client/extensions/common/IClientItemExtensions"
+      ]
+    }
+  },
+  "registration_boundary": {
+    "absence_scope": "Zero typed Methodref/InterfaceMethodref calls named initializeClient in this exact publisher JAR; this does not prove runtime non-use, because external engine dispatch, reflection or external consumers may invoke declarations.",
+    "excluded": "External Minecraft/NeoForge Item and IClientItemExtensions engine bodies, runtime event registration, reflective calls, renderer CFG, layer/model/withAnimations internals, resource-pack rendering, active equipment powers, gameplay authorization, mutating hooks, perks and physical client execution.",
+    "external_engine_callback_dispatch": "NOT_VERIFIED",
+    "independent_model_property_events": "ClientProxy model-property registration is an independent presentation surface, not evidence of an ACClientExtensionItem dispatcher.",
+    "proxy_selection_and_client_initialization": "NOT_VERIFIED",
+    "publisher_typed_initialize_client_callers": 0,
+    "registration_execution": "NOT_VERIFIED"
+  },
+  "schema_version": 1,
+  "typed_reference_census": {
+    "assignability_census": {
+      "concrete_assignable": [
+        "com/github/alexmodguy/alexscaves/citadel/item/ItemCustomRender",
+        "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER",
+        "com/github/alexmodguy/alexscaves/server/item/CaveMapItem",
+        "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem",
+        "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem",
+        "com/github/alexmodguy/alexscaves/server/item/DreadbowItem",
+        "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem",
+        "com/github/alexmodguy/alexscaves/server/item/FrostmintSpearItem",
+        "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+        "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem",
+        "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem",
+        "com/github/alexmodguy/alexscaves/server/item/LimestoneSpearItem",
+        "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem",
+        "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem",
+        "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem",
+        "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem",
+        "com/github/alexmodguy/alexscaves/server/item/RaygunItem",
+        "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem",
+        "com/github/alexmodguy/alexscaves/server/item/SeaStaffItem",
+        "com/github/alexmodguy/alexscaves/server/item/ShotGumItem",
+        "com/github/alexmodguy/alexscaves/server/item/SpearItem",
+        "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem"
+      ],
+      "direct_implementers": [
+        "com/github/alexmodguy/alexscaves/citadel/item/ItemCustomRender",
+        "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER",
+        "com/github/alexmodguy/alexscaves/server/item/CaveMapItem",
+        "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem",
+        "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem",
+        "com/github/alexmodguy/alexscaves/server/item/DreadbowItem",
+        "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+        "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem",
+        "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem",
+        "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem",
+        "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem",
+        "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem",
+        "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem",
+        "com/github/alexmodguy/alexscaves/server/item/RaygunItem",
+        "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem",
+        "com/github/alexmodguy/alexscaves/server/item/SeaStaffItem",
+        "com/github/alexmodguy/alexscaves/server/item/ShotGumItem",
+        "com/github/alexmodguy/alexscaves/server/item/SpearItem",
+        "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem"
+      ],
+      "inherited_implementers": [
+        {
+          "access": 33,
+          "callback_declaring_owner": "com/github/alexmodguy/alexscaves/server/item/SpearItem",
+          "declared_callbacks": [],
+          "interfaces": [
+            "com/github/alexmodguy/alexscaves/server/item/ACEnchantableItem",
+            "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem"
+          ],
+          "owner": "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem",
+          "parent": "com/github/alexmodguy/alexscaves/server/item/SpearItem"
+        },
+        {
+          "access": 33,
+          "callback_declaring_owner": "com/github/alexmodguy/alexscaves/server/item/SpearItem",
+          "declared_callbacks": [],
+          "interfaces": [],
+          "owner": "com/github/alexmodguy/alexscaves/server/item/FrostmintSpearItem",
+          "parent": "com/github/alexmodguy/alexscaves/server/item/SpearItem"
+        },
+        {
+          "access": 33,
+          "callback_declaring_owner": "com/github/alexmodguy/alexscaves/server/item/SpearItem",
+          "declared_callbacks": [],
+          "interfaces": [],
+          "owner": "com/github/alexmodguy/alexscaves/server/item/LimestoneSpearItem",
+          "parent": "com/github/alexmodguy/alexscaves/server/item/SpearItem"
+        }
+      ],
+      "scope": "Publisher class parent/interface graph only; external subclasses and runtime loading are not enumerated."
+    },
+    "class_entries_scanned": 1555,
+    "class_path_roster_sha256": "2296d31ecc7fabb375922b8ad23c7a25c3e969bdfd80d5e1aa602034ae5d62ed",
+    "initialize_client_declarations": [
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/citadel/item/ItemCustomRender"
+      },
+      {
+        "method": {
+          "access": 1025,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/block/fluid/ACClientExtensionFluidType"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "3a3d109ca24cb3979ff89f93f0e77c23d642074bb9fe3a46629d680d1988e4b5",
+          "code_size": 15,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 4,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/block/fluid/AcidFluidType"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "3a3d109ca24cb3979ff89f93f0e77c23d642074bb9fe3a46629d680d1988e4b5",
+          "code_size": 15,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 4,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/block/fluid/PurpleSodaFluidType"
+      },
+      {
+        "method": {
+          "access": 1025,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/CaveMapItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "8feea315dd287ffc9f561fc045ac5cc30f5cb395ebeae02eb795c06f44eb4a9f",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "9f3118d96b8957ec4744b35c55e1ce18381783303d8934a4375b363fefdc227c",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "b02f9ebde61c43e897abbc812aa747511e0f2669a43934350b35eabeb30a4f01",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "ab25a13fc141e9c68e695fdce843d4563c474d551d77359cefa387da179e2a9a",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "b8c47826161500ed87bc5adf9d9f8c880f2be565109ee49e0c0cf6500d299c2f",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "6137614bc90b8903055da75a0cc17c846a23868cdafb9789ddc11abb0bc64d72",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "e5b472f09c165b99fddb1ca278e23b470a76c5387449ced55e02919ea752a6c3",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "c8d0b31b2bcc9dc0cc0163ca26fe176a53a2229a95d6f45c91748c001627062e",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "6137614bc90b8903055da75a0cc17c846a23868cdafb9789ddc11abb0bc64d72",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "6137614bc90b8903055da75a0cc17c846a23868cdafb9789ddc11abb0bc64d72",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "144711b99740d3708eef2b7046ebc5ea16154a57c55f0d47c2f95fbabd15e985",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "ab25a13fc141e9c68e695fdce843d4563c474d551d77359cefa387da179e2a9a",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/SeaStaffItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "144711b99740d3708eef2b7046ebc5ea16154a57c55f0d47c2f95fbabd15e985",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ShotGumItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "5bd9dd3a009f057948becf069fe9e1294ca74f597b236e49dbb765e7ba693676",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/SpearItem"
+      },
+      {
+        "method": {
+          "access": 1,
+          "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        },
+        "owner": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem"
+      }
+    ],
+    "initialize_client_member_references": [],
+    "member_reference_scope": "Every Methodref and InterfaceMethodref named initializeClient, any owner and any descriptor; includes references reachable by method handles but does not infer reflective/external calls",
+    "method": "CLASS/Fieldref/Methodref/InterfaceMethodref/NameAndType/MethodType plus declared JVM descriptors; UTF8/String names alone do not count",
+    "registration_event": "net/neoforged/neoforge/client/event/RegisterClientExtensionsEvent",
+    "registration_event_typed_owners": [],
+    "target": "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+    "target_owners": [
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/citadel/item/ItemCustomRender",
+        "typed_references": [
+          {
+            "index": 29,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": false,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+        "typed_references": [
+          {
+            "index": 1,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER",
+        "typed_references": [
+          {
+            "index": 29,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/CaveMapItem",
+        "typed_references": [
+          {
+            "index": 391,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem",
+        "typed_references": [
+          {
+            "index": 292,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem",
+        "typed_references": [
+          {
+            "index": 196,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/DreadbowItem",
+        "typed_references": [
+          {
+            "index": 567,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+        "typed_references": [
+          {
+            "index": 341,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem",
+        "typed_references": [
+          {
+            "index": 214,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem",
+        "typed_references": [
+          {
+            "index": 194,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/OrtholanceItem",
+        "typed_references": [
+          {
+            "index": 377,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem",
+        "typed_references": [
+          {
+            "index": 338,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem",
+        "typed_references": [
+          {
+            "index": 93,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem",
+        "typed_references": [
+          {
+            "index": 212,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem",
+        "typed_references": [
+          {
+            "index": 692,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem",
+        "typed_references": [
+          {
+            "index": 399,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/SeaStaffItem",
+        "typed_references": [
+          {
+            "index": 372,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ShotGumItem",
+        "typed_references": [
+          {
+            "index": 404,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/SpearItem",
+        "typed_references": [
+          {
+            "index": 155,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "extends_directly": false,
+        "implements_directly": true,
+        "owner": "com/github/alexmodguy/alexscaves/server/item/SugarStaffItem",
+        "typed_references": [
+          {
+            "index": 242,
+            "kind": "class_constant"
+          }
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "authority": "SHA-exact publisher binary; no adjacent source is used for installed behavior.",
+    "physical_cli_is_gameplay": false,
+    "reproduction": "Mandatory seal comparison; deterministic full selected method rows/code hashes, typed census and explicit pivots; negative mutation checks and twice-run physical-binary CLI idempotence."
+  }
+}

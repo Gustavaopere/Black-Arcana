@@ -151,14 +151,14 @@ class ArmorMaterialCards(unittest.TestCase):
         support=self.inventory['integration_support_inventory']
         prefix=support['reviewed_prefix']
         roster=self.inventory['remaining_family_inventory']['item_outer_classes']
-        self.assertEqual([r['class'] for r in prefix],roster[:2])
+        self.assertEqual([r['class'] for r in prefix[:2]],['server/item/ACArmorMaterial','server/item/ACArmorTickItem'])
+        self.assertEqual([r['class'] for r in prefix],roster[:len(prefix)])
         self.assertEqual(prefix[0]['card'],'systems/armor-material.md')
         self.assertEqual(prefix[0]['additional_cards'],1)
         self.assertIsNone(prefix[1]['card'])
         self.assertEqual(prefix[1]['additional_cards'],0)
         self.assertEqual(prefix[1]['disposition'],'EMPTY_MARKER_SUPPORT_ONLY')
-        self.assertEqual(support['next_alphabetical_uncovered_scope'],roster[2])
-        self.assertEqual(roster[2],'server/item/ACClientExtensionItem')
+        self.assertEqual(support['next_alphabetical_uncovered_scope'],roster[len(prefix)])
         self.assertFalse(support['family_universe_closed'])
         self.assertFalse(self.inventory['whole_provider_catalog_closed'])
 

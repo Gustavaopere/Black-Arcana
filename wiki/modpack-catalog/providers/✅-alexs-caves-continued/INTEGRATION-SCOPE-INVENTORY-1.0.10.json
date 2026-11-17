@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine historical damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. 51 individual enchantment static contracts (Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging, Gamma Ray, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection, X Ray); no publisher enchantment JSON dossier remains partial. This completes only the bounded 51-resource publisher static catalog, not the whole provider/runtime universe. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root. Tremorzilla Beam and Raygun add two separately certified damage-type contracts; the current ledger therefore has eleven certified damage cards (11/11 publisher damage JSONs, 100%) while damage_types.cards and documented_static_contracts preserve the nine-card historical checkpoint. The historical Raygun checkpoint had 81/81 observed provider cards. ACArmorMaterial now adds one separately certified integration-support card, bringing the current observed cards to 82/82 individual static contracts (100% of that observed scope); ACArmorTickItem is an empty-marker support disposition only and adds zero cards or independent abilities. The full provider integration universe remains OPEN, with server/item/ACClientExtensionItem next in the alphabetical uncovered inventory. This adds one support candidate and zero semantic magic roots; it does not certify complete armor items, per-player mutation hooks or physical gameplay.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine historical damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. 51 individual enchantment static contracts (Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging, Gamma Ray, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection, X Ray); no publisher enchantment JSON dossier remains partial. This completes only the bounded 51-resource publisher static catalog, not the whole provider/runtime universe. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root. Tremorzilla Beam and Raygun add two separately certified damage-type contracts; the current ledger therefore has eleven certified damage cards (11/11 publisher damage JSONs, 100%) while damage_types.cards and documented_static_contracts preserve the nine-card historical checkpoint. The historical Raygun checkpoint had 81/81 observed provider cards. The historical ACArmorMaterial checkpoint added one separately certified integration-support card and reached 82/82 individual static contracts; ACArmorTickItem remains an empty-marker support disposition only and adds zero cards or independent abilities. ACClientExtensionItem now adds one separately certified integration-support card for its declared ABI and all 19 direct implementer initializeClient bodies (18 native and one relocated Citadel), bringing the current observed cards to 83/83 individual static contracts (100% of that observed scope). The typed census of all 1555 artifact classes finds 20 target-reference owners including self, but no native Methodref/InterfaceMethodref named initializeClient; registration execution and reflective/external invocation remain NOT_VERIFIED. The full provider integration universe remains OPEN, with server/item/ACDestroyedItem next in the alphabetical uncovered inventory after the three-class reviewed prefix. This adds one support candidate and zero semantic magic roots; it does not certify complete implementing items or renderers, per-player mutation hooks, perks or physical gameplay.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -479,9 +479,10 @@
       "publisher_json_static_catalog_scope": "Exactly 51 data/alexscaves/enchantment/*.json resources in the SHA-exact publisher 1.0.10 artifact and 51 individual static contracts; not a whole-provider/runtime universe closure."
     },
     "integration_support": {
-      "documented_static_contracts": 1,
+      "documented_static_contracts": 2,
       "cards": [
-        "systems/armor-material.md"
+        "systems/armor-material.md",
+        "systems/client-extension.md"
       ],
       "evidence": "EXACT-ARMOR-MATERIAL-1.0.10.md",
       "manifest": "EXACT-ARMOR-MATERIAL-1.0.10.json",
@@ -499,10 +500,16 @@
       "semantic_magic_roots_added": 0,
       "mutating_hook": "NOT_VERIFIED",
       "physical_qa": "NOT_TESTED",
-      "mutation": "NO_MUTATION"
+      "mutation": "NO_MUTATION",
+      "related_evidence": [
+        "EXACT-CLIENT-EXTENSION-1.0.10.md"
+      ],
+      "related_manifests": [
+        "EXACT-CLIENT-EXTENSION-1.0.10.json"
+      ]
     }
   },
-  "next_alphabetical_uncovered_scope": "server/item/ACClientExtensionItem",
+  "next_alphabetical_uncovered_scope": "server/item/ACDestroyedItem",
   "integration_support_inventory": {
     "source_inventory": "remaining_family_inventory.item_outer_classes",
     "scope": "REVIEWED_ALPHABETICAL_PREFIX_OF_PHYSICAL_ITEM_OUTER_CLASSES",
@@ -526,9 +533,19 @@
         "additional_cards": 0,
         "semantic_magic_roots_added": 0,
         "scope_note": "Empty interface, not an independent ability. Typed constant-pool census over all 1555 artifact classes finds only its own class and the implements declaration in DarknessArmorItem; no marker dispatcher or calls. DarknessArmorItem.acInventoryTick reaches private acArmorTick through the distinct ACTickingItem route."
+      },
+      {
+        "class": "server/item/ACClientExtensionItem",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": "systems/client-extension.md",
+        "evidence": "EXACT-CLIENT-EXTENSION-1.0.10.md",
+        "manifest": "EXACT-CLIENT-EXTENSION-1.0.10.json",
+        "additional_cards": 1,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "Declared interface ABI and all 19 direct implementer initializeClient bodies, 18 native and one relocated Citadel; bounded client-extension outputs. Typed census scans all 1555 classes, finds self plus 19 direct implementers, and no native Methodref/InterfaceMethodref named initializeClient. Registration execution, bootstrap/event reachability and reflective/external invocation remain NOT_VERIFIED. No complete item/renderer certification, safe per-player hook, physical QA, perk certification or provider closure."
       }
     ],
-    "next_alphabetical_uncovered_scope": "server/item/ACClientExtensionItem",
+    "next_alphabetical_uncovered_scope": "server/item/ACDestroyedItem",
     "family_universe_closed": false,
     "remaining_family_inventory_preserved": true,
     "typed_constant_pool_class_count": 1555,
