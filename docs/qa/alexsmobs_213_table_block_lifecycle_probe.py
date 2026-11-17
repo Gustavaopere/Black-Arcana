@@ -35,7 +35,9 @@ SYMBOLS = re.compile(
     r"ItemStack|NBT|saveAdditional|loadAdditional|setItem|"
     r"UUID|rerollPlayerUUID|setRerollPlayerUUID|"
     r"sendTo|sendPacket|MessageUpdate|DataComponents|BlockHitResult|"
-    r"InteractionResult|ClipContext|register|AMMenuRegistry)"
+    r"InteractionResult|ClipContext|register|AMMenuRegistry|"
+    r"sendMSGToAll|explodeOnDestroy|Level\.explode|"
+    r"transmutingTableExplodes|transmutationBlacklist)"
 )
 INVOKES = ("invoke", "getfield", "putfield", "getstatic", "putstatic",
            "ldc", "new", "instanceof", "checkcast")
@@ -44,6 +46,7 @@ MAX_INSTRUCTIONS = 350
 MAX_REFS = 95
 MAX_BRANCHES = 70
 MAX_CANDIDATES = 100
+LITERAL_OPS = ("ldc", "fconst", "iconst", "bipush", "sipush", "dconst")
 MENU_NAMES = {"MenuTransmutationTable", "stillValid", "slotsChanged",
               "clickMenuButton", "transmute", "removed",
               "lambda$removed$0", "quickMoveStack"}
@@ -75,6 +78,7 @@ def project(method):
     pos = set(positions)
     refs = []
     jumps = []
+    literals = []
     for i, r in enumerate(instructions):
         if r["opcode"].startswith(("if", "goto")):
             val = r["operand"].split(" ", 1)[0]
@@ -85,6 +89,8 @@ def project(method):
             jumps.append({"site": r["offset"], "opcode": r["opcode"],
                           "target": dst,
                           "prior": item(instructions[i - 1]) if i else None})
+        if r["opcode"].startswith(LITERAL_OPS):
+            literals.append(item(r))
         if r["opcode"].startswith(INVOKES) and SYMBOLS.search(r["symbol"]):
             refs.append({
                 "site": item(r),
@@ -92,7 +98,8 @@ def project(method):
                 "next": item(instructions[i+1]) if i+1 < len(instructions)
                         else None,
             })
-    require(len(jumps) <= MAX_BRANCHES and len(refs) <= MAX_REFS,
+    require(len(jumps) <= MAX_BRANCHES and len(refs) <= MAX_REFS
+            and len(literals) <= 100,
             "unbounded operator evidence for native method")
     return {
         "name": method_name(method),
@@ -101,6 +108,7 @@ def project(method):
         "instruction_count": len(instructions),
         "branches": jumps,
         "relevant_refs": refs,
+        "literal_operators": literals,
         "native_set_changed_calls": [
             item(r) for r in instructions
             if r["opcode"].startswith("invoke")
@@ -156,6 +164,141 @@ def sealed_classfiles(old):
             "prior publisher exactness mismatch")
     return {x["class_path"]: x["class_sha256"]
             for x in old["observations"]["classes"]}
+
+
+
+def exact_edge(method, offset, opcode, symbol=None, target=None):
+    found = [x for x in method["relevant_refs"]
+             if x["site"]["offset"] == offset]
+    if opcode.startswith(("if", "goto")):
+        found = [x for x in method["branches"] if x["site"] == offset]
+        require(len(found) == 1 and found[0]["opcode"] == opcode,
+                "missing native branch at " + str(offset))
+        if target is not None:
+            require(found[0]["target"] == target,
+                    "native branch target drift at " + str(offset))
+        return found[0]
+    require(len(found) == 1 and found[0]["site"]["opcode"] == opcode,
+            "missing native owner operand at " + str(offset))
+    if symbol:
+        require(symbol in found[0]["site"]["symbol"],
+                "native owner operand identity drift at " + str(offset))
+    return found[0]["site"]
+
+
+def native_owner_path(by_path):
+    def member(path, name):
+        rows = [m for m in by_path[path]["selected_methods"]
+                if m["name"] == name]
+        require(len(rows) == 1, "missing/ambiguous owner method " + name)
+        return rows[0]
+
+    block_use = member(BLOCK, "amUse")
+    explode = member(BLOCK, "explodeOnDestroy")
+    destroy = member(BLOCK, "onDestroyedByPlayer")
+    menu_provider = member(BLOCK, "lambda$getMenuProvider$2")
+    ticker = member(BLOCK, "getTicker")
+    slot = member(INPUT_SLOT, "mayPlace")
+    container = member(INPUT_CONTAINER, "setChanged")
+    menu_valid = member(MENU, "stillValid")
+
+    require(any(b["site"] == 4 and b["target"] == 11
+                for b in block_use["branches"]),
+            "client interaction guard changed")
+    require(any(b["site"] == 43 and b["target"] == 86
+                for b in block_use["branches"]),
+            "tile identity/send guard changed")
+    require(any(b["site"] == 3 and b["target"] == 46
+                for b in explode["branches"]),
+            "config explosion guard changed")
+    require(any(b["site"] == 18 and b["target"] == 28
+                for b in menu_provider["branches"]),
+            "menu null fallback guard changed")
+    require(any(b["site"] == 18 and b["target"] == 44
+                for b in slot["branches"]) and
+            any(b["site"] == 37 and b["target"] == 44
+                for b in slot["branches"]),
+            "slot max-stack or blacklist guard changed")
+    return {
+        "am_use": {
+            "client_guard": exact_edge(
+                block_use, 1, "invokevirtual", "Level.isClientSide:"
+            ),
+            "menu_open": exact_edge(
+                block_use, 19, "invokevirtual", "Player.openMenu:"
+            ),
+            "blockentity_resolution": exact_edge(
+                block_use, 33, "invokevirtual", "Level.getBlockEntity:"
+            ),
+            "blockentity_type_check": exact_edge(
+                block_use, 40, "instanceof", "TileEntityTransmutationTable"
+            ),
+            "display_packet": exact_edge(
+                block_use, 53, "new", "MessageUpdateTransmutablesToDisplay"
+            ),
+            "broadcast_to_all": exact_edge(
+                block_use, 83, "invokestatic", "AlexsMobs.sendMSGToAll:"
+            ),
+            "return_client_and_server": "SUCCESS_ON_CLIENT_CONSUME_ON_SERVER",
+            "session_and_packet_ownership": "NOT_CERTIFIED",
+        },
+        "menu": {
+            "container_access": exact_edge(
+                menu_provider, 9, "invokestatic", "ContainerLevelAccess.create:"
+            ),
+            "instanceof_tile": exact_edge(
+                menu_provider, 15, "instanceof",
+                "TileEntityTransmutationTable"
+            ),
+            "new_menu": exact_edge(
+                menu_provider, 29, "invokespecial",
+                "MenuTransmutationTable"
+            ),
+            "still_valid": exact_edge(
+                menu_valid, 16, "invokestatic", "stillValid:"
+            ),
+            "menu_type_and_position_binding": "CONSTRUCTION_ONLY_NOT_SESSION_CERTIFIED",
+        },
+        "ticker": exact_edge(
+            ticker, 17, "invokestatic", "createTickerHelper:"
+        ),
+        "destruction": {
+            "destroy_calls_explode": exact_edge(
+                destroy, 2, "invokestatic", "explodeOnDestroy:"
+            ),
+            "config_guard": exact_edge(
+                explode, 0, "getstatic", "AMConfig.transmutingTableExplodes:"
+            ),
+            "effect_owner": exact_edge(
+                explode, 42, "invokevirtual", "Level.explode:"
+            ),
+            "world_interaction": exact_edge(
+                explode, 39, "getstatic", "ExplosionInteraction.BLOCK"
+            ),
+            "literal_operators": explode["literal_operators"],
+            "effective_pack_config": "NOT_CAPTURED",
+            "world_effect_policy_external_provider": "NO_MUTATION",
+        },
+        "slot_constraints": {
+            "max_stack_size": exact_edge(
+                slot, 14, "invokevirtual", "ItemStack.getMaxStackSize:"
+            ),
+            "blacklist": exact_edge(
+                slot, 25, "getstatic", "AMConfig.transmutationBlacklist:"
+            ),
+            "branches": slot["branches"],
+            "effective_pack_blacklist": "NOT_CAPTURED",
+        },
+        "container_change_callback": {
+            "slots_changed": exact_edge(
+                container, 5, "invokevirtual", "MenuTransmutationTable.slotsChanged:"
+            ),
+            "simple_container_dirty": exact_edge(
+                container, 9, "invokespecial", "SimpleContainer.setChanged:"
+            ),
+            "block_entity_dirty_inference": "NOT_VERIFIED",
+        },
+    }
 
 
 def audit(jar: Path, javap_bin: str, predecessor: dict) -> dict:
@@ -236,6 +379,7 @@ def audit(jar: Path, javap_bin: str, predecessor: dict) -> dict:
         "classes": classes,
         "binary_consumer_candidates": discovered,
         "static_signals": signals,
+        "exact_owner_path": native_owner_path(bypath),
         "limitations": {
             "physical_modlist_current": "NOT_RECONFIRMED",
             "real_block_use_and_menu_open": "NOT_TESTED",
@@ -272,6 +416,10 @@ def verify_lock(report, lock):
             "consumer cohort changed")
     require(lock["static_signals"] == report["static_signals"],
             "native dirty/open/validity signals changed")
+    require(lock["owner_path_sha256"] == hashlib.sha256(
+        json.dumps(report["exact_owner_path"], sort_keys=True,
+                   ensure_ascii=False).encode("utf-8")
+    ).hexdigest(), "exact owner path evidence changed")
     require(lock["mutation"] == "NO_MUTATION" and
             report["limitations"]["mutation"] == "NO_MUTATION",
             "mutating contract must fail closed")
