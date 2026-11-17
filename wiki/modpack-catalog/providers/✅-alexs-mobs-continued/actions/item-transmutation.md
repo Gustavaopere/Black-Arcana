@@ -2,7 +2,7 @@
 
 - Provider: **Alex's Mobs Continued** (`alexsmobs`)
 - Version: `2.1.13`
-- Publisher SHA-1 (histórico verificado contra modlist anterior; versão atual pendente): `50ddafdf3d12b33331e4eecb4ab514ae451baadd`
+- Publisher SHA-1 (modlist atual do sibling registra 2.1.13 no commit `55d8baa`): `50ddafdf3d12b33331e4eecb4ab514ae451baadd`
 - Owner surface: `alexsmobs:transmutation_table`
 - Semantic type: deliberate supernatural item-transmutation action
 - State: `COUNTED_EXACT`
@@ -133,7 +133,7 @@ Se `n` representa `ItemStack.getCount()`, `a = AMConfig.transmutingWeightAddStep
 
 `MenuTransmutationTable$1.setChanged` chama `MenuTransmutationTable.slotsChanged` e `SimpleContainer.setChanged`. Não apareceu `BlockEntity.setChanged` diretamente nos métodos selecionados do tile; isso **não é prova de perda de persistência**, porque consumidores indiretos não foram exauridos.
 
-**Boundary para perks:** peso, seleção, custo de XP, reroll e opções continuam sob autoridade do provider, sem hook mutador validado. O JAR atual da modlist do sibling ainda não foi reconfirmado. `static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; 0/3 contratos estáticos certificados no recorte observado.
+**Boundary para perks:** peso, seleção, custo de XP, reroll e opções continuam sob autoridade do provider, sem hook mutador validado. A modlist atual do sibling registra JAR 2.1.13, mas sua configuração e execução física não foram testadas. `static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; 0/3 contratos estáticos certificados no recorte observado.
 
 ## Bloco proprietário, abertura de menu e efeito de explosão (JAR SHA-exato 2.1.13)
 
@@ -149,4 +149,4 @@ Se `n` representa `ItemStack.getCount()`, `a = AMConfig.transmutingWeightAddStep
 
 **Mudança de estado/persistência:** `MenuTransmutationTable$1.setChanged` chama `slotsChanged @5` e `SimpleContainer.setChanged @9`. Os métodos inspecionados de bloco/tile não apresentaram `BlockEntity.setChanged` nem `Level.sendBlockUpdated` **diretamente**; isso não exclui dirty mark indireta do runtime. Manter testes de reload, chunk unload, slots, sessão, multiplayer, explode-on-destroy, claims e config pendentes.
 
-A ficha permanece **⚠️ parcial**, `static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. **0/3** contratos estáticos integrais certificados no recorte de Alex's Mobs. O JAR 2.1.13 foi historicamente cruzado com modlist; a presença/versionamento na modlist atual do sibling continuam não reconfirmados.
+A ficha permanece **⚠️ parcial**, `static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. **0/3** contratos estáticos integrais certificados no recorte de Alex's Mobs. A [modlist do sibling @55d8baa](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/55d8baa166cc3660f529f912d7a735623ab40a32/PROJECT-INSTRUCTIONS/modlist/Mobs/%E2%9C%85-alexs-mobs-continued%20v2.1.13.md) registra JAR 2.1.13 e SHA-1 coincidentes; testes físicos e captura da config vigente continuam pendentes.
