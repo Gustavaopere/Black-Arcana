@@ -47,6 +47,7 @@ MAX_INSTRUCTIONS = 520
 MAX_BRANCHES = 90
 MAX_REFS = 100
 MAX_LITERALS = 65
+MATH_OPERATORS = {"dadd", "dsub", "dmul", "ddiv", "dneg", "dcmpl", "dcmpg", "i2d"}
 MAX_REPORT_BYTES = 250_000
 MAX_CANDIDATES = 80
 AMCOMPAT_RELEVANT = {
@@ -93,7 +94,7 @@ def method_projection(method):
     offsets = [r["offset"] for r in rows]
     require(offsets == sorted(set(offsets)),
             "nonmonotonic or duplicate JVM bytecode offsets")
-    branches, refs, constants = [], [], []
+    branches, refs, constants, math_ops = [], [], [], []
     for index, row in enumerate(rows):
         op = row["opcode"]
         if op.startswith(("if", "goto")):
@@ -113,9 +114,17 @@ def method_projection(method):
             })
         if op.startswith(LITERALS):
             constants.append(item(row))
+        if op in MATH_OPERATORS:
+            math_ops.append({
+                "site": item(row),
+                "before": item(rows[index - 1]) if index else None,
+                "after": item(rows[index + 1])
+                         if index + 1 < len(rows) else None,
+            })
     require(len(branches) <= MAX_BRANCHES
             and len(refs) <= MAX_REFS
-            and len(constants) <= MAX_LITERALS,
+            and len(constants) <= MAX_LITERALS
+            and len(math_ops) <= 75,
             "unbounded TransmutationData control/evidence cohort")
     return {
         "name": method_name(method),
@@ -125,6 +134,7 @@ def method_projection(method):
         "branches": branches,
         "relevant_refs": refs,
         "literal_operators": constants,
+        "arithmetic_operators": math_ops,
         "native_set_changed_calls": [
             item(row) for row in rows
             if row["opcode"].startswith("invoke")
