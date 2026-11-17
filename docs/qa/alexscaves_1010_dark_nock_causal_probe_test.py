@@ -115,10 +115,16 @@ class DarkNockCausalProbeTests(unittest.TestCase):
         self.assertEqual(sum(seal["instruction_counts"].values()), 938)
         self.assertEqual(sum(seal["direct_branch_counts"].values()), 99)
         self.assertEqual(len(seal["direct_DARK_NOCK_class_token_owners"]), 2)
+        import sys
+        sys.path.insert(0, str(ROOT / "scripts/catalog"))
+        import check_perk_ready_indexes as canonical
+        provider_cards = [card for card in P.rglob("*.md")
+                          if canonical.is_card(card)]
+        global_cards = [card for card in canonical.PROVIDERS.rglob("*.md")
+                        if canonical.is_card(card)]
         objects = ledger["objects"]
-        global_certified = len(objects)
-        alex_certified = sum(k.startswith("✅-alexs-caves-continued/")
-                             for k in objects)
+        global_certified = sum(canonical.certified(card, ledger) for card in global_cards)
+        alex_certified = sum(canonical.certified(card, ledger) for card in provider_cards)
         enchant_certified = sum(k.startswith("✅-alexs-caves-continued/enchantments/")
                                 for k in objects)
         self.assertGreaterEqual(global_certified, 205)
@@ -137,8 +143,8 @@ class DarkNockCausalProbeTests(unittest.TestCase):
         prov = (P / "INDEX.md").read_text()
         global_index = (ROOT / "wiki/modpack-catalog/providers/INDEX.md").read_text()
         self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {enchant_certified}/51",sub)
-        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {alex_certified}/81",prov)
-        self.assertIn(f"Fichas com contrato técnico estático certificado: {global_certified}/2393",global_index)
+        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {alex_certified}/{len(provider_cards)}",prov)
+        self.assertIn(f"Fichas com contrato técnico estático certificado: {global_certified}/{len(global_cards)}",global_index)
         self.assertIn("Providers com catálogo concluído: 4/164",global_index)
 
 if __name__ == "__main__":

@@ -65,15 +65,22 @@ class EnergyEfficiencyStaticCardsTests(unittest.TestCase):
             self.assertIn(x,self.card)
 
     def test_all_indexes_derive_from_ledger_and_alphabetical_row(self):
+        import sys
+        sys.path.insert(0, str(ROOT / "scripts/catalog"))
+        import check_perk_ready_indexes as canonical
+        provider_cards = [card for card in P.rglob("*.md")
+                          if canonical.is_card(card)]
+        global_cards = [card for card in canonical.PROVIDERS.rglob("*.md")
+                        if canonical.is_card(card)]
         keys=self.ledger["objects"]
-        all_count=len(keys)
-        provider_count=sum(k.startswith("✅-alexs-caves-continued/") for k in keys)
+        all_count=sum(canonical.certified(card, self.ledger) for card in global_cards)
+        provider_count=sum(canonical.certified(card, self.ledger) for card in provider_cards)
         enchant_count=sum(k.startswith("✅-alexs-caves-continued/enchantments/") for k in keys)
         self.assertGreaterEqual(all_count,209)
         self.assertGreaterEqual(provider_count,71)
         self.assertGreaterEqual(enchant_count,43)
-        self.assertIn(f"Fichas com contrato técnico estático certificado: {all_count}/2393",self.global_index)
-        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {provider_count}/81",self.provider)
+        self.assertIn(f"Fichas com contrato técnico estático certificado: {all_count}/{len(global_cards)}",self.global_index)
+        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {provider_count}/{len(provider_cards)}",self.provider)
         self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {enchant_count}/51",self.enchants)
         self.assertIn(f"individual_full_enchantment_dossiers={enchant_count}/51",self.cross)
         self.assertIn(f"individual_partial_enchantment_dossiers={51-enchant_count}/51",self.cross)

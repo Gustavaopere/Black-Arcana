@@ -69,9 +69,16 @@ class DetonatingDeathStaticCardTests(unittest.TestCase):
             self.assertIn(token,self.card)
 
     def test_ledger_derived_indexes_and_alpha_row(self):
+        import sys
+        sys.path.insert(0, str(ROOT / "scripts/catalog"))
+        import check_perk_ready_indexes as canonical
+        provider_cards = [card for card in P.rglob("*.md")
+                          if canonical.is_card(card)]
+        global_cards = [card for card in canonical.PROVIDERS.rglob("*.md")
+                        if canonical.is_card(card)]
         keys=self.ledger["objects"]
-        global_count=len(keys)
-        provider_count=sum(k.startswith("✅-alexs-caves-continued/") for k in keys)
+        global_count=sum(canonical.certified(card, self.ledger) for card in global_cards)
+        provider_count=sum(canonical.certified(card, self.ledger) for card in provider_cards)
         enchant_count=sum(k.startswith("✅-alexs-caves-continued/enchantments/")
                           for k in keys)
         self.assertGreaterEqual(global_count,207)
@@ -86,9 +93,9 @@ class DetonatingDeathStaticCardTests(unittest.TestCase):
         self.assertIn("| ✅ | Detonating Death |", self.mod_index)
         self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {enchant_count}/51",
                       self.enchant_index)
-        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {provider_count}/81",
+        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {provider_count}/{len(provider_cards)}",
                       self.mod_index)
-        self.assertIn(f"Fichas com contrato técnico estático certificado: {global_count}/2393",
+        self.assertIn(f"Fichas com contrato técnico estático certificado: {global_count}/{len(global_cards)}",
                       self.global_index)
         self.assertIn("Providers com catálogo concluído: 4/164",
                       self.global_index)

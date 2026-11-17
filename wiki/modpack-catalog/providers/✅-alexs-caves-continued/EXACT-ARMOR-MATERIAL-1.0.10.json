@@ -1,0 +1,3421 @@
+{
+  "artifact": {
+    "mod_id": "alexscaves",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "version": "1.0.10"
+  },
+  "axes": {
+    "behavior": "Mutable native material configuration; fresh EnumMap/ArmorMaterial/direct Holder on vanilla(); direct native armor constructors and finite attribute handoff.",
+    "costs": "No mana, cast or cooldown operation in the material. Item durability is a configured maximum, not a proved wear/repair settlement or gameplay cost.",
+    "identity": "Publisher 1.0.10 SHA-1/SHA-256/size; class declarations and all ten ACArmorMaterial JVM methods, including both constructors and separate <clinit>.",
+    "integration": "Native constructor, registry, sound-holder and selected attribute bridge calls only; external engine internals, active armor effects and perks remain outside scope.",
+    "parameters": "Six literal registry declarations; MAX_DAMAGE_ARRAY [13,15,16,11]; ordinal-indexed defense/durability; raw array alias; captured repair supplier and five setup writes.",
+    "targeting": "Not applicable: configuration/armor construction has no target query, damage request, projectile or effect application; direct attribute consumers do not create a spell target.",
+    "validation": "Typed all-class reference census, declaration/body reconciliation, explicit operand/branch pivots, immutable artifact identity and deterministic seal reproduction; physical gameplay remains NOT_TESTED."
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0,
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES"
+  },
+  "class_sha256": {
+    "com/github/alexmodguy/alexscaves/mixin/ItemStackTickMixin": "260fff4418e426eb5b3b9a02032cc0d5ebb73444aa1b16d7d578f4660e33a6b6",
+    "com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial": "478accf7ab37014dc06a8f3d801348948638dc517db0e21b7fd91d2b47ca40a6",
+    "com/github/alexmodguy/alexscaves/server/item/ACArmorTickItem": "f3f9e0ea4b09af538ad28414da3f9e34b07f9a16fdc72beeeffd73ee1505f038",
+    "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+    "com/github/alexmodguy/alexscaves/server/item/ACTickingItem": "a96fc5427180e594aa59c3272395c207f3570f49165e33af0fdfa429a9922a1e",
+    "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem": "872fc610bac5be6010e3981b001c4088c7227e9cffe7938381c34c2f456c4e9a",
+    "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem": "6c4ea04559e2e2425bbc842f02cb9a89a2ea9009b7f43e2d71d05c336c64c334",
+    "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem": "918cc76cd122605e6ba7aa2e8d26e1f4891b3ad8f26554b960e9b07412884a27",
+    "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem": "289395b93a1a223f2e66a02528ccb4ce3a1a659dd9c82ac071a5b63c32b1c7cb",
+    "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem": "8833c162d1507aba795b1ff809f5a6f6ddb846da308d809795cf80e69be5d09e",
+    "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem": "12809966af8256aa5c55e56b54d49f5be66e9785d6616ffa934c376f3d6d31bd",
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b"
+  },
+  "integration_bounds": {
+    "array_alias": "Long constructor stores caller int[] directly; no defensive copy or validation.",
+    "durability": "MAX_DAMAGE_ARRAY[type.ordinal()] * multiplier is JVM int multiplication, passed to supplied Item.Properties.durability; maximum configuration, no observed wear/repair settlement.",
+    "excluded": "Active armor powers and tick behavior beyond the finite dispatch/operand witness, Minecraft/NeoForge engine internals, external consumers, perks/hooks, network authorization, rendering, resource packs, datapack/runtime registry contents and physical gameplay.",
+    "max_damage_array_by_ordinal": [
+      13,
+      15,
+      16,
+      11
+    ],
+    "name": "Stored by constructor; not read by vanilla(), which passes List.of() as material layers.",
+    "native_bridge_ceiling": "Six direct item constructors; Diving/Gingerbread finite attributes and ACCompat sound/attribute bridges. ArmorItem, Item.Properties, Ingredient, registries, attribute engine and accepted gameplay outcomes remain external.",
+    "ordinal_limit": "Only vanilla() skips ordinals >= damageReduction.length. properties() and defense() directly index arrays; null/short arrays or non-four-slot ordinals have no native guard.",
+    "snapshot_and_live_state": "vanilla() snapshots defense/enchantability/sound/toughness/knockback in fresh ArmorMaterial+Holder; supplier captures this and reads current ingredient. Later setRepairMaterial including null affects future supplier reads; constructor values and arrays are not perk APIs."
+  },
+  "marker": {
+    "access": 1537,
+    "actual_tick_dispatch": {
+      "boundary": "Observed native method tests ACTickingItem; does not dispatch via ACArmorTickItem. Mixin application and gameplay outcomes are not tested.",
+      "interface_declaration": [
+        {
+          "access": 1025,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+          "name": "acInventoryTick"
+        }
+      ],
+      "invokeinterface_offset": 36,
+      "name": "ac_inventoryTick",
+      "owner": "com/github/alexmodguy/alexscaves/mixin/ItemStackTickMixin",
+      "receiver_interface": "com/github/alexmodguy/alexscaves/server/item/ACTickingItem",
+      "type_check_offset": 15
+    },
+    "darkness_inventory_tick_boundary": {
+      "coverage": "OPERAND_WINDOW_ONLY",
+      "full_method_code_sha256": "49391dc10abed9b7fa8211e41106a76c237cde5f3b0e5a65d5a2df54b19851b4",
+      "instructions": [
+        {
+          "offset": 0,
+          "opcode": "aload_3",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 1,
+          "opcode": "instanceof",
+          "operand": "#38",
+          "symbol": "class net/minecraft/world/entity/player/Player"
+        },
+        {
+          "offset": 4,
+          "opcode": "ifeq",
+          "operand": "30",
+          "symbol": ""
+        },
+        {
+          "offset": 7,
+          "opcode": "aload_3",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 8,
+          "opcode": "checkcast",
+          "operand": "#38",
+          "symbol": "class net/minecraft/world/entity/player/Player"
+        },
+        {
+          "offset": 11,
+          "opcode": "astore",
+          "operand": "5",
+          "symbol": ""
+        },
+        {
+          "offset": 13,
+          "opcode": "aload_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 14,
+          "opcode": "aload",
+          "operand": "5",
+          "symbol": ""
+        },
+        {
+          "offset": 16,
+          "opcode": "invokestatic",
+          "operand": "#191",
+          "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.isWornArmor:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Z"
+        },
+        {
+          "offset": 19,
+          "opcode": "ifeq",
+          "operand": "30",
+          "symbol": ""
+        },
+        {
+          "offset": 22,
+          "opcode": "aload_0",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 23,
+          "opcode": "aload_1",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 24,
+          "opcode": "aload_2",
+          "operand": "",
+          "symbol": ""
+        },
+        {
+          "offset": 25,
+          "opcode": "aload",
+          "operand": "5",
+          "symbol": ""
+        },
+        {
+          "offset": 27,
+          "opcode": "invokevirtual",
+          "operand": "#195",
+          "symbol": "Method acArmorTick:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;)V"
+        },
+        {
+          "offset": 30,
+          "opcode": "aload_1",
+          "operand": "",
+          "symbol": ""
+        }
+      ],
+      "limit": "Only Player/worn-armor gates and helper invocation; active power and cloak suffix are excluded.",
+      "name": "acInventoryTick",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem",
+      "private_helper_declaration": {
+        "access": 2,
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;)V",
+        "name": "acArmorTick"
+      },
+      "window": [
+        0,
+        30
+      ]
+    },
+    "declared_methods": [],
+    "direct_implementers": [
+      "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem"
+    ],
+    "disposition": "EMPTY_MARKER_SUPPORT_ONLY",
+    "fields": [],
+    "limit": "No typed dispatcher/member/class reference beyond declaration and sole direct implementer in 1555 publisher class entries. Reflective name construction, external mods and future versions are not closed.",
+    "owner": "com/github/alexmodguy/alexscaves/server/item/ACArmorTickItem",
+    "typed_dispatch_references": []
+  },
+  "material_definitions": [
+    {
+      "clinit_window": [
+        34,
+        74
+      ],
+      "constructor": "(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+      "damage_reduction_by_ordinal": [
+        3,
+        4,
+        3,
+        2
+      ],
+      "durability_multiplier": 20,
+      "enchantability": 25,
+      "equip_sound_field": "ARMOR_EQUIP_LEATHER",
+      "knockback_resistance": 0.0,
+      "name": "primordial",
+      "registry_field": "PRIMORDIAL_ARMOR_MATERIAL",
+      "setup_repair_item": "TOUGH_HIDE",
+      "toughness": 0.0
+    },
+    {
+      "clinit_window": [
+        77,
+        118
+      ],
+      "constructor": "(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+      "damage_reduction_by_ordinal": [
+        2,
+        4,
+        5,
+        2
+      ],
+      "durability_multiplier": 20,
+      "enchantability": 25,
+      "equip_sound_field": "ARMOR_EQUIP_IRON",
+      "knockback_resistance": 0.0,
+      "name": "hazmat_suit",
+      "registry_field": "HAZMAT_SUIT_ARMOR_MATERIAL",
+      "setup_repair_item": "POLYMER_PLATE",
+      "toughness": 0.5
+    },
+    {
+      "clinit_window": [
+        121,
+        162
+      ],
+      "constructor": "(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+      "damage_reduction_by_ordinal": [
+        2,
+        6,
+        5,
+        2
+      ],
+      "durability_multiplier": 20,
+      "enchantability": 25,
+      "equip_sound_field": "ARMOR_EQUIP_IRON",
+      "knockback_resistance": 0.0,
+      "name": "diving_suit",
+      "registry_field": "DIVING_SUIT_ARMOR_MATERIAL",
+      "setup_repair_item": "minecraft:copper_ingot",
+      "toughness": 0.0
+    },
+    {
+      "clinit_window": [
+        165,
+        203
+      ],
+      "constructor": "(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+      "damage_reduction_by_ordinal": [
+        4,
+        5,
+        1,
+        1
+      ],
+      "durability_multiplier": 15,
+      "enchantability": 40,
+      "equip_sound_field": "EMPTY",
+      "knockback_resistance": 0.0,
+      "name": "darkness",
+      "registry_field": "DARKNESS_ARMOR_MATERIAL",
+      "setup_repair_item": "DARK_TATTERS",
+      "toughness": 0.5
+    },
+    {
+      "clinit_window": [
+        206,
+        246
+      ],
+      "constructor": "(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+      "damage_reduction_by_ordinal": [
+        2,
+        2,
+        1,
+        2
+      ],
+      "durability_multiplier": 6,
+      "enchantability": 40,
+      "equip_sound_field": "ARMOR_EQUIP_GENERIC",
+      "knockback_resistance": 0.0,
+      "name": "rainbounce",
+      "registry_field": "RAINBOUNCE_ARMOR_MATERIAL",
+      "setup_repair_item": "Ingredient.EMPTY",
+      "toughness": 0.0
+    },
+    {
+      "clinit_window": [
+        249,
+        289
+      ],
+      "constructor": "(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+      "damage_reduction_by_ordinal": [
+        2,
+        4,
+        5,
+        2
+      ],
+      "durability_multiplier": 10,
+      "enchantability": 25,
+      "equip_sound_field": "ARMOR_EQUIP_LEATHER",
+      "knockback_resistance": 0.0,
+      "name": "gingerbread",
+      "registry_field": "GINGERBREAD_ARMOR_MATERIAL",
+      "setup_repair_item": "GINGERBREAD_CRUMBS",
+      "toughness": 0.0
+    }
+  ],
+  "material_supplier_bootstrap": [
+    {
+      "arguments": [
+        "()Ljava/lang/Object;",
+        {
+          "reference": [
+            10,
+            "com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial",
+            [
+              12,
+              "getRepairIngredient",
+              "()Lnet/minecraft/world/item/crafting/Ingredient;"
+            ]
+          ],
+          "reference_kind": 5
+        },
+        "()Lnet/minecraft/world/item/crafting/Ingredient;"
+      ],
+      "handle": {
+        "reference": [
+          10,
+          "java/lang/invoke/LambdaMetafactory",
+          [
+            12,
+            "metafactory",
+            "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;"
+          ]
+        ],
+        "reference_kind": 6
+      }
+    }
+  ],
+  "native_methods": {
+    "com/github/alexmodguy/alexscaves/mixin/ItemStackTickMixin": [
+      {
+        "access": 2,
+        "branches": [
+          {
+            "offset": 18,
+            "opcode": "ifeq",
+            "target": 41
+          }
+        ],
+        "code_sha256": "269b98fa05df18d2359efa0bbe65a30fddce7bed11984d6d4ab667d9d8a592b1",
+        "code_size": 42,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;IZLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+        "exception_handlers": [],
+        "instruction_count": 19,
+        "instruction_sha256": "5377e22eb3ca35e4a4fa112d0a08f630a0064b6ed696d95b7799eb53d3a0a17a",
+        "instructions": [],
+        "name": "ac_inventoryTick",
+        "pivots": [
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/ACTickingItem",
+            "offset": 15,
+            "opcode": "instanceof"
+          },
+          {
+            "contains": "41",
+            "offset": 18,
+            "opcode": "ifeq"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/ACTickingItem",
+            "offset": 23,
+            "opcode": "checkcast"
+          },
+          {
+            "contains": "InterfaceMethod com/github/alexmodguy/alexscaves/server/item/ACTickingItem.acInventoryTick:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+            "offset": 36,
+            "opcode": "invokeinterface"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial": [
+      {
+        "access": 8,
+        "branches": [],
+        "code_sha256": "2f9d11d3a34d81a25e1f812833351951889a6edce5a0e1c754f971fc143b17a1",
+        "code_size": 27,
+        "coverage": "FULL_BODY",
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "instruction_count": 20,
+        "instruction_sha256": "beb821abf87659cd54897a08812086ab161e0cbbe5da835bc71c0f5c761a65a8",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "iconst_4",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "newarray",
+            "operand": "int",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "bipush",
+            "operand": "13",
+            "symbol": ""
+          },
+          {
+            "offset": 7,
+            "opcode": "iastore",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 8,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 9,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 10,
+            "opcode": "bipush",
+            "operand": "15",
+            "symbol": ""
+          },
+          {
+            "offset": 12,
+            "opcode": "iastore",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 13,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 14,
+            "opcode": "iconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 15,
+            "opcode": "bipush",
+            "operand": "16",
+            "symbol": ""
+          },
+          {
+            "offset": 17,
+            "opcode": "iastore",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 18,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 19,
+            "opcode": "iconst_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 20,
+            "opcode": "bipush",
+            "operand": "11",
+            "symbol": ""
+          },
+          {
+            "offset": 22,
+            "opcode": "iastore",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 23,
+            "opcode": "putstatic",
+            "operand": "#96",
+            "symbol": "Field MAX_DAMAGE_ARRAY:[I"
+          },
+          {
+            "offset": 26,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<clinit>",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 0,
+            "opcode": "iconst_4"
+          },
+          {
+            "contains": "int",
+            "offset": 1,
+            "opcode": "newarray"
+          },
+          {
+            "contains": "13",
+            "offset": 5,
+            "opcode": "bipush"
+          },
+          {
+            "contains": "15",
+            "offset": 10,
+            "opcode": "bipush"
+          },
+          {
+            "contains": "16",
+            "offset": 15,
+            "opcode": "bipush"
+          },
+          {
+            "contains": "11",
+            "offset": 20,
+            "opcode": "bipush"
+          },
+          {
+            "contains": "MAX_DAMAGE_ARRAY:",
+            "offset": 23,
+            "opcode": "putstatic"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "a3bfc2876e35512dfb78004ed9e429b07cd24dcfa4949cf6802f7e8ae64d380d",
+        "code_size": 15,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+        "exception_handlers": [],
+        "instruction_count": 10,
+        "instruction_sha256": "329c99f6d1dc25699f0dc62e26b35b98e0be8a2134937e399d2b4ee17dae2b9e",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "iload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "iload",
+            "operand": "4",
+            "symbol": ""
+          },
+          {
+            "offset": 6,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 8,
+            "opcode": "fload",
+            "operand": "6",
+            "symbol": ""
+          },
+          {
+            "offset": 10,
+            "opcode": "fconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 11,
+            "opcode": "invokespecial",
+            "operand": "#1",
+            "symbol": "Method \"<init>\":(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;FF)V"
+          },
+          {
+            "offset": 14,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 10,
+            "opcode": "fconst_0"
+          },
+          {
+            "contains": "(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;FF)V",
+            "offset": 11,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "ec01a073b83df5388b3f8b764410ac0f7fe8d8ed368f66a306e88d0a0bdbb2c7",
+        "code_size": 54,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;FF)V",
+        "exception_handlers": [],
+        "instruction_count": 30,
+        "instruction_sha256": "203d098999891c951f2e6b44707ce74a71fcdf386ed4fbc516dabbe7841747f5",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "invokespecial",
+            "operand": "#7",
+            "symbol": "Method java/lang/Object.\"<init>\":()V"
+          },
+          {
+            "offset": 4,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "aconst_null",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 6,
+            "opcode": "putfield",
+            "operand": "#12",
+            "symbol": "Field ingredient:Lnet/minecraft/world/item/crafting/Ingredient;"
+          },
+          {
+            "offset": 9,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 10,
+            "opcode": "fconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 11,
+            "opcode": "putfield",
+            "operand": "#16",
+            "symbol": "Field knockbackResistance:F"
+          },
+          {
+            "offset": 14,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 15,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 16,
+            "opcode": "putfield",
+            "operand": "#20",
+            "symbol": "Field name:Ljava/lang/String;"
+          },
+          {
+            "offset": 19,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 20,
+            "opcode": "iload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 21,
+            "opcode": "putfield",
+            "operand": "#24",
+            "symbol": "Field durability:I"
+          },
+          {
+            "offset": 24,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 25,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 26,
+            "opcode": "putfield",
+            "operand": "#28",
+            "symbol": "Field damageReduction:[I"
+          },
+          {
+            "offset": 29,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 30,
+            "opcode": "iload",
+            "operand": "4",
+            "symbol": ""
+          },
+          {
+            "offset": 32,
+            "opcode": "putfield",
+            "operand": "#32",
+            "symbol": "Field encantability:I"
+          },
+          {
+            "offset": 35,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 36,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 38,
+            "opcode": "putfield",
+            "operand": "#35",
+            "symbol": "Field sound:Lnet/minecraft/sounds/SoundEvent;"
+          },
+          {
+            "offset": 41,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 42,
+            "opcode": "fload",
+            "operand": "6",
+            "symbol": ""
+          },
+          {
+            "offset": 44,
+            "opcode": "putfield",
+            "operand": "#39",
+            "symbol": "Field toughness:F"
+          },
+          {
+            "offset": 47,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 48,
+            "opcode": "fload",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 50,
+            "opcode": "putfield",
+            "operand": "#16",
+            "symbol": "Field knockbackResistance:F"
+          },
+          {
+            "offset": 53,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 5,
+            "opcode": "aconst_null"
+          },
+          {
+            "contains": "ingredient:",
+            "offset": 6,
+            "opcode": "putfield"
+          },
+          {
+            "contains": "",
+            "offset": 10,
+            "opcode": "fconst_0"
+          },
+          {
+            "contains": "name:",
+            "offset": 16,
+            "opcode": "putfield"
+          },
+          {
+            "contains": "durability:",
+            "offset": 21,
+            "opcode": "putfield"
+          },
+          {
+            "contains": "",
+            "offset": 25,
+            "opcode": "aload_3"
+          },
+          {
+            "contains": "damageReduction:[I",
+            "offset": 26,
+            "opcode": "putfield"
+          },
+          {
+            "contains": "encantability:",
+            "offset": 32,
+            "opcode": "putfield"
+          },
+          {
+            "contains": "sound:",
+            "offset": 38,
+            "opcode": "putfield"
+          },
+          {
+            "contains": "toughness:",
+            "offset": 44,
+            "opcode": "putfield"
+          },
+          {
+            "contains": "knockbackResistance:",
+            "offset": 50,
+            "opcode": "putfield"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "ca376e5db623cb413fa351837f98d63bdaf31b08289179a2b471263ec2299da7",
+        "code_size": 10,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/item/ArmorItem$Type;)I",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "a11ff34d433d027adb84579b7817ee743a52d803a020e9245716c8c3980a4e32",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#28",
+            "symbol": "Field damageReduction:[I"
+          },
+          {
+            "offset": 4,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "invokevirtual",
+            "operand": "#53",
+            "symbol": "Method net/minecraft/world/item/ArmorItem$Type.ordinal:()I"
+          },
+          {
+            "offset": 8,
+            "opcode": "iaload",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 9,
+            "opcode": "ireturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "defense",
+        "pivots": [
+          {
+            "contains": "damageReduction:",
+            "offset": 1,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "ordinal:",
+            "offset": 5,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "",
+            "offset": 8,
+            "opcode": "iaload"
+          },
+          {
+            "contains": "",
+            "offset": 9,
+            "opcode": "ireturn"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [
+          {
+            "offset": 4,
+            "opcode": "ifnonnull",
+            "target": 13
+          },
+          {
+            "offset": 10,
+            "opcode": "goto",
+            "target": 17
+          }
+        ],
+        "code_sha256": "c2011e0c5e24e42fe05858e164b28f6fb83672b092723d5ea222d31cf57300be",
+        "code_size": 18,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/crafting/Ingredient;",
+        "exception_handlers": [],
+        "instruction_count": 8,
+        "instruction_sha256": "8e1bdeb2e9c94be827e61a75f6b08af59eb21667d5389b91cff62b3bd076cbad",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#12",
+            "symbol": "Field ingredient:Lnet/minecraft/world/item/crafting/Ingredient;"
+          },
+          {
+            "offset": 4,
+            "opcode": "ifnonnull",
+            "operand": "13",
+            "symbol": ""
+          },
+          {
+            "offset": 7,
+            "opcode": "getstatic",
+            "operand": "#104",
+            "symbol": "Field net/minecraft/world/item/crafting/Ingredient.EMPTY:Lnet/minecraft/world/item/crafting/Ingredient;"
+          },
+          {
+            "offset": 10,
+            "opcode": "goto",
+            "operand": "17",
+            "symbol": ""
+          },
+          {
+            "offset": 13,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 14,
+            "opcode": "getfield",
+            "operand": "#12",
+            "symbol": "Field ingredient:Lnet/minecraft/world/item/crafting/Ingredient;"
+          },
+          {
+            "offset": 17,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getRepairIngredient",
+        "pivots": [
+          {
+            "contains": "ingredient:",
+            "offset": 1,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "13",
+            "offset": 4,
+            "opcode": "ifnonnull"
+          },
+          {
+            "contains": "Ingredient.EMPTY:",
+            "offset": 7,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "17",
+            "offset": 10,
+            "opcode": "goto"
+          },
+          {
+            "contains": "ingredient:",
+            "offset": 14,
+            "opcode": "getfield"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "e8d2aa12e368721bbab608b00d0f464a2dea8a19315a0a4adfe7b2064e3be44c",
+        "code_size": 5,
+        "coverage": "FULL_BODY",
+        "descriptor": "()F",
+        "exception_handlers": [],
+        "instruction_count": 3,
+        "instruction_sha256": "4e949313929a14281a179fc7a857b41a45815d5668e54cb973b36c2c7bd0ae44",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#16",
+            "symbol": "Field knockbackResistance:F"
+          },
+          {
+            "offset": 4,
+            "opcode": "freturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "knockbackResistance",
+        "pivots": [
+          {
+            "contains": "knockbackResistance:",
+            "offset": 1,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "",
+            "offset": 4,
+            "opcode": "freturn"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "7ae42c08625bdacf751e0d64d7d807f38e5a287a48cf551e1bb3858c1d18f70e",
+        "code_size": 18,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+        "exception_handlers": [],
+        "instruction_count": 10,
+        "instruction_sha256": "252dc516ee9897c0317152e801136c635cb29b4537c7d7738da51214052d1b3a",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#96",
+            "symbol": "Field MAX_DAMAGE_ARRAY:[I"
+          },
+          {
+            "offset": 4,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "invokevirtual",
+            "operand": "#53",
+            "symbol": "Method net/minecraft/world/item/ArmorItem$Type.ordinal:()I"
+          },
+          {
+            "offset": 8,
+            "opcode": "iaload",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 9,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 10,
+            "opcode": "getfield",
+            "operand": "#24",
+            "symbol": "Field durability:I"
+          },
+          {
+            "offset": 13,
+            "opcode": "imul",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 14,
+            "opcode": "invokevirtual",
+            "operand": "#99",
+            "symbol": "Method net/minecraft/world/item/Item$Properties.durability:(I)Lnet/minecraft/world/item/Item$Properties;"
+          },
+          {
+            "offset": 17,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "properties",
+        "pivots": [
+          {
+            "contains": "MAX_DAMAGE_ARRAY:",
+            "offset": 1,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "ordinal:",
+            "offset": 5,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "",
+            "offset": 8,
+            "opcode": "iaload"
+          },
+          {
+            "contains": "durability:",
+            "offset": 10,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "",
+            "offset": 13,
+            "opcode": "imul"
+          },
+          {
+            "contains": "Properties.durability:",
+            "offset": 14,
+            "opcode": "invokevirtual"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "351e4151526ca3f9a50a82cb2419ff6265804f4471b94c2b05ef40c1aeda7b22",
+        "code_size": 6,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/item/crafting/Ingredient;)V",
+        "exception_handlers": [],
+        "instruction_count": 4,
+        "instruction_sha256": "32c21b53b75b4d747c7d58e73e1a43f68b6d2717764c70030766d87876532e31",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "putfield",
+            "operand": "#12",
+            "symbol": "Field ingredient:Lnet/minecraft/world/item/crafting/Ingredient;"
+          },
+          {
+            "offset": 5,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "setRepairMaterial",
+        "pivots": [
+          {
+            "contains": "",
+            "offset": 1,
+            "opcode": "aload_1"
+          },
+          {
+            "contains": "ingredient:",
+            "offset": 2,
+            "opcode": "putfield"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "bdebbedb5c3cc1632ef9feb64d46c20031037f4dbb2e054c915e8b9eb0261197",
+        "code_size": 5,
+        "coverage": "FULL_BODY",
+        "descriptor": "()F",
+        "exception_handlers": [],
+        "instruction_count": 3,
+        "instruction_sha256": "c4bc5d9e0b90385f0a4cc0b4770bfac647cedd1973c7b650994679a6ef684ee2",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#39",
+            "symbol": "Field toughness:F"
+          },
+          {
+            "offset": 4,
+            "opcode": "freturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "toughness",
+        "pivots": [
+          {
+            "contains": "toughness:",
+            "offset": 1,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "",
+            "offset": 4,
+            "opcode": "freturn"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [
+          {
+            "offset": 23,
+            "opcode": "if_icmpge",
+            "target": 73
+          },
+          {
+            "offset": 42,
+            "opcode": "if_icmpge",
+            "target": 67
+          },
+          {
+            "offset": 70,
+            "opcode": "goto",
+            "target": 20
+          }
+        ],
+        "code_sha256": "77d10d6dedf2f3216299fc13ac404f42197b7f68cdb337234bf5b0caaa5a85df",
+        "code_size": 113,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/core/Holder;",
+        "exception_handlers": [],
+        "instruction_count": 55,
+        "instruction_sha256": "ad8145aa65a2dd7906f45660a9253cb42e0232cf17e6b6d95b90a211e95da281",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "new",
+            "operand": "#42",
+            "symbol": "class java/util/EnumMap"
+          },
+          {
+            "offset": 3,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "ldc",
+            "operand": "#44",
+            "symbol": "class net/minecraft/world/item/ArmorItem$Type"
+          },
+          {
+            "offset": 6,
+            "opcode": "invokespecial",
+            "operand": "#46",
+            "symbol": "Method java/util/EnumMap.\"<init>\":(Ljava/lang/Class;)V"
+          },
+          {
+            "offset": 9,
+            "opcode": "astore_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 10,
+            "opcode": "invokestatic",
+            "operand": "#49",
+            "symbol": "Method net/minecraft/world/item/ArmorItem$Type.values:()[Lnet/minecraft/world/item/ArmorItem$Type;"
+          },
+          {
+            "offset": 13,
+            "opcode": "astore_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 14,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 15,
+            "opcode": "arraylength",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 16,
+            "opcode": "istore_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 17,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 18,
+            "opcode": "istore",
+            "operand": "4",
+            "symbol": ""
+          },
+          {
+            "offset": 20,
+            "opcode": "iload",
+            "operand": "4",
+            "symbol": ""
+          },
+          {
+            "offset": 22,
+            "opcode": "iload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 23,
+            "opcode": "if_icmpge",
+            "operand": "73",
+            "symbol": ""
+          },
+          {
+            "offset": 26,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 27,
+            "opcode": "iload",
+            "operand": "4",
+            "symbol": ""
+          },
+          {
+            "offset": 29,
+            "opcode": "aaload",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 30,
+            "opcode": "astore",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 32,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 34,
+            "opcode": "invokevirtual",
+            "operand": "#53",
+            "symbol": "Method net/minecraft/world/item/ArmorItem$Type.ordinal:()I"
+          },
+          {
+            "offset": 37,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 38,
+            "opcode": "getfield",
+            "operand": "#28",
+            "symbol": "Field damageReduction:[I"
+          },
+          {
+            "offset": 41,
+            "opcode": "arraylength",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 42,
+            "opcode": "if_icmpge",
+            "operand": "67",
+            "symbol": ""
+          },
+          {
+            "offset": 45,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 46,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 48,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 49,
+            "opcode": "getfield",
+            "operand": "#28",
+            "symbol": "Field damageReduction:[I"
+          },
+          {
+            "offset": 52,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 54,
+            "opcode": "invokevirtual",
+            "operand": "#53",
+            "symbol": "Method net/minecraft/world/item/ArmorItem$Type.ordinal:()I"
+          },
+          {
+            "offset": 57,
+            "opcode": "iaload",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 58,
+            "opcode": "invokestatic",
+            "operand": "#57",
+            "symbol": "Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+          },
+          {
+            "offset": 61,
+            "opcode": "invokeinterface",
+            "operand": "#63, 3",
+            "symbol": "InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
+          },
+          {
+            "offset": 66,
+            "opcode": "pop",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 67,
+            "opcode": "iinc",
+            "operand": "4, 1",
+            "symbol": ""
+          },
+          {
+            "offset": 70,
+            "opcode": "goto",
+            "operand": "20",
+            "symbol": ""
+          },
+          {
+            "offset": 73,
+            "opcode": "new",
+            "operand": "#69",
+            "symbol": "class net/minecraft/world/item/ArmorMaterial"
+          },
+          {
+            "offset": 76,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 77,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 78,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 79,
+            "opcode": "getfield",
+            "operand": "#32",
+            "symbol": "Field encantability:I"
+          },
+          {
+            "offset": 82,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 83,
+            "opcode": "getfield",
+            "operand": "#35",
+            "symbol": "Field sound:Lnet/minecraft/sounds/SoundEvent;"
+          },
+          {
+            "offset": 86,
+            "opcode": "invokestatic",
+            "operand": "#71",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.soundHolder:(Lnet/minecraft/sounds/SoundEvent;)Lnet/minecraft/core/Holder;"
+          },
+          {
+            "offset": 89,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 90,
+            "opcode": "invokedynamic",
+            "operand": "#77, 0",
+            "symbol": "InvokeDynamic #0:get:(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 95,
+            "opcode": "invokestatic",
+            "operand": "#81",
+            "symbol": "InterfaceMethod java/util/List.of:()Ljava/util/List;"
+          },
+          {
+            "offset": 98,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 99,
+            "opcode": "getfield",
+            "operand": "#39",
+            "symbol": "Field toughness:F"
+          },
+          {
+            "offset": 102,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 103,
+            "opcode": "getfield",
+            "operand": "#16",
+            "symbol": "Field knockbackResistance:F"
+          },
+          {
+            "offset": 106,
+            "opcode": "invokespecial",
+            "operand": "#87",
+            "symbol": "Method net/minecraft/world/item/ArmorMaterial.\"<init>\":(Ljava/util/Map;ILnet/minecraft/core/Holder;Ljava/util/function/Supplier;Ljava/util/List;FF)V"
+          },
+          {
+            "offset": 109,
+            "opcode": "invokestatic",
+            "operand": "#90",
+            "symbol": "InterfaceMethod net/minecraft/core/Holder.direct:(Ljava/lang/Object;)Lnet/minecraft/core/Holder;"
+          },
+          {
+            "offset": 112,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "vanilla",
+        "pivots": [
+          {
+            "contains": "EnumMap",
+            "offset": 0,
+            "opcode": "new"
+          },
+          {
+            "contains": "ArmorItem$Type.values:",
+            "offset": 10,
+            "opcode": "invokestatic"
+          },
+          {
+            "contains": "73",
+            "offset": 23,
+            "opcode": "if_icmpge"
+          },
+          {
+            "contains": "ArmorItem$Type.ordinal:",
+            "offset": 34,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "",
+            "offset": 41,
+            "opcode": "arraylength"
+          },
+          {
+            "contains": "67",
+            "offset": 42,
+            "opcode": "if_icmpge"
+          },
+          {
+            "contains": "",
+            "offset": 57,
+            "opcode": "iaload"
+          },
+          {
+            "contains": "Map.put:",
+            "offset": 61,
+            "opcode": "invokeinterface"
+          },
+          {
+            "contains": "20",
+            "offset": 70,
+            "opcode": "goto"
+          },
+          {
+            "contains": "ArmorMaterial",
+            "offset": 73,
+            "opcode": "new"
+          },
+          {
+            "contains": "encantability:",
+            "offset": 79,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "sound:",
+            "offset": 83,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "ACCompat.soundHolder:",
+            "offset": 86,
+            "opcode": "invokestatic"
+          },
+          {
+            "contains": "get:",
+            "offset": 90,
+            "opcode": "invokedynamic"
+          },
+          {
+            "contains": "List.of:",
+            "offset": 95,
+            "opcode": "invokestatic"
+          },
+          {
+            "contains": "toughness:",
+            "offset": 99,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "knockbackResistance:",
+            "offset": 103,
+            "opcode": "getfield"
+          },
+          {
+            "contains": "ArmorMaterial.\"<init>\":(Ljava/util/Map;ILnet/minecraft/core/Holder;Ljava/util/function/Supplier;Ljava/util/List;FF)V",
+            "offset": 106,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Holder.direct:",
+            "offset": 109,
+            "opcode": "invokestatic"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/ACArmorTickItem": [],
+    "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": [
+      {
+        "access": 8,
+        "branches": [],
+        "code_sha256": "bb73db4c0f1d1c84abdf5ab1c07defd24db79e5e8c754b8c9f9ec8481a84a84a",
+        "code_size": 4273,
+        "coverage": "FULL_BODY",
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "instruction_count": 1382,
+        "instruction_sha256": "37c76b83778533021b7931e770a55b4e4ac4be25d1ff3bb10881ebb258647756",
+        "instructions": [],
+        "name": "<clinit>",
+        "pivots": [
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial",
+            "offset": 34,
+            "opcode": "new"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.\"<init>\":(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+            "offset": 71,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field PRIMORDIAL_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 74,
+            "opcode": "putstatic"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial",
+            "offset": 77,
+            "opcode": "new"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.\"<init>\":(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+            "offset": 115,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field HAZMAT_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 118,
+            "opcode": "putstatic"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial",
+            "offset": 121,
+            "opcode": "new"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.\"<init>\":(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+            "offset": 159,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field DIVING_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 162,
+            "opcode": "putstatic"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial",
+            "offset": 165,
+            "opcode": "new"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.\"<init>\":(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+            "offset": 200,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field DARKNESS_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 203,
+            "opcode": "putstatic"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial",
+            "offset": 206,
+            "opcode": "new"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.\"<init>\":(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+            "offset": 243,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field RAINBOUNCE_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 246,
+            "opcode": "putstatic"
+          },
+          {
+            "contains": "class com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial",
+            "offset": 249,
+            "opcode": "new"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.\"<init>\":(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+            "offset": 286,
+            "opcode": "invokespecial"
+          },
+          {
+            "contains": "Field GINGERBREAD_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 289,
+            "opcode": "putstatic"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "bb759be18025281f8a946a5f6fd1fe312accf4cf80ecc8b2595dcf7c8f113ff8",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "5fa01429a74291b5a74c7af6532af8c85b0fc21daa89815e227e2bee72a3eacb",
+        "instructions": [],
+        "name": "lambda$static$100",
+        "pivots": [
+          {
+            "contains": "Field DIVING_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/DivingArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "eebdd0659953be4bb91c294e3f4a682c85a6f2621e1dd175eb714304ae565b07",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "2988bd04e2e58480242aefe4f6731e61bf324cf8d8cc6cd2d54794abd25bf1e0",
+        "instructions": [],
+        "name": "lambda$static$101",
+        "pivots": [
+          {
+            "contains": "Field DIVING_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/DivingArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "1c5056eeb3274285c2026d3af92ee741e8706da73774c758904117ccba0c5e31",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "14370beed2ec9353a5250cde1f97d8c5d5dd92b4b8540a4111411067996487d6",
+        "instructions": [],
+        "name": "lambda$static$102",
+        "pivots": [
+          {
+            "contains": "Field DIVING_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/DivingArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "050f52ecb79c931c3a455149c9f7537653be12d3fc22fe11bf940b207da78dea",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "dda5cd0097ef451e47a32876dcf0a0a69a24fd78afe0260d3124f63c5ffd76a4",
+        "instructions": [],
+        "name": "lambda$static$134",
+        "pivots": [
+          {
+            "contains": "Field DARKNESS_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "4ab51a5f80296bb82149e023b386ab8fd56f442c07762060aac3ed6ae44f911f",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "a77382a0a5971b85c55902bbf49e4bdc0af13a90ff585ce4602ce5c0c2192c00",
+        "instructions": [],
+        "name": "lambda$static$135",
+        "pivots": [
+          {
+            "contains": "Field DARKNESS_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "743c600464c92408a92f17805c11a665d11f2607953e01424b60713a2866be2c",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "5a4f14aa8c35ae1004697b38488cad8c1e3d329bb4485af63bd452fec2b6f55a",
+        "instructions": [],
+        "name": "lambda$static$174",
+        "pivots": [
+          {
+            "contains": "Field RAINBOUNCE_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "79d0884fc7c242b39f1d5bce534ca142ae256e74a6c6d238bc13c300317a8efa",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "69ef66532b0ef5efedcac00f6fb56b144832be19449d5564e32054c8efcb53b9",
+        "instructions": [],
+        "name": "lambda$static$187",
+        "pivots": [
+          {
+            "contains": "Field GINGERBREAD_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "0e77e72163171f231f71b095e94e0e3899dfb6c9a4cb6474a0e2c12e72f120f2",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "9d29742fe0fa1d1540c5b1a05acbdffe974846f0c0d021d2009623ad0f68757e",
+        "instructions": [],
+        "name": "lambda$static$188",
+        "pivots": [
+          {
+            "contains": "Field GINGERBREAD_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "257187a78894696f95fba75968464ff074ddbea5e0acc9587017dc4980444fdb",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "18620f2aec39a63be419ba110ff513806ea252b6ab63b9ee589c6fa621b9e26c",
+        "instructions": [],
+        "name": "lambda$static$189",
+        "pivots": [
+          {
+            "contains": "Field GINGERBREAD_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "f337d5c701cb2492f908ce230a7a5f2526e78c6140e3c62fda7b45e531963d6f",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "89a2f9ecfd43ea36dbee22a0b19497a85439adf24c766ecd6ab7b50756e746dc",
+        "instructions": [],
+        "name": "lambda$static$190",
+        "pivots": [
+          {
+            "contains": "Field GINGERBREAD_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "cc034be26bcab1d267ef64005d24c47e2c15d001aa3f316f876edcfd5185f25c",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "a081b4b006913e5debfe0a59bee0ce182c8bf9646cfbec03b5e7def9b08e9e52",
+        "instructions": [],
+        "name": "lambda$static$42",
+        "pivots": [
+          {
+            "contains": "Field PRIMORDIAL_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "f355991cfaa016f715e8dee7d1afda2fd1dbb72d1ccda502ebed923d21c46167",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "ea5e98aa42d728edfad89f30a2c3ef1b128eb2201de256e7c2d03a3826c0933d",
+        "instructions": [],
+        "name": "lambda$static$43",
+        "pivots": [
+          {
+            "contains": "Field PRIMORDIAL_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "c0bd3bf9fd92112f5a4ceab6a56f9418b2e14f63ba06275708254e711eba1045",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "9de2dc138983464c4e2ec94fcc01eecdc395519070e38407cba553608a54fda9",
+        "instructions": [],
+        "name": "lambda$static$44",
+        "pivots": [
+          {
+            "contains": "Field PRIMORDIAL_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "f897098418696851186b969485d9ba015be4f88764f03cae42ee0e5fce5f0ec5",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "8b2496fa8059bd6ed4971392cd637fd39e45eba140e0b55dc211e6462ab740c5",
+        "instructions": [],
+        "name": "lambda$static$69",
+        "pivots": [
+          {
+            "contains": "Field HAZMAT_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "80ea46f68e34fe17dd07490c99129cfbc1dee6067ffd6fc353b72d9e684022bb",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "73fd8eba0162e856b3f5a7cafe5740a6a056f4ca2043913f0cc16d019ff18c79",
+        "instructions": [],
+        "name": "lambda$static$70",
+        "pivots": [
+          {
+            "contains": "Field HAZMAT_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "678903cbf3732ae64e0aa1fc33148fa398a2c73f64ca5b1ff5fc718e5f6b41e5",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "d6256c917856f0d5e3bd19d46a242d3c34f3e7f7b51663e5bc62d68232c989d1",
+        "instructions": [],
+        "name": "lambda$static$71",
+        "pivots": [
+          {
+            "contains": "Field HAZMAT_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "323374ac5fc296f76167c1aa99e5cd21a15eba184c6235b3f20366a571f4b258",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "98b47d50d57b5b2b450ebc9122290d7c64e83e4a10c1ed68d697aa385bc2afe5",
+        "instructions": [],
+        "name": "lambda$static$72",
+        "pivots": [
+          {
+            "contains": "Field HAZMAT_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "0ac37708db5c575df3a9f25e24dfcfd3c6af655f1dd353cadd67884cc74b7f5f",
+        "code_size": 14,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item;",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "f0f045a203176c0cfc095f952222b91847726883117e08050327fa69b620bd4c",
+        "instructions": [],
+        "name": "lambda$static$99",
+        "pivots": [
+          {
+            "contains": "Field DIVING_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 4,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/DivingArmorItem.\"<init>\":(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+            "offset": 10,
+            "opcode": "invokespecial"
+          }
+        ]
+      },
+      {
+        "access": 9,
+        "branches": [],
+        "code_sha256": "4824f7bd08b59f416a503e5b0d349acfc2a442fbb9f9c73df045533465762c84",
+        "code_size": 1028,
+        "coverage": "FULL_BODY",
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "instruction_count": 346,
+        "instruction_sha256": "3d17a9dceed7db61842f3056f6fb83d209b0fc91cf6027f219d259784bb1c073",
+        "instructions": [],
+        "name": "setup",
+        "pivots": [
+          {
+            "contains": "Field PRIMORDIAL_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 0,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.setRepairMaterial:(Lnet/minecraft/world/item/crafting/Ingredient;)V",
+            "offset": 24,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Field HAZMAT_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 27,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.setRepairMaterial:(Lnet/minecraft/world/item/crafting/Ingredient;)V",
+            "offset": 51,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Field DIVING_SUIT_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 54,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.setRepairMaterial:(Lnet/minecraft/world/item/crafting/Ingredient;)V",
+            "offset": 70,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Field DARKNESS_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 73,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.setRepairMaterial:(Lnet/minecraft/world/item/crafting/Ingredient;)V",
+            "offset": 97,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Field GINGERBREAD_ARMOR_MATERIAL:Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+            "offset": 100,
+            "opcode": "getstatic"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.setRepairMaterial:(Lnet/minecraft/world/item/crafting/Ingredient;)V",
+            "offset": 124,
+            "opcode": "invokevirtual"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/ACTickingItem": [],
+    "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "9d468ac4daa8aef0c5f80d57396e2a6fed0861cadf15a5545eba6febd84a1b2d",
+        "code_size": 28,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+        "exception_handlers": [],
+        "instruction_count": 14,
+        "instruction_sha256": "e35b3c62731ef5fb9ff1d825af9f7a6d3a9ecfe3cc56abcea9c65c837ed84a11",
+        "instructions": [],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.vanilla:()Lnet/minecraft/core/Holder;",
+            "offset": 2,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.properties:(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+            "offset": 21,
+            "opcode": "invokevirtual"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem": [
+      {
+        "access": 8,
+        "branches": [],
+        "code_sha256": "48ac0b1117ad027ddd212f62ee15c10dfaea174eada102e7eecb607d7e551b11",
+        "code_size": 40,
+        "coverage": "FULL_BODY",
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "instruction_count": 24,
+        "instruction_sha256": "018599f6f1b9ff243f6eebd04b5ffb74dda89b3e64bbd2de63ce96a0b2b8d495",
+        "instructions": [],
+        "name": "<clinit>",
+        "pivots": []
+      },
+      {
+        "access": 1,
+        "branches": [
+          {
+            "offset": 81,
+            "opcode": "if_acmpne",
+            "target": 113
+          },
+          {
+            "offset": 110,
+            "opcode": "goto",
+            "target": 145
+          },
+          {
+            "offset": 117,
+            "opcode": "if_acmpne",
+            "target": 145
+          },
+          {
+            "offset": 151,
+            "opcode": "ifle",
+            "target": 179
+          }
+        ],
+        "code_sha256": "0c4cccc6945408536d00444c4fe556189b4fb16c6fc1a9269029a6711c5f39c6",
+        "code_size": 188,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+        "exception_handlers": [],
+        "instruction_count": 90,
+        "instruction_sha256": "98fabe320a10f5d913c61b84e88eb00b1e9ce631fe3f33edcc49d4a3f5e215e4",
+        "instructions": [],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.vanilla:()Lnet/minecraft/core/Holder;",
+            "offset": 2,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.properties:(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+            "offset": 15,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.defense:(Lnet/minecraft/world/item/ArmorItem$Type;)I",
+            "offset": 63,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "113",
+            "offset": 81,
+            "opcode": "if_acmpne"
+          },
+          {
+            "contains": "145",
+            "offset": 117,
+            "opcode": "if_acmpne"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.toughness:()F",
+            "offset": 131,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.knockbackResistance:()F",
+            "offset": 146,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "179",
+            "offset": 151,
+            "opcode": "ifle"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.knockbackResistance:()F",
+            "offset": 165,
+            "opcode": "invokevirtual"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [
+          {
+            "offset": 8,
+            "opcode": "if_acmpne",
+            "target": 18
+          },
+          {
+            "offset": 15,
+            "opcode": "goto",
+            "target": 21
+          }
+        ],
+        "code_sha256": "58f64ea8dc4a948b39982a1401ef374232b19000d863bd256b793def406771ba",
+        "code_size": 22,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)Lcom/google/common/collect/Multimap;",
+        "exception_handlers": [],
+        "instruction_count": 10,
+        "instruction_sha256": "78766bb7548e9eaab353436ecf093bc58bafa4d171a331839c2836b81a1196b2",
+        "instructions": [],
+        "name": "acModifiers",
+        "pivots": [
+          {
+            "contains": "18",
+            "offset": 8,
+            "opcode": "if_acmpne"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "b254bff067ef9d7dc069864b1079759ec2b61782a36cbfb1181a3eac21413ffe",
+        "code_size": 18,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+        "exception_handlers": [],
+        "instruction_count": 8,
+        "instruction_sha256": "8ed5077c6324fbede087a8c010e4e1b3a030bce52a363a9f06070729bb25c7b5",
+        "instructions": [],
+        "name": "getDefaultAttributeModifiers",
+        "pivots": []
+      },
+      {
+        "access": 4098,
+        "branches": [],
+        "code_sha256": "e0c9fd0b022cbc4d2017ef32a832a445640ea0504d4e6d21c80e72f08392856b",
+        "code_size": 6,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+        "exception_handlers": [],
+        "instruction_count": 4,
+        "instruction_sha256": "9f66b767c2947f4f899a4c892bb3643307c5f44afe67d051304b8b5387800e0c",
+        "instructions": [],
+        "name": "lambda$getDefaultAttributeModifiers$0",
+        "pivots": []
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem": [
+      {
+        "access": 8,
+        "branches": [],
+        "code_sha256": "2dbc661d324bc6a0fcfe129ddad17e65969138d761f78ba35ca0a02f50619b03",
+        "code_size": 40,
+        "coverage": "FULL_BODY",
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "instruction_count": 24,
+        "instruction_sha256": "e45a52e9e1256285550e099e31591b090f17d04e0eb47437ae45cdddc79e4fe4",
+        "instructions": [],
+        "name": "<clinit>",
+        "pivots": []
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "016b54adf8722ae63575eb5560dc348390d69bc44aba9ac329cbc5077744cca6",
+        "code_size": 129,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+        "exception_handlers": [],
+        "instruction_count": 62,
+        "instruction_sha256": "3e819e82db652e0b8e629e0c6339590acd84e7eecbeb50333c23586d6e271fce",
+        "instructions": [],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.vanilla:()Lnet/minecraft/core/Holder;",
+            "offset": 2,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.properties:(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+            "offset": 15,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.defense:(Lnet/minecraft/world/item/ArmorItem$Type;)I",
+            "offset": 40,
+            "opcode": "invokevirtual"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [
+          {
+            "offset": 8,
+            "opcode": "if_acmpne",
+            "target": 26
+          },
+          {
+            "offset": 23,
+            "opcode": "goto",
+            "target": 29
+          }
+        ],
+        "code_sha256": "1b24de0379720c175d5baf54153113551d0fcd539913a73cf11700bc3894fd99",
+        "code_size": 30,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)Lcom/google/common/collect/Multimap;",
+        "exception_handlers": [],
+        "instruction_count": 14,
+        "instruction_sha256": "30cf36d0881c6b8d1c8b03ed1e1d48c35fc91dbe1515cc3639d8c1f57caf17e8",
+        "instructions": [],
+        "name": "acModifiers",
+        "pivots": [
+          {
+            "contains": "26",
+            "offset": 8,
+            "opcode": "if_acmpne"
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "2c41c88d682745da1e8d9b413baf47a886cd184fbfa45fdeed5a90fc63de1e98",
+        "code_size": 18,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+        "exception_handlers": [],
+        "instruction_count": 8,
+        "instruction_sha256": "0c89455ac0c9b95fe2a5876a8080cb1d84b19fbadee026e5a3007e038fa87948",
+        "instructions": [],
+        "name": "getDefaultAttributeModifiers",
+        "pivots": []
+      },
+      {
+        "access": 2,
+        "branches": [
+          {
+            "offset": 13,
+            "opcode": "ifeq",
+            "target": 33
+          }
+        ],
+        "code_sha256": "a539358ace403b7b44f9ab83f62dc9a88820d36200f5bc8a6d359a5bb1432330",
+        "code_size": 158,
+        "coverage": "FULL_BODY",
+        "descriptor": "(II)Lcom/google/common/collect/Multimap;",
+        "exception_handlers": [],
+        "instruction_count": 73,
+        "instruction_sha256": "9950c3ffe19bdaddeb9b3d2dc4aecdc2b7fad8f0d81f42fa1de1cde7c3fa0881",
+        "instructions": [],
+        "name": "getOrCreateDurabilityAttributes",
+        "pivots": [
+          {
+            "contains": "33",
+            "offset": 13,
+            "opcode": "ifeq"
+          }
+        ]
+      },
+      {
+        "access": 4098,
+        "branches": [],
+        "code_sha256": "3303bfe90e9230d0d926209bc420ab92c2b13b3a8dee10b6c4f47b68595e5ae3",
+        "code_size": 6,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+        "exception_handlers": [],
+        "instruction_count": 4,
+        "instruction_sha256": "ed920d60e03a8ae500dbd48d1a60a99bba0767b147870273456892cc87950715",
+        "instructions": [],
+        "name": "lambda$getDefaultAttributeModifiers$0",
+        "pivots": []
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "5e8f67599291bf70376f1b5ac3d9a4dab96fd02c9471265953e29cdfb2e4e477",
+        "code_size": 22,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+        "exception_handlers": [],
+        "instruction_count": 12,
+        "instruction_sha256": "1c59bef51bc767350a0f79f732eac8355d4c7b6c50b864e6b32197f3a1efabf2",
+        "instructions": [],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.vanilla:()Lnet/minecraft/core/Holder;",
+            "offset": 2,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.properties:(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+            "offset": 15,
+            "opcode": "invokevirtual"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "5e8f67599291bf70376f1b5ac3d9a4dab96fd02c9471265953e29cdfb2e4e477",
+        "code_size": 22,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+        "exception_handlers": [],
+        "instruction_count": 12,
+        "instruction_sha256": "1c59bef51bc767350a0f79f732eac8355d4c7b6c50b864e6b32197f3a1efabf2",
+        "instructions": [],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.vanilla:()Lnet/minecraft/core/Holder;",
+            "offset": 2,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.properties:(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+            "offset": 15,
+            "opcode": "invokevirtual"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "5e8f67599291bf70376f1b5ac3d9a4dab96fd02c9471265953e29cdfb2e4e477",
+        "code_size": 22,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+        "exception_handlers": [],
+        "instruction_count": 12,
+        "instruction_sha256": "1c59bef51bc767350a0f79f732eac8355d4c7b6c50b864e6b32197f3a1efabf2",
+        "instructions": [],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.vanilla:()Lnet/minecraft/core/Holder;",
+            "offset": 2,
+            "opcode": "invokevirtual"
+          },
+          {
+            "contains": "Method com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial.properties:(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+            "offset": 15,
+            "opcode": "invokevirtual"
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat": [
+      {
+        "access": 9,
+        "branches": [],
+        "code_sha256": "8bdb073c542b0d73677c4f8c47f9fdd9a1a4f3a18aefd201a70dff604687bf00",
+        "code_size": 10,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lnet/minecraft/core/Holder;",
+        "exception_handlers": [],
+        "instruction_count": 4,
+        "instruction_sha256": "2adb7e5883598f4d691eaaa223a978026587b37a663652361a41a23f8ef0237d",
+        "instructions": [],
+        "name": "attribute",
+        "pivots": [
+          {
+            "contains": "InterfaceMethod net/minecraft/core/Registry.wrapAsHolder:(Ljava/lang/Object;)Lnet/minecraft/core/Holder;",
+            "offset": 4,
+            "opcode": "invokeinterface"
+          }
+        ]
+      },
+      {
+        "access": 9,
+        "branches": [],
+        "code_sha256": "37e7c5b1079faceba98168c4236c421f943fcd670dbbe8682c7959a3954afbbc",
+        "code_size": 18,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;",
+        "exception_handlers": [],
+        "instruction_count": 9,
+        "instruction_sha256": "c0c944eca509ab6af2cd3bb96b86653cffd9b97fc55533da03c417acd39ee11c",
+        "instructions": [],
+        "name": "attributeModifier",
+        "pivots": []
+      },
+      {
+        "access": 9,
+        "branches": [
+          {
+            "offset": 1,
+            "opcode": "ifnonnull",
+            "target": 14
+          }
+        ],
+        "code_sha256": "b65cc9a9b479cab9d8d913b93f9559d580b3e8479056c7a13b4fd7ee5cf79c35",
+        "code_size": 44,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lcom/google/common/collect/Multimap;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/util/function/Supplier;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+        "exception_handlers": [],
+        "instruction_count": 19,
+        "instruction_sha256": "df378652b173a5b12a73fe57cd4e734b0764ce71aad80339d1bef7fcae53c96f",
+        "instructions": [],
+        "name": "itemAttributes",
+        "pivots": [
+          {
+            "contains": "14",
+            "offset": 1,
+            "opcode": "ifnonnull"
+          }
+        ]
+      },
+      {
+        "access": 9,
+        "branches": [
+          {
+            "offset": 24,
+            "opcode": "if_icmpge",
+            "target": 87
+          },
+          {
+            "offset": 50,
+            "opcode": "ifnonnull",
+            "target": 56
+          },
+          {
+            "offset": 53,
+            "opcode": "goto",
+            "target": 81
+          },
+          {
+            "offset": 84,
+            "opcode": "goto",
+            "target": 20
+          },
+          {
+            "offset": 89,
+            "opcode": "ifeq",
+            "target": 99
+          },
+          {
+            "offset": 96,
+            "opcode": "goto",
+            "target": 108
+          }
+        ],
+        "code_sha256": "09e5ff2330ba99053f19845ca86562f2e5e72eb722443e5e5a7d3ef86db92479",
+        "code_size": 109,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/BiFunction;Lnet/minecraft/world/item/ItemStack;Ljava/util/function/Supplier;)Lnet/minecraft/world/item/component/ItemAttributeModifiers;",
+        "exception_handlers": [],
+        "instruction_count": 48,
+        "instruction_sha256": "059e45b5aef30a3ac45fd2d3f3d1a5644b7b97a0a1097554ca2ec411d5d0e840",
+        "instructions": [],
+        "name": "itemAttributes",
+        "pivots": [
+          {
+            "contains": "87",
+            "offset": 24,
+            "opcode": "if_icmpge"
+          },
+          {
+            "contains": "56",
+            "offset": 50,
+            "opcode": "ifnonnull"
+          },
+          {
+            "contains": "99",
+            "offset": 89,
+            "opcode": "ifeq"
+          }
+        ]
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "f4d71ee620740500cae210adca28e551bf479508e896683adeeb318fa6a8681b",
+        "code_size": 9,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/item/component/ItemAttributeModifiers$Builder;Lnet/minecraft/world/entity/EquipmentSlotGroup;Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+        "exception_handlers": [],
+        "instruction_count": 7,
+        "instruction_sha256": "27b43ca94b52e26e85a8272d72ebebd9e55de92afa53d32b0627cc2e3ac2e82c",
+        "instructions": [],
+        "name": "lambda$itemAttributes$0",
+        "pivots": []
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "f4d71ee620740500cae210adca28e551bf479508e896683adeeb318fa6a8681b",
+        "code_size": 9,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/item/component/ItemAttributeModifiers$Builder;Lnet/minecraft/world/entity/EquipmentSlotGroup;Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+        "exception_handlers": [],
+        "instruction_count": 7,
+        "instruction_sha256": "27b43ca94b52e26e85a8272d72ebebd9e55de92afa53d32b0627cc2e3ac2e82c",
+        "instructions": [],
+        "name": "lambda$itemAttributes$1",
+        "pivots": []
+      },
+      {
+        "access": 9,
+        "branches": [],
+        "code_sha256": "8fafe95dc2139a93cec0c81428d4593ef8d2ff7b51b2604b45de4479c92123b7",
+        "code_size": 10,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/core/Holder;)Lnet/minecraft/sounds/SoundEvent;",
+        "exception_handlers": [],
+        "instruction_count": 4,
+        "instruction_sha256": "b9e038eb9e7ed8dc69728f4007ffbec6f2e0021d8405d0452a31a3455b151e46",
+        "instructions": [],
+        "name": "rawSound",
+        "pivots": []
+      },
+      {
+        "access": 9,
+        "branches": [],
+        "code_sha256": "f99858239d4e38fd12a7d76d1d7ffce3bd311a43bc78a96befa18329790f7b28",
+        "code_size": 2,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/sounds/SoundEvent;)Lnet/minecraft/sounds/SoundEvent;",
+        "exception_handlers": [],
+        "instruction_count": 2,
+        "instruction_sha256": "78acbddde5ca0eaa8f3a12464b7e70dd0e70e843f0094acc651453d6bdd68fd2",
+        "instructions": [],
+        "name": "rawSound",
+        "pivots": []
+      },
+      {
+        "access": 9,
+        "branches": [],
+        "code_sha256": "a6c5aae1ee3172d19daf0936edfbfc8577b83dac098f167d50b94d9cf46a719d",
+        "code_size": 10,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/sounds/SoundEvent;)Lnet/minecraft/core/Holder;",
+        "exception_handlers": [],
+        "instruction_count": 4,
+        "instruction_sha256": "a7256fd0d32628b72d7a6e407c8dd9b17a890b7c7d7e5d4bb45e25cc4212b787",
+        "instructions": [],
+        "name": "soundHolder",
+        "pivots": [
+          {
+            "contains": "InterfaceMethod net/minecraft/core/Registry.wrapAsHolder:(Ljava/lang/Object;)Lnet/minecraft/core/Holder;",
+            "offset": 4,
+            "opcode": "invokeinterface"
+          }
+        ]
+      }
+    ]
+  },
+  "resources": {
+    "alexscaves.mixins.json": {
+      "package": "com.github.alexmodguy.alexscaves.mixin",
+      "registered_common_mixin": "ItemStackTickMixin",
+      "sha256": "6e120e2d2cf226a25cbe3d0605968a184384194354eac0b1153108f74632c140"
+    }
+  },
+  "schema_version": 1,
+  "typed_reference_census": {
+    "class_entries_scanned": 1555,
+    "class_path_roster_sha256": "2296d31ecc7fabb375922b8ad23c7a25c3e969bdfd80d5e1aa602034ae5d62ed",
+    "method": "CLASS/Fieldref/Methodref/InterfaceMethodref/NameAndType/MethodType plus declared JVM descriptors; plain UTF8/String constants do not count",
+    "targets": {
+      "com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial": [
+        {
+          "extends_directly": false,
+          "implements_directly": false,
+          "owner": "com/github/alexmodguy/alexscaves/server/item/ACArmorMaterial",
+          "typed_references": [
+            {
+              "descriptor": "(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;FF)V",
+              "index": 1,
+              "kind": "method_reference",
+              "name": "<init>"
+            },
+            {
+              "index": 2,
+              "kind": "class_constant"
+            },
+            {
+              "descriptor": "Lnet/minecraft/world/item/crafting/Ingredient;",
+              "index": 12,
+              "kind": "field_reference",
+              "name": "ingredient"
+            },
+            {
+              "descriptor": "F",
+              "index": 16,
+              "kind": "field_reference",
+              "name": "knockbackResistance"
+            },
+            {
+              "descriptor": "Ljava/lang/String;",
+              "index": 20,
+              "kind": "field_reference",
+              "name": "name"
+            },
+            {
+              "descriptor": "I",
+              "index": 24,
+              "kind": "field_reference",
+              "name": "durability"
+            },
+            {
+              "descriptor": "[I",
+              "index": 28,
+              "kind": "field_reference",
+              "name": "damageReduction"
+            },
+            {
+              "descriptor": "I",
+              "index": 32,
+              "kind": "field_reference",
+              "name": "encantability"
+            },
+            {
+              "descriptor": "Lnet/minecraft/sounds/SoundEvent;",
+              "index": 35,
+              "kind": "field_reference",
+              "name": "sound"
+            },
+            {
+              "descriptor": "F",
+              "index": 39,
+              "kind": "field_reference",
+              "name": "toughness"
+            },
+            {
+              "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;)Ljava/util/function/Supplier;",
+              "index": 78,
+              "kind": "name_and_type_descriptor",
+              "name": "get"
+            },
+            {
+              "descriptor": "[I",
+              "index": 96,
+              "kind": "field_reference",
+              "name": "MAX_DAMAGE_ARRAY"
+            },
+            {
+              "descriptor": "()Lnet/minecraft/world/item/crafting/Ingredient;",
+              "index": 145,
+              "kind": "method_reference",
+              "name": "getRepairIngredient"
+            }
+          ]
+        },
+        {
+          "extends_directly": false,
+          "implements_directly": false,
+          "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+          "typed_references": [
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "index": 41,
+              "kind": "name_and_type_descriptor",
+              "name": "PRIMORDIAL_ARMOR_MATERIAL"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/crafting/Ingredient;)V",
+              "index": 61,
+              "kind": "method_reference",
+              "name": "setRepairMaterial"
+            },
+            {
+              "index": 62,
+              "kind": "class_constant"
+            },
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "index": 68,
+              "kind": "name_and_type_descriptor",
+              "name": "HAZMAT_SUIT_ARMOR_MATERIAL"
+            },
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "index": 74,
+              "kind": "name_and_type_descriptor",
+              "name": "DIVING_SUIT_ARMOR_MATERIAL"
+            },
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "index": 83,
+              "kind": "name_and_type_descriptor",
+              "name": "DARKNESS_ARMOR_MATERIAL"
+            },
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "index": 89,
+              "kind": "name_and_type_descriptor",
+              "name": "GINGERBREAD_ARMOR_MATERIAL"
+            },
+            {
+              "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+              "index": 430,
+              "kind": "name_and_type_descriptor",
+              "name": "<init>"
+            },
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "index": 487,
+              "kind": "name_and_type_descriptor",
+              "name": "RAINBOUNCE_ARMOR_MATERIAL"
+            },
+            {
+              "descriptor": "(Ljava/lang/String;I[IILnet/minecraft/sounds/SoundEvent;F)V",
+              "index": 946,
+              "kind": "method_reference",
+              "name": "<init>"
+            },
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "kind": "field_declaration",
+              "name": "PRIMORDIAL_ARMOR_MATERIAL"
+            },
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "kind": "field_declaration",
+              "name": "HAZMAT_SUIT_ARMOR_MATERIAL"
+            },
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "kind": "field_declaration",
+              "name": "DIVING_SUIT_ARMOR_MATERIAL"
+            },
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "kind": "field_declaration",
+              "name": "DARKNESS_ARMOR_MATERIAL"
+            },
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "kind": "field_declaration",
+              "name": "RAINBOUNCE_ARMOR_MATERIAL"
+            },
+            {
+              "descriptor": "Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;",
+              "kind": "field_declaration",
+              "name": "GINGERBREAD_ARMOR_MATERIAL"
+            }
+          ]
+        },
+        {
+          "extends_directly": false,
+          "implements_directly": false,
+          "owner": "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem",
+          "typed_references": [
+            {
+              "descriptor": "()Lnet/minecraft/core/Holder;",
+              "index": 1,
+              "kind": "method_reference",
+              "name": "vanilla"
+            },
+            {
+              "index": 2,
+              "kind": "class_constant"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+              "index": 23,
+              "kind": "method_reference",
+              "name": "properties"
+            },
+            {
+              "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+              "kind": "method_declaration",
+              "name": "<init>"
+            }
+          ]
+        },
+        {
+          "extends_directly": false,
+          "implements_directly": false,
+          "owner": "com/github/alexmodguy/alexscaves/server/item/DivingArmorItem",
+          "typed_references": [
+            {
+              "descriptor": "()Lnet/minecraft/core/Holder;",
+              "index": 1,
+              "kind": "method_reference",
+              "name": "vanilla"
+            },
+            {
+              "index": 2,
+              "kind": "class_constant"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+              "index": 13,
+              "kind": "method_reference",
+              "name": "properties"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/ArmorItem$Type;)I",
+              "index": 60,
+              "kind": "method_reference",
+              "name": "defense"
+            },
+            {
+              "descriptor": "()F",
+              "index": 107,
+              "kind": "method_reference",
+              "name": "toughness"
+            },
+            {
+              "descriptor": "()F",
+              "index": 111,
+              "kind": "method_reference",
+              "name": "knockbackResistance"
+            },
+            {
+              "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+              "kind": "method_declaration",
+              "name": "<init>"
+            }
+          ]
+        },
+        {
+          "extends_directly": false,
+          "implements_directly": false,
+          "owner": "com/github/alexmodguy/alexscaves/server/item/GingerbreadArmorItem",
+          "typed_references": [
+            {
+              "descriptor": "()Lnet/minecraft/core/Holder;",
+              "index": 1,
+              "kind": "method_reference",
+              "name": "vanilla"
+            },
+            {
+              "index": 2,
+              "kind": "class_constant"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+              "index": 13,
+              "kind": "method_reference",
+              "name": "properties"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/ArmorItem$Type;)I",
+              "index": 35,
+              "kind": "method_reference",
+              "name": "defense"
+            },
+            {
+              "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+              "kind": "method_declaration",
+              "name": "<init>"
+            }
+          ]
+        },
+        {
+          "extends_directly": false,
+          "implements_directly": false,
+          "owner": "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem",
+          "typed_references": [
+            {
+              "descriptor": "()Lnet/minecraft/core/Holder;",
+              "index": 1,
+              "kind": "method_reference",
+              "name": "vanilla"
+            },
+            {
+              "index": 2,
+              "kind": "class_constant"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+              "index": 13,
+              "kind": "method_reference",
+              "name": "properties"
+            },
+            {
+              "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+              "kind": "method_declaration",
+              "name": "<init>"
+            }
+          ]
+        },
+        {
+          "extends_directly": false,
+          "implements_directly": false,
+          "owner": "com/github/alexmodguy/alexscaves/server/item/PrimordialArmorItem",
+          "typed_references": [
+            {
+              "descriptor": "()Lnet/minecraft/core/Holder;",
+              "index": 1,
+              "kind": "method_reference",
+              "name": "vanilla"
+            },
+            {
+              "index": 2,
+              "kind": "class_constant"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+              "index": 13,
+              "kind": "method_reference",
+              "name": "properties"
+            },
+            {
+              "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+              "kind": "method_declaration",
+              "name": "<init>"
+            }
+          ]
+        },
+        {
+          "extends_directly": false,
+          "implements_directly": false,
+          "owner": "com/github/alexmodguy/alexscaves/server/item/RainbounceBootsItem",
+          "typed_references": [
+            {
+              "descriptor": "()Lnet/minecraft/core/Holder;",
+              "index": 1,
+              "kind": "method_reference",
+              "name": "vanilla"
+            },
+            {
+              "index": 2,
+              "kind": "class_constant"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/Item$Properties;Lnet/minecraft/world/item/ArmorItem$Type;)Lnet/minecraft/world/item/Item$Properties;",
+              "index": 13,
+              "kind": "method_reference",
+              "name": "properties"
+            },
+            {
+              "descriptor": "(Lcom/github/alexmodguy/alexscaves/server/item/ACArmorMaterial;Lnet/minecraft/world/item/ArmorItem$Type;)V",
+              "kind": "method_declaration",
+              "name": "<init>"
+            }
+          ]
+        }
+      ],
+      "com/github/alexmodguy/alexscaves/server/item/ACArmorTickItem": [
+        {
+          "extends_directly": false,
+          "implements_directly": false,
+          "owner": "com/github/alexmodguy/alexscaves/server/item/ACArmorTickItem",
+          "typed_references": [
+            {
+              "index": 1,
+              "kind": "class_constant"
+            }
+          ]
+        },
+        {
+          "extends_directly": false,
+          "implements_directly": true,
+          "owner": "com/github/alexmodguy/alexscaves/server/item/DarknessArmorItem",
+          "typed_references": [
+            {
+              "index": 296,
+              "kind": "class_constant"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "validation": {
+    "authority": "SHA-exact publisher binary; public adjacent source is not used for installed parameters.",
+    "physical_cli_is_gameplay": false,
+    "reproduction": "Mandatory exact seal comparison; deterministic report, negative pivot/census/declaration tests and twice-run physical binary CLI idempotence."
+  }
+}

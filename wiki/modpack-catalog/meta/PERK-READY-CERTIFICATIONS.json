@@ -8906,6 +8906,48 @@
           "reason": "Selo individual EXACT-RAYGUN-CONTRACT-1.0.10.json e prova Markdown compõem os 26 corpos e evidências SHA-exatas históricas com auditores, testes de regressão e replay reproduzível do JAR publisher. A certificação encerra somente o contrato técnico estático da ficha Raygun; QA física NOT_TESTED e autorização de mutação NOT_VERIFIED."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/armor-material.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Individual ACArmorMaterial integration-support static contract: two constructors, seven API methods, separate static initializer, native durability/defense/repair semantics and six material bindings. ACArmorTickItem is an empty-marker support disposition only, with no separate card or independent ability; actual Darkness tick uses ACTickingItem. Adds one support candidate and zero semantic magic roots. No complete armor-item certification, safe per-player hook, accepted gameplay, physical QA or whole-provider closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.md",
+          "reason": "JAR publisher Alex's Caves Continued 1.0.10 SHA-exato, SHA-1 6960b299a39a039ac8a5eb9b07be4ad0e3e0a570; ACArmorMaterial e seis bindings nativos identificados por bytecode e recursos, sem importar parâmetros da fonte adjacente 1.1.1."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.md",
+          "reason": "Dois construtores, sete métodos de API e inicializador estático separado têm disposição própria; getters, cópia de tipos, reparo e material compartilhado não são casts. ACArmorTickItem é interface vazia: censo tipado das 1555 classes não encontra dispatcher ou chamadas de API do marcador; o tick Darkness usa ACTickingItem e método privado."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.md",
+          "reason": "Durabilidade MAX_DAMAGE_ARRAY[ordinal] vezes durabilityFactor, array base 13/15/16/11; cópia vanilla com guard de ordinal distinta dos getters sem guard universal. Array de defesa por referência, knockback público e parâmetros dos seis materiais preservam autoridade e limites nativos; defesa, toughness e knockback dos bindings têm snapshots próprios."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.md",
+          "reason": "Classe de suporte de materiais sem alvo, alcance, projétil, área ou seleção de entidade autônomos. ArmorItem.Type escolhe propriedades pelo ordinal; comportamento de defesa e targeting de itens de armadura completos pertence a outros contratos. O marcador vazio não acrescenta habilidade independente."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.md",
+          "reason": "Supplier de reparo é bruto e lido tardiamente; null retorna Ingredient.EMPTY. Cinco bindings de reparo são identificados entre seis materiais; ausência de binding Rainbounce não prova impossibilidade universal de reparo. Não se inferem mana, custo de cast, receita, aquisição Survival ou custo efetivo de armadura completa."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.md",
+          "reason": "Materiais e arrays compartilhados, setter bruto e campo público não constituem hook seguro por jogador. ACArmorTickItem recebe somente disposição de suporte com zero fichas; a rota real de DarknessArmorItem é acInventoryTick via ACTickingItem até acArmorTick privado. Sem mutação, duplicação de procs, certificação de armor-item completo ou fechamento integral do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ARMOR-MATERIAL-1.0.10.md",
+          "reason": "Selo EXACT-ARMOR-MATERIAL-1.0.10.json, prova Markdown e auditoria SHA-exata reproduzível fixam corpos, bindings e censo tipado de todas as 1555 classes. Certifica somente a nova ficha estática de suporte, com zero raízes mágicas adicionais, mutating_hook NOT_VERIFIED, physical_qa NOT_TESTED e NO_MUTATION."
+        }
+      }
     }
   },
   "providers": {},

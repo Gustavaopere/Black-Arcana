@@ -82,9 +82,16 @@ class DazingSweepCertificateTests(unittest.TestCase):
         self.assertIn("363 instruções", self.card)
         self.assertIn("29 branches diretos", self.card)
         self.assertIn("EXACT-DAZING-SWEEP-CAUSAL-1.0.10.json", self.card)
+        import sys
+        sys.path.insert(0, str(ROOT / "scripts/catalog"))
+        import check_perk_ready_indexes as canonical
+        provider_cards = [card for card in P.rglob("*.md")
+                          if canonical.is_card(card)]
+        global_cards = [card for card in canonical.PROVIDERS.rglob("*.md")
+                        if canonical.is_card(card)]
         objects = self.ledger["objects"]
-        n_global = len(objects)
-        n_provider = sum(k.startswith("✅-alexs-caves-continued/") for k in objects)
+        n_global = sum(canonical.certified(card, self.ledger) for card in global_cards)
+        n_provider = sum(canonical.certified(card, self.ledger) for card in provider_cards)
         n_enchant = sum(k.startswith("✅-alexs-caves-continued/enchantments/")
                         for k in objects)
         self.assertGreaterEqual(n_global, 206)
@@ -98,12 +105,12 @@ class DazingSweepCertificateTests(unittest.TestCase):
         self.assertIn("| ✅ | Dazing Sweep |",self.enchants)
         self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {n_enchant}/51",
                       self.enchants)
-        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {n_provider}/81",
+        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {n_provider}/{len(provider_cards)}",
                       self.provider)
-        self.assertIn(f"Fichas com contrato técnico estático certificado: {n_global}/2393",
+        self.assertIn(f"Fichas com contrato técnico estático certificado: {n_global}/{len(global_cards)}",
                       self.global_index)
         self.assertRegex(self.global_index,
-            r"Fichas catalogadas \(somente fichas detectadas\): [0-9]+/2393")
+            rf"Fichas catalogadas \(somente fichas detectadas\): [0-9]+/{len(global_cards)}")
         self.assertIn("Providers com catálogo concluído: 4/164",
                       self.global_index)
 

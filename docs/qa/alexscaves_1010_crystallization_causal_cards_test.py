@@ -118,10 +118,16 @@ class CrystallizationStaticCardsTest(unittest.TestCase):
                      "WeaponStack","ControllerUUID","NO_MUTATION",
                      "NOT_VERIFIED","NOT_TESTED"):
             self.assertIn(text,self.card)
+        import sys
+        sys.path.insert(0, str(ROOT / "scripts/catalog"))
+        import check_perk_ready_indexes as canonical
+        provider_cards = [card for card in P.rglob("*.md")
+                          if canonical.is_card(card)]
+        global_cards = [card for card in canonical.PROVIDERS.rglob("*.md")
+                        if canonical.is_card(card)]
         objects=self.ledger["objects"]
-        n_global=len(objects)
-        n_provider=sum(k.startswith("✅-alexs-caves-continued/")
-                       for k in objects)
+        n_global=sum(canonical.certified(card, self.ledger) for card in global_cards)
+        n_provider=sum(canonical.certified(card, self.ledger) for card in provider_cards)
         n_enchant=sum(k.startswith("✅-alexs-caves-continued/enchantments/")
                       for k in objects)
         self.assertGreaterEqual(n_enchant,38)
@@ -132,9 +138,9 @@ class CrystallizationStaticCardsTest(unittest.TestCase):
         self.assertIn("| ✅ | "+chr(96)+"alexscaves:crystallization",self.cross)
         self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {n_enchant}/51",
                       self.ench_index)
-        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {n_provider}/81",
+        self.assertIn(f"Fichas catalogadas (somente fichas detectadas): {n_provider}/{len(provider_cards)}",
                       self.provider_index)
-        self.assertIn(f"Fichas com contrato técnico estático certificado: {n_global}/2393",
+        self.assertIn(f"Fichas com contrato técnico estático certificado: {n_global}/{len(global_cards)}",
                       self.global_index)
 
 if __name__=="__main__":
