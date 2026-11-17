@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 79/81.**
+**Fichas catalogadas (somente fichas detectadas): 80/81.**
 
-**Barra das fichas catalogadas:** `███████████████████░ 97.5%`
+**Barra das fichas catalogadas:** `███████████████████░ 98.8%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 79/81.**
+**Homologadas para perks (somente fichas detectadas): 80/81.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████████░ 97.5%`
+**Barra dos contratos técnicos estáticos:** `███████████████████░ 98.8%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -101,7 +101,7 @@
 | ✅ | Triple Split | [enchantments/triple-split.md](enchantments/triple-split.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Tsunami | [enchantments/tsunami.md](enchantments/tsunami.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Twilight Perfection | [enchantments/twilight-perfection.md](enchantments/twilight-perfection.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | X Ray | [enchantments/x-ray.md](enchantments/x-ray.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | X Ray | [enchantments/x-ray.md](enchantments/x-ray.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Desolate Dagger | [equipment/desolate-dagger.md](equipment/desolate-dagger.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dreadbow | [equipment/dreadbow.md](equipment/dreadbow.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -113,7 +113,7 @@
 | ✅ | Actions | 8/8 (100.0%) | 8 | [Abrir índice](actions/INDEX.md) |
 | ⚠️ | Damage Types | 10/11 (90.9%) | 10 | [Abrir índice](damage-types/INDEX.md) |
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
-| ⚠️ | Enchantments | 50/51 (98.0%) | 50 | [Abrir índice](enchantments/INDEX.md) |
+| ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
 
 ## Critério do ✅

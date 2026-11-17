@@ -1,0 +1,2481 @@
+{
+  "artifact": {
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "census": {
+    "declared_methods": {
+      "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": 4,
+      "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class": 26
+    },
+    "method_census": [
+      {
+        "body_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+        "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+        "direct_branches": 57,
+        "instructions": 523,
+        "name": "onUseTick",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class"
+      },
+      {
+        "body_sha256": "40210390d9ab29d32b359bd02dbf74e41083d829b341905ca272bbc6b681a9f1",
+        "descriptor": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceKey;",
+        "direct_branches": 0,
+        "instructions": 6,
+        "name": "key",
+        "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class"
+      },
+      {
+        "body_sha256": "c8d1d26f8fed7476bac1f90cc58329630cf3e86830079b4dd0bc06d18027f525",
+        "descriptor": "()V",
+        "direct_branches": 0,
+        "instructions": 182,
+        "name": "<clinit>",
+        "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class"
+      }
+    ]
+  },
+  "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+  "class_sha256": {
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class": "60006fab1b3b29f5f93c8365416815a12770cf8877a059298cb4ee82f7a92f32",
+    "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class": "3fc60cb7ff8be2744becf8ac9e524799349996972708845a124f02650bfb344c"
+  },
+  "compiled_token_owners": [
+    "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+    "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class"
+  ],
+  "composed_energy_report_sha256": "0bb9e77b51908adaf6b679f483c484d5b4da5169cd4cb440e0c7a31b9c6dcfb3",
+  "composed_gamma_report_sha256": "cf36a14f33464b6bd75f476b03dc654f11b9fb0f9676ec6337cc442c7c1e2b7c",
+  "enchantment": "alexscaves:x_ray",
+  "endpoint_slots": {
+    "client_visual_endpoint": 13,
+    "damage_endpoint": 14,
+    "entity_result_replaces_damage_endpoint_at": 766,
+    "full_endpoint": 12,
+    "initial_selection": "XRay?local12:local11.pick_location"
+  },
+  "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+  "gamma_ray_resource_json": {
+    "anvil_cost": 4,
+    "description": {
+      "translate": "enchantment.alexscaves.gamma_ray"
+    },
+    "max_cost": {
+      "base": 41,
+      "per_level_above_first": 10
+    },
+    "max_level": 1,
+    "min_cost": {
+      "base": 1,
+      "per_level_above_first": 18
+    },
+    "slots": [
+      "mainhand"
+    ],
+    "supported_items": "#alexscaves:enchantable/raygun",
+    "weight": 2
+  },
+  "inherited_native_contract": {
+    "codec_and_packet_delivery": "NOT_VERIFIED",
+    "method_census": [
+      {
+        "body_sha256": "b037276094928625e501d13fddd11829e3fe5540d585f7d8213f37b098c39bc5",
+        "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+        "direct_branches": 57,
+        "instructions": 523,
+        "name": "onUseTick",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class"
+      },
+      {
+        "body_sha256": "0b89217b97ca4f3d1c155c01b4170d1f0cb9141e4ee854ccf0c72892cd3b1db7",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+        "direct_branches": 2,
+        "instructions": 8,
+        "name": "hasCharge",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class"
+      },
+      {
+        "body_sha256": "c69c154524dbe4b4e46ed589438f7548cc39658305072a59b7c6a7dc9ec25baa",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+        "direct_branches": 2,
+        "instructions": 11,
+        "name": "getCharge",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class"
+      },
+      {
+        "body_sha256": "cedf012dbfb8edf1ca2171c57001dc8937f2982e3755a156da058a74d260993e",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;I)V",
+        "direct_branches": 0,
+        "instructions": 11,
+        "name": "setCharge",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class"
+      },
+      {
+        "body_sha256": "775387837bd0e7dbbd2fd04cd5de0375a6ccd2813de5db375fd152f8b63ad8dc",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I",
+        "direct_branches": 3,
+        "instructions": 24,
+        "name": "enchantLevel",
+        "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class"
+      },
+      {
+        "body_sha256": "77997f2089224cd768dc079fb789bc5ffa96c8647bf5c0cabe932b8c3a3702b5",
+        "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "direct_branches": 0,
+        "instructions": 5,
+        "name": "hurt",
+        "owner": "com/github/alexmodguy/alexscaves/server/misc/ACCompat.class"
+      },
+      {
+        "body_sha256": "160e3b07f7d14162ff90739c9005faac1ee7a2ffbe0c73b6626cd9f78645ba6a",
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "direct_branches": 0,
+        "instructions": 13,
+        "name": "causeRaygunDamage",
+        "owner": "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class"
+      },
+      {
+        "body_sha256": "8f61976678e2fc06746efd8b4b9451ad9b5b0c9d6ee6ce69fe7495d52d82a2f9",
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "direct_branches": 0,
+        "instructions": 12,
+        "name": "causeRadiationDamage",
+        "owner": "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.class"
+      },
+      {
+        "body_sha256": "68bd2733471bac19320e1bb31c7e5d3fb8656842f4d2e2541c319b76b3e00c37",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+        "direct_branches": 4,
+        "instructions": 42,
+        "name": "tick",
+        "owner": "com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect.class"
+      },
+      {
+        "body_sha256": "4b6d3c038ae9b8007d3bdeef4eb15a67d82da8bce872da5c4cd29435526fe8d1",
+        "descriptor": "(II)Z",
+        "direct_branches": 4,
+        "instructions": 24,
+        "name": "shouldTick",
+        "owner": "com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect.class"
+      },
+      {
+        "body_sha256": "60a6077687ecc4dbfaa0312570ca6e622c84aa9110043af2399ad5f2264f6f85",
+        "descriptor": "(Lnet/minecraft/core/Holder$Reference;Lnet/minecraft/world/entity/Entity;I)V",
+        "direct_branches": 0,
+        "instructions": 8,
+        "name": "<init>",
+        "owner": "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.class"
+      },
+      {
+        "body_sha256": "3e68eb959a5ae3f99249df4019c0e26d59090b97991c7c8211e18280e4d8b08d",
+        "descriptor": "(Lnet/minecraft/core/Holder$Reference;I)V",
+        "direct_branches": 0,
+        "instructions": 7,
+        "name": "<init>",
+        "owner": "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.class"
+      }
+    ],
+    "native_method_count": 12,
+    "network_authorization": "NOT_VERIFIED",
+    "onUseTick_direct_branches": 57,
+    "onUseTick_instructions": 523,
+    "projectile_predicate_bootstrap": {
+      "factory": "java/lang/invoke/LambdaMetafactory.metafactory",
+      "implementation": "REF_invokeVirtual net/minecraft/world/entity/Entity.canBeHitByProjectile:()Z",
+      "index": 0,
+      "invokedynamic_offsets": [
+        61,
+        938
+      ],
+      "xray_additional_invokedynamic_offset": 635
+    },
+    "source": "EXACT-GAMMA-RAY-CAUSAL-1.0.10.json",
+    "visual_consumers_scope": "SELECTED_NATIVE_CLIENT_VISUAL_CONSUMERS_ONLY",
+    "visual_method_count": 2
+  },
+  "local_slot_accesses": {
+    "10": [
+      {
+        "access": "WRITE",
+        "offset": 72,
+        "opcode": "astore",
+        "operand": "10",
+        "symbol": ""
+      },
+      {
+        "access": "WRITE",
+        "offset": 652,
+        "opcode": "astore",
+        "operand": "10",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 669,
+        "opcode": "aload",
+        "operand": "10",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 677,
+        "opcode": "aload",
+        "operand": "10",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 727,
+        "opcode": "aload",
+        "operand": "10",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 734,
+        "opcode": "aload",
+        "operand": "10",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 742,
+        "opcode": "aload",
+        "operand": "10",
+        "symbol": ""
+      }
+    ],
+    "11": [
+      {
+        "access": "WRITE",
+        "offset": 83,
+        "opcode": "astore",
+        "operand": "11",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 115,
+        "opcode": "aload",
+        "operand": "11",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 132,
+        "opcode": "aload",
+        "operand": "11",
+        "symbol": ""
+      }
+    ],
+    "12": [
+      {
+        "access": "WRITE",
+        "offset": 103,
+        "opcode": "astore",
+        "operand": "12",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 110,
+        "opcode": "aload",
+        "operand": "12",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 127,
+        "opcode": "aload",
+        "operand": "12",
+        "symbol": ""
+      }
+    ],
+    "13": [
+      {
+        "access": "WRITE",
+        "offset": 120,
+        "opcode": "astore",
+        "operand": "13",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 218,
+        "opcode": "aload",
+        "operand": "13",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 223,
+        "opcode": "aload",
+        "operand": "13",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 228,
+        "opcode": "aload",
+        "operand": "13",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 494,
+        "opcode": "aload",
+        "operand": "13",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 518,
+        "opcode": "aload",
+        "operand": "13",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 527,
+        "opcode": "aload",
+        "operand": "13",
+        "symbol": ""
+      }
+    ],
+    "14": [
+      {
+        "access": "WRITE",
+        "offset": 137,
+        "opcode": "astore",
+        "operand": "14",
+        "symbol": ""
+      },
+      {
+        "access": "WRITE",
+        "offset": 766,
+        "opcode": "astore",
+        "operand": "14",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 895,
+        "opcode": "aload",
+        "operand": "14",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 909,
+        "opcode": "aload",
+        "operand": "14",
+        "symbol": ""
+      }
+    ],
+    "23": [
+      {
+        "access": "WRITE",
+        "offset": 587,
+        "opcode": "fstore",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 595,
+        "opcode": "fload",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 657,
+        "opcode": "fload",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "WRITE",
+        "offset": 661,
+        "opcode": "fstore",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "WRITE",
+        "offset": 689,
+        "opcode": "astore",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 692,
+        "opcode": "aload",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 717,
+        "opcode": "aload",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "WRITE",
+        "offset": 834,
+        "opcode": "astore",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 848,
+        "opcode": "aload",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 853,
+        "opcode": "aload",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 858,
+        "opcode": "aload",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "WRITE",
+        "offset": 932,
+        "opcode": "istore",
+        "operand": "23",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 1114,
+        "opcode": "iload",
+        "operand": "23",
+        "symbol": ""
+      }
+    ],
+    "8": [
+      {
+        "access": "WRITE",
+        "offset": 41,
+        "opcode": "fstore",
+        "operand": "8",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 66,
+        "opcode": "fload",
+        "operand": "8",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 75,
+        "opcode": "fload",
+        "operand": "8",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 90,
+        "opcode": "fload",
+        "operand": "8",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 578,
+        "opcode": "fload",
+        "operand": "8",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 597,
+        "opcode": "fload",
+        "operand": "8",
+        "symbol": ""
+      }
+    ],
+    "9": [
+      {
+        "access": "WRITE",
+        "offset": 58,
+        "opcode": "istore",
+        "operand": "9",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 105,
+        "opcode": "iload",
+        "operand": "9",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 122,
+        "opcode": "iload",
+        "operand": "9",
+        "symbol": ""
+      },
+      {
+        "access": "READ",
+        "offset": 569,
+        "opcode": "iload",
+        "operand": "9",
+        "symbol": ""
+      }
+    ]
+  },
+  "loop_slot23": {
+    "guard": "local23<local8",
+    "initial": 1.0,
+    "later_reuse": {
+      "block_position_store": 689,
+      "impact_position_store": 834,
+      "status_amplifier_store": 932
+    },
+    "reads": [
+      595,
+      657
+    ],
+    "step": 1.0,
+    "type_in_loop": "float",
+    "writes": [
+      587,
+      661
+    ]
+  },
+  "pivots": [
+    {
+      "name": "onUseTick",
+      "offset": 35,
+      "opcode": "ldc_w",
+      "operand": "#269",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "float 25.0f"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 38,
+      "opcode": "fload",
+      "operand": "7",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 40,
+      "opcode": "fmul",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 41,
+      "opcode": "fstore",
+      "operand": "8",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 43,
+      "opcode": "aload_3",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 44,
+      "opcode": "getstatic",
+      "operand": "#270",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Field com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.X_RAY:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 47,
+      "opcode": "invokestatic",
+      "operand": "#193",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.enchantLevel:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceKey;)I"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 50,
+      "opcode": "ifle",
+      "operand": "57",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 53,
+      "opcode": "iconst_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 54,
+      "opcode": "goto",
+      "operand": "58",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 57,
+      "opcode": "iconst_0",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 58,
+      "opcode": "istore",
+      "operand": "9",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 60,
+      "opcode": "aload_2",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 61,
+      "opcode": "invokedynamic",
+      "operand": "#273,  0",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "InvokeDynamic #0:test:()Ljava/util/function/Predicate;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 66,
+      "opcode": "fload",
+      "operand": "8",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 68,
+      "opcode": "f2d",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 69,
+      "opcode": "invokestatic",
+      "operand": "#276",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/entity/projectile/ProjectileUtil.getHitResultOnViewVector:(Lnet/minecraft/world/entity/Entity;Ljava/util/function/Predicate;D)Lnet/minecraft/world/phys/HitResult;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 72,
+      "opcode": "astore",
+      "operand": "10",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 74,
+      "opcode": "aload_2",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 75,
+      "opcode": "fload",
+      "operand": "8",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 77,
+      "opcode": "f2d",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 78,
+      "opcode": "fconst_0",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 79,
+      "opcode": "iconst_0",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 80,
+      "opcode": "invokevirtual",
+      "operand": "#282",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.pick:(DFZ)Lnet/minecraft/world/phys/HitResult;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 83,
+      "opcode": "astore",
+      "operand": "11",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 85,
+      "opcode": "aload_2",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 86,
+      "opcode": "fconst_0",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 87,
+      "opcode": "invokevirtual",
+      "operand": "#286",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getViewVector:(F)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 90,
+      "opcode": "fload",
+      "operand": "8",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 92,
+      "opcode": "f2d",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 93,
+      "opcode": "invokevirtual",
+      "operand": "#290",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 96,
+      "opcode": "aload_2",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 97,
+      "opcode": "invokevirtual",
+      "operand": "#296",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 100,
+      "opcode": "invokevirtual",
+      "operand": "#300",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 103,
+      "opcode": "astore",
+      "operand": "12",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 105,
+      "opcode": "iload",
+      "operand": "9",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 107,
+      "opcode": "ifeq",
+      "operand": "115",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 110,
+      "opcode": "aload",
+      "operand": "12",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 112,
+      "opcode": "goto",
+      "operand": "120",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 115,
+      "opcode": "aload",
+      "operand": "11",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 117,
+      "opcode": "invokevirtual",
+      "operand": "#304",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/HitResult.getLocation:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 120,
+      "opcode": "astore",
+      "operand": "13",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 122,
+      "opcode": "iload",
+      "operand": "9",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 124,
+      "opcode": "ifeq",
+      "operand": "132",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 127,
+      "opcode": "aload",
+      "operand": "12",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 129,
+      "opcode": "goto",
+      "operand": "137",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 132,
+      "opcode": "aload",
+      "operand": "11",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 134,
+      "opcode": "invokevirtual",
+      "operand": "#304",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/HitResult.getLocation:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 137,
+      "opcode": "astore",
+      "operand": "14",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 211,
+      "opcode": "invokevirtual",
+      "operand": "#184",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 214,
+      "opcode": "ifeq",
+      "operand": "322",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 218,
+      "opcode": "aload",
+      "operand": "13",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 223,
+      "opcode": "aload",
+      "operand": "13",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 228,
+      "opcode": "aload",
+      "operand": "13",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 233,
+      "opcode": "invokestatic",
+      "operand": "#337",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method setRayPosition:(Lnet/minecraft/world/item/ItemStack;DDD)V"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 563,
+      "opcode": "aconst_null",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 564,
+      "opcode": "astore",
+      "operand": "20",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 566,
+      "opcode": "aconst_null",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 567,
+      "opcode": "astore",
+      "operand": "21",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 569,
+      "opcode": "iload",
+      "operand": "9",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 571,
+      "opcode": "ifeq",
+      "operand": "669",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 574,
+      "opcode": "aload_2",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 575,
+      "opcode": "invokevirtual",
+      "operand": "#390",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getBoundingBox:()Lnet/minecraft/world/phys/AABB;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 578,
+      "opcode": "fload",
+      "operand": "8",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 580,
+      "opcode": "f2d",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 581,
+      "opcode": "invokevirtual",
+      "operand": "#394",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/AABB.inflate:(D)Lnet/minecraft/world/phys/AABB;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 584,
+      "opcode": "astore",
+      "operand": "22",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 586,
+      "opcode": "fconst_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 587,
+      "opcode": "fstore",
+      "operand": "23",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 589,
+      "opcode": "aload_2",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 590,
+      "opcode": "invokevirtual",
+      "operand": "#296",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getEyePosition:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 593,
+      "opcode": "astore",
+      "operand": "24",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 595,
+      "opcode": "fload",
+      "operand": "23",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 597,
+      "opcode": "fload",
+      "operand": "8",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 599,
+      "opcode": "fcmpg",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 600,
+      "opcode": "ifge",
+      "operand": "666",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 603,
+      "opcode": "aload",
+      "operand": "24",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 605,
+      "opcode": "aload_2",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 606,
+      "opcode": "fconst_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 607,
+      "opcode": "invokevirtual",
+      "operand": "#286",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getViewVector:(F)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 610,
+      "opcode": "invokevirtual",
+      "operand": "#300",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 613,
+      "opcode": "astore",
+      "operand": "24",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 615,
+      "opcode": "aload",
+      "operand": "24",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 617,
+      "opcode": "aload_2",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 618,
+      "opcode": "fconst_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 619,
+      "opcode": "invokevirtual",
+      "operand": "#286",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/entity/LivingEntity.getViewVector:(F)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 622,
+      "opcode": "invokevirtual",
+      "operand": "#300",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 625,
+      "opcode": "astore",
+      "operand": "25",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 627,
+      "opcode": "aload_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 628,
+      "opcode": "aload_2",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 629,
+      "opcode": "aload",
+      "operand": "24",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 631,
+      "opcode": "aload",
+      "operand": "25",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 633,
+      "opcode": "aload",
+      "operand": "22",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 635,
+      "opcode": "invokedynamic",
+      "operand": "#273,  0",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "InvokeDynamic #0:test:()Ljava/util/function/Predicate;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 640,
+      "opcode": "invokestatic",
+      "operand": "#400",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/entity/projectile/ProjectileUtil.getEntityHitResult:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Lnet/minecraft/world/phys/EntityHitResult;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 643,
+      "opcode": "astore",
+      "operand": "26",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 645,
+      "opcode": "aload",
+      "operand": "26",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 647,
+      "opcode": "ifnull",
+      "operand": "657",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 650,
+      "opcode": "aload",
+      "operand": "26",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 652,
+      "opcode": "astore",
+      "operand": "10",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 654,
+      "opcode": "goto",
+      "operand": "666",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 657,
+      "opcode": "fload",
+      "operand": "23",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 659,
+      "opcode": "fconst_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 660,
+      "opcode": "fadd",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 661,
+      "opcode": "fstore",
+      "operand": "23",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 663,
+      "opcode": "goto",
+      "operand": "595",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 666,
+      "opcode": "goto",
+      "operand": "734",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 669,
+      "opcode": "aload",
+      "operand": "10",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 671,
+      "opcode": "instanceof",
+      "operand": "#404",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "class net/minecraft/world/phys/BlockHitResult"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 674,
+      "opcode": "ifeq",
+      "operand": "734",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 677,
+      "opcode": "aload",
+      "operand": "10",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 679,
+      "opcode": "checkcast",
+      "operand": "#404",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "class net/minecraft/world/phys/BlockHitResult"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 682,
+      "opcode": "astore",
+      "operand": "22",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 684,
+      "opcode": "aload",
+      "operand": "22",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 686,
+      "opcode": "invokevirtual",
+      "operand": "#406",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/BlockHitResult.getBlockPos:()Lnet/minecraft/core/BlockPos;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 689,
+      "opcode": "astore",
+      "operand": "23",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 691,
+      "opcode": "aload_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 692,
+      "opcode": "aload",
+      "operand": "23",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 694,
+      "opcode": "invokevirtual",
+      "operand": "#409",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/level/Level.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 697,
+      "opcode": "astore",
+      "operand": "24",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 699,
+      "opcode": "aload",
+      "operand": "22",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 701,
+      "opcode": "invokevirtual",
+      "operand": "#413",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/BlockHitResult.getDirection:()Lnet/minecraft/core/Direction;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 704,
+      "opcode": "astore",
+      "operand": "20",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 706,
+      "opcode": "aload",
+      "operand": "24",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 708,
+      "opcode": "invokevirtual",
+      "operand": "#417",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/level/block/state/BlockState.isAir:()Z"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 711,
+      "opcode": "ifne",
+      "operand": "734",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 714,
+      "opcode": "aload",
+      "operand": "24",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 716,
+      "opcode": "aload_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 717,
+      "opcode": "aload",
+      "operand": "23",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 719,
+      "opcode": "aload",
+      "operand": "20",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 721,
+      "opcode": "invokevirtual",
+      "operand": "#422",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/level/block/state/BlockState.isFaceSturdy:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 724,
+      "opcode": "ifeq",
+      "operand": "734",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 727,
+      "opcode": "aload",
+      "operand": "10",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 729,
+      "opcode": "invokevirtual",
+      "operand": "#304",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/HitResult.getLocation:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 732,
+      "opcode": "astore",
+      "operand": "21",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 734,
+      "opcode": "aload",
+      "operand": "10",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 736,
+      "opcode": "instanceof",
+      "operand": "#426",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "class net/minecraft/world/phys/EntityHitResult"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 739,
+      "opcode": "ifeq",
+      "operand": "768",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 742,
+      "opcode": "aload",
+      "operand": "10",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 744,
+      "opcode": "checkcast",
+      "operand": "#426",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "class net/minecraft/world/phys/EntityHitResult"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 747,
+      "opcode": "astore",
+      "operand": "22",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 749,
+      "opcode": "aload",
+      "operand": "22",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 751,
+      "opcode": "invokevirtual",
+      "operand": "#428",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/EntityHitResult.getEntity:()Lnet/minecraft/world/entity/Entity;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 754,
+      "opcode": "invokevirtual",
+      "operand": "#432",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/entity/Entity.position:()Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 757,
+      "opcode": "astore",
+      "operand": "21",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 759,
+      "opcode": "getstatic",
+      "operand": "#435",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Field net/minecraft/core/Direction.UP:Lnet/minecraft/core/Direction;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 762,
+      "opcode": "astore",
+      "operand": "20",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 764,
+      "opcode": "aload",
+      "operand": "21",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 766,
+      "opcode": "astore",
+      "operand": "14",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 768,
+      "opcode": "aload",
+      "operand": "21",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 770,
+      "opcode": "ifnull",
+      "operand": "874",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 773,
+      "opcode": "iload",
+      "operand": "5",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 775,
+      "opcode": "iconst_2",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 776,
+      "opcode": "irem",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 777,
+      "opcode": "ifne",
+      "operand": "874",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 834,
+      "opcode": "astore",
+      "operand": "23",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 874,
+      "opcode": "aload_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 875,
+      "opcode": "invokevirtual",
+      "operand": "#184",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 878,
+      "opcode": "ifne",
+      "operand": "1160",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 881,
+      "opcode": "iload",
+      "operand": "5",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 883,
+      "opcode": "iload",
+      "operand": "6",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 885,
+      "opcode": "isub",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 886,
+      "opcode": "iconst_3",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 887,
+      "opcode": "irem",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 888,
+      "opcode": "ifne",
+      "operand": "1160",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 891,
+      "opcode": "new",
+      "operand": "#395",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "class net/minecraft/world/phys/AABB"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 895,
+      "opcode": "aload",
+      "operand": "14",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 897,
+      "opcode": "ldc2_w",
+      "operand": "#461",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "double -1.0d"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 900,
+      "opcode": "ldc2_w",
+      "operand": "#461",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "double -1.0d"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 903,
+      "opcode": "ldc2_w",
+      "operand": "#461",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "double -1.0d"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 906,
+      "opcode": "invokevirtual",
+      "operand": "#452",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 909,
+      "opcode": "aload",
+      "operand": "14",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 911,
+      "opcode": "dconst_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 912,
+      "opcode": "dconst_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 913,
+      "opcode": "dconst_1",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 914,
+      "opcode": "invokevirtual",
+      "operand": "#452",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 917,
+      "opcode": "invokespecial",
+      "operand": "#463",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/phys/AABB.\"<init>\":(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)V"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 932,
+      "opcode": "istore",
+      "operand": "23",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 938,
+      "opcode": "invokedynamic",
+      "operand": "#273,  0",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "InvokeDynamic #0:test:()Ljava/util/function/Predicate;"
+    },
+    {
+      "name": "onUseTick",
+      "offset": 943,
+      "opcode": "invokevirtual",
+      "operand": "#468",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": "Method net/minecraft/world/level/Level.getEntities:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;"
+    },
+    {
+      "name": "key",
+      "offset": 0,
+      "opcode": "getstatic",
+      "operand": "#7",
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "symbol": "Field net/minecraft/core/registries/Registries.ENCHANTMENT:Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "name": "key",
+      "offset": 3,
+      "opcode": "ldc",
+      "operand": "#15",
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "symbol": "String alexscaves"
+    },
+    {
+      "name": "key",
+      "offset": 5,
+      "opcode": "aload_0",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "symbol": ""
+    },
+    {
+      "name": "key",
+      "offset": 6,
+      "opcode": "invokestatic",
+      "operand": "#17",
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "symbol": "Method net/minecraft/resources/ResourceLocation.fromNamespaceAndPath:(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;"
+    },
+    {
+      "name": "key",
+      "offset": 9,
+      "opcode": "invokestatic",
+      "operand": "#23",
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "symbol": "Method net/minecraft/resources/ResourceKey.create:(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "name": "key",
+      "offset": 12,
+      "opcode": "areturn",
+      "operand": "",
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "symbol": ""
+    },
+    {
+      "name": "<clinit>",
+      "offset": 194,
+      "opcode": "ldc_w",
+      "operand": "#290",
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "symbol": "String x_ray"
+    },
+    {
+      "name": "<clinit>",
+      "offset": 197,
+      "opcode": "invokestatic",
+      "operand": "#224",
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "symbol": "Method key:(Ljava/lang/String;)Lnet/minecraft/resources/ResourceKey;"
+    },
+    {
+      "name": "<clinit>",
+      "offset": 200,
+      "opcode": "putstatic",
+      "operand": "#292",
+      "owner": "com/github/alexmodguy/alexscaves/server/enchantment/ACEnchantmentRegistry.class",
+      "symbol": "Field X_RAY:Lnet/minecraft/resources/ResourceKey;"
+    }
+  ],
+  "prior_seal_sha256": {
+    "EXACT-ENERGY-EFFICIENCY-CAUSAL-1.0.10.json": "a499370fe6bea484e7ac1d0d2afcf74a170495c913c151f73239253067f82a68",
+    "EXACT-GAMMA-RAY-CAUSAL-1.0.10.json": "cf36a14f33464b6bd75f476b03dc654f11b9fb0f9676ec6337cc442c7c1e2b7c"
+  },
+  "publisher_enchantment_census": {
+    "count": 51,
+    "ids": [
+      "arrow_inducting",
+      "astral_transferring",
+      "bonking",
+      "bouncing_bolt",
+      "bouncy_ball",
+      "charting_call",
+      "chomping_spirit",
+      "crystallization",
+      "dark_nock",
+      "dazing_sweep",
+      "detonating_death",
+      "double_stab",
+      "energy_efficiency",
+      "enveloping_bubble",
+      "explosive_flavor",
+      "far_flung",
+      "ferrous_haste",
+      "field_extension",
+      "flinging",
+      "gamma_ray",
+      "heavy_slam",
+      "herd_phalanx",
+      "humungous_hex",
+      "impending_stab",
+      "lasting_morale",
+      "multiple_mint",
+      "peppermint_punting",
+      "plummeting_flight",
+      "precise_volley",
+      "rapid_possession",
+      "relentless_darkness",
+      "sated_blade",
+      "sea_swing",
+      "seapairing",
+      "second_wave",
+      "seekcandy",
+      "shaded_respite",
+      "sharp_cane",
+      "sightless",
+      "soak_seeking",
+      "solar",
+      "spell_lasting",
+      "straight_hook",
+      "swiftwood",
+      "targeted_ricochet",
+      "taxing_bellow",
+      "triple_splash",
+      "triple_split",
+      "tsunami",
+      "twilight_perfection",
+      "x_ray"
+    ],
+    "inventory_ids_match": true,
+    "resource_sha256": {
+      "data/alexscaves/enchantment/arrow_inducting.json": "80d52e42318ad732b32ba6118dea8f5b315b8d2d702da32d202ff95246a973e5",
+      "data/alexscaves/enchantment/astral_transferring.json": "41133c10af9c9e8d5e33d1b8339b734f81547b141f83fc0144aa9cf89f1f04c2",
+      "data/alexscaves/enchantment/bonking.json": "f03c4e8c2f8b00b3668b8d7bf14276647b3e0324c159c6336b189a258571a86a",
+      "data/alexscaves/enchantment/bouncing_bolt.json": "bc103328ad554dd97348becf898d5ecedd2867385d1ffbd756cf04ec302d24e7",
+      "data/alexscaves/enchantment/bouncy_ball.json": "003c602b45f66154304a0cabdff36b71450da876b071bd355ad604e2cab632ca",
+      "data/alexscaves/enchantment/charting_call.json": "352ec52d0e21298a921cc10fe5253b0484c0b273adf3fc5713bce046758ccacd",
+      "data/alexscaves/enchantment/chomping_spirit.json": "f0fb73c3e1c564831375009736264848190a6a6edd126b36bb3802ff356fa6e7",
+      "data/alexscaves/enchantment/crystallization.json": "b2394e226f7d31843e6d459ef48e21bb955be3d174b3d63eb7ef0a66f0fee3da",
+      "data/alexscaves/enchantment/dark_nock.json": "569cb5857db11189b2eb8a1163d53a440587ab02e2f14bc8296aaaf91dcd8033",
+      "data/alexscaves/enchantment/dazing_sweep.json": "c86a7aceb5dfec02083dabc93ab51dc5253fbeb616c013a5f33f343656c26318",
+      "data/alexscaves/enchantment/detonating_death.json": "8402461954ff5b249ae675b51d7dcc23d933b2b06c494b327bf608371298646e",
+      "data/alexscaves/enchantment/double_stab.json": "554b3d0fb8e157ef912716cba8180b43cae340f01ee64ca931465b1d2884ff71",
+      "data/alexscaves/enchantment/energy_efficiency.json": "c5771a00e6dd2dd0a693369a110a943354b074dde27b9f3c9d1dcb4a8440cf3a",
+      "data/alexscaves/enchantment/enveloping_bubble.json": "d984c8cc3f8d72bffa2fce0972a2449b393907f7686626cc6135bf2a8260ed5a",
+      "data/alexscaves/enchantment/explosive_flavor.json": "2da6cbf1a482c69cb268a65667a4b25ea402bc3d9c7b055ef2bd7e5d8f2d08e8",
+      "data/alexscaves/enchantment/far_flung.json": "a7f48d6ad8eca7a883b3d930313d6962334b0b43a0d6722cb2e60831e9ed8e8c",
+      "data/alexscaves/enchantment/ferrous_haste.json": "38db83ed098b276532ad99d652f0614a4ec85b23c1dacb1f17d614a9a3d2f819",
+      "data/alexscaves/enchantment/field_extension.json": "c0f2998a08abbefc53a67447ad9e899cdb43bf8a0144a38d53d5fde2b90eb43e",
+      "data/alexscaves/enchantment/flinging.json": "0680721d1687f85991e11ee33908b67aa8b720339e7b09eeaaaf92cf604356f2",
+      "data/alexscaves/enchantment/gamma_ray.json": "4873ef951ef2afff56e8734740e68c0e4bec4b2d69e893632a9f97dc317630fd",
+      "data/alexscaves/enchantment/heavy_slam.json": "927532341a9a53ac73c081f99d7f9b4703f9fa3245c1fdafb609dfdba7733c8a",
+      "data/alexscaves/enchantment/herd_phalanx.json": "294818f10b6327c0ca06ef4510d599bba0a61a6c47ffc044236268411ccc0616",
+      "data/alexscaves/enchantment/humungous_hex.json": "8c45ec4c64e1ed5e258ce1a8d6a27b7693275336b76b91d108521fb91a015cc0",
+      "data/alexscaves/enchantment/impending_stab.json": "bb3918b0fdf897ad70897952d15094e04d8af905b3e2f2db0d2159b762f5ffbc",
+      "data/alexscaves/enchantment/lasting_morale.json": "8c662fb7f68987d8e564ec053ebccdd9232593e5961d2213bbbed037b270232f",
+      "data/alexscaves/enchantment/multiple_mint.json": "e7357f60b417fa10f5c64518dc51ab61365dca1a410c342ef2aa0604de40af03",
+      "data/alexscaves/enchantment/peppermint_punting.json": "ebe5a66b3d69d1d4384149959893712a7458ed9acfcc9064fa58fd16e8ba412b",
+      "data/alexscaves/enchantment/plummeting_flight.json": "163b032e37c716f0ef172a37b739a6d61340dab7c629c070698f8543999ec830",
+      "data/alexscaves/enchantment/precise_volley.json": "59efc44222dcd59530e13a50cb413a2db0c875213ced1a2ac9de2ef982615f53",
+      "data/alexscaves/enchantment/rapid_possession.json": "449eda001a6bb6507ef4e43cc18e601659d970e8bd7d43967aff32dfed07288a",
+      "data/alexscaves/enchantment/relentless_darkness.json": "94edb103571eba0d0ca503b8a9455d4643a0f414c758b4ca79d49bbcdf9f473e",
+      "data/alexscaves/enchantment/sated_blade.json": "9f9857ce8d742c377ae7a88a1e4261825c3359a90311f5bfaa3d1a3c792fa86b",
+      "data/alexscaves/enchantment/sea_swing.json": "f5e7985f7941b02a47966fa1135f3fc3ceff05b60d9eee015cbb6b33c7eb9c3a",
+      "data/alexscaves/enchantment/seapairing.json": "e814c593b935bca5a9b84f2ae3aa56d137d9bd099a9e7334b7d4a47fcccfbc57",
+      "data/alexscaves/enchantment/second_wave.json": "68d843242cc39b33eb952142b168fa8e72a2695bfa8adea6de3e4bba6febb97c",
+      "data/alexscaves/enchantment/seekcandy.json": "7e564925928b90368d9042f1b722f89464bfbd708abf69ced0d785b5871f0a74",
+      "data/alexscaves/enchantment/shaded_respite.json": "0c5bc4a73c8779c7bc0da2eb47a59e1263ac6c2ef6dead0cbfe5223c73e05872",
+      "data/alexscaves/enchantment/sharp_cane.json": "d9d75a98966a4881b93ea877d2e8d9be15539dc7a162ba32de5dce112b41c181",
+      "data/alexscaves/enchantment/sightless.json": "1e7d093a0d459e2e6a29b40cd625b4fb1f990285343b53e4421c8f3727b2ecb9",
+      "data/alexscaves/enchantment/soak_seeking.json": "cfec967d084e9dc3870b90bc05d62375524af447ae280aa7fea63458e644b66b",
+      "data/alexscaves/enchantment/solar.json": "6b89d32889d8da9adfad072c534ae76627b1c620d489951bf1095f1805809b80",
+      "data/alexscaves/enchantment/spell_lasting.json": "839c95095540d2c40624575ad74aada2df482d7b4364d86fd8ebc238593a47dc",
+      "data/alexscaves/enchantment/straight_hook.json": "75508b5c035e6e240a17ca3e31a4757838cb03e6b7f444e2ece49df284cc3b6f",
+      "data/alexscaves/enchantment/swiftwood.json": "3d19fac156679ac53f49424b9bb828ad44a003d3d33a8b14dda303d50fc17551",
+      "data/alexscaves/enchantment/targeted_ricochet.json": "adb5dfde437fbe38910045b6ec593103c43224224c8ab3a0101dec522a5ebb1e",
+      "data/alexscaves/enchantment/taxing_bellow.json": "275b7ef42207724ae8ee2048097d3f16dbdfc60796f06a98eb77356ddb744df1",
+      "data/alexscaves/enchantment/triple_splash.json": "6946e2d21814f3e398925f2886a6284b140032b255a05f9598c8e00e2bc315be",
+      "data/alexscaves/enchantment/triple_split.json": "fd4f773c48969b4c2537f443cc80d91e1385d545763be78feaefc5816ac551a0",
+      "data/alexscaves/enchantment/tsunami.json": "37f1f8c3f8b98084b73b23aa2ec49ba9a925bb9a37089f622cf992234a086242",
+      "data/alexscaves/enchantment/twilight_perfection.json": "82a8e06c07b66be33a330bdbeb1bc867d03ce13a49ab2505fa06504fe5f044e1",
+      "data/alexscaves/enchantment/x_ray.json": "612b1f7b126cea12085dea00736115b05fd4789bf9fc9ff6c4344a427135b0f8"
+    },
+    "scope": "EXACT_PUBLISHER_ENCHANTMENT_JSON_ROSTER_ONLY_NOT_RUNTIME_REGISTRY_CLOSURE"
+  },
+  "range_slot": {
+    "formula": "25.0F*warmup_progress(local7)",
+    "reads": [
+      66,
+      75,
+      90,
+      578,
+      597
+    ],
+    "slot": 8,
+    "writes": [
+      41
+    ]
+  },
+  "resource_json": {
+    "anvil_cost": 1,
+    "description": {
+      "translate": "enchantment.alexscaves.x_ray"
+    },
+    "exclusive_set": [
+      "alexscaves:gamma_ray"
+    ],
+    "max_cost": {
+      "base": 41,
+      "per_level_above_first": 10
+    },
+    "max_level": 1,
+    "min_cost": {
+      "base": 1,
+      "per_level_above_first": 12
+    },
+    "slots": [
+      "mainhand"
+    ],
+    "supported_items": "#alexscaves:enchantable/raygun",
+    "weight": 10
+  },
+  "resource_sha256": {
+    "data/alexscaves/enchantment/gamma_ray.json": "4873ef951ef2afff56e8734740e68c0e4bec4b2d69e893632a9f97dc317630fd",
+    "data/alexscaves/enchantment/x_ray.json": "612b1f7b126cea12085dea00736115b05fd4789bf9fc9ff6c4344a427135b0f8",
+    "data/alexscaves/tags/item/enchantable/raygun.json": "8e7cb71ff2c706004fba0493f2237e96da3af53dea6e3ae414542b5150cc012d"
+  },
+  "safety": {
+    "accepted_damage_and_effects": "NOT_TESTED",
+    "actual_pixels_and_delivery": "NOT_TESTED",
+    "claims_and_pvp": "NOT_VERIFIED",
+    "codec_and_packet_delivery": "NOT_VERIFIED",
+    "effective_charge_settlement": "NOT_TESTED",
+    "effective_world_datapack": "NOT_VERIFIED",
+    "exception_edges": "NOT_RECONSTRUCTED",
+    "global_nearest_entity": "NOT_VERIFIED",
+    "mastery_credit_for_periodic_radiation": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "network_authorization": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "projectile_util_internals": "NOT_VERIFIED",
+    "provider_universe_closed": false,
+    "wall_penetration": "NOT_VERIFIED",
+    "whole_raygun_card": "PARTIAL"
+  },
+  "schema_version": 1,
+  "selected_direct_edges": [
+    {
+      "name": "onUseTick",
+      "offset": 50,
+      "opcode": "ifle",
+      "operand": "57",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 54,
+      "opcode": "goto",
+      "operand": "58",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 107,
+      "opcode": "ifeq",
+      "operand": "115",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 112,
+      "opcode": "goto",
+      "operand": "120",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 124,
+      "opcode": "ifeq",
+      "operand": "132",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 129,
+      "opcode": "goto",
+      "operand": "137",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 214,
+      "opcode": "ifeq",
+      "operand": "322",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 571,
+      "opcode": "ifeq",
+      "operand": "669",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 600,
+      "opcode": "ifge",
+      "operand": "666",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 647,
+      "opcode": "ifnull",
+      "operand": "657",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 654,
+      "opcode": "goto",
+      "operand": "666",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 663,
+      "opcode": "goto",
+      "operand": "595",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 666,
+      "opcode": "goto",
+      "operand": "734",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 674,
+      "opcode": "ifeq",
+      "operand": "734",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 711,
+      "opcode": "ifne",
+      "operand": "734",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 724,
+      "opcode": "ifeq",
+      "operand": "734",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 739,
+      "opcode": "ifeq",
+      "operand": "768",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 770,
+      "opcode": "ifnull",
+      "operand": "874",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 777,
+      "opcode": "ifne",
+      "operand": "874",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 878,
+      "opcode": "ifne",
+      "operand": "1160",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    },
+    {
+      "name": "onUseTick",
+      "offset": 888,
+      "opcode": "ifne",
+      "operand": "1160",
+      "owner": "com/github/alexmodguy/alexscaves/server/item/RaygunItem.class",
+      "symbol": ""
+    }
+  ],
+  "source_helper_sha256": {
+    "docs/qa/alexscaves_1010_bouncy_ball_causal_probe.py": "95f43e0c463b682d67463d8f3e6fe7cb4ae1ad61f3e774a64c22a3f4182a0b29",
+    "docs/qa/alexscaves_1010_bouncy_ball_probe.py": "14a2d3dce072a1d831f7af420fbd2131cebda6373c8137cee8240189e43db83e",
+    "docs/qa/alexscaves_1010_damage_consumer_probe.py": "5f275c180e58d7fb4dbbb03c9ee74f20fa2e96dcf29fc30052bbadc20627394d",
+    "docs/qa/alexscaves_1010_energy_efficiency_probe.py": "07ef18e01629314180de1db7b63b4cebb98d64648b7b1834c6e3a793d98987a2",
+    "docs/qa/alexscaves_1010_gamma_ray_causal_audit.py": "02492b7a1c491966fec56146866bd5c00ca957ac68f4894d8b4f987361fa5ca5",
+    "docs/qa/alexscaves_1010_gumball_state_probe.py": "afcb689f0cca2458cefde74c0ebdda6027092240bfa07ffc8a05ae273e2f72c0",
+    "docs/qa/alexscaves_1010_raygun_local_flow_probe.py": "55a1338c5a1c36a0a318ef1c6eb1fb838771f6de1752ef7f2ecf8ba2007d1afb",
+    "docs/qa/alexscaves_1010_raygun_radiation_guard_probe.py": "e98f6dc67278e78376001824fef09aa90d11e1740bd49a93a025d8d0ab35be5c",
+    "docs/qa/alexscaves_1010_xray_causal_audit.py": "71723822d5244f636b50ba0536be43aabef3898d345893ebd0fd046667378692"
+  },
+  "static_contract": {
+    "block_sturdy": "only X-Ray false branch@669: BlockHitResult and !isAir and isFaceSturdy(level,blockPos,direction)@721 set impact local21; this branch does not replace damage endpoint14; X-Ray skips@666->734",
+    "client_visual_endpoint": "isClientSide branch forwards local13 components to setRayPosition@233; delivery and pixels NOT_TESTED",
+    "entity_endpoint": "EntityHitResult after either branch -> entity.position()@754 -> impact21 and damage14@766; direction20=UP",
+    "exclusion": "publisher X-Ray JSON exclusive_set=[alexscaves:gamma_ray]; Gamma JSON has no exclusive_set; effective datapack NOT_VERIFIED",
+    "full_endpoint": "eyePosition+getViewVector(0F)*local8 -> local12@103",
+    "impact_and_damage_separation": "local21 null@770 or elapsed%2!=0@777 skips only impact visuals to874; server cadence/AABB query follows independently, so a non-entity result retains the initially chosen local14 geometry without proving an accepted hit",
+    "initial_endpoints": "local13@120 and local14@137 independently choose local12 when X-Ray, otherwise local11=LivingEntity.pick(local8,0F,false).getLocation()",
+    "native_damage_status": {
+      "effect_duration_ticks": 800,
+      "gamma_false": 1.5,
+      "gamma_false_amplifier": 0,
+      "gamma_true": 2.0,
+      "gamma_true_amplifier": 4,
+      "source": "causeRaygunDamage(registryAccess,shooter)",
+      "status_gate": "(Tremorzilla || ACCompat.hurt returns true) && LivingEntity && !RESISTS_RADIATION"
+    },
+    "native_pipeline_reference": "frozen Gamma contract: server !isClientSide && (elapsed-15)%3==0; target filters exclude shooter, alliances both ways and same vehicle; X-Ray has no damage/status boolean read or separate bonus",
+    "range": "25.0F*warmup_progress; X-Ray does not increase local8",
+    "registry_mapping": "String x_ray@194 -> key@197 -> X_RAY@200; key uses Registries.ENCHANTMENT and namespace alexscaves",
+    "scan_aabb": "shooter.getBoundingBox().inflate((double)local8) -> local22@584; expansion equals local8 on each axis",
+    "scan_break": "first nonnull segment result -> local10@652; break@654->666->734; no explicit global nearest-distance comparison; helper internals NOT_VERIFIED",
+    "scan_first_segment": "eye+viewVector(1F) to eye+2*viewVector(1F); initial eye-to-eye+view segment is not added by this supplemental loop",
+    "scan_loop": "float23=1F; local24=eye; while(float23<local8): local24+=getViewVector(1F); local25=local24+getViewVector(1F); getEntityHitResult(level,shooter,local24,local25,local22,predicatebootstrap0)@640; null increments float23 by1F",
+    "scan_no_hit": "initial local10 from getHitResultOnViewVector@69 remains unchanged if no supplemental result",
+    "target_volume": "AABB(local14+(-1D,-1D,-1D),local14+(1D,1D,1D))@891-917",
+    "world_boundary": "native calls and branches do not prove actual wall penetration, global nearest selection, protected/PvP hits, accepted damage/effects or an authoritative mutating hook"
+  },
+  "supported_item_tag": {
+    "values": [
+      "alexscaves:raygun"
+    ]
+  },
+  "version": "1.0.10",
+  "xray_boolean_slot": {
+    "predicate": "ACCompat.enchantLevel(stack,X_RAY)>0",
+    "reads": [
+      105,
+      122,
+      569
+    ],
+    "slot": 9,
+    "writes": [
+      58
+    ]
+  }
+}
