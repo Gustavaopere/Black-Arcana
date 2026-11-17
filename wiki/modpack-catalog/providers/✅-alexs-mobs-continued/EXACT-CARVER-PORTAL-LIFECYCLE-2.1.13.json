@@ -1,0 +1,3827 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_ALEXSMOBS_213_CARVER_PORTAL_LIFECYCLE_JVM_BOUNDARY_READONLY",
+  "artifact": {
+    "sha1": "50ddafdf3d12b33331e4eecb4ab514ae451baadd",
+    "sha256": "eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8",
+    "size_bytes": 27452738
+  },
+  "observations": {
+    "classes": [
+      {
+        "class_path": "com/github/alexthe666/alexsmobs/item/ItemDimensionalCarver.class",
+        "declared_method_count": 12,
+        "selected_method_count": 7,
+        "tick_operator_windows": [],
+        "selected_methods": [
+          {
+            "name": "rayTracePortal",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/ClipContext$Fluid;)Lnet/minecraft/world/phys/BlockHitResult;",
+            "method_sha256": "62e7582e96bb14e08763d403d332c791945c7a11032f1ddbf3d9c13c640c476f",
+            "instruction_count": 71,
+            "branch_count": 0,
+            "branches": [],
+            "references": []
+          },
+          {
+            "name": "use",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+            "method_sha256": "a15882e9c4723a992a1baac483a8adf72134ee3e08b71e24c9dfc992a3b361fa",
+            "instruction_count": 116,
+            "branch_count": 3,
+            "branches": [
+              {
+                "offset": 17,
+                "opcode": "if_icmplt",
+                "branch_target": 26
+              },
+              {
+                "offset": 135,
+                "opcode": "ifeq",
+                "branch_target": 168
+              },
+              {
+                "offset": 165,
+                "opcode": "goto",
+                "branch_target": 210
+              }
+            ],
+            "references": []
+          },
+          {
+            "name": "getUseDuration",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I",
+            "method_sha256": "d7b49910d9b0f822cd380276033bb073c73050c1e4c5678bc452e7fa106bd021",
+            "instruction_count": 4,
+            "branch_count": 0,
+            "branches": [],
+            "references": []
+          },
+          {
+            "name": "getUseDuration",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+            "method_sha256": "327c0b2ea41222aa8b4e66abfaa50fb4e43e279f3a085b570ca4cdeb2efa812f",
+            "instruction_count": 2,
+            "branch_count": 0,
+            "branches": [],
+            "references": []
+          },
+          {
+            "name": "onUseTick",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+            "method_sha256": "dc50310b081da4783cf9afec06bb78f537851c361a6827a030d589242429a6ed",
+            "instruction_count": 195,
+            "branch_count": 10,
+            "branches": [
+              {
+                "offset": 18,
+                "opcode": "ifne",
+                "branch_target": 46
+              },
+              {
+                "offset": 62,
+                "opcode": "ifeq",
+                "branch_target": 378
+              },
+              {
+                "offset": 104,
+                "opcode": "ifge",
+                "branch_target": 192
+              },
+              {
+                "offset": 206,
+                "opcode": "ifle",
+                "branch_target": 232
+              },
+              {
+                "offset": 216,
+                "opcode": "ifeq",
+                "branch_target": 232
+              },
+              {
+                "offset": 235,
+                "opcode": "if_icmpne",
+                "branch_target": 378
+              },
+              {
+                "offset": 245,
+                "opcode": "ifne",
+                "branch_target": 378
+              },
+              {
+                "offset": 306,
+                "opcode": "if_acmpne",
+                "branch_target": 314
+              },
+              {
+                "offset": 361,
+                "opcode": "ifeq",
+                "branch_target": 378
+              },
+              {
+                "offset": 380,
+                "opcode": "ifeq",
+                "branch_target": 425
+              }
+            ],
+            "references": [
+              {
+                "site": {
+                  "offset": 199,
+                  "opcode": "invokevirtual",
+                  "operand": "#248",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.distanceToSqr:(DDD)D"
+                },
+                "predecessor": {
+                  "offset": 197,
+                  "opcode": "dload",
+                  "operand": "12",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 202,
+                  "opcode": "ldc2_w",
+                  "operand": "#252",
+                  "symbol": "double 9.0d"
+                }
+              },
+              {
+                "site": {
+                  "offset": 223,
+                  "opcode": "invokevirtual",
+                  "operand": "#254",
+                  "symbol": "Method net/minecraft/world/entity/player/Player.getCooldowns:()Lnet/minecraft/world/item/ItemCooldowns;"
+                },
+                "predecessor": {
+                  "offset": 220,
+                  "opcode": "checkcast",
+                  "operand": "#8",
+                  "symbol": "class net/minecraft/world/entity/player/Player"
+                },
+                "successor": {
+                  "offset": 226,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 229,
+                  "opcode": "invokestatic",
+                  "operand": "#258",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/misc/AMCompat.addCooldown:(Lnet/minecraft/world/item/ItemCooldowns;Lnet/minecraft/world/item/Item;I)V"
+                },
+                "predecessor": {
+                  "offset": 227,
+                  "opcode": "bipush",
+                  "operand": "40",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 232,
+                  "opcode": "iload",
+                  "operand": "4",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 242,
+                  "opcode": "invokevirtual",
+                  "operand": "#262",
+                  "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+                },
+                "predecessor": {
+                  "offset": 239,
+                  "opcode": "invokevirtual",
+                  "operand": "#233",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;"
+                },
+                "successor": {
+                  "offset": 245,
+                  "opcode": "ifne",
+                  "operand": "378",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 265,
+                  "opcode": "new",
+                  "operand": "#269",
+                  "symbol": "class com/github/alexthe666/alexsmobs/entity/EntityVoidPortal"
+                },
+                "predecessor": {
+                  "offset": 262,
+                  "opcode": "invokevirtual",
+                  "operand": "#227",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V"
+                },
+                "successor": {
+                  "offset": 268,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 274,
+                  "opcode": "invokespecial",
+                  "operand": "#271",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/entity/EntityVoidPortal.\"<init>\":(Lnet/minecraft/world/level/Level;Lcom/github/alexthe666/alexsmobs/item/ItemDimensionalCarver;)V"
+                },
+                "predecessor": {
+                  "offset": 273,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 277,
+                  "opcode": "astore",
+                  "operand": "14",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 287,
+                  "opcode": "invokevirtual",
+                  "operand": "#274",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/entity/EntityVoidPortal.setPos:(DDD)V"
+                },
+                "predecessor": {
+                  "offset": 285,
+                  "opcode": "dload",
+                  "operand": "12",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 290,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 318,
+                  "opcode": "invokevirtual",
+                  "operand": "#289",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/entity/EntityVoidPortal.setAttachmentFacing:(Lnet/minecraft/core/Direction;)V"
+                },
+                "predecessor": {
+                  "offset": 316,
+                  "opcode": "aload",
+                  "operand": "15",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 321,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 327,
+                  "opcode": "invokevirtual",
+                  "operand": "#293",
+                  "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+                },
+                "predecessor": {
+                  "offset": 325,
+                  "opcode": "aload",
+                  "operand": "14",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 330,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 341,
+                  "opcode": "invokevirtual",
+                  "operand": "#297",
+                  "symbol": "Method onPortalOpen:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lcom/github/alexthe666/alexsmobs/entity/EntityVoidPortal;Lnet/minecraft/core/Direction;)V"
+                },
+                "predecessor": {
+                  "offset": 339,
+                  "opcode": "aload",
+                  "operand": "15",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 344,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 351,
+                  "opcode": "invokestatic",
+                  "operand": "#301",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/misc/AMCompat.hurtAndBreak:(Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)V"
+                },
+                "predecessor": {
+                  "offset": 348,
+                  "opcode": "invokevirtual",
+                  "operand": "#192",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.getUsedItemHand:()Lnet/minecraft/world/InteractionHand;"
+                },
+                "successor": {
+                  "offset": 354,
+                  "opcode": "iconst_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 368,
+                  "opcode": "invokevirtual",
+                  "operand": "#254",
+                  "symbol": "Method net/minecraft/world/entity/player/Player.getCooldowns:()Lnet/minecraft/world/item/ItemCooldowns;"
+                },
+                "predecessor": {
+                  "offset": 365,
+                  "opcode": "checkcast",
+                  "operand": "#8",
+                  "symbol": "class net/minecraft/world/entity/player/Player"
+                },
+                "successor": {
+                  "offset": 371,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 375,
+                  "opcode": "invokestatic",
+                  "operand": "#258",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/misc/AMCompat.addCooldown:(Lnet/minecraft/world/item/ItemCooldowns;Lnet/minecraft/world/item/Item;I)V"
+                },
+                "predecessor": {
+                  "offset": 372,
+                  "opcode": "sipush",
+                  "operand": "200",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 378,
+                  "opcode": "iload",
+                  "operand": "6",
+                  "symbol": ""
+                }
+              }
+            ]
+          },
+          {
+            "name": "releaseUsingImpl",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+            "method_sha256": "6e8e93f4011eea4c40cc1e4136cdfacd54c31700ec851129abc3ee8195f5a72c",
+            "instruction_count": 23,
+            "branch_count": 0,
+            "branches": [],
+            "references": []
+          },
+          {
+            "name": "onPortalOpen",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lcom/github/alexthe666/alexsmobs/entity/EntityVoidPortal;Lnet/minecraft/core/Direction;)V",
+            "method_sha256": "e40bbd8c10fbac6cbfdb336e423a1192c13ee3c28ce1a13c587aa8ab8c264e61",
+            "instruction_count": 44,
+            "branch_count": 4,
+            "branches": [
+              {
+                "offset": 19,
+                "opcode": "ifeq",
+                "branch_target": 35
+              },
+              {
+                "offset": 32,
+                "opcode": "goto",
+                "branch_target": 48
+              },
+              {
+                "offset": 54,
+                "opcode": "ifeq",
+                "branch_target": 85
+              },
+              {
+                "offset": 75,
+                "opcode": "ifnull",
+                "branch_target": 85
+              }
+            ],
+            "references": [
+              {
+                "site": {
+                  "offset": 4,
+                  "opcode": "invokevirtual",
+                  "operand": "#317",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/entity/EntityVoidPortal.setLifespan:(I)V"
+                },
+                "predecessor": {
+                  "offset": 1,
+                  "opcode": "sipush",
+                  "operand": "1200",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 7,
+                  "opcode": "getstatic",
+                  "operand": "#321",
+                  "symbol": "Field net/minecraft/world/level/Level.OVERWORLD:Lnet/minecraft/resources/ResourceKey;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#325",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.getSleepingPos:()Ljava/util/Optional;"
+                },
+                "predecessor": {
+                  "offset": 12,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 16,
+                  "opcode": "invokevirtual",
+                  "operand": "#329",
+                  "symbol": "Method java/util/Optional.isPresent:()Z"
+                }
+              },
+              {
+                "site": {
+                  "offset": 23,
+                  "opcode": "invokevirtual",
+                  "operand": "#325",
+                  "symbol": "Method net/minecraft/world/entity/LivingEntity.getSleepingPos:()Ljava/util/Optional;"
+                },
+                "predecessor": {
+                  "offset": 22,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 26,
+                  "opcode": "invokevirtual",
+                  "operand": "#334",
+                  "symbol": "Method java/util/Optional.get:()Ljava/lang/Object;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 65,
+                  "opcode": "invokevirtual",
+                  "operand": "#353",
+                  "symbol": "Method net/minecraft/server/level/ServerPlayer.getRespawnDimension:()Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 63,
+                  "opcode": "aload",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 68,
+                  "opcode": "astore",
+                  "operand": "5",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 72,
+                  "opcode": "invokevirtual",
+                  "operand": "#357",
+                  "symbol": "Method net/minecraft/server/level/ServerPlayer.getRespawnPosition:()Lnet/minecraft/core/BlockPos;"
+                },
+                "predecessor": {
+                  "offset": 70,
+                  "opcode": "aload",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 75,
+                  "opcode": "ifnull",
+                  "operand": "85",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 80,
+                  "opcode": "invokevirtual",
+                  "operand": "#357",
+                  "symbol": "Method net/minecraft/server/level/ServerPlayer.getRespawnPosition:()Lnet/minecraft/core/BlockPos;"
+                },
+                "predecessor": {
+                  "offset": 78,
+                  "opcode": "aload",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 83,
+                  "opcode": "astore",
+                  "operand": "6",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 88,
+                  "opcode": "putfield",
+                  "operand": "#361",
+                  "symbol": "Field com/github/alexthe666/alexsmobs/entity/EntityVoidPortal.exitDimension:Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 86,
+                  "opcode": "aload",
+                  "operand": "5",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 91,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 98,
+                  "opcode": "invokevirtual",
+                  "operand": "#368",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/entity/EntityVoidPortal.setDestination:(Lnet/minecraft/core/BlockPos;)V"
+                },
+                "predecessor": {
+                  "offset": 95,
+                  "opcode": "invokevirtual",
+                  "operand": "#364",
+                  "symbol": "Method net/minecraft/core/BlockPos.above:(I)Lnet/minecraft/core/BlockPos;"
+                },
+                "successor": {
+                  "offset": 101,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ]
+          }
+        ],
+        "method_roster": [
+          {
+            "name": "ItemDimensionalCarver",
+            "descriptor": "(Lnet/minecraft/world/item/Item$Properties;)V",
+            "instruction_count": 4
+          },
+          {
+            "name": "rayTracePortal",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/ClipContext$Fluid;)Lnet/minecraft/world/phys/BlockHitResult;",
+            "instruction_count": 71
+          },
+          {
+            "name": "getItemStackLimit",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+            "instruction_count": 2
+          },
+          {
+            "name": "use",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+            "instruction_count": 116
+          },
+          {
+            "name": "getUseDuration",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)I",
+            "instruction_count": 4
+          },
+          {
+            "name": "getUseDuration",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)I",
+            "instruction_count": 2
+          },
+          {
+            "name": "getXpRepairRatio",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)F",
+            "instruction_count": 2
+          },
+          {
+            "name": "onUseTick",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+            "instruction_count": 195
+          },
+          {
+            "name": "releaseUsing",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+            "instruction_count": 7
+          },
+          {
+            "name": "releaseUsingImpl",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+            "instruction_count": 23
+          },
+          {
+            "name": "shouldCauseReequipAnimation",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Z)Z",
+            "instruction_count": 8
+          },
+          {
+            "name": "onPortalOpen",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lcom/github/alexthe666/alexsmobs/entity/EntityVoidPortal;Lnet/minecraft/core/Direction;)V",
+            "instruction_count": 44
+          }
+        ],
+        "class_sha256": "36295a531101875388114059940f6161d0afc808118c2344def04d732db88e6f"
+      },
+      {
+        "class_path": "com/github/alexthe666/alexsmobs/entity/EntityVoidPortal.class",
+        "declared_method_count": 24,
+        "selected_method_count": 16,
+        "tick_operator_windows": [
+          {
+            "start": 0,
+            "end": 35,
+            "selected_operators": [
+              {
+                "offset": 0,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 1,
+                "opcode": "invokespecial",
+                "operand": "#53",
+                "symbol": "Method net/minecraft/world/entity/Entity.tick:()V"
+              },
+              {
+                "offset": 4,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 5,
+                "opcode": "getfield",
+                "operand": "#57",
+                "symbol": "Field tickCount:I"
+              },
+              {
+                "offset": 8,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 9,
+                "opcode": "if_icmpne",
+                "operand": "26",
+                "symbol": ""
+              },
+              {
+                "offset": 12,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 13,
+                "opcode": "invokevirtual",
+                "operand": "#61",
+                "symbol": "Method getLifespan:()I"
+              },
+              {
+                "offset": 16,
+                "opcode": "ifne",
+                "operand": "26",
+                "symbol": ""
+              },
+              {
+                "offset": 19,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 20,
+                "opcode": "sipush",
+                "operand": "2000",
+                "symbol": ""
+              },
+              {
+                "offset": 23,
+                "opcode": "invokevirtual",
+                "operand": "#43",
+                "symbol": "Method setLifespan:(I)V"
+              },
+              {
+                "offset": 26,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 27,
+                "opcode": "getfield",
+                "operand": "#7",
+                "symbol": "Field madeOpenNoise:Z"
+              },
+              {
+                "offset": 30,
+                "opcode": "ifne",
+                "operand": "75",
+                "symbol": ""
+              },
+              {
+                "offset": 33,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 34,
+                "opcode": "getstatic",
+                "operand": "#65",
+                "symbol": "Field net/minecraft/world/level/gameevent/GameEvent.ENTITY_PLACE:Lnet/minecraft/core/Holder$Reference;"
+              }
+            ]
+          },
+          {
+            "start": 530,
+            "end": 576,
+            "selected_operators": [
+              {
+                "offset": 532,
+                "opcode": "pop",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 533,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 534,
+                "opcode": "invokevirtual",
+                "operand": "#138",
+                "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+              },
+              {
+                "offset": 537,
+                "opcode": "invokevirtual",
+                "operand": "#142",
+                "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+              },
+              {
+                "offset": 540,
+                "opcode": "ifne",
+                "operand": "856",
+                "symbol": ""
+              },
+              {
+                "offset": 543,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 544,
+                "opcode": "invokevirtual",
+                "operand": "#138",
+                "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+              },
+              {
+                "offset": 547,
+                "opcode": "invokevirtual",
+                "operand": "#225",
+                "symbol": "Method net/minecraft/world/level/Level.getServer:()Lnet/minecraft/server/MinecraftServer;"
+              },
+              {
+                "offset": 550,
+                "opcode": "astore",
+                "operand": "10",
+                "symbol": ""
+              },
+              {
+                "offset": 552,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 553,
+                "opcode": "invokevirtual",
+                "operand": "#229",
+                "symbol": "Method getDestination:()Lnet/minecraft/core/BlockPos;"
+              },
+              {
+                "offset": 556,
+                "opcode": "ifnull",
+                "operand": "856",
+                "symbol": ""
+              },
+              {
+                "offset": 559,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 560,
+                "opcode": "invokevirtual",
+                "operand": "#61",
+                "symbol": "Method getLifespan:()I"
+              },
+              {
+                "offset": 563,
+                "opcode": "bipush",
+                "operand": "20",
+                "symbol": ""
+              },
+              {
+                "offset": 565,
+                "opcode": "if_icmple",
+                "operand": "856",
+                "symbol": ""
+              },
+              {
+                "offset": 568,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 569,
+                "opcode": "getfield",
+                "operand": "#57",
+                "symbol": "Field tickCount:I"
+              },
+              {
+                "offset": 572,
+                "opcode": "bipush",
+                "operand": "20",
+                "symbol": ""
+              },
+              {
+                "offset": 574,
+                "opcode": "if_icmple",
+                "operand": "856",
+                "symbol": ""
+              }
+            ]
+          },
+          {
+            "start": 675,
+            "end": 718,
+            "selected_operators": [
+              {
+                "offset": 676,
+                "opcode": "invokevirtual",
+                "operand": "#279",
+                "symbol": "Method net/minecraft/core/Holder$Reference.is:(Lnet/minecraft/tags/TagKey;)Z"
+              },
+              {
+                "offset": 679,
+                "opcode": "ifeq",
+                "operand": "685",
+                "symbol": ""
+              },
+              {
+                "offset": 682,
+                "opcode": "goto",
+                "operand": "603",
+                "symbol": ""
+              },
+              {
+                "offset": 685,
+                "opcode": "aload",
+                "operand": "13",
+                "symbol": ""
+              },
+              {
+                "offset": 687,
+                "opcode": "instanceof",
+                "operand": "#285",
+                "symbol": "class com/github/alexthe666/alexsmobs/entity/EntityVoidWormPart"
+              },
+              {
+                "offset": 690,
+                "opcode": "ifeq",
+                "operand": "715",
+                "symbol": ""
+              },
+              {
+                "offset": 693,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 694,
+                "opcode": "invokevirtual",
+                "operand": "#61",
+                "symbol": "Method getLifespan:()I"
+              },
+              {
+                "offset": 697,
+                "opcode": "bipush",
+                "operand": "22",
+                "symbol": ""
+              },
+              {
+                "offset": 699,
+                "opcode": "if_icmpge",
+                "operand": "853",
+                "symbol": ""
+              },
+              {
+                "offset": 702,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 703,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 704,
+                "opcode": "invokevirtual",
+                "operand": "#61",
+                "symbol": "Method getLifespan:()I"
+              },
+              {
+                "offset": 707,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 708,
+                "opcode": "iadd",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 709,
+                "opcode": "invokevirtual",
+                "operand": "#43",
+                "symbol": "Method setLifespan:(I)V"
+              },
+              {
+                "offset": 712,
+                "opcode": "goto",
+                "operand": "853",
+                "symbol": ""
+              },
+              {
+                "offset": 715,
+                "opcode": "aload",
+                "operand": "13",
+                "symbol": ""
+              },
+              {
+                "offset": 717,
+                "opcode": "instanceof",
+                "operand": "#214",
+                "symbol": "class com/github/alexthe666/alexsmobs/entity/EntityVoidWorm"
+              }
+            ]
+          },
+          {
+            "start": 850,
+            "end": 942,
+            "selected_operators": [
+              {
+                "offset": 850,
+                "opcode": "invokevirtual",
+                "operand": "#297",
+                "symbol": "Method net/minecraft/world/entity/Entity.setPortalCooldown:()V"
+              },
+              {
+                "offset": 853,
+                "opcode": "goto",
+                "operand": "603",
+                "symbol": ""
+              },
+              {
+                "offset": 856,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 857,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 858,
+                "opcode": "invokevirtual",
+                "operand": "#61",
+                "symbol": "Method getLifespan:()I"
+              },
+              {
+                "offset": 861,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 862,
+                "opcode": "isub",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 863,
+                "opcode": "invokevirtual",
+                "operand": "#43",
+                "symbol": "Method setLifespan:(I)V"
+              },
+              {
+                "offset": 866,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 867,
+                "opcode": "invokevirtual",
+                "operand": "#61",
+                "symbol": "Method getLifespan:()I"
+              },
+              {
+                "offset": 870,
+                "opcode": "bipush",
+                "operand": "20",
+                "symbol": ""
+              },
+              {
+                "offset": 872,
+                "opcode": "if_icmpgt",
+                "operand": "924",
+                "symbol": ""
+              },
+              {
+                "offset": 875,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 876,
+                "opcode": "getfield",
+                "operand": "#13",
+                "symbol": "Field madeCloseNoise:Z"
+              },
+              {
+                "offset": 879,
+                "opcode": "ifne",
+                "operand": "924",
+                "symbol": ""
+              },
+              {
+                "offset": 882,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 883,
+                "opcode": "getstatic",
+                "operand": "#65",
+                "symbol": "Field net/minecraft/world/level/gameevent/GameEvent.ENTITY_PLACE:Lnet/minecraft/core/Holder$Reference;"
+              },
+              {
+                "offset": 886,
+                "opcode": "invokevirtual",
+                "operand": "#71",
+                "symbol": "Method gameEvent:(Lnet/minecraft/core/Holder;)V"
+              },
+              {
+                "offset": 889,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 890,
+                "opcode": "getstatic",
+                "operand": "#330",
+                "symbol": "Field com/github/alexthe666/alexsmobs/misc/AMSoundRegistry.VOID_PORTAL_CLOSE:Ljava/util/function/Supplier;"
+              },
+              {
+                "offset": 893,
+                "opcode": "invokeinterface",
+                "operand": "#25,  1",
+                "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+              },
+              {
+                "offset": 898,
+                "opcode": "checkcast",
+                "operand": "#80",
+                "symbol": "class net/minecraft/sounds/SoundEvent"
+              },
+              {
+                "offset": 903,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 904,
+                "opcode": "getfield",
+                "operand": "#82",
+                "symbol": "Field random:Lnet/minecraft/util/RandomSource;"
+              },
+              {
+                "offset": 907,
+                "opcode": "invokeinterface",
+                "operand": "#86,  1",
+                "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+              },
+              {
+                "offset": 912,
+                "opcode": "ldc",
+                "operand": "#92",
+                "symbol": "float 0.2f"
+              },
+              {
+                "offset": 916,
+                "opcode": "invokevirtual",
+                "operand": "#93",
+                "symbol": "Method playSound:(Lnet/minecraft/sounds/SoundEvent;FF)V"
+              },
+              {
+                "offset": 919,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 920,
+                "opcode": "iconst_1",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 921,
+                "opcode": "putfield",
+                "operand": "#13",
+                "symbol": "Field madeCloseNoise:Z"
+              },
+              {
+                "offset": 924,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 925,
+                "opcode": "invokevirtual",
+                "operand": "#61",
+                "symbol": "Method getLifespan:()I"
+              },
+              {
+                "offset": 928,
+                "opcode": "ifgt",
+                "operand": "938",
+                "symbol": ""
+              },
+              {
+                "offset": 931,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 932,
+                "opcode": "getstatic",
+                "operand": "#333",
+                "symbol": "Field net/minecraft/world/entity/Entity$RemovalReason.DISCARDED:Lnet/minecraft/world/entity/Entity$RemovalReason;"
+              },
+              {
+                "offset": 935,
+                "opcode": "invokevirtual",
+                "operand": "#339",
+                "symbol": "Method remove:(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
+              },
+              {
+                "offset": 938,
+                "opcode": "aload_0",
+                "operand": "",
+                "symbol": ""
+              },
+              {
+                "offset": 939,
+                "opcode": "getfield",
+                "operand": "#57",
+                "symbol": "Field tickCount:I"
+              }
+            ]
+          }
+        ],
+        "selected_methods": [
+          {
+            "name": "EntityVoidPortal",
+            "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+            "method_sha256": "927ae2f1407f8c693bd4e4403c42c7c3f71dcb32690c3fad0ab0e8c193ca8376",
+            "instruction_count": 14,
+            "branch_count": 0,
+            "branches": [],
+            "references": []
+          },
+          {
+            "name": "EntityVoidPortal",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lcom/github/alexthe666/alexsmobs/item/ItemDimensionalCarver;)V",
+            "method_sha256": "4a4d27e7252e500edc669c76bdc8461e61a0923764ec0c7abc8faab15223dfa0",
+            "instruction_count": 24,
+            "branch_count": 2,
+            "branches": [
+              {
+                "offset": 25,
+                "opcode": "if_acmpne",
+                "branch_target": 43
+              },
+              {
+                "offset": 40,
+                "opcode": "goto",
+                "branch_target": 55
+              }
+            ],
+            "references": [
+              {
+                "site": {
+                  "offset": 17,
+                  "opcode": "getstatic",
+                  "operand": "#34",
+                  "symbol": "Field com/github/alexthe666/alexsmobs/item/AMItemRegistry.SHATTERED_DIMENSIONAL_CARVER:Ljava/util/function/Supplier;"
+                },
+                "predecessor": {
+                  "offset": 16,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 20,
+                  "opcode": "invokeinterface",
+                  "operand": "#25,  1",
+                  "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 37,
+                  "opcode": "invokevirtual",
+                  "operand": "#43",
+                  "symbol": "Method setLifespan:(I)V"
+                },
+                "predecessor": {
+                  "offset": 34,
+                  "opcode": "sipush",
+                  "operand": "2000",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 40,
+                  "opcode": "goto",
+                  "operand": "55",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 52,
+                  "opcode": "invokevirtual",
+                  "operand": "#43",
+                  "symbol": "Method setLifespan:(I)V"
+                },
+                "predecessor": {
+                  "offset": 49,
+                  "opcode": "sipush",
+                  "operand": "1200",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 55,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ]
+          },
+          {
+            "name": "getAddEntityPacket",
+            "descriptor": "(Lnet/minecraft/server/level/ServerEntity;)Lnet/minecraft/network/protocol/Packet;",
+            "method_sha256": "1f163831b6119dc68f24e282efd23d3fb9498c8f34b712cba8016e5ca48f82cd",
+            "instruction_count": 4,
+            "branch_count": 0,
+            "branches": [],
+            "references": []
+          },
+          {
+            "name": "tick",
+            "descriptor": "()V",
+            "method_sha256": "df6080be4cc51c76c1ba1b14fb3d6a19e219290ad8f47a2e3a0a127895581f27",
+            "instruction_count": 418,
+            "branch_count": 34,
+            "branches": [
+              {
+                "offset": 9,
+                "opcode": "if_icmpne",
+                "branch_target": 26
+              },
+              {
+                "offset": 16,
+                "opcode": "ifne",
+                "branch_target": 26
+              },
+              {
+                "offset": 30,
+                "opcode": "ifne",
+                "branch_target": 75
+              },
+              {
+                "offset": 166,
+                "opcode": "goto",
+                "branch_target": 202
+              },
+              {
+                "offset": 184,
+                "opcode": "goto",
+                "branch_target": 202
+              },
+              {
+                "offset": 270,
+                "opcode": "ifeq",
+                "branch_target": 475
+              },
+              {
+                "offset": 285,
+                "opcode": "ifge",
+                "branch_target": 475
+              },
+              {
+                "offset": 301,
+                "opcode": "if_icmplt",
+                "branch_target": 475
+              },
+              {
+                "offset": 540,
+                "opcode": "ifne",
+                "branch_target": 856
+              },
+              {
+                "offset": 556,
+                "opcode": "ifnull",
+                "branch_target": 856
+              },
+              {
+                "offset": 565,
+                "opcode": "if_icmple",
+                "branch_target": 856
+              },
+              {
+                "offset": 574,
+                "opcode": "if_icmple",
+                "branch_target": 856
+              },
+              {
+                "offset": 610,
+                "opcode": "ifeq",
+                "branch_target": 856
+              },
+              {
+                "offset": 630,
+                "opcode": "ifne",
+                "branch_target": 603
+              },
+              {
+                "offset": 638,
+                "opcode": "ifne",
+                "branch_target": 603
+              },
+              {
+                "offset": 646,
+                "opcode": "ifne",
+                "branch_target": 603
+              },
+              {
+                "offset": 654,
+                "opcode": "ifne",
+                "branch_target": 603
+              },
+              {
+                "offset": 662,
+                "opcode": "ifne",
+                "branch_target": 603
+              },
+              {
+                "offset": 679,
+                "opcode": "ifeq",
+                "branch_target": 685
+              },
+              {
+                "offset": 682,
+                "opcode": "goto",
+                "branch_target": 603
+              },
+              {
+                "offset": 690,
+                "opcode": "ifeq",
+                "branch_target": 715
+              },
+              {
+                "offset": 699,
+                "opcode": "if_icmpge",
+                "branch_target": 853
+              },
+              {
+                "offset": 712,
+                "opcode": "goto",
+                "branch_target": 853
+              },
+              {
+                "offset": 720,
+                "opcode": "ifeq",
+                "branch_target": 754
+              },
+              {
+                "offset": 751,
+                "opcode": "goto",
+                "branch_target": 853
+              },
+              {
+                "offset": 761,
+                "opcode": "ifnull",
+                "branch_target": 808
+              },
+              {
+                "offset": 777,
+                "opcode": "ifnull",
+                "branch_target": 808
+              },
+              {
+                "offset": 791,
+                "opcode": "if_acmpeq",
+                "branch_target": 808
+              },
+              {
+                "offset": 810,
+                "opcode": "ifeq",
+                "branch_target": 853
+              },
+              {
+                "offset": 853,
+                "opcode": "goto",
+                "branch_target": 603
+              },
+              {
+                "offset": 872,
+                "opcode": "if_icmpgt",
+                "branch_target": 924
+              },
+              {
+                "offset": 879,
+                "opcode": "ifne",
+                "branch_target": 924
+              },
+              {
+                "offset": 928,
+                "opcode": "ifgt",
+                "branch_target": 938
+              },
+              {
+                "offset": 943,
+                "opcode": "if_icmple",
+                "branch_target": 950
+              }
+            ],
+            "references": [
+              {
+                "site": {
+                  "offset": 13,
+                  "opcode": "invokevirtual",
+                  "operand": "#61",
+                  "symbol": "Method getLifespan:()I"
+                },
+                "predecessor": {
+                  "offset": 12,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 16,
+                  "opcode": "ifne",
+                  "operand": "26",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 23,
+                  "opcode": "invokevirtual",
+                  "operand": "#43",
+                  "symbol": "Method setLifespan:(I)V"
+                },
+                "predecessor": {
+                  "offset": 20,
+                  "opcode": "sipush",
+                  "operand": "2000",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 26,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 76,
+                  "opcode": "invokevirtual",
+                  "operand": "#97",
+                  "symbol": "Method getAttachmentFacing:()Lnet/minecraft/core/Direction;"
+                },
+                "predecessor": {
+                  "offset": 75,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 79,
+                  "opcode": "invokevirtual",
+                  "operand": "#101",
+                  "symbol": "Method net/minecraft/core/Direction.getOpposite:()Lnet/minecraft/core/Direction;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 105,
+                  "opcode": "getstatic",
+                  "operand": "#108",
+                  "symbol": "Field com/github/alexthe666/alexsmobs/entity/EntityVoidPortal$1.$SwitchMap$net$minecraft$core$Direction:[I"
+                },
+                "predecessor": {
+                  "offset": 103,
+                  "opcode": "fstore",
+                  "operand": "7",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 108,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 267,
+                  "opcode": "invokevirtual",
+                  "operand": "#142",
+                  "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+                },
+                "predecessor": {
+                  "offset": 264,
+                  "opcode": "invokevirtual",
+                  "operand": "#138",
+                  "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+                },
+                "successor": {
+                  "offset": 270,
+                  "opcode": "ifeq",
+                  "operand": "475",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 293,
+                  "opcode": "invokevirtual",
+                  "operand": "#61",
+                  "symbol": "Method getLifespan:()I"
+                },
+                "predecessor": {
+                  "offset": 292,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 296,
+                  "opcode": "invokestatic",
+                  "operand": "#149",
+                  "symbol": "Method java/lang/Math.min:(II)I"
+                }
+              },
+              {
+                "site": {
+                  "offset": 537,
+                  "opcode": "invokevirtual",
+                  "operand": "#142",
+                  "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+                },
+                "predecessor": {
+                  "offset": 534,
+                  "opcode": "invokevirtual",
+                  "operand": "#138",
+                  "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+                },
+                "successor": {
+                  "offset": 540,
+                  "opcode": "ifne",
+                  "operand": "856",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 553,
+                  "opcode": "invokevirtual",
+                  "operand": "#229",
+                  "symbol": "Method getDestination:()Lnet/minecraft/core/BlockPos;"
+                },
+                "predecessor": {
+                  "offset": 552,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 556,
+                  "opcode": "ifnull",
+                  "operand": "856",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 560,
+                  "opcode": "invokevirtual",
+                  "operand": "#61",
+                  "symbol": "Method getLifespan:()I"
+                },
+                "predecessor": {
+                  "offset": 559,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 563,
+                  "opcode": "bipush",
+                  "operand": "20",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 578,
+                  "opcode": "invokevirtual",
+                  "operand": "#229",
+                  "symbol": "Method getDestination:()Lnet/minecraft/core/BlockPos;"
+                },
+                "predecessor": {
+                  "offset": 577,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 581,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 582,
+                  "opcode": "invokevirtual",
+                  "operand": "#97",
+                  "symbol": "Method getAttachmentFacing:()Lnet/minecraft/core/Direction;"
+                },
+                "predecessor": {
+                  "offset": 581,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 585,
+                  "opcode": "invokevirtual",
+                  "operand": "#101",
+                  "symbol": "Method net/minecraft/core/Direction.getOpposite:()Lnet/minecraft/core/Direction;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 627,
+                  "opcode": "invokevirtual",
+                  "operand": "#251",
+                  "symbol": "Method net/minecraft/world/entity/Entity.isOnPortalCooldown:()Z"
+                },
+                "predecessor": {
+                  "offset": 625,
+                  "opcode": "aload",
+                  "operand": "13",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 630,
+                  "opcode": "ifne",
+                  "operand": "603",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 643,
+                  "opcode": "instanceof",
+                  "operand": "#8",
+                  "symbol": "class com/github/alexthe666/alexsmobs/entity/EntityVoidPortal"
+                },
+                "predecessor": {
+                  "offset": 641,
+                  "opcode": "aload",
+                  "operand": "13",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 646,
+                  "opcode": "ifne",
+                  "operand": "603",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 694,
+                  "opcode": "invokevirtual",
+                  "operand": "#61",
+                  "symbol": "Method getLifespan:()I"
+                },
+                "predecessor": {
+                  "offset": 693,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 697,
+                  "opcode": "bipush",
+                  "operand": "22",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 704,
+                  "opcode": "invokevirtual",
+                  "operand": "#61",
+                  "symbol": "Method getLifespan:()I"
+                },
+                "predecessor": {
+                  "offset": 703,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 707,
+                  "opcode": "iconst_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 709,
+                  "opcode": "invokevirtual",
+                  "operand": "#43",
+                  "symbol": "Method setLifespan:(I)V"
+                },
+                "predecessor": {
+                  "offset": 708,
+                  "opcode": "iadd",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 712,
+                  "opcode": "goto",
+                  "operand": "853",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 729,
+                  "opcode": "invokevirtual",
+                  "operand": "#229",
+                  "symbol": "Method getDestination:()Lnet/minecraft/core/BlockPos;"
+                },
+                "predecessor": {
+                  "offset": 728,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 732,
+                  "opcode": "invokestatic",
+                  "operand": "#287",
+                  "symbol": "Method net/minecraft/world/phys/Vec3.atCenterOf:(Lnet/minecraft/core/Vec3i;)Lnet/minecraft/world/phys/Vec3;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 735,
+                  "opcode": "invokevirtual",
+                  "operand": "#293",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/entity/EntityVoidWorm.teleportTo:(Lnet/minecraft/world/phys/Vec3;)V"
+                },
+                "predecessor": {
+                  "offset": 732,
+                  "opcode": "invokestatic",
+                  "operand": "#287",
+                  "symbol": "Method net/minecraft/world/phys/Vec3.atCenterOf:(Lnet/minecraft/core/Vec3i;)Lnet/minecraft/world/phys/Vec3;"
+                },
+                "successor": {
+                  "offset": 738,
+                  "opcode": "aload",
+                  "operand": "13",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 740,
+                  "opcode": "invokevirtual",
+                  "operand": "#297",
+                  "symbol": "Method net/minecraft/world/entity/Entity.setPortalCooldown:()V"
+                },
+                "predecessor": {
+                  "offset": 738,
+                  "opcode": "aload",
+                  "operand": "13",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 743,
+                  "opcode": "aload",
+                  "operand": "13",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 758,
+                  "opcode": "getfield",
+                  "operand": "#303",
+                  "symbol": "Field exitDimension:Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 757,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 761,
+                  "opcode": "ifnull",
+                  "operand": "808",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 767,
+                  "opcode": "getfield",
+                  "operand": "#303",
+                  "symbol": "Field exitDimension:Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 766,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 770,
+                  "opcode": "invokevirtual",
+                  "operand": "#307",
+                  "symbol": "Method net/minecraft/server/MinecraftServer.getLevel:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/server/level/ServerLevel;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 784,
+                  "opcode": "invokevirtual",
+                  "operand": "#313",
+                  "symbol": "Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 781,
+                  "opcode": "invokevirtual",
+                  "operand": "#138",
+                  "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+                },
+                "successor": {
+                  "offset": 787,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 788,
+                  "opcode": "getfield",
+                  "operand": "#303",
+                  "symbol": "Field exitDimension:Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 787,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 791,
+                  "opcode": "if_acmpeq",
+                  "operand": "808",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 802,
+                  "opcode": "invokevirtual",
+                  "operand": "#317",
+                  "symbol": "Method teleportEntityFromDimension:(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Z)V"
+                },
+                "predecessor": {
+                  "offset": 801,
+                  "opcode": "iconst_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 805,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 845,
+                  "opcode": "invokevirtual",
+                  "operand": "#327",
+                  "symbol": "Method net/minecraft/world/entity/Entity.teleportTo:(DDD)V"
+                },
+                "predecessor": {
+                  "offset": 844,
+                  "opcode": "f2d",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 848,
+                  "opcode": "aload",
+                  "operand": "13",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 850,
+                  "opcode": "invokevirtual",
+                  "operand": "#297",
+                  "symbol": "Method net/minecraft/world/entity/Entity.setPortalCooldown:()V"
+                },
+                "predecessor": {
+                  "offset": 848,
+                  "opcode": "aload",
+                  "operand": "13",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 853,
+                  "opcode": "goto",
+                  "operand": "603",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 858,
+                  "opcode": "invokevirtual",
+                  "operand": "#61",
+                  "symbol": "Method getLifespan:()I"
+                },
+                "predecessor": {
+                  "offset": 857,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 861,
+                  "opcode": "iconst_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 863,
+                  "opcode": "invokevirtual",
+                  "operand": "#43",
+                  "symbol": "Method setLifespan:(I)V"
+                },
+                "predecessor": {
+                  "offset": 862,
+                  "opcode": "isub",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 866,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 867,
+                  "opcode": "invokevirtual",
+                  "operand": "#61",
+                  "symbol": "Method getLifespan:()I"
+                },
+                "predecessor": {
+                  "offset": 866,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 870,
+                  "opcode": "bipush",
+                  "operand": "20",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 925,
+                  "opcode": "invokevirtual",
+                  "operand": "#61",
+                  "symbol": "Method getLifespan:()I"
+                },
+                "predecessor": {
+                  "offset": 924,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 928,
+                  "opcode": "ifgt",
+                  "operand": "938",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 932,
+                  "opcode": "getstatic",
+                  "operand": "#333",
+                  "symbol": "Field net/minecraft/world/entity/Entity$RemovalReason.DISCARDED:Lnet/minecraft/world/entity/Entity$RemovalReason;"
+                },
+                "predecessor": {
+                  "offset": 931,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 935,
+                  "opcode": "invokevirtual",
+                  "operand": "#339",
+                  "symbol": "Method remove:(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
+                }
+              }
+            ]
+          },
+          {
+            "name": "teleportEntityFromDimension",
+            "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Z)V",
+            "method_sha256": "66b9d7f3cd73e96d0b5dedc80e5c1b15a106e82a48e85c60eaa6b2b2794f23e9",
+            "instruction_count": 69,
+            "branch_count": 4,
+            "branches": [
+              {
+                "offset": 4,
+                "opcode": "ifeq",
+                "branch_target": 43
+              },
+              {
+                "offset": 29,
+                "opcode": "ifnonnull",
+                "branch_target": 141
+              },
+              {
+                "offset": 40,
+                "opcode": "goto",
+                "branch_target": 141
+              },
+              {
+                "offset": 64,
+                "opcode": "ifnull",
+                "branch_target": 134
+              }
+            ],
+            "references": [
+              {
+                "site": {
+                  "offset": 7,
+                  "opcode": "getstatic",
+                  "operand": "#348",
+                  "symbol": "Field com/github/alexthe666/alexsmobs/misc/AMTeleportQueue.PLAYERS:Lit/unimi/dsi/fastutil/objects/ObjectList;"
+                },
+                "predecessor": {
+                  "offset": 4,
+                  "opcode": "ifeq",
+                  "operand": "43",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 10,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 124,
+                  "opcode": "invokevirtual",
+                  "operand": "#297",
+                  "symbol": "Method net/minecraft/world/entity/Entity.setPortalCooldown:()V"
+                },
+                "predecessor": {
+                  "offset": 122,
+                  "opcode": "aload",
+                  "operand": "5",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 127,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 130,
+                  "opcode": "invokevirtual",
+                  "operand": "#412",
+                  "symbol": "Method net/minecraft/server/level/ServerLevel.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+                },
+                "predecessor": {
+                  "offset": 128,
+                  "opcode": "aload",
+                  "operand": "5",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 133,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 135,
+                  "opcode": "getstatic",
+                  "operand": "#333",
+                  "symbol": "Field net/minecraft/world/entity/Entity$RemovalReason.DISCARDED:Lnet/minecraft/world/entity/Entity$RemovalReason;"
+                },
+                "predecessor": {
+                  "offset": 134,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 138,
+                  "opcode": "invokevirtual",
+                  "operand": "#417",
+                  "symbol": "Method net/minecraft/world/entity/Entity.remove:(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"
+                }
+              }
+            ]
+          },
+          {
+            "name": "getAttachmentFacing",
+            "descriptor": "()Lnet/minecraft/core/Direction;",
+            "method_sha256": "9f6b7fbb6fc1143f02f8d6332163506d453cd3053d27b389dcdc8ca083fc2419",
+            "instruction_count": 6,
+            "branch_count": 0,
+            "branches": [],
+            "references": [
+              {
+                "site": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "predecessor": {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#436",
+                  "symbol": "Field ATTACHED_FACE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#436",
+                  "symbol": "Field ATTACHED_FACE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "successor": {
+                  "offset": 7,
+                  "opcode": "invokevirtual",
+                  "operand": "#440",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 7,
+                  "opcode": "invokevirtual",
+                  "operand": "#440",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                },
+                "predecessor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#436",
+                  "symbol": "Field ATTACHED_FACE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "successor": {
+                  "offset": 10,
+                  "opcode": "checkcast",
+                  "operand": "#102",
+                  "symbol": "class net/minecraft/core/Direction"
+                }
+              }
+            ]
+          },
+          {
+            "name": "setAttachmentFacing",
+            "descriptor": "(Lnet/minecraft/core/Direction;)V",
+            "method_sha256": "dc8cfb2381877f24fb1ed6ddae4da4e8c5c1579f800bbb8dccd913d3b830e30b",
+            "instruction_count": 6,
+            "branch_count": 0,
+            "branches": [],
+            "references": [
+              {
+                "site": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "predecessor": {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#436",
+                  "symbol": "Field ATTACHED_FACE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#436",
+                  "symbol": "Field ATTACHED_FACE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "successor": {
+                  "offset": 7,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 8,
+                  "opcode": "invokevirtual",
+                  "operand": "#445",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+                },
+                "predecessor": {
+                  "offset": 7,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 11,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ]
+          },
+          {
+            "name": "getLifespan",
+            "descriptor": "()I",
+            "method_sha256": "835b400f6bb33ced0ae32e5152e2a75de0082627c4ca1d84a610e430d8f1bfaf",
+            "instruction_count": 7,
+            "branch_count": 0,
+            "branches": [],
+            "references": [
+              {
+                "site": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "predecessor": {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#449",
+                  "symbol": "Field LIFESPAN:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#449",
+                  "symbol": "Field LIFESPAN:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "successor": {
+                  "offset": 7,
+                  "opcode": "invokevirtual",
+                  "operand": "#440",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 7,
+                  "opcode": "invokevirtual",
+                  "operand": "#440",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                },
+                "predecessor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#449",
+                  "symbol": "Field LIFESPAN:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "successor": {
+                  "offset": 10,
+                  "opcode": "checkcast",
+                  "operand": "#452",
+                  "symbol": "class java/lang/Integer"
+                }
+              }
+            ]
+          },
+          {
+            "name": "setLifespan",
+            "descriptor": "(I)V",
+            "method_sha256": "4bb7709eaf87a75a9e5b05b917b42a07ba313d9c7b697f79838bc11eee75fa54",
+            "instruction_count": 7,
+            "branch_count": 0,
+            "branches": [],
+            "references": [
+              {
+                "site": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "predecessor": {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#449",
+                  "symbol": "Field LIFESPAN:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#449",
+                  "symbol": "Field LIFESPAN:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "successor": {
+                  "offset": 7,
+                  "opcode": "iload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 11,
+                  "opcode": "invokevirtual",
+                  "operand": "#445",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+                },
+                "predecessor": {
+                  "offset": 8,
+                  "opcode": "invokestatic",
+                  "operand": "#457",
+                  "symbol": "Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+                },
+                "successor": {
+                  "offset": 14,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ]
+          },
+          {
+            "name": "getDestination",
+            "descriptor": "()Lnet/minecraft/core/BlockPos;",
+            "method_sha256": "ed9e2298353cacd37d0076da3a1505f9fe65b28b270451903053032e9d1b3fdb",
+            "instruction_count": 9,
+            "branch_count": 0,
+            "branches": [],
+            "references": [
+              {
+                "site": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "predecessor": {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "successor": {
+                  "offset": 7,
+                  "opcode": "invokevirtual",
+                  "operand": "#440",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 7,
+                  "opcode": "invokevirtual",
+                  "operand": "#440",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                },
+                "predecessor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "successor": {
+                  "offset": 10,
+                  "opcode": "checkcast",
+                  "operand": "#475",
+                  "symbol": "class java/util/Optional"
+                }
+              }
+            ]
+          },
+          {
+            "name": "setDestination",
+            "descriptor": "(Lnet/minecraft/core/BlockPos;)V",
+            "method_sha256": "12ee2c7f004ce5650f8a369a569d7bfa7369ab1e210590655ddae573542eff41",
+            "instruction_count": 24,
+            "branch_count": 3,
+            "branches": [
+              {
+                "offset": 18,
+                "opcode": "ifnonnull",
+                "branch_target": 51
+              },
+              {
+                "offset": 25,
+                "opcode": "ifnull",
+                "branch_target": 42
+              },
+              {
+                "offset": 39,
+                "opcode": "if_acmpne",
+                "branch_target": 51
+              }
+            ],
+            "references": [
+              {
+                "site": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "predecessor": {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "successor": {
+                  "offset": 7,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 11,
+                  "opcode": "invokevirtual",
+                  "operand": "#445",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+                },
+                "predecessor": {
+                  "offset": 8,
+                  "opcode": "invokestatic",
+                  "operand": "#481",
+                  "symbol": "Method java/util/Optional.ofNullable:(Ljava/lang/Object;)Ljava/util/Optional;"
+                },
+                "successor": {
+                  "offset": 14,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 22,
+                  "opcode": "getfield",
+                  "operand": "#303",
+                  "symbol": "Field exitDimension:Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 21,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 25,
+                  "opcode": "ifnull",
+                  "operand": "42",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 29,
+                  "opcode": "getfield",
+                  "operand": "#303",
+                  "symbol": "Field exitDimension:Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 28,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 32,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 36,
+                  "opcode": "invokevirtual",
+                  "operand": "#313",
+                  "symbol": "Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 33,
+                  "opcode": "invokevirtual",
+                  "operand": "#138",
+                  "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+                },
+                "successor": {
+                  "offset": 39,
+                  "opcode": "if_acmpne",
+                  "operand": "51",
+                  "symbol": ""
+                }
+              }
+            ]
+          },
+          {
+            "name": "setDestination",
+            "descriptor": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)V",
+            "method_sha256": "415afa1410ec1ff06bbfa7150df3e355b7494e162f565c2deff7548842226245",
+            "instruction_count": 24,
+            "branch_count": 3,
+            "branches": [
+              {
+                "offset": 18,
+                "opcode": "ifnonnull",
+                "branch_target": 51
+              },
+              {
+                "offset": 25,
+                "opcode": "ifnull",
+                "branch_target": 42
+              },
+              {
+                "offset": 39,
+                "opcode": "if_acmpne",
+                "branch_target": 51
+              }
+            ],
+            "references": [
+              {
+                "site": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "predecessor": {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "successor": {
+                  "offset": 7,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 11,
+                  "opcode": "invokevirtual",
+                  "operand": "#445",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+                },
+                "predecessor": {
+                  "offset": 8,
+                  "opcode": "invokestatic",
+                  "operand": "#481",
+                  "symbol": "Method java/util/Optional.ofNullable:(Ljava/lang/Object;)Ljava/util/Optional;"
+                },
+                "successor": {
+                  "offset": 14,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 22,
+                  "opcode": "getfield",
+                  "operand": "#303",
+                  "symbol": "Field exitDimension:Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 21,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 25,
+                  "opcode": "ifnull",
+                  "operand": "42",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 29,
+                  "opcode": "getfield",
+                  "operand": "#303",
+                  "symbol": "Field exitDimension:Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 28,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 32,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 36,
+                  "opcode": "invokevirtual",
+                  "operand": "#313",
+                  "symbol": "Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 33,
+                  "opcode": "invokevirtual",
+                  "operand": "#138",
+                  "symbol": "Method level:()Lnet/minecraft/world/level/Level;"
+                },
+                "successor": {
+                  "offset": 39,
+                  "opcode": "if_acmpne",
+                  "operand": "51",
+                  "symbol": ""
+                }
+              }
+            ]
+          },
+          {
+            "name": "defineSynchedData",
+            "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+            "method_sha256": "428a636d84507334a7b5d37d35bad35638515bcfec7040d492ceb8ceb15e3195",
+            "instruction_count": 28,
+            "branch_count": 0,
+            "branches": [],
+            "references": [
+              {
+                "site": {
+                  "offset": 1,
+                  "opcode": "getstatic",
+                  "operand": "#436",
+                  "symbol": "Field ATTACHED_FACE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 0,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#370",
+                  "symbol": "Field net/minecraft/core/Direction.DOWN:Lnet/minecraft/core/Direction;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 7,
+                  "opcode": "invokevirtual",
+                  "operand": "#509",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+                },
+                "predecessor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#370",
+                  "symbol": "Field net/minecraft/core/Direction.DOWN:Lnet/minecraft/core/Direction;"
+                },
+                "successor": {
+                  "offset": 10,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 12,
+                  "opcode": "getstatic",
+                  "operand": "#449",
+                  "symbol": "Field LIFESPAN:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 11,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 15,
+                  "opcode": "sipush",
+                  "operand": "300",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 21,
+                  "opcode": "invokevirtual",
+                  "operand": "#509",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+                },
+                "predecessor": {
+                  "offset": 18,
+                  "opcode": "invokestatic",
+                  "operand": "#457",
+                  "symbol": "Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+                },
+                "successor": {
+                  "offset": 24,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 26,
+                  "opcode": "getstatic",
+                  "operand": "#461",
+                  "symbol": "Field SHATTERED:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 25,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 29,
+                  "opcode": "iconst_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 33,
+                  "opcode": "invokevirtual",
+                  "operand": "#509",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+                },
+                "predecessor": {
+                  "offset": 30,
+                  "opcode": "invokestatic",
+                  "operand": "#469",
+                  "symbol": "Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;"
+                },
+                "successor": {
+                  "offset": 36,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 38,
+                  "opcode": "getstatic",
+                  "operand": "#515",
+                  "symbol": "Field SISTER_UUID:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 37,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 41,
+                  "opcode": "invokestatic",
+                  "operand": "#518",
+                  "symbol": "Method java/util/Optional.empty:()Ljava/util/Optional;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 44,
+                  "opcode": "invokevirtual",
+                  "operand": "#509",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+                },
+                "predecessor": {
+                  "offset": 41,
+                  "opcode": "invokestatic",
+                  "operand": "#518",
+                  "symbol": "Method java/util/Optional.empty:()Ljava/util/Optional;"
+                },
+                "successor": {
+                  "offset": 47,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 49,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 48,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 52,
+                  "opcode": "invokestatic",
+                  "operand": "#518",
+                  "symbol": "Method java/util/Optional.empty:()Ljava/util/Optional;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 55,
+                  "opcode": "invokevirtual",
+                  "operand": "#509",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData$Builder.define:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)Lnet/minecraft/network/syncher/SynchedEntityData$Builder;"
+                },
+                "predecessor": {
+                  "offset": 52,
+                  "opcode": "invokestatic",
+                  "operand": "#518",
+                  "symbol": "Method java/util/Optional.empty:()Ljava/util/Optional;"
+                },
+                "successor": {
+                  "offset": 58,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ]
+          },
+          {
+            "name": "readAdditionalSaveData",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+            "method_sha256": "b148a5d2ff700afad4528882eed02ff01e474c3c8539ce0e80e69f8ff445fe0b",
+            "instruction_count": 86,
+            "branch_count": 5,
+            "branches": [
+              {
+                "offset": 38,
+                "opcode": "ifeq",
+                "branch_target": 52
+              },
+              {
+                "offset": 59,
+                "opcode": "ifeq",
+                "branch_target": 114
+              },
+              {
+                "offset": 111,
+                "opcode": "goto",
+                "branch_target": 127
+              },
+              {
+                "offset": 134,
+                "opcode": "ifeq",
+                "branch_target": 148
+              },
+              {
+                "offset": 155,
+                "opcode": "ifeq",
+                "branch_target": 207
+              }
+            ],
+            "references": [
+              {
+                "site": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "predecessor": {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#436",
+                  "symbol": "Field ATTACHED_FACE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 4,
+                  "opcode": "getstatic",
+                  "operand": "#436",
+                  "symbol": "Field ATTACHED_FACE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 1,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "successor": {
+                  "offset": 7,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 8,
+                  "opcode": "ldc_w",
+                  "operand": "#522",
+                  "symbol": "String AttachFace"
+                },
+                "predecessor": {
+                  "offset": 7,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 11,
+                  "opcode": "invokestatic",
+                  "operand": "#524",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/misc/AMCompat.getByte:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)B"
+                }
+              },
+              {
+                "site": {
+                  "offset": 17,
+                  "opcode": "invokevirtual",
+                  "operand": "#445",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+                },
+                "predecessor": {
+                  "offset": 14,
+                  "opcode": "invokestatic",
+                  "operand": "#528",
+                  "symbol": "Method net/minecraft/core/Direction.from3DDataValue:(I)Lnet/minecraft/core/Direction;"
+                },
+                "successor": {
+                  "offset": 20,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 22,
+                  "opcode": "ldc_w",
+                  "operand": "#532",
+                  "symbol": "String Lifespan"
+                },
+                "predecessor": {
+                  "offset": 21,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 25,
+                  "opcode": "invokestatic",
+                  "operand": "#534",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/misc/AMCompat.getInt:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I"
+                }
+              },
+              {
+                "site": {
+                  "offset": 28,
+                  "opcode": "invokevirtual",
+                  "operand": "#43",
+                  "symbol": "Method setLifespan:(I)V"
+                },
+                "predecessor": {
+                  "offset": 25,
+                  "opcode": "invokestatic",
+                  "operand": "#534",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/misc/AMCompat.getInt:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)I"
+                },
+                "successor": {
+                  "offset": 31,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 88,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "predecessor": {
+                  "offset": 87,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 91,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 91,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 88,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "successor": {
+                  "offset": 94,
+                  "opcode": "new",
+                  "operand": "#234",
+                  "symbol": "class net/minecraft/core/BlockPos"
+                }
+              },
+              {
+                "site": {
+                  "offset": 108,
+                  "opcode": "invokevirtual",
+                  "operand": "#445",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+                },
+                "predecessor": {
+                  "offset": 105,
+                  "opcode": "invokestatic",
+                  "operand": "#556",
+                  "symbol": "Method java/util/Optional.of:(Ljava/lang/Object;)Ljava/util/Optional;"
+                },
+                "successor": {
+                  "offset": 111,
+                  "opcode": "goto",
+                  "operand": "127",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 115,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "predecessor": {
+                  "offset": 114,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 118,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 118,
+                  "opcode": "getstatic",
+                  "operand": "#472",
+                  "symbol": "Field DESTINATION:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 115,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "successor": {
+                  "offset": 121,
+                  "opcode": "invokestatic",
+                  "operand": "#518",
+                  "symbol": "Method java/util/Optional.empty:()Ljava/util/Optional;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 124,
+                  "opcode": "invokevirtual",
+                  "operand": "#445",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.set:(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"
+                },
+                "predecessor": {
+                  "offset": 121,
+                  "opcode": "invokestatic",
+                  "operand": "#518",
+                  "symbol": "Method java/util/Optional.empty:()Ljava/util/Optional;"
+                },
+                "successor": {
+                  "offset": 127,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 149,
+                  "opcode": "ldc_w",
+                  "operand": "#566",
+                  "symbol": "String ExitDimension"
+                },
+                "predecessor": {
+                  "offset": 148,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 152,
+                  "opcode": "invokestatic",
+                  "operand": "#540",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/misc/AMCompat.contains:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Z"
+                }
+              },
+              {
+                "site": {
+                  "offset": 166,
+                  "opcode": "ldc_w",
+                  "operand": "#566",
+                  "symbol": "String ExitDimension"
+                },
+                "predecessor": {
+                  "offset": 165,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 169,
+                  "opcode": "invokestatic",
+                  "operand": "#578",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/misc/AMCompat.getTag:(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;)Lnet/minecraft/nbt/Tag;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 204,
+                  "opcode": "putfield",
+                  "operand": "#303",
+                  "symbol": "Field exitDimension:Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 201,
+                  "opcode": "checkcast",
+                  "operand": "#612",
+                  "symbol": "class net/minecraft/resources/ResourceKey"
+                },
+                "successor": {
+                  "offset": 207,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ]
+          },
+          {
+            "name": "addAdditionalSaveData",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+            "method_sha256": "63b428bff2cd469afd856ff9074b7cab2144aa68a449caf1ca503fc783c9a788",
+            "instruction_count": 67,
+            "branch_count": 3,
+            "branches": [
+              {
+                "offset": 52,
+                "opcode": "ifnull",
+                "branch_target": 88
+              },
+              {
+                "offset": 92,
+                "opcode": "ifnull",
+                "branch_target": 106
+              },
+              {
+                "offset": 110,
+                "opcode": "ifnull",
+                "branch_target": 158
+              }
+            ],
+            "references": [
+              {
+                "site": {
+                  "offset": 1,
+                  "opcode": "ldc_w",
+                  "operand": "#522",
+                  "symbol": "String AttachFace"
+                },
+                "predecessor": {
+                  "offset": 0,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 4,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 5,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "predecessor": {
+                  "offset": 4,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 8,
+                  "opcode": "getstatic",
+                  "operand": "#436",
+                  "symbol": "Field ATTACHED_FACE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 8,
+                  "opcode": "getstatic",
+                  "operand": "#436",
+                  "symbol": "Field ATTACHED_FACE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "predecessor": {
+                  "offset": 5,
+                  "opcode": "getfield",
+                  "operand": "#432",
+                  "symbol": "Field entityData:Lnet/minecraft/network/syncher/SynchedEntityData;"
+                },
+                "successor": {
+                  "offset": 11,
+                  "opcode": "invokevirtual",
+                  "operand": "#440",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 11,
+                  "opcode": "invokevirtual",
+                  "operand": "#440",
+                  "symbol": "Method net/minecraft/network/syncher/SynchedEntityData.get:(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;"
+                },
+                "predecessor": {
+                  "offset": 8,
+                  "opcode": "getstatic",
+                  "operand": "#436",
+                  "symbol": "Field ATTACHED_FACE:Lnet/minecraft/network/syncher/EntityDataAccessor;"
+                },
+                "successor": {
+                  "offset": 14,
+                  "opcode": "checkcast",
+                  "operand": "#102",
+                  "symbol": "class net/minecraft/core/Direction"
+                }
+              },
+              {
+                "site": {
+                  "offset": 25,
+                  "opcode": "ldc_w",
+                  "operand": "#532",
+                  "symbol": "String Lifespan"
+                },
+                "predecessor": {
+                  "offset": 24,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 28,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 29,
+                  "opcode": "invokevirtual",
+                  "operand": "#61",
+                  "symbol": "Method getLifespan:()I"
+                },
+                "predecessor": {
+                  "offset": 28,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 32,
+                  "opcode": "invokevirtual",
+                  "operand": "#623",
+                  "symbol": "Method net/minecraft/nbt/CompoundTag.putInt:(Ljava/lang/String;I)V"
+                }
+              },
+              {
+                "site": {
+                  "offset": 47,
+                  "opcode": "invokevirtual",
+                  "operand": "#229",
+                  "symbol": "Method getDestination:()Lnet/minecraft/core/BlockPos;"
+                },
+                "predecessor": {
+                  "offset": 46,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 50,
+                  "opcode": "astore_2",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 107,
+                  "opcode": "getfield",
+                  "operand": "#303",
+                  "symbol": "Field exitDimension:Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 106,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 110,
+                  "opcode": "ifnull",
+                  "operand": "158",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 120,
+                  "opcode": "getfield",
+                  "operand": "#303",
+                  "symbol": "Field exitDimension:Lnet/minecraft/resources/ResourceKey;"
+                },
+                "predecessor": {
+                  "offset": 119,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 123,
+                  "opcode": "invokevirtual",
+                  "operand": "#640",
+                  "symbol": "Method net/minecraft/resources/ResourceKey.location:()Lnet/minecraft/resources/ResourceLocation;"
+                }
+              }
+            ]
+          },
+          {
+            "name": "lambda$addAdditionalSaveData$0",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/nbt/Tag;)V",
+            "method_sha256": "5256a214b44e11507d93565865338034d0bdea6c90c9fbcde3331f41849ade0a",
+            "instruction_count": 5,
+            "branch_count": 0,
+            "branches": [],
+            "references": [
+              {
+                "site": {
+                  "offset": 1,
+                  "opcode": "ldc_w",
+                  "operand": "#566",
+                  "symbol": "String ExitDimension"
+                },
+                "predecessor": {
+                  "offset": 0,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "successor": {
+                  "offset": 4,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ]
+          }
+        ],
+        "method_roster": [
+          {
+            "name": "EntityVoidPortal",
+            "descriptor": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+            "instruction_count": 14
+          },
+          {
+            "name": "EntityVoidPortal",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lcom/github/alexthe666/alexsmobs/item/ItemDimensionalCarver;)V",
+            "instruction_count": 24
+          },
+          {
+            "name": "getAddEntityPacket",
+            "descriptor": "(Lnet/minecraft/server/level/ServerEntity;)Lnet/minecraft/network/protocol/Packet;",
+            "instruction_count": 4
+          },
+          {
+            "name": "tick",
+            "descriptor": "()V",
+            "instruction_count": 418
+          },
+          {
+            "name": "teleportEntityFromDimension",
+            "descriptor": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Z)V",
+            "instruction_count": 69
+          },
+          {
+            "name": "clearObstructions",
+            "descriptor": "()V",
+            "instruction_count": 47
+          },
+          {
+            "name": "getAttachmentFacing",
+            "descriptor": "()Lnet/minecraft/core/Direction;",
+            "instruction_count": 6
+          },
+          {
+            "name": "setAttachmentFacing",
+            "descriptor": "(Lnet/minecraft/core/Direction;)V",
+            "instruction_count": 6
+          },
+          {
+            "name": "getLifespan",
+            "descriptor": "()I",
+            "instruction_count": 7
+          },
+          {
+            "name": "setLifespan",
+            "descriptor": "(I)V",
+            "instruction_count": 7
+          },
+          {
+            "name": "isShattered",
+            "descriptor": "()Z",
+            "instruction_count": 7
+          },
+          {
+            "name": "setShattered",
+            "descriptor": "(Z)V",
+            "instruction_count": 7
+          },
+          {
+            "name": "getDestination",
+            "descriptor": "()Lnet/minecraft/core/BlockPos;",
+            "instruction_count": 9
+          },
+          {
+            "name": "setDestination",
+            "descriptor": "(Lnet/minecraft/core/BlockPos;)V",
+            "instruction_count": 24
+          },
+          {
+            "name": "createAndSetSister",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/Direction;)V",
+            "instruction_count": 56
+          },
+          {
+            "name": "setDestination",
+            "descriptor": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)V",
+            "instruction_count": 24
+          },
+          {
+            "name": "link",
+            "descriptor": "(Lcom/github/alexthe666/alexsmobs/entity/EntityVoidPortal;)V",
+            "instruction_count": 21
+          },
+          {
+            "name": "defineSynchedData",
+            "descriptor": "(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V",
+            "instruction_count": 28
+          },
+          {
+            "name": "readAdditionalSaveData",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+            "instruction_count": 86
+          },
+          {
+            "name": "addAdditionalSaveData",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)V",
+            "instruction_count": 67
+          },
+          {
+            "name": "getSister",
+            "descriptor": "()Lnet/minecraft/world/entity/Entity;",
+            "instruction_count": 17
+          },
+          {
+            "name": "getSisterId",
+            "descriptor": "()Ljava/util/UUID;",
+            "instruction_count": 9
+          },
+          {
+            "name": "setSisterId",
+            "descriptor": "(Ljava/util/UUID;)V",
+            "instruction_count": 7
+          },
+          {
+            "name": "lambda$addAdditionalSaveData$0",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/nbt/Tag;)V",
+            "instruction_count": 5
+          }
+        ],
+        "class_sha256": "09796124461bfdde10766ca0e53c00f68ec00a6b13d79289c7c1a5c8652e29b5"
+      }
+    ],
+    "bounded_reference_sites": 121
+  },
+  "limits": {
+    "static_bytecode_only": true,
+    "effective_teleport_and_claims": "NOT_VERIFIED",
+    "runtime_dimension_destination": "NOT_OBSERVED",
+    "portal_spawn_accepted": "NOT_TESTED",
+    "portal_save_load_and_reconnect": "NOT_TESTED",
+    "multi_client_owner_authorization": "NOT_VERIFIED",
+    "exception_edges_interprocedural_cfg": "NOT_ANALYZED",
+    "mutating_hook": "NOT_VERIFIED",
+    "static_perk_contract": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "publisher_universe_closed": false
+  }
+}

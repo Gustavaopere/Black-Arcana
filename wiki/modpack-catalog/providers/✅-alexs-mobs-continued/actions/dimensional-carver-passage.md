@@ -65,3 +65,27 @@ Carver: **identidade executável provada no JAR exato**, mas obtenção normal r
 - `releaseUsingImpl` limpa `HASBLOCK` e `BLOCKX/Y/Z`. Duração efetiva, proteção de destino, lifecycle da entidade, multiplayer e hooks de mutação continuam pendentes.
 
 **Proveniência:** [mapa de bytecode SHA-exato](../EXACT-CONTROL-OPERANDS-2.1.13.md). Estado documental e hooks permanecem ⚠️ / ⛔, respectivamente; não promover índices sem o certificado exigido.
+
+## Ciclo de vida de EntityVoidPortal — selo estático publisher 2.1.13
+
+Evidência: [manifesto de duas classes com hashes, descritores, branches e janelas JVM](../EXACT-CARVER-PORTAL-LIFECYCLE-2.1.13.json) · [handoff com limites e interpretação causal](../../../../../docs/qa/alexsmobs-213-carver-portal-lifecycle-handoff.md). **Somente** o JAR instalado `alexsmobs-2.1.13-neoforge+1.21.1.jar`, SHA-256 `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8`.
+
+### Parâmetros, fórmulas e eventos observados
+
+| Superfície da versão instalada | Prova JVM | Contrato estritamente permitido |
+|---|---|---|
+| Criação pelo item | `ItemDimensionalCarver.onUseTick @265–375` | Instancia `EntityVoidPortal`, define posição/facing, tenta `addFreshEntity @327`, executa `onPortalOpen @341`, aplica durabilidade via `AMCompat.hurtAndBreak @351` e cooldown pelo provider. O retorno booleano de `addFreshEntity` é descartado por `pop @330`; não garante aceitação do spawn |
+| Vida atribuída ao abrir | `onPortalOpen: setLifespan(1200) @4` | **1200 ticks inicialmente**; não implica duração efetiva universal |
+| Fallback de vida | `EntityVoidPortal.tick: tickCount==1 @5–9; getLifespan @13; ifne @16; setLifespan(2000) @23` | **2000 ticks apenas se o lifespan estiver zero no primeiro tick**; não sobrescreve automaticamente o valor 1200 não nulo |
+| Redução/descartes | `tick: getLifespan @858; isub 1 @862; setLifespan @863; ifgt @928; remove(DISCARDED) @935` | Há caminho de decremento unitário e descarte quando lifespan fica não positivo |
+| Incremento condicional | `tick: instanceof EntityVoidWormPart @687; getLifespan @694; if_icmpge(22) @699; iadd 1 @708; setLifespan @709` | Existe caminho que adiciona 1 quando o lifespan está abaixo de 22, com demais gates ainda não reconstruídos |
+| Janela de ativação do portal | `tick: isClientSide @537; ifne @540; getDestination @553; ifnull @556; getLifespan @560; if_icmple 20 @565; tickCount @569; if_icmple 20 @574` | Consultas/teleportes nessa região são **server-side, com destino não nulo, vida >20 e idade >20 ticks** |
+| Alvos/transferência | `Entity.isOnPortalCooldown @627`; `EntityVoidPortal.teleportEntityFromDimension` consulta `AMTeleportQueue.PLAYERS`, aplica `setPortalCooldown` e referencia `ServerLevel.addFreshEntity` | Há filtros de entidade e caminho de movimentação entre dimensões; resultado físico, permissão, destino exato e idempotência não testados |
+| Estado sincronizado | `SynchedEntityData`: `LIFESPAN`, `DESTINATION`, `ATTACHED_FACE` e métodos `defineSynchedData`, `get/setLifespan`, `get/setDestination` | Campos da entidade têm acesso sincronizado, sem provar consentimento/autoridade de qualquer mod periférico |
+| Estado salvo | `addAdditionalSaveData` (67 instruções/3 branches), `readAdditionalSaveData` (86/5) | Existem caminhos NBT com `AttachFace`, `Lifespan`, `ExitDimension` e `DESTINATION`; QA de save/reload e reconexão **NÃO VERIFICADA** |
+
+### Integração com perks e Mastery
+
+Permitir teoricamente uma perk que altere vida, destino, alcance do clip, cooldown ou custo de durabilidade exigiria **um boundary real do provider**, análise de owner/sidedness e testes de segurança em dimensões, claims e multiplayer. A presença de `setLifespan` e de acessores de `SynchedEntityData` **não demonstra que sejam pontos seguros de extensão**, tampouco permite que o RPG Skill Tree tome autoridade de criação/teleporte. Um adaptador Black Arcana não deve originar um segundo portal, invalidar gates da aquisição pelo Void Worm, nem replicar a cobrança nativa.
+
+**Pendências explícitas:** lifecycle real da entidade em servidor modpack; destino/resolução dimensional e `AMTeleportQueue`; concorrência de travessia; redirecionamento PvP/claims; persistência/save/reload; mods que alteram dimensões; API/hook mutador. O item permanece **⚠️ parcial/condicionado** e **`static_perk_contract=NOT_CERTIFIED` · `mutating_hook=NOT_VERIFIED` · `physical_qa=NOT_TESTED` · `NO_MUTATION`**. Os índices continuam em **0/3 contratos estáticos no recorte observado de Alex's Mobs**, sem alterar o denominador semântico.
