@@ -20,6 +20,8 @@ BASE = "com/github/alexthe666/alexsmobs/"
 MESSAGE = BASE + "message/MessageTransmuteFromMenu.class"
 MENU = BASE + "inventory/MenuTransmutationTable.class"
 TILE = BASE + "tileentity/TileEntityTransmutationTable.class"
+CONTEXT = BASE + "message/AMNetContext.class"
+HANDLER = BASE + "message/MessageTransmuteFromMenu$Handler.class"
 PATHS = (MESSAGE, MENU, TILE)
 
 SHA1 = "50ddafdf3d12b33331e4eecb4ab514ae451baadd"
@@ -226,10 +228,24 @@ def project_dispatch_candidates(class_bytes, jar, javap_bin):
                 } for i in indices],
             })
             total += len(indices)
+        receiver_head = []
+        if path == HANDLER:
+            targets = [m for m in methods if method_name(m) == "lambda$handle$0"]
+            require(len(targets) == 1, "exact C2S receiver lambda missing")
+            recv = targets[0]
+            require(len(recv["instructions"]) <= 70, "unexpected large receiver lambda")
+            receiver_head = [
+                item(row) for row in recv["instructions"]
+                if 0 <= row["offset"] < 24 and
+                (row["opcode"].startswith(("invoke", "if", "getfield", "getstatic"))
+                 or row["opcode"] in {"checkcast", "instanceof", "aconst_null"})
+            ]
+            require(1 <= len(receiver_head) <= 14, "invalid receiver source window")
         results.append({
             "class_path": path,
             "class_sha256": hashlib.sha256(data).hexdigest(),
             "direct_javap_references": selected,
+            "receiver_source_operators": receiver_head,
             "typed_reference_unverified": not bool(selected),
         })
     require(total <= MAX_EXTERNAL_REFS, "unbounded C2S dispatch references")
@@ -252,6 +268,12 @@ def audit(jar, javap_bin):
             if path not in PATHS and
             b"MessageTransmuteFromMenu" in archive.read(path)
         }
+        require(CONTEXT in names, "missing packet context interface")
+        raw_context = archive.read(CONTEXT)
+        require(raw_context[:4] == b"\\xca\\xfe\\xba\\xbe"
+                and int.from_bytes(raw_context[6:8], "big") == 65,
+                "unexpected packet context classfile version")
+        context_sha = hashlib.sha256(raw_context).hexdigest()
         for path in PATHS:
             require(path in names, "missing native transmutation class " + path)
             raw = archive.read(path)
@@ -265,6 +287,16 @@ def audit(jar, javap_bin):
     }
     observed = projection(methods)
     externals = project_dispatch_candidates(candidates, jar, javap_bin)
+    context = parse_methods(javap(javap_bin, jar, CONTEXT[:-6].replace("/", ".")))
+    context_abi = {
+        "class_path": CONTEXT, "class_sha256": context_sha,
+        "declared_methods": [{
+            "name": method_name(m), "descriptor": m["descriptor"],
+            "instructions": len(m["instructions"]),
+        } for m in context],
+    }
+    require(1 <= len(context_abi["declared_methods"]) <= 30,
+            "unexpected packet context contract")
     for cls in observed["classes"]:
         cls["class_sha256"] = sha[cls["class_path"]]
     report = {
@@ -276,10 +308,12 @@ def audit(jar, javap_bin):
         },
         "observations": observed,
         "external_message_reference_discovery": externals,
+        "network_context_declaration": context_abi,
         "limitations": {
             "read_only": True,
             "complete_sender_receiver_identity": "NOT_CERTIFIED",
             "context_sender_authentication": "NOT_VERIFIED",
+            "receiver_player_id_and_active_menu_guards": "OPERAND_OBSERVED_NOT_RUNTIME_TESTED",
             "menu_player_session_binding": "NOT_VERIFIED",
             "packet_choice_validation": "NOT_VERIFIED",
             "replay_and_concurrent_settlement": "NOT_VERIFIED",
