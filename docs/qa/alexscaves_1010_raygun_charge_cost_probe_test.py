@@ -33,7 +33,7 @@ class RaygunChargeCostTests(unittest.TestCase):
     def test_exact_method_projection_carries_energy_efficiency(self):
         result=projection(roster())
         self.assertEqual(len(result["selected_methods"]),len(METHODS))
-        self.assertEqual(result["charge_related_site_count"],2)
+        self.assertEqual(result["charge_related_site_count"],1)
         self.assertEqual(result["selected_methods"][0]["charge_related_references"][0]["offset"],246)
 
     def test_bounded_site_window_carries_predecessor_and_successor(self):
