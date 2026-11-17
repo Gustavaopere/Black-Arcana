@@ -30,7 +30,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - name: Run 11 synthetic read-only fail-closed checks
+      - name: Run 13 synthetic read-only fail-closed checks
         run: |
           python3 -m py_compile docs/qa/alexsmobs_213_transmutation_data_probe.py docs/qa/alexsmobs_213_transmutation_data_probe_test.py
           python3 docs/qa/alexsmobs_213_transmutation_data_probe_test.py -v
