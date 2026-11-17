@@ -30,7 +30,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - name: Run 13 synthetic no-mutation tests
+      - name: Run 17 synthetic no-mutation tests
         run: |
           python3 -m py_compile \
             docs/qa/alexsmobs_213_transmutation_settlement_probe.py \
