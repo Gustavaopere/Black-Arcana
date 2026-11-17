@@ -198,8 +198,12 @@ def audit(jar: Path, javap_bin: str, predecessor: dict) -> dict:
         methods = parse_methods(
             javap(javap_bin, jar, path[:-6].replace("/", "."))
         )
-        require(1 <= len(methods) <= 80,
-                "missing or excessive native methods in selected class")
+        # AMCompat is a cross-version compatibility utility with a broader API;
+        # selected evidence remains restricted to the named NBT helpers.
+        bound = 240 if path == COMPAT else 80
+        require(1 <= len(methods) <= bound,
+                "unexpected native method roster: " + path +
+                " count=" + str(len(methods)))
         chosen = selected_methods(path, methods)
         require(1 <= len(chosen) <= MAX_METHODS,
                 "unexpected selected method count")
