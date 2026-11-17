@@ -60,3 +60,24 @@ Contrato JAR exato: seleção no menu, settlement server-owned de input/output, 
 - `postTransmute` registra dados por UUID, soma a quantidade de entrada ao contador de transmutação, possui advancement em **1000** itens e define o UUID para reroll. XP efetivo, autorização C2S, concorrência e persistência não passaram por QA físico.
 
 **Proveniência:** [mapa de bytecode SHA-exato](../EXACT-CONTROL-OPERANDS-2.1.13.md). Não certificar mutadores que alterem XP, pools, quantidades, ou reroll.
+
+## Boundary C2S efetiva — auditoria SHA-exata 2.1.13
+
+**Novas evidências:** [manifesto nativo do JAR exato](../EXACT-TRANSMUTATION-C2S-2.1.13.json) · [relatório de recepção/menu e limites](../../../../../docs/qa/alexsmobs-213-transmutation-c2s-handoff.md) · [auditor reproduzível](../../../../../docs/qa/alexsmobs_213_transmutation_c2s_probe.py). O publisher permanece `alexsmobs-2.1.13-neoforge+1.21.1.jar`, SHA-256 `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8`.
+
+A mensagem `MessageTransmuteFromMenu` é portadora de dois inteiros: **`playerId`** e **`choice`**. Seus métodos `read(FriendlyByteBuf)` e `write(Message,FriendlyByteBuf)` usam duas operações `readInt` / `writeInt`; os quatro métodos declarados da classe não contêm `handle`. O processamento real pertence à classe aninhada `MessageTransmuteFromMenu$Handler`.
+
+**Registro candidato observado:** `AlexsMobs.setup(FMLCommonSetupEvent) @375` referencia a classe da mensagem, próxima a `registerMessage(Class,BiConsumer,Function,BiConsumer) @393`. A associação dos callbacks de registro ao tipo de payload e à direção de transporte não foi inteiramente provada via bootstrap.
+
+**Handler:** `handle(Message,AMNetContext)` utiliza `setPacketHandled` e `enqueueWork`; o `lambda$handle$0` tem guardas compilados precisos:
+
+- `AMNetContext.getSender @1` consulta o `ServerPlayer` disponibilizado pelo contexto; existe ramo `isClientSide @8` e, no caminho cliente, `CommonProxy.getClientSidePlayer @19`;
+- `Player.getId @24`, `Message.playerId @28`, `if_icmpne @31 →61`: o ID informado **precisa coincidir com o jogador resolvido** para o caminho prosseguir;
+- `Player.containerMenu @35`, `instanceof MenuTransmutationTable @38`, `ifeq @41 →61`: o menu ativo precisa ser do tipo correto;
+- `Message.choice @55` é passado para `MenuTransmutationTable.transmute(Player,int) @58` apenas depois desses guardas.
+
+**Alcance dessas checagens:** comparação de ID e verificação do tipo do menu são fatos do bytecode, não prova de autenticação final do bridge de rede, da posição da tabela, da identidade da sessão, de permissão ou da ausência de replay. A implementação concreta de `AMNetContext` ainda não foi reconstruída.
+
+**Transmutação efetiva solicitada:** `MenuTransmutationTable.transmute` verifica lado servidor, tabela, input, possibilidades, razão de tamanho e XP suficiente ou `Abilities.instabuild`; quando os guards são satisfeitos, solicita `ItemStack.setCount @122`, `Slot.set @131`, `Player.giveExperienceLevels @138` e `postTransmute @149`. `TileEntityTransmutationTable.getPossibility @3` aplica `Mth.clamp(choice,0,2)`; a escolha fora de `0..2` pode ser **normalizada**, não necessariamente rejeitada. Nenhum resultado físico ou duplo settlement sob replay foi provado.
+
+**Perks possíveis (conceituais somente):** custo de XP, alternativas, quantidades e reroll exigem hook real antes da transação server-owned; sem esse hook não modificar nem repetir consumo, `postTransmute`, output, XP ou Mastery. **`static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`.** A ficha continua ⚠️ parcial; Alex's Mobs permanece com **0/3 contratos estáticos integrais certificados** no recorte observado.
