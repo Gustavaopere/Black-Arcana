@@ -44,7 +44,7 @@ SETTLEMENT_SYMBOLS = {
     "selected_count": r"ItemStack\.setCount:",
     "output_slot": r"Slot\.set:",
     "xp_debit": r"Player\.giveExperienceLevels:",
-    "reroll_commit": r"TileEntityTransmutationTable\.postTransmute:",
+    "post_settlement_callback": r"TileEntityTransmutationTable\.postTransmute:",
 }
 MAX_METHOD_INSTRUCTIONS = 350
 MAX_REFS_PER_METHOD = 100
@@ -150,6 +150,70 @@ def validate_against_sealed_snapshot(methods, snapshot):
     return True
 
 
+def reroll_lifecycle(methods):
+    """Report only exact JVM state transitions, not a runtime reliability claim."""
+    post = select_method(methods, "postTransmute")
+    tick = select_method(methods, "tick")
+    loaded = select_method(methods, "loadAdditional")
+    saved = select_method(methods, "saveAdditional")
+    randomize = select_method(methods, "randomizeResults")
+
+    def exact(method, offset, opcode, symbol=None, operand=None):
+        found = [r for r in method["instructions"] if r["offset"] == offset]
+        require(len(found) == 1 and found[0]["opcode"] == opcode,
+                "reroll JVM offset/opcode drift at " + str(offset))
+        row = found[0]
+        if symbol:
+            require(symbol in row["symbol"],
+                    "reroll JVM symbol drift at " + str(offset))
+        if operand:
+            require(row["operand"].split(" ", 1)[0] == operand,
+                    "reroll branch target drift at " + str(offset))
+        return item(row)
+
+    markers = {
+        "post_transmute_count": exact(post, 79, "putfield", "totalTransmuteCount:I"),
+        "post_transmute_queues_uuid": exact(
+            post, 114, "invokevirtual", "setRerollPlayerUUID:"
+        ),
+        "tick_pending_uuid_check": exact(tick, 14, "ifnull", operand="87"),
+        "tick_player_lookup": exact(
+            tick, 25, "invokevirtual", "Level.getPlayerByUUID:"
+        ),
+        "tick_missing_player_skips_reroll": exact(
+            tick, 30, "ifnull", operand="82"
+        ),
+        "tick_randomize_with_player": exact(
+            tick, 79, "invokevirtual", "randomizeResults:"
+        ),
+        "tick_clear_pending_uuid": exact(
+            tick, 84, "putfield", "rerollPlayerUUID:"
+        ),
+    }
+    require(not any(
+        "randomizeResults:" in r["symbol"] for r in post["instructions"]
+    ), "postTransmute now directly rerolls, not a deferred marker")
+    serialization = {}
+    for name, method in (("loadAdditional", loaded), ("saveAdditional", saved)):
+        used = any("rerollPlayerUUID:" in r["symbol"]
+                   for r in method["instructions"])
+        require(not used, "reroll UUID persistence now exists: review scope")
+        serialization[name + "_directly_references_reroll_uuid"] = used
+    reroll_calls = [r["offset"] for r in randomize["instructions"]
+                    if r["opcode"].startswith("invoke") and
+                    "rollPossiblity:" in r["symbol"]]
+    require(reroll_calls == [3, 9, 15],
+            "native three-output reroll callsites drift")
+    return {
+        "anchors": markers,
+        "randomize_result_option_calls": reroll_calls,
+        "serialization": serialization,
+        "missing_player_branch_bypasses_randomize": True,
+        "pending_uuid_cleared_after_missing_player_branch": True,
+        "scope": "EXACT_STATIC_TICK_CFG_ONLY_NO_LOGIN_RELOAD_QA",
+    }
+
+
 def audit(jar, javap_bin, sealed):
     require(sha_file(jar) == (SHA1, SHA256, SIZE),
             "publisher JAR SHA-1/SHA-256/size mismatch")
@@ -214,6 +278,7 @@ def audit(jar, javap_bin, sealed):
         "classes": projections,
         "settlement": sequence,
         "menu_lifecycle": table_fields,
+        "reroll_lifecycle": reroll_lifecycle(native[TILE]),
         "limitations": {
             "scope": "EXACT_PUBLISHER_STATIC_ONLY",
             "effective_pack_configuration": "NOT_VERIFIED_CURRENT_MODLIST",
