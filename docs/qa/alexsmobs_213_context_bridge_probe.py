@@ -48,7 +48,7 @@ def class_candidates(archive):
         data = archive.read(path)
         if b"AMNetContext" not in data and path != REGISTER_OWNER:
             continue
-        require(data[:4] == b"\\xca\\xfe\\xba\\xbe" and
+        require(data[:4] == b"\xca\xfe\xba\xbe" and
                 int.from_bytes(data[6:8], "big") == 65,
                 "candidate JVM classfile identity mismatch")
         found[path] = hashlib.sha256(data).hexdigest()
@@ -108,7 +108,7 @@ def bootstrap_candidates(verbose):
         lines = [x.strip() for x in block.splitlines() if x.strip()]
         if not lines or not re.match(r"\d+: #\d+ REF_", lines[0]):
             continue
-        if not re.search(r"lambda\\$setup\\$|MessageTransmuteFromMenu|registerMessage", block):
+        if not re.search(r"lambda\$setup\$|MessageTransmuteFromMenu|registerMessage", block):
             continue
         require(len(lines) <= 15, "oversize setup bootstrap entry")
         out.append([line[:230] for line in lines])
