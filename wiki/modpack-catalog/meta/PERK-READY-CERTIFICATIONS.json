@@ -8865,6 +8865,47 @@
           "reason": "Selo individual, auditor, testes semânticos/negativos e workflow reproduzem o JAR exato e as provas anteriores. Censo dos 51 JSONs publisher comparado ao inventário e aos 51 contratos individuais encerra somente esse recorte estático; não fecha provider, hooks mutadores, runtime ou QA física."
         }
       }
+    },
+    "✅-alexs-caves-continued/damage-types/raygun.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutation": "NO_MUTATION",
+      "scope_note": "Individual Raygun DamageType and native item static contract: exact resources/factory, all 26 declared RaygunItem methods, charge/ammo/lifecycle, targeting, requested damage/status, visuals/UI and explicit network/integration limits. No accepted outcomes, C2S authorization, safe mutating hook, physical QA, new semantic magic root or whole-provider closure is certified.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTRACT-1.0.10.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, SHA-1 6960b299a39a039ac8a5eb9b07be4ad0e3e0a570 e SHA-256 36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c; item, DamageType raygun, JSON, tags diretas, registry, factory e classe nativa identificados. Fonte pública 1.1.1 permanece adjacente."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTRACT-1.0.10.md",
+          "reason": "Disposição causal dos 26 métodos próprios de RaygunItem, incluindo uso mantido, recarga, inventário, liberação, setters/getters, interpolação e UI; onUseTick separa targeting, dano solicitado, Irradiated e feedback. A factory tem um callsite direto no usuário do item; não é novo cast ou projétil."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTRACT-1.0.10.md",
+          "reason": "26 corpos próprios, 1.111 instruções JVM e 107 branches diretos; ChargeUsed<1000, uso máximo 72000 ticks, progresso T/15F e distância 25F*p, dano solicitado 1.5F/2F e Irradiated 800 ticks amplifier 0/4. Gate servidor (T-15)%3==0 não acrescenta T>=15; valores pedidos não são resultados físicos."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTRACT-1.0.10.md",
+          "reason": "Trace inicial, extremos, busca segmentada X-Ray, fallback, posição da entidade e cubo final local14±1 são consumidores distintos. Filtros de identidade/aliança/veículo e retorno de hurt/addEffect, exceção Tremorzilla e resistência à radiação preservados; sem alcance final universal, PvP ou claims homologados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTRACT-1.0.10.md",
+          "reason": "ChargeUsed é gasto acumulado; uma Uranium Rod recarrega o item esgotado e o ramo termina com useFail. Débito Energy Efficiency ocorre no cliente após warm-up, Solar recupera no servidor sob guards próprios, e setters não impõem clamp universal. Sem mana, cooldown ou durabilidade próprios inferidos; custo C2S autorizado e gameplay não certificados."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTRACT-1.0.10.md",
+          "reason": "CUSTOM_DATA, UpdatesStackTags, emissor/receiver e anvil têm boundaries delimitadas sem autenticação C2S ou reconciliação física presumidas. Black Arcana mantém seu runtime e RPG Skill Tree a progressão; não duplicar dano/status, recursos, procs ou crédito Mastery. Hook NOT_VERIFIED, NO_MUTATION, sem fechamento integral do provider."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-RAYGUN-CONTRACT-1.0.10.md",
+          "reason": "Selo individual EXACT-RAYGUN-CONTRACT-1.0.10.json e prova Markdown compõem os 26 corpos e evidências SHA-exatas históricas com auditores, testes de regressão e replay reproduzível do JAR publisher. A certificação encerra somente o contrato técnico estático da ficha Raygun; QA física NOT_TESTED e autorização de mutação NOT_VERIFIED."
+        }
+      }
     }
   },
   "providers": {},

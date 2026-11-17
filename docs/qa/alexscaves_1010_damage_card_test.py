@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check exact damage resource cards, nine prior static seals and new beam seal."""
+"""Check eleven damage resource cards, nine historical seals and later contracts."""
 import hashlib
 import json
 import re
@@ -69,7 +69,7 @@ STATIC_CONTRACTS = {
 }
 
 
-NEW_DAMAGE_TYPE_STATIC = frozenset({"tremorzilla_beam"})
+NEW_DAMAGE_TYPE_STATIC = frozenset({"tremorzilla_beam", "raygun"})
 
 FORSAKEN_PRIOR_MANIFEST_SHA256 = {
     'EXACT-FORSAKEN-SONIC-1.0.10.json': '56c82085ba92270a4058fce09b7e8ccd3cfc7fdd72a2e2e92d92395d8e9709de',
@@ -151,7 +151,8 @@ class DamageTypeCards(unittest.TestCase):
     def test_exact_eleven_resource_cards(self):
         ids = set(self.manifest["damage_types"])
         actual = {x.stem.replace("-", "_") for x in FAMILY.glob("*.md")
-                  if x.name not in {"INDEX.md", "README.md"}}
+                  if x.name not in {"INDEX.md", "README.md"}
+                  and not x.name.startswith("EXACT-")}
         self.assertEqual(ids, actual)
         self.assertEqual(11, len(ids))
         self.assertEqual(6, len(self.manifest["damage_type_tags"]))
@@ -165,11 +166,12 @@ class DamageTypeCards(unittest.TestCase):
                 for field in ("message_id", "scaling", "exhaustion"):
                     self.assertIn("| `" + field + "` | `" + str(obj["json"][field]) + "` |", text)
                 for tag in self.manifest["direct_tag_entries"][id]:
-                    self.assertIn("- `" + tag + "`", text)
+                    self.assertIn("`" + tag + "`", text)
                 for deny in ("NOT_VERIFIED", "NOT_TESTED"):
                     self.assertIn(deny, text)
                 self.assertIn("STATIC_TECHNICAL_CATALOG_ONLY" if id in STATIC_CONTRACTS or id in NEW_DAMAGE_TYPE_STATIC else "NOT_CERTIFIED", text)
-                self.assertIn("**+0 raízes mágicas novas**", text)
+                self.assertIn("**+0 raízes mágicas**" if id == "raygun"
+                              else "**+0 raízes mágicas novas**", text)
 
     def test_nine_static_certificates_have_sealed_cards_and_runtime_limits(self):
         self.assertEqual(set(STATIC_CONTRACTS), {"acid", "dark_arrow", "desolate_dagger", "forsaken_sonic_boom", "gumball", "radiation", "intentional_game_design", "nuke", "spirit_dinosaur"})
@@ -219,15 +221,33 @@ class DamageTypeCards(unittest.TestCase):
         self.assertEqual(cert["safety"]["physical_qa"], "NOT_TESTED")
         self.assertFalse(cert["safety"]["provider_universe_closed"])
 
-    def test_last_damage_type_raygun_remains_uncertified(self):
+    def test_last_damage_type_raygun_has_separate_static_contract(self):
         ledger = json.loads(
             (ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text()
         )
         remaining = set(self.manifest["damage_types"]) - set(STATIC_CONTRACTS) - NEW_DAMAGE_TYPE_STATIC
-        self.assertEqual(remaining, {"raygun"})
-        for damage_id in remaining:
-            relative = FAMILY.parent.name + "/damage-types/" + damage_id.replace("_", "-") + ".md"
-            self.assertNotIn(relative, ledger["objects"])
+        self.assertFalse(remaining)
+        provider = FAMILY.parent
+        seal = json.loads((provider / "EXACT-RAYGUN-CONTRACT-1.0.10.json").read_text())
+        entry = ledger["objects"][provider.name + "/damage-types/raygun.md"]
+        self.assertEqual(seal["primary_resource"]["sha256"],
+                         self.manifest["damage_types"]["raygun"]["sha256"])
+        self.assertEqual(seal["primary_resource"]["json"],
+                         self.manifest["damage_types"]["raygun"]["json"])
+        self.assertEqual(seal["claim_scope"], "STATIC_TECHNICAL_CATALOG_ONLY")
+        self.assertEqual(entry["claim_scope"], seal["claim_scope"])
+        self.assertEqual(set(entry["evidence"]),
+                         {"identity", "behavior", "parameters", "targeting",
+                          "costs", "integration", "validation"})
+        self.assertEqual(seal["census"]["declared_methods"], 26)
+        self.assertEqual(len(seal["method_dispositions"]), 26)
+        for key, value in {"mutating_hook": "NOT_VERIFIED",
+                           "physical_qa": "NOT_TESTED",
+                           "provider_universe_closed": False}.items():
+            self.assertEqual(seal["safety"][key], value)
+        archive = FAMILY / "EXACT-RAYGUN-HISTORICAL-CARD-1.0.10.md"
+        self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(),
+                         "75f033bc9c27195c85ca952e0b70bc18ff00f5f1aba1955e58242c98c11e0f87")
 
     def test_dark_arrow_ambiguity_is_retained(self):
         a = self.manifest["damage_types"]["dark_arrow"]

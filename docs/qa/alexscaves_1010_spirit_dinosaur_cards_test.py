@@ -72,7 +72,7 @@ class SpiritDinosaurContract(unittest.TestCase):
         self.assertEqual(d['physical_qa'],'NOT_TESTED')
         self.assertFalse(d['provider_universe_closed'])
 
-    def test_historical_inventory_preserved_plus_individual_beam_certification(self):
+    def test_historical_inventory_preserved_plus_current_individual_certifications(self):
         inventory=json.loads((P/'INTEGRATION-SCOPE-INVENTORY-1.0.10.json').read_text())
         ledger=json.loads((ROOT/'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json').read_text())
         self.assertFalse(inventory['whole_provider_catalog_closed'])
@@ -84,11 +84,22 @@ class SpiritDinosaurContract(unittest.TestCase):
             self.assertTrue(historical <= certified,
                             'a previous static inventory cannot lose certified cards')
             self.assertEqual(status['documented_static_contracts'],len(historical))
-            # This is a frozen catalog checkpoint, not the current ledger:
-            # Tremorzilla Beam later earned its own SHA-exact static certificate.
+            # The nine-card damage inventory is a frozen checkpoint. Later
+            # individual contracts belong to the explicit current inventory.
             new_individual=certified-historical
             if family == 'damage_types':
-                self.assertEqual(new_individual, {'damage-types/tremorzilla-beam.md'})
+                self.assertEqual(status['documented_static_contracts'],9)
+                self.assertEqual(status['checkpoint_scope'],
+                                 'HISTORICAL_NINE_DAMAGE_CONTRACT_CHECKPOINT')
+                current=set(status['current_cards'])
+                self.assertEqual(current,certified)
+                self.assertEqual(status['current_documented_static_contracts'],len(current))
+                additional=status['additional_individual_static_contracts']
+                self.assertEqual(len(additional),len(new_individual))
+                self.assertEqual({entry['card'] for entry in additional},new_individual)
+                for entry in additional:
+                    self.assertEqual(entry['claim_scope'],'STATIC_TECHNICAL_CATALOG_ONLY')
+                    self.assertTrue((P/entry['evidence']).is_file())
             else:
                 self.assertFalse(new_individual)
 
