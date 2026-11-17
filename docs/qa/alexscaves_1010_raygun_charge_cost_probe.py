@@ -34,7 +34,7 @@ NEEDLES = (
     "ChargeUsed", "UseTime",
 )
 MAX_SITES_PER_METHOD = 22
-MAX_REPORT_BYTES = 32000
+MAX_REPORT_BYTES = 35000
 
 def slim(row):
     return {key: row[key][:180] if isinstance(row[key], str) else row[key]
@@ -71,7 +71,7 @@ def selected_instruction_window(method, start, end):
                            "goto", "getstatic", "getfield", "putfield",
                            "sipush", "bipush", "ldc", "ldc_w", "iadd", "isub",
                            "imul", "idiv", "irem", "fadd", "fsub", "fmul",
-                           "fdiv", "i2f", "f2i", "f2d", "i2d", "fcmpg", "fcmpl",
+                           "fdiv", "i2f", "f2i", "f2d", "d2i", "i2d", "fcmpg", "fcmpl",
                            "dup", "aconst_null",
                            }):
             relevant.append(slim(row))
@@ -105,6 +105,12 @@ def projection(methods):
             selected_instruction_window(onuse, 222, 295),
         "onUseTick_activation_operator_window":
             selected_instruction_window(onuse, 130, 190),
+        "onUseTick_charge_increment_window":
+            selected_instruction_window(onuse, 285, 322),
+        "acInventoryTick_charge_recovery_window":
+            selected_instruction_window(by_name["acInventoryTick"], 60, 143),
+        "acInventoryTick_use_time_window":
+            selected_instruction_window(by_name["acInventoryTick"], 193, 230),
         "charge_related_site_count": sum(len(x["charge_related_references"])
                                          for x in output),
     }
