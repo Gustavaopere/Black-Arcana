@@ -30,14 +30,14 @@ METHODS = (
 )
 NEEDLES = (
     "getCharge:", "setCharge:", "getUseTime:", "setUseTime:",
-    "hasCharge:", ".ENERGY_EFFICIENCY:", "enchantLevel:",
+    "hasCharge:", ".ENERGY_EFFICIENCY:",
     "ChargeUsed", "UseTime",
 )
 MAX_SITES_PER_METHOD = 22
-MAX_REPORT_BYTES = 36000
+MAX_REPORT_BYTES = 32000
 
 def slim(row):
-    return {key: row[key][:320] if isinstance(row[key], str) else row[key]
+    return {key: row[key][:180] if isinstance(row[key], str) else row[key]
             for key in ("offset", "opcode", "operand", "symbol")}
 
 def selected_sites(method):
@@ -54,8 +54,8 @@ def selected_sites(method):
     return [{
         "offset": rows[i]["offset"],
         "site": slim(rows[i]),
-        "before": [slim(row) for row in rows[max(0, i - 6):i]],
-        "after": [slim(row) for row in rows[i + 1:i + 7]],
+        "before": [slim(row) for row in rows[max(0, i - 3):i]],
+        "after": [slim(row) for row in rows[i + 1:i + 4]],
     } for i in matches]
 
 def selected_instruction_window(method, start, end):
