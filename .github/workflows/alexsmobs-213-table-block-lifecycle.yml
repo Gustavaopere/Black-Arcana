@@ -1,0 +1,78 @@
+name: Alexs Mobs 2.1.13 Table block and menu lifecycle static audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexsmobs-213-table-block-lifecycle.yml'
+      - 'docs/qa/alexsmobs_213_table_block_lifecycle_probe.py'
+      - 'docs/qa/alexsmobs_213_table_block_lifecycle_probe_test.py'
+      - 'docs/qa/alexsmobs-213-table-block-lifecycle-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-TABLE-BLOCK-LIFECYCLE-2.1.13.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/actions/item-transmutation.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-ARTIFACT-PERK-QA-GATES-2.1.13.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexsmobs-213-table-block-lifecycle.yml'
+      - 'docs/qa/alexsmobs_213_table_block_lifecycle_probe.py'
+      - 'docs/qa/alexsmobs_213_table_block_lifecycle_probe_test.py'
+      - 'docs/qa/alexsmobs-213-table-block-lifecycle-handoff.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-TABLE-BLOCK-LIFECYCLE-2.1.13.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/actions/item-transmutation.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-ARTIFACT-PERK-QA-GATES-2.1.13.md'
+permissions:
+  contents: read
+jobs:
+  table_block_lifecycle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Run 15 bounded synthetic fail-closed checks
+        run: |
+          python3 -m py_compile docs/qa/alexsmobs_213_table_block_lifecycle_probe.py docs/qa/alexsmobs_213_table_block_lifecycle_probe_test.py
+          python3 docs/qa/alexsmobs_213_table_block_lifecycle_probe_test.py -v
+      - name: Download publisher JAR and enforce exact historical SHA
+        run: |
+          set -euo pipefail
+          mkdir -p build/alexsmobs-213-block
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://cursemaven.com/curse/maven/alexs-mobs-continued-1635121/8856498/alexs-mobs-continued-1635121-8856498.jar' \
+            --output build/alexsmobs-213-block/alexsmobs-2.1.13.jar
+          printf '%s  %s\n' \
+            'eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8' \
+            'build/alexsmobs-213-block/alexsmobs-2.1.13.jar' | sha256sum -c -
+          test "$(stat -c '%s' build/alexsmobs-213-block/alexsmobs-2.1.13.jar)" = '27452738'
+      - name: Disassemble bounded exact block/menu/slot/tile owner lifecycle
+        run: |
+          set -euo pipefail
+          JAR='build/alexsmobs-213-block/alexsmobs-2.1.13.jar'
+          PREV='wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-TRANSMUTATION-C2S-2.1.13.json'
+          LOCK='wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-TABLE-BLOCK-LIFECYCLE-2.1.13.json'
+          if [[ -f "$LOCK" ]]; then
+            python3 docs/qa/alexsmobs_213_table_block_lifecycle_probe.py \
+              --jar "$JAR" --javap "$JAVA_HOME/bin/javap" \
+              --predecessor "$PREV" --lock "$LOCK" \
+              --output build/alexsmobs-213-block/report.json
+          else
+            python3 docs/qa/alexsmobs_213_table_block_lifecycle_probe.py \
+              --jar "$JAR" --javap "$JAVA_HOME/bin/javap" \
+              --predecessor "$PREV" \
+              --output build/alexsmobs-213-block/report.json
+          fi
+      - name: Verify catalog index and certification gates unchanged
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: alexsmobs-213-table-block-lifecycle-readonly
+          path: build/alexsmobs-213-block/report.json
+          if-no-files-found: ignore
+          retention-days: 14

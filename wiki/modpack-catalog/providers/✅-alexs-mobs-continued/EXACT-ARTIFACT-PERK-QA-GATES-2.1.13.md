@@ -21,6 +21,9 @@ Status: `EXACT_ARTIFACT_SCOPED / 3 ROOTS / 1 COUNTED_EXACT / 2 CONDITIONAL / NO_
 | AMC-T01 | Transmutation Table, escolha válida, XP suficiente, candidato válido | somente um input consumido/convertido, um resultado e um desconto XP pelo provider; estado reroll consistente | servidor dedicado + client |
 | AMC-T02 | Menu aberto com candidato inválido, falta de XP, inventário alterado ou pacote repetido | falha segura, sem ganho de item, sem débito duplo; não inferir proteção antes do teste | segurança de menu e sessão |
 | AMC-T03 | Reload/datapack/restore com opções de transmutação | tabela restaura dados e não reutiliza saída inválida | JAR 2.1.13 + save/restart |
+| AMC-T04 | `AMConfig.transmutingTableExplodes` false/true; mesa destruída por jogador, dentro e fora de região protegida | com config false, nenhuma chamada explosiva provider; com true, só a explosão nativa permitida pelo servidor/proteções; documentar raio/dano/blocos reais e nenhum efeito BA duplicado | config física + servidor dedicado + proteção de território + logs |
+| AMC-T05 | Input `getMaxStackSize <= 1`, item na `transmutationBlacklist`, menu de mesa nula/substituída, packet stale e session id errado | nenhum settlement ou XP indevido; recusa consistente entre abertura, slot, receptor e ticks; reload da mesa sem conteúdo órfão | JAR exato + config física + multiplayer/QA negativa |
+| AMC-T06 | Dois jogadores abrem mesas simultaneamente, opções distintas, broadcast `sendMSGToAll` e mudança de dimensão | nenhuma alternativa visível de outro jogador, sem consumo por visualização e sem autorizar transmutação para sessão de terceiro | cliente+servidor + observação de mensagens |
 | AMC-V01 | `voidWormSummonable=false` ou dimensão fora da lista permitida | não criar boss; consumo do Mysterious Worm seguir estritamente o provider | captura de config efetiva |
 | AMC-V02 | dimensões permitidas e limiar de profundidade atendido, item válido | uma única transição de item → spawn, com owner/advancement coerentes | client + server |
 | AMC-V03 | drop em ticks múltiplos, logout e multiplayer | nenhum segundo Void Worm para o mesmo evento; sem replay/cadeia duplicada | dedicado |
@@ -28,6 +31,10 @@ Status: `EXACT_ARTIFACT_SCOPED / 3 ROOTS / 1 COUNTED_EXACT / 2 CONDITIONAL / NO_
 | AMC-D02 | alvo inválido/protegido, destino fora de dimensão, logout ou reload com portal ativo | abortar ou encerrar conforme provider, sem bypass de WorldEffectPolicy para efeitos próprios do BA, sem portal órfão ou duplicação de custo | servidor + proteção + persistência |
 
 Nenhum desses casos tem resultado registrado como `PASS`. O antigo CI de auditoria prova **identidade/estrutura** do artefato, não valida o comportamento do modpack montado.
+
+## Controle de explosão do bloco na versão publisher histórica
+
+A [auditoria de BlockTransmutationTable](EXACT-TABLE-BLOCK-LIFECYCLE-2.1.13.json) documenta `onDestroyedByPlayer -> explodeOnDestroy`, `AMConfig.transmutingTableExplodes` e `Level.explode(...,3.0f,false,ExplosionInteraction.BLOCK)` centrado no bloco. Essa é uma chamada do provider, sem prova de config atual ou proteção efetiva; **não** altera a contagem de raízes semânticas e não é interceptada automaticamente pelo `WorldEffectPolicy` do Black Arcana. Os casos AMC-T04..T06 são propostas, **não resultados PASS**. Manter `NO_MUTATION`.
 
 ## Mutadores e boundary segura
 

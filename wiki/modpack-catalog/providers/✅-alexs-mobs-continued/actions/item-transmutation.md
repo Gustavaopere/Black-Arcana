@@ -2,7 +2,7 @@
 
 - Provider: **Alex's Mobs Continued** (`alexsmobs`)
 - Version: `2.1.13`
-- Publisher SHA-1 (histórico verificado contra modlist anterior; versão atual pendente): `50ddafdf3d12b33331e4eecb4ab514ae451baadd`
+- Publisher SHA-1 (modlist atual do sibling registra 2.1.13 no commit `55d8baa`): `50ddafdf3d12b33331e4eecb4ab514ae451baadd`
 - Owner surface: `alexsmobs:transmutation_table`
 - Semantic type: deliberate supernatural item-transmutation action
 - State: `COUNTED_EXACT`
@@ -133,4 +133,20 @@ Se `n` representa `ItemStack.getCount()`, `a = AMConfig.transmutingWeightAddStep
 
 `MenuTransmutationTable$1.setChanged` chama `MenuTransmutationTable.slotsChanged` e `SimpleContainer.setChanged`. Não apareceu `BlockEntity.setChanged` diretamente nos métodos selecionados do tile; isso **não é prova de perda de persistência**, porque consumidores indiretos não foram exauridos.
 
-**Boundary para perks:** peso, seleção, custo de XP, reroll e opções continuam sob autoridade do provider, sem hook mutador validado. O JAR atual da modlist do sibling ainda não foi reconfirmado. `static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; 0/3 contratos estáticos certificados no recorte observado.
+**Boundary para perks:** peso, seleção, custo de XP, reroll e opções continuam sob autoridade do provider, sem hook mutador validado. A modlist atual do sibling registra JAR 2.1.13, mas sua configuração e execução física não foram testadas. `static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; 0/3 contratos estáticos certificados no recorte observado.
+
+## Bloco proprietário, abertura de menu e efeito de explosão (JAR SHA-exato 2.1.13)
+
+[Manifesto de block/menu/slots/dirty](../EXACT-TABLE-BLOCK-LIFECYCLE-2.1.13.json) · [relatório com offsets, guards e limites](../../../../../docs/qa/alexsmobs-213-table-block-lifecycle-handoff.md) · [auditor read-only](../../../../../docs/qa/alexsmobs_213_table_block_lifecycle_probe.py). Esta etapa examinou **5 classfiles** e **13 classes candidatas a consumidores** (nomes binários; não é call graph fechado). `BlockTransmutationTable.class` SHA-256 `36a9a206a89bdeb43848aaa37719e9e3dc9d00d29330b1eac760b1242e0a02c1`; **18 métodos** no publisher.
+
+**Entrada do jogador e menu:** `BlockTransmutationTable.useItemOn` encaminha a `amUse @11`. `amUse` retorna `InteractionResult.SUCCESS` no lado cliente (`Level.isClientSide @1` / `ifeq @4→11`); no servidor consulta `BlockState.getMenuProvider @16`, chama `Player.openMenu @19` e descarta seu `OptionalInt` (`pop @22`), resolve `Level.getBlockEntity @33`, exige `instanceof TileEntityTransmutationTable @40` para o envio e constrói `MessageUpdateTransmutablesToDisplay` com `playerId` e alternativas de índices 0, 1, 2 em `@53–80`. A mensagem é enviada via **`AlexsMobs.sendMSGToAll @83`**; essa chamada é broadcast no provider, e não autorização server-owned de transmutação. A classe `MessageUpdateTransmutablesToDisplay$Handler` já foi auditada quanto ao teste de `playerId`, mas não há certificação de sessão.
+
+**Vínculo de bloco, posição e tick:** `newBlockEntity` instancia `TileEntityTransmutationTable`; `lambda$getMenuProvider$2` usa `ContainerLevelAccess.create(level,pos) @9`, testa a entidade com `instanceof @15` e passa o tile (ou `null`) a `MenuTransmutationTable.<init> @29`. `stillValid` consulta o bloco registrado `AMBlockRegistry.TRANSMUTATION_TABLE` e `ContainerLevelAccess`, mas não foi provado que um pacote repetido seja recusado após mudança de mesa/menu. `getTicker` usa `AMTileEntityRegistry.TRANSMUTATION_TABLE` e `createTickerHelper @17`.
+
+**Entrada de itens:** `MenuTransmutationTable$2.mayPlace` verifica `ItemStack.getMaxStackSize @14` com branch `if_icmple @18→44` contra 1 e depois o identificador de registry contra `AMConfig.transmutationBlacklist @25`, `List.contains @32`, `ifne @37→44`. A configuração de blacklist carregada no pack continua desconhecida. Isso é uma restrição do slot, não nova magia.
+
+**Efeito secundário de destruição de mundo — pertencente ao provider:** ao destruir a mesa por jogador, `BlockTransmutationTable.onDestroyedByPlayer` invoca `explodeOnDestroy @2`. Se `AMConfig.transmutingTableExplodes` estiver habilitada (`getstatic @0`, `ifeq @3→46`), a implementação chama `Level.explode @42` com potência **3,0f**, centro `(x+0,5; y+0,5; z+0,5)`, fogo `false` e `Level.ExplosionInteraction.BLOCK @39`. Dano efetivo, área, blocos destruídos, interação com proteções e config do pack são **NÃO VERIFICADOS**. Não confundir a solicitação de explosão pelo provider com efeito autorizado pelo `WorldEffectPolicy` do Black Arcana: não há interceptação comprovada.
+
+**Mudança de estado/persistência:** `MenuTransmutationTable$1.setChanged` chama `slotsChanged @5` e `SimpleContainer.setChanged @9`. Os métodos inspecionados de bloco/tile não apresentaram `BlockEntity.setChanged` nem `Level.sendBlockUpdated` **diretamente**; isso não exclui dirty mark indireta do runtime. Manter testes de reload, chunk unload, slots, sessão, multiplayer, explode-on-destroy, claims e config pendentes.
+
+A ficha permanece **⚠️ parcial**, `static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. **0/3** contratos estáticos integrais certificados no recorte de Alex's Mobs. A [modlist do sibling @55d8baa](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/55d8baa166cc3660f529f912d7a735623ab40a32/PROJECT-INSTRUCTIONS/modlist/Mobs/%E2%9C%85-alexs-mobs-continued%20v2.1.13.md) registra JAR 2.1.13 e SHA-1 coincidentes; testes físicos e captura da config vigente continuam pendentes.

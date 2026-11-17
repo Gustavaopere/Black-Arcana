@@ -1,10 +1,10 @@
 # Alex's Mobs Continued — 2.1.13
 
-Status: `⚠️ HISTORICAL PUBLISHER SCOPE DOCUMENTED / CURRENT PHYSICAL MODLIST PRESENCE NOT RECONFIRMED / 3 SUPERNATURAL ROOTS IN OBSERVED ARTIFACT / 0 OF 3 STATIC CONTRACTS CERTIFIED / NO_MUTATION`
+Status: `⚠️ HISTORICAL PUBLISHER SCOPE DOCUMENTED / SIBLING MAIN MODLIST ENTRY RECONFIRMED AT 2.1.13 / PHYSICAL RUNTIME QA NOT TESTED / 3 SUPERNATURAL ROOTS IN OBSERVED ARTIFACT / 0 OF 3 STATIC CONTRACTS CERTIFIED / NO_MUTATION`
 
-## Identidade física historicamente conferida
+## Identidade registrada na modlist atual do sibling
 
-Publisher 2.1.13 previously matched to a sibling physical modlist (not reverified against current sibling `main`):
+Publisher 2.1.13 matched to physical modlist historically and reconfirmed as the **documented selected JAR** in [modlist do sibling @55d8baa](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/55d8baa166cc3660f529f912d7a735623ab40a32/PROJECT-INSTRUCTIONS/modlist/Mobs/%E2%9C%85-alexs-mobs-continued%20v2.1.13.md) (commit `55d8baa166cc3660f529f912d7a735623ab40a32`):
 
 - physical row: **#21**;
 - JAR: `alexsmobs-2.1.13-neoforge+1.21.1.jar`;
@@ -18,7 +18,7 @@ Alex's Mobs Continued is cross-domain for the magic catalog: the sibling classif
 
 ## Provência atual e contrato estático (17/11/2026)
 
-A árvore `Gustavaopere/neoforge-rpg-skilltree/main` consultada nesta tranche **não possui uma entrada nominal de Alex's Mobs na modlist**. Os hashes e o JAR 2.1.13 documentados abaixo continuam evidência válida do *publisher historicamente auditado*, mas não provam presença nem versão no pack contemporâneo. Esta ressalva deve acompanhar quaisquer afirmações de compatibilidade ou integração.
+A [modlist do sibling @55d8baa](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/55d8baa166cc3660f529f912d7a735623ab40a32/PROJECT-INSTRUCTIONS/modlist/Mobs/%E2%9C%85-alexs-mobs-continued%20v2.1.13.md) foi localizada e reconsultada: `PROJECT-INSTRUCTIONS/modlist/Mobs/✅-alexs-mobs-continued v2.1.13.md`, JAR `alexsmobs-2.1.13-neoforge+1.21.1.jar`, posição #21, mod ID `alexsmobs`, runtime 2.1.13 e SHA-1 `50ddafdf3d12b33331e4eecb4ab514ae451baadd`. Isso reconfirma o **estado documentado da modlist atual no GitHub**; não é inspeção presencial do diretório de mods ou teste físico do pack. A versão upstream 2.3.0 está documentada como lançada, porém **não instalada**.
 
 O índice individual [INDEX.md](INDEX.md) permanece em **0/3 contratos técnicos estáticos certificados** no recorte semântico observado; o universo integral do mod e as configurações físicas atuais não estão homologados. A auditoria adicional [TransmutationData/NBT/display](../../../../docs/qa/alexsmobs-213-transmutation-data-handoff.md) certifica somente referências estáticas e seus limites, **não** valida perks, hooks ou QA física. `NO_MUTATION` até prova de boundary real.
 
@@ -37,7 +37,7 @@ Final audit checkpoint used by this catalog:
 - publisher SHA-256: `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8`;
 - bytes: `27,452,738`.
 
-The publisher SHA-1 exactly matched the physical sibling SHA-1 in the historical audit; current physical modlist presence has not been reconfirmed.
+The publisher SHA-1 matches both the historical audit and the current sibling `main@55d8baa` modlist **record**. Actual client/server runtime and compatibility are still `NOT_TESTED`.
 
 The exact artifact contains **5,584 archive entries / 1,270 classes / 4,314 non-class resources / 638 provider-data paths**, including **45 item classes, 27 block classes, 12 tile/block-entity classes and 22 message classes**. Exhaustive signature inspection finds **26 item classes** and **11 block classes** with relevant interaction surfaces.
 
@@ -122,7 +122,7 @@ Catalog closure does not assert assembled-pack runtime PASS. Later QA still incl
 
 **⚠️ Observed publisher semantic inventory documented; no current-pack or full-static-contract closure claim.**
 
-Historical Alex's Mobs 2.1.13 publisher semantic inventory: **3 supernatural roots = 1 strict artifact-scoped + 2 config/reachability-conditional**; installed-mod status and static contracts require separate verification.
+Alex's Mobs 2.1.13 publisher semantic inventory: **3 supernatural roots = 1 strict artifact-scoped + 2 config/reachability-conditional**. The current sibling modlist records 2.1.13, but deployed config, static certification (0/3) and physical QA remain separately unverified.
 
 Strict semantic delta: **+1**.
 

@@ -6,7 +6,7 @@
 
 A PR #1109 rastreou `MessageTransmuteFromMenu`, `Handler` e o caminho até `MenuTransmutationTable.transmute`. A PR #1110 comprovou a implementação `AMNeoNetwork$1`, a ligação ao `IPayloadContext` e o registro do envelope por `playBidirectional`. Esta tranche **não repete** esse trabalho: investiga a sequência de settlement, os callbacks de menu e a persistência de estado, distinguindo guardas estáticos de garantias de replay, concorrência e sessão.
 
-Artefato publisher histórico cruzado com modlist física em auditorias anteriores: `alexsmobs-2.1.13-neoforge+1.21.1.jar`, mod id `alexsmobs`, SHA-1 `50ddafdf3d12b33331e4eecb4ab514ae451baadd`, SHA-256 `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8`, 27.452.738 bytes; CurseForge project/file `1635121/8856498`. **A revalidação da modlist física contemporânea ainda é pendência**, pois a árvore atual do sibling não exibiu entrada nominal de Alex's Mobs.
+Artefato publisher histórico cruzado com modlist física em auditorias anteriores: `alexsmobs-2.1.13-neoforge+1.21.1.jar`, mod id `alexsmobs`, SHA-1 `50ddafdf3d12b33331e4eecb4ab514ae451baadd`, SHA-256 `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8`, 27.452.738 bytes; CurseForge project/file `1635121/8856498`. **Reconciliação da modlist no sibling:** a [modlist do sibling @55d8baa](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/55d8baa166cc3660f529f912d7a735623ab40a32/PROJECT-INSTRUCTIONS/modlist/Mobs/%E2%9C%85-alexs-mobs-continued%20v2.1.13.md) registra o mesmo JAR 2.1.13 e SHA-1 `50ddafdf3d12b33331e4eecb4ab514ae451baadd`. Esse registro confirma a versão selecionada em GitHub, sem substituir a QA física de config, sessão, persistência e multiplayer.
 
 ## Programa de inspeção SHA-exata
 

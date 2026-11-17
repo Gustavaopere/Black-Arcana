@@ -6,7 +6,7 @@
 
 Após as PRs #1109 (receptor), #1110 (contexto NeoForge) e #1111 (settlement, reroll diferido e persistência parcial), esta tranche investiga **o objeto de dados e seus consumidores**, não repete a inspeção do pacote C2S nem implementa hook mutador.
 
-A versão física confirmada anteriormente foi `alexsmobs-2.1.13-neoforge+1.21.1.jar`, SHA-1 `50ddafdf3d12b33331e4eecb4ab514ae451baadd`, SHA-256 `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8` e 27.452.738 bytes. **Não há prova nova de que a modlist atual ainda inclui esse provider:** a árvore atual do sibling não mostrou uma entrada nominal de Alex's Mobs. Análises abaixo são condicionadas ao JAR historicamente identificado; não interpretar como compatibilidade certificada com um pack diferente.
+A versão física confirmada anteriormente foi `alexsmobs-2.1.13-neoforge+1.21.1.jar`, SHA-1 `50ddafdf3d12b33331e4eecb4ab514ae451baadd`, SHA-256 `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8` e 27.452.738 bytes. **Reconciliação posterior:** a [modlist do sibling @55d8baa](https://github.com/Gustavaopere/neoforge-rpg-skilltree/blob/55d8baa166cc3660f529f912d7a735623ab40a32/PROJECT-INSTRUCTIONS/modlist/Mobs/%E2%9C%85-alexs-mobs-continued%20v2.1.13.md) confirma o arquivo `alexsmobs-2.1.13-neoforge+1.21.1.jar` e SHA-1 correspondente no estado atual documentado do pack. A auditoria do JAR permanece exata; configs e testes no cliente/servidor real seguem pendentes.
 
 ## Método reprodutível
 
