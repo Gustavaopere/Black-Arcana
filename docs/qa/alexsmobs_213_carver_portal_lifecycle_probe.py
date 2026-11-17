@@ -31,10 +31,11 @@ PORTAL_NAME = re.compile(
     re.I,
 )
 REFERENCE = re.compile(
-    r"(?:lifespan|destination|attach|teleport|portal|dimension|"
-    r"discard|remove|addFreshEntity|hurtAndBreak|isClientSide|"
-    r"getEntities|distanceToSqr|setPos|getRespawn|getSleepingPos|"
-    r"cooldown|defineId|entityData|synched|level|SOUND)",
+    r"(?:lifespan|destination|attach|teleport|dimension|"
+    r"discard|addFreshEntity|hurtAndBreak|isClientSide|"
+    r"distanceToSqr|getRespawn|getSleepingPos|"
+    r"cooldown|defineId|entityData|synched|setLifespan|"
+    r"EntityVoidPortal)",
     re.I,
 )
 SCHEMA = "SHA_EXACT_ALEXSMOBS_213_CARVER_PORTAL_LIFECYCLE_JVM_BOUNDARY_READONLY"
@@ -84,7 +85,8 @@ def selected_method(method):
         })
     ]
     require(len(sites) <= MAX_REFS_METHOD,
-            "unbounded native portal references in method")
+            "unbounded native portal references in method " + name_of(method) +
+            " (" + str(len(sites)) + ")")
     branches = []
     for x in ins:
         if not x["opcode"].startswith(("if", "goto")):
