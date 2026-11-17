@@ -1,0 +1,1958 @@
+{
+  "schema_version": 1,
+  "scope": "SHA_EXACT_ALEXSMOBS_213_TRANSMUTATION_C2S_OWNER_CAUSAL_DISCOVERY_READONLY",
+  "artifact": {
+    "filename": "alexsmobs-2.1.13-neoforge+1.21.1.jar",
+    "sha1": "50ddafdf3d12b33331e4eecb4ab514ae451baadd",
+    "sha256": "eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8",
+    "size_bytes": 27452738
+  },
+  "observations": {
+    "classes": [
+      {
+        "class_path": "com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu.class",
+        "declared_methods": 4,
+        "roster": [
+          {
+            "name": "MessageTransmuteFromMenu",
+            "descriptor": "(II)V",
+            "instructions": 9
+          },
+          {
+            "name": "MessageTransmuteFromMenu",
+            "descriptor": "()V",
+            "instructions": 3
+          },
+          {
+            "name": "read",
+            "descriptor": "(Lnet/minecraft/network/FriendlyByteBuf;)Lcom/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu;",
+            "instructions": 8
+          },
+          {
+            "name": "write",
+            "descriptor": "(Lcom/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu;Lnet/minecraft/network/FriendlyByteBuf;)V",
+            "instructions": 11
+          }
+        ],
+        "selected_methods": [
+          {
+            "name": "MessageTransmuteFromMenu",
+            "descriptor": "(II)V",
+            "body_sha256": "83bf680d9f76250846bd947c955b45e1b496225100a5a65a7b6c953fa07b0762",
+            "instruction_count": 9,
+            "branch_count": 0,
+            "branches": [],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 6,
+                  "opcode": "putfield",
+                  "operand": "#7",
+                  "symbol": "Field playerId:I"
+                },
+                "previous": {
+                  "offset": 5,
+                  "opcode": "iload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 9,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 11,
+                  "opcode": "putfield",
+                  "operand": "#13",
+                  "symbol": "Field choice:I"
+                },
+                "previous": {
+                  "offset": 10,
+                  "opcode": "iload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 14,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ],
+            "critical_windows": []
+          },
+          {
+            "name": "MessageTransmuteFromMenu",
+            "descriptor": "()V",
+            "body_sha256": "87b54a21fa9cf1577a6000c36eb2c7f906bfd8a9139fc7e0f3214cba24234a41",
+            "instruction_count": 3,
+            "branch_count": 0,
+            "branches": [],
+            "selected_refs": [],
+            "critical_windows": []
+          },
+          {
+            "name": "read",
+            "descriptor": "(Lnet/minecraft/network/FriendlyByteBuf;)Lcom/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu;",
+            "body_sha256": "517ba44a34fe713224cab00260cdfa94a5e208fd3b172e1bd476c8f3de157a79",
+            "instruction_count": 8,
+            "branch_count": 0,
+            "branches": [],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 0,
+                  "opcode": "new",
+                  "operand": "#8",
+                  "symbol": "class com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu"
+                },
+                "previous": null,
+                "next": {
+                  "offset": 3,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 5,
+                  "opcode": "invokevirtual",
+                  "operand": "#16",
+                  "symbol": "Method net/minecraft/network/FriendlyByteBuf.readInt:()I"
+                },
+                "previous": {
+                  "offset": 4,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 8,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 9,
+                  "opcode": "invokevirtual",
+                  "operand": "#16",
+                  "symbol": "Method net/minecraft/network/FriendlyByteBuf.readInt:()I"
+                },
+                "previous": {
+                  "offset": 8,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 12,
+                  "opcode": "invokespecial",
+                  "operand": "#22",
+                  "symbol": "Method \"<init>\":(II)V"
+                }
+              }
+            ],
+            "critical_windows": [
+              {
+                "anchor": 0,
+                "operators": [
+                  {
+                    "offset": 0,
+                    "opcode": "new",
+                    "operand": "#8",
+                    "symbol": "class com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu"
+                  },
+                  {
+                    "offset": 3,
+                    "opcode": "dup",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 4,
+                    "opcode": "aload_0",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 5,
+                    "opcode": "invokevirtual",
+                    "operand": "#16",
+                    "symbol": "Method net/minecraft/network/FriendlyByteBuf.readInt:()I"
+                  },
+                  {
+                    "offset": 8,
+                    "opcode": "aload_0",
+                    "operand": "",
+                    "symbol": ""
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "write",
+            "descriptor": "(Lcom/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu;Lnet/minecraft/network/FriendlyByteBuf;)V",
+            "body_sha256": "7b8d36588a6205e78ab596a10b935102da0a12cfd825ddbc0231445730e6ecec",
+            "instruction_count": 11,
+            "branch_count": 0,
+            "branches": [],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 2,
+                  "opcode": "getfield",
+                  "operand": "#7",
+                  "symbol": "Field playerId:I"
+                },
+                "previous": {
+                  "offset": 1,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 5,
+                  "opcode": "invokevirtual",
+                  "operand": "#25",
+                  "symbol": "Method net/minecraft/network/FriendlyByteBuf.writeInt:(I)Lnet/minecraft/network/FriendlyByteBuf;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 5,
+                  "opcode": "invokevirtual",
+                  "operand": "#25",
+                  "symbol": "Method net/minecraft/network/FriendlyByteBuf.writeInt:(I)Lnet/minecraft/network/FriendlyByteBuf;"
+                },
+                "previous": {
+                  "offset": 2,
+                  "opcode": "getfield",
+                  "operand": "#7",
+                  "symbol": "Field playerId:I"
+                },
+                "next": {
+                  "offset": 8,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 11,
+                  "opcode": "getfield",
+                  "operand": "#13",
+                  "symbol": "Field choice:I"
+                },
+                "previous": {
+                  "offset": 10,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 14,
+                  "opcode": "invokevirtual",
+                  "operand": "#25",
+                  "symbol": "Method net/minecraft/network/FriendlyByteBuf.writeInt:(I)Lnet/minecraft/network/FriendlyByteBuf;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 14,
+                  "opcode": "invokevirtual",
+                  "operand": "#25",
+                  "symbol": "Method net/minecraft/network/FriendlyByteBuf.writeInt:(I)Lnet/minecraft/network/FriendlyByteBuf;"
+                },
+                "previous": {
+                  "offset": 11,
+                  "opcode": "getfield",
+                  "operand": "#13",
+                  "symbol": "Field choice:I"
+                },
+                "next": {
+                  "offset": 17,
+                  "opcode": "pop",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ],
+            "critical_windows": []
+          }
+        ],
+        "relevant_refs": 9,
+        "class_sha256": "19f5adc1a384c085a2cd511fac3c9afcecf2d4eecc58ac46ea57fbd4c1a34e84"
+      },
+      {
+        "class_path": "com/github/alexthe666/alexsmobs/inventory/MenuTransmutationTable.class",
+        "declared_methods": 9,
+        "roster": [
+          {
+            "name": "MenuTransmutationTable",
+            "descriptor": "(ILnet/minecraft/world/entity/player/Inventory;)V",
+            "instructions": 9
+          },
+          {
+            "name": "MenuTransmutationTable",
+            "descriptor": "(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/inventory/ContainerLevelAccess;Lnet/minecraft/world/entity/player/Player;Lcom/github/alexthe666/alexsmobs/tileentity/TileEntityTransmutationTable;)V",
+            "instructions": 108
+          },
+          {
+            "name": "stillValid",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;)Z",
+            "instructions": 8
+          },
+          {
+            "name": "slotsChanged",
+            "descriptor": "(Lnet/minecraft/world/Container;)V",
+            "instructions": 14
+          },
+          {
+            "name": "quickMoveStack",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;I)Lnet/minecraft/world/item/ItemStack;",
+            "instructions": 62
+          },
+          {
+            "name": "clickMenuButton",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;I)Z",
+            "instructions": 13
+          },
+          {
+            "name": "transmute",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;I)V",
+            "instructions": 74
+          },
+          {
+            "name": "removed",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+            "instructions": 10
+          },
+          {
+            "name": "lambda$removed$0",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
+            "instructions": 6
+          }
+        ],
+        "selected_methods": [
+          {
+            "name": "MenuTransmutationTable",
+            "descriptor": "(ILnet/minecraft/world/entity/player/Inventory;)V",
+            "body_sha256": "8e1030419035ddb59261b7fc93502b2daf8c5568d92e94f644b9d10316519863",
+            "instruction_count": 9,
+            "branch_count": 0,
+            "branches": [],
+            "selected_refs": [],
+            "critical_windows": []
+          },
+          {
+            "name": "MenuTransmutationTable",
+            "descriptor": "(ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/inventory/ContainerLevelAccess;Lnet/minecraft/world/entity/player/Player;Lcom/github/alexthe666/alexsmobs/tileentity/TileEntityTransmutationTable;)V",
+            "body_sha256": "cac5110e8237abe6fba2053c79198bdac9e915354b9fccfc8ca77be3a9562bc7",
+            "instruction_count": 108,
+            "branch_count": 9,
+            "branches": [
+              {
+                "offset": 79,
+                "opcode": "if_icmpge",
+                "target": 144
+              },
+              {
+                "offset": 89,
+                "opcode": "if_icmpge",
+                "target": 138
+              },
+              {
+                "offset": 135,
+                "opcode": "goto",
+                "target": 85
+              },
+              {
+                "offset": 141,
+                "opcode": "goto",
+                "target": 76
+              },
+              {
+                "offset": 151,
+                "opcode": "if_icmpge",
+                "target": 186
+              },
+              {
+                "offset": 183,
+                "opcode": "goto",
+                "target": 147
+              },
+              {
+                "offset": 188,
+                "opcode": "ifnull",
+                "target": 214
+              },
+              {
+                "offset": 193,
+                "opcode": "ifnull",
+                "target": 214
+              },
+              {
+                "offset": 201,
+                "opcode": "ifne",
+                "target": 214
+              }
+            ],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 13,
+                  "opcode": "invokespecial",
+                  "operand": "#39",
+                  "symbol": "Method net/minecraft/world/inventory/AbstractContainerMenu.\"<init>\":(Lnet/minecraft/world/inventory/MenuType;I)V"
+                },
+                "previous": {
+                  "offset": 12,
+                  "opcode": "iload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 16,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 198,
+                  "opcode": "invokevirtual",
+                  "operand": "#82",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/tileentity/TileEntityTransmutationTable.hasPossibilities:()Z"
+                },
+                "previous": {
+                  "offset": 196,
+                  "opcode": "aload",
+                  "operand": "5",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 201,
+                  "opcode": "ifne",
+                  "operand": "214",
+                  "symbol": ""
+                }
+              }
+            ],
+            "critical_windows": [
+              {
+                "anchor": 13,
+                "operators": [
+                  {
+                    "offset": 4,
+                    "opcode": "invokeinterface",
+                    "operand": "#31,  1",
+                    "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+                  },
+                  {
+                    "offset": 9,
+                    "opcode": "checkcast",
+                    "operand": "#37",
+                    "symbol": "class net/minecraft/world/inventory/MenuType"
+                  },
+                  {
+                    "offset": 12,
+                    "opcode": "iload_1",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 13,
+                    "opcode": "invokespecial",
+                    "operand": "#39",
+                    "symbol": "Method net/minecraft/world/inventory/AbstractContainerMenu.\"<init>\":(Lnet/minecraft/world/inventory/MenuType;I)V"
+                  },
+                  {
+                    "offset": 16,
+                    "opcode": "aload_0",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 17,
+                    "opcode": "new",
+                    "operand": "#44",
+                    "symbol": "class com/github/alexthe666/alexsmobs/inventory/MenuTransmutationTable$1"
+                  },
+                  {
+                    "offset": 20,
+                    "opcode": "dup",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 21,
+                    "opcode": "aload_0",
+                    "operand": "",
+                    "symbol": ""
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "stillValid",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;)Z",
+            "body_sha256": "7fbbb9b85a0d62996b64dadfbdc4c1216428049798614c556a43e5b7b8c2e7a4",
+            "instruction_count": 8,
+            "branch_count": 0,
+            "branches": [],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 16,
+                  "opcode": "invokestatic",
+                  "operand": "#103",
+                  "symbol": "Method stillValid:(Lnet/minecraft/world/inventory/ContainerLevelAccess;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/Block;)Z"
+                },
+                "previous": {
+                  "offset": 13,
+                  "opcode": "checkcast",
+                  "operand": "#101",
+                  "symbol": "class net/minecraft/world/level/block/Block"
+                },
+                "next": {
+                  "offset": 19,
+                  "opcode": "ireturn",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ],
+            "critical_windows": []
+          },
+          {
+            "name": "quickMoveStack",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;I)Lnet/minecraft/world/item/ItemStack;",
+            "body_sha256": "cb3551499fb0eea1d48e9da62328f7e7a651f05d08236c4966f1cf2294714967",
+            "instruction_count": 62,
+            "branch_count": 7,
+            "branches": [
+              {
+                "offset": 19,
+                "opcode": "ifnull",
+                "target": 129
+              },
+              {
+                "offset": 27,
+                "opcode": "ifeq",
+                "target": 129
+              },
+              {
+                "offset": 44,
+                "opcode": "ifeq",
+                "target": 63
+              },
+              {
+                "offset": 56,
+                "opcode": "ifne",
+                "target": 80
+              },
+              {
+                "offset": 73,
+                "opcode": "ifne",
+                "target": 80
+              },
+              {
+                "offset": 85,
+                "opcode": "ifeq",
+                "target": 96
+              },
+              {
+                "offset": 110,
+                "opcode": "if_icmpne",
+                "target": 117
+              }
+            ],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 93,
+                  "opcode": "invokevirtual",
+                  "operand": "#139",
+                  "symbol": "Method net/minecraft/world/inventory/Slot.set:(Lnet/minecraft/world/item/ItemStack;)V"
+                },
+                "previous": {
+                  "offset": 90,
+                  "opcode": "getstatic",
+                  "operand": "#107",
+                  "symbol": "Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;"
+                },
+                "next": {
+                  "offset": 96,
+                  "opcode": "aload",
+                  "operand": "4",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 98,
+                  "opcode": "invokevirtual",
+                  "operand": "#143",
+                  "symbol": "Method net/minecraft/world/inventory/Slot.setChanged:()V"
+                },
+                "previous": {
+                  "offset": 96,
+                  "opcode": "aload",
+                  "operand": "4",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 101,
+                  "opcode": "aload",
+                  "operand": "5",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 103,
+                  "opcode": "invokevirtual",
+                  "operand": "#147",
+                  "symbol": "Method net/minecraft/world/item/ItemStack.getCount:()I"
+                },
+                "previous": {
+                  "offset": 101,
+                  "opcode": "aload",
+                  "operand": "5",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 106,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 107,
+                  "opcode": "invokevirtual",
+                  "operand": "#147",
+                  "symbol": "Method net/minecraft/world/item/ItemStack.getCount:()I"
+                },
+                "previous": {
+                  "offset": 106,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 110,
+                  "opcode": "if_icmpne",
+                  "operand": "117",
+                  "symbol": ""
+                }
+              }
+            ],
+            "critical_windows": []
+          },
+          {
+            "name": "clickMenuButton",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;I)Z",
+            "body_sha256": "fdfb47b33e2337ef9fe9af1aab2f2cffc1f85cdc41a51b1c6a2044343623f3bb",
+            "instruction_count": 13,
+            "branch_count": 1,
+            "branches": [
+              {
+                "offset": 7,
+                "opcode": "ifeq",
+                "target": 25
+              }
+            ],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 4,
+                  "opcode": "invokevirtual",
+                  "operand": "#162",
+                  "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+                },
+                "previous": {
+                  "offset": 1,
+                  "opcode": "invokevirtual",
+                  "operand": "#158",
+                  "symbol": "Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;"
+                },
+                "next": {
+                  "offset": 7,
+                  "opcode": "ifeq",
+                  "operand": "25",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 10,
+                  "opcode": "new",
+                  "operand": "#167",
+                  "symbol": "class com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu"
+                },
+                "previous": {
+                  "offset": 7,
+                  "opcode": "ifeq",
+                  "operand": "25",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 13,
+                  "opcode": "dup",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 19,
+                  "opcode": "invokespecial",
+                  "operand": "#172",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu.\"<init>\":(II)V"
+                },
+                "previous": {
+                  "offset": 18,
+                  "opcode": "iload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 22,
+                  "opcode": "invokestatic",
+                  "operand": "#175",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/AlexsMobs.sendMSGToServer:(Ljava/lang/Object;)V"
+                }
+              }
+            ],
+            "critical_windows": [
+              {
+                "anchor": 10,
+                "operators": [
+                  {
+                    "offset": 1,
+                    "opcode": "invokevirtual",
+                    "operand": "#158",
+                    "symbol": "Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;"
+                  },
+                  {
+                    "offset": 4,
+                    "opcode": "invokevirtual",
+                    "operand": "#162",
+                    "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+                  },
+                  {
+                    "offset": 7,
+                    "opcode": "ifeq",
+                    "operand": "25",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 10,
+                    "opcode": "new",
+                    "operand": "#167",
+                    "symbol": "class com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu"
+                  },
+                  {
+                    "offset": 13,
+                    "opcode": "dup",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 14,
+                    "opcode": "aload_1",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 15,
+                    "opcode": "invokevirtual",
+                    "operand": "#169",
+                    "symbol": "Method net/minecraft/world/entity/player/Player.getId:()I"
+                  },
+                  {
+                    "offset": 18,
+                    "opcode": "iload_2",
+                    "operand": "",
+                    "symbol": ""
+                  }
+                ]
+              },
+              {
+                "anchor": 19,
+                "operators": [
+                  {
+                    "offset": 14,
+                    "opcode": "aload_1",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 15,
+                    "opcode": "invokevirtual",
+                    "operand": "#169",
+                    "symbol": "Method net/minecraft/world/entity/player/Player.getId:()I"
+                  },
+                  {
+                    "offset": 18,
+                    "opcode": "iload_2",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 19,
+                    "opcode": "invokespecial",
+                    "operand": "#172",
+                    "symbol": "Method com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu.\"<init>\":(II)V"
+                  },
+                  {
+                    "offset": 22,
+                    "opcode": "invokestatic",
+                    "operand": "#175",
+                    "symbol": "Method com/github/alexthe666/alexsmobs/AlexsMobs.sendMSGToServer:(Ljava/lang/Object;)V"
+                  },
+                  {
+                    "offset": 25,
+                    "opcode": "iconst_1",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 26,
+                    "opcode": "ireturn",
+                    "operand": "",
+                    "symbol": ""
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "transmute",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;I)V",
+            "body_sha256": "2fedacd00022a7db7a0f66803cde1da9d0e5c00a4535857376de7b661719276a",
+            "instruction_count": 74,
+            "branch_count": 7,
+            "branches": [
+              {
+                "offset": 47,
+                "opcode": "ifne",
+                "target": 152
+              },
+              {
+                "offset": 54,
+                "opcode": "ifnull",
+                "target": 152
+              },
+              {
+                "offset": 61,
+                "opcode": "ifle",
+                "target": 152
+              },
+              {
+                "offset": 71,
+                "opcode": "ifeq",
+                "target": 152
+              },
+              {
+                "offset": 78,
+                "opcode": "ifne",
+                "target": 152
+              },
+              {
+                "offset": 87,
+                "opcode": "if_icmpge",
+                "target": 100
+              },
+              {
+                "offset": 97,
+                "opcode": "ifeq",
+                "target": 152
+              }
+            ],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 8,
+                  "opcode": "getstatic",
+                  "operand": "#179",
+                  "symbol": "Field com/github/alexthe666/alexsmobs/config/AMConfig.transmutingExperienceCost:I"
+                },
+                "previous": {
+                  "offset": 7,
+                  "opcode": "astore_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 11,
+                  "opcode": "istore",
+                  "operand": "4",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 18,
+                  "opcode": "invokevirtual",
+                  "operand": "#185",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/tileentity/TileEntityTransmutationTable.getPossibility:(I)Lnet/minecraft/world/item/ItemStack;"
+                },
+                "previous": {
+                  "offset": 17,
+                  "opcode": "iload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 21,
+                  "opcode": "invokevirtual",
+                  "operand": "#129",
+                  "symbol": "Method net/minecraft/world/item/ItemStack.copy:()Lnet/minecraft/world/item/ItemStack;"
+                }
+              },
+              {
+                "site": {
+                  "offset": 44,
+                  "opcode": "invokevirtual",
+                  "operand": "#162",
+                  "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+                },
+                "previous": {
+                  "offset": 41,
+                  "opcode": "invokevirtual",
+                  "operand": "#158",
+                  "symbol": "Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;"
+                },
+                "next": {
+                  "offset": 47,
+                  "opcode": "ifne",
+                  "operand": "152",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 68,
+                  "opcode": "invokevirtual",
+                  "operand": "#82",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/tileentity/TileEntityTransmutationTable.hasPossibilities:()Z"
+                },
+                "previous": {
+                  "offset": 65,
+                  "opcode": "getfield",
+                  "operand": "#53",
+                  "symbol": "Field table:Lcom/github/alexthe666/alexsmobs/tileentity/TileEntityTransmutationTable;"
+                },
+                "next": {
+                  "offset": 71,
+                  "opcode": "ifeq",
+                  "operand": "152",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 82,
+                  "opcode": "getfield",
+                  "operand": "#192",
+                  "symbol": "Field net/minecraft/world/entity/player/Player.experienceLevel:I"
+                },
+                "previous": {
+                  "offset": 81,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 85,
+                  "opcode": "iload",
+                  "operand": "4",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 94,
+                  "opcode": "getfield",
+                  "operand": "#199",
+                  "symbol": "Field net/minecraft/world/entity/player/Abilities.instabuild:Z"
+                },
+                "previous": {
+                  "offset": 91,
+                  "opcode": "invokevirtual",
+                  "operand": "#195",
+                  "symbol": "Method net/minecraft/world/entity/player/Player.getAbilities:()Lnet/minecraft/world/entity/player/Abilities;"
+                },
+                "next": {
+                  "offset": 97,
+                  "opcode": "ifeq",
+                  "operand": "152",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 101,
+                  "opcode": "invokevirtual",
+                  "operand": "#147",
+                  "symbol": "Method net/minecraft/world/item/ItemStack.getCount:()I"
+                },
+                "previous": {
+                  "offset": 100,
+                  "opcode": "aload_3",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 104,
+                  "opcode": "i2d",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 122,
+                  "opcode": "invokevirtual",
+                  "operand": "#215",
+                  "symbol": "Method net/minecraft/world/item/ItemStack.setCount:(I)V"
+                },
+                "previous": {
+                  "offset": 119,
+                  "opcode": "invokestatic",
+                  "operand": "#211",
+                  "symbol": "Method java/lang/Math.max:(II)I"
+                },
+                "next": {
+                  "offset": 125,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 131,
+                  "opcode": "invokevirtual",
+                  "operand": "#139",
+                  "symbol": "Method net/minecraft/world/inventory/Slot.set:(Lnet/minecraft/world/item/ItemStack;)V"
+                },
+                "previous": {
+                  "offset": 129,
+                  "opcode": "aload",
+                  "operand": "5",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 134,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 138,
+                  "opcode": "invokevirtual",
+                  "operand": "#219",
+                  "symbol": "Method net/minecraft/world/entity/player/Player.giveExperienceLevels:(I)V"
+                },
+                "previous": {
+                  "offset": 137,
+                  "opcode": "ineg",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 141,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 149,
+                  "opcode": "invokevirtual",
+                  "operand": "#222",
+                  "symbol": "Method com/github/alexthe666/alexsmobs/tileentity/TileEntityTransmutationTable.postTransmute:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V"
+                },
+                "previous": {
+                  "offset": 147,
+                  "opcode": "aload",
+                  "operand": "5",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 152,
+                  "opcode": "return",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ],
+            "critical_windows": [
+              {
+                "anchor": 149,
+                "operators": [
+                  {
+                    "offset": 145,
+                    "opcode": "aload_1",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 146,
+                    "opcode": "aload_3",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 147,
+                    "opcode": "aload",
+                    "operand": "5",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 149,
+                    "opcode": "invokevirtual",
+                    "operand": "#222",
+                    "symbol": "Method com/github/alexthe666/alexsmobs/tileentity/TileEntityTransmutationTable.postTransmute:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V"
+                  },
+                  {
+                    "offset": 152,
+                    "opcode": "return",
+                    "operand": "",
+                    "symbol": ""
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "removed",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+            "body_sha256": "fd7248552ebc88a1a405972b533f283c3111383b5f3281e0540b057b7357437c",
+            "instruction_count": 10,
+            "branch_count": 0,
+            "branches": [],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 2,
+                  "opcode": "invokespecial",
+                  "operand": "#226",
+                  "symbol": "Method net/minecraft/world/inventory/AbstractContainerMenu.removed:(Lnet/minecraft/world/entity/player/Player;)V"
+                },
+                "previous": {
+                  "offset": 1,
+                  "opcode": "aload_1",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 5,
+                  "opcode": "aload_0",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ],
+            "critical_windows": [
+              {
+                "anchor": 2,
+                "operators": [
+                  {
+                    "offset": 0,
+                    "opcode": "aload_0",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 1,
+                    "opcode": "aload_1",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 2,
+                    "opcode": "invokespecial",
+                    "operand": "#226",
+                    "symbol": "Method net/minecraft/world/inventory/AbstractContainerMenu.removed:(Lnet/minecraft/world/entity/player/Player;)V"
+                  },
+                  {
+                    "offset": 5,
+                    "opcode": "aload_0",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 6,
+                    "opcode": "getfield",
+                    "operand": "#61",
+                    "symbol": "Field access:Lnet/minecraft/world/inventory/ContainerLevelAccess;"
+                  },
+                  {
+                    "offset": 9,
+                    "opcode": "aload_0",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 10,
+                    "opcode": "aload_1",
+                    "operand": "",
+                    "symbol": ""
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "lambda$removed$0",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
+            "body_sha256": "e321cad228cf531553dd8974e361479cfffe32167beb6c73985f3e0c602f1899",
+            "instruction_count": 6,
+            "branch_count": 0,
+            "branches": [],
+            "selected_refs": [],
+            "critical_windows": []
+          }
+        ],
+        "relevant_refs": 22,
+        "class_sha256": "e4f3700261fe9bbb0a8895359dc98739337595cb07b3c0fe0a9480f6de4d5e76"
+      },
+      {
+        "class_path": "com/github/alexthe666/alexsmobs/tileentity/TileEntityTransmutationTable.class",
+        "declared_methods": 12,
+        "roster": [
+          {
+            "name": "TileEntityTransmutationTable",
+            "descriptor": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+            "instructions": 23
+          },
+          {
+            "name": "commonTick",
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lcom/github/alexthe666/alexsmobs/tileentity/TileEntityTransmutationTable;)V",
+            "instructions": 3
+          },
+          {
+            "name": "createFromLootTable",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/world/item/ItemStack;",
+            "instructions": 36
+          },
+          {
+            "name": "loadAdditional",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+            "instructions": 68
+          },
+          {
+            "name": "saveAdditional",
+            "descriptor": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+            "instructions": 82
+          },
+          {
+            "name": "randomizeResults",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;)V",
+            "instructions": 75
+          },
+          {
+            "name": "rollPossiblity",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;I)V",
+            "instructions": 34
+          },
+          {
+            "name": "hasPossibilities",
+            "descriptor": "()Z",
+            "instructions": 22
+          },
+          {
+            "name": "getPossibility",
+            "descriptor": "(I)Lnet/minecraft/world/item/ItemStack;",
+            "instructions": 16
+          },
+          {
+            "name": "postTransmute",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V",
+            "instructions": 52
+          },
+          {
+            "name": "tick",
+            "descriptor": "()V",
+            "instructions": 42
+          },
+          {
+            "name": "setRerollPlayerUUID",
+            "descriptor": "(Ljava/util/UUID;)V",
+            "instructions": 4
+          }
+        ],
+        "selected_methods": [
+          {
+            "name": "rollPossiblity",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;I)V",
+            "body_sha256": "c31e61e74684e77b6ea54d86b26eccbd284feb40c7d049904c576007daca5ec9",
+            "instruction_count": 34,
+            "branch_count": 5,
+            "branches": [
+              {
+                "offset": 1,
+                "opcode": "ifnull",
+                "target": 24
+              },
+              {
+                "offset": 11,
+                "opcode": "ifne",
+                "target": 24
+              },
+              {
+                "offset": 21,
+                "opcode": "ifne",
+                "target": 25
+              },
+              {
+                "offset": 64,
+                "opcode": "goto",
+                "target": 78
+              },
+              {
+                "offset": 71,
+                "opcode": "goto",
+                "target": 78
+              }
+            ],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 8,
+                  "opcode": "invokevirtual",
+                  "operand": "#55",
+                  "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+                },
+                "previous": {
+                  "offset": 5,
+                  "opcode": "invokevirtual",
+                  "operand": "#49",
+                  "symbol": "Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;"
+                },
+                "next": {
+                  "offset": 11,
+                  "opcode": "ifne",
+                  "operand": "24",
+                  "symbol": ""
+                }
+              },
+              {
+                "site": {
+                  "offset": 28,
+                  "opcode": "invokestatic",
+                  "operand": "#305",
+                  "symbol": "Method net/minecraft/util/Mth.clamp:(III)I"
+                },
+                "previous": {
+                  "offset": 27,
+                  "opcode": "iconst_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 31,
+                  "opcode": "istore",
+                  "operand": "4",
+                  "symbol": ""
+                }
+              }
+            ],
+            "critical_windows": []
+          },
+          {
+            "name": "hasPossibilities",
+            "descriptor": "()Z",
+            "body_sha256": "341d4f111d224f0bda50753be244ce470cb1ace5e3936da5e0c7afaccc33cbe8",
+            "instruction_count": 22,
+            "branch_count": 4,
+            "branches": [
+              {
+                "offset": 4,
+                "opcode": "if_icmpge",
+                "target": 36
+              },
+              {
+                "offset": 13,
+                "opcode": "ifnull",
+                "target": 28
+              },
+              {
+                "offset": 25,
+                "opcode": "ifeq",
+                "target": 30
+              },
+              {
+                "offset": 33,
+                "opcode": "goto",
+                "target": 2
+              }
+            ],
+            "selected_refs": [],
+            "critical_windows": []
+          },
+          {
+            "name": "getPossibility",
+            "descriptor": "(I)Lnet/minecraft/world/item/ItemStack;",
+            "body_sha256": "23248f6bc0725e3315efcf759120651243e3bfd32a72936b254ab44d19085b9c",
+            "instruction_count": 16,
+            "branch_count": 2,
+            "branches": [
+              {
+                "offset": 15,
+                "opcode": "ifnonnull",
+                "target": 24
+              },
+              {
+                "offset": 21,
+                "opcode": "goto",
+                "target": 25
+              }
+            ],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 3,
+                  "opcode": "invokestatic",
+                  "operand": "#305",
+                  "symbol": "Method net/minecraft/util/Mth.clamp:(III)I"
+                },
+                "previous": {
+                  "offset": 2,
+                  "opcode": "iconst_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 6,
+                  "opcode": "istore_2",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ],
+            "critical_windows": []
+          },
+          {
+            "name": "postTransmute",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V",
+            "body_sha256": "520b62ed6d15c94843e78b7fb67cf2fab160fb350a49c228f46ba2a5d485bf05",
+            "instruction_count": 52,
+            "branch_count": 4,
+            "branches": [
+              {
+                "offset": 13,
+                "opcode": "ifeq",
+                "target": 37
+              },
+              {
+                "offset": 34,
+                "opcode": "goto",
+                "target": 46
+              },
+              {
+                "offset": 86,
+                "opcode": "ifeq",
+                "target": 109
+              },
+              {
+                "offset": 96,
+                "opcode": "if_icmplt",
+                "target": 109
+              }
+            ],
+            "selected_refs": [
+              {
+                "site": {
+                  "offset": 75,
+                  "opcode": "invokevirtual",
+                  "operand": "#330",
+                  "symbol": "Method net/minecraft/world/item/ItemStack.getCount:()I"
+                },
+                "previous": {
+                  "offset": 74,
+                  "opcode": "aload_2",
+                  "operand": "",
+                  "symbol": ""
+                },
+                "next": {
+                  "offset": 78,
+                  "opcode": "iadd",
+                  "operand": "",
+                  "symbol": ""
+                }
+              }
+            ],
+            "critical_windows": []
+          }
+        ],
+        "relevant_refs": 4,
+        "class_sha256": "4879c9f0072866d0d594731538e0eaa509696505ea7b6ade79c19d4a885a1783"
+      }
+    ],
+    "bounded_reference_count": 35
+  },
+  "external_message_reference_discovery": {
+    "scanned_provider_class_candidates": 2,
+    "parsed_references": 4,
+    "external_owners": [
+      {
+        "class_path": "com/github/alexthe666/alexsmobs/AlexsMobs.class",
+        "class_sha256": "8601044e454d365bf8605c4dc8f94b7e1ab4dbf50b2b51b3cec36dc677279af6",
+        "direct_javap_references": [
+          {
+            "method": "setup",
+            "descriptor": "(Lnet/neoforged/fml/event/lifecycle/FMLCommonSetupEvent;)V",
+            "method_sha256": "a2f3098282896185cc77de3b7007fd50bd184ab5cce3767dcab5fa68050581aa",
+            "instructions": 118,
+            "references": [
+              {
+                "offset": 375,
+                "site": {
+                  "offset": 375,
+                  "opcode": "ldc_w",
+                  "operand": "#334",
+                  "symbol": "class com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu"
+                },
+                "operators": [
+                  {
+                    "offset": 357,
+                    "opcode": "invokedynamic",
+                    "operand": "#331,  0",
+                    "symbol": "InvokeDynamic #59:accept:()Ljava/util/function/BiConsumer;"
+                  },
+                  {
+                    "offset": 362,
+                    "opcode": "invokedynamic",
+                    "operand": "#332,  0",
+                    "symbol": "InvokeDynamic #60:apply:()Ljava/util/function/Function;"
+                  },
+                  {
+                    "offset": 367,
+                    "opcode": "invokedynamic",
+                    "operand": "#333,  0",
+                    "symbol": "InvokeDynamic #61:accept:()Ljava/util/function/BiConsumer;"
+                  },
+                  {
+                    "offset": 372,
+                    "opcode": "invokestatic",
+                    "operand": "#246",
+                    "symbol": "Method registerMessage:(Ljava/lang/Class;Ljava/util/function/BiConsumer;Ljava/util/function/Function;Ljava/util/function/BiConsumer;)V"
+                  },
+                  {
+                    "offset": 375,
+                    "opcode": "ldc_w",
+                    "operand": "#334",
+                    "symbol": "class com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu"
+                  },
+                  {
+                    "offset": 378,
+                    "opcode": "invokedynamic",
+                    "operand": "#336,  0",
+                    "symbol": "InvokeDynamic #62:accept:()Ljava/util/function/BiConsumer;"
+                  },
+                  {
+                    "offset": 383,
+                    "opcode": "invokedynamic",
+                    "operand": "#337,  0",
+                    "symbol": "InvokeDynamic #63:apply:()Ljava/util/function/Function;"
+                  },
+                  {
+                    "offset": 388,
+                    "opcode": "invokedynamic",
+                    "operand": "#338,  0",
+                    "symbol": "InvokeDynamic #64:accept:()Ljava/util/function/BiConsumer;"
+                  },
+                  {
+                    "offset": 393,
+                    "opcode": "invokestatic",
+                    "operand": "#246",
+                    "symbol": "Method registerMessage:(Ljava/lang/Class;Ljava/util/function/BiConsumer;Ljava/util/function/Function;Ljava/util/function/BiConsumer;)V"
+                  },
+                  {
+                    "offset": 396,
+                    "opcode": "ldc_w",
+                    "operand": "#339",
+                    "symbol": "class com/github/alexthe666/alexsmobs/citadel/server/message/PropertiesMessage"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "receiver_source_operators": [],
+        "receiver_guard_anchors": [],
+        "typed_reference_unverified": false
+      },
+      {
+        "class_path": "com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu$Handler.class",
+        "class_sha256": "b2ebdc3a88d6aecf68290ae2376fa4c3ee8885b3aff71260cbf0b4986f199146",
+        "direct_javap_references": [
+          {
+            "method": "handle",
+            "descriptor": "(Lcom/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu;Lcom/github/alexthe666/alexsmobs/message/AMNetContext;)V",
+            "method_sha256": "ab843e1991be53475960de1c69304c5698c2b13d709e1e97a1edce339508c784",
+            "instructions": 9,
+            "references": [
+              {
+                "offset": 10,
+                "site": {
+                  "offset": 10,
+                  "opcode": "invokedynamic",
+                  "operand": "#13,  0",
+                  "symbol": "InvokeDynamic #0:run:(Lcom/github/alexthe666/alexsmobs/message/AMNetContext;Lcom/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu;)Ljava/lang/Runnable;"
+                },
+                "operators": [
+                  {
+                    "offset": 2,
+                    "opcode": "invokeinterface",
+                    "operand": "#7,  2",
+                    "symbol": "InterfaceMethod com/github/alexthe666/alexsmobs/message/AMNetContext.setPacketHandled:(Z)V"
+                  },
+                  {
+                    "offset": 7,
+                    "opcode": "aload_1",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 8,
+                    "opcode": "aload_1",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 9,
+                    "opcode": "aload_0",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 10,
+                    "opcode": "invokedynamic",
+                    "operand": "#13,  0",
+                    "symbol": "InvokeDynamic #0:run:(Lcom/github/alexthe666/alexsmobs/message/AMNetContext;Lcom/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu;)Ljava/lang/Runnable;"
+                  },
+                  {
+                    "offset": 15,
+                    "opcode": "invokeinterface",
+                    "operand": "#17,  2",
+                    "symbol": "InterfaceMethod com/github/alexthe666/alexsmobs/message/AMNetContext.enqueueWork:(Ljava/lang/Runnable;)V"
+                  },
+                  {
+                    "offset": 20,
+                    "opcode": "return",
+                    "operand": "",
+                    "symbol": ""
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "method": "lambda$handle$0",
+            "descriptor": "(Lcom/github/alexthe666/alexsmobs/message/AMNetContext;Lcom/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu;)V",
+            "method_sha256": "95d0ed2d03eb01e289430529b1c354735170514c27be382894a956ff87191aac",
+            "instructions": 28,
+            "references": [
+              {
+                "offset": 28,
+                "site": {
+                  "offset": 28,
+                  "opcode": "getfield",
+                  "operand": "#47",
+                  "symbol": "Field com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu.playerId:I"
+                },
+                "operators": [
+                  {
+                    "offset": 22,
+                    "opcode": "astore_2",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 23,
+                    "opcode": "aload_2",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 24,
+                    "opcode": "invokevirtual",
+                    "operand": "#41",
+                    "symbol": "Method net/minecraft/world/entity/player/Player.getId:()I"
+                  },
+                  {
+                    "offset": 27,
+                    "opcode": "aload_1",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 28,
+                    "opcode": "getfield",
+                    "operand": "#47",
+                    "symbol": "Field com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu.playerId:I"
+                  },
+                  {
+                    "offset": 31,
+                    "opcode": "if_icmpne",
+                    "operand": "61",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 34,
+                    "opcode": "aload_2",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 35,
+                    "opcode": "getfield",
+                    "operand": "#53",
+                    "symbol": "Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;"
+                  },
+                  {
+                    "offset": 38,
+                    "opcode": "instanceof",
+                    "operand": "#57",
+                    "symbol": "class com/github/alexthe666/alexsmobs/inventory/MenuTransmutationTable"
+                  },
+                  {
+                    "offset": 41,
+                    "opcode": "ifeq",
+                    "operand": "61",
+                    "symbol": ""
+                  }
+                ]
+              },
+              {
+                "offset": 55,
+                "site": {
+                  "offset": 55,
+                  "opcode": "getfield",
+                  "operand": "#59",
+                  "symbol": "Field com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu.choice:I"
+                },
+                "operators": [
+                  {
+                    "offset": 51,
+                    "opcode": "astore_3",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 52,
+                    "opcode": "aload_3",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 53,
+                    "opcode": "aload_2",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 54,
+                    "opcode": "aload_1",
+                    "operand": "",
+                    "symbol": ""
+                  },
+                  {
+                    "offset": 55,
+                    "opcode": "getfield",
+                    "operand": "#59",
+                    "symbol": "Field com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu.choice:I"
+                  },
+                  {
+                    "offset": 58,
+                    "opcode": "invokevirtual",
+                    "operand": "#62",
+                    "symbol": "Method com/github/alexthe666/alexsmobs/inventory/MenuTransmutationTable.transmute:(Lnet/minecraft/world/entity/player/Player;I)V"
+                  },
+                  {
+                    "offset": 61,
+                    "opcode": "return",
+                    "operand": "",
+                    "symbol": ""
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "receiver_source_operators": [
+          {
+            "offset": 1,
+            "opcode": "invokeinterface",
+            "operand": "#21,  1",
+            "symbol": "InterfaceMethod com/github/alexthe666/alexsmobs/message/AMNetContext.getSender:()Lnet/minecraft/server/level/ServerPlayer;"
+          },
+          {
+            "offset": 8,
+            "opcode": "invokeinterface",
+            "operand": "#25,  1",
+            "symbol": "InterfaceMethod com/github/alexthe666/alexsmobs/message/AMNetContext.isClientSide:()Z"
+          },
+          {
+            "offset": 13,
+            "opcode": "ifeq",
+            "operand": "23",
+            "symbol": ""
+          },
+          {
+            "offset": 16,
+            "opcode": "getstatic",
+            "operand": "#29",
+            "symbol": "Field com/github/alexthe666/alexsmobs/AlexsMobs.PROXY:Lcom/github/alexthe666/alexsmobs/CommonProxy;"
+          },
+          {
+            "offset": 19,
+            "opcode": "invokevirtual",
+            "operand": "#35",
+            "symbol": "Method com/github/alexthe666/alexsmobs/CommonProxy.getClientSidePlayer:()Lnet/minecraft/world/entity/player/Player;"
+          }
+        ],
+        "receiver_guard_anchors": [
+          {
+            "offset": 1,
+            "opcode": "invokeinterface",
+            "operand": "#21,  1",
+            "symbol": "InterfaceMethod com/github/alexthe666/alexsmobs/message/AMNetContext.getSender:()Lnet/minecraft/server/level/ServerPlayer;"
+          },
+          {
+            "offset": 8,
+            "opcode": "invokeinterface",
+            "operand": "#25,  1",
+            "symbol": "InterfaceMethod com/github/alexthe666/alexsmobs/message/AMNetContext.isClientSide:()Z"
+          },
+          {
+            "offset": 13,
+            "opcode": "ifeq",
+            "operand": "23",
+            "symbol": ""
+          },
+          {
+            "offset": 19,
+            "opcode": "invokevirtual",
+            "operand": "#35",
+            "symbol": "Method com/github/alexthe666/alexsmobs/CommonProxy.getClientSidePlayer:()Lnet/minecraft/world/entity/player/Player;"
+          },
+          {
+            "offset": 24,
+            "opcode": "invokevirtual",
+            "operand": "#41",
+            "symbol": "Method net/minecraft/world/entity/player/Player.getId:()I"
+          },
+          {
+            "offset": 28,
+            "opcode": "getfield",
+            "operand": "#47",
+            "symbol": "Field com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu.playerId:I"
+          },
+          {
+            "offset": 31,
+            "opcode": "if_icmpne",
+            "operand": "61",
+            "symbol": ""
+          },
+          {
+            "offset": 35,
+            "opcode": "getfield",
+            "operand": "#53",
+            "symbol": "Field net/minecraft/world/entity/player/Player.containerMenu:Lnet/minecraft/world/inventory/AbstractContainerMenu;"
+          },
+          {
+            "offset": 38,
+            "opcode": "instanceof",
+            "operand": "#57",
+            "symbol": "class com/github/alexthe666/alexsmobs/inventory/MenuTransmutationTable"
+          },
+          {
+            "offset": 41,
+            "opcode": "ifeq",
+            "operand": "61",
+            "symbol": ""
+          },
+          {
+            "offset": 55,
+            "opcode": "getfield",
+            "operand": "#59",
+            "symbol": "Field com/github/alexthe666/alexsmobs/message/MessageTransmuteFromMenu.choice:I"
+          },
+          {
+            "offset": 58,
+            "opcode": "invokevirtual",
+            "operand": "#62",
+            "symbol": "Method com/github/alexthe666/alexsmobs/inventory/MenuTransmutationTable.transmute:(Lnet/minecraft/world/entity/player/Player;I)V"
+          }
+        ],
+        "typed_reference_unverified": false
+      }
+    ]
+  },
+  "network_context_declaration": {
+    "class_path": "com/github/alexthe666/alexsmobs/message/AMNetContext.class",
+    "class_sha256": "6f33af8ea8e4b16f84473b9db291c395a1d76c9ea8dfb515bc345b99558b28e7",
+    "declared_methods": [
+      {
+        "name": "setPacketHandled",
+        "descriptor": "(Z)V",
+        "instructions": 0
+      },
+      {
+        "name": "enqueueWork",
+        "descriptor": "(Ljava/lang/Runnable;)V",
+        "instructions": 0
+      },
+      {
+        "name": "getSender",
+        "descriptor": "()Lnet/minecraft/server/level/ServerPlayer;",
+        "instructions": 0
+      },
+      {
+        "name": "isClientSide",
+        "descriptor": "()Z",
+        "instructions": 0
+      }
+    ]
+  },
+  "limitations": {
+    "read_only": true,
+    "complete_sender_receiver_identity": "NOT_CERTIFIED",
+    "context_sender_authentication": "NOT_VERIFIED",
+    "receiver_player_id_and_active_menu_guards": "OPERAND_OBSERVED_NOT_RUNTIME_TESTED",
+    "menu_player_session_binding": "NOT_VERIFIED",
+    "packet_choice_validation": "NOT_VERIFIED",
+    "replay_and_concurrent_settlement": "NOT_VERIFIED",
+    "transmutation_xp_and_item_effective_qa": "NOT_TESTED",
+    "runtime_packet_registration": "NOT_RECONSTRUCTED",
+    "exceptional_cfg_and_transformed_runtime": "NOT_RECONSTRUCTED",
+    "static_perk_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false
+  }
+}
