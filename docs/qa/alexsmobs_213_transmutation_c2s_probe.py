@@ -14,7 +14,7 @@ import re
 import zipfile
 from pathlib import Path
 
-from alexscaves_1010_damage_consumer_probe import javap, parse_methods, sha_file
+from alexscaves_1010_damage_consumer_probe import CODE_LINE, javap, parse_methods, sha_file
 
 BASE = "com/github/alexthe666/alexsmobs/"
 MESSAGE = BASE + "message/MessageTransmuteFromMenu.class"
@@ -48,7 +48,9 @@ MAX_METHODS = 65
 MAX_SELECTED = 25
 MAX_REFS_PER = 65
 MAX_REFERENCES = 260
-MAX_REPORT_BYTES = 145000
+MAX_REPORT_BYTES = 160000
+MAX_EXTERNAL_CLASSES = 14
+MAX_EXTERNAL_REFS = 40
 
 
 class TransmuteProbeError(ValueError):
@@ -166,6 +168,75 @@ def projection(methods):
     return {"classes": out, "bounded_reference_count": grand_total}
 
 
+def parse_class_initializer(raw):
+    """Preserve class-initializer JVM references that parse_methods omits."""
+    rows = []
+    active = False
+    for line in raw.splitlines():
+        if line.strip() == "static {};":
+            active = True
+            continue
+        if active and line.startswith("}"):
+            break
+        if not active:
+            continue
+        match = CODE_LINE.match(line)
+        if match:
+            offset, opcode, operand, symbol = match.groups()
+            rows.append({
+                "offset": int(offset), "opcode": opcode,
+                "operand": operand.strip(), "symbol": (symbol or "").strip(),
+            })
+    if not rows:
+        return None
+    return {"header": "private static void <clinit>();",
+            "descriptor": "()V", "instructions": rows}
+
+
+def project_dispatch_candidates(class_bytes, jar, javap_bin):
+    """Byte string is *only* a candidate search; javap validates each callsite."""
+    require(1 <= len(class_bytes) <= MAX_EXTERNAL_CLASSES,
+            "missing/oversize external transmutation message ref population")
+    results = []
+    total = 0
+    for path, data in sorted(class_bytes.items()):
+        native = javap(javap_bin, jar, path[:-6].replace("/", "."))
+        methods = parse_methods(native)
+        init = parse_class_initializer(native)
+        if init:
+            methods.append(init)
+        selected = []
+        for method in methods:
+            rows = method["instructions"]
+            indices = [
+                i for i, row in enumerate(rows)
+                if "MessageTransmuteFromMenu" in row["symbol"]
+            ]
+            if not indices:
+                continue
+            require(len(indices) <= 16, "oversize message registration references")
+            selected.append({
+                "method": method_name(method), "descriptor": method["descriptor"],
+                "method_sha256": fingerprint(method),
+                "instructions": len(rows),
+                "references": [{
+                    "offset": rows[i]["offset"],
+                    "site": item(rows[i]),
+                    "operators": opcode_window(rows, i, 4, 5),
+                } for i in indices],
+            })
+            total += len(indices)
+        results.append({
+            "class_path": path,
+            "class_sha256": hashlib.sha256(data).hexdigest(),
+            "direct_javap_references": selected,
+            "typed_reference_unverified": not bool(selected),
+        })
+    require(total <= MAX_EXTERNAL_REFS, "unbounded C2S dispatch references")
+    return {"scanned_provider_class_candidates": len(results),
+            "parsed_references": total, "external_owners": results}
+
+
 def audit(jar, javap_bin):
     require(sha_file(jar) == (SHA1, SHA256, SIZE),
             "installed publisher SHA-1/SHA-256/size mismatch")
@@ -173,6 +244,14 @@ def audit(jar, javap_bin):
     with zipfile.ZipFile(jar) as archive:
         names = archive.namelist()
         require(len(names) == len(set(names)), "duplicate ZIP entries")
+        members = [x for x in names if x.startswith(BASE) and x.endswith(".class")]
+        require(1100 <= len(members) <= 1700,
+                "unexpected publisher provider class population")
+        candidates = {
+            path: archive.read(path) for path in members
+            if path not in PATHS and
+            b"MessageTransmuteFromMenu" in archive.read(path)
+        }
         for path in PATHS:
             require(path in names, "missing native transmutation class " + path)
             raw = archive.read(path)
@@ -185,6 +264,7 @@ def audit(jar, javap_bin):
         for path in PATHS
     }
     observed = projection(methods)
+    externals = project_dispatch_candidates(candidates, jar, javap_bin)
     for cls in observed["classes"]:
         cls["class_sha256"] = sha[cls["class_path"]]
     report = {
@@ -195,6 +275,7 @@ def audit(jar, javap_bin):
             "sha1": SHA1, "sha256": SHA256, "size_bytes": SIZE,
         },
         "observations": observed,
+        "external_message_reference_discovery": externals,
         "limitations": {
             "read_only": True,
             "complete_sender_receiver_identity": "NOT_CERTIFIED",
