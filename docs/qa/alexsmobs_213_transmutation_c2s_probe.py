@@ -41,7 +41,7 @@ REF = re.compile(
     r"transmutingExperienceCost|AMConfig|instabuild|"
     r"Mth.clamp|Slot.set|\.setChanged|"
     r"getPossibilities|canUse|stillValid|"
-    r"getCount|setCount|setItem|setOutput|"
+    r"getCount|setCount|setItem|setOutput|readInt|writeInt|choice:I|"
     r"Packet|Context|getLevel|getSender)")
 CRITICAL = re.compile(r"(?i:getSender|enqueueWork|containerMenu|"
                       r"getEntity|transmute|MessageTransmuteFromMenu)")
@@ -229,6 +229,7 @@ def project_dispatch_candidates(class_bytes, jar, javap_bin):
             })
             total += len(indices)
         receiver_head = []
+        receiver_guards = []
         if path == HANDLER:
             targets = [m for m in methods if method_name(m) == "lambda$handle$0"]
             require(len(targets) == 1, "exact C2S receiver lambda missing")
@@ -241,11 +242,34 @@ def project_dispatch_candidates(class_bytes, jar, javap_bin):
                  or row["opcode"] in {"checkcast", "instanceof", "aconst_null"})
             ]
             require(1 <= len(receiver_head) <= 14, "invalid receiver source window")
+            offset_map = {row["offset"]: row for row in recv["instructions"]}
+            anchors = (
+                (1, "invokeinterface", "AMNetContext.getSender:"),
+                (8, "invokeinterface", "AMNetContext.isClientSide:"),
+                (13, "ifeq", "23"),
+                (19, "invokevirtual", "CommonProxy.getClientSidePlayer:"),
+                (24, "invokevirtual", "Player.getId:"),
+                (28, "getfield", "MessageTransmuteFromMenu.playerId:I"),
+                (31, "if_icmpne", "61"),
+                (35, "getfield", "Player.containerMenu:"),
+                (38, "instanceof", "MenuTransmutationTable"),
+                (41, "ifeq", "61"),
+                (55, "getfield", "MessageTransmuteFromMenu.choice:I"),
+                (58, "invokevirtual", "MenuTransmutationTable.transmute:"),
+            )
+            for offset, opcode, symbol in anchors:
+                row = offset_map.get(offset)
+                require(row is not None and row["opcode"] == opcode and
+                        (symbol in row["operand"] or symbol in row["symbol"]),
+                        "receiver identity/menu/choice JVM guard drift at " +
+                        str(offset))
+                receiver_guards.append(item(row))
         results.append({
             "class_path": path,
             "class_sha256": hashlib.sha256(data).hexdigest(),
             "direct_javap_references": selected,
             "receiver_source_operators": receiver_head,
+            "receiver_guard_anchors": receiver_guards,
             "typed_reference_unverified": not bool(selected),
         })
     require(total <= MAX_EXTERNAL_REFS, "unbounded C2S dispatch references")
