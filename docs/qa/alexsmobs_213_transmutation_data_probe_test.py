@@ -93,6 +93,27 @@ class TransmutationDataProbeTests(unittest.TestCase):
         projected = method_projection(m)
         self.assertEqual(len(projected["native_set_changed_calls"]), 1)
 
+    def test_math_operators_cover_weighted_sampling_sign_and_division(self):
+        m = method("getRandomItem", [
+            row(0, "dconst_0"),
+            row(1, "dneg"),
+            row(2, "ddiv"),
+            row(3, "dreturn"),
+        ])
+        result = method_projection(m)
+        self.assertEqual(
+            [r["site"]["opcode"] for r in result["arithmetic_operators"]],
+            ["dneg", "ddiv"],
+        )
+
+    def test_unbounded_math_operators_fail_closed(self):
+        m = method("calculateAddWeight", [
+            *[row(i, "dneg") for i in range(76)],
+            row(76, "dreturn"),
+        ])
+        with self.assertRaises(TransmuteProbeError):
+            method_projection(m)
+
     def test_prior_artifact_hash_identity_is_mandatory(self):
         x = {"artifact": {"sha1": SHA1, "sha256": SHA256,
                           "size_bytes": SIZE},
