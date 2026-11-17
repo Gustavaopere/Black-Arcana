@@ -30,7 +30,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - name: Run 11 bounded synthetic fail-closed checks
+      - name: Run 15 bounded synthetic fail-closed checks
         run: |
           python3 -m py_compile docs/qa/alexsmobs_213_table_block_lifecycle_probe.py docs/qa/alexsmobs_213_table_block_lifecycle_probe_test.py
           python3 docs/qa/alexsmobs_213_table_block_lifecycle_probe_test.py -v
