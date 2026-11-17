@@ -32,7 +32,7 @@ jobs:
         run: |
           python3 -m py_compile docs/qa/alexsmobs_213_context_bridge_probe.py docs/qa/alexsmobs_213_context_bridge_probe_test.py
           python3 docs/qa/alexsmobs_213_context_bridge_probe_test.py -v
-      - name: Download exact current modlist publisher JAR
+      - name: Download previously physical-modlist-matched publisher JAR
         run: |
           set -euo pipefail
           mkdir -p build/alexsmobs-213-context-bridge
