@@ -28,7 +28,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - name: Run 8 deterministic candidate-only tests
+      - name: Run 10 deterministic candidate-only tests
         run: |
           python3 -m py_compile docs/qa/alexsmobs_213_context_bridge_probe.py docs/qa/alexsmobs_213_context_bridge_probe_test.py
           python3 docs/qa/alexsmobs_213_context_bridge_probe_test.py -v
