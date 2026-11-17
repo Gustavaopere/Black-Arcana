@@ -4,7 +4,8 @@ import copy
 import unittest
 
 from alexsmobs_213_context_bridge_probe import (
-    bootstrap_candidates, is_direct_implementer, method_projection,
+    bootstrap_candidates, bridge_windows, is_direct_implementer, method_projection,
+    SEND,
     verify_snapshot,
 )
 from alexsmobs_213_transmutation_c2s_probe import TransmuteProbeError
@@ -77,6 +78,28 @@ class ContextBridgeTests(unittest.TestCase):
 
     def test_missing_bootstrap_means_unknown_not_approval(self):
         self.assertEqual(bootstrap_candidates("no bootstrap section"), [])
+
+    def test_exact_registration_direction_method_window_is_selected(self):
+        method = {
+            "header": "public static void registerPlay();", "descriptor": "()V",
+            "instructions": [
+                row(0, "aload_0"),
+                row(1, "invokevirtual", "#7", "Method PayloadRegistrar.playBidirectional:()V"),
+                row(4, "return"),
+            ],
+        }
+        selected = bridge_windows(SEND, [method])
+        self.assertEqual(len(selected), 1)
+        self.assertEqual(selected[0]["instructions"][1]["offset"], 1)
+        self.assertEqual(selected[0]["method"], "registerPlay")
+
+    def test_unbounded_bridge_method_rejected(self):
+        method = {
+            "header": "public static void registerPlay();", "descriptor": "()V",
+            "instructions": [row(i, "nop") for i in range(66)],
+        }
+        with self.assertRaises(TransmuteProbeError):
+            bridge_windows(SEND, [method])
 
     def test_sha_exact_snapshot_rejects_changed_observation(self):
         original = {"classes": [], "limitations": {"mutation": "NO_MUTATION"}}
