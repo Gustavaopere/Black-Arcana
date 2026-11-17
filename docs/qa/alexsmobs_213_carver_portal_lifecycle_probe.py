@@ -70,6 +70,27 @@ def small(row):
     }
 
 
+def bounded_operator_window(method, start, end):
+    """Keep selected branch/operand facts, not a method body or source."""
+    require(start < end and end - start <= 100, "unbounded lifecycle operator window")
+    allowed = {
+        "bipush", "sipush", "ldc", "ldc_w", "ldc2_w",
+        "iadd", "isub", "imul", "idiv", "irem",
+        "iconst_0", "iconst_1", "iconst_2", "aconst_null",
+        "dup", "pop", "checkcast", "instanceof",
+    }
+    items = [
+        small(ins) for ins in method["instructions"]
+        if start <= ins["offset"] < end and
+        (ins["opcode"].startswith(("if", "goto", "invoke", "iload", "istore",
+                                  "aload", "astore")) or
+         ins["opcode"] in allowed or
+         ins["opcode"].startswith(("getfield", "putfield", "getstatic", "putstatic")))
+    ]
+    require(len(items) <= 64, "too many selected lifecycle operators")
+    return items
+
+
 def selected_method(method):
     ins = method["instructions"]
     require(0 < len(ins) <= 3000, "empty/oversize selected JVM method")
@@ -130,9 +151,18 @@ def projection(class_methods):
         require(len(chosen) <= MAX_METHODS, "unbounded selected native methods")
         items = [selected_method(m) for m in chosen]
         total_refs += sum(len(m["references"]) for m in items)
+        windows = []
+        if path == PORTAL:
+            tick = [m for m in chosen if name_of(m) == "tick"]
+            require(len(tick) == 1, "portal tick JVM identity absent or ambiguous")
+            for start, end in ((0, 35), (530, 576), (675, 718), (850, 942)):
+                windows.append({"start": start, "end": end,
+                                "selected_operators":
+                                    bounded_operator_window(tick[0], start, end)})
         result.append({
             "class_path": path, "declared_method_count": len(methods),
             "selected_method_count": len(items),
+            "tick_operator_windows": windows,
             "selected_methods": items,
             "method_roster": [{
                 "name": name_of(m), "descriptor": m["descriptor"],
