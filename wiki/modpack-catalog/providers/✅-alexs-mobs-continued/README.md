@@ -37,7 +37,7 @@ Final audit checkpoint used by this catalog:
 - publisher SHA-256: `eef0b4d36f1e40292b23f90ad3052e2e9aace3a33c6a48c65b8b5f2b061ab6c8`;
 - bytes: `27,452,738`.
 
-The publisher SHA-1 exactly equals the current physical sibling SHA-1.
+The publisher SHA-1 exactly matched the physical sibling SHA-1 in the historical audit; current physical modlist presence has not been reconfirmed.
 
 The exact artifact contains **5,584 archive entries / 1,270 classes / 4,314 non-class resources / 638 provider-data paths**, including **45 item classes, 27 block classes, 12 tile/block-entity classes and 22 message classes**. Exhaustive signature inspection finds **26 item classes** and **11 block classes** with relevant interaction surfaces.
 
@@ -120,9 +120,9 @@ Catalog closure does not assert assembled-pack runtime PASS. Later QA still incl
 
 ## Result
 
-**✅ Cataloged — exact current denominator closed.**
+**⚠️ Observed publisher semantic inventory documented; no current-pack or full-static-contract closure claim.**
 
-Current Alex's Mobs Continued semantic inventory: **3 supernatural roots = 1 strict exact-current + 2 config/reachability-conditional**.
+Historical Alex's Mobs 2.1.13 publisher semantic inventory: **3 supernatural roots = 1 strict artifact-scoped + 2 config/reachability-conditional**; installed-mod status and static contracts require separate verification.
 
 Strict semantic delta: **+1**.
 
