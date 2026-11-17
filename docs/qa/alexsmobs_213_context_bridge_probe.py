@@ -30,10 +30,10 @@ SYMBOLS = re.compile(
 )
 METHOD_NAMES = {"getSender", "isClientSide", "enqueueWork", "setPacketHandled"}
 MAX_CANDIDATES = 45
-MAX_REFS_PER_METHOD = 28
+MAX_REFS_PER_METHOD = 90
 MAX_METHODS_PER_CLASS = 45
 MAX_BOOTSTRAP = 30
-MAX_REPORT_BYTES = 175000
+MAX_REPORT_BYTES = 300000
 
 
 def class_candidates(archive):
