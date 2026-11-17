@@ -2,14 +2,14 @@
 
 - Provider: **Alex's Mobs Continued** (`alexsmobs`)
 - Version: `2.1.13`
-- Exact physical/publisher SHA-1: `50ddafdf3d12b33331e4eecb4ab514ae451baadd`
+- Publisher SHA-1 (histórico verificado contra modlist anterior; versão atual pendente): `50ddafdf3d12b33331e4eecb4ab514ae451baadd`
 - Owner surface: `alexsmobs:transmutation_table`
 - Semantic type: deliberate supernatural item-transmutation action
 - State: `COUNTED_EXACT`
 
 ## Identity and trigger
 
-The exact installed artifact exposes a direct player-driven Transmutation Table path:
+The publisher JAR 2.1.13, previously matched to a physical modlist, exposes a direct player-driven Transmutation Table path:
 
 - player opens the provider table/menu;
 - an eligible input item is inserted;
@@ -26,7 +26,7 @@ Exact artifact evidence closes that the provider:
 - replaces the input with the selected transmuted result;
 - removes the configured XP-level cost;
 - records the provider transmutation state;
-- rerolls provider result state after settlement.
+- agenda o reroll para o próximo processamento de tick da tabela, condicionado à presença do jogador, como detalhado na auditoria de ciclo de vida.
 
 Black Arcana must not replay the result replacement or charge a second cost.
 
@@ -107,3 +107,30 @@ Essa evidência não demonstra vínculo de mesa/sessão, impossibilidade de repl
 **NBT/persistência:** `loadAdditional`/`saveAdditional` movimentam `totalTransmuteCount`, `PlayerTransmutationData`, `TransmutationData` e arrays de alternativas; não referenciam diretamente `rerollPlayerUUID`. Os dados registrados por jogador e as alternativas persistidas não constituem prova de restauração do **agendamento transitório**. Necessário executar AMC-T01..T03, replay, concorrência, sessão inválida, saída fora de 0..2 e save/restart no modpack instalado.
 
 **Integração:** impedir perks que alterem quantidade, custo de XP, choice, pools ou reroll até comprovar seam segura e idempotência, sem repetir efeitos ou alterar runtime alheio. `static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`. Índices permanecem 0/3 contratos integrais no recorte de Alex's Mobs; universo integral do mod não foi homologado.
+
+## Dados por jogador, pesos, NBT e display — auditoria SHA-exata 2.1.13
+
+**Evidência reproduzível:** [manifesto SHA-exato](../EXACT-TRANSMUTATION-DATA-2.1.13.json) · [relatório técnico de estado e sincronização](../../../../../docs/qa/alexsmobs-213-transmutation-data-handoff.md) · [auditor read-only](../../../../../docs/qa/alexsmobs_213_transmutation_data_probe.py) · [CI do publisher](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44182648998).
+
+O escopo examinado inclui **8 classfiles** e **6 candidatos binários** (referências de constant pool, não grafo completo). O owner `com.github.alexthe666.alexsmobs.misc.TransmutationData` possui **10 métodos** e um mapa `Object2DoubleMap<ItemStack>` inicializado por `Object2DoubleOpenHashMap`. `getWeight` e `putWeight` comparam chaves por `ItemStack.isSameItemSameComponents`; `putWeight` aplica `Math.max(0,peso)`.
+
+### Fórmulas de pesos — bytecode físico 2.1.13
+
+Se `n` representa `ItemStack.getCount()`, `a = AMConfig.transmutingWeightAddStep` e `r = AMConfig.transmutingWeightRemoveStep`, com valores efetivos da config **não capturados**:
+
+- Atualização de entrada: `w_entrada' = max(0, w_entrada + ln(pow(n,a)))` — `calculateAddWeight @5/@8`, `dadd @23`, `putWeight @24`.
+- Atualização de saída: `w_saida' = max(0, w_saida - ln(pow(n,r)))` — `calculateRemoveWeight @5/@8`, `dneg @11`, `dadd @38`, `putWeight @39`.
+- `getTotalWeight()`: soma `DoubleStream.sum` dos pesos armazenados.
+- `getRandomItem(Random)`: avalia pesos positivos com escore `-ln(U)/peso`, `U = Random.nextDouble()`; a comparação `dcmpg @80` mantém o menor escore observado e o item selecionado é copiado. Essa é a amostragem interna do objeto; **a distribuição efetiva das três opções também depende dos gates de loot, RNG e configuração**.
+
+`TileEntityTransmutationTable.randomizeResults` gera as três possibilidades com `rollPossiblity(player,0/1/2) @3/@9/@15`. O caminho alternativo de `TransmutationData.getRandomItem @94` envolve `limitTransmutingToLootTables` e comparação de `Random.nextFloat` com limiar `min(0.01875000074505806 × getTotalWeight(), 0.20000000298023224)`; **esse limiar isolado não é uma taxa efetiva comprovada de resultados**. Os valores numéricos são os literais double do bytecode, não valores reconfigurados pelo Black Arcana.
+
+### Persistência e sincronização
+
+`TransmutationData.saveAsNBT/fromNBT` usa lista `TransmutationData` cujas entradas têm chaves `Item` e `Weight`. `TileEntityTransmutationTable.saveAdditional/loadAdditional` conserva `TotalCount`, `PlayerTransmutationData` por `UUID`, `TransmutationData` e opções de output, mas não referencia diretamente o UUID transitório que agenda reroll. Não há teste físico de descarregamento/recarregamento do chunk.
+
+`MessageUpdateTransmutablesToDisplay` serializa `playerId` e três `ItemStack`; o `$Handler` verifica o ID do jogador e chama `CommonProxy.setDisplayTransmuteResult` para índices 0, 1 e 2. **Não presumir direção S2C exclusiva**, pois o envelope NeoForge auditado na PR #1110 é bidirecional.
+
+`MenuTransmutationTable$1.setChanged` chama `MenuTransmutationTable.slotsChanged` e `SimpleContainer.setChanged`. Não apareceu `BlockEntity.setChanged` diretamente nos métodos selecionados do tile; isso **não é prova de perda de persistência**, porque consumidores indiretos não foram exauridos.
+
+**Boundary para perks:** peso, seleção, custo de XP, reroll e opções continuam sob autoridade do provider, sem hook mutador validado. O JAR atual da modlist do sibling ainda não foi reconfirmado. `static_perk_contract=NOT_CERTIFIED`, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, `NO_MUTATION`; 0/3 contratos estáticos certificados no recorte observado.
