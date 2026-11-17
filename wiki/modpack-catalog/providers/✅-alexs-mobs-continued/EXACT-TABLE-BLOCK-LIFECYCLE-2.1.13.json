@@ -40,5 +40,14 @@
   "mutating_hook": "NOT_VERIFIED",
   "physical_qa": "NOT_TESTED",
   "universe_closed": false,
-  "caveats": "Publisher historic SHA identity only; no current modlist presence, deployed config, player-world interaction QA, protection-plugin compatibility, indirect persistence proof or mutating perk hook."
+  "caveats": "Publisher JAR exact-match to current GitHub sibling modlist record; physical client/pack loading, deployed config, protection plugins, indirect persistence and safe perk hooks are NOT verified.",
+  "sibling_modlist": {
+    "repository": "Gustavaopere/neoforge-rpg-skilltree",
+    "commit": "55d8baa166cc3660f529f912d7a735623ab40a32",
+    "entry": "PROJECT-INSTRUCTIONS/modlist/Mobs/✅-alexs-mobs-continued v2.1.13.md",
+    "entry_blob_sha": "1f54b22afbf7aaa6adcd8dff502e5751bbdb19f9",
+    "selected_jar": "alexsmobs-2.1.13-neoforge+1.21.1.jar",
+    "recorded_sha1": "50ddafdf3d12b33331e4eecb4ab514ae451baadd",
+    "runtime_physical_qa": "NOT_TESTED"
+  }
 }
