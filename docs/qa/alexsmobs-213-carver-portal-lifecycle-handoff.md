@@ -31,3 +31,38 @@ O [workflow](../../.github/workflows/alexsmobs-213-carver-portal-lifecycle.yml) 
 **Proibido inferir:** dimension hopping arbitrário; bypass de claim; destino validado pelo servidor; tempo efetivo de vida igual ao valor inicial; aceitação do spawn; cardinalidade do teleporte; logout/save/reload; hook mutador; ou QA real apenas de um callsite.
 
 Após a descoberta, qualquer afirmação substantiva nova deve indicar offset/descritor e classe revisados do classfile 2.1.13, com limites claros. Não editar Raygun/X-Ray ou os índices 80/81 do Alex's Caves.
+
+## Resultado verificado — JAR 2.1.13 / CI #44013379631
+
+A [descoberta física executada em Java 21](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44013379631) terminou com **14/14 regressões sintéticas**, validação SHA-1/SHA-256/tamanho da versão da modlist, classes JVM major 65, inspeção de **duas classes**, **23 métodos com ABI/descritor/hash**, **121 referências selecionadas**, checagem dos índices existentes e nenhuma mutação. A evidência compilada está selada em [EXACT-CARVER-PORTAL-LIFECYCLE-2.1.13.json](../../wiki/modpack-catalog/providers/✅-alexs-mobs-continued/EXACT-CARVER-PORTAL-LIFECYCLE-2.1.13.json). Os hashes SHA-256 individuais são:
+- `ItemDimensionalCarver.class`: `36295a531101875388114059940f6161d0afc808118c2344def04d732db88e6f`, 12 métodos declarados, sete method entries selecionadas (dois overloads de `getUseDuration`);
+- `EntityVoidPortal.class`: `09796124461bfdde10766ca0e53c00f68ec00a6b13d79289c7c1a5c8652e29b5`, 24 métodos declarados, 16 method entries selecionadas; `tick()V` tem **418 instruções JVM e 34 desvios**.
+
+### Duração e descarte: início não equivale a vida efetiva
+
+1. O `ItemDimensionalCarver.onPortalOpen` escreve lifespan inicial **1200** via `EntityVoidPortal.setLifespan @4` (confirmado também por manifesto anterior).
+2. **Fallback distinto da classe portal:** `EntityVoidPortal.tick` invoca `Entity.tick @1`, consulta `tickCount @5`, `if_icmpne @9 → 26`. Quando `tickCount == 1`, consulta `getLifespan @13`; se o valor for zero (`ifne @16 → 26` não salta), grava `setLifespan(2000) @23`. **2000 é fallback condicionado no primeiro tick quando o lifespan é zero**, não a duração sempre atribuída ao Carver.
+3. O `tick` executa `getLifespan @858`, `iconst_1 @861`, `isub @862` e `setLifespan @863`: decremento de 1 no caminho alcançado. `getLifespan @925`, `ifgt @928 →938`, `Entity$RemovalReason.DISCARDED @932` e `Entity.remove @935` mostram o caminho de descarte quando o contador resultante não é positivo.
+4. Há **outro modificador interno**: quando um candidato à interação passa pelo ramo de `EntityVoidWormPart` (`instanceof @687`) e o lifespan é menor que 22 (`getLifespan @694; bipush 22 @697; if_icmpge @699 →853`), o método incrementa lifespan por 1 (`@704–709`). Isso impede inferir um número fixo de ticks de vida apenas de `onPortalOpen` e do decremento final. Não foi reconstruída uma prova completa das condições externas desse ramo.
+
+### Targeting, teleporte e gates de lado lógico
+
+O fluxo do `EntityVoidPortal.tick` possui gate `Level.isClientSide @537 / ifne @540 →856`: o grupo de consulta/teleporte examinado aparece no ramo não-cliente. Ele exige `getDestination @553 != null` (`ifnull @556 →856`), `getLifespan @560 > 20` (`if_icmple @565 →856`) e `tickCount >20` (`if_icmple @574 →856`). Esse `20` é um **gate de janela de utilização**, não um cooldown próprio do BA. O código também consulta `Entity.isOnPortalCooldown @627` e possui exclusões por classe e tags; sem reconstrução de todas as condições, não presumir targeting universal.
+
+O item em `onUseTick` instancia `EntityVoidPortal @265`, inicializa posição, `setAttachmentFacing @318`, tenta `Level.addFreshEntity @327`, invoca `onPortalOpen @341`, chama `AMCompat.hurtAndBreak @351` e `AMCompat.addCooldown @375`. São callsites nativos ordenados; **`addFreshEntity` retorna booleano e o relatório não comprova que seu resultado tenha sido tratado como gate de aceitação** (a chamada é seguida de `pop @330` no recorte). Não concluir spawn aceito, teleporte bem-sucedido ou durabilidade duplicada.
+
+O portal contém `teleportEntityFromDimension(Entity,ServerLevel,BlockPos,boolean)` com quatro branches e referências a `AMTeleportQueue.PLAYERS`, `setPortalCooldown`, `ServerLevel.addFreshEntity` e descarte da entidade de origem. Esse método é uma fronteira importante de movimentação entre dimensões, mas a semântica de `AMTeleportQueue`, transferências interdimensionais e efeitos no multiplayer são **NÃO VERIFICADOS neste recorte**.
+
+### Estado serializado e sincronização
+
+`EntityVoidPortal.getLifespan`/`setLifespan`, `getDestination`/`setDestination`, orientação de anexo e `defineSynchedData` acessam `SynchedEntityData`. A classe implementa **`readAdditionalSaveData(CompoundTag)` (86 instruções, 5 branches)** e **`addAdditionalSaveData(CompoundTag)` (67 instruções, 3 branches)**. Os métodos observados referenciam as chaves `AttachFace`, `Lifespan`, `ExitDimension` e os acessores `DESTINATION`, `ATTACHED_FACE`, `LIFESPAN`.
+
+Portanto existe um **caminho compilado de serialização/reidratação** para parte do estado; isso **não é QA de save/reload** e não demonstra persistência de todos os dados, resolução de dimensões removidas, ausência de portal órfão, sincronização de rede ou segurança sob logoff.
+
+### Impacto e limites
+
+**Dados verificáveis para ficha:** valor inicial de 1200 (Carver); fallback 2000 restrito ao primeiro tick e valor zero; decremento/discard de lifespan; exceção de incremento no caminho `EntityVoidWormPart`; gates servidor/destino/lifespan/idade; presença do caminho nativo de teleporte entre dimensões e das rotinas NBT/synched data.
+
+**Não certificável com esta evidência:** teleporte efetivamente aceito em todos os targets, segurança de world claims, config de obtenção por Void Worm, interações exatas de `AMTeleportQueue`, salvamento em jogo, owner/persistence de viagem, falhas de spawn, e safe hook de modificador de range/tempo/cooldown.
+
+**Resultado final desta etapa:** enriquecimento estático do Carver, sem promover a ficha a ✅. `static_perk_contract=NOT_CERTIFIED`; `mutating_hook=NOT_VERIFIED`; `physical_qa=NOT_TESTED`; `NO_MUTATION`. A matriz de três ações de Alex's Mobs mantém `0/3` certificados, 1 `COUNTED_EXACT` e 2 `CONDITIONAL`.
