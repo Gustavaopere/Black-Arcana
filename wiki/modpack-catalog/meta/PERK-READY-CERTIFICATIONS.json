@@ -8824,6 +8824,47 @@
           "reason": "Selo individual EXACT-GAMMA-RAY-CAUSAL-1.0.10.json e prova Markdown compõem evidências SHA-exatas reutilizadas e novos recursos/pivôs, com auditor, regressões negativas e workflow reproduzíveis. Não promovem o contrato integral da Raygun, datapacks efetivos, QA física ou universo do provider."
         }
       }
+    },
+    "✅-alexs-caves-continued/enchantments/x-ray.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutation": "NO_MUTATION",
+      "scope_note": "Individual X-Ray static targeting contract: exact resources, boolean/endpoints, stepped entity search and native fallback/settlement limits. 51 publisher enchantment JSON dossiers now have static contracts; whole provider, mutators, network authority and physical outcomes remain open. +0 semantic magic roots.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/x-ray.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato, JSON X-Ray, tag Raygun e exclusão declarada de Gamma; registry/ResourceKey e consumidores compilados verificados. Fonte pública 1.1.1 permanece apenas adjacente."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/x-ray.md",
+          "reason": "onUseTick integral reutilizado com prova própria dos fluxos de X-Ray: booleano local9, escolha de extremos13/14 e laço de segmentos com contadorfloat. Primeiro resultado de entidade não nulo encerra esse laço; sem resultado preserva o trace inicial, sem garantia de nearest global ou hit aceito."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/x-ray.md",
+          "reason": "JSON máximo I/peso10, custos1+12*(L-1)/41+10*(L-1), bigorna1 e mainhand. Nível positivo é booleano, não escala. Distância25F*p e passos1F são parâmetros nativos do trace, não alcance final garantido; projétil/vida/tamanho próprios N/A."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/x-ray.md",
+          "reason": "Extremos geométricos e locais do trace, AABB expandida e segmentos são distintos do cubo final local14±1. Caminho X-Ray salta o teste de face de bloco do ramo alternativo, preservando filtros de identidade/aliança/veículo e pipeline nativo. Não certifica atravessar qualquer parede, LOS efetivo, claims ou PvP."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/x-ray.md",
+          "reason": "ChargeUsed e Energy Efficiency, aquecimento/consumo cliente e cadência servidor permanecem separados e já documentados. X-Ray não possui débito próprio comprovado, desconto de energia ou bônus próprio de dano/status; recarga e rede pertencem à Raygun."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/x-ray.md",
+          "reason": "Fonte direta recebe o usuário; exceção Tremorzilla/resistência, Irradiated e feedback permanecem nativos e distintos de X-Ray. Black Arcana e RPG Skill Tree só integram via boundary real, sem segundo hurt, proc, receipt ou Mastery derivado de trace; NO_MUTATION e autorização C2S não homologada."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/enchantments/x-ray.md",
+          "reason": "Selo individual, auditor, testes semânticos/negativos e workflow reproduzem o JAR exato e as provas anteriores. Censo dos 51 JSONs publisher comparado ao inventário e aos 51 contratos individuais encerra somente esse recorte estático; não fecha provider, hooks mutadores, runtime ou QA física."
+        }
+      }
     }
   },
   "providers": {},

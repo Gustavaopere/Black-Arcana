@@ -582,7 +582,11 @@ class BonkingContract(unittest.TestCase):
             self.assertIn(f'individual_{name}_enchantment_dossiers={count}/{len(ids)}', crosswalk)
         self.assertEqual(len(full) + len(partial) + len(missing), len(ids))
         self.assertFalse(missing)
-        self.assertIn(f'começando por `alexscaves:{partial[0]}`', crosswalk)
+        if partial:
+            self.assertIn(f'começando por `alexscaves:{partial[0]}`', crosswalk)
+        else:
+            self.assertEqual(len(full), len(ids))
+            self.assertNotIn('começando por `alexscaves:', crosswalk)
         self.assertEqual(ledger['known_rosters'][P.name]['total'], self.d['semantic_magic_roots'])
         self.assertNotIn(P.name, ledger['providers'])
 

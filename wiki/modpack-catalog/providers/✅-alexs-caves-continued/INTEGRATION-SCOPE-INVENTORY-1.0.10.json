@@ -22,7 +22,7 @@
     "enchantment_jsons": 51,
     "damage_type_jsons": 11
   },
-  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. 50 individual enchantment static contracts (Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging, Gamma Ray, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection); one other individual enchantment dossier remains partial. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root.",
+  "completed_scope": "Eight supernatural/magical action contracts, eight mob-effect contracts, three equipment contracts (Dreadbow, Desolate Dagger and Shot Gum) and nine historical damage contracts (Acid, Dark Arrow, Desolate Dagger, Forsaken Sonic Boom, Gumball, Radiation, Intentional Game Design, Nuke and Spirit Dinosaur) with scoped native consumers; no additional semantic magic root. Nuclear ticket mismatch and physical acceptance remain unresolved. 51 individual enchantment static contracts (Arrow Inducting, Astral Transferring, Bonking, Bouncing Bolt, Bouncy Ball, Charting Call, Chomping Spirit, Crystallization, Dark Nock, Dazing Sweep, Detonating Death, Double Stab, Energy Efficiency, Enveloping Bubble, Explosive Flavor, Far Flung, Ferrous Haste, Field Extension, Flinging, Gamma Ray, Heavy Slam, Herd Phalanx, Humungous Hex, Impending Stab, Lasting Morale, Multiple Mint, Peppermint Punting, Plummeting Flight, Precise Volley, Rapid Possession, Relentless Darkness, Sated Blade, Sea Swing, Seapairing, Second Wave, Seekcandy, Shaded Respite, Sharp Cane, Sightless, Soak Seeking, Solar, Spell Lasting, Straight Hook, Swiftwood, Targeted Ricochet, Taxing Bellow, Triple Splash, Triple Split, Tsunami, Twilight Perfection, X Ray); no publisher enchantment JSON dossier remains partial. This completes only the bounded 51-resource publisher static catalog, not the whole provider/runtime universe. All 51 publisher enchantment identities have individual dossiers; no additional semantic magic root. Tremorzilla Beam adds one separately certified damage-type contract; the current ledger therefore has ten certified damage cards while damage_types.cards preserves the nine-card historical checkpoint.",
   "whole_provider_catalog_closed": false,
   "next_alphabetical_provider": "✅-alexs-caves-continued",
   "mutating_hook": "NOT_VERIFIED",
@@ -341,13 +341,34 @@
         "EXACT-GUMBALL-CONTRACTS-1.0.10.md",
         "EXACT-RADIATION-CONTRACT-1.0.10.md",
         "EXACT-NUCLEAR-CONTRACTS-1.0.10.md"
+      ],
+      "checkpoint_scope": "HISTORICAL_NINE_DAMAGE_CONTRACT_CHECKPOINT",
+      "current_documented_static_contracts": 10,
+      "current_cards": [
+        "damage-types/acid.md",
+        "damage-types/dark-arrow.md",
+        "damage-types/desolate-dagger.md",
+        "damage-types/forsaken-sonic-boom.md",
+        "damage-types/gumball.md",
+        "damage-types/intentional-game-design.md",
+        "damage-types/nuke.md",
+        "damage-types/radiation.md",
+        "damage-types/spirit-dinosaur.md",
+        "damage-types/tremorzilla-beam.md"
+      ],
+      "additional_individual_static_contracts": [
+        {
+          "card": "damage-types/tremorzilla-beam.md",
+          "evidence": "EXACT-TREMORZILLA-BEAM-STATIC-1.0.10.md",
+          "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY"
+        }
       ]
     },
     "enchantments": {
       "identified_objects": 51,
       "individual_dossiers": 51,
-      "partial_dossiers": 1,
-      "documented_static_contracts": 50,
+      "partial_dossiers": 0,
+      "documented_static_contracts": 51,
       "cards": [
         "enchantments/arrow-inducting.md",
         "enchantments/astral-transferring.md",
@@ -398,9 +419,10 @@
         "enchantments/triple-splash.md",
         "enchantments/triple-split.md",
         "enchantments/tsunami.md",
-        "enchantments/twilight-perfection.md"
+        "enchantments/twilight-perfection.md",
+        "enchantments/x-ray.md"
       ],
-      "evidence": "EXACT-GAMMA-RAY-CAUSAL-1.0.10.md",
+      "evidence": "EXACT-XRAY-CAUSAL-1.0.10.md",
       "family_universe_closed": false,
       "related_evidence": [
         "EXACT-HEAVY-SLAM-CONTRACT-1.0.10.md",
@@ -442,8 +464,11 @@
         "EXACT-ARROW-INDUCTING-CONTRACT-1.0.10.md",
         "EXACT-ASTRAL-TRANSFERRING-CONTRACT-1.0.10.md",
         "EXACT-BONKING-CONTRACT-1.0.10.md",
-        "EXACT-FLINGING-CAUSAL-1.0.10.md"
-      ]
+        "EXACT-FLINGING-CAUSAL-1.0.10.md",
+        "EXACT-GAMMA-RAY-CAUSAL-1.0.10.md"
+      ],
+      "publisher_json_static_catalog_complete": true,
+      "publisher_json_static_catalog_scope": "Exactly 51 data/alexscaves/enchantment/*.json resources in the SHA-exact publisher 1.0.10 artifact and 51 individual static contracts; not a whole-provider/runtime universe closure."
     }
   }
 }
