@@ -31,6 +31,9 @@ TARGETS={
     LIVING:{"eat","addEatEffect","addEatEffects"},
     PLAYER:{"eat"},
     FOODDATA:{"eat","add","addInternal"},
+    "net.minecraft.world.food.FoodConstants":{"saturationByModifier"},
+    "net.minecraft.world.item.Item":{"use","getUseDuration","finishUsingItem"},
+    "net.minecraft.world.item.ItemStack":{"consume"},
 }
 EXPECTED_BUILDER=TARGETS[BUILDER]-{"<init>"}
 
