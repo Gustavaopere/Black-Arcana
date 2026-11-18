@@ -74,3 +74,7 @@ AC_DYNAMIC_ATTRIBUTE_REPORT=/caminho/novo/dynamic-attribute-discovery.json \
 ```
 
 O [workflow read-only](../../../../.github/workflows/alexscaves-1010-dynamic-attribute-probe.yml) validou a identidade do artefato e **oito testes de pivôs nativos PASS** na [execução SHA-exata](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44220064013/job/134519414118). Os testes defendem contagens, branches e linhas de cálculo; não fecham a parametrização interna dos cinco mapas defaultModifiers nem a interface como um todo. Até aprofundar construção desses mapas, dispatch externo e ciclo engine de aplicação, o objeto permanece **⚠️ parcial** e não entra no manifesto de contratos estáticos certificados.
+
+## Continuidade — #1118
+
+O [dossiê suplementar de construção e referência externa](EXACT-DYNAMIC-ATTRIBUTE-CONSTRUCTION-1.0.10.md) amplia o recorte além dos oito testes originais: construtores dos sete owners diretos e três herdados, quinze fábricas nativas, handles de bootstrap, IDs de modificadores e referência NeoForge pinada. A descoberta original permanece preservada; não há promoção no ledger nesta etapa.

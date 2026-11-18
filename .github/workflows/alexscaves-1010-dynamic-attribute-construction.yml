@@ -42,6 +42,10 @@ jobs:
             --userdev build/dynamic-attribute-construction/neoforge-userdev.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/dynamic-attribute-construction/report.json
+      - name: Verify exact construction, registry bindings and external call pivots
+        run: |
+          export AC_ATTRIBUTE_CONSTRUCTION_REPORT=build/dynamic-attribute-construction/report.json
+          python3 docs/qa/alexscaves_1010_dynamic_attribute_construction_test.py -v
       - name: Archive bounded discovery evidence
         if: always()
         uses: actions/upload-artifact@v7
