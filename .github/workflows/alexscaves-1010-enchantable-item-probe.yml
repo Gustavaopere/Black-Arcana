@@ -8,6 +8,8 @@ on:
       - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
       - 'docs/qa/alexscaves_1010_enchantable_item_probe_test.py'
       - 'docs/qa/alexscaves_1010_enchantable_item_boundary.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/enchantable-item.md'
   workflow_dispatch:
 
 permissions:
@@ -52,6 +54,13 @@ jobs:
             --javap "$JAVA_HOME/bin/javap" \
             --native-report build/enchantable-item-1010/report.json \
             --output build/enchantable-item-1010/boundary.json
+      - name: Verify sealed interface, bindings, references and resources
+        run: |
+          export AC_ENCHANTABLE_NATIVE_REPORT=build/enchantable-item-1010/report.json
+          export AC_ENCHANTABLE_BOUNDARY_REPORT=build/enchantable-item-1010/boundary.json
+          export AC_ENCHANTABLE_JAR=build/enchantable-item-1010/alexscaves-1.0.10.jar
+          export AC_ENCHANTABLE_JAVAP="$JAVA_HOME/bin/javap"
+          python3 docs/qa/alexscaves_1010_enchantable_item_probe_test.py -v
       - name: Archive read-only evidence
         if: always()
         uses: actions/upload-artifact@v7

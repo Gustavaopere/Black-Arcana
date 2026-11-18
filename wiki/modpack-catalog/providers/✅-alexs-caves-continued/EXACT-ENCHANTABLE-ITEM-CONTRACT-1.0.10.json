@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "artifact": {
+    "mod_id": "alexscaves",
+    "version": "1.0.10",
+    "size_bytes": 75279314,
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "perk_certification": "NOT_CERTIFIED",
+    "runtime_dispatch": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "axes": {
+    "identity": "Publisher 1.0.10 SHA-exato; interface pública, duas assinaturas, zero campos/superinterfaces, 13 implementadores diretos, zero herdados, 13 bindings.",
+    "behavior": "13 valores constantes 1; 12 overrides e default da interface com count==1; Ortholance sem override, referência Item.isEnchantable exige max stack 1/MAX_DAMAGE; guarda adicional da ItemStack.",
+    "parameters": "Inteiro 1, quantidade da stack, 51 JSONs e 14 tags locais de supported_items; 48 recursos dos 13 itens e 3 de Desolate Dagger fora do roster, zero primary_items explícitos.",
+    "targeting": "N/A para cast, vítima, LOS, AOE, projétil: consulta ItemStack e elegibilidade de encantamento por holder/tag no consumidor externo, sem alvo vivo/caster.",
+    "costs": "N/A para custo de cast, mana, XP, lapis, débito de durabilidade, cooldown e duração: corpos somente leem count ou retornam constante; cálculo de custos mesa/bigorna é externo.",
+    "integration": "Mojang 1.21.1 e NeoForge 21.1.250 pinados: precedência de método de classe, bridge stack-aware, EnchantmentHelper, supports/primary e anvil/table; sem autoridade por jogador ou hook seguro. NO_MUTATION.",
+    "validation": "Censo de 1555 classes, dois relatórios SHA-exatos, bindings por handles, testes de corpo/offset/roster/recursos e ledger. Referência não é execução instalada."
+  },
+  "interface": {
+    "owner": "com/github/alexmodguy/alexscaves/server/item/ACEnchantableItem",
+    "sha256": "3e2b29f7d1d11f066d4d2e54141a90561edcf76a8c550a32746ee4a23f1f4786",
+    "class_count": 1555,
+    "fields": 0,
+    "superinterfaces": 0,
+    "methods": [
+      [
+        "getEnchantmentValue",
+        "()I",
+        1025
+      ],
+      [
+        "isEnchantable",
+        "(Lnet/minecraft/world/item/ItemStack;)Z",
+        1
+      ]
+    ],
+    "default_code_sha256": "64da4f2b791e5e23d69c3ca524d113b15372ce159dc6deca49aa5f1e6b0ef074",
+    "constant_value_code_sha256": "95ef737cd8a13db65e3eb3c18e8816a5179dcbdf341309522ab00e95d5aae6d2",
+    "direct_implementers": 13,
+    "inherited_implementers": 0,
+    "declared_count_guards": 12
+  },
+  "owners": [
+    {
+      "owner": "CandyCaneHookItem",
+      "item_id": "alexscaves:candy_cane_hook",
+      "factory": "lambda$static$179",
+      "bootstrap_offset": 3166,
+      "resource_count": 3,
+      "value": 1,
+      "declares_count_guard": true
+    },
+    {
+      "owner": "DreadbowItem",
+      "item_id": "alexscaves:dreadbow",
+      "factory": "lambda$static$137",
+      "bootstrap_offset": 2503,
+      "resource_count": 5,
+      "value": 1,
+      "declares_count_guard": true
+    },
+    {
+      "owner": "ExtinctionSpearItem",
+      "item_id": "alexscaves:extinction_spear",
+      "factory": "lambda$static$49",
+      "bootstrap_offset": 1126,
+      "resource_count": 3,
+      "value": 1,
+      "declares_count_guard": true
+    },
+    {
+      "owner": "GalenaGauntletItem",
+      "item_id": "alexscaves:galena_gauntlet",
+      "factory": "lambda$static$19",
+      "bootstrap_offset": 633,
+      "resource_count": 3,
+      "value": 1,
+      "declares_count_guard": true
+    },
+    {
+      "owner": "MagicConchItem",
+      "item_id": "alexscaves:magic_conch",
+      "factory": "lambda$static$107",
+      "bootstrap_offset": 2027,
+      "resource_count": 3,
+      "value": 1,
+      "declares_count_guard": true
+    },
+    {
+      "owner": "OrtholanceItem",
+      "item_id": "alexscaves:ortholance",
+      "factory": "lambda$static$110",
+      "bootstrap_offset": 2078,
+      "resource_count": 4,
+      "value": 1,
+      "declares_count_guard": false
+    },
+    {
+      "owner": "PrimitiveClubItem",
+      "item_id": "alexscaves:primitive_club",
+      "factory": "lambda$static$40",
+      "bootstrap_offset": 973,
+      "resource_count": 3,
+      "value": 1,
+      "declares_count_guard": true
+    },
+    {
+      "owner": "RaygunItem",
+      "item_id": "alexscaves:raygun",
+      "factory": "lambda$static$76",
+      "bootstrap_offset": 1568,
+      "resource_count": 4,
+      "value": 1,
+      "declares_count_guard": true
+    },
+    {
+      "owner": "ResistorShieldItem",
+      "item_id": "alexscaves:resistor_shield",
+      "factory": "lambda$static$20",
+      "bootstrap_offset": 650,
+      "resource_count": 2,
+      "value": 1,
+      "declares_count_guard": true
+    },
+    {
+      "owner": "SeaStaffItem",
+      "item_id": "alexscaves:sea_staff",
+      "factory": "lambda$static$108",
+      "bootstrap_offset": 2044,
+      "resource_count": 5,
+      "value": 1,
+      "declares_count_guard": true
+    },
+    {
+      "owner": "ShotGumItem",
+      "item_id": "alexscaves:shot_gum",
+      "factory": "lambda$static$176",
+      "bootstrap_offset": 3115,
+      "resource_count": 4,
+      "value": 1,
+      "declares_count_guard": true
+    },
+    {
+      "owner": "SugarStaffItem",
+      "item_id": "alexscaves:sugar_staff",
+      "factory": "lambda$static$184",
+      "bootstrap_offset": 3251,
+      "resource_count": 5,
+      "value": 1,
+      "declares_count_guard": true
+    },
+    {
+      "owner": "TotemOfPossessionItem",
+      "item_id": "alexscaves:totem_of_possession",
+      "factory": "lambda$static$126",
+      "bootstrap_offset": 2316,
+      "resource_count": 4,
+      "value": 1,
+      "declares_count_guard": true
+    }
+  ],
+  "resources": {
+    "enchantments": 51,
+    "supported_item_tags": 14,
+    "explicit_primary_items": 0,
+    "interface_item_resources": 48,
+    "other_item": "alexscaves:desolate_dagger",
+    "other_item_resources": 3,
+    "scope": "literal publisher resources, not loaded datapack union"
+  },
+  "references": {
+    "minecraft_version": "1.21.1",
+    "mojang_metadata_sha1": "ff7ef54488da4a711f3c8a781a9f79105bbe801a",
+    "mojang_client_sha1": "30c73b1c5da787909b2f73340419fdf13b9def88",
+    "mojang_client_sha256": "499f6897d1837516680f3114072d8106e11c9adcd933fe5cf051b551089b0c99",
+    "mojang_mappings_sha1": "2244b6f072256667bcd9a73df124d6c58de77992",
+    "mojang_mappings_sha256": "140c47931cccc8fc9e4c22d7603e2d714d1a953a146f51ea7397d95c955536ec",
+    "neoforge_version": "21.1.250",
+    "neoforge_universal_sha256": "1f9cc68fe9ec0416475d34ce76e95a696b9721d5d338168563dab0632c3d2956",
+    "neoforge_userdev_sha256": "deb6dd1e002aa85406e92501f49d5429cc8eaefe32fc353433e67030c32d8372",
+    "boundary": "official external references, not transformed runtime"
+  },
+  "reports": {
+    "native": {
+      "sha256": "d34a655d06d65a771ea9237ef222635e159ffcfa6fe8b454ee6826ee14979e73",
+      "run": 44312413309,
+      "job": 134829679393
+    },
+    "boundary": {
+      "sha256": "2666fde10c15277042eea741f770c0bab4e1487ac0d0730b37494e47a45adf5d",
+      "run": 44313906227,
+      "job": 134834846277
+    }
+  },
+  "validation": {
+    "native_auditor": "docs/qa/alexscaves_1010_enchantable_item_probe.py",
+    "boundary_auditor": "docs/qa/alexscaves_1010_enchantable_item_boundary.py",
+    "tests": "docs/qa/alexscaves_1010_enchantable_item_probe_test.py",
+    "workflow": ".github/workflows/alexscaves-1010-enchantable-item-probe.yml"
+  }
+}
