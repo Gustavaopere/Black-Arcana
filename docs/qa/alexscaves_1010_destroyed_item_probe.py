@@ -22,6 +22,7 @@ from alexscaves_1010_action_contract_audit import parse_javap
 
 PREFIX = "com/github/alexmodguy/alexscaves/"
 TARGET = PREFIX + "server/item/ACDestroyedItem"
+PARENT = PREFIX + "server/item/RadioactiveBlockItem"
 MAX_DISASSEMBLED_OWNERS = 40
 
 
@@ -68,7 +69,7 @@ def collect(jar):
                     "typed_references": refs,
                 })
             matches = [m for m in reader.methods if m["name"] == "onDestroyed"]
-            if reader.name == TARGET or refs or TARGET in reader.interfaces:
+            if reader.name in (TARGET, PARENT) or refs or TARGET in reader.interfaces:
                 class_hashes[reader.name] = digest(raw)
                 if matches:
                     declarations.append({
@@ -93,7 +94,7 @@ def collect(jar):
             if any(ref["kind"] in ("method_reference", "interface_method_reference")
                    for ref in row["typed_references"])
         })
-        chosen = sorted({TARGET, *direct, *inherited, *member_callers})
+        chosen = sorted({TARGET, PARENT, *direct, *inherited, *member_callers})
         require(len(chosen) <= MAX_DISASSEMBLED_OWNERS,
                 "disassembly candidate set exceeds bound; explicitly review scope")
         return {
@@ -173,6 +174,8 @@ def main():
           [r for r in report["on_destroyed_declarations_in_bounded_owners"]
            if r["owner"] == TARGET])
     print("direct implementers:", report["direct_implementers"])
+    print("bounded exact class SHA-256:", report["bounded_class_sha256"])
+    print("bounded onDestroyed declarations:", report["on_destroyed_declarations_in_bounded_owners"])
     print("inherited implementers:", report["inherited_implementers_within_publisher"])
     print("typed method-reference callers:", report["typed_member_callers"])
     for owner, methods in report["native_on_destroyed_bodies"].items():
