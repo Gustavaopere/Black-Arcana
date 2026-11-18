@@ -4,15 +4,15 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 2/3.**
+**Fichas catalogadas (somente fichas detectadas): 2/4.**
 
-**Barra das fichas catalogadas:** `█████████████░░░░░░░ 66.7%`
+**Barra das fichas catalogadas:** `██████████░░░░░░░░░░ 50.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 2/3.**
+**Homologadas para perks (somente fichas detectadas): 2/4.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 66.7%`
+**Barra dos contratos técnicos estáticos:** `██████████░░░░░░░░░░ 50.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -23,6 +23,7 @@
 | ✅ | Armor Material | [ficha/armor-material.md](armor-material.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Client Extension | [ficha/client-extension.md](client-extension.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ⚠️ | Destroyed Item | [ficha/destroyed-item.md](destroyed-item.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Dynamic Attributes | [ficha/dynamic-attributes.md](dynamic-attributes.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
