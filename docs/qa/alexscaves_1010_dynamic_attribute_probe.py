@@ -21,9 +21,12 @@ from alexscaves_1010_action_contract_audit import parse_javap
 PREFIX = "com/github/alexmodguy/alexscaves/"
 TARGET = PREFIX + "server/item/ACDynamicAttributeItem"
 CALLBACK = "acModifiers"
+HELPER = PREFIX + "server/misc/ACCompat"
 MAX_OWNERS = 45
 METHOD_NAMES = frozenset({
-    "acModifiers", "getAttributeModifiers", "getDefaultAttributeModifiers"
+    "acModifiers", "getAttributeModifiers", "getDefaultAttributeModifiers",
+    "getOrCreateDurabilityAttributes", "getStatsForEnchantmentLevel",
+    "itemAttributes", "lambda$getDefaultAttributeModifiers$0"
 })
 
 
@@ -93,7 +96,7 @@ def inspect(jar):
                         "target_owner": owner,
                         "descriptor": signature[2],
                     })
-            if refs or names or reader.name == TARGET:
+            if refs or names or reader.name in (TARGET, HELPER):
                 class_hashes[reader.name] = digest(raw)
         require(TARGET in hierarchy, "interface missing")
         require(hierarchy[TARGET]["access"] & 512, "target must be an interface")
@@ -103,7 +106,7 @@ def inspect(jar):
                            if o != TARGET and o not in direct
                            and inherited_target(o, hierarchy))
         callers = sorted({r["caller"] for r in method_references})
-        relevant = sorted({TARGET, *direct, *inherited, *callers})
+        relevant = sorted({TARGET, HELPER, *direct, *inherited, *callers})
         require(0 < len(direct) <= 30, "direct implementer roster absent or unbounded")
         require(len(relevant) <= MAX_OWNERS, "too many owners for bounded inspection")
         return {
