@@ -1,5 +1,7 @@
 # Alex's Caves Continued 1.0.10 — escopo de integrações ainda aberto
 
+**Atualização incremental — 17/11/2026 (PR #1115):** [ACDestroyedItem](systems/destroyed-item.md) passou a ter **ficha ⚠️ parcial** sustentada por inspeção SHA-exata do implementador RadioactiveOnDestroyedBlockItem. A resolução externa do supermétodo, dispatch NeoForge, efeitos aceitos e World Safety seguem pendentes, sob **NO_MUTATION**. O total documental atual é **83/84 contratos estáticos certificados nas fichas observadas**; o checkpoint anterior 83/83 e o apontamento de ACDestroyedItem como próximo escopo *sem disposição* devem ser lidos como histórico do prefixo anterior. O provider integral ainda está OPEN.
+
 Os recortes das oito ações mágicas e dos oito efeitos registrados têm contratos estáticos próprios. Eles **não cobrem todo o conteúdo integrável por perks** do mod. A classificação histórica `EXCLUDED` em [42 classes de interação](ITEM-ACTION-DISPOSITION-1.0.10.md) significa exclusão do denominador de magia, não exclusão do trabalho de integração.
 
 Autoridade: JAR 1.0.10, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, 75.279.314 bytes. O [inventário JSON](INTEGRATION-SCOPE-INVENTORY-1.0.10.json) enumera os nomes exatos abaixo a partir do artefato, sem importar os parâmetros da fonte 1.1.1. [Limites e reprodução](EXACT-TECHNICAL-CONTRACTS-1.0.10.md).

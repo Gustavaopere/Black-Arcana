@@ -1,5 +1,7 @@
 # Alex's Caves Continued — catálogo técnico 1.0.10
 
+**Atualização incremental — 17/11/2026 (PR #1115, ainda parcial):** a ficha [ACDestroyedItem](systems/destroyed-item.md) foi acrescentada como **⚠️ suporte NÃO CERTIFICADO**, com auditoria binária read-only da versão publisher 1.0.10. Os contadores atuais de fichas observadas são **83/84 contratos estáticos certificados**; as menções anteriores a 83/83 e ao próximo candidato descrevem o checkpoint anterior da PR #1114, não encerramento do universo. Há zero novas raízes mágicas; hooks e QA física continuam não verificados/não testados. Os índices gerados refletem o novo recorte.
+
 **Ações sobrenaturais: 8/8 contratos técnicos estáticos documentados.** [Índice de ações](actions/INDEX.md) · [evidência binária](EXACT-TECHNICAL-CONTRACTS-1.0.10.md) · [manifesto dos contratos](EXACT-TECHNICAL-CONTRACTS-1.0.10.json).
 
 **Mob effects: 8/8 contratos técnicos estáticos documentados.** [Índice de efeitos](effects/INDEX.md) · [evidência e reprodução](EXACT-EFFECT-CONTRACTS-1.0.10.md) · [manifesto dos efeitos](EXACT-EFFECT-CONTRACTS-1.0.10.json). As fichas distinguem aplicações, atributos, dano, targeting, movimento, consumidores e cleanup; não acrescentam raízes mágicas.
