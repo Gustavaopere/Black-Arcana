@@ -10,7 +10,7 @@
 - **JAR físico/publisher:** alexscaves-1.0.10-neoforge+1.21.1.jar, **75.279.314 bytes**, SHA-1 **6960b299a39a039ac8a5eb9b07be4ad0e3e0a570**, SHA-256 **36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c**; CurseForge projeto **1645389**, arquivo **8856293**.
 - **Owner:** com.github.alexmodguy.alexscaves.server.item.ACDynamicAttributeItem; classfile SHA-256 **22671a5b460c001b73982a2cff6c555f52559ee3390d48728c7ccff04c9e52be**.
 - **Assinatura pública abstrata:** acModifiers(EquipmentSlot, ItemStack):Multimap; JVM descriptor **(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)Lcom/google/common/collect/Multimap;**. A erasure não especifica os argumentos genéricos do Multimap nem prova aplicação final pela engine.
-- **Evidência:** [auditoria binária SHA-exata e limites](../EXACT-DYNAMIC-ATTRIBUTE-DISCOVERY-1.0.10.md); [auditor e oito regressões nativas](../../../../docs/qa/alexscaves_1010_dynamic_attribute_probe_test.py).
+- **Evidência:** [auditoria binária SHA-exata e limites](../EXACT-DYNAMIC-ATTRIBUTE-DISCOVERY-1.0.10.md); [auditor e oito regressões nativas](../../../../../docs/qa/alexscaves_1010_dynamic_attribute_probe_test.py).
 - **Fonte adjacente:** Codx-org/AlexsCavesContinued @ 523308608422ab8e31974befa7111ecdf495dd37 declara **1.1.1**. Não é autoridade de valores para 1.0.10.
 
 ## 2. Ativação, ordem, guardas e consumidores
@@ -73,7 +73,7 @@ Nenhum adapter, mixin, novo settlement de dano ou atribuição de XP foi adicion
 
 ## 7. Validação e pendências
 
-[Probe nativo](../../../../docs/qa/alexscaves_1010_dynamic_attribute_probe.py) lê JAR e usa JDK 21; [testes](../../../../docs/qa/alexscaves_1010_dynamic_attribute_probe_test.py) verificaram **8/8 PASS** no [workflow exato](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44220064013/job/134519414118). Os checks cobrem declaração e roster, classes herdadas, ordens/offsets, null versus vazio, custo da seleção Swiftwood, cache/divisão Gingerbread e fallback do helper; são **testes estáticos**, não GameTests ou QA física.
+[Probe nativo](../../../../../docs/qa/alexscaves_1010_dynamic_attribute_probe.py) lê JAR e usa JDK 21; [testes](../../../../../docs/qa/alexscaves_1010_dynamic_attribute_probe_test.py) verificaram **8/8 PASS** no [workflow exato](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44220064013/job/134519414118). Os checks cobrem declaração e roster, classes herdadas, ordens/offsets, null versus vazio, custo da seleção Swiftwood, cache/divisão Gingerbread e fallback do helper; são **testes estáticos**, não GameTests ou QA física.
 
 A [prova compartilhada](../EXACT-DYNAMIC-ATTRIBUTE-DISCOVERY-1.0.10.md) inclui hashes de cada corpo acModifiers, referência de CI, limites do recorte e comando reproduzível. Pendências para certificação plena: revisar construtores e conteúdo dos mapas defaultModifiers e divingArmorAttributes por item, dispatch efetivo/externo de atributos em NeoForge 1.21.1, composição de ItemAttributeModifiers com outros mods/datapacks, lifecycle/reload, interação com atributos e perks de RPG Skill Tree e QA física quando exigida. Não confundir **interface parcialmente inventariada** com **sete equipamentos completos**.
 
