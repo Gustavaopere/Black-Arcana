@@ -7,6 +7,8 @@ on:
       - '.github/workflows/alexscaves-1010-dynamic-attribute-construction.yml'
       - 'docs/qa/alexscaves_1010_dynamic_attribute_construction.py'
       - 'docs/qa/alexscaves_1010_dynamic_attribute_construction_test.py'
+      - 'docs/qa/alexscaves_1010_dynamic_attribute_builder_probe.py'
+      - 'docs/qa/alexscaves_1010_dynamic_attribute_builder_probe_test.py'
   workflow_dispatch:
 
 permissions:
@@ -46,11 +48,22 @@ jobs:
         run: |
           export AC_ATTRIBUTE_CONSTRUCTION_REPORT=build/dynamic-attribute-construction/report.json
           python3 docs/qa/alexscaves_1010_dynamic_attribute_construction_test.py -v
+      - name: Inspect exact event builder and provider state consumers
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_dynamic_attribute_builder_probe.py
+          python3 docs/qa/alexscaves_1010_dynamic_attribute_builder_probe.py \
+            --jar build/dynamic-attribute-construction/alexscaves-1.0.10.jar \
+            --universal build/dynamic-attribute-construction/neoforge-universal.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --construction-report build/dynamic-attribute-construction/report.json \
+            --output build/dynamic-attribute-construction/builder-report.json
       - name: Archive bounded discovery evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: dynamic-attribute-construction-1010
-          path: build/dynamic-attribute-construction/report.json
+          path: |
+            build/dynamic-attribute-construction/report.json
+            build/dynamic-attribute-construction/builder-report.json
           retention-days: 14
           if-no-files-found: ignore
