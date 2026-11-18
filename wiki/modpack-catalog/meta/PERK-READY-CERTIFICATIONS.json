@@ -9080,6 +9080,50 @@
           "reason": "Auditores read-only, identidade de artefatos, hashes canônicos reproduzíveis dos relatórios, regressões específicas de pivôs/identidade, documentação e índice; nenhuma inferência de runtime transformado/QA física."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/enchantable-item.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Scoped interface only: 13 direct owners, 12 explicit count guards, Ortholance inherited Item reference, 13 bindings, stack-aware NeoForge bridges, 51 publisher resources/14 tags. Full equipment/gameplay costs, transformed runtime, safe hooks and provider closure not verified. +1 support card, +1 static certificate, zero roots.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-exato; interface pública, duas assinaturas, zero campos/superinterfaces, 13 implementadores diretos, zero herdados, 13 bindings."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "13 valores constantes 1; 12 overrides e default da interface com count==1; Ortholance sem override, referência Item.isEnchantable exige max stack 1/MAX_DAMAGE; guarda adicional da ItemStack."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Inteiro 1, quantidade da stack, 51 JSONs e 14 tags locais de supported_items; 48 recursos dos 13 itens e 3 de Desolate Dagger fora do roster, zero primary_items explícitos."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "N/A para cast, vítima, LOS, AOE, projétil: consulta ItemStack e elegibilidade de encantamento por holder/tag no consumidor externo, sem alvo vivo/caster."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "N/A para custo de cast, mana, XP, lapis, débito de durabilidade, cooldown e duração: corpos somente leem count ou retornam constante; cálculo de custos mesa/bigorna é externo."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Mojang 1.21.1 e NeoForge 21.1.250 pinados: precedência de método de classe, bridge stack-aware, EnchantmentHelper, supports/primary e anvil/table; sem autoridade por jogador ou hook seguro. NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ENCHANTABLE-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Censo de 1555 classes, dois relatórios SHA-exatos, bindings por handles, testes de corpo/offset/roster/recursos e ledger. Referência não é execução instalada."
+        }
+      }
     }
   },
   "providers": {},

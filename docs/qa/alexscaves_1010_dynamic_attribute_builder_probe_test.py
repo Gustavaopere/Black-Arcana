@@ -141,8 +141,12 @@ class BuilderContract(unittest.TestCase):
         self.assertNotIn(PROVIDER.name,ledger["providers"])
         inv=json.loads((PROVIDER/"INTEGRATION-SCOPE-INVENTORY-1.0.10.json").read_text())
         s=inv["integration_support_inventory"]
-        self.assertEqual(s["reviewed_prefix"][4]["disposition"],"INDIVIDUAL_STATIC_CONTRACT_CERTIFIED")
-        self.assertEqual(s["next_alphabetical_uncovered_scope"],"server/item/ACEnchantableItem")
+        prefix=s["reviewed_prefix"]
+        roster=inv["remaining_family_inventory"]["item_outer_classes"]
+        self.assertEqual([row["class"] for row in prefix],roster[:len(prefix)])
+        self.assertEqual(prefix[4]["class"],"server/item/ACDynamicAttributeItem")
+        self.assertEqual(prefix[4]["disposition"],"INDIVIDUAL_STATIC_CONTRACT_CERTIFIED")
+        self.assertEqual(s["next_alphabetical_uncovered_scope"],roster[len(prefix)] if len(prefix)<len(roster) else None)
         self.assertFalse(s["family_universe_closed"])
         self.assertFalse(inv["whole_provider_catalog_closed"])
         for k in AXES:
