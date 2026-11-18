@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "artifact": {
+    "mod_id": "alexscaves",
+    "version": "1.0.10",
+    "size_bytes": 75279314,
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES",
+    "runtime_dispatch": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "axes": {
+    "identity": "Publisher 1.0.10 SHA-exato: ACFoodBuilder 14 métodos/9 campos e record Effect 6 métodos/2 campos; censo de 1555 classfiles; separa ACFoods, ACFoodPropertiesItem e equipamentos.",
+    "behavior": "Fluent setters, list append, resolve cria FoodProperties.Builder e resolve suppliers imediatamente; build registra identidade em BUILT, food encaminha para Item.Properties; meat/sound não são lidos neste recorte.",
+    "parameters": "Nutrição int, saturationMod float, flags alwaysEat/fast/bowl, probabilidade float por supplier; referência oficial vanilla: saturação (float)N*m*2F, 1.6/0.8 s -> 32/16 ticks, clamps de FoodData, sorteio servidor u<p.",
+    "targeting": "Não há cast: o consumidor externo é a LivingEntity que come; nenhum alvo hostil, AOE, projétil ou LOS próprio. O record de efeito não recebe entidade/stack.",
+    "costs": "Builder não debita recursos; referência vanilla solicita consume(1,this), preserva materiais infinitos, retorno de recipiente no Player; não é taxa de mana, cooldown ou cobrança de perk.",
+    "integration": "NeoForge físico 21.1.250: getFoodProperties(stack,living) e patch food/eat, PossibleEffect copy, eventos Start/Tick e Finish após finishUsingItem; superfícies de referência, não hooks mutadores homologados. NO_MUTATION.",
+    "validation": "Dois relatórios SHA-exatos e auditores independentes com Mojang client/mappings verificados, testes de roster, pivôs, parâmetros e ledger; consumo externo referencial, sem QA física."
+  },
+  "native": {
+    "class_entries_scanned": 1555,
+    "builder": {
+      "owner": "com/github/alexmodguy/alexscaves/server/item/ACFoodBuilder",
+      "sha256": "e9f064e00c45b84250c3cc88e6150810b160495f209f89aa9c8a423bbee17493",
+      "methods": 14,
+      "fields": 9,
+      "resolve_code_sha256": "689f9ff3124509b8d43d3467a0708029bf06b983e18b5b38369a57cd8e8944d4"
+    },
+    "effect": {
+      "sha256": "d3bb61ebe47a9b01b37f88bb691bfd2ce548f4ac08245f725840db56c3a11e87",
+      "methods": 6,
+      "fields": 2
+    },
+    "food_registry": {
+      "food_fields": 63,
+      "calls": {
+        "of": 63,
+        "nutrition": 63,
+        "saturationMod": 63,
+        "build": 63,
+        "meat": 5,
+        "fast": 6,
+        "bowl": 6,
+        "effect": 46,
+        "alwaysEat": 3,
+        "sound": 3
+      }
+    },
+    "direct_food_bridge_calls": {
+      "ACBlockRegistry": 1,
+      "ACItemRegistry": 40,
+      "AlexMealItem": 1,
+      "BiomeTreatItem": 1,
+      "DarkenedAppleItem": 1,
+      "HotChocolateBottleItem": 1,
+      "JellyBeanItem": 1
+    }
+  },
+  "references": {
+    "minecraft": "1.21.1",
+    "client_sha1": "30c73b1c5da787909b2f73340419fdf13b9def88",
+    "client_sha256": "499f6897d1837516680f3114072d8106e11c9adcd933fe5cf051b551089b0c99",
+    "mappings_sha256": "140c47931cccc8fc9e4c22d7603e2d714d1a953a146f51ea7397d95c955536ec",
+    "neoforge": "21.1.250",
+    "universal_sha256": "1f9cc68fe9ec0416475d34ce76e95a696b9721d5d338168563dab0632c3d2956",
+    "userdev_sha256": "deb6dd1e002aa85406e92501f49d5429cc8eaefe32fc353433e67030c32d8372",
+    "normal_seconds": 1.6,
+    "fast_seconds": 0.8,
+    "normal_ticks": 32,
+    "fast_ticks": 16,
+    "saturation_formula": "((float)nutrition * saturationModifier) * 2F",
+    "boundary": "official untransformed vanilla client and separately pinned NeoForge official universal/userdev reference"
+  },
+  "reports": {
+    "native": {
+      "sha256": "e6453ae5631a104314f67c9d9e337cced60da511e56f226b2b13fb4f39054a77",
+      "run": 44318572341,
+      "job": 134851123940
+    },
+    "reference": {
+      "sha256": "7eeb6cfcb82dbe38406c5c5241d6955a10826a66610fe8d1d732e7906189fb50",
+      "run": 44319361784,
+      "job": 134853907680
+    }
+  },
+  "validation": {
+    "native_auditor": "docs/qa/alexscaves_1010_food_builder_probe.py",
+    "reference_auditor": "docs/qa/alexscaves_1010_food_builder_reference.py",
+    "tests": "docs/qa/alexscaves_1010_food_builder_probe_test.py",
+    "workflow": ".github/workflows/alexscaves-1010-food-builder-probe.yml"
+  }
+}
