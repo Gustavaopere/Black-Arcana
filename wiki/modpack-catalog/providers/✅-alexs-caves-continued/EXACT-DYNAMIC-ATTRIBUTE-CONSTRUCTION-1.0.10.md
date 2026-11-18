@@ -76,3 +76,25 @@ NeoForge **21.1.250 universal** (sha256 1f9cc68fe9ec0416475d34ce76e95a696b9721d5
 ## Limites
 
 A auditoria inicial demonstrou os construtores, handles, bindings e o caminho externo até CommonHooks. Os auxiliares da natação, identificação do caminho de modifier, fallback de superclasse e despacho/build do evento foram observados na execução ampliada. Ficam em revisão semântica interna do builder e identidade final dos modificadores em todos os caminhos de construção, selo estável de certificação e comparação com o runtime realmente transformado. Não se certificam as habilidades completas dos equipamentos, targeting, dano final, uso de item, projéteis, ciclo de cache ou world safety por consequência desta auditoria. A contabilidade permanece 84/85 contratos estáticos observados, uma ficha parcial, sem nova raiz mágica, `mutating_hook=NOT_VERIFIED`, `physical_qa=NOT_TESTED`, provider OPEN.
+
+## Builder interno e consumidores de estado — projeção exata da #1118
+
+A [projeção complementar](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44310396511/job/134822711432), report SHA-256 `5e5c751d9c2343e50b06e407dae020274e4e8a5bf913cf7121bebc9089d21dce`, verificou a identidade canônica do relatório anterior (`4439256ffa12570e5f20ec16d16df2912196b79297dc7757dda3a1d8dd608b77`) e leu o evento e suas duas classes internas no universal NeoForge 21.1.250. O builder é criado de forma lazy em `getBuilder` @4–19 com o componente inicial. O container básico é uma lista `entries` e um mapa `entriesByKey`.
+
+| Operação interna | Contrato estático delimitado |
+|---|---|
+| Chave | Record `Key(attr:Holder,id:ResourceLocation)`; somente dois campos, sem slot, magnitude ou operação. O grupo está no Entry, não na chave. |
+| Construção | Itera os entries iniciais, acrescenta cada um à lista (@69) e insere no mapa com `put` (@98), ignorando retorno. Não é uma limpeza automática de duplicatas já presentes; a última entrada da mesma chave no mapa pode coexistir com entradas anteriores na lista. |
+| addModifier | `containsKey` @20; retorna `false` @28–29 para chave existente, antes de criar Entry; para chave nova cria Entry com slot @37, acrescenta à lista e ao mapa, `true` @68–69. |
+| replaceModifier | Chave id/atributo @9, Entry com slot @21. Se chave existe, localiza a entrada anterior pelo índice, `set` @83 ou `add` @98 se não localizada; atualiza mapa @112, devolve anterior internamente. Se ausente, acrescenta à lista e mapa, retorna null internamente. API do evento descarta retorno. Pode trocar o slot, operação e valor da entrada substituída. |
+| removeModifier | Remove do mapa @13 e, se encontrado, remove a entrada correspondente da lista @31; retorno booleano não é prova de remoção global de todas as duplicatas históricas. |
+| removeIf | Invoca o predicado em `List.removeIf` @5 e separadamente `Map.values().removeIf` @21; retorna o segundo booleano, descartando o primeiro. Predicado com estado/efeitos colaterais pode ter avaliações distintas. |
+| clear / getEntryView / build | Limpa lista e mapa; a view usa Collections.unmodifiableList; build copia a lista com ImmutableList.copyOf e preserva a flag showInTooltip fornecida pelo evento. |
+
+Hashes de classe: builder `d0cb0eb64629ddba35f7013ca8a49e3af13acbf6c1e98e1e53b6a7b9dda6e205`; Key `44bc5021c711f5784f303342f780cad488909add0c8441c76e8102d1fad1385e`. A projeção registra hashes dos corpos, offsets, descritores e bootstraps. A chave não inclui UUID de jogador: adquirir acesso ao evento não equivale a vincular perk à pessoa correta.
+
+O censo de acessos a campos nos métodos das sete classes diretas encontra `GingerbreadArmorItem.defaultAttributes` somente na escrita do construtor @125; não há leitura direta desse campo nesse recorte. O helper de cache `getOrCreateDurabilityAttributes` tem Code SHA-256 `a539358ace403b7b44f9ab83f62dc9a88820d36200f5bc8a6d359a5bb1432330`; seu bootstrap @71 usa a mesma receita de `gingerbread_armor.` + nome do slot. O cache tem chave damage, e não maxDamage nem jogador. Para as quatro armas de mapa fixo, o campo é escrito no construtor e lido em acModifiers; o PrimitiveClub usa array inicializado no construtor e lido por índice. A ausência de leitura interna não exclui consumidores externos/reflexivos, mixins ou transformações.
+
+**Atenção a perks:** IDs iguais com holders iguais colidem mesmo que o grupo de slot seja diferente. Não usar o mesmo ID para um bônus adicional esperando coexistência automática; não chamar replaceModifier como se acrescentasse novo modificador. Estas são consequências do contrato estático, não recomendações para instalar um hook. Mantêm-se `NO_MUTATION`, `NOT_VERIFIED`, `NOT_TESTED` e provider `OPEN`.
+
+O [selo de contrato individual](EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.md) reúne os sete eixos. O dossiê acima é histórico da fase de descoberta e seus estados parciais não são promoção de runtime.
