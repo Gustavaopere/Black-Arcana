@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "artifact": {
+    "mod_id": "alexscaves",
+    "version": "1.0.10",
+    "size_bytes": 75279314,
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c"
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "perk_certification": "NOT_CERTIFIED",
+    "runtime_dispatch": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "axes": {
+    "identity": "JAR publisher 1.0.10 SHA-exato; ABI abstrata, sete implementadores diretos e três herdados; censo tipado de 1555 classfiles; quinze bindings estáticos de ACItemRegistry.",
+    "behavior": "Sete callbacks, seleção por slot/stack, diferença null e vazio, wrappers/bootstraps, fallback de superclasse e cache Gingerbread; projeção de construtores e consumidores de campos no publisher.",
+    "parameters": "Valores ADD_VALUE de armas/lanças; Swiftwood float e clamp 0..3, defesa/material e bônus Diving, movimento Gingerbread 0.1+0.9*r e cache por dano, identities de modifier com ResourceLocation/fields simbólicos, operações e grupos de slot.",
+    "targeting": "N/A para target de cast, vítima, LOS, AOE, projéteis e world effects: interface seleciona slot de equipamento e stack, não entidade-alvo. Atributos finais e ataques são consumidores externos.",
+    "costs": "N/A para custo de cast, mana, stamina, cooldown, recarga, XP ou débito: consulta da stack e atributos, sem transação de recursos. Durabilidade como input, não consumo pelo callback.",
+    "integration": "Cadeia NeoForge 21.1.250 oficial universal/userdev: prioridade do componente não vazio, bridge stack-aware, CommonHooks, evento e builder com chave Holder/ResourceLocation sem slot; nenhum owner individual nem hook seguro certificado. NO_MUTATION.",
+    "validation": "Auditores read-only, identidade de artefatos, hashes canônicos reproduzíveis dos relatórios, regressões específicas de pivôs/identidade, documentação e índice; nenhuma inferência de runtime transformado/QA física."
+  },
+  "scope": {
+    "interface": "com/github/alexmodguy/alexscaves/server/item/ACDynamicAttributeItem",
+    "class_sha256": "22671a5b460c001b73982a2cff6c555f52559ee3390d48728c7ccff04c9e52be",
+    "class_entries_scanned": 1555,
+    "direct_implementers": 7,
+    "inherited_implementers": 3,
+    "registry_bindings": 15,
+    "engine_reference_version": "21.1.250",
+    "engine_evidence": "PINNED_USERDEV_PATCH_PLUS_UNIVERSAL_BYTECODE_REFERENCE",
+    "runtime_boundary": "Installed transformed engine, gameplay outcomes, owner authority, modifier order between listeners, external field reflection and pack/runtime configuration not certified."
+  },
+  "reports": {
+    "construction": {
+      "sha256": "4439256ffa12570e5f20ec16d16df2912196b79297dc7757dda3a1d8dd608b77",
+      "normalized_filename": "alexscaves-1.0.10.jar",
+      "workflow_job": 134812482251,
+      "workflow_run": 44307421054
+    },
+    "builder": {
+      "sha256": "5e5c751d9c2343e50b06e407dae020274e4e8a5bf913cf7121bebc9089d21dce",
+      "workflow_job": 134822711432,
+      "workflow_run": 44310396511
+    }
+  },
+  "builder": {
+    "owner": "net/neoforged/neoforge/event/ItemAttributeModifierEvent$ItemAttributeModifiersBuilder",
+    "class_sha256": "d0cb0eb64629ddba35f7013ca8a49e3af13acbf6c1e98e1e53b6a7b9dda6e205",
+    "key_owner": "net/neoforged/neoforge/event/ItemAttributeModifierEvent$ItemAttributeModifiersBuilder$Key",
+    "key_class_sha256": "44bc5021c711f5784f303342f780cad488909add0c8441c76e8102d1fad1385e",
+    "key_fields": [
+      "attr",
+      "id"
+    ],
+    "key_includes_slot": false,
+    "initial_list_preserves_entries": true,
+    "initial_map_put_overwrites_same_key": true,
+    "add_duplicate_returns_false": true,
+    "replace_can_change_slot": true,
+    "replace_existing_entry_in_place_if_present": true,
+    "remove_if_predicate_applied_separately_to_list_and_map": true,
+    "build_immutable_copy": true
+  },
+  "validation": {
+    "native_discovery_tests": "docs/qa/alexscaves_1010_dynamic_attribute_probe_test.py",
+    "construction_tests": "docs/qa/alexscaves_1010_dynamic_attribute_construction_test.py",
+    "builder_tests": "docs/qa/alexscaves_1010_dynamic_attribute_builder_probe_test.py",
+    "construction_auditor": "docs/qa/alexscaves_1010_dynamic_attribute_construction.py",
+    "builder_auditor": "docs/qa/alexscaves_1010_dynamic_attribute_builder_probe.py",
+    "workflow": ".github/workflows/alexscaves-1010-dynamic-attribute-construction.yml",
+    "method": "SHA-exact read-only semantic projections, canonical hashes, tested native and upstream reference pivots. The certificate is candidate until CI complete and merged."
+  }
+}

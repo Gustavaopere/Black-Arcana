@@ -9036,6 +9036,50 @@
           "reason": "A prova e o selo EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.json vinculam ABI, método completo, censo tipado, delegates e registro selector 5 ao artefato SHA-exato, separando a referência externa pinned da execução instalada. Conclui somente o certificado estático da ficha já existente: +1 certificado, +0 candidatos e +0 raízes mágicas; mutating_hook NOT_VERIFIED, physical_qa NOT_TESTED, perk_certification NOT_CERTIFIED e provider OPEN."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/dynamic-attributes.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Individual static support interface only: exact ABI and callbacks, 10 owners, 15 factory bindings, modifier construction, native state/cache and pinned NeoForge 21.1.250 event/builder reference. Not whole-equipment contracts, actual gameplay, ownership, hooks, perks or provider closure. Completes existing #1116 candidate, +1 static certificate, +0 cards and +0 semantic magic roots.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato; ABI abstrata, sete implementadores diretos e três herdados; censo tipado de 1555 classfiles; quinze bindings estáticos de ACItemRegistry."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.md",
+          "reason": "Sete callbacks, seleção por slot/stack, diferença null e vazio, wrappers/bootstraps, fallback de superclasse e cache Gingerbread; projeção de construtores e consumidores de campos no publisher."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.md",
+          "reason": "Valores ADD_VALUE de armas/lanças; Swiftwood float e clamp 0..3, defesa/material e bônus Diving, movimento Gingerbread 0.1+0.9*r e cache por dano, identities de modifier com ResourceLocation/fields simbólicos, operações e grupos de slot."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.md",
+          "reason": "N/A para target de cast, vítima, LOS, AOE, projéteis e world effects: interface seleciona slot de equipamento e stack, não entidade-alvo. Atributos finais e ataques são consumidores externos."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.md",
+          "reason": "N/A para custo de cast, mana, stamina, cooldown, recarga, XP ou débito: consulta da stack e atributos, sem transação de recursos. Durabilidade como input, não consumo pelo callback."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.md",
+          "reason": "Cadeia NeoForge 21.1.250 oficial universal/userdev: prioridade do componente não vazio, bridge stack-aware, CommonHooks, evento e builder com chave Holder/ResourceLocation sem slot; nenhum owner individual nem hook seguro certificado. NO_MUTATION."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.md",
+          "reason": "Auditores read-only, identidade de artefatos, hashes canônicos reproduzíveis dos relatórios, regressões específicas de pivôs/identidade, documentação e índice; nenhuma inferência de runtime transformado/QA física."
+        }
+      }
     }
   },
   "providers": {},

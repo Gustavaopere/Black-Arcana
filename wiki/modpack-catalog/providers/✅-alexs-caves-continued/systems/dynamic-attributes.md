@@ -1,6 +1,6 @@
 # Dynamic Attributes — ACDynamicAttributeItem (Alex's Caves Continued 1.0.10)
 
-**Contrato técnico estático:** ⚠️ PARCIAL / NOT_CERTIFIED. **Hook mutador:** NOT_VERIFIED. **QA física:** NOT_TESTED. **Perk executável:** NOT_CERTIFIED. **Política:** NO_MUTATION/fail-closed. **Provider:** OPEN. **Novas raízes mágicas:** 0.
+**Contrato técnico estático:** ✅ `CERTIFIED_STATIC_7_AXES` / `STATIC_TECHNICAL_CATALOG_ONLY` (recorte da interface). **Hook mutador:** NOT_VERIFIED. **QA física:** NOT_TESTED. **Perk executável:** NOT_CERTIFIED. **Política:** NO_MUTATION/fail-closed. **Provider:** OPEN. **Novas raízes mágicas:** 0.
 
 ## 1. Identidade, proveniência e descrição
 
@@ -29,9 +29,11 @@ Cada implementador direto declara getDefaultAttributeModifiers(ItemStack) e soli
 | **SpearItem** | MAINHAND: campo defaultModifiers; outro slot: null; três lanças derivadas herdam esse corpo |
 | **TotemOfPossessionItem** | MAINHAND: campo defaultModifiers; outro slot: null |
 
-A tabela representa **retornos no bytecode 1.0.10**, não atributos finais, ritmo de ataque, defesa efetiva ou estados de jogadores. O conteúdo completo dos cinco mapas defaultModifiers de armas e de divingArmorAttributes permanece em escopo futuro de suas fichas de equipamento.
+A tabela representa **retornos no bytecode 1.0.10**, não atributos finais, ritmo de ataque, defesa efetiva ou estados de jogadores. Os construtores e valores nativos desses mapas foram aprofundados na prova suplementar #1118; o comportamento integral dos equipamentos permanece em escopo futuro de suas fichas.
 
 ## 3. Efeitos e parâmetros exatos do recorte
+
+**Ampliação da auditoria — #1118:** a [prova de construção dos mapas e referência NeoForge 21.1.250](../EXACT-DYNAMIC-ATTRIBUTE-CONSTRUCTION-1.0.10.md) documenta os valores dos construtores, as quinze fábricas de registro e o caminho externo de seleção. Ortholance fornece +5 de dano e -2.4000000953674316 de velocidade; Candy Cane +3/+4; Totem +2/-2.4000000953674316; Limestone/Frostmint/Extinction Spears +3/+5/+8 de dano e -3 de velocidade, todos ADD_VALUE. Diving leggings solicitam +0.5 de natação ADD_VALUE; chestplate solicita toughness do material. Gingerbread mantém mapa inicial distinto do cache por dano. O componente de atributos não vazio do NeoForge evita o fallback stack-aware; a aplicação final continua não verificada. A referência ampliada confirma NeoForgeMod.SWIM_SPEED e o despacho CommonHooks.computeModifiedAttributes → ItemAttributeModifierEvent → build(). O evento recebe stack e modificadores iniciais, não player; não há autorização para implementar perks sem prova de autoridade e segurança. Os dados não constituem atributos finais do jogador nem certificado dos equipamentos completos.
 
 **GingerbreadArmorItem.getOrCreateDurabilityAttributes(int damage,int maxDamage)** possui 73 instruções. Usa Map.containsKey(damage) e, em hit de cache, retorna o mapa existente. No caminho de criação calcula:
 
@@ -63,7 +65,7 @@ Swiftwood é um nível de encantamento obtido por ACCompat.enchantLevel e limita
 - Estado: cache de modificadores de Gingerbread em campo de item, indexado por **damage**, não por player/UUID. Este código não prova isolamento por stack, invalidation, persistência de cache ou sincronização cliente/servidor.
 - Autoria: nenhum caster, target player, owner de projétil, recibo de hit ou identificador de perk é passado por acModifiers. Não derivar crédito de kill/XP/Mastery da existência do atributo.
 
-Os valores internos dos demais defaultModifiers e o comportamento completo dos owners de combate/armadura permanecem responsabilidade de auditorias individuais. Esta ficha de interface não os certifica por associação.
+Os valores internos dos mapas são documentados no dossiê suplementar, mas os efeitos completos dos owners de combate/armadura permanecem responsabilidade de auditorias individuais. Esta ficha de interface não os certifica por associação.
 
 ## 6. Interoperabilidade e limites de perks
 
@@ -73,8 +75,10 @@ Nenhum adapter, mixin, novo settlement de dano ou atribuição de XP foi adicion
 
 ## 7. Validação e pendências
 
+**Contrato estático individual:** [prova de sete eixos](../EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.md), [manifesto reproduzível](../EXACT-DYNAMIC-ATTRIBUTE-CONTRACT-1.0.10.json), [detalhes de construção/builder](../EXACT-DYNAMIC-ATTRIBUTE-CONSTRUCTION-1.0.10.md). O builder do NeoForge 21.1.250 usa chave `(Holder<Attribute>, ResourceLocation)` sem slot; add recusa chave duplicada, replace pode substituir inclusive slot, remove atua pela chave e build copia a lista. A construção preserva a lista inicial, sem deduplicar entradas já presentes. O campo Gingerbread `defaultAttributes` tem somente escrita interna no construtor, e o caminho ativo usa o cache dependente de dano. A tabela de materiais e a fórmula Swiftwood têm seus próprios dossiês.
+
 [Probe nativo](../../../../../docs/qa/alexscaves_1010_dynamic_attribute_probe.py) lê JAR e usa JDK 21; [testes](../../../../../docs/qa/alexscaves_1010_dynamic_attribute_probe_test.py) verificaram **8/8 PASS** no [workflow exato](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44220064013/job/134519414118). Os checks cobrem declaração e roster, classes herdadas, ordens/offsets, null versus vazio, custo da seleção Swiftwood, cache/divisão Gingerbread e fallback do helper; são **testes estáticos**, não GameTests ou QA física.
 
-A [prova compartilhada](../EXACT-DYNAMIC-ATTRIBUTE-DISCOVERY-1.0.10.md) inclui hashes de cada corpo acModifiers, referência de CI, limites do recorte e comando reproduzível. Pendências para certificação plena: revisar construtores e conteúdo dos mapas defaultModifiers e divingArmorAttributes por item, dispatch efetivo/externo de atributos em NeoForge 1.21.1, composição de ItemAttributeModifiers com outros mods/datapacks, lifecycle/reload, interação com atributos e perks de RPG Skill Tree e QA física quando exigida. Não confundir **interface parcialmente inventariada** com **sete equipamentos completos**.
+A [prova compartilhada](../EXACT-DYNAMIC-ATTRIBUTE-DISCOVERY-1.0.10.md) inclui hashes de cada corpo acModifiers, referência de CI, limites do recorte e comando reproduzível. O selo delimita a interface, os produtores nativos e a referência externa oficial; não fecha os efeitos integrais dos itens. Identidades de armas que dependem de campos externos são documentadas simbolicamente, e a ordem/valores de enum externos não são inferidos. Runtime transformado, composição de ItemAttributeModifiers com outros mods/datapacks, lifecycle/reload, interação com atributos e perks de RPG Skill Tree e QA física são limites independentes. Não confundir **contrato estático delimitado da interface** com **equipamentos completos**.
 
-**Estado final: ⚠️ PARCIAL · NOT_CERTIFIED · NOT_VERIFIED · NOT_TESTED · NO_MUTATION.**
+**Estado final: ✅ CERTIFIED_STATIC_7_AXES (somente catálogo) · perk NOT_CERTIFIED · hook NOT_VERIFIED · QA NOT_TESTED · NO_MUTATION · provider OPEN.**
