@@ -1,7 +1,5 @@
 # Índice do catálogo — Alexs Caves Continued / Systems
 
-**Disposição alfabética de suporte:** [ACFoodPropertiesItem](../EXACT-FOOD-PROPERTIES-ITEM-MARKER-1.0.10.md) — marcador vazio, sem ficha independente (+0); próximo `ACFoods`. BiomeTreatItem permanece aberto; provider OPEN.
-
 > Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
 
 **Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
