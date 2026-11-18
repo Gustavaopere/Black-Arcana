@@ -1,0 +1,52 @@
+name: Alex's Caves 1.0.10 enchantable item discovery
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-enchantable-item-probe.yml'
+      - 'docs/qa/alexscaves_1010_enchantable_item_probe.py'
+      - 'docs/qa/alexscaves_1010_enchantable_item_probe_test.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  enchantable_item_discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download exact publisher and official NeoForge references
+        run: |
+          mkdir -p build/enchantable-item-1010
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/enchantable-item-1010/alexscaves-1.0.10.jar
+          for variant in universal userdev; do
+            curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+              "https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-$variant.jar" \
+              --output "build/enchantable-item-1010/neoforge-$variant.jar"
+          done
+      - name: Inspect native interface, implementations and external references
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_enchantable_item_probe.py
+          python3 docs/qa/alexscaves_1010_enchantable_item_probe.py \
+            --jar build/enchantable-item-1010/alexscaves-1.0.10.jar \
+            --universal build/enchantable-item-1010/neoforge-universal.jar \
+            --userdev build/enchantable-item-1010/neoforge-userdev.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/enchantable-item-1010/report.json
+      - name: Archive read-only evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-enchantable-item-discovery
+          path: build/enchantable-item-1010/report.json
+          retention-days: 14
+          if-no-files-found: ignore
