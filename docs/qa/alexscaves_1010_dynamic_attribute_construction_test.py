@@ -156,5 +156,45 @@ class ConstructionEvidence(unittest.TestCase):
         added=[x["text"].strip() for x in patch["matching_lines"] if x["text"].startswith("+")]
         self.assertEqual(sum("this.getAttributeModifiers().forEach(" in x for x in added),2)
 
+    def test_native_attribute_bridge_and_identity(self):
+        for name,recipe in (("DivingArmorItem","diving_armor.\u0001"),
+                            ("GingerbreadArmorItem","gingerbread_armor.\u0001")):
+            m=self.method(I+name,"<init>")
+            self.assertEqual(m["bootstrap_call_sites"][0]["bootstrap"]["arguments"],[recipe])
+        m=self.method(P+"server/misc/ACPlatform","swimSpeedAttribute")
+        self.pivot(m,0,"getstatic","NeoForgeMod.SWIM_SPEED")
+        self.pivot(m,3,"invokeinterface","Holder.value")
+        m=self.method(P+"server/misc/ACCompat","attribute")
+        self.pivot(m,0,"getstatic","BuiltInRegistries.ATTRIBUTE")
+        self.pivot(m,4,"invokeinterface","Registry.wrapAsHolder")
+        for name in ("DivingArmorItem","GingerbreadArmorItem","OrtholanceItem","PrimitiveClubItem",
+                     "SharpenedCandyCaneItem","SpearItem","TotemOfPossessionItem"):
+            m=self.method(I+name,"lambda$getDefaultAttributeModifiers$"+("1" if name=="TotemOfPossessionItem" else "0"))
+            owner="ArmorItem" if name in ("DivingArmorItem","GingerbreadArmorItem") else "Item"
+            self.pivot(m,2,"invokespecial","/world/item/"+owner+".getDefaultAttributeModifiers:")
+            self.pivot(m,5,"areturn")
+
+    def test_external_event_boundary_not_player_authority(self):
+        hooks="net/neoforged/neoforge/common/CommonHooks"
+        event="net/neoforged/neoforge/event/ItemAttributeModifierEvent"
+        m=self.method(hooks,"computeModifiedAttributes",engine=True)
+        self.pivot(m,0,"new",event)
+        self.pivot(m,6,"invokespecial",'ItemAttributeModifierEvent."<init>"')
+        self.pivot(m,10,"getstatic","NeoForge.EVENT_BUS")
+        self.pivot(m,14,"invokeinterface","IEventBus.post")
+        self.pivot(m,21,"invokevirtual","ItemAttributeModifierEvent.build:")
+        m=self.method(event,"<init>",engine=True)
+        self.pivot(m,6,"putfield","stack:Lnet/minecraft/world/item/ItemStack;")
+        self.pivot(m,11,"putfield","defaultModifiers:")
+        m=self.method(event,"build",engine=True)
+        self.pivot(m,4,"ifnonnull","14")
+        self.pivot(m,8,"getfield","defaultModifiers:")
+        self.pivot(m,22,"invokevirtual","showInTooltip:")
+        self.pivot(m,25,"invokevirtual","ItemAttributeModifiersBuilder.build:")
+        for name,off in (("addModifier",7),("removeModifier",6),("replaceModifier",7)):
+            m=self.method(event,name,engine=True)
+            self.pivot(m,off,"invokevirtual","ItemAttributeModifiersBuilder."+name)
+        self.assertEqual(self.doc["mutating_hook"],"NOT_VERIFIED")
+
 if __name__=="__main__":
     unittest.main()
