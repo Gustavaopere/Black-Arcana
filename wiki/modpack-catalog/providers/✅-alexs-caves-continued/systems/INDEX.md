@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 5/5.**
+**Fichas catalogadas (somente fichas detectadas): 6/6.**
 
 **Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 5/5.**
+**Homologadas para perks (somente fichas detectadas): 6/6.**
 
 **Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
@@ -25,6 +25,7 @@
 | ✅ | Destroyed Item | [ficha/destroyed-item.md](destroyed-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dynamic Attributes | [ficha/dynamic-attributes.md](dynamic-attributes.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Enchantable Item | [ficha/enchantable-item.md](enchantable-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Food Builder | [ficha/food-builder.md](food-builder.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
