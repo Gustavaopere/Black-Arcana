@@ -6,7 +6,7 @@
 
 **Barra dos providers catalogados:** `░░░░░░░░░░░░░░░░░░░░ 2.4%`
 
-**Fichas catalogadas (somente fichas detectadas): 474/2398.**
+**Fichas catalogadas (somente fichas detectadas): 475/2399.**
 
 **Barra das fichas catalogadas:** `███░░░░░░░░░░░░░░░░░ 19.8%`
 
@@ -18,9 +18,9 @@
 
 **Próximo na fila alfabética:** Alexs Caves Continued.
 
-**Fichas com contrato técnico estático certificado: 224/2398.**
+**Fichas com contrato técnico estático certificado: 225/2399.**
 
-**Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 9.3%`
+**Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 9.4%`
 
 **Mods com escopo integral certificado: 0/164.**
 
@@ -34,7 +34,7 @@
 | ✅ | Aces Spell Utils — ✅ catálogo da versão-fonte documentado | 118/118 (100.0%) | 0 | ⚠️ | ⚠️ 0/118 verificados | ⚠️ 0/118 testados | [Ver fichas](✅-aces-spell-utils/INDEX.md) |
 | ✅ | Acolyte — ✅ catálogo do artefato publisher documentado | 74/74 (100.0%) | 0 | ⚠️ | ⚠️ 0/74 verificados | ⚠️ 0/74 testados | [Ver fichas](✅-acolyte/INDEX.md) |
 | ✅ | Aeromancy Additions — ✅ catálogo da versão-fonte documentado | 58/58 (100.0%) | 0 | ⚠️ | ⚠️ 0/58 verificados | ⚠️ 0/58 testados | [Ver fichas](✅-aeromancy-additions/INDEX.md) |
-| ⚠️ | Alexs Caves Continued — 🟡 próximo na fila | 86/86 (100.0%) | 86 | ⚠️ | ⚠️ 0/86 verificados | ⚠️ 0/86 testados | [Ver fichas](✅-alexs-caves-continued/INDEX.md) |
+| ⚠️ | Alexs Caves Continued — 🟡 próximo na fila | 87/87 (100.0%) | 87 | ⚠️ | ⚠️ 0/87 verificados | ⚠️ 0/87 testados | [Ver fichas](✅-alexs-caves-continued/INDEX.md) |
 | ⚠️ | Alexs Mobs Continued | 0/3 (0.0%) | 0 | ⚠️ | ⚠️ 0/3 verificados | ⚠️ 0/3 testados | [Ver fichas](✅-alexs-mobs-continued/INDEX.md) |
 | ⚠️ | Alshanex Familiars | 0/18 (0.0%) | 0 | ⚠️ | ⚠️ 0/18 verificados | ⚠️ 0/18 testados | [Ver fichas](✅-alshanex-familiars/INDEX.md) |
 | ⚠️ | Apokinetics | 0/0 | 0 | ⚠️ | ⚠️ 0/0 verificados | ⚠️ 0/0 testados | [Ver fichas](✅-apokinetics/INDEX.md) |

@@ -8,6 +8,8 @@ on:
       - 'docs/qa/alexscaves_1010_food_builder_probe.py'
       - 'docs/qa/alexscaves_1010_food_builder_probe_test.py'
       - 'docs/qa/alexscaves_1010_food_builder_reference.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOOD-BUILDER-CONTRACT-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/food-builder.md'
   workflow_dispatch:
 
 permissions:
@@ -52,6 +54,11 @@ jobs:
             --userdev build/food-builder-1010/neoforge-userdev.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/food-builder-1010/reference.json
+      - name: Verify sealed builder, consumption references and ledger
+        run: |
+          export AC_FOOD_NATIVE_REPORT=build/food-builder-1010/report.json
+          export AC_FOOD_REFERENCE_REPORT=build/food-builder-1010/reference.json
+          python3 docs/qa/alexscaves_1010_food_builder_probe_test.py -v
       - name: Archive bounded evidence
         if: always()
         uses: actions/upload-artifact@v7

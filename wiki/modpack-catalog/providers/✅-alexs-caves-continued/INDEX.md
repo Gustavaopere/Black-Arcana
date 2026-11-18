@@ -4,7 +4,7 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 86/86.**
+**Fichas catalogadas (somente fichas detectadas): 87/87.**
 
 **Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
@@ -12,7 +12,7 @@
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 86/86.**
+**Homologadas para perks (somente fichas detectadas): 87/87.**
 
 **Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
@@ -110,6 +110,7 @@
 | ✅ | Destroyed Item | [systems/destroyed-item.md](systems/destroyed-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Dynamic Attributes | [systems/dynamic-attributes.md](systems/dynamic-attributes.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Enchantable Item | [systems/enchantable-item.md](systems/enchantable-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Food Builder | [systems/food-builder.md](systems/food-builder.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Subpastas
 
@@ -120,7 +121,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
-| ✅ | Systems | 5/5 (100.0%) | 5 | [Abrir índice](systems/INDEX.md) |
+| ✅ | Systems | 6/6 (100.0%) | 6 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
 
