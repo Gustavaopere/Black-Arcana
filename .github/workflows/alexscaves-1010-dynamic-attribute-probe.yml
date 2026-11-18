@@ -1,0 +1,50 @@
+name: Alex's Caves 1.0.10 dynamic attribute read-only discovery
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-dynamic-attribute-probe.yml'
+      - 'docs/qa/alexscaves_1010_dynamic_attribute_probe.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dynamic_attribute_discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch and fingerprint exact 1.0.10 JAR
+        run: |
+          mkdir -p build/dynamic-attribute-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/dynamic-attribute-1010/alexscaves-1.0.10.jar
+          echo '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c  build/dynamic-attribute-1010/alexscaves-1.0.10.jar' | sha256sum --check --strict
+          echo '6960b299a39a039ac8a5eb9b07be4ad0e3e0a570  build/dynamic-attribute-1010/alexscaves-1.0.10.jar' | sha1sum --check --strict
+          test "$(wc -c < build/dynamic-attribute-1010/alexscaves-1.0.10.jar)" -eq 75279314
+      - name: Inspect exact attribute ABI and bounded callbacks
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_dynamic_attribute_probe.py
+          python3 docs/qa/alexscaves_1010_dynamic_attribute_probe.py \
+            --jar build/dynamic-attribute-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/dynamic-attribute-1010/dynamic-attribute-discovery.json
+      - name: Archive read-only discovery evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-dynamic-attribute-discovery
+          path: build/dynamic-attribute-1010/dynamic-attribute-discovery.json
+          if-no-files-found: ignore
+          retention-days: 14
