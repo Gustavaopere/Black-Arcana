@@ -1,0 +1,52 @@
+name: Alex's Caves 1.0.10 dynamic attribute construction discovery
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-dynamic-attribute-construction.yml'
+      - 'docs/qa/alexscaves_1010_dynamic_attribute_construction.py'
+      - 'docs/qa/alexscaves_1010_dynamic_attribute_construction_test.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dynamic_attribute_construction:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download exact publisher and pinned NeoForge references
+        run: |
+          mkdir -p build/dynamic-attribute-construction
+          curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output build/dynamic-attribute-construction/alexscaves-1.0.10.jar
+          for variant in universal userdev; do
+            curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 180 \
+              "https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-$variant.jar" \
+              --output "build/dynamic-attribute-construction/neoforge-$variant.jar"
+          done
+      - name: Audit modifier construction and external reference
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_dynamic_attribute_construction.py
+          python3 docs/qa/alexscaves_1010_dynamic_attribute_construction.py \
+            --jar build/dynamic-attribute-construction/alexscaves-1.0.10.jar \
+            --universal build/dynamic-attribute-construction/neoforge-universal.jar \
+            --userdev build/dynamic-attribute-construction/neoforge-userdev.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/dynamic-attribute-construction/report.json
+      - name: Archive bounded discovery evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: dynamic-attribute-construction-1010
+          path: build/dynamic-attribute-construction/report.json
+          retention-days: 14
+          if-no-files-found: ignore
