@@ -26,18 +26,22 @@ from alexscaves_1010_destroyed_item_engine_reference import (
 
 ITEM = PREFIX + "server/item/"
 REGISTRY = ITEM + "ACItemRegistry"
+PLATFORM = PREFIX + "server/misc/ACPlatform"
 FIELDS = {"defaultModifiers", "divingArmorAttributes",
-          "gingerbreadDurabilityDependentAttributes", "acDefense", "acSlot"}
+          "gingerbreadDurabilityDependentAttributes", "acDefense", "acSlot", "defaultAttributes"}
 NATIVE_NAMES = {"<init>", "<clinit>", "acModifiers",
                 "getDefaultAttributeModifiers", "getAttributeModifiers",
                 "getOrCreateDurabilityAttributes", "getStatsForEnchantmentLevel"}
-HELPER_NAMES = {"itemAttributes", "attributeModifier"}
+HELPER_NAMES = {"itemAttributes", "attributeModifier", "attribute"}
 ENGINE_OWNERS = (
     "net/neoforged/neoforge/common/extensions/IItemExtension",
     "net/neoforged/neoforge/common/extensions/IItemStackExtension",
+    "net/neoforged/neoforge/common/CommonHooks",
+    "net/neoforged/neoforge/event/ItemAttributeModifierEvent",
 )
 ENGINE_NAMES = {"getAttributeModifiers", "getDefaultAttributeModifiers",
-                "forEachModifier", "getAttributeModifiersFromComponents"}
+                "forEachModifier", "getAttributeModifiersFromComponents",
+                "computeModifiedAttributes", "getDefaultModifiers", "getModifiers", "build"}
 PATCH_TOKENS = re.compile(r"get(?:Default)?AttributeModifiers|forEachModifier|ItemAttributeModifierEvent|ATTRIBUTE_MODIFIERS|modifyItemAttributes")
 
 
@@ -73,7 +77,7 @@ def method_row(reader, key, body):
 
 def native_projection(jar, javap):
     census = inspect(jar)
-    owners = sorted({*census["direct_implementers"], *census["inherited_implementers"], HELPER})
+    owners = sorted({*census["direct_implementers"], *census["inherited_implementers"], HELPER, PLATFORM})
     result = {}
     with zipfile.ZipFile(jar) as z:
         for owner in owners:
@@ -85,12 +89,14 @@ def native_projection(jar, javap):
                 name = key[0]
                 if owner == HELPER:
                     keep = name in HELPER_NAMES or name.startswith("lambda$itemAttributes$")
+                elif owner == PLATFORM:
+                    keep = name == "swimSpeedAttribute"
                 else:
                     keep = (name in NATIVE_NAMES or
                             name.startswith("lambda$getDefaultAttributeModifiers$")) and name != "<clinit>"
                 if keep:
                     selected.append(method_row(reader, key, body))
-            require(any(x["name"] == "<init>" for x in selected) or owner == HELPER,
+            require(any(x["name"] == "<init>" for x in selected) or owner in (HELPER, PLATFORM),
                     "constructor missing for " + owner)
             result[owner] = {"class_sha256": digest(raw), "parent": reader.parent,
                              "interfaces": reader.interfaces,
@@ -100,7 +106,7 @@ def native_projection(jar, javap):
         reader = ClassReader(raw)
         methods = disasm(jar, javap, REGISTRY)
         factory_rows = []
-        owner_tokens = tuple(o for o in owners if o != HELPER)
+        owner_tokens = tuple(o for o in owners if o not in (HELPER, PLATFORM))
         for key, body in sorted(methods.items()):
             if key[0] == "<clinit>":
                 continue
@@ -147,7 +153,8 @@ def engine_projection(universal, userdev, javap):
             reader = ClassReader(raw)
             parsed = disasm(universal, javap, name)
             selected = [method_row(reader, k, b) for k, b in sorted(parsed.items())
-                        if k[0] in ENGINE_NAMES or "AttributeModifier" in k[0]]
+                        if k[0] in ENGINE_NAMES or "AttributeModifier" in k[0] or
+                        (name.endswith("ItemAttributeModifierEvent") and k[0] in ("<init>", "addModifier", "removeModifier", "replaceModifier", "removeAllModifiers", "clearModifiers"))]
             owners[name] = {"class_sha256": digest(raw), "methods": selected}
     patch_rows = []
     with zipfile.ZipFile(userdev) as z:
@@ -181,11 +188,13 @@ def main():
     for owner, entry in report["provider"]["native_owners"].items():
         print("OWNER", owner, entry["class_sha256"])
         for m in entry["methods"]:
-            if m["name"] not in ("<init>", "attributeModifier") and not m["name"].startswith("lambda$itemAttributes$"):
+            if m["name"] not in ("<init>", "attributeModifier", "attribute", "swimSpeedAttribute") and not m["name"].startswith(("lambda$itemAttributes$", "lambda$getDefaultAttributeModifiers$")):
                 if m["name"] == "getDefaultAttributeModifiers":
                     print("BOOTSTRAPS", m["name"], json.dumps(m["bootstrap_call_sites"]))
                 continue
             print("METHOD", m["name"], m["descriptor"], m["instruction_count"], m["declaration"].get("code_sha256"))
+            if m["bootstrap_call_sites"]:
+                print("METHOD_BOOTSTRAPS", json.dumps(m["bootstrap_call_sites"]))
             for i in m["instructions"]:
                 print(" ", i["offset"], i["opcode"], i["operand"], i["symbol"])
     for m in report["provider"]["registry"]["factories"]:
