@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 84/84.**
+**Fichas catalogadas (somente fichas detectadas): 84/85.**
 
-**Barra das fichas catalogadas:** `████████████████████ 100.0%`
+**Barra das fichas catalogadas:** `███████████████████░ 98.8%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 84/84.**
+**Homologadas para perks (somente fichas detectadas): 84/85.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
+**Barra dos contratos técnicos estáticos:** `███████████████████░ 98.8%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -108,6 +108,7 @@
 | ✅ | Armor Material | [systems/armor-material.md](systems/armor-material.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Client Extension | [systems/client-extension.md](systems/client-extension.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Destroyed Item | [systems/destroyed-item.md](systems/destroyed-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Dynamic Attributes | [systems/dynamic-attributes.md](systems/dynamic-attributes.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Subpastas
 
@@ -118,7 +119,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
-| ✅ | Systems | 3/3 (100.0%) | 3 | [Abrir índice](systems/INDEX.md) |
+| ⚠️ | Systems | 3/4 (75.0%) | 3 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅
 

@@ -2,27 +2,28 @@
 
 > Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
 
-**Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
+**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 3/3.**
+**Fichas catalogadas (somente fichas detectadas): 3/4.**
 
-**Barra das fichas catalogadas:** `████████████████████ 100.0%`
+**Barra das fichas catalogadas:** `███████████████░░░░░ 75.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 3/3.**
+**Homologadas para perks (somente fichas detectadas): 3/4.**
 
-**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
+**Barra dos contratos técnicos estáticos:** `███████████████░░░░░ 75.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
-**Contratos desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
+**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
 | ✅ | Armor Material | [ficha/armor-material.md](armor-material.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Client Extension | [ficha/client-extension.md](client-extension.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Destroyed Item | [ficha/destroyed-item.md](destroyed-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ⚠️ | Dynamic Attributes | [ficha/dynamic-attributes.md](dynamic-attributes.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
