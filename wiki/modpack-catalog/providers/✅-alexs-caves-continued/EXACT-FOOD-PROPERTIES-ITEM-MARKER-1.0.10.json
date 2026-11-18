@@ -1,0 +1,31 @@
+{
+  "schema": "AC_FOOD_PROPERTIES_ITEM_MARKER_DISPOSITION_V1",
+  "artifact": {
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "native_report_sha256": "5e7c6410a705ab9ce60b46f90db22f8611813eedeb9471aa7f26fff5cee28df9",
+  "class_entries_scanned": 1555,
+  "target": "com/github/alexmodguy/alexscaves/server/item/ACFoodPropertiesItem",
+  "target_class_sha256": "78b5fe9d3b47072e4b1708fbd11129d2669c95a1b913f3bf2ba8946364cb5d3d",
+  "target_access": 1537,
+  "disposition": "EMPTY_MARKER_SUPPORT_ONLY",
+  "declared_fields": 0,
+  "declared_methods": 0,
+  "direct_implementers": [
+    "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem"
+  ],
+  "inherited_implementers": [],
+  "native_member_references": 0,
+  "additional_cards": 0,
+  "semantic_magic_roots_added": 0,
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "perk_certification": "NOT_CERTIFIED",
+  "mutation": "NO_MUTATION",
+  "provider_universe_closed": false,
+  "discovery_run": 44324891388,
+  "discovery_job": 134873432907
+}
