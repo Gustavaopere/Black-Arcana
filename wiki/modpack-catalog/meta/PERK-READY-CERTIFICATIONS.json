@@ -8992,6 +8992,50 @@
           "reason": "Selo EXACT-CLIENT-EXTENSION-1.0.10.json, prova Markdown e auditoria reproduzível vinculam ABI, 19 corpos e censo tipado de 1555 classes ao JAR publisher SHA-exato. Certifica somente a nova ficha técnica estática de suporte, com +1 candidato e +0 raízes mágicas; registration_execution NOT_VERIFIED, mutating_hook NOT_VERIFIED, physical_qa NOT_TESTED, perk_certification NOT_CERTIFIED e NO_MUTATION."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/destroyed-item.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Individual ACDestroyedItem integration-support static contract: declared interface ABI, single direct implementer, complete 170-byte onDestroyed body, superclass/delegate boundary, typed 1555-class census and sole selector-5 waste_drum factory binding in ACBlockRegistry. The version-pinned NeoForge reference explains the external bridge; transformed ModLauncher runtime and physical outcomes remain NOT_VERIFIED. Completes the existing PR #1115 candidate: +1 static certification, +0 candidates and +0 semantic magic roots. Does not certify full block-item behavior, accepted spawn/status/damage/explosion, World Safety, owner/Mastery, safe per-player mutation, physical QA, perks or whole-provider closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.md",
+          "reason": "O JAR publisher Alex's Caves Continued 1.0.10, SHA-1 6960b299a39a039ac8a5eb9b07be4ad0e3e0a570, fixa a ABI de ACDestroyedItem e o único implementador direto RadioactiveOnDestroyedBlockItem no censo de 1555 classes. O binding nativo é waste_drum no ACBlockRegistry, selector 5; os três registros de selector 4 usam RadioactiveBlockItem comum e não pertencem a este callback."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.md",
+          "reason": "O corpo completo de 170 bytes chama o supermétodo antes dos guards isCreativePlayer/isRemoved; após retorno normal e guards elegíveis solicita discard, cloud e explosão em ordem. O bridge externo e a delegação de um argumento têm disposição estática própria em referência NeoForge versionada; isso não prova execução no pack ou equivalência ao runtime físico transformado."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.md",
+          "reason": "A nuvem recebe Irradiated 9600 ticks/amplifier 1, raio 2F, duração 12000 ticks, espera 0 e radiusPerTick=-radius/duration; cor 7853582 e partícula GAMMAROACH são visuais. A explosão solicita 1.8F em x,y+0.5,z com fonte null e interação BLOCK. Os parâmetros fornecidos não são recibos de spawn, status, dano ou destruição de blocos aceitos."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.md",
+          "reason": "O callback não seleciona vítimas nem chama LivingEntity.hurt diretamente: cloud e explosão conservam consumidores e políticas externos. A nuvem usa a posição do ItemEntity e não recebe owner explícito; a explosão recebe fonte null. Não há guarda local de servidor nem política própria de PvP/claims ou atribuição a jogador/Mastery certificada."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.md",
+          "reason": "O callback solicita o descarte do item antes da nuvem e da explosão, mas não implementa mana, stamina, cooldown ou nova cobrança de cast. O booleano de addFreshEntity é descartado e não condiciona a explosão. Registro, receita ou chance de radioatividade do item não comprovam aquisição Survival, consumo aceito ou custo adicional deste callback."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.md",
+          "reason": "A referência NeoForge versionada delimita ItemEntity -> ItemStack/IItemStackExtension -> Item/IItemExtension, seguido pela delegação Citadel de um argumento e pelo callback nativo; o censo publisher não encontra consumidor tipado da interface ACDestroyedItem. A interface não é um evento registrado ou hook de perk por jogador. Autoridade de descarte, cloud e explosão permanece nativa; World Safety, cancelamento, ownership, crédito e runtime transformado não são homologados. NO_MUTATION, sem duplicar efeitos."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.md",
+          "reason": "A prova e o selo EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.json vinculam ABI, método completo, censo tipado, delegates e registro selector 5 ao artefato SHA-exato, separando a referência externa pinned da execução instalada. Conclui somente o certificado estático da ficha já existente: +1 certificado, +0 candidatos e +0 raízes mágicas; mutating_hook NOT_VERIFIED, physical_qa NOT_TESTED, perk_certification NOT_CERTIFIED e provider OPEN."
+        }
+      }
     }
   },
   "providers": {},

@@ -1,0 +1,238 @@
+{
+  "artifacts": {
+    "universal": {
+      "filename": "neoforge-21.1.250-universal.jar",
+      "official_sha256_url": "https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-universal.jar.sha256",
+      "official_url": "https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-universal.jar",
+      "sha1": "214c5293c8599b0aaadfdbfa92453ba23918a219",
+      "sha256": "1f9cc68fe9ec0416475d34ce76e95a696b9721d5d338168563dab0632c3d2956",
+      "size_bytes": 3551255
+    },
+    "userdev": {
+      "filename": "neoforge-21.1.250-userdev.jar",
+      "official_sha256_url": "https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-userdev.jar.sha256",
+      "official_url": "https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-userdev.jar",
+      "sha1": "45f4a0daf3ecd5864338cb5ab7368afbee02e529",
+      "sha256": "deb6dd1e002aa85406e92501f49d5429cc8eaefe32fc353433e67030c32d8372",
+      "size_bytes": 3983248
+    }
+  },
+  "claims": {
+    "actual_gameplay_outcomes": "NOT_VERIFIED",
+    "claim_scope": "STATIC_DESTROYED_ITEM_EXTERNAL_BOUNDARY_ONLY",
+    "evidence_grade": "PINNED_USERDEV_PATCH_PLUS_UNIVERSAL_BYTECODE_REFERENCE",
+    "installed_transformed_execution": "NOT_VERIFIED",
+    "matches_physical_ledger_loader_version": true,
+    "minecraft_version": "1.21.1",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "neoforge_version": "21.1.250",
+    "perk_certification": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "external_boundary": {
+    "item_bridge": "IItemExtension default invokes self().onDestroyed(itemEntity) virtually, preserving one-argument subclass dispatch.",
+    "item_entity_dispatch": "The official userdev patch replaces the one-argument call with ItemStack.onDestroyed(this, damageSource) inside health <= 0 and before discard().",
+    "limitations": "Userdev patch context is not a complete ItemEntity.hurt binary body. No derived Minecraft JAR is required. Installed transformations, modpack execution, cloud application, victims, explosion outcomes and gameplay safety remain unverified.",
+    "resolution_reference": "https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html#jvms-5.4.3.3",
+    "stack_bridge": "IItemStackExtension default invokes self().getItem().onDestroyed(itemEntity, damageSource) virtually.",
+    "superclass_resolution": "Conditional reference derivation: combining the separate publisher native seal with the standard external BlockItem-to-Item hierarchy and Item implementing IItemExtension supplies the inherited two-argument default when no class in the superclass chain declares that descriptor. JVM class-method resolution includes maximally specific superinterface defaults. The external BlockItem hierarchy itself is not projected by these three source patches."
+  },
+  "schema": "AC_DESTROYED_ITEM_ENGINE_REFERENCE_V1",
+  "universal_default_bridges": [
+    {
+      "class_access": 1537,
+      "class_major": 65,
+      "class_sha256": "d65a413962ab6bf6cf8c33119b010dd16fcf482c114b8ae8abe5c59da951b088",
+      "interfaces": [],
+      "method": {
+        "access": 1,
+        "code_sha256": "5329be910501a1f43935664ae16d2d9968d734c3eb063130a2ece881a1cc508a",
+        "code_size": 11,
+        "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+        "exception_handlers": [],
+        "instruction_count": 5,
+        "instruction_sha256": "793b6eae799d4d115b96738d2c8310b88f3077c3f021adf7f48816feaa4d6e30",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "invokeinterface",
+            "operand": "#3, 1",
+            "symbol": "InterfaceMethod self:()Lnet/minecraft/world/item/Item;"
+          },
+          {
+            "offset": 6,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 7,
+            "opcode": "invokevirtual",
+            "operand": "#256",
+            "symbol": "Method net/minecraft/world/item/Item.onDestroyed:(Lnet/minecraft/world/entity/item/ItemEntity;)V"
+          },
+          {
+            "offset": 10,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "max_locals": 3,
+        "max_stack": 2,
+        "name": "onDestroyed"
+      },
+      "owner": "net/neoforged/neoforge/common/extensions/IItemExtension",
+      "parent": "java/lang/Object"
+    },
+    {
+      "class_access": 1537,
+      "class_major": 65,
+      "class_sha256": "244993a9cd1a5e99507c88a0a8e1d65b6ef997d44bd73ab696a510ccf2d0397e",
+      "interfaces": [],
+      "method": {
+        "access": 1,
+        "code_sha256": "daec92ef22fe14d788a69e103bb2d2a03bff3357748764a77ce93bdcf159271c",
+        "code_size": 15,
+        "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+        "exception_handlers": [],
+        "instruction_count": 7,
+        "instruction_sha256": "c5d91a9dd86510195337ca5b6c83d880140140a6fa1eb68a13e742116fdd2378",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "invokeinterface",
+            "operand": "#3, 1",
+            "symbol": "InterfaceMethod self:()Lnet/minecraft/world/item/ItemStack;"
+          },
+          {
+            "offset": 6,
+            "opcode": "invokevirtual",
+            "operand": "#9",
+            "symbol": "Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;"
+          },
+          {
+            "offset": 9,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 10,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 11,
+            "opcode": "invokevirtual",
+            "operand": "#256",
+            "symbol": "Method net/minecraft/world/item/Item.onDestroyed:(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V"
+          },
+          {
+            "offset": 14,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "max_locals": 3,
+        "max_stack": 3,
+        "name": "onDestroyed"
+      },
+      "owner": "net/neoforged/neoforge/common/extensions/IItemStackExtension",
+      "parent": "java/lang/Object"
+    }
+  ],
+  "userdev_source_patches": [
+    {
+      "assertion": "active class declaration adds extension interface",
+      "entry": "patches/net/minecraft/world/item/Item.java.patch",
+      "selected_patch_lines": [
+        {
+          "line": 8,
+          "text": "+public class Item implements FeatureElement, ItemLike, net.neoforged.neoforge.common.extensions.IItemExtension {"
+        }
+      ],
+      "sha256": "6d16f90d962de67d1de56f92fdf7a8c8067296a87c7c20f7e48691b15ced706f",
+      "size_bytes": 10016
+    },
+    {
+      "assertion": "active class declaration adds extension interface",
+      "entry": "patches/net/minecraft/world/item/ItemStack.java.patch",
+      "selected_patch_lines": [
+        {
+          "line": 8,
+          "text": "+public final class ItemStack implements DataComponentHolder, net.neoforged.neoforge.common.MutableDataComponentHolder, net.neoforged.neoforge.common.extensions.IItemStackExtension {"
+        }
+      ],
+      "sha256": "5e910db862cc11662067e5ffbd2a792197d2eb618ce76f4281ee6fb5998c8c7d",
+      "size_bytes": 12326
+    },
+    {
+      "assertion": "health <= 0 calls two-argument stack callback before discard",
+      "entry": "patches/net/minecraft/world/entity/item/ItemEntity.java.patch",
+      "selected_patch_lines": [
+        {
+          "line": 75,
+          "text": "@@ -282,7 +_,7 @@"
+        },
+        {
+          "line": 76,
+          "text": "             this.health = (int)((float)this.health - p_32014_);"
+        },
+        {
+          "line": 77,
+          "text": "             this.gameEvent(GameEvent.ENTITY_DAMAGE, p_32013_.getEntity());"
+        },
+        {
+          "line": 78,
+          "text": "             if (this.health <= 0) {"
+        },
+        {
+          "line": 79,
+          "text": "-                this.getItem().onDestroyed(this);"
+        },
+        {
+          "line": 80,
+          "text": "+                this.getItem().onDestroyed(this, p_32013_);"
+        },
+        {
+          "line": 81,
+          "text": "                 this.discard();"
+        },
+        {
+          "line": 82,
+          "text": "             }"
+        }
+      ],
+      "sha256": "6c48c1cacf8fa9b7afcb61f8b541782a6a5d0b48a4d32ae2868f1e2fe637e489",
+      "size_bytes": 6507
+    }
+  ],
+  "validation": {
+    "comparison": "Exact artifact and selected entry/code hashes; complete two bridge instruction bodies; active interface-declaration additions and health-gated callback-before-discard patch context; mandatory deterministic seal comparison.",
+    "derived_minecraft_jar_required": false,
+    "engine_build_or_launch_performed": false,
+    "required_inputs": [
+      "official universal JAR",
+      "official userdev JAR",
+      "JDK 21 javap"
+    ]
+  }
+}

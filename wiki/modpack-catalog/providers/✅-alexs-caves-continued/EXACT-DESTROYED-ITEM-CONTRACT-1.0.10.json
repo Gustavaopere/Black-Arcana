@@ -1,0 +1,4678 @@
+{
+  "artifact": {
+    "mod_id": "alexscaves",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "version": "1.0.10"
+  },
+  "axes": {
+    "behavior": "Complete 170-byte native callback: superclass call precedes creative/removed guards; then discard, configured cloud submission and null-source BLOCK explosion request, conditional on normal upstream return.",
+    "costs": "Native ItemEntity.discard precedes both submissions; no stack decrement, mana, cooldown or refund path. Submission return values are ignored; accepted world effects or transactional settlement are not established.",
+    "identity": "Publisher 1.0.10 SHA-1/SHA-256/size; abstract two-argument interface declaration and sole concrete publisher implementer, with complete typed hierarchy/member census.",
+    "integration": "ACBlockRegistry selector 5/WASTE_DRUM supplier bridge, constructors, relocated Citadel one-argument callback, ACCompat color/effect bridges and bounded native IRRADIATED consumer. Matching-version NeoForge reference proof is a separate boundary.",
+    "parameters": "Cloud GAMMAROACH/color 7853582/IRRADIATED 9600 amplifier 1/radius 2/duration 12000/wait 0/negative-radius-over-duration; explosion 1.8 at Y+0.5. Factory selector 5 constructs with 0.01, an inherited inventory field, not callback RNG.",
+    "targeting": "Callback receives ItemEntity and DamageSource; no owner assignment or entity search in the callback. Cloud and explosion consumers perform external selection. Finite native IRRADIATED consumer is recorded separately from cloud application.",
+    "validation": "All 1555 class entries, typed owner/declaration/member/hierarchy censuses, reconciled JVM declarations/full selected bodies, explicit operand/branch/switch/bootstrap pivots, immutable seal and twice-run physical-binary CLI. Gameplay remains NOT_TESTED."
+  },
+  "callback_semantics": {
+    "cloud": {
+      "add_fresh_entity_boolean_checked": false,
+      "cloud_duration_ticks": 12000,
+      "color": 7853582,
+      "effect_input_amplifier": 1,
+      "effect_input_duration_ticks": 9600,
+      "effect_supplier": "IRRADIATED",
+      "owner_assignment_in_callback": false,
+      "particle_supplier": "GAMMAROACH",
+      "radius": 2.0,
+      "radius_per_tick_expression": "-cloud.getRadius() / (float) cloud.getDuration()",
+      "wait_time_ticks": 0
+    },
+    "code_size": 170,
+    "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+    "explosion": {
+      "interaction": "BLOCK",
+      "position": "(item.x,item.y+0.5,item.z)",
+      "returned_explosion_used": false,
+      "source_entity": null,
+      "strength": 1.8
+    },
+    "guards": [
+      {
+        "offset": 10,
+        "rejects": "DamageSource.isCreativePlayer()",
+        "return_offset": 169
+      },
+      {
+        "offset": 17,
+        "rejects": "ItemEntity.isRemoved()",
+        "return_offset": 169
+      }
+    ],
+    "input_policy": "No local null guards or explicit ownership authorization. DamageSource is dereferenced after superclass return; ItemEntity is subsequently dereferenced. No accepted world change, permission decision or settlement follows from those facts.",
+    "local_client_side_guard": false,
+    "local_dedicated_reentrancy_or_rollback_guard": false,
+    "local_rng": false,
+    "order": [
+      "superclass two-argument call",
+      "creative guard",
+      "removed guard",
+      "ItemEntity.discard",
+      "construct and configure cloud",
+      "Level.addFreshEntity return ignored",
+      "Level.explode return ignored"
+    ],
+    "owner": "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem",
+    "upstream_call": {
+      "causal_bound": "Every local guard and effect below offset 6 requires normal return from the superclass call. Matching-version NeoForge default bridges are separately evidenced reference inputs; actual installed transformed dispatch remains unverified.",
+      "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+      "offset": 3,
+      "opcode": "invokespecial",
+      "parent_declares_two_argument_method": false,
+      "relocated_native_ancestor_one_argument_method": "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier",
+      "symbolic_owner": "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem"
+    }
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "mutating_hook": "NOT_VERIFIED",
+    "mutation": "NO_MUTATION",
+    "perk_certification": "NOT_CERTIFIED",
+    "physical_qa": "NOT_TESTED",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0,
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES"
+  },
+  "class_sha256": {
+    "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier": "07a1c41d7b895e55e6c25c1dcb749703bed3c4a289592c958b4567a85a567d20",
+    "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": "b4de04f32f6e1d92eeda55480b8480f7ed69f3813164f330f49d0eced202e54c",
+    "com/github/alexmodguy/alexscaves/server/item/ACDestroyedItem": "2ccc084cf825941414561ed02362fc3776b5ddddd699c8c62952818956771100",
+    "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem": "289395b93a1a223f2e66a02528ccb4ce3a1a659dd9c82ac071a5b63c32b1c7cb",
+    "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem": "1c769a4b64f0e4b3b9a2f5589bfc44ce3e27ec46c616b447d4e1359ffb21bd4b",
+    "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem": "853e1f6318cfaa2c97ab27955e6b068e4e5f34ab94f4354092233e69bc502f24",
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat": "333738f324e6e9d77a488e14b7e81b169c2b2d4f6db5171206a016ad0271f57b",
+    "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes": "389fb88f8d6e1515e3dfe7f401a728bb33629666bd2319ae7e25668f710e4ef6",
+    "com/github/alexmodguy/alexscaves/server/potion/ACMobEffect": "39f88d7cf3c25eb4806b7bb769846282e5114f9e1e56dee6efaed9eb9e683896",
+    "com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect": "ee532620f143ff83773b08cf52f72b0b20b3fb6e85b18ed7b39dfd930465ba5c"
+  },
+  "integration_bounds": {
+    "color_bridge": "ACCompat.setCloudColor installs PotionContents with empty base potion, Optional.of(color), empty effect list; native callback adds its effect afterwards.",
+    "constructor_chance": "Factory 0.01 is stored as inherited randomChanceOfRadiation; inventory tick multiplies it by stack count and (1 - hazmat_count/4), checks existing IRRADIATED and RNG, requests duration 1800. The destroyed callback neither reads the field nor samples RNG.",
+    "cost": "Discard is requested before cloud/explosion; no mana/cooldown/cast/stack decrement/refund or transactional world settlement in the callback.",
+    "effect_bridge": "ACCompat.effect wraps BuiltInRegistries.MOB_EFFECT through Registry.wrapAsHolder; registry realization and accepted engine effects are external.",
+    "excluded": "Installed class transformation/execution, accepted cloud/entity/effect/explosion/damage outcomes, world destruction and protection rules, event cancellation, network authorization, external consumers, perks/hooks and physical gameplay.",
+    "native_status_consumer": "IRRADIATED shouldTick rejects amplifier <=0; otherwise interval=200/amplifier, periodic duration%interval==interval/2 if interval>1, else true. At amplifier1 the native predicate is duration%200==100. Engine cloud duration transforms and scheduling are external.",
+    "native_status_tick": "Hazmat count is four exact item identities; resistance=1-count*0.25. Unprotected Player requests exhaustion0.4. Raycat bypasses hurt. Other entities request radiation hurt(resistance) only if randomFloat < resistance+0.1; hurt return ignored. Native hurt request is not accepted damage.",
+    "relocated_callback": "One-argument BlockItemWithSupplier callback tests the supplied block for ShulkerBoxBlock, resets CONTAINER to EMPTY, and invokes ItemUtils.onContainerDestroyed on prior non-null contents. It has no discard call. It is a different JVM descriptor from ACDestroyedItem."
+  },
+  "native_methods": {
+    "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "61d43cd97c9cbca676b438401f28916224a51f881b6e2cd2cb3caee92417e2a4",
+        "code_size": 12,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+        "exception_handlers": [],
+        "instruction_count": 8,
+        "instruction_sha256": "507a3c41a1af0ec720908f181ae7ed91d3af1737246aa8ca2ffe4d074cc0f997",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "aconst_null",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "invokespecial",
+            "operand": "#1",
+            "symbol": "Method net/minecraft/world/item/BlockItem.\"<init>\":(Lnet/minecraft/world/level/block/Block;Lnet/minecraft/world/item/Item$Properties;)V"
+          },
+          {
+            "offset": 6,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 7,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 8,
+            "opcode": "putfield",
+            "operand": "#7",
+            "symbol": "Field blockSupplier:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 11,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": null,
+            "offset": 1,
+            "opcode": "aconst_null",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "BlockItem.\"<init>\":",
+            "offset": 3,
+            "opcode": "invokespecial",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "blockSupplier:",
+            "offset": 8,
+            "opcode": "putfield",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "34958b1e4ad3d0a7c35384b798190647caca05f7aac8bc9d6258af91b9393083",
+        "code_size": 13,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/level/block/Block;",
+        "exception_handlers": [],
+        "instruction_count": 5,
+        "instruction_sha256": "c54faf57c62b131ed168e44cc324cb89385606348a71dce88143cbeb21a7a8f2",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#7",
+            "symbol": "Field blockSupplier:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokeinterface",
+            "operand": "#13, 1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 9,
+            "opcode": "checkcast",
+            "operand": "#19",
+            "symbol": "class net/minecraft/world/level/block/Block"
+          },
+          {
+            "offset": 12,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getBlock",
+        "pivots": [
+          {
+            "contains": "blockSupplier:",
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "Supplier.get:",
+            "offset": 4,
+            "opcode": "invokeinterface",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [
+          {
+            "offset": 12,
+            "opcode": "ifeq",
+            "target": 44
+          },
+          {
+            "offset": 33,
+            "opcode": "ifnull",
+            "target": 44
+          }
+        ],
+        "code_sha256": "226813dc8af7ac6358213a35838f56fb39d5d9e717acb039d331303489bc9a46",
+        "code_size": 45,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;)V",
+        "exception_handlers": [],
+        "instruction_count": 19,
+        "instruction_sha256": "e9f9e3683d844c593bdcd3c5e7949b09c18e1770a73f84c92520089ae6775aa9",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getfield",
+            "operand": "#7",
+            "symbol": "Field blockSupplier:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 4,
+            "opcode": "invokeinterface",
+            "operand": "#13, 1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 9,
+            "opcode": "instanceof",
+            "operand": "#21",
+            "symbol": "class net/minecraft/world/level/block/ShulkerBoxBlock"
+          },
+          {
+            "offset": 12,
+            "opcode": "ifeq",
+            "operand": "44",
+            "symbol": ""
+          },
+          {
+            "offset": 15,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 16,
+            "opcode": "invokevirtual",
+            "operand": "#23",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.getItem:()Lnet/minecraft/world/item/ItemStack;"
+          },
+          {
+            "offset": 19,
+            "opcode": "getstatic",
+            "operand": "#29",
+            "symbol": "Field net/minecraft/core/component/DataComponents.CONTAINER:Lnet/minecraft/core/component/DataComponentType;"
+          },
+          {
+            "offset": 22,
+            "opcode": "getstatic",
+            "operand": "#35",
+            "symbol": "Field net/minecraft/world/item/component/ItemContainerContents.EMPTY:Lnet/minecraft/world/item/component/ItemContainerContents;"
+          },
+          {
+            "offset": 25,
+            "opcode": "invokevirtual",
+            "operand": "#41",
+            "symbol": "Method net/minecraft/world/item/ItemStack.set:(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;"
+          },
+          {
+            "offset": 28,
+            "opcode": "checkcast",
+            "operand": "#36",
+            "symbol": "class net/minecraft/world/item/component/ItemContainerContents"
+          },
+          {
+            "offset": 31,
+            "opcode": "astore_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 32,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 33,
+            "opcode": "ifnull",
+            "operand": "44",
+            "symbol": ""
+          },
+          {
+            "offset": 36,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 37,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 38,
+            "opcode": "invokevirtual",
+            "operand": "#47",
+            "symbol": "Method net/minecraft/world/item/component/ItemContainerContents.nonEmptyItems:()Ljava/lang/Iterable;"
+          },
+          {
+            "offset": 41,
+            "opcode": "invokestatic",
+            "operand": "#51",
+            "symbol": "Method net/minecraft/world/item/ItemUtils.onContainerDestroyed:(Lnet/minecraft/world/entity/item/ItemEntity;Ljava/lang/Iterable;)V"
+          },
+          {
+            "offset": 44,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "onDestroyed",
+        "pivots": [
+          {
+            "contains": "ShulkerBoxBlock",
+            "offset": 9,
+            "opcode": "instanceof",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 12,
+            "opcode": "ifeq",
+            "operand": "44",
+            "symbol": null
+          },
+          {
+            "contains": "DataComponents.CONTAINER:",
+            "offset": 19,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "ItemContainerContents.EMPTY:",
+            "offset": 22,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "ItemStack.set:",
+            "offset": 25,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 33,
+            "opcode": "ifnull",
+            "operand": "44",
+            "symbol": null
+          },
+          {
+            "contains": "ItemContainerContents.nonEmptyItems:",
+            "offset": 38,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "ItemUtils.onContainerDestroyed:",
+            "offset": 41,
+            "opcode": "invokestatic",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": [
+      {
+        "access": 10,
+        "branches": [],
+        "code_sha256": "26961a0e9ab5a59780758d47ec0512a60c5ac8d3deab1d9982f6421393181e81",
+        "code_size": 8,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/item/Item$Properties;",
+        "exception_handlers": [],
+        "instruction_count": 4,
+        "instruction_sha256": "7fd844c639d0515df4916a863dec5dd841ea287239e14a1674c3c5c20335573f",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "new",
+            "operand": "#191",
+            "symbol": "class net/minecraft/world/item/Item$Properties"
+          },
+          {
+            "offset": 3,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "invokespecial",
+            "operand": "#193",
+            "symbol": "Method net/minecraft/world/item/Item$Properties.\"<init>\":()V"
+          },
+          {
+            "offset": 7,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "blockItemProperties",
+        "pivots": []
+      },
+      {
+        "access": 10,
+        "branches": [
+          {
+            "offset": 1,
+            "opcode": "tableswitch",
+            "targets": {
+              "1": 59,
+              "2": 66,
+              "3": 73,
+              "4": 80,
+              "5": 87,
+              "6": 94,
+              "7": 101,
+              "8": 108,
+              "9": 115,
+              "default": 52
+            }
+          }
+        ],
+        "code_sha256": "0491a61abf0d322efcd2b927a9d55591d5f25a2f094e9d386121b5ad3ed45b68",
+        "code_size": 122,
+        "coverage": "FULL_BODY",
+        "descriptor": "(ILjava/util/function/Supplier;)Ljava/util/function/Supplier;",
+        "exception_handlers": [],
+        "instruction_count": 32,
+        "instruction_sha256": "29225986b1ae7894d6aaa1b20b6b63ed82e23d89097f80a1958f644e90b69ea9",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "iload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "tableswitch",
+            "operand": "{",
+            "symbol": "1 to 9"
+          },
+          {
+            "offset": 52,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 53,
+            "opcode": "invokedynamic",
+            "operand": "#194, 0",
+            "symbol": "InvokeDynamic #3:get:(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 58,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 59,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 60,
+            "opcode": "invokedynamic",
+            "operand": "#197, 0",
+            "symbol": "InvokeDynamic #4:get:(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 65,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 66,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 67,
+            "opcode": "invokedynamic",
+            "operand": "#198, 0",
+            "symbol": "InvokeDynamic #5:get:(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 72,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 73,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 74,
+            "opcode": "invokedynamic",
+            "operand": "#199, 0",
+            "symbol": "InvokeDynamic #6:get:(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 79,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 80,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 81,
+            "opcode": "invokedynamic",
+            "operand": "#200, 0",
+            "symbol": "InvokeDynamic #7:get:(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 86,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 87,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 88,
+            "opcode": "invokedynamic",
+            "operand": "#201, 0",
+            "symbol": "InvokeDynamic #8:get:(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 93,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 94,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 95,
+            "opcode": "invokedynamic",
+            "operand": "#202, 0",
+            "symbol": "InvokeDynamic #9:get:(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 100,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 101,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 102,
+            "opcode": "invokedynamic",
+            "operand": "#203, 0",
+            "symbol": "InvokeDynamic #10:get:(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 107,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 108,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 109,
+            "opcode": "invokedynamic",
+            "operand": "#204, 0",
+            "symbol": "InvokeDynamic #11:get:(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 114,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 115,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 116,
+            "opcode": "invokedynamic",
+            "operand": "#205, 0",
+            "symbol": "InvokeDynamic #12:get:(Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 121,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getBlockSupplier",
+        "pivots": []
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "97cdb48022a1d0e97196956a30d852cc346aad92de1c88cc8f6590109bfd71f3",
+        "code_size": 15,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+        "exception_handlers": [],
+        "instruction_count": 7,
+        "instruction_sha256": "5de06206169291ec7a95e9c470f42fb005eee4b27863aceec9d6fdcafed294ee",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "new",
+            "operand": "#332",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem"
+          },
+          {
+            "offset": 3,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "invokestatic",
+            "operand": "#300",
+            "symbol": "Method blockItemProperties:()Lnet/minecraft/world/item/Item$Properties;"
+          },
+          {
+            "offset": 8,
+            "opcode": "ldc_w",
+            "operand": "#334",
+            "symbol": "float 0.001f"
+          },
+          {
+            "offset": 11,
+            "opcode": "invokespecial",
+            "operand": "#335",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem.\"<init>\":(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;F)V"
+          },
+          {
+            "offset": 14,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "lambda$getBlockSupplier$440",
+        "pivots": []
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "6659fa766f94d238df90308e900913b9bb93b1edc19ea32f34b4f3a90b6e425f",
+        "code_size": 15,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+        "exception_handlers": [],
+        "instruction_count": 7,
+        "instruction_sha256": "e1615e8ac80bd7faedde620f588a1bca7b9f05dcccc07bbdbe6d9fe0a287af8f",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "new",
+            "operand": "#326",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem"
+          },
+          {
+            "offset": 3,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "invokestatic",
+            "operand": "#300",
+            "symbol": "Method blockItemProperties:()Lnet/minecraft/world/item/Item$Properties;"
+          },
+          {
+            "offset": 8,
+            "opcode": "ldc_w",
+            "operand": "#328",
+            "symbol": "float 0.01f"
+          },
+          {
+            "offset": 11,
+            "opcode": "invokespecial",
+            "operand": "#329",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem.\"<init>\":(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;F)V"
+          },
+          {
+            "offset": 14,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "lambda$getBlockSupplier$441",
+        "pivots": []
+      },
+      {
+        "access": 4106,
+        "branches": [],
+        "code_sha256": "30cee093ea59043530072e12988396b7eeedfe0d935aac68d4b630139c4df39e",
+        "code_size": 8,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Lnet/minecraft/world/level/block/Block;",
+        "exception_handlers": [],
+        "instruction_count": 4,
+        "instruction_sha256": "60cbb5ec1a8850f3c7c28d1b923ea4160f6612cf6b22388b3832fd1b0bcfb1e2",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "new",
+            "operand": "#964",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/block/WasteDrumBlock"
+          },
+          {
+            "offset": 3,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "invokespecial",
+            "operand": "#966",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/block/WasteDrumBlock.\"<init>\":()V"
+          },
+          {
+            "offset": 7,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "lambda$static$154",
+        "pivots": []
+      },
+      {
+        "access": 10,
+        "branches": [],
+        "code_sha256": "880cfc05bc5ceb41e14acecd472d7bfb24f00a608b64b7c50dd12f8a9fb16976",
+        "code_size": 7,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/lang/String;Ljava/util/function/Supplier;)Ljava/util/function/Supplier;",
+        "exception_handlers": [],
+        "instruction_count": 5,
+        "instruction_sha256": "6afdc7902af0b539ab146f5d22e57605b881a0823cadceba1792a28c0da0d369",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "invokestatic",
+            "operand": "#164",
+            "symbol": "Method registerBlockAndItem:(Ljava/lang/String;Ljava/util/function/Supplier;I)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 6,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "registerBlockAndItem",
+        "pivots": []
+      },
+      {
+        "access": 10,
+        "branches": [],
+        "code_sha256": "d1a0bd80dc6b33272d28f317f10161bc4fbacda2d8b41529fe2a53d82141f32c",
+        "code_size": 24,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/lang/String;Ljava/util/function/Supplier;I)Ljava/util/function/Supplier;",
+        "exception_handlers": [],
+        "instruction_count": 14,
+        "instruction_sha256": "b25d4dee598c295affb002d6f74553bd2a9b59171eb78c539cb14eec52f2c6c7",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "getstatic",
+            "operand": "#170",
+            "symbol": "Field DEF_REG:Lcom/github/alexmodguy/alexscaves/server/misc/ACDeferredRegister;"
+          },
+          {
+            "offset": 3,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "invokevirtual",
+            "operand": "#174",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 8,
+            "opcode": "astore_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 9,
+            "opcode": "getstatic",
+            "operand": "#180",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.DEF_REG:Lcom/github/alexmodguy/alexscaves/server/misc/ACDeferredRegister;"
+          },
+          {
+            "offset": 12,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 13,
+            "opcode": "iload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 14,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 15,
+            "opcode": "invokestatic",
+            "operand": "#183",
+            "symbol": "Method getBlockSupplier:(ILjava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 18,
+            "opcode": "invokevirtual",
+            "operand": "#174",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 21,
+            "opcode": "pop",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 22,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 23,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "registerBlockAndItem",
+        "pivots": []
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/ACDestroyedItem": [
+      {
+        "access": 1025,
+        "branches": [],
+        "code_sha256": null,
+        "code_size": null,
+        "coverage": "ABSTRACT_DECLARATION",
+        "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+        "exception_handlers": null,
+        "instruction_count": 0,
+        "instruction_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "instructions": [],
+        "name": "onDestroyed",
+        "pivots": []
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem": [
+      {
+        "access": 9,
+        "branches": [
+          {
+            "offset": 23,
+            "opcode": "ifeq",
+            "target": 29
+          },
+          {
+            "offset": 50,
+            "opcode": "ifeq",
+            "target": 56
+          },
+          {
+            "offset": 77,
+            "opcode": "ifeq",
+            "target": 83
+          },
+          {
+            "offset": 104,
+            "opcode": "ifeq",
+            "target": 110
+          }
+        ],
+        "code_sha256": "a6916b6e7526a7a5a53962909e0acf82ab376238a0b66d3c601596e0be95c989",
+        "code_size": 112,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;)I",
+        "exception_handlers": [],
+        "instruction_count": 40,
+        "instruction_sha256": "d546af06a43f1aa99eee96014438b2679d3dda44b33dffdd7b73aacbc7400c69",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "istore_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "getstatic",
+            "operand": "#168",
+            "symbol": "Field net/minecraft/world/entity/EquipmentSlot.HEAD:Lnet/minecraft/world/entity/EquipmentSlot;"
+          },
+          {
+            "offset": 6,
+            "opcode": "invokevirtual",
+            "operand": "#171",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemBySlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
+          },
+          {
+            "offset": 9,
+            "opcode": "getstatic",
+            "operand": "#56",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.HAZMAT_MASK:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 12,
+            "opcode": "invokeinterface",
+            "operand": "#62, 1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 17,
+            "opcode": "checkcast",
+            "operand": "#67",
+            "symbol": "class net/minecraft/world/item/Item"
+          },
+          {
+            "offset": 20,
+            "opcode": "invokevirtual",
+            "operand": "#69",
+            "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+          },
+          {
+            "offset": 23,
+            "opcode": "ifeq",
+            "operand": "29",
+            "symbol": ""
+          },
+          {
+            "offset": 26,
+            "opcode": "iinc",
+            "operand": "1, 1",
+            "symbol": ""
+          },
+          {
+            "offset": 29,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 30,
+            "opcode": "getstatic",
+            "operand": "#177",
+            "symbol": "Field net/minecraft/world/entity/EquipmentSlot.CHEST:Lnet/minecraft/world/entity/EquipmentSlot;"
+          },
+          {
+            "offset": 33,
+            "opcode": "invokevirtual",
+            "operand": "#171",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemBySlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
+          },
+          {
+            "offset": 36,
+            "opcode": "getstatic",
+            "operand": "#180",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.HAZMAT_CHESTPLATE:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 39,
+            "opcode": "invokeinterface",
+            "operand": "#62, 1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 44,
+            "opcode": "checkcast",
+            "operand": "#67",
+            "symbol": "class net/minecraft/world/item/Item"
+          },
+          {
+            "offset": 47,
+            "opcode": "invokevirtual",
+            "operand": "#69",
+            "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+          },
+          {
+            "offset": 50,
+            "opcode": "ifeq",
+            "operand": "56",
+            "symbol": ""
+          },
+          {
+            "offset": 53,
+            "opcode": "iinc",
+            "operand": "1, 1",
+            "symbol": ""
+          },
+          {
+            "offset": 56,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 57,
+            "opcode": "getstatic",
+            "operand": "#158",
+            "symbol": "Field net/minecraft/world/entity/EquipmentSlot.LEGS:Lnet/minecraft/world/entity/EquipmentSlot;"
+          },
+          {
+            "offset": 60,
+            "opcode": "invokevirtual",
+            "operand": "#171",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemBySlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
+          },
+          {
+            "offset": 63,
+            "opcode": "getstatic",
+            "operand": "#183",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.HAZMAT_LEGGINGS:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 66,
+            "opcode": "invokeinterface",
+            "operand": "#62, 1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 71,
+            "opcode": "checkcast",
+            "operand": "#67",
+            "symbol": "class net/minecraft/world/item/Item"
+          },
+          {
+            "offset": 74,
+            "opcode": "invokevirtual",
+            "operand": "#69",
+            "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+          },
+          {
+            "offset": 77,
+            "opcode": "ifeq",
+            "operand": "83",
+            "symbol": ""
+          },
+          {
+            "offset": 80,
+            "opcode": "iinc",
+            "operand": "1, 1",
+            "symbol": ""
+          },
+          {
+            "offset": 83,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 84,
+            "opcode": "getstatic",
+            "operand": "#186",
+            "symbol": "Field net/minecraft/world/entity/EquipmentSlot.FEET:Lnet/minecraft/world/entity/EquipmentSlot;"
+          },
+          {
+            "offset": 87,
+            "opcode": "invokevirtual",
+            "operand": "#171",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.getItemBySlot:(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
+          },
+          {
+            "offset": 90,
+            "opcode": "getstatic",
+            "operand": "#189",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.HAZMAT_BOOTS:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 93,
+            "opcode": "invokeinterface",
+            "operand": "#62, 1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 98,
+            "opcode": "checkcast",
+            "operand": "#67",
+            "symbol": "class net/minecraft/world/item/Item"
+          },
+          {
+            "offset": 101,
+            "opcode": "invokevirtual",
+            "operand": "#69",
+            "symbol": "Method net/minecraft/world/item/ItemStack.is:(Lnet/minecraft/world/item/Item;)Z"
+          },
+          {
+            "offset": 104,
+            "opcode": "ifeq",
+            "operand": "110",
+            "symbol": ""
+          },
+          {
+            "offset": 107,
+            "opcode": "iinc",
+            "operand": "1, 1",
+            "symbol": ""
+          },
+          {
+            "offset": 110,
+            "opcode": "iload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 111,
+            "opcode": "ireturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getWornAmount",
+        "pivots": [
+          {
+            "contains": "ACItemRegistry.HAZMAT_MASK:",
+            "offset": 9,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 23,
+            "opcode": "ifeq",
+            "operand": "29",
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 26,
+            "opcode": "iinc",
+            "operand": "1, 1",
+            "symbol": null
+          },
+          {
+            "contains": "ACItemRegistry.HAZMAT_CHESTPLATE:",
+            "offset": 36,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 50,
+            "opcode": "ifeq",
+            "operand": "56",
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 53,
+            "opcode": "iinc",
+            "operand": "1, 1",
+            "symbol": null
+          },
+          {
+            "contains": "ACItemRegistry.HAZMAT_LEGGINGS:",
+            "offset": 63,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 77,
+            "opcode": "ifeq",
+            "operand": "83",
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 80,
+            "opcode": "iinc",
+            "operand": "1, 1",
+            "symbol": null
+          },
+          {
+            "contains": "ACItemRegistry.HAZMAT_BOOTS:",
+            "offset": 90,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 104,
+            "opcode": "ifeq",
+            "operand": "110",
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 107,
+            "opcode": "iinc",
+            "operand": "1, 1",
+            "symbol": null
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "668113e6779d9bb2128c47dc5f1b7210561d219af9d6fef79715ba835d2562af",
+        "code_size": 12,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;F)V",
+        "exception_handlers": [],
+        "instruction_count": 8,
+        "instruction_sha256": "f3344f932a38610451cedb408fae6ed790ddd895e7571834a8e9d60d1d1b4b20",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "invokespecial",
+            "operand": "#1",
+            "symbol": "Method com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier.\"<init>\":(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V"
+          },
+          {
+            "offset": 6,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 7,
+            "opcode": "fload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 8,
+            "opcode": "putfield",
+            "operand": "#7",
+            "symbol": "Field randomChanceOfRadiation:F"
+          },
+          {
+            "offset": 11,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier.\"<init>\":",
+            "offset": 3,
+            "opcode": "invokespecial",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 7,
+            "opcode": "fload_3",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "randomChanceOfRadiation:F",
+            "offset": 8,
+            "opcode": "putfield",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [
+          {
+            "offset": 4,
+            "opcode": "ifne",
+            "target": 166
+          },
+          {
+            "offset": 11,
+            "opcode": "ifeq",
+            "target": 166
+          },
+          {
+            "offset": 25,
+            "opcode": "ifeq",
+            "target": 43
+          },
+          {
+            "offset": 40,
+            "opcode": "ifne",
+            "target": 166
+          },
+          {
+            "offset": 87,
+            "opcode": "ifne",
+            "target": 166
+          },
+          {
+            "offset": 105,
+            "opcode": "ifge",
+            "target": 166
+          }
+        ],
+        "code_sha256": "a98c07b15db89b72116500877e23e3f95db45ec8223dfeaa00fb76980bacc47d",
+        "code_size": 167,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Z)V",
+        "exception_handlers": [],
+        "instruction_count": 73,
+        "instruction_sha256": "75543b1b405f2225b8ca073341059eeb818715f6043312f7d0802f9056f9639f",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "invokevirtual",
+            "operand": "#13",
+            "symbol": "Method net/minecraft/world/level/Level.isClientSide:()Z"
+          },
+          {
+            "offset": 4,
+            "opcode": "ifne",
+            "operand": "166",
+            "symbol": ""
+          },
+          {
+            "offset": 7,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 8,
+            "opcode": "instanceof",
+            "operand": "#19",
+            "symbol": "class net/minecraft/world/entity/LivingEntity"
+          },
+          {
+            "offset": 11,
+            "opcode": "ifeq",
+            "operand": "166",
+            "symbol": ""
+          },
+          {
+            "offset": 14,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 15,
+            "opcode": "checkcast",
+            "operand": "#19",
+            "symbol": "class net/minecraft/world/entity/LivingEntity"
+          },
+          {
+            "offset": 18,
+            "opcode": "astore",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 20,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 22,
+            "opcode": "instanceof",
+            "operand": "#21",
+            "symbol": "class net/minecraft/world/entity/player/Player"
+          },
+          {
+            "offset": 25,
+            "opcode": "ifeq",
+            "operand": "43",
+            "symbol": ""
+          },
+          {
+            "offset": 28,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 30,
+            "opcode": "checkcast",
+            "operand": "#21",
+            "symbol": "class net/minecraft/world/entity/player/Player"
+          },
+          {
+            "offset": 33,
+            "opcode": "astore",
+            "operand": "6",
+            "symbol": ""
+          },
+          {
+            "offset": 35,
+            "opcode": "aload",
+            "operand": "6",
+            "symbol": ""
+          },
+          {
+            "offset": 37,
+            "opcode": "invokevirtual",
+            "operand": "#23",
+            "symbol": "Method net/minecraft/world/entity/player/Player.isCreative:()Z"
+          },
+          {
+            "offset": 40,
+            "opcode": "ifne",
+            "operand": "166",
+            "symbol": ""
+          },
+          {
+            "offset": 43,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 44,
+            "opcode": "invokevirtual",
+            "operand": "#26",
+            "symbol": "Method net/minecraft/world/item/ItemStack.getCount:()I"
+          },
+          {
+            "offset": 47,
+            "opcode": "i2f",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 48,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 49,
+            "opcode": "getfield",
+            "operand": "#7",
+            "symbol": "Field randomChanceOfRadiation:F"
+          },
+          {
+            "offset": 52,
+            "opcode": "fmul",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 53,
+            "opcode": "fstore",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 55,
+            "opcode": "fconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 56,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 58,
+            "opcode": "invokestatic",
+            "operand": "#32",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem.getWornAmount:(Lnet/minecraft/world/entity/LivingEntity;)I"
+          },
+          {
+            "offset": 61,
+            "opcode": "i2f",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 62,
+            "opcode": "ldc",
+            "operand": "#38",
+            "symbol": "float 4.0f"
+          },
+          {
+            "offset": 64,
+            "opcode": "fdiv",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 65,
+            "opcode": "fsub",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 66,
+            "opcode": "fstore",
+            "operand": "8",
+            "symbol": ""
+          },
+          {
+            "offset": 68,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 70,
+            "opcode": "getstatic",
+            "operand": "#39",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.IRRADIATED:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 73,
+            "opcode": "invokeinterface",
+            "operand": "#45, 1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 78,
+            "opcode": "checkcast",
+            "operand": "#51",
+            "symbol": "class net/minecraft/world/effect/MobEffect"
+          },
+          {
+            "offset": 81,
+            "opcode": "invokestatic",
+            "operand": "#53",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.effect:(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/core/Holder;"
+          },
+          {
+            "offset": 84,
+            "opcode": "invokevirtual",
+            "operand": "#59",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.hasEffect:(Lnet/minecraft/core/Holder;)Z"
+          },
+          {
+            "offset": 87,
+            "opcode": "ifne",
+            "operand": "166",
+            "symbol": ""
+          },
+          {
+            "offset": 90,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 91,
+            "opcode": "invokevirtual",
+            "operand": "#63",
+            "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+          },
+          {
+            "offset": 94,
+            "opcode": "invokeinterface",
+            "operand": "#67, 1",
+            "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+          },
+          {
+            "offset": 99,
+            "opcode": "fload",
+            "operand": "7",
+            "symbol": ""
+          },
+          {
+            "offset": 101,
+            "opcode": "fload",
+            "operand": "8",
+            "symbol": ""
+          },
+          {
+            "offset": 103,
+            "opcode": "fmul",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 104,
+            "opcode": "fcmpg",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 105,
+            "opcode": "ifge",
+            "operand": "166",
+            "symbol": ""
+          },
+          {
+            "offset": 108,
+            "opcode": "new",
+            "operand": "#73",
+            "symbol": "class net/minecraft/world/effect/MobEffectInstance"
+          },
+          {
+            "offset": 111,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 112,
+            "opcode": "getstatic",
+            "operand": "#39",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.IRRADIATED:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 115,
+            "opcode": "invokeinterface",
+            "operand": "#45, 1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 120,
+            "opcode": "checkcast",
+            "operand": "#51",
+            "symbol": "class net/minecraft/world/effect/MobEffect"
+          },
+          {
+            "offset": 123,
+            "opcode": "invokestatic",
+            "operand": "#53",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.effect:(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/core/Holder;"
+          },
+          {
+            "offset": 126,
+            "opcode": "sipush",
+            "operand": "1800",
+            "symbol": ""
+          },
+          {
+            "offset": 129,
+            "opcode": "invokespecial",
+            "operand": "#75",
+            "symbol": "Method net/minecraft/world/effect/MobEffectInstance.\"<init>\":(Lnet/minecraft/core/Holder;I)V"
+          },
+          {
+            "offset": 132,
+            "opcode": "astore",
+            "operand": "9",
+            "symbol": ""
+          },
+          {
+            "offset": 134,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 136,
+            "opcode": "aload",
+            "operand": "9",
+            "symbol": ""
+          },
+          {
+            "offset": 138,
+            "opcode": "invokevirtual",
+            "operand": "#78",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.addEffect:(Lnet/minecraft/world/effect/MobEffectInstance;)Z"
+          },
+          {
+            "offset": 141,
+            "opcode": "pop",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 142,
+            "opcode": "new",
+            "operand": "#82",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/message/UpdateEffectVisualityEntityMessage"
+          },
+          {
+            "offset": 145,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 146,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 147,
+            "opcode": "invokevirtual",
+            "operand": "#84",
+            "symbol": "Method net/minecraft/world/entity/Entity.getId:()I"
+          },
+          {
+            "offset": 150,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 151,
+            "opcode": "invokevirtual",
+            "operand": "#84",
+            "symbol": "Method net/minecraft/world/entity/Entity.getId:()I"
+          },
+          {
+            "offset": 154,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 155,
+            "opcode": "aload",
+            "operand": "9",
+            "symbol": ""
+          },
+          {
+            "offset": 157,
+            "opcode": "invokevirtual",
+            "operand": "#89",
+            "symbol": "Method net/minecraft/world/effect/MobEffectInstance.getDuration:()I"
+          },
+          {
+            "offset": 160,
+            "opcode": "invokespecial",
+            "operand": "#92",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/message/UpdateEffectVisualityEntityMessage.\"<init>\":(IIII)V"
+          },
+          {
+            "offset": 163,
+            "opcode": "invokestatic",
+            "operand": "#95",
+            "symbol": "Method com/github/alexmodguy/alexscaves/AlexsCaves.sendMSGToAll:(Ljava/lang/Object;)V"
+          },
+          {
+            "offset": 166,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "acInventoryTick",
+        "pivots": [
+          {
+            "contains": "Level.isClientSide:()Z",
+            "offset": 1,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 4,
+            "opcode": "ifne",
+            "operand": "166",
+            "symbol": null
+          },
+          {
+            "contains": "LivingEntity",
+            "offset": 8,
+            "opcode": "instanceof",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 11,
+            "opcode": "ifeq",
+            "operand": "166",
+            "symbol": null
+          },
+          {
+            "contains": "Player.isCreative:()Z",
+            "offset": 37,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 40,
+            "opcode": "ifne",
+            "operand": "166",
+            "symbol": null
+          },
+          {
+            "contains": "ItemStack.getCount:()I",
+            "offset": 44,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "randomChanceOfRadiation:F",
+            "offset": 49,
+            "opcode": "getfield",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 52,
+            "opcode": "fmul",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "HazmatArmorItem.getWornAmount:",
+            "offset": 58,
+            "opcode": "invokestatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "float 4.0f",
+            "offset": 62,
+            "opcode": "ldc",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 64,
+            "opcode": "fdiv",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 65,
+            "opcode": "fsub",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "LivingEntity.hasEffect:",
+            "offset": 84,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 87,
+            "opcode": "ifne",
+            "operand": "166",
+            "symbol": null
+          },
+          {
+            "contains": "RandomSource.nextFloat:()F",
+            "offset": 94,
+            "opcode": "invokeinterface",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 103,
+            "opcode": "fmul",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 104,
+            "opcode": "fcmpg",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 105,
+            "opcode": "ifge",
+            "operand": "166",
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 126,
+            "opcode": "sipush",
+            "operand": "1800",
+            "symbol": null
+          },
+          {
+            "contains": "LivingEntity.addEffect:",
+            "offset": 138,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 141,
+            "opcode": "pop",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem": [
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "e1e5d733c7751a8bb39d327cb52e4c272a84e1e7c211af5ea84d834434afa25d",
+        "code_size": 8,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;F)V",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "b25d141f7ce98b04c2866f3931130af136e769f75806b6c17eb8c48fc0bc68db",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "fload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "invokespecial",
+            "operand": "#1",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem.\"<init>\":(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;F)V"
+          },
+          {
+            "offset": 7,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<init>",
+        "pivots": []
+      },
+      {
+        "access": 1,
+        "branches": [
+          {
+            "offset": 10,
+            "opcode": "ifne",
+            "target": 169
+          },
+          {
+            "offset": 17,
+            "opcode": "ifne",
+            "target": 169
+          }
+        ],
+        "code_sha256": "34f73b931946ae63544f4cbe9e35d1bd10fcab90f25b000bbdc54b98bc8b8881",
+        "code_size": 170,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+        "exception_handlers": [],
+        "instruction_count": 82,
+        "instruction_sha256": "f07915c0f5fc6f9f80d281c442540e949e067d0e1055b88af0bf993e538122d3",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "invokespecial",
+            "operand": "#7",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem.onDestroyed:(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V"
+          },
+          {
+            "offset": 6,
+            "opcode": "aload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 7,
+            "opcode": "invokevirtual",
+            "operand": "#11",
+            "symbol": "Method net/minecraft/world/damagesource/DamageSource.isCreativePlayer:()Z"
+          },
+          {
+            "offset": 10,
+            "opcode": "ifne",
+            "operand": "169",
+            "symbol": ""
+          },
+          {
+            "offset": 13,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 14,
+            "opcode": "invokevirtual",
+            "operand": "#17",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.isRemoved:()Z"
+          },
+          {
+            "offset": 17,
+            "opcode": "ifne",
+            "operand": "169",
+            "symbol": ""
+          },
+          {
+            "offset": 20,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 21,
+            "opcode": "invokevirtual",
+            "operand": "#22",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.discard:()V"
+          },
+          {
+            "offset": 24,
+            "opcode": "new",
+            "operand": "#26",
+            "symbol": "class net/minecraft/world/entity/AreaEffectCloud"
+          },
+          {
+            "offset": 27,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 28,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 29,
+            "opcode": "invokevirtual",
+            "operand": "#28",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.level:()Lnet/minecraft/world/level/Level;"
+          },
+          {
+            "offset": 32,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 33,
+            "opcode": "invokevirtual",
+            "operand": "#32",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.getX:()D"
+          },
+          {
+            "offset": 36,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 37,
+            "opcode": "invokevirtual",
+            "operand": "#36",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.getY:()D"
+          },
+          {
+            "offset": 40,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 41,
+            "opcode": "invokevirtual",
+            "operand": "#39",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.getZ:()D"
+          },
+          {
+            "offset": 44,
+            "opcode": "invokespecial",
+            "operand": "#42",
+            "symbol": "Method net/minecraft/world/entity/AreaEffectCloud.\"<init>\":(Lnet/minecraft/world/level/Level;DDD)V"
+          },
+          {
+            "offset": 47,
+            "opcode": "astore_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 48,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 49,
+            "opcode": "getstatic",
+            "operand": "#45",
+            "symbol": "Field com/github/alexmodguy/alexscaves/client/particle/ACParticleRegistry.GAMMAROACH:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 52,
+            "opcode": "invokeinterface",
+            "operand": "#51, 1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 57,
+            "opcode": "checkcast",
+            "operand": "#57",
+            "symbol": "class net/minecraft/core/particles/ParticleOptions"
+          },
+          {
+            "offset": 60,
+            "opcode": "invokevirtual",
+            "operand": "#59",
+            "symbol": "Method net/minecraft/world/entity/AreaEffectCloud.setParticle:(Lnet/minecraft/core/particles/ParticleOptions;)V"
+          },
+          {
+            "offset": 63,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 64,
+            "opcode": "ldc",
+            "operand": "#63",
+            "symbol": "int 7853582"
+          },
+          {
+            "offset": 66,
+            "opcode": "invokestatic",
+            "operand": "#64",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.setCloudColor:(Lnet/minecraft/world/entity/AreaEffectCloud;I)V"
+          },
+          {
+            "offset": 69,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 70,
+            "opcode": "new",
+            "operand": "#70",
+            "symbol": "class net/minecraft/world/effect/MobEffectInstance"
+          },
+          {
+            "offset": 73,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 74,
+            "opcode": "getstatic",
+            "operand": "#72",
+            "symbol": "Field com/github/alexmodguy/alexscaves/server/potion/ACEffectRegistry.IRRADIATED:Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 77,
+            "opcode": "invokeinterface",
+            "operand": "#51, 1",
+            "symbol": "InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 82,
+            "opcode": "checkcast",
+            "operand": "#77",
+            "symbol": "class net/minecraft/world/effect/MobEffect"
+          },
+          {
+            "offset": 85,
+            "opcode": "invokestatic",
+            "operand": "#79",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACCompat.effect:(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/core/Holder;"
+          },
+          {
+            "offset": 88,
+            "opcode": "sipush",
+            "operand": "9600",
+            "symbol": ""
+          },
+          {
+            "offset": 91,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 92,
+            "opcode": "invokespecial",
+            "operand": "#83",
+            "symbol": "Method net/minecraft/world/effect/MobEffectInstance.\"<init>\":(Lnet/minecraft/core/Holder;II)V"
+          },
+          {
+            "offset": 95,
+            "opcode": "invokevirtual",
+            "operand": "#86",
+            "symbol": "Method net/minecraft/world/entity/AreaEffectCloud.addEffect:(Lnet/minecraft/world/effect/MobEffectInstance;)V"
+          },
+          {
+            "offset": 98,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 99,
+            "opcode": "fconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 100,
+            "opcode": "invokevirtual",
+            "operand": "#90",
+            "symbol": "Method net/minecraft/world/entity/AreaEffectCloud.setRadius:(F)V"
+          },
+          {
+            "offset": 103,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 104,
+            "opcode": "sipush",
+            "operand": "12000",
+            "symbol": ""
+          },
+          {
+            "offset": 107,
+            "opcode": "invokevirtual",
+            "operand": "#94",
+            "symbol": "Method net/minecraft/world/entity/AreaEffectCloud.setDuration:(I)V"
+          },
+          {
+            "offset": 110,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 111,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 112,
+            "opcode": "invokevirtual",
+            "operand": "#98",
+            "symbol": "Method net/minecraft/world/entity/AreaEffectCloud.setWaitTime:(I)V"
+          },
+          {
+            "offset": 115,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 116,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 117,
+            "opcode": "invokevirtual",
+            "operand": "#101",
+            "symbol": "Method net/minecraft/world/entity/AreaEffectCloud.getRadius:()F"
+          },
+          {
+            "offset": 120,
+            "opcode": "fneg",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 121,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 122,
+            "opcode": "invokevirtual",
+            "operand": "#105",
+            "symbol": "Method net/minecraft/world/entity/AreaEffectCloud.getDuration:()I"
+          },
+          {
+            "offset": 125,
+            "opcode": "i2f",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 126,
+            "opcode": "fdiv",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 127,
+            "opcode": "invokevirtual",
+            "operand": "#109",
+            "symbol": "Method net/minecraft/world/entity/AreaEffectCloud.setRadiusPerTick:(F)V"
+          },
+          {
+            "offset": 130,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 131,
+            "opcode": "invokevirtual",
+            "operand": "#28",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.level:()Lnet/minecraft/world/level/Level;"
+          },
+          {
+            "offset": 134,
+            "opcode": "aload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 135,
+            "opcode": "invokevirtual",
+            "operand": "#112",
+            "symbol": "Method net/minecraft/world/level/Level.addFreshEntity:(Lnet/minecraft/world/entity/Entity;)Z"
+          },
+          {
+            "offset": 138,
+            "opcode": "pop",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 139,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 140,
+            "opcode": "invokevirtual",
+            "operand": "#28",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.level:()Lnet/minecraft/world/level/Level;"
+          },
+          {
+            "offset": 143,
+            "opcode": "aconst_null",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 144,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 145,
+            "opcode": "invokevirtual",
+            "operand": "#32",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.getX:()D"
+          },
+          {
+            "offset": 148,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 149,
+            "opcode": "invokevirtual",
+            "operand": "#36",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.getY:()D"
+          },
+          {
+            "offset": 152,
+            "opcode": "ldc2_w",
+            "operand": "#118",
+            "symbol": "double 0.5d"
+          },
+          {
+            "offset": 155,
+            "opcode": "dadd",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 156,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 157,
+            "opcode": "invokevirtual",
+            "operand": "#39",
+            "symbol": "Method net/minecraft/world/entity/item/ItemEntity.getZ:()D"
+          },
+          {
+            "offset": 160,
+            "opcode": "ldc",
+            "operand": "#120",
+            "symbol": "float 1.8f"
+          },
+          {
+            "offset": 162,
+            "opcode": "getstatic",
+            "operand": "#121",
+            "symbol": "Field net/minecraft/world/level/Level$ExplosionInteraction.BLOCK:Lnet/minecraft/world/level/Level$ExplosionInteraction;"
+          },
+          {
+            "offset": 165,
+            "opcode": "invokevirtual",
+            "operand": "#127",
+            "symbol": "Method net/minecraft/world/level/Level.explode:(Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"
+          },
+          {
+            "offset": 168,
+            "opcode": "pop",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 169,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "onDestroyed",
+        "pivots": [
+          {
+            "contains": "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem.onDestroyed:(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+            "offset": 3,
+            "opcode": "invokespecial",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "DamageSource.isCreativePlayer:()Z",
+            "offset": 7,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 10,
+            "opcode": "ifne",
+            "operand": "169",
+            "symbol": null
+          },
+          {
+            "contains": "ItemEntity.isRemoved:()Z",
+            "offset": 14,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 17,
+            "opcode": "ifne",
+            "operand": "169",
+            "symbol": null
+          },
+          {
+            "contains": "ItemEntity.discard:()V",
+            "offset": 21,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "AreaEffectCloud",
+            "offset": 24,
+            "opcode": "new",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "AreaEffectCloud.\"<init>\":",
+            "offset": 44,
+            "opcode": "invokespecial",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "ACParticleRegistry.GAMMAROACH:",
+            "offset": 49,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "AreaEffectCloud.setParticle:",
+            "offset": 60,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "int 7853582",
+            "offset": 64,
+            "opcode": "ldc",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "ACCompat.setCloudColor:",
+            "offset": 66,
+            "opcode": "invokestatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "ACEffectRegistry.IRRADIATED:",
+            "offset": 74,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "ACCompat.effect:",
+            "offset": 85,
+            "opcode": "invokestatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 88,
+            "opcode": "sipush",
+            "operand": "9600",
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 91,
+            "opcode": "iconst_1",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "MobEffectInstance.\"<init>\":(Lnet/minecraft/core/Holder;II)V",
+            "offset": 92,
+            "opcode": "invokespecial",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "AreaEffectCloud.addEffect:",
+            "offset": 95,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 99,
+            "opcode": "fconst_2",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "AreaEffectCloud.setRadius:",
+            "offset": 100,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 104,
+            "opcode": "sipush",
+            "operand": "12000",
+            "symbol": null
+          },
+          {
+            "contains": "AreaEffectCloud.setDuration:",
+            "offset": 107,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 111,
+            "opcode": "iconst_0",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "AreaEffectCloud.setWaitTime:",
+            "offset": 112,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "AreaEffectCloud.getRadius:()F",
+            "offset": 117,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 120,
+            "opcode": "fneg",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "AreaEffectCloud.getDuration:()I",
+            "offset": 122,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 125,
+            "opcode": "i2f",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 126,
+            "opcode": "fdiv",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "AreaEffectCloud.setRadiusPerTick:",
+            "offset": 127,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "Level.addFreshEntity:",
+            "offset": 135,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 138,
+            "opcode": "pop",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 143,
+            "opcode": "aconst_null",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "double 0.5d",
+            "offset": 152,
+            "opcode": "ldc2_w",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 155,
+            "opcode": "dadd",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "float 1.8f",
+            "offset": 160,
+            "opcode": "ldc",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "Level$ExplosionInteraction.BLOCK:",
+            "offset": 162,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "Level.explode:",
+            "offset": 165,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 168,
+            "opcode": "pop",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 169,
+            "opcode": "return",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/misc/ACCompat": [
+      {
+        "access": 9,
+        "branches": [],
+        "code_sha256": "a6fcb990359b50a29238d383f13da2a665a0510bbd6dfc4f527e05ef80b47863",
+        "code_size": 10,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/core/Holder;",
+        "exception_handlers": [],
+        "instruction_count": 4,
+        "instruction_sha256": "2dd36afb293de8c4555965481c9760f14a071d9e3c3758e012be9238cab3cca2",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "getstatic",
+            "operand": "#83",
+            "symbol": "Field net/minecraft/core/registries/BuiltInRegistries.MOB_EFFECT:Lnet/minecraft/core/Registry;"
+          },
+          {
+            "offset": 3,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "invokeinterface",
+            "operand": "#89, 2",
+            "symbol": "InterfaceMethod net/minecraft/core/Registry.wrapAsHolder:(Ljava/lang/Object;)Lnet/minecraft/core/Holder;"
+          },
+          {
+            "offset": 9,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "effect",
+        "pivots": [
+          {
+            "contains": "BuiltInRegistries.MOB_EFFECT:",
+            "offset": 0,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "Registry.wrapAsHolder:",
+            "offset": 4,
+            "opcode": "invokeinterface",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      },
+      {
+        "access": 9,
+        "branches": [],
+        "code_sha256": "983785512824eaba3ee1ed1343f19ba2d3e0ca9dff9f4d2d3c032ba74cdf09de",
+        "code_size": 25,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/AreaEffectCloud;I)V",
+        "exception_handlers": [],
+        "instruction_count": 11,
+        "instruction_sha256": "fe4019a92f9dfcf30776cd86e3f82c9b80f2c5fa97c0a52ce29c692fb56a8a02",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "new",
+            "operand": "#337",
+            "symbol": "class net/minecraft/world/item/alchemy/PotionContents"
+          },
+          {
+            "offset": 4,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "invokestatic",
+            "operand": "#709",
+            "symbol": "Method java/util/Optional.empty:()Ljava/util/Optional;"
+          },
+          {
+            "offset": 8,
+            "opcode": "iload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 9,
+            "opcode": "invokestatic",
+            "operand": "#712",
+            "symbol": "Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;"
+          },
+          {
+            "offset": 12,
+            "opcode": "invokestatic",
+            "operand": "#718",
+            "symbol": "Method java/util/Optional.of:(Ljava/lang/Object;)Ljava/util/Optional;"
+          },
+          {
+            "offset": 15,
+            "opcode": "invokestatic",
+            "operand": "#648",
+            "symbol": "InterfaceMethod java/util/List.of:()Ljava/util/List;"
+          },
+          {
+            "offset": 18,
+            "opcode": "invokespecial",
+            "operand": "#721",
+            "symbol": "Method net/minecraft/world/item/alchemy/PotionContents.\"<init>\":(Ljava/util/Optional;Ljava/util/Optional;Ljava/util/List;)V"
+          },
+          {
+            "offset": 21,
+            "opcode": "invokevirtual",
+            "operand": "#724",
+            "symbol": "Method net/minecraft/world/entity/AreaEffectCloud.setPotionContents:(Lnet/minecraft/world/item/alchemy/PotionContents;)V"
+          },
+          {
+            "offset": 24,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "setCloudColor",
+        "pivots": [
+          {
+            "contains": "Optional.empty:",
+            "offset": 5,
+            "opcode": "invokestatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 8,
+            "opcode": "iload_1",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "Integer.valueOf:",
+            "offset": 9,
+            "opcode": "invokestatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "Optional.of:",
+            "offset": 12,
+            "opcode": "invokestatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "List.of:",
+            "offset": 15,
+            "opcode": "invokestatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "PotionContents.\"<init>\":",
+            "offset": 18,
+            "opcode": "invokespecial",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "AreaEffectCloud.setPotionContents:",
+            "offset": 21,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes": [
+      {
+        "access": 9,
+        "branches": [],
+        "code_sha256": "2d5d7216434949a0c4bfdaa1d670dfa6f34b743acf50ede19503021284a8981f",
+        "code_size": 32,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "exception_handlers": [],
+        "instruction_count": 12,
+        "instruction_sha256": "5a2e9f3e1975fc48c1ee0311607fa3caebdcb360d8d172eb582d10fa791aa868",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "new",
+            "operand": "#7",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages"
+          },
+          {
+            "offset": 3,
+            "opcode": "dup",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "getstatic",
+            "operand": "#9",
+            "symbol": "Field net/minecraft/core/registries/Registries.DAMAGE_TYPE:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 8,
+            "opcode": "invokeinterface",
+            "operand": "#15, 2",
+            "symbol": "InterfaceMethod net/minecraft/core/RegistryAccess.registry:(Lnet/minecraft/resources/ResourceKey;)Ljava/util/Optional;"
+          },
+          {
+            "offset": 13,
+            "opcode": "invokevirtual",
+            "operand": "#21",
+            "symbol": "Method java/util/Optional.get:()Ljava/lang/Object;"
+          },
+          {
+            "offset": 16,
+            "opcode": "checkcast",
+            "operand": "#27",
+            "symbol": "class net/minecraft/core/Registry"
+          },
+          {
+            "offset": 19,
+            "opcode": "getstatic",
+            "operand": "#41",
+            "symbol": "Field RADIATION:Lnet/minecraft/resources/ResourceKey;"
+          },
+          {
+            "offset": 22,
+            "opcode": "invokeinterface",
+            "operand": "#34, 2",
+            "symbol": "InterfaceMethod net/minecraft/core/Registry.getHolderOrThrow:(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Holder$Reference;"
+          },
+          {
+            "offset": 27,
+            "opcode": "iconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 28,
+            "opcode": "invokespecial",
+            "operand": "#38",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes$DamageSourceRandomMessages.\"<init>\":(Lnet/minecraft/core/Holder$Reference;I)V"
+          },
+          {
+            "offset": 31,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "causeRadiationDamage",
+        "pivots": [
+          {
+            "contains": "Registries.DAMAGE_TYPE:",
+            "offset": 5,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "RADIATION:",
+            "offset": 19,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "Registry.getHolderOrThrow:",
+            "offset": 22,
+            "opcode": "invokeinterface",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 27,
+            "opcode": "iconst_2",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "ACDamageTypes$DamageSourceRandomMessages.\"<init>\":",
+            "offset": 28,
+            "opcode": "invokespecial",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/potion/ACMobEffect": [
+      {
+        "access": 4,
+        "branches": [],
+        "code_sha256": "6f2f4a08b450faed0343ea558f222260e434fbd83ba79df8b86d1d750cf8e9a4",
+        "code_size": 7,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/effect/MobEffectCategory;I)V",
+        "exception_handlers": [],
+        "instruction_count": 5,
+        "instruction_sha256": "da8335a819ba9d96dcb04202037d673b74fe7eb36d6486fc254b5a01bf80784f",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "iload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "invokespecial",
+            "operand": "#1",
+            "symbol": "Method net/minecraft/world/effect/MobEffect.\"<init>\":(Lnet/minecraft/world/effect/MobEffectCategory;I)V"
+          },
+          {
+            "offset": 6,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<init>",
+        "pivots": []
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "8442ce18fd62bc884b1feffdddf6980e585654f2a5cb3bf5f5e794046287fc51",
+        "code_size": 8,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;I)Z",
+        "exception_handlers": [],
+        "instruction_count": 6,
+        "instruction_sha256": "99db0739bd7792844f8ba932db2c2735d258d948f66b38637e76c145db8a43d3",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "iload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "invokevirtual",
+            "operand": "#11",
+            "symbol": "Method tick:(Lnet/minecraft/world/entity/LivingEntity;I)V"
+          },
+          {
+            "offset": 6,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 7,
+            "opcode": "ireturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "applyEffectTick",
+        "pivots": [
+          {
+            "contains": "tick:",
+            "offset": 3,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 6,
+            "opcode": "iconst_1",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "281be911753d2297307fbd32836c3f150e29e4a569444d8219e5b26768c8b914",
+        "code_size": 7,
+        "coverage": "FULL_BODY",
+        "descriptor": "(II)Z",
+        "exception_handlers": [],
+        "instruction_count": 5,
+        "instruction_sha256": "34b963ef465c2a5be17688d14a9436f2ada33884ab34fa912d91d9ccbff9f493",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "iload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2,
+            "opcode": "iload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 3,
+            "opcode": "invokevirtual",
+            "operand": "#17",
+            "symbol": "Method shouldTick:(II)Z"
+          },
+          {
+            "offset": 6,
+            "opcode": "ireturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "shouldApplyEffectTickThisTick",
+        "pivots": [
+          {
+            "contains": "shouldTick:",
+            "offset": 3,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect": [
+      {
+        "access": 4,
+        "branches": [],
+        "code_sha256": "3eb77e08dcec2ddb48f64bb3bc98ad2825596fb64f8e6c0009bb2b7f3619c40e",
+        "code_size": 10,
+        "coverage": "FULL_BODY",
+        "descriptor": "()V",
+        "exception_handlers": [],
+        "instruction_count": 5,
+        "instruction_sha256": "0e648fd04930d9865013a7f34b6ad4b3c917cf031ea03b025f0a1c11bdb3e863",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": "#1",
+            "symbol": "Field net/minecraft/world/effect/MobEffectCategory.HARMFUL:Lnet/minecraft/world/effect/MobEffectCategory;"
+          },
+          {
+            "offset": 4,
+            "opcode": "ldc",
+            "operand": "#7",
+            "symbol": "int 7853582"
+          },
+          {
+            "offset": 6,
+            "opcode": "invokespecial",
+            "operand": "#8",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/potion/ACMobEffect.\"<init>\":(Lnet/minecraft/world/effect/MobEffectCategory;I)V"
+          },
+          {
+            "offset": 9,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "<init>",
+        "pivots": [
+          {
+            "contains": "MobEffectCategory.HARMFUL:",
+            "offset": 1,
+            "opcode": "getstatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "int 7853582",
+            "offset": 4,
+            "opcode": "ldc",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [],
+        "code_sha256": "763834ca82b7a2e7133ab28c922f63928fec51decdd0dae4c5be302811612135",
+        "code_size": 4,
+        "coverage": "FULL_BODY",
+        "descriptor": "()Ljava/util/List;",
+        "exception_handlers": [],
+        "instruction_count": 2,
+        "instruction_sha256": "5645a410aa714ef9fcc6efa47352fda0743a175856816255f0eb8349dcdaf5af",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "invokestatic",
+            "operand": "#63",
+            "symbol": "InterfaceMethod java/util/List.of:()Ljava/util/List;"
+          },
+          {
+            "offset": 3,
+            "opcode": "areturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "getCurativeItems",
+        "pivots": [
+          {
+            "contains": "List.of:",
+            "offset": 0,
+            "opcode": "invokestatic",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [
+          {
+            "offset": 1,
+            "opcode": "ifgt",
+            "target": 6
+          },
+          {
+            "offset": 14,
+            "opcode": "if_icmple",
+            "target": 32
+          },
+          {
+            "offset": 23,
+            "opcode": "if_icmpne",
+            "target": 30
+          },
+          {
+            "offset": 27,
+            "opcode": "goto",
+            "target": 31
+          }
+        ],
+        "code_sha256": "3e211c04eea5213dbb55bf4b934614feea6c52fbd2519ce23c48d4d7cfdc6e11",
+        "code_size": 34,
+        "coverage": "FULL_BODY",
+        "descriptor": "(II)Z",
+        "exception_handlers": [],
+        "instruction_count": 24,
+        "instruction_sha256": "fc6e7f3092592d578c9d3ec01c02b2427e45503821d37ba3e82012bce8e4d6c5",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "iload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "ifgt",
+            "operand": "6",
+            "symbol": ""
+          },
+          {
+            "offset": 4,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "ireturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 6,
+            "opcode": "sipush",
+            "operand": "200",
+            "symbol": ""
+          },
+          {
+            "offset": 9,
+            "opcode": "iload_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 10,
+            "opcode": "idiv",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 11,
+            "opcode": "istore_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 12,
+            "opcode": "iload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 13,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 14,
+            "opcode": "if_icmple",
+            "operand": "32",
+            "symbol": ""
+          },
+          {
+            "offset": 17,
+            "opcode": "iload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 18,
+            "opcode": "iload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 19,
+            "opcode": "irem",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 20,
+            "opcode": "iload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 21,
+            "opcode": "iconst_2",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 22,
+            "opcode": "idiv",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 23,
+            "opcode": "if_icmpne",
+            "operand": "30",
+            "symbol": ""
+          },
+          {
+            "offset": 26,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 27,
+            "opcode": "goto",
+            "operand": "31",
+            "symbol": ""
+          },
+          {
+            "offset": 30,
+            "opcode": "iconst_0",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 31,
+            "opcode": "ireturn",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 32,
+            "opcode": "iconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 33,
+            "opcode": "ireturn",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "shouldTick",
+        "pivots": [
+          {
+            "contains": null,
+            "offset": 1,
+            "opcode": "ifgt",
+            "operand": "6",
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 6,
+            "opcode": "sipush",
+            "operand": "200",
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 10,
+            "opcode": "idiv",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 14,
+            "opcode": "if_icmple",
+            "operand": "32",
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 19,
+            "opcode": "irem",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 22,
+            "opcode": "idiv",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 23,
+            "opcode": "if_icmpne",
+            "operand": "30",
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 32,
+            "opcode": "iconst_1",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      },
+      {
+        "access": 1,
+        "branches": [
+          {
+            "offset": 18,
+            "opcode": "ifeq",
+            "target": 38
+          },
+          {
+            "offset": 28,
+            "opcode": "ifne",
+            "target": 38
+          },
+          {
+            "offset": 42,
+            "opcode": "ifne",
+            "target": 83
+          },
+          {
+            "offset": 63,
+            "opcode": "ifge",
+            "target": 83
+          }
+        ],
+        "code_sha256": "edd350cb39df312d24219c5d56d85c72411dacb42f9a0b02dd9e579470f3e44e",
+        "code_size": 84,
+        "coverage": "FULL_BODY",
+        "descriptor": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+        "exception_handlers": [],
+        "instruction_count": 42,
+        "instruction_sha256": "16d7936ed5ad148727bc46083451f5329beea0545a46b6d2306c695bc585aed7",
+        "instructions": [
+          {
+            "offset": 0,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 1,
+            "opcode": "invokestatic",
+            "operand": "#14",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem.getWornAmount:(Lnet/minecraft/world/entity/LivingEntity;)I"
+          },
+          {
+            "offset": 4,
+            "opcode": "istore_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 5,
+            "opcode": "fconst_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 6,
+            "opcode": "iload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 7,
+            "opcode": "i2f",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 8,
+            "opcode": "ldc",
+            "operand": "#20",
+            "symbol": "float 0.25f"
+          },
+          {
+            "offset": 10,
+            "opcode": "fmul",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 11,
+            "opcode": "fsub",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 12,
+            "opcode": "fstore",
+            "operand": "4",
+            "symbol": ""
+          },
+          {
+            "offset": 14,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 15,
+            "opcode": "instanceof",
+            "operand": "#21",
+            "symbol": "class net/minecraft/world/entity/player/Player"
+          },
+          {
+            "offset": 18,
+            "opcode": "ifeq",
+            "operand": "38",
+            "symbol": ""
+          },
+          {
+            "offset": 21,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 22,
+            "opcode": "checkcast",
+            "operand": "#21",
+            "symbol": "class net/minecraft/world/entity/player/Player"
+          },
+          {
+            "offset": 25,
+            "opcode": "astore",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 27,
+            "opcode": "iload_3",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 28,
+            "opcode": "ifne",
+            "operand": "38",
+            "symbol": ""
+          },
+          {
+            "offset": 31,
+            "opcode": "aload",
+            "operand": "5",
+            "symbol": ""
+          },
+          {
+            "offset": 33,
+            "opcode": "ldc",
+            "operand": "#23",
+            "symbol": "float 0.4f"
+          },
+          {
+            "offset": 35,
+            "opcode": "invokevirtual",
+            "operand": "#24",
+            "symbol": "Method net/minecraft/world/entity/player/Player.causeFoodExhaustion:(F)V"
+          },
+          {
+            "offset": 38,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 39,
+            "opcode": "instanceof",
+            "operand": "#28",
+            "symbol": "class com/github/alexmodguy/alexscaves/server/entity/living/RaycatEntity"
+          },
+          {
+            "offset": 42,
+            "opcode": "ifne",
+            "operand": "83",
+            "symbol": ""
+          },
+          {
+            "offset": 45,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 46,
+            "opcode": "invokevirtual",
+            "operand": "#30",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;"
+          },
+          {
+            "offset": 49,
+            "opcode": "invokevirtual",
+            "operand": "#36",
+            "symbol": "Method net/minecraft/world/level/Level.getRandom:()Lnet/minecraft/util/RandomSource;"
+          },
+          {
+            "offset": 52,
+            "opcode": "invokeinterface",
+            "operand": "#42, 1",
+            "symbol": "InterfaceMethod net/minecraft/util/RandomSource.nextFloat:()F"
+          },
+          {
+            "offset": 57,
+            "opcode": "fload",
+            "operand": "4",
+            "symbol": ""
+          },
+          {
+            "offset": 59,
+            "opcode": "ldc",
+            "operand": "#48",
+            "symbol": "float 0.1f"
+          },
+          {
+            "offset": 61,
+            "opcode": "fadd",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 62,
+            "opcode": "fcmpg",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 63,
+            "opcode": "ifge",
+            "operand": "83",
+            "symbol": ""
+          },
+          {
+            "offset": 66,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 67,
+            "opcode": "aload_1",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 68,
+            "opcode": "invokevirtual",
+            "operand": "#30",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.level:()Lnet/minecraft/world/level/Level;"
+          },
+          {
+            "offset": 71,
+            "opcode": "invokevirtual",
+            "operand": "#49",
+            "symbol": "Method net/minecraft/world/level/Level.registryAccess:()Lnet/minecraft/core/RegistryAccess;"
+          },
+          {
+            "offset": 74,
+            "opcode": "invokestatic",
+            "operand": "#53",
+            "symbol": "Method com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes.causeRadiationDamage:(Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/damagesource/DamageSource;"
+          },
+          {
+            "offset": 77,
+            "opcode": "fload",
+            "operand": "4",
+            "symbol": ""
+          },
+          {
+            "offset": 79,
+            "opcode": "invokevirtual",
+            "operand": "#59",
+            "symbol": "Method net/minecraft/world/entity/LivingEntity.hurt:(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
+          },
+          {
+            "offset": 82,
+            "opcode": "pop",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 83,
+            "opcode": "return",
+            "operand": "",
+            "symbol": ""
+          }
+        ],
+        "name": "tick",
+        "pivots": [
+          {
+            "contains": "HazmatArmorItem.getWornAmount:",
+            "offset": 1,
+            "opcode": "invokestatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "float 0.25f",
+            "offset": 8,
+            "opcode": "ldc",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 10,
+            "opcode": "fmul",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 11,
+            "opcode": "fsub",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 28,
+            "opcode": "ifne",
+            "operand": "38",
+            "symbol": null
+          },
+          {
+            "contains": "float 0.4f",
+            "offset": 33,
+            "opcode": "ldc",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "Player.causeFoodExhaustion:",
+            "offset": 35,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "RaycatEntity",
+            "offset": 39,
+            "opcode": "instanceof",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 42,
+            "opcode": "ifne",
+            "operand": "83",
+            "symbol": null
+          },
+          {
+            "contains": "RandomSource.nextFloat:()F",
+            "offset": 52,
+            "opcode": "invokeinterface",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": "float 0.1f",
+            "offset": 59,
+            "opcode": "ldc",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 61,
+            "opcode": "fadd",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 63,
+            "opcode": "ifge",
+            "operand": "83",
+            "symbol": null
+          },
+          {
+            "contains": "ACDamageTypes.causeRadiationDamage:",
+            "offset": 74,
+            "opcode": "invokestatic",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 77,
+            "opcode": "fload",
+            "operand": "4",
+            "symbol": null
+          },
+          {
+            "contains": "LivingEntity.hurt:",
+            "offset": 79,
+            "opcode": "invokevirtual",
+            "operand": null,
+            "symbol": null
+          },
+          {
+            "contains": null,
+            "offset": 82,
+            "opcode": "pop",
+            "operand": null,
+            "symbol": null
+          }
+        ]
+      }
+    ]
+  },
+  "registration_bridge": {
+    "actual_get_block_supplier_invocations": [
+      {
+        "descriptor": "(Ljava/lang/String;Ljava/util/function/Supplier;I)Ljava/util/function/Supplier;",
+        "name": "registerBlockAndItem",
+        "offset": 15
+      }
+    ],
+    "clinit": {
+      "coverage": "SELECTED_OPERAND_WINDOWS",
+      "full_method_code_sha256": "d4e20fc9df025209351d92f78283942e0817358a21a30b62c4b68dc9d93f082a",
+      "full_method_code_size": 5485,
+      "full_method_instruction_sha256": "8e5baaa872e55cb23aa7d39b2c66f6f5cd11c56e2cc172edb66492f2b85e8848"
+    },
+    "destroyed_factory": "lambda$getBlockSupplier$441",
+    "destroyed_factory_chance_field_input": 0.01,
+    "destroyed_selector": 5,
+    "explicit_selector_counts": {
+      "1": 29,
+      "2": 2,
+      "3": 4,
+      "4": 3,
+      "5": 1,
+      "6": 2,
+      "7": 1,
+      "8": 1
+    },
+    "explicit_three_argument_registration_count": 43,
+    "limit": "Native registration declarations and supplier construction only; engine registration lifecycle, realized registry instances and installed execution are not physically tested.",
+    "negative_registrations": [
+      {
+        "instructions": [
+          {
+            "offset": 2059,
+            "opcode": "ldc_w",
+            "operand": "#2017",
+            "symbol": "String radrock_uranium_ore"
+          },
+          {
+            "offset": 2062,
+            "opcode": "invokedynamic",
+            "operand": "#2019, 0",
+            "symbol": "InvokeDynamic #157:get:()Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 2067,
+            "opcode": "iconst_4",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2068,
+            "opcode": "invokestatic",
+            "operand": "#164",
+            "symbol": "Method registerBlockAndItem:(Ljava/lang/String;Ljava/util/function/Supplier;I)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 2071,
+            "opcode": "putstatic",
+            "operand": "#2020",
+            "symbol": "Field RADROCK_URANIUM_ORE:Ljava/util/function/Supplier;"
+          }
+        ],
+        "name": "radrock_uranium_ore",
+        "registration_offset": 2068,
+        "registry_field": "RADROCK_URANIUM_ORE",
+        "selector": 4,
+        "selector_offset": 2067,
+        "window": [
+          2059,
+          2071
+        ]
+      },
+      {
+        "instructions": [
+          {
+            "offset": 2292,
+            "opcode": "ldc_w",
+            "operand": "#2107",
+            "symbol": "String block_of_uranium"
+          },
+          {
+            "offset": 2295,
+            "opcode": "invokedynamic",
+            "operand": "#2109, 0",
+            "symbol": "InvokeDynamic #173:get:()Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 2300,
+            "opcode": "iconst_4",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2301,
+            "opcode": "invokestatic",
+            "operand": "#164",
+            "symbol": "Method registerBlockAndItem:(Ljava/lang/String;Ljava/util/function/Supplier;I)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 2304,
+            "opcode": "putstatic",
+            "operand": "#2110",
+            "symbol": "Field BLOCK_OF_URANIUM:Ljava/util/function/Supplier;"
+          }
+        ],
+        "name": "block_of_uranium",
+        "registration_offset": 2301,
+        "registry_field": "BLOCK_OF_URANIUM",
+        "selector": 4,
+        "selector_offset": 2300,
+        "window": [
+          2292,
+          2304
+        ]
+      },
+      {
+        "instructions": [
+          {
+            "offset": 2321,
+            "opcode": "ldc_w",
+            "operand": "#2119",
+            "symbol": "String unrefined_waste"
+          },
+          {
+            "offset": 2324,
+            "opcode": "invokedynamic",
+            "operand": "#2121, 0",
+            "symbol": "InvokeDynamic #175:get:()Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 2329,
+            "opcode": "iconst_4",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2330,
+            "opcode": "invokestatic",
+            "operand": "#164",
+            "symbol": "Method registerBlockAndItem:(Ljava/lang/String;Ljava/util/function/Supplier;I)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 2333,
+            "opcode": "putstatic",
+            "operand": "#2122",
+            "symbol": "Field UNREFINED_WASTE:Ljava/util/function/Supplier;"
+          }
+        ],
+        "name": "unrefined_waste",
+        "registration_offset": 2330,
+        "registry_field": "UNREFINED_WASTE",
+        "selector": 4,
+        "selector_offset": 2329,
+        "window": [
+          2321,
+          2333
+        ]
+      }
+    ],
+    "ordinary_radioactive_chance_field_input": 0.001,
+    "ordinary_radioactive_factory": "lambda$getBlockSupplier$440",
+    "ordinary_radioactive_selector": 4,
+    "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+    "positive_registrations": [
+      {
+        "instructions": [
+          {
+            "offset": 2192,
+            "opcode": "ldc_w",
+            "operand": "#2065",
+            "symbol": "String waste_drum"
+          },
+          {
+            "offset": 2195,
+            "opcode": "invokedynamic",
+            "operand": "#2067, 0",
+            "symbol": "InvokeDynamic #166:get:()Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 2200,
+            "opcode": "iconst_5",
+            "operand": "",
+            "symbol": ""
+          },
+          {
+            "offset": 2201,
+            "opcode": "invokestatic",
+            "operand": "#164",
+            "symbol": "Method registerBlockAndItem:(Ljava/lang/String;Ljava/util/function/Supplier;I)Ljava/util/function/Supplier;"
+          },
+          {
+            "offset": 2204,
+            "opcode": "putstatic",
+            "operand": "#2068",
+            "symbol": "Field WASTE_DRUM:Ljava/util/function/Supplier;"
+          }
+        ],
+        "name": "waste_drum",
+        "registration_offset": 2201,
+        "registry_field": "WASTE_DRUM",
+        "selector": 5,
+        "selector_offset": 2200,
+        "window": [
+          2192,
+          2204
+        ]
+      }
+    ],
+    "selector_switch": {
+      "1": 59,
+      "2": 66,
+      "3": 73,
+      "4": 80,
+      "5": 87,
+      "6": 94,
+      "7": 101,
+      "8": 108,
+      "9": 115,
+      "default": 52
+    },
+    "supplier_bootstraps": [
+      {
+        "arguments": [
+          "()Ljava/lang/Object;",
+          {
+            "reference": [
+              10,
+              "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+              [
+                12,
+                "lambda$getBlockSupplier$440",
+                "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;"
+              ]
+            ],
+            "reference_kind": 6
+          },
+          "()Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;"
+        ],
+        "handle": {
+          "reference": [
+            10,
+            "java/lang/invoke/LambdaMetafactory",
+            [
+              12,
+              "metafactory",
+              "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;"
+            ]
+          ],
+          "reference_kind": 6
+        },
+        "index": 7
+      },
+      {
+        "arguments": [
+          "()Ljava/lang/Object;",
+          {
+            "reference": [
+              10,
+              "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+              [
+                12,
+                "lambda$getBlockSupplier$441",
+                "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;"
+              ]
+            ],
+            "reference_kind": 6
+          },
+          "()Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;"
+        ],
+        "handle": {
+          "reference": [
+            10,
+            "java/lang/invoke/LambdaMetafactory",
+            [
+              12,
+              "metafactory",
+              "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;"
+            ]
+          ],
+          "reference_kind": 6
+        },
+        "index": 8
+      },
+      {
+        "arguments": [
+          "()Ljava/lang/Object;",
+          {
+            "reference": [
+              10,
+              "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+              [
+                12,
+                "lambda$static$154",
+                "()Lnet/minecraft/world/level/block/Block;"
+              ]
+            ],
+            "reference_kind": 6
+          },
+          "()Lnet/minecraft/world/level/block/Block;"
+        ],
+        "handle": {
+          "reference": [
+            10,
+            "java/lang/invoke/LambdaMetafactory",
+            [
+              12,
+              "metafactory",
+              "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;"
+            ]
+          ],
+          "reference_kind": 6
+        },
+        "index": 166
+      }
+    ]
+  },
+  "schema_version": 1,
+  "typed_reference_census": {
+    "class_entries_scanned": 1555,
+    "class_path_roster_sha256": "2296d31ecc7fabb375922b8ad23c7a25c3e969bdfd80d5e1aa602034ae5d62ed",
+    "concrete_implementers_within_publisher": [
+      "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem"
+    ],
+    "direct_implementers": [
+      "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem"
+    ],
+    "inherited_implementers_within_publisher": [],
+    "limit": "Publisher classfile closure only; reflective name construction, external mods, transformed runtime classes and future versions are not closed.",
+    "method": "Typed Class/Fieldref/Methodref/InterfaceMethodref/NameAndType/MethodType plus declared JVM descriptors; plain UTF8/String constants do not count.",
+    "on_destroyed_declarations": [
+      {
+        "access": 1,
+        "code_sha256": "226813dc8af7ac6358213a35838f56fb39d5d9e717acb039d331303489bc9a46",
+        "code_size": 45,
+        "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;)V",
+        "exception_handlers": [],
+        "max_locals": 3,
+        "max_stack": 3,
+        "name": "onDestroyed",
+        "owner": "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier"
+      },
+      {
+        "access": 1025,
+        "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+        "name": "onDestroyed",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACDestroyedItem"
+      },
+      {
+        "access": 1,
+        "code_sha256": "34f73b931946ae63544f4cbe9e35d1bd10fcab90f25b000bbdc54b98bc8b8881",
+        "code_size": 170,
+        "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+        "exception_handlers": [],
+        "max_locals": 4,
+        "max_stack": 10,
+        "name": "onDestroyed",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem"
+      }
+    ],
+    "on_destroyed_member_references": [
+      {
+        "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/damagesource/DamageSource;)V",
+        "index": 7,
+        "kind": 10,
+        "name": "onDestroyed",
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem",
+        "target_owner": "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem"
+      }
+    ],
+    "registry_member_references": [
+      {
+        "descriptor": "(Ljava/lang/String;Ljava/util/function/Supplier;I)Ljava/util/function/Supplier;",
+        "index": 164,
+        "kind": 10,
+        "name": "registerBlockAndItem",
+        "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+        "target_owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry"
+      },
+      {
+        "descriptor": "(ILjava/util/function/Supplier;)Ljava/util/function/Supplier;",
+        "index": 183,
+        "kind": 10,
+        "name": "getBlockSupplier",
+        "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+        "target_owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry"
+      },
+      {
+        "descriptor": "(Ljava/lang/String;Ljava/util/function/Supplier;)Ljava/util/function/Supplier;",
+        "index": 1260,
+        "kind": 10,
+        "name": "registerBlockAndItem",
+        "owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry",
+        "target_owner": "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry"
+      }
+    ],
+    "selected_hierarchy": {
+      "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier": {
+        "access": 33,
+        "interfaces": [],
+        "parent": "net/minecraft/world/item/BlockItem"
+      },
+      "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": {
+        "access": 33,
+        "interfaces": [],
+        "parent": "java/lang/Object"
+      },
+      "com/github/alexmodguy/alexscaves/server/item/ACDestroyedItem": {
+        "access": 1537,
+        "interfaces": [],
+        "parent": "java/lang/Object"
+      },
+      "com/github/alexmodguy/alexscaves/server/item/HazmatArmorItem": {
+        "access": 33,
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/CustomArmorPostRender",
+          "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACTickingItem"
+        ],
+        "parent": "net/minecraft/world/item/ArmorItem"
+      },
+      "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem": {
+        "access": 33,
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/ACTickingItem"
+        ],
+        "parent": "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier"
+      },
+      "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem": {
+        "access": 33,
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/ACDestroyedItem"
+        ],
+        "parent": "com/github/alexmodguy/alexscaves/server/item/RadioactiveBlockItem"
+      },
+      "com/github/alexmodguy/alexscaves/server/misc/ACCompat": {
+        "access": 33,
+        "interfaces": [],
+        "parent": "java/lang/Object"
+      },
+      "com/github/alexmodguy/alexscaves/server/misc/ACDamageTypes": {
+        "access": 33,
+        "interfaces": [],
+        "parent": "java/lang/Object"
+      },
+      "com/github/alexmodguy/alexscaves/server/potion/ACMobEffect": {
+        "access": 1057,
+        "interfaces": [],
+        "parent": "net/minecraft/world/effect/MobEffect"
+      },
+      "com/github/alexmodguy/alexscaves/server/potion/IrradiatedEffect": {
+        "access": 33,
+        "interfaces": [],
+        "parent": "com/github/alexmodguy/alexscaves/server/potion/ACMobEffect"
+      }
+    },
+    "target": "com/github/alexmodguy/alexscaves/server/item/ACDestroyedItem",
+    "typed_reference_owners": [
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/ACDestroyedItem",
+        "typed_references": [
+          {
+            "index": 1,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      {
+        "owner": "com/github/alexmodguy/alexscaves/server/item/RadioactiveOnDestroyedBlockItem",
+        "typed_references": [
+          {
+            "index": 133,
+            "kind": "class_constant"
+          }
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "authority": "SHA-exact publisher binary, not adjacent source.",
+    "physical_cli_is_gameplay": false,
+    "reproduction": "Mandatory exact seal comparison; native semantic/census negatives and twice-run physical-binary CLI idempotence."
+  }
+}

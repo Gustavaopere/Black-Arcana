@@ -1,0 +1,95 @@
+name: Alex's Caves 1.0.10 destroyed item static native contract
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-destroyed-item-contract.yml'
+      - 'docs/qa/alexscaves_1010_*.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'scripts/catalog/*perk_ready_indexes*.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-destroyed-item-contract.yml'
+      - 'docs/qa/alexscaves_1010_*.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'scripts/catalog/*perk_ready_indexes*.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  destroyed_item_static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      AC_DESTROYED_ITEM_JAR: '${{ github.workspace }}/build/destroyed-item-1010/alexscaves-1.0.10.jar'
+      AC_DESTROYED_ENGINE_UNIVERSAL: '${{ github.workspace }}/build/destroyed-item-1010/neoforge-21.1.250-universal.jar'
+      AC_DESTROYED_ENGINE_USERDEV: '${{ github.workspace }}/build/destroyed-item-1010/neoforge-21.1.250-userdev.jar'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch and fingerprint exact publisher artifact
+        run: |
+          mkdir -p build/destroyed-item-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output "$AC_DESTROYED_ITEM_JAR"
+          echo '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c  build/destroyed-item-1010/alexscaves-1.0.10.jar' | sha256sum --check --strict
+          echo '6960b299a39a039ac8a5eb9b07be4ad0e3e0a570  build/destroyed-item-1010/alexscaves-1.0.10.jar' | sha1sum --check --strict
+          test "$(wc -c < "$AC_DESTROYED_ITEM_JAR")" -eq 75279314
+      - name: Fetch and fingerprint official NeoForge reference inputs
+        run: |
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-universal.jar' \
+            --output "$AC_DESTROYED_ENGINE_UNIVERSAL"
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-userdev.jar' \
+            --output "$AC_DESTROYED_ENGINE_USERDEV"
+          echo '1f9cc68fe9ec0416475d34ce76e95a696b9721d5d338168563dab0632c3d2956  build/destroyed-item-1010/neoforge-21.1.250-universal.jar' | sha256sum --check --strict
+          echo 'deb6dd1e002aa85406e92501f49d5429cc8eaefe32fc353433e67030c32d8372  build/destroyed-item-1010/neoforge-21.1.250-userdev.jar' | sha256sum --check --strict
+          test "$(wc -c < "$AC_DESTROYED_ENGINE_UNIVERSAL")" -eq 3551255
+          test "$(wc -c < "$AC_DESTROYED_ENGINE_USERDEV")" -eq 3983248
+      - name: Native negatives, physical-binary CLI idempotence and semantic cards
+        run: |
+          export AC_DESTROYED_ITEM_JAVAP="$JAVA_HOME/bin/javap"
+          export AC_DESTROYED_ENGINE_JAVAP="$JAVA_HOME/bin/javap"
+          python3 docs/qa/alexscaves_1010_destroyed_item_contract_audit_test.py -v
+          python3 docs/qa/alexscaves_1010_destroyed_item_engine_reference_test.py -v
+          python3 docs/qa/alexscaves_1010_destroyed_item_contract_cards_test.py -v
+      - name: Verify mandatory native contract and official reference seals
+        run: |
+          python3 docs/qa/alexscaves_1010_destroyed_item_contract_audit.py \
+            --jar "$AC_DESTROYED_ITEM_JAR" --javap "$JAVA_HOME/bin/javap" \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DESTROYED-ITEM-CONTRACT-1.0.10.json' \
+            --output build/destroyed-item-1010/destroyed-item-native-evidence.json
+          python3 docs/qa/alexscaves_1010_destroyed_item_engine_reference.py \
+            --universal "$AC_DESTROYED_ENGINE_UNIVERSAL" --userdev "$AC_DESTROYED_ENGINE_USERDEV" \
+            --javap "$JAVA_HOME/bin/javap" \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-DESTROYED-ITEM-ENGINE-REFERENCE-21.1.250.json' \
+            --output build/destroyed-item-1010/destroyed-item-engine-reference-evidence.json
+      - name: Verify canonical catalog indexes
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - name: Archive bounded static evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-destroyed-item-static-native-and-reference
+          path: |
+            build/destroyed-item-1010/destroyed-item-native-evidence.json
+            build/destroyed-item-1010/destroyed-item-engine-reference-evidence.json
+          if-no-files-found: ignore
+          retention-days: 14
