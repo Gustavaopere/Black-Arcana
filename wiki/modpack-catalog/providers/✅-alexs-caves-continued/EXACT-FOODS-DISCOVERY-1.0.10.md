@@ -1,6 +1,6 @@
 # ACFoods — inventário de construção e consumidores (1.0.10)
 
-**Estado:** descoberta SHA-exata executada, disposição individual ainda candidata; não certifica os alimentos, blocos, registries, efeitos downstream ou hooks. NO_MUTATION / provider OPEN.
+**Estado:** descoberta SHA-exata executada, registro histórico da descoberta; o [contrato candidato #1122](EXACT-FOODS-CONTRACT-1.0.10.md) delimita a certificação de suporte; não certifica os alimentos, blocos, registries, efeitos downstream ou hooks. NO_MUTATION / provider OPEN.
 
 ## Identidade e escopo
 - Artefato publisher `alexscaves-1.0.10-neoforge+1.21.1.jar`, SHA-1 `6960b299a39a039ac8a5eb9b07be4ad0e3e0a570`, SHA-256 `36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c`, 75.279.314 bytes.
@@ -37,7 +37,7 @@
 | `GINGERBREAD_HALF` | 2 | 0.1 | — | SUGAR_RUSH · 1% · 200 t (lambda$static$34) | 15 |
 | `GUMBALL_PILE` | 3 | 0.2 | — | SUGAR_RUSH · 1% · 200 t (lambda$static$43) | 1 |
 | `GUMMY_RING` | 3 | 0.15 | — | SUGAR_RUSH · 1% · 200 t (lambda$static$31) | 5 |
-| `HOT_CHOCOLATE_BOTTLE` | 4 | 0.25 | sound:undefined | SUGAR_RUSH · 2% · 200 t (lambda$static$39) | 1 |
+| `HOT_CHOCOLATE_BOTTLE` | 4 | 0.25 | sound:GENERIC_DRINK | SUGAR_RUSH · 2% · 200 t (lambda$static$39) | 1 |
 | `JELLY_BEAN` | 1 | 0.05 | — | — | 1 |
 | `LANTERNFISH` | 1 | 0.175 | fast | — | 1 |
 | `LANTERNFISH_COOKED` | 2 | 0.3 | fast | — | 1 |
@@ -49,7 +49,7 @@
 | `PEPPERMINT_POWDER` | 1 | 0.1 | fast | SUGAR_RUSH · 1% · 200 t (lambda$static$40) | 1 |
 | `PINE_NUTS` | 2 | 0.175 | — | — | 1 |
 | `PRIMORDIAL_SOUP` | 6 | 0.6 | bowl | DIG_SPEED · 100% · 800 t (lambda$static$1) | 1 |
-| `PURPLE_SODA_BOTTLE` | 2 | 0.1 | sound:undefined | SUGAR_RUSH · 1% · 200 t (lambda$static$36) | 1 |
+| `PURPLE_SODA_BOTTLE` | 2 | 0.1 | sound:GENERIC_DRINK | SUGAR_RUSH · 1% · 200 t (lambda$static$36) | 1 |
 | `RADGILL` | 2 | 0.2 | — | IRRADIATED · 100% · 2000 t (lambda$static$2) | 1 |
 | `RADGILL_COOKED` | 5 | 0.3 | — | IRRADIATED · 10% · 1000 t (lambda$static$3) | 1 |
 | `ROCK_CANDY` | 2 | 0.1 | — | SUGAR_RUSH · 1% · 200 t (lambda$static$32) | 16 |
@@ -58,7 +58,7 @@
 | `SERENE_SALAD` | 5 | 0.35 | bowl | — | 1 |
 | `SLAM` | 4 | 0.5 | meat | DAMAGE_BOOST · 100% · 400 t (lambda$static$4) | 1 |
 | `SMALL_PEPPERMINT` | 3 | 0.15 | — | SUGAR_RUSH · 1% · 200 t (lambda$static$18) | 1 |
-| `SOYLENT_GREEN` | 3 | 0.35 | alwaysEat, meat, sound:undefined | — | 1 |
+| `SOYLENT_GREEN` | 3 | 0.35 | alwaysEat, meat, sound:HONEY_DRINK | — | 1 |
 | `SPELUNKIE` | 2 | 0.1 | fast | — | 1 |
 | `SPRINKLES` | 1 | 0.1 | — | SUGAR_RUSH · 1% · 200 t (lambda$static$24) | 1 |
 | `STINKY_FISH` | 1 | 0.1 | — | STUNNED · 100% · 100 t (lambda$static$6) | 1 |
@@ -100,4 +100,4 @@ O [manifesto de descoberta](EXACT-FOODS-DISCOVERY-1.0.10.json) registra todos os
 
 ## Evidência e próximos gates
 
-Relatório SHA-256 `8310d35563ee74028469f192aada383c35a6cd43f70b288ec5ad93de6d8dfed1`, [job de descoberta](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44332664446/job/134900918644). [Auditor](../../../../docs/qa/alexscaves_1010_foods_probe.py) e regressões específicas. Antes de certificado: testar manifesto contra relatório, conferir limite do bridge ACCompat/efeitos e reconciliar índices gerados (sem edição manual) com a main e o marcador #1121. Nenhum contador promovido.
+Relatório SHA-256 `8310d35563ee74028469f192aada383c35a6cd43f70b288ec5ad93de6d8dfed1`, [job de descoberta](https://github.com/Gustavaopere/Black-Arcana/actions/runs/44332664446/job/134900918644). [Auditor](../../../../docs/qa/alexscaves_1010_foods_probe.py) e regressões específicas. Esta descoberta não promoveu contadores. Seis regressões passaram e o boundary complementar foi auditado posteriormente; ver o [contrato candidato](EXACT-FOODS-CONTRACT-1.0.10.md). A CI final exige a validação do ledger e dos índices canônicos.

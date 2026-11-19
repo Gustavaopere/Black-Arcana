@@ -82,6 +82,22 @@ class FoodsCrosswalk(unittest.TestCase):
             self.assertEqual(self.report[k], v)
         self.assertEqual(self.seal["claim_scope"], "DISCOVERY_NOT_CERTIFIED")
 
+    def test_boundary_exact_replay(self):
+        raw = Path(os.environ["AC_FOODS_BOUNDARY"]).read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), "0fe3473bee455115e568c58f815cc223014ddf5202c828d2634e48d629733320")
+        bound = json.loads(raw)
+        native = bound["native"]["method"]
+        self.assertEqual(native["declaration"]["code_sha256"], "a6fcb990359b50a29238d383f13da2a665a0510bbd6dfc4f527e05ef80b47863")
+        self.assertEqual([r["opcode"] for r in native["instructions"]], ["getstatic", "aload_0", "invokeinterface", "areturn"])
+        self.assertIn("Registry.wrapAsHolder:", native["instructions"][2]["symbol"])
+        constructors = {m["declaration"]["descriptor"]: m for m in bound["vanilla"]["constructors"]}
+        default = constructors["(Ljm;I)V"]
+        self.assertEqual(default["declaration"]["code_sha256"], "24931801535be6734bb46587ae621201d1762f5143dfe56f82debdabe241bef0")
+        self.assertEqual(default["instructions"][3]["opcode"], "iconst_0")
+        self.assertIn("(Ljm;II)V", default["instructions"][4]["symbol"])
+        for field, value in {"mutation": "NO_MUTATION", "mutating_hook": "NOT_VERIFIED", "physical_qa": "NOT_TESTED"}.items():
+            self.assertEqual(bound[field], value)
+
 
 if __name__ == "__main__":
     unittest.main()
