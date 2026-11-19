@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "scope": "STATIC_REFERENCE_ONLY",
+  "native_report_sha256": "6b930d9bc296c736278df961dea6db3b0af31789b39fd623df4cdea232016b2f",
+  "boundary_report_sha256": "03519b95b38412c1efccba0157f83c59dffc0e865dd55efe05c7c779ed2e789a",
+  "run": 44452908844,
+  "job": 135320920618,
+  "native": {
+    "spear": {
+      "class_sha256": "37b96d1b7936408c0dbd92f0a0715af8400ef55d452c196527e912c3eaf10583",
+      "declarations": [],
+      "method": null,
+      "owner": "com/github/alexmodguy/alexscaves/server/item/SpearItem",
+      "parent": "net/minecraft/world/item/Item"
+    },
+    "bindings": {
+      "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": {
+        "class_sha256": "b4de04f32f6e1d92eeda55480b8480f7ed69f3813164f330f49d0eced202e54c",
+        "fields": {
+          "PACKED_GALENA": {
+            "write": 131,
+            "registration_name": "packed_galena"
+          }
+        }
+      },
+      "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+        "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+        "fields": {
+          "AZURE_NEODYMIUM_INGOT": {
+            "write": 505,
+            "registration_name": "azure_neodymium_ingot"
+          },
+          "HEAVY_BONE": {
+            "write": 964,
+            "registration_name": "heavy_bone"
+          },
+          "PURE_DARKNESS": {
+            "write": 2426,
+            "registration_name": "pure_darkness"
+          },
+          "SCARLET_NEODYMIUM_INGOT": {
+            "write": 488,
+            "registration_name": "scarlet_neodymium_ingot"
+          },
+          "TECTONIC_SHARD": {
+            "write": 1117,
+            "registration_name": "tectonic_shard"
+          }
+        }
+      }
+    }
+  },
+  "vanilla": {
+    "net.minecraft.world.item.Item": {
+      "obfuscated_owner": "cul",
+      "class_sha256": "40e167e49df378e0021165e839c953888384d487710b578f87fab159f01f6968",
+      "parent": "java/lang/Object",
+      "methods": [
+        {
+          "name": "isValidRepairItem",
+          "descriptor": "(Lcuq;Lcuq;)Z",
+          "code_sha256": "42ca1f85243342bd41983ab86f2235408fa46ded7466d4525196f66b9dbb5f3e",
+          "instruction_sha256": "1b59058de047d7b952e93f4f86ee9b459050726291ca25b3857f3634e96e36f2",
+          "instruction_count": 2
+        }
+      ]
+    },
+    "net.minecraft.world.item.ItemStack": {
+      "obfuscated_owner": "cuq",
+      "class_sha256": "a34b9141828bd62fa74ad6a5d3b9b47a81df18b4a86866827c8f73d3ab97f901",
+      "parent": "java/lang/Object",
+      "methods": [
+        {
+          "name": "is",
+          "descriptor": "(Lawu;)Z",
+          "code_sha256": "47201f18964146ad993d5f98cf788e23682f0136b075b9e9939042e4d98db9dd",
+          "instruction_sha256": "131268e71854e0b76dcbb728a705b3191beaed06868a68b3f92c05c62620e022",
+          "instruction_count": 6
+        },
+        {
+          "name": "is",
+          "descriptor": "(Lcul;)Z",
+          "code_sha256": "92e477546dc196af43f1e7a1d4c4b020db230a499c294ba1369a03ae10c92146",
+          "instruction_sha256": "4fa94735ec9963550bd4c9a6fcbf995b054a6edba8edff98c576c09457c984ba",
+          "instruction_count": 8
+        },
+        {
+          "name": "is",
+          "descriptor": "(Ljava/util/function/Predicate;)Z",
+          "code_sha256": "f24ac65ba540c03f61d2380860337a41a923531313842a364a6a5b8cae895393",
+          "instruction_sha256": "0822a2f78caf2a40e14016453092baa40bfcc5cbc65cf3858b3167927279bab4",
+          "instruction_count": 6
+        },
+        {
+          "name": "is",
+          "descriptor": "(Ljm;)Z",
+          "code_sha256": "c6ee5225f3f5597e32634519994f9562be397f29fc880e62ada3feb64623af94",
+          "instruction_sha256": "7245b138f81d1e3d130e10d2eed06032055a02cae935680fd6a968353c9f0c94",
+          "instruction_count": 9
+        },
+        {
+          "name": "is",
+          "descriptor": "(Ljq;)Z",
+          "code_sha256": "c49d1dbf48b1bd772e0cbc8bd34ebdf39f5cff32f3ff511b0fec82744725977f",
+          "instruction_sha256": "0b4cf79bf9e981d1be0cb76fa9ae0aa6b90616d6b9dd9362027192711d08f217",
+          "instruction_count": 5
+        },
+        {
+          "name": "setDamageValue",
+          "descriptor": "(I)V",
+          "code_sha256": "8c813b177c90df56e2b8a5d9f3addc1d7adc06aa9eda00e1854da0c01e7edc9b",
+          "instruction_sha256": "47363f6bd93fe9d4b8b843684d84e4197321688a324178b0d9892e38ec367457",
+          "instruction_count": 11
+        },
+        {
+          "name": "shrink",
+          "descriptor": "(I)V",
+          "code_sha256": "e817ced3285f45dd30739e5e4f9cffac308b190159b9ce0d94deba71a814feef",
+          "instruction_sha256": "4db8c8193b72c0322bf0d67156819c373e836297c485cdfa15e42fe842d0f5c2",
+          "instruction_count": 5
+        },
+        {
+          "name": "getDamageValue",
+          "descriptor": "()I",
+          "code_sha256": "b5fae22a90e1397b6cc864ebbcf5063e8bc976e7cfc03c3c829f033343d26d97",
+          "instruction_sha256": "009b36be5db47e42fda4c492be76f337222fea4a0eb952561d0f4fc1558dbd51",
+          "instruction_count": 12
+        },
+        {
+          "name": "getMaxDamage",
+          "descriptor": "()I",
+          "code_sha256": "fb14a2839afe7c7fe2e9f0c76cb1e74f95211848b2262f74e576d341b77f2013",
+          "instruction_sha256": "827a3ea3e86963f961af5ec70579fedcf01a61cbdba50e500ab1f2f90839cd64",
+          "instruction_count": 8
+        }
+      ]
+    },
+    "net.minecraft.world.item.ShieldItem": {
+      "obfuscated_owner": "cvt",
+      "class_sha256": "97f4148cf303b6666061c7572a51678ca793d28d2f2513497b08d1419d267d06",
+      "parent": "net.minecraft.world.item.Item",
+      "methods": [
+        {
+          "name": "isValidRepairItem",
+          "descriptor": "(Lcuq;Lcuq;)Z",
+          "code_sha256": "fbf299497a6a2bb7fa638c8dd734cdad3cd5f5f97244a0bbca4d40fb1949c63a",
+          "instruction_sha256": "3a53073138ea875517c1b2f00e863f663197f3b05f412f6757e23f66343e0020",
+          "instruction_count": 13
+        }
+      ]
+    },
+    "net.minecraft.world.inventory.AnvilMenu": {
+      "obfuscated_owner": "cpw",
+      "class_sha256": "57c809b6c17aec41130d813d019491b479111b6a07157ca224928fe86b3e25c3",
+      "parent": "net.minecraft.world.inventory.ItemCombinerMenu",
+      "methods": [
+        {
+          "name": "onTake",
+          "descriptor": "(Lcmx;Lcuq;)V",
+          "code_sha256": "fac5fa38b8bcb1f984586304e13c01db1066809b8c755f092495ed80ed3b8f8a",
+          "instruction_sha256": "c46b87baf1ffac1db99e683333de141e2d834faa0734c05709a0f9f1285a470f",
+          "instruction_count": 62
+        },
+        {
+          "name": "mayPickup",
+          "descriptor": "(Lcmx;Z)Z",
+          "code_sha256": "ac48d765540cab2cf170dba55791d71a0698da2e93ef6051fe29595d9bfc8cc5",
+          "instruction_sha256": "d1c0dc3580f003ecf9ce5dd82f75ac863a4c47f7c1ae4a202e8b236254446d02",
+          "instruction_count": 17
+        },
+        {
+          "name": "createResult",
+          "descriptor": "()V",
+          "code_sha256": "8ed75a901f7330491de4fdd2de4a4ed1d3c5aa766dde76a9835e8fe4332bd703",
+          "instruction_sha256": "a4a04970a186b41a3fc9cc37e65a7eeb1e1d2c582698eeb20c6e592386928a6f",
+          "instruction_count": 479
+        }
+      ]
+    }
+  },
+  "neoforge": {
+    "classes": {
+      "net/neoforged/neoforge/common/CommonHooks": {
+        "present": true,
+        "class_sha256": "86c8a56c77fff474bf4fe90f0354ad32698f018b5e19dc52a2725ee5ff96c73e",
+        "methods": [
+          {
+            "name": "onAnvilChange",
+            "descriptor": "(Lnet/minecraft/world/inventory/AnvilMenu;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/Container;Ljava/lang/String;JLnet/minecraft/world/entity/player/Player;)Z",
+            "code_sha256": "bf790b882c056a79d8a04830b29f83690afbeb8aaf639920bf80d926ddbf177d",
+            "instruction_sha256": "9ff3482fc359ad6da953c4dedfc3f0ca5f8677d010e0334bf4ce708f3e3390d1"
+          },
+          {
+            "name": "onAnvilRepair",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)F",
+            "code_sha256": "cb974052fedea7ccd66527141c9c6d97940dd1fdb35bd8c3f3ce133d0a91dad0",
+            "instruction_sha256": "13993170b6e75abcbbde988b0bd7c331861030d9b9b072059ad82769197a66de"
+          }
+        ]
+      },
+      "net/neoforged/neoforge/common/extensions/IItemExtension": {
+        "present": true,
+        "class_sha256": "d65a413962ab6bf6cf8c33119b010dd16fcf482c114b8ae8abe5c59da951b088",
+        "methods": [
+          {
+            "name": "canGrindstoneRepair",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Z",
+            "code_sha256": "42ca1f85243342bd41983ab86f2235408fa46ded7466d4525196f66b9dbb5f3e",
+            "instruction_sha256": "1b59058de047d7b952e93f4f86ee9b459050726291ca25b3857f3634e96e36f2"
+          },
+          {
+            "name": "getXpRepairRatio",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)F",
+            "code_sha256": "d9cd8c1ff77fbad798dbd032706c992ad89384e8a40d95ca0bfc1185834392df",
+            "instruction_sha256": "da2b5ab14944c06bf229df225b19f5d889cfa7508e8f0b195ed6e78db56314ea"
+          }
+        ]
+      },
+      "net/neoforged/neoforge/common/extensions/IItemStackExtension": {
+        "present": true,
+        "class_sha256": "244993a9cd1a5e99507c88a0a8e1d65b6ef997d44bd73ab696a510ccf2d0397e",
+        "methods": [
+          {
+            "name": "canGrindstoneRepair",
+            "descriptor": "()Z",
+            "code_sha256": "60eeda27bb38f5002fbc87e8c9989d2ddee2f02e0e6153355af7e6e0e6dfa51f",
+            "instruction_sha256": "36e2f769ecf79c07b27ac98eb85b357cf5e53324808648eb19a9cd6f53a04251"
+          },
+          {
+            "name": "getXpRepairRatio",
+            "descriptor": "()F",
+            "code_sha256": "cc380d952349b7ef8a946ea6aaa0617c271ee89bc9f53aa10e525db8f4a7ea57",
+            "instruction_sha256": "ddc42977a5612aeeec6c84e62902414325a0ae5669f1bd81a47b89e36bcc6f51"
+          },
+          {
+            "name": "isRepairable",
+            "descriptor": "()Z",
+            "code_sha256": "7f765482b9cc289e5965aa11934f5863b6b3b5f0ef4800fe3ffb88ed71f9f343",
+            "instruction_sha256": "1f556b061fa5d46312a6fe66ebb345b5a29357236f1abb270cf7f9e2e4525f70"
+          }
+        ]
+      },
+      "net/neoforged/neoforge/event/AnvilUpdateEvent": {
+        "present": true,
+        "class_sha256": "012c9107fcffe62dc6e6f08ee0006a77338d5b47b8210472fbf0c74159eda4be",
+        "methods": [
+          {
+            "name": "<init>",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Ljava/lang/String;JLnet/minecraft/world/entity/player/Player;)V",
+            "code_sha256": "a59e6f868a9230f2540a0613151c0b5c35f7974fd94e75a44efbf972d5dd5f8b",
+            "instruction_sha256": "e7317260f75ac0ed61ea06078cf9b03dd019bf805357c17ef8ade966fc42ce44"
+          },
+          {
+            "name": "getCost",
+            "descriptor": "()J",
+            "code_sha256": "aaafb2a74ad119b77ec2fa1958eae82bfad4a3d96bc0099f0f9d34790204c4df",
+            "instruction_sha256": "4923fc454c53eca57edbc98bfbd26397ee071bc4b0ef0cce24c931a675c039ad"
+          },
+          {
+            "name": "getLeft",
+            "descriptor": "()Lnet/minecraft/world/item/ItemStack;",
+            "code_sha256": "668501b084f2dc96265ceb4e39579391868136fffaeab12c3f93e3c91daee2e4",
+            "instruction_sha256": "e6aa1b3117845418fd50c8dc4bda5071ea866cac4cc5b30dbb015da41f289b09"
+          },
+          {
+            "name": "getMaterialCost",
+            "descriptor": "()I",
+            "code_sha256": "aece51df23ee847e071ab55a74ffbdcdf6d8c53ec811ac8c087ac16fd1374ea3",
+            "instruction_sha256": "2abc967cc157d5b1a9d22c9287e12f71ccec99bb07e0d7fff2dfa7fdec99fc9f"
+          },
+          {
+            "name": "getName",
+            "descriptor": "()Ljava/lang/String;",
+            "code_sha256": "0fbdf12e3c14b4247d4a032174948df3d0189afc28989b2075c42b7c33cae81d",
+            "instruction_sha256": "8e5dffb9132bacf993bedce099e7749e155f50f1a7b32bd455d1c3bbd733f43c"
+          },
+          {
+            "name": "getOutput",
+            "descriptor": "()Lnet/minecraft/world/item/ItemStack;",
+            "code_sha256": "f66e8250518af8e7eba2e824a653290c86670b3fe30fd9f290298cfd4523f135",
+            "instruction_sha256": "a540d7b46b28135552129837f3cab829b9483afcd303a7135da02582833d8c7a"
+          },
+          {
+            "name": "getPlayer",
+            "descriptor": "()Lnet/minecraft/world/entity/player/Player;",
+            "code_sha256": "d4cb001bace8bb3a2b0160810962011a36016374bea88040df093a5ff37999c7",
+            "instruction_sha256": "93e8e4b4daa1cc72baf0c504acb826ec71da668608ab1d7672829045bd912dea"
+          },
+          {
+            "name": "getRight",
+            "descriptor": "()Lnet/minecraft/world/item/ItemStack;",
+            "code_sha256": "d0cf9f922ab010f8c80625ee6685ff3cb0a085a2217bde1a5d580997c5014bcb",
+            "instruction_sha256": "9509a519692d7eb315951102ef0709459dcf36b8ca4bed0e385a082d4a1a7f43"
+          },
+          {
+            "name": "setCost",
+            "descriptor": "(J)V",
+            "code_sha256": "179b57c4c2ec9bd5e08a7849f42040f6e5ea0c38ad61f7b14fc02c00269b21e4",
+            "instruction_sha256": "b732d1f8def9353e854d8fe668701d262ffef121ef47493077642e767f42407d"
+          },
+          {
+            "name": "setMaterialCost",
+            "descriptor": "(I)V",
+            "code_sha256": "af34a887fc9d6d15405595bb428ce262d4c5cf62b6e8d15ea25ce14a1abe4255",
+            "instruction_sha256": "02c18f279faa3bedf70b31fd4ea836fdb66a0236d6788602b0801d1e50d72363"
+          },
+          {
+            "name": "setOutput",
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)V",
+            "code_sha256": "6377798f8121adf0407db2372aa220ce41c532ac92844368c39c3a53e012a535",
+            "instruction_sha256": "5f7cc154f0154a5a6f77b722ed9f7933cbe6d5f87db69d5b3f1801fc73938b3b"
+          }
+        ]
+      },
+      "net/neoforged/neoforge/event/entity/player/AnvilRepairEvent": {
+        "present": true,
+        "class_sha256": "4db204ff616742e9f347d4cee7e71f47105a950e71d2eb96b8c17209a8b5e7e5",
+        "methods": [
+          {
+            "name": "<init>",
+            "descriptor": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V",
+            "code_sha256": "98451feee885d00d86a949ba15cffd88da70a20440b28eeefc664e9517d702e4",
+            "instruction_sha256": "977e577a456a563f9145fd80c5d5f688cc1ef7ec40a066c508d01b235bd2fed9"
+          },
+          {
+            "name": "getBreakChance",
+            "descriptor": "()F",
+            "code_sha256": "9b45ee0968780b024865d5deb993395f0e9da53d4eab0d2c2307dca756ddd2cd",
+            "instruction_sha256": "9e39f50abb570ecf6e6995b4bda659719cb86f0857f995d4b0e115f5e6d17933"
+          },
+          {
+            "name": "getLeft",
+            "descriptor": "()Lnet/minecraft/world/item/ItemStack;",
+            "code_sha256": "d0cf9f922ab010f8c80625ee6685ff3cb0a085a2217bde1a5d580997c5014bcb",
+            "instruction_sha256": "15e04770ad4dd4a824390cb19b9c1db2b3e571461f775230d8add66725b7763c"
+          },
+          {
+            "name": "getOutput",
+            "descriptor": "()Lnet/minecraft/world/item/ItemStack;",
+            "code_sha256": "668501b084f2dc96265ceb4e39579391868136fffaeab12c3f93e3c91daee2e4",
+            "instruction_sha256": "768f09ac4739db1ae9de7303c9d9ad413ca5058ed7105a4c89acea7d6e76dcd1"
+          },
+          {
+            "name": "getRight",
+            "descriptor": "()Lnet/minecraft/world/item/ItemStack;",
+            "code_sha256": "0eec0060b32fcb98482ec72288809eca9f97fb43dc33cd581f87ed7b3ed00525",
+            "instruction_sha256": "33f753fcbaec171c69968d5c8f037d4aee37ec9786b3cc4030b62c74d625fc31"
+          },
+          {
+            "name": "setBreakChance",
+            "descriptor": "(F)V",
+            "code_sha256": "588553cf287b5b975949d2d892f0a382e08567d234f5d0792bbd3c300ca2296b",
+            "instruction_sha256": "1708c141eabee5d820b634846819a6d14644c0cbf5c8b24bb3424be461d974ca"
+          }
+        ]
+      }
+    },
+    "patches": {
+      "patches/net/minecraft/world/item/Item.java.patch": {
+        "present": true,
+        "sha256": "6d16f90d962de67d1de56f92fdf7a8c8067296a87c7c20f7e48691b15ced706f"
+      },
+      "patches/net/minecraft/world/item/ItemStack.java.patch": {
+        "present": true,
+        "sha256": "5e910db862cc11662067e5ffbd2a792197d2eb618ce76f4281ee6fb5998c8c7d"
+      },
+      "patches/net/minecraft/world/item/ShieldItem.java.patch": {
+        "present": true,
+        "sha256": "d9fe59880bef093536a705697f0ec5da8ca7a7814f8755fba8101afcd0a6512a"
+      },
+      "patches/net/minecraft/world/inventory/AnvilMenu.java.patch": {
+        "present": true,
+        "sha256": "ce25eb90f69a09d99546f3ae9c9147fb3681869c414990a3c0ee2fa0731ee2d0"
+      },
+      "patches/net/minecraft/world/inventory/ItemCombinerMenu.java.patch": {
+        "present": false
+      }
+    }
+  },
+  "mutation": "NO_MUTATION",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED"
+}

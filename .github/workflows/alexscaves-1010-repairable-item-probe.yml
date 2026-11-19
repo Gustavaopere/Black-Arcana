@@ -10,6 +10,9 @@ on:
       - 'docs/qa/alexscaves_1010_repairable_item_boundary.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REPAIRABLE-ITEM-DISCOVERY-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REPAIRABLE-ITEM-DISCOVERY-1.0.10.md'
+      - 'docs/qa/alexscaves_1010_repairable_item_boundary_test.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REPAIRABLE-ITEM-BOUNDARY-1.0.10.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-REPAIRABLE-ITEM-BOUNDARY-1.0.10.json'
   workflow_dispatch:
 
 permissions:
@@ -53,6 +56,8 @@ jobs:
             --userdev build/repairable-1010/userdev.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/repairable-1010/boundary.json
+      - name: Replay bounded repair engine evidence
+        run: AC_REPAIRABLE_BOUNDARY=build/repairable-1010/boundary.json python3 docs/qa/alexscaves_1010_repairable_item_boundary_test.py -v
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
