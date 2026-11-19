@@ -9168,6 +9168,50 @@
           "reason": "Dois relatórios SHA-exatos e auditores independentes com Mojang client/mappings verificados, testes de roster, pivôs, parâmetros e ledger; consumo externo referencial, sem QA física."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/foods.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "63 FoodProperties, 606 initializer instructions, 46 suppliers and all 121 direct sites in eight owners; ACCompat holder bridge and official vanilla constructor/default plus reused builder reference. Does not certify foods, item registry, gameplay, per-player mutation or provider closure.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "JAR publisher 1.0.10 SHA-exato; ACFoods com 63 campos public static final de FoodProperties, 48 métodos, censo tipado de 1555 classfiles."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "606 instruções no clinit, 63 construções únicas, 46 suppliers, resolução eager por ACFoodBuilder e ACCompat.effect delegando wrapAsHolder; 121 leituras em oito owners. Crosswalk por campo e supplier, não certificação de item."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "63 pares de nutrição/modificador de saturação, flags, 46 probabilidades e durações; 45 campos com efeitos, 18 sem declaração; constructor Holder,int referencia amplifier bruto zero; formula float N*m*2F, 32/16 ticks, custos e clamps no contrato de builder."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "Suporte declarativo global, nenhum alvo/cast no helper. O consumador de referência é LivingEntity; efeitos downstream e targeting de itens/blocos têm contratos separados."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "Sem mana, cooldown, recurso, gasto ou transação próprios. Referência de consumo de stack, recipiente e fome no contrato ACFoodBuilder; não equivale a execução dos itens."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "Censo e crosswalk de 121 referências tipadas em oito owners, ACCompat.effect -> Registry.wrapAsHolder, referências vanilla 1.21.1 e NeoForge 21.1.250 do builder; sem hook mutador ou autoridade sobre efeitos downstream."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-CONTRACT-1.0.10.md",
+          "reason": "Job 134904019583: seis testes, replay do relatório de SHA fixa; job 135317637623: boundary nativo e construtores de referência SHA-exatos; testes de crosswalk, identidade, boundary e índices obrigatórios. QA física NOT_TESTED."
+        }
+      }
     }
   },
   "providers": {},

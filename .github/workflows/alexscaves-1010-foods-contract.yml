@@ -1,0 +1,84 @@
+name: Alex's Caves 1.0.10 ACFoods static contract
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-foods-contract.yml'
+      - 'docs/qa/alexscaves_1010_*.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'scripts/catalog/*perk_ready_indexes*.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/alexscaves-1010-foods-contract.yml'
+      - 'docs/qa/alexscaves_1010_*.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/**'
+      - 'wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json'
+      - 'scripts/catalog/*perk_ready_indexes*.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  foods_static:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      AC_FOODS_JAR: '${{ github.workspace }}/build/foods-contract-1010/alexscaves-1.0.10.jar'
+      AC_FOODS_REPORT: '${{ github.workspace }}/build/foods-contract-1010/discovery.json'
+      AC_FOODS_BOUNDARY: '${{ github.workspace }}/build/foods-contract-1010/boundary.json'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Fetch and fingerprint the exact publisher artifact
+        run: |
+          mkdir -p build/foods-contract-1010
+          curl --fail --silent --show-error --location --retry 3 \
+            --connect-timeout 20 --max-time 180 \
+            'https://edge.forgecdn.net/files/8856/293/alexscaves-1.0.10-neoforge%2B1.21.1.jar' \
+            --output "$AC_FOODS_JAR"
+          echo '36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c  build/foods-contract-1010/alexscaves-1.0.10.jar' | sha256sum --check --strict
+          echo '6960b299a39a039ac8a5eb9b07be4ad0e3e0a570  build/foods-contract-1010/alexscaves-1.0.10.jar' | sha1sum --check --strict
+          test "$(wc -c < "$AC_FOODS_JAR")" -eq 75279314
+      - name: Reproduce the preserved discovery crosswalk
+        run: |
+          python3 docs/qa/alexscaves_1010_foods_probe.py \
+            --jar "$AC_FOODS_JAR" --javap "$JAVA_HOME/bin/javap" \
+            --output "$AC_FOODS_REPORT"
+          python3 docs/qa/alexscaves_1010_foods_boundary.py \
+            --jar "$AC_FOODS_JAR" --javap "$JAVA_HOME/bin/javap" \
+            --output "$AC_FOODS_BOUNDARY"
+          python3 docs/qa/alexscaves_1010_foods_probe_test.py -v
+      - name: Native contract negatives, binary CLI and semantic evidence
+        run: |
+          export AC_FOODS_JAVAP="$JAVA_HOME/bin/javap"
+          python3 docs/qa/alexscaves_1010_foods_contract_audit_test.py -v
+          python3 docs/qa/alexscaves_1010_foods_contract_cards_test.py -v
+      - name: Verify the mandatory static contract seal
+        run: |
+          python3 docs/qa/alexscaves_1010_foods_contract_audit.py \
+            --jar "$AC_FOODS_JAR" --javap "$JAVA_HOME/bin/javap" \
+            --seal 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-NATIVE-CONTRACT-1.0.10.json' \
+            --output build/foods-contract-1010/contract.json
+      - name: Verify canonical catalog indexes
+        run: |
+          python3 scripts/catalog/check_perk_ready_indexes.py
+          python3 scripts/catalog/generate_perk_ready_indexes.py --check
+      - name: Archive bounded static evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: alexscaves-1010-foods-static-contract
+          path: |
+            build/foods-contract-1010/discovery.json
+            build/foods-contract-1010/boundary.json
+            build/foods-contract-1010/contract.json
+          if-no-files-found: ignore
+          retention-days: 14
