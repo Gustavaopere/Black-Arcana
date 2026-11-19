@@ -7,6 +7,7 @@ on:
       - '.github/workflows/alexscaves-1010-foods-probe.yml'
       - 'docs/qa/alexscaves_1010_foods_probe.py'
       - 'docs/qa/alexscaves_1010_foods_probe_test.py'
+      - 'docs/qa/alexscaves_1010_foods_boundary.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-DISCOVERY-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-FOODS-DISCOVERY-1.0.10.md'
   workflow_dispatch:
@@ -40,11 +41,19 @@ jobs:
       - name: Verify every property, effect supplier and consumer site
         run: |
           AC_FOODS_REPORT=build/foods-1010/report.json python3 docs/qa/alexscaves_1010_foods_probe_test.py -v
+      - name: Audit supplier holder and vanilla constructor defaults
+        run: |
+          python3 docs/qa/alexscaves_1010_foods_boundary.py \
+            --jar build/foods-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/foods-1010/boundary.json
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: alexscaves-1010-foods-discovery
-          path: build/foods-1010/report.json
+          path: |
+            build/foods-1010/report.json
+            build/foods-1010/boundary.json
           retention-days: 14
           if-no-files-found: ignore
