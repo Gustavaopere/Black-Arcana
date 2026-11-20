@@ -1,0 +1,53 @@
+{
+  "scope": "EXACT_NATIVE_DISCOVERY_NOT_CERTIFIED",
+  "source_jar": {
+    "filename": "alexscaves-1.0.10-neoforge+1.21.1.jar",
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314,
+    "classfiles": 1555
+  },
+  "capture": {
+    "workflow_run_id": 44830850816,
+    "job_id": 136615116371,
+    "job_status": "success",
+    "artifact_id": 14675699386,
+    "artifact_name": "alexscaves-1010-burrowing-arrow-entity-discovery",
+    "artifact_sha256": "4f291e7d6a6240002be04bbfa354a2a71718a32be2a8c0ab7a5aa42dd3f3df65",
+    "artifact_expires_at": "2026-12-04T22:41:20Z",
+    "javap_version": "Java 21 (Temurin; exact patch not part of binary contract)"
+  },
+  "targets": {
+    "ACItemRegistry$6": {
+      "path": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry$6.class",
+      "class_sha256": "721d302ffe9969fd15510f63035c2d338be5a962a91f88519c0b527efe8b53a6",
+      "class_size_bytes": 1553,
+      "transcript_sha256": "827d92a19a4bb247a7445b17f43aa1b822104ccc29634912843017665ba3b221",
+      "transcript_lines": 127
+    },
+    "BurrowingArrowEntity": {
+      "path": "com/github/alexmodguy/alexscaves/server/entity/item/BurrowingArrowEntity.class",
+      "class_sha256": "2fc54e3d320e716e2ccd39bca598c1d4be6a1a1fc3bfbe3e01a6b5bd6690b975",
+      "class_size_bytes": 9267,
+      "transcript_sha256": "9512813a4c6a70a65159c87a13f74c902ca39a4c30c22e80a5c4e9e7e77972fa",
+      "transcript_lines": 1149
+    },
+    "BurrowingArrowItem": {
+      "path": "com/github/alexmodguy/alexscaves/server/item/BurrowingArrowItem.class",
+      "class_sha256": "be5e566fc89b01c311d70d8d2a0fbbe7387601c9b07e70417135bd668b51fded",
+      "class_size_bytes": 1236,
+      "transcript_sha256": "2a3f0d614d505e3d45742f039bb49313bc4c773e0b6fed98d80281f81f0ca8ba",
+      "transcript_lines": 93
+    }
+  },
+  "derived_conclusions": {
+    "individual_static_contract": "NOT_CERTIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "new_semantic_magic_roots_certified": 0
+  },
+  "limitations": "Only class identities and complete javap captures are verified here. Individual method effects and all transitive consumers remain uncertified; artifact expires and cannot serve alone as durable bytecode evidence."
+}
