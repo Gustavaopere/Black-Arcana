@@ -13,6 +13,7 @@ on:
       - 'docs/qa/alexscaves_1010_ticking_item_boundary_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-BOUNDARY-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-BOUNDARY-1.0.10.md'
+      - 'docs/qa/alexscaves_1010_ticking_item_extra.py'
   workflow_dispatch:
 
 permissions:
@@ -58,6 +59,12 @@ jobs:
             --output build/ticking-1010/boundary.json
       - name: Replay exact inventory tick boundary
         run: AC_TICK_BOUNDARY=build/ticking-1010/boundary.json python3 docs/qa/alexscaves_1010_ticking_item_boundary_test.py -v
+      - name: Inspect upper inventory caller, damage setter and radiation parameters
+        run: |
+          python3 docs/qa/alexscaves_1010_ticking_item_extra.py \
+            --jar build/ticking-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/ticking-1010/extra.json
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
@@ -66,5 +73,6 @@ jobs:
           path: |
             build/ticking-1010/report.json
             build/ticking-1010/boundary.json
+            build/ticking-1010/extra.json
           retention-days: 14
           if-no-files-found: ignore
