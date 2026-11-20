@@ -6,6 +6,8 @@ on:
       - '.github/workflows/alexscaves-1010-burrowing-entity-probe.yml'
       - 'docs/qa/alexscaves_1010_burrowing_entity_probe.py'
       - 'docs/qa/alexscaves-1010-burrowing-arrow-causal-handoff.md'
+      - 'docs/qa/alexscaves_1010_burrowing_entity_static_checks.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-ARROW-CAUSAL-1.0.10.md'
   workflow_dispatch:
 permissions:
   contents: read
@@ -20,7 +22,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Validate bytecode-auditor syntax
-        run: python3 -m py_compile docs/qa/alexscaves_1010_burrowing_entity_probe.py
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_burrowing_entity_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_burrowing_entity_static_checks.py
       - name: Download exact publisher JAR
         run: |
           mkdir -p build/burrowing-arrow-1010
@@ -33,6 +37,10 @@ jobs:
             --jar build/burrowing-arrow-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output-dir build/burrowing-arrow-1010/bytecode
+      - name: Assert exact local entity branches and safety boundaries
+        run: |
+          python3 docs/qa/alexscaves_1010_burrowing_entity_static_checks.py \
+            --transcript-dir build/burrowing-arrow-1010/bytecode
       - name: Archive SHA-exact bytecode evidence
         if: always()
         uses: actions/upload-artifact@v7

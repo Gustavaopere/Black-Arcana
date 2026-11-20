@@ -47,3 +47,8 @@ O workflow [burrowing_arrow_entity_discovery](https://github.com/Gustavaopere/Bl
 
 Artefato de CI `14675699386`, SHA-256 do ZIP `4f291e7d6a6240002be04bbfa354a2a71718a32be2a8c0ab7a5aa42dd3f3df65`, retenção até 04/12/2026. A transcrição foi **capturada**, mas os 1.149 registros de linha da entidade ainda não foram individualmente analisados/convertidos em contrato de comportamento. Não confundir esse resultado com certificação de dano, colisão, block safety, targeting ou persistência.
 
+
+
+## Auditoria de branches e world safety
+
+[Relatório estático SHA-exato com offsets, fórmulas, gates de escavação, discrepância do Boolean de destruição e limites de integração](../../wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-BURROWING-ARROW-CAUSAL-1.0.10.md). O relatório é ⚠️ parcial e não promove ficha, hooks, nem QA física.
