@@ -22,7 +22,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Check probe syntax
-        run: python3 -m py_compile docs/qa/alexscaves_1010_cave_book_probe.py
+        run: |
+          python3 -m py_compile docs/qa/alexscaves_1010_cave_book_probe.py
+          python3 -m py_compile docs/qa/alexscaves_1010_cave_book_static_checks.py
       - name: Retrieve SHA-exact publisher JAR
         run: |
           mkdir -p build/cave-book-1010
@@ -35,6 +37,10 @@ jobs:
             --jar build/cave-book-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output-dir build/cave-book-1010/evidence
+      - name: Assert SHA-exact Cave Book item, GUI, Codex and advancement branches
+        run: |
+          python3 docs/qa/alexscaves_1010_cave_book_static_checks.py \
+            --transcript-dir build/cave-book-1010/evidence
       - name: Archive read-only evidence
         if: always()
         uses: actions/upload-artifact@v7
