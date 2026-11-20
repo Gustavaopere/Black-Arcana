@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 9/9.**
+**Fichas catalogadas (somente fichas detectadas): 10/10.**
 
 **Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 9/9.**
+**Homologadas para perks (somente fichas detectadas): 10/10.**
 
 **Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
@@ -29,6 +29,7 @@
 | ✅ | Foods | [ficha/foods.md](foods.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Item Registry | [ficha/item-registry.md](item-registry.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Repairable Item | [ficha/repairable-item.md](repairable-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Swing Control Item | [ficha/swing-control-item.md](swing-control-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 

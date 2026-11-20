@@ -9300,6 +9300,50 @@
           "reason": "Job 135321798629 on 60869d51 passed 4 native plus 5 boundary regressions; replay SHA-exact reports and ledger/card/index gates required on final HEAD. No installed transform or physical execution."
         }
       }
+    },
+    "✅-alexs-caves-continued/systems/swing-control-item.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Scoped swing and left-click control ABI and PrimitiveClubItem predicates; two methods, one implementer, no native typed dispatch, exact official NeoForge virtual dispatch and vanilla strength/animation reference. Does not certify attack acceptance, entire club, damage, transformed runtime, safe perks or physical QA; zero semantic roots.",
+      "evidence": {
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SWING-CONTROL-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Publisher 1.0.10 SHA-exact artifact; 1555 classes, interface two abstract methods, one direct implementer, zero inherited and zero exact native member references."
+        },
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SWING-CONTROL-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Complete PrimitiveClubItem callbacks, precise comparison opcodes and branches, swingTime=-1 write and true/false return; official external virtual dispatch and cancellation reference."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SWING-CONTROL-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Scale sampled at 0F, double 0.95 versus float promotion, swing threshold 1F, animation comparisons including NaN; official attack speed delay float(20D*(1D/ATTACK_SPEED)), scale clamp, updateSwingTime reference."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SWING-CONTROL-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Left click receives Player and Entity; stack and target unused locally; swing receives LivingEntity and requires Player for local predicate/write. No target acquisition, area or damage pipeline certified."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SWING-CONTROL-ITEM-CONTRACT-1.0.10.md",
+          "reason": "No resources, damage, mana, stack consumption or cooldown mutation in local callbacks; swingTime animation state only, attack strength ticker independent in reference."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SWING-CONTROL-ITEM-CONTRACT-1.0.10.md",
+          "reason": "NeoForge IItemExtension/StackExtension virtual bridge and CommonHooks.onPlayerAttackTarget, patch callsites early return; event precedes callback. Swiftwood/dynamic-attributes separate. Client/server runtime and safe mutation not verified."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SWING-CONTROL-ITEM-CONTRACT-1.0.10.md",
+          "reason": "Job 136065187890 replayed native SHA and four tests, official reference boundary SHA; candidate adds replay and canonical index/ledger checks, no physical execution."
+        }
+      }
     }
   },
   "providers": {},
