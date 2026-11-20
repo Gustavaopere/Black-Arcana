@@ -1,0 +1,1641 @@
+{
+  "scope": "DISCOVERY_NOT_CERTIFIED",
+  "report_sha256": "357381bd6a9ca6f8df9d79ef274552468033832664a40f59fc04ec2d76d99a6c",
+  "run": 44671878664,
+  "job": 136074491135,
+  "artifact": {
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "targets": {
+    "com/github/alexmodguy/alexscaves/server/item/AlwaysCombinableOnAnvil": {
+      "class_sha256": "d6d9ba639692a4e2964eca9163842f2fdfbfc98584b2d1b07155a4c780edf13c",
+      "consumers": {},
+      "declarations": [],
+      "descendants": [
+        "com/github/alexmodguy/alexscaves/server/item/RaygunItem",
+        "com/github/alexmodguy/alexscaves/server/item/ShotGumItem"
+      ],
+      "fields": [],
+      "hierarchy": {
+        "access": 1537,
+        "interfaces": [],
+        "parent": "java/lang/Object"
+      },
+      "in_jar_ancestors": [],
+      "member_refs": {},
+      "typed_census": {
+        "com/github/alexmodguy/alexscaves/server/event/CommonEvents": [
+          {
+            "index": 1275,
+            "kind": "class_constant"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/AlwaysCombinableOnAnvil": [
+          {
+            "index": 1,
+            "kind": "class_constant"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/RaygunItem": [
+          {
+            "index": 690,
+            "kind": "class_constant"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/ShotGumItem": [
+          {
+            "index": 402,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      "methods": [],
+      "ancestors": {}
+    },
+    "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem": {
+      "class_sha256": "d95121a7506d733bbfd1d61be48945a5f959d2dea43c854b894bb71e3cde6eb7",
+      "consumers": {
+        "com/github/alexmodguy/alexscaves/client/ClientProxy": {
+          "class_sha256": "a3d0eb9e19511f13f4155f994fe5486a51b3d5e645ffcfe8ab58440d790e1a69",
+          "sites": [
+            {
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;I)I",
+              "method": "lambda$onItemColors$23",
+              "offset": 16,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I",
+                "index": 2116,
+                "name": "getBiomeTreatColorOf",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem.getBiomeTreatColorOf:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I"
+            },
+            {
+              "descriptor": "(Lnet/neoforged/neoforge/client/event/RegisterColorHandlersEvent$Item;)V",
+              "method": "onItemColors",
+              "offset": 131,
+              "opcode": "getstatic",
+              "reference": {
+                "descriptor": "Ljava/util/function/Supplier;",
+                "index": 1146,
+                "name": "BIOME_TREAT",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+                "tag": 9
+              },
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.BIOME_TREAT:Ljava/util/function/Supplier;"
+            }
+          ]
+        },
+        "com/github/alexmodguy/alexscaves/client/particle/JellyBeanEatParticle": {
+          "class_sha256": "15e98df8c441839e3fb9642b598603331656c3604459e57562659ed12f13c3c6",
+          "sites": [
+            {
+              "descriptor": "(Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDDLnet/minecraft/world/item/ItemStack;)V",
+              "method": "<init>",
+              "offset": 100,
+              "opcode": "getstatic",
+              "reference": {
+                "descriptor": "Ljava/util/function/Supplier;",
+                "index": 43,
+                "name": "BIOME_TREAT",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+                "tag": 9
+              },
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.BIOME_TREAT:Ljava/util/function/Supplier;"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDDLnet/minecraft/world/item/ItemStack;)V",
+              "method": "<init>",
+              "offset": 119,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I",
+                "index": 59,
+                "name": "getBiomeTreatColorOf",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem.getBiomeTreatColorOf:(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I"
+            }
+          ]
+        },
+        "com/github/alexmodguy/alexscaves/server/block/ConversionCrucibleBlock": {
+          "class_sha256": "3198bd295732cbdd26ba6a567a41ada4a20d3d92c48cabdacc5e992da1b4c7eb",
+          "sites": [
+            {
+              "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/InteractionResult;",
+              "method": "acUse",
+              "offset": 157,
+              "opcode": "getstatic",
+              "reference": {
+                "descriptor": "Ljava/util/function/Supplier;",
+                "index": 180,
+                "name": "BIOME_TREAT",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+                "tag": 9
+              },
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.BIOME_TREAT:Ljava/util/function/Supplier;"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/InteractionResult;",
+              "method": "acUse",
+              "offset": 176,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+                "index": 187,
+                "name": "getCaveBiome",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem.getCaveBiome:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/InteractionResult;",
+              "method": "acUse",
+              "offset": 193,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+                "index": 187,
+                "name": "getCaveBiome",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem.getCaveBiome:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;"
+            }
+          ]
+        },
+        "com/github/alexmodguy/alexscaves/server/block/blockentity/ConversionCrucibleBlockEntity": {
+          "class_sha256": "3f0789adf49ec122a7bed10b9085841cedabbcb64c2ac5ff2fb94046ee7d5266",
+          "sites": [
+            {
+              "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lcom/github/alexmodguy/alexscaves/server/block/blockentity/ConversionCrucibleBlockEntity;)V",
+              "method": "tick",
+              "offset": 731,
+              "opcode": "getstatic",
+              "reference": {
+                "descriptor": "Ljava/util/function/Supplier;",
+                "index": 293,
+                "name": "BIOME_TREAT",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+                "tag": 9
+              },
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.BIOME_TREAT:Ljava/util/function/Supplier;"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lcom/github/alexmodguy/alexscaves/server/block/blockentity/ConversionCrucibleBlockEntity;)V",
+              "method": "tick",
+              "offset": 753,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+                "index": 300,
+                "name": "getCaveBiome",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem.getCaveBiome:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lcom/github/alexmodguy/alexscaves/server/block/blockentity/ConversionCrucibleBlockEntity;)V",
+              "method": "tick",
+              "offset": 765,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+                "index": 300,
+                "name": "getCaveBiome",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem.getCaveBiome:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;"
+            }
+          ]
+        },
+        "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+          "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+          "sites": [
+            {
+              "descriptor": "()V",
+              "method": "<clinit>",
+              "offset": 3480,
+              "opcode": "putstatic",
+              "reference": {
+                "descriptor": "Ljava/util/function/Supplier;",
+                "index": 1970,
+                "name": "BIOME_TREAT",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+                "tag": 9
+              },
+              "symbol": "Field BIOME_TREAT:Ljava/util/function/Supplier;"
+            },
+            {
+              "descriptor": "()Lnet/minecraft/world/item/Item;",
+              "method": "lambda$static$197",
+              "offset": 4,
+              "opcode": "invokespecial",
+              "reference": {
+                "descriptor": "()V",
+                "index": 367,
+                "name": "<init>",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem.\"<init>\":()V"
+            }
+          ]
+        },
+        "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem": {
+          "class_sha256": "d95121a7506d733bbfd1d61be48945a5f959d2dea43c854b894bb71e3cde6eb7",
+          "sites": [
+            {
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+              "method": "appendHoverText",
+              "offset": 1,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+                "index": 50,
+                "name": "getCaveBiome",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method getCaveBiome:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;",
+              "method": "finishUsingItem",
+              "offset": 1,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+                "index": 50,
+                "name": "getCaveBiome",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method getCaveBiome:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;",
+              "method": "finishUsingItem",
+              "offset": 59,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/item/ItemStack;",
+                "index": 177,
+                "name": "create",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method create:(Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/item/ItemStack;"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I",
+              "method": "getBiomeTreatColorOf",
+              "offset": 31,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+                "index": 50,
+                "name": "getCaveBiome",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method getCaveBiome:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I",
+              "method": "getBiomeTreatColorOf",
+              "offset": 48,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/resources/ResourceKey;)I",
+                "index": 133,
+                "name": "getBiomeColor",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method getBiomeColor:(Lnet/minecraft/world/level/Level;Lnet/minecraft/resources/ResourceKey;)I"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+              "method": "use",
+              "offset": 17,
+              "opcode": "invokestatic",
+              "reference": {
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+                "index": 50,
+                "name": "getCaveBiome",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+                "tag": 10
+              },
+              "symbol": "Method getCaveBiome:(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;"
+            }
+          ]
+        },
+        "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry": {
+          "class_sha256": "e73ea47bee91ada022b06c5c73eebf454f68cfe769bbc7e7a22b2561cc23822d",
+          "sites": [
+            {
+              "descriptor": "(Lnet/minecraft/world/item/CreativeModeTab$ItemDisplayParameters;Lnet/minecraft/world/item/CreativeModeTab$Output;)V",
+              "method": "lambda$static$24",
+              "offset": 751,
+              "opcode": "getstatic",
+              "reference": {
+                "descriptor": "Ljava/util/function/Supplier;",
+                "index": 288,
+                "name": "BIOME_TREAT",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+                "tag": 9
+              },
+              "symbol": "Field com/github/alexmodguy/alexscaves/server/item/ACItemRegistry.BIOME_TREAT:Ljava/util/function/Supplier;"
+            }
+          ]
+        }
+      },
+      "declarations": [
+        {
+          "access": 1,
+          "code_sha256": "e8af4389dd2cc24a12cbeeb6caab24100cf0eb31b78223363b136d95781998ee",
+          "code_size": 29,
+          "descriptor": "()V",
+          "exception_handlers": [],
+          "max_locals": 1,
+          "max_stack": 3,
+          "name": "<init>"
+        },
+        {
+          "access": 1,
+          "code_sha256": "8ba17081aa10c2f161bbe5b97b39a413457a5eb83cb89fc49518860e4a10baf0",
+          "code_size": 65,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "exception_handlers": [],
+          "max_locals": 5,
+          "max_stack": 3,
+          "name": "use"
+        },
+        {
+          "access": 1,
+          "code_sha256": "353a720a8d5360a3423eb1a46f9c60467d6ad49741d318b1196911d23e8130e1",
+          "code_size": 39,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+          "exception_handlers": [],
+          "max_locals": 6,
+          "max_stack": 5,
+          "name": "appendHoverText"
+        },
+        {
+          "access": 9,
+          "code_sha256": "6597626b27a6d3f0669ffcb28431efc5da3f156f4ce0fea4eeff40114a5488f3",
+          "code_size": 54,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I",
+          "exception_handlers": [],
+          "max_locals": 5,
+          "max_stack": 4,
+          "name": "getBiomeTreatColorOf"
+        },
+        {
+          "access": 1,
+          "code_sha256": "064ad1bbbf7cb5be9ffbfaacefdd75fb147aacc5bfd70b7c47cdaabfb4c7e51b",
+          "code_size": 71,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;",
+          "exception_handlers": [],
+          "max_locals": 5,
+          "max_stack": 4,
+          "name": "finishUsingItem"
+        },
+        {
+          "access": 1,
+          "code_sha256": "fbc30272d4d22f107860a1d74c40b9c5e05e2733710bb705c61c5eac83992cc6",
+          "code_size": 4,
+          "descriptor": "()Lnet/minecraft/sounds/SoundEvent;",
+          "exception_handlers": [],
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "getDrinkingSound"
+        },
+        {
+          "access": 1,
+          "code_sha256": "c7fd5d76f0a0a3e7f2925023a6925341b8b6bf2f8286f68bf9081b2cc907bcc6",
+          "code_size": 4,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/UseAnim;",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 1,
+          "name": "getUseAnimation"
+        },
+        {
+          "access": 1,
+          "code_sha256": "a68b4801b293a1e2907ae8007559c06e420a01a3801d2482748ac415f608b287",
+          "code_size": 294,
+          "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+          "exception_handlers": [],
+          "max_locals": 9,
+          "max_stack": 17,
+          "name": "onUseTick"
+        }
+      ],
+      "descendants": [],
+      "fields": [],
+      "hierarchy": {
+        "access": 33,
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/ACFoodPropertiesItem"
+        ],
+        "parent": "com/github/alexmodguy/alexscaves/server/item/CaveInfoItem"
+      },
+      "in_jar_ancestors": [
+        "com/github/alexmodguy/alexscaves/server/item/CaveInfoItem"
+      ],
+      "member_refs": {
+        "com/github/alexmodguy/alexscaves/client/ClientProxy": [
+          {
+            "descriptor": "Ljava/util/function/Supplier;",
+            "index": 1146,
+            "name": "BIOME_TREAT",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+            "tag": 9
+          },
+          {
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I",
+            "index": 2116,
+            "name": "getBiomeTreatColorOf",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+            "tag": 10
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/client/particle/JellyBeanEatParticle": [
+          {
+            "descriptor": "Ljava/util/function/Supplier;",
+            "index": 43,
+            "name": "BIOME_TREAT",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+            "tag": 9
+          },
+          {
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I",
+            "index": 59,
+            "name": "getBiomeTreatColorOf",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+            "tag": 10
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/block/ConversionCrucibleBlock": [
+          {
+            "descriptor": "Ljava/util/function/Supplier;",
+            "index": 180,
+            "name": "BIOME_TREAT",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+            "tag": 9
+          },
+          {
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+            "index": 187,
+            "name": "getCaveBiome",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+            "tag": 10
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/block/blockentity/ConversionCrucibleBlockEntity": [
+          {
+            "descriptor": "Ljava/util/function/Supplier;",
+            "index": 293,
+            "name": "BIOME_TREAT",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+            "tag": 9
+          },
+          {
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+            "index": 300,
+            "name": "getCaveBiome",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+            "tag": 10
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": [
+          {
+            "descriptor": "()V",
+            "index": 367,
+            "name": "<init>",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+            "tag": 10
+          },
+          {
+            "descriptor": "Ljava/util/function/Supplier;",
+            "index": 1970,
+            "name": "BIOME_TREAT",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+            "tag": 9
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem": [
+          {
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+            "index": 50,
+            "name": "getCaveBiome",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+            "tag": 10
+          },
+          {
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/resources/ResourceKey;)I",
+            "index": 133,
+            "name": "getBiomeColor",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+            "tag": 10
+          },
+          {
+            "descriptor": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/item/ItemStack;",
+            "index": 177,
+            "name": "create",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem",
+            "tag": 10
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/misc/ACCreativeTabRegistry": [
+          {
+            "descriptor": "Ljava/util/function/Supplier;",
+            "index": 288,
+            "name": "BIOME_TREAT",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry",
+            "tag": 9
+          }
+        ]
+      },
+      "typed_census": {
+        "com/github/alexmodguy/alexscaves/client/ClientProxy": [
+          {
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I",
+            "index": 2116,
+            "kind": "method_reference",
+            "name": "getBiomeTreatColorOf"
+          },
+          {
+            "index": 2117,
+            "kind": "class_constant"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/client/particle/JellyBeanEatParticle": [
+          {
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I",
+            "index": 59,
+            "kind": "method_reference",
+            "name": "getBiomeTreatColorOf"
+          },
+          {
+            "index": 60,
+            "kind": "class_constant"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/block/ConversionCrucibleBlock": [
+          {
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+            "index": 187,
+            "kind": "method_reference",
+            "name": "getCaveBiome"
+          },
+          {
+            "index": 188,
+            "kind": "class_constant"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/block/blockentity/ConversionCrucibleBlockEntity": [
+          {
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+            "index": 300,
+            "kind": "method_reference",
+            "name": "getCaveBiome"
+          },
+          {
+            "index": 301,
+            "kind": "class_constant"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": [
+          {
+            "index": 365,
+            "kind": "class_constant"
+          },
+          {
+            "descriptor": "()V",
+            "index": 367,
+            "kind": "method_reference",
+            "name": "<init>"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/BiomeTreatItem": [
+          {
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+            "index": 50,
+            "kind": "method_reference",
+            "name": "getCaveBiome"
+          },
+          {
+            "index": 51,
+            "kind": "class_constant"
+          },
+          {
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/resources/ResourceKey;)I",
+            "index": 133,
+            "kind": "method_reference",
+            "name": "getBiomeColor"
+          },
+          {
+            "descriptor": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/item/ItemStack;",
+            "index": 177,
+            "kind": "method_reference",
+            "name": "create"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/CaveInfoItem": [
+          {
+            "index": 303,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      "methods": [
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "e8af4389dd2cc24a12cbeeb6caab24100cf0eb31b78223363b136d95781998ee",
+            "code_size": 29,
+            "descriptor": "()V",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 3,
+            "name": "<init>"
+          },
+          "instruction_count": 13,
+          "instruction_sha256": "797a17e84c04111b2709ebeffcc1d782dbc34e137b02d6c9c51dc417aaccf82a"
+        },
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "353a720a8d5360a3423eb1a46f9c60467d6ad49741d318b1196911d23e8130e1",
+            "code_size": 39,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+            "exception_handlers": [],
+            "max_locals": 6,
+            "max_stack": 5,
+            "name": "appendHoverText"
+          },
+          "instruction_count": 19,
+          "instruction_sha256": "362445bc93f14911ad70ed9a779299df7d0ee4532a3e0999d7bb5fd89e139eb8"
+        },
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "064ad1bbbf7cb5be9ffbfaacefdd75fb147aacc5bfd70b7c47cdaabfb4c7e51b",
+            "code_size": 71,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;",
+            "exception_handlers": [],
+            "max_locals": 5,
+            "max_stack": 4,
+            "name": "finishUsingItem"
+          },
+          "instruction_count": 32,
+          "instruction_sha256": "85518a9d8535cf233f7dd12d528e607cd85b767f6bfe83fdbe656ea33c088fd2"
+        },
+        {
+          "declaration": {
+            "access": 9,
+            "code_sha256": "6597626b27a6d3f0669ffcb28431efc5da3f156f4ce0fea4eeff40114a5488f3",
+            "code_size": 54,
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)I",
+            "exception_handlers": [],
+            "max_locals": 5,
+            "max_stack": 4,
+            "name": "getBiomeTreatColorOf"
+          },
+          "instruction_count": 29,
+          "instruction_sha256": "26a970d73590bdd9ab7ee8e33c79f012e9d80d52b46248e0c1a57c5cc57ec1cb"
+        },
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "fbc30272d4d22f107860a1d74c40b9c5e05e2733710bb705c61c5eac83992cc6",
+            "code_size": 4,
+            "descriptor": "()Lnet/minecraft/sounds/SoundEvent;",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 1,
+            "name": "getDrinkingSound"
+          },
+          "instruction_count": 2,
+          "instruction_sha256": "425d1eceb68cd97a7008441c6a4dfc59fcd9174fe314a508c456432383139bd2"
+        },
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "c7fd5d76f0a0a3e7f2925023a6925341b8b6bf2f8286f68bf9081b2cc907bcc6",
+            "code_size": 4,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/UseAnim;",
+            "exception_handlers": [],
+            "max_locals": 2,
+            "max_stack": 1,
+            "name": "getUseAnimation"
+          },
+          "instruction_count": 2,
+          "instruction_sha256": "e4a99f7d92077864bd51a1f3f6d8a596aa98b0d0db00395f3ad9c22a3780bb50"
+        },
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "a68b4801b293a1e2907ae8007559c06e420a01a3801d2482748ac415f608b287",
+            "code_size": 294,
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;I)V",
+            "exception_handlers": [],
+            "max_locals": 9,
+            "max_stack": 17,
+            "name": "onUseTick"
+          },
+          "instruction_count": 134,
+          "instruction_sha256": "4efe38fea23bb150e8f8614f5eff3f865cec5f0e5bf4744e19f42bc8f9cfe879"
+        },
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "8ba17081aa10c2f161bbe5b97b39a413457a5eb83cb89fc49518860e4a10baf0",
+            "code_size": 65,
+            "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+            "exception_handlers": [],
+            "max_locals": 5,
+            "max_stack": 3,
+            "name": "use"
+          },
+          "instruction_count": 31,
+          "instruction_sha256": "e7e9d9f33d8255062d2806c421d8640c3956d867fcf326cd8cfea4e2ba413ed4"
+        }
+      ],
+      "ancestors": {
+        "com/github/alexmodguy/alexscaves/server/item/CaveInfoItem": {
+          "class_sha256": "20b9b5234e829030e0ec01d73669c2be000741695c819fa114941a0dc2e98183",
+          "methods": [
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "28cebb232fca4c105df0432ff0dd30450743644127fc0e254ebacf17e88fe81d",
+                "code_size": 11,
+                "descriptor": "(Lnet/minecraft/world/item/Item$Properties;Z)V",
+                "exception_handlers": [],
+                "max_locals": 3,
+                "max_stack": 2,
+                "name": "<init>"
+              },
+              "instruction_count": 7,
+              "instruction_sha256": "8d532bc15c763ac3cb964663f12d687b90076f8c01dbdd9e9289e4766c15740f"
+            },
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "806db6467c8b73397e637b4b5ac4fa30686f58167ba8d957315314b6433dae54",
+                "code_size": 68,
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+                "exception_handlers": [],
+                "max_locals": 7,
+                "max_stack": 5,
+                "name": "appendHoverText"
+              },
+              "instruction_count": 30,
+              "instruction_sha256": "d78fc0289b029cf063198bda13a8efce306f0bb8ef1813ec42d91c51733e0716"
+            },
+            {
+              "declaration": {
+                "access": 9,
+                "code_sha256": "1403b57a603a3a83c03e43dcba5a503b005a87aa2326dbb8975a577f9ee48cfe",
+                "code_size": 64,
+                "descriptor": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/item/ItemStack;",
+                "exception_handlers": [],
+                "max_locals": 4,
+                "max_stack": 3,
+                "name": "create"
+              },
+              "instruction_count": 32,
+              "instruction_sha256": "a6cdad3717a8f59522f2edc9cb799b305663b3c2f488e86ef36f1cd3abf96eb5"
+            },
+            {
+              "declaration": {
+                "access": 12,
+                "code_sha256": "5d18c6d21e6cd781d663c1b27e6019e9bb099bdf2dbab6651c6d2544c6b27a25",
+                "code_size": 66,
+                "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/resources/ResourceKey;)I",
+                "exception_handlers": [],
+                "max_locals": 4,
+                "max_stack": 2,
+                "name": "getBiomeColor"
+              },
+              "instruction_count": 32,
+              "instruction_sha256": "a066fdbccd93bf7fc6d47130140bf6103810fcec18088cb00bcca5205000c7f2"
+            },
+            {
+              "declaration": {
+                "access": 9,
+                "code_sha256": "7b0b20ce383959d956dc207946099c4262a5e69a015ee54c1be9232aa8b23db3",
+                "code_size": 137,
+                "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Z)I",
+                "exception_handlers": [],
+                "max_locals": 5,
+                "max_stack": 6,
+                "name": "getBiomeColorOf"
+              },
+              "instruction_count": 68,
+              "instruction_sha256": "28c91b536252606049eb1f65566f19870a19ab9db7d1a96f5cdc7146f5d8a4fd"
+            },
+            {
+              "declaration": {
+                "access": 9,
+                "code_sha256": "c6b812724d2d3e387422c792e060b787aaef84192c6d034408dcba2c563e3ca3",
+                "code_size": 39,
+                "descriptor": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/resources/ResourceKey;",
+                "exception_handlers": [],
+                "max_locals": 2,
+                "max_stack": 2,
+                "name": "getCaveBiome"
+              },
+              "instruction_count": 19,
+              "instruction_sha256": "5436ee24e23fec81e8c6a8e06de261201d34ad1439f35b3eedd25a07ff44a4fa"
+            },
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "e295a25ac0007c6cca7c15f9ed3a53206540c94c21b3b9a41b6415f701851dea",
+                "code_size": 265,
+                "descriptor": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+                "exception_handlers": [],
+                "max_locals": 11,
+                "max_stack": 6,
+                "name": "use"
+              },
+              "instruction_count": 116,
+              "instruction_sha256": "ff4ccf574d42d79aea415c6766d346c7e3dd6d30023df6420c4f2162c0403eea"
+            }
+          ]
+        }
+      }
+    },
+    "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER": {
+      "class_sha256": "68428e70b3a16af8189a8cca24d49a1c234122a8456fb196ce5840b23f40a4ab",
+      "consumers": {
+        "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": {
+          "class_sha256": "b4de04f32f6e1d92eeda55480b8480f7ed69f3813164f330f49d0eced202e54c",
+          "sites": [
+            {
+              "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+              "method": "lambda$getBlockSupplier$439",
+              "offset": 8,
+              "opcode": "invokespecial",
+              "reference": {
+                "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+                "index": 314,
+                "name": "<init>",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER",
+                "tag": 10
+              },
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER.\"<init>\":(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V"
+            },
+            {
+              "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+              "method": "lambda$getBlockSupplier$445",
+              "offset": 14,
+              "opcode": "invokespecial",
+              "reference": {
+                "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+                "index": 314,
+                "name": "<init>",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER",
+                "tag": 10
+              },
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER.\"<init>\":(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V"
+            }
+          ]
+        }
+      },
+      "declarations": [
+        {
+          "access": 1,
+          "code_sha256": "c9756504eb86647f17f7c3673eb5662a089d87ac1c9f04fe03905f8ecfdc73df",
+          "code_size": 7,
+          "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+          "exception_handlers": [],
+          "max_locals": 3,
+          "max_stack": 3,
+          "name": "<init>"
+        },
+        {
+          "access": 1,
+          "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+          "code_size": 16,
+          "descriptor": "(Ljava/util/function/Consumer;)V",
+          "exception_handlers": [],
+          "max_locals": 2,
+          "max_stack": 2,
+          "name": "initializeClient"
+        }
+      ],
+      "descendants": [],
+      "fields": [],
+      "hierarchy": {
+        "access": 33,
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem"
+        ],
+        "parent": "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier"
+      },
+      "in_jar_ancestors": [
+        "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier"
+      ],
+      "member_refs": {
+        "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": [
+          {
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+            "index": 314,
+            "name": "<init>",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER",
+            "tag": 10
+          }
+        ]
+      },
+      "typed_census": {
+        "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": [
+          {
+            "index": 298,
+            "kind": "class_constant"
+          },
+          {
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+            "index": 314,
+            "kind": "method_reference",
+            "name": "<init>"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/BlockItemWithISTER": [
+          {
+            "index": 27,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      "methods": [
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "c9756504eb86647f17f7c3673eb5662a089d87ac1c9f04fe03905f8ecfdc73df",
+            "code_size": 7,
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+            "exception_handlers": [],
+            "max_locals": 3,
+            "max_stack": 3,
+            "name": "<init>"
+          },
+          "instruction_count": 5,
+          "instruction_sha256": "e3c1f4fe4ed8a3820f46dd701c9e829e2d9ec0cfacae6bd0f05ccb3a845658aa"
+        },
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "6184ea4455e39a53dab899c2aa820dd62d5f3c0a8ca150dc6cc5fe97f766d5dc",
+            "code_size": 16,
+            "descriptor": "(Ljava/util/function/Consumer;)V",
+            "exception_handlers": [],
+            "max_locals": 2,
+            "max_stack": 2,
+            "name": "initializeClient"
+          },
+          "instruction_count": 6,
+          "instruction_sha256": "3bf8d93fe26dfc810a00c8e99aed13e6fc07afe0e44da002879da4a97d408e4f"
+        }
+      ],
+      "ancestors": {
+        "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier": {
+          "class_sha256": "07a1c41d7b895e55e6c25c1dcb749703bed3c4a289592c958b4567a85a567d20",
+          "methods": [
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "61d43cd97c9cbca676b438401f28916224a51f881b6e2cd2cb3caee92417e2a4",
+                "code_size": 12,
+                "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+                "exception_handlers": [],
+                "max_locals": 3,
+                "max_stack": 3,
+                "name": "<init>"
+              },
+              "instruction_count": 8,
+              "instruction_sha256": "507a3c41a1af0ec720908f181ae7ed91d3af1737246aa8ca2ffe4d074cc0f997"
+            },
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "5fba881bd1a026278faca1b4a5a9eb6fc3eec8fed13571f9f16df3681035445e",
+                "code_size": 21,
+                "descriptor": "()Z",
+                "exception_handlers": [],
+                "max_locals": 1,
+                "max_stack": 1,
+                "name": "canFitInsideContainerItems"
+              },
+              "instruction_count": 9,
+              "instruction_sha256": "07345aa99f90ddcdce5ea31444190412850eb2719dccce57a64c2ef1c558e87e"
+            },
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "34958b1e4ad3d0a7c35384b798190647caca05f7aac8bc9d6258af91b9393083",
+                "code_size": 13,
+                "descriptor": "()Lnet/minecraft/world/level/block/Block;",
+                "exception_handlers": [],
+                "max_locals": 1,
+                "max_stack": 1,
+                "name": "getBlock"
+              },
+              "instruction_count": 5,
+              "instruction_sha256": "c54faf57c62b131ed168e44cc324cb89385606348a71dce88143cbeb21a7a8f2"
+            },
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "226813dc8af7ac6358213a35838f56fb39d5d9e717acb039d331303489bc9a46",
+                "code_size": 45,
+                "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;)V",
+                "exception_handlers": [],
+                "max_locals": 3,
+                "max_stack": 3,
+                "name": "onDestroyed"
+              },
+              "instruction_count": 19,
+              "instruction_sha256": "e9f9e3683d844c593bdcd3c5e7949b09c18e1770a73f84c92520089ae6775aa9"
+            }
+          ]
+        }
+      }
+    },
+    "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding": {
+      "class_sha256": "3dcd18424a03d342c3ea78f116d9de2c5181fffc0bc5213ea9db36f87b1e6e3b",
+      "consumers": {
+        "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": {
+          "class_sha256": "b4de04f32f6e1d92eeda55480b8480f7ed69f3813164f330f49d0eced202e54c",
+          "sites": [
+            {
+              "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+              "method": "lambda$getBlockSupplier$438",
+              "offset": 8,
+              "opcode": "invokespecial",
+              "reference": {
+                "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+                "index": 338,
+                "name": "<init>",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding",
+                "tag": 10
+              },
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding.\"<init>\":(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V"
+            }
+          ]
+        },
+        "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding": {
+          "class_sha256": "3dcd18424a03d342c3ea78f116d9de2c5181fffc0bc5213ea9db36f87b1e6e3b",
+          "sites": [
+            {
+              "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+              "method": "<init>",
+              "offset": 8,
+              "opcode": "putfield",
+              "reference": {
+                "descriptor": "Ljava/util/function/Supplier;",
+                "index": 7,
+                "name": "block",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding",
+                "tag": 9
+              },
+              "symbol": "Field block:Ljava/util/function/Supplier;"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/item/context/BlockPlaceContext;",
+              "method": "updatePlacementContext",
+              "offset": 18,
+              "opcode": "invokevirtual",
+              "reference": {
+                "descriptor": "()Lnet/minecraft/world/level/block/Block;",
+                "index": 29,
+                "name": "getBlock",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding",
+                "tag": 10
+              },
+              "symbol": "Method getBlock:()Lnet/minecraft/world/level/block/Block;"
+            }
+          ]
+        }
+      },
+      "declarations": [
+        {
+          "access": 1,
+          "code_sha256": "f395971294cffd63bbc31ac8b493c346815dbc815f1223d49b031507eba756d7",
+          "code_size": 12,
+          "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+          "exception_handlers": [],
+          "max_locals": 3,
+          "max_stack": 3,
+          "name": "<init>"
+        },
+        {
+          "access": 1,
+          "code_sha256": "875f77b4951bb9c1cdc95d039a6836419e5e7016eb2d6b9741cc31ffa987f482",
+          "code_size": 273,
+          "descriptor": "(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/item/context/BlockPlaceContext;",
+          "exception_handlers": [],
+          "max_locals": 11,
+          "max_stack": 7,
+          "name": "updatePlacementContext"
+        },
+        {
+          "access": 4,
+          "code_sha256": "42ca1f85243342bd41983ab86f2235408fa46ded7466d4525196f66b9dbb5f3e",
+          "code_size": 2,
+          "descriptor": "()Z",
+          "exception_handlers": [],
+          "max_locals": 1,
+          "max_stack": 1,
+          "name": "mustSurvive"
+        }
+      ],
+      "descendants": [],
+      "fields": [
+        {
+          "access": 18,
+          "descriptor": "Ljava/util/function/Supplier;",
+          "name": "block"
+        }
+      ],
+      "hierarchy": {
+        "access": 33,
+        "interfaces": [],
+        "parent": "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier"
+      },
+      "in_jar_ancestors": [
+        "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier"
+      ],
+      "member_refs": {
+        "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": [
+          {
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+            "index": 338,
+            "name": "<init>",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding",
+            "tag": 10
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding": [
+          {
+            "descriptor": "Ljava/util/function/Supplier;",
+            "index": 7,
+            "name": "block",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding",
+            "tag": 9
+          },
+          {
+            "descriptor": "()Lnet/minecraft/world/level/block/Block;",
+            "index": 29,
+            "name": "getBlock",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding",
+            "tag": 10
+          }
+        ]
+      },
+      "typed_census": {
+        "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": [
+          {
+            "index": 336,
+            "kind": "class_constant"
+          },
+          {
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+            "index": 338,
+            "kind": "method_reference",
+            "name": "<init>"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/BlockItemWithScaffolding": [
+          {
+            "descriptor": "Ljava/util/function/Supplier;",
+            "index": 7,
+            "kind": "field_reference",
+            "name": "block"
+          },
+          {
+            "index": 8,
+            "kind": "class_constant"
+          },
+          {
+            "descriptor": "()Lnet/minecraft/world/level/block/Block;",
+            "index": 29,
+            "kind": "method_reference",
+            "name": "getBlock"
+          }
+        ]
+      },
+      "methods": [
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "f395971294cffd63bbc31ac8b493c346815dbc815f1223d49b031507eba756d7",
+            "code_size": 12,
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+            "exception_handlers": [],
+            "max_locals": 3,
+            "max_stack": 3,
+            "name": "<init>"
+          },
+          "instruction_count": 8,
+          "instruction_sha256": "543f10ccd50ef3d3793a785d6ec05b5924e1b1cac733c64854dc53dd2ad5fbea"
+        },
+        {
+          "declaration": {
+            "access": 4,
+            "code_sha256": "42ca1f85243342bd41983ab86f2235408fa46ded7466d4525196f66b9dbb5f3e",
+            "code_size": 2,
+            "descriptor": "()Z",
+            "exception_handlers": [],
+            "max_locals": 1,
+            "max_stack": 1,
+            "name": "mustSurvive"
+          },
+          "instruction_count": 2,
+          "instruction_sha256": "1b59058de047d7b952e93f4f86ee9b459050726291ca25b3857f3634e96e36f2"
+        },
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "875f77b4951bb9c1cdc95d039a6836419e5e7016eb2d6b9741cc31ffa987f482",
+            "code_size": 273,
+            "descriptor": "(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/item/context/BlockPlaceContext;",
+            "exception_handlers": [],
+            "max_locals": 11,
+            "max_stack": 7,
+            "name": "updatePlacementContext"
+          },
+          "instruction_count": 126,
+          "instruction_sha256": "4dc8a1d3e361bfcd8568f97c3a2e4fcf995c497fa2dc94b1cbea7f2b86bf0693"
+        }
+      ],
+      "ancestors": {
+        "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier": {
+          "class_sha256": "07a1c41d7b895e55e6c25c1dcb749703bed3c4a289592c958b4567a85a567d20",
+          "methods": [
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "61d43cd97c9cbca676b438401f28916224a51f881b6e2cd2cb3caee92417e2a4",
+                "code_size": 12,
+                "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+                "exception_handlers": [],
+                "max_locals": 3,
+                "max_stack": 3,
+                "name": "<init>"
+              },
+              "instruction_count": 8,
+              "instruction_sha256": "507a3c41a1af0ec720908f181ae7ed91d3af1737246aa8ca2ffe4d074cc0f997"
+            },
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "5fba881bd1a026278faca1b4a5a9eb6fc3eec8fed13571f9f16df3681035445e",
+                "code_size": 21,
+                "descriptor": "()Z",
+                "exception_handlers": [],
+                "max_locals": 1,
+                "max_stack": 1,
+                "name": "canFitInsideContainerItems"
+              },
+              "instruction_count": 9,
+              "instruction_sha256": "07345aa99f90ddcdce5ea31444190412850eb2719dccce57a64c2ef1c558e87e"
+            },
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "34958b1e4ad3d0a7c35384b798190647caca05f7aac8bc9d6258af91b9393083",
+                "code_size": 13,
+                "descriptor": "()Lnet/minecraft/world/level/block/Block;",
+                "exception_handlers": [],
+                "max_locals": 1,
+                "max_stack": 1,
+                "name": "getBlock"
+              },
+              "instruction_count": 5,
+              "instruction_sha256": "c54faf57c62b131ed168e44cc324cb89385606348a71dce88143cbeb21a7a8f2"
+            },
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "226813dc8af7ac6358213a35838f56fb39d5d9e717acb039d331303489bc9a46",
+                "code_size": 45,
+                "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;)V",
+                "exception_handlers": [],
+                "max_locals": 3,
+                "max_stack": 3,
+                "name": "onDestroyed"
+              },
+              "instruction_count": 19,
+              "instruction_sha256": "e9f9e3683d844c593bdcd3c5e7949b09c18e1770a73f84c92520089ae6775aa9"
+            }
+          ]
+        }
+      }
+    },
+    "com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore": {
+      "class_sha256": "5765cf004782864625eededda1694f56494222112292e40b8d8b37409e0e921a",
+      "consumers": {
+        "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": {
+          "class_sha256": "b4de04f32f6e1d92eeda55480b8480f7ed69f3813164f330f49d0eced202e54c",
+          "sites": [
+            {
+              "descriptor": "(Ljava/util/function/Supplier;)Lcom/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier;",
+              "method": "lambda$getBlockSupplier$437",
+              "offset": 8,
+              "opcode": "invokespecial",
+              "reference": {
+                "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+                "index": 341,
+                "name": "<init>",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore",
+                "tag": 10
+              },
+              "symbol": "Method com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore.\"<init>\":(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V"
+            }
+          ]
+        },
+        "com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore": {
+          "class_sha256": "5765cf004782864625eededda1694f56494222112292e40b8d8b37409e0e921a",
+          "sites": [
+            {
+              "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+              "method": "<init>",
+              "offset": 8,
+              "opcode": "putfield",
+              "reference": {
+                "descriptor": "Ljava/util/function/Supplier;",
+                "index": 7,
+                "name": "block",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore",
+                "tag": 9
+              },
+              "symbol": "Field block:Ljava/util/function/Supplier;"
+            },
+            {
+              "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+              "method": "appendHoverText",
+              "offset": 4,
+              "opcode": "getfield",
+              "reference": {
+                "descriptor": "Ljava/util/function/Supplier;",
+                "index": 7,
+                "name": "block",
+                "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore",
+                "tag": 9
+              },
+              "symbol": "Field block:Ljava/util/function/Supplier;"
+            }
+          ]
+        }
+      },
+      "declarations": [
+        {
+          "access": 1,
+          "code_sha256": "f395971294cffd63bbc31ac8b493c346815dbc815f1223d49b031507eba756d7",
+          "code_size": 12,
+          "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+          "exception_handlers": [],
+          "max_locals": 3,
+          "max_stack": 3,
+          "name": "<init>"
+        },
+        {
+          "access": 1,
+          "code_sha256": "2591a3c1f9fd8f0bd26cfbf30164fd42c5345a1e214ef7ca243fda55fda3fde6",
+          "code_size": 72,
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+          "exception_handlers": [],
+          "max_locals": 7,
+          "max_stack": 5,
+          "name": "appendHoverText"
+        }
+      ],
+      "descendants": [],
+      "fields": [
+        {
+          "access": 18,
+          "descriptor": "Ljava/util/function/Supplier;",
+          "name": "block"
+        }
+      ],
+      "hierarchy": {
+        "access": 33,
+        "interfaces": [],
+        "parent": "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier"
+      },
+      "in_jar_ancestors": [
+        "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier"
+      ],
+      "member_refs": {
+        "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": [
+          {
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+            "index": 341,
+            "name": "<init>",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore",
+            "tag": 10
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore": [
+          {
+            "descriptor": "Ljava/util/function/Supplier;",
+            "index": 7,
+            "name": "block",
+            "owner": "com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore",
+            "tag": 9
+          }
+        ]
+      },
+      "typed_census": {
+        "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": [
+          {
+            "index": 339,
+            "kind": "class_constant"
+          },
+          {
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+            "index": 341,
+            "kind": "method_reference",
+            "name": "<init>"
+          }
+        ],
+        "com/github/alexmodguy/alexscaves/server/item/BlockItemWithSupplierLore": [
+          {
+            "descriptor": "Ljava/util/function/Supplier;",
+            "index": 7,
+            "kind": "field_reference",
+            "name": "block"
+          },
+          {
+            "index": 8,
+            "kind": "class_constant"
+          }
+        ]
+      },
+      "methods": [
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "f395971294cffd63bbc31ac8b493c346815dbc815f1223d49b031507eba756d7",
+            "code_size": 12,
+            "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+            "exception_handlers": [],
+            "max_locals": 3,
+            "max_stack": 3,
+            "name": "<init>"
+          },
+          "instruction_count": 8,
+          "instruction_sha256": "543f10ccd50ef3d3793a785d6ec05b5924e1b1cac733c64854dc53dd2ad5fbea"
+        },
+        {
+          "declaration": {
+            "access": 1,
+            "code_sha256": "2591a3c1f9fd8f0bd26cfbf30164fd42c5345a1e214ef7ca243fda55fda3fde6",
+            "code_size": 72,
+            "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+            "exception_handlers": [],
+            "max_locals": 7,
+            "max_stack": 5,
+            "name": "appendHoverText"
+          },
+          "instruction_count": 28,
+          "instruction_sha256": "3769cc955f0b36caed009b5ef6ebec049415fbee12e7e9653c0196b37b6b95ce"
+        }
+      ],
+      "ancestors": {
+        "com/github/alexmodguy/alexscaves/citadel/item/BlockItemWithSupplier": {
+          "class_sha256": "07a1c41d7b895e55e6c25c1dcb749703bed3c4a289592c958b4567a85a567d20",
+          "methods": [
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "61d43cd97c9cbca676b438401f28916224a51f881b6e2cd2cb3caee92417e2a4",
+                "code_size": 12,
+                "descriptor": "(Ljava/util/function/Supplier;Lnet/minecraft/world/item/Item$Properties;)V",
+                "exception_handlers": [],
+                "max_locals": 3,
+                "max_stack": 3,
+                "name": "<init>"
+              },
+              "instruction_count": 8,
+              "instruction_sha256": "507a3c41a1af0ec720908f181ae7ed91d3af1737246aa8ca2ffe4d074cc0f997"
+            },
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "5fba881bd1a026278faca1b4a5a9eb6fc3eec8fed13571f9f16df3681035445e",
+                "code_size": 21,
+                "descriptor": "()Z",
+                "exception_handlers": [],
+                "max_locals": 1,
+                "max_stack": 1,
+                "name": "canFitInsideContainerItems"
+              },
+              "instruction_count": 9,
+              "instruction_sha256": "07345aa99f90ddcdce5ea31444190412850eb2719dccce57a64c2ef1c558e87e"
+            },
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "34958b1e4ad3d0a7c35384b798190647caca05f7aac8bc9d6258af91b9393083",
+                "code_size": 13,
+                "descriptor": "()Lnet/minecraft/world/level/block/Block;",
+                "exception_handlers": [],
+                "max_locals": 1,
+                "max_stack": 1,
+                "name": "getBlock"
+              },
+              "instruction_count": 5,
+              "instruction_sha256": "c54faf57c62b131ed168e44cc324cb89385606348a71dce88143cbeb21a7a8f2"
+            },
+            {
+              "declaration": {
+                "access": 1,
+                "code_sha256": "226813dc8af7ac6358213a35838f56fb39d5d9e717acb039d331303489bc9a46",
+                "code_size": 45,
+                "descriptor": "(Lnet/minecraft/world/entity/item/ItemEntity;)V",
+                "exception_handlers": [],
+                "max_locals": 3,
+                "max_stack": 3,
+                "name": "onDestroyed"
+              },
+              "instruction_count": 19,
+              "instruction_sha256": "e9f9e3683d844c593bdcd3c5e7949b09c18e1770a73f84c92520089ae6775aa9"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "biome_treat_factory": {
+    "declaration": {
+      "access": 4106,
+      "code_sha256": "cf75f86145e14cda77689d73e549a72b510ca42c306256c39c309349422f32fe",
+      "code_size": 8,
+      "descriptor": "()Lnet/minecraft/world/item/Item;",
+      "exception_handlers": [],
+      "max_locals": 0,
+      "max_stack": 2,
+      "name": "lambda$static$197"
+    },
+    "instruction_count": 4,
+    "instruction_sha256": "5759f9a734c1cd4070f2d57e0e0d3e97bdd07fb671008f4465fd69f440a3f80d"
+  },
+  "biome_treat_resources": {
+    "assets/alexscaves/models/item/biome_treat.json": {
+      "json": {
+        "parent": "minecraft:item/generated",
+        "textures": {
+          "layer0": "alexscaves:item/biome_treat",
+          "layer1": "alexscaves:item/biome_treat_color"
+        }
+      },
+      "sha256": "c3f8030aa379a26c1890103b82a43a9ee446e1e6f3666a66af87ec1f36157791",
+      "size": 158
+    },
+    "data/alexscaves/recipe/biome_treat.json": {
+      "json": {
+        "key": {
+          "C": {
+            "item": "alexscaves:candy_cane"
+          },
+          "E": {
+            "item": "alexscaves:radiant_essence"
+          },
+          "R": {
+            "tag": "alexscaves:rock_candies"
+          }
+        },
+        "pattern": [
+          "RER",
+          "RER",
+          " C "
+        ],
+        "result": {
+          "id": "alexscaves:biome_treat"
+        },
+        "type": "minecraft:crafting_shaped"
+      },
+      "sha256": "c7b6b504ec21125773b6f65e5a5d4a591da98dcb3266ecf04108d855658f9012",
+      "size": 408
+    }
+  },
+  "mutation": "NO_MUTATION",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED"
+}
