@@ -47,7 +47,7 @@
     "physical_qa": "NOT_TESTED",
     "mutation": "NO_MUTATION",
     "provider_universe_closed": false,
-    "new_semantic_magic_roots": 0
+    "new_semantic_magic_roots_certified": 0
   },
   "limitations": "Only class identities and complete javap captures are verified here. Individual method effects and all transitive consumers remain uncertified; artifact expires and cannot serve alone as durable bytecode evidence."
 }
