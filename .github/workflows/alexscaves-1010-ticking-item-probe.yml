@@ -9,6 +9,7 @@ on:
       - 'docs/qa/alexscaves_1010_ticking_item_probe_test.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-DISCOVERY-1.0.10.json'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-TICKING-ITEM-DISCOVERY-1.0.10.md'
+      - 'docs/qa/alexscaves_1010_ticking_item_boundary.py'
   workflow_dispatch:
 
 permissions:
@@ -39,11 +40,26 @@ jobs:
             --output build/ticking-1010/report.json
       - name: Replay native tick crosswalk
         run: AC_TICK_REPORT=build/ticking-1010/report.json python3 docs/qa/alexscaves_1010_ticking_item_probe_test.py -v
+      - name: Audit mixin annotation, callbacks and official inventory tick boundary
+        run: |
+          for kind in universal userdev; do
+            curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 120 \
+              "https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-$kind.jar" \
+              --output "build/ticking-1010/$kind.jar"
+          done
+          python3 docs/qa/alexscaves_1010_ticking_item_boundary.py \
+            --jar build/ticking-1010/alexscaves-1.0.10.jar \
+            --universal build/ticking-1010/universal.jar \
+            --userdev build/ticking-1010/userdev.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/ticking-1010/boundary.json
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: alexscaves-1010-ticking-item-discovery
-          path: build/ticking-1010/report.json
+          path: |
+            build/ticking-1010/report.json
+            build/ticking-1010/boundary.json
           retention-days: 14
           if-no-files-found: ignore
