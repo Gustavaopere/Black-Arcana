@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "artifact": {
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "claims": {
+    "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+    "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+    "static_technical_contract": "CERTIFIED_STATIC_7_AXES",
+    "runtime_dispatch": "NOT_VERIFIED",
+    "mutating_hook": "NOT_VERIFIED",
+    "physical_qa": "NOT_TESTED",
+    "perk_certification": "NOT_CERTIFIED",
+    "mutation": "NO_MUTATION",
+    "provider_universe_closed": false,
+    "semantic_magic_roots_delta": 0
+  },
+  "axes": {
+    "identity": "Publisher 1.0.10 SHA-1/SHA-256/size; interface flags 1537, zero fields, three methods; five direct implementers, zero indirect, one in-JAR ancestor, six typed reference owners across 1555 classes.",
+    "behavior": "Getter ABI, default false and dagger true, complete helper loop with ItemStack.is(Item) short circuit; all five material producers and isValidRepairItem overrides, six registration bindings; fallback hierarchy and engine reference separated.",
+    "parameters": "Six literal material fields and registry paths, array cardinalities 1/1/1/1/2; identity vs tag matching; vanilla per-material restoration min(D,floor(M/4)), loop bounded by stack count and remaining damage; raw material eligibility does not set cost.",
+    "targeting": "No entity targeting, AOE, LOS, projectile, damage application or cast. Receiver equipment and material ItemStack are the predicates' inputs; player/slots in external anvil reference only.",
+    "costs": "Helper does not spend resources or repair. Vanilla createResult increments base cost per material, onTake deducts experience levels when not instabuild and settles right stack count; final anvil price not determined by this interface.",
+    "integration": "Native override calls and registry suppliers; ACItemRegistry contract reused for five item bindings, block binding bounded to literal and helper. Official Minecraft 1.21.1 and NeoForge 21.1.250 AnvilUpdateEvent/AnvilRepairEvent boundaries; no verified safe mutating hook.",
+    "validation": "Job 135321798629 on 60869d51 passed 4 native plus 5 boundary regressions; replay SHA-exact reports and ledger/card/index gates required on final HEAD. No installed transform or physical execution."
+  },
+  "target_class_sha256": "04a9b942d2459794503eebc1415a29c245710a0625f1a126f5df2714266d6a05",
+  "class_entries_scanned": 1555,
+  "direct_implementers": [
+    "com/github/alexmodguy/alexscaves/server/item/DesolateDaggerItem",
+    "com/github/alexmodguy/alexscaves/server/item/ExtinctionSpearItem",
+    "com/github/alexmodguy/alexscaves/server/item/GalenaGauntletItem",
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem",
+    "com/github/alexmodguy/alexscaves/server/item/ResistorShieldItem"
+  ],
+  "material_bindings": {
+    "com/github/alexmodguy/alexscaves/server/block/ACBlockRegistry": {
+      "class_sha256": "b4de04f32f6e1d92eeda55480b8480f7ed69f3813164f330f49d0eced202e54c",
+      "fields": {
+        "PACKED_GALENA": {
+          "write": 131,
+          "registration_name": "packed_galena"
+        }
+      }
+    },
+    "com/github/alexmodguy/alexscaves/server/item/ACItemRegistry": {
+      "class_sha256": "114e4a3576d56cb66d240fa9df9db7693b1df576ebfa86631ef751dd1e7b5bb1",
+      "fields": {
+        "AZURE_NEODYMIUM_INGOT": {
+          "write": 505,
+          "registration_name": "azure_neodymium_ingot"
+        },
+        "HEAVY_BONE": {
+          "write": 964,
+          "registration_name": "heavy_bone"
+        },
+        "PURE_DARKNESS": {
+          "write": 2426,
+          "registration_name": "pure_darkness"
+        },
+        "SCARLET_NEODYMIUM_INGOT": {
+          "write": 488,
+          "registration_name": "scarlet_neodymium_ingot"
+        },
+        "TECTONIC_SHARD": {
+          "write": 1117,
+          "registration_name": "tectonic_shard"
+        }
+      }
+    }
+  },
+  "native_report_sha256": "6b930d9bc296c736278df961dea6db3b0af31789b39fd623df4cdea232016b2f",
+  "boundary_report_sha256": "03519b95b38412c1efccba0157f83c59dffc0e865dd55efe05c7c779ed2e789a",
+  "replay_job": 135321798629,
+  "discovery_manifest": "EXACT-REPAIRABLE-ITEM-DISCOVERY-1.0.10.json",
+  "boundary_manifest": "EXACT-REPAIRABLE-ITEM-BOUNDARY-1.0.10.json",
+  "registry_crosswalk": "systems/item-registry.md",
+  "next_scope": "server/item/ACSwingControlItem"
+}

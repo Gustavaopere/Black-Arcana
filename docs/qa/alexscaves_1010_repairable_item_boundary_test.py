@@ -79,6 +79,23 @@ class RepairBoundary(unittest.TestCase):
             if group["present"]:
                 self.assertEqual(actual["sha256"], group["sha256"])
 
+    def test_certificate_matches_reports(self):
+        directory = SEAL.parent
+        cert = json.loads((directory / "EXACT-REPAIRABLE-ITEM-CONTRACT-1.0.10.json").read_text(encoding="utf8"))
+        native = json.loads((directory / "EXACT-REPAIRABLE-ITEM-DISCOVERY-1.0.10.json").read_text(encoding="utf8"))
+        self.assertEqual(cert["artifact"], native["artifact"])
+        self.assertEqual(cert["direct_implementers"], native["direct_implementers"])
+        self.assertEqual(cert["target_class_sha256"], native["target_class_sha256"])
+        self.assertEqual(cert["native_report_sha256"], native["report_sha256"])
+        self.assertEqual(cert["boundary_report_sha256"], self.seal["boundary_report_sha256"])
+        self.assertEqual(cert["material_bindings"], self.seal["native"]["bindings"])
+        self.assertEqual(set(cert["axes"]), {"identity", "behavior", "parameters", "targeting", "costs", "integration", "validation"})
+        ledger = json.loads((ROOT / "wiki/modpack-catalog/meta/PERK-READY-CERTIFICATIONS.json").read_text(encoding="utf8"))
+        item = ledger["objects"]["✅-alexs-caves-continued/systems/repairable-item.md"]
+        self.assertEqual(set(item["evidence"]), set(cert["axes"]))
+        for field in ("claim_scope", "evidence_grade", "mutation", "mutating_hook", "physical_qa", "perk_certification", "runtime_dispatch", "provider_universe_closed"):
+            self.assertEqual(item[field], cert["claims"][field])
+
 
 if __name__ == "__main__":
     unittest.main()
