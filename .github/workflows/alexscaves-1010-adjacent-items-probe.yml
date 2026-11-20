@@ -1,8 +1,8 @@
-name: Alex's Caves 1.0.10 adjacent item class discovery
+name: Alex's Caves 1.0.10 adjacent item contracts
 on:
   pull_request:
     branches: [main]
-    paths:
+    paths: &contract_paths
       - '.github/workflows/alexscaves-1010-adjacent-items-probe.yml'
       - 'docs/qa/alexscaves_1010_adjacent_items_probe.py'
       - 'docs/qa/alexscaves_1010_adjacent_items_boundary.py'
@@ -10,7 +10,15 @@ on:
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-DISCOVERY-1.0.10.json'
       - 'docs/qa/alexscaves_1010_adjacent_items_boundary_test.py'
       - 'docs/qa/alexscaves_1010_anvil_block_selector_extra.py'
+      - 'docs/qa/alexscaves_1010_adjacent_items_catalog.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-BOUNDARY-1.0.10.json'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.*'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/items/biome-treat.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/anvil-combination.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/scaffolding-placement.md'
+  push:
+    branches: [main]
+    paths: *contract_paths
   workflow_dispatch:
 permissions:
   contents: read
@@ -46,6 +54,15 @@ jobs:
         run: AC_ADJACENT_BOUNDARY=build/adjacent-items-1010/boundary.json python3 docs/qa/alexscaves_1010_adjacent_items_boundary_test.py -v
       - name: Audit switch, annotation and factory selector
         run: python3 docs/qa/alexscaves_1010_anvil_block_selector_extra.py --jar build/adjacent-items-1010/alexscaves-1.0.10.jar --javap "$JAVA_HOME/bin/javap" --output build/adjacent-items-1010/extra.json
+      - name: Reproduce the catalog seal and registry bindings
+        run: |
+          python3 docs/qa/alexscaves_1010_adjacent_items_catalog.py \
+            --jar build/adjacent-items-1010/alexscaves-1.0.10.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --discovery build/adjacent-items-1010/report.json \
+            --boundary build/adjacent-items-1010/boundary.json \
+            --extra build/adjacent-items-1010/extra.json \
+            --output build/adjacent-items-1010/catalog.json
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
@@ -55,5 +72,6 @@ jobs:
             build/adjacent-items-1010/report.json
             build/adjacent-items-1010/boundary.json
             build/adjacent-items-1010/extra.json
+            build/adjacent-items-1010/catalog.json
           retention-days: 14
           if-no-files-found: ignore

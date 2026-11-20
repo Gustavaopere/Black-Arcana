@@ -1,5 +1,7 @@
 # Alex's Caves Continued 1.0.10 — índice de 51 encantamentos para perks
 
+**Recorte atual:** **96/96 contratos estáticos entre fichas observadas**, com 13/13 suportes e 2/2 itens concretos. A auditoria das cinco classes conclui a política de bigorna, o Biome Treat e a seleção de andaimes. Renderização e lore receberam disposições de apresentação. O próximo símbolo é `server/item/BurrowingArrowItem`. O provider segue aberto, com hooks mutadores e QA física pendentes. Os números dos checkpoints anteriores são históricos. [Prova e reprodução](EXACT-ADJACENT-ITEMS-CATALOG-1.0.10.md)
+
 **Continuidade atual fora dos encantamentos:** [Alex Meal](items/alex-meal.md) possui [certificação estática individual](EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md), sem novo encantamento, efeito vanilla ou raiz mágica. **93/93 contratos estáticos entre fichas observadas**, suportes **11/11**, itens desta árvore **1/1**. Os 51 encantamentos conservam seus certificados. Próxima classe: `server/item/AlwaysCombinableOnAnvil`; os checkpoints abaixo são históricos. Provider OPEN; hooks NOT_VERIFIED e QA NOT_TESTED.
 
 > Identidades dos 51 JSONs publisher e dossiers individuais são contagens diferentes. A conclusão abaixo é do **contrato técnico estático**, independente de hook mutador e QA física. Referências históricas a nomes/símbolos em outros manifestos permanecem úteis, mas não bastam para concluir outro encantamento.
