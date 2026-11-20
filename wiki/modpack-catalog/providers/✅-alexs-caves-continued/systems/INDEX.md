@@ -4,13 +4,13 @@
 
 **Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 10/10.**
+**Fichas catalogadas (somente fichas detectadas): 11/11.**
 
 **Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 10/10.**
+**Homologadas para perks (somente fichas detectadas): 11/11.**
 
 **Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
@@ -30,6 +30,7 @@
 | ✅ | Item Registry | [ficha/item-registry.md](item-registry.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Repairable Item | [ficha/repairable-item.md](repairable-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Swing Control Item | [ficha/swing-control-item.md](swing-control-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
+| ✅ | Ticking Item | [ficha/ticking-item.md](ticking-item.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
