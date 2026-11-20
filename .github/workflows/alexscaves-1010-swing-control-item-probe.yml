@@ -7,6 +7,10 @@ on:
       - '.github/workflows/alexscaves-1010-swing-control-item-probe.yml'
       - 'docs/qa/alexscaves_1010_swing_control_item_probe.py'
       - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/systems/swing-control-item.md'
+      - 'docs/qa/alexscaves_1010_swing_control_item_probe_test.py'
+      - 'docs/qa/alexscaves_1010_swing_control_item_boundary.py'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SWING-CONTROL-ITEM-DISCOVERY-1.0.10.md'
+      - 'wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-SWING-CONTROL-ITEM-DISCOVERY-1.0.10.json'
   workflow_dispatch:
 
 permissions:
@@ -35,11 +39,27 @@ jobs:
             --jar build/swing-control-1010/alexscaves-1.0.10.jar \
             --javap "$JAVA_HOME/bin/javap" \
             --output build/swing-control-1010/report.json
+      - name: Replay exact swing predicates
+        run: AC_SWING_REPORT=build/swing-control-1010/report.json python3 docs/qa/alexscaves_1010_swing_control_item_probe_test.py -v
+      - name: Audit official swing and attack reference boundaries
+        run: |
+          for kind in universal userdev; do
+            curl --fail --silent --show-error --location --retry 3 --connect-timeout 20 --max-time 120 \
+              "https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.250/neoforge-21.1.250-$kind.jar" \
+              --output "build/swing-control-1010/$kind.jar"
+          done
+          python3 docs/qa/alexscaves_1010_swing_control_item_boundary.py \
+            --universal build/swing-control-1010/universal.jar \
+            --userdev build/swing-control-1010/userdev.jar \
+            --javap "$JAVA_HOME/bin/javap" \
+            --output build/swing-control-1010/boundary.json
       - name: Archive read-only report
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: alexscaves-1010-swing-control-item-discovery
-          path: build/swing-control-1010/report.json
+          path: |
+            build/swing-control-1010/report.json
+            build/swing-control-1010/boundary.json
           retention-days: 14
           if-no-files-found: ignore
