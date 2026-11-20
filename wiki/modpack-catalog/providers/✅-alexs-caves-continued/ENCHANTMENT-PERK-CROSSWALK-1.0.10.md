@@ -1,5 +1,7 @@
 # Alex's Caves Continued 1.0.10 — índice de 51 encantamentos para perks
 
+**Continuidade atual fora dos encantamentos:** [Alex Meal](items/alex-meal.md) possui [certificação estática individual](EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md), sem novo encantamento, efeito vanilla ou raiz mágica. Recorte observado preparado **93/93**, suportes **11/11**, itens desta árvore **1/1**. Os 51 encantamentos conservam seus certificados. Próxima classe: `server/item/AlwaysCombinableOnAnvil`; os checkpoints abaixo são históricos. Provider OPEN; hooks NOT_VERIFIED e QA NOT_TESTED.
+
 > Identidades dos 51 JSONs publisher e dossiers individuais são contagens diferentes. A conclusão abaixo é do **contrato técnico estático**, independente de hook mutador e QA física. Referências históricas a nomes/símbolos em outros manifestos permanecem úteis, mas não bastam para concluir outro encantamento.
 
 ```text

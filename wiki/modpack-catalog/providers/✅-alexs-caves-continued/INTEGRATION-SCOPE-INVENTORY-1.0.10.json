@@ -543,9 +543,22 @@
         "EXACT-TICKING-ITEM-CONTRACT-1.0.10.json"
       ],
       "partial_cards": []
+    },
+    "item_contracts": {
+      "cards": [
+        "items/alex-meal.md"
+      ],
+      "documented_static_contracts": 1,
+      "family_universe_closed": false,
+      "evidence": "EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+      "manifest": "EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.json",
+      "semantic_magic_roots_added": 0,
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "mutation": "NO_MUTATION"
     }
   },
-  "next_alphabetical_uncovered_scope": "server/item/AlexMealItem",
+  "next_alphabetical_uncovered_scope": "server/item/AlwaysCombinableOnAnvil",
   "integration_support_inventory": {
     "source_inventory": "remaining_family_inventory.item_outer_classes",
     "scope": "REVIEWED_ALPHABETICAL_PREFIX_OF_PHYSICAL_ITEM_OUTER_CLASSES",
@@ -679,9 +692,19 @@
         "additional_cards": 1,
         "semantic_magic_roots_added": 0,
         "scope_note": "Scoped inventory-tick dispatcher/ABI, 17 declared callbacks and one inherited implementer, exact annotations and official engine caller/selection/durability reference. Local callback bodies and call edges only; does not certify every implementer as whole item, downstream effects/spawn/cost settlement, live tick frequency, safe mutating hooks, physical QA or provider closure. Zero new magical roots."
+      },
+      {
+        "class": "server/item/AlexMealItem",
+        "disposition": "INDIVIDUAL_STATIC_CONTRACT_CERTIFIED",
+        "card": "items/alex-meal.md",
+        "evidence": "EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+        "manifest": "EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.json",
+        "additional_cards": 1,
+        "semantic_magic_roots_added": 0,
+        "scope_note": "Concrete food item: both own methods, causal registry binding, recipe/model/selected translations and composition with pinned Foods/FoodBuilder/reference certificates. No new API support or magical root. Does not certify transformed consumption, accepted vanilla effects, effective datapacks/components, safe per-player mutations, physical QA or provider closure."
       }
     ],
-    "next_alphabetical_uncovered_scope": "server/item/AlexMealItem",
+    "next_alphabetical_uncovered_scope": "server/item/AlwaysCombinableOnAnvil",
     "family_universe_closed": false,
     "remaining_family_inventory_preserved": true,
     "typed_constant_pool_class_count": 1555,
@@ -690,5 +713,15 @@
     "mutation": "NO_MUTATION"
   },
   "completed_scope_checkpoint_scope": "HISTORICAL_SEQUENCE_THROUGH_PR_1122",
-  "current_completed_scope": "Candidate #1127: ACTickingItem bounded static dispatcher contract after integrated #1126; 17 direct and one inherited implementations, exact mixin HEAD and engine reference, 92/92 observed and 11/11 support contracts, +1 card and zero semantic roots. Next server/item/AlexMealItem reserved #1128. Provider OPEN, family universe not closed; NO_MUTATION, NOT_VERIFIED, NOT_TESTED."
+  "current_completed_scope": "Candidate #1127: ACTickingItem bounded static dispatcher contract after integrated #1126; 17 direct and one inherited implementations, exact mixin HEAD and engine reference, 92/92 observed and 11/11 support contracts, +1 card and zero semantic roots. Next server/item/AlexMealItem reserved #1128. Provider OPEN, family universe not closed; NO_MUTATION, NOT_VERIFIED, NOT_TESTED.",
+  "current_item_contract_checkpoint": {
+    "scope": "ONE_CONCRETE_ITEM_ADDED_TO_EXISTING_ALPHABETICAL_REVIEW",
+    "item": "items/alex-meal.md",
+    "provider_observed_static_contracts": 93,
+    "provider_observed_cards": 93,
+    "support_contracts_unchanged": 11,
+    "concrete_item_contracts": 1,
+    "whole_provider_catalog_closed": false,
+    "next_scope": "server/item/AlwaysCombinableOnAnvil"
+  }
 }

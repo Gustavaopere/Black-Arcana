@@ -9388,6 +9388,50 @@
           "reason": "Job 136073564307 passed 4 discovery +4 boundary replay tests and extra audit, three exact report hashes. Additional replay, ledger/index gates on final candidate; no transformed runtime or physical QA."
         }
       }
+    },
+    "✅-alexs-caves-continued/items/alex-meal.md": {
+      "status": "COMPLETE_PERK_READY",
+      "claim_scope": "STATIC_TECHNICAL_CATALOG_ONLY",
+      "evidence_grade": "SHA_EXACT_BINARY_BEHAVIOR",
+      "version": "1.0.10",
+      "artifact_sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+      "mutating_hook": "NOT_VERIFIED",
+      "physical_qa": "NOT_TESTED",
+      "perk_certification": "NOT_CERTIFIED",
+      "runtime_dispatch": "NOT_VERIFIED",
+      "mutation": "NO_MUTATION",
+      "provider_universe_closed": false,
+      "scope_note": "Concrete Alex Meal item: complete two-method native surface, causal registry factory, food parameters/effect payloads, packaged recipe/model and selected provider text. Composes pinned existing food and official-reference contracts; does not certify transformed consumption, accepted effects, safe per-player hooks or full provider universe. One item card, zero new spell roots; support count unchanged.",
+      "evidence": {
+        "behavior": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Constructor attaches the ALEX_MEAL food properties, rarity alias and stack limit; tooltip appends translated styled text before super. No own consumption override; inherited consumption is a pinned external reference."
+        },
+        "costs": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Own methods do not settle resources. The inherited reference requests consume(1,entity), preserves infinite materials and handles bowl conversion; actual overrides, component composition and transactions remain unverified."
+        },
+        "identity": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Exact publisher 1.0.10 hashes, concrete item class and complete two-method surface, registry argument flow and packaged recipe/model; source 1.1.1 is not the behavior authority."
+        },
+        "integration": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Composes existing FoodBuilder, Foods and registry contracts without mutating global FoodProperties or suppliers. Use events and getFoodProperties are reference surfaces, not approved per-player hooks or Mastery settlement."
+        },
+        "parameters": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Nutrition 40, binary32 saturation modifier 5, nominal 400 saturation before reference clamps, stack limit 1, bowl conversion, CONFUSION 200 ticks and BAD_OMEN 48000 ticks at probability 1. Reference use duration 32 ticks and amplifier zero are separately scoped."
+        },
+        "targeting": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Food consumer is the receiving entity in the external reference. No own attack, target query, range, area, projectile, summon or direct damage behavior. Downstream vanilla effects are not certified by this item."
+        },
+        "validation": {
+          "path": "wiki/modpack-catalog/providers/✅-alexs-caves-continued/EXACT-ALEX-MEAL-ITEM-CERTIFICATION-1.0.10.md",
+          "reason": "Reproduces the original exact report, checks immutable prerequisite seals, complete item/factory bodies and resources, and records selected translation strings. Negative controls and two real read-only CLI runs guard the finite claim."
+        }
+      }
     }
   },
   "providers": {},
