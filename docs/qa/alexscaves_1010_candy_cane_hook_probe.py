@@ -78,8 +78,7 @@ def inspect(jar: Path, javap: str, output_dir: Path):
         "mutation": "NO_MUTATION",
     }
     out = output_dir / "report.json"
-    out.write_text(json.dumps(result, indent=2, ensure_ascii=False, sort_keys=True) + "
-", encoding="utf-8")
+    out.write_text(json.dumps(result, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
     print(out.read_text(encoding="utf-8"))
 
 def main():
