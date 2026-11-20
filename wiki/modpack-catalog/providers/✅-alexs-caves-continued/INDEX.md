@@ -4,17 +4,17 @@
 
 **Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
 
-**Fichas catalogadas (somente fichas detectadas): 96/97.**
+**Fichas catalogadas (somente fichas detectadas): 96/96.**
 
-**Barra das fichas catalogadas:** `███████████████████░ 99.0%`
+**Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
 **Fila alfabética:** 🟡 próximo provider a concluir. Não presumir 100% a partir de inventário agregado.
 
-**Homologadas para perks (somente fichas detectadas): 96/97.**
+**Homologadas para perks (somente fichas detectadas): 96/96.**
 
-**Barra dos contratos técnicos estáticos:** `███████████████████░ 99.0%`
+**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
@@ -107,7 +107,6 @@
 | ✅ | Shot Gum | [equipment/shot-gum.md](equipment/shot-gum.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Alex Meal | [items/alex-meal.md](items/alex-meal.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Biome Treat | [items/biome-treat.md](items/biome-treat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Candy Cane Hook | [items/candy-cane-hook.md](items/candy-cane-hook.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Anvil Combination | [systems/anvil-combination.md](systems/anvil-combination.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Armor Material | [systems/armor-material.md](systems/armor-material.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Client Extension | [systems/client-extension.md](systems/client-extension.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
@@ -131,7 +130,7 @@
 | ✅ | Effects | 8/8 (100.0%) | 8 | [Abrir índice](effects/INDEX.md) |
 | ✅ | Enchantments | 51/51 (100.0%) | 51 | [Abrir índice](enchantments/INDEX.md) |
 | ✅ | Equipment | 3/3 (100.0%) | 3 | [Abrir índice](equipment/INDEX.md) |
-| ⚠️ | Items | 2/3 (66.7%) | 2 | [Abrir índice](items/INDEX.md) |
+| ✅ | Items | 2/2 (100.0%) | 2 | [Abrir índice](items/INDEX.md) |
 | ✅ | Systems | 13/13 (100.0%) | 13 | [Abrir índice](systems/INDEX.md) |
 
 ## Critério do ✅

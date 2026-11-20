@@ -2,27 +2,26 @@
 
 > Catálogo documentado, contrato técnico estático, hooks mutadores e QA físico têm estados independentes. Uma pasta antiga ✅ não constitui prova.
 
-**Catálogo desta árvore:** ⚠️ conclusão do escopo ainda não comprovada.
+**Catálogo desta árvore:** ✅ documentado no escopo indicado abaixo.
 
-**Fichas catalogadas (somente fichas detectadas): 2/3.**
+**Fichas catalogadas (somente fichas detectadas): 2/2.**
 
-**Barra das fichas catalogadas:** `█████████████░░░░░░░ 66.7%`
+**Barra das fichas catalogadas:** `████████████████████ 100.0%`
 
 **Limite da prova do catálogo:** apenas fichas com contratos técnicos estáticos certificados sustentam ✅ individual. O universo integral do provider continua não verificado; contagens observadas não encerram esse escopo.
 
-**Homologadas para perks (somente fichas detectadas): 2/3.**
+**Homologadas para perks (somente fichas detectadas): 2/2.**
 
-**Barra dos contratos técnicos estáticos:** `█████████████░░░░░░░ 66.7%`
+**Barra dos contratos técnicos estáticos:** `████████████████████ 100.0%`
 
 **Limite da homologação:** os certificados acima cobrem contratos técnicos estáticos; catálogo concluído não promove hooks mutadores nem QA físico.
 
-**Contratos desta subpasta:** ⚠️ validação técnica individual pendente.
+**Contratos desta subpasta:** ✅ contratos técnicos estáticos de todas as fichas detectadas certificados; recorte documental, sem homologação de hooks mutadores, QA físico ou universo integral do provider.
 
 | Catálogo | Objeto / habilidade identificada | Ficha | Contrato estático | Hooks mutadores | QA físico |
 |---|---|---|---|---|---|
 | ✅ | Alex Meal | [ficha/alex-meal.md](alex-meal.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
 | ✅ | Biome Treat | [ficha/biome-treat.md](biome-treat.md) | ✅ certificado | ⚠️ não verificado | ⚠️ não testado |
-| ⚠️ | Candy Cane Hook | [ficha/candy-cane-hook.md](candy-cane-hook.md) | ⚠️ pendente | ⚠️ não verificado | ⚠️ não testado |
 
 ## Critério do ✅
 
