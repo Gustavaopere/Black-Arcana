@@ -8,7 +8,7 @@
 
 **Fichas catalogadas (somente fichas detectadas): 480/2404.**
 
-**Barra das fichas catalogadas:** `███░░░░░░░░░░░░░░░░░ 19.9%`
+**Barra das fichas catalogadas:** `███░░░░░░░░░░░░░░░░░ 20.0%`
 
 **Escopo:** pastas atuais de providers; a modlist pode conter outros mods/sistemas ainda não representados. Objetos ausentes do catálogo não são presumidos inexistentes.
 
@@ -20,7 +20,7 @@
 
 **Fichas com contrato técnico estático certificado: 230/2404.**
 
-**Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 9.5%`
+**Barra das fichas estáticas observadas:** `█░░░░░░░░░░░░░░░░░░░ 9.6%`
 
 **Mods com escopo integral certificado: 0/164.**
 
