@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "scope": "DISCOVERY_NOT_CERTIFIED",
+  "artifact": {
+    "version": "1.0.10",
+    "sha1": "6960b299a39a039ac8a5eb9b07be4ad0e3e0a570",
+    "sha256": "36ae0a3cbd028df466a37c671ba2fdf021c060ca1c9c1c32e9f2e95bffae0e7c",
+    "size_bytes": 75279314
+  },
+  "class_entries_scanned": 1555,
+  "report_sha256": "67a3bf38959ca92fd40c7a86ffcfa08fc738e036de2eab9f8fd1b54a4e6db8d2",
+  "run": 44666320278,
+  "job": 136056381402,
+  "mutation": "NO_MUTATION",
+  "mutating_hook": "NOT_VERIFIED",
+  "physical_qa": "NOT_TESTED",
+  "provider_universe_closed": false,
+  "owners": {
+    "com/github/alexmodguy/alexscaves/server/item/ACSwingControlItem": {
+      "class_sha256": "0fc278b0860306f7746dd2dc445712b42ca4d227d1ec154dfff11471aa67cee3",
+      "hierarchy": {
+        "parent": "java/lang/Object",
+        "interfaces": [],
+        "access": 1537
+      },
+      "methods": []
+    },
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem": {
+      "class_sha256": "92bfb58cb5ed2c84dd6f989afad22c98209542889e30b6214c502dbff42fa1ac",
+      "hierarchy": {
+        "parent": "net/minecraft/world/item/Item",
+        "interfaces": [
+          "com/github/alexmodguy/alexscaves/server/item/ACClientExtensionItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACEnchantableItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACRepairableItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACDynamicAttributeItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACTickingItem",
+          "com/github/alexmodguy/alexscaves/server/item/ACSwingControlItem"
+        ],
+        "access": 33
+      },
+      "methods": [
+        {
+          "name": "onEntitySwing",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "instruction_count": 24,
+          "instruction_sha256": "677ff12c087d2e6bdc254270a867dd3f701f7dfa90312c7cf8beed7b60b4e0ce"
+        },
+        {
+          "name": "onLeftClickEntity",
+          "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;)Z",
+          "instruction_count": 16,
+          "instruction_sha256": "fc3972e0779fc2793328c758162faa7cbd5ad115e6a970b1151afd51807919ad"
+        }
+      ]
+    }
+  },
+  "target_class_sha256": "0fc278b0860306f7746dd2dc445712b42ca4d227d1ec154dfff11471aa67cee3",
+  "target_access": 1537,
+  "target_fields": [],
+  "target_methods": [
+    {
+      "access": 1025,
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;)Z",
+      "name": "onLeftClickEntity"
+    },
+    {
+      "access": 1025,
+      "descriptor": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)Z",
+      "name": "onEntitySwing"
+    }
+  ],
+  "direct_implementers": [
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem"
+  ],
+  "inherited_implementers": [],
+  "in_jar_ancestors": [],
+  "typed_census": {
+    "com/github/alexmodguy/alexscaves/server/item/ACSwingControlItem": [
+      {
+        "index": 1,
+        "kind": "class_constant"
+      }
+    ],
+    "com/github/alexmodguy/alexscaves/server/item/PrimitiveClubItem": [
+      {
+        "index": 346,
+        "kind": "class_constant"
+      }
+    ]
+  },
+  "exact_member_refs": {}
+}
